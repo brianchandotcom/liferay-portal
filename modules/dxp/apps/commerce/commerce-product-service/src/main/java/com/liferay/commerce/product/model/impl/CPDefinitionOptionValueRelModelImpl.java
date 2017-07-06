@@ -89,9 +89,9 @@ public class CPDefinitionOptionValueRelModelImpl extends BaseModelImpl<CPDefinit
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "CPDefinitionOptionRelId", Types.BIGINT },
-			{ "name", Types.VARCHAR },
 			{ "title", Types.VARCHAR },
-			{ "priority", Types.DOUBLE }
+			{ "priority", Types.DOUBLE },
+			{ "key_", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -105,12 +105,12 @@ public class CPDefinitionOptionValueRelModelImpl extends BaseModelImpl<CPDefinit
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("CPDefinitionOptionRelId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("key_", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPDefinitionOptionValueRel (uuid_ VARCHAR(75) null,CPDefinitionOptionValueRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionOptionRelId LONG,name VARCHAR(75) null,title STRING null,priority DOUBLE)";
+	public static final String TABLE_SQL_CREATE = "create table CPDefinitionOptionValueRel (uuid_ VARCHAR(75) null,CPDefinitionOptionValueRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionOptionRelId LONG,title STRING null,priority DOUBLE,key_ VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table CPDefinitionOptionValueRel";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpDefinitionOptionValueRel.priority ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPDefinitionOptionValueRel.priority ASC";
@@ -155,9 +155,9 @@ public class CPDefinitionOptionValueRelModelImpl extends BaseModelImpl<CPDefinit
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setCPDefinitionOptionRelId(soapModel.getCPDefinitionOptionRelId());
-		model.setName(soapModel.getName());
 		model.setTitle(soapModel.getTitle());
 		model.setPriority(soapModel.getPriority());
+		model.setKey(soapModel.getKey());
 
 		return model;
 	}
@@ -233,9 +233,9 @@ public class CPDefinitionOptionValueRelModelImpl extends BaseModelImpl<CPDefinit
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("CPDefinitionOptionRelId", getCPDefinitionOptionRelId());
-		attributes.put("name", getName());
 		attributes.put("title", getTitle());
 		attributes.put("priority", getPriority());
+		attributes.put("key", getKey());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -301,12 +301,6 @@ public class CPDefinitionOptionValueRelModelImpl extends BaseModelImpl<CPDefinit
 			setCPDefinitionOptionRelId(CPDefinitionOptionRelId);
 		}
 
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
 		String title = (String)attributes.get("title");
 
 		if (title != null) {
@@ -317,6 +311,12 @@ public class CPDefinitionOptionValueRelModelImpl extends BaseModelImpl<CPDefinit
 
 		if (priority != null) {
 			setPriority(priority);
+		}
+
+		String key = (String)attributes.get("key");
+
+		if (key != null) {
+			setKey(key);
 		}
 	}
 
@@ -498,22 +498,6 @@ public class CPDefinitionOptionValueRelModelImpl extends BaseModelImpl<CPDefinit
 
 	@JSON
 	@Override
-	public String getName() {
-		if (_name == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _name;
-		}
-	}
-
-	@Override
-	public void setName(String name) {
-		_name = name;
-	}
-
-	@JSON
-	@Override
 	public String getTitle() {
 		if (_title == null) {
 			return StringPool.BLANK;
@@ -624,6 +608,22 @@ public class CPDefinitionOptionValueRelModelImpl extends BaseModelImpl<CPDefinit
 		_priority = priority;
 	}
 
+	@JSON
+	@Override
+	public String getKey() {
+		if (_key == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _key;
+		}
+	}
+
+	@Override
+	public void setKey(String key) {
+		_key = key;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -731,9 +731,9 @@ public class CPDefinitionOptionValueRelModelImpl extends BaseModelImpl<CPDefinit
 		cpDefinitionOptionValueRelImpl.setCreateDate(getCreateDate());
 		cpDefinitionOptionValueRelImpl.setModifiedDate(getModifiedDate());
 		cpDefinitionOptionValueRelImpl.setCPDefinitionOptionRelId(getCPDefinitionOptionRelId());
-		cpDefinitionOptionValueRelImpl.setName(getName());
 		cpDefinitionOptionValueRelImpl.setTitle(getTitle());
 		cpDefinitionOptionValueRelImpl.setPriority(getPriority());
+		cpDefinitionOptionValueRelImpl.setKey(getKey());
 
 		cpDefinitionOptionValueRelImpl.resetOriginalValues();
 
@@ -870,14 +870,6 @@ public class CPDefinitionOptionValueRelModelImpl extends BaseModelImpl<CPDefinit
 
 		cpDefinitionOptionValueRelCacheModel.CPDefinitionOptionRelId = getCPDefinitionOptionRelId();
 
-		cpDefinitionOptionValueRelCacheModel.name = getName();
-
-		String name = cpDefinitionOptionValueRelCacheModel.name;
-
-		if ((name != null) && (name.length() == 0)) {
-			cpDefinitionOptionValueRelCacheModel.name = null;
-		}
-
 		cpDefinitionOptionValueRelCacheModel.title = getTitle();
 
 		String title = cpDefinitionOptionValueRelCacheModel.title;
@@ -887,6 +879,14 @@ public class CPDefinitionOptionValueRelModelImpl extends BaseModelImpl<CPDefinit
 		}
 
 		cpDefinitionOptionValueRelCacheModel.priority = getPriority();
+
+		cpDefinitionOptionValueRelCacheModel.key = getKey();
+
+		String key = cpDefinitionOptionValueRelCacheModel.key;
+
+		if ((key != null) && (key.length() == 0)) {
+			cpDefinitionOptionValueRelCacheModel.key = null;
+		}
 
 		return cpDefinitionOptionValueRelCacheModel;
 	}
@@ -913,12 +913,12 @@ public class CPDefinitionOptionValueRelModelImpl extends BaseModelImpl<CPDefinit
 		sb.append(getModifiedDate());
 		sb.append(", CPDefinitionOptionRelId=");
 		sb.append(getCPDefinitionOptionRelId());
-		sb.append(", name=");
-		sb.append(getName());
 		sb.append(", title=");
 		sb.append(getTitle());
 		sb.append(", priority=");
 		sb.append(getPriority());
+		sb.append(", key=");
+		sb.append(getKey());
 		sb.append("}");
 
 		return sb.toString();
@@ -970,16 +970,16 @@ public class CPDefinitionOptionValueRelModelImpl extends BaseModelImpl<CPDefinit
 		sb.append(getCPDefinitionOptionRelId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>title</column-name><column-value><![CDATA[");
 		sb.append(getTitle());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>priority</column-name><column-value><![CDATA[");
 		sb.append(getPriority());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>key</column-name><column-value><![CDATA[");
+		sb.append(getKey());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -1008,10 +1008,10 @@ public class CPDefinitionOptionValueRelModelImpl extends BaseModelImpl<CPDefinit
 	private long _CPDefinitionOptionRelId;
 	private long _originalCPDefinitionOptionRelId;
 	private boolean _setOriginalCPDefinitionOptionRelId;
-	private String _name;
 	private String _title;
 	private String _titleCurrentLanguageId;
 	private double _priority;
+	private String _key;
 	private long _columnBitmask;
 	private CPDefinitionOptionValueRel _escapedModel;
 }

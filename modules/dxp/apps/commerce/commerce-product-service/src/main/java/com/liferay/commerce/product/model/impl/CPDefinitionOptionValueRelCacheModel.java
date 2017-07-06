@@ -87,12 +87,12 @@ public class CPDefinitionOptionValueRelCacheModel implements CacheModel<CPDefini
 		sb.append(modifiedDate);
 		sb.append(", CPDefinitionOptionRelId=");
 		sb.append(CPDefinitionOptionRelId);
-		sb.append(", name=");
-		sb.append(name);
 		sb.append(", title=");
 		sb.append(title);
 		sb.append(", priority=");
 		sb.append(priority);
+		sb.append(", key=");
+		sb.append(key);
 		sb.append("}");
 
 		return sb.toString();
@@ -138,13 +138,6 @@ public class CPDefinitionOptionValueRelCacheModel implements CacheModel<CPDefini
 
 		cpDefinitionOptionValueRelImpl.setCPDefinitionOptionRelId(CPDefinitionOptionRelId);
 
-		if (name == null) {
-			cpDefinitionOptionValueRelImpl.setName(StringPool.BLANK);
-		}
-		else {
-			cpDefinitionOptionValueRelImpl.setName(name);
-		}
-
 		if (title == null) {
 			cpDefinitionOptionValueRelImpl.setTitle(StringPool.BLANK);
 		}
@@ -153,6 +146,13 @@ public class CPDefinitionOptionValueRelCacheModel implements CacheModel<CPDefini
 		}
 
 		cpDefinitionOptionValueRelImpl.setPriority(priority);
+
+		if (key == null) {
+			cpDefinitionOptionValueRelImpl.setKey(StringPool.BLANK);
+		}
+		else {
+			cpDefinitionOptionValueRelImpl.setKey(key);
+		}
 
 		cpDefinitionOptionValueRelImpl.resetOriginalValues();
 
@@ -175,10 +175,10 @@ public class CPDefinitionOptionValueRelCacheModel implements CacheModel<CPDefini
 		modifiedDate = objectInput.readLong();
 
 		CPDefinitionOptionRelId = objectInput.readLong();
-		name = objectInput.readUTF();
 		title = objectInput.readUTF();
 
 		priority = objectInput.readDouble();
+		key = objectInput.readUTF();
 	}
 
 	@Override
@@ -211,13 +211,6 @@ public class CPDefinitionOptionValueRelCacheModel implements CacheModel<CPDefini
 
 		objectOutput.writeLong(CPDefinitionOptionRelId);
 
-		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(name);
-		}
-
 		if (title == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -226,6 +219,13 @@ public class CPDefinitionOptionValueRelCacheModel implements CacheModel<CPDefini
 		}
 
 		objectOutput.writeDouble(priority);
+
+		if (key == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(key);
+		}
 	}
 
 	public String uuid;
@@ -237,7 +237,7 @@ public class CPDefinitionOptionValueRelCacheModel implements CacheModel<CPDefini
 	public long createDate;
 	public long modifiedDate;
 	public long CPDefinitionOptionRelId;
-	public String name;
 	public String title;
 	public double priority;
+	public String key;
 }

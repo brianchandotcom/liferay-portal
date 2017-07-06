@@ -54,15 +54,14 @@ public class CPOptionCategoryLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CPOptionCategory addCPOptionCategory(
-		java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		double priority,
+		double priority, java.lang.String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addCPOptionCategory(name, titleMap, descriptionMap,
-			priority, serviceContext);
+				   .addCPOptionCategory(titleMap, descriptionMap, priority,
+			key, serviceContext);
 	}
 
 	/**
@@ -158,15 +157,15 @@ public class CPOptionCategoryLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CPOptionCategory updateCPOptionCategory(
-		long cpOptionCategoryId, java.lang.String name,
+		long cpOptionCategoryId,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		double priority,
+		double priority, java.lang.String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .updateCPOptionCategory(cpOptionCategoryId, name, titleMap,
-			descriptionMap, priority, serviceContext);
+				   .updateCPOptionCategory(cpOptionCategoryId, titleMap,
+			descriptionMap, priority, key, serviceContext);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {

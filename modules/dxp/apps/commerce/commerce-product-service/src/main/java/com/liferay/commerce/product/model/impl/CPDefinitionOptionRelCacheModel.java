@@ -66,7 +66,7 @@ public class CPDefinitionOptionRelCacheModel implements CacheModel<CPDefinitionO
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -88,8 +88,6 @@ public class CPDefinitionOptionRelCacheModel implements CacheModel<CPDefinitionO
 		sb.append(CPDefinitionId);
 		sb.append(", CPOptionId=");
 		sb.append(CPOptionId);
-		sb.append(", name=");
-		sb.append(name);
 		sb.append(", title=");
 		sb.append(title);
 		sb.append(", description=");
@@ -149,13 +147,6 @@ public class CPDefinitionOptionRelCacheModel implements CacheModel<CPDefinitionO
 		cpDefinitionOptionRelImpl.setCPDefinitionId(CPDefinitionId);
 		cpDefinitionOptionRelImpl.setCPOptionId(CPOptionId);
 
-		if (name == null) {
-			cpDefinitionOptionRelImpl.setName(StringPool.BLANK);
-		}
-		else {
-			cpDefinitionOptionRelImpl.setName(name);
-		}
-
 		if (title == null) {
 			cpDefinitionOptionRelImpl.setTitle(StringPool.BLANK);
 		}
@@ -205,7 +196,6 @@ public class CPDefinitionOptionRelCacheModel implements CacheModel<CPDefinitionO
 		CPDefinitionId = objectInput.readLong();
 
 		CPOptionId = objectInput.readLong();
-		name = objectInput.readUTF();
 		title = objectInput.readUTF();
 		description = objectInput.readUTF();
 		DDMFormFieldTypeName = objectInput.readUTF();
@@ -251,13 +241,6 @@ public class CPDefinitionOptionRelCacheModel implements CacheModel<CPDefinitionO
 
 		objectOutput.writeLong(CPOptionId);
 
-		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(name);
-		}
-
 		if (title == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -298,7 +281,6 @@ public class CPDefinitionOptionRelCacheModel implements CacheModel<CPDefinitionO
 	public long modifiedDate;
 	public long CPDefinitionId;
 	public long CPOptionId;
-	public String name;
 	public String title;
 	public String description;
 	public String DDMFormFieldTypeName;

@@ -79,10 +79,11 @@ public interface CPOptionCategoryLocalService extends BaseLocalService,
 	public CPOptionCategory addCPOptionCategory(
 		CPOptionCategory cpOptionCategory);
 
-	public CPOptionCategory addCPOptionCategory(java.lang.String name,
+	public CPOptionCategory addCPOptionCategory(
 		Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> descriptionMap, double priority,
-		ServiceContext serviceContext) throws PortalException;
+		java.lang.String key, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Creates a new cp option category with the primary key. Does not add the cp option category to the database.
@@ -163,9 +164,10 @@ public interface CPOptionCategoryLocalService extends BaseLocalService,
 		CPOptionCategory cpOptionCategory);
 
 	public CPOptionCategory updateCPOptionCategory(long cpOptionCategoryId,
-		java.lang.String name, Map<Locale, java.lang.String> titleMap,
+		Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> descriptionMap, double priority,
-		ServiceContext serviceContext) throws PortalException;
+		java.lang.String key, ServiceContext serviceContext)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();

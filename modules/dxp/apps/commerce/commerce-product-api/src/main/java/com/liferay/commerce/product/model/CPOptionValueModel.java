@@ -228,21 +228,6 @@ public interface CPOptionValueModel extends BaseModel<CPOptionValue>,
 	public void setCPOptionId(long CPOptionId);
 
 	/**
-	 * Returns the name of this cp option value.
-	 *
-	 * @return the name of this cp option value
-	 */
-	@AutoEscape
-	public String getName();
-
-	/**
-	 * Sets the name of this cp option value.
-	 *
-	 * @param name the name of this cp option value
-	 */
-	public void setName(String name);
-
-	/**
 	 * Returns the title of this cp option value.
 	 *
 	 * @return the title of this cp option value
@@ -354,6 +339,21 @@ public interface CPOptionValueModel extends BaseModel<CPOptionValue>,
 	 * @param priority the priority of this cp option value
 	 */
 	public void setPriority(double priority);
+
+	/**
+	 * Returns the key of this cp option value.
+	 *
+	 * @return the key of this cp option value
+	 */
+	@AutoEscape
+	public String getKey();
+
+	/**
+	 * Sets the key of this cp option value.
+	 *
+	 * @param key the key of this cp option value
+	 */
+	public void setKey(String key);
 
 	/**
 	 * Returns the last publish date of this cp option value.

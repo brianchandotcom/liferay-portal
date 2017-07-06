@@ -84,14 +84,14 @@ public class CPOptionCategoryCacheModel implements CacheModel<CPOptionCategory>,
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", name=");
-		sb.append(name);
 		sb.append(", title=");
 		sb.append(title);
 		sb.append(", description=");
 		sb.append(description);
 		sb.append(", priority=");
 		sb.append(priority);
+		sb.append(", key=");
+		sb.append(key);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
 		sb.append("}");
@@ -136,13 +136,6 @@ public class CPOptionCategoryCacheModel implements CacheModel<CPOptionCategory>,
 			cpOptionCategoryImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		if (name == null) {
-			cpOptionCategoryImpl.setName(StringPool.BLANK);
-		}
-		else {
-			cpOptionCategoryImpl.setName(name);
-		}
-
 		if (title == null) {
 			cpOptionCategoryImpl.setTitle(StringPool.BLANK);
 		}
@@ -158,6 +151,13 @@ public class CPOptionCategoryCacheModel implements CacheModel<CPOptionCategory>,
 		}
 
 		cpOptionCategoryImpl.setPriority(priority);
+
+		if (key == null) {
+			cpOptionCategoryImpl.setKey(StringPool.BLANK);
+		}
+		else {
+			cpOptionCategoryImpl.setKey(key);
+		}
 
 		if (lastPublishDate == Long.MIN_VALUE) {
 			cpOptionCategoryImpl.setLastPublishDate(null);
@@ -185,11 +185,11 @@ public class CPOptionCategoryCacheModel implements CacheModel<CPOptionCategory>,
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		name = objectInput.readUTF();
 		title = objectInput.readUTF();
 		description = objectInput.readUTF();
 
 		priority = objectInput.readDouble();
+		key = objectInput.readUTF();
 		lastPublishDate = objectInput.readLong();
 	}
 
@@ -221,13 +221,6 @@ public class CPOptionCategoryCacheModel implements CacheModel<CPOptionCategory>,
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
-		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(name);
-		}
-
 		if (title == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -243,6 +236,14 @@ public class CPOptionCategoryCacheModel implements CacheModel<CPOptionCategory>,
 		}
 
 		objectOutput.writeDouble(priority);
+
+		if (key == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(key);
+		}
+
 		objectOutput.writeLong(lastPublishDate);
 	}
 
@@ -254,9 +255,9 @@ public class CPOptionCategoryCacheModel implements CacheModel<CPOptionCategory>,
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public String name;
 	public String title;
 	public String description;
 	public double priority;
+	public String key;
 	public long lastPublishDate;
 }

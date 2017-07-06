@@ -3015,6 +3015,7 @@ public class CPOptionValuePersistenceImpl extends BasePersistenceImpl<CPOptionVa
 			Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 			dbColumnNames.put("uuid", "uuid_");
+			dbColumnNames.put("key", "key_");
 
 			field.set(this, dbColumnNames);
 		}
@@ -3478,9 +3479,9 @@ public class CPOptionValuePersistenceImpl extends BasePersistenceImpl<CPOptionVa
 		cpOptionValueImpl.setCreateDate(cpOptionValue.getCreateDate());
 		cpOptionValueImpl.setModifiedDate(cpOptionValue.getModifiedDate());
 		cpOptionValueImpl.setCPOptionId(cpOptionValue.getCPOptionId());
-		cpOptionValueImpl.setName(cpOptionValue.getName());
 		cpOptionValueImpl.setTitle(cpOptionValue.getTitle());
 		cpOptionValueImpl.setPriority(cpOptionValue.getPriority());
+		cpOptionValueImpl.setKey(cpOptionValue.getKey());
 		cpOptionValueImpl.setLastPublishDate(cpOptionValue.getLastPublishDate());
 
 		return cpOptionValueImpl;
@@ -3906,6 +3907,6 @@ public class CPOptionValuePersistenceImpl extends BasePersistenceImpl<CPOptionVa
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No CPOptionValue exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(CPOptionValuePersistenceImpl.class);
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"uuid"
+				"uuid", "key"
 			});
 }

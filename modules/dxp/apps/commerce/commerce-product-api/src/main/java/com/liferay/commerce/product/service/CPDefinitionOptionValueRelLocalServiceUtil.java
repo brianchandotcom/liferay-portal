@@ -65,14 +65,14 @@ public class CPDefinitionOptionValueRelLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRel addCPDefinitionOptionValueRel(
-		long cpDefinitionOptionRelId, java.lang.String name,
+		long cpDefinitionOptionRelId,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		double priority,
+		double priority, java.lang.String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCPDefinitionOptionValueRel(cpDefinitionOptionRelId,
-			name, titleMap, priority, serviceContext);
+			titleMap, priority, key, serviceContext);
 	}
 
 	/**
@@ -177,14 +177,14 @@ public class CPDefinitionOptionValueRelLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
-		long cpDefinitionOptionValueRelId, java.lang.String name,
+		long cpDefinitionOptionValueRelId,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		double priority,
+		double priority, java.lang.String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCPDefinitionOptionValueRel(cpDefinitionOptionValueRelId,
-			name, titleMap, priority, serviceContext);
+			titleMap, priority, key, serviceContext);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {

@@ -2848,6 +2848,7 @@ public class CPOptionPersistenceImpl extends BasePersistenceImpl<CPOption>
 			Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 			dbColumnNames.put("uuid", "uuid_");
+			dbColumnNames.put("key", "key_");
 
 			field.set(this, dbColumnNames);
 		}
@@ -3276,13 +3277,13 @@ public class CPOptionPersistenceImpl extends BasePersistenceImpl<CPOption>
 		cpOptionImpl.setUserName(cpOption.getUserName());
 		cpOptionImpl.setCreateDate(cpOption.getCreateDate());
 		cpOptionImpl.setModifiedDate(cpOption.getModifiedDate());
-		cpOptionImpl.setName(cpOption.getName());
 		cpOptionImpl.setTitle(cpOption.getTitle());
 		cpOptionImpl.setDescription(cpOption.getDescription());
 		cpOptionImpl.setDDMFormFieldTypeName(cpOption.getDDMFormFieldTypeName());
 		cpOptionImpl.setFacetable(cpOption.isFacetable());
 		cpOptionImpl.setRequired(cpOption.isRequired());
 		cpOptionImpl.setSkuContributor(cpOption.isSkuContributor());
+		cpOptionImpl.setKey(cpOption.getKey());
 		cpOptionImpl.setLastPublishDate(cpOption.getLastPublishDate());
 
 		return cpOptionImpl;
@@ -3716,6 +3717,6 @@ public class CPOptionPersistenceImpl extends BasePersistenceImpl<CPOption>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No CPOption exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(CPOptionPersistenceImpl.class);
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"uuid"
+				"uuid", "key"
 			});
 }

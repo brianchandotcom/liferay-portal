@@ -70,10 +70,11 @@ import java.util.Map;
 @ProviderType
 public class CPOptionCategoryServiceSoap {
 	public static com.liferay.commerce.product.model.CPOptionCategorySoap addCPOptionCategory(
-		java.lang.String name, java.lang.String[] titleMapLanguageIds,
+		java.lang.String[] titleMapLanguageIds,
 		java.lang.String[] titleMapValues,
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues, double priority,
+		java.lang.String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -82,8 +83,8 @@ public class CPOptionCategoryServiceSoap {
 			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
 					descriptionMapValues);
 
-			com.liferay.commerce.product.model.CPOptionCategory returnValue = CPOptionCategoryServiceUtil.addCPOptionCategory(name,
-					titleMap, descriptionMap, priority, serviceContext);
+			com.liferay.commerce.product.model.CPOptionCategory returnValue = CPOptionCategoryServiceUtil.addCPOptionCategory(titleMap,
+					descriptionMap, priority, key, serviceContext);
 
 			return com.liferay.commerce.product.model.CPOptionCategorySoap.toSoapModel(returnValue);
 		}
@@ -201,11 +202,11 @@ public class CPOptionCategoryServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CPOptionCategorySoap updateCPOptionCategory(
-		long cpOptionCategoryId, java.lang.String name,
-		java.lang.String[] titleMapLanguageIds,
+		long cpOptionCategoryId, java.lang.String[] titleMapLanguageIds,
 		java.lang.String[] titleMapValues,
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues, double priority,
+		java.lang.String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -215,7 +216,7 @@ public class CPOptionCategoryServiceSoap {
 					descriptionMapValues);
 
 			com.liferay.commerce.product.model.CPOptionCategory returnValue = CPOptionCategoryServiceUtil.updateCPOptionCategory(cpOptionCategoryId,
-					name, titleMap, descriptionMap, priority, serviceContext);
+					titleMap, descriptionMap, priority, key, serviceContext);
 
 			return com.liferay.commerce.product.model.CPOptionCategorySoap.toSoapModel(returnValue);
 		}

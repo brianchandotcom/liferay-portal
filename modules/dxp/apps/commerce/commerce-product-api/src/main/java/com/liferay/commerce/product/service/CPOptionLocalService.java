@@ -82,12 +82,11 @@ public interface CPOptionLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CPOption addCPOption(CPOption cpOption);
 
-	public CPOption addCPOption(java.lang.String name,
-		Map<Locale, java.lang.String> titleMap,
+	public CPOption addCPOption(Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> descriptionMap,
 		java.lang.String ddmFormFieldTypeName, boolean facetable,
-		boolean required, boolean skuContributor, ServiceContext serviceContext)
-		throws PortalException;
+		boolean required, boolean skuContributor, java.lang.String key,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new cp option with the primary key. Does not add the cp option to the database.
@@ -172,12 +171,12 @@ public interface CPOptionLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CPOption updateCPOption(CPOption cpOption);
 
-	public CPOption updateCPOption(long cpOptionId, java.lang.String name,
+	public CPOption updateCPOption(long cpOptionId,
 		Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> descriptionMap,
 		java.lang.String ddmFormFieldTypeName, boolean facetable,
-		boolean required, boolean skuContributor, ServiceContext serviceContext)
-		throws PortalException;
+		boolean required, boolean skuContributor, java.lang.String key,
+		ServiceContext serviceContext) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();

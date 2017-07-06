@@ -139,8 +139,6 @@ public class CPOptionPersistenceTest {
 
 		newCPOption.setModifiedDate(RandomTestUtil.nextDate());
 
-		newCPOption.setName(RandomTestUtil.randomString());
-
 		newCPOption.setTitle(RandomTestUtil.randomString());
 
 		newCPOption.setDescription(RandomTestUtil.randomString());
@@ -152,6 +150,8 @@ public class CPOptionPersistenceTest {
 		newCPOption.setRequired(RandomTestUtil.randomBoolean());
 
 		newCPOption.setSkuContributor(RandomTestUtil.randomBoolean());
+
+		newCPOption.setKey(RandomTestUtil.randomString());
 
 		newCPOption.setLastPublishDate(RandomTestUtil.nextDate());
 
@@ -176,7 +176,6 @@ public class CPOptionPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCPOption.getModifiedDate()),
 			Time.getShortTimestamp(newCPOption.getModifiedDate()));
-		Assert.assertEquals(existingCPOption.getName(), newCPOption.getName());
 		Assert.assertEquals(existingCPOption.getTitle(), newCPOption.getTitle());
 		Assert.assertEquals(existingCPOption.getDescription(),
 			newCPOption.getDescription());
@@ -188,6 +187,7 @@ public class CPOptionPersistenceTest {
 			newCPOption.getRequired());
 		Assert.assertEquals(existingCPOption.getSkuContributor(),
 			newCPOption.getSkuContributor());
+		Assert.assertEquals(existingCPOption.getKey(), newCPOption.getKey());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCPOption.getLastPublishDate()),
 			Time.getShortTimestamp(newCPOption.getLastPublishDate()));
@@ -266,9 +266,9 @@ public class CPOptionPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("CPOption", "uuid", true,
 			"CPOptionId", true, "groupId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,
-			"name", true, "title", true, "description", true,
-			"DDMFormFieldTypeName", true, "facetable", true, "required", true,
-			"skuContributor", true, "lastPublishDate", true);
+			"title", true, "description", true, "DDMFormFieldTypeName", true,
+			"facetable", true, "required", true, "skuContributor", true, "key",
+			true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -498,8 +498,6 @@ public class CPOptionPersistenceTest {
 
 		cpOption.setModifiedDate(RandomTestUtil.nextDate());
 
-		cpOption.setName(RandomTestUtil.randomString());
-
 		cpOption.setTitle(RandomTestUtil.randomString());
 
 		cpOption.setDescription(RandomTestUtil.randomString());
@@ -511,6 +509,8 @@ public class CPOptionPersistenceTest {
 		cpOption.setRequired(RandomTestUtil.randomBoolean());
 
 		cpOption.setSkuContributor(RandomTestUtil.randomBoolean());
+
+		cpOption.setKey(RandomTestUtil.randomString());
 
 		cpOption.setLastPublishDate(RandomTestUtil.nextDate());
 

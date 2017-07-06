@@ -142,11 +142,11 @@ public class CPDefinitionOptionValueRelPersistenceTest {
 
 		newCPDefinitionOptionValueRel.setCPDefinitionOptionRelId(RandomTestUtil.nextLong());
 
-		newCPDefinitionOptionValueRel.setName(RandomTestUtil.randomString());
-
 		newCPDefinitionOptionValueRel.setTitle(RandomTestUtil.randomString());
 
 		newCPDefinitionOptionValueRel.setPriority(RandomTestUtil.nextDouble());
+
+		newCPDefinitionOptionValueRel.setKey(RandomTestUtil.randomString());
 
 		_cpDefinitionOptionValueRels.add(_persistence.update(
 				newCPDefinitionOptionValueRel));
@@ -175,12 +175,12 @@ public class CPDefinitionOptionValueRelPersistenceTest {
 				newCPDefinitionOptionValueRel.getModifiedDate()));
 		Assert.assertEquals(existingCPDefinitionOptionValueRel.getCPDefinitionOptionRelId(),
 			newCPDefinitionOptionValueRel.getCPDefinitionOptionRelId());
-		Assert.assertEquals(existingCPDefinitionOptionValueRel.getName(),
-			newCPDefinitionOptionValueRel.getName());
 		Assert.assertEquals(existingCPDefinitionOptionValueRel.getTitle(),
 			newCPDefinitionOptionValueRel.getTitle());
 		AssertUtils.assertEquals(existingCPDefinitionOptionValueRel.getPriority(),
 			newCPDefinitionOptionValueRel.getPriority());
+		Assert.assertEquals(existingCPDefinitionOptionValueRel.getKey(),
+			newCPDefinitionOptionValueRel.getKey());
 	}
 
 	@Test
@@ -259,8 +259,8 @@ public class CPDefinitionOptionValueRelPersistenceTest {
 			"uuid", true, "CPDefinitionOptionValueRelId", true, "groupId",
 			true, "companyId", true, "userId", true, "userName", true,
 			"createDate", true, "modifiedDate", true,
-			"CPDefinitionOptionRelId", true, "name", true, "title", true,
-			"priority", true);
+			"CPDefinitionOptionRelId", true, "title", true, "priority", true,
+			"key", true);
 	}
 
 	@Test
@@ -514,11 +514,11 @@ public class CPDefinitionOptionValueRelPersistenceTest {
 
 		cpDefinitionOptionValueRel.setCPDefinitionOptionRelId(RandomTestUtil.nextLong());
 
-		cpDefinitionOptionValueRel.setName(RandomTestUtil.randomString());
-
 		cpDefinitionOptionValueRel.setTitle(RandomTestUtil.randomString());
 
 		cpDefinitionOptionValueRel.setPriority(RandomTestUtil.nextDouble());
+
+		cpDefinitionOptionValueRel.setKey(RandomTestUtil.randomString());
 
 		_cpDefinitionOptionValueRels.add(_persistence.update(
 				cpDefinitionOptionValueRel));

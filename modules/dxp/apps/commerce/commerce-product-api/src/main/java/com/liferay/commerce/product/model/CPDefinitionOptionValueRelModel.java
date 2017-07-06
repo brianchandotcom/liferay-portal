@@ -230,21 +230,6 @@ public interface CPDefinitionOptionValueRelModel extends BaseModel<CPDefinitionO
 	public void setCPDefinitionOptionRelId(long CPDefinitionOptionRelId);
 
 	/**
-	 * Returns the name of this cp definition option value rel.
-	 *
-	 * @return the name of this cp definition option value rel
-	 */
-	@AutoEscape
-	public String getName();
-
-	/**
-	 * Sets the name of this cp definition option value rel.
-	 *
-	 * @param name the name of this cp definition option value rel
-	 */
-	public void setName(String name);
-
-	/**
 	 * Returns the title of this cp definition option value rel.
 	 *
 	 * @return the title of this cp definition option value rel
@@ -356,6 +341,21 @@ public interface CPDefinitionOptionValueRelModel extends BaseModel<CPDefinitionO
 	 * @param priority the priority of this cp definition option value rel
 	 */
 	public void setPriority(double priority);
+
+	/**
+	 * Returns the key of this cp definition option value rel.
+	 *
+	 * @return the key of this cp definition option value rel
+	 */
+	@AutoEscape
+	public String getKey();
+
+	/**
+	 * Sets the key of this cp definition option value rel.
+	 *
+	 * @param key the key of this cp definition option value rel
+	 */
+	public void setKey(String key);
 
 	@Override
 	public boolean isNew();

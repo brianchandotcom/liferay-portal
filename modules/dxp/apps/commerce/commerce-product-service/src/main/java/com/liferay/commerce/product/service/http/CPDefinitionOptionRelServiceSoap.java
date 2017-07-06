@@ -106,7 +106,7 @@ public class CPDefinitionOptionRelServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinitionOptionRelSoap addCPDefinitionOptionRel(
-		long cpDefinitionId, long cpOptionId, java.lang.String name,
+		long cpDefinitionId, long cpOptionId,
 		java.lang.String[] titleMapLanguageIds,
 		java.lang.String[] titleMapValues,
 		java.lang.String[] descriptionMapLanguageIds,
@@ -124,9 +124,9 @@ public class CPDefinitionOptionRelServiceSoap {
 
 			com.liferay.commerce.product.model.CPDefinitionOptionRel returnValue =
 				CPDefinitionOptionRelServiceUtil.addCPDefinitionOptionRel(cpDefinitionId,
-					cpOptionId, name, titleMap, descriptionMap,
-					ddmFormFieldTypeName, priority, facetable, required,
-					skuContributor, importOptionValue, serviceContext);
+					cpOptionId, titleMap, descriptionMap, ddmFormFieldTypeName,
+					priority, facetable, required, skuContributor,
+					importOptionValue, serviceContext);
 
 			return com.liferay.commerce.product.model.CPDefinitionOptionRelSoap.toSoapModel(returnValue);
 		}
@@ -328,7 +328,7 @@ public class CPDefinitionOptionRelServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinitionOptionRelSoap updateCPDefinitionOptionRel(
-		long cpDefinitionOptionRelId, long cpOptionId, java.lang.String name,
+		long cpDefinitionOptionRelId, long cpOptionId,
 		java.lang.String[] titleMapLanguageIds,
 		java.lang.String[] titleMapValues,
 		java.lang.String[] descriptionMapLanguageIds,
@@ -345,9 +345,9 @@ public class CPDefinitionOptionRelServiceSoap {
 
 			com.liferay.commerce.product.model.CPDefinitionOptionRel returnValue =
 				CPDefinitionOptionRelServiceUtil.updateCPDefinitionOptionRel(cpDefinitionOptionRelId,
-					cpOptionId, name, titleMap, descriptionMap,
-					ddmFormFieldTypeName, priority, facetable, required,
-					skuContributor, serviceContext);
+					cpOptionId, titleMap, descriptionMap, ddmFormFieldTypeName,
+					priority, facetable, required, skuContributor,
+					serviceContext);
 
 			return com.liferay.commerce.product.model.CPDefinitionOptionRelSoap.toSoapModel(returnValue);
 		}

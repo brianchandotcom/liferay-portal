@@ -214,21 +214,6 @@ public interface CPOptionModel extends BaseModel<CPOption>, LocalizedModel,
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the name of this cp option.
-	 *
-	 * @return the name of this cp option
-	 */
-	@AutoEscape
-	public String getName();
-
-	/**
-	 * Sets the name of this cp option.
-	 *
-	 * @param name the name of this cp option
-	 */
-	public void setName(String name);
-
-	/**
 	 * Returns the title of this cp option.
 	 *
 	 * @return the title of this cp option
@@ -505,6 +490,21 @@ public interface CPOptionModel extends BaseModel<CPOption>, LocalizedModel,
 	 * @param skuContributor the sku contributor of this cp option
 	 */
 	public void setSkuContributor(boolean skuContributor);
+
+	/**
+	 * Returns the key of this cp option.
+	 *
+	 * @return the key of this cp option
+	 */
+	@AutoEscape
+	public String getKey();
+
+	/**
+	 * Sets the key of this cp option.
+	 *
+	 * @param key the key of this cp option
+	 */
+	public void setKey(String key);
 
 	/**
 	 * Returns the last publish date of this cp option.

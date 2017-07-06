@@ -72,9 +72,9 @@ public class CPDefinitionOptionValueRelWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("CPDefinitionOptionRelId", getCPDefinitionOptionRelId());
-		attributes.put("name", getName());
 		attributes.put("title", getTitle());
 		attributes.put("priority", getPriority());
+		attributes.put("key", getKey());
 
 		return attributes;
 	}
@@ -137,12 +137,6 @@ public class CPDefinitionOptionValueRelWrapper
 			setCPDefinitionOptionRelId(CPDefinitionOptionRelId);
 		}
 
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
 		String title = (String)attributes.get("title");
 
 		if (title != null) {
@@ -153,6 +147,12 @@ public class CPDefinitionOptionValueRelWrapper
 
 		if (priority != null) {
 			setPriority(priority);
+		}
+
+		String key = (String)attributes.get("key");
+
+		if (key != null) {
+			setKey(key);
 		}
 	}
 
@@ -233,13 +233,13 @@ public class CPDefinitionOptionValueRelWrapper
 	}
 
 	/**
-	* Returns the name of this cp definition option value rel.
+	* Returns the key of this cp definition option value rel.
 	*
-	* @return the name of this cp definition option value rel
+	* @return the key of this cp definition option value rel
 	*/
 	@Override
-	public java.lang.String getName() {
-		return _cpDefinitionOptionValueRel.getName();
+	public java.lang.String getKey() {
+		return _cpDefinitionOptionValueRel.getKey();
 	}
 
 	/**
@@ -535,6 +535,16 @@ public class CPDefinitionOptionValueRelWrapper
 	}
 
 	/**
+	* Sets the key of this cp definition option value rel.
+	*
+	* @param key the key of this cp definition option value rel
+	*/
+	@Override
+	public void setKey(java.lang.String key) {
+		_cpDefinitionOptionValueRel.setKey(key);
+	}
+
+	/**
 	* Sets the modified date of this cp definition option value rel.
 	*
 	* @param modifiedDate the modified date of this cp definition option value rel
@@ -542,16 +552,6 @@ public class CPDefinitionOptionValueRelWrapper
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_cpDefinitionOptionValueRel.setModifiedDate(modifiedDate);
-	}
-
-	/**
-	* Sets the name of this cp definition option value rel.
-	*
-	* @param name the name of this cp definition option value rel
-	*/
-	@Override
-	public void setName(java.lang.String name) {
-		_cpDefinitionOptionValueRel.setName(name);
 	}
 
 	@Override

@@ -243,21 +243,6 @@ public interface CPDefinitionOptionRelModel extends BaseModel<CPDefinitionOption
 	public void setCPOptionId(long CPOptionId);
 
 	/**
-	 * Returns the name of this cp definition option rel.
-	 *
-	 * @return the name of this cp definition option rel
-	 */
-	@AutoEscape
-	public String getName();
-
-	/**
-	 * Sets the name of this cp definition option rel.
-	 *
-	 * @param name the name of this cp definition option rel
-	 */
-	public void setName(String name);
-
-	/**
 	 * Returns the title of this cp definition option rel.
 	 *
 	 * @return the title of this cp definition option rel

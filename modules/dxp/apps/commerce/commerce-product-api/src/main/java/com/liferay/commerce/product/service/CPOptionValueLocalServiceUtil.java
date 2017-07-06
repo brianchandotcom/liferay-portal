@@ -54,13 +54,13 @@ public class CPOptionValueLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CPOptionValue addCPOptionValue(
-		long cpOptionId, java.lang.String name,
+		long cpOptionId,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		double priority,
+		double priority, java.lang.String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addCPOptionValue(cpOptionId, name, titleMap, priority,
+				   .addCPOptionValue(cpOptionId, titleMap, priority, key,
 			serviceContext);
 	}
 
@@ -157,14 +157,14 @@ public class CPOptionValueLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CPOptionValue updateCPOptionValue(
-		long cpOptionValueId, java.lang.String name,
+		long cpOptionValueId,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		double priority,
+		double priority, java.lang.String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .updateCPOptionValue(cpOptionValueId, name, titleMap,
-			priority, serviceContext);
+				   .updateCPOptionValue(cpOptionValueId, titleMap, priority,
+			key, serviceContext);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {

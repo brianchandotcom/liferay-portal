@@ -90,7 +90,6 @@ public class CPDefinitionOptionRelModelImpl extends BaseModelImpl<CPDefinitionOp
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "CPDefinitionId", Types.BIGINT },
 			{ "CPOptionId", Types.BIGINT },
-			{ "name", Types.VARCHAR },
 			{ "title", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
 			{ "DDMFormFieldTypeName", Types.VARCHAR },
@@ -112,7 +111,6 @@ public class CPDefinitionOptionRelModelImpl extends BaseModelImpl<CPDefinitionOp
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("CPDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CPOptionId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("DDMFormFieldTypeName", Types.VARCHAR);
@@ -122,7 +120,7 @@ public class CPDefinitionOptionRelModelImpl extends BaseModelImpl<CPDefinitionOp
 		TABLE_COLUMNS_MAP.put("skuContributor", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPDefinitionOptionRel (uuid_ VARCHAR(75) null,CPDefinitionOptionRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,CPOptionId LONG,name VARCHAR(75) null,title STRING null,description STRING null,DDMFormFieldTypeName VARCHAR(75) null,priority DOUBLE,facetable BOOLEAN,required BOOLEAN,skuContributor BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table CPDefinitionOptionRel (uuid_ VARCHAR(75) null,CPDefinitionOptionRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,CPOptionId LONG,title STRING null,description STRING null,DDMFormFieldTypeName VARCHAR(75) null,priority DOUBLE,facetable BOOLEAN,required BOOLEAN,skuContributor BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table CPDefinitionOptionRel";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpDefinitionOptionRel.priority ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPDefinitionOptionRel.priority ASC";
@@ -169,7 +167,6 @@ public class CPDefinitionOptionRelModelImpl extends BaseModelImpl<CPDefinitionOp
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setCPDefinitionId(soapModel.getCPDefinitionId());
 		model.setCPOptionId(soapModel.getCPOptionId());
-		model.setName(soapModel.getName());
 		model.setTitle(soapModel.getTitle());
 		model.setDescription(soapModel.getDescription());
 		model.setDDMFormFieldTypeName(soapModel.getDDMFormFieldTypeName());
@@ -252,7 +249,6 @@ public class CPDefinitionOptionRelModelImpl extends BaseModelImpl<CPDefinitionOp
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("CPDefinitionId", getCPDefinitionId());
 		attributes.put("CPOptionId", getCPOptionId());
-		attributes.put("name", getName());
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
 		attributes.put("DDMFormFieldTypeName", getDDMFormFieldTypeName());
@@ -328,12 +324,6 @@ public class CPDefinitionOptionRelModelImpl extends BaseModelImpl<CPDefinitionOp
 
 		if (CPOptionId != null) {
 			setCPOptionId(CPOptionId);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
 		}
 
 		String title = (String)attributes.get("title");
@@ -564,22 +554,6 @@ public class CPDefinitionOptionRelModelImpl extends BaseModelImpl<CPDefinitionOp
 	@Override
 	public void setCPOptionId(long CPOptionId) {
 		_CPOptionId = CPOptionId;
-	}
-
-	@JSON
-	@Override
-	public String getName() {
-		if (_name == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _name;
-		}
-	}
-
-	@Override
-	public void setName(String name) {
-		_name = name;
 	}
 
 	@JSON
@@ -1005,7 +979,6 @@ public class CPDefinitionOptionRelModelImpl extends BaseModelImpl<CPDefinitionOp
 		cpDefinitionOptionRelImpl.setModifiedDate(getModifiedDate());
 		cpDefinitionOptionRelImpl.setCPDefinitionId(getCPDefinitionId());
 		cpDefinitionOptionRelImpl.setCPOptionId(getCPOptionId());
-		cpDefinitionOptionRelImpl.setName(getName());
 		cpDefinitionOptionRelImpl.setTitle(getTitle());
 		cpDefinitionOptionRelImpl.setDescription(getDescription());
 		cpDefinitionOptionRelImpl.setDDMFormFieldTypeName(getDDMFormFieldTypeName());
@@ -1154,14 +1127,6 @@ public class CPDefinitionOptionRelModelImpl extends BaseModelImpl<CPDefinitionOp
 
 		cpDefinitionOptionRelCacheModel.CPOptionId = getCPOptionId();
 
-		cpDefinitionOptionRelCacheModel.name = getName();
-
-		String name = cpDefinitionOptionRelCacheModel.name;
-
-		if ((name != null) && (name.length() == 0)) {
-			cpDefinitionOptionRelCacheModel.name = null;
-		}
-
 		cpDefinitionOptionRelCacheModel.title = getTitle();
 
 		String title = cpDefinitionOptionRelCacheModel.title;
@@ -1200,7 +1165,7 @@ public class CPDefinitionOptionRelModelImpl extends BaseModelImpl<CPDefinitionOp
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1222,8 +1187,6 @@ public class CPDefinitionOptionRelModelImpl extends BaseModelImpl<CPDefinitionOp
 		sb.append(getCPDefinitionId());
 		sb.append(", CPOptionId=");
 		sb.append(getCPOptionId());
-		sb.append(", name=");
-		sb.append(getName());
 		sb.append(", title=");
 		sb.append(getTitle());
 		sb.append(", description=");
@@ -1245,7 +1208,7 @@ public class CPDefinitionOptionRelModelImpl extends BaseModelImpl<CPDefinitionOp
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(58);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.product.model.CPDefinitionOptionRel");
@@ -1290,10 +1253,6 @@ public class CPDefinitionOptionRelModelImpl extends BaseModelImpl<CPDefinitionOp
 		sb.append(
 			"<column><column-name>CPOptionId</column-name><column-value><![CDATA[");
 		sb.append(getCPOptionId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>title</column-name><column-value><![CDATA[");
@@ -1351,7 +1310,6 @@ public class CPDefinitionOptionRelModelImpl extends BaseModelImpl<CPDefinitionOp
 	private long _originalCPDefinitionId;
 	private boolean _setOriginalCPDefinitionId;
 	private long _CPOptionId;
-	private String _name;
 	private String _title;
 	private String _titleCurrentLanguageId;
 	private String _description;

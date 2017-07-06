@@ -140,13 +140,13 @@ public class CPOptionCategoryPersistenceTest {
 
 		newCPOptionCategory.setModifiedDate(RandomTestUtil.nextDate());
 
-		newCPOptionCategory.setName(RandomTestUtil.randomString());
-
 		newCPOptionCategory.setTitle(RandomTestUtil.randomString());
 
 		newCPOptionCategory.setDescription(RandomTestUtil.randomString());
 
 		newCPOptionCategory.setPriority(RandomTestUtil.nextDouble());
+
+		newCPOptionCategory.setKey(RandomTestUtil.randomString());
 
 		newCPOptionCategory.setLastPublishDate(RandomTestUtil.nextDate());
 
@@ -172,14 +172,14 @@ public class CPOptionCategoryPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCPOptionCategory.getModifiedDate()),
 			Time.getShortTimestamp(newCPOptionCategory.getModifiedDate()));
-		Assert.assertEquals(existingCPOptionCategory.getName(),
-			newCPOptionCategory.getName());
 		Assert.assertEquals(existingCPOptionCategory.getTitle(),
 			newCPOptionCategory.getTitle());
 		Assert.assertEquals(existingCPOptionCategory.getDescription(),
 			newCPOptionCategory.getDescription());
 		AssertUtils.assertEquals(existingCPOptionCategory.getPriority(),
 			newCPOptionCategory.getPriority());
+		Assert.assertEquals(existingCPOptionCategory.getKey(),
+			newCPOptionCategory.getKey());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCPOptionCategory.getLastPublishDate()),
 			Time.getShortTimestamp(newCPOptionCategory.getLastPublishDate()));
@@ -258,8 +258,8 @@ public class CPOptionCategoryPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("CPOptionCategory", "uuid",
 			true, "CPOptionCategoryId", true, "groupId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "name", true, "title", true, "description",
-			true, "priority", true, "lastPublishDate", true);
+			"modifiedDate", true, "title", true, "description", true,
+			"priority", true, "key", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -491,13 +491,13 @@ public class CPOptionCategoryPersistenceTest {
 
 		cpOptionCategory.setModifiedDate(RandomTestUtil.nextDate());
 
-		cpOptionCategory.setName(RandomTestUtil.randomString());
-
 		cpOptionCategory.setTitle(RandomTestUtil.randomString());
 
 		cpOptionCategory.setDescription(RandomTestUtil.randomString());
 
 		cpOptionCategory.setPriority(RandomTestUtil.nextDouble());
+
+		cpOptionCategory.setKey(RandomTestUtil.randomString());
 
 		cpOptionCategory.setLastPublishDate(RandomTestUtil.nextDate());
 

@@ -142,11 +142,11 @@ public class CPOptionValuePersistenceTest {
 
 		newCPOptionValue.setCPOptionId(RandomTestUtil.nextLong());
 
-		newCPOptionValue.setName(RandomTestUtil.randomString());
-
 		newCPOptionValue.setTitle(RandomTestUtil.randomString());
 
 		newCPOptionValue.setPriority(RandomTestUtil.nextDouble());
+
+		newCPOptionValue.setKey(RandomTestUtil.randomString());
 
 		newCPOptionValue.setLastPublishDate(RandomTestUtil.nextDate());
 
@@ -174,12 +174,12 @@ public class CPOptionValuePersistenceTest {
 			Time.getShortTimestamp(newCPOptionValue.getModifiedDate()));
 		Assert.assertEquals(existingCPOptionValue.getCPOptionId(),
 			newCPOptionValue.getCPOptionId());
-		Assert.assertEquals(existingCPOptionValue.getName(),
-			newCPOptionValue.getName());
 		Assert.assertEquals(existingCPOptionValue.getTitle(),
 			newCPOptionValue.getTitle());
 		AssertUtils.assertEquals(existingCPOptionValue.getPriority(),
 			newCPOptionValue.getPriority());
+		Assert.assertEquals(existingCPOptionValue.getKey(),
+			newCPOptionValue.getKey());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCPOptionValue.getLastPublishDate()),
 			Time.getShortTimestamp(newCPOptionValue.getLastPublishDate()));
@@ -259,8 +259,8 @@ public class CPOptionValuePersistenceTest {
 		return OrderByComparatorFactoryUtil.create("CPOptionValue", "uuid",
 			true, "CPOptionValueId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "CPOptionId", true, "name", true, "title",
-			true, "priority", true, "lastPublishDate", true);
+			"modifiedDate", true, "CPOptionId", true, "title", true,
+			"priority", true, "key", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -494,11 +494,11 @@ public class CPOptionValuePersistenceTest {
 
 		cpOptionValue.setCPOptionId(RandomTestUtil.nextLong());
 
-		cpOptionValue.setName(RandomTestUtil.randomString());
-
 		cpOptionValue.setTitle(RandomTestUtil.randomString());
 
 		cpOptionValue.setPriority(RandomTestUtil.nextDouble());
+
+		cpOptionValue.setKey(RandomTestUtil.randomString());
 
 		cpOptionValue.setLastPublishDate(RandomTestUtil.nextDate());
 

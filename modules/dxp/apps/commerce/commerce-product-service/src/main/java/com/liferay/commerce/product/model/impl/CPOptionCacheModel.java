@@ -83,8 +83,6 @@ public class CPOptionCacheModel implements CacheModel<CPOption>, Externalizable 
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", name=");
-		sb.append(name);
 		sb.append(", title=");
 		sb.append(title);
 		sb.append(", description=");
@@ -97,6 +95,8 @@ public class CPOptionCacheModel implements CacheModel<CPOption>, Externalizable 
 		sb.append(required);
 		sb.append(", skuContributor=");
 		sb.append(skuContributor);
+		sb.append(", key=");
+		sb.append(key);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
 		sb.append("}");
@@ -141,13 +141,6 @@ public class CPOptionCacheModel implements CacheModel<CPOption>, Externalizable 
 			cpOptionImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		if (name == null) {
-			cpOptionImpl.setName(StringPool.BLANK);
-		}
-		else {
-			cpOptionImpl.setName(name);
-		}
-
 		if (title == null) {
 			cpOptionImpl.setTitle(StringPool.BLANK);
 		}
@@ -172,6 +165,13 @@ public class CPOptionCacheModel implements CacheModel<CPOption>, Externalizable 
 		cpOptionImpl.setFacetable(facetable);
 		cpOptionImpl.setRequired(required);
 		cpOptionImpl.setSkuContributor(skuContributor);
+
+		if (key == null) {
+			cpOptionImpl.setKey(StringPool.BLANK);
+		}
+		else {
+			cpOptionImpl.setKey(key);
+		}
 
 		if (lastPublishDate == Long.MIN_VALUE) {
 			cpOptionImpl.setLastPublishDate(null);
@@ -199,7 +199,6 @@ public class CPOptionCacheModel implements CacheModel<CPOption>, Externalizable 
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		name = objectInput.readUTF();
 		title = objectInput.readUTF();
 		description = objectInput.readUTF();
 		DDMFormFieldTypeName = objectInput.readUTF();
@@ -209,6 +208,7 @@ public class CPOptionCacheModel implements CacheModel<CPOption>, Externalizable 
 		required = objectInput.readBoolean();
 
 		skuContributor = objectInput.readBoolean();
+		key = objectInput.readUTF();
 		lastPublishDate = objectInput.readLong();
 	}
 
@@ -240,13 +240,6 @@ public class CPOptionCacheModel implements CacheModel<CPOption>, Externalizable 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
-		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(name);
-		}
-
 		if (title == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -273,6 +266,14 @@ public class CPOptionCacheModel implements CacheModel<CPOption>, Externalizable 
 		objectOutput.writeBoolean(required);
 
 		objectOutput.writeBoolean(skuContributor);
+
+		if (key == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(key);
+		}
+
 		objectOutput.writeLong(lastPublishDate);
 	}
 
@@ -284,12 +285,12 @@ public class CPOptionCacheModel implements CacheModel<CPOption>, Externalizable 
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public String name;
 	public String title;
 	public String description;
 	public String DDMFormFieldTypeName;
 	public boolean facetable;
 	public boolean required;
 	public boolean skuContributor;
+	public String key;
 	public long lastPublishDate;
 }

@@ -35,14 +35,13 @@ public class CPOptionCategoryServiceWrapper implements CPOptionCategoryService,
 
 	@Override
 	public com.liferay.commerce.product.model.CPOptionCategory addCPOptionCategory(
-		java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		double priority,
+		double priority, java.lang.String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpOptionCategoryService.addCPOptionCategory(name, titleMap,
-			descriptionMap, priority, serviceContext);
+		return _cpOptionCategoryService.addCPOptionCategory(titleMap,
+			descriptionMap, priority, key, serviceContext);
 	}
 
 	@Override
@@ -75,14 +74,14 @@ public class CPOptionCategoryServiceWrapper implements CPOptionCategoryService,
 
 	@Override
 	public com.liferay.commerce.product.model.CPOptionCategory updateCPOptionCategory(
-		long cpOptionCategoryId, java.lang.String name,
+		long cpOptionCategoryId,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		double priority,
+		double priority, java.lang.String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpOptionCategoryService.updateCPOptionCategory(cpOptionCategoryId,
-			name, titleMap, descriptionMap, priority, serviceContext);
+			titleMap, descriptionMap, priority, key, serviceContext);
 	}
 
 	@Override

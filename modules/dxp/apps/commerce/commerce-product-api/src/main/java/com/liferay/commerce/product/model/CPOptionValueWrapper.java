@@ -69,9 +69,9 @@ public class CPOptionValueWrapper implements CPOptionValue,
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("CPOptionId", getCPOptionId());
-		attributes.put("name", getName());
 		attributes.put("title", getTitle());
 		attributes.put("priority", getPriority());
+		attributes.put("key", getKey());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
@@ -133,12 +133,6 @@ public class CPOptionValueWrapper implements CPOptionValue,
 			setCPOptionId(CPOptionId);
 		}
 
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
 		String title = (String)attributes.get("title");
 
 		if (title != null) {
@@ -149,6 +143,12 @@ public class CPOptionValueWrapper implements CPOptionValue,
 
 		if (priority != null) {
 			setPriority(priority);
+		}
+
+		String key = (String)attributes.get("key");
+
+		if (key != null) {
+			setKey(key);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
@@ -235,13 +235,13 @@ public class CPOptionValueWrapper implements CPOptionValue,
 	}
 
 	/**
-	* Returns the name of this cp option value.
+	* Returns the key of this cp option value.
 	*
-	* @return the name of this cp option value
+	* @return the key of this cp option value
 	*/
 	@Override
-	public java.lang.String getName() {
-		return _cpOptionValue.getName();
+	public java.lang.String getKey() {
+		return _cpOptionValue.getKey();
 	}
 
 	/**
@@ -546,6 +546,16 @@ public class CPOptionValueWrapper implements CPOptionValue,
 	}
 
 	/**
+	* Sets the key of this cp option value.
+	*
+	* @param key the key of this cp option value
+	*/
+	@Override
+	public void setKey(java.lang.String key) {
+		_cpOptionValue.setKey(key);
+	}
+
+	/**
 	* Sets the last publish date of this cp option value.
 	*
 	* @param lastPublishDate the last publish date of this cp option value
@@ -563,16 +573,6 @@ public class CPOptionValueWrapper implements CPOptionValue,
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_cpOptionValue.setModifiedDate(modifiedDate);
-	}
-
-	/**
-	* Sets the name of this cp option value.
-	*
-	* @param name the name of this cp option value
-	*/
-	@Override
-	public void setName(java.lang.String name) {
-		_cpOptionValue.setName(name);
 	}
 
 	@Override

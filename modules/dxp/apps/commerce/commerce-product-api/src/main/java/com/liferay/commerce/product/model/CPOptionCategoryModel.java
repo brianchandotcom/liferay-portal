@@ -214,21 +214,6 @@ public interface CPOptionCategoryModel extends BaseModel<CPOptionCategory>,
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the name of this cp option category.
-	 *
-	 * @return the name of this cp option category
-	 */
-	@AutoEscape
-	public String getName();
-
-	/**
-	 * Sets the name of this cp option category.
-	 *
-	 * @param name the name of this cp option category
-	 */
-	public void setName(String name);
-
-	/**
 	 * Returns the title of this cp option category.
 	 *
 	 * @return the title of this cp option category
@@ -441,6 +426,21 @@ public interface CPOptionCategoryModel extends BaseModel<CPOptionCategory>,
 	 * @param priority the priority of this cp option category
 	 */
 	public void setPriority(double priority);
+
+	/**
+	 * Returns the key of this cp option category.
+	 *
+	 * @return the key of this cp option category
+	 */
+	@AutoEscape
+	public String getKey();
+
+	/**
+	 * Sets the key of this cp option category.
+	 *
+	 * @param key the key of this cp option category
+	 */
+	public void setKey(String key);
 
 	/**
 	 * Returns the last publish date of this cp option category.

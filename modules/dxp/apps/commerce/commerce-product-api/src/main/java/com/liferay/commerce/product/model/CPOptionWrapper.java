@@ -67,13 +67,13 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("name", getName());
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
 		attributes.put("DDMFormFieldTypeName", getDDMFormFieldTypeName());
 		attributes.put("facetable", getFacetable());
 		attributes.put("required", getRequired());
 		attributes.put("skuContributor", getSkuContributor());
+		attributes.put("key", getKey());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
@@ -129,12 +129,6 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 			setModifiedDate(modifiedDate);
 		}
 
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
 		String title = (String)attributes.get("title");
 
 		if (title != null) {
@@ -170,6 +164,12 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 
 		if (skuContributor != null) {
 			setSkuContributor(skuContributor);
+		}
+
+		String key = (String)attributes.get("key");
+
+		if (key != null) {
+			setKey(key);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
@@ -378,13 +378,13 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	}
 
 	/**
-	* Returns the name of this cp option.
+	* Returns the key of this cp option.
 	*
-	* @return the name of this cp option
+	* @return the key of this cp option
 	*/
 	@Override
-	public java.lang.String getName() {
-		return _cpOption.getName();
+	public java.lang.String getKey() {
+		return _cpOption.getKey();
 	}
 
 	/**
@@ -763,6 +763,16 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	}
 
 	/**
+	* Sets the key of this cp option.
+	*
+	* @param key the key of this cp option
+	*/
+	@Override
+	public void setKey(java.lang.String key) {
+		_cpOption.setKey(key);
+	}
+
+	/**
 	* Sets the last publish date of this cp option.
 	*
 	* @param lastPublishDate the last publish date of this cp option
@@ -780,16 +790,6 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_cpOption.setModifiedDate(modifiedDate);
-	}
-
-	/**
-	* Sets the name of this cp option.
-	*
-	* @param name the name of this cp option
-	*/
-	@Override
-	public void setName(java.lang.String name) {
-		_cpOption.setName(name);
 	}
 
 	@Override

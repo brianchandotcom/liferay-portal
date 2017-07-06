@@ -71,7 +71,6 @@ public class CPDefinitionOptionRelWrapper implements CPDefinitionOptionRel,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("CPDefinitionId", getCPDefinitionId());
 		attributes.put("CPOptionId", getCPOptionId());
-		attributes.put("name", getName());
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
 		attributes.put("DDMFormFieldTypeName", getDDMFormFieldTypeName());
@@ -144,12 +143,6 @@ public class CPDefinitionOptionRelWrapper implements CPDefinitionOptionRel,
 
 		if (CPOptionId != null) {
 			setCPOptionId(CPOptionId);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
 		}
 
 		String title = (String)attributes.get("title");
@@ -414,16 +407,6 @@ public class CPDefinitionOptionRelWrapper implements CPDefinitionOptionRel,
 	@Override
 	public java.lang.String getDescriptionCurrentValue() {
 		return _cpDefinitionOptionRel.getDescriptionCurrentValue();
-	}
-
-	/**
-	* Returns the name of this cp definition option rel.
-	*
-	* @return the name of this cp definition option rel
-	*/
-	@Override
-	public java.lang.String getName() {
-		return _cpDefinitionOptionRel.getName();
 	}
 
 	/**
@@ -844,16 +827,6 @@ public class CPDefinitionOptionRelWrapper implements CPDefinitionOptionRel,
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_cpDefinitionOptionRel.setModifiedDate(modifiedDate);
-	}
-
-	/**
-	* Sets the name of this cp definition option rel.
-	*
-	* @param name the name of this cp definition option rel
-	*/
-	@Override
-	public void setName(java.lang.String name) {
-		_cpDefinitionOptionRel.setName(name);
 	}
 
 	@Override

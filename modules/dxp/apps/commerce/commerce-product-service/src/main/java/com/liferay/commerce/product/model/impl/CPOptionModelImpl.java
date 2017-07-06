@@ -88,13 +88,13 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
-			{ "name", Types.VARCHAR },
 			{ "title", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
 			{ "DDMFormFieldTypeName", Types.VARCHAR },
 			{ "facetable", Types.BOOLEAN },
 			{ "required", Types.BOOLEAN },
 			{ "skuContributor", Types.BOOLEAN },
+			{ "key_", Types.VARCHAR },
 			{ "lastPublishDate", Types.TIMESTAMP }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -108,17 +108,17 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("DDMFormFieldTypeName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("facetable", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("required", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("skuContributor", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("key_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPOption (uuid_ VARCHAR(75) null,CPOptionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,title STRING null,description STRING null,DDMFormFieldTypeName VARCHAR(75) null,facetable BOOLEAN,required BOOLEAN,skuContributor BOOLEAN,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CPOption (uuid_ VARCHAR(75) null,CPOptionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title STRING null,description STRING null,DDMFormFieldTypeName VARCHAR(75) null,facetable BOOLEAN,required BOOLEAN,skuContributor BOOLEAN,key_ VARCHAR(75) null,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CPOption";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpOption.title ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPOption.title ASC";
@@ -160,13 +160,13 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setName(soapModel.getName());
 		model.setTitle(soapModel.getTitle());
 		model.setDescription(soapModel.getDescription());
 		model.setDDMFormFieldTypeName(soapModel.getDDMFormFieldTypeName());
 		model.setFacetable(soapModel.getFacetable());
 		model.setRequired(soapModel.getRequired());
 		model.setSkuContributor(soapModel.getSkuContributor());
+		model.setKey(soapModel.getKey());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
@@ -240,13 +240,13 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("name", getName());
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
 		attributes.put("DDMFormFieldTypeName", getDDMFormFieldTypeName());
 		attributes.put("facetable", getFacetable());
 		attributes.put("required", getRequired());
 		attributes.put("skuContributor", getSkuContributor());
+		attributes.put("key", getKey());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -305,12 +305,6 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 			setModifiedDate(modifiedDate);
 		}
 
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
 		String title = (String)attributes.get("title");
 
 		if (title != null) {
@@ -346,6 +340,12 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 
 		if (skuContributor != null) {
 			setSkuContributor(skuContributor);
+		}
+
+		String key = (String)attributes.get("key");
+
+		if (key != null) {
+			setKey(key);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
@@ -505,22 +505,6 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		_setModifiedDate = true;
 
 		_modifiedDate = modifiedDate;
-	}
-
-	@JSON
-	@Override
-	public String getName() {
-		if (_name == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _name;
-		}
-	}
-
-	@Override
-	public void setName(String name) {
-		_name = name;
 	}
 
 	@JSON
@@ -796,6 +780,22 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 
 	@JSON
 	@Override
+	public String getKey() {
+		if (_key == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _key;
+		}
+	}
+
+	@Override
+	public void setKey(String key) {
+		_key = key;
+	}
+
+	@JSON
+	@Override
 	public Date getLastPublishDate() {
 		return _lastPublishDate;
 	}
@@ -932,13 +932,13 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		cpOptionImpl.setUserName(getUserName());
 		cpOptionImpl.setCreateDate(getCreateDate());
 		cpOptionImpl.setModifiedDate(getModifiedDate());
-		cpOptionImpl.setName(getName());
 		cpOptionImpl.setTitle(getTitle());
 		cpOptionImpl.setDescription(getDescription());
 		cpOptionImpl.setDDMFormFieldTypeName(getDDMFormFieldTypeName());
 		cpOptionImpl.setFacetable(getFacetable());
 		cpOptionImpl.setRequired(getRequired());
 		cpOptionImpl.setSkuContributor(getSkuContributor());
+		cpOptionImpl.setKey(getKey());
 		cpOptionImpl.setLastPublishDate(getLastPublishDate());
 
 		cpOptionImpl.resetOriginalValues();
@@ -1061,14 +1061,6 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 			cpOptionCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		cpOptionCacheModel.name = getName();
-
-		String name = cpOptionCacheModel.name;
-
-		if ((name != null) && (name.length() == 0)) {
-			cpOptionCacheModel.name = null;
-		}
-
 		cpOptionCacheModel.title = getTitle();
 
 		String title = cpOptionCacheModel.title;
@@ -1099,6 +1091,14 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		cpOptionCacheModel.required = getRequired();
 
 		cpOptionCacheModel.skuContributor = getSkuContributor();
+
+		cpOptionCacheModel.key = getKey();
+
+		String key = cpOptionCacheModel.key;
+
+		if ((key != null) && (key.length() == 0)) {
+			cpOptionCacheModel.key = null;
+		}
 
 		Date lastPublishDate = getLastPublishDate();
 
@@ -1132,8 +1132,6 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
-		sb.append(", name=");
-		sb.append(getName());
 		sb.append(", title=");
 		sb.append(getTitle());
 		sb.append(", description=");
@@ -1146,6 +1144,8 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		sb.append(getRequired());
 		sb.append(", skuContributor=");
 		sb.append(getSkuContributor());
+		sb.append(", key=");
+		sb.append(getKey());
 		sb.append(", lastPublishDate=");
 		sb.append(getLastPublishDate());
 		sb.append("}");
@@ -1194,10 +1194,6 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>title</column-name><column-value><![CDATA[");
 		sb.append(getTitle());
 		sb.append("]]></column-value></column>");
@@ -1220,6 +1216,10 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		sb.append(
 			"<column><column-name>skuContributor</column-name><column-value><![CDATA[");
 		sb.append(getSkuContributor());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>key</column-name><column-value><![CDATA[");
+		sb.append(getKey());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
@@ -1249,7 +1249,6 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
-	private String _name;
 	private String _title;
 	private String _titleCurrentLanguageId;
 	private String _description;
@@ -1258,6 +1257,7 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 	private boolean _facetable;
 	private boolean _required;
 	private boolean _skuContributor;
+	private String _key;
 	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private CPOption _escapedModel;

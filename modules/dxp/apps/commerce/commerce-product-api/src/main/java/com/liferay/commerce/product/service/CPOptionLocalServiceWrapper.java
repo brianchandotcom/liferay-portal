@@ -47,16 +47,15 @@ public class CPOptionLocalServiceWrapper implements CPOptionLocalService,
 
 	@Override
 	public com.liferay.commerce.product.model.CPOption addCPOption(
-		java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String ddmFormFieldTypeName, boolean facetable,
-		boolean required, boolean skuContributor,
+		boolean required, boolean skuContributor, java.lang.String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpOptionLocalService.addCPOption(name, titleMap,
-			descriptionMap, ddmFormFieldTypeName, facetable, required,
-			skuContributor, serviceContext);
+		return _cpOptionLocalService.addCPOption(titleMap, descriptionMap,
+			ddmFormFieldTypeName, facetable, required, skuContributor, key,
+			serviceContext);
 	}
 
 	/**
@@ -183,16 +182,16 @@ public class CPOptionLocalServiceWrapper implements CPOptionLocalService,
 
 	@Override
 	public com.liferay.commerce.product.model.CPOption updateCPOption(
-		long cpOptionId, java.lang.String name,
+		long cpOptionId,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String ddmFormFieldTypeName, boolean facetable,
-		boolean required, boolean skuContributor,
+		boolean required, boolean skuContributor, java.lang.String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpOptionLocalService.updateCPOption(cpOptionId, name, titleMap,
+		return _cpOptionLocalService.updateCPOption(cpOptionId, titleMap,
 			descriptionMap, ddmFormFieldTypeName, facetable, required,
-			skuContributor, serviceContext);
+			skuContributor, key, serviceContext);
 	}
 
 	@Override

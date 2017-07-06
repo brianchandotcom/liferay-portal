@@ -56,9 +56,9 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class CPOptionValueServiceHttp {
 	public static com.liferay.commerce.product.model.CPOptionValue addCPOptionValue(
-		HttpPrincipal httpPrincipal, long cpOptionId, java.lang.String name,
+		HttpPrincipal httpPrincipal, long cpOptionId,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		double priority,
+		double priority, java.lang.String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -66,7 +66,7 @@ public class CPOptionValueServiceHttp {
 					"addCPOptionValue", _addCPOptionValueParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpOptionId, name, titleMap, priority, serviceContext);
+					cpOptionId, titleMap, priority, key, serviceContext);
 
 			Object returnObj = null;
 
@@ -381,9 +381,8 @@ public class CPOptionValueServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPOptionValue updateCPOptionValue(
 		HttpPrincipal httpPrincipal, long cpOptionValueId,
-		java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		double priority,
+		double priority, java.lang.String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -391,7 +390,7 @@ public class CPOptionValueServiceHttp {
 					"updateCPOptionValue", _updateCPOptionValueParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpOptionValueId, name, titleMap, priority, serviceContext);
+					cpOptionValueId, titleMap, priority, key, serviceContext);
 
 			Object returnObj = null;
 
@@ -417,8 +416,9 @@ public class CPOptionValueServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(CPOptionValueServiceHttp.class);
 	private static final Class<?>[] _addCPOptionValueParameterTypes0 = new Class[] {
-			long.class, java.lang.String.class, java.util.Map.class,
-			double.class, com.liferay.portal.kernel.service.ServiceContext.class
+			long.class, java.util.Map.class, double.class,
+			java.lang.String.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCPOptionValueParameterTypes1 = new Class[] {
 			com.liferay.commerce.product.model.CPOptionValue.class
@@ -450,7 +450,8 @@ public class CPOptionValueServiceHttp {
 			int.class, int.class, com.liferay.portal.kernel.search.Sort.class
 		};
 	private static final Class<?>[] _updateCPOptionValueParameterTypes10 = new Class[] {
-			long.class, java.lang.String.class, java.util.Map.class,
-			double.class, com.liferay.portal.kernel.service.ServiceContext.class
+			long.class, java.util.Map.class, double.class,
+			java.lang.String.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

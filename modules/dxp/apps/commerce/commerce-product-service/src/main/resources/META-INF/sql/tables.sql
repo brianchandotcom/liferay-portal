@@ -79,7 +79,6 @@ create table CPDefinitionOptionRel (
 	modifiedDate DATE null,
 	CPDefinitionId LONG,
 	CPOptionId LONG,
-	name VARCHAR(75) null,
 	title STRING null,
 	description STRING null,
 	DDMFormFieldTypeName VARCHAR(75) null,
@@ -99,9 +98,9 @@ create table CPDefinitionOptionValueRel (
 	createDate DATE null,
 	modifiedDate DATE null,
 	CPDefinitionOptionRelId LONG,
-	name VARCHAR(75) null,
 	title STRING null,
-	priority DOUBLE
+	priority DOUBLE,
+	key_ VARCHAR(75) null
 );
 
 create table CPFriendlyURLEntry (
@@ -150,13 +149,13 @@ create table CPOption (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	name VARCHAR(75) null,
 	title STRING null,
 	description STRING null,
 	DDMFormFieldTypeName VARCHAR(75) null,
 	facetable BOOLEAN,
 	required BOOLEAN,
 	skuContributor BOOLEAN,
+	key_ VARCHAR(75) null,
 	lastPublishDate DATE null
 );
 
@@ -169,10 +168,10 @@ create table CPOptionCategory (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	name VARCHAR(75) null,
 	title STRING null,
 	description STRING null,
 	priority DOUBLE,
+	key_ VARCHAR(75) null,
 	lastPublishDate DATE null
 );
 
@@ -186,9 +185,9 @@ create table CPOptionValue (
 	createDate DATE null,
 	modifiedDate DATE null,
 	CPOptionId LONG,
-	name VARCHAR(75) null,
 	title STRING null,
 	priority DOUBLE,
+	key_ VARCHAR(75) null,
 	lastPublishDate DATE null
 );
 

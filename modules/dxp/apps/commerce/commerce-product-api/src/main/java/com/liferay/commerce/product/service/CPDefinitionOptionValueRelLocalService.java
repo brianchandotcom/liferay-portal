@@ -89,9 +89,9 @@ public interface CPDefinitionOptionValueRelLocalService extends BaseLocalService
 		ServiceContext serviceContext) throws PortalException;
 
 	public CPDefinitionOptionValueRel addCPDefinitionOptionValueRel(
-		long cpDefinitionOptionRelId, java.lang.String name,
-		Map<Locale, java.lang.String> titleMap, double priority,
-		ServiceContext serviceContext) throws PortalException;
+		long cpDefinitionOptionRelId, Map<Locale, java.lang.String> titleMap,
+		double priority, java.lang.String key, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Creates a new cp definition option value rel with the primary key. Does not add the cp definition option value rel to the database.
@@ -175,9 +175,10 @@ public interface CPDefinitionOptionValueRelLocalService extends BaseLocalService
 		CPDefinitionOptionValueRel cpDefinitionOptionValueRel);
 
 	public CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
-		long cpDefinitionOptionValueRelId, java.lang.String name,
+		long cpDefinitionOptionValueRelId,
 		Map<Locale, java.lang.String> titleMap, double priority,
-		ServiceContext serviceContext) throws PortalException;
+		java.lang.String key, ServiceContext serviceContext)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();

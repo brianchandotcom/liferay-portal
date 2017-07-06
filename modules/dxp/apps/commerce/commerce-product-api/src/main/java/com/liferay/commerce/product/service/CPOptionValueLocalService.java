@@ -83,8 +83,8 @@ public interface CPOptionValueLocalService extends BaseLocalService,
 	public CPOptionValue addCPOptionValue(CPOptionValue cpOptionValue);
 
 	public CPOptionValue addCPOptionValue(long cpOptionId,
-		java.lang.String name, Map<Locale, java.lang.String> titleMap,
-		double priority, ServiceContext serviceContext)
+		Map<Locale, java.lang.String> titleMap, double priority,
+		java.lang.String key, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -165,8 +165,8 @@ public interface CPOptionValueLocalService extends BaseLocalService,
 	public CPOptionValue updateCPOptionValue(CPOptionValue cpOptionValue);
 
 	public CPOptionValue updateCPOptionValue(long cpOptionValueId,
-		java.lang.String name, Map<Locale, java.lang.String> titleMap,
-		double priority, ServiceContext serviceContext)
+		Map<Locale, java.lang.String> titleMap, double priority,
+		java.lang.String key, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

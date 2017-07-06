@@ -4130,7 +4130,6 @@ public class CPDefinitionOptionRelPersistenceImpl extends BasePersistenceImpl<CP
 		cpDefinitionOptionRelImpl.setModifiedDate(cpDefinitionOptionRel.getModifiedDate());
 		cpDefinitionOptionRelImpl.setCPDefinitionId(cpDefinitionOptionRel.getCPDefinitionId());
 		cpDefinitionOptionRelImpl.setCPOptionId(cpDefinitionOptionRel.getCPOptionId());
-		cpDefinitionOptionRelImpl.setName(cpDefinitionOptionRel.getName());
 		cpDefinitionOptionRelImpl.setTitle(cpDefinitionOptionRel.getTitle());
 		cpDefinitionOptionRelImpl.setDescription(cpDefinitionOptionRel.getDescription());
 		cpDefinitionOptionRelImpl.setDDMFormFieldTypeName(cpDefinitionOptionRel.getDDMFormFieldTypeName());

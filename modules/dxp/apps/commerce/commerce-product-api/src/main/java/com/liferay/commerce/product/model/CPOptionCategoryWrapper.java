@@ -68,10 +68,10 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("name", getName());
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
 		attributes.put("priority", getPriority());
+		attributes.put("key", getKey());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
@@ -127,12 +127,6 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 			setModifiedDate(modifiedDate);
 		}
 
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
 		String title = (String)attributes.get("title");
 
 		if (title != null) {
@@ -149,6 +143,12 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 
 		if (priority != null) {
 			setPriority(priority);
+		}
+
+		String key = (String)attributes.get("key");
+
+		if (key != null) {
+			setKey(key);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
@@ -297,13 +297,13 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 	}
 
 	/**
-	* Returns the name of this cp option category.
+	* Returns the key of this cp option category.
 	*
-	* @return the name of this cp option category
+	* @return the key of this cp option category
 	*/
 	@Override
-	public java.lang.String getName() {
-		return _cpOptionCategory.getName();
+	public java.lang.String getKey() {
+		return _cpOptionCategory.getKey();
 	}
 
 	/**
@@ -662,6 +662,16 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 	}
 
 	/**
+	* Sets the key of this cp option category.
+	*
+	* @param key the key of this cp option category
+	*/
+	@Override
+	public void setKey(java.lang.String key) {
+		_cpOptionCategory.setKey(key);
+	}
+
+	/**
 	* Sets the last publish date of this cp option category.
 	*
 	* @param lastPublishDate the last publish date of this cp option category
@@ -679,16 +689,6 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_cpOptionCategory.setModifiedDate(modifiedDate);
-	}
-
-	/**
-	* Sets the name of this cp option category.
-	*
-	* @param name the name of this cp option category
-	*/
-	@Override
-	public void setName(java.lang.String name) {
-		_cpOptionCategory.setName(name);
 	}
 
 	@Override

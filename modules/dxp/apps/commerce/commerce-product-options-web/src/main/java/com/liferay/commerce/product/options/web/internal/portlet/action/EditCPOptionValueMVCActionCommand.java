@@ -111,10 +111,10 @@ public class EditCPOptionValueMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "cpOptionValueId");
 
 		long cpOptionId = ParamUtil.getLong(actionRequest, "cpOptionId");
-		String name = ParamUtil.getString(actionRequest, "name");
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "title");
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
+		String key = ParamUtil.getString(actionRequest, "key");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CPOptionValue.class.getName(), actionRequest);
@@ -126,14 +126,14 @@ public class EditCPOptionValueMVCActionCommand extends BaseMVCActionCommand {
 			// Add commerce product option value
 
 			cpOptionValue = _cpOptionValueService.addCPOptionValue(
-				cpOptionId, name, titleMap, priority, serviceContext);
+				cpOptionId, titleMap, priority, key, serviceContext);
 		}
 		else {
 
 			// Update commerce product option value
 
 			cpOptionValue = _cpOptionValueService.updateCPOptionValue(
-				cpOptionValueId, name, titleMap, priority, serviceContext);
+				cpOptionValueId, titleMap, priority, key, serviceContext);
 		}
 
 		return cpOptionValue;

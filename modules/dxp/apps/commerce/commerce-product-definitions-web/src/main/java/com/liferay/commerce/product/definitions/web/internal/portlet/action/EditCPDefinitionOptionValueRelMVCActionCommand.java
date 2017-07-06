@@ -101,10 +101,10 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 
 		long cpDefinitionOptionRelId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionOptionRelId");
-		String name = ParamUtil.getString(actionRequest, "name");
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "title");
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
+		String key = ParamUtil.getString(actionRequest, "key");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CPDefinitionOptionValueRel.class.getName(), actionRequest);
@@ -118,7 +118,7 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 			cpDefinitionOptionValueRel =
 				_cpDefinitionOptionValueRelService.
 					addCPDefinitionOptionValueRel(
-						cpDefinitionOptionRelId, name, titleMap, priority,
+						cpDefinitionOptionRelId, titleMap, priority, key,
 						serviceContext);
 		}
 		else {
@@ -128,7 +128,7 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 			cpDefinitionOptionValueRel =
 				_cpDefinitionOptionValueRelService.
 					updateCPDefinitionOptionValueRel(
-						cpDefinitionOptionValueRelId, name, titleMap, priority,
+						cpDefinitionOptionValueRelId, titleMap, priority, key,
 						serviceContext);
 		}
 

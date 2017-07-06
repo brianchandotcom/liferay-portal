@@ -533,20 +533,20 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
-	public static List<String> getJenkinsMasters(
+	public static List<JenkinsMaster> getJenkinsMasters(
 		Properties buildProperties, String prefix) {
 
-		List<String> masterNames = new ArrayList<>();
+		List<JenkinsMaster> jenkinsMasters = new ArrayList<>();
 
 		for (int i = 1;
 			buildProperties.containsKey(
 				"master.slaves(" + prefix + "-" + i + ")");
 			i++) {
 
-			masterNames.add(prefix + "-" + i);
+			jenkinsMasters.add(new JenkinsMaster(prefix + "-" + i));
 		}
 
-		return masterNames;
+		return jenkinsMasters;
 	}
 
 	public static String getJobVariant(JSONObject jsonObject) {

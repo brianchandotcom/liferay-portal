@@ -2,44 +2,77 @@
 	{
 		"categories": [
 			{
+				"images": [
+					"category-women.png"
+				],
 				"path": "women",
 				"subcategories": [
 					{
+						"images": [
+							"category-women.png"
+						],
 						"path": "women-clothes",
 						"subcategories": [
 							{
+								"images": [
+									"category-women.png"
+								],
 								"path": "women-clothes-dressers",
 								"title": "Dressers & Skirts"
 							},
 							{
+								"images": [
+									"category-women.png"
+								],
 								"path": "women-clothes-jeans",
 								"title": "Jeans"
 							},
 							{
+								"images": [
+									"category-women.png"
+								],
 								"path": "women-clothes-skirts",
 								"title": "Sweat skirts"
 							},
 							{
+								"images": [
+									"category-women.png"
+								],
 								"path": "women-clothes-t-shirts",
 								"title": "T-shirts"
 							},
 							{
+								"images": [
+									"category-women.png"
+								],
 								"path": "women-clothes-shirts",
 								"title": "Shirts"
 							},
 							{
+								"images": [
+									"category-women.png"
+								],
 								"path": "women-clothes-knitwear",
 								"title": "Knitwear"
 							},
 							{
+								"images": [
+									"category-women.png"
+								],
 								"path": "women-clothes-outerwear",
 								"title": "Outerwear"
 							},
 							{
+								"images": [
+									"category-women.png"
+								],
 								"path": "women-clothes-shorts",
 								"title": "Trousers & Shorts"
 							},
 							{
+								"images": [
+									"category-women.png"
+								],
 								"path": "women-clothes-blazers",
 								"title": "Blazers"
 							}
@@ -47,37 +80,64 @@
 						"title": "Clothes"
 					},
 					{
+						"images": [
+							"category-accessories.png"
+						],
 						"path": "women-accessories",
 						"subcategories": [
 							{
+								"images": [
+									"category-bags.png"
+								],
 								"path": "women-accessories-bags",
 								"title": "Bags"
 							},
 							{
+								"images": [
+									"category-accessories.png"
+								],
 								"path": "women-accessories-shoes",
 								"title": "Shoes"
 							},
 							{
+								"images": [
+									"category-accessories.png"
+								],
 								"path": "women-accessories-wallets",
 								"title": "Wallets"
 							},
 							{
+								"images": [
+									"category-accessories.png"
+								],
 								"path": "women-accessories-belts",
 								"title": "Belts"
 							},
 							{
+								"images": [
+									"category-accessories.png"
+								],
 								"path": "women-accessories-hats",
 								"title": "Hats, Scarves, & Gloves"
 							},
 							{
+								"images": [
+									"category-accessories.png"
+								],
 								"path": "women-accessories-jewellery",
 								"title": "Watch & Jewellery"
 							},
 							{
+								"images": [
+									"category-accessories.png"
+								],
 								"path": "women-accessories-perfumes",
 								"title": "Perfumes"
 							},
 							{
+								"images": [
+									"category-accessories.png"
+								],
 								"path": "women-accessories-sunglasses",
 								"title": "Sunglasses"
 							}
@@ -88,36 +148,63 @@
 				"title": "Women"
 			},
 			{
+				"images": [
+					"category-man.png"
+				],
 				"path": "men",
 				"subcategories": [
 					{
+						"images": [
+							"category-man.png"
+						],
 						"path": "men-clothes",
 						"subcategories": [
 							{
+								"images": [
+									"category-man.png"
+								],
 								"path": "men-clothes-jeans",
 								"title": "Jeans"
 							},
 							{
+								"images": [
+									"category-man.png"
+								],
 								"path": "men-clothes-t-shirts",
 								"title": "T-shirts"
 							},
 							{
+								"images": [
+									"category-man.png"
+								],
 								"path": "men-clothes-shirts",
 								"title": "Shirts"
 							},
 							{
+								"images": [
+									"category-man.png"
+								],
 								"path": "men-clothes-knitwear",
 								"title": "Knitwear"
 							},
 							{
+								"images": [
+									"category-man.png"
+								],
 								"path": "men-clothes-outerwear",
 								"title": "Outerwear"
 							},
 							{
+								"images": [
+									"category-man.png"
+								],
 								"path": "men-clothes-shorts",
 								"title": "Trousers & Shorts"
 							},
 							{
+								"images": [
+									"category-man.png"
+								],
 								"path": "men-clothes-blazers",
 								"title": "Blazers"
 							}
@@ -125,37 +212,64 @@
 						"title": "Clothes"
 					},
 					{
+						"images": [
+							"category-man.png"
+						],
 						"path": "men-accessories",
 						"subcategories": [
 							{
+								"images": [
+									"category-man.png"
+								],
 								"path": "men-accessories-bags",
 								"title": "Bags"
 							},
 							{
+								"images": [
+									"category-man.png"
+								],
 								"path": "men-accessories-shoes",
 								"title": "Shoes"
 							},
 							{
+								"images": [
+									"category-man.png"
+								],
 								"path": "men-accessories-wallets",
 								"title": "Wallets"
 							},
 							{
+								"images": [
+									"category-man.png"
+								],
 								"path": "men-accessories-belts",
 								"title": "Belts"
 							},
 							{
+								"images": [
+									"category-man.png"
+								],
 								"path": "men-accessories-hats",
 								"title": "Hats, Scarves, & Gloves"
 							},
 							{
+								"images": [
+									"category-man.png"
+								],
 								"path": "men-accessories-jewellery",
 								"title": "Watch & Jewellery"
 							},
 							{
+								"images": [
+									"category-man.png"
+								],
 								"path": "men-accessories-perfumes",
 								"title": "Perfumes"
 							},
 							{
+								"images": [
+									"category-man.png"
+								],
 								"path": "men-accessories-sunglasses",
 								"title": "Sunglasses"
 							}
@@ -166,36 +280,63 @@
 				"title": "Men"
 			},
 			{
+				"images": [
+					"category-promo.png"
+				],
 				"path": "underwear",
 				"subcategories": [
 					{
+						"images": [
+							"category-women.png"
+						],
 						"path": "underwear-women",
 						"subcategories": [
 							{
+								"images": [
+									"category-women.png"
+								],
 								"path": "underwear-women-new-arrival",
 								"title": "New arrivals"
 							},
 							{
+								"images": [
+									"category-women.png"
+								],
 								"path": "underwear-women-shop-by-set",
 								"title": "Shop by set"
 							},
 							{
+								"images": [
+									"category-women.png"
+								],
 								"path": "underwear-women-bras",
 								"title": "Bras"
 							},
 							{
+								"images": [
+									"category-women.png"
+								],
 								"path": "underwear-women-panties",
 								"title": "Panties"
 							},
 							{
+								"images": [
+									"category-women.png"
+								],
 								"path": "underwear-women-sports",
 								"title": "Sports underwear"
 							},
 							{
+								"images": [
+									"category-women.png"
+								],
 								"path": "underwear-women-nightwear",
 								"title": "Nightwear & Loungewear"
 							},
 							{
+								"images": [
+									"category-women.png"
+								],
 								"path": "underwear-women-socks",
 								"title": "Socks & Tights"
 							}
@@ -203,33 +344,57 @@
 						"title": "Women"
 					},
 					{
+						"images": [
+							"category-man.png"
+						],
 						"path": "underwear-men",
 						"subcategories": [
 							{
+								"images": [
+									"category-man.png"
+								],
 								"path": "underwear-men-new-arrival",
 								"title": "New arrivals"
 							},
 							{
+								"images": [
+									"category-man.png"
+								],
 								"path": "underwear-men-trunks",
 								"title": "Trunks"
 							},
 							{
+								"images": [
+									"category-man.png"
+								],
 								"path": "underwear-men-briefs",
 								"title": "Briefs"
 							},
 							{
+								"images": [
+									"category-man.png"
+								],
 								"path": "underwear-men-boxers",
 								"title": "Boxers"
 							},
 							{
+								"images": [
+									"category-man.png"
+								],
 								"path": "underwear-men-socks",
 								"title": "Socks"
 							},
 							{
+								"images": [
+									"category-man.png"
+								],
 								"path": "underwear-men-nightwear",
 								"title": "Nightwear & Loungewear"
 							},
 							{
+								"images": [
+									"category-man.png"
+								],
 								"path": "underwear-men-multipacks",
 								"title": "Multipacks"
 							}
@@ -237,13 +402,22 @@
 						"title": "Men"
 					},
 					{
+						"images": [
+							"category-promo.png"
+						],
 						"path": "underwear-girls",
 						"subcategories": [
 							{
+								"images": [
+									"category-promo.png"
+								],
 								"path": "underwear-girls-underwear",
 								"title": "Underwear"
 							},
 							{
+								"images": [
+									"category-promo.png"
+								],
 								"path": "underwear-girls-pyjamas",
 								"title": "Pyjamas"
 							}
@@ -251,13 +425,22 @@
 						"title": "Girls"
 					},
 					{
+						"images": [
+							"category-promo.png"
+						],
 						"path": "underwear-boys",
 						"subcategories": [
 							{
+								"images": [
+									"category-promo.png"
+								],
 								"path": "underwear-boys-underwear",
 								"title": "Underwear"
 							},
 							{
+								"images": [
+									"category-promo.png"
+								],
 								"path": "underwear-boys-pyjamas",
 								"title": "Pyjamas"
 							}
@@ -268,20 +451,35 @@
 				"title": "Underwear"
 			},
 			{
+				"images": [
+					"category-whatsnews.png"
+				],
 				"path": "sale",
 				"subcategories": [
 					{
+						"images": [
+							"category-whatsnews.png"
+						],
 						"path": "sale-women",
 						"subcategories": [
 							{
+								"images": [
+									"category-whatsnews.png"
+								],
 								"path": "sale-women-clothes",
 								"title": "Clothes"
 							},
 							{
+								"images": [
+									"category-whatsnews.png"
+								],
 								"path": "sale-women-accessories",
 								"title": "Shoes & Accessories"
 							},
 							{
+								"images": [
+									"category-whatsnews.png"
+								],
 								"path": "sale-women-underwear",
 								"title": "Underwear"
 							}
@@ -289,17 +487,29 @@
 						"title": "Women"
 					},
 					{
+						"images": [
+							"category-man.png"
+						],
 						"path": "sale-men",
 						"subcategories": [
 							{
+								"images": [
+									"category-man.png"
+								],
 								"path": "sale-men-clothes",
 								"title": "Clothes"
 							},
 							{
+								"images": [
+									"category-man.png"
+								],
 								"path": "sale-men-accessories",
 								"title": "Shoes & Accessories"
 							},
 							{
+								"images": [
+									"category-man.png"
+								],
 								"path": "sale-men-underwear",
 								"title": "Underwear"
 							}
@@ -312,10 +522,16 @@
 		],
 		"manufacturers": [
 			{
+				"images": [
+					"category-loewe.png"
+				],
 				"path": "calvin-klein",
 				"title": "Calvin Klein"
 			},
 			{
+				"images": [
+					"category-loewe.png"
+				],
 				"path": "loewe",
 				"title": "LOEWE"
 			}

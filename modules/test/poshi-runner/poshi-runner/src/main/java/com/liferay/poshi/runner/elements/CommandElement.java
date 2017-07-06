@@ -14,6 +14,8 @@
 
 package com.liferay.poshi.runner.elements;
 
+import com.liferay.poshi.runner.util.RegexUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,66 +44,34 @@ public class CommandElement extends PoshiElement {
 
 	@Override
 	public void parseReadableSyntax(String readableSyntax) {
-		StringBuilder sb = new StringBuilder();
+		for (String readableBlock : getReadableBlocks(readableSyntax)) {
+			if (readableBlock.startsWith("setUp")) {
+				System.out.println(readableBlock);
+			}
 
-		for (String line : readableSyntax.split("\n")) {
-			line = line.trim();
+			if (readableBlock.endsWith("}") || readableBlock.endsWith(";") ||
+				readableBlock.startsWith("@description")) {
 
-			String endKey = " {";
-
-			if (line.endsWith(endKey)) {
-				String startKey = "test";
-
-				if (line.startsWith(startKey)) {
-					int start = startKey.length();
-					int end = line.length() - endKey.length();
-
-					String name = line.substring(start, end);
-
-					addAttribute("name", name);
-				}
+				addElementFromReadableSyntax(readableBlock);
 
 				continue;
 			}
 
-			if (line.equals(");")) {
-				sb.append(line);
+			if (readableBlock.endsWith("{")) {
+				String name = RegexUtil.getGroup(
+					readableBlock, "test([\\w]*)", 1);
 
-				addElementFromReadableSyntax(sb.toString());
-
-				sb.setLength(0);
-
-				continue;
-			}
-
-			if (line.endsWith(";")) {
-				addElementFromReadableSyntax(line);
+				addAttribute("name", name);
 
 				continue;
 			}
 
-			if (line.equals("}")) {
-				continue;
-			}
-
-			if (line.startsWith("@description")) {
-				PoshiElement poshiElement = new DescriptionElement(line);
-
-				add(poshiElement);
-
-				continue;
-			}
-
-			if (line.startsWith("@")) {
-				String name = getNameFromAssignment(line);
-				String value = getQuotedContent(line);
+			if (readableBlock.startsWith("@")) {
+				String name = getNameFromAssignment(readableBlock);
+				String value = getQuotedContent(readableBlock);
 
 				addAttribute(name, value);
-
-				continue;
 			}
-
-			sb.append(line);
 		}
 	}
 

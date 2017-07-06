@@ -46,47 +46,6 @@
 		</execute>
 	</command>
 
-	<command name="addChildCP">
-		<execute macro="Site#viewCP">
-			<var name="siteMember" value="${siteMember}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteType" value="${siteType}" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Add Child Site" />
-			<var name="rowEntry" value="${siteName}" />
-		</execute>
-
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${childSiteName}" />
-		</execute>
-
-		<if>
-			<equals arg1="${membershipType}" arg2="Private" />
-			<then>
-				<execute function="Select" locator1="SitesEditSite#MEMBERSHIP_TYPE" value1="Private" />
-			</then>
-			<elseif>
-				<equals arg1="${membershipType}" arg2="Restricted" />
-				<then>
-					<execute function="Select" locator1="SitesEditSite#MEMBERSHIP_TYPE" value1="Restricted" />
-				</then>
-			</elseif>
-			<else>
-				<execute function="Select" locator1="SitesEditSite#MEMBERSHIP_TYPE" value1="Open" />
-			</else>
-		</if>
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="ContentRow#ENTRY_CONTENT_ROW_1" value1="${siteName}" />
-
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
-
-		<execute function="AssertTextEquals" locator1="SitesEditSite#DETAILS_NAME" value1="${childSiteName}" />
-	</command>
-
 	<command name="addCommunityCP">
 		<execute macro="Site#addCP">
 			<var name="membershipType" value="${membershipType}" />
@@ -975,17 +934,6 @@
 			<equals arg1="${selectPublicPages}" arg2="true" />
 			<then>
 				<execute function="Select" locator1="SitesEditSite#PAGES_PUBLIC_PAGES_SITE_TEMPLATE_SELECT" value1="${siteTemplate}" />
-
-				<if>
-					<equals arg1="${checkPropagation}" arg2="true" />
-					<then>
-						<execute macro="Panel#expandPanel">
-							<var name="panelHeading" value="Pages" />
-						</execute>
-
-						<execute function="Check#checkToggleSwitch" locator1="Checkbox#PUBLIC_PAGES_ENABLE_PROPAGATION" />
-					</then>
-				</if>
 			</then>
 			<elseif>
 				<equals arg1="${selectPrivatePages}" arg2="true" />

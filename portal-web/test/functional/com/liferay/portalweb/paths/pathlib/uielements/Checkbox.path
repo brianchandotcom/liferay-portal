@@ -289,11 +289,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PUBLIC_PAGES_ENABLE_PROPAGATION</td>
-	<td>//label[contains(.,'Enable propagation of changes')]/input[@type='checkbox' and contains(@id,'publicLayoutSetPrototype')]]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PRIORITIZATION_STRATEGY</td>
 	<td>//input[contains(@id,'prioritize') and contains(@type,'checkbox')]</td>
 	<td></td>

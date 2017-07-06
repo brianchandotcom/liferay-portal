@@ -808,32 +808,32 @@ public class PoshiRunnerContext {
 			poshiFileNames, "default/testFunctional",
 			"override/testFunctional");
 
-		List<URL> urls = new ArrayList<>();
-
-		urls.addAll(_getPoshiURLs(poshiFileNames, _TEST_BASE_DIR_NAME));
-
 		if (Validator.isNotNull(PropsValues.TEST_INCLUDE_DIR_NAMES)) {
-			urls.addAll(
-				_getPoshiURLs(
-					new String[] {
-						"**/*.action", "**/*.function", "**/*.macro",
-						"**/*.path"
-					},
-					PropsValues.TEST_INCLUDE_DIR_NAMES));
+			_readPoshiFiles(
+				new String[] {
+					"**/*.action", "**/*.function", "**/*.macro", "**/*.path"
+				},
+				PropsValues.TEST_INCLUDE_DIR_NAMES);
 		}
 
 		if (Validator.isNotNull(PropsValues.TEST_SUBREPO_DIRS)) {
-			urls.addAll(
-				_getPoshiURLs(poshiFileNames, PropsValues.TEST_SUBREPO_DIRS));
+			_readPoshiFiles(poshiFileNames, PropsValues.TEST_SUBREPO_DIRS);
 		}
 
-		for (URL url : urls) {
+		_readPoshiFiles(poshiFileNames, _TEST_BASE_DIR_NAME);
+
+		_initComponentCommandNamesMap();
+	}
+
+	private static void _readPoshiFiles(
+			String[] includes, String... baseDirNames)
+		throws Exception {
+
+		for (URL url : _getPoshiURLs(includes, baseDirNames)) {
 			_storeRootElement(
 				PoshiRunnerGetterUtil.getRootElementFromURL(url),
 				url.getFile());
 		}
-
-		_initComponentCommandNamesMap();
 	}
 
 	private static void _readPoshiFilesFromClassPath(

@@ -19,6 +19,7 @@ import com.liferay.poshi.runner.util.RegexUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 import org.dom4j.Attribute;
 import org.dom4j.Element;
@@ -136,6 +137,60 @@ public abstract class PoshiElement extends DefaultElement {
 
 	protected String getPad() {
 		return "\t";
+	}
+
+	protected boolean isBalancedReadableSyntax(String readableSyntax) {
+		Stack<Character> stack = new Stack<>();
+
+		for (int i = 0; i < readableSyntax.length(); i++) {
+			char c = readableSyntax.charAt(i);
+
+			if (!stack.isEmpty() && (stack.peek() == '\"')) {
+				if (c == '\"') {
+					stack.pop();
+				}
+
+				continue;
+			}
+
+			if (c == '\"') {
+				stack.push('\"');
+			}
+
+			if (c == '{') {
+				stack.push('{');
+
+				continue;
+			}
+
+			if (c == '(') {
+				stack.push('(');
+
+				continue;
+			}
+
+			if (c == '}') {
+				if (stack.isEmpty()) {
+					return false;
+				}
+
+				if (stack.pop() != '{') {
+					return false;
+				}
+			}
+
+			if (c == ')') {
+				if (stack.isEmpty()) {
+					return false;
+				}
+
+				if (stack.pop() != '(') {
+					return false;
+				}
+			}
+		}
+
+		return stack.isEmpty();
 	}
 
 	protected List<PoshiElementAttribute> toPoshiElementAttributes(

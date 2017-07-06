@@ -55,9 +55,10 @@ public class CPOptionCategoryStagedModelRepository
 		}
 
 		return _cpOptionCategoryLocalService.addCPOptionCategory(
-			cpOptionCategory.getName(), cpOptionCategory.getTitleMap(),
+			cpOptionCategory.getTitleMap(),
 			cpOptionCategory.getDescriptionMap(),
-			cpOptionCategory.getPriority(), serviceContext);
+			cpOptionCategory.getPriority(), cpOptionCategory.getKey(),
+			serviceContext);
 	}
 
 	@Override
@@ -133,9 +134,10 @@ public class CPOptionCategoryStagedModelRepository
 
 		return _cpOptionCategoryLocalService.updateCPOptionCategory(
 			cpOptionCategory.getCPOptionCategoryId(),
-			cpOptionCategory.getName(), cpOptionCategory.getTitleMap(),
+			cpOptionCategory.getTitleMap(),
 			cpOptionCategory.getDescriptionMap(),
-			cpOptionCategory.getPriority(), serviceContext);
+			cpOptionCategory.getPriority(), cpOptionCategory.getKey(),
+			serviceContext);
 	}
 
 	@Reference

@@ -57,9 +57,9 @@ public class CPDefinitionOptionValueRelStagedModelRepository
 		return _cpDefinitionOptionValueRelLocalService.
 			addCPDefinitionOptionValueRel(
 				cpDefinitionOptionValueRel.getCPDefinitionOptionRelId(),
-				cpDefinitionOptionValueRel.getName(),
 				cpDefinitionOptionValueRel.getTitleMap(),
-				cpDefinitionOptionValueRel.getPriority(), serviceContext);
+				cpDefinitionOptionValueRel.getPriority(),
+				cpDefinitionOptionValueRel.getKey(), serviceContext);
 	}
 
 	@Override
@@ -137,9 +137,9 @@ public class CPDefinitionOptionValueRelStagedModelRepository
 		return _cpDefinitionOptionValueRelLocalService.
 			updateCPDefinitionOptionValueRel(
 				cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId(),
-				cpDefinitionOptionValueRel.getName(),
 				cpDefinitionOptionValueRel.getTitleMap(),
-				cpDefinitionOptionValueRel.getPriority(), serviceContext);
+				cpDefinitionOptionValueRel.getPriority(),
+				cpDefinitionOptionValueRel.getKey(), serviceContext);
 	}
 
 	@Reference

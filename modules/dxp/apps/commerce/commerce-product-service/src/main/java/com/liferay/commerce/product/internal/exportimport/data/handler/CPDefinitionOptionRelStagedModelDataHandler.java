@@ -52,10 +52,6 @@ public class CPDefinitionOptionRelStagedModelDataHandler
 	public String getDisplayName(CPDefinitionOptionRel cpDefinitionOptionRel) {
 		String displayName = cpDefinitionOptionRel.getTitleCurrentValue();
 
-		if (Validator.isNull(displayName)) {
-			displayName = cpDefinitionOptionRel.getName();
-		}
-
 		return displayName;
 	}
 

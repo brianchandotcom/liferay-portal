@@ -54,10 +54,10 @@ public class CPOptionStagedModelRepository
 		}
 
 		return _cpOptionLocalService.addCPOption(
-			cpOption.getName(), cpOption.getTitleMap(),
-			cpOption.getDescriptionMap(), cpOption.getDDMFormFieldTypeName(),
-			cpOption.isFacetable(), cpOption.isRequired(),
-			cpOption.isSkuContributor(), serviceContext);
+			cpOption.getTitleMap(), cpOption.getDescriptionMap(),
+			cpOption.getDDMFormFieldTypeName(), cpOption.isFacetable(),
+			cpOption.isRequired(), cpOption.isSkuContributor(),
+			cpOption.getKey(), serviceContext);
 	}
 
 	@Override
@@ -124,10 +124,10 @@ public class CPOptionStagedModelRepository
 			cpOption);
 
 		return _cpOptionLocalService.updateCPOption(
-			cpOption.getCPOptionId(), cpOption.getName(),
-			cpOption.getTitleMap(), cpOption.getDescriptionMap(),
-			cpOption.getDDMFormFieldTypeName(), cpOption.isFacetable(),
-			cpOption.isRequired(), cpOption.isSkuContributor(), serviceContext);
+			cpOption.getCPOptionId(), cpOption.getTitleMap(),
+			cpOption.getDescriptionMap(), cpOption.getDDMFormFieldTypeName(),
+			cpOption.isFacetable(), cpOption.isRequired(),
+			cpOption.isSkuContributor(), cpOption.getKey(), serviceContext);
 	}
 
 	@Reference

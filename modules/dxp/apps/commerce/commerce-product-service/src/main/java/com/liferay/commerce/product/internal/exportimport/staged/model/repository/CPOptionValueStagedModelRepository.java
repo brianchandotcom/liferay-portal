@@ -54,8 +54,8 @@ public class CPOptionValueStagedModelRepository
 		}
 
 		return _cpOptionValueLocalService.addCPOptionValue(
-			cpOptionValue.getCPOptionId(), cpOptionValue.getName(),
-			cpOptionValue.getTitleMap(), cpOptionValue.getPriority(),
+			cpOptionValue.getCPOptionId(), cpOptionValue.getTitleMap(),
+			cpOptionValue.getPriority(), cpOptionValue.getKey(),
 			serviceContext);
 	}
 
@@ -125,8 +125,8 @@ public class CPOptionValueStagedModelRepository
 			cpOptionValue);
 
 		return _cpOptionValueLocalService.updateCPOptionValue(
-			cpOptionValue.getCPOptionValueId(), cpOptionValue.getName(),
-			cpOptionValue.getTitleMap(), cpOptionValue.getPriority(),
+			cpOptionValue.getCPOptionValueId(), cpOptionValue.getTitleMap(),
+			cpOptionValue.getPriority(), cpOptionValue.getKey(),
 			serviceContext);
 	}
 

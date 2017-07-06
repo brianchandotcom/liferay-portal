@@ -47,7 +47,7 @@ public class CPOptionStagedModelDataHandler
 		String displayName = cpOption.getTitleCurrentValue();
 
 		if (Validator.isNull(displayName)) {
-			displayName = cpOption.getName();
+			displayName = cpOption.getKey();
 		}
 
 		return displayName;

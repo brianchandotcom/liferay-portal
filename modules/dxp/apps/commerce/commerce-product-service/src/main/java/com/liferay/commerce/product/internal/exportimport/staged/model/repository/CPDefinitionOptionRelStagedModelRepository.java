@@ -57,7 +57,6 @@ public class CPDefinitionOptionRelStagedModelRepository
 		return _cpDefinitionOptionRelLocalService.addCPDefinitionOptionRel(
 			cpDefinitionOptionRel.getCPDefinitionId(),
 			cpDefinitionOptionRel.getCPOptionId(),
-			cpDefinitionOptionRel.getName(),
 			cpDefinitionOptionRel.getTitleMap(),
 			cpDefinitionOptionRel.getDescriptionMap(),
 			cpDefinitionOptionRel.getDDMFormFieldTypeName(),
@@ -140,7 +139,6 @@ public class CPDefinitionOptionRelStagedModelRepository
 		return _cpDefinitionOptionRelLocalService.updateCPDefinitionOptionRel(
 			cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
 			cpDefinitionOptionRel.getCPOptionId(),
-			cpDefinitionOptionRel.getName(),
 			cpDefinitionOptionRel.getTitleMap(),
 			cpDefinitionOptionRel.getDescriptionMap(),
 			cpDefinitionOptionRel.getDDMFormFieldTypeName(),

@@ -53,9 +53,7 @@ public class SubrepositoryTaskNoReport extends SubrepositoryTask {
 
 	@Override
 	public String getGitHubMessage() throws Exception {
-
 		return FailureMessageUtil.getFailureMessage(consoleSnippet);
-
 	}
 
 	protected static final Pattern consoleResultPattern = Pattern.compile(

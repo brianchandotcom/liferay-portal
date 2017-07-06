@@ -28,7 +28,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.xsl.content.web.configuration.XSLContentPortletInstanceConfiguration",
 	localization = "content/Language",
-	name = "xsl.content.portlet.instance.configuration.name"
+	name = "xsl-content-portlet-instance-configuration-name"
 )
 public interface XSLContentPortletInstanceConfiguration {
 

@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.portal.security.sso.google.configuration.GoogleAuthorizationConfiguration",
 	localization = "content/Language",
-	name = "google.authorization.configuration.name"
+	name = "google-authorization-configuration-name"
 )
 public interface GoogleAuthorizationConfiguration {
 

@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.portal.search.solr.configuration.SolrSSLSocketFactoryConfiguration",
 	localization = "content/Language",
-	name = "solr.ssl.socket.factory.configuration.name"
+	name = "solr-ssl-socket-factory-configuration-name"
 )
 public interface SolrSSLSocketFactoryConfiguration {
 

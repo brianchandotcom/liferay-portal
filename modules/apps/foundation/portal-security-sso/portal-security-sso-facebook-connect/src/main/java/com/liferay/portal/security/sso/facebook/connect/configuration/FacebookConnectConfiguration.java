@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.portal.security.sso.facebook.connect.configuration.FacebookConnectConfiguration",
 	localization = "content/Language",
-	name = "facebook.connect.configuration.name"
+	name = "facebook-connect-configuration-name"
 )
 public interface FacebookConnectConfiguration {
 

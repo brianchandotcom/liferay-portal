@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.portal.template.velocity.configuration.VelocityEngineConfiguration",
 	localization = "content/Language",
-	name = "velocity.engine.configuration.name"
+	name = "velocity-engine-configuration-name"
 )
 public interface VelocityEngineConfiguration {
 

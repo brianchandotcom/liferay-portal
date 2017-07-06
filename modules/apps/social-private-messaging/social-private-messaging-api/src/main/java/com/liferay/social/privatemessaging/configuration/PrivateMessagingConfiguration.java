@@ -27,7 +27,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.social.privatemessaging.configuration.PrivateMessagingConfiguration",
 	localization = "content/Language",
-	name = "privatemessaging.service.configuration.name"
+	name = "privatemessaging-service-configuration-name"
 )
 public interface PrivateMessagingConfiguration {
 

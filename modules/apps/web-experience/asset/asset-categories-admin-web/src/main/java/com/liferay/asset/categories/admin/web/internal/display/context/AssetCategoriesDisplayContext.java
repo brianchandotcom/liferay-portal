@@ -40,13 +40,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -73,11 +71,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -100,14 +96,10 @@ public class AssetCategoriesDisplayContext {
 					ASSET_CATEGORIES_ADMIN_CONFIGURATION);
 	}
 
-	public String getAssetCategoriesSelectorURL() throws WindowStateException {
-		String assetCategoriesSelectorPortletId =
-			PortletProviderUtil.getPortletId(
-				AssetCategory.class.getName(), PortletProvider.Action.BROWSE);
-
-		LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
-			_renderRequest, assetCategoriesSelectorPortletId,
-			PortletRequest.RENDER_PHASE);
+	public String getAssetCategoriesSelectorURL() throws Exception {
+		PortletURL portletURL = PortletProviderUtil.getPortletURL(
+			_request, AssetCategory.class.getName(),
+			PortletProvider.Action.BROWSE);
 
 		portletURL.setParameter(
 			"eventName", _renderResponse.getNamespace() + "selectCategory");

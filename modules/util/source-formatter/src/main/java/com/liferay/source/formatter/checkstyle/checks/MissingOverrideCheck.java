@@ -351,8 +351,8 @@ public class MissingOverrideCheck extends AbstractCheck {
 	private static final String[] _EXCLUDES = new String[] {
 		"**/.git/**", "**/.gradle/**", "**/bin/**", "**/build/**",
 		"**/classes/**", "**/node_modules/**", "**/npm-shrinkwrap.json",
-		"**/package.json", "**/package-lock.json", "**/test-classes/**",
-		"**/test-coverage/**", "**/test-results/**", "**/tmp/**"
+		"**/package-lock.json", "**/test-classes/**", "**/test-coverage/**",
+		"**/test-results/**", "**/tmp/**"
 	};
 
 	private static final double _LOWEST_SUPPORTED_JAVA_VERSION = 1.7;

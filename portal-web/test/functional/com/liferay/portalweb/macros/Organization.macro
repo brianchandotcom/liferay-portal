@@ -404,7 +404,7 @@
 		<execute function="Click" locator1="Icon#CLOSE" />
 	</command>
 
-	<command name="createSiteOrganizationSite">
+	<command name="editOrganizationCreateSite">
 		<execute macro="Organization#editOrganizationInformationCP">
 			<var name="orgName" value="${orgName}" />
 			<var name="panelHeading" value="Organization Site" />

@@ -84,7 +84,6 @@ public class CPOptionStagedModelDataHandlerTest
 		CPOption cpOption = (CPOption)stagedModel;
 		CPOption importedCPOption = (CPOption)importedStagedModel;
 
-		Assert.assertEquals(cpOption.getName(), importedCPOption.getName());
 		Assert.assertEquals(
 			cpOption.getTitleMap(), importedCPOption.getTitleMap());
 		Assert.assertEquals(
@@ -95,6 +94,7 @@ public class CPOptionStagedModelDataHandlerTest
 			cpOption.isRequired(), importedCPOption.isRequired());
 		Assert.assertEquals(
 			cpOption.isSkuContributor(), importedCPOption.isSkuContributor());
+		Assert.assertEquals(cpOption.getKey(), importedCPOption.getKey());
 	}
 
 }

@@ -86,8 +86,6 @@ public class CPOptionCategoryStagedModelDataHandlerTest
 			(CPOptionCategory)importedStagedModel;
 
 		Assert.assertEquals(
-			cpOptionCategory.getName(), importedCPOptionCategory.getName());
-		Assert.assertEquals(
 			cpOptionCategory.getTitleMap(),
 			importedCPOptionCategory.getTitleMap());
 		Assert.assertEquals(
@@ -96,6 +94,8 @@ public class CPOptionCategoryStagedModelDataHandlerTest
 		Assert.assertEquals(
 			cpOptionCategory.getPriority(),
 			importedCPOptionCategory.getPriority(), 0.01);
+		Assert.assertEquals(
+			cpOptionCategory.getKey(), importedCPOptionCategory.getKey());
 	}
 
 }

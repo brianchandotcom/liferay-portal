@@ -186,14 +186,14 @@ public class CPDefinitionOptionValueRelStagedModelDataHandlerTest
 			(CPDefinitionOptionValueRel)importedStagedModel;
 
 		Assert.assertEquals(
-			cpDefinitionOptionValueRel.getName(),
-			importedCPDefinitionOptionValueRel.getName());
-		Assert.assertEquals(
 			cpDefinitionOptionValueRel.getTitleMap(),
 			importedCPDefinitionOptionValueRel.getTitleMap());
 		Assert.assertEquals(
 			cpDefinitionOptionValueRel.getPriority(),
 			importedCPDefinitionOptionValueRel.getPriority(), 0.01);
+		Assert.assertEquals(
+			cpDefinitionOptionValueRel.getKey(),
+			importedCPDefinitionOptionValueRel.getKey());
 	}
 
 }

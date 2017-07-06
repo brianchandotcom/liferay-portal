@@ -163,9 +163,6 @@ public class CPDefinitionOptionRelStagedModelDataHandlerTest
 			(CPDefinitionOptionRel)importedStagedModel;
 
 		Assert.assertEquals(
-			cpDefinitionOptionRel.getName(),
-			importedCPDefinitionOptionRel.getName());
-		Assert.assertEquals(
 			cpDefinitionOptionRel.getTitleMap(),
 			importedCPDefinitionOptionRel.getTitleMap());
 		Assert.assertEquals(

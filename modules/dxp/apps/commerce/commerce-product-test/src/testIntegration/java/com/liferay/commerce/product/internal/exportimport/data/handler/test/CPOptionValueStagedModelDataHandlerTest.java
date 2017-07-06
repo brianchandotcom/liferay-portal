@@ -129,12 +129,12 @@ public class CPOptionValueStagedModelDataHandlerTest
 			(CPOptionValue)importedStagedModel;
 
 		Assert.assertEquals(
-			cpOptionValue.getName(), importedCPOptionValue.getName());
-		Assert.assertEquals(
 			cpOptionValue.getTitleMap(), importedCPOptionValue.getTitleMap());
 		Assert.assertEquals(
 			cpOptionValue.getPriority(), importedCPOptionValue.getPriority(),
 			0.01);
+		Assert.assertEquals(
+			cpOptionValue.getKey(), importedCPOptionValue.getKey());
 	}
 
 }

@@ -159,8 +159,7 @@ public class CPTestUtil {
 			ServiceContextTestUtil.getServiceContext(groupId);
 
 		return CPDefinitionOptionRelLocalServiceUtil.addCPDefinitionOptionRel(
-			cpDefinitionId, cpOptionId, RandomTestUtil.randomString(),
-			RandomTestUtil.randomLocaleStringMap(),
+			cpDefinitionId, cpOptionId, RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(), null,
 			RandomTestUtil.randomDouble(), RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
@@ -176,9 +175,9 @@ public class CPTestUtil {
 
 		return CPDefinitionOptionValueRelLocalServiceUtil.
 			addCPDefinitionOptionValueRel(
-				cpDefinitionOptionRelId, RandomTestUtil.randomString(),
-				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomDouble(), serviceContext);
+				cpDefinitionOptionRelId, RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomDouble(), RandomTestUtil.randomString(),
+				serviceContext);
 	}
 
 	public static CPDefinition addCPDefinitionWithWorkflow(
@@ -272,11 +271,11 @@ public class CPTestUtil {
 			ServiceContextTestUtil.getServiceContext(groupId);
 
 		return CPOptionLocalServiceUtil.addCPOption(
-			RandomTestUtil.randomString(),
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(), null,
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
-			RandomTestUtil.randomBoolean(), serviceContext);
+			RandomTestUtil.randomBoolean(), RandomTestUtil.randomString(),
+			serviceContext);
 	}
 
 	public static CPOptionCategory addCPOptionCategory(long groupId)
@@ -286,10 +285,10 @@ public class CPTestUtil {
 			ServiceContextTestUtil.getServiceContext(groupId);
 
 		return CPOptionCategoryLocalServiceUtil.addCPOptionCategory(
-			RandomTestUtil.randomString(),
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomDouble(), serviceContext);
+			RandomTestUtil.randomDouble(), RandomTestUtil.randomString(),
+			serviceContext);
 	}
 
 	public static CPOptionValue addCPOptionValue(long groupId, long cpOptionId)
@@ -299,9 +298,9 @@ public class CPTestUtil {
 			ServiceContextTestUtil.getServiceContext(groupId);
 
 		return CPOptionValueLocalServiceUtil.addCPOptionValue(
-			cpOptionId, RandomTestUtil.randomString(),
-			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomDouble(), serviceContext);
+			cpOptionId, RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomDouble(), RandomTestUtil.randomString(),
+			serviceContext);
 	}
 
 	public static FileEntry addFileEntry(long groupId) throws Exception {

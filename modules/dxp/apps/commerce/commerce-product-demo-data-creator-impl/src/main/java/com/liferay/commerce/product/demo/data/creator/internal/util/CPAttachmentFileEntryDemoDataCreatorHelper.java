@@ -73,7 +73,7 @@ public class CPAttachmentFileEntryDemoDataCreatorHelper
 				groupId, folder.getFolderId(), fileName);
 
 			InputStream inputStream = classLoader.getResourceAsStream(
-			"com/liferay/commerce/product/demo/data/creator/internal" +
+				"com/liferay/commerce/product/demo/data/creator/internal" +
 					"/dependencies/images/" + fileName);
 
 			FileEntry fileEntry = _portletFileRepository.addPortletFileEntry(
@@ -86,7 +86,6 @@ public class CPAttachmentFileEntryDemoDataCreatorHelper
 				fileEntry.getFileEntryId(), titleMap, null, 0,
 				CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE);
 		}
-
 	}
 
 	public void addCPDefinitionAttachmentFileEntries(
@@ -115,12 +114,10 @@ public class CPAttachmentFileEntryDemoDataCreatorHelper
 				"com/liferay/commerce/product/demo/data/creator/internal" +
 					"/dependencies/images/" + fileName);
 
-			FileEntry fileEntry =
-				_portletFileRepository.addPortletFileEntry(
-					groupId, userId, CPDefinition.class.getName(),
-					cpDefinitionId, CPConstants.SERVICE_NAME,
-					folder.getFolderId(), inputStream, uniqueFileName,
-					"image/jpeg", true);
+			FileEntry fileEntry = _portletFileRepository.addPortletFileEntry(
+				groupId, userId, CPDefinition.class.getName(), cpDefinitionId,
+				CPConstants.SERVICE_NAME, folder.getFolderId(), inputStream,
+				uniqueFileName, "image/jpeg", true);
 
 			List<CPDefinitionOptionRel> cpDefinitionOptionRels =
 				_cpOptionDemoDataCreatorHelper.getCPDefinitionOptionRels();

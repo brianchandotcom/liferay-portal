@@ -72,7 +72,7 @@
 <!--DATE-->
 <tr>
 	<td>DATE_FIELD</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//input[@type='text' and contains(@aria-label,'${key_fieldLabel}')]</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>

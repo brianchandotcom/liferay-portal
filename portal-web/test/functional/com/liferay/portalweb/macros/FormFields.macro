@@ -37,7 +37,6 @@
 	</command>
 
 	<command name="editDate">
-		<var name="key_fieldLabel" value="${fieldLabel}" />
 		<var name="key_fieldName" value="${fieldName}" />
 
 		<execute function="Type" locator1="FormFields#DATE_FIELD" value1="${fieldValue}" />

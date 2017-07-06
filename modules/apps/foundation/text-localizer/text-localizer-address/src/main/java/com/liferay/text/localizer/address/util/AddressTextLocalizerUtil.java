@@ -23,6 +23,9 @@ import com.liferay.portal.kernel.service.RegionServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
 
@@ -72,6 +75,48 @@ public class AddressTextLocalizerUtil {
 		}
 
 		return themeDisplay.getLocale();
+	}
+
+	/**
+	* Check if address is written in Roman characters.
+	*
+	* @param address the address
+	* @return <code>true</code> if the address in written in Roman characters;
+	* <code>false</code> otherwise.
+	*/
+	public static boolean isRomanizedAddress(Address address) {
+		String addressString = _geteAddressString(address);
+
+		if (Validator.isNull(addressString)) {
+			return false;
+		}
+
+		return addressString.matches("[\\w\\s\\-\\,\\.]+");
+	}
+
+	private static String _geteAddressString(Address address) {
+		StringBundler sb = new StringBundler(7);
+
+		if (Validator.isNotNull(address.getStreet1())) {
+			sb.append(address.getStreet1());
+		}
+
+		if (Validator.isNotNull(address.getStreet2())) {
+			sb.append(StringPool.SPACE);
+			sb.append(address.getStreet2());
+		}
+
+		if (Validator.isNotNull(address.getStreet3())) {
+			sb.append(StringPool.SPACE);
+			sb.append(address.getStreet3());
+		}
+
+		if (Validator.isNotNull(address.getCity())) {
+			sb.append(StringPool.SPACE);
+			sb.append(address.getCity());
+		}
+
+		return sb.toString();
 	}
 
 }

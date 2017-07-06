@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.trash.TrashHandler;
@@ -55,6 +56,9 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -337,10 +341,43 @@ public class MBMessageStagedModelDataHandler
 								message.getBody(), serviceContext);
 					}
 					else {
+						Stream<ObjectValuePair<String, InputStream>>
+							objectValuePairStream = inputStreamOVPs.stream();
+
+						Set<String> incomingFileNames =
+							objectValuePairStream.map(
+								ObjectValuePair::getKey
+							).collect(
+								Collectors.toSet()
+							);
+
+						List<FileEntry> portletFileEntries =
+							PortletFileRepositoryUtil.getPortletFileEntries(
+								existingMessage.getGroupId(),
+								existingMessage.getAttachmentsFolderId());
+
+						Stream<FileEntry> portletFileEntryStream =
+							portletFileEntries.stream();
+
+						List<Long> updatedFileEntryIds =
+							portletFileEntryStream.filter(
+								fileEntry -> incomingFileNames.contains(
+									fileEntry.getFileName())
+							).map(
+								FileEntry::getFileEntryId
+							).collect(
+								Collectors.toList()
+							);
+
+						for (Long fileEntryId : updatedFileEntryIds) {
+							PortletFileRepositoryUtil.deletePortletFileEntry(
+								fileEntryId);
+						}
+
 						importedMessage = _mbMessageLocalService.updateMessage(
 							userId, existingMessage.getMessageId(),
 							message.getSubject(), message.getBody(),
-							inputStreamOVPs, new ArrayList<String>(),
+							inputStreamOVPs, Collections.emptyList(),
 							message.getPriority(), message.getAllowPingbacks(),
 							serviceContext);
 					}

@@ -16,109 +16,58 @@
 
 <%@ include file="/init.jsp" %>
 
-<div id="<portlet:namespace />queryRules">
-	<aui:fieldset label="displayed-assets-must-match-these-rules">
-		<liferay-ui:asset-tags-error />
+<%
+long[] categorizableGroupIds = (long[])request.getAttribute("configuration.jsp-categorizableGroupIds");
+
+if (categorizableGroupIds == null) {
+	categorizableGroupIds = StringUtil.split(ParamUtil.getString(request, "categorizableGroupIds"), 0L);
+}
+%>
+
+<aui:fieldset label="displayed-assets-must-match-these-rules" markupView="lexicon">
+	<liferay-ui:asset-tags-error />
+
+	<%
+	DuplicateQueryRuleException dqre = null;
+	%>
+
+	<liferay-ui:error exception="<%= DuplicateQueryRuleException.class %>">
 
 		<%
-		DuplicateQueryRuleException dqre = null;
+		dqre = (DuplicateQueryRuleException)errorException;
+
+		String name = dqre.getName();
 		%>
 
-		<liferay-ui:error exception="<%= DuplicateQueryRuleException.class %>">
+		<liferay-util:buffer var="messageArgument">
+			<em>(<liferay-ui:message key='<%= dqre.isContains() ? "contains" : "does-not-contain" %>' /> - <liferay-ui:message key='<%= dqre.isAndOperator() ? "all" : "any" %>' /> - <liferay-ui:message key='<%= name.equals(("assetTags")) ? "tags" : "categories" %>' />)</em>
+		</liferay-util:buffer>
 
-			<%
-			dqre = (DuplicateQueryRuleException)errorException;
+		<liferay-ui:message arguments="<%= messageArgument %>" key="only-one-rule-with-the-combination-x-is-supported" translateArguments="<%= false %>" />
+	</liferay-ui:error>
 
-			String name = dqre.getName();
-			%>
+	<aui:input label='<%= LanguageUtil.format(request, "show-only-assets-with-x-as-its-display-page", HtmlUtil.escape(layout.getName(locale)), false) %>' name="preferences--showOnlyLayoutAssets--" type="checkbox" value="<%= assetPublisherDisplayContext.isShowOnlyLayoutAssets() %>" />
 
-			<liferay-util:buffer var="messageArgument">
-				<em>(<liferay-ui:message key='<%= dqre.isContains() ? "contains" : "does-not-contain" %>' /> - <liferay-ui:message key='<%= dqre.isAndOperator() ? "all" : "any" %>' /> - <liferay-ui:message key='<%= name.equals(("assetTags")) ? "tags" : "categories" %>' />)</em>
-			</liferay-util:buffer>
+	<aui:input label="include-tags-specified-in-the-url" name="preferences--mergeUrlTags--" type="checkbox" value="<%= assetPublisherDisplayContext.isMergeURLTags() %>" />
+</aui:fieldset>
 
-			<liferay-ui:message arguments="<%= messageArgument %>" key="only-one-rule-with-the-combination-x-is-supported" translateArguments="<%= false %>" />
-		</liferay-ui:error>
+<div id="<portlet:namespace />ConditionForm"></div>
 
-		<%
-		String queryLogicIndexesParam = ParamUtil.getString(request, "queryLogicIndexes");
+<%
+Map<String, Object> context = new HashMap<>();
 
-		int[] queryLogicIndexes = null;
+context.put("categorySelectorURL", assetPublisherDisplayContext.getCategorySelectorURL());
+context.put("id", "autofield");
+context.put("groupIds", StringUtil.merge(categorizableGroupIds));
+context.put("namespace", liferayPortletResponse.getNamespace());
+context.put("pathThemeImages", themeDisplay.getPathThemeImages());
+context.put("rules", assetPublisherDisplayContext.getAutoFieldRulesJSONArray());
+context.put("tagSelectorURL", assetPublisherDisplayContext.getTagSelectorURL());
+context.put("vocabularyIds", assetPublisherDisplayContext.getVocabularyIds());
+%>
 
-		if (Validator.isNotNull(queryLogicIndexesParam)) {
-			queryLogicIndexes = StringUtil.split(queryLogicIndexesParam, 0);
-		}
-		else {
-			queryLogicIndexes = new int[0];
-
-			for (int i = 0; true; i++) {
-				String queryValues = PrefsParamUtil.getString(portletPreferences, request, "queryValues" + i);
-
-				if (Validator.isNull(queryValues)) {
-					break;
-				}
-
-				queryLogicIndexes = ArrayUtil.append(queryLogicIndexes, i);
-			}
-
-			if (queryLogicIndexes.length == 0) {
-				queryLogicIndexes = ArrayUtil.append(queryLogicIndexes, -1);
-			}
-		}
-
-		int index = 0;
-
-		for (int queryLogicIndex : queryLogicIndexes) {
-			String queryValues = StringUtil.merge(portletPreferences.getValues("queryValues" + queryLogicIndex, new String[0]));
-			String tagNames = ParamUtil.getString(request, "queryTagNames" + queryLogicIndex, queryValues);
-			String categoryIds = ParamUtil.getString(request, "queryCategoryIds" + queryLogicIndex, queryValues);
-
-			if (Validator.isNotNull(tagNames) || Validator.isNotNull(categoryIds) || (queryLogicIndexes.length == 1)) {
-				request.setAttribute("configuration.jsp-categorizableGroupIds", assetPublisherDisplayContext.getReferencedModelsGroupIds());
-				request.setAttribute("configuration.jsp-index", String.valueOf(index));
-				request.setAttribute("configuration.jsp-queryLogicIndex", String.valueOf(queryLogicIndex));
-
-				String cssClass = StringPool.BLANK;
-
-				if (dqre != null) {
-					boolean queryContains = PrefsParamUtil.getBoolean(portletPreferences, request, "queryContains" + queryLogicIndex, true);
-					boolean queryAndOperator = PrefsParamUtil.getBoolean(portletPreferences, request, "queryAndOperator" + queryLogicIndex);
-					String queryName = PrefsParamUtil.getString(portletPreferences, request, "queryName" + queryLogicIndex, "assetTags");
-
-					String dqreQueryName = dqre.getName();
-
-					if ((dqre.isContains() == queryContains) && (dqre.isAndOperator() == queryAndOperator) && dqreQueryName.equals(queryName)) {
-						cssClass = "asset-query-rule-error";
-					}
-				}
-		%>
-
-				<div class="lfr-form-row <%= cssClass %>">
-					<div class="row-fields">
-						<liferay-util:include page="/edit_query_rule.jsp" servletContext="<%= application %>" />
-					</div>
-				</div>
-
-		<%
-			}
-
-			index++;
-		}
-		%>
-
-	</aui:fieldset>
-</div>
-
-<aui:input label='<%= LanguageUtil.format(request, "show-only-assets-with-x-as-its-display-page", HtmlUtil.escape(layout.getName(locale)), false) %>' name="preferences--showOnlyLayoutAssets--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isShowOnlyLayoutAssets() %>" />
-
-<aui:input label="include-tags-specified-in-the-url" name="preferences--mergeUrlTags--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isMergeURLTags() %>" />
-
-<aui:script use="liferay-auto-fields">
-	var autoFields = new Liferay.AutoFields(
-		{
-			contentBox: '#<portlet:namespace />queryRules',
-			fieldIndexes: '<portlet:namespace />queryLogicIndexes',
-			namespace: '<portlet:namespace />',
-			url: '<liferay-portlet:renderURL portletConfiguration="<%= true %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="<%= Constants.CMD %>" value="edit_query_rule" /><portlet:param name="categorizableGroupIds" value="<%= StringUtil.merge(assetPublisherDisplayContext.getReferencedModelsGroupIds()) %>" /></liferay-portlet:renderURL>'
-		}
-	).render();
-</aui:script>
+<soy:template-renderer
+	context="<%= context %>"
+	module="asset-publisher-web/js/AutoField.es"
+	templateNamespace="AutoField.render"
+/>

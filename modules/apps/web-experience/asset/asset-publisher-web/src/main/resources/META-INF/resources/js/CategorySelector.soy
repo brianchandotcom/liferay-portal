@@ -1,0 +1,13 @@
+{namespace CategorySelector}
+
+/**
+ * Default AutoField.ItemSelector deltemplate
+ */
+{template .render}
+	{@param index: int}
+	{@param? namespace: string}
+
+	<div id="{$namespace}assetCategoriesSelector{$index}">
+		<input name="{$namespace}queryCategoryIds{$index}" id="{$namespace}queryCategoryIds{$index}" ref="hiddenInput" type="hidden" />
+	</div>
+{/template}

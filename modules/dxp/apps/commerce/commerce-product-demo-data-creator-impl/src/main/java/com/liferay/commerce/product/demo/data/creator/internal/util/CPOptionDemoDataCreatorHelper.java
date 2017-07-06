@@ -56,7 +56,6 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			String name = jsonObject.getString("name");
 			String title = jsonObject.getString("title");
 			String description = jsonObject.getString("description");
 			String ddmFormFieldTypeName = jsonObject.getString(
@@ -78,7 +77,7 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 
 			CPDefinitionOptionRel cpDefinitionOptionRel =
 				_cpDefinitionOptionRelLocalService.addCPDefinitionOptionRel(
-					cpDefinitionId, cpOptionId, name, titleMap, descriptionMap,
+					cpDefinitionId, cpOptionId, titleMap, descriptionMap,
 					ddmFormFieldTypeName, priority, facetable, required,
 					skuContributor, false, serviceContext);
 
@@ -139,9 +138,9 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 			Locale locale, long userId, long groupId, JSONObject jsonObject)
 		throws PortalException {
 
-		String name = jsonObject.getString("name");
+		String key = jsonObject.getString("key");
 
-		CPOption cpOption = _cpOptions.get(name);
+		CPOption cpOption = _cpOptions.get(key);
 
 		if (cpOption != null) {
 			return cpOption;
@@ -162,10 +161,10 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 		ServiceContext serviceContext = getServiceContext(userId, groupId);
 
 		cpOption = _cpOptionLocalService.addCPOption(
-			name, titleMap, descriptionMap, ddmFormFieldTypeName, facetable,
-			required, skuContributor, serviceContext);
+			titleMap, descriptionMap, ddmFormFieldTypeName, facetable,
+			required, skuContributor, key, serviceContext);
 
-		_cpOptions.put(name, cpOption);
+		_cpOptions.put(key, cpOption);
 
 		return cpOption;
 	}

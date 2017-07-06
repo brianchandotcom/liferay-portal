@@ -14,24 +14,24 @@
 			{
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
-				"name": "Color",
+				"key": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
 				"title": "Color",
 				"values": [
 					{
-						"name": "Blue",
+						"key": "Blue",
 						"priority": 1,
 						"title": "Blue"
 					},
 					{
-						"name": "Pink",
+						"key": "Pink",
 						"priority": 2,
 						"title": "Pink"
 					},
 					{
-						"name": "Gold",
+						"key": "Gold",
 						"priority": 3,
 						"title": "Gold"
 					}
@@ -56,34 +56,34 @@
 			"Hammock-red.jpg",
 			"Hammock-blue.jpg"
 		],
-		"name": "Hammock Bag",
+		"key": "Hammock Bag",
 		"options": [
 			{
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
-				"name": "Color",
+				"key": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
 				"title": "Color",
 				"values": [
 					{
-						"name": "Tan",
+						"key": "Tan",
 						"priority": 1,
 						"title": "Tan"
 					},
 					{
-						"name": "Black",
+						"key": "Black",
 						"priority": 2,
 						"title": "Black"
 					},
 					{
-						"name": "Red",
+						"key": "Red",
 						"priority": 3,
 						"title": "Red"
 					},
 					{
-						"name": "Blue",
+						"key": "Blue",
 						"priority": 4,
 						"title": "Blue"
 					}
@@ -114,39 +114,39 @@
 			{
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
-				"name": "Color",
+				"key": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
 				"title": "Color",
 				"values": [
 					{
-						"name": "Black",
+						"key": "Black",
 						"priority": 1,
 						"title": "Black"
 					},
 					{
-						"name": "Yellow",
+						"key": "Yellow",
 						"priority": 2,
 						"title": "Yellow"
 					},
 					{
-						"name": "Orange",
+						"key": "Orange",
 						"priority": 3,
 						"title": "Orange"
 					},
 					{
-						"name": "Pink",
+						"key": "Pink",
 						"priority": 4,
 						"title": "Pink"
 					},
 					{
-						"name": "Red",
+						"key": "Red",
 						"priority": 5,
 						"title": "Red"
 					},
 					{
-						"name": "Blue",
+						"key": "Blue",
 						"priority": 6,
 						"title": "Blue"
 					}
@@ -172,39 +172,39 @@
 			"Fortune-hobo-red.jpg",
 			"Fortune-hobo-indigo.jpg"
 		],
-		"name": "Fortune Hobo Bag",
+		"key": "Fortune Hobo Bag",
 		"options": [
 			{
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
-				"name": "Color",
+				"key": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
 				"title": "Color",
 				"values": [
 					{
-						"name": "Black",
+						"key": "Black",
 						"priority": 1,
 						"title": "Black"
 					},
 					{
-						"name": "Yellow",
+						"key": "Yellow",
 						"priority": 2,
 						"title": "Yellow"
 					},
 					{
-						"name": "Tan",
+						"key": "Tan",
 						"priority": 3,
 						"title": "Tan"
 					},
 					{
-						"name": "Red",
+						"key": "Red",
 						"priority": 4,
 						"title": "Red"
 					},
 					{
-						"name": "Indigo",
+						"key": "Indigo",
 						"priority": 5,
 						"title": "Indigo"
 					}
@@ -236,44 +236,44 @@
 			{
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
-				"name": "Color",
+				"key": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
 				"title": "Color",
 				"values": [
 					{
-						"name": "Black",
+						"key": "Black",
 						"priority": 1,
 						"title": "Black"
 					},
 					{
-						"name": "Yellow",
+						"key": "Yellow",
 						"priority": 2,
 						"title": "Yellow"
 					},
 					{
-						"name": "Tan",
+						"key": "Tan",
 						"priority": 3,
 						"title": "Tan"
 					},
 					{
-						"name": "Red",
+						"key": "Red",
 						"priority": 4,
 						"title": "Red"
 					},
 					{
-						"name": "Stone",
+						"key": "Stone",
 						"priority": 5,
 						"title": "Stone"
 					},
 					{
-						"name": "Blue",
+						"key": "Blue",
 						"priority": 6,
 						"title": "Blue"
 					},
 					{
-						"name": "Fuchsia",
+						"key": "Fuchsia",
 						"priority": 7,
 						"title": "Fuchsia"
 					}
@@ -302,29 +302,29 @@
 			{
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
-				"name": "Color",
+				"key": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
 				"title": "Color",
 				"values": [
 					{
-						"name": "Black",
+						"key": "Black",
 						"priority": 1,
 						"title": "Black"
 					},
 					{
-						"name": "Tan",
+						"key": "Tan",
 						"priority": 2,
 						"title": "Tan"
 					},
 					{
-						"name": "Mink",
+						"key": "Mink",
 						"priority": 3,
 						"title": "Mink"
 					},
 					{
-						"name": "Marine",
+						"key": "Marine",
 						"priority": 4,
 						"title": "Marine"
 					}
@@ -348,29 +348,29 @@
 			"Medium-pouch-tan.jpg",
 			"Medium-pouch-blue.jpg"
 		],
-		"name": "Medium T Pouch",
+		"key": "Medium T Pouch",
 		"options": [
 			{
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
-				"name": "Color",
+				"key": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
 				"title": "Color",
 				"values": [
 					{
-						"name": "Black",
+						"key": "Black",
 						"priority": 1,
 						"title": "Black"
 					},
 					{
-						"name": "Tan",
+						"key": "Tan",
 						"priority": 2,
 						"title": "Tan"
 					},
 					{
-						"name": "Blue",
+						"key": "Blue",
 						"priority": 3,
 						"title": "Blue"
 					}
@@ -400,34 +400,34 @@
 			{
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
-				"name": "Color",
+				"key": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
 				"title": "Color",
 				"values": [
 					{
-						"name": "Black",
+						"key": "Black",
 						"priority": 1,
 						"title": "Black"
 					},
 					{
-						"name": "Yellow",
+						"key": "Yellow",
 						"priority": 2,
 						"title": "Yellow"
 					},
 					{
-						"name": "Red",
+						"key": "Red",
 						"priority": 3,
 						"title": "Red"
 					},
 					{
-						"name": "Stone",
+						"key": "Stone",
 						"priority": 4,
 						"title": "Stone"
 					},
 					{
-						"name": "Fuchsia",
+						"key": "Fuchsia",
 						"priority": 5,
 						"title": "Fuchsia"
 					}
@@ -452,34 +452,34 @@
 			"Flamenco-marine.jpg",
 			"Flamenco-pink.jpg"
 		],
-		"name": "Flamenco Knot bag",
+		"key": "Flamenco Knot bag",
 		"options": [
 			{
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
-				"name": "Color",
+				"key": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
 				"title": "Color",
 				"values": [
 					{
-						"name": "Black",
+						"key": "Black",
 						"priority": 1,
 						"title": "Black"
 					},
 					{
-						"name": "Tan",
+						"key": "Tan",
 						"priority": 2,
 						"title": "Tan"
 					},
 					{
-						"name": "Marine",
+						"key": "Marine",
 						"priority": 3,
 						"title": "Marine"
 					},
 					{
-						"name": "Pink",
+						"key": "Pink",
 						"priority": 4,
 						"title": "Pink"
 					}
@@ -510,39 +510,39 @@
 			{
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
-				"name": "Color",
+				"key": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
 				"title": "Color",
 				"values": [
 					{
-						"name": "Black",
+						"key": "Black",
 						"priority": 1,
 						"title": "Black"
 					},
 					{
-						"name": "Yellow",
+						"key": "Yellow",
 						"priority": 2,
 						"title": "Yellow"
 					},
 					{
-						"name": "Red",
+						"key": "Red",
 						"priority": 3,
 						"title": "Red"
 					},
 					{
-						"name": "Orange",
+						"key": "Orange",
 						"priority": 4,
 						"title": "Orange"
 					},
 					{
-						"name": "Blue",
+						"key": "Blue",
 						"priority": 5,
 						"title": "Blue"
 					},
 					{
-						"name": "Fuchsia",
+						"key": "Fuchsia",
 						"priority": 6,
 						"title": "Fuchsia"
 					}
@@ -574,44 +574,44 @@
 			{
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
-				"name": "Color",
+				"key": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
 				"title": "Color",
 				"values": [
 					{
-						"name": "Black",
+						"key": "Black",
 						"priority": 1,
 						"title": "Black"
 					},
 					{
-						"name": "Yellow",
+						"key": "Yellow",
 						"priority": 2,
 						"title": "Yellow"
 					},
 					{
-						"name": "Red",
+						"key": "Red",
 						"priority": 3,
 						"title": "Red"
 					},
 					{
-						"name": "Aqua",
+						"key": "Aqua",
 						"priority": 4,
 						"title": "Aqua"
 					},
 					{
-						"name": "Tan",
+						"key": "Tan",
 						"priority": 5,
 						"title": "Tan"
 					},
 					{
-						"name": "Orange",
+						"key": "Orange",
 						"priority": 6,
 						"title": "Orange"
 					},
 					{
-						"name": "Blue",
+						"key": "Blue",
 						"priority": 7,
 						"title": "Blue"
 					}
@@ -635,29 +635,29 @@
 			"Joyce-small-blue.jpg",
 			"Joyce-small-orange.jpg"
 		],
-		"name": "Joyce Small Bag",
+		"key": "Joyce Small Bag",
 		"options": [
 			{
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
-				"name": "Color",
+				"key": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
 				"title": "Color",
 				"values": [
 					{
-						"name": "Black",
+						"key": "Black",
 						"priority": 1,
 						"title": "Black"
 					},
 					{
-						"name": "Blue",
+						"key": "Blue",
 						"priority": 2,
 						"title": "Blue"
 					},
 					{
-						"name": "Orange",
+						"key": "Orange",
 						"priority": 3,
 						"title": "Orange"
 					}
@@ -688,39 +688,39 @@
 			{
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
-				"name": "Color",
+				"key": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
 				"title": "Color",
 				"values": [
 					{
-						"name": "Black",
+						"key": "Black",
 						"priority": 1,
 						"title": "Black"
 					},
 					{
-						"name": "Yellow",
+						"key": "Yellow",
 						"priority": 2,
 						"title": "Yellow"
 					},
 					{
-						"name": "Red",
+						"key": "Red",
 						"priority": 3,
 						"title": "Red"
 					},
 					{
-						"name": "Orange",
+						"key": "Orange",
 						"priority": 4,
 						"title": "Orange"
 					},
 					{
-						"name": "Pink",
+						"key": "Pink",
 						"priority": 5,
 						"title": "Pink"
 					},
 					{
-						"name": "Mink",
+						"key": "Mink",
 						"priority": 6,
 						"title": "Mink"
 					}
@@ -749,29 +749,29 @@
 			{
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
-				"name": "Color",
+				"key": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
 				"title": "Color",
 				"values": [
 					{
-						"name": "Black",
+						"key": "Black",
 						"priority": 1,
 						"title": "Black"
 					},
 					{
-						"name": "Red",
+						"key": "Red",
 						"priority": 2,
 						"title": "Red"
 					},
 					{
-						"name": "Tan",
+						"key": "Tan",
 						"priority": 3,
 						"title": "Tan"
 					},
 					{
-						"name": "Indigo",
+						"key": "Indigo",
 						"priority": 4,
 						"title": "Indigo"
 					}
@@ -800,29 +800,29 @@
 			{
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
-				"name": "Color",
+				"key": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
 				"title": "Color",
 				"values": [
 					{
-						"name": "Black",
+						"key": "Black",
 						"priority": 1,
 						"title": "Black"
 					},
 					{
-						"name": "Yellow",
+						"key": "Yellow",
 						"priority": 2,
 						"title": "Yellow"
 					},
 					{
-						"name": "Red",
+						"key": "Red",
 						"priority": 3,
 						"title": "Red"
 					},
 					{
-						"name": "Green",
+						"key": "Green",
 						"priority": 4,
 						"title": "Green"
 					}

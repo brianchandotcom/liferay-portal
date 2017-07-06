@@ -24,7 +24,8 @@ if (Validator.isNull(body)) {
 	}
 }
 
-String editorName = InputEditorTag.getEditor(request, PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.html.jsp")).getName();
+Editor editor = InputEditorTag.getEditor(request, PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.html.jsp"));
+String editorName = editor.getName();
 
 Map<String, String> fileBrowserParams = new HashMap();
 

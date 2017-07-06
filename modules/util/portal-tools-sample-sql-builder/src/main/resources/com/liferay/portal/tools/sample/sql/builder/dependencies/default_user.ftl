@@ -1,16 +1,14 @@
 <#-- Default user -->
 
-<@insertUser
-	_userModel = dataFactory.defaultUserModel
-/>
+<@insertUser _userModel=dataFactory.defaultUserModel />
 
 <#-- Guest user -->
 
 <#assign userModel = dataFactory.guestUserModel />
 
 <@insertGroup
-	_groupModel = dataFactory.newGroupModel(userModel)
-	_publicPageCount = 0
+	_groupModel=dataFactory.newGroupModel(userModel)
+	_publicPageCount=0
 />
 
 <#assign
@@ -19,9 +17,9 @@
 />
 
 <@insertUser
-	_groupIds = groupIds
-	_roleIds = roleIds
-	_userModel = userModel
+	_groupIds=groupIds
+	_roleIds=roleIds
+	_userModel=userModel
 />
 
 <#-- Sample user -->
@@ -36,13 +34,11 @@
 	layoutModel = dataFactory.newLayoutModel(userGroupModel.groupId, "home", "", "")
 />
 
-<@insertLayout
-	_layoutModel = layoutModel
-/>
+<@insertLayout _layoutModel=layoutModel />
 
 <@insertGroup
-	_groupModel = userGroupModel
-	_publicPageCount = 1
+	_groupModel=userGroupModel
+	_publicPageCount=1
 />
 
 <#assign
@@ -51,9 +47,9 @@
 />
 
 <@insertUser
-	_groupIds = groupIds
-	_roleIds = roleIds
-	_userModel = userModel
+	_groupIds=groupIds
+	_roleIds=roleIds
+	_userModel=userModel
 />
 
 <#list groupIds as groupId>

@@ -64,9 +64,7 @@
 		<#list dlFolderModels as dlFolderModel>
 			${dataFactory.toInsertSQL(dlFolderModel)}
 
-			<@insertAssetEntry
-				_entry = dlFolderModel
-			/>
+			<@insertAssetEntry _entry=dlFolderModel />
 
 			<#local dlFileEntryModels = dataFactory.newDlFileEntryModels(dlFolderModel)>
 
@@ -77,25 +75,23 @@
 
 				${dataFactory.toInsertSQL(dlFileVersionModel)}
 
-				<@insertAssetEntry
-					_entry = dlFileEntryModel
-				/>
+				<@insertAssetEntry _entry=dlFileEntryModel />
 
 				<#local ddmStorageLinkId = dataFactory.getCounterNext()>
 
 				<@insertDDMContent
-					_ddmStorageLinkId = ddmStorageLinkId
-					_ddmStructureId = _ddmStructureId
-					_entry = dlFileEntryModel
+					_ddmStorageLinkId=ddmStorageLinkId
+					_ddmStructureId=_ddmStructureId
+					_entry=dlFileEntryModel
 				/>
 
 				<@insertMBDiscussion
-					_classNameId = dataFactory.DLFileEntryClassNameId
-					_classPK = dlFileEntryModel.fileEntryId
-					_groupId = dlFileEntryModel.groupId
-					_maxCommentCount = 0
-					_mbRootMessageId = dataFactory.getCounterNext()
-					_mbThreadId = dataFactory.getCounterNext()
+					_classNameId=dataFactory.DLFileEntryClassNameId
+					_classPK=dlFileEntryModel.fileEntryId
+					_groupId=dlFileEntryModel.groupId
+					_maxCommentCount=0
+					_mbRootMessageId=dataFactory.getCounterNext()
+					_mbThreadId=dataFactory.getCounterNext()
 				/>
 
 				${dataFactory.toInsertSQL(dataFactory.newSocialActivityModel(dlFileEntryModel))}
@@ -110,10 +106,10 @@
 			</#list>
 
 			<@insertDLFolder
-				_ddmStructureId = _ddmStructureId
-				_dlFolderDepth = _dlFolderDepth + 1
-				_groupId = groupId
-				_parentDLFolderId = dlFolderModel.folderId
+				_ddmStructureId=_ddmStructureId
+				_dlFolderDepth=_dlFolderDepth + 1
+				_groupId=groupId
+				_parentDLFolderId=dlFolderModel.folderId
 			/>
 		</#list>
 	</#if>
@@ -154,16 +150,12 @@
 
 	<#local mbRootMessageModel = dataFactory.newMBMessageModel(mbThreadModel, _classNameId, _classPK, 0)>
 
-	<@insertMBMessage
-		_mbMessageModel = mbRootMessageModel
-	/>
+	<@insertMBMessage _mbMessageModel=mbRootMessageModel />
 
 	<#local mbMessageModels = dataFactory.newMBMessageModels(mbThreadModel, _classNameId, _classPK, _maxCommentCount)>
 
 	<#list mbMessageModels as mbMessageModel>
-		<@insertMBMessage
-			_mbMessageModel = mbMessageModel
-		/>
+		<@insertMBMessage _mbMessageModel=mbMessageModel />
 
 		${dataFactory.toInsertSQL(dataFactory.newSocialActivityModel(mbMessageModel))}
 	</#list>
@@ -176,9 +168,7 @@
 >
 	${dataFactory.toInsertSQL(_mbMessageModel)}
 
-	<@insertAssetEntry
-		_entry = _mbMessageModel
-	/>
+	<@insertAssetEntry _entry=_mbMessageModel />
 </#macro>
 
 <#macro insertUser

@@ -9,9 +9,7 @@
 
 	${dataFactory.getCSVWriter("assetPublisher").write(layoutModel.friendlyURL + "\n")}
 
-	<@insertLayout
-		_layoutModel = layoutModel
-	/>
+	<@insertLayout _layoutModel=layoutModel />
 
 	<#assign portletPreferencesModels = dataFactory.newAssetPublisherPortletPreferencesModels(layoutModel.plid) />
 

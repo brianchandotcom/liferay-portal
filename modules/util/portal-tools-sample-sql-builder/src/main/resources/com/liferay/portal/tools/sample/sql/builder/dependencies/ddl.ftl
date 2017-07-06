@@ -8,9 +8,9 @@
 		/>
 
 		<@insertDDMStructure
-			_ddmStructureModel = ddmStructureModel
-			_ddmStructureLayoutModel = dataFactory.newDDLDDMStructureLayoutModel(groupId, ddmStructureVersionModel)
-			_ddmStructureVersionModel = ddmStructureVersionModel
+			_ddmStructureLayoutModel=dataFactory.newDDLDDMStructureLayoutModel(groupId, ddmStructureVersionModel)
+			_ddmStructureModel=ddmStructureModel
+			_ddmStructureVersionModel=ddmStructureVersionModel
 		/>
 	</#if>
 
@@ -21,9 +21,7 @@
 		layoutModel = dataFactory.newLayoutModel(groupId, layoutName, "", portletId)
 	/>
 
-	<@insertLayout
-		_layoutModel = layoutModel
-	/>
+	<@insertLayout _layoutModel=layoutModel />
 
 	<#assign ddlRecordSetModel = dataFactory.newDDLRecordSetModel(ddmStructureModel, ddlRecordSetCount) />
 
@@ -41,10 +39,10 @@
 		${dataFactory.toInsertSQL(dataFactory.newDDLRecordVersionModel(ddlRecordModel))}
 
 		<@insertDDMContent
-			_currentIndex = ddlRecordCount
-			_ddmStorageLinkId = dataFactory.getCounterNext()
-			_ddmStructureId = ddmStructureModel.structureId
-			_entry = ddlRecordModel
+			_currentIndex=ddlRecordCount
+			_ddmStorageLinkId=dataFactory.getCounterNext()
+			_ddmStructureId=ddmStructureModel.structureId
+			_entry=ddlRecordModel
 		/>
 
 		${dataFactory.getCSVWriter("dynamicDataList").write(ddlRecordModel.groupId + "," + layoutName + "," + portletId + "," + ddlRecordSetModel.recordSetId + "," + ddlRecordModel.recordId + "\n")}

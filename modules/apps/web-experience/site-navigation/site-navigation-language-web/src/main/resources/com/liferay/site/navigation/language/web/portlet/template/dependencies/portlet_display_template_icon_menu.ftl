@@ -1,6 +1,9 @@
 <#if entries?has_content>
 	<div class="truncate-text">
-		<@liferay_ui["icon-menu"] icon="../aui/globe" message=locale.getDisplayName(locale)>
+		<@liferay_ui["icon-menu"]
+			icon="../aui/globe"
+			message=locale.getDisplayName(locale)
+		>
 			<#list entries as entry>
 				<#if !entry.isSelected() && !entry.isDisabled()>
 					<@liferay_ui["icon"]

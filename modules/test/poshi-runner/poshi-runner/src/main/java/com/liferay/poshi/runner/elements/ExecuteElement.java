@@ -57,6 +57,8 @@ public class ExecuteElement extends PoshiElement {
 		String[] assignments = content.split(",");
 
 		for (String assignment : assignments) {
+			assignment = assignment.trim();
+
 			if (executeType.equals("macro")) {
 				assignment = "var " + assignment;
 

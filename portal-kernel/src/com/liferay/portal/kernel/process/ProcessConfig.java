@@ -23,6 +23,7 @@ import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Shuyang Zhou
@@ -40,6 +41,10 @@ public class ProcessConfig implements Serializable {
 
 	public String[] getBootstrapClassPathElements() {
 		return ArrayUtil.toStringArray(_bootstrapClassPathHolders);
+	}
+
+	public Map<String, String> getEnvironment() {
+		return _environment;
 	}
 
 	public String getJavaExecutable() {
@@ -77,6 +82,12 @@ public class ProcessConfig implements Serializable {
 			return this;
 		}
 
+		public Builder setEnvironment(Map<String, String> environment) {
+			_environment = environment;
+
+			return this;
+		}
+
 		public Builder setJavaExecutable(String javaExecutable) {
 			_javaExecutable = javaExecutable;
 
@@ -98,6 +109,7 @@ public class ProcessConfig implements Serializable {
 		private List<String> _arguments = Collections.emptyList();
 		private String _bootstrapClassPath = System.getProperty(
 			"java.class.path");
+		private Map<String, String> _environment;
 		private String _javaExecutable = "java";
 		private ClassLoader _reactClassLoader =
 			ProcessConfig.class.getClassLoader();
@@ -111,6 +123,7 @@ public class ProcessConfig implements Serializable {
 		_bootstrapClassPathHolders = _toPathHolders(
 			builder._bootstrapClassPath);
 
+		_environment = builder._environment;
 		_javaExecutable = builder._javaExecutable;
 		_reactClassLoader = builder._reactClassLoader;
 
@@ -135,6 +148,7 @@ public class ProcessConfig implements Serializable {
 
 	private final List<String> _arguments;
 	private final PathHolder[] _bootstrapClassPathHolders;
+	private final Map<String, String> _environment;
 	private final String _javaExecutable;
 	private final transient ClassLoader _reactClassLoader;
 	private final PathHolder[] _runtimeClassPathHolders;

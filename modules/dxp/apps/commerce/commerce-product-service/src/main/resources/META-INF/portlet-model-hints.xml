@@ -90,10 +90,9 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="CPDefinitionId" type="long" />
 		<field name="CPOptionId" type="long" />
-		<field name="name" type="String">
+		<field localized="true" name="title" type="String">
 			<validator name="required" />
 		</field>
-		<field localized="true" name="title" type="String" />
 		<field localized="true" name="description" type="String" />
 		<field name="DDMFormFieldTypeName" type="String">
 			<validator name="required" />
@@ -115,12 +114,14 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="CPDefinitionOptionRelId" type="long" />
-		<field name="name" type="String">
+		<field localized="true" name="title" type="String">
 			<validator name="required" />
 		</field>
-		<field localized="true" name="title" type="String" />
 		<field name="priority" type="double">
 			<validator name="number" />
+		</field>
+		<field name="key" type="String">
+			<validator name="required" />
 		</field>
 	</model>
 	<model name="com.liferay.commerce.product.model.CPDisplayLayout">
@@ -184,9 +185,6 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="name" type="String">
-			<validator name="required" />
-		</field>
 		<field localized="true" name="title" type="String">
 			<validator name="required" />
 		</field>
@@ -199,6 +197,9 @@
 		<field name="facetable" type="boolean" />
 		<field name="required" type="boolean" />
 		<field name="skuContributor" type="boolean" />
+		<field name="key" type="String">
+			<validator name="required" />
+		</field>
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPOptionCategory">
@@ -210,15 +211,15 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="name" type="String">
-			<validator name="required" />
-		</field>
 		<field localized="true" name="title" type="String">
 			<validator name="required" />
 		</field>
 		<field localized="true" name="description" type="String" />
 		<field name="priority" type="double">
 			<validator name="number" />
+		</field>
+		<field name="key" type="String">
+			<validator name="required" />
 		</field>
 		<field name="lastPublishDate" type="Date" />
 	</model>
@@ -232,14 +233,14 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="CPOptionId" type="long" />
-		<field name="name" type="String">
-			<validator name="required" />
-		</field>
 		<field localized="true" name="title" type="String">
 			<validator name="required" />
 		</field>
 		<field name="priority" type="double">
 			<validator name="number" />
+		</field>
+		<field name="key" type="String">
+			<validator name="required" />
 		</field>
 		<field name="lastPublishDate" type="Date" />
 	</model>

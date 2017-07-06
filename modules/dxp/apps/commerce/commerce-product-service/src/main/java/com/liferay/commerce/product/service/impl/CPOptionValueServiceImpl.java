@@ -38,8 +38,8 @@ public class CPOptionValueServiceImpl extends CPOptionValueServiceBaseImpl {
 
 	@Override
 	public CPOptionValue addCPOptionValue(
-			long cpOptionId, String name, Map<Locale, String> titleMap,
-			double priority, ServiceContext serviceContext)
+			long cpOptionId, Map<Locale, String> titleMap, double priority,
+			String key, ServiceContext serviceContext)
 		throws PortalException {
 
 		CPOptionPermission.check(
@@ -47,7 +47,7 @@ public class CPOptionValueServiceImpl extends CPOptionValueServiceBaseImpl {
 			CPActionKeys.ADD_COMMERCE_PRODUCT_OPTION_VALUE);
 
 		return cpOptionValueLocalService.addCPOptionValue(
-			cpOptionId, name, titleMap, priority, serviceContext);
+			cpOptionId, titleMap, priority, key, serviceContext);
 	}
 
 	@Override
@@ -147,8 +147,8 @@ public class CPOptionValueServiceImpl extends CPOptionValueServiceBaseImpl {
 
 	@Override
 	public CPOptionValue updateCPOptionValue(
-			long cpOptionValueId, String name, Map<Locale, String> titleMap,
-			double priority, ServiceContext serviceContext)
+			long cpOptionValueId, Map<Locale, String> titleMap,
+			double priority, String key, ServiceContext serviceContext)
 		throws PortalException {
 
 		CPOptionPermission.checkCPOptionValue(
@@ -156,7 +156,7 @@ public class CPOptionValueServiceImpl extends CPOptionValueServiceBaseImpl {
 			CPActionKeys.UPDATE_COMMERCE_PRODUCT_OPTION_VALUE);
 
 		return cpOptionValueLocalService.updateCPOptionValue(
-			cpOptionValueId, name, titleMap, priority, serviceContext);
+			cpOptionValueId, titleMap, priority, key, serviceContext);
 	}
 
 }

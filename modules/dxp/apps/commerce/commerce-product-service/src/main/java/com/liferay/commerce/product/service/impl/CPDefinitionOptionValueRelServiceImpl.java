@@ -38,9 +38,8 @@ public class CPDefinitionOptionValueRelServiceImpl
 
 	@Override
 	public CPDefinitionOptionValueRel addCPDefinitionOptionValueRel(
-			long cpDefinitionOptionRelId, String name,
-			Map<Locale, String> titleMap, double priority,
-			ServiceContext serviceContext)
+			long cpDefinitionOptionRelId, Map<Locale, String> titleMap,
+			double priority, String key, ServiceContext serviceContext)
 		throws PortalException {
 
 		CPDefinitionPermission.checkCPDefinitionOptionRel(
@@ -48,7 +47,7 @@ public class CPDefinitionOptionValueRelServiceImpl
 
 		return cpDefinitionOptionValueRelLocalService.
 			addCPDefinitionOptionValueRel(
-				cpDefinitionOptionRelId, name, titleMap, priority,
+				cpDefinitionOptionRelId, titleMap, priority, key,
 				serviceContext);
 	}
 
@@ -166,9 +165,8 @@ public class CPDefinitionOptionValueRelServiceImpl
 
 	@Override
 	public CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
-			long cpDefinitionOptionValueRelId, String name,
-			Map<Locale, String> titleMap, double priority,
-			ServiceContext serviceContext)
+			long cpDefinitionOptionValueRelId, Map<Locale, String> titleMap,
+			double priority, String key, ServiceContext serviceContext)
 		throws PortalException {
 
 		CPDefinitionPermission.checkCPDefinitionOptionValueRel(
@@ -177,7 +175,7 @@ public class CPDefinitionOptionValueRelServiceImpl
 
 		return cpDefinitionOptionValueRelLocalService.
 			updateCPDefinitionOptionValueRel(
-				cpDefinitionOptionValueRelId, name, titleMap, priority,
+				cpDefinitionOptionValueRelId, titleMap, priority, key,
 				serviceContext);
 	}
 

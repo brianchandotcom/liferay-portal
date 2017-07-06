@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
@@ -51,21 +52,24 @@ import java.util.Map;
  */
 public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 
+	public static final String FIELD_KEY = "key";
+
 	public static final String[] SELECTED_FIELD_NAMES =
 		{Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID};
 
 	@Override
 	public CPOption addCPOption(
-			String name, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,
-			boolean facetable, boolean required, boolean skuContributor,
-			ServiceContext serviceContext)
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			String ddmFormFieldTypeName, boolean facetable, boolean required,
+			boolean skuContributor, String key, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product option
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
+
+		key = FriendlyURLNormalizerUtil.normalize(key);
 
 		long cpOptionId = counterLocalService.increment();
 
@@ -76,13 +80,13 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 		cpOption.setCompanyId(user.getCompanyId());
 		cpOption.setUserId(user.getUserId());
 		cpOption.setUserName(user.getFullName());
-		cpOption.setName(name);
 		cpOption.setTitleMap(titleMap);
 		cpOption.setDescriptionMap(descriptionMap);
 		cpOption.setDDMFormFieldTypeName(ddmFormFieldTypeName);
 		cpOption.setFacetable(facetable);
 		cpOption.setRequired(required);
 		cpOption.setSkuContributor(skuContributor);
+		cpOption.setKey(key);
 		cpOption.setExpandoBridgeAttributes(serviceContext);
 
 		cpOptionPersistence.update(cpOption);
@@ -221,23 +225,25 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 
 	@Override
 	public CPOption updateCPOption(
-			long cpOptionId, String name, Map<Locale, String> titleMap,
+			long cpOptionId, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,
 			boolean facetable, boolean required, boolean skuContributor,
-			ServiceContext serviceContext)
+			String key, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product option
 
 		CPOption cpOption = cpOptionPersistence.findByPrimaryKey(cpOptionId);
 
-		cpOption.setName(name);
+		key = FriendlyURLNormalizerUtil.normalize(key);
+
 		cpOption.setTitleMap(titleMap);
 		cpOption.setDescriptionMap(descriptionMap);
 		cpOption.setDDMFormFieldTypeName(ddmFormFieldTypeName);
 		cpOption.setFacetable(facetable);
 		cpOption.setRequired(required);
 		cpOption.setSkuContributor(skuContributor);
+		cpOption.setKey(key);
 		cpOption.setExpandoBridgeAttributes(serviceContext);
 
 		cpOptionPersistence.update(cpOption);
@@ -258,9 +264,10 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 		Map<String, Serializable> attributes = new HashMap<>();
 
 		attributes.put(Field.ENTRY_CLASS_PK, keywords);
-		attributes.put(Field.NAME, keywords);
+		attributes.put(Field.TITLE, keywords);
 		attributes.put(Field.DESCRIPTION, keywords);
 		attributes.put(Field.CONTENT, keywords);
+		attributes.put(FIELD_KEY, keywords);
 		attributes.put("params", params);
 
 		searchContext.setAttributes(attributes);

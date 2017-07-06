@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
@@ -52,19 +53,23 @@ import java.util.Map;
 public class CPOptionValueLocalServiceImpl
 	extends CPOptionValueLocalServiceBaseImpl {
 
+	public static final String FIELD_KEY = "key";
+
 	public static final String[] SELECTED_FIELD_NAMES =
 		{Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID};
 
 	@Override
 	public CPOptionValue addCPOptionValue(
-			long cpOptionId, String name, Map<Locale, String> titleMap,
-			double priority, ServiceContext serviceContext)
+			long cpOptionId, Map<Locale, String> titleMap, double priority,
+			String key, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product option value
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
+
+		key = FriendlyURLNormalizerUtil.normalize(key);
 
 		long cpOptionValueId = counterLocalService.increment();
 
@@ -77,9 +82,9 @@ public class CPOptionValueLocalServiceImpl
 		cpOptionValue.setUserId(user.getUserId());
 		cpOptionValue.setUserName(user.getFullName());
 		cpOptionValue.setCPOptionId(cpOptionId);
-		cpOptionValue.setName(name);
 		cpOptionValue.setTitleMap(titleMap);
 		cpOptionValue.setPriority(priority);
+		cpOptionValue.setKey(key);
 		cpOptionValue.setExpandoBridgeAttributes(serviceContext);
 
 		cpOptionValuePersistence.update(cpOptionValue);
@@ -173,8 +178,8 @@ public class CPOptionValueLocalServiceImpl
 
 	@Override
 	public CPOptionValue updateCPOptionValue(
-			long cpOptionValueId, String name, Map<Locale, String> titleMap,
-			double priority, ServiceContext serviceContext)
+			long cpOptionValueId, Map<Locale, String> titleMap,
+			double priority, String key, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product option value
@@ -182,9 +187,11 @@ public class CPOptionValueLocalServiceImpl
 		CPOptionValue cpOptionValue = cpOptionValuePersistence.findByPrimaryKey(
 			cpOptionValueId);
 
-		cpOptionValue.setName(name);
+		key = FriendlyURLNormalizerUtil.normalize(key);
+
 		cpOptionValue.setTitleMap(titleMap);
 		cpOptionValue.setPriority(priority);
+		cpOptionValue.setKey(key);
 		cpOptionValue.setExpandoBridgeAttributes(serviceContext);
 
 		cpOptionValuePersistence.update(cpOptionValue);
@@ -207,6 +214,7 @@ public class CPOptionValueLocalServiceImpl
 		attributes.put(Field.ENTRY_CLASS_PK, keywords);
 		attributes.put(Field.TITLE, keywords);
 		attributes.put(Field.CONTENT, keywords);
+		attributes.put(FIELD_KEY, keywords);
 		attributes.put("CPOptionId", cpOptionId);
 		attributes.put("params", params);
 

@@ -37,9 +37,8 @@ public class CPOptionCategoryServiceImpl
 
 	@Override
 	public CPOptionCategory addCPOptionCategory(
-			String name, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, double priority,
-			ServiceContext serviceContext)
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			double priority, String key, ServiceContext serviceContext)
 		throws PortalException {
 
 		CPPermission.check(
@@ -47,7 +46,7 @@ public class CPOptionCategoryServiceImpl
 			CPActionKeys.ADD_COMMERCE_PRODUCT_OPTION_CATEGORY);
 
 		return cpOptionCategoryLocalService.addCPOptionCategory(
-			name, titleMap, descriptionMap, priority, serviceContext);
+			titleMap, descriptionMap, priority, key, serviceContext);
 	}
 
 	@Override
@@ -124,8 +123,8 @@ public class CPOptionCategoryServiceImpl
 
 	@Override
 	public CPOptionCategory updateCPOptionCategory(
-			long cpOptionCategoryId, String name, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, double priority,
+			long cpOptionCategoryId, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, double priority, String key,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -133,7 +132,7 @@ public class CPOptionCategoryServiceImpl
 			getPermissionChecker(), cpOptionCategoryId, ActionKeys.UPDATE);
 
 		return cpOptionCategoryLocalService.updateCPOptionCategory(
-			cpOptionCategoryId, name, titleMap, descriptionMap, priority,
+			cpOptionCategoryId, titleMap, descriptionMap, priority, key,
 			serviceContext);
 	}
 

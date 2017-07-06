@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -37,15 +38,16 @@ public class CPOptionCategoryLocalServiceImpl
 
 	@Override
 	public CPOptionCategory addCPOptionCategory(
-			String name, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, double priority,
-			ServiceContext serviceContext)
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			double priority, String key, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product option category
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
+
+		key = FriendlyURLNormalizerUtil.normalize(key);
 
 		long cpOptionCategoryId = counterLocalService.increment();
 
@@ -57,10 +59,10 @@ public class CPOptionCategoryLocalServiceImpl
 		cpOptionCategory.setCompanyId(user.getCompanyId());
 		cpOptionCategory.setUserId(user.getUserId());
 		cpOptionCategory.setUserName(user.getFullName());
-		cpOptionCategory.setName(name);
 		cpOptionCategory.setTitleMap(titleMap);
 		cpOptionCategory.setDescriptionMap(descriptionMap);
 		cpOptionCategory.setPriority(priority);
+		cpOptionCategory.setKey(key);
 
 		cpOptionCategoryPersistence.update(cpOptionCategory);
 
@@ -137,18 +139,20 @@ public class CPOptionCategoryLocalServiceImpl
 
 	@Override
 	public CPOptionCategory updateCPOptionCategory(
-			long cpOptionCategoryId, String name, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, double priority,
+			long cpOptionCategoryId, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, double priority, String key,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		CPOptionCategory cpOptionCategory =
 			cpOptionCategoryPersistence.findByPrimaryKey(cpOptionCategoryId);
 
-		cpOptionCategory.setName(name);
+		key = FriendlyURLNormalizerUtil.normalize(key);
+
 		cpOptionCategory.setTitleMap(titleMap);
 		cpOptionCategory.setDescriptionMap(descriptionMap);
 		cpOptionCategory.setPriority(priority);
+		cpOptionCategory.setKey(key);
 
 		cpOptionCategoryPersistence.update(cpOptionCategory);
 

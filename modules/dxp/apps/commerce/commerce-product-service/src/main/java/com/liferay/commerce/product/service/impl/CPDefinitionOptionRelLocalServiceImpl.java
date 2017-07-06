@@ -65,11 +65,10 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		CPOption cpOption = cpOptionLocalService.getCPOption(cpOptionId);
 
 		return cpDefinitionOptionRelLocalService.addCPDefinitionOptionRel(
-			cpDefinitionId, cpOptionId, cpOption.getName(),
-			cpOption.getTitleMap(), cpOption.getDescriptionMap(),
-			cpOption.getDDMFormFieldTypeName(), 0, cpOption.getFacetable(),
-			cpOption.isRequired(), cpOption.getSkuContributor(),
-			importOptionValue, serviceContext);
+			cpDefinitionId, cpOptionId, cpOption.getTitleMap(),
+			cpOption.getDescriptionMap(), cpOption.getDDMFormFieldTypeName(),
+			0, cpOption.getFacetable(), cpOption.isRequired(),
+			cpOption.getSkuContributor(), importOptionValue, serviceContext);
 	}
 
 	@Override
@@ -83,10 +82,10 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 	@Override
 	public CPDefinitionOptionRel addCPDefinitionOptionRel(
-			long cpDefinitionId, long cpOptionId, String name,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			String ddmFormFieldTypeName, double priority, boolean facetable,
-			boolean required, boolean skuContributor, boolean importOptionValue,
+			long cpDefinitionId, long cpOptionId, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,
+			double priority, boolean facetable, boolean required,
+			boolean skuContributor, boolean importOptionValue,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -107,7 +106,6 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		cpDefinitionOptionRel.setUserName(user.getFullName());
 		cpDefinitionOptionRel.setCPDefinitionId(cpDefinitionId);
 		cpDefinitionOptionRel.setCPOptionId(cpOptionId);
-		cpDefinitionOptionRel.setName(name);
 		cpDefinitionOptionRel.setTitleMap(titleMap);
 		cpDefinitionOptionRel.setDescriptionMap(descriptionMap);
 		cpDefinitionOptionRel.setDDMFormFieldTypeName(ddmFormFieldTypeName);
@@ -299,7 +297,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 	@Override
 	public CPDefinitionOptionRel updateCPDefinitionOptionRel(
-			long cpDefinitionOptionRelId, long cpOptionId, String name,
+			long cpDefinitionOptionRelId, long cpOptionId,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			String ddmFormFieldTypeName, double priority, boolean facetable,
 			boolean required, boolean skuContributor,
@@ -311,7 +309,6 @@ public class CPDefinitionOptionRelLocalServiceImpl
 				cpDefinitionOptionRelId);
 
 		cpDefinitionOptionRel.setCPOptionId(cpOptionId);
-		cpDefinitionOptionRel.setName(name);
 		cpDefinitionOptionRel.setTitleMap(titleMap);
 		cpDefinitionOptionRel.setDescriptionMap(descriptionMap);
 		cpDefinitionOptionRel.setDDMFormFieldTypeName(ddmFormFieldTypeName);

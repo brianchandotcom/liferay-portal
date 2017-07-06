@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
@@ -55,6 +56,8 @@ import java.util.Map;
 public class CPDefinitionOptionValueRelLocalServiceImpl
 	extends CPDefinitionOptionValueRelLocalServiceBaseImpl {
 
+	public static final String FIELD_KEY = "key";
+
 	public static final String[] SELECTED_FIELD_NAMES =
 		{Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID};
 
@@ -66,22 +69,23 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 
 		return cpDefinitionOptionValueRelLocalService.
 			addCPDefinitionOptionValueRel(
-				cpDefinitionOptionRelId, cpOptionValue.getName(),
-				cpOptionValue.getTitleMap(), cpOptionValue.getPriority(),
+				cpDefinitionOptionRelId, cpOptionValue.getTitleMap(),
+				cpOptionValue.getPriority(), cpOptionValue.getKey(),
 				serviceContext);
 	}
 
 	@Override
 	public CPDefinitionOptionValueRel addCPDefinitionOptionValueRel(
-			long cpDefinitionOptionRelId, String name,
-			Map<Locale, String> titleMap, double priority,
-			ServiceContext serviceContext)
+			long cpDefinitionOptionRelId, Map<Locale, String> titleMap,
+			double priority, String key, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product definition option value rel
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
+
+		key = FriendlyURLNormalizerUtil.normalize(key);
 
 		long cpDefinitionOptionValueRelId = counterLocalService.increment();
 
@@ -96,9 +100,9 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		cpDefinitionOptionValueRel.setUserName(user.getFullName());
 		cpDefinitionOptionValueRel.setCPDefinitionOptionRelId(
 			cpDefinitionOptionRelId);
-		cpDefinitionOptionValueRel.setName(name);
-		cpDefinitionOptionValueRel.setPriority(priority);
 		cpDefinitionOptionValueRel.setTitleMap(titleMap);
+		cpDefinitionOptionValueRel.setPriority(priority);
+		cpDefinitionOptionValueRel.setKey(key);
 		cpDefinitionOptionValueRel.setExpandoBridgeAttributes(serviceContext);
 
 		cpDefinitionOptionValueRelPersistence.update(
@@ -241,9 +245,8 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 
 	@Override
 	public CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
-			long cpDefinitionOptionValueRelId, String name,
-			Map<Locale, String> titleMap, double priority,
-			ServiceContext serviceContext)
+			long cpDefinitionOptionValueRelId, Map<Locale, String> titleMap,
+			double priority, String key, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product definition option value rel
@@ -252,9 +255,11 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 			cpDefinitionOptionValueRelPersistence.findByPrimaryKey(
 				cpDefinitionOptionValueRelId);
 
-		cpDefinitionOptionValueRel.setName(name);
+		key = FriendlyURLNormalizerUtil.normalize(key);
+
 		cpDefinitionOptionValueRel.setTitleMap(titleMap);
 		cpDefinitionOptionValueRel.setPriority(priority);
+		cpDefinitionOptionValueRel.setKey(key);
 		cpDefinitionOptionValueRel.setExpandoBridgeAttributes(serviceContext);
 
 		cpDefinitionOptionValueRelPersistence.update(
@@ -278,6 +283,7 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		attributes.put(Field.ENTRY_CLASS_PK, keywords);
 		attributes.put(Field.TITLE, keywords);
 		attributes.put(Field.CONTENT, keywords);
+		attributes.put(FIELD_KEY, keywords);
 		attributes.put("CPDefinitionOptionRelId", cpDefinitionOptionRelId);
 		attributes.put("params", params);
 

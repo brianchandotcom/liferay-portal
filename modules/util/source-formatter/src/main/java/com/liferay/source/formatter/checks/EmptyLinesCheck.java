@@ -488,7 +488,7 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 		Pattern.compile(
 			"\n(\t*)<.* />\n(\t*)<([-\\w:]+|\\w((?!</| />).)*[^/]>)\n");
 	private final Pattern _missingEmptyLinePattern1 = Pattern.compile(
-		"(\t| = |return )new .*\\(.*\\) \\{\n\t+[^{\t]");
+		"(\t| = | -> |return )new .*\\(.*\\) \\{\n\t+[^{\t]");
 	private final Pattern _missingEmptyLinePattern2 = Pattern.compile(
 		"(\n\t*)(public|private|protected) [^;]+? \\{");
 	private final Pattern _missingEmptyLinePattern3 = Pattern.compile(

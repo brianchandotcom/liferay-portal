@@ -70,7 +70,9 @@ public class IndexerPostProcessorRegistryTest {
 		IndexerPostProcessor[] mbMessageIndexerPostProcessors =
 			mbMessageIndexer.getIndexerPostProcessors();
 
-		Assert.assertEquals(1, mbMessageIndexerPostProcessors.length);
+		Assert.assertEquals(
+			Arrays.toString(mbMessageIndexerPostProcessors), 1,
+			mbMessageIndexerPostProcessors.length);
 
 		IndexerPostProcessor mbMessageIndexerPostProcessor =
 			mbMessageIndexerPostProcessors[0];
@@ -83,7 +85,9 @@ public class IndexerPostProcessorRegistryTest {
 		IndexerPostProcessor[] mbThreadIndexerPostProcessors =
 			mbThreadIndexer.getIndexerPostProcessors();
 
-		Assert.assertEquals(1, mbThreadIndexerPostProcessors.length);
+		Assert.assertEquals(
+			Arrays.toString(mbThreadIndexerPostProcessors), 1,
+			mbThreadIndexerPostProcessors.length);
 
 		IndexerPostProcessor mbThreadIndexerPostProcessor =
 			mbThreadIndexerPostProcessors[0];
@@ -101,7 +105,9 @@ public class IndexerPostProcessorRegistryTest {
 		IndexerPostProcessor[] userIndexerPostProcessors =
 			userIndexer.getIndexerPostProcessors();
 
-		Assert.assertEquals(1, userIndexerPostProcessors.length);
+		Assert.assertEquals(
+			Arrays.toString(userIndexerPostProcessors), 1,
+			userIndexerPostProcessors.length);
 
 		IndexerPostProcessor userIndexerPostProcessor =
 			userIndexerPostProcessors[0];
@@ -114,7 +120,9 @@ public class IndexerPostProcessorRegistryTest {
 		IndexerPostProcessor[] userGroupIndexerPostProcessors =
 			userGroupIndexer.getIndexerPostProcessors();
 
-		Assert.assertEquals(1, userGroupIndexerPostProcessors.length);
+		Assert.assertEquals(
+			Arrays.toString(userGroupIndexerPostProcessors), 1,
+			userGroupIndexerPostProcessors.length);
 
 		IndexerPostProcessor userGroupIndexerPostProcessor =
 			userGroupIndexerPostProcessors[0];
@@ -215,7 +223,9 @@ public class IndexerPostProcessorRegistryTest {
 		IndexerPostProcessor[] organizationIndexerPostProcessors =
 			organizationIndexer.getIndexerPostProcessors();
 
-		Assert.assertEquals(1, organizationIndexerPostProcessors.length);
+		Assert.assertEquals(
+			Arrays.toString(organizationIndexerPostProcessors), 1,
+			organizationIndexerPostProcessors.length);
 
 		IndexerPostProcessor organizationIndexerPostProcessor =
 			organizationIndexerPostProcessors[0];
@@ -231,7 +241,9 @@ public class IndexerPostProcessorRegistryTest {
 		IndexerPostProcessor[] contactIndexerPostProcessors =
 			contactIndexer.getIndexerPostProcessors();
 
-		Assert.assertEquals(1, contactIndexerPostProcessors.length);
+		Assert.assertEquals(
+			Arrays.toString(contactIndexerPostProcessors), 1,
+			contactIndexerPostProcessors.length);
 
 		IndexerPostProcessor contactIndexerPostProcessor =
 			contactIndexerPostProcessors[0];

@@ -53,10 +53,6 @@ public class CPDefinitionItemSelectorChecker extends EmptyOnClickRowChecker {
 
 	@Override
 	public boolean isDisabled(Object obj) {
-		if (isChecked(obj)) {
-			return true;
-		}
-
 		CPDefinition cpDefinition = (CPDefinition)obj;
 
 		for (CPDefinitionLink cpDefinitionLink : _cpDefinitionLinks) {

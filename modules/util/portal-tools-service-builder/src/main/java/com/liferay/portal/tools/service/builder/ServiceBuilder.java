@@ -1704,21 +1704,45 @@ public class ServiceBuilder {
 		String packageName = javaClass.getPackageName();
 
 		if (packageName.endsWith(".service.base")) {
-			if (methodName.endsWith("Finder") &&
-				(methodName.startsWith("get") ||
-				 methodName.startsWith("set"))) {
+			if (!methodName.endsWith("Finder") &&
+				!methodName.endsWith("Persistence") &&
+				!methodName.endsWith("Service")) {
 
-				return false;
+				return true;
 			}
-			else if (methodName.endsWith("Persistence") &&
-					 (methodName.startsWith("get") ||
-					  methodName.startsWith("set"))) {
 
-				return false;
+			Type[] parameterTypes = method.getParameterTypes(true);
+			Type returnType = method.getReturnType(true);
+
+			Type checkType = null;
+
+			if (methodName.startsWith("get")) {
+				if (ArrayUtil.isEmpty(parameterTypes)) {
+					checkType = returnType;
+				}
 			}
-			else if (methodName.endsWith("Service") &&
-					 (methodName.startsWith("get") ||
-					  methodName.startsWith("set"))) {
+			else if (methodName.startsWith("set")) {
+				if ((parameterTypes != null) && (parameterTypes.length == 1)) {
+					checkType = parameterTypes[0];
+				}
+			}
+
+			if (checkType == null) {
+				return true;
+			}
+
+			String checkTypeName = checkType.getFullyQualifiedName();
+
+			int pos = checkTypeName.lastIndexOf(CharPool.PERIOD);
+
+			if (pos == -1) {
+				return true;
+			}
+
+			String checkPackageName = checkTypeName.substring(0, pos);
+
+			if (checkPackageName.endsWith(".persistence") ||
+				checkPackageName.endsWith(".service")) {
 
 				return false;
 			}

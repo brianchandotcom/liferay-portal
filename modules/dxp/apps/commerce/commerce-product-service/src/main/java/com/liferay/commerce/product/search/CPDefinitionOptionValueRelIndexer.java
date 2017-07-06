@@ -55,6 +55,7 @@ public class CPDefinitionOptionValueRelIndexer
 
 	public static final String FIELD_CP_DEFINITION_OPTION_REL_ID =
 		"CPDefinitionOptionRelId";
+
 	public static final String FIELD_KEY = "key";
 
 	public CPDefinitionOptionValueRelIndexer() {

@@ -178,8 +178,8 @@ public class CPOptionValueLocalServiceImpl
 
 	@Override
 	public CPOptionValue updateCPOptionValue(
-			long cpOptionValueId, Map<Locale, String> titleMap,
-			double priority, String key, ServiceContext serviceContext)
+			long cpOptionValueId, Map<Locale, String> titleMap, double priority,
+			String key, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product option value

@@ -66,18 +66,9 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 		return cpDefinitionOptionRelLocalService.addCPDefinitionOptionRel(
 			cpDefinitionId, cpOptionId, cpOption.getTitleMap(),
-			cpOption.getDescriptionMap(), cpOption.getDDMFormFieldTypeName(),
-			0, cpOption.getFacetable(), cpOption.isRequired(),
+			cpOption.getDescriptionMap(), cpOption.getDDMFormFieldTypeName(), 0,
+			cpOption.getFacetable(), cpOption.isRequired(),
 			cpOption.getSkuContributor(), importOptionValue, serviceContext);
-	}
-
-	@Override
-	public CPDefinitionOptionRel addCPDefinitionOptionRel(
-			long cpDefinitionId, long cpOptionId, ServiceContext serviceContext)
-		throws PortalException {
-
-		return cpDefinitionOptionRelLocalService.addCPDefinitionOptionRel(
-			cpDefinitionId, cpOptionId, true, serviceContext);
 	}
 
 	@Override
@@ -125,6 +116,15 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		}
 
 		return cpDefinitionOptionRel;
+	}
+
+	@Override
+	public CPDefinitionOptionRel addCPDefinitionOptionRel(
+			long cpDefinitionId, long cpOptionId, ServiceContext serviceContext)
+		throws PortalException {
+
+		return cpDefinitionOptionRelLocalService.addCPDefinitionOptionRel(
+			cpDefinitionId, cpOptionId, true, serviceContext);
 	}
 
 	@Override

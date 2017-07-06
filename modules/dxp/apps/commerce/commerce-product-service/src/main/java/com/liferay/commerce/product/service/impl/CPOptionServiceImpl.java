@@ -49,8 +49,8 @@ public class CPOptionServiceImpl extends CPOptionServiceBaseImpl {
 			CPActionKeys.ADD_COMMERCE_PRODUCT_OPTION);
 
 		return cpOptionLocalService.addCPOption(
-			titleMap, descriptionMap, ddmFormFieldTypeName, facetable,
-			required, skuContributor, key, serviceContext);
+			titleMap, descriptionMap, ddmFormFieldTypeName, facetable, required,
+			skuContributor, key, serviceContext);
 	}
 
 	@Override

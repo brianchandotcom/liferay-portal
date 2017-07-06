@@ -49,6 +49,7 @@ public class CPOptionValueIndexer extends BaseIndexer<CPOptionValue> {
 	public static final String CLASS_NAME = CPOptionValue.class.getName();
 
 	public static final String FIELD_CP_OPTION_ID = "CPOptionId";
+
 	public static final String FIELD_KEY = "key";
 
 	public CPOptionValueIndexer() {

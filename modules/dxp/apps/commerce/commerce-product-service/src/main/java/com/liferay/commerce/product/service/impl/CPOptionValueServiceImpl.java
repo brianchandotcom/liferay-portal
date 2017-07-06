@@ -147,8 +147,8 @@ public class CPOptionValueServiceImpl extends CPOptionValueServiceBaseImpl {
 
 	@Override
 	public CPOptionValue updateCPOptionValue(
-			long cpOptionValueId, Map<Locale, String> titleMap,
-			double priority, String key, ServiceContext serviceContext)
+			long cpOptionValueId, Map<Locale, String> titleMap, double priority,
+			String key, ServiceContext serviceContext)
 		throws PortalException {
 
 		CPOptionPermission.checkCPOptionValue(

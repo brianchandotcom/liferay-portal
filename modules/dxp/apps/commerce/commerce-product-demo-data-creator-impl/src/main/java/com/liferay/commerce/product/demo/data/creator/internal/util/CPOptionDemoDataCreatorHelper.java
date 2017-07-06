@@ -161,8 +161,8 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 		ServiceContext serviceContext = getServiceContext(userId, groupId);
 
 		cpOption = _cpOptionLocalService.addCPOption(
-			titleMap, descriptionMap, ddmFormFieldTypeName, facetable,
-			required, skuContributor, key, serviceContext);
+			titleMap, descriptionMap, ddmFormFieldTypeName, facetable, required,
+			skuContributor, key, serviceContext);
 
 		_cpOptions.put(key, cpOption);
 

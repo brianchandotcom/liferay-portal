@@ -273,77 +273,96 @@ private void _cherryPickPrepNext(Commit commit) {
 	assert moduleDirName : "Unable to parse commit ${commit.id}"
 
 	File moduleDir = new File(projectDir.parentFile, moduleDirName)
-
-	if (_isGitRepoReadOnly(moduleDir)) {
-		println "Commit ${commit.id} NOT cherry-picked: ${relativePath(moduleDir)} is in a read-only subrepo"
-
-		return
-	}
-
-	List<String> excludedTaskNames = []
-	Closure<String> versionClosure = osgiVersionClosure
-	String versionFileName = "bnd.bnd"
-
-	if (_exists(moduleDir, "build.xml")) {
-		versionClosure = antVersionClosure
-		versionFileName = "docroot/WEB-INF/liferay-plugin-package.properties"
-	}
-	else if (_contains(moduleDir, "gulpfile.js", "require('liferay-theme-tasks')")) {
-		excludedTaskNames = ["writeParentThemesDigest"]
-		versionClosure = themeVersionClosure
-		versionFileName = "package.json"
-	}
-
-	File versionFile = new File(moduleDir, versionFileName)
-
-	String newVersion = versionClosure(_getCommitFileStream(commit.id, FileUtil.relativize(versionFile, projectDir.parentFile)))
-	String curVersion = versionClosure(versionFile)
-
-	def curVersionNumber
-	def newVersionNumber
-
-	if (newVersion.indexOf('.') != -1) {
-		curVersionNumber = VersionNumber.parse(curVersion)
-		newVersionNumber = VersionNumber.parse(newVersion)
-	}
-	else {
-		curVersionNumber = curVersion as Integer
-		newVersionNumber = newVersion as Integer
-	}
-
-	if (curVersionNumber >= newVersionNumber) {
-		println "Commit ${commit.id} NOT cherry-picked: ${relativePath(moduleDir)} has a version (${curVersionNumber}) which is greater or equal than the one in the commit (${newVersionNumber})"
-
-		return
-	}
-
-	StartParameter startParameter = gradle.startParameter.newBuild()
+	boolean moduleOSGi = true
 
 	String moduleTaskPrefix = _getModuleTaskPrefix(moduleDir)
 
-	startParameter.excludedTaskNames = excludedTaskNames.collect {
-		moduleTaskPrefix + it
+	if (_isGitRepoReadOnly(moduleDir)) {
+		println "Commit ${commit.id} NOT cherry-picked: ${relativePath(moduleDir)} is in a read-only subrepo"
+	}
+	else {
+		List<String> excludedTaskNames = []
+		Closure<String> versionClosure = osgiVersionClosure
+		String versionFileName = "bnd.bnd"
+
+		if (_exists(moduleDir, "build.xml")) {
+			moduleOSGi = false
+			versionClosure = antVersionClosure
+			versionFileName = "docroot/WEB-INF/liferay-plugin-package.properties"
+		}
+		else if (_contains(moduleDir, "gulpfile.js", "require('liferay-theme-tasks')")) {
+			excludedTaskNames = ["writeParentThemesDigest"]
+			moduleOSGi = false
+			versionClosure = themeVersionClosure
+			versionFileName = "package.json"
+		}
+
+		File versionFile = new File(moduleDir, versionFileName)
+
+		String newVersion = versionClosure(_getCommitFileStream(commit.id, FileUtil.relativize(versionFile, projectDir.parentFile)))
+		String curVersion = versionClosure(versionFile)
+
+		def curVersionNumber
+		def newVersionNumber
+
+		if (newVersion.indexOf('.') != -1) {
+			curVersionNumber = VersionNumber.parse(curVersion)
+			newVersionNumber = VersionNumber.parse(newVersion)
+		}
+		else {
+			curVersionNumber = curVersion as Integer
+			newVersionNumber = newVersion as Integer
+		}
+
+		if (curVersionNumber >= newVersionNumber) {
+			println "Commit ${commit.id} NOT cherry-picked: ${relativePath(moduleDir)} has a version (${curVersionNumber}) which is greater or equal than the one in the commit (${newVersionNumber})"
+		}
+		else {
+			StartParameter startParameter = gradle.startParameter.newBuild()
+
+			startParameter.excludedTaskNames = excludedTaskNames.collect {
+				moduleTaskPrefix + it
+			}
+
+			startParameter.projectProperties = ["forced.update.version": newVersion]
+			startParameter.taskNames = [moduleTaskPrefix + "updateVersion"]
+
+			NestedBuildFactory nestedBuildFactory = gradle.services.get(NestedBuildFactory)
+
+			GradleLauncher gradleLauncher = nestedBuildFactory.nestedInstance(startParameter)
+
+			try {
+				gradleLauncher.run()
+			}
+			finally {
+				gradleLauncher.stop()
+			}
+
+			grgit.add patterns: [moduleDirName]
+
+			grgit.commit author: commit.author, message: commit.fullMessage
+
+			println "Commit ${commit.id} cherry-picked: ${relativePath(moduleDir)} updated from version ${curVersionNumber} to ${newVersionNumber}"
+		}
 	}
 
-	startParameter.projectProperties = ["forced.update.version": newVersion]
-	startParameter.taskNames = [moduleTaskPrefix + "updateVersion"]
+	if (moduleOSGi) {
+		StartParameter startParameter = gradle.startParameter.newBuild()
 
-	NestedBuildFactory nestedBuildFactory = gradle.services.get(NestedBuildFactory)
+		startParameter.projectProperties = ["syncRelease": true]
+		startParameter.taskNames = [moduleTaskPrefix + "baseline"]
 
-	GradleLauncher gradleLauncher = nestedBuildFactory.nestedInstance(startParameter)
+		NestedBuildFactory nestedBuildFactory = gradle.services.get(NestedBuildFactory)
 
-	try {
-		gradleLauncher.run()
+		GradleLauncher gradleLauncher = nestedBuildFactory.nestedInstance(startParameter)
+
+		try {
+			gradleLauncher.run()
+		}
+		finally {
+			gradleLauncher.stop()
+		}
 	}
-	finally {
-		gradleLauncher.stop()
-	}
-
-	grgit.add patterns: [moduleDirName]
-
-	grgit.commit author: commit.author, message: commit.fullMessage
-
-	println "Commit ${commit.id} cherry-picked: ${relativePath(moduleDir)} updated from version ${curVersionNumber} to ${newVersionNumber}"
 }
 
 private boolean _contains(File dir, String fileName, String s) {

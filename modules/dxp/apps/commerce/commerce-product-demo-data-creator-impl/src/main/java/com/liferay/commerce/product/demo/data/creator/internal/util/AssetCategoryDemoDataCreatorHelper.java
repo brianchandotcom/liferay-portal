@@ -47,7 +47,7 @@ public class AssetCategoryDemoDataCreatorHelper
 	public void addAssetCategories(
 			long userId, long groupId, long assetCategoryId, long vocabularyId,
 			String layoutUuid, JSONArray jsonArray)
-		throws PortalException {
+		throws Exception {
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject categoryJSONObject = jsonArray.getJSONObject(i);
@@ -57,6 +57,13 @@ public class AssetCategoryDemoDataCreatorHelper
 				categoryJSONObject);
 
 			long parentCategoryId = assetCategory.getCategoryId();
+
+			JSONArray imagesJSONArray = categoryJSONObject.getJSONArray(
+				"images");
+
+			_cpAttachmentFileEntryDemoDataCreatorHelper.
+				addAssetCategoryAttachmentFileEntries(
+					userId, groupId, parentCategoryId, imagesJSONArray);
 
 			addSubcategories(
 				userId, groupId, parentCategoryId, vocabularyId, layoutUuid,
@@ -90,7 +97,7 @@ public class AssetCategoryDemoDataCreatorHelper
 	protected void addSubcategories(
 			long userId, long groupId, long parentCategoryId, long vocabularyId,
 			String layoutUuid, JSONObject jsonObject)
-		throws PortalException {
+		throws Exception {
 
 		JSONArray jsonArray = jsonObject.getJSONArray("subcategories");
 
@@ -103,6 +110,13 @@ public class AssetCategoryDemoDataCreatorHelper
 					categoryJSONObject);
 
 				long subcategoryId = assetCategory.getCategoryId();
+
+				JSONArray imagesJSONArray = categoryJSONObject.getJSONArray(
+					"images");
+
+				_cpAttachmentFileEntryDemoDataCreatorHelper.
+					addAssetCategoryAttachmentFileEntries(
+						userId, groupId, subcategoryId, imagesJSONArray);
 
 				addSubcategories(
 					userId, groupId, subcategoryId, vocabularyId, layoutUuid,
@@ -189,6 +203,10 @@ public class AssetCategoryDemoDataCreatorHelper
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private CPAttachmentFileEntryDemoDataCreatorHelper
+		_cpAttachmentFileEntryDemoDataCreatorHelper;
 
 	@Reference
 	private CPDisplayLayoutLocalService _cpDisplayLayoutLocalService;

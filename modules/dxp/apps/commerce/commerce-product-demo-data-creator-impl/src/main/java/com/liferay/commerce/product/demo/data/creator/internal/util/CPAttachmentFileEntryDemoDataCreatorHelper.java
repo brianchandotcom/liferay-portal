@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.demo.data.creator.internal.util;
 
+import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -49,7 +50,46 @@ import org.osgi.service.component.annotations.Reference;
 public class CPAttachmentFileEntryDemoDataCreatorHelper
 	extends BaseCPDemoDataCreatorHelper {
 
-	public void addCPAttachmentFileEntries(
+	public void addAssetCategoryAttachmentFileEntries(
+			long userId, long groupId, long categoryId, JSONArray jsonArray)
+		throws Exception {
+
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		long classeNameId = _portal.getClassNameId(AssetCategory.class);
+
+		Folder folder = _cpAttachmentFileEntryLocalService.getAttachmentsFolder(
+			userId, groupId, AssetCategory.class.getName(), categoryId);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			String fileName = jsonArray.getString(i);
+
+			Map<Locale, String> titleMap = Collections.singletonMap(
+				Locale.US, fileName);
+
+			String uniqueFileName = _portletFileRepository.getUniqueFileName(
+				groupId, folder.getFolderId(), fileName);
+
+			InputStream inputStream = classLoader.getResourceAsStream(
+			"com/liferay/commerce/product/demo/data/creator/internal" +
+					"/dependencies/images/" + fileName);
+
+			FileEntry fileEntry = _portletFileRepository.addPortletFileEntry(
+				groupId, userId, AssetCategory.class.getName(), categoryId,
+				CPConstants.SERVICE_NAME, folder.getFolderId(), inputStream,
+				uniqueFileName, "image/png", true);
+
+			createCPAttachmentFileEntry(
+				userId, groupId, classeNameId, categoryId,
+				fileEntry.getFileEntryId(), titleMap, null, 0,
+				CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE);
+		}
+
+	}
+
+	public void addCPDefinitionAttachmentFileEntries(
 			long userId, long groupId, long cpDefinitionId, JSONArray jsonArray)
 		throws Exception {
 
@@ -71,75 +111,72 @@ public class CPAttachmentFileEntryDemoDataCreatorHelper
 			String uniqueFileName = _portletFileRepository.getUniqueFileName(
 				groupId, folder.getFolderId(), fileName);
 
-			try (InputStream inputStream = classLoader.getResourceAsStream(
-					"com/liferay/commerce/product/demo/data/creator/internal" +
-						"/dependencies/images/" + fileName)) {
+			InputStream inputStream = classLoader.getResourceAsStream(
+				"com/liferay/commerce/product/demo/data/creator/internal" +
+					"/dependencies/images/" + fileName);
 
-				FileEntry fileEntry =
-					_portletFileRepository.addPortletFileEntry(
-						groupId, userId, CPDefinition.class.getName(),
-						cpDefinitionId, CPConstants.SERVICE_NAME,
-						folder.getFolderId(), inputStream, uniqueFileName,
-						"image/jpeg", true);
+			FileEntry fileEntry =
+				_portletFileRepository.addPortletFileEntry(
+					groupId, userId, CPDefinition.class.getName(),
+					cpDefinitionId, CPConstants.SERVICE_NAME,
+					folder.getFolderId(), inputStream, uniqueFileName,
+					"image/jpeg", true);
 
-				List<CPDefinitionOptionRel> cpDefinitionOptionRels =
-					_cpOptionDemoDataCreatorHelper.getCPDefinitionOptionRels();
-				List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
-					_cpDefinitionOptionValueRelDemoDataCreatorHelper.
-						getCPDefinitionOptionValueRels();
+			List<CPDefinitionOptionRel> cpDefinitionOptionRels =
+				_cpOptionDemoDataCreatorHelper.getCPDefinitionOptionRels();
+			List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
+				_cpDefinitionOptionValueRelDemoDataCreatorHelper.
+					getCPDefinitionOptionValueRels();
 
-				JSONArray optionIds = JSONFactoryUtil.createJSONArray();
+			JSONArray optionIds = JSONFactoryUtil.createJSONArray();
 
-				for (CPDefinitionOptionRel cpDefinitionOptionRel :
-						cpDefinitionOptionRels) {
+			for (CPDefinitionOptionRel cpDefinitionOptionRel :
+					cpDefinitionOptionRels) {
 
-					if (cpDefinitionOptionRel.getCPDefinitionId() ==
-							cpDefinitionId) {
+				if (cpDefinitionOptionRel.getCPDefinitionId() ==
+						cpDefinitionId) {
 
-						long cpDefinitionOptionRelId =
-							cpDefinitionOptionRel.getCPDefinitionOptionRelId();
+					long cpDefinitionOptionRelId =
+						cpDefinitionOptionRel.getCPDefinitionOptionRelId();
 
-						optionIds.put(cpDefinitionOptionRelId);
+					optionIds.put(cpDefinitionOptionRelId);
 
-						for (CPDefinitionOptionValueRel
-								cpDefinitionOptionValueRel :
-									cpDefinitionOptionValueRels) {
+					for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
+							cpDefinitionOptionValueRels) {
 
-							if (cpDefinitionOptionValueRel.
-									getCPDefinitionOptionRelId() ==
-										cpDefinitionOptionRelId) {
+						if (cpDefinitionOptionValueRel.
+								getCPDefinitionOptionRelId() ==
+									cpDefinitionOptionRelId) {
 
-								optionIds.put(
-									cpDefinitionOptionValueRel.
-										getCPDefinitionOptionValueRelId());
+							optionIds.put(
+								cpDefinitionOptionValueRel.
+									getCPDefinitionOptionValueRelId());
 
-								StringBuilder sb = new StringBuilder();
+							StringBuilder sb = new StringBuilder(9);
 
-								sb.append("[{\"cpDefinitionOptionRelId\":\"");
-								sb.append(optionIds.get(0));
-								sb.append(StringPool.QUOTE);
-								sb.append(StringPool.COMMA);
-								sb.append("\"cpDefinitionOptionValueRelId\"");
-								sb.append(StringPool.COLON);
-								sb.append(StringPool.QUOTE);
-								sb.append(optionIds.get(1));
-								sb.append("\"}]");
+							sb.append("[{\"cpDefinitionOptionRelId\":\"");
+							sb.append(optionIds.get(0));
+							sb.append(StringPool.QUOTE);
+							sb.append(StringPool.COMMA);
+							sb.append("\"cpDefinitionOptionValueRelId\"");
+							sb.append(StringPool.COLON);
+							sb.append(StringPool.QUOTE);
+							sb.append(optionIds.get(1));
+							sb.append("\"}]");
 
-								createCPAttachmentFileEntry(
-									userId, groupId, classeNameId,
-									cpDefinitionId, fileEntry.getFileEntryId(),
-									titleMap, sb.toString(), 0,
-									CPConstants.
-										ATTACHMENT_FILE_ENTRY_TYPE_IMAGE);
-							}
-							else {
-								continue;
-							}
+							createCPAttachmentFileEntry(
+								userId, groupId, classeNameId, cpDefinitionId,
+								fileEntry.getFileEntryId(), titleMap,
+								sb.toString(), 0,
+								CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE);
+						}
+						else {
+							continue;
 						}
 					}
-					else {
-						continue;
-					}
+				}
+				else {
+					continue;
 				}
 			}
 		}

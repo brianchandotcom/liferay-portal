@@ -44,6 +44,10 @@ public class PoshiElementFactory {
 			return new ExecuteElement(element);
 		}
 
+		if (elementName.equals("for")) {
+			return new ForElement(element);
+		}
+
 		if (elementName.equals("property")) {
 			return new PropertyElement(element);
 		}
@@ -92,6 +96,10 @@ public class PoshiElementFactory {
 
 				if (line.startsWith("definition {")) {
 					return new DefinitionElement(readableSyntax);
+				}
+
+				if (line.startsWith("for (")) {
+					return new ForElement(readableSyntax);
 				}
 
 				if (line.startsWith("property ")) {

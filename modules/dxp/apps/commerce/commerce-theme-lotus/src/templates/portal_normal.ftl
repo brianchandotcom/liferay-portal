@@ -21,18 +21,15 @@
 		<div id="wrapper">
 			<header id="banner" role="banner">
 				<div class="container-fluid-1280">
-					<nav class="navbar">
-						<div class="navbar-header">
+					<nav class="">
+						<div class="">
 							<a class="${logo_css_class}" href="${site_default_url}" rel="home" title="<@liferay.language_format arguments="${site_name}" key="go-to-x" />">
 								<img alt="${logo_description}" height="${company_logo_height}" src="${site_logo}" width="${company_logo_width}" />
 							</a>
 
-							<@commerce_category_navigation_menu default_preferences=freeMarkerPortletPreferences.getPreferences("portletSetupPortletDecoratorId", "barebone") />
-
-							<button class="collapsed navbar-toggle" data-target="#navigationCollapse" data-toggle="collapse" type="button">
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-							</button>
+							<div class="commerce-navigation">
+								<@commerce_category_navigation_menu default_preferences=freeMarkerPortletPreferences.getPreferences("portletSetupPortletDecoratorId", "barebone") />
+							</div>
 						</div>
 					</nav>
 				</div>
@@ -62,10 +59,12 @@
 
 					<div class="col-md-4 col-md-offset-2">
 						<div id="foocont">
-							<@liferay_ui["asset-display"]
-								className = "com.liferay.journal.model.JournalArticle"
-								classPK = footer_content_id
-							/>
+							<#if fullScreenNavigation>
+								<@liferay_ui["asset-display"]
+									className = "com.liferay.journal.model.JournalArticle"
+									classPK = footer_content_id
+								/>
+							</#if>
 						</div>
 
 						<p id="copyright">

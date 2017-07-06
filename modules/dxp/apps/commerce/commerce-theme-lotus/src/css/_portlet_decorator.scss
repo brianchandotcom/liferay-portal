@@ -7,7 +7,12 @@
 
 	.portlet-content {
 		padding: 0;
+		border-width: 0px ;
 	}
+}
+
+.portlet-decorate .portlet-content{
+	border-width: 0px ;
 }
 
 .portlet-solid .portlet-content {

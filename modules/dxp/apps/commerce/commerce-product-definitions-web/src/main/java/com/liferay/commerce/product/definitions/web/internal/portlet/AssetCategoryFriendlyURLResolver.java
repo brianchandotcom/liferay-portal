@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.product.content.category.web.internal.portlet;
+package com.liferay.commerce.product.definitions.web.internal.portlet;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetTag;

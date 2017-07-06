@@ -12,12 +12,11 @@
  * details.
  */
 
-package com.liferay.commerce.product.content.web.internal.portlet;
+package com.liferay.commerce.product.definitions.web.internal.portlet;
 
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.commerce.product.constants.CPConstants;
-import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.constants.CPWebKeys;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPFriendlyURLEntry;
@@ -94,7 +93,6 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 			actualParams.setParentMap(params);
 		}
 
-		actualParams.put("p_p_id", new String[] {CPPortletKeys.CP_CONTENT_WEB});
 		actualParams.put("p_p_lifecycle", new String[] {"0"});
 		actualParams.put("p_p_mode", new String[] {"view"});
 

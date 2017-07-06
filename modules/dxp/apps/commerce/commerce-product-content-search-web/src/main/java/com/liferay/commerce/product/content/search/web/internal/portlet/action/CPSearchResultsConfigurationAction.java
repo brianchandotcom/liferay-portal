@@ -66,7 +66,7 @@ public class CPSearchResultsConfigurationAction
 			_log.error(e);
 		}
 
-		return "/configuration.jsp";
+		return "/search_results/configuration.jsp";
 	}
 
 	@Override

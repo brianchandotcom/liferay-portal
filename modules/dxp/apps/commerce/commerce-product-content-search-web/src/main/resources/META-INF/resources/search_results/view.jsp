@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+CPSearchResultsDisplayContext cpSearchResultsDisplayContext = (CPSearchResultsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
 Map<String, Object> contextObjects = new HashMap<>();
 
 contextObjects.put("cpSearchResultsDisplayContext", cpSearchResultsDisplayContext);

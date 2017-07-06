@@ -42,7 +42,3 @@ page import="java.util.Map" %>
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
-
-<%
-CPSearchResultsDisplayContext cpSearchResultsDisplayContext = (CPSearchResultsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-%>

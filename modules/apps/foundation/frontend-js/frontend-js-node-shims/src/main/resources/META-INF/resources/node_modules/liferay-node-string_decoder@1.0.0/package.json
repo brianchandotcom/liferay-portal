@@ -1,0 +1,9 @@
+{
+  "name": "liferay-node-string_decoder",
+  "version": "1.0.0",
+  "description": "Liferay Node.js shim for string_decoder package",
+  "main": "index.js",
+  "dependencies": {
+    "string_decoder": "^1.0.1"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "liferay-node-url",
+  "version": "1.0.0",
+  "description": "Liferay Node.js shim for url package",
+  "main": "index.js",
+  "dependencies": {
+    "url": "^0.11.0"
+  }
+}

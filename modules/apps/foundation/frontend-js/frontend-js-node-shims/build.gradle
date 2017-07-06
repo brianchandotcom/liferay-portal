@@ -1,0 +1,5 @@
+apply plugin: "com.liferay.node"
+
+classes {
+	dependsOn npmRunBuild
+}

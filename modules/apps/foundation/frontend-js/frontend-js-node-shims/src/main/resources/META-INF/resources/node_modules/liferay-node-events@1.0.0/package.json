@@ -1,0 +1,9 @@
+{
+  "name": "liferay-node-events",
+  "version": "1.0.0",
+  "description": "Liferay Node.js shim for events package",
+  "main": "index.js",
+  "dependencies": {
+    "events": "^1.1.1"
+  }
+}

@@ -177,20 +177,8 @@ public class LoadBalancerUtil {
 		List<JenkinsMaster> allJenkinsMasters = null;
 
 		if (!_jenkinsMasters.containsKey(masterPrefix)) {
-			allJenkinsMasters = new ArrayList<>();
-
-			for (String jenkinsMasterName :
-					JenkinsResultsParserUtil.getJenkinsMasters(
-						properties, masterPrefix)) {
-
-				JenkinsMaster jenkinsMaster = new JenkinsMaster(
-					jenkinsMasterName,
-					properties.getProperty(
-						JenkinsResultsParserUtil.combine(
-							"jenkins.local.url[", jenkinsMasterName, "]")));
-
-				allJenkinsMasters.add(jenkinsMaster);
-			}
+			allJenkinsMasters = JenkinsResultsParserUtil.getJenkinsMasters(
+				properties, masterPrefix);
 
 			_jenkinsMasters.put(masterPrefix, allJenkinsMasters);
 		}
@@ -204,7 +192,7 @@ public class LoadBalancerUtil {
 			return new ArrayList<>(allJenkinsMasters);
 		}
 
-		List<JenkinsMaster> filteredJenkinsMasters = new ArrayList<>(
+		List<JenkinsMaster> availableJenkinsMasters = new ArrayList<>(
 			allJenkinsMasters.size());
 
 		for (JenkinsMaster jenkinsMaster : allJenkinsMasters) {
@@ -212,10 +200,10 @@ public class LoadBalancerUtil {
 				continue;
 			}
 
-			filteredJenkinsMasters.add(jenkinsMaster);
+			availableJenkinsMasters.add(jenkinsMaster);
 		}
 
-		return filteredJenkinsMasters;
+		return availableJenkinsMasters;
 	}
 
 	protected static String getMasterPrefix(String baseInvocationURL) {

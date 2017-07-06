@@ -1675,6 +1675,19 @@ if the system property `jacoco.code.coverage` is set to `true`.
 ### Changed
 - [LPS-72705]: Update the [Liferay Gradle Plugins] dependency to version 3.3.38.
 
+## 3.9.0 - 2017-07-10
+
+### Added
+- [LPS-73489]: Add plugin `LiferayRootDefaultsPlugin` that can be applied to
+root projects in order to:
+	- apply [Liferay Gradle Plugins Source Formatter]
+	- apply `com.liferay.app.defaults.plugin`
+	- automatically configure the subprojects
+	- configure default Maven repositories
+
+### Changed
+- [LPS-73489]: Update the [Liferay Gradle Plugins] dependency to version 3.4.0.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
@@ -1853,6 +1866,7 @@ if the system property `jacoco.code.coverage` is set to `true`.
 [LPS-73327]: https://issues.liferay.com/browse/LPS-73327
 [LPS-73352]: https://issues.liferay.com/browse/LPS-73352
 [LPS-73383]: https://issues.liferay.com/browse/LPS-73383
+[LPS-73489]: https://issues.liferay.com/browse/LPS-73489
 [LPS-73495]: https://issues.liferay.com/browse/LPS-73495
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841

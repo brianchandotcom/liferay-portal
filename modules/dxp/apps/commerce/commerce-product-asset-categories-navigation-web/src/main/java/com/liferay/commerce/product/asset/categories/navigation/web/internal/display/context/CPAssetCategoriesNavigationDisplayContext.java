@@ -24,6 +24,7 @@ import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPFriendlyURLEntry;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService;
+import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -170,7 +171,13 @@ public class CPAssetCategoriesNavigationDisplayContext {
 			return null;
 		}
 
-		FileEntry fileEntry = cpAttachmentFileEntry.getFileEntry();
+		FileEntry fileEntry = null;
+
+		try {
+			fileEntry = cpAttachmentFileEntry.getFileEntry();
+		}
+		catch (NoSuchFileEntryException nsfee) {
+		}
 
 		if (fileEntry == null) {
 			return null;

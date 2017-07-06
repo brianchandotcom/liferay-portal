@@ -48,7 +48,7 @@ public class CPPortletKeys {
 			"CPOptionFacetsPortlet";
 
 	public static final String CP_SEARCH_RESULTS =
-		"com_liferay_commerce_product_content_web_internal_portlet_" +
+		"com_liferay_commerce_product_content_search_web_internal_portlet_" +
 			"CPSearchResultsPortlet";
 
 }

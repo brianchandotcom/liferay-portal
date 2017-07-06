@@ -14,8 +14,6 @@
 
 package com.liferay.portal.dao.sql.transformer;
 
-import static org.mockito.Mockito.when;
-
 import com.liferay.portal.dao.db.MySQLDB;
 
 import org.junit.Assert;
@@ -124,7 +122,8 @@ public class MySQLSQLTransformerLogicTest
 	private static MySQLDB _getCaseInsensitiveMySQLDB() {
 		MySQLDB mySQLDB = Mockito.spy(new MySQLDB(5, 7));
 
-		when(mySQLDB.isSupportsStringCaseSensitiveQuery()).thenReturn(false);
+		Mockito.when(
+			mySQLDB.isSupportsStringCaseSensitiveQuery()).thenReturn(false);
 
 		return mySQLDB;
 	}
@@ -132,7 +131,8 @@ public class MySQLSQLTransformerLogicTest
 	private static MySQLDB _getCaseSensitiveMySQLDB() {
 		MySQLDB mySQLDB = Mockito.spy(new MySQLDB(5, 7));
 
-		when(mySQLDB.isSupportsStringCaseSensitiveQuery()).thenReturn(true);
+		Mockito.when(
+			mySQLDB.isSupportsStringCaseSensitiveQuery()).thenReturn(true);
 
 		return mySQLDB;
 	}

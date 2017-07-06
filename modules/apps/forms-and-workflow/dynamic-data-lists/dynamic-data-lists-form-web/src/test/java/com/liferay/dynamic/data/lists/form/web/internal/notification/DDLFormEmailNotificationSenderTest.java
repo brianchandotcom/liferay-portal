@@ -14,9 +14,6 @@
 
 package com.liferay.dynamic.data.lists.form.web.internal.notification;
 
-import static org.powermock.api.mockito.PowerMockito.when;
-import static org.powermock.api.support.membermodification.MemberMatcher.field;
-
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -42,6 +39,8 @@ import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.api.support.membermodification.MemberMatcher;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
@@ -118,7 +117,7 @@ public class DDLFormEmailNotificationSenderTest {
 	protected void setUpDDLFormEmailNotificationSender() throws Exception {
 		_ddlFormEmailNotificationSender = new DDLFormEmailNotificationSender();
 
-		field(
+		MemberMatcher.field(
 			DDLFormEmailNotificationSender.class,
 			"_ddmFormFieldTypeServicesTracker"
 		).set(
@@ -127,7 +126,7 @@ public class DDLFormEmailNotificationSenderTest {
 	}
 
 	protected void setUpDDMFormFieldTypeServicesTracker() {
-		when(
+		PowerMockito.when(
 			_ddmFormFieldTypeServicesTracker.getDDMFormFieldValueRenderer(
 				Matchers.anyString())
 		).thenReturn(
@@ -140,7 +139,7 @@ public class DDLFormEmailNotificationSenderTest {
 
 		htmlUtil.setHtml(_html);
 
-		when(
+		PowerMockito.when(
 			_html.escape(Matchers.anyString())
 		).then(
 			new Answer<String>() {

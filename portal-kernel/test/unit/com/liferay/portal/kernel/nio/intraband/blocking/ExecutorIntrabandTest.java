@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.nio.intraband.blocking;
 
-import static java.lang.Thread.sleep;
-
 import com.liferay.portal.kernel.nio.intraband.BaseIntraband;
 import com.liferay.portal.kernel.nio.intraband.ChannelContext;
 import com.liferay.portal.kernel.nio.intraband.CompletionHandler;
@@ -156,7 +154,7 @@ public class ExecutorIntrabandTest {
 
 						@Override
 						public Void call() throws Exception {
-							sleep(100);
+							Thread.sleep(100);
 
 							sourceChannel.close();
 

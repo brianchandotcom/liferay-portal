@@ -17,11 +17,27 @@
 <%@ include file="/init.jsp" %>
 
 <%
-AssetCategory assetCategory = (AssetCategory)request.getAttribute(WebKeys.ASSET_CATEGORY);
+CPCategoryContentDisplayContext cpCategoryContentDisplayContext = (CPCategoryContentDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+AssetCategory assetCategory = cpCategoryContentDisplayContext.getAssetCategory();
 %>
 
 <c:if test="<%= assetCategory != null %>">
-	<h1><%= assetCategory.getTitle(languageId) %></h1>
+	<div class="category-detail">
+		<div class="category-image">
 
-	<p><%= assetCategory.getDescription(languageId) %></p>
+			<%
+			String imgURL = cpCategoryContentDisplayContext.getDefaultImageSrc(themeDisplay);
+			%>
+
+			<c:if test="<%= Validator.isNotNull(imgURL) %>">
+				<img src="<%= imgURL %>" />
+			</c:if>
+		</div>
+
+		<div class="container-fluid-1280">
+			<h1><%= assetCategory.getTitle(languageId) %></h1>
+			<p><%= assetCategory.getDescription(languageId) %></p>
+		</div>
+	</div>
 </c:if>

@@ -15,11 +15,25 @@
 package com.liferay.commerce.product.content.category.web.internal.portlet;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.content.category.web.internal.display.context.CPCategoryContentDisplayContext;
+import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.io.IOException;
 
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -48,4 +62,40 @@ import org.osgi.service.component.annotations.Component;
 	service = {CPCategoryContentPortlet.class, Portlet.class}
 )
 public class CPCategoryContentPortlet extends MVCPortlet {
+
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		try {
+			HttpServletRequest httpServletRequest =
+				_portal.getHttpServletRequest(renderRequest);
+
+			CPCategoryContentDisplayContext
+				cpAssetCategoryNavigationDisplayContext =
+					new CPCategoryContentDisplayContext(
+						httpServletRequest, _cpAttachmentFileEntryService,
+						_portal);
+
+			renderRequest.setAttribute(
+				WebKeys.PORTLET_DISPLAY_CONTEXT,
+				cpAssetCategoryNavigationDisplayContext);
+		}
+		catch (Exception ex) {
+			_log.error(ex);
+		}
+
+		super.render(renderRequest, renderResponse);
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CPCategoryContentPortlet.class);
+
+	@Reference
+	private CPAttachmentFileEntryService _cpAttachmentFileEntryService;
+
+	@Reference
+	private Portal _portal;
+
 }

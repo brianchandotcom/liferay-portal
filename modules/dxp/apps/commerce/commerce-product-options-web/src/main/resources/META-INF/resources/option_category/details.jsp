@@ -31,21 +31,23 @@ CPOptionCategory cpOptionCategory = (CPOptionCategory)request.getAttribute(CPWeb
 
 	<aui:input name="priority" />
 
-	<aui:input name="key" />
+	<aui:input helpMessage="key-field-help" name="key" />
 </aui:fieldset>
 
-<aui:script sandbox="<%= true %>">
-	var form = $(document.<portlet:namespace />fm);
+<c:if test="<%= cpOptionCategory == null %>">
+	<aui:script sandbox="<%= true %>">
+		var form = $(document.<portlet:namespace />fm);
 
-	var keyInput = form.fm('key');
-	var titleInput = form.fm('title');
+		var keyInput = form.fm('key');
+		var titleInput = form.fm('title');
 
-	var onTitleInput = _.debounce(
-		function(event) {
-			keyInput.val(titleInput.val());
-		},
-		200
-	);
+		var onTitleInput = _.debounce(
+			function(event) {
+				keyInput.val(titleInput.val());
+			},
+			200
+		);
 
-	titleInput.on('input', onTitleInput);
-</aui:script>
+		titleInput.on('input', onTitleInput);
+	</aui:script>
+</c:if>

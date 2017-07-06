@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
 
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,8 +34,7 @@ public class FTLTagCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		content = _formatMultiParameterTags(content);
-		content = _formatSingleParameterTags(content);
+		content = _formatTags(content);
 
 		return _formatAssignTags(content);
 	}
@@ -78,98 +79,124 @@ public class FTLTagCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private String _formatMultiParameterTags(String content) {
-		Matcher matcher = _multiParameterTagPattern.matcher(content);
+	private String _formatTags(String content) {
+		Matcher matcher = _tagPattern.matcher(content);
 
 		while (matcher.find()) {
-			String match = matcher.group();
+			String match = matcher.group(3);
 
-			if (match.contains("><")) {
-				continue;
+			Map<String, String> attributesMap = _getAttributesMap(match);
+
+			if (attributesMap.isEmpty()) {
+				return content;
 			}
 
-			String strippedMatch = stripQuotes(match, CharPool.QUOTE);
+			String tabs = matcher.group(2);
 
-			if (StringUtil.count(strippedMatch, CharPool.EQUAL) <= 1) {
-				continue;
+			String delimeter = StringPool.SPACE;
+
+			if (attributesMap.size() > 1) {
+				delimeter = "\n" + tabs + "\t";
 			}
 
-			String replacement = match;
+			StringBundler sb = new StringBundler(attributesMap.size() * 4 + 4);
 
-			String tabs = matcher.group(1);
+			sb.append(_getTagName(match));
+			sb.append(delimeter);
 
-			int x = -1;
-
-			while (true) {
-				x = replacement.indexOf(
-					StringPool.EQUAL, x + tabs.length() + 2);
-
-				if (x == -1) {
-					break;
-				}
-
-				if (ToolsUtil.isInsideQuotes(replacement, x)) {
-					continue;
-				}
-
-				int y = replacement.lastIndexOf(StringPool.SPACE, x);
-
-				if (y == -1) {
-					break;
-				}
-
-				replacement =
-					replacement.substring(0, y) + StringPool.NEW_LINE + tabs +
-						StringPool.TAB + replacement.substring(y + 1);
+			for (Map.Entry<String, String> entry : attributesMap.entrySet()) {
+				sb.append(entry.getKey());
+				sb.append(StringPool.EQUAL);
+				sb.append(entry.getValue());
+				sb.append(delimeter);
 			}
 
-			if (!match.equals(replacement)) {
-				replacement = StringUtil.replaceLast(
-					replacement, "/>", StringPool.NEW_LINE + tabs + "/>");
+			sb.setIndex(sb.index() - 1);
 
-				content = StringUtil.replace(content, match, replacement);
+			String closingTag = matcher.group(4);
+
+			if (attributesMap.size() > 1) {
+				sb.append("\n");
+				sb.append(tabs);
+			}
+			else if (closingTag.equals("/>")) {
+				sb.append(StringPool.SPACE);
+			}
+
+			String replacement = sb.toString();
+
+			if (!replacement.equals(match)) {
+				return StringUtil.replaceFirst(
+					content, match, replacement, matcher.start());
 			}
 		}
 
 		return content;
 	}
 
-	private String _formatSingleParameterTags(String content) {
-		Matcher matcher = _singleParameterTagPattern.matcher(content);
+	private Map<String, String> _getAttributesMap(String s) {
+		Map<String, String> attributesMap = new TreeMap<>();
 
-		while (matcher.find()) {
-			String match = matcher.group();
+		String attributeName = null;
 
-			String replacement = match;
+		while (true) {
+			boolean match = false;
 
-			String group1 = matcher.group(1);
-			String group2 = matcher.group(2);
+			Matcher matcher = _tagAttributePattern.matcher(s);
 
-			if (group2 != null) {
-				replacement = StringUtil.replaceFirst(
-					replacement, group1 + StringPool.SPACE, group1);
+			while (matcher.find()) {
+				if (ToolsUtil.isInsideQuotes(s, matcher.end() - 1)) {
+					continue;
+				}
+
+				match = true;
+
+				break;
 			}
 
-			String group3 = matcher.group(3);
-
-			if (group3.startsWith(StringPool.SPACE)) {
-				replacement = StringUtil.replaceLast(
-					replacement, group3, group3.substring(1));
+			if (!match) {
+				break;
 			}
 
-			content = StringUtil.replace(content, match, replacement);
+			if (attributeName != null) {
+				attributesMap.put(
+					attributeName,
+					StringUtil.trim(s.substring(0, matcher.start())));
+			}
+
+			attributeName = matcher.group(1);
+
+			s = s.substring(matcher.end());
 		}
 
-		return content;
+		if (attributeName != null) {
+			attributesMap.put(attributeName, StringUtil.trim(s));
+		}
+
+		return attributesMap;
+	}
+
+	private String _getTagName(String s) {
+		StringBundler sb = new StringBundler();
+
+		for (char c : s.toCharArray()) {
+			if (Character.isWhitespace(c)) {
+				return sb.toString();
+			}
+
+			sb.append(c);
+		}
+
+		return sb.toString();
 	}
 
 	private final Pattern _assignTagsBlockPattern = Pattern.compile(
 		"((\t*)<#assign[^<#/>]*=[^<#/>]*/>(\n|$)+){2,}", Pattern.MULTILINE);
 	private final Pattern _incorrectAssignTagPattern = Pattern.compile(
 		"(<#assign .*=.*[^/])>(\n|$)");
-	private final Pattern _multiParameterTagPattern = Pattern.compile(
-		"\n(\t*)<@.+=.+=.+/>");
-	private final Pattern _singleParameterTagPattern = Pattern.compile(
-		"(<@[\\w\\.]+ \\w+)( )?=([^=]+?)/>");
+	private final Pattern _tagAttributePattern = Pattern.compile(
+		"\\s(\\S+)\\s*=");
+	private final Pattern _tagPattern = Pattern.compile(
+		"(\\A|\n)(\t*)<@(\\S[^>]*?)(/?>)(\n|\\Z)", Pattern.DOTALL);
 
 }

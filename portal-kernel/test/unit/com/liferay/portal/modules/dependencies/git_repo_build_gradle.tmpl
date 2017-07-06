@@ -12,10 +12,6 @@ buildscript {
 	}
 }
 
-apply plugin: "com.liferay.app.defaults.plugin"
-
-configure(subprojects.findAll {!it.childProjects}) {
-	apply plugin: "com.liferay.defaults.plugin"
-}
+apply plugin: "com.liferay.root.defaults.plugin"
 
 apply from: "build-ext.gradle"

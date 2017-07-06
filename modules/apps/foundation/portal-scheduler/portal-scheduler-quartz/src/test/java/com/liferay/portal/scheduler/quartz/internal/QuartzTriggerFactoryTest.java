@@ -14,18 +14,16 @@
 
 package com.liferay.portal.scheduler.quartz.internal;
 
-import static com.liferay.portal.kernel.util.StringUtil.randomString;
-
-import static org.junit.Assert.assertEquals;
-
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -132,7 +130,7 @@ public class QuartzTriggerFactoryTest {
 		for (Date exprectedFireDate : expectedFireDates) {
 			fireDate = trigger.getFireDateAfter(fireDate);
 
-			assertEquals(exprectedFireDate, fireDate);
+			Assert.assertEquals(exprectedFireDate, fireDate);
 		}
 	}
 
@@ -155,7 +153,8 @@ public class QuartzTriggerFactoryTest {
 		Date startDate, Date endDate, String cronExpression) {
 
 		return _quartzTriggerFactory.createTrigger(
-			randomString(), randomString(), startDate, endDate, cronExpression);
+			StringUtil.randomString(), StringUtil.randomString(), startDate,
+			endDate, cronExpression);
 	}
 
 	private final QuartzTriggerFactory _quartzTriggerFactory =

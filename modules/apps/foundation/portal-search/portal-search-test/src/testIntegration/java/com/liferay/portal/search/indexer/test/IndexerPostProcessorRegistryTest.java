@@ -14,10 +14,6 @@
 
 package com.liferay.portal.search.indexer.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBThread;
@@ -74,12 +70,12 @@ public class IndexerPostProcessorRegistryTest {
 		IndexerPostProcessor[] mbMessageIndexerPostProcessors =
 			mbMessageIndexer.getIndexerPostProcessors();
 
-		assertEquals(1, mbMessageIndexerPostProcessors.length);
+		Assert.assertEquals(1, mbMessageIndexerPostProcessors.length);
 
 		IndexerPostProcessor mbMessageIndexerPostProcessor =
 			mbMessageIndexerPostProcessors[0];
 
-		assertNotNull(mbMessageIndexerPostProcessor);
+		Assert.assertNotNull(mbMessageIndexerPostProcessor);
 
 		Indexer<MBThread> mbThreadIndexer = IndexerRegistryUtil.getIndexer(
 			MBThread.class.getName());
@@ -87,13 +83,13 @@ public class IndexerPostProcessorRegistryTest {
 		IndexerPostProcessor[] mbThreadIndexerPostProcessors =
 			mbThreadIndexer.getIndexerPostProcessors();
 
-		assertEquals(1, mbThreadIndexerPostProcessors.length);
+		Assert.assertEquals(1, mbThreadIndexerPostProcessors.length);
 
 		IndexerPostProcessor mbThreadIndexerPostProcessor =
 			mbThreadIndexerPostProcessors[0];
 
-		assertNotNull(mbThreadIndexerPostProcessor);
-		assertEquals(
+		Assert.assertNotNull(mbThreadIndexerPostProcessor);
+		Assert.assertEquals(
 			mbMessageIndexerPostProcessor, mbThreadIndexerPostProcessor);
 	}
 
@@ -105,12 +101,12 @@ public class IndexerPostProcessorRegistryTest {
 		IndexerPostProcessor[] userIndexerPostProcessors =
 			userIndexer.getIndexerPostProcessors();
 
-		assertEquals(1, userIndexerPostProcessors.length);
+		Assert.assertEquals(1, userIndexerPostProcessors.length);
 
 		IndexerPostProcessor userIndexerPostProcessor =
 			userIndexerPostProcessors[0];
 
-		assertNotNull(userIndexerPostProcessor);
+		Assert.assertNotNull(userIndexerPostProcessor);
 
 		Indexer<UserGroup> userGroupIndexer = IndexerRegistryUtil.getIndexer(
 			UserGroup.class.getName());
@@ -118,13 +114,14 @@ public class IndexerPostProcessorRegistryTest {
 		IndexerPostProcessor[] userGroupIndexerPostProcessors =
 			userGroupIndexer.getIndexerPostProcessors();
 
-		assertEquals(1, userGroupIndexerPostProcessors.length);
+		Assert.assertEquals(1, userGroupIndexerPostProcessors.length);
 
 		IndexerPostProcessor userGroupIndexerPostProcessor =
 			userGroupIndexerPostProcessors[0];
 
-		assertNotNull(userGroupIndexerPostProcessor);
-		assertEquals(userIndexerPostProcessor, userGroupIndexerPostProcessor);
+		Assert.assertNotNull(userGroupIndexerPostProcessor);
+		Assert.assertEquals(
+			userIndexerPostProcessor, userGroupIndexerPostProcessor);
 	}
 
 	@Test
@@ -132,7 +129,7 @@ public class IndexerPostProcessorRegistryTest {
 		Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
 			"com.liferay.portal.test.SampleModel");
 
-		assertNull(indexer);
+		Assert.assertNull(indexer);
 
 		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
@@ -187,7 +184,7 @@ public class IndexerPostProcessorRegistryTest {
 			indexer = IndexerRegistryUtil.getIndexer(
 				"com.liferay.portal.test.SampleModel");
 
-			assertNotNull(indexer);
+			Assert.assertNotNull(indexer);
 
 			List<String> expectedClassNames = Arrays.asList(
 				TestSampleModelIndexerPostProcessor.class.getName());
@@ -218,12 +215,12 @@ public class IndexerPostProcessorRegistryTest {
 		IndexerPostProcessor[] organizationIndexerPostProcessors =
 			organizationIndexer.getIndexerPostProcessors();
 
-		assertEquals(1, organizationIndexerPostProcessors.length);
+		Assert.assertEquals(1, organizationIndexerPostProcessors.length);
 
 		IndexerPostProcessor organizationIndexerPostProcessor =
 			organizationIndexerPostProcessors[0];
 
-		assertNotNull(organizationIndexerPostProcessor);
+		Assert.assertNotNull(organizationIndexerPostProcessor);
 	}
 
 	@Test
@@ -234,12 +231,12 @@ public class IndexerPostProcessorRegistryTest {
 		IndexerPostProcessor[] contactIndexerPostProcessors =
 			contactIndexer.getIndexerPostProcessors();
 
-		assertEquals(1, contactIndexerPostProcessors.length);
+		Assert.assertEquals(1, contactIndexerPostProcessors.length);
 
 		IndexerPostProcessor contactIndexerPostProcessor =
 			contactIndexerPostProcessors[0];
 
-		assertNotNull(contactIndexerPostProcessor);
+		Assert.assertNotNull(contactIndexerPostProcessor);
 	}
 
 }

@@ -14,11 +14,6 @@
 
 package com.liferay.dynamic.data.lists.form.web.internal.portlet.action;
 
-import static org.powermock.api.mockito.PowerMockito.field;
-import static org.powermock.api.mockito.PowerMockito.mock;
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
-import static org.powermock.api.mockito.PowerMockito.when;
-
 import com.liferay.dynamic.data.mapping.annotations.DDMForm;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderParameterSettings;
@@ -50,6 +45,7 @@ import org.mockito.Matchers;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
+import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -126,9 +122,9 @@ public class GetDataProviderParametersSettingsMVCResourceCommandTest {
 	}
 
 	protected void setUpDDMDataProvider() {
-		_ddmDataProvider = mock(DDMDataProvider.class);
+		_ddmDataProvider = PowerMockito.mock(DDMDataProvider.class);
 
-		when(
+		PowerMockito.when(
 			_ddmDataProvider.getSettings()
 		).then(
 			new Answer<Class<?>>() {
@@ -145,7 +141,7 @@ public class GetDataProviderParametersSettingsMVCResourceCommandTest {
 	}
 
 	protected void setUpDDMFormValuesJSONDeserializer() throws Exception {
-		field(
+		PowerMockito.field(
 			DDMFormValuesJSONDeserializerImpl.class, "_jsonFactory"
 		).set(
 			_ddmFormValuesJSONDeserializer, _jsonFactory
@@ -158,14 +154,14 @@ public class GetDataProviderParametersSettingsMVCResourceCommandTest {
 		_getDataProviderParametersSettingsMVCResourceCommand =
 			new GetDataProviderParametersSettingsMVCResourceCommand();
 
-		field(
+		PowerMockito.field(
 			_getDataProviderParametersSettingsMVCResourceCommand.getClass(),
 			"_jsonFactory"
 		).set(
 			_getDataProviderParametersSettingsMVCResourceCommand, _jsonFactory
 		);
 
-		field(
+		PowerMockito.field(
 			_getDataProviderParametersSettingsMVCResourceCommand.getClass(),
 			"_ddmFormValuesJSONDeserializer"
 		).set(
@@ -183,7 +179,7 @@ public class GetDataProviderParametersSettingsMVCResourceCommandTest {
 	protected void setUpLanguageUtil() {
 		LanguageUtil languageUtil = new LanguageUtil();
 
-		Language language = mock(Language.class);
+		Language language = PowerMockito.mock(Language.class);
 
 		languageUtil.setLanguage(language);
 	}
@@ -193,9 +189,9 @@ public class GetDataProviderParametersSettingsMVCResourceCommandTest {
 	}
 
 	protected void setUpResourceBundleUtil() {
-		mockStatic(ResourceBundleUtil.class);
+		PowerMockito.mockStatic(ResourceBundleUtil.class);
 
-		when(
+		PowerMockito.when(
 			ResourceBundleUtil.getBundle(
 				Matchers.anyString(), Matchers.any(Locale.class),
 				Matchers.any(ClassLoader.class))

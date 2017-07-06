@@ -14,16 +14,15 @@
 
 package com.liferay.portal.servlet.filters.secure;
 
-import static org.mockito.Mockito.when;
-
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
-
 import com.liferay.portal.util.PropsUtil;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.mockito.Mockito;
+
+import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -36,9 +35,9 @@ public class SecureFilterTest {
 
 	@Test
 	public void testSecureFilterIsEnabledIfDisabled() {
-		mockStatic(PropsUtil.class);
+		PowerMockito.mockStatic(PropsUtil.class);
 
-		when(
+		Mockito.when(
 			PropsUtil.get(SecureFilter.class.getName())
 		).thenReturn(
 			"false"
@@ -51,9 +50,9 @@ public class SecureFilterTest {
 
 	@Test
 	public void testSecureFilterIsEnabledIfEnabled() {
-		mockStatic(PropsUtil.class);
+		PowerMockito.mockStatic(PropsUtil.class);
 
-		when(
+		Mockito.when(
 			PropsUtil.get(SecureFilter.class.getName())
 		).thenReturn(
 			"true"

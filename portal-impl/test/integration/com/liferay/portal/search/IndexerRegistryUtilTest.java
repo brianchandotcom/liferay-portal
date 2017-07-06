@@ -14,8 +14,6 @@
 
 package com.liferay.portal.search;
 
-import static org.junit.Assert.assertNotNull;
-
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.portal.kernel.model.User;
@@ -26,6 +24,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.messageboards.util.MBMessageIndexer;
 import com.liferay.portlet.messageboards.util.MBThreadIndexer;
 
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -45,12 +44,12 @@ public class IndexerRegistryUtilTest {
 		Indexer<MBMessage> mbMessageIndexer = IndexerRegistryUtil.getIndexer(
 			MBMessageIndexer.class.getName());
 
-		assertNotNull(mbMessageIndexer);
+		Assert.assertNotNull(mbMessageIndexer);
 
 		Indexer<MBThread> mbThreadIndexer = IndexerRegistryUtil.getIndexer(
 			MBThreadIndexer.class.getName());
 
-		assertNotNull(mbThreadIndexer);
+		Assert.assertNotNull(mbThreadIndexer);
 	}
 
 	@Test
@@ -58,12 +57,12 @@ public class IndexerRegistryUtilTest {
 		Indexer<User> userIndexer = IndexerRegistryUtil.getIndexer(
 			User.class.getName());
 
-		assertNotNull(userIndexer);
+		Assert.assertNotNull(userIndexer);
 
 		Indexer<UserGroup> userGroupIndexer = IndexerRegistryUtil.getIndexer(
 			UserGroup.class.getName());
 
-		assertNotNull(userGroupIndexer);
+		Assert.assertNotNull(userGroupIndexer);
 	}
 
 }

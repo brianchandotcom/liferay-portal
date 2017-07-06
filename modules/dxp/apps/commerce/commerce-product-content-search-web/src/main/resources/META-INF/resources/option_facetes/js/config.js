@@ -6,7 +6,7 @@
 					base: MODULE_PATH + '/js/',
 					combine: Liferay.AUI.getCombine(),
 					modules: {
-						'liferay-search-facet-util': {
+						'liferay-cp-option-facets-util': {
 							path: 'facet_util.js',
 							requires: []
 						}

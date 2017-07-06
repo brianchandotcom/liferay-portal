@@ -1,5 +1,5 @@
 AUI.add(
-	'liferay-search-facet-util',
+	'liferay-cp-option-facets-util',
 	function(A) {
 		var FacetUtil = {
 			addURLParameter: function(key, value, parameterArray) {

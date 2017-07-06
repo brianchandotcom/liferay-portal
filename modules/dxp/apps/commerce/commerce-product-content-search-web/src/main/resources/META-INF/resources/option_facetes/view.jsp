@@ -76,4 +76,4 @@ CPOptionFacetesDisplayContext cpOptionFacetesDisplayContext = (CPOptionFacetesDi
 
 <%} %>
 
-<aui:script use="liferay-search-facet-util"></aui:script>
+<aui:script use="liferay-cp-option-facets-util"></aui:script>

@@ -113,7 +113,7 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
+		policyOption = ReferencePolicyOption.GREEDY, unbind = "-"
 	)
 	public void setDLMimeTypeDisplayContext(
 		DLMimeTypeDisplayContext dlMimeTypeDisplayContext) {
@@ -136,12 +136,6 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 	)
 	public void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
-	}
-
-	public void unsetDLMimeTypeDisplayContext(
-		DLMimeTypeDisplayContext dlMimeTypeDisplayContext) {
-
-		_dlMimeTypeDisplayContext = null;
 	}
 
 	protected ResourceBundleLoader getResourceBundleLoader() {

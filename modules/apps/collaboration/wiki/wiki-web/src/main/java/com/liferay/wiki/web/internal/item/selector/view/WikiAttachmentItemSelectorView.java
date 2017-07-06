@@ -126,7 +126,7 @@ public class WikiAttachmentItemSelectorView
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
+		policyOption = ReferencePolicyOption.GREEDY, unbind = "-"
 	)
 	public void setDLMimeTypeDisplayContext(
 		DLMimeTypeDisplayContext dlMimeTypeDisplayContext) {
@@ -148,12 +148,6 @@ public class WikiAttachmentItemSelectorView
 	)
 	public void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
-	}
-
-	public void unsetDLMimeTypeDisplayContext(
-		DLMimeTypeDisplayContext dlMimeTypeDisplayContext) {
-
-		_dlMimeTypeDisplayContext = null;
 	}
 
 	private static final List<ItemSelectorReturnType>

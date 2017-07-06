@@ -53,22 +53,8 @@ public class SubrepositoryTaskNoReport extends SubrepositoryTask {
 
 	@Override
 	public String getGitHubMessage() throws Exception {
-		StringBuilder sb = new StringBuilder();
 
 		return FailureMessageUtil.getFailureMessage(consoleSnippet);
-
-		// GenericFailureMessageGenerator genericFailureMessageGenerator =
-		// 	new GenericFailureMessageGenerator();
-
-		//
-
-		// sb.append("<pre><code>");
-		// sb.append(
-		// 	genericFailureMessageGenerator.getMessage(
-		// 		null, consoleSnippet, null));
-		// sb.append("</code></pre>");
-
-		// return sb.toString();
 
 	}
 

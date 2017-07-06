@@ -47,7 +47,7 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 request.setAttribute("view.jsp-cpDefinition", cpDefinition);
 request.setAttribute("view.jsp-cpType", cpAttachmentFileEntriesDisplayContext.getCPType());
 request.setAttribute("view.jsp-portletURL", portletURL);
-request.setAttribute("view.jsp-showSearch", true);
+request.setAttribute("view.jsp-showSearch", false);
 request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 %>
 

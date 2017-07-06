@@ -40,9 +40,11 @@
 		/>
 	</aui:nav>
 
-	<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-		<aui:nav-bar-search>
-			<liferay-ui:input-search markupView="lexicon" />
-		</aui:nav-bar-search>
-	</aui:form>
+	<c:if test="<%= toolbarItem.equals("view-all-product-options") %>">
+		<aui:form action="<%= portletURL.toString() %>" name="searchFm">
+			<aui:nav-bar-search>
+				<liferay-ui:input-search markupView="lexicon" />
+			</aui:nav-bar-search>
+		</aui:form>
+	</c:if>
 </aui:nav-bar>

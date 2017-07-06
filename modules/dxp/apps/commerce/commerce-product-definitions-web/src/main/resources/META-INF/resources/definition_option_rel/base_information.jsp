@@ -31,7 +31,7 @@ List<DDMFormFieldType> ddmFormFieldTypes = cpDefinitionOptionRelDisplayContext.g
 <aui:fieldset>
 	<aui:select
 		label="field-type"
-		name="ddmFormFieldTypeName"
+		name="DDMFormFieldTypeName"
 		showEmptyOption="<%= true %>"
 	>
 

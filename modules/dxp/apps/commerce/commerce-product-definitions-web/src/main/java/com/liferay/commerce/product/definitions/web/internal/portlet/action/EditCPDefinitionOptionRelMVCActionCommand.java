@@ -153,7 +153,7 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
 		String ddmFormFieldTypeName = ParamUtil.getString(
-			actionRequest, "ddmFormFieldTypeName");
+			actionRequest, "DDMFormFieldTypeName");
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
 		boolean facetable = ParamUtil.getBoolean(actionRequest, "facetable");
 		boolean required = ParamUtil.getBoolean(actionRequest, "required");

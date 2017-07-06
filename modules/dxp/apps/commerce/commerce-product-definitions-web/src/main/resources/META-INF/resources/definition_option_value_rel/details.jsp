@@ -25,9 +25,25 @@ CPDefinitionOptionValueRel cpDefinitionOptionValueRel = (CPDefinitionOptionValue
 <aui:model-context bean="<%= cpDefinitionOptionValueRel %>" model="<%= CPDefinitionOptionValueRel.class %>" />
 
 <aui:fieldset>
-	<aui:input name="name" />
-
 	<aui:input name="title" />
 
 	<aui:input name="priority" />
+
+	<aui:input name="key" />
 </aui:fieldset>
+
+<aui:script sandbox="<%= true %>">
+	var form = $(document.<portlet:namespace />fm);
+
+	var keyInput = form.fm('key');
+	var titleInput = form.fm('title');
+
+	var onTitleInput = _.debounce(
+		function(event) {
+			keyInput.val(titleInput.val());
+		},
+		200
+	);
+
+	titleInput.on('input', onTitleInput);
+</aui:script>

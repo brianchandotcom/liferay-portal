@@ -25,8 +25,6 @@ CPDefinitionOptionRel cpDefinitionOptionRel = (CPDefinitionOptionRel)request.get
 <aui:model-context bean="<%= cpDefinitionOptionRel %>" model="<%= CPDefinitionOptionRel.class %>" />
 
 <aui:fieldset>
-	<aui:input name="name" />
-
 	<aui:input name="title" />
 
 	<aui:input name="description" />

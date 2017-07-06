@@ -25,11 +25,27 @@ CPOptionCategory cpOptionCategory = (CPOptionCategory)request.getAttribute(CPWeb
 <aui:model-context bean="<%= cpOptionCategory %>" model="<%= CPOptionCategory.class %>" />
 
 <aui:fieldset>
-	<aui:input name="name" />
-
 	<aui:input name="title" />
 
 	<aui:input name="description" />
 
 	<aui:input name="priority" />
+
+	<aui:input name="key" />
 </aui:fieldset>
+
+<aui:script sandbox="<%= true %>">
+	var form = $(document.<portlet:namespace />fm);
+
+	var keyInput = form.fm('key');
+	var titleInput = form.fm('title');
+
+	var onTitleInput = _.debounce(
+		function(event) {
+			keyInput.val(titleInput.val());
+		},
+		200
+	);
+
+	titleInput.on('input', onTitleInput);
+</aui:script>

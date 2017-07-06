@@ -14,15 +14,25 @@
 
 package com.liferay.staging.bar.web.internal.portlet;
 
+import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.portal.kernel.exception.LayoutBranchNameException;
 import com.liferay.portal.kernel.exception.LayoutSetBranchNameException;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutBranch;
 import com.liferay.portal.kernel.model.LayoutRevision;
+import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.security.auth.AuthException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalService;
 import com.liferay.portal.kernel.service.LayoutSetBranchService;
@@ -32,13 +42,19 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.staging.bar.web.internal.portlet.constants.StagingBarPortletKeys;
+import com.liferay.staging.constants.StagingProcessesWebKeys;
 
 import java.io.IOException;
+
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -110,6 +126,201 @@ public class StagingBarPortlet extends MVCPortlet {
 		}
 
 		addLayoutRevisionSessionMessages(actionRequest, actionResponse);
+	}
+
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			renderRequest);
+
+		long plid = themeDisplay.getPlid();
+
+		Layout layout = _layoutLocalService.fetchLayout(plid);
+
+		Layout selLayout = layout;
+
+		long selPlid = ParamUtil.getLong(httpServletRequest, "selPlid");
+
+		if (selPlid > 0) {
+			try {
+				selLayout = _layoutLocalService.getLayout(selPlid);
+			}
+			catch (PortalException pe) {
+				throw new PortletException(pe);
+			}
+		}
+
+		Group group = null;
+		boolean privateLayout = false;
+
+		if (selLayout != null) {
+			try {
+				group = selLayout.getGroup();
+			}
+			catch (PortalException pe) {
+				throw new PortletException(pe);
+			}
+
+			privateLayout = selLayout.isPrivateLayout();
+		}
+
+		boolean branchingEnabled = false;
+
+		LayoutRevision layoutRevision = null;
+
+		LayoutSetBranch layoutSetBranch = null;
+
+		LayoutBranch layoutBranch = null;
+
+		Layout liveLayout = null;
+
+		if (layout != null) {
+			layoutRevision = LayoutStagingUtil.getLayoutRevision(layout);
+
+			if (layoutRevision != null) {
+				branchingEnabled = true;
+
+				try {
+					layoutSetBranch =
+						_layoutSetBranchLocalService.getLayoutSetBranch(
+							layoutRevision.getLayoutSetBranchId());
+
+					layoutBranch = layoutRevision.getLayoutBranch();
+				}
+				catch (PortalException pe) {
+					throw new PortletException(pe);
+				}
+			}
+		}
+
+		Group liveGroup = _staging.getLiveGroup(group.getGroupId());
+		String liveURL = null;
+		Group stagingGroup = _staging.getStagingGroup(group.getGroupId());
+		Layout stagingLayout = null;
+		String stagingURL = null;
+		List<LayoutSetBranch> layoutSetBranches = null;
+		String remoteURL = null;
+		String remoteSiteURL = StringPool.BLANK;
+
+		if (themeDisplay.isShowStagingIcon()) {
+			if (liveGroup != null) {
+				liveLayout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
+					layout.getUuid(), liveGroup.getGroupId(),
+					layout.isPrivateLayout());
+
+				if (liveLayout != null) {
+					try {
+						liveURL = _portal.getLayoutURL(
+							liveLayout, themeDisplay);
+					}
+					catch (PortalException pe) {
+						throw new PortletException(pe);
+					}
+				}
+				else if ((layout.isPrivateLayout() &&
+						  (liveGroup.getPrivateLayoutsPageCount() > 0)) ||
+						 (layout.isPublicLayout() &&
+						  (liveGroup.getPublicLayoutsPageCount() > 0))) {
+
+					liveURL = liveGroup.getDisplayURL(
+						themeDisplay, layout.isPrivateLayout());
+				}
+			}
+
+			if (stagingGroup != null) {
+				stagingLayout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
+					layout.getUuid(), stagingGroup.getGroupId(),
+					layout.isPrivateLayout());
+
+				if (stagingLayout != null) {
+					try {
+						stagingURL = _portal.getLayoutURL(
+							stagingLayout, themeDisplay);
+					}
+					catch (PortalException pe) {
+						throw new PortletException(pe);
+					}
+				}
+				else {
+					stagingURL = stagingGroup.getDisplayURL(
+						themeDisplay, layout.isPrivateLayout());
+				}
+			}
+
+			if (group.isStagingGroup() || group.isStagedRemotely()) {
+				layoutSetBranches =
+					_layoutSetBranchLocalService.getLayoutSetBranches(
+						stagingGroup.getGroupId(), layout.isPrivateLayout());
+			}
+
+			UnicodeProperties typeSettingsProperties =
+				group.getTypeSettingsProperties();
+
+			String remoteAddress = typeSettingsProperties.getProperty(
+				"remoteAddress");
+			int remotePort = GetterUtil.getInteger(
+				typeSettingsProperties.getProperty("remotePort"));
+			String remotePathContext = typeSettingsProperties.getProperty(
+				"remotePathContext");
+			boolean secureConnection = GetterUtil.getBoolean(
+				typeSettingsProperties.getProperty("secureConnection"));
+
+			remoteURL = _staging.buildRemoteURL(
+				remoteAddress, remotePort, remotePathContext, secureConnection);
+
+			if ((liveGroup != null) && group.isStagedRemotely()) {
+				try {
+					remoteSiteURL = _staging.getRemoteSiteURL(
+						group, layout.isPrivateLayout());
+				}
+				catch (AuthException ae) {
+					_log.error(ae.getMessage());
+
+					SessionErrors.add(renderRequest, AuthException.class);
+				}
+				catch (Exception e) {
+					_log.error(e, e);
+
+					SessionErrors.add(renderRequest, Exception.class);
+				}
+			}
+		}
+
+		renderRequest.setAttribute(WebKeys.GROUP, group);
+		renderRequest.setAttribute(WebKeys.LAYOUT, layout);
+		renderRequest.setAttribute(WebKeys.LAYOUT_REVISION, layoutRevision);
+		renderRequest.setAttribute(WebKeys.PRIVATE_LAYOUT, privateLayout);
+
+		renderRequest.setAttribute(
+			StagingProcessesWebKeys.BRANCHING_ENABLED,
+			String.valueOf(branchingEnabled));
+		renderRequest.setAttribute(
+			StagingProcessesWebKeys.LAYOUT_BRANCH, layoutBranch);
+		renderRequest.setAttribute(
+			StagingProcessesWebKeys.LAYOUT_SET_BRANCH, layoutSetBranch);
+		renderRequest.setAttribute(
+			StagingProcessesWebKeys.LAYOUT_SET_BRANCHES, layoutSetBranches);
+		renderRequest.setAttribute(
+			StagingProcessesWebKeys.LIVE_GROUP, liveGroup);
+		renderRequest.setAttribute(
+			StagingProcessesWebKeys.LIVE_LAYOUT, liveLayout);
+		renderRequest.setAttribute(StagingProcessesWebKeys.LIVE_URL, liveURL);
+		renderRequest.setAttribute(
+			StagingProcessesWebKeys.REMOTE_SITE_URL, remoteSiteURL);
+		renderRequest.setAttribute(
+			StagingProcessesWebKeys.REMOTE_URL, remoteURL);
+		renderRequest.setAttribute(
+			StagingProcessesWebKeys.STAGING_GROUP, stagingGroup);
+		renderRequest.setAttribute(
+			StagingProcessesWebKeys.STAGING_URL, stagingURL);
+
+		super.render(renderRequest, renderResponse);
 	}
 
 	public void updateLayoutRevision(
@@ -227,6 +438,13 @@ public class StagingBarPortlet extends MVCPortlet {
 	}
 
 	@Reference
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
+	@Reference
 	protected void setLayoutRevisionLocalService(
 		LayoutRevisionLocalService layoutRevisionLocalService) {
 
@@ -261,6 +479,12 @@ public class StagingBarPortlet extends MVCPortlet {
 	protected void setRelease(Release release) {
 	}
 
+	protected void unsetLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = null;
+	}
+
 	protected void unsetLayoutRevisionLocalService(
 		LayoutRevisionLocalService layoutRevisionLocalService) {
 
@@ -285,6 +509,10 @@ public class StagingBarPortlet extends MVCPortlet {
 		_layoutSetLocalService = null;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		StagingBarPortlet.class);
+
+	private LayoutLocalService _layoutLocalService;
 	private LayoutRevisionLocalService _layoutRevisionLocalService;
 	private LayoutSetBranchLocalService _layoutSetBranchLocalService;
 	private LayoutSetBranchService _layoutSetBranchService;

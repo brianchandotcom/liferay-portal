@@ -38,6 +38,8 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.internal.plugins.osgi.OsgiHelper;
 import org.gradle.api.plugins.BasePlugin;
+import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.TaskContainer;
@@ -54,6 +56,8 @@ public class NodePlugin implements Plugin<Project> {
 	public static final String EXTENSION_NAME = "node";
 
 	public static final String NPM_INSTALL_TASK_NAME = "npmInstall";
+
+	public static final String NPM_RUN_BUILD_TASK_NAME = "npmRunBuild";
 
 	public static final String NPM_SHRINKWRAP_TASK_NAME = "npmShrinkwrap";
 
@@ -201,15 +205,32 @@ public class NodePlugin implements Plugin<Project> {
 	private ExecuteNpmTask _addTaskNpmRun(
 		String name, NpmInstallTask npmInstallTask) {
 
+		Project project = npmInstallTask.getProject();
+
 		String taskName = "npmRun" + StringUtil.capitalize(name);
 
-		ExecuteNpmTask executeNpmTask = GradleUtil.addTask(
-			npmInstallTask.getProject(), taskName, ExecuteNpmTask.class);
+		final ExecuteNpmTask executeNpmTask = GradleUtil.addTask(
+			project, taskName, ExecuteNpmTask.class);
 
 		executeNpmTask.dependsOn(npmInstallTask);
 		executeNpmTask.setArgs("run-script", name);
 		executeNpmTask.setDescription("Runs the \"" + name + "\" NPM script.");
 		executeNpmTask.setGroup(BasePlugin.BUILD_GROUP);
+
+		if (taskName.equals(NPM_RUN_BUILD_TASK_NAME)) {
+			PluginContainer pluginContainer = project.getPlugins();
+
+			pluginContainer.withType(
+				JavaPlugin.class,
+				new Action<JavaPlugin>() {
+
+					@Override
+					public void execute(JavaPlugin javaPlugin) {
+						_configureTaskNpmRunBuildForJavaPlugin(executeNpmTask);
+					}
+
+				});
+		}
 
 		return executeNpmTask;
 	}
@@ -374,6 +395,17 @@ public class NodePlugin implements Plugin<Project> {
 		ExecuteNpmTask executeNpmTask, NodeExtension nodeExtension) {
 
 		executeNpmTask.args(nodeExtension.getNpmArgs());
+	}
+
+	private void _configureTaskNpmRunBuildForJavaPlugin(
+		ExecuteNpmTask executeNpmTask) {
+
+		executeNpmTask.mustRunAfter(JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
+
+		Task classesTask = GradleUtil.getTask(
+			executeNpmTask.getProject(), JavaPlugin.CLASSES_TASK_NAME);
+
+		classesTask.dependsOn(executeNpmTask);
 	}
 
 	private void _configureTaskPublishNodeModule(

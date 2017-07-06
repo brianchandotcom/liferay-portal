@@ -1831,6 +1831,19 @@ to version 2.0.27.
 - [LPS-72705]: Update the [Liferay Source Formatter] dependency to version
 1.0.416.
 
+## 3.3.37 - 2017-07-10
+
+### Changed
+- [LPS-73472]: Apply [Liferay Gradle Plugins JS Module Config Generator] and
+[Liferay Gradle Plugins JS Transpiler] to an OSGi project only if the
+`package.json` file does not declare a script named `"build"`.
+- [LPS-73472]: Update the [Liferay Gradle Plugins Gulp] dependency to version
+2.0.16.
+- [LPS-73472]: Update the [Liferay Gradle Plugins JS Module Config Generator]
+dependency to version 2.1.15.
+- [LPS-73472]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
+version 2.3.15.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -1997,4 +2010,5 @@ to version 2.0.27.
 [LPS-73148]: https://issues.liferay.com/browse/LPS-73148
 [LPS-73156]: https://issues.liferay.com/browse/LPS-73156
 [LPS-73383]: https://issues.liferay.com/browse/LPS-73383
+[LPS-73472]: https://issues.liferay.com/browse/LPS-73472
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

@@ -32,6 +32,12 @@ public class SystemEventLocalServiceWrapper implements SystemEventLocalService,
 	}
 
 	@Override
+	public boolean validateGroup(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _systemEventLocalService.validateGroup(groupId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _systemEventLocalService.getActionableDynamicQuery();
 	}
@@ -301,6 +307,12 @@ public class SystemEventLocalServiceWrapper implements SystemEventLocalService,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _systemEventLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
+	}
+
+	@Override
+	public void checkSystemEvents()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_systemEventLocalService.checkSystemEvents();
 	}
 
 	@Override

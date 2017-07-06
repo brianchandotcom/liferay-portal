@@ -1603,6 +1603,10 @@ public class PropsValues {
 
 	public static final int STAGING_REMOTE_TRANSFER_BUFFER_SIZE = GetterUtil.getInteger(PropsUtil.get(PropsKeys.STAGING_REMOTE_TRANSFER_BUFFER_SIZE));
 
+	public static final int STAGING_SYSTEM_EVENT_CHECK_INTERVAL = GetterUtil.getInteger(PropsUtil.get(PropsKeys.STAGING_SYSTEM_EVENT_CHECK_INTERVAL));
+
+	public static final int STAGING_SYSTEM_EVENT_MAX_AGE = GetterUtil.getInteger(PropsUtil.get(PropsKeys.STAGING_SYSTEM_EVENT_MAX_AGE));
+
 	public static boolean STRIP_CSS_SASS_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.STRIP_CSS_SASS_ENABLED));
 
 	public static final String[] STRIP_IGNORE_PATHS = PropsUtil.getArray(PropsKeys.STRIP_IGNORE_PATHS);

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -29,6 +31,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.base.SystemEventLocalServiceBaseImpl;
 import com.liferay.portal.util.PropsValues;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -78,6 +81,32 @@ public class SystemEventLocalServiceImpl
 		return addSystemEvent(
 			0, companyId, 0, className, classPK, classUuid, referrerClassName,
 			type, extraData, StringPool.BLANK);
+	}
+
+	public void checkSystemEvents() throws PortalException {
+		if (PropsValues.STAGING_SYSTEM_EVENT_MAX_AGE <= 0) {
+			return;
+		}
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			systemEventLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Calendar calendar = Calendar.getInstance();
+
+				calendar.add(
+					Calendar.HOUR, -PropsValues.STAGING_SYSTEM_EVENT_MAX_AGE);
+
+				dynamicQuery.add(
+					RestrictionsFactoryUtil.lt(
+						"createDate", calendar.getTime()));
+			});
+
+		actionableDynamicQuery.setPerformActionMethod(
+			systemEvent -> deleteSystemEvent((SystemEvent)systemEvent));
+
+		actionableDynamicQuery.performActions();
 	}
 
 	@Override

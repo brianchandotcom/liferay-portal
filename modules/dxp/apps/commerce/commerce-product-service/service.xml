@@ -201,7 +201,6 @@
 
 		<column name="CPDefinitionId" type="long" />
 		<column name="CPOptionId" type="long" />
-		<column name="name" type="String" />
 		<column localized="true" name="title" type="String" />
 		<column localized="true" name="description" type="String" />
 		<column name="DDMFormFieldTypeName" type="String" />
@@ -257,9 +256,9 @@
 		<!-- Other fields -->
 
 		<column name="CPDefinitionOptionRelId"  type="long" />
-		<column name="name" type="String" />
 		<column localized="true" name="title" type="String" />
 		<column name="priority" type="double" />
+		<column name="key" type="String" />
 
 		<!-- Order -->
 
@@ -488,13 +487,13 @@
 
 		<!-- Other fields -->
 
-		<column name="name" type="String" />
 		<column localized="true" name="title" type="String" />
 		<column localized="true" name="description" type="String" />
 		<column name="DDMFormFieldTypeName" type="String" />
 		<column name="facetable" type="boolean" />
 		<column name="required" type="boolean" />
 		<column name="skuContributor" type="boolean" />
+		<column name="key" type="String" />
 		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
@@ -536,10 +535,10 @@
 
 		<!-- Other fields -->
 
-		<column name="name" type="String" />
 		<column localized="true" name="title" type="String" />
 		<column localized="true" name="description" type="String" />
 		<column name="priority" type="double" />
+		<column name="key" type="String" />
 		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
@@ -578,9 +577,9 @@
 		<!-- Other fields -->
 
 		<column name="CPOptionId" type="long" />
-		<column name="name" type="String" />
 		<column localized="true" name="title" type="String" />
 		<column name="priority" type="double" />
+		<column name="key" type="String" />
 		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->

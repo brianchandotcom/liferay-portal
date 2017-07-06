@@ -14,6 +14,9 @@
 
 package com.liferay.poshi.runner.elements;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.dom4j.Element;
 
 /**
@@ -137,6 +140,43 @@ public class CommandElement extends PoshiElement {
 	@Override
 	protected String getBlockName() {
 		return getReadableCommandTitle();
+	}
+
+	protected List<String> getReadableBlocks(String readableSyntax) {
+		StringBuilder sb = new StringBuilder();
+
+		List<String> readableBlocks = new ArrayList<>();
+
+		for (String line : readableSyntax.split("\n")) {
+			line = line.trim();
+
+			if (line.startsWith("setUp") || line.startsWith("tearDown")) {
+				continue;
+			}
+
+			if ((line.endsWith(" {") && line.startsWith("test")) ||
+				line.startsWith("@")) {
+
+				readableBlocks.add(line);
+
+				continue;
+			}
+
+			sb.append(line);
+			sb.append("\n");
+
+			String readableBlock = sb.toString();
+
+			readableBlock = readableBlock.trim();
+
+			if (isValidReadableBlock(readableBlock)) {
+				readableBlocks.add(readableBlock);
+
+				sb.setLength(0);
+			}
+		}
+
+		return readableBlocks;
 	}
 
 	protected String getReadableCommandTitle() {

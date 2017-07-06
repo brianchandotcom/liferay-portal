@@ -14,6 +14,9 @@
 
 package com.liferay.poshi.runner.elements;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.dom4j.Element;
 
 /**
@@ -134,6 +137,47 @@ public class DefinitionElement extends PoshiElement {
 	@Override
 	protected String getPad() {
 		return "";
+	}
+
+	protected List<String> getReadableBlocks(String readableSyntax) {
+		StringBuilder sb = new StringBuilder();
+
+		List<String> readableBlocks = new ArrayList<>();
+
+		for (String line : readableSyntax.split("\n")) {
+			line = line.trim();
+
+			if (line.length() == 0) {
+				continue;
+			}
+
+			if (line.startsWith("@") && !line.startsWith("@description") &&
+				!line.startsWith("@priority")) {
+
+				readableBlocks.add(line);
+
+				continue;
+			}
+
+			if (line.startsWith("definition {")) {
+				continue;
+			}
+
+			sb.append(line);
+			sb.append("\n");
+
+			String readableBlock = sb.toString();
+
+			readableBlock = readableBlock.trim();
+
+			if (isValidReadableBlock(readableBlock)) {
+				readableBlocks.add(readableBlock);
+
+				sb.setLength(0);
+			}
+		}
+
+		return readableBlocks;
 	}
 
 	@Override

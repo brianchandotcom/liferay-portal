@@ -38,8 +38,6 @@ public class SubrepositorySourceFormatFailureMessageGenerator
 
 		int start = consoleOutput.indexOf(_TOKEN_FORMAT_SOURCE);
 
-		start = consoleOutput.indexOf(_TOKEN_FORMAT_SOURCE, start);
-
 		start = consoleOutput.indexOf(_TOKEN_SYNC_RESULTS, start);
 
 		start = consoleOutput.indexOf("\n", start);
@@ -77,7 +75,7 @@ public class SubrepositorySourceFormatFailureMessageGenerator
 	}
 
 	private static final String _TOKEN_EXCEPTION_IS =
-		"FAILURE: Build failed with an excepetion.";
+		"FAILURE: Build failed with an exception.";
 
 	private static final String _TOKEN_FORMAT_SOURCE =
 		"subrepository-source-format-jdk8:";

@@ -132,6 +132,25 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 
 		mdrActionLocalService.deleteActions(
 			ruleGroupInstance.getRuleGroupInstanceId());
+
+		// Update priorities
+
+		List<MDRRuleGroupInstance> mdrRuleGroupInstances =
+			getRuleGroupInstances(
+				ruleGroupInstance.getClassName(),
+				ruleGroupInstance.getClassPK(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, new RuleGroupInstancePriorityComparator());
+
+		for (int i = 0; i < mdrRuleGroupInstances.size(); i++) {
+			MDRRuleGroupInstance mdrRuleGroupInstance =
+				mdrRuleGroupInstances.get(i);
+
+			if (mdrRuleGroupInstance.getPriority() != i) {
+				mdrRuleGroupInstance.setPriority(i);
+
+				mdrRuleGroupInstancePersistence.update(mdrRuleGroupInstance);
+			}
+		}
 	}
 
 	@Override

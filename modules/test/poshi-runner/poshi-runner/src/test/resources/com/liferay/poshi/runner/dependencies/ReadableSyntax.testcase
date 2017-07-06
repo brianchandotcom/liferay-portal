@@ -26,6 +26,13 @@ definition {
 			portlet = "Users and Organizations"
 		);
 
+		for (breadcrumbName : "${breadcrumbListVisible}") {
+			var key_breadcrumbName = "${breadcrumbName}";
+			var breadcrumbNameUppercase = "StringUtil.upperCase('${breadcrumbName}')";
+
+			AssertTextEquals(locator1 = "Breadcrumb#BREADCRUMB_ENTRY", value1 = "${breadcrumbNameUppercase}");
+		}
+
 		User.addCP(
 			userEmailAddress = "${userEmailAddress}",
 			userFirstName = "${userFirstName}",

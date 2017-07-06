@@ -24,6 +24,14 @@
             <var name="portlet" value="Users and Organizations" />
         </execute>
 
+        <for list="${breadcrumbListVisible}" param="breadcrumbName">
+            <var name="key_breadcrumbName" value="${breadcrumbName}" />
+
+            <var method="StringUtil#upperCase('${breadcrumbName}')" name="breadcrumbNameUppercase" />
+
+            <execute function="AssertTextEquals" locator1="Breadcrumb#BREADCRUMB_ENTRY" value1="${breadcrumbNameUppercase}" />
+        </for>
+
         <execute macro="User#addCP">
             <var name="userEmailAddress" value="${userEmailAddress}" />
             <var name="userFirstName" value="${userFirstName}" />

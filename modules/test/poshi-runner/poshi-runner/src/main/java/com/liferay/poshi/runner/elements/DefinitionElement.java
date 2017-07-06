@@ -136,4 +136,19 @@ public class DefinitionElement extends PoshiElement {
 		return "";
 	}
 
+	@Override
+	protected boolean isBalanceValidationRequired(String readableSyntax) {
+		readableSyntax = readableSyntax.trim();
+
+		if ((readableSyntax.startsWith("@") && readableSyntax.contains("{")) ||
+			readableSyntax.startsWith("setUp") ||
+			readableSyntax.startsWith("tearDown") ||
+			readableSyntax.startsWith("test")) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 }

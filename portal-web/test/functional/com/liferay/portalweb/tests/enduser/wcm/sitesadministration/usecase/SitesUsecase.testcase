@@ -66,7 +66,7 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
-		<execute macro="Organization#createSiteOrganizationSite">
+		<execute macro="Organization#editOrganizationCreateSite">
 			<var name="orgName" value="College of Agricultural Science" />
 		</execute>
 

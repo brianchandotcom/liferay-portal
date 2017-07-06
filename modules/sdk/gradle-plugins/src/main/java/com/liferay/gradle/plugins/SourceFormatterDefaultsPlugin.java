@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.internal;
+package com.liferay.gradle.plugins;
 
-import com.liferay.gradle.plugins.BasePortalToolDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.source.formatter.FormatSourceTask;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;

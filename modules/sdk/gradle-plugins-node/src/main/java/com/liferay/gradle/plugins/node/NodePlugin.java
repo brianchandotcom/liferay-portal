@@ -22,6 +22,7 @@ import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask;
 import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
 import com.liferay.gradle.plugins.node.tasks.NpmShrinkwrapTask;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
+import com.liferay.gradle.util.StringUtil;
 
 import groovy.json.JsonSlurper;
 
@@ -36,6 +37,7 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.internal.plugins.osgi.OsgiHelper;
+import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.TaskContainer;
@@ -80,6 +82,7 @@ public class NodePlugin implements Plugin<Project> {
 		}
 
 		_addTaskNpmShrinkwrap(project, cleanNpmTask, npmInstallTask);
+		_addTasksNpmRun(npmInstallTask, packageJsonMap);
 
 		_configureTasksDownloadNodeModule(
 			project, npmInstallTask, packageJsonMap);
@@ -195,6 +198,22 @@ public class NodePlugin implements Plugin<Project> {
 		return npmInstallTask;
 	}
 
+	private ExecuteNpmTask _addTaskNpmRun(
+		String name, NpmInstallTask npmInstallTask) {
+
+		String taskName = "npmRun" + StringUtil.capitalize(name);
+
+		ExecuteNpmTask executeNpmTask = GradleUtil.addTask(
+			npmInstallTask.getProject(), taskName, ExecuteNpmTask.class);
+
+		executeNpmTask.dependsOn(npmInstallTask);
+		executeNpmTask.setArgs("run-script", name);
+		executeNpmTask.setDescription("Runs the \"" + name + "\" NPM script.");
+		executeNpmTask.setGroup(BasePlugin.BUILD_GROUP);
+
+		return executeNpmTask;
+	}
+
 	private NpmShrinkwrapTask _addTaskNpmShrinkwrap(
 		Project project, Delete cleanNpmTask, NpmInstallTask npmInstallTask) {
 
@@ -207,6 +226,25 @@ public class NodePlugin implements Plugin<Project> {
 				"control which versions of each dependency will be used.");
 
 		return npmShrinkwrapTask;
+	}
+
+	private void _addTasksNpmRun(
+		NpmInstallTask npmInstallTask, Map<String, Object> packageJsonMap) {
+
+		if (packageJsonMap == null) {
+			return;
+		}
+
+		Map<String, String> scriptsJsonMap =
+			(Map<String, String>)packageJsonMap.get("scripts");
+
+		if (scriptsJsonMap == null) {
+			return;
+		}
+
+		for (String name : scriptsJsonMap.keySet()) {
+			_addTaskNpmRun(name, npmInstallTask);
+		}
 	}
 
 	private void _configureTaskDownloadNodeGlobal(

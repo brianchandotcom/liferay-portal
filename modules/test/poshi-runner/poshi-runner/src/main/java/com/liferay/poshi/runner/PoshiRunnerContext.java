@@ -131,11 +131,26 @@ public class PoshiRunnerContext {
 	public static String getPathLocator(String pathLocatorKey)
 		throws Exception {
 
-		if (!_pathLocators.containsKey(pathLocatorKey)) {
+		if (!isPathLocator(pathLocatorKey)) {
 			throw new Exception("No such locator key " + pathLocatorKey);
 		}
 
-		return _pathLocators.get(pathLocatorKey);
+		String pathLocator = _pathLocators.get(pathLocatorKey);
+
+		if (pathLocator == null) {
+			String className =
+				PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
+					pathLocatorKey);
+
+			String commandName =
+				PoshiRunnerGetterUtil.getCommandNameFromClassCommandName(
+					pathLocatorKey);
+
+			pathLocator = _pathLocators.get(
+				_pathExtensions.get(className) + "#" + commandName);
+		}
+
+		return pathLocator;
 	}
 
 	public static Element getPathRootElement(String className) {
@@ -196,7 +211,20 @@ public class PoshiRunnerContext {
 	}
 
 	public static boolean isPathLocator(String pathLocatorKey) {
-		return _pathLocators.containsKey(pathLocatorKey);
+		String className =
+			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
+				pathLocatorKey);
+
+		boolean pathLocatorExists = _pathLocators.containsKey(pathLocatorKey);
+
+		if (!pathLocatorExists && _pathExtensions.containsKey(className)) {
+			pathLocatorExists = _pathLocators.containsKey(
+				_pathExtensions.get(className) + "#" +
+					PoshiRunnerGetterUtil.getCommandNameFromClassCommandName(
+						pathLocatorKey));
+		}
+
+		return pathLocatorExists;
 	}
 
 	public static boolean isRootElement(String rootElementKey) {
@@ -980,25 +1008,11 @@ public class PoshiRunnerContext {
 			String locator = locatorElement.getText();
 
 			if (locatorKey.equals("EXTEND_ACTION_PATH")) {
-				for (URL resource : _resourceURLs) {
-					String expectedExtendedPath = "/" + locator + ".path";
-
-					String extendFilePath = resource.getFile();
-
-					if (extendFilePath.endsWith(expectedExtendedPath)) {
-						_storePathElement(
-							PoshiRunnerGetterUtil.getRootElementFromURL(
-								resource),
-							className,
-							PoshiRunnerGetterUtil.getClassNameFromFilePath(
-								extendFilePath));
-
-						break;
-					}
-				}
+				_pathExtensions.put(className, locator);
 			}
-
-			_pathLocators.put(className + "#" + locatorKey, locator);
+			else {
+				_pathLocators.put(className + "#" + locatorKey, locator);
+			}
 		}
 	}
 
@@ -1210,6 +1224,7 @@ public class PoshiRunnerContext {
 	private static final Map<String, String> _filePaths = new HashMap<>();
 	private static final Map<String, Integer> _functionLocatorCounts =
 		new HashMap<>();
+	private static final Map<String, String> _pathExtensions = new HashMap<>();
 	private static final Map<String, String> _pathLocators = new HashMap<>();
 	private static final List<String> _productNames = new ArrayList<>();
 	private static final List<URL> _resourceURLs = new ArrayList<>();

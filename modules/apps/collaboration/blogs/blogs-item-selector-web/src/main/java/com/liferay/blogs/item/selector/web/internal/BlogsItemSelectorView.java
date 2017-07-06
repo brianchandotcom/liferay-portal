@@ -123,7 +123,7 @@ public class BlogsItemSelectorView
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
+		policyOption = ReferencePolicyOption.GREEDY, unbind = "-"
 	)
 	public void setDLMimeTypeDisplayContext(
 		DLMimeTypeDisplayContext dlMimeTypeDisplayContext) {
@@ -146,12 +146,6 @@ public class BlogsItemSelectorView
 	)
 	public void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
-	}
-
-	public void unsetDLMimeTypeDisplayContext(
-		DLMimeTypeDisplayContext dlMimeTypeDisplayContext) {
-
-		_dlMimeTypeDisplayContext = null;
 	}
 
 	@Reference(unbind = "-")

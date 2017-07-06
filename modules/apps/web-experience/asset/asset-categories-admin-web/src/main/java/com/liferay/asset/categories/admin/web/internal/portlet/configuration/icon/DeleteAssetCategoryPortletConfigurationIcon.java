@@ -63,18 +63,21 @@ public class DeleteAssetCategoryPortletConfigurationIcon
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		PortletURL deleteURL = PortletURLFactoryUtil.create(
+		long categoryId = ParamUtil.getLong(portletRequest, "categoryId");
+
+		PortletURL deleteCategoryURL = PortletURLFactoryUtil.create(
 			portletRequest,
 			AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN,
 			PortletRequest.ACTION_PHASE);
 
-		deleteURL.setParameter(ActionRequest.ACTION_NAME, "deleteCategory");
-		deleteURL.setParameter(
-			"categoryId", ParamUtil.getString(portletRequest, "categoryId"));
-		deleteURL.setParameter(
+		deleteCategoryURL.setParameter(
+			ActionRequest.ACTION_NAME, "deleteCategory");
+		deleteCategoryURL.setParameter(
+			"categoryId", String.valueOf(categoryId));
+		deleteCategoryURL.setParameter(
 			"redirect", _portal.getCurrentURL(portletRequest));
 
-		return deleteURL.toString();
+		return deleteCategoryURL.toString();
 	}
 
 	@Override

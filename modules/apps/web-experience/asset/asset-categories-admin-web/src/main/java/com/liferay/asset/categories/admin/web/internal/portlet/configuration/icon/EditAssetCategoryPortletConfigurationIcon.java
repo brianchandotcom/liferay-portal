@@ -27,12 +27,14 @@ import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfiguration
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
+import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -63,24 +65,32 @@ public class EditAssetCategoryPortletConfigurationIcon
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		PortletURL liferayPortletURL = PortletURLFactoryUtil.create(
-			portletRequest,
-			AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN,
-			PortletRequest.RENDER_PHASE);
+		long vocabularyId = ParamUtil.getLong(portletRequest, "vocabularyId");
 
-		liferayPortletURL.setParameter("mvcPath", "/edit_category.jsp");
-		liferayPortletURL.setParameter(
-			"p_p_state", WindowState.MAXIMIZED.toString());
-		liferayPortletURL.setParameter(
-			"categoryId", ParamUtil.getString(portletRequest, "categoryId"));
-		liferayPortletURL.setParameter(
-			"vocabularyId",
-			ParamUtil.getString(portletRequest, "vocabularyId"));
+		long categoryId = ParamUtil.getLong(portletRequest, "categoryId");
 
-		liferayPortletURL.setParameter(
-			"redirect", _portal.getCurrentURL(portletRequest));
+		try {
+			PortletURL editCategoryURL = PortletURLFactoryUtil.create(
+				portletRequest,
+				AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN,
+				PortletRequest.RENDER_PHASE);
 
-		return liferayPortletURL.toString();
+			editCategoryURL.setParameter("mvcPath", "/edit_category.jsp");
+			editCategoryURL.setParameter(
+				"vocabularyId", String.valueOf(vocabularyId));
+			editCategoryURL.setParameter(
+				"categoryId", String.valueOf(categoryId));
+			editCategoryURL.setParameter(
+				"redirect", _portal.getCurrentURL(portletRequest));
+
+			editCategoryURL.setWindowState(WindowState.MAXIMIZED);
+
+			return editCategoryURL.toString();
+		}
+		catch (WindowStateException wse) {
+		}
+
+		return StringPool.BLANK;
 	}
 
 	@Override

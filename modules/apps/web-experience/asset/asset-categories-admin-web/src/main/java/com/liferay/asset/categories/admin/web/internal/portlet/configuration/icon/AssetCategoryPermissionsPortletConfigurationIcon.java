@@ -66,16 +66,16 @@ public class AssetCategoryPermissionsPortletConfigurationIcon
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
+		long categoryId = ParamUtil.getLong(portletRequest, "categoryId", 0);
+
+		if (categoryId <= 0) {
+			return StringPool.BLANK;
+		}
+
 		String url = StringPool.BLANK;
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		long categoryId = ParamUtil.getLong(portletRequest, "categoryId", 0);
-
-		if (categoryId <= 0) {
-			return url;
-		}
 
 		AssetCategory assetCategory = _assetCategoryLocalService.fetchCategory(
 			categoryId);
@@ -136,16 +136,10 @@ public class AssetCategoryPermissionsPortletConfigurationIcon
 		return true;
 	}
 
-	@Reference(unbind = "-")
-	protected void setAssetCategoryLocalService(
-		AssetCategoryLocalService assetCategoryLocalService) {
-
-		_assetCategoryLocalService = assetCategoryLocalService;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetCategoryPermissionsPortletConfigurationIcon.class);
 
+	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Reference

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 
+import java.io.File;
 import java.io.Serializable;
 
 import java.util.Comparator;
@@ -113,7 +114,8 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 			String configuration = _getConfiguration(dependency);
 
 			if (configuration.equals("compile") &&
-				isModulesApp(absolutePath, _projectPathPrefix, false)) {
+				isModulesApp(absolutePath, _projectPathPrefix, false) &&
+				_hasBNDFile(absolutePath)) {
 
 				dependency = StringUtil.replaceFirst(
 					dependency, "compile", "provided");
@@ -139,6 +141,22 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 		int pos = dependency.indexOf(StringPool.SPACE);
 
 		return dependency.substring(0, pos);
+	}
+
+	private boolean _hasBNDFile(String absolutePath) {
+		if (!absolutePath.endsWith("/build.gradle")) {
+			return false;
+		}
+
+		int pos = absolutePath.lastIndexOf(StringPool.SLASH);
+
+		File file = new File(absolutePath.substring(0, pos + 1) + "bnd.bnd");
+
+		if (!file.exists()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private final Pattern _dependenciesPattern = Pattern.compile(

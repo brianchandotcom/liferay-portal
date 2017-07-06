@@ -59,7 +59,7 @@ public class CPDefinitionOptionRelIndexer
 		setDefaultSelectedFieldNames(
 			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
 			Field.GROUP_ID, Field.MODIFIED_DATE, Field.SCOPE_GROUP_ID,
-			Field.NAME, Field.UID);
+			Field.TITLE, Field.UID);
 		setFilterSearch(true);
 		setPermissionAware(true);
 	}
@@ -94,7 +94,6 @@ public class CPDefinitionOptionRelIndexer
 		addSearchLocalizedTerm(
 			searchQuery, searchContext, Field.DESCRIPTION, false);
 		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
-		addSearchTerm(searchQuery, searchContext, Field.NAME, false);
 		addSearchLocalizedTerm(searchQuery, searchContext, Field.TITLE, false);
 		addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
 
@@ -158,7 +157,6 @@ public class CPDefinitionOptionRelIndexer
 					Field.DESCRIPTION, languageId),
 				description);
 
-			document.addText(Field.NAME, cpDefinitionOptionRel.getName());
 			document.addText(Field.CONTENT, title);
 
 			document.addKeyword(

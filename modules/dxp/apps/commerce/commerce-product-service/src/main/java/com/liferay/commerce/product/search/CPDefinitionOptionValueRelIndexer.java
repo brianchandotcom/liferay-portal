@@ -55,12 +55,13 @@ public class CPDefinitionOptionValueRelIndexer
 
 	public static final String FIELD_CP_DEFINITION_OPTION_REL_ID =
 		"CPDefinitionOptionRelId";
+	public static final String FIELD_KEY = "key";
 
 	public CPDefinitionOptionValueRelIndexer() {
 		setDefaultSelectedFieldNames(
 			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
 			Field.GROUP_ID, Field.MODIFIED_DATE, Field.SCOPE_GROUP_ID,
-			Field.NAME, Field.UID);
+			Field.TITLE, Field.UID, FIELD_KEY);
 		setFilterSearch(true);
 		setPermissionAware(true);
 	}
@@ -91,7 +92,7 @@ public class CPDefinitionOptionValueRelIndexer
 		throws Exception {
 
 		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
-		addSearchTerm(searchQuery, searchContext, Field.NAME, false);
+		addSearchTerm(searchQuery, searchContext, FIELD_KEY, false);
 		addSearchLocalizedTerm(searchQuery, searchContext, Field.TITLE, false);
 		addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
 
@@ -151,7 +152,7 @@ public class CPDefinitionOptionValueRelIndexer
 				LocalizationUtil.getLocalizedName(Field.TITLE, languageId),
 				title);
 
-			document.addText(Field.NAME, cpDefinitionOptionValueRel.getName());
+			document.addText(FIELD_KEY, cpDefinitionOptionValueRel.getKey());
 			document.addText(Field.CONTENT, title);
 		}
 
@@ -175,7 +176,7 @@ public class CPDefinitionOptionValueRelIndexer
 		Document document, Locale locale, String snippet,
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		Summary summary = createSummary(document, Field.TITLE, Field.TITLE);
+		Summary summary = createSummary(document, Field.TITLE, FIELD_KEY);
 
 		summary.setMaxContentLength(200);
 

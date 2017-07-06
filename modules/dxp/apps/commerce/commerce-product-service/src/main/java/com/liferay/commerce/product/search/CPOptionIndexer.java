@@ -46,11 +46,13 @@ public class CPOptionIndexer extends BaseIndexer<CPOption> {
 
 	public static final String CLASS_NAME = CPOption.class.getName();
 
+	public static final String FIELD_KEY = "key";
+
 	public CPOptionIndexer() {
 		setDefaultSelectedFieldNames(
 			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
 			Field.GROUP_ID, Field.MODIFIED_DATE, Field.SCOPE_GROUP_ID,
-			Field.NAME, Field.UID);
+			Field.TITLE, Field.UID, FIELD_KEY);
 		setFilterSearch(true);
 		setPermissionAware(true);
 	}
@@ -97,7 +99,7 @@ public class CPOptionIndexer extends BaseIndexer<CPOption> {
 					Field.DESCRIPTION, languageId),
 				description);
 
-			document.addText(Field.NAME, cpOption.getName());
+			document.addText(FIELD_KEY, cpOption.getKey());
 			document.addText(Field.CONTENT, title);
 		}
 

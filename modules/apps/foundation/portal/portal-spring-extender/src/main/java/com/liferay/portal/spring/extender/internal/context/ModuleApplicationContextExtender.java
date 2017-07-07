@@ -26,10 +26,13 @@ import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.spring.extender.internal.classloader.BundleResolverClassLoader;
+import com.liferay.portal.spring.extender.internal.configuration.SpringExtenderConfiguration;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistratorTracker;
 
 import java.io.IOException;
@@ -39,11 +42,16 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.sql.DataSource;
 
+import org.apache.felix.dm.ComponentDeclaration;
+import org.apache.felix.dm.ComponentDependencyDeclaration;
 import org.apache.felix.dm.DependencyManager;
 import org.apache.felix.dm.ServiceDependency;
 import org.apache.felix.utils.extender.Extension;
@@ -60,18 +68,42 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Miguel Pastor
  */
-@Component(immediate = true)
+@Component(
+	configurationPid = "com.liferay.portal.spring.extender.internal.configuration.SpringExtenderConfiguration",
+	immediate = true
+)
 public class ModuleApplicationContextExtender extends AbstractExtender {
 
 	@Activate
-	protected void activate(BundleContext bundleContext) throws Exception {
+	protected void activate(
+			BundleContext bundleContext,
+			SpringExtenderConfiguration springExtenderConfiguration)
+		throws Exception {
+
 		_logger = new Logger(bundleContext);
 
 		start(bundleContext);
+
+		long scanningInterval =
+			springExtenderConfiguration.unavailableComponentScanningInterval();
+
+		if (scanningInterval > 0) {
+			_unavailableComponentScanningThread =
+				new UnavailableComponentScanningThread(
+					scanningInterval * Time.SECOND);
+
+			_unavailableComponentScanningThread.start();
+		}
 	}
 
 	@Deactivate
 	protected void deactivate(BundleContext bundleContext) throws Exception {
+		if (_unavailableComponentScanningThread != null) {
+			_unavailableComponentScanningThread.interrupt();
+
+			_unavailableComponentScanningThread.join();
+		}
+
 		stop(bundleContext);
 	}
 
@@ -129,8 +161,88 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 		_logger.log(Logger.LOG_DEBUG, "[" + bundle + "] " + s);
 	}
 
+	private void _scanUnavailableComponents() {
+		StringBundler sb = new StringBundler();
+
+		for (DependencyManager dependencyManager :
+				(List<DependencyManager>)
+					DependencyManager.getDependencyManagers()) {
+
+			BundleContext bundleContext = dependencyManager.getBundleContext();
+
+			Bundle bundle = bundleContext.getBundle();
+
+			Map<ComponentDeclaration, List<ComponentDependencyDeclaration>>
+				unavailableComponentDeclarations = new HashMap<>();
+
+			for (ComponentDeclaration componentDeclaration :
+					(List<ComponentDeclaration>)
+						dependencyManager.getComponents()) {
+
+				if (componentDeclaration.getState() !=
+						ComponentDeclaration.STATE_UNREGISTERED) {
+
+					continue;
+				}
+
+				List<ComponentDependencyDeclaration>
+					componentDependencyDeclarations =
+						unavailableComponentDeclarations.computeIfAbsent(
+							componentDeclaration, key -> new ArrayList<>());
+
+				for (ComponentDependencyDeclaration
+						componentDependencyDeclaration :
+							componentDeclaration.getComponentDependencies()) {
+
+					if (componentDependencyDeclaration.getState() ==
+							ComponentDependencyDeclaration.
+								STATE_UNAVAILABLE_REQUIRED) {
+
+						componentDependencyDeclarations.add(
+							componentDependencyDeclaration);
+					}
+				}
+			}
+
+			if (!unavailableComponentDeclarations.isEmpty()) {
+				sb.append("Found unavailable component in bundle : ");
+				sb.append(bundle);
+				sb.append("\n");
+
+				for (Entry<
+						ComponentDeclaration,
+						List<ComponentDependencyDeclaration>> entry :
+							unavailableComponentDeclarations.entrySet()) {
+
+					sb.append("\tComponent:");
+					sb.append(entry.getKey());
+					sb.append(" is not available, due to :\n");
+
+					for (ComponentDependencyDeclaration
+							componentDependencyDeclaration : entry.getValue()) {
+
+						sb.append("\t\tRequired dependency :");
+						sb.append(componentDependencyDeclaration);
+						sb.append(" is unavailable!\n");
+					}
+				}
+			}
+		}
+
+		if (sb.index() == 0) {
+			_logger.log(
+				Logger.LOG_INFO,
+				"All Spring Extender Dependency Manager components are " +
+					"registered!");
+		}
+		else {
+			_logger.log(Logger.LOG_WARNING, sb.toString());
+		}
+	}
+
 	private Logger _logger;
 	private ServiceConfigurator _serviceConfigurator;
+	private Thread _unavailableComponentScanningThread;
 
 	private class ModuleApplicationContextExtension implements Extension {
 
@@ -368,6 +480,34 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 			protected final String serviceClassName;
 
 		}
+
+	}
+
+	private class UnavailableComponentScanningThread extends Thread {
+
+		@Override
+		public void run() {
+			try {
+				while (true) {
+					sleep(_scanningInterval);
+
+					_scanUnavailableComponents();
+				}
+			}
+			catch (InterruptedException ie) {
+				_logger.log(
+					Logger.LOG_INFO, "Stopped unavailable component scanning.");
+			}
+		}
+
+		private UnavailableComponentScanningThread(long scanningInterval) {
+			_scanningInterval = scanningInterval;
+
+			setDaemon(true);
+			setName("Spring Extender unavailable component scanner");
+		}
+
+		private final long _scanningInterval;
 
 	}
 

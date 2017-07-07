@@ -16,6 +16,7 @@ package com.liferay.commerce.product.demo.data.creator.internal.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringPool;
@@ -58,8 +59,9 @@ public class LayoutDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 		ServiceContext serviceContext = getServiceContext(userId, groupId);
 
 		layout = _layoutLocalService.addLayout(
-			userId, groupId, false, 0, name, name, null, "portlet", false,
-			friendlyURL, serviceContext);
+			userId, groupId, false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			name, name, null, LayoutConstants.TYPE_PORTLET, true, friendlyURL,
+			serviceContext);
 
 		_layouts.put(name, layout);
 

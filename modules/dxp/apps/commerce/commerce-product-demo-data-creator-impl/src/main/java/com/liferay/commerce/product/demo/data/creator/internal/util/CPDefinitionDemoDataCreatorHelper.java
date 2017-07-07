@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
@@ -260,9 +258,6 @@ public class CPDefinitionDemoDataCreatorHelper
 
 		return catalogJSONArray;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CPDefinitionDemoDataCreatorHelper.class);
 
 	@Reference
 	private AssetCategoryDemoDataCreatorHelper

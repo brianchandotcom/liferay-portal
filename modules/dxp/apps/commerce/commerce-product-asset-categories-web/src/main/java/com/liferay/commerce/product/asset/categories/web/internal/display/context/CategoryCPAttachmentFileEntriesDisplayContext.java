@@ -18,7 +18,6 @@ import com.liferay.commerce.product.definitions.web.configuration.AttachmentsCon
 import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
-import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
@@ -42,14 +41,12 @@ public class CategoryCPAttachmentFileEntriesDisplayContext
 	public CategoryCPAttachmentFileEntriesDisplayContext(
 			ActionHelper actionHelper,
 			AttachmentsConfiguration attachmentsConfiguration,
-			DLMimeTypeDisplayContext dlMimeTypeDisplayContext,
 			HttpServletRequest httpServletRequest, ItemSelector itemSelector)
 		throws PortalException {
 
 		super(actionHelper, httpServletRequest);
 
 		_attachmentsConfiguration = attachmentsConfiguration;
-		_dlMimeTypeDisplayContext = dlMimeTypeDisplayContext;
 		_itemSelector = itemSelector;
 	}
 
@@ -95,7 +92,6 @@ public class CategoryCPAttachmentFileEntriesDisplayContext
 
 	private final AttachmentsConfiguration _attachmentsConfiguration;
 	private CPAttachmentFileEntry _cpAttachmentFileEntry;
-	private final DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
 	private final ItemSelector _itemSelector;
 
 }

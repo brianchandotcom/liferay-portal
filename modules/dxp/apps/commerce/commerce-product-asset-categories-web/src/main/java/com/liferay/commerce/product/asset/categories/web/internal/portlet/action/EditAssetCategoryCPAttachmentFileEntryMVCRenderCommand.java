@@ -18,7 +18,6 @@ import com.liferay.commerce.product.asset.categories.web.internal.display.contex
 import com.liferay.commerce.product.definitions.web.configuration.AttachmentsConfiguration;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.exception.NoSuchCPAttachmentFileEntryException;
-import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -77,8 +76,7 @@ public class EditAssetCategoryCPAttachmentFileEntryMVCRenderCommand
 				categoryCPAttachmentFileEntriesDisplayContext =
 					new CategoryCPAttachmentFileEntriesDisplayContext(
 						_actionHelper, _attachmentsConfiguration,
-						_dlMimeTypeDisplayContext, httpServletRequest,
-						_itemSelector);
+						httpServletRequest, _itemSelector);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -117,9 +115,6 @@ public class EditAssetCategoryCPAttachmentFileEntryMVCRenderCommand
 	private ActionHelper _actionHelper;
 
 	private volatile AttachmentsConfiguration _attachmentsConfiguration;
-
-	@Reference
-	private DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
 
 	@Reference
 	private ItemSelector _itemSelector;

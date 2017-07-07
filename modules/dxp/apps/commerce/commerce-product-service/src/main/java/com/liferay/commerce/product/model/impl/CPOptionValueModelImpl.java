@@ -131,8 +131,9 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 	public static final long CPOPTIONID_COLUMN_BITMASK = 1L;
 	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 	public static final long GROUPID_COLUMN_BITMASK = 4L;
-	public static final long UUID_COLUMN_BITMASK = 8L;
-	public static final long TITLE_COLUMN_BITMASK = 16L;
+	public static final long KEY_COLUMN_BITMASK = 8L;
+	public static final long UUID_COLUMN_BITMASK = 16L;
+	public static final long TITLE_COLUMN_BITMASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -625,7 +626,17 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 
 	@Override
 	public void setKey(String key) {
+		_columnBitmask |= KEY_COLUMN_BITMASK;
+
+		if (_originalKey == null) {
+			_originalKey = _key;
+		}
+
 		_key = key;
+	}
+
+	public String getOriginalKey() {
+		return GetterUtil.getString(_originalKey);
 	}
 
 	@JSON
@@ -825,6 +836,8 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 		cpOptionValueModelImpl._originalCPOptionId = cpOptionValueModelImpl._CPOptionId;
 
 		cpOptionValueModelImpl._setOriginalCPOptionId = false;
+
+		cpOptionValueModelImpl._originalKey = cpOptionValueModelImpl._key;
 
 		cpOptionValueModelImpl._columnBitmask = 0;
 	}
@@ -1033,6 +1046,7 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 	private String _titleCurrentLanguageId;
 	private double _priority;
 	private String _key;
+	private String _originalKey;
 	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private CPOptionValue _escapedModel;

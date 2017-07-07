@@ -887,6 +887,66 @@ public class CPOptionUtil {
 	}
 
 	/**
+	* Returns the cp option where groupId = &#63; and key = &#63; or throws a {@link NoSuchCPOptionException} if it could not be found.
+	*
+	* @param groupId the group ID
+	* @param key the key
+	* @return the matching cp option
+	* @throws NoSuchCPOptionException if a matching cp option could not be found
+	*/
+	public static CPOption findByG_K(long groupId, java.lang.String key)
+		throws com.liferay.commerce.product.exception.NoSuchCPOptionException {
+		return getPersistence().findByG_K(groupId, key);
+	}
+
+	/**
+	* Returns the cp option where groupId = &#63; and key = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param groupId the group ID
+	* @param key the key
+	* @return the matching cp option, or <code>null</code> if a matching cp option could not be found
+	*/
+	public static CPOption fetchByG_K(long groupId, java.lang.String key) {
+		return getPersistence().fetchByG_K(groupId, key);
+	}
+
+	/**
+	* Returns the cp option where groupId = &#63; and key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param groupId the group ID
+	* @param key the key
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching cp option, or <code>null</code> if a matching cp option could not be found
+	*/
+	public static CPOption fetchByG_K(long groupId, java.lang.String key,
+		boolean retrieveFromCache) {
+		return getPersistence().fetchByG_K(groupId, key, retrieveFromCache);
+	}
+
+	/**
+	* Removes the cp option where groupId = &#63; and key = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param key the key
+	* @return the cp option that was removed
+	*/
+	public static CPOption removeByG_K(long groupId, java.lang.String key)
+		throws com.liferay.commerce.product.exception.NoSuchCPOptionException {
+		return getPersistence().removeByG_K(groupId, key);
+	}
+
+	/**
+	* Returns the number of cp options where groupId = &#63; and key = &#63;.
+	*
+	* @param groupId the group ID
+	* @param key the key
+	* @return the number of matching cp options
+	*/
+	public static int countByG_K(long groupId, java.lang.String key) {
+		return getPersistence().countByG_K(groupId, key);
+	}
+
+	/**
 	* Caches the cp option in the entity cache if it is enabled.
 	*
 	* @param cpOption the cp option

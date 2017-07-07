@@ -903,6 +903,67 @@ public class CPOptionCategoryUtil {
 	}
 
 	/**
+	* Returns the cp option category where groupId = &#63; and key = &#63; or throws a {@link NoSuchCPOptionCategoryException} if it could not be found.
+	*
+	* @param groupId the group ID
+	* @param key the key
+	* @return the matching cp option category
+	* @throws NoSuchCPOptionCategoryException if a matching cp option category could not be found
+	*/
+	public static CPOptionCategory findByG_K(long groupId, java.lang.String key)
+		throws com.liferay.commerce.product.exception.NoSuchCPOptionCategoryException {
+		return getPersistence().findByG_K(groupId, key);
+	}
+
+	/**
+	* Returns the cp option category where groupId = &#63; and key = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param groupId the group ID
+	* @param key the key
+	* @return the matching cp option category, or <code>null</code> if a matching cp option category could not be found
+	*/
+	public static CPOptionCategory fetchByG_K(long groupId, java.lang.String key) {
+		return getPersistence().fetchByG_K(groupId, key);
+	}
+
+	/**
+	* Returns the cp option category where groupId = &#63; and key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param groupId the group ID
+	* @param key the key
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching cp option category, or <code>null</code> if a matching cp option category could not be found
+	*/
+	public static CPOptionCategory fetchByG_K(long groupId,
+		java.lang.String key, boolean retrieveFromCache) {
+		return getPersistence().fetchByG_K(groupId, key, retrieveFromCache);
+	}
+
+	/**
+	* Removes the cp option category where groupId = &#63; and key = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param key the key
+	* @return the cp option category that was removed
+	*/
+	public static CPOptionCategory removeByG_K(long groupId,
+		java.lang.String key)
+		throws com.liferay.commerce.product.exception.NoSuchCPOptionCategoryException {
+		return getPersistence().removeByG_K(groupId, key);
+	}
+
+	/**
+	* Returns the number of cp option categories where groupId = &#63; and key = &#63;.
+	*
+	* @param groupId the group ID
+	* @param key the key
+	* @return the number of matching cp option categories
+	*/
+	public static int countByG_K(long groupId, java.lang.String key) {
+		return getPersistence().countByG_K(groupId, key);
+	}
+
+	/**
 	* Caches the cp option category in the entity cache if it is enabled.
 	*
 	* @param cpOptionCategory the cp option category

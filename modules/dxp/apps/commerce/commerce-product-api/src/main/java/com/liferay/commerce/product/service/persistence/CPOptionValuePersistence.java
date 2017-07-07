@@ -768,6 +768,56 @@ public interface CPOptionValuePersistence extends BasePersistence<CPOptionValue>
 	public int countByCPOptionId(long CPOptionId);
 
 	/**
+	* Returns the cp option value where CPOptionId = &#63; and key = &#63; or throws a {@link NoSuchCPOptionValueException} if it could not be found.
+	*
+	* @param CPOptionId the cp option ID
+	* @param key the key
+	* @return the matching cp option value
+	* @throws NoSuchCPOptionValueException if a matching cp option value could not be found
+	*/
+	public CPOptionValue findByC_K(long CPOptionId, java.lang.String key)
+		throws NoSuchCPOptionValueException;
+
+	/**
+	* Returns the cp option value where CPOptionId = &#63; and key = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param CPOptionId the cp option ID
+	* @param key the key
+	* @return the matching cp option value, or <code>null</code> if a matching cp option value could not be found
+	*/
+	public CPOptionValue fetchByC_K(long CPOptionId, java.lang.String key);
+
+	/**
+	* Returns the cp option value where CPOptionId = &#63; and key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param CPOptionId the cp option ID
+	* @param key the key
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching cp option value, or <code>null</code> if a matching cp option value could not be found
+	*/
+	public CPOptionValue fetchByC_K(long CPOptionId, java.lang.String key,
+		boolean retrieveFromCache);
+
+	/**
+	* Removes the cp option value where CPOptionId = &#63; and key = &#63; from the database.
+	*
+	* @param CPOptionId the cp option ID
+	* @param key the key
+	* @return the cp option value that was removed
+	*/
+	public CPOptionValue removeByC_K(long CPOptionId, java.lang.String key)
+		throws NoSuchCPOptionValueException;
+
+	/**
+	* Returns the number of cp option values where CPOptionId = &#63; and key = &#63;.
+	*
+	* @param CPOptionId the cp option ID
+	* @param key the key
+	* @return the number of matching cp option values
+	*/
+	public int countByC_K(long CPOptionId, java.lang.String key);
+
+	/**
 	* Caches the cp option value in the entity cache if it is enabled.
 	*
 	* @param cpOptionValue the cp option value

@@ -3073,6 +3073,266 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 
 	private static final String _FINDER_COLUMN_CPDEFINITIONOPTIONRELID_CPDEFINITIONOPTIONRELID_2 =
 		"cpDefinitionOptionValueRel.CPDefinitionOptionRelId = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_C_K = new FinderPath(CPDefinitionOptionValueRelModelImpl.ENTITY_CACHE_ENABLED,
+			CPDefinitionOptionValueRelModelImpl.FINDER_CACHE_ENABLED,
+			CPDefinitionOptionValueRelImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByC_K",
+			new String[] { Long.class.getName(), String.class.getName() },
+			CPDefinitionOptionValueRelModelImpl.CPDEFINITIONOPTIONRELID_COLUMN_BITMASK |
+			CPDefinitionOptionValueRelModelImpl.KEY_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_C_K = new FinderPath(CPDefinitionOptionValueRelModelImpl.ENTITY_CACHE_ENABLED,
+			CPDefinitionOptionValueRelModelImpl.FINDER_CACHE_ENABLED,
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByC_K",
+			new String[] { Long.class.getName(), String.class.getName() });
+
+	/**
+	 * Returns the cp definition option value rel where CPDefinitionOptionRelId = &#63; and key = &#63; or throws a {@link NoSuchCPDefinitionOptionValueRelException} if it could not be found.
+	 *
+	 * @param CPDefinitionOptionRelId the cp definition option rel ID
+	 * @param key the key
+	 * @return the matching cp definition option value rel
+	 * @throws NoSuchCPDefinitionOptionValueRelException if a matching cp definition option value rel could not be found
+	 */
+	@Override
+	public CPDefinitionOptionValueRel findByC_K(long CPDefinitionOptionRelId,
+		String key) throws NoSuchCPDefinitionOptionValueRelException {
+		CPDefinitionOptionValueRel cpDefinitionOptionValueRel = fetchByC_K(CPDefinitionOptionRelId,
+				key);
+
+		if (cpDefinitionOptionValueRel == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("CPDefinitionOptionRelId=");
+			msg.append(CPDefinitionOptionRelId);
+
+			msg.append(", key=");
+			msg.append(key);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchCPDefinitionOptionValueRelException(msg.toString());
+		}
+
+		return cpDefinitionOptionValueRel;
+	}
+
+	/**
+	 * Returns the cp definition option value rel where CPDefinitionOptionRelId = &#63; and key = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param CPDefinitionOptionRelId the cp definition option rel ID
+	 * @param key the key
+	 * @return the matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
+	 */
+	@Override
+	public CPDefinitionOptionValueRel fetchByC_K(long CPDefinitionOptionRelId,
+		String key) {
+		return fetchByC_K(CPDefinitionOptionRelId, key, true);
+	}
+
+	/**
+	 * Returns the cp definition option value rel where CPDefinitionOptionRelId = &#63; and key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param CPDefinitionOptionRelId the cp definition option rel ID
+	 * @param key the key
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
+	 */
+	@Override
+	public CPDefinitionOptionValueRel fetchByC_K(long CPDefinitionOptionRelId,
+		String key, boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { CPDefinitionOptionRelId, key };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_C_K,
+					finderArgs, this);
+		}
+
+		if (result instanceof CPDefinitionOptionValueRel) {
+			CPDefinitionOptionValueRel cpDefinitionOptionValueRel = (CPDefinitionOptionValueRel)result;
+
+			if ((CPDefinitionOptionRelId != cpDefinitionOptionValueRel.getCPDefinitionOptionRelId()) ||
+					!Objects.equals(key, cpDefinitionOptionValueRel.getKey())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_CPDEFINITIONOPTIONVALUEREL_WHERE);
+
+			query.append(_FINDER_COLUMN_C_K_CPDEFINITIONOPTIONRELID_2);
+
+			boolean bindKey = false;
+
+			if (key == null) {
+				query.append(_FINDER_COLUMN_C_K_KEY_1);
+			}
+			else if (key.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_K_KEY_3);
+			}
+			else {
+				bindKey = true;
+
+				query.append(_FINDER_COLUMN_C_K_KEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(CPDefinitionOptionRelId);
+
+				if (bindKey) {
+					qPos.add(key);
+				}
+
+				List<CPDefinitionOptionValueRel> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(FINDER_PATH_FETCH_BY_C_K, finderArgs,
+						list);
+				}
+				else {
+					CPDefinitionOptionValueRel cpDefinitionOptionValueRel = list.get(0);
+
+					result = cpDefinitionOptionValueRel;
+
+					cacheResult(cpDefinitionOptionValueRel);
+
+					if ((cpDefinitionOptionValueRel.getCPDefinitionOptionRelId() != CPDefinitionOptionRelId) ||
+							(cpDefinitionOptionValueRel.getKey() == null) ||
+							!cpDefinitionOptionValueRel.getKey().equals(key)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_C_K,
+							finderArgs, cpDefinitionOptionValueRel);
+					}
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_C_K, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (CPDefinitionOptionValueRel)result;
+		}
+	}
+
+	/**
+	 * Removes the cp definition option value rel where CPDefinitionOptionRelId = &#63; and key = &#63; from the database.
+	 *
+	 * @param CPDefinitionOptionRelId the cp definition option rel ID
+	 * @param key the key
+	 * @return the cp definition option value rel that was removed
+	 */
+	@Override
+	public CPDefinitionOptionValueRel removeByC_K(
+		long CPDefinitionOptionRelId, String key)
+		throws NoSuchCPDefinitionOptionValueRelException {
+		CPDefinitionOptionValueRel cpDefinitionOptionValueRel = findByC_K(CPDefinitionOptionRelId,
+				key);
+
+		return remove(cpDefinitionOptionValueRel);
+	}
+
+	/**
+	 * Returns the number of cp definition option value rels where CPDefinitionOptionRelId = &#63; and key = &#63;.
+	 *
+	 * @param CPDefinitionOptionRelId the cp definition option rel ID
+	 * @param key the key
+	 * @return the number of matching cp definition option value rels
+	 */
+	@Override
+	public int countByC_K(long CPDefinitionOptionRelId, String key) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_K;
+
+		Object[] finderArgs = new Object[] { CPDefinitionOptionRelId, key };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_CPDEFINITIONOPTIONVALUEREL_WHERE);
+
+			query.append(_FINDER_COLUMN_C_K_CPDEFINITIONOPTIONRELID_2);
+
+			boolean bindKey = false;
+
+			if (key == null) {
+				query.append(_FINDER_COLUMN_C_K_KEY_1);
+			}
+			else if (key.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_K_KEY_3);
+			}
+			else {
+				bindKey = true;
+
+				query.append(_FINDER_COLUMN_C_K_KEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(CPDefinitionOptionRelId);
+
+				if (bindKey) {
+					qPos.add(key);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_K_CPDEFINITIONOPTIONRELID_2 = "cpDefinitionOptionValueRel.CPDefinitionOptionRelId = ? AND ";
+	private static final String _FINDER_COLUMN_C_K_KEY_1 = "cpDefinitionOptionValueRel.key IS NULL";
+	private static final String _FINDER_COLUMN_C_K_KEY_2 = "cpDefinitionOptionValueRel.key = ?";
+	private static final String _FINDER_COLUMN_C_K_KEY_3 = "(cpDefinitionOptionValueRel.key IS NULL OR cpDefinitionOptionValueRel.key = '')";
 
 	public CPDefinitionOptionValueRelPersistenceImpl() {
 		setModelClass(CPDefinitionOptionValueRel.class);
@@ -3112,6 +3372,12 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 			new Object[] {
 				cpDefinitionOptionValueRel.getUuid(),
 				cpDefinitionOptionValueRel.getGroupId()
+			}, cpDefinitionOptionValueRel);
+
+		finderCache.putResult(FINDER_PATH_FETCH_BY_C_K,
+			new Object[] {
+				cpDefinitionOptionValueRel.getCPDefinitionOptionRelId(),
+				cpDefinitionOptionValueRel.getKey()
 			}, cpDefinitionOptionValueRel);
 
 		cpDefinitionOptionValueRel.resetOriginalValues();
@@ -3202,6 +3468,16 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 			Long.valueOf(1), false);
 		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
 			cpDefinitionOptionValueRelModelImpl, false);
+
+		args = new Object[] {
+				cpDefinitionOptionValueRelModelImpl.getCPDefinitionOptionRelId(),
+				cpDefinitionOptionValueRelModelImpl.getKey()
+			};
+
+		finderCache.putResult(FINDER_PATH_COUNT_BY_C_K, args, Long.valueOf(1),
+			false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_C_K, args,
+			cpDefinitionOptionValueRelModelImpl, false);
 	}
 
 	protected void clearUniqueFindersCache(
@@ -3226,6 +3502,27 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
 			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		}
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					cpDefinitionOptionValueRelModelImpl.getCPDefinitionOptionRelId(),
+					cpDefinitionOptionValueRelModelImpl.getKey()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_K, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_K, args);
+		}
+
+		if ((cpDefinitionOptionValueRelModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_C_K.getColumnBitmask()) != 0) {
+			Object[] args = new Object[] {
+					cpDefinitionOptionValueRelModelImpl.getOriginalCPDefinitionOptionRelId(),
+					cpDefinitionOptionValueRelModelImpl.getOriginalKey()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_K, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_K, args);
 		}
 	}
 

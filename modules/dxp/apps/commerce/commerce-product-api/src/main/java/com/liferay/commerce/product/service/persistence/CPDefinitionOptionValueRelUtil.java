@@ -1029,6 +1029,72 @@ public class CPDefinitionOptionValueRelUtil {
 	}
 
 	/**
+	* Returns the cp definition option value rel where CPDefinitionOptionRelId = &#63; and key = &#63; or throws a {@link NoSuchCPDefinitionOptionValueRelException} if it could not be found.
+	*
+	* @param CPDefinitionOptionRelId the cp definition option rel ID
+	* @param key the key
+	* @return the matching cp definition option value rel
+	* @throws NoSuchCPDefinitionOptionValueRelException if a matching cp definition option value rel could not be found
+	*/
+	public static CPDefinitionOptionValueRel findByC_K(
+		long CPDefinitionOptionRelId, java.lang.String key)
+		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionValueRelException {
+		return getPersistence().findByC_K(CPDefinitionOptionRelId, key);
+	}
+
+	/**
+	* Returns the cp definition option value rel where CPDefinitionOptionRelId = &#63; and key = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param CPDefinitionOptionRelId the cp definition option rel ID
+	* @param key the key
+	* @return the matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
+	*/
+	public static CPDefinitionOptionValueRel fetchByC_K(
+		long CPDefinitionOptionRelId, java.lang.String key) {
+		return getPersistence().fetchByC_K(CPDefinitionOptionRelId, key);
+	}
+
+	/**
+	* Returns the cp definition option value rel where CPDefinitionOptionRelId = &#63; and key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param CPDefinitionOptionRelId the cp definition option rel ID
+	* @param key the key
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
+	*/
+	public static CPDefinitionOptionValueRel fetchByC_K(
+		long CPDefinitionOptionRelId, java.lang.String key,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .fetchByC_K(CPDefinitionOptionRelId, key, retrieveFromCache);
+	}
+
+	/**
+	* Removes the cp definition option value rel where CPDefinitionOptionRelId = &#63; and key = &#63; from the database.
+	*
+	* @param CPDefinitionOptionRelId the cp definition option rel ID
+	* @param key the key
+	* @return the cp definition option value rel that was removed
+	*/
+	public static CPDefinitionOptionValueRel removeByC_K(
+		long CPDefinitionOptionRelId, java.lang.String key)
+		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionValueRelException {
+		return getPersistence().removeByC_K(CPDefinitionOptionRelId, key);
+	}
+
+	/**
+	* Returns the number of cp definition option value rels where CPDefinitionOptionRelId = &#63; and key = &#63;.
+	*
+	* @param CPDefinitionOptionRelId the cp definition option rel ID
+	* @param key the key
+	* @return the number of matching cp definition option value rels
+	*/
+	public static int countByC_K(long CPDefinitionOptionRelId,
+		java.lang.String key) {
+		return getPersistence().countByC_K(CPDefinitionOptionRelId, key);
+	}
+
+	/**
 	* Caches the cp definition option value rel in the entity cache if it is enabled.
 	*
 	* @param cpDefinitionOptionValueRel the cp definition option value rel

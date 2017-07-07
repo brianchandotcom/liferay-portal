@@ -232,6 +232,15 @@ public class CPDefinitionOptionValueRelPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_K() throws Exception {
+		_persistence.countByC_K(RandomTestUtil.nextLong(), StringPool.BLANK);
+
+		_persistence.countByC_K(0L, StringPool.NULL);
+
+		_persistence.countByC_K(0L, (String)null);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CPDefinitionOptionValueRel newCPDefinitionOptionValueRel = addCPDefinitionOptionValueRel();
 
@@ -490,6 +499,16 @@ public class CPDefinitionOptionValueRelPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				existingCPDefinitionOptionValueRel, "getOriginalGroupId",
 				new Class<?>[0]));
+
+		Assert.assertEquals(Long.valueOf(
+				existingCPDefinitionOptionValueRel.getCPDefinitionOptionRelId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingCPDefinitionOptionValueRel,
+				"getOriginalCPDefinitionOptionRelId", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(
+				existingCPDefinitionOptionValueRel.getKey(),
+				ReflectionTestUtil.invoke(existingCPDefinitionOptionValueRel,
+					"getOriginalKey", new Class<?>[0])));
 	}
 
 	protected CPDefinitionOptionValueRel addCPDefinitionOptionValueRel()

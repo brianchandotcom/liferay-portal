@@ -227,6 +227,15 @@ public class CPOptionCategoryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_K() throws Exception {
+		_persistence.countByG_K(RandomTestUtil.nextLong(), StringPool.BLANK);
+
+		_persistence.countByG_K(0L, StringPool.NULL);
+
+		_persistence.countByG_K(0L, (String)null);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CPOptionCategory newCPOptionCategory = addCPOptionCategory();
 
@@ -470,6 +479,13 @@ public class CPOptionCategoryPersistenceTest {
 		Assert.assertEquals(Long.valueOf(existingCPOptionCategory.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(existingCPOptionCategory,
 				"getOriginalGroupId", new Class<?>[0]));
+
+		Assert.assertEquals(Long.valueOf(existingCPOptionCategory.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingCPOptionCategory,
+				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(existingCPOptionCategory.getKey(),
+				ReflectionTestUtil.invoke(existingCPOptionCategory,
+					"getOriginalKey", new Class<?>[0])));
 	}
 
 	protected CPOptionCategory addCPOptionCategory() throws Exception {

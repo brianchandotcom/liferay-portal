@@ -136,8 +136,9 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
-	public static final long UUID_COLUMN_BITMASK = 4L;
-	public static final long TITLE_COLUMN_BITMASK = 8L;
+	public static final long KEY_COLUMN_BITMASK = 4L;
+	public static final long UUID_COLUMN_BITMASK = 8L;
+	public static final long TITLE_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -791,7 +792,17 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 
 	@Override
 	public void setKey(String key) {
+		_columnBitmask |= KEY_COLUMN_BITMASK;
+
+		if (_originalKey == null) {
+			_originalKey = _key;
+		}
+
 		_key = key;
+	}
+
+	public String getOriginalKey() {
+		return GetterUtil.getString(_originalKey);
 	}
 
 	@JSON
@@ -1011,6 +1022,8 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		cpOptionModelImpl._setOriginalCompanyId = false;
 
 		cpOptionModelImpl._setModifiedDate = false;
+
+		cpOptionModelImpl._originalKey = cpOptionModelImpl._key;
 
 		cpOptionModelImpl._columnBitmask = 0;
 	}
@@ -1258,6 +1271,7 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 	private boolean _required;
 	private boolean _skuContributor;
 	private String _key;
+	private String _originalKey;
 	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private CPOption _escapedModel;

@@ -984,6 +984,67 @@ public class CPOptionValueUtil {
 	}
 
 	/**
+	* Returns the cp option value where CPOptionId = &#63; and key = &#63; or throws a {@link NoSuchCPOptionValueException} if it could not be found.
+	*
+	* @param CPOptionId the cp option ID
+	* @param key the key
+	* @return the matching cp option value
+	* @throws NoSuchCPOptionValueException if a matching cp option value could not be found
+	*/
+	public static CPOptionValue findByC_K(long CPOptionId, java.lang.String key)
+		throws com.liferay.commerce.product.exception.NoSuchCPOptionValueException {
+		return getPersistence().findByC_K(CPOptionId, key);
+	}
+
+	/**
+	* Returns the cp option value where CPOptionId = &#63; and key = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param CPOptionId the cp option ID
+	* @param key the key
+	* @return the matching cp option value, or <code>null</code> if a matching cp option value could not be found
+	*/
+	public static CPOptionValue fetchByC_K(long CPOptionId, java.lang.String key) {
+		return getPersistence().fetchByC_K(CPOptionId, key);
+	}
+
+	/**
+	* Returns the cp option value where CPOptionId = &#63; and key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param CPOptionId the cp option ID
+	* @param key the key
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching cp option value, or <code>null</code> if a matching cp option value could not be found
+	*/
+	public static CPOptionValue fetchByC_K(long CPOptionId,
+		java.lang.String key, boolean retrieveFromCache) {
+		return getPersistence().fetchByC_K(CPOptionId, key, retrieveFromCache);
+	}
+
+	/**
+	* Removes the cp option value where CPOptionId = &#63; and key = &#63; from the database.
+	*
+	* @param CPOptionId the cp option ID
+	* @param key the key
+	* @return the cp option value that was removed
+	*/
+	public static CPOptionValue removeByC_K(long CPOptionId,
+		java.lang.String key)
+		throws com.liferay.commerce.product.exception.NoSuchCPOptionValueException {
+		return getPersistence().removeByC_K(CPOptionId, key);
+	}
+
+	/**
+	* Returns the number of cp option values where CPOptionId = &#63; and key = &#63;.
+	*
+	* @param CPOptionId the cp option ID
+	* @param key the key
+	* @return the number of matching cp option values
+	*/
+	public static int countByC_K(long CPOptionId, java.lang.String key) {
+		return getPersistence().countByC_K(CPOptionId, key);
+	}
+
+	/**
 	* Caches the cp option value in the entity cache if it is enabled.
 	*
 	* @param cpOptionValue the cp option value

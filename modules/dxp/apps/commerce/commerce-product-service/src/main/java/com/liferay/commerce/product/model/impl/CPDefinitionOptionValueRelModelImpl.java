@@ -129,8 +129,9 @@ public class CPDefinitionOptionValueRelModelImpl extends BaseModelImpl<CPDefinit
 	public static final long CPDEFINITIONOPTIONRELID_COLUMN_BITMASK = 1L;
 	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 	public static final long GROUPID_COLUMN_BITMASK = 4L;
-	public static final long UUID_COLUMN_BITMASK = 8L;
-	public static final long PRIORITY_COLUMN_BITMASK = 16L;
+	public static final long KEY_COLUMN_BITMASK = 8L;
+	public static final long UUID_COLUMN_BITMASK = 16L;
+	public static final long PRIORITY_COLUMN_BITMASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -621,7 +622,17 @@ public class CPDefinitionOptionValueRelModelImpl extends BaseModelImpl<CPDefinit
 
 	@Override
 	public void setKey(String key) {
+		_columnBitmask |= KEY_COLUMN_BITMASK;
+
+		if (_originalKey == null) {
+			_originalKey = _key;
+		}
+
 		_key = key;
+	}
+
+	public String getOriginalKey() {
+		return GetterUtil.getString(_originalKey);
 	}
 
 	@Override
@@ -818,6 +829,8 @@ public class CPDefinitionOptionValueRelModelImpl extends BaseModelImpl<CPDefinit
 
 		cpDefinitionOptionValueRelModelImpl._setOriginalCPDefinitionOptionRelId = false;
 
+		cpDefinitionOptionValueRelModelImpl._originalKey = cpDefinitionOptionValueRelModelImpl._key;
+
 		cpDefinitionOptionValueRelModelImpl._columnBitmask = 0;
 	}
 
@@ -1012,6 +1025,7 @@ public class CPDefinitionOptionValueRelModelImpl extends BaseModelImpl<CPDefinit
 	private String _titleCurrentLanguageId;
 	private double _priority;
 	private String _key;
+	private String _originalKey;
 	private long _columnBitmask;
 	private CPDefinitionOptionValueRel _escapedModel;
 }

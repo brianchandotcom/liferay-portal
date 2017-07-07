@@ -23,9 +23,9 @@ create index IX_A65BAB00 on CPDefinitionOptionRel (groupId);
 create index IX_7BED0C5E on CPDefinitionOptionRel (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_EB691260 on CPDefinitionOptionRel (uuid_[$COLUMN_LENGTH:75$], groupId);
 
-create index IX_80E027EC on CPDefinitionOptionValueRel (CPDefinitionOptionRelId);
+create unique index IX_8FDF08C0 on CPDefinitionOptionValueRel (CPDefinitionOptionRelId, key_[$COLUMN_LENGTH:75$]);
 create index IX_44C2E505 on CPDefinitionOptionValueRel (companyId);
-create index IX_695AE8C7 on CPDefinitionOptionValueRel (groupId);
+create unique index IX_A23E795B on CPDefinitionOptionValueRel (groupId, key_[$COLUMN_LENGTH:75$]);
 create index IX_CD95E77 on CPDefinitionOptionValueRel (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_34516B9 on CPDefinitionOptionValueRel (uuid_[$COLUMN_LENGTH:75$], groupId);
 
@@ -52,17 +52,17 @@ create index IX_8A7A3F5C on CPInstance (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_F902ECDE on CPInstance (uuid_[$COLUMN_LENGTH:75$], groupId);
 
 create index IX_210EACA0 on CPOption (companyId);
-create index IX_5999DB22 on CPOption (groupId);
+create unique index IX_5DD6FB76 on CPOption (groupId, key_[$COLUMN_LENGTH:75$]);
 create index IX_C565E27C on CPOption (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_BABCD7FE on CPOption (uuid_[$COLUMN_LENGTH:75$], groupId);
 
 create index IX_88DFEE42 on CPOptionCategory (companyId);
-create index IX_A2B31D44 on CPOptionCategory (groupId);
+create unique index IX_120A9C18 on CPOptionCategory (groupId, key_[$COLUMN_LENGTH:75$]);
 create index IX_957E69A on CPOptionCategory (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_8CFD4B9C on CPOptionCategory (uuid_[$COLUMN_LENGTH:75$], groupId);
 
-create index IX_6223D706 on CPOptionValue (CPOptionId);
+create unique index IX_F4C57C5A on CPOptionValue (CPOptionId, key_[$COLUMN_LENGTH:75$]);
 create index IX_C95EFDB3 on CPOptionValue (companyId);
-create index IX_F5E154F5 on CPOptionValue (groupId);
+create unique index IX_D4A28B09 on CPOptionValue (groupId, key_[$COLUMN_LENGTH:75$]);
 create index IX_17FEC609 on CPOptionValue (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_1D633ACB on CPOptionValue (uuid_[$COLUMN_LENGTH:75$], groupId);

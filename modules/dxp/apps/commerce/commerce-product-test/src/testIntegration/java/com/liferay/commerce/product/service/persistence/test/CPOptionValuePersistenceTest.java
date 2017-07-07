@@ -234,6 +234,15 @@ public class CPOptionValuePersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_K() throws Exception {
+		_persistence.countByC_K(RandomTestUtil.nextLong(), StringPool.BLANK);
+
+		_persistence.countByC_K(0L, StringPool.NULL);
+
+		_persistence.countByC_K(0L, (String)null);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CPOptionValue newCPOptionValue = addCPOptionValue();
 
@@ -471,6 +480,13 @@ public class CPOptionValuePersistenceTest {
 		Assert.assertEquals(Long.valueOf(existingCPOptionValue.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(existingCPOptionValue,
 				"getOriginalGroupId", new Class<?>[0]));
+
+		Assert.assertEquals(Long.valueOf(existingCPOptionValue.getCPOptionId()),
+			ReflectionTestUtil.<Long>invoke(existingCPOptionValue,
+				"getOriginalCPOptionId", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(existingCPOptionValue.getKey(),
+				ReflectionTestUtil.invoke(existingCPOptionValue,
+					"getOriginalKey", new Class<?>[0])));
 	}
 
 	protected CPOptionValue addCPOptionValue() throws Exception {

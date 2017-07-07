@@ -2868,6 +2868,260 @@ public class CPOptionCategoryPersistenceImpl extends BasePersistenceImpl<CPOptio
 	}
 
 	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 = "cpOptionCategory.companyId = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_G_K = new FinderPath(CPOptionCategoryModelImpl.ENTITY_CACHE_ENABLED,
+			CPOptionCategoryModelImpl.FINDER_CACHE_ENABLED,
+			CPOptionCategoryImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByG_K",
+			new String[] { Long.class.getName(), String.class.getName() },
+			CPOptionCategoryModelImpl.GROUPID_COLUMN_BITMASK |
+			CPOptionCategoryModelImpl.KEY_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_K = new FinderPath(CPOptionCategoryModelImpl.ENTITY_CACHE_ENABLED,
+			CPOptionCategoryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_K",
+			new String[] { Long.class.getName(), String.class.getName() });
+
+	/**
+	 * Returns the cp option category where groupId = &#63; and key = &#63; or throws a {@link NoSuchCPOptionCategoryException} if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param key the key
+	 * @return the matching cp option category
+	 * @throws NoSuchCPOptionCategoryException if a matching cp option category could not be found
+	 */
+	@Override
+	public CPOptionCategory findByG_K(long groupId, String key)
+		throws NoSuchCPOptionCategoryException {
+		CPOptionCategory cpOptionCategory = fetchByG_K(groupId, key);
+
+		if (cpOptionCategory == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("groupId=");
+			msg.append(groupId);
+
+			msg.append(", key=");
+			msg.append(key);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchCPOptionCategoryException(msg.toString());
+		}
+
+		return cpOptionCategory;
+	}
+
+	/**
+	 * Returns the cp option category where groupId = &#63; and key = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param key the key
+	 * @return the matching cp option category, or <code>null</code> if a matching cp option category could not be found
+	 */
+	@Override
+	public CPOptionCategory fetchByG_K(long groupId, String key) {
+		return fetchByG_K(groupId, key, true);
+	}
+
+	/**
+	 * Returns the cp option category where groupId = &#63; and key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param key the key
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching cp option category, or <code>null</code> if a matching cp option category could not be found
+	 */
+	@Override
+	public CPOptionCategory fetchByG_K(long groupId, String key,
+		boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { groupId, key };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_G_K,
+					finderArgs, this);
+		}
+
+		if (result instanceof CPOptionCategory) {
+			CPOptionCategory cpOptionCategory = (CPOptionCategory)result;
+
+			if ((groupId != cpOptionCategory.getGroupId()) ||
+					!Objects.equals(key, cpOptionCategory.getKey())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_CPOPTIONCATEGORY_WHERE);
+
+			query.append(_FINDER_COLUMN_G_K_GROUPID_2);
+
+			boolean bindKey = false;
+
+			if (key == null) {
+				query.append(_FINDER_COLUMN_G_K_KEY_1);
+			}
+			else if (key.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_K_KEY_3);
+			}
+			else {
+				bindKey = true;
+
+				query.append(_FINDER_COLUMN_G_K_KEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				if (bindKey) {
+					qPos.add(key);
+				}
+
+				List<CPOptionCategory> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(FINDER_PATH_FETCH_BY_G_K, finderArgs,
+						list);
+				}
+				else {
+					CPOptionCategory cpOptionCategory = list.get(0);
+
+					result = cpOptionCategory;
+
+					cacheResult(cpOptionCategory);
+
+					if ((cpOptionCategory.getGroupId() != groupId) ||
+							(cpOptionCategory.getKey() == null) ||
+							!cpOptionCategory.getKey().equals(key)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_G_K,
+							finderArgs, cpOptionCategory);
+					}
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_G_K, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (CPOptionCategory)result;
+		}
+	}
+
+	/**
+	 * Removes the cp option category where groupId = &#63; and key = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param key the key
+	 * @return the cp option category that was removed
+	 */
+	@Override
+	public CPOptionCategory removeByG_K(long groupId, String key)
+		throws NoSuchCPOptionCategoryException {
+		CPOptionCategory cpOptionCategory = findByG_K(groupId, key);
+
+		return remove(cpOptionCategory);
+	}
+
+	/**
+	 * Returns the number of cp option categories where groupId = &#63; and key = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param key the key
+	 * @return the number of matching cp option categories
+	 */
+	@Override
+	public int countByG_K(long groupId, String key) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_K;
+
+		Object[] finderArgs = new Object[] { groupId, key };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_CPOPTIONCATEGORY_WHERE);
+
+			query.append(_FINDER_COLUMN_G_K_GROUPID_2);
+
+			boolean bindKey = false;
+
+			if (key == null) {
+				query.append(_FINDER_COLUMN_G_K_KEY_1);
+			}
+			else if (key.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_K_KEY_3);
+			}
+			else {
+				bindKey = true;
+
+				query.append(_FINDER_COLUMN_G_K_KEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				if (bindKey) {
+					qPos.add(key);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_K_GROUPID_2 = "cpOptionCategory.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_K_KEY_1 = "cpOptionCategory.key IS NULL";
+	private static final String _FINDER_COLUMN_G_K_KEY_2 = "cpOptionCategory.key = ?";
+	private static final String _FINDER_COLUMN_G_K_KEY_3 = "(cpOptionCategory.key IS NULL OR cpOptionCategory.key = '')";
 
 	public CPOptionCategoryPersistenceImpl() {
 		setModelClass(CPOptionCategory.class);
@@ -2904,6 +3158,11 @@ public class CPOptionCategoryPersistenceImpl extends BasePersistenceImpl<CPOptio
 		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] {
 				cpOptionCategory.getUuid(), cpOptionCategory.getGroupId()
+			}, cpOptionCategory);
+
+		finderCache.putResult(FINDER_PATH_FETCH_BY_G_K,
+			new Object[] {
+				cpOptionCategory.getGroupId(), cpOptionCategory.getKey()
 			}, cpOptionCategory);
 
 		cpOptionCategory.resetOriginalValues();
@@ -2989,6 +3248,16 @@ public class CPOptionCategoryPersistenceImpl extends BasePersistenceImpl<CPOptio
 			Long.valueOf(1), false);
 		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
 			cpOptionCategoryModelImpl, false);
+
+		args = new Object[] {
+				cpOptionCategoryModelImpl.getGroupId(),
+				cpOptionCategoryModelImpl.getKey()
+			};
+
+		finderCache.putResult(FINDER_PATH_COUNT_BY_G_K, args, Long.valueOf(1),
+			false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_G_K, args,
+			cpOptionCategoryModelImpl, false);
 	}
 
 	protected void clearUniqueFindersCache(
@@ -3013,6 +3282,27 @@ public class CPOptionCategoryPersistenceImpl extends BasePersistenceImpl<CPOptio
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
 			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		}
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					cpOptionCategoryModelImpl.getGroupId(),
+					cpOptionCategoryModelImpl.getKey()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_K, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_K, args);
+		}
+
+		if ((cpOptionCategoryModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_G_K.getColumnBitmask()) != 0) {
+			Object[] args = new Object[] {
+					cpOptionCategoryModelImpl.getOriginalGroupId(),
+					cpOptionCategoryModelImpl.getOriginalKey()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_K, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_K, args);
 		}
 	}
 

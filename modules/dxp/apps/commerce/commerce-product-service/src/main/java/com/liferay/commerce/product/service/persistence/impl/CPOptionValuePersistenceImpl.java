@@ -3004,6 +3004,260 @@ public class CPOptionValuePersistenceImpl extends BasePersistenceImpl<CPOptionVa
 	}
 
 	private static final String _FINDER_COLUMN_CPOPTIONID_CPOPTIONID_2 = "cpOptionValue.CPOptionId = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_C_K = new FinderPath(CPOptionValueModelImpl.ENTITY_CACHE_ENABLED,
+			CPOptionValueModelImpl.FINDER_CACHE_ENABLED,
+			CPOptionValueImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByC_K",
+			new String[] { Long.class.getName(), String.class.getName() },
+			CPOptionValueModelImpl.CPOPTIONID_COLUMN_BITMASK |
+			CPOptionValueModelImpl.KEY_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_C_K = new FinderPath(CPOptionValueModelImpl.ENTITY_CACHE_ENABLED,
+			CPOptionValueModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_K",
+			new String[] { Long.class.getName(), String.class.getName() });
+
+	/**
+	 * Returns the cp option value where CPOptionId = &#63; and key = &#63; or throws a {@link NoSuchCPOptionValueException} if it could not be found.
+	 *
+	 * @param CPOptionId the cp option ID
+	 * @param key the key
+	 * @return the matching cp option value
+	 * @throws NoSuchCPOptionValueException if a matching cp option value could not be found
+	 */
+	@Override
+	public CPOptionValue findByC_K(long CPOptionId, String key)
+		throws NoSuchCPOptionValueException {
+		CPOptionValue cpOptionValue = fetchByC_K(CPOptionId, key);
+
+		if (cpOptionValue == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("CPOptionId=");
+			msg.append(CPOptionId);
+
+			msg.append(", key=");
+			msg.append(key);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchCPOptionValueException(msg.toString());
+		}
+
+		return cpOptionValue;
+	}
+
+	/**
+	 * Returns the cp option value where CPOptionId = &#63; and key = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param CPOptionId the cp option ID
+	 * @param key the key
+	 * @return the matching cp option value, or <code>null</code> if a matching cp option value could not be found
+	 */
+	@Override
+	public CPOptionValue fetchByC_K(long CPOptionId, String key) {
+		return fetchByC_K(CPOptionId, key, true);
+	}
+
+	/**
+	 * Returns the cp option value where CPOptionId = &#63; and key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param CPOptionId the cp option ID
+	 * @param key the key
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching cp option value, or <code>null</code> if a matching cp option value could not be found
+	 */
+	@Override
+	public CPOptionValue fetchByC_K(long CPOptionId, String key,
+		boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { CPOptionId, key };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_C_K,
+					finderArgs, this);
+		}
+
+		if (result instanceof CPOptionValue) {
+			CPOptionValue cpOptionValue = (CPOptionValue)result;
+
+			if ((CPOptionId != cpOptionValue.getCPOptionId()) ||
+					!Objects.equals(key, cpOptionValue.getKey())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_CPOPTIONVALUE_WHERE);
+
+			query.append(_FINDER_COLUMN_C_K_CPOPTIONID_2);
+
+			boolean bindKey = false;
+
+			if (key == null) {
+				query.append(_FINDER_COLUMN_C_K_KEY_1);
+			}
+			else if (key.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_K_KEY_3);
+			}
+			else {
+				bindKey = true;
+
+				query.append(_FINDER_COLUMN_C_K_KEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(CPOptionId);
+
+				if (bindKey) {
+					qPos.add(key);
+				}
+
+				List<CPOptionValue> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(FINDER_PATH_FETCH_BY_C_K, finderArgs,
+						list);
+				}
+				else {
+					CPOptionValue cpOptionValue = list.get(0);
+
+					result = cpOptionValue;
+
+					cacheResult(cpOptionValue);
+
+					if ((cpOptionValue.getCPOptionId() != CPOptionId) ||
+							(cpOptionValue.getKey() == null) ||
+							!cpOptionValue.getKey().equals(key)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_C_K,
+							finderArgs, cpOptionValue);
+					}
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_C_K, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (CPOptionValue)result;
+		}
+	}
+
+	/**
+	 * Removes the cp option value where CPOptionId = &#63; and key = &#63; from the database.
+	 *
+	 * @param CPOptionId the cp option ID
+	 * @param key the key
+	 * @return the cp option value that was removed
+	 */
+	@Override
+	public CPOptionValue removeByC_K(long CPOptionId, String key)
+		throws NoSuchCPOptionValueException {
+		CPOptionValue cpOptionValue = findByC_K(CPOptionId, key);
+
+		return remove(cpOptionValue);
+	}
+
+	/**
+	 * Returns the number of cp option values where CPOptionId = &#63; and key = &#63;.
+	 *
+	 * @param CPOptionId the cp option ID
+	 * @param key the key
+	 * @return the number of matching cp option values
+	 */
+	@Override
+	public int countByC_K(long CPOptionId, String key) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_K;
+
+		Object[] finderArgs = new Object[] { CPOptionId, key };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_CPOPTIONVALUE_WHERE);
+
+			query.append(_FINDER_COLUMN_C_K_CPOPTIONID_2);
+
+			boolean bindKey = false;
+
+			if (key == null) {
+				query.append(_FINDER_COLUMN_C_K_KEY_1);
+			}
+			else if (key.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_K_KEY_3);
+			}
+			else {
+				bindKey = true;
+
+				query.append(_FINDER_COLUMN_C_K_KEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(CPOptionId);
+
+				if (bindKey) {
+					qPos.add(key);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_K_CPOPTIONID_2 = "cpOptionValue.CPOptionId = ? AND ";
+	private static final String _FINDER_COLUMN_C_K_KEY_1 = "cpOptionValue.key IS NULL";
+	private static final String _FINDER_COLUMN_C_K_KEY_2 = "cpOptionValue.key = ?";
+	private static final String _FINDER_COLUMN_C_K_KEY_3 = "(cpOptionValue.key IS NULL OR cpOptionValue.key = '')";
 
 	public CPOptionValuePersistenceImpl() {
 		setModelClass(CPOptionValue.class);
@@ -3039,6 +3293,10 @@ public class CPOptionValuePersistenceImpl extends BasePersistenceImpl<CPOptionVa
 
 		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] { cpOptionValue.getUuid(), cpOptionValue.getGroupId() },
+			cpOptionValue);
+
+		finderCache.putResult(FINDER_PATH_FETCH_BY_C_K,
+			new Object[] { cpOptionValue.getCPOptionId(), cpOptionValue.getKey() },
 			cpOptionValue);
 
 		cpOptionValue.resetOriginalValues();
@@ -3121,6 +3379,16 @@ public class CPOptionValuePersistenceImpl extends BasePersistenceImpl<CPOptionVa
 			Long.valueOf(1), false);
 		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
 			cpOptionValueModelImpl, false);
+
+		args = new Object[] {
+				cpOptionValueModelImpl.getCPOptionId(),
+				cpOptionValueModelImpl.getKey()
+			};
+
+		finderCache.putResult(FINDER_PATH_COUNT_BY_C_K, args, Long.valueOf(1),
+			false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_C_K, args,
+			cpOptionValueModelImpl, false);
 	}
 
 	protected void clearUniqueFindersCache(
@@ -3144,6 +3412,27 @@ public class CPOptionValuePersistenceImpl extends BasePersistenceImpl<CPOptionVa
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
 			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		}
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					cpOptionValueModelImpl.getCPOptionId(),
+					cpOptionValueModelImpl.getKey()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_K, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_K, args);
+		}
+
+		if ((cpOptionValueModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_C_K.getColumnBitmask()) != 0) {
+			Object[] args = new Object[] {
+					cpOptionValueModelImpl.getOriginalCPOptionId(),
+					cpOptionValueModelImpl.getOriginalKey()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_K, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_K, args);
 		}
 	}
 

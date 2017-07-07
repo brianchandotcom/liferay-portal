@@ -48,6 +48,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
+import java.util.Random;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -532,6 +533,22 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
+	public static List<JenkinsMaster> getJenkinsMasters(
+		Properties buildProperties, String prefix) {
+
+		List<JenkinsMaster> jenkinsMasters = new ArrayList<>();
+
+		for (int i = 1;
+			buildProperties.containsKey(
+				"master.slaves(" + prefix + "-" + i + ")");
+			i++) {
+
+			jenkinsMasters.add(new JenkinsMaster(prefix + "-" + i));
+		}
+
+		return jenkinsMasters;
+	}
+
 	public static String getJobVariant(JSONObject jsonObject) {
 		JSONArray actionsJSONArray = jsonObject.getJSONArray("actions");
 
@@ -626,20 +643,44 @@ public class JenkinsResultsParserUtil {
 		return localURL + localURLQueryString;
 	}
 
-	public static List<String> getMasters(
-		Properties buildProperties, String prefix) {
+	public static String getMostAvailableMasterURL(
+		String baseInvocationURL, int invokedBatchSize) {
 
-		List<String> masters = new ArrayList<>();
+		String loadBalancerServiceURL =
+			_LOAD_BALANCER_SERVICE_URL_TEMPLATE.replace(
+				"${baseInvocationURL}", baseInvocationURL);
 
-		for (int i = 1;
-			buildProperties.containsKey(
-				"master.slaves(" + prefix + "-" + i + ")");
-			i++) {
+		loadBalancerServiceURL = loadBalancerServiceURL.replace(
+			"${invokedBatchSize}", Integer.toString(invokedBatchSize));
 
-			masters.add(prefix + "-" + i);
+		try {
+			JSONObject jsonObject = toJSONObject(loadBalancerServiceURL);
+
+			return jsonObject.getString("mostAvailableMasterURL");
 		}
+		catch (IOException ioe) {
+			Properties buildProperties = null;
 
-		return masters;
+			try {
+				buildProperties = getBuildProperties();
+			}
+			catch (IOException ioe2) {
+				throw new RuntimeException(
+					"Unable to get build properties", ioe2);
+			}
+
+			List<JenkinsMaster> availableJenkinsMasters =
+				LoadBalancerUtil.getAvailableJenkinsMasters(
+					LoadBalancerUtil.getMasterPrefix(baseInvocationURL),
+					buildProperties);
+
+			Random random = new Random(System.currentTimeMillis());
+
+			JenkinsMaster randomJenkinsMaster = availableJenkinsMasters.get(
+				random.nextInt(availableJenkinsMasters.size()));
+
+			return "http://" + randomJenkinsMaster.getMasterName();
+		}
 	}
 
 	public static String getNounForm(
@@ -712,19 +753,21 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static List<String> getSlaves(
-		Properties buildProperties, String masterPatternString) {
+		Properties buildProperties, String jenkinsMasterPatternString) {
 
 		List<String> slaves = new ArrayList<>();
 
-		Pattern masterPattern = Pattern.compile(
-			"master.slaves\\(" + masterPatternString + "\\)");
+		Pattern jenkinsSlavesPropertyNamePattern = Pattern.compile(
+			"master.slaves\\(" + jenkinsMasterPatternString + "\\)");
 
-		for (Object key : buildProperties.keySet()) {
-			Matcher keyMatcher = masterPattern.matcher(key.toString());
+		for (Object propertyName : buildProperties.keySet()) {
+			Matcher jenkinsSlavesPropertyNameMatcher =
+				jenkinsSlavesPropertyNamePattern.matcher(
+					propertyName.toString());
 
-			if (keyMatcher.find()) {
+			if (jenkinsSlavesPropertyNameMatcher.find()) {
 				String slavesString = expandSlaveRange(
-					buildProperties.getProperty(key.toString()));
+					buildProperties.getProperty(propertyName.toString()));
 
 				for (String slave : slavesString.split(",")) {
 					slaves.add(slave.trim());
@@ -735,10 +778,10 @@ public class JenkinsResultsParserUtil {
 		return slaves;
 	}
 
-	public static List<String> getSlaves(String masterPatternString)
+	public static List<String> getSlaves(String jenkinsMasterPatternString)
 		throws Exception {
 
-		return getSlaves(getBuildProperties(), masterPatternString);
+		return getSlaves(getBuildProperties(), jenkinsMasterPatternString);
 	}
 
 	public static String merge(String... strings) {
@@ -1159,12 +1202,16 @@ public class JenkinsResultsParserUtil {
 			_RETRY_PERIOD_DEFAULT, _TIMEOUT_DEFAULT);
 	}
 
-	public static void turnSlavesOff(String master, String... slaves) {
-		_setSlaveStatus(master, true, slaves);
+	public static void turnSlavesOff(
+		String jenkinsMasterName, String... slaveNames) {
+
+		_setSlaveStatus(jenkinsMasterName, true, slaveNames);
 	}
 
-	public static void turnSlavesOn(String master, String... slaves) {
-		_setSlaveStatus(master, false, slaves);
+	public static void turnSlavesOn(
+		String jenkinsMasterName, String... slaveNames) {
+
+		_setSlaveStatus(jenkinsMasterName, false, slaveNames);
 	}
 
 	public static void write(File file, String content) throws IOException {
@@ -1241,10 +1288,12 @@ public class JenkinsResultsParserUtil {
 		return duration;
 	}
 
-	private static void _executeJenkinsScript(String master, String script) {
+	private static void _executeJenkinsScript(
+		String jenkinsMasterName, String script) {
+
 		try {
 			URL urlObject = new URL(
-				fixURL(getLocalURL("http://" + master + "/script")));
+				fixURL(getLocalURL("http://" + jenkinsMasterName + "/script")));
 
 			HttpURLConnection httpURLConnection =
 				(HttpURLConnection)urlObject.openConnection();
@@ -1289,7 +1338,7 @@ public class JenkinsResultsParserUtil {
 	}
 
 	private static void _setSlaveStatus(
-		String master, boolean offlineStatus, String... slaves) {
+		String jenkinsMasterName, boolean offlineStatus, String... slaveNames) {
 
 		try {
 			String script = "script=";
@@ -1300,21 +1349,26 @@ public class JenkinsResultsParserUtil {
 				clazz.getResourceAsStream(
 					"dependencies/set-slave-status.groovy"));
 
-			script = script.replace("${slaves}", merge(slaves));
+			script = script.replace("${slaves}", merge(slaveNames));
 			script = script.replace(
 				"${offline.status}", String.valueOf(offlineStatus));
 
-			_executeJenkinsScript(master, script);
+			_executeJenkinsScript(jenkinsMasterName, script);
 		}
 		catch (IOException ioe) {
 			System.out.println(
-				"Unable to set the status for slaves: " + slaves);
+				"Unable to set the status for slaves: " + slaveNames);
 
 			ioe.printStackTrace();
 		}
 	}
 
 	private static final long _BASH_COMMAND_TIMEOUT_DEFAULT = 1000 * 60 * 60;
+
+	private static final String _LOAD_BALANCER_SERVICE_URL_TEMPLATE = combine(
+		"http://cloud-10-0-0-31.lax.liferay.com/osb-jenkins-web/",
+		"load_balancer?baseInvocationURL=${baseInvocationURL}",
+		"&invokedJobBatchSize=${invokedBatchSize}");
 
 	private static final int _MAX_RETRIES_DEFAULT = 3;
 

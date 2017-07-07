@@ -15,12 +15,16 @@
 package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.exception.CPDefinitionOptionValueRelKeyException;
+import com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionValueRelException;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -84,11 +88,36 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-			updateCPDefinitionOptionValueRel(actionRequest);
+		try {
+			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
+				updateCPDefinitionOptionValueRel(actionRequest);
+			} else if (cmd.equals(Constants.DELETE)) {
+				deleteCPDefinitionOptionValueRels(actionRequest);
+			}
 		}
-		else if (cmd.equals(Constants.DELETE)) {
-			deleteCPDefinitionOptionValueRels(actionRequest);
+		catch (Exception e) {
+			if (e instanceof NoSuchCPDefinitionOptionValueRelException ||
+				e instanceof PrincipalException) {
+
+				SessionErrors.add(actionRequest, e.getClass());
+
+				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
+			}
+			else if (e instanceof CPDefinitionOptionValueRelKeyException) {
+				hideDefaultErrorMessage(actionRequest);
+				hideDefaultSuccessMessage(actionRequest);
+
+				SessionErrors.add(actionRequest, e.getClass());
+
+				actionResponse.setRenderParameter(
+					"mvcRenderCommandName",
+					"editProductDefinitionOptionValueRel");
+
+				SessionErrors.add(actionRequest, e.getClass());
+			}
+			else {
+				throw e;
+			}
 		}
 	}
 

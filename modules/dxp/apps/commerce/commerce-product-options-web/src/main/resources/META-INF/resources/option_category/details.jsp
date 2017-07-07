@@ -24,6 +24,8 @@ CPOptionCategory cpOptionCategory = (CPOptionCategory)request.getAttribute(CPWeb
 
 <aui:model-context bean="<%= cpOptionCategory %>" model="<%= CPOptionCategory.class %>" />
 
+<liferay-ui:error exception="<%= CPOptionCategoryKeyException.class %>" message="please-enter-unique-key" />
+
 <aui:fieldset>
 	<aui:input name="title" />
 

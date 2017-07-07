@@ -77,6 +77,12 @@ public class SystemEventTest {
 			SynchronousDestinationTestRule.INSTANCE);
 
 	public long doTestRemoteStaging() throws Exception {
+		setPortalProperty(
+			"TUNNELING_SERVLET_SHARED_SECRET",
+			"F0E1D2C3B4A5968778695A4B3C2D1E0F");
+
+		setPortalProperty("TUNNELING_SERVLET_SHARED_SECRET_HEX", true);
+
 		_stagingGroup = GroupTestUtil.addGroup();
 
 		ServiceContext serviceContext =

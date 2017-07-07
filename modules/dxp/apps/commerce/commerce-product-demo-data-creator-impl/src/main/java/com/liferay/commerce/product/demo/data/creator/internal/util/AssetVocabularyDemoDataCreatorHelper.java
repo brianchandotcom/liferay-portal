@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.demo.data.creator.internal.util;
 
+import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -43,43 +44,28 @@ public class AssetVocabularyDemoDataCreatorHelper
 	public void addAssetVocabularies(long userId, long groupId)
 		throws Exception {
 
+		ServiceContext serviceContext = getServiceContext(userId, groupId);
+
 		String layoutUuid = _layoutDemoDataCreatorHelper.getLayoutUuid(
 			userId, groupId, "Categories");
 
-		AssetVocabulary commerceAssetVocabulary = createAssetVocabulary(
-			userId, groupId, "Commerce");
+		JSONArray assetVocabulariesJSONArray = getAssetVocabulariesJSONArray();
 
-		AssetVocabulary manufacturersAssetVocabulary = createAssetVocabulary(
-			userId, groupId, "Manufacturers");
+		for (int i = 0; i < assetVocabulariesJSONArray.length(); i++) {
+			JSONObject assetVocabularyJSONObject =
+				assetVocabulariesJSONArray.getJSONObject(i);
 
-		long commerceVocabularyId = commerceAssetVocabulary.getVocabularyId();
-		long manufacturersVocabularyId =
-			manufacturersAssetVocabulary.getVocabularyId();
-
-		JSONArray assetCategoriesJSONArray = getAssetCategoriesJSONArray();
-
-		for (int i = 0; i < assetCategoriesJSONArray.length(); i++) {
-			JSONObject categoriesJSONObject =
-				assetCategoriesJSONArray.getJSONObject(i);
-
-			JSONArray categoriesJSONArray = categoriesJSONObject.getJSONArray(
-				"categories");
-			JSONArray manufacturersJSONArray =
-				categoriesJSONObject.getJSONArray("manufacturers");
-
-			_assetCategoryDemoDataCreatorHelper.addAssetCategories(
-				userId, groupId, 0, commerceVocabularyId, layoutUuid,
-				categoriesJSONArray);
-
-			_assetCategoryDemoDataCreatorHelper.addAssetCategories(
-				userId, groupId, 0, manufacturersVocabularyId, layoutUuid,
-				manufacturersJSONArray);
+			createAssetVocabulary(
+				assetVocabularyJSONObject, layoutUuid, serviceContext);
 		}
 	}
 
 	public AssetVocabulary createAssetVocabulary(
-			long userId, long groupId, String title)
-		throws PortalException {
+			JSONObject assetVocabularyJSONObject, String layoutUuid,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		String title = assetVocabularyJSONObject.getString("vocabulary");
 
 		AssetVocabulary assetVocabulary = _assetVocabularies.get(title);
 
@@ -88,7 +74,7 @@ public class AssetVocabularyDemoDataCreatorHelper
 		}
 
 		assetVocabulary = _assetVocabularyLocalService.fetchGroupVocabulary(
-			groupId, title);
+			serviceContext.getScopeGroupId(), title);
 
 		if (assetVocabulary != null) {
 			_assetVocabularies.put(title, assetVocabulary);
@@ -96,12 +82,20 @@ public class AssetVocabularyDemoDataCreatorHelper
 			return assetVocabulary;
 		}
 
-		ServiceContext serviceContext = getServiceContext(userId, groupId);
-
 		assetVocabulary = _assetVocabularyLocalService.addVocabulary(
-			userId, groupId, title, serviceContext);
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(), title,
+			serviceContext);
 
 		_assetVocabularies.put(title, assetVocabulary);
+
+		JSONArray categoriesJSONArray = assetVocabularyJSONObject.getJSONArray(
+			"categories");
+
+		_assetCategoryDemoDataCreatorHelper.addAssetCategories(
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+			assetVocabulary.getVocabularyId(),
+			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, layoutUuid,
+			categoriesJSONArray);
 
 		return assetVocabulary;
 	}
@@ -136,20 +130,17 @@ public class AssetVocabularyDemoDataCreatorHelper
 		_assetVocabularies = null;
 	}
 
-	protected JSONArray getAssetCategoriesJSONArray() throws Exception {
+	protected JSONArray getAssetVocabulariesJSONArray() throws Exception {
 		Class<?> clazz = getClass();
 
-		String assetCategoriesPath =
+		String assetVocabulariesPath =
 			"com/liferay/commerce/product/demo/data/creator/internal" +
 				"/dependencies/categories.json";
 
-		String assetCategoriesJSON = StringUtil.read(
-			clazz.getClassLoader(), assetCategoriesPath, false);
+		String assetVocabulariesJSON = StringUtil.read(
+			clazz.getClassLoader(), assetVocabulariesPath, false);
 
-		JSONArray assetCategoriesJSONArray = JSONFactoryUtil.createJSONArray(
-			assetCategoriesJSON);
-
-		return assetCategoriesJSONArray;
+		return JSONFactoryUtil.createJSONArray(assetVocabulariesJSON);
 	}
 
 	@Reference

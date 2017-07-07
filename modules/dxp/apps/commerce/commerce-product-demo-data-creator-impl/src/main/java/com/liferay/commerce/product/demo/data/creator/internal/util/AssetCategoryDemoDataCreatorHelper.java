@@ -45,7 +45,7 @@ public class AssetCategoryDemoDataCreatorHelper
 	extends BaseCPDemoDataCreatorHelper {
 
 	public void addAssetCategories(
-			long userId, long groupId, long assetCategoryId, long vocabularyId,
+			long userId, long groupId, long vocabularyId, long parentCategoryId,
 			String layoutUuid, JSONArray jsonArray)
 		throws Exception {
 
@@ -53,21 +53,20 @@ public class AssetCategoryDemoDataCreatorHelper
 			JSONObject categoryJSONObject = jsonArray.getJSONObject(i);
 
 			AssetCategory assetCategory = getAssetCategory(
-				userId, groupId, assetCategoryId, vocabularyId, layoutUuid,
-				categoryJSONObject);
-
-			long parentCategoryId = assetCategory.getCategoryId();
-
-			JSONArray imagesJSONArray = categoryJSONObject.getJSONArray(
-				"images");
-
-			_cpAttachmentFileEntryDemoDataCreatorHelper.
-				addAssetCategoryAttachmentFileEntries(
-					userId, groupId, parentCategoryId, imagesJSONArray);
-
-			addSubcategories(
 				userId, groupId, parentCategoryId, vocabularyId, layoutUuid,
 				categoryJSONObject);
+
+			JSONArray categoriesJSONArray = categoryJSONObject.getJSONArray(
+				"categories");
+
+			if ((categoriesJSONArray != null) &&
+				(categoriesJSONArray.length() > 0)) {
+
+				addAssetCategories(
+					userId, groupId, vocabularyId,
+					assetCategory.getCategoryId(), layoutUuid,
+					categoriesJSONArray);
+			}
 		}
 	}
 
@@ -94,46 +93,15 @@ public class AssetCategoryDemoDataCreatorHelper
 		init();
 	}
 
-	protected void addSubcategories(
-			long userId, long groupId, long parentCategoryId, long vocabularyId,
-			String layoutUuid, JSONObject jsonObject)
-		throws Exception {
-
-		JSONArray jsonArray = jsonObject.getJSONArray("subcategories");
-
-		if (jsonArray != null) {
-			for (int i = 0; i < jsonArray.length(); i++) {
-				JSONObject categoryJSONObject = jsonArray.getJSONObject(i);
-
-				AssetCategory assetCategory = getAssetCategory(
-					userId, groupId, parentCategoryId, vocabularyId, layoutUuid,
-					categoryJSONObject);
-
-				long subcategoryId = assetCategory.getCategoryId();
-
-				JSONArray imagesJSONArray = categoryJSONObject.getJSONArray(
-					"images");
-
-				_cpAttachmentFileEntryDemoDataCreatorHelper.
-					addAssetCategoryAttachmentFileEntries(
-						userId, groupId, subcategoryId, imagesJSONArray);
-
-				addSubcategories(
-					userId, groupId, subcategoryId, vocabularyId, layoutUuid,
-					categoryJSONObject);
-			}
-		}
-	}
-
 	protected AssetCategory getAssetCategory(
 			long userId, long groupId, long parentCategoryId, long vocabularyId,
-			String layoutUuid, JSONObject jsonObject)
-		throws PortalException {
+			String layoutUuid, JSONObject categoryJSONObject)
+		throws Exception {
 
-		String path = jsonObject.getString("path");
-		String title = jsonObject.getString("title");
+		String key = categoryJSONObject.getString("key");
+		String title = categoryJSONObject.getString("title");
 
-		AssetCategory assetCategory = _assetCategories.get(path);
+		AssetCategory assetCategory = _assetCategories.get(key);
 
 		if (assetCategory != null) {
 			return assetCategory;
@@ -143,7 +111,7 @@ public class AssetCategoryDemoDataCreatorHelper
 			groupId, parentCategoryId, title, vocabularyId);
 
 		if (assetCategory != null) {
-			_assetCategories.put(path, assetCategory);
+			_assetCategories.put(key, assetCategory);
 
 			return assetCategory;
 		}
@@ -167,7 +135,13 @@ public class AssetCategoryDemoDataCreatorHelper
 			AssetCategory.class, assetCategory.getCategoryId(), layoutUuid,
 			serviceContext);
 
-		_assetCategories.put(path, assetCategory);
+		JSONArray imagesJSONArray = categoryJSONObject.getJSONArray("images");
+
+		_cpAttachmentFileEntryDemoDataCreatorHelper.
+			addAssetCategoryAttachmentFileEntries(
+				userId, groupId, parentCategoryId, imagesJSONArray);
+
+		_assetCategories.put(key, assetCategory);
 
 		return assetCategory;
 	}

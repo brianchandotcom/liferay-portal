@@ -106,7 +106,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 		AUI.$('#<portlet:namespace />selectRegularRoleLink').on(
 			'click',
 			function(event) {
-				var searchContainerName = '<portlet:namespace/>rolesSearchContainer';
+				var searchContainerName = '<portlet:namespace />rolesSearchContainer';
 
 				var searchContainer = Liferay.SearchContainer.get(searchContainerName);
 
@@ -339,7 +339,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 		AUI.$('#<portlet:namespace />selectOrganizationRoleLink').on(
 			'click',
 			function(event) {
-				var searchContainerName = '<portlet:namespace/>organizationRolesSearchContainer';
+				var searchContainerName = '<portlet:namespace />organizationRolesSearchContainer';
 
 				var searchContainer = Liferay.SearchContainer.get(searchContainerName);
 
@@ -521,7 +521,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 				A.one('#<portlet:namespace />selectSiteRoleLink').on(
 					'click',
 					function(event) {
-						var searchContainerName = '<portlet:namespace/>siteRolesSearchContainer';
+						var searchContainerName = '<portlet:namespace />siteRolesSearchContainer';
 
 						searchContainer = Liferay.SearchContainer.get(searchContainerName);
 

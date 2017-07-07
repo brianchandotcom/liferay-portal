@@ -220,7 +220,7 @@ Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-show
 			currentAction: '<%= Constants.ADD %>',
 			namespace: '<portlet:namespace />',
 			replyToMessageId: '<%= replyToMessageId %>',
-			rootNode: '#<portlet:namespace/>addQuickReply<%= replyToMessageId %>'
+			rootNode: '#<portlet:namespace />addQuickReply<%= replyToMessageId %>'
 		}
 	);
 </aui:script>

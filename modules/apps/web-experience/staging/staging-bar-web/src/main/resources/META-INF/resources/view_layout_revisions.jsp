@@ -59,13 +59,13 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 			</aui:select>
 		</c:if>
 
-		<div class="layout-revision-container" id="<portlet:namespace/>layoutRevisionsContainer">
+		<div class="layout-revision-container" id="<portlet:namespace />layoutRevisionsContainer">
 
 			<%
 			for (LayoutRevision rootLayoutRevision : rootLayoutRevisions) {
 			%>
 
-				<div class="layout-variation-container <%= (recentLayoutRevision.getLayoutBranchId() == rootLayoutRevision.getLayoutBranchId()) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace/><%= rootLayoutRevision.getLayoutRevisionId() %>">
+				<div class="layout-variation-container <%= (recentLayoutRevision.getLayoutBranchId() == rootLayoutRevision.getLayoutBranchId()) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace /><%= rootLayoutRevision.getLayoutRevisionId() %>">
 					<c:if test="<%= rootLayoutRevisions.size() > 1 %>">
 
 						<%
@@ -168,7 +168,7 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 </div>
 
 <aui:script>
-	function <portlet:namespace/>selectRevision(layoutRevisionId, layoutSetBranchId) {
+	function <portlet:namespace />selectRevision(layoutRevisionId, layoutSetBranchId) {
 		AUI.$.ajax(
 			themeDisplay.getPathMain() + '/portal/update_layout',
 			{
@@ -192,7 +192,7 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 </aui:script>
 
 <aui:script sandbox="<%= true %>">
-	var variationsSelector = $('#<portlet:namespace/>variationsSelector');
+	var variationsSelector = $('#<portlet:namespace />variationsSelector');
 
 	var layoutBranchesContainer = $('.layout-variation-container');
 
@@ -207,7 +207,7 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 			else {
 				layoutBranchesContainer.addClass('hide');
 
-				$('#<portlet:namespace/>' + variation).removeClass('hide');
+				$('#<portlet:namespace />' + variation).removeClass('hide');
 			}
 		}
 	);

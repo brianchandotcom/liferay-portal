@@ -480,7 +480,7 @@ if (portletTitleBasedNavigation) {
 			},
 			currentAction: '<%= (message == null) ? Constants.ADD : Constants.UPDATE %>',
 			namespace: '<portlet:namespace />',
-			rootNode: '#<portlet:namespace/>mbEditPageContainer'
+			rootNode: '#<portlet:namespace />mbEditPageContainer'
 		}
 	);
 </aui:script>

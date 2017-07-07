@@ -170,33 +170,21 @@
 			<var name="roleTitle" value="Impersonating Role Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
+		<execute macro="JSONUser#addUser">
 			<var name="userEmailAddress" value="userea1@liferay.com" />
 			<var name="userFirstName" value="userfn1" />
 			<var name="userLastName" value="userln1" />
 			<var name="userScreenName" value="usersn1" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
+		<execute macro="JSONUser#addUser">
 			<var name="userEmailAddress" value="userea2@liferay.com" />
 			<var name="userFirstName" value="userfn2" />
 			<var name="userLastName" value="userln2" />
 			<var name="userScreenName" value="usersn2" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
+		<execute macro="JSONUser#addUser">
 			<var name="userEmailAddress" value="userea3@liferay.com" />
 			<var name="userFirstName" value="userfn3" />
 			<var name="userLastName" value="userln3" />

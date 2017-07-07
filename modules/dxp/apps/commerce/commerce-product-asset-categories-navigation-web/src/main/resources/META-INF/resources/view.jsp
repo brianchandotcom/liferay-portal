@@ -28,7 +28,7 @@ List<AssetCategory> assetCategories = cpAssetCategoriesNavigationDisplayContext.
 		%>
 
 			<li>
-				<a class="" href="#avoooo"><span><%= HtmlUtil.escape(assetCategory.getTitle(locale)) %></span></a>
+				<a href="#avoooo"><span><%= HtmlUtil.escape(assetCategory.getTitle(locale)) %></span></a>
 
 				<div class="child-menu dropdown-menu" role="menu">
 					<div class="container-fluid-1280">
@@ -40,7 +40,7 @@ List<AssetCategory> assetCategories = cpAssetCategoriesNavigationDisplayContext.
 							<div class="child-menu-level-1">
 								<h5><%= HtmlUtil.escape(assetCategoryLevel1.getTitle(locale)) %></h5>
 
-								<ul class="">
+								<ul>
 
 									<%
 									for (AssetCategory assetCategoryLevel2 : cpAssetCategoriesNavigationDisplayContext.getChildAssetCategories(assetCategoryLevel1.getCategoryId())) {

@@ -279,6 +279,7 @@ public class CPDefinitionFinderImpl
 		return null;
 	}
 
-	private final Log _log = LogFactoryUtil.getLog(CPDefinitionFinderImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		CPDefinitionFinderImpl.class);
 
 }

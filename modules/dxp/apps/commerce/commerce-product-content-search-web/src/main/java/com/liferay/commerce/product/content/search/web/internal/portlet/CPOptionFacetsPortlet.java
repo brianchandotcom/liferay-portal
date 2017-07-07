@@ -242,9 +242,10 @@ public class CPOptionFacetsPortlet
 	@Reference
 	protected PortletSharedSearchRequest portletSharedSearchRequest;
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		CPOptionFacetsPortlet.class);
+
 	@Reference
 	private Portal _portal;
-
-	private final Log _log = LogFactoryUtil.getLog(CPOptionFacetsPortlet.class);
 
 }

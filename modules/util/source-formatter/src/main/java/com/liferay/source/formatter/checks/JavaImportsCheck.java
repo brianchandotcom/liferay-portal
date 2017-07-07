@@ -14,10 +14,14 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ImportsFormatter;
 import com.liferay.portal.tools.JavaImportsFormatter;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
@@ -36,7 +40,27 @@ public class JavaImportsCheck extends BaseFileCheck {
 
 		content = importsFormatter.format(content, packagePath, className);
 
-		return StringUtil.replace(content, ";\n/**", ";\n\n/**");
+		content = StringUtil.replace(content, ";\n/**", ";\n\n/**");
+
+		Matcher matcher = _importMethodPattern.matcher(content);
+
+		while (matcher.find()) {
+			StringBundler sb = new StringBundler();
+
+			sb.append("Do not import method '");
+			sb.append(matcher.group(2));
+			sb.append("', import class '");
+			sb.append(matcher.group(3));
+			sb.append("' instead");
+
+			addMessage(
+				fileName, sb.toString(), getLineCount(content, matcher.end()));
+		}
+
+		return content;
 	}
+
+	private final Pattern _importMethodPattern = Pattern.compile(
+		"\nimport (static )?((.*\\.[A-Z]\\w*)\\.[a-z]\\w*);");
 
 }

@@ -14,8 +14,6 @@
 
 package com.liferay.portal.servlet;
 
-import static org.mockito.Mockito.verify;
-
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.service.PortletLocalService;
@@ -186,7 +184,7 @@ public class ComboServletTest extends PowerMockito {
 			_mockHttpServletRequest, _mockHttpServletResponse,
 			"/js/javascript.js");
 
-		verify(_portalServletContext);
+		Mockito.verify(_portalServletContext);
 
 		_portalServletContext.getRequestDispatcher(path);
 	}
@@ -197,7 +195,7 @@ public class ComboServletTest extends PowerMockito {
 			_mockHttpServletRequest, _mockHttpServletResponse,
 			_TEST_PORTLET_ID + ":/js/javascript.js");
 
-		verify(_pluginServletContext);
+		Mockito.verify(_pluginServletContext);
 
 		_pluginServletContext.getRequestDispatcher("/js/javascript.js");
 	}

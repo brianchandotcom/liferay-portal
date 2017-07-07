@@ -14,8 +14,6 @@
 
 package com.liferay.portal.tools.deploy;
 
-import static org.junit.Assert.assertTrue;
-
 import com.liferay.portal.deploy.auto.ModuleAutoDeployer;
 import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -25,6 +23,7 @@ import java.io.File;
 
 import java.text.MessageFormat;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -66,7 +65,7 @@ public class ModuleAutoDeployerTest extends BaseDeployerTestCase {
 
 		File deployedJarFile = new File(getModulesDir(), jarFile.getName());
 
-		assertTrue(deployedJarFile.exists());
+		Assert.assertTrue(deployedJarFile.exists());
 	}
 
 	protected File getConfigsDir() {

@@ -32,6 +32,7 @@ import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
+ * @author Peter Shin
  */
 public class GradleDependenciesCheck extends BaseFileCheck {
 
@@ -152,11 +153,7 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 
 		File file = new File(absolutePath.substring(0, pos + 1) + "bnd.bnd");
 
-		if (!file.exists()) {
-			return false;
-		}
-
-		return true;
+		return file.exists();
 	}
 
 	private final Pattern _dependenciesPattern = Pattern.compile(

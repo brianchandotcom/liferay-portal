@@ -93,7 +93,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -132,7 +131,6 @@ public class DDLExporterTest {
 		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
 	}
 
-	@Ignore
 	@Test
 	public void testCSVExport() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
@@ -230,7 +228,6 @@ public class DDLExporterTest {
 		}
 	}
 
-	@Ignore
 	@Test
 	public void testExportRecordsWithDistinctFields() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
@@ -358,7 +355,6 @@ public class DDLExporterTest {
 		}
 	}
 
-	@Ignore
 	@Test
 	public void testExportWithSpecialCharacters() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
@@ -420,7 +416,6 @@ public class DDLExporterTest {
 		}
 	}
 
-	@Ignore
 	@Test
 	public void testXLSExport() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
@@ -540,7 +535,6 @@ public class DDLExporterTest {
 		}
 	}
 
-	@Ignore
 	@Test
 	public void testXMLExport() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
@@ -782,7 +776,7 @@ public class DDLExporterTest {
 		_fieldValues.put(
 			DDMFormFieldType.LINK_TO_PAGE, createLinkToPageDDMFormFieldValue());
 		_fieldValues.put(DDMFormFieldType.NUMBER, "3");
-		_fieldValues.put(DDMFormFieldType.RADIO, createListDDMFormFieldValue());
+		_fieldValues.put(DDMFormFieldType.RADIO, "Value 1");
 		_fieldValues.put(
 			DDMFormFieldType.SELECT, createListDDMFormFieldValue());
 		_fieldValues.put(DDMFormFieldType.TEXT, "Text content");

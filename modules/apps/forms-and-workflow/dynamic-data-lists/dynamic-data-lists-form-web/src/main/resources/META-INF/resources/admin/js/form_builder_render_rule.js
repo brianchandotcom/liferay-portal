@@ -292,7 +292,7 @@ AUI.add(
 							actions.push(
 								A.merge(
 									{
-										action: instance._actions[currentIndex + '-target'].getValue()
+										action: instance._actions[currentIndex + '-target'].getValue()[0] || ''
 									},
 									targetAction ? targetAction.getValue() : undefined
 								)
@@ -384,14 +384,7 @@ AUI.add(
 
 						var value = selectField.getValue();
 
-						if (!A.Lang.isArray(value)) {
-							value = value || '';
-						}
-						else {
-							value = value[0];
-						}
-
-						return value;
+						return value[0] || '';
 					},
 
 					_handleActionChange: function(event) {

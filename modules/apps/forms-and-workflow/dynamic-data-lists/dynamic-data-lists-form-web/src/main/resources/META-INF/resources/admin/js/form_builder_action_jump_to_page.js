@@ -43,8 +43,8 @@ AUI.add(
 						var instance = this;
 
 						return {
-							source: instance._sourceField.getValue(),
-							target: instance._targetField.getValue()
+							source: instance._sourceField.getValue()[0] || '',
+							target: instance._targetField.getValue()[0] || ''
 						};
 					},
 

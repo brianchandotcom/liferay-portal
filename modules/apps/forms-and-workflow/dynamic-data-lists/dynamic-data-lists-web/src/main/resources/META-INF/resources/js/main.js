@@ -158,7 +158,7 @@ AUI.add(
 
 							value = JSON.stringify(value);
 						}
-						else if (type === 'radio' || type === 'select') {
+						else if (type === 'select') {
 							if (!isArray(value)) {
 								value = AArray(value);
 							}
@@ -513,7 +513,13 @@ AUI.add(
 									return label;
 								};
 							}
-							else if (type === 'radio' || type === 'select') {
+							else if (type === 'radio') {
+								structureField = instance.findStructureFieldByAttribute(structure, 'name', name);
+
+								config.multiple = false;
+								config.options = instance.getCellEditorOptions(structureField.options, locale);
+							}
+							else if (type === 'select') {
 								structureField = instance.findStructureFieldByAttribute(structure, 'name', name);
 
 								var multiple = A.DataType.Boolean.parse(structureField.multiple);

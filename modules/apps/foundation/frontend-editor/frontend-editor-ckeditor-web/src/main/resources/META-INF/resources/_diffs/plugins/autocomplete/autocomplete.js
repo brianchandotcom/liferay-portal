@@ -374,8 +374,9 @@
 			}
 
 			if (!nextElement) {
-				nextElement = new CKEDITOR.dom.text(STR_SPACE);
+				nextElement = new CKEDITOR.dom.element('span');
 
+				nextElement.appendText(STR_SPACE);
 				nextElement.insertAfter(newElement);
 			}
 

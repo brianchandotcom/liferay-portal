@@ -127,7 +127,7 @@ if (sampleFileEntryId > 0) {
 		function(event) {
 			event.preventDefault();
 
-			var useSampleCheckbox = A.one('#<portlet:namespace/>useSample');
+			var useSampleCheckbox = A.one('#<portlet:namespace />useSample');
 
 			if (useSampleCheckbox.attr('checked')) {
 				$('#<portlet:namespace />sampleUrl').attr('disabled', false);
@@ -150,7 +150,7 @@ if (sampleFileEntryId > 0) {
 		function(A) {
 			selectSampleFileType(A);
 
-			A.one('#<portlet:namespace/>useSample').on(
+			A.one('#<portlet:namespace />useSample').on(
 				'click',
 				function(b) {
 					selectSampleFileType(A);
@@ -160,7 +160,7 @@ if (sampleFileEntryId > 0) {
 	);
 
 	function selectSampleFileType(A) {
-		var useSampleCheckbox = A.one('#<portlet:namespace/>useSample');
+		var useSampleCheckbox = A.one('#<portlet:namespace />useSample');
 
 		var isSampleFileSelected = A.one('#lfr-definition-virtual-sample-button-row-message').hasClass('hide');
 

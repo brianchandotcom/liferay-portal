@@ -56,8 +56,8 @@ long fileEntryId = BeanParamUtil.getLong(cpAttachmentFileEntry, request, "fileEn
 	<c:when test='<%= toolbarItem.equals("view-product-definition-attachments") %>'>
 		<aui:input name="fileEntryId" type="hidden" />
 
-		<div id='<portlet:namespace />file-entry-container <%= (fileEntryId > 0) ? StringPool.BLANK : "hidden" %>'>
-			<h5 id="<portlet:namespace />file-entry-title">
+		<div id='<portlet:namespace />fileEntryContainer <%= (fileEntryId > 0) ? StringPool.BLANK : "hidden" %>'>
+			<h5 id="<portlet:namespace />fileEntryTitle">
 				<c:if test="<%= (fileEntryId > 0) %>">
 					<%= cpAttachmentFileEntriesDisplayContext.getFileEntryName() %>
 				</c:if>
@@ -93,9 +93,9 @@ long fileEntryId = BeanParamUtil.getLong(cpAttachmentFileEntry, request, "fileEn
 
 								$('#<portlet:namespace />fileEntryId').val(value.fileEntryId);
 
-								$('#<portlet:namespace />file-entry-title').html(value.title);
+								$('#<portlet:namespace />fileEntryTitle').html(value.title);
 
-								$('#<portlet:namespace />file-entry-container').removeClass('hidden');
+								$('#<portlet:namespace />fileEntryContainer').removeClass('hidden');
 
 								$('#<portlet:namespace />deleteFile').removeClass('hidden');
 							}
@@ -119,9 +119,9 @@ long fileEntryId = BeanParamUtil.getLong(cpAttachmentFileEntry, request, "fileEn
 
 			$('#<portlet:namespace />fileEntryId').val(0);
 
-			$('#<portlet:namespace />file-entry-title').html('');
+			$('#<portlet:namespace />fileEntryTitle').html('');
 
-			$('#<portlet:namespace />file-entry-container').addClass('hidden');
+			$('#<portlet:namespace />fileEntryContainer').addClass('hidden');
 
 			$('#<portlet:namespace />deleteFile').addClass('hidden');
 		}

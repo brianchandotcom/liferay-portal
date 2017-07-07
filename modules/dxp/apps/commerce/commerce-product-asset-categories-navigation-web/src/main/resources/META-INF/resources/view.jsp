@@ -20,7 +20,7 @@
 List<AssetCategory> assetCategories = cpAssetCategoriesNavigationDisplayContext.getAssetCategories();
 %>
 
-<div class="cp-asset-category-navigation" id="<portlet:namespace/>cp-asset-category-navigation">
+<div class="cp-asset-category-navigation" id="<portlet:namespace />cpAssetCategoryNavigation">
 	<ul class="navbar-site split-button-dropdowns">
 
 		<%
@@ -87,7 +87,7 @@ List<AssetCategory> assetCategories = cpAssetCategoriesNavigationDisplayContext.
 </div>
 
 <aui:script use="liferay-navigation-interaction">
-	var navigation = A.one('#<portlet:namespace/>cp-asset-category-navigation');
+	var navigation = A.one('#<portlet:namespace />cpAssetCategoryNavigation');
 
 	Liferay.Data.NAV_INTERACTION_LIST_SELECTOR = '.navbar-site';
 	Liferay.Data.NAV_LIST_SELECTOR = '.navbar-site';

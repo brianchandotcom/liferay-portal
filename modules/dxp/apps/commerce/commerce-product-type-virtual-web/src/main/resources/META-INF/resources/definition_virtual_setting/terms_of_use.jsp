@@ -124,7 +124,7 @@ if (termsOfUseJournalArticleResourcePrimKey > 0) {
 		function(event) {
 			event.preventDefault();
 
-			var contentCheckbox = $('#<portlet:namespace/>termsOfUseRequired');
+			var contentCheckbox = $('#<portlet:namespace />termsOfUseRequired');
 
 			if (contentCheckbox.attr('checked')) {
 				$('#<portlet:namespace />termsOfUseContent').attr('disabled', false);
@@ -145,7 +145,7 @@ if (termsOfUseJournalArticleResourcePrimKey > 0) {
 		function(A) {
 			selectContentType(A);
 
-			A.one('#<portlet:namespace/>termsOfUseRequired').on(
+			A.one('#<portlet:namespace />termsOfUseRequired').on(
 				'click',
 				function(b) {
 					selectContentType(A);
@@ -155,7 +155,7 @@ if (termsOfUseJournalArticleResourcePrimKey > 0) {
 	);
 
 	function selectContentType(A) {
-		var contentCheckbox = A.one('#<portlet:namespace/>termsOfUseRequired');
+		var contentCheckbox = A.one('#<portlet:namespace />termsOfUseRequired');
 
 		var isContentSelected = A.one('#<portlet:namespace />journalArticleRemove').hasClass('hide');
 

@@ -111,6 +111,11 @@ public class ComboServletTest extends PowerMockito {
 					else if (Objects.equals(PortletKeys.PORTAL, args[0])) {
 						return _portalPortlet;
 					}
+					else if (Objects.equals(
+								_NON_EXISTING_PORTLET_ID, args[0])) {
+
+						return null;
+					}
 
 					return _portletUndeployed;
 				}
@@ -168,7 +173,7 @@ public class ComboServletTest extends PowerMockito {
 		RequestDispatcher requestDispatcher =
 			_comboServlet.getResourceRequestDispatcher(
 				_mockHttpServletRequest, _mockHttpServletResponse,
-				"2345678:/js/javascript.js");
+				_NON_EXISTING_PORTLET_ID + ":/js/javascript.js");
 
 		Assert.assertNull(requestDispatcher);
 	}
@@ -291,6 +296,8 @@ public class ComboServletTest extends PowerMockito {
 			_TEST_PORTLET_ID
 		);
 	}
+
+	private static final String _NON_EXISTING_PORTLET_ID = "2345678";
 
 	private static final String _TEST_PORTLET_ID = "TEST_PORTLET_ID";
 

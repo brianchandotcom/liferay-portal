@@ -30,6 +30,4 @@ page import="com.liferay.portal.kernel.util.StringPool" %>
 
 <liferay-theme:defineObjects />
 
-<portlet:defineObjects />
-
 <%@ include file="/init-ext.jsp" %>

@@ -32,6 +32,4 @@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
 
 <liferay-theme:defineObjects />
 
-<portlet:defineObjects />
-
 <%@ include file="/init-ext.jsp" %>

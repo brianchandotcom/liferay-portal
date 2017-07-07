@@ -34,6 +34,4 @@ page import="com.liferay.unit.converter.web.internal.util.UnitConverterUtil" %>
 
 <liferay-theme:defineObjects />
 
-<portlet:defineObjects />
-
 <%@ include file="/init-ext.jsp" %>

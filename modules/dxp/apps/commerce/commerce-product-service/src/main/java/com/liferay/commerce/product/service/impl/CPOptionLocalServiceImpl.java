@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.service.impl;
 
+import com.liferay.commerce.product.exception.CPOptionKeyException;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.base.CPOptionLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -65,6 +66,8 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 		long groupId = serviceContext.getScopeGroupId();
 
 		key = FriendlyURLNormalizerUtil.normalize(key);
+
+		validate(groupId, key);
 
 		long cpOptionId = counterLocalService.increment();
 
@@ -232,6 +235,8 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 
 		key = FriendlyURLNormalizerUtil.normalize(key);
 
+		validate(cpOption.getGroupId(), key);
+
 		cpOption.setTitleMap(titleMap);
 		cpOption.setDescriptionMap(descriptionMap);
 		cpOption.setDDMFormFieldTypeName(ddmFormFieldTypeName);
@@ -320,6 +325,14 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 
 		throw new SearchException(
 			"Unable to fix the search index after 10 attempts");
+	}
+
+	protected void validate(long groupId, String key) throws PortalException {
+		CPOption cpOption = cpOptionPersistence.fetchByG_K(groupId, key);
+
+		if (cpOption != null) {
+			throw new CPOptionKeyException();
+		}
 	}
 
 	private static final String _FIELD_KEY = "key";

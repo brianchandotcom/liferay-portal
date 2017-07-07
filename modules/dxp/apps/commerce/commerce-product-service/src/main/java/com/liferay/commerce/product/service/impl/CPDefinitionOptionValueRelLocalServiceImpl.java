@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.service.impl;
 
+import com.liferay.commerce.product.exception.CPDefinitionOptionValueRelKeyException;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPOption;
@@ -81,6 +82,8 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		long groupId = serviceContext.getScopeGroupId();
 
 		key = FriendlyURLNormalizerUtil.normalize(key);
+
+		validate(cpDefinitionOptionRelId, key);
 
 		long cpDefinitionOptionValueRelId = counterLocalService.increment();
 
@@ -252,6 +255,8 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 
 		key = FriendlyURLNormalizerUtil.normalize(key);
 
+		validate(cpDefinitionOptionValueRel.getCPDefinitionOptionRelId(), key);
+
 		cpDefinitionOptionValueRel.setTitleMap(titleMap);
 		cpDefinitionOptionValueRel.setPriority(priority);
 		cpDefinitionOptionValueRel.setKey(key);
@@ -341,6 +346,18 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 
 		throw new SearchException(
 			"Unable to fix the search index after 10 attempts");
+	}
+
+	protected void validate(long cpDefinitionOptionRelId, String key)
+		throws PortalException {
+
+		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
+			cpDefinitionOptionValueRelPersistence.fetchByC_K(
+				cpDefinitionOptionRelId, key);
+
+		if (cpDefinitionOptionValueRel != null) {
+			throw new CPDefinitionOptionValueRelKeyException();
+		}
 	}
 
 	private static final String _FIELD_KEY = "key";

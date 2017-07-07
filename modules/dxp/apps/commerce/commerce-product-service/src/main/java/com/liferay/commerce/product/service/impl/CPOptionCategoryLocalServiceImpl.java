@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.service.impl;
 
+import com.liferay.commerce.product.exception.CPOptionCategoryKeyException;
 import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.service.base.CPOptionCategoryLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -48,6 +49,8 @@ public class CPOptionCategoryLocalServiceImpl
 		long groupId = serviceContext.getScopeGroupId();
 
 		key = FriendlyURLNormalizerUtil.normalize(key);
+
+		validate(groupId, key);
 
 		long cpOptionCategoryId = counterLocalService.increment();
 
@@ -149,6 +152,8 @@ public class CPOptionCategoryLocalServiceImpl
 
 		key = FriendlyURLNormalizerUtil.normalize(key);
 
+		validate(cpOptionCategory.getGroupId(), key);
+
 		cpOptionCategory.setTitleMap(titleMap);
 		cpOptionCategory.setDescriptionMap(descriptionMap);
 		cpOptionCategory.setPriority(priority);
@@ -157,6 +162,15 @@ public class CPOptionCategoryLocalServiceImpl
 		cpOptionCategoryPersistence.update(cpOptionCategory);
 
 		return cpOptionCategory;
+	}
+
+	protected void validate(long groupId, String key) throws PortalException {
+		CPOptionCategory cpOptionCategory =
+			cpOptionCategoryPersistence.fetchByG_K(groupId, key);
+
+		if (cpOptionCategory != null) {
+			throw new CPOptionCategoryKeyException();
+		}
 	}
 
 }

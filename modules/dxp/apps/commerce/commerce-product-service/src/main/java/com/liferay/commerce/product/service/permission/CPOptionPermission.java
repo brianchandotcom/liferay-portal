@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(
-	property = {"model.class.name=com.liferay.commerce.product.model.CPOption"},
+	property = "model.class.name=com.liferay.commerce.product.model.CPOption",
 	service = BaseModelPermissionChecker.class
 )
 public class CPOptionPermission implements BaseModelPermissionChecker {

@@ -125,7 +125,7 @@ public class CPAttachmentFileEntryDemoDataCreatorHelper
 				_cpDefinitionOptionValueRelDemoDataCreatorHelper.
 					getCPDefinitionOptionValueRels();
 
-			JSONArray optionIds = JSONFactoryUtil.createJSONArray();
+			JSONArray optionIdsJSONArray = JSONFactoryUtil.createJSONArray();
 
 			for (CPDefinitionOptionRel cpDefinitionOptionRel :
 					cpDefinitionOptionRels) {
@@ -136,7 +136,7 @@ public class CPAttachmentFileEntryDemoDataCreatorHelper
 					long cpDefinitionOptionRelId =
 						cpDefinitionOptionRel.getCPDefinitionOptionRelId();
 
-					optionIds.put(cpDefinitionOptionRelId);
+					optionIdsJSONArray.put(cpDefinitionOptionRelId);
 
 					for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
 							cpDefinitionOptionValueRels) {
@@ -145,20 +145,20 @@ public class CPAttachmentFileEntryDemoDataCreatorHelper
 								getCPDefinitionOptionRelId() ==
 									cpDefinitionOptionRelId) {
 
-							optionIds.put(
+							optionIdsJSONArray.put(
 								cpDefinitionOptionValueRel.
 									getCPDefinitionOptionValueRelId());
 
 							StringBuilder sb = new StringBuilder(9);
 
 							sb.append("[{\"cpDefinitionOptionRelId\":\"");
-							sb.append(optionIds.get(0));
+							sb.append(optionIdsJSONArray.get(0));
 							sb.append(StringPool.QUOTE);
 							sb.append(StringPool.COMMA);
 							sb.append("\"cpDefinitionOptionValueRelId\"");
 							sb.append(StringPool.COLON);
 							sb.append(StringPool.QUOTE);
-							sb.append(optionIds.get(1));
+							sb.append(optionIdsJSONArray.get(1));
 							sb.append("\"}]");
 
 							createCPAttachmentFileEntry(

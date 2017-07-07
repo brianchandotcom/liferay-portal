@@ -49,9 +49,7 @@ public class CPDefinitionOptionRelStagedModelDataHandler
 
 	@Override
 	public String getDisplayName(CPDefinitionOptionRel cpDefinitionOptionRel) {
-		String displayName = cpDefinitionOptionRel.getTitleCurrentValue();
-
-		return displayName;
+		return cpDefinitionOptionRel.getTitleCurrentValue();
 	}
 
 	@Override

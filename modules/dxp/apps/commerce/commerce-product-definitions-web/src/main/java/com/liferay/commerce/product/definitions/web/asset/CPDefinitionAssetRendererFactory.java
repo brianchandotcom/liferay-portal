@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + CPPortletKeys.COMMERCE_PRODUCT_DEFINITIONS},
+	property = "javax.portlet.name=" + CPPortletKeys.COMMERCE_PRODUCT_DEFINITIONS,
 	service = AssetRendererFactory.class
 )
 public class CPDefinitionAssetRendererFactory
@@ -149,6 +149,7 @@ public class CPDefinitionAssetRendererFactory
 			permissionChecker, classPK, actionId);
 	}
 
+	@Override
 	protected Group getGroup(LiferayPortletRequest liferayPortletRequest) {
 		return (Group)liferayPortletRequest.getAttribute(
 			ASSET_RENDERER_FACTORY_GROUP);

@@ -38,9 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" + CPPortletKeys.CP_ASSET_CATEGORY_NAVIGATION
-	},
+	property = "javax.portlet.name=" + CPPortletKeys.CP_ASSET_CATEGORY_NAVIGATION,
 	service = ConfigurationAction.class
 )
 public class CPAssetCategoriesNavigationConfigurationAction

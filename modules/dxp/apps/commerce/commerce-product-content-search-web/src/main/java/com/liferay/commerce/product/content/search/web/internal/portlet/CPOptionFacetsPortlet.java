@@ -99,6 +99,9 @@ public class CPOptionFacetsPortlet
 		try {
 			List<Facet> facets = getFacets(renderRequest);
 
+			SearchContext searchContext =
+				portletSharedSearchSettings.getSearchContext();
+
 			for (Facet facet : facets) {
 				Optional<String[]> parameterValuesOptional =
 					portletSharedSearchSettings.getParameterValues(
@@ -106,11 +109,14 @@ public class CPOptionFacetsPortlet
 
 				if (parameterValuesOptional.isPresent()) {
 					if (facet instanceof MultiValueFacet) {
-						((MultiValueFacet)facet).setValues(
+						MultiValueFacet multiValueFacet =
+							(MultiValueFacet)facet;
+
+						multiValueFacet.setValues(
 							parameterValuesOptional.get());
 					}
 
-					portletSharedSearchSettings.getSearchContext().setAttribute(
+					searchContext.setAttribute(
 						facet.getFieldName(),
 						StringUtil.merge(parameterValuesOptional.get()));
 				}

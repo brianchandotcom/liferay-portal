@@ -27,19 +27,17 @@ page import="com.liferay.asset.kernel.model.AssetVocabulary" %><%@
 page import="com.liferay.commerce.product.asset.categories.navigation.web.internal.display.context.CPAssetCategoriesNavigationDisplayContext" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 <%@ page import="java.util.List" %>
-
-<%@
-		page import="com.liferay.portal.kernel.util.Validator" %>
 
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
 
 <%
-	CPAssetCategoriesNavigationDisplayContext cpAssetCategoriesNavigationDisplayContext = (CPAssetCategoriesNavigationDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CPAssetCategoriesNavigationDisplayContext cpAssetCategoriesNavigationDisplayContext = (CPAssetCategoriesNavigationDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-	AssetVocabulary assetVocabulary = cpAssetCategoriesNavigationDisplayContext.getAssetVocabulary();
+AssetVocabulary assetVocabulary = cpAssetCategoriesNavigationDisplayContext.getAssetVocabulary();
 %>

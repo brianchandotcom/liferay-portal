@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"model.class.name=com.liferay.commerce.product.model.CPOptionValue"},
+	property = "model.class.name=com.liferay.commerce.product.model.CPOptionValue",
 	service = StagedModelRepository.class
 )
 public class CPOptionValueStagedModelRepository

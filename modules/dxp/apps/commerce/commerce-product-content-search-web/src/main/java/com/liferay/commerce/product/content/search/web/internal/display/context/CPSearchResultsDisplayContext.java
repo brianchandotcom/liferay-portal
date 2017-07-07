@@ -88,7 +88,7 @@ public class CPSearchResultsDisplayContext {
 	}
 
 	public long getDisplayStyleGroupId() {
-		if (_displayStyleGroupId != 0) {
+		if (_displayStyleGroupId > 0) {
 			return _displayStyleGroupId;
 		}
 

@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = {"model.class.name=com.liferay.commerce.product.model.CPDefinition"},
+	property = "model.class.name=com.liferay.commerce.product.model.CPDefinition",
 	service = TrashHandler.class
 )
 public class CPDefinitionTrashHandler extends BaseTrashHandler {

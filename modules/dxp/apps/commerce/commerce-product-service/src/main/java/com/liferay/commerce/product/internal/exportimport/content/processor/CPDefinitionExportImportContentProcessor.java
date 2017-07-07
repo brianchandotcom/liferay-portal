@@ -25,9 +25,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Andrea Di Giorgi
  */
 @Component(
-	property = {
-		"model.class.name=com.liferay.commerce.product.model.CPDefinition"
-	},
+	property = "model.class.name=com.liferay.commerce.product.model.CPDefinition",
 	service = {
 		CPDefinitionExportImportContentProcessor.class,
 		ExportImportContentProcessor.class

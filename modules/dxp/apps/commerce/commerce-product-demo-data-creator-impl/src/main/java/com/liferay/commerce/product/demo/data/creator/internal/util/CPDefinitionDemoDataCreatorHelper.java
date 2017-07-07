@@ -105,7 +105,7 @@ public class CPDefinitionDemoDataCreatorHelper
 			}
 		}
 
-		//Related product definitions
+		// Related product definitions
 
 		createCPDefinitionLinks(catalogJSONArray, serviceContext);
 	}
@@ -224,9 +224,9 @@ public class CPDefinitionDemoDataCreatorHelper
 
 			List<Long> cpDefinitionIdsList = new ArrayList<>();
 
-			for (int x = 0; x < cpDefinitionLinksJSONArray.length(); x++) {
+			for (int j = 0; j < cpDefinitionLinksJSONArray.length(); j++) {
 				CPDefinition cpDefinitionEntry = getCPDefinitionByTitle(
-					cpDefinitionLinksJSONArray.getString(x));
+					cpDefinitionLinksJSONArray.getString(j));
 
 				cpDefinitionIdsList.add(cpDefinitionEntry.getCPDefinitionId());
 			}

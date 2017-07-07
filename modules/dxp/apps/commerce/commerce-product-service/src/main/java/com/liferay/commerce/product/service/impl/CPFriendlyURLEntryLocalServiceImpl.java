@@ -115,6 +115,7 @@ public class CPFriendlyURLEntryLocalServiceImpl
 			groupId, companyId, classNameId, languageId, urlTitle);
 	}
 
+	@Override
 	public Map<String, String> getLanguageIdToUrlTitleMap(
 		long groupId, long companyId, long classNameId, long classPK) {
 

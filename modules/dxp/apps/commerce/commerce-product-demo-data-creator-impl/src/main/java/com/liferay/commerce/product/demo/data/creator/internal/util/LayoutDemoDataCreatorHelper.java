@@ -89,9 +89,8 @@ public class LayoutDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 	public String getLayoutUuid(long userId, long groupId, String name)
 		throws PortalException {
 
-		String friendlyURL = StringPool.FORWARD_SLASH;
-
-		friendlyURL += StringUtil.toLowerCase(name);
+		String friendlyURL =
+			StringPool.FORWARD_SLASH + StringUtil.toLowerCase(name);
 
 		Layout layout = createLayout(userId, groupId, name, friendlyURL);
 

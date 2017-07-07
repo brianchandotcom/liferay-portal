@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Marco Leo
  */
 @Component(
-	property = {"resource.name=" + CPPermission.RESOURCE_NAME},
+	property = "resource.name=" + CPPermission.RESOURCE_NAME,
 	service = ResourcePermissionChecker.class
 )
 public class CPPermission extends BaseResourcePermissionChecker {

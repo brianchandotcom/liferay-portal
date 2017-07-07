@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -194,18 +192,11 @@ public class CPDefinitionFinderImpl
 				queryDefinition.getEnd());
 		}
 		catch (Exception e) {
-			try {
-				throw new SystemException(e);
-			}
-			catch (SystemException se) {
-				_log.error(se);
-			}
+			throw new SystemException(e);
 		}
 		finally {
 			closeSession(session);
 		}
-
-		return null;
 	}
 
 	protected List<CPDefinition> doFindByG_P_S(
@@ -265,21 +256,11 @@ public class CPDefinitionFinderImpl
 				queryDefinition.getEnd());
 		}
 		catch (Exception e) {
-			try {
-				throw new SystemException(e);
-			}
-			catch (SystemException se) {
-				_log.error(e);
-			}
+			throw new SystemException(e);
 		}
 		finally {
 			closeSession(session);
 		}
-
-		return null;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CPDefinitionFinderImpl.class);
 
 }

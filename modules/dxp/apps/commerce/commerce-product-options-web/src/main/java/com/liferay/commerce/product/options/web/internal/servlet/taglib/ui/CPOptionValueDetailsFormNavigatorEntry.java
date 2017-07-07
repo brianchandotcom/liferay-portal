@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Marco Leo
  */
 @Component(
-	property = {"form.navigator.entry.order:Integer=100"},
+	property = "form.navigator.entry.order:Integer=100",
 	service = FormNavigatorEntry.class
 )
 public class CPOptionValueDetailsFormNavigatorEntry

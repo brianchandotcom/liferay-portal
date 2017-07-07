@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Marco Leo
  */
 @Component(
-	property = {"form.navigator.category.order:Integer=5"},
+	property = "form.navigator.category.order:Integer=5",
 	service = FormNavigatorCategory.class
 )
 public class CPFriendlyURLFormNavigatorCategory

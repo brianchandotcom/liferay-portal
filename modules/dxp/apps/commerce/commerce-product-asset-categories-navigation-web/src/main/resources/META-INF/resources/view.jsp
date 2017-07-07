@@ -87,7 +87,6 @@ List<AssetCategory> assetCategories = cpAssetCategoriesNavigationDisplayContext.
 </div>
 
 <aui:script use="liferay-navigation-interaction">
-
 	var navigation = A.one('#<portlet:namespace/>cp-asset-category-navigation');
 
 	Liferay.Data.NAV_INTERACTION_LIST_SELECTOR = '.navbar-site';
@@ -96,5 +95,4 @@ List<AssetCategory> assetCategories = cpAssetCategoriesNavigationDisplayContext.
 	if (navigation) {
 		navigation.plug(Liferay.NavigationInteraction);
 	}
-
 </aui:script>

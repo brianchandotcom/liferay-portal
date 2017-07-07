@@ -66,7 +66,7 @@ public class FileUtil {
 	}
 
 	public static List<URL> getIncludedResourceURLs(
-			FileSystem fileSystem, String[] includes, String... baseDirNames)
+			FileSystem fileSystem, String[] includes, String baseDirName)
 		throws IOException {
 
 		final List<PathMatcher> pathMatchers = new ArrayList<>();
@@ -77,55 +77,51 @@ public class FileUtil {
 
 		final List<URL> filePaths = new ArrayList<>();
 
-		for (String baseDirName : baseDirNames) {
-			if (Validator.isNull(baseDirName)) {
-				continue;
-			}
+		if (Validator.isNull(baseDirName)) {
+			return filePaths;
+		}
 
-			Path path = fileSystem.getPath(baseDirName);
+		Path path = fileSystem.getPath(baseDirName);
 
-			if (!Files.exists(path)) {
-				System.out.println(
-					"Directory " + baseDirName + " does not exist.");
+		if (!Files.exists(path)) {
+			System.out.println("Directory " + baseDirName + " does not exist.");
 
-				continue;
-			}
+			return filePaths;
+		}
 
-			Files.walkFileTree(
-				path,
-				new SimpleFileVisitor<Path>() {
+		Files.walkFileTree(
+			path,
+			new SimpleFileVisitor<Path>() {
 
-					@Override
-					public FileVisitResult visitFile(
-							Path filePath,
-							BasicFileAttributes basicFileAttributes)
-						throws IOException {
+				@Override
+				public FileVisitResult visitFile(
+						Path filePath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
 
-						for (PathMatcher pathMatcher : pathMatchers) {
-							URI uri = filePath.toUri();
+					for (PathMatcher pathMatcher : pathMatchers) {
+						URI uri = filePath.toUri();
 
-							if (pathMatcher.matches(filePath)) {
-								filePaths.add(uri.toURL());
+						if (pathMatcher.matches(filePath)) {
+							filePaths.add(uri.toURL());
 
-								break;
-							}
+							break;
 						}
-
-						return FileVisitResult.CONTINUE;
 					}
 
-				});
-		}
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
 
 		return filePaths;
 	}
 
 	public static List<URL> getIncludedResourceURLs(
-			String[] includes, String... baseDirNames)
+			String[] includes, String baseDirName)
 		throws IOException {
 
 		return getIncludedResourceURLs(
-			FileSystems.getDefault(), includes, baseDirNames);
+			FileSystems.getDefault(), includes, baseDirName);
 	}
 
 	public static String getSeparator() {

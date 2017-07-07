@@ -395,17 +395,17 @@ public class PoshiRunnerContext {
 	}
 
 	private static List<URL> _getPoshiURLs(
-			FileSystem fileSystem, String[] includes, String... baseDirNames)
+			FileSystem fileSystem, String[] includes, String baseDirName)
 		throws IOException {
 
 		List<URL> urls = null;
 
 		if (fileSystem == null) {
-			urls = FileUtil.getIncludedResourceURLs(includes, baseDirNames);
+			urls = FileUtil.getIncludedResourceURLs(includes, baseDirName);
 		}
 		else {
 			urls = FileUtil.getIncludedResourceURLs(
-				fileSystem, includes, baseDirNames);
+				fileSystem, includes, baseDirName);
 		}
 
 		for (URL url : urls) {
@@ -430,10 +430,10 @@ public class PoshiRunnerContext {
 	}
 
 	private static List<URL> _getPoshiURLs(
-			String[] includes, String... baseDirNames)
+			String[] includes, String baseDirName)
 		throws Exception {
 
-		return _getPoshiURLs(null, includes, baseDirNames);
+		return _getPoshiURLs(null, includes, baseDirName);
 	}
 
 	private static String _getTestBatchGroups() throws Exception {
@@ -829,18 +829,18 @@ public class PoshiRunnerContext {
 			String[] includes, String... baseDirNames)
 		throws Exception {
 
-		for (URL url : _getPoshiURLs(includes, baseDirNames)) {
-			_storeRootElement(
-				PoshiRunnerGetterUtil.getRootElementFromURL(url),
-				url.getFile());
+		for (String baseDirName : baseDirNames) {
+			for (URL url : _getPoshiURLs(includes, baseDirName)) {
+				_storeRootElement(
+					PoshiRunnerGetterUtil.getRootElementFromURL(url),
+					url.getFile());
+			}
 		}
 	}
 
 	private static void _readPoshiFilesFromClassPath(
 			String[] includes, String... resourceNames)
 		throws Exception {
-
-		List<URL> urls = new ArrayList<>();
 
 		for (String resourceName : resourceNames) {
 			ClassLoader classLoader = PoshiRunnerContext.class.getClassLoader();
@@ -859,18 +859,16 @@ public class PoshiRunnerContext {
 						URI.create(resourceURLString.substring(0, x)),
 						new HashMap<String, String>(), classLoader)) {
 
-					urls.addAll(
-						_getPoshiURLs(
+					for (URL url : _getPoshiURLs(
 							fileSystem, includes,
-							resourceURLString.substring(x + 1)));
+							resourceURLString.substring(x + 1))) {
+
+						_storeRootElement(
+							PoshiRunnerGetterUtil.getRootElementFromURL(url),
+							url.getFile());
+					}
 				}
 			}
-		}
-
-		for (URL url : urls) {
-			_storeRootElement(
-				PoshiRunnerGetterUtil.getRootElementFromURL(url),
-				url.getFile());
 		}
 	}
 

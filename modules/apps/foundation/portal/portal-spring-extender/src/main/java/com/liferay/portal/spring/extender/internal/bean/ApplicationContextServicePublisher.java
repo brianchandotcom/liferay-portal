@@ -14,6 +14,8 @@
 
 package com.liferay.portal.spring.extender.internal.bean;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -28,8 +30,6 @@ import java.util.Dictionary;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import org.apache.felix.utils.log.Logger;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -51,8 +51,6 @@ public class ApplicationContextServicePublisher {
 
 		_applicationContext = applicationContext;
 		_bundleContext = bundleContext;
-
-		_log = new Logger(bundleContext);
 	}
 
 	public void register() {
@@ -65,9 +63,7 @@ public class ApplicationContextServicePublisher {
 			catch (BeanIsAbstractException biae) {
 			}
 			catch (Exception e) {
-				_log.log(
-					Logger.LOG_ERROR, "Unable to register service " + beanName,
-					e);
+				_log.error("Unable to register service " + beanName, e);
 			}
 
 			if (bean != null) {
@@ -199,7 +195,7 @@ public class ApplicationContextServicePublisher {
 			interfaces = getInterfaces(bean);
 		}
 		catch (Exception e) {
-			_log.log(Logger.LOG_ERROR, "Unable to register service " + bean, e);
+			_log.error("Unable to register service " + bean, e);
 		}
 
 		interfaces.add(bean.getClass());
@@ -215,9 +211,11 @@ public class ApplicationContextServicePublisher {
 		}
 
 		if (names.isEmpty()) {
-			_log.log(
-				Logger.LOG_DEBUG,
-				"Skipping registration because of an empty list of interfaces");
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Skipping registration because of an empty list of " +
+						"interfaces");
+			}
 
 			return;
 		}
@@ -241,9 +239,11 @@ public class ApplicationContextServicePublisher {
 		_serviceRegistrations.add(serviceRegistration);
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		ApplicationContextServicePublisher.class);
+
 	private final ApplicationContext _applicationContext;
 	private final BundleContext _bundleContext;
-	private final Logger _log;
 	private final Set<ServiceRegistration<?>> _serviceRegistrations =
 		new HashSet<>();
 

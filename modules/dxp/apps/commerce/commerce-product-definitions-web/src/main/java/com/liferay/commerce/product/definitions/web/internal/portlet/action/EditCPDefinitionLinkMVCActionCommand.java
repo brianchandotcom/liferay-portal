@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.exception.NoSuchCPDefinitionLinkException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLink;
 import com.liferay.commerce.product.service.CPDefinitionLinkService;
@@ -22,8 +23,10 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -116,18 +119,30 @@ public class EditCPDefinitionLinkMVCActionCommand extends BaseMVCActionCommand {
 		redirect = getSaveAndContinueRedirect(
 			actionRequest, cpDefinitionId, redirect, backURL);
 
-		if (cmd.equals(Constants.ADD)) {
-			addCPDefinitionLinks(actionRequest);
+		try {
+			if (cmd.equals(Constants.ADD)) {
+				addCPDefinitionLinks(actionRequest);
 
-			sendRedirect(actionRequest, actionResponse, redirect);
-		}
-		else if (cmd.equals(Constants.DELETE)) {
-			deleteCPDefinitionLinks(actionRequest);
-		}
-		else if (cmd.equals(Constants.UPDATE)) {
-			updateCPDefinitionLink(actionRequest);
+				sendRedirect(actionRequest, actionResponse, redirect);
+			} else if (cmd.equals(Constants.DELETE)) {
+				deleteCPDefinitionLinks(actionRequest);
+			} else if (cmd.equals(Constants.UPDATE)) {
+				updateCPDefinitionLink(actionRequest);
 
-			sendRedirect(actionRequest, actionResponse, redirect);
+				sendRedirect(actionRequest, actionResponse, redirect);
+			}
+		}
+		catch (Exception e) {
+			if (e instanceof NoSuchCPDefinitionLinkException ||
+				e instanceof PrincipalException) {
+
+				SessionErrors.add(actionRequest, e.getClass());
+
+				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
+			}
+			else {
+				throw e;
+			}
 		}
 	}
 

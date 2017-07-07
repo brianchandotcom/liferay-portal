@@ -19,6 +19,7 @@
 <liferay-ui:error-header />
 
 <liferay-ui:error exception="<%= CPDefinitionProductTypeNameException.class %>" message="please-select-a-valid-type" />
+<liferay-ui:error exception="<%= NoSuchCPAttachmentFileEntryException.class %>" message="the-attachment-could-not-be-found" />
 <liferay-ui:error exception="<%= NoSuchCPDefinitionException.class %>" message="the-product-could-not-be-found" />
 <liferay-ui:error exception="<%= NoSuchCPDefinitionLinkException.class %>" message="the-related-product-could-not-be-found" />
 <liferay-ui:error exception="<%= NoSuchCPDefinitionOptionRelException.class %>" message="the-option-could-not-be-found" />

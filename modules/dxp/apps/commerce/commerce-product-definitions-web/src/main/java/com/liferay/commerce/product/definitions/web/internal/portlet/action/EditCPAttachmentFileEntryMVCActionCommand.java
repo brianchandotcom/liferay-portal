@@ -16,6 +16,7 @@ package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.exception.CPAttachmentFileEntryFileEntryIdException;
+import com.liferay.commerce.product.exception.NoSuchCPAttachmentFileEntryException;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -110,7 +112,14 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 			}
 		}
 		catch (Exception e) {
-			if (e instanceof CPAttachmentFileEntryFileEntryIdException) {
+			if (e instanceof NoSuchCPAttachmentFileEntryException ||
+				e instanceof PrincipalException) {
+
+				SessionErrors.add(actionRequest, e.getClass());
+
+				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
+			}
+			else if (e instanceof CPAttachmentFileEntryFileEntryIdException) {
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
 

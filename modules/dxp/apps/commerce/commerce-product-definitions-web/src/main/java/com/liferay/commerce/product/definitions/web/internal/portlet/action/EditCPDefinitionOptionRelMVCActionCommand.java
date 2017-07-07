@@ -15,12 +15,15 @@
 package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionRelException;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -110,35 +113,46 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 		long cpDefinitionOptionRelId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionOptionRelId");
 
-		if (cmd.equals(Constants.ADD) || cmd.equals(Constants.ADD_MULTIPLE)) {
-			addCPDefinitionOptionRels(actionRequest);
-		}
-		else if (cmd.equals(Constants.DELETE)) {
-			deleteCPDefinitionOptionRels(
-				cpDefinitionOptionRelId, actionRequest);
-		}
-		else if (cmd.equals(Constants.UPDATE)) {
-			updateCPDefinitionOptionRel(cpDefinitionOptionRelId, actionRequest);
-		}
-		else if (cmd.equals("setFacetable")) {
-			boolean facetable = ParamUtil.getBoolean(
-				actionRequest, "facetable");
+		try {
+			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.ADD_MULTIPLE)) {
+				addCPDefinitionOptionRels(actionRequest);
+			} else if (cmd.equals(Constants.DELETE)) {
+				deleteCPDefinitionOptionRels(
+					cpDefinitionOptionRelId, actionRequest);
+			} else if (cmd.equals(Constants.UPDATE)) {
+				updateCPDefinitionOptionRel(
+					cpDefinitionOptionRelId, actionRequest);
+			} else if (cmd.equals("setFacetable")) {
+				boolean facetable = ParamUtil.getBoolean(
+					actionRequest, "facetable");
 
-			_cpDefinitionOptionRelService.setFacetable(
-				cpDefinitionOptionRelId, facetable);
-		}
-		else if (cmd.equals("setRequired")) {
-			boolean required = ParamUtil.getBoolean(actionRequest, "required");
+				_cpDefinitionOptionRelService.setFacetable(
+					cpDefinitionOptionRelId, facetable);
+			} else if (cmd.equals("setRequired")) {
+				boolean required = ParamUtil.getBoolean(
+					actionRequest, "required");
 
-			_cpDefinitionOptionRelService.setRequired(
-				cpDefinitionOptionRelId, required);
-		}
-		else if (cmd.equals("setSkuContributor")) {
-			boolean skuContributor = ParamUtil.getBoolean(
-				actionRequest, "skuContributor");
+				_cpDefinitionOptionRelService.setRequired(
+					cpDefinitionOptionRelId, required);
+			} else if (cmd.equals("setSkuContributor")) {
+				boolean skuContributor = ParamUtil.getBoolean(
+					actionRequest, "skuContributor");
 
-			_cpDefinitionOptionRelService.setSkuContributor(
-				cpDefinitionOptionRelId, skuContributor);
+				_cpDefinitionOptionRelService.setSkuContributor(
+					cpDefinitionOptionRelId, skuContributor);
+			}
+		}
+		catch (Exception e) {
+			if (e instanceof NoSuchCPDefinitionOptionRelException ||
+				e instanceof PrincipalException) {
+
+				SessionErrors.add(actionRequest, e.getClass());
+
+				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
+			}
+			else {
+				throw e;
+			}
 		}
 	}
 

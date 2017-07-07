@@ -18,6 +18,7 @@ import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
+import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
@@ -223,8 +224,10 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 				continue;
 			}
 
-			optionNames.add(cpDefinitionOptionRel.getName());
-			optionIds.add(cpDefinitionOptionRel.getCPOptionId());
+			CPOption cpOption = cpDefinitionOptionRel.getCPOption();
+
+			optionNames.add(cpOption.getKey());
+			optionIds.add(cpOption.getCPOptionId());
 
 			List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
 				cpDefinitionOptionRel.getCPDefinitionOptionValueRels();
@@ -237,18 +240,18 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 
 				optionValueNames.add(
 					StringUtil.toLowerCase(
-						cpDefinitionOptionValueRel.getName()));
+						cpDefinitionOptionValueRel.getKey()));
 				optionValueIds.add(
 					cpDefinitionOptionValueRel.
 						getCPDefinitionOptionValueRelId());
 			}
 
 			document.addText(
-				"ATTRIBUTE_" + cpDefinitionOptionRel.getName() +
+				"ATTRIBUTE_" + cpOption.getKey() +
 					"_VALUES_NAMES",
 				ArrayUtil.toStringArray(optionValueNames));
 			document.addNumber(
-				"ATTRIBUTE_" + cpDefinitionOptionRel.getName() +
+				"ATTRIBUTE_" + cpOption.getKey() +
 					"_VALUES_IDS",
 				ArrayUtil.toLongArray(optionValueIds));
 

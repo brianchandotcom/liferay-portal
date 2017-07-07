@@ -53,9 +53,6 @@ import java.util.Map;
 public class CPDefinitionOptionRelLocalServiceImpl
 	extends CPDefinitionOptionRelLocalServiceBaseImpl {
 
-	public static final String[] SELECTED_FIELD_NAMES =
-		{Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID};
-
 	@Override
 	public CPDefinitionOptionRel addCPDefinitionOptionRel(
 			long cpDefinitionId, long cpOptionId, boolean importOptionValue,
@@ -376,7 +373,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		List<CPDefinitionOptionRel> cpDefinitionOptionRels = new ArrayList<>();
 
 		for (int i = 0; i < 10; i++) {
-			Hits hits = indexer.search(searchContext, SELECTED_FIELD_NAMES);
+			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
 
 			Document[] documents = hits.getDocs();
 
@@ -399,5 +396,8 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		throw new SearchException(
 			"Unable to fix the search index after 10 attempts");
 	}
+
+	private static final String[] _SELECTED_FIELD_NAMES =
+		{Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID};
 
 }

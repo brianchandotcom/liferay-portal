@@ -53,11 +53,6 @@ import java.util.Map;
 public class CPOptionValueLocalServiceImpl
 	extends CPOptionValueLocalServiceBaseImpl {
 
-	public static final String FIELD_KEY = "key";
-
-	public static final String[] SELECTED_FIELD_NAMES =
-		{Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID};
-
 	@Override
 	public CPOptionValue addCPOptionValue(
 			long cpOptionId, Map<Locale, String> titleMap, double priority,
@@ -214,7 +209,7 @@ public class CPOptionValueLocalServiceImpl
 		attributes.put(Field.ENTRY_CLASS_PK, keywords);
 		attributes.put(Field.TITLE, keywords);
 		attributes.put(Field.CONTENT, keywords);
-		attributes.put(FIELD_KEY, keywords);
+		attributes.put(_FIELD_KEY, keywords);
 		attributes.put("CPOptionId", cpOptionId);
 		attributes.put("params", params);
 
@@ -253,7 +248,7 @@ public class CPOptionValueLocalServiceImpl
 		List<CPOptionValue> cpOptionValues = new ArrayList<>();
 
 		for (int i = 0; i < 10; i++) {
-			Hits hits = indexer.search(searchContext, SELECTED_FIELD_NAMES);
+			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
 
 			Document[] documents = hits.getDocs();
 
@@ -275,5 +270,10 @@ public class CPOptionValueLocalServiceImpl
 		throw new SearchException(
 			"Unable to fix the search index after 10 attempts");
 	}
+
+	private static final String _FIELD_KEY = "key";
+
+	private static final String[] _SELECTED_FIELD_NAMES =
+		{Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID};
 
 }

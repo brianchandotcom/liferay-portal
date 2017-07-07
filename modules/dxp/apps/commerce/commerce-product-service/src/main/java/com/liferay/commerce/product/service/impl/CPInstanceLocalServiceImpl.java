@@ -69,9 +69,6 @@ import java.util.Map;
  */
 public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
-	public static final String[] SELECTED_FIELD_NAMES =
-		{Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID};
-
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPInstance addCPInstance(
@@ -548,7 +545,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		List<CPInstance> cpInstances = new ArrayList<>();
 
 		for (int i = 0; i < 10; i++) {
-			Hits hits = indexer.search(searchContext, SELECTED_FIELD_NAMES);
+			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
 
 			Document[] documents = hits.getDocs();
 
@@ -582,5 +579,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			CPInstance.class.getName(), cpInstance.getCPInstanceId(),
 			cpInstance, serviceContext, workflowContext);
 	}
+
+	private static final String[] _SELECTED_FIELD_NAMES =
+		{Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID};
 
 }

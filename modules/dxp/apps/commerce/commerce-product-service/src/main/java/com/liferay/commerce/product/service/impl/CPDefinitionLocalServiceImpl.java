@@ -87,9 +87,6 @@ import java.util.Set;
 public class CPDefinitionLocalServiceImpl
 	extends CPDefinitionLocalServiceBaseImpl {
 
-	public static final String[] SELECTED_FIELD_NAMES =
-		{Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID};
-
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPDefinition addCPDefinition(
@@ -957,7 +954,7 @@ public class CPDefinitionLocalServiceImpl
 		List<CPDefinition> cpDefinitions = new ArrayList<>();
 
 		for (int i = 0; i < 10; i++) {
-			Hits hits = indexer.search(searchContext, SELECTED_FIELD_NAMES);
+			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
 
 			Document[] documents = hits.getDocs();
 
@@ -1158,6 +1155,9 @@ public class CPDefinitionLocalServiceImpl
 
 		return newCPDefinitionLocalizations;
 	}
+
+	private static final String[] _SELECTED_FIELD_NAMES =
+		{Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPDefinitionLocalServiceImpl.class);

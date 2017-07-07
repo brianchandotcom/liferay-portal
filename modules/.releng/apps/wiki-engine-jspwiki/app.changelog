@@ -1,0 +1,10 @@
+#
+# Liferay App Version 1.0.0
+#
+
+app.artifacts-1.0.0=\
+	com.liferay.wiki.engine.jspwiki-2.0.12.jar
+
+app.change.log-1.0.0=LPS-67352
+
+app.git.id-1.0.0=763187e643b25548a30b6ba806e4854a8633efd4

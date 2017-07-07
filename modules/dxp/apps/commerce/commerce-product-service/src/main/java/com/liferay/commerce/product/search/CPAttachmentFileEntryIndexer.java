@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.LinkedHashMap;
@@ -147,7 +148,7 @@ public class CPAttachmentFileEntryIndexer
 		Document document = getBaseModelDocument(
 			CLASS_NAME, cpAttachmentFileEntry);
 
-		document.addText(Field.CONTENT, "");
+		document.addText(Field.CONTENT, StringPool.BLANK);
 
 		document.addNumber(
 			FIELD_RELATED_ENTITY_CLASS_NAME_ID,

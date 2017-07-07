@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
@@ -190,7 +191,7 @@ public class CPAssetCategoriesNavigationDisplayContext {
 			categoryId);
 
 		if (assetCategory == null) {
-			return "";
+			return StringPool.BLANK;
 		}
 
 		String languageId = LanguageUtil.getLanguageId(
@@ -202,7 +203,7 @@ public class CPAssetCategoriesNavigationDisplayContext {
 				classNameId, categoryId, languageId, true);
 
 		if (cpFriendlyURLEntry == null) {
-			return "";
+			return StringPool.BLANK;
 		}
 
 		String url =

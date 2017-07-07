@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
@@ -91,7 +92,8 @@ public class CPCategoryContentDisplayContext {
 		}
 
 		return DLUtil.getDownloadURL(
-			fileEntry, fileEntry.getFileVersion(), themeDisplay, "");
+			fileEntry, fileEntry.getFileVersion(), themeDisplay,
+			StringPool.BLANK);
 	}
 
 	private AssetCategory _assetCategory;

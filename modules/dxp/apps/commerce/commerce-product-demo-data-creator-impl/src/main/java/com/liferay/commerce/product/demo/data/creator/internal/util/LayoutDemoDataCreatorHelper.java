@@ -26,6 +26,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import com.liferay.portal.kernel.util.StringUtil;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -88,7 +89,9 @@ public class LayoutDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 	public String getLayoutUuid(long userId, long groupId, String name)
 		throws PortalException {
 
-		String friendlyURL = StringPool.FORWARD_SLASH + name;
+		String friendlyURL = StringPool.FORWARD_SLASH;
+
+		friendlyURL += StringUtil.toLowerCase(name);
 
 		Layout layout = createLayout(userId, groupId, name, friendlyURL);
 

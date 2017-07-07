@@ -174,16 +174,10 @@ public class DDLFormBuilderContextToDDMForm {
 		}
 	}
 
-	protected String getDDMFormFieldSelectValue(String serializedValue)
+	protected JSONArray getDDMFormFieldSelectValue(String serializedValue)
 		throws PortalException {
 
-		JSONArray jsonArray = jsonFactory.createJSONArray(serializedValue);
-
-		if (jsonArray.length() == 0) {
-			return "";
-		}
-
-		return jsonArray.getString(0);
+		return jsonFactory.createJSONArray(serializedValue);
 	}
 
 	protected DDMFormFieldValidation getDDMFormFieldValidation(

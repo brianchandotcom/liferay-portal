@@ -146,9 +146,7 @@ public class DDLImpl implements DDL {
 
 				jsonObject.put(fieldName, fieldJSONObject.toString());
 			}
-			else if (fieldType.equals(DDMFormFieldType.RADIO) ||
-					 fieldType.equals(DDMFormFieldType.SELECT)) {
-
+			else if (fieldType.equals(DDMFormFieldType.SELECT)) {
 				JSONArray fieldJSONArray = JSONFactoryUtil.createJSONArray();
 
 				fieldValuesStream.forEach(

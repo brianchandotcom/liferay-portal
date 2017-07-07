@@ -44,7 +44,7 @@ AUI.add(
 						var instance = this;
 
 						return {
-							target: instance._field.getValue()
+							target: instance._field.getValue()[0] || ''
 						};
 					},
 
@@ -66,7 +66,7 @@ AUI.add(
 						var action = instance.get('action');
 
 						if (action && action.target) {
-							value = action.target;
+							value = [action.target];
 						}
 
 						instance._field = instance.createSelectField(

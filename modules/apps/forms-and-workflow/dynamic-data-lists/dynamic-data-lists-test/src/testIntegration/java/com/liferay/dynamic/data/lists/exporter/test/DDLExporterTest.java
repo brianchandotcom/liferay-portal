@@ -782,7 +782,7 @@ public class DDLExporterTest {
 		_fieldValues.put(
 			DDMFormFieldType.LINK_TO_PAGE, createLinkToPageDDMFormFieldValue());
 		_fieldValues.put(DDMFormFieldType.NUMBER, "3");
-		_fieldValues.put(DDMFormFieldType.RADIO, createListDDMFormFieldValue());
+		_fieldValues.put(DDMFormFieldType.RADIO, "Value 1");
 		_fieldValues.put(
 			DDMFormFieldType.SELECT, createListDDMFormFieldValue());
 		_fieldValues.put(DDMFormFieldType.TEXT, "Text content");

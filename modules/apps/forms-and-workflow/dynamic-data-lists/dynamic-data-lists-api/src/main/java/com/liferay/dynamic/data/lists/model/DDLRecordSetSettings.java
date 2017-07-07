@@ -135,7 +135,7 @@ public interface DDLRecordSetSettings {
 	public String storageType();
 
 	@DDMFormField(
-		label = "%select-a-workflow",
+		label = "%select-a-workflow", predefinedValue = "[\"no-workflow\"]",
 		properties = {
 			"dataSourceType=data-provider",
 			"ddmDataProviderInstanceId=workflow-definitions"

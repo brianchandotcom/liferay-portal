@@ -54,7 +54,7 @@ AUI.add(
 						return {
 							action: 'calculate',
 							expression: instance._getCalculateKeyActions().join().replace(/\,/g, ''),
-							target: instance._targetField.getValue()
+							target: instance._targetField.getValue()[0] || ''
 						};
 					},
 

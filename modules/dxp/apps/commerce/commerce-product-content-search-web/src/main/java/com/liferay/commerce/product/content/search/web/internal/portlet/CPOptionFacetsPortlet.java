@@ -19,6 +19,8 @@ import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.search.web.internal.display.context.CPOptionFacetesDisplayContext;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.search.CPDefinitionIndexer;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
@@ -117,7 +119,7 @@ public class CPOptionFacetsPortlet
 			}
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			_log.error(e);
 		}
 	}
 
@@ -151,7 +153,7 @@ public class CPOptionFacetsPortlet
 				WebKeys.PORTLET_DISPLAY_CONTEXT, cpOptionFacetesDisplayContext);
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			_log.error(e);
 		}
 
 		super.render(renderRequest, renderResponse);
@@ -242,5 +244,7 @@ public class CPOptionFacetsPortlet
 
 	@Reference
 	private Portal _portal;
+
+	private final Log _log = LogFactoryUtil.getLog(CPOptionFacetsPortlet.class);
 
 }

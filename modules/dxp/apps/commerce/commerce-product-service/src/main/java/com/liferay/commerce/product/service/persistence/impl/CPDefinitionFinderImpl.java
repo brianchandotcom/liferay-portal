@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -196,7 +198,7 @@ public class CPDefinitionFinderImpl
 				throw new SystemException(e);
 			}
 			catch (SystemException se) {
-				se.printStackTrace();
+				_log.error(se);
 			}
 		}
 		finally {
@@ -267,7 +269,7 @@ public class CPDefinitionFinderImpl
 				throw new SystemException(e);
 			}
 			catch (SystemException se) {
-				se.printStackTrace();
+				_log.error(e);
 			}
 		}
 		finally {
@@ -276,5 +278,7 @@ public class CPDefinitionFinderImpl
 
 		return null;
 	}
+
+	private final Log _log = LogFactoryUtil.getLog(CPDefinitionFinderImpl.class);
 
 }

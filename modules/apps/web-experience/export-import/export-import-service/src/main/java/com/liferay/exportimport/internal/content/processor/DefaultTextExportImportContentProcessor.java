@@ -30,10 +30,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.model.VirtualLayoutConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -702,6 +704,18 @@ public class DefaultTextExportImportContentProcessor
 
 				urlSB.append(_DATA_HANDLER_GROUP_FRIENDLY_URL);
 
+				String siteAdminURL =
+					GroupConstants.CONTROL_PANEL_FRIENDLY_URL +
+						PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL;
+
+				if (url.endsWith(siteAdminURL)) {
+					urlSB.append(_DATA_HANDLER_SITE_ADMIN_URL);
+
+					url = StringPool.BLANK;
+
+					continue;
+				}
+
 				if (pos == -1) {
 					url = StringPool.BLANK;
 
@@ -977,6 +991,12 @@ public class DefaultTextExportImportContentProcessor
 			}
 		}
 
+		StringBundler siteAdminURL = new StringBundler(3);
+
+		siteAdminURL.append(VirtualLayoutConstants.CANONICAL_URL_SEPARATOR);
+		siteAdminURL.append(GroupConstants.CONTROL_PANEL_FRIENDLY_URL);
+		siteAdminURL.append(PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL);
+
 		content = StringUtil.replace(
 			content, _DATA_HANDLER_COMPANY_SECURE_URL, companySecurePortalURL);
 		content = StringUtil.replace(
@@ -1006,6 +1026,8 @@ public class DefaultTextExportImportContentProcessor
 		content = StringUtil.replace(
 			content, _DATA_HANDLER_PUBLIC_SERVLET_MAPPING,
 			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING);
+		content = StringUtil.replace(
+			content, _DATA_HANDLER_SITE_ADMIN_URL, siteAdminURL.toString());
 
 		return content;
 	}
@@ -1314,6 +1336,17 @@ public class DefaultTextExportImportContentProcessor
 				continue;
 			}
 
+			String siteAdminURL =
+				GroupConstants.CONTROL_PANEL_FRIENDLY_URL +
+					PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL;
+
+			if (url.endsWith(
+					VirtualLayoutConstants.CANONICAL_URL_SEPARATOR +
+						siteAdminURL)) {
+
+				url = url.substring(url.indexOf(siteAdminURL));
+			}
+
 			pos = url.indexOf(StringPool.SLASH, 1);
 
 			String groupFriendlyURL = url;
@@ -1413,6 +1446,9 @@ public class DefaultTextExportImportContentProcessor
 
 	private static final String _DATA_HANDLER_PUBLIC_SERVLET_MAPPING =
 		"@data_handler_public_servlet_mapping@";
+
+	private static final String _DATA_HANDLER_SITE_ADMIN_URL =
+		"@data_handler_site_admin_url@";
 
 	private static final char[] _DL_REFERENCE_LEGACY_STOP_CHARS = {
 		CharPool.APOSTROPHE, CharPool.CLOSE_BRACKET, CharPool.CLOSE_CURLY_BRACE,

@@ -36,9 +36,11 @@ import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.VirtualLayoutConstants;
 import com.liferay.portal.kernel.repository.capabilities.ThumbnailCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
@@ -349,6 +351,12 @@ public class DefaultExportImportContentProcessorTest {
 			true);
 
 		Assert.assertFalse(
+			content.contains(VirtualLayoutConstants.CANONICAL_URL_SEPARATOR));
+		Assert.assertFalse(
+			content.contains(GroupConstants.CONTROL_PANEL_FRIENDLY_URL));
+		Assert.assertFalse(
+			content.contains(PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL));
+		Assert.assertFalse(
 			content.contains(
 				PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING));
 		Assert.assertFalse(
@@ -400,6 +408,12 @@ public class DefaultExportImportContentProcessorTest {
 			_portletDataContextExport, _referrerStagedModel, content, true,
 			true);
 
+		Assert.assertFalse(
+			content.contains(VirtualLayoutConstants.CANONICAL_URL_SEPARATOR));
+		Assert.assertFalse(
+			content.contains(GroupConstants.CONTROL_PANEL_FRIENDLY_URL));
+		Assert.assertFalse(
+			content.contains(PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL));
 		Assert.assertFalse(
 			content.contains(
 				PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING));
@@ -532,6 +546,7 @@ public class DefaultExportImportContentProcessorTest {
 			content.contains("@data_handler_private_user_servlet_mapping@"));
 		Assert.assertFalse(
 			content.contains("@data_handler_public_servlet_mapping@"));
+		Assert.assertFalse(content.contains("@data_handler_site_admin_url@"));
 	}
 
 	@Test
@@ -766,6 +781,8 @@ public class DefaultExportImportContentProcessorTest {
 		content = StringUtil.replace(
 			content,
 			new String[] {
+				"[$CANONICAL_URL_SEPARATOR$]", "[$CONTROL_PANEL_FRIENDLY_URL$]",
+				"[$CONTROL_PANEL_LAYOUT_FRIENDLY_URL$]",
 				"[$GROUP_FRIENDLY_URL$]", "[$GROUP_ID$]", "[$IMAGE_ID$]",
 				"[$LIVE_GROUP_FRIENDLY_URL$]", "[$LIVE_GROUP_ID$]",
 				"[$LIVE_PUBLIC_LAYOUT_FRIENDLY_URL$]", "[$PATH_CONTEXT$]",
@@ -777,6 +794,9 @@ public class DefaultExportImportContentProcessorTest {
 				"[$WEB_ID$]"
 			},
 			new String[] {
+				VirtualLayoutConstants.CANONICAL_URL_SEPARATOR,
+				GroupConstants.CONTROL_PANEL_FRIENDLY_URL,
+				PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL,
 				_stagingGroup.getFriendlyURL(),
 				String.valueOf(fileEntry.getGroupId()),
 				String.valueOf(fileEntry.getFileEntryId()),

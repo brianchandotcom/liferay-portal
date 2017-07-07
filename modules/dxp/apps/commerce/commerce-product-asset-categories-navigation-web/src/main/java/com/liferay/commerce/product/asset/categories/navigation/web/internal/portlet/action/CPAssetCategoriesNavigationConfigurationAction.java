@@ -58,8 +58,8 @@ public class CPAssetCategoriesNavigationConfigurationAction
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				cpAssetCategoryNavigationDisplayContext);
 		}
-		catch (Exception ex) {
-			_log.error(ex);
+		catch (Exception e) {
+			_log.error(e);
 		}
 
 		return "/configuration.jsp";

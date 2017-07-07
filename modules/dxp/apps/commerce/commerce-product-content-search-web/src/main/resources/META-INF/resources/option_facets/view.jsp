@@ -53,7 +53,6 @@ for (Facet facet : cpOptionFacetsDisplayContext.getFacets()) {
 									name="<portlet:namespace />term_<%= i %>"
 									onChange='Liferay.Search.FacetUtil.changeSelection(event);'
 									type="checkbox"
-									<%= 1 > 2 ? "checked" : StringPool.BLANK %>
 								/>
 
 								<span class="term-name">

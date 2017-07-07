@@ -104,7 +104,7 @@ public class CategoryCPFriendlyURLFormNavigatorEntry
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, getKey());
+		return LanguageUtil.get(locale, "details");
 	}
 
 	public String getLayoutBreadcrumb(

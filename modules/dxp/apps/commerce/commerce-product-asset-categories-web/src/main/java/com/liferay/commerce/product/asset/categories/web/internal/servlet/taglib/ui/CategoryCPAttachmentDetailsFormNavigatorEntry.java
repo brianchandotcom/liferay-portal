@@ -55,7 +55,7 @@ public class CategoryCPAttachmentDetailsFormNavigatorEntry
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, getKey());
+		return LanguageUtil.get(locale, "details");
 	}
 
 	@Override

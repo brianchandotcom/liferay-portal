@@ -64,7 +64,7 @@ public class CategoryCPAttachmentFormNavigatorEntry
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, getKey());
+		return LanguageUtil.get(locale, "images");
 	}
 
 	@Override
@@ -91,8 +91,8 @@ public class CategoryCPAttachmentFormNavigatorEntry
 	}
 
 	@Override
-	public boolean isVisible(User user, AssetCategory formModelBean) {
-		if (formModelBean != null) {
+	public boolean isVisible(User user, AssetCategory assetCategory) {
+		if (assetCategory != null) {
 			return true;
 		}
 

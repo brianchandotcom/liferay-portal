@@ -8,11 +8,11 @@
 			FROM
 				CPDefinition
 			LEFT JOIN CPDefinitionLocalization ON
-				(CPDefinition.CPDefinitionId = CPDefinitionLocalization.CPDefinitionId)
+				(CPDefinition.CPDefinitionId = CPDefinitionLocalization.CPDefinitionId) AND
+				(CPDefinitionLocalization.languageId = ?)
 			WHERE
 				(CPDefinition.groupId = ?) AND
 				(CPDefinition.productTypeName = ?) AND
-				(CPDefinitionLocalization.languageId = ?) AND
 				([$OWNER_USER_ID$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] ([$STATUS$]))
 		]]>
 	</sql>
@@ -37,11 +37,11 @@
 			FROM
 				CPDefinition
 			LEFT JOIN CPDefinitionLocalization ON
-				(CPDefinition.CPDefinitionId = CPDefinitionLocalization.CPDefinitionId)
+				(CPDefinition.CPDefinitionId = CPDefinitionLocalization.CPDefinitionId) AND
+				(CPDefinitionLocalization.languageId = ?)
 			WHERE
 				(CPDefinition.groupId = ?) AND
 				(CPDefinition.productTypeName = ?) AND
-				(CPDefinitionLocalization.languageId = ?) AND
 				([$OWNER_USER_ID$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] ([$STATUS$]))
 		]]>
 	</sql>

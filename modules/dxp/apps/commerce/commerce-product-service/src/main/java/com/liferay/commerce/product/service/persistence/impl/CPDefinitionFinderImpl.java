@@ -130,6 +130,8 @@ public class CPDefinitionFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
+			qPos.add(languageId);
+
 			if (groupId > 0) {
 				qPos.add(groupId);
 			}
@@ -138,7 +140,6 @@ public class CPDefinitionFinderImpl
 				qPos.add(productTypeName);
 			}
 
-			qPos.add(languageId);
 			qPos.add(queryDefinition.getStatus());
 
 			Iterator<Long> itr = q.iterate();
@@ -245,6 +246,8 @@ public class CPDefinitionFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
+			qPos.add(languageId);
+
 			if (groupId > 0) {
 				qPos.add(groupId);
 			}
@@ -253,7 +256,6 @@ public class CPDefinitionFinderImpl
 				qPos.add(productTypeName);
 			}
 
-			qPos.add(languageId);
 			qPos.add(queryDefinition.getStatus());
 
 			return (List<CPDefinition>)QueryUtil.list(

@@ -65,7 +65,7 @@
 				-d screenName=${userScreenName} \
 				-d emailAddress=${userEmailAddress} \
 				-d facebookId=0 \
-				-d openId=0 \
+				-d openId= \
 				-d locale= \
 				-d firstName=${userFirstNameEncoded} \
 				-d middleName= \

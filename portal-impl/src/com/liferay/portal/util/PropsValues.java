@@ -1669,6 +1669,8 @@ public class PropsValues {
 
 	public static final boolean TUNNELING_SERVLET_SHARED_SECRET_HEX = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.TUNNELING_SERVLET_SHARED_SECRET_HEX));
 
+	public static final String TUNNELING_SERVLET_TIMEOUT = PropsUtil.get(PropsKeys.TUNNELING_SERVLET_TIMEOUT);
+
 	public static final boolean UPGRADE_DATABASE_TRANSACTIONS_DISABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.UPGRADE_DATABASE_TRANSACTIONS_DISABLED));
 
 	/**

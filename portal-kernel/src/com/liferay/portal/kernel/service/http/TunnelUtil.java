@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProtectedClassLoaderObjectInputStream;
 
@@ -124,6 +125,13 @@ public class TunnelUtil {
 			HttpHeaders.CONTENT_TYPE,
 			ContentTypes.APPLICATION_X_JAVA_SERIALIZED_OBJECT);
 		httpURLConnection.setUseCaches(false);
+
+		int connectTimeout = GetterUtil.getInteger(
+			PropsUtil.get(PropsKeys.TUNNELING_SERVLET_TIMEOUT));
+
+		if (connectTimeout > 0) {
+			httpURLConnection.setConnectTimeout(connectTimeout);
+		}
 
 		httpURLConnection.setRequestMethod(HttpMethods.POST);
 

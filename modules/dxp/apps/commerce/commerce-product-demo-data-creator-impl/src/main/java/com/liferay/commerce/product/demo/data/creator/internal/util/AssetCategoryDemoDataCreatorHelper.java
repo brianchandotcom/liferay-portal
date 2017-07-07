@@ -137,11 +137,11 @@ public class AssetCategoryDemoDataCreatorHelper
 
 		JSONArray imagesJSONArray = categoryJSONObject.getJSONArray("images");
 
+		_assetCategories.put(key, assetCategory);
+
 		_cpAttachmentFileEntryDemoDataCreatorHelper.
 			addAssetCategoryAttachmentFileEntries(
 				userId, groupId, parentCategoryId, imagesJSONArray);
-
-		_assetCategories.put(key, assetCategory);
 
 		return assetCategory;
 	}

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.FolderIndexer;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -48,7 +49,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo Garcia
  */
 @Component(immediate = true, service = Indexer.class)
-public class BookmarksFolderIndexer extends BaseIndexer<BookmarksFolder> {
+public class BookmarksFolderIndexer 
+	extends BaseIndexer<BookmarksFolder> implements FolderIndexer{
 
 	public static final String CLASS_NAME = BookmarksFolder.class.getName();
 
@@ -63,6 +65,11 @@ public class BookmarksFolderIndexer extends BaseIndexer<BookmarksFolder> {
 	@Override
 	public String getClassName() {
 		return CLASS_NAME;
+	}
+	
+	@Override
+	public String[] getFolderClassNames() {
+		return new String[] {CLASS_NAME};
 	}
 
 	@Override

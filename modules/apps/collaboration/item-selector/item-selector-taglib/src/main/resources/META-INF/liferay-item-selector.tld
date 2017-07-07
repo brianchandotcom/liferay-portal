@@ -100,6 +100,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The DL MimeType Display Context.</description>
+			<name>dlMimeTypeDisplayContext</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>A message to be shown if there are no results.</description>
 			<name>emptyResultsMessage</name>
 			<required>false</required>

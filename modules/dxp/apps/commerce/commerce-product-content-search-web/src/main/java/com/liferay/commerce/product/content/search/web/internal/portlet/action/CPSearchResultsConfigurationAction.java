@@ -63,7 +63,7 @@ public class CPSearchResultsConfigurationAction
 				WebKeys.PORTLET_DISPLAY_CONTEXT, cpSearchResultsDisplayContext);
 		}
 		catch (Exception e) {
-			_log.error(e);
+			_log.error(e, e);
 		}
 
 		return "/search_results/configuration.jsp";

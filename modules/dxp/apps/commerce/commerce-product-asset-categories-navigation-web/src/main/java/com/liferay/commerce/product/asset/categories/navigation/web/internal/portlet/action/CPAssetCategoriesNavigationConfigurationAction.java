@@ -59,7 +59,7 @@ public class CPAssetCategoriesNavigationConfigurationAction
 				cpAssetCategoryNavigationDisplayContext);
 		}
 		catch (Exception e) {
-			_log.error(e);
+			_log.error(e, e);
 		}
 
 		return "/configuration.jsp";

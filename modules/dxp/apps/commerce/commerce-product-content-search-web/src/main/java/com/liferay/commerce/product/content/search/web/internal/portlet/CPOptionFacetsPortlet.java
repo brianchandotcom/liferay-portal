@@ -124,7 +124,7 @@ public class CPOptionFacetsPortlet
 			}
 		}
 		catch (Exception e) {
-			_log.error(e);
+			_log.error(e, e);
 		}
 	}
 
@@ -158,7 +158,7 @@ public class CPOptionFacetsPortlet
 				WebKeys.PORTLET_DISPLAY_CONTEXT, cpOptionFacetesDisplayContext);
 		}
 		catch (Exception e) {
-			_log.error(e);
+			_log.error(e, e);
 		}
 
 		super.render(renderRequest, renderResponse);

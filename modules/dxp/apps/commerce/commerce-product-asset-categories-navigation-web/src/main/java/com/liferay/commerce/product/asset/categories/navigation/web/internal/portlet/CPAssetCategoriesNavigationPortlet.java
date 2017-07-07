@@ -87,7 +87,7 @@ public class CPAssetCategoriesNavigationPortlet extends MVCPortlet {
 				cpAssetCategoryNavigationDisplayContext);
 		}
 		catch (Exception e) {
-			_log.error(e);
+			_log.error(e, e);
 		}
 
 		super.render(renderRequest, renderResponse);

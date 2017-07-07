@@ -173,7 +173,7 @@ birthdayCalendar.set(Calendar.YEAR, 1970);
 			</c:if>
 
 			<c:choose>
-				<c:when test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.FIELD_ENABLE_COM_LIFERAY_PORTAL_MODEL_CONTACT_BIRTHDAY) %>">
+				<c:when test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_CONTACT_BIRTHDAY) %>">
 					<aui:input name="birthday" value="<%= birthdayCalendar %>" />
 				</c:when>
 				<c:otherwise>
@@ -183,7 +183,7 @@ birthdayCalendar.set(Calendar.YEAR, 1970);
 				</c:otherwise>
 			</c:choose>
 
-			<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.FIELD_ENABLE_COM_LIFERAY_PORTAL_MODEL_CONTACT_MALE) %>">
+			<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_CONTACT_MALE) %>">
 				<aui:select label="gender" name="male">
 					<aui:option label="male" value="1" />
 					<aui:option label="female" selected="<%= !male %>" value="0" />

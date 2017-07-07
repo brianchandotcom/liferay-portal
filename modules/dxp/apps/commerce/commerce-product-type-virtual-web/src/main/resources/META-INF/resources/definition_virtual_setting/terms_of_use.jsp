@@ -150,7 +150,7 @@ if (termsOfUseJournalArticleResourcePrimKey > 0) {
 				function(b) {
 					selectContentType(A);
 				}
-			)
+			);
 		}
 	);
 

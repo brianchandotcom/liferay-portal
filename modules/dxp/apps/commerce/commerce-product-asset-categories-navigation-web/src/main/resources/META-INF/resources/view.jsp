@@ -28,7 +28,7 @@ List<AssetCategory> assetCategories = cpAssetCategoriesNavigationDisplayContext.
 		%>
 
 			<li>
-				<a href="#avoooo"><span><%= HtmlUtil.escape(assetCategory.getTitle(locale)) %></span></a>
+				<a><span><%= HtmlUtil.escape(assetCategory.getTitle(locale)) %></span></a>
 
 				<div class="child-menu dropdown-menu" role="menu">
 					<div class="container-fluid-1280">

@@ -171,19 +171,14 @@ public class CPAssetCategoriesNavigationDisplayContext {
 			return null;
 		}
 
-		FileEntry fileEntry = null;
-
 		try {
-			fileEntry = cpAttachmentFileEntry.getFileEntry();
+			FileEntry fileEntry = cpAttachmentFileEntry.getFileEntry();
+
+			return DLUtil.getThumbnailSrc(fileEntry, themeDisplay);
 		}
 		catch (NoSuchFileEntryException nsfee) {
-		}
-
-		if (fileEntry == null) {
 			return null;
 		}
-
-		return DLUtil.getThumbnailSrc(fileEntry, themeDisplay);
 	}
 
 	public String getFriendlyURL(long categoryId, ThemeDisplay themeDisplay)

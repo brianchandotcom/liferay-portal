@@ -88,7 +88,7 @@ if (!Validator.isNull(languageId)) {
 
 List<String> languageIds = new ArrayList<String>();
 
-String fieldName = name + fieldSuffix;
+String fieldName = HtmlUtil.getAUICompatibleId(name) + fieldSuffix;
 
 Exception exception = (Exception)request.getAttribute("liferay-ui:error:exception");
 String focusField = (String)request.getAttribute("liferay-ui:error:focusField");

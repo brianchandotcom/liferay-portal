@@ -56,7 +56,7 @@ long fileEntryId = BeanParamUtil.getLong(cpAttachmentFileEntry, request, "fileEn
 	<c:when test='<%= toolbarItem.equals("view-product-definition-attachments") %>'>
 		<aui:input name="fileEntryId" type="hidden" />
 
-		<div id='<portlet:namespace />fileEntryContainer <%= (fileEntryId > 0) ? StringPool.BLANK : "hidden" %>'>
+		<div id="<portlet:namespace />fileEntryContainer">
 			<h5 id="<portlet:namespace />fileEntryTitle">
 				<c:if test="<%= (fileEntryId > 0) %>">
 					<%= cpAttachmentFileEntriesDisplayContext.getFileEntryName() %>

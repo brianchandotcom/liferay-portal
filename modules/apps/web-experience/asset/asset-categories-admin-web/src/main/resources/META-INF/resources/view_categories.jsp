@@ -60,9 +60,21 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-filters>
 			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"all"} %>'
-				portletURL="<%= PortletURLUtil.clone(assetCategoriesDisplayContext.getIteratorURL(), liferayPortletResponse) %>"
-			/>
+				label="<%= assetCategoriesDisplayContext.isNavigationCategory() ? assetCategoriesDisplayContext.getCategoryTitle() : null %>"
+			>
+
+				<%
+				PortletURL viewCategoryHomeURL = PortletURLUtil.clone(assetCategoriesDisplayContext.getIteratorURL(), liferayPortletResponse);
+
+				viewCategoryHomeURL.setParameter("navigation", "all");
+				%>
+
+				<liferay-frontend:management-bar-filter-item active="<%= assetCategoriesDisplayContext.isNavigationAll() %>" label="all" url="<%= viewCategoryHomeURL.toString() %>" />
+
+				<c:if test="<%= assetCategoriesDisplayContext.isFlattenedNavigationAllowed() %>">
+					<liferay-frontend:management-bar-filter-item active="<%= assetCategoriesDisplayContext.isNavigationCategory() %>" id="selectCategory" label="category" url="javascript:;" />
+				</c:if>
+			</liferay-frontend:management-bar-navigation>
 
 			<liferay-frontend:management-bar-sort
 				orderByCol="<%= assetCategoriesDisplayContext.getOrderByCol() %>"
@@ -258,7 +270,42 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 	<aui:input name="vocabularyId" type="hidden" />
 </aui:form>
 
-<aui:script sandbox="<%= true %>">
+<aui:script sandbox="<%= true %>" use="liferay-item-selector-dialog">
+	$('#<portlet:namespace />selectCategory').on(
+		'click',
+		function(event) {
+			event.preventDefault();
+
+			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+				{
+					eventName: '<portlet:namespace />selectCategory',
+					on: {
+						selectedItemChange: function(event) {
+							var selectedItem = event.newVal;
+							var category = selectedItem ? selectedItem[Object.keys(selectedItem)[0]] : null;
+
+							if (category) {
+								var uri = '<portlet:renderURL><portlet:param name="mvcPath" value="/view_categories.jsp" /><portlet:param name="navigation" value="all" /><portlet:param name="vocabularyId" value="<%= String.valueOf(assetCategoriesDisplayContext.getVocabularyId()) %>" /></portlet:renderURL>';
+
+								uri = Liferay.Util.addParams('<portlet:namespace />categoryId=' + category.categoryId, uri);
+
+								location.href = uri;
+							}
+						}
+					},
+					strings: {
+						add: '<liferay-ui:message key="select" />',
+						cancel: '<liferay-ui:message key="cancel" />'
+					},
+					title: '<liferay-ui:message key="select-category" />',
+					url: '<%= assetCategoriesDisplayContext.getAssetCategoriesSelectorURL() %>'
+				}
+			);
+
+			itemSelectorDialog.open();
+		}
+	);
+
 	$('#<portlet:namespace />deleteSelectedCategories').on(
 		'click',
 		function() {

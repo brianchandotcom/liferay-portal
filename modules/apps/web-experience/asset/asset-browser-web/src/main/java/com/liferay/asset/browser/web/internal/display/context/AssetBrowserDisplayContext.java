@@ -338,8 +338,7 @@ public class AssetBrowserDisplayContext {
 
 		Group group = GroupLocalServiceUtil.fetchGroup(getGroupId());
 
-		return HtmlUtil.escape(
-			group.getDescriptiveName(themeDisplay.getLocale()));
+		return group.getDescriptiveName(themeDisplay.getLocale());
 	}
 
 	public String getOrderByCol() {

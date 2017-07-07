@@ -31,7 +31,7 @@ CPOptionCategory cpOptionCategory = (CPOptionCategory)request.getAttribute(CPWeb
 
 	<aui:input name="priority" />
 
-	<aui:input helpMessage="key-field-help" name="key" />
+	<aui:input helpMessage="key-help" name="key" />
 </aui:fieldset>
 
 <c:if test="<%= cpOptionCategory == null %>">

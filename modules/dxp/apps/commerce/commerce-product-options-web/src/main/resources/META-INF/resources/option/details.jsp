@@ -61,7 +61,7 @@ List<DDMFormFieldType> ddmFormFieldTypes = cpOptionDisplayContext.getDDMFormFiel
 
 	<aui:input name="skuContributor" />
 
-	<aui:input helpMessage="key-field-help" name="key" />
+	<aui:input helpMessage="key-help" name="key" />
 </aui:fieldset>
 
 <c:if test="<%= cpOption == null %>">

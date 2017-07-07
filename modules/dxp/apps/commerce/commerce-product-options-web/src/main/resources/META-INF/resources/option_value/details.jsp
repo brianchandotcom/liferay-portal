@@ -29,7 +29,7 @@ CPOptionValue cpOptionValue = (CPOptionValue)request.getAttribute(CPWebKeys.CP_O
 
 	<aui:input name="priority" />
 
-	<aui:input helpMessage="key-field-help" name="key" />
+	<aui:input helpMessage="key-help" name="key" />
 </aui:fieldset>
 
 <c:if test="<%= cpOptionValue == null %>">

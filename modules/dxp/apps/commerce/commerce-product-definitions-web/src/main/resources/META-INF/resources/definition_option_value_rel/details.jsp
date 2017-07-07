@@ -29,7 +29,7 @@ CPDefinitionOptionValueRel cpDefinitionOptionValueRel = (CPDefinitionOptionValue
 
 	<aui:input name="priority" />
 
-	<aui:input helpMessage="key-field-help" name="key" />
+	<aui:input helpMessage="key-help" name="key" />
 </aui:fieldset>
 
 <c:if test="<%= cpDefinitionOptionValueRel == null %>">

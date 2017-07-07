@@ -670,12 +670,12 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 		@Override
 		public CacheModel<NullModel> toCacheModel() {
-			return this;
+			return nullModel;
 		}
 
 		@Override
 		public NullModel toEntityModel() {
-			return this;
+			return nullModel;
 		}
 
 		@Override

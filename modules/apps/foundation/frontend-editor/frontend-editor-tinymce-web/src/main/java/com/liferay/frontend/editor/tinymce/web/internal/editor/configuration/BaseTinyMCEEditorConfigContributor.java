@@ -14,6 +14,9 @@
 
 package com.liferay.frontend.editor.tinymce.web.internal.editor.configuration;
 
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.ItemSelectorCriterion;
+import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
@@ -27,13 +30,16 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import javax.portlet.PortletURL;
 
 /**
  * @author Ambrin Chaudhary
  */
-public class BaseTinyMCEEditorConfigContributor
+public abstract class BaseTinyMCEEditorConfigContributor
 	extends BaseEditorConfigContributor {
 
 	@Override
@@ -60,6 +66,27 @@ public class BaseTinyMCEEditorConfigContributor
 
 		jsonObject.put("convert_urls", Boolean.FALSE);
 		jsonObject.put("extended_valid_elements", _EXTENDED_VALID_ELEMENTS);
+
+		String filebrowserImageBrowseUrl = jsonObject.getString(
+			"filebrowserImageBrowseUrl");
+
+		String itemSelectedEventName =
+			getItemSelector().getItemSelectedEventName(
+				filebrowserImageBrowseUrl);
+
+		List<ItemSelectorCriterion> itemSelectorCriteria =
+			getItemSelector().getItemSelectorCriteria(
+				filebrowserImageBrowseUrl);
+
+		itemSelectorCriteria.add(new ImageItemSelectorCriterion());
+
+		PortletURL itemSelectorURL = getItemSelector().getItemSelectorURL(
+			requestBackedPortletURLFactory, itemSelectedEventName,
+			itemSelectorCriteria.toArray(
+				new ItemSelectorCriterion[itemSelectorCriteria.size()]));
+
+		jsonObject.put("filebrowserImageBrowseUrl", itemSelectorURL.toString());
+
 		jsonObject.put("invalid_elements", "script");
 
 		String contentsLanguageId = (String)inputEditorTaglibAttributes.get(
@@ -87,6 +114,8 @@ public class BaseTinyMCEEditorConfigContributor
 				"preview print");
 		jsonObject.put("toolbar_items_size", "small");
 	}
+
+	protected abstract ItemSelector getItemSelector();
 
 	protected String getTinyMCELanguage(String contentsLanguageId) {
 		Locale contentsLocale = LocaleUtil.fromLanguageId(contentsLanguageId);

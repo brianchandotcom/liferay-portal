@@ -23,11 +23,11 @@
 </style>
 
 <%
-CPOptionFacetesDisplayContext cpOptionFacetesDisplayContext = (CPOptionFacetesDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CPOptionFacetsDisplayContext cpOptionFacetsDisplayContext = (CPOptionFacetsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
 <%
-for (Facet facet : cpOptionFacetesDisplayContext.getFacets()) {
+for (Facet facet : cpOptionFacetsDisplayContext.getFacets()) {
 %>
 
 	<liferay-ui:panel-container extended="<%= true %>" markupView="lexicon" persistState="<%= true %>">

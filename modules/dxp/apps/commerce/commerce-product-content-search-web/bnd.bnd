@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Commerce Product Content Search Web
 Bundle-SymbolicName: com.liferay.commerce.product.content.search.web
 Bundle-Version: 1.0.0
-Liferay-JS-Config: /META-INF/resources/option_facetes/js/config.js
+Liferay-JS-Config: /META-INF/resources/option_facets/js/config.js
 Web-ContextPath: /commerce-product-content-search-web

@@ -25,9 +25,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Marco Leo
  */
-public class CPOptionFacetesDisplayContext {
+public class CPOptionFacetsDisplayContext {
 
-	public CPOptionFacetesDisplayContext(
+	public CPOptionFacetsDisplayContext(
 		HttpServletRequest httpServletRequest, List<Facet> facets,
 		PortletSharedSearchResponse portletSharedSearchResponse) {
 

@@ -16,7 +16,7 @@ package com.liferay.commerce.product.content.search.web.internal.portlet;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.content.search.web.internal.display.context.CPOptionFacetesDisplayContext;
+import com.liferay.commerce.product.content.search.web.internal.display.context.CPOptionFacetsDisplayContext;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.search.CPDefinitionIndexer;
 import com.liferay.portal.kernel.log.Log;
@@ -65,7 +65,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
-		"com.liferay.portlet.css-class-wrapper=portlet-cp-option-facetes",
+		"com.liferay.portlet.css-class-wrapper=portlet-cp-option-facets",
 		"com.liferay.portlet.display-category=commerce",
 		"com.liferay.portlet.instanceable=true",
 		"com.liferay.portlet.layout-cacheable=true",
@@ -74,10 +74,10 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.private-session-attributes=false",
 		"com.liferay.portlet.restore-current-view=false",
 		"com.liferay.portlet.use-default-template=true",
-		"javax.portlet.display-name=Option Facetes",
+		"javax.portlet.display-name=Option Facets",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
-		"javax.portlet.init-param.view-template=/option_facetes/view.jsp",
+		"javax.portlet.init-param.view-template=/option_facets/view.jsp",
 		"javax.portlet.name=" + CPPortletKeys.CP_OPTION_FACETS,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=guest,power-user,user",
@@ -149,13 +149,13 @@ public class CPOptionFacetsPortlet
 					portletSharedSearchResponse.getFacet(facet.getFieldName()));
 			}
 
-			CPOptionFacetesDisplayContext cpOptionFacetesDisplayContext =
-				new CPOptionFacetesDisplayContext(
+			CPOptionFacetsDisplayContext cpOptionFacetsDisplayContext =
+				new CPOptionFacetsDisplayContext(
 					httpServletRequest, filledFacets,
 					portletSharedSearchResponse);
 
 			renderRequest.setAttribute(
-				WebKeys.PORTLET_DISPLAY_CONTEXT, cpOptionFacetesDisplayContext);
+				WebKeys.PORTLET_DISPLAY_CONTEXT, cpOptionFacetsDisplayContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

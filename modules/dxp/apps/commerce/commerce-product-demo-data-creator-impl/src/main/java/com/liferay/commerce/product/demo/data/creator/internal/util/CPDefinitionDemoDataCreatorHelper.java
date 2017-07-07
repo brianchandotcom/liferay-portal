@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -106,48 +105,9 @@ public class CPDefinitionDemoDataCreatorHelper
 			}
 		}
 
-		// Related products
+		//Related product definitions
 
-		for (int i = 0; i < catalogJSONArray.length(); i++) {
-			JSONObject productJSONObject = catalogJSONArray.getJSONObject(i);
-
-			String title = productJSONObject.getString("title");
-
-			Collection<CPDefinition> cpDefinitions = _cpDefinitions.values();
-
-			JSONArray cpDefinitionLinksJSONArray =
-				productJSONObject.getJSONArray("relatedProducts");
-
-			for (CPDefinition cpDefinition : cpDefinitions) {
-				List<Long> cpDefinitionIdsList = new ArrayList<>();
-
-				for (int x = 0; x < cpDefinitionLinksJSONArray.length(); x++) {
-					JSONObject relatedProductJSONObject =
-						cpDefinitionLinksJSONArray.getJSONObject(x);
-
-					String cpDefinitionEntryTitle =
-						relatedProductJSONObject.getString("title");
-
-					if (title.equals(cpDefinition.getTitle("en_US"))) {
-						CPDefinition cpDefinitionEntry = getCPDefinitionByTitle(
-							cpDefinitionEntryTitle);
-
-						cpDefinitionIdsList.add(
-							cpDefinitionEntry.getCPDefinitionId());
-					}
-					else {
-						continue;
-					}
-				}
-
-				long[] cpDefinitionEntryIds = ArrayUtil.toLongArray(
-					cpDefinitionIdsList);
-
-				_cpDefinitionLinkLocalService.updateCPDefinitionLinks(
-					cpDefinition.getCPDefinitionId(), cpDefinitionEntryIds, 0,
-					serviceContext);
-			}
-		}
+		createCPDefinitionLinks(catalogJSONArray, serviceContext);
 	}
 
 	public void deleteCPDefinitions() throws PortalException {
@@ -242,6 +202,42 @@ public class CPDefinitionDemoDataCreatorHelper
 		_cpDefinitions.put(title, cpDefinition);
 
 		return cpDefinition;
+	}
+
+	protected void createCPDefinitionLinks(
+			JSONArray catalogJSONArray, ServiceContext serviceContext)
+		throws Exception {
+
+		for (int i = 0; i < catalogJSONArray.length(); i++) {
+			JSONObject productJSONObject = catalogJSONArray.getJSONObject(i);
+
+			String title = productJSONObject.getString("title");
+
+			CPDefinition cpDefinition = getCPDefinitionByTitle(title);
+
+			JSONArray cpDefinitionLinksJSONArray =
+				productJSONObject.getJSONArray("relatedProducts");
+
+			if (cpDefinitionLinksJSONArray == null) {
+				continue;
+			}
+
+			List<Long> cpDefinitionIdsList = new ArrayList<>();
+
+			for (int x = 0; x < cpDefinitionLinksJSONArray.length(); x++) {
+				CPDefinition cpDefinitionEntry = getCPDefinitionByTitle(
+					cpDefinitionLinksJSONArray.getString(x));
+
+				cpDefinitionIdsList.add(cpDefinitionEntry.getCPDefinitionId());
+			}
+
+			long[] cpDefinitionEntryIds = ArrayUtil.toLongArray(
+				cpDefinitionIdsList);
+
+			_cpDefinitionLinkLocalService.updateCPDefinitionLinks(
+				cpDefinition.getCPDefinitionId(), cpDefinitionEntryIds, 0,
+				serviceContext);
+		}
 	}
 
 	@Deactivate

@@ -3052,110 +3052,6 @@ go</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="setup-testable-tomcat-dummy-socket-proxy">
-		<sequential>
-			<local name="dummy.socket.proxy" />
-
-			<property name="dummy.socket.proxy" value="-DsocksProxyHost=127.0.0.1 -DsocksProxyPort=8888" />
-
-			<if>
-				<not>
-					<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.bat" substring="${dummy.socket.proxy}" />
-				</not>
-				<then>
-					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.bat">
-						<![CDATA[
-							set "CATALINA_OPTS=%CATALINA_OPTS% ${dummy.socket.proxy}"
-						]]>
-					</echo>
-				</then>
-			</if>
-			<if>
-				<not>
-					<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.sh" substring="${dummy.socket.proxy}" />
-				</not>
-				<then>
-					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.sh">
-						<![CDATA[
-							CATALINA_OPTS="${CATALINA_OPTS} ${dummy.socket.proxy}"
-						]]>
-					</echo>
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="setup-testable-tomcat-gc">
-		<sequential>
-			<if>
-				<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.bat" substring="${test.batch.app.server.tomcat.setenv.gc.old}" />
-				<then>
-					<replace file="${app.server.tomcat.dir}/bin/setenv.bat" token="${test.batch.app.server.tomcat.setenv.gc.old}" value="${test.batch.app.server.tomcat.setenv.gc.new}" />
-				</then>
-				<else>
-					<if>
-						<not>
-							<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.bat" substring="${test.batch.app.server.tomcat.setenv.gc.new}" />
-						</not>
-						<then>
-							<fail message="Unable to setup tomcat gc properties for ${app.server.tomcat.dir}/bin/setenv.bat" />
-						</then>
-					</if>
-				</else>
-			</if>
-
-			<if>
-				<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.sh" substring="${test.batch.app.server.tomcat.setenv.gc.old}" />
-				<then>
-					<replace file="${app.server.tomcat.dir}/bin/setenv.sh" token="${test.batch.app.server.tomcat.setenv.gc.old}" value="${test.batch.app.server.tomcat.setenv.gc.new}" />
-				</then>
-				<else>
-					<if>
-						<not>
-							<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.sh" substring="${test.batch.app.server.tomcat.setenv.gc.new}" />
-						</not>
-						<then>
-							<fail message="Unable to setup tomcat gc properties for ${app.server.tomcat.dir}/bin/setenv.sh" />
-						</then>
-					</if>
-				</else>
-			</if>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="setup-testable-tomcat-heap-dump-on-oom">
-		<sequential>
-			<local name="heap.dump.on.oom" />
-
-			<property name="heap.dump.on.oom" value="-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=${test.batch.app.server.tomcat.setenv.heap.dump.path}" />
-
-			<if>
-				<not>
-					<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.bat" substring="${heap.dump.on.oom}" />
-				</not>
-				<then>
-					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.bat">
-						<![CDATA[
-							set "CATALINA_OPTS=%CATALINA_OPTS% ${heap.dump.on.oom}"
-						]]>
-					</echo>
-				</then>
-			</if>
-			<if>
-				<not>
-					<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.sh" substring="${heap.dump.on.oom}" />
-				</not>
-				<then>
-					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.sh">
-						<![CDATA[
-							CATALINA_OPTS="${CATALINA_OPTS} ${heap.dump.on.oom}"
-						]]>
-					</echo>
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="setup-testable-tomcat-jmx">
 		<sequential>
 			<var name="testable.tomcat.jmx.opts" value="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=${jmx.remote.authenticate} -Dcom.sun.management.jmxremote.port=${jmx.remote.port} -Dcom.sun.management.jmxremote.ssl=${jmx.remote.ssl}" />
@@ -3359,54 +3255,13 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="setup-testable-tomcat-print-final-flags">
-		<sequential>
-			<local name="print.final.flags" />
-
-			<property name="print.final.flags" value="-XX:+PrintFlagsFinal" />
-
-			<if>
-				<not>
-					<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.bat" substring="${print.final.flags}" />
-				</not>
-				<then>
-					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.bat">
-						<![CDATA[
-							set "CATALINA_OPTS=%CATALINA_OPTS% ${print.final.flags}"
-						]]>
-					</echo>
-				</then>
-			</if>
-			<if>
-				<not>
-					<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.sh" substring="${print.final.flags}" />
-				</not>
-				<then>
-					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.sh">
-						<![CDATA[
-							CATALINA_OPTS="${CATALINA_OPTS} ${print.final.flags}"
-						]]>
-					</echo>
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="setup-testable-tomcat-setenv">
 		<sequential>
 			<setup-testable-tomcat-aspectj-agent />
 
-			<setup-testable-tomcat-dummy-socket-proxy />
-
-			<setup-testable-tomcat-gc />
-
-			<setup-testable-tomcat-heap-dump-on-oom />
-
 			<setup-testable-tomcat-jmx />
 
 			<setup-testable-tomcat-jpda-address />
-
-			<setup-testable-tomcat-print-final-flags />
 		</sequential>
 	</macrodef>
 

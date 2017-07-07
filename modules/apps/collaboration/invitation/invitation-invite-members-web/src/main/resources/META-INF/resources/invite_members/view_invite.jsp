@@ -132,7 +132,7 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 				node: A.one(document.<portlet:namespace />fm)
 			},
 			namespace: '<portlet:namespace />',
-			rootNode: '#<portlet:namespace/>inviteMembersContainer'
+			rootNode: '#<portlet:namespace />inviteMembersContainer'
 		}
 	);
 

@@ -90,7 +90,7 @@ for (String categoryKey : categoryKeys) {
 	var uri = metalUriSrcUri.default;
 
 	var redirectField = dom.toElement('input[name="<portlet:namespace />redirect"]');
-	var tabs1Param = '<portlet:namespace/><%= tabs1Param %>';
+	var tabs1Param = '<portlet:namespace /><%= tabs1Param %>';
 
 	var updateRedirectField = function(event) {
 		var redirectURL = new uri(redirectField.value);
@@ -99,7 +99,7 @@ for (String categoryKey : categoryKeys) {
 
 		redirectField.value = redirectURL.toString();
 
-		Liferay.Store('<portlet:namespace/><%= id %>', event.id);
+		Liferay.Store('<portlet:namespace /><%= id %>', event.id);
 	};
 
 	var clearFormNavigatorHandles = function(event) {
@@ -107,7 +107,7 @@ for (String categoryKey : categoryKeys) {
 			Liferay.detach('showTab', updateRedirectField);
 			Liferay.detach('destroyPortlet', clearFormNavigatorHandles);
 
-			Liferay.Store('<portlet:namespace/><%= id %>', null);
+			Liferay.Store('<portlet:namespace /><%= id %>', null);
 		}
 	};
 

@@ -16,7 +16,7 @@
 
 <%@ include file="/article/init.jsp" %>
 
-<div id="<portlet:namespace/>message-container"></div>
+<div id="<portlet:namespace />message-container"></div>
 
 <c:if test="<%= Objects.equals(portletDisplay.getId(), KBPortletKeys.KNOWLEDGE_BASE_ARTICLE_DEFAULT_INSTANCE) && PortletPermissionUtil.contains(permissionChecker, plid, portletDisplay.getId(), KBActionKeys.CONFIGURATION) %>">
 	<div class="alert alert-info portlet-configuration">

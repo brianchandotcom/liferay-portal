@@ -86,7 +86,7 @@ PowwowServer powwowServer = PowwowServerLocalServiceUtil.fetchPowwowServer(powwo
 	function showProviderTypeFields() {
 		A.all('.optional-field').get('parentNode').hide();
 
-		var selectedProviderType = A.one('#<portlet:namespace/>providerType option:selected').val();
+		var selectedProviderType = A.one('#<portlet:namespace />providerType option:selected').val();
 
 		<%
 		for (String providerType : PortletPropsValues.POWWOW_PROVIDER_TYPES) {

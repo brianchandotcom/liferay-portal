@@ -19,6 +19,9 @@ package com.liferay.knowledge.base.item.selector.web.internal.constants;
  */
 public class KBItemSelectorWebKeys {
 
+	public static final String DL_MIME_TYPE_DISPLAY_CONTEXT =
+		"DL_MIME_TYPE_DISPLAY_CONTEXT";
+
 	public static final String
 		KB_ATTACHMENT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT =
 			"KB_ATTACHMENT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT";

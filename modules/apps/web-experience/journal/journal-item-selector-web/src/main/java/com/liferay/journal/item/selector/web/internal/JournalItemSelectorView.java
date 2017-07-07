@@ -108,6 +108,17 @@ public class JournalItemSelectorView
 		requestDispatcher.include(request, response);
 	}
 
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	public void setDLMimeTypeDisplayContext(
+		DLMimeTypeDisplayContext dlMimeTypeDisplayContext) {
+
+		_dlMimeTypeDisplayContext = dlMimeTypeDisplayContext;
+	}
+
 	@Reference(unbind = "-")
 	public void setItemSelectorReturnTypeResolverHandler(
 		ItemSelectorReturnTypeResolverHandler
@@ -123,6 +134,12 @@ public class JournalItemSelectorView
 	)
 	public void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
+	}
+
+	public void unsetDLMimeTypeDisplayContext(
+		DLMimeTypeDisplayContext dlMimeTypeDisplayContext) {
+
+		_dlMimeTypeDisplayContext = null;
 	}
 
 	private static final List<ItemSelectorReturnType>

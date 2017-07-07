@@ -19,6 +19,9 @@ package com.liferay.wiki.web.internal.item.selector.constants;
  */
 public class WikiItemSelectorWebKeys {
 
+	public static final String DL_MIME_TYPE_DISPLAY_CONTEXT =
+		"DL_MIME_TYPE_DISPLAY_CONTEXT";
+
 	public static final String
 		WIKI_ATTACHMENT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT =
 			"WIKI_ATTACHMENT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT";

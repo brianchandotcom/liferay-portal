@@ -166,11 +166,28 @@ public class ComboServlet extends HttpServlet {
 		String[] modulePaths = modulePathsSet.toArray(
 			new String[modulePathsSet.size()]);
 
-		String firstModulePath = modulePaths[0];
+		String extension = StringPool.BLANK;
 
-		String resourcePath = getResourcePath(firstModulePath);
+		for (String modulePath : modulePaths) {
+			String pathExtension = _getModulePathExtension(modulePath);
 
-		String extension = FileUtil.getExtension(resourcePath);
+			if (Validator.isNull(pathExtension)) {
+				continue;
+			}
+
+			if (Validator.isNull(extension)) {
+				extension = pathExtension;
+			}
+
+			if (!extension.equals(pathExtension)) {
+				response.setHeader(
+					HttpHeaders.CACHE_CONTROL,
+					HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
+				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+
+				return;
+			}
+		}
 
 		String minifierType = ParamUtil.getString(request, "minifierType");
 
@@ -436,6 +453,18 @@ public class ComboServlet extends HttpServlet {
 		}
 
 		return validModuleExtension;
+	}
+
+	private String _getModulePathExtension(String modulePath) {
+		String resourcePath = getResourcePath(modulePath);
+
+		int index = resourcePath.indexOf(CharPool.QUESTION);
+
+		if (index != -1) {
+			resourcePath = resourcePath.substring(0, index);
+		}
+
+		return FileUtil.getExtension(resourcePath);
 	}
 
 	private static final String _CSS_EXTENSION = "css";

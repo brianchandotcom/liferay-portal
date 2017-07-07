@@ -56,7 +56,7 @@ public class ViewCPDefinitionGroupedEntriesMVCRenderCommand
 		throws PortletException {
 
 		RequestDispatcher requestDispatcher =
-			servletContext.getRequestDispatcher(
+			_servletContext.getRequestDispatcher(
 				"/view_definition_grouped_entries.jsp");
 
 		try {
@@ -76,7 +76,7 @@ public class ViewCPDefinitionGroupedEntriesMVCRenderCommand
 				cpDefinitionVirtualSettingDisplayContext);
 
 			renderRequest.setAttribute(
-				"cpDefinitionServletContext", cpDefinitionServletContext);
+				"cpDefinitionServletContext", _cpDefinitionServletContext);
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
@@ -88,26 +88,26 @@ public class ViewCPDefinitionGroupedEntriesMVCRenderCommand
 		return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
 	}
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.product.definitions.web)"
-	)
-	protected ServletContext cpDefinitionServletContext;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.product.type.grouped.web)"
-	)
-	protected ServletContext servletContext;
-
 	@Reference
 	private ActionHelper _actionHelper;
 
 	@Reference
 	private CPDefinitionGroupedEntryService _cpDefinitionGroupedEntryService;
 
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.commerce.product.definitions.web)"
+	)
+	private ServletContext _cpDefinitionServletContext;
+
 	@Reference
 	private ItemSelector _itemSelector;
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.commerce.product.type.grouped.web)"
+	)
+	private ServletContext _servletContext;
 
 }

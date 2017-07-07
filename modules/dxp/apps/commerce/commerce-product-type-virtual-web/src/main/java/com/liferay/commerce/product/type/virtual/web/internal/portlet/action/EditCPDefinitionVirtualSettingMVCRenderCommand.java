@@ -61,7 +61,7 @@ public class EditCPDefinitionVirtualSettingMVCRenderCommand
 		throws PortletException {
 
 		RequestDispatcher requestDispatcher =
-			servletContext.getRequestDispatcher(
+			_servletContext.getRequestDispatcher(
 				"/edit_definition_virtual_setting.jsp");
 
 		try {
@@ -94,7 +94,7 @@ public class EditCPDefinitionVirtualSettingMVCRenderCommand
 				cpDefinitionVirtualSettingDisplayContext);
 
 			renderRequest.setAttribute(
-				"cpDefinitionServletContext", cpDefinitionServletContext);
+				"cpDefinitionServletContext", _cpDefinitionServletContext);
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
@@ -106,18 +106,13 @@ public class EditCPDefinitionVirtualSettingMVCRenderCommand
 		return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
 	}
 
+	@Reference
+	private ActionHelper _actionHelper;
+
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.product.definitions.web)"
 	)
-	protected ServletContext cpDefinitionServletContext;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.product.type.virtual.web)"
-	)
-	protected ServletContext servletContext;
-
-	@Reference
-	private ActionHelper _actionHelper;
+	private ServletContext _cpDefinitionServletContext;
 
 	@Reference
 	private CPDefinitionVirtualSettingActionHelper
@@ -138,5 +133,10 @@ public class EditCPDefinitionVirtualSettingMVCRenderCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.commerce.product.type.virtual.web)"
+	)
+	private ServletContext _servletContext;
 
 }

@@ -56,7 +56,7 @@ public class EditCPDefinitionGroupedEntryMVCRenderCommand
 		throws PortletException {
 
 		RequestDispatcher requestDispatcher =
-			servletContext.getRequestDispatcher(
+			_servletContext.getRequestDispatcher(
 				"/edit_definition_grouped_entry.jsp");
 
 		try {
@@ -85,11 +85,6 @@ public class EditCPDefinitionGroupedEntryMVCRenderCommand
 		return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
 	}
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.product.type.grouped.web)"
-	)
-	protected ServletContext servletContext;
-
 	@Reference
 	private ActionHelper _actionHelper;
 
@@ -101,5 +96,10 @@ public class EditCPDefinitionGroupedEntryMVCRenderCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.commerce.product.type.grouped.web)"
+	)
+	private ServletContext _servletContext;
 
 }

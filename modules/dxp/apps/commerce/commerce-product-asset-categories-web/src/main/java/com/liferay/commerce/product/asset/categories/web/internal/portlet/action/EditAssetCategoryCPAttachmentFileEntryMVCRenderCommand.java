@@ -64,7 +64,7 @@ public class EditAssetCategoryCPAttachmentFileEntryMVCRenderCommand
 		throws PortletException {
 
 		RequestDispatcher requestDispatcher =
-			servletContext.getRequestDispatcher("/edit_image.jsp");
+			_servletContext.getRequestDispatcher("/edit_image.jsp");
 
 		try {
 			HttpServletRequest httpServletRequest =
@@ -106,11 +106,6 @@ public class EditAssetCategoryCPAttachmentFileEntryMVCRenderCommand
 			AttachmentsConfiguration.class, properties);
 	}
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.product.asset.categories.web)"
-	)
-	protected ServletContext servletContext;
-
 	@Reference
 	private ActionHelper _actionHelper;
 
@@ -121,5 +116,10 @@ public class EditAssetCategoryCPAttachmentFileEntryMVCRenderCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.commerce.product.asset.categories.web)"
+	)
+	private ServletContext _servletContext;
 
 }

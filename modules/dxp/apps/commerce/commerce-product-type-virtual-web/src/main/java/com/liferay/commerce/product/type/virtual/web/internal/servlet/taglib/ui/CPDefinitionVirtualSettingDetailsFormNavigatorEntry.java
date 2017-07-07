@@ -70,7 +70,7 @@ public class CPDefinitionVirtualSettingDetailsFormNavigatorEntry
 		throws IOException {
 
 		RequestDispatcher requestDispatcher =
-			cpDefinitionVirtualSettingServletContext.getRequestDispatcher(
+			_cpDefinitionVirtualSettingServletContext.getRequestDispatcher(
 				getJspPath());
 
 		try {
@@ -89,6 +89,6 @@ public class CPDefinitionVirtualSettingDetailsFormNavigatorEntry
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.product.type.virtual.web)"
 	)
-	protected ServletContext cpDefinitionVirtualSettingServletContext;
+	private ServletContext _cpDefinitionVirtualSettingServletContext;
 
 }

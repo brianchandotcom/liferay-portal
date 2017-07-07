@@ -1,0 +1,49 @@
+<definition component-name="portal-upgrades">
+	<property name="ignore.errors" value="Plugin security management is not enabled. Enable a security manager, then restart." />
+	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
+	<property name="testray.main.component.name" value="Upgrades Collaboration" />
+
+	<set-up>
+		<execute macro="SignIn#signIn" />
+
+		<execute macro="Smoke#viewWelcomePage" />
+
+		<execute macro="Upgrade#reindexSearches" />
+	</set-up>
+
+	<command name="ViewDMArchive6012" priority="5">
+		<property name="data.archive.type" value="data-archive-documents-and-media" />
+		<property name="portal.version" value="6.0.12" />
+
+		<execute macro="Upgrade#viewDocument" />
+	</command>
+
+	<command name="ViewDMArchive6130" priority="5">
+		<property name="data.archive.type" value="data-archive-documents-and-media" />
+		<property name="portal.version" value="6.1.30" />
+
+		<execute macro="Upgrade#viewDocument" />
+	</command>
+
+	<command name="ViewDMArchive621015" priority="5">
+		<property name="data.archive.type" value="data-archive-documents-and-media" />
+		<property name="portal.version" value="6.2.10.15" />
+
+		<execute macro="Upgrade#viewDocument" />
+	</command>
+
+	<command name="ViewDMArchive623" priority="5">
+		<property name="data.archive.type" value="data-archive-documents-and-media" />
+		<property name="portal.version" value="6.2.3" />
+
+		<execute macro="Upgrade#viewDocument" />
+	</command>
+
+	<command name="ViewDMArchive625" priority="5">
+		<property name="data.archive.type" value="data-archive-documents-and-media" />
+		<property name="portal.version" value="6.2.5" />
+
+		<execute macro="Upgrade#viewDocument" />
+	</command>
+</definition>

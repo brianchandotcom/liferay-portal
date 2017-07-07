@@ -142,7 +142,7 @@ public class CPOptionFacetsPortlet
 		try {
 			List<Facet> facets = getFacets(renderRequest);
 
-			List<Facet> filledFacets = new ArrayList<>();
+			List<Facet> filledFacets = new ArrayList<>(facets.size());
 
 			for (Facet facet : facets) {
 				filledFacets.add(

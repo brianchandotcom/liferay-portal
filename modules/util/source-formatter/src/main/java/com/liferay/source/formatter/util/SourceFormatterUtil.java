@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.checks.util.SourceUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -65,8 +66,10 @@ public class SourceFormatterUtil {
 
 		outerLoop:
 		for (String fileName : allFileNames) {
-			String encodedFileName = StringUtil.replace(
-				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
+			String encodedFileName = SourceUtil.getAbsolutePath(fileName);
+
+			encodedFileName = StringUtil.replace(
+				encodedFileName, CharPool.BACK_SLASH, CharPool.SLASH);
 
 			for (String includeRegex : includesRegex) {
 				if (encodedFileName.matches(includeRegex)) {

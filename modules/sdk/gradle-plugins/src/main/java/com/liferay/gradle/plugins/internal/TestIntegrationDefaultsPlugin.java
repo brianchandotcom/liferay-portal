@@ -87,6 +87,13 @@ public class TestIntegrationDefaultsPlugin
 				project,
 				TestIntegrationPlugin.SET_UP_TESTABLE_TOMCAT_TASK_NAME);
 
+		setUpTestableTomcatTask.setAspectJAgent(
+			GradleUtil.getProperty(project, "aspectj.agent", (String)null));
+
+		setUpTestableTomcatTask.setAspectJConfiguration(
+			GradleUtil.getProperty(
+				project, "aspectj.configuration", (String)null));
+
 		setUpTestableTomcatTask.setZipUrl(
 			new Callable<String>() {
 

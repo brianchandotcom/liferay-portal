@@ -91,7 +91,8 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 				updateCPDefinitionOptionValueRel(actionRequest);
-			} else if (cmd.equals(Constants.DELETE)) {
+			}
+			else if (cmd.equals(Constants.DELETE)) {
 				deleteCPDefinitionOptionValueRels(actionRequest);
 			}
 		}

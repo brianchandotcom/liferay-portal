@@ -633,8 +633,8 @@
 		<exception>CPFriendlyURLLength</exception>
 		<exception>CPInstanceDisplayDate</exception>
 		<exception>CPInstanceExpirationDate</exception>
-		<exception>CPOptionKey</exception>
 		<exception>CPOptionCategoryKey</exception>
+		<exception>CPOptionKey</exception>
 		<exception>CPOptionValueKey</exception>
 		<exception>DuplicateCPFriendlyURLEntry</exception>
 		<exception>NoSuchSkuContributorCPDefinitionOptionRel</exception>

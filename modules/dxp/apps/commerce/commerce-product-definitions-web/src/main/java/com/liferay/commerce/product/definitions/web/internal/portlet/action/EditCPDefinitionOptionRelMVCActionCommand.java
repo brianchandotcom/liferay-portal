@@ -114,27 +114,34 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 			actionRequest, "cpDefinitionOptionRelId");
 
 		try {
-			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.ADD_MULTIPLE)) {
+			if (cmd.equals(Constants.ADD) ||
+				cmd.equals(Constants.ADD_MULTIPLE)) {
+
 				addCPDefinitionOptionRels(actionRequest);
-			} else if (cmd.equals(Constants.DELETE)) {
+			}
+			else if (cmd.equals(Constants.DELETE)) {
 				deleteCPDefinitionOptionRels(
 					cpDefinitionOptionRelId, actionRequest);
-			} else if (cmd.equals(Constants.UPDATE)) {
+			}
+			else if (cmd.equals(Constants.UPDATE)) {
 				updateCPDefinitionOptionRel(
 					cpDefinitionOptionRelId, actionRequest);
-			} else if (cmd.equals("setFacetable")) {
+			}
+			else if (cmd.equals("setFacetable")) {
 				boolean facetable = ParamUtil.getBoolean(
 					actionRequest, "facetable");
 
 				_cpDefinitionOptionRelService.setFacetable(
 					cpDefinitionOptionRelId, facetable);
-			} else if (cmd.equals("setRequired")) {
+			}
+			else if (cmd.equals("setRequired")) {
 				boolean required = ParamUtil.getBoolean(
 					actionRequest, "required");
 
 				_cpDefinitionOptionRelService.setRequired(
 					cpDefinitionOptionRelId, required);
-			} else if (cmd.equals("setSkuContributor")) {
+			}
+			else if (cmd.equals("setSkuContributor")) {
 				boolean skuContributor = ParamUtil.getBoolean(
 					actionRequest, "skuContributor");
 

@@ -22,6 +22,7 @@ import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask;
 import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
 import com.liferay.gradle.plugins.node.tasks.NpmShrinkwrapTask;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
+import com.liferay.gradle.util.StringUtil;
 
 import groovy.json.JsonSlurper;
 
@@ -36,6 +37,9 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.internal.plugins.osgi.OsgiHelper;
+import org.gradle.api.plugins.BasePlugin;
+import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.TaskContainer;
@@ -53,6 +57,8 @@ public class NodePlugin implements Plugin<Project> {
 
 	public static final String NPM_INSTALL_TASK_NAME = "npmInstall";
 
+	public static final String NPM_RUN_BUILD_TASK_NAME = "npmRunBuild";
+
 	public static final String NPM_SHRINKWRAP_TASK_NAME = "npmShrinkwrap";
 
 	@Override
@@ -68,9 +74,22 @@ public class NodePlugin implements Plugin<Project> {
 		NpmInstallTask npmInstallTask = _addTaskNpmInstall(
 			project, cleanNpmTask);
 
-		_addTaskNpmShrinkwrap(project, cleanNpmTask, npmInstallTask);
+		Map<String, Object> packageJsonMap = null;
 
-		_configureTasksDownloadNodeModule(project, npmInstallTask);
+		File packageJsonFile = npmInstallTask.getPackageJsonFile();
+
+		if (packageJsonFile.exists()) {
+			JsonSlurper jsonSlurper = new JsonSlurper();
+
+			packageJsonMap = (Map<String, Object>)jsonSlurper.parse(
+				packageJsonFile);
+		}
+
+		_addTaskNpmShrinkwrap(project, cleanNpmTask, npmInstallTask);
+		_addTasksNpmRun(npmInstallTask, packageJsonMap);
+
+		_configureTasksDownloadNodeModule(
+			project, npmInstallTask, packageJsonMap);
 
 		_configureTasksExecuteNode(
 			project, nodeExtension, GradleUtil.isRunningInsideDaemon());
@@ -183,6 +202,39 @@ public class NodePlugin implements Plugin<Project> {
 		return npmInstallTask;
 	}
 
+	private ExecuteNpmTask _addTaskNpmRun(
+		String name, NpmInstallTask npmInstallTask) {
+
+		Project project = npmInstallTask.getProject();
+
+		String taskName = "npmRun" + StringUtil.capitalize(name);
+
+		final ExecuteNpmTask executeNpmTask = GradleUtil.addTask(
+			project, taskName, ExecuteNpmTask.class);
+
+		executeNpmTask.dependsOn(npmInstallTask);
+		executeNpmTask.setArgs("run-script", name);
+		executeNpmTask.setDescription("Runs the \"" + name + "\" NPM script.");
+		executeNpmTask.setGroup(BasePlugin.BUILD_GROUP);
+
+		if (taskName.equals(NPM_RUN_BUILD_TASK_NAME)) {
+			PluginContainer pluginContainer = project.getPlugins();
+
+			pluginContainer.withType(
+				JavaPlugin.class,
+				new Action<JavaPlugin>() {
+
+					@Override
+					public void execute(JavaPlugin javaPlugin) {
+						_configureTaskNpmRunBuildForJavaPlugin(executeNpmTask);
+					}
+
+				});
+		}
+
+		return executeNpmTask;
+	}
+
 	private NpmShrinkwrapTask _addTaskNpmShrinkwrap(
 		Project project, Delete cleanNpmTask, NpmInstallTask npmInstallTask) {
 
@@ -195,6 +247,25 @@ public class NodePlugin implements Plugin<Project> {
 				"control which versions of each dependency will be used.");
 
 		return npmShrinkwrapTask;
+	}
+
+	private void _addTasksNpmRun(
+		NpmInstallTask npmInstallTask, Map<String, Object> packageJsonMap) {
+
+		if (packageJsonMap == null) {
+			return;
+		}
+
+		Map<String, String> scriptsJsonMap =
+			(Map<String, String>)packageJsonMap.get("scripts");
+
+		if (scriptsJsonMap == null) {
+			return;
+		}
+
+		for (String name : scriptsJsonMap.keySet()) {
+			_addTaskNpmRun(name, npmInstallTask);
+		}
 	}
 
 	private void _configureTaskDownloadNodeGlobal(
@@ -247,7 +318,8 @@ public class NodePlugin implements Plugin<Project> {
 
 	private void _configureTaskDownloadNodeModule(
 		DownloadNodeModuleTask downloadNodeModuleTask,
-		final NpmInstallTask npmInstallTask) {
+		final NpmInstallTask npmInstallTask,
+		final Map<String, Object> packageJsonMap) {
 
 		downloadNodeModuleTask.onlyIf(
 			new Spec<Task>() {
@@ -267,18 +339,11 @@ public class NodePlugin implements Plugin<Project> {
 						return true;
 					}
 
-					File packageJsonFile = npmInstallTask.getPackageJsonFile();
-
-					if (!packageJsonFile.exists()) {
+					if (packageJsonMap == null) {
 						return true;
 					}
 
 					String moduleName = downloadNodeModuleTask.getModuleName();
-
-					JsonSlurper jsonSlurper = new JsonSlurper();
-
-					Map<String, Object> packageJsonMap =
-						(Map<String, Object>)jsonSlurper.parse(packageJsonFile);
 
 					Map<String, Object> dependenciesJsonMap =
 						(Map<String, Object>)packageJsonMap.get("dependencies");
@@ -332,6 +397,17 @@ public class NodePlugin implements Plugin<Project> {
 		executeNpmTask.args(nodeExtension.getNpmArgs());
 	}
 
+	private void _configureTaskNpmRunBuildForJavaPlugin(
+		ExecuteNpmTask executeNpmTask) {
+
+		executeNpmTask.mustRunAfter(JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
+
+		Task classesTask = GradleUtil.getTask(
+			executeNpmTask.getProject(), JavaPlugin.CLASSES_TASK_NAME);
+
+		classesTask.dependsOn(executeNpmTask);
+	}
+
 	private void _configureTaskPublishNodeModule(
 		PublishNodeModuleTask publishNodeModuleTask) {
 
@@ -380,7 +456,8 @@ public class NodePlugin implements Plugin<Project> {
 	}
 
 	private void _configureTasksDownloadNodeModule(
-		Project project, final NpmInstallTask npmInstallTask) {
+		Project project, final NpmInstallTask npmInstallTask,
+		final Map<String, Object> packageJsonMap) {
 
 		TaskContainer taskContainer = project.getTasks();
 
@@ -393,7 +470,7 @@ public class NodePlugin implements Plugin<Project> {
 					DownloadNodeModuleTask downloadNodeModuleTask) {
 
 					_configureTaskDownloadNodeModule(
-						downloadNodeModuleTask, npmInstallTask);
+						downloadNodeModuleTask, npmInstallTask, packageJsonMap);
 				}
 
 			});

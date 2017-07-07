@@ -43,6 +43,7 @@ import com.liferay.gradle.plugins.javadoc.formatter.JavadocFormatterPlugin;
 import com.liferay.gradle.plugins.js.module.config.generator.JSModuleConfigGeneratorPlugin;
 import com.liferay.gradle.plugins.js.transpiler.JSTranspilerPlugin;
 import com.liferay.gradle.plugins.lang.builder.LangBuilderPlugin;
+import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.node.tasks.DownloadNodeModuleTask;
 import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
@@ -655,8 +656,15 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, JavaPlugin.class);
 
 		GradleUtil.applyPlugin(project, CSSBuilderPlugin.class);
-		GradleUtil.applyPlugin(project, JSModuleConfigGeneratorPlugin.class);
-		GradleUtil.applyPlugin(project, JSTranspilerPlugin.class);
+
+		GradleUtil.applyPlugin(project, NodePlugin.class);
+
+		if (!GradleUtil.hasTask(project, NodePlugin.NPM_RUN_BUILD_TASK_NAME)) {
+			GradleUtil.applyPlugin(
+				project, JSModuleConfigGeneratorPlugin.class);
+			GradleUtil.applyPlugin(project, JSTranspilerPlugin.class);
+		}
+
 		GradleUtil.applyPlugin(project, JavadocFormatterPlugin.class);
 		GradleUtil.applyPlugin(project, JspCPlugin.class);
 		GradleUtil.applyPlugin(project, LangBuilderPlugin.class);

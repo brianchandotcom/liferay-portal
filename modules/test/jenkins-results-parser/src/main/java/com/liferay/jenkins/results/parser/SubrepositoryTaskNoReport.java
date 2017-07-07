@@ -14,7 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
-import com.liferay.jenkins.results.parser.failure.message.generator.FailureMessageUtil;
+import com.liferay.jenkins.results.parser.failure.message.generator.FailureMessageGenerator;
+import com.liferay.jenkins.results.parser.failure.message.generator.SubrepositorySourceFormatFailureMessageGenerator;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -53,11 +54,13 @@ public class SubrepositoryTaskNoReport extends SubrepositoryTask {
 
 	@Override
 	public String getGitHubMessage() throws Exception {
-		return FailureMessageUtil.getFailureMessage(consoleSnippet);
+		return failureMessageGenerator.getMessage(null, consoleSnippet, null);
 	}
 
 	protected static final Pattern consoleResultPattern = Pattern.compile(
 		"Subrepository task (FAILED|SUCCESSFUL)(.*)");
+	protected static final FailureMessageGenerator failureMessageGenerator =
+		new SubrepositorySourceFormatFailureMessageGenerator();
 
 	protected String consoleSnippet;
 

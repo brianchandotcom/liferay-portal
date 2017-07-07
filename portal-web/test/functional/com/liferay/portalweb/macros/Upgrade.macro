@@ -569,6 +569,39 @@
 		</execute>
 	</command>
 
+	<command name="viewDocument">
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Document" />
+		</execute>
+
+		<execute macro="DMPortlet#setDescriptiveView" />
+
+		<execute macro="DMDocument#enableActionsMenuOnPortlet" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Document" />
+		</execute>
+
+		<execute macro="DMDocument#viewAllPG">
+			<var name="commentBody" value="Document Comment" />
+			<var name="dmDocumentTitle" value="Document1" />
+		</execute>
+
+		<execute macro="DMDocument#viewDocumentDetailsCmdPG">
+			<var name="dmDocumentTitle" value="Document1" />
+		</execute>
+
+		<execute macro="DMDocument#viewDocumentMetadataCP">
+			<var name="metadataData" value="application/msword" />
+			<var name="metadataLabel" value="Content Type" />
+		</execute>
+
+		<execute macro="DMDocument#viewDocumentMetadataCP">
+			<var name="metadataData" value="Liferay" />
+			<var name="metadataLabel" value="Creator" />
+		</execute>
+	</command>
+
 	<command name="viewNestedPortlets">
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Nested Portlets" />

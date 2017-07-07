@@ -29,7 +29,10 @@
 		</if>
 	</tear-down>
 
-	<command name="ActivateUserActions" priority="3">
+	<command name="ActivateUserActions" priority="5">
+		<property name="portal.acceptance" value="pending" />
+		<property name="testray.component.names" value="Training" />
+
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
@@ -83,6 +86,7 @@
 
 	<command name="AddMember" priority="5">
 		<property name="portal.acceptance" value="true" />
+		<property name="testray.component.names" value="Training" />
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
@@ -136,6 +140,7 @@
 
 	<command name="AddOrganization" priority="5">
 		<property name="portal.acceptance" value="true" />
+		<property name="testray.component.names" value="Training" />
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
@@ -294,7 +299,10 @@
 		</execute>
 	</command>
 
-	<command name="AddOrganizationSite" priority="4">
+	<command name="AddOrganizationSite" priority="5">
+		<property name="portal.acceptance" value="pending" />
+		<property name="testray.component.names" value="Training" />
+
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
@@ -408,8 +416,10 @@
 		</execute>
 	</command>
 
-	<command name="AddOrganizationTeam" priority="4">
-		<property name="test.name.skip.portal.instance" value="CPUsersandorganizations#AddORganizationTeam" />
+	<command name="AddOrganizationTeam" priority="5">
+		<property name="portal.acceptance" value="pending" />
+		<property name="test.name.skip.portal.instance" value="CPUsersandorganizations#AddOrganizationTeam" />
+		<property name="testray.component.names" value="Training" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Server Administration" />
@@ -487,7 +497,10 @@
 		</execute>
 	</command>
 
-	<command name="AddSuborganization" priority="4">
+	<command name="AddSuborganization" priority="5">
+		<property name="portal.acceptance" value="pending" />
+		<property name="testray.component.names" value="Training" />
+
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
@@ -541,6 +554,7 @@
 
 	<command name="AddUser" priority="5">
 		<property name="portal.acceptance" value="true" />
+		<property name="testray.component.names" value="Training" />
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
@@ -1278,6 +1292,7 @@
 
 	<command name="EditOrganizationSite" priority="5">
 		<property name="portal.acceptance" value="true" />
+		<property name="testray.component.names" value="Training" />
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />

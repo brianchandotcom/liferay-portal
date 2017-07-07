@@ -89,8 +89,9 @@
 		</execute>
 	</command>
 
-	<command name="AddAPMultiplePortlet" priority="4">
-		<property name="testray.component.names" value="Asset Publisher" />
+	<command name="AddAPMultiplePortlet" priority="5">
+		<property name="portal.acceptance" value="pending" />
+		<property name="testray.component.names" value="Asset Publisher,Training" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Asset Publisher Page" />
@@ -535,8 +536,9 @@
 		</execute>
 	</command>
 
-	<command name="ConfigureAPPortletScopeMultipleSites" priority="4">
-		<property name="testray.component.names" value="Asset Publisher" />
+	<command name="ConfigureAPPortletScopeMultipleSites" priority="5">
+		<property name="portal.acceptance" value="pending" />
+		<property name="testray.component.names" value="Asset Publisher,Training" />
 
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
@@ -1154,8 +1156,9 @@
 		</execute>
 	</command>
 
-	<command name="RestoreAPArchivedSetup" priority="4">
-		<property name="testray.component.names" value="Asset Publisher" />
+	<command name="RestoreAPArchivedSetup" priority="5">
+		<property name="portal.acceptance" value="pending" />
+		<property name="testray.component.names" value="Asset Publisher,Training" />
 
 		<execute macro="Navigator#openURL" />
 

@@ -54,6 +54,9 @@
 	</tear-down>
 
 	<command name="AddDocument" priority="5">
+		<property name="portal.acceptance" value="pending" />
+		<property name="testray.component.names" value="Training" />
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
@@ -323,9 +326,9 @@
 		</execute>
 	</command>
 
-	<command name="AddFolderDocuments" priority="4">
-		<var name="dmDocumentDescription" value="DM Document Description" />
-		<var name="dmFolderName" value="DM Folder Name" />
+	<command name="AddFolderDocuments" priority="5">
+		<property name="portal.acceptance" value="pending" />
+		<property name="testray.component.names" value="Training" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents and Media Page" />
@@ -971,6 +974,9 @@
 	</command>
 
 	<command name="EditDocumentType" priority="5">
+		<property name="portal.acceptance" value="pending" />
+		<property name="testray.component.names" value="Training" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -1673,8 +1679,10 @@
 		</execute>
 	</command>
 
-	<command name="ViewSearchResultsForChildObjectRespectsParentFolderPermissions" priority="4">
+	<command name="ViewSearchResultsForChildObjectRespectsParentFolderPermissions" priority="5">
+		<property name="portal.acceptance" value="pending" />
 		<property name="test.name.skip.portal.instance" value="PGDocumentsandmedia#ViewSearchResultsForChildObjectRespectsParentFolderPermissions" />
+		<property name="testray.component.names" value="Training" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Server Administration" />

@@ -68,6 +68,7 @@
 	<command name="AddPageVariation" priority="5">
 		<property name="portal.acceptance" value="true" />
 		<property name="test.assert.warning.exceptions" value="true" />
+		<property name="testray.component.names" value="Training" />
 
 		<execute macro="Staging#addPageVariationPG">
 			<var name="pageVariationName" value="Page Variation Name" />

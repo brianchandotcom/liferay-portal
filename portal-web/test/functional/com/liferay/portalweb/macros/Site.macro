@@ -939,6 +939,17 @@
 				<equals arg1="${selectPrivatePages}" arg2="true" />
 				<then>
 					<execute function="Select" locator1="SitesEditSite#PAGES_PRIVATE_PAGES_SITE_TEMPLATE_SELECT" value1="${siteTemplate}" />
+
+					<if>
+						<equals arg1="${checkPropagation}" arg2="true" />
+						<then>
+							<execute macro="Panel#expandPanel">
+								<var name="panelHeading" value="Pages" />
+							</execute>
+
+							<execute function="Check#checkToggleSwitch" locator1="Checkbox#PRIVATE_PAGES_ENABLE_PROPAGATION" />
+						</then>
+					</if>
 				</then>
 			</elseif>
 		</if>

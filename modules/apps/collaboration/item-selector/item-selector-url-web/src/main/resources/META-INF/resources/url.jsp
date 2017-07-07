@@ -32,13 +32,13 @@ ItemSelectorURLViewDisplayContext itemSelectorURLViewDisplayContext = (ItemSelec
 	new Liferay.ItemSelectorUrl(
 		{
 			closeCaption: '<%= itemSelectorURLViewDisplayContext.getTitle(locale) %>',
-			namespace: '<portlet:namespace/>',
+			namespace: '<portlet:namespace />',
 			on: {
 				selectedItem: function(event) {
 					Liferay.Util.getOpener().Liferay.fire('<%= itemSelectorURLViewDisplayContext.getItemSelectedEventName() %>', event);
 				}
 			},
-			rootNode: '#<portlet:namespace/>itemSelectorUrlContainer'
+			rootNode: '#<portlet:namespace />itemSelectorUrlContainer'
 		}
 	);
 </aui:script>

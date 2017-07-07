@@ -91,7 +91,7 @@ boolean nodeInGroup = false;
 							</div>
 
 							<aui:script sandbox="<%= true %>">
-								var nodeIdSelect = $('#<portlet:namespace/>nodeId');
+								var nodeIdSelect = $('#<portlet:namespace />nodeId');
 								var pageSelectorContainer = $('#<portlet:namespace />pageSelectorContainer');
 
 								var nodeIdValue = nodeIdSelect.val();

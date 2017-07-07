@@ -298,7 +298,7 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 							JSONObject geolocationJSONObject = JSONFactoryUtil.createJSONObject(value.toString());
 							%>
 
-							<div id="<portlet:namespace/>CoordinatesContainer">
+							<div id="<portlet:namespace />CoordinatesContainer">
 								<div class="glyphicon glyphicon-map-marker"
 									id="<%= portletDisplay.getNamespace()+"ExpandoAttribute--" + name + "--Location" %>">
 								</div>
@@ -795,7 +795,7 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 					JSONObject geolocationJSONObject = JSONFactoryUtil.createJSONObject(value.toString());
 					%>
 
-					<div id="<portlet:namespace/>CoordinatesContainer">
+					<div id="<portlet:namespace />CoordinatesContainer">
 						<div class="glyphicon glyphicon-map-marker"
 							id="<%= portletDisplay.getNamespace()+"ExpandoAttribute--" + name + "--Location" %>">
 						</div>

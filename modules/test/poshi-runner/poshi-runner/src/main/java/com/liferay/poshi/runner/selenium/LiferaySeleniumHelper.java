@@ -420,16 +420,19 @@ public class LiferaySeleniumHelper {
 	public static String getTestConsoleLogFileContent() throws Exception {
 		Map<String, File> consoleLogFiles = new TreeMap<>();
 
+		String baseDirName = PropsValues.TEST_CONSOLE_LOG_FILE_NAME;
+
 		int x = PropsValues.TEST_CONSOLE_LOG_FILE_NAME.lastIndexOf("/");
 
-		String baseDirName = PropsValues.TEST_CONSOLE_LOG_FILE_NAME.substring(
-			0, x);
-		String[] includes =
-			new String[] {PropsValues.TEST_CONSOLE_LOG_FILE_NAME.substring(x)};
+		if (x != -1) {
+			baseDirName = PropsValues.TEST_CONSOLE_LOG_FILE_NAME.substring(
+				0, x);
+		}
 
-		for (URL url :
-				FileUtil.getIncludedResourceURLs(includes, baseDirName)) {
+		List<URL> urls = FileUtil.getIncludedResourceURLs(
+			new String[] {PropsValues.TEST_CONSOLE_LOG_FILE_NAME}, baseDirName);
 
+		for (URL url : urls) {
 			File file = new File(url.toURI());
 
 			consoleLogFiles.put(Long.toString(file.lastModified()), file);

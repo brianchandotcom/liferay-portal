@@ -28,7 +28,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	factory = true,
 	id = "com.liferay.frontend.taglib.form.navigator.internal.configuration.FormNavigatorConfiguration",
 	localization = "content/Language",
-	name = "form.navigator.configuration.name"
+	name = "form-navigator-configuration-name"
 )
 public interface FormNavigatorConfiguration {
 

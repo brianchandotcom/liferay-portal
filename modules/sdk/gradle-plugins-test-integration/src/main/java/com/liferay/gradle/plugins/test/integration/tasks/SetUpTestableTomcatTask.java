@@ -250,6 +250,7 @@ public class SetUpTestableTomcatTask
 	@TaskAction
 	public void setUpTestableTomcat() throws Exception {
 		_setUpJmx();
+		_setUpJpda();
 		_setUpLogging();
 		_setUpManager();
 		_setUpOsgiModules();
@@ -330,6 +331,18 @@ public class SetUpTestableTomcatTask
 
 				printWriter.println(
 					"CATALINA_OPTS=\"${CATALINA_OPTS} ${JMX_OPTS}\"");
+			}
+		}
+	}
+
+	private void _setUpJpda() throws IOException {
+		if (!_contains("bin/setenv.sh", "JPDA_ADDRESS")) {
+			try (PrintWriter printWriter = _getAppendPrintWriter(
+					"bin/setenv.sh")) {
+
+				printWriter.println();
+
+				printWriter.println("JPDA_ADDRESS=\"8000\"");
 			}
 		}
 	}

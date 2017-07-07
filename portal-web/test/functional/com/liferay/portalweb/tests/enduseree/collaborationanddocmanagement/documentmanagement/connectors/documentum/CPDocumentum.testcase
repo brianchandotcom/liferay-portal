@@ -166,86 +166,6 @@
 		</for>
 	</command>
 
-	<command name="AddDocument" priority="5">
-		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Documentum Repository Name" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_1.txt" />
-			<var name="dmDocumentTitle" value="Document_1.txt" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="Document_1.txt" />
-		</execute>
-
-		<execute macro="DMDocument#viewCP">
-			<var name="dmDocumentTitle" value="Document_1.txt" />
-		</execute>
-	</command>
-
-	<command name="AddDocumentInSubfolder" priority="5">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Documentum Repository Name" />
-		</execute>
-
-		<execute macro="DMFolder#addSubfolderCP">
-			<var name="dmSubFolderName" value="DM Folder2 Name" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="DM Folder2 Name" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_2.txt" />
-			<var name="dmDocumentTitle" value="Document_2.txt" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Documentum Repository Name" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="DM Folder2 Name" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="Document_2.txt" />
-		</execute>
-
-		<execute macro="DMDocument#viewCP">
-			<var name="dmDocumentTitle" value="Document_2.txt" />
-		</execute>
-	</command>
-
-	<command name="AddSubfolder" priority="5">
-		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Documentum Repository Name" />
-		</execute>
-
-		<execute macro="DMFolder#addSubfolderCP">
-			<var name="dmSubFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMFolder#viewCP">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-	</command>
-
 	<command name="CheckinDocument" priority="5">
 		<property name="test.name.skip.portal.instance" value="CPDocumentum#CheckinDocument" />
 
@@ -273,8 +193,16 @@
 			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
+		<execute macro="DMDocument#viewIconLockedCP">
+			<var name="dmDocumentTitle" value="Document_3.txt" />
+		</execute>
+
 		<execute macro="DMNavigator#gotoDocumentCP">
 			<var name="dmDocumentTitle" value="Document_3.txt" />
+		</execute>
+
+		<execute macro="DMDocument#viewCheckedoutCP">
+			<var name="dmRepositoryName" value="true" />
 		</execute>
 
 		<execute macro="DMDocument#checkinCP">
@@ -320,20 +248,20 @@
 		</execute>
 	</command>
 
-	<command name="CheckoutDocument" priority="5">
-		<property name="test.name.skip.portal.instance" value="CPDocumentum#DeleteCheckedoutDocument" />
+	<command name="DeleteCheckedoutDocument" priority="5">
+		<description message="This is a use case for LPS-68454" />
 
 		<execute macro="DMRepository#gotoCP">
 			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
 		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_4.txt" />
-			<var name="dmDocumentTitle" value="Document_4.txt" />
+			<var name="dmDocumentFile" value="Document_3.txt" />
+			<var name="dmDocumentTitle" value="Document_3.txt" />
 		</execute>
 
 		<execute macro="DMDocument#checkoutCP">
-			<var name="dmDocumentTitle" value="Document_4.txt" />
+			<var name="dmDocumentTitle" value="Document_3.txt" />
 			<var name="dmRepositoryName" value="true" />
 		</execute>
 
@@ -348,36 +276,15 @@
 		</execute>
 
 		<execute macro="DMDocument#viewIconLockedCP">
-			<var name="dmDocumentTitle" value="Document_4.txt" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="Document_4.txt" />
-		</execute>
-
-		<execute macro="DMDocument#viewCheckedoutCP" >
-			<var name="dmRepositoryName" value="true" />
-		</execute>
-
-		<execute macro="DMDocument#cancelCheckoutCP">
-			<var name="dmRepositoryName" value="true" />
-		</execute>
-	</command>
-
-	<command name="DeleteDocument" priority="5">
-		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Documentum Repository Name" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentTitle" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="Document_3.txt" />
 		</execute>
 
 		<execute macro="DMDocument#deleteCP">
-			<var name="dmDocumentTitle" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="Document_3.txt" />
 			<var name="recycleBinDisabled" value="true" />
 		</execute>
+
+		<execute function="AssertConsoleTextNotPresent" value1="Cannot prune sysobject Document_3.txt version tree since one or more of its versions are locked." />
 
 		<execute macro="Navigator#openURL" />
 
@@ -385,14 +292,12 @@
 			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute macro="ProductMenuHelper#closeProductMenu" />
-
 		<execute macro="DMRepository#gotoCP">
 			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
 		<execute macro="DMDocument#cannotViewCP">
-			<var name="dmDocumentTitle" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="Document_3.txt" />
 		</execute>
 	</command>
 
@@ -407,12 +312,38 @@
 			<var name="dmSubFolderName" value="DM Folder3 Name" />
 		</execute>
 
+		<execute macro="DMFolder#viewCP">
+			<var name="dmFolderName" value="DM Folder3 Name" />
+		</execute>
+
 		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="DM Folder3 Name" />
 		</execute>
 
 		<execute macro="DMDocument#addCP">
 			<var name="dmDocumentFile" value="Document_2.doc" />
+			<var name="dmDocumentTitle" value="Document_2.doc" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMRepository#gotoCP">
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoFolder">
+			<var name="dmFolderName" value="DM Folder3 Name" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoDocumentCP">
+			<var name="dmDocumentTitle" value="Document_2.doc" />
+		</execute>
+
+		<execute macro="DMDocument#viewCP">
 			<var name="dmDocumentTitle" value="Document_2.doc" />
 		</execute>
 
@@ -536,44 +467,6 @@
 		</execute>
 	</command>
 
-	<command name="EditDocumentTitleFileExtension" priority="5">
-		<property name="test.name.skip.portal.instance" value="CPDocumentum#EditDocumentTitleFileNameAndFileExtension" />
-
-		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Documentum Repository Name" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_1.docx" />
-			<var name="dmDocumentTitle" value="Document_1.docx" />
-		</execute>
-
-		<execute macro="DMDocument#editCP">
-			<var name="dmDocumentTitle" value="Document_1.docx" />
-			<var name="dmDocumentTitleEdit" value="Document_1.jpg" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#closeProductMenu" />
-
-		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Documentum Repository Name" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="Document_1.jpg" />
-		</execute>
-
-		<execute macro="DMDocument#viewCP">
-			<var name="dmDocumentTitle" value="Document_1.jpg" />
-		</execute>
-	</command>
-
 	<command name="EditDocumentTitleFileNameAndFileExtension" priority="5">
 		<execute macro="DMRepository#gotoCP">
 			<var name="dmRepositoryName" value="Documentum Repository Name" />
@@ -582,6 +475,18 @@
 		<execute macro="DMDocument#addCP">
 			<var name="dmDocumentFile" value="Document_2.docx" />
 			<var name="dmDocumentTitle" value="Document_2.docx" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoDocumentCP">
+			<var name="dmDocumentTitle" value="Document_2.docx" />
+		</execute>
+
+		<execute macro="DMDocument#viewCP">
+			<var name="dmDocumentTitle" value="Document_2.docx" />
+		</execute>
+
+		<execute macro="DMRepository#gotoCP">
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
 		<execute macro="DMDocument#editCP">
@@ -792,25 +697,6 @@
 
 		<execute macro="DMDocument#cannotViewCP">
 			<var name="dmDocumentTitle" value="Document_1.doc" />
-		</execute>
-	</command>
-
-	<command name="SearchDocument" priority="5">
-		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Documentum Repository Name" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_2.doc" />
-			<var name="dmDocumentTitle" value="Document_2.doc" />
-		</execute>
-
-		<execute macro="DMDocument#searchCP">
-			<var name="dmDocumentKeyword" value="Document_2.doc" />
-		</execute>
-
-		<execute macro="DMDocument#viewSearchResultsCP">
-			<var name="dmDocumentTitle" value="Document_2.doc" />
 		</execute>
 	</command>
 

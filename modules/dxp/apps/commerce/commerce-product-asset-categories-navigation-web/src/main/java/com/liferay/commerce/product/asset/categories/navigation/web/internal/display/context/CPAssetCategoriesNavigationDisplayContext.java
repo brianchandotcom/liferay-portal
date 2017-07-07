@@ -78,14 +78,14 @@ public class CPAssetCategoriesNavigationDisplayContext {
 	}
 
 	public List<AssetCategory> getAssetCategories() throws PortalException {
+		if (_assetCategories != null) {
+			return _assetCategories;
+		}
+
 		AssetVocabulary assetVocabulary = getAssetVocabulary();
 
 		if (assetVocabulary == null) {
 			return Collections.emptyList();
-		}
-
-		if (_assetCategories != null) {
-			return _assetCategories;
 		}
 
 		_assetCategories = _assetCategoryService.getVocabularyRootCategories(

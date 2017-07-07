@@ -57,6 +57,8 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -397,17 +399,30 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 		contextObjects.put(
 			PortletDisplayTemplateConstants.LOCALE, request.getLocale());
 
-		RenderRequest renderRequest = (RenderRequest)request.getAttribute(
+		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 
-		contextObjects.put(
-			PortletDisplayTemplateConstants.RENDER_REQUEST, renderRequest);
+		RenderRequest renderRequest = null;
 
-		RenderResponse renderResponse = (RenderResponse)request.getAttribute(
+		if (portletRequest instanceof RenderRequest) {
+			renderRequest = (RenderRequest)portletRequest;
+
+			contextObjects.put(
+				PortletDisplayTemplateConstants.RENDER_REQUEST, renderRequest);
+		}
+
+		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-		contextObjects.put(
-			PortletDisplayTemplateConstants.RENDER_RESPONSE, renderResponse);
+		RenderResponse renderResponse = null;
+
+		if (portletResponse instanceof RenderResponse) {
+			renderResponse = (RenderResponse)portletResponse;
+
+			contextObjects.put(
+				PortletDisplayTemplateConstants.RENDER_RESPONSE,
+				renderResponse);
+		}
 
 		if ((renderRequest != null) && (renderResponse != null)) {
 			PortletURL currentURL = PortletURLUtil.getCurrent(
@@ -453,8 +468,8 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 
 		contextObjects.put(TemplateConstants.WRITER, unsyncStringWriter);
 
-		if (renderRequest != null) {
-			_mergePortletPreferences(renderRequest, contextObjects);
+		if (portletRequest != null) {
+			_mergePortletPreferences(portletRequest, contextObjects);
 		}
 
 		return transformer.transform(
@@ -501,9 +516,9 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 	}
 
 	private Map<String, Object> _mergePortletPreferences(
-		RenderRequest renderRequest, Map<String, Object> contextObjects) {
+		PortletRequest portletRequest, Map<String, Object> contextObjects) {
 
-		PortletPreferences portletPreferences = renderRequest.getPreferences();
+		PortletPreferences portletPreferences = portletRequest.getPreferences();
 
 		Map<String, String[]> map = portletPreferences.getMap();
 

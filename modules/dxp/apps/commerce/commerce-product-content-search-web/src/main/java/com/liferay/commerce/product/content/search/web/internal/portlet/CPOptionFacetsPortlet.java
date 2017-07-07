@@ -22,7 +22,6 @@ import com.liferay.commerce.product.search.CPDefinitionIndexer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
@@ -215,7 +214,7 @@ public class CPOptionFacetsPortlet
 		Indexer<CPDefinition> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			CPDefinition.class);
 
-		Hits hits = indexer.search(searchContext);
+		indexer.search(searchContext);
 
 		FacetCollector facetCollector = facet.getFacetCollector();
 

@@ -189,8 +189,6 @@ public class CPAssetCategoriesNavigationDisplayContext {
 	public String getFriendlyURL(long categoryId, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		CPAttachmentFileEntry cpAttachmentFileEntry = null;
-
 		long classNameId = _portal.getClassNameId(AssetCategory.class);
 
 		AssetCategory assetCategory = _assetCategoryService.fetchCategory(

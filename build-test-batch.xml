@@ -2377,6 +2377,90 @@ ${output.content}</echo>
 		</run-batch-test>
 	</target>
 
+	<target name="portal-license-jdk8">
+		<run-batch-test>
+			<test-action>
+				<sequential>
+					<execute>
+						<![CDATA[
+							git diff --name-only ${liferay.portal.branch}...HEAD > ${project.dir}/modifiedList
+						]]>
+					</execute>
+
+					<print-file file.name="${project.dir}/modifiedList" />
+
+					<var name="fileMatchFound" unset="true" />
+
+					<beanshell>
+						<![CDATA[
+							import java.io.FileReader;
+							import java.util.List;
+							import java.util.ArrayList;
+
+							String project_dir = project.getProperty("project.dir");
+
+							FileReader fileReader = new FileReader(project_dir + "/modifiedList");
+
+							BufferedReader bufferReader = new BufferedReader(fileReader);
+
+							ArrayList modifiedList = new ArrayList();
+
+							String line = bufferReader.readLine();
+
+							while (line != null) {
+								modifiedList.add(line);
+
+								line = bufferReader.readLine();
+							}
+
+							fileReader = new FileReader(project_dir + "/masterList");
+
+							bufferReader = new BufferedReader(fileReader);
+
+							ArrayList masterList = new ArrayList();
+
+							line = bufferReader.readLine();
+
+							while (line != null) {
+								masterList.add(line);
+
+								line = bufferReader.readLine();
+							}
+
+							for (int i = 0; i < modifiedList.size(); i++){
+								if (masterList.contains( modifiedList.get(i) ) ){
+									project.setProperty("fileMatchFound", "true");
+
+									return;
+								}
+							}
+
+						]]>
+					</beanshell>
+
+					<if>
+						<isset property="fileMatchFound" />
+						<then>
+							<execute dir="${project.dir}">
+								<![CDATA[
+									git clean -d -f -x
+								]]>
+							</execute>
+
+							<execute dir="${release.tool.dir}">
+								<![CDATA[
+									ant dist
+								]]>
+							</execute>
+						</then>
+					</if>
+
+					<delete file="${project.dir}/modifiedList" />
+				</sequential>
+			</test-action>
+		</run-batch-test>
+	</target>
+
 	<target name="portal-startup-space-in-path-jdk8">
 		<sequential>
 			<run-batch-test>

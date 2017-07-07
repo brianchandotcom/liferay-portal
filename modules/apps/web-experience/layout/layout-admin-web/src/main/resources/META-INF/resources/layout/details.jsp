@@ -143,7 +143,7 @@ StringBuilder friendlyURLBase = new StringBuilder();
 		<liferay-ui:message arguments='<%= new String[] {LanguageUtil.get(request, "inherit-changes"), "General"} %>' key="some-page-settings-are-unavailable-because-x-is-enabled" translateArguments="<%= false %>" />
 	</div>
 
-	<div class="<%= selLayout.isLayoutPrototypeLinkEnabled() ? StringPool.BLANK : "hide" %>" id="<portlet:namespace/>layoutPrototypeMergeAlert">
+	<div class="<%= selLayout.isLayoutPrototypeLinkEnabled() ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />layoutPrototypeMergeAlert">
 
 		<%
 		request.setAttribute("edit_layout_prototype.jsp-layoutPrototype", layoutPrototype);

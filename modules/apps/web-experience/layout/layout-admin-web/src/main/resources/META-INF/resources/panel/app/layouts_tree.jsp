@@ -20,7 +20,7 @@
 LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayContext(liferayPortletRequest, liferayPortletResponse);
 %>
 
-<div class="layouts-tree-container" id="<portlet:namespace/>layoutsTreeContainer">
+<div class="layouts-tree-container" id="<portlet:namespace />layoutsTreeContainer">
 	<c:if test="<%= layoutsTreeDisplayContext.isShowLayoutTabs() %>">
 
 		<%
@@ -112,7 +112,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 
 								<c:if test="<%= layoutsTreeDisplayContext.isShowExpandLayoutSetButton(false) %>">
 									<li>
-										<a href="javascript:;" id="<portlet:namespace/>expandPagesLink"><liferay-ui:message key="expand-area" /></a>
+										<a href="javascript:;" id="<portlet:namespace />expandPagesLink"><liferay-ui:message key="expand-area" /></a>
 									</li>
 								</c:if>
 
@@ -184,7 +184,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 
 								<c:if test="<%= layoutsTreeDisplayContext.isShowExpandLayoutSetButton(false) %>">
 									<li>
-										<a href="javascript:;" id="<portlet:namespace/>expandPagesLink"><liferay-ui:message key="expand-area" /></a>
+										<a href="javascript:;" id="<portlet:namespace />expandPagesLink"><liferay-ui:message key="expand-area" /></a>
 									</li>
 								</c:if>
 

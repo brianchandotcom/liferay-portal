@@ -81,7 +81,7 @@ if (selLayout != null) {
 	<c:otherwise>
 		<aui:input checked="<%= selLayout.isCustomizable() %>" helpMessage="customizable-help" label="customizable" name='<%= "TypeSettingsProperties--" + LayoutConstants.CUSTOMIZABLE_LAYOUT + "--" %>' type="toggle-switch" />
 
-		<div class="customization-settings" id="<portlet:namespace/>customizationSettingsOptions">
+		<div class="customization-settings" id="<portlet:namespace />customizationSettingsOptions">
 
 			<%
 			if (Validator.isNotNull(velocityTemplateId) && Validator.isNotNull(velocityTemplateContent)) {

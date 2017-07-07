@@ -21,7 +21,7 @@ boolean exactMatch = GetterUtil.getBoolean(renderRequest.getAttribute(KBWebKeys.
 String[] searchKeywords = (String[])renderRequest.getAttribute(KBWebKeys.KNOWLEDGE_BASE_SEARCH_KEYWORDS);
 %>
 
-<div id="<portlet:namespace/>message-container"></div>
+<div id="<portlet:namespace />message-container"></div>
 
 <c:if test="<%= Objects.equals(portletDisplay.getId(), KBPortletKeys.KNOWLEDGE_BASE_ARTICLE_DEFAULT_INSTANCE) && PortletPermissionUtil.contains(permissionChecker, plid, portletDisplay.getId(), KBActionKeys.CONFIGURATION) %>">
 	<div class="alert alert-info portlet-configuration">

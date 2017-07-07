@@ -283,7 +283,7 @@ UnitConverter unitConverter = UnitConverterUtil.getUnitConverter(type, fromId, t
 		Liferay.Util.focusFormField(form.fm('fromValue'));
 	</c:if>
 
-	$('#<portlet:namespace/>convertButton').on(
+	$('#<portlet:namespace />convertButton').on(
 		'click',
 		function(event) {
 			event.preventDefault();

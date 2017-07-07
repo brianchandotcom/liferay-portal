@@ -28,6 +28,9 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.commerce.product.constants.CPPortletKeys" %><%@
 page import="com.liferay.commerce.product.constants.CPWebKeys" %><%@
+page import="com.liferay.commerce.product.exception.CPOptionCategoryKeyException" %><%@
+page import="com.liferay.commerce.product.exception.CPOptionKeyException" %><%@
+page import="com.liferay.commerce.product.exception.CPOptionValueKeyException" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchCPOptionCategoryException" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchCPOptionException" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchCPOptionValueException" %><%@

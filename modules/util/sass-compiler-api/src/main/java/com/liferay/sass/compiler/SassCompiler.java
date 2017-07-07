@@ -14,10 +14,17 @@
 
 package com.liferay.sass.compiler;
 
+import java.io.Closeable;
+import java.io.IOException;
+
 /**
  * @author David Truong
  */
-public interface SassCompiler {
+public interface SassCompiler extends Closeable {
+
+	@Override
+	public default void close() throws IOException {
+	}
 
 	public String compileFile(String inputFileName, String includeDirName)
 		throws SassCompilerException;

@@ -3088,14 +3088,14 @@ go</echo>
 	<macrodef name="setup-testable-tomcat-gc">
 		<sequential>
 			<if>
-				<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.bat" substring="${app.server.tomcat.setenv.gc.old}" />
+				<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.bat" substring="${test.batch.app.server.tomcat.setenv.gc.old}" />
 				<then>
-					<replace file="${app.server.tomcat.dir}/bin/setenv.bat" token="${app.server.tomcat.setenv.gc.old}" value="${app.server.tomcat.setenv.gc.new}" />
+					<replace file="${app.server.tomcat.dir}/bin/setenv.bat" token="${test.batch.app.server.tomcat.setenv.gc.old}" value="${test.batch.app.server.tomcat.setenv.gc.new}" />
 				</then>
 				<else>
 					<if>
 						<not>
-							<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.bat" substring="${app.server.tomcat.setenv.gc.new}" />
+							<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.bat" substring="${test.batch.app.server.tomcat.setenv.gc.new}" />
 						</not>
 						<then>
 							<fail message="Unable to setup tomcat gc properties for ${app.server.tomcat.dir}/bin/setenv.bat" />
@@ -3105,14 +3105,14 @@ go</echo>
 			</if>
 
 			<if>
-				<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.sh" substring="${app.server.tomcat.setenv.gc.old}" />
+				<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.sh" substring="${test.batch.app.server.tomcat.setenv.gc.old}" />
 				<then>
-					<replace file="${app.server.tomcat.dir}/bin/setenv.sh" token="${app.server.tomcat.setenv.gc.old}" value="${app.server.tomcat.setenv.gc.new}" />
+					<replace file="${app.server.tomcat.dir}/bin/setenv.sh" token="${test.batch.app.server.tomcat.setenv.gc.old}" value="${test.batch.app.server.tomcat.setenv.gc.new}" />
 				</then>
 				<else>
 					<if>
 						<not>
-							<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.sh" substring="${app.server.tomcat.setenv.gc.new}" />
+							<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.sh" substring="${test.batch.app.server.tomcat.setenv.gc.new}" />
 						</not>
 						<then>
 							<fail message="Unable to setup tomcat gc properties for ${app.server.tomcat.dir}/bin/setenv.sh" />
@@ -3127,7 +3127,7 @@ go</echo>
 		<sequential>
 			<local name="heap.dump.on.oom" />
 
-			<property name="heap.dump.on.oom" value="-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=${app.server.tomcat.setenv.heap.dump.path}" />
+			<property name="heap.dump.on.oom" value="-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=${test.batch.app.server.tomcat.setenv.heap.dump.path}" />
 
 			<if>
 				<not>

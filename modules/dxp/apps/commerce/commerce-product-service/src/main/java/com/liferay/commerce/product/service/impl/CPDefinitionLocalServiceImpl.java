@@ -131,6 +131,8 @@ public class CPDefinitionLocalServiceImpl
 		CPDefinition cpDefinition = cpDefinitionPersistence.create(
 			cpDefinitionId);
 
+		Locale locale = LocaleUtil.getSiteDefault();
+
 		cpDefinition.setUuid(serviceContext.getUuid());
 		cpDefinition.setGroupId(groupId);
 		cpDefinition.setCompanyId(user.getCompanyId());
@@ -139,6 +141,7 @@ public class CPDefinitionLocalServiceImpl
 		cpDefinition.setBaseSKU(baseSKU);
 		cpDefinition.setProductTypeName(productTypeName);
 		cpDefinition.setDDMStructureKey(ddmStructureKey);
+		cpDefinition.setDefaultLanguageId(LocaleUtil.toLanguageId(locale));
 		cpDefinition.setDisplayDate(displayDate);
 		cpDefinition.setExpirationDate(expirationDate);
 

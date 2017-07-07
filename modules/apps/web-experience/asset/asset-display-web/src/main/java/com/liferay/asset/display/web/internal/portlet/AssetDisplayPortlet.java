@@ -38,6 +38,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + AssetDisplayPortletKeys.ASSET_DISPLAY,
+		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=guest,power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},

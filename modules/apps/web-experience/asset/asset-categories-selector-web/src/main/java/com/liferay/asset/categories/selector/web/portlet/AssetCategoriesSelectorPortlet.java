@@ -59,6 +59,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + AssetCategoriesSelectorPortletKeys.ASSET_CATEGORIES_SELECTOR,
+		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=guest,power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},

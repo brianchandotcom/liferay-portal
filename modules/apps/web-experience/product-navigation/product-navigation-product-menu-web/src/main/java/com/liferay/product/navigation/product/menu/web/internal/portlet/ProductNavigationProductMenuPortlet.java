@@ -48,6 +48,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.display-name=Product Menu",
 		"javax.portlet.init-param.view-template=/portlet/view.jsp",
 		"javax.portlet.name=" + ProductNavigationProductMenuPortletKeys.PRODUCT_NAVIGATION_PRODUCT_MENU,
+		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.supported-public-render-parameter=layoutSetBranchId",
 		"javax.portlet.supported-public-render-parameter=privateLayout",
 		"javax.portlet.supported-public-render-parameter=selPlid",

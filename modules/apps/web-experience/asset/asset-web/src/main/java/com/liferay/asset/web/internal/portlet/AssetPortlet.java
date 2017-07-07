@@ -37,6 +37,7 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=Asset", "javax.portlet.expiration-cache=0",
 		"javax.portlet.name=" + AssetPortletKeys.ASSET,
+		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},

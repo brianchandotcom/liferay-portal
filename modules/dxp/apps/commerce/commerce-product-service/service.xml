@@ -278,6 +278,10 @@
 		<finder name="CPDefinitionOptionRelId" return-type="Collection">
 			<finder-column name="CPDefinitionOptionRelId" />
 		</finder>
+		<finder name="C_K" return-type="CPDefinitionOptionValueRel" unique="true">
+			<finder-column name="CPDefinitionOptionRelId" />
+			<finder-column name="key" />
+		</finder>
 
 		<!-- References -->
 
@@ -511,6 +515,10 @@
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
+		<finder name="G_K" return-type="CPOption" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="key" />
+		</finder>
 
 		<!-- References -->
 
@@ -556,6 +564,10 @@
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
+		<finder name="G_K" return-type="CPOptionCategory" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="key" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="CPOptionValue" remote-service="true"  uuid="true">
 
@@ -600,6 +612,10 @@
 		<finder name="CPOptionId" return-type="Collection">
 			<finder-column name="CPOptionId" />
 		</finder>
+		<finder name="C_K" return-type="CPOptionValue" unique="true">
+			<finder-column name="CPOptionId" />
+			<finder-column name="key" />
+		</finder>
 
 		<!-- References -->
 
@@ -612,10 +628,14 @@
 		<exception>CPAttachmentFileEntrySize</exception>
 		<exception>CPDefinitionDisplayDate</exception>
 		<exception>CPDefinitionExpirationDate</exception>
+		<exception>CPDefinitionOptionValueRelKey</exception>
 		<exception>CPDefinitionProductTypeName</exception>
 		<exception>CPFriendlyURLLength</exception>
 		<exception>CPInstanceDisplayDate</exception>
 		<exception>CPInstanceExpirationDate</exception>
+		<exception>CPOptionKey</exception>
+		<exception>CPOptionCategoryKey</exception>
+		<exception>CPOptionValueKey</exception>
 		<exception>DuplicateCPFriendlyURLEntry</exception>
 		<exception>NoSuchSkuContributorCPDefinitionOptionRel</exception>
 	</exceptions>

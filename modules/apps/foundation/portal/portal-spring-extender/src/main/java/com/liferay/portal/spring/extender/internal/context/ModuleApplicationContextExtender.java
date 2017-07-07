@@ -15,10 +15,13 @@
 package com.liferay.portal.spring.extender.internal.context;
 
 import com.liferay.osgi.felix.util.AbstractExtender;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBContext;
 import com.liferay.portal.kernel.dao.db.DBManager;
 import com.liferay.portal.kernel.dao.db.DBProcessContext;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.configuration.configurator.ServiceConfigurator;
@@ -55,7 +58,6 @@ import org.apache.felix.dm.ComponentDependencyDeclaration;
 import org.apache.felix.dm.DependencyManager;
 import org.apache.felix.dm.ServiceDependency;
 import org.apache.felix.utils.extender.Extension;
-import org.apache.felix.utils.log.Logger;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -76,13 +78,14 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 
 	@Activate
 	protected void activate(
-			BundleContext bundleContext,
-			SpringExtenderConfiguration springExtenderConfiguration)
+			BundleContext bundleContext, Map<String, Object> properties)
 		throws Exception {
 
-		_logger = new Logger(bundleContext);
-
 		start(bundleContext);
+
+		SpringExtenderConfiguration springExtenderConfiguration =
+			ConfigurableUtil.createConfigurable(
+				SpringExtenderConfiguration.class, properties);
 
 		long scanningInterval =
 			springExtenderConfiguration.unavailableComponentScanningInterval();
@@ -109,7 +112,9 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 
 	@Override
 	protected void debug(Bundle bundle, String s) {
-		_logger.log(Logger.LOG_DEBUG, "[" + bundle + "] " + s);
+		if (_log.isDebugEnabled()) {
+			_log.debug(s);
+		}
 	}
 
 	@Override
@@ -125,7 +130,7 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 
 	@Override
 	protected void error(String s, Throwable throwable) {
-		_logger.log(Logger.LOG_ERROR, s, throwable);
+		_log.error(s, throwable);
 	}
 
 	@Reference(
@@ -158,10 +163,12 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 
 	@Override
 	protected void warn(Bundle bundle, String s, Throwable throwable) {
-		_logger.log(Logger.LOG_DEBUG, "[" + bundle + "] " + s);
+		if (_log.isWarnEnabled()) {
+			_log.warn(s, throwable);
+		}
 	}
 
-	private void _scanUnavailableComponents() {
+	private static void _scanUnavailableComponents() {
 		StringBundler sb = new StringBundler();
 
 		for (DependencyManager dependencyManager :
@@ -230,19 +237,53 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 		}
 
 		if (sb.index() == 0) {
-			_logger.log(
-				Logger.LOG_INFO,
-				"All Spring Extender Dependency Manager components are " +
-					"registered!");
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"All Spring Extender Dependency Manager components are " +
+						"registered!");
+			}
 		}
 		else {
-			_logger.log(Logger.LOG_WARNING, sb.toString());
+			if (_log.isWarnEnabled()) {
+				_log.warn(sb.toString());
+			}
 		}
 	}
 
-	private Logger _logger;
+	private static final Log _log = LogFactoryUtil.getLog(
+		ModuleApplicationContextExtender.class);
+
 	private ServiceConfigurator _serviceConfigurator;
 	private Thread _unavailableComponentScanningThread;
+
+	private static class UnavailableComponentScanningThread extends Thread {
+
+		@Override
+		public void run() {
+			try {
+				while (true) {
+					sleep(_scanningInterval);
+
+					_scanUnavailableComponents();
+				}
+			}
+			catch (InterruptedException ie) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Stopped unavailable component scanning.");
+				}
+			}
+		}
+
+		private UnavailableComponentScanningThread(long scanningInterval) {
+			_scanningInterval = scanningInterval;
+
+			setDaemon(true);
+			setName("Spring Extender unavailable component scanner");
+		}
+
+		private final long _scanningInterval;
+
+	}
 
 	private class ModuleApplicationContextExtension implements Extension {
 
@@ -273,9 +314,9 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 			URL resource = _bundle.getResource("/META-INF/sql/" + templateName);
 
 			if (resource == null) {
-				_logger.log(
-					Logger.LOG_DEBUG,
-					"Unable to locate SQL template " + templateName);
+				if (_log.isDebugEnabled()) {
+					_log.debug("Unable to locate SQL template " + templateName);
+				}
 
 				return null;
 			}
@@ -480,34 +521,6 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 			protected final String serviceClassName;
 
 		}
-
-	}
-
-	private class UnavailableComponentScanningThread extends Thread {
-
-		@Override
-		public void run() {
-			try {
-				while (true) {
-					sleep(_scanningInterval);
-
-					_scanUnavailableComponents();
-				}
-			}
-			catch (InterruptedException ie) {
-				_logger.log(
-					Logger.LOG_INFO, "Stopped unavailable component scanning.");
-			}
-		}
-
-		private UnavailableComponentScanningThread(long scanningInterval) {
-			_scanningInterval = scanningInterval;
-
-			setDaemon(true);
-			setName("Spring Extender unavailable component scanner");
-		}
-
-		private final long _scanningInterval;
 
 	}
 

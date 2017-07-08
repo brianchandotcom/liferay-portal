@@ -70,6 +70,17 @@
 		</execute>
 	</command>
 
+	<command name="addMessageBoards">
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Message Boards" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="Message Boards Body" />
+			<var name="threadSubject" value="Message Boards Subject 3" />
+		</execute>
+	</command>
+
 	<command name="addOrganization">
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />

@@ -613,6 +613,16 @@
 		</execute>
 	</command>
 
+	<command name="viewMessageBoards">
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Message Boards" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewLockedPG">
+			<var name="threadSubject" value="Message Boards Subject 2" />
+		</execute>
+	</command>
+
 	<command name="viewNestedPortlets">
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Nested Portlets" />

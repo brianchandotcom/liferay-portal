@@ -128,7 +128,11 @@ public class SchedulerHelperPropertiesVerifyProcessTest {
 
 		schedulerHelperPropertiesVerifyProcess.doVerify();
 
-		Mockito.verify(configuration).update(_argumentCaptor.capture());
+		Mockito.verify(
+			configuration
+		).update(
+			_argumentCaptor.capture()
+		);
 
 		Dictionary<String, Object> dictionary = _argumentCaptor.getValue();
 

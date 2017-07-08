@@ -197,9 +197,10 @@ public class IndexerPostProcessorRegistryTest {
 			List<String> expectedClassNames = Arrays.asList(
 				TestSampleModelIndexerPostProcessor.class.getName());
 
-			List<String> actualClassNames = Stream.of(
-				indexer.getIndexerPostProcessors()
-			).map(
+			Stream<IndexerPostProcessor> indexerPostProcessorsStream =
+				Stream.of(indexer.getIndexerPostProcessors());
+
+			List<String> actualClassNames = indexerPostProcessorsStream.map(
 				IndexerPostProcessor::getClass
 			).map(
 				Class::getName

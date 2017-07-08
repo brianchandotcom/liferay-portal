@@ -53,6 +53,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.impl.CriteriaImpl;
@@ -115,14 +116,23 @@ public class DummyStagedModelRepository
 	}
 
 	public List<Dummy> fetchDummiesByFolderId(long folderId) {
-		return _dummies.stream().filter(
-			d -> d.getFolderId() == folderId).collect(Collectors.toList());
+		Stream<Dummy> dummiesStream = _dummies.stream();
+
+		return dummiesStream.filter(
+			d -> d.getFolderId() == folderId
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	public Dummy fetchDummyById(long id) {
-		List<Dummy> dummies =
-			_dummies.stream().filter(d -> d.getId() == id).collect(
-				Collectors.toList());
+		Stream<Dummy> dummiesStream = _dummies.stream();
+
+		List<Dummy> dummies = dummiesStream.filter(
+			d -> d.getId() == id
+		).collect(
+			Collectors.toList()
+		);
 
 		if (dummies.isEmpty()) {
 			return null;
@@ -138,10 +148,15 @@ public class DummyStagedModelRepository
 
 	@Override
 	public Dummy fetchStagedModelByUuidAndGroupId(String uuid, long groupId) {
-		List<Dummy> dummies = _dummies.stream().filter(
+		Stream<Dummy> dummiesStream = _dummies.stream();
+
+		List<Dummy> dummies = dummiesStream.filter(
 			dummy ->
 				dummy.getUuid().equals(uuid) &&
-				dummy.getGroupId() == groupId).collect(Collectors.toList());
+				dummy.getGroupId() == groupId
+		).collect(
+			Collectors.toList()
+		);
 
 		if (dummies.isEmpty()) {
 			return null;
@@ -154,10 +169,15 @@ public class DummyStagedModelRepository
 	public List<Dummy> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return _dummies.stream().filter(
+		Stream<Dummy> dummiesStream = _dummies.stream();
+
+		return dummiesStream.filter(
 			dummy ->
 				dummy.getUuid().equals(uuid) &&
-				dummy.getCompanyId() == companyId).collect(Collectors.toList());
+				dummy.getCompanyId() == companyId
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	@Override
@@ -194,8 +214,11 @@ public class DummyStagedModelRepository
 
 		exportActionableDynamicQuery.setBaseLocalService(
 			new DummyBaseLocalServiceImpl());
-		exportActionableDynamicQuery.setClassLoader(
-			getClass().getClassLoader());
+
+		Class<?> clazz = getClass();
+
+		exportActionableDynamicQuery.setClassLoader(clazz.getClassLoader());
+
 		exportActionableDynamicQuery.setModelClass(Dummy.class);
 
 		exportActionableDynamicQuery.setPrimaryKeyPropertyName("id");
@@ -372,9 +395,13 @@ public class DummyStagedModelRepository
 					CriteriaImpl.CriterionEntry criteriaImpl =
 						(CriteriaImpl.CriterionEntry)iterator.next();
 
-					result = result.stream().filter(
+					Stream<Dummy> dummiesStream = result.stream();
+
+					result = dummiesStream.filter(
 						getPredicate(criteriaImpl.toString())
-					).collect(Collectors.toList());
+					).collect(
+						Collectors.toList()
+					);
 				}
 			}
 			catch (Exception e) {

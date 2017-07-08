@@ -398,7 +398,11 @@ public class RecurrenceUtilTest {
 
 		calendarBooking.setRecurrence(recurrence);
 
-		Mockito.doReturn(_utcTimeZone).when(calendarBooking).getTimeZone();
+		Mockito.doReturn(
+			_utcTimeZone
+		).when(
+			calendarBooking
+		).getTimeZone();
 
 		return calendarBooking;
 	}

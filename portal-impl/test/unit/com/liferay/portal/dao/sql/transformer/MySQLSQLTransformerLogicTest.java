@@ -123,7 +123,10 @@ public class MySQLSQLTransformerLogicTest
 		MySQLDB mySQLDB = Mockito.spy(new MySQLDB(5, 7));
 
 		Mockito.when(
-			mySQLDB.isSupportsStringCaseSensitiveQuery()).thenReturn(false);
+			mySQLDB.isSupportsStringCaseSensitiveQuery()
+		).thenReturn(
+			false
+		);
 
 		return mySQLDB;
 	}
@@ -132,7 +135,10 @@ public class MySQLSQLTransformerLogicTest
 		MySQLDB mySQLDB = Mockito.spy(new MySQLDB(5, 7));
 
 		Mockito.when(
-			mySQLDB.isSupportsStringCaseSensitiveQuery()).thenReturn(true);
+			mySQLDB.isSupportsStringCaseSensitiveQuery()
+		).thenReturn(
+			true
+		);
 
 		return mySQLDB;
 	}

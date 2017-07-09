@@ -14,7 +14,6 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
@@ -48,11 +47,6 @@ public class ChainingCheck extends AbstractCheck {
 
 	@Override
 	public void visitToken(DetailAST detailAST) {
-		FileContents fileContents = getFileContents();
-
-		String fileName = StringUtil.replace(
-			fileContents.getFileName(), CharPool.BACK_SLASH, CharPool.SLASH);
-
 		List<DetailAST> methodCallASTList = DetailASTUtil.getAllChildTokens(
 			detailAST, true, TokenTypes.METHOD_CALL);
 

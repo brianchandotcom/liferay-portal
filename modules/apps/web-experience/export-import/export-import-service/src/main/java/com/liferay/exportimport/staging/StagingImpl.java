@@ -131,6 +131,9 @@ import com.liferay.portlet.exportimport.staging.ProxiedLayoutsThreadLocal;
 
 import java.io.Serializable;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -1246,8 +1249,24 @@ public class StagingImpl implements Staging {
 		boolean secureConnection = GetterUtil.getBoolean(
 			typeSettingsProperties.getProperty("secureConnection"));
 
-		return GroupServiceHttp.getGroupDisplayURL(
+		String groupDisplayURL = GroupServiceHttp.getGroupDisplayURL(
 			httpPrincipal, remoteGroupId, privateLayout, secureConnection);
+
+		try {
+			URL remoteSiteURL = new URL(groupDisplayURL);
+
+			String remoteAddress = typeSettingsProperties.getProperty(
+				"remoteAddress");
+
+			remoteSiteURL = new URL(
+				remoteSiteURL.getProtocol(), remoteAddress,
+				remoteSiteURL.getPort(), remoteSiteURL.getFile());
+
+			return remoteSiteURL.toString();
+		}
+		catch (MalformedURLException murle) {
+			throw new PortalException(murle);
+		}
 	}
 
 	@Override

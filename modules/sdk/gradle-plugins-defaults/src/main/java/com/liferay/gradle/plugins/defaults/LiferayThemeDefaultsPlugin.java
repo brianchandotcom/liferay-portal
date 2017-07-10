@@ -413,10 +413,14 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		File npmShrinkwrapJsonFile = project.file("npm-shrinkwrap.json");
 
 		if (npmShrinkwrapJsonFile.exists()) {
-			replaceRegexTask.match(_JSON_VERSION_REGEX, npmShrinkwrapJsonFile);
+			replaceRegexTask.match(
+				GradlePluginsDefaultsUtil.jsonVersionPattern.pattern(),
+				npmShrinkwrapJsonFile);
 		}
 
-		replaceRegexTask.match(_JSON_VERSION_REGEX, "package.json");
+		replaceRegexTask.match(
+			GradlePluginsDefaultsUtil.jsonVersionPattern.pattern(),
+			"package.json");
 
 		replaceRegexTask.setDescription(
 			"Updates the project version in the package.json file.");
@@ -746,8 +750,5 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		"com.liferay.frontend.css.common";
 
 	private static final String _GROUP = "com.liferay.plugins";
-
-	private static final String _JSON_VERSION_REGEX =
-		"\\n\\t\"version\": \"(.+)\"";
 
 }

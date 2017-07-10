@@ -451,7 +451,8 @@ public class CPDefinitionLocalServiceImpl
 		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
 			cpAttachmentFileEntryLocalService.getCPAttachmentFileEntries(
 				classNameId, cpDefinitionId,
-				CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE, 0, 1);
+				CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE,
+				WorkflowConstants.STATUS_APPROVED, 0, 1);
 
 		if (cpAttachmentFileEntries.isEmpty()) {
 			return null;

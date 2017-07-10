@@ -41,16 +41,21 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author James Hinkey
  * @author Sergio González
  * @author Jesse Rao
  */
-@Component(service = KBArticleImporter.class)
 public class KBArticleImporter {
+
+	public KBArticleImporter(
+		KBArchiveFactory kbArchiveFactory,
+		KBArticleLocalService kbArticleLocalService, Portal portal) {
+
+		_kbArchiveFactory = kbArchiveFactory;
+		_kbArticleLocalService = kbArticleLocalService;
+		_portal = portal;
+	}
 
 	public int processZipFile(
 			long userId, long groupId, long parentKBFolderId,
@@ -293,13 +298,8 @@ public class KBArticleImporter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		KBArticleImporter.class);
 
-	@Reference
-	private KBArchiveFactory _kbArchiveFactory;
-
-	@Reference
-	private KBArticleLocalService _kbArticleLocalService;
-
-	@Reference
-	private Portal _portal;
+	private final KBArchiveFactory _kbArchiveFactory;
+	private final KBArticleLocalService _kbArticleLocalService;
+	private final Portal _portal;
 
 }

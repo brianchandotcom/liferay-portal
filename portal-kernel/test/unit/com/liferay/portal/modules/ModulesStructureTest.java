@@ -713,11 +713,14 @@ public class ModulesStructureTest {
 		Path gradlePropertiesPath = dirPath.resolve("gradle.properties");
 		Path settingsGradlePath = dirPath.resolve("settings.gradle");
 
-		String buildGradle = ModulesStructureTestUtil.read(buildGradlePath);
+		if (!_isInGitRepoReadOnly(dirPath)) {
+			String buildGradle = ModulesStructureTestUtil.read(buildGradlePath);
 
-		Assert.assertEquals(
-			"Incorrect " + buildGradlePath,
-			_getGitRepoBuildGradle(dirPath, buildGradleTemplate), buildGradle);
+			Assert.assertEquals(
+				"Incorrect " + buildGradlePath,
+				_getGitRepoBuildGradle(dirPath, buildGradleTemplate),
+				buildGradle);
+		}
 
 		String gradleProperties = ModulesStructureTestUtil.read(
 			gradlePropertiesPath);

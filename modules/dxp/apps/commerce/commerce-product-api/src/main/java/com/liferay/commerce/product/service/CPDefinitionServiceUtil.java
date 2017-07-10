@@ -186,9 +186,10 @@ public class CPDefinitionServiceUtil {
 		return getService().getCPDefinitionsByCategoryId(categoryId, start, end);
 	}
 
-	public static void deleteAssetCategoryCPDefinition(long cpDefinitionId)
+	public static void deleteAssetCategoryCPDefinition(long cpDefinitionId,
+		long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteAssetCategoryCPDefinition(cpDefinitionId);
+		getService().deleteAssetCategoryCPDefinition(cpDefinitionId, categoryId);
 	}
 
 	public static void restoreCPDefinitionFromTrash(long cpDefinitionId)

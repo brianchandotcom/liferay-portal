@@ -496,9 +496,10 @@ public class CPDefinitionLocalServiceUtil {
 		getService().checkCPDefinitions();
 	}
 
-	public static void deleteAssetCategoryCPDefinition(long cpDefinitionId)
+	public static void deleteAssetCategoryCPDefinition(long cpDefinitionId,
+		long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteAssetCategoryCPDefinition(cpDefinitionId);
+		getService().deleteAssetCategoryCPDefinition(cpDefinitionId, categoryId);
 	}
 
 	public static void deleteCPDefinitions(long groupId)

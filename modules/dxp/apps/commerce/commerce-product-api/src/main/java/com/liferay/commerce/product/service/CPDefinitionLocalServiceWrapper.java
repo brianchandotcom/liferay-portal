@@ -540,9 +540,11 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 	}
 
 	@Override
-	public void deleteAssetCategoryCPDefinition(long cpDefinitionId)
+	public void deleteAssetCategoryCPDefinition(long cpDefinitionId,
+		long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_cpDefinitionLocalService.deleteAssetCategoryCPDefinition(cpDefinitionId);
+		_cpDefinitionLocalService.deleteAssetCategoryCPDefinition(cpDefinitionId,
+			categoryId);
 	}
 
 	@Override

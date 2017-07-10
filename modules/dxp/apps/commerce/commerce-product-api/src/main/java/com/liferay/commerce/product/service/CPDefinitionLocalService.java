@@ -420,8 +420,8 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 
 	public void checkCPDefinitions() throws PortalException;
 
-	public void deleteAssetCategoryCPDefinition(long cpDefinitionId)
-		throws PortalException;
+	public void deleteAssetCategoryCPDefinition(long cpDefinitionId,
+		long categoryId) throws PortalException;
 
 	public void deleteCPDefinitions(long groupId) throws PortalException;
 

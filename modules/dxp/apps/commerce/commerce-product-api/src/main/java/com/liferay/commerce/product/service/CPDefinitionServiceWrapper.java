@@ -192,9 +192,11 @@ public class CPDefinitionServiceWrapper implements CPDefinitionService,
 	}
 
 	@Override
-	public void deleteAssetCategoryCPDefinition(long cpDefinitionId)
+	public void deleteAssetCategoryCPDefinition(long cpDefinitionId,
+		long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_cpDefinitionService.deleteAssetCategoryCPDefinition(cpDefinitionId);
+		_cpDefinitionService.deleteAssetCategoryCPDefinition(cpDefinitionId,
+			categoryId);
 	}
 
 	@Override

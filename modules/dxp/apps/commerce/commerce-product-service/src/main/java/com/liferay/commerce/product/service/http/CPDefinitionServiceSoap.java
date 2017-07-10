@@ -112,10 +112,11 @@ public class CPDefinitionServiceSoap {
 		}
 	}
 
-	public static void deleteAssetCategoryCPDefinition(long cpDefinitionId)
-		throws RemoteException {
+	public static void deleteAssetCategoryCPDefinition(long cpDefinitionId,
+		long categoryId) throws RemoteException {
 		try {
-			CPDefinitionServiceUtil.deleteAssetCategoryCPDefinition(cpDefinitionId);
+			CPDefinitionServiceUtil.deleteAssetCategoryCPDefinition(cpDefinitionId,
+				categoryId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

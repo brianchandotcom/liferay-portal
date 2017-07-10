@@ -154,8 +154,8 @@ public interface CPDefinitionService extends BaseService {
 	public List<CPDefinition> getCPDefinitionsByCategoryId(long categoryId,
 		int start, int end);
 
-	public void deleteAssetCategoryCPDefinition(long cpDefinitionId)
-		throws PortalException;
+	public void deleteAssetCategoryCPDefinition(long cpDefinitionId,
+		long categoryId) throws PortalException;
 
 	public void restoreCPDefinitionFromTrash(long cpDefinitionId)
 		throws PortalException;

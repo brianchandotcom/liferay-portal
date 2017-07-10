@@ -126,6 +126,14 @@ declared in the `package.json` file.
 - [LPS-73472]: Run the `"build"` script (if declared in the `package.json` file)
 when compiling a Java project.
 
+## 2.4.0 - 2017-07-11
+
+### Added
+- [LPS-73070]: Delete the `package-lock.json` file when running the `cleanNPM`
+task, if present.
+- [LPS-73070]: Use the `package-lock.json` file to calculate the `node_modules`
+cache digest.
+
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
@@ -141,4 +149,5 @@ when compiling a Java project.
 [LPS-71826]: https://issues.liferay.com/browse/LPS-71826
 [LPS-72152]: https://issues.liferay.com/browse/LPS-72152
 [LPS-72340]: https://issues.liferay.com/browse/LPS-72340
+[LPS-73070]: https://issues.liferay.com/browse/LPS-73070
 [LPS-73472]: https://issues.liferay.com/browse/LPS-73472

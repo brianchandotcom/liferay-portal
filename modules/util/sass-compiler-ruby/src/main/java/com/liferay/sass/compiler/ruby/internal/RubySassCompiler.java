@@ -112,7 +112,7 @@ public class RubySassCompiler implements AutoCloseable, SassCompiler {
 	}
 
 	@Override
-	public void close() throws Exception {
+	public void close() {
 		_scriptingContainer.terminate();
 	}
 

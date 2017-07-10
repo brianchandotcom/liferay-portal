@@ -226,7 +226,7 @@ public class ComboServlet extends HttpServlet {
 					response.setHeader(
 						HttpHeaders.CACHE_CONTROL,
 						HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
-					response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+					response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 
 					return;
 				}

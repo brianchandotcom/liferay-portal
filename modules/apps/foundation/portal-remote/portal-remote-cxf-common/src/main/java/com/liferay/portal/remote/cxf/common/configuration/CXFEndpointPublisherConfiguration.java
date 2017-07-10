@@ -27,7 +27,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	factory = true,
 	id = "com.liferay.portal.remote.cxf.common.configuration.CXFEndpointPublisherConfiguration",
-	localization = "content/Language", name = "cxf.endpoint.configuration.name"
+	localization = "content/Language", name = "cxf-endpoint-configuration-name"
 )
 public interface CXFEndpointPublisherConfiguration {
 

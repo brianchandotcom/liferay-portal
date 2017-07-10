@@ -27,7 +27,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	factory = true,
 	id = "com.liferay.portal.remote.rest.extender.configuration.RestExtenderConfiguration",
-	localization = "content/Language", name = "rest.extender.configuration.name"
+	localization = "content/Language", name = "rest-extender-configuration-name"
 )
 public interface RestExtenderConfiguration {
 

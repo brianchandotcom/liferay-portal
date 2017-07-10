@@ -66,9 +66,12 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 			fileName, content, "<%@ page import=");
 
 		if (isPortalSource() || isSubrepository()) {
+			content = _removeUnusedPortletDefineObjects(fileName, content);
 			content = _removeUnusedTaglibs(fileName, content);
 			content = _removeUnusedVariables(fileName, absolutePath, content);
 		}
+
+		_contentsMap.put(fileName, content);
 
 		return content;
 	}
@@ -189,6 +192,24 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 		return !_isJSPTermRequired(
 			fileName, regex, type, checkedForUnusedJSPTerm,
 			checkedForIncludesFileNames, includeFileNames, contentsMap);
+	}
+
+	private boolean _hasUnusedPortletDefineObjectsProperty(
+		String fileName, String portletDefineObjectProperty,
+		Set<String> checkedFileNames, Set<String> includeFileNames) {
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append("((/)|(\\*)|(\\+(\\+)?)|(-(-)?)|\\(|=)?( )?");
+		sb.append(portletDefineObjectProperty);
+		sb.append("( )?(\\.");
+		sb.append("|(((\\+)|(-)|(\\*)|(/)|(%)|(\\|)|(&)|(\\^))?(=))");
+		sb.append("|(\\+(\\+)?)|(-(-)?)");
+		sb.append("|(\\)))?");
+
+		return _hasUnusedJSPTerm(
+			fileName, sb.toString(), "portletDefineObjectProperty",
+			checkedFileNames, includeFileNames, _contentsMap);
 	}
 
 	private boolean _hasUnusedVariable(
@@ -368,6 +389,30 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 		return StringUtil.replaceFirst(content, imports, newImports);
 	}
 
+	private String _removeUnusedPortletDefineObjects(
+		String fileName, String content) {
+
+		if (!content.contains("<portlet:defineObjects />\n")) {
+			return content;
+		}
+
+		Set<String> checkedFileNames = new HashSet<>();
+		Set<String> includeFileNames = new HashSet<>();
+
+		for (String portletDefineObjectProperty :
+				_PORTLET_DEFINE_OBJECTS_PROPERTIES) {
+
+			if (!_hasUnusedPortletDefineObjectsProperty(
+					fileName, portletDefineObjectProperty, checkedFileNames,
+					includeFileNames)) {
+
+				return content;
+			}
+		}
+
+		return StringUtil.removeSubstring(content, "<portlet:defineObjects />");
+	}
+
 	private String _removeUnusedTaglibs(String fileName, String content) {
 		Set<String> checkedFileNames = new HashSet<>();
 		Set<String> includeFileNames = new HashSet<>();
@@ -448,6 +493,15 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 
 		return content;
 	}
+
+	private static final String[] _PORTLET_DEFINE_OBJECTS_PROPERTIES =
+		new String[] {
+			"actionRequest", "actionResponse", "eventRequest", "eventResponse",
+			"liferayPortletRequest", "liferayPortletResponse", "portletConfig",
+			"portletName", "portletPreferences", "portletPreferencesValues",
+			"portletSession", "portletSessionScope", "renderResponse",
+			"renderRequest", "resourceRequest", "resourceResponse"
+		};
 
 	private static final String _UNUSED_VARIABLES_EXCLUDES =
 		"jsp.unused.variables.excludes";

@@ -22,8 +22,6 @@
 
 <%@ page import="com.liferay.portal.search.web.internal.search.bar.portlet.SearchBarPortletDisplayContext" %>
 
-<portlet:defineObjects />
-
 <%
 SearchBarPortletDisplayContext searchBarPortletDisplayContext = (SearchBarPortletDisplayContext)java.util.Objects.requireNonNull(request.getAttribute(com.liferay.portal.search.web.internal.search.bar.constants.SearchBarWebKeys.DISPLAY_CONTEXT));
 %>

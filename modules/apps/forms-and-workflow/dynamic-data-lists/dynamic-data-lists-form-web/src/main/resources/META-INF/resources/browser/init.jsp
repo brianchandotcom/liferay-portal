@@ -32,8 +32,6 @@ page import="java.util.Map" %>
 
 <liferay-theme:defineObjects />
 
-<portlet:defineObjects />
-
 <%
 DDLFormBrowserDisplayContext ddlFormBrowserDisplayContext = (DDLFormBrowserDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>

@@ -41,6 +41,4 @@ page import="java.util.Map" %>
 
 <liferay-theme:defineObjects />
 
-<portlet:defineObjects />
-
 <%@ include file="/init-ext.jsp" %>

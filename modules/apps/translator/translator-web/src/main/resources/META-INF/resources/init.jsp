@@ -39,8 +39,6 @@ page import="com.liferay.translator.web.internal.util.TranslatorUtil" %>
 
 <liferay-theme:defineObjects />
 
-<portlet:defineObjects />
-
 <%
 TranslatorConfiguration translatorConfiguration = (TranslatorConfiguration)request.getAttribute(TranslatorConfiguration.class.getName());
 %>

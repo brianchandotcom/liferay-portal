@@ -24,11 +24,11 @@ import com.liferay.source.formatter.util.FileUtil;
 import java.io.File;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -126,7 +126,7 @@ public class JSPSourceUtil {
 	public static Map<String, String> getContentsMap(List<String> fileNames)
 		throws Exception {
 
-		Map<String, String> contentsMap = new HashMap<>();
+		Map<String, String> contentsMap = new ConcurrentHashMap<>();
 
 		if (ListUtil.isEmpty(fileNames)) {
 			return contentsMap;

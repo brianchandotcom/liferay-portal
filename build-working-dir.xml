@@ -180,6 +180,20 @@
 			</filterchain>
 		</loadfile>
 
+		<exec executable="git" resultproperty="portal.private.git.commit.result">
+			<arg value="cat-file" />
+			<arg value="-e" />
+			<arg value="${portal.private.git.commit}" />
+		</exec>
+
+		<fail message="Please run this command from the liferay-portal-ee repository.">
+			<condition>
+				<not>
+					<equals arg1="${portal.private.git.commit.result}" arg2="0" />
+				</not>
+			</condition>
+		</fail>
+
 		<exec executable="git" failonerror="true">
 			<arg value="checkout" />
 			<arg value="${portal.private.git.commit}" />

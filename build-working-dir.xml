@@ -168,6 +168,9 @@
 	</target>
 
 	<target depends="checkout-portal" name="prepare-working-dir">
-		<prepare-working-dir private.branch.name="${private.branch.name}" public.branch.name="${public.branch.name}" />
+		<prepare-working-dir
+			private.branch.name="${private.branch.name}"
+			public.branch.name="${public.branch.name}"
+		/>
 	</target>
 </project>

@@ -46,7 +46,7 @@ GRADLE_FILES=(
 	"gradlew.bat"
 )
 
-LOCAL_SHAS=($(
+LOCAL_SHAS="$(
 	for FILE in "${GRADLE_FILES[@]}"; do
 		SHA="$(git hash-object "${FILE}")"
 
@@ -56,7 +56,7 @@ LOCAL_SHAS=($(
 
 		echo "${FILE}:${SHA}"
 	done
-))
+)"
 
 SUBREPO=$1
 
@@ -146,10 +146,19 @@ for BRANCH in "${BRANCHES[@]}"; do
 
 	GRADLEW_BAT_REMOTE_SHA="$(echo "${GRADLEW_JSON}" | grep '"sha"' | sed 's/"[^"]*$//' | sed 's/.*"//')"
 
-	REMOTE_SHAS=(
-		"gradle/wrapper/gradle-wrapper.jar:${GRADLE_WRAPPER_JAR_REMOTE_SHA}"
-		"gradle/wrapper/gradle-wrapper.properties:${GRADLE_WRAPPER_PROPERTIES_REMOTE_SHA}"
-		"gradlew:${GRADLEW_REMOTE_SHA}"
-		"gradlew.bat:${GRADLEW_BAT_REMOTE_SHA}"
-	)
+	REMOTE_SHAS="
+gradle/wrapper/gradle-wrapper.jar:${GRADLE_WRAPPER_JAR_REMOTE_SHA}
+gradle/wrapper/gradle-wrapper.properties:${GRADLE_WRAPPER_PROPERTIES_REMOTE_SHA}
+gradlew:${GRADLEW_REMOTE_SHA}
+gradlew.bat:${GRADLEW_BAT_REMOTE_SHA}
+"
+
+	for GRADLE_FILE in "${GRADLE_FILES[@]}"; do
+		LOCAL_SHA="$(echo "${LOCAL_SHAS}" | grep "^${GRADLE_FILE}:" | sed 's/.*://')"
+		REMOTE_SHA="$(echo "${REMOTE_SHAS}" | grep "^${GRADLE_FILE}:" | sed 's/.*://')"
+
+		if [[ "${LOCAL_SHA}" != "${REMOTE_SHA}" ]]; then
+			echo "$BRANCH:$GRADLE_FILE:$LOCAL_SHA:$REMOTE_SHA"
+		fi
+	done
 done

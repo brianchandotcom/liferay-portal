@@ -51,13 +51,13 @@ public class CheckCPDefinitionMessageListener extends BaseMessageListener {
 
 		String className = clazz.getName();
 
-		CPDefinitionConfiguration cPDefinitionConfiguration =
+		CPDefinitionConfiguration cpDefinitionConfiguration =
 			ConfigurableUtil.createConfigurable(
 				CPDefinitionConfiguration.class, properties);
 
 		Trigger trigger = _triggerFactory.createTrigger(
 			className, className, null, null,
-			cPDefinitionConfiguration.checkInterval(), TimeUnit.MINUTE);
+			cpDefinitionConfiguration.checkInterval(), TimeUnit.MINUTE);
 
 		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
 			className, trigger);
@@ -73,7 +73,7 @@ public class CheckCPDefinitionMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		_cPDefinitionLocalService.checkCPDefinitions();
+		_cpDefinitionLocalService.checkCPDefinitions();
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
@@ -82,7 +82,7 @@ public class CheckCPDefinitionMessageListener extends BaseMessageListener {
 	}
 
 	@Reference
-	private CPDefinitionLocalService _cPDefinitionLocalService;
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;

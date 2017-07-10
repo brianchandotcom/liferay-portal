@@ -27,7 +27,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 @Meta.OCD(
 	id = "com.liferay.dynamic.data.lists.form.web.configuration.DDLFormWebConfiguration",
-	localization = "content/Language", name = "ddl.form.web.configuration.name"
+	localization = "content/Language", name = "ddl-form-web-configuration-name"
 )
 public interface DDLFormWebConfiguration {
 

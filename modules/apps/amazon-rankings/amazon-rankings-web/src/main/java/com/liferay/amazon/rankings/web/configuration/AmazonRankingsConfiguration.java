@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.amazon.rankings.web.configuration.AmazonRankingsConfiguration",
 	localization = "content/Language",
-	name = "amazon.rankings.configuration.name"
+	name = "amazon-rankings-configuration-name"
 )
 public interface AmazonRankingsConfiguration {
 

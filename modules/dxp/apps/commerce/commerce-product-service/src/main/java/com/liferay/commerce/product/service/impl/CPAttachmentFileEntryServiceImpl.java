@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -102,30 +103,31 @@ public class CPAttachmentFileEntryServiceImpl
 
 	@Override
 	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
-			long classNameId, long classPK, int type, int start, int end)
+			long classNameId, long classPK, int type, int status, int start,
+			int end)
 		throws PortalException {
 
 		return cpAttachmentFileEntryLocalService.getCPAttachmentFileEntries(
-			classNameId, classPK, type, start, end);
+			classNameId, classPK, type, status, start, end);
 	}
 
 	@Override
 	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
-			long classNameId, long classPK, int type, int start, int end,
-			OrderByComparator<CPAttachmentFileEntry> orderByComparator)
+			long classNameId, long classPK, int type, int status, int start,
+			int end, OrderByComparator<CPAttachmentFileEntry> orderByComparator)
 		throws PortalException {
 
 		return cpAttachmentFileEntryLocalService.getCPAttachmentFileEntries(
-			classNameId, classPK, type, start, end, orderByComparator);
+			classNameId, classPK, type, status, start, end, orderByComparator);
 	}
 
 	@Override
 	public int getCPAttachmentFileEntriesCount(
-		long classNameId, long classPK, int type) {
+		long classNameId, long classPK, int type, int status) {
 
 		return
 			cpAttachmentFileEntryLocalService.getCPAttachmentFileEntriesCount(
-				classNameId, classPK, type);
+				classNameId, classPK, type, status);
 	}
 
 	@Override
@@ -162,6 +164,20 @@ public class CPAttachmentFileEntryServiceImpl
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire, titleMap,
 			json, priority, type, serviceContext);
+	}
+
+	@Override
+	public CPAttachmentFileEntry updateStatus(
+			long userId, long cpAttachmentFileEntryId, int status,
+			ServiceContext serviceContext,
+			Map<String, Serializable> workflowContext)
+		throws PortalException {
+
+		checkCPAttachmentFileEntryPermissions(cpAttachmentFileEntryId);
+
+		return cpAttachmentFileEntryLocalService.updateStatus(
+			userId, cpAttachmentFileEntryId, status, serviceContext,
+			workflowContext);
 	}
 
 	protected void checkCPAttachmentFileEntryPermissions(

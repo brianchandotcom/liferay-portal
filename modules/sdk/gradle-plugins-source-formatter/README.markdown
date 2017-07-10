@@ -70,6 +70,9 @@ subprojects {
 }
 ```
 
+The tasks `checkSourceFormatting` and `formatSource` are automatically skipped
+if another task with the same name is being executed in a parent project.
+
 ### FormatSourceTask
 
 Tasks of type `FormatSourceTask` extend [`JavaExec`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html),

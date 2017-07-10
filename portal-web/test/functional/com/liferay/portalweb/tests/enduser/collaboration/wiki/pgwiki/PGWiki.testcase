@@ -796,11 +796,12 @@
 		</execute>
 
 		<execute macro="AlloyEditor#addSourceContent">
-			<var name="content"><![CDATA[
-!JSPWiki Header"
-
-__JSPWiki Bold Text__]]></var>
+			<var name="content" value="!JSPWiki Header" />
 		</execute>
+
+		<execute function="KeyPress" locator1="TextArea#ACE_EDITOR" value1="\RETURN" />
+
+		<execute function="Type#sendKeysAceEditor" locator1="TextArea#ACE_EDITOR" value1="__JSPWiki Bold Text__" />
 
 		<execute macro="PortletEntry#publish" />
 

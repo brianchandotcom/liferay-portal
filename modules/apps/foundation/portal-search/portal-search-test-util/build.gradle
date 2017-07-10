@@ -5,6 +5,7 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.registry.api", version: "1.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.test", version: "1.0.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.test.integration", version: "2.0.0"
 	provided group: "junit", name: "junit", version: "4.12"
 	provided group: "org.mockito", name: "mockito-core", version: "1.10.8"
 	provided project(":apps:foundation:portal-search:portal-search")

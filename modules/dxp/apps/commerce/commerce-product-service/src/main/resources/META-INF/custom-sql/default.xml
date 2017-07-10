@@ -1,6 +1,18 @@
 <?xml version="1.0"?>
 
 <custom-sql>
+	<sql id="com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryFinder.findByExpirationDate">
+		<![CDATA[
+			SELECT
+				CPAttachmentFileEntry.*
+			FROM
+				CPAttachmentFileEntry
+			WHERE
+				(CPAttachmentFileEntry.expirationDate < ?)  AND
+				(CPAttachmentFileEntry.expirationDate is not null) AND
+				([$OWNER_USER_ID$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] ([$STATUS$]))
+		]]>
+	</sql>
 	<sql id="com.liferay.commerce.product.service.persistence.CPDefinitionFinder.countByG_P_S">
 		<![CDATA[
 			SELECT
@@ -42,6 +54,18 @@
 			WHERE
 				(CPDefinition.groupId = ?) AND
 				(CPDefinition.productTypeName = ?) AND
+				([$OWNER_USER_ID$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] ([$STATUS$]))
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.product.service.persistence.CPInstanceFinder.findByExpirationDate">
+		<![CDATA[
+			SELECT
+				CPInstance.*
+			FROM
+				CPInstance
+			WHERE
+				(CPInstance.expirationDate < ?)  AND
+				(CPInstance.expirationDate is not null) AND
 				([$OWNER_USER_ID$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] ([$STATUS$]))
 		]]>
 	</sql>

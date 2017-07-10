@@ -18,6 +18,8 @@ import com.liferay.gradle.util.Validator;
 
 import java.io.File;
 
+import java.util.regex.Pattern;
+
 import org.gradle.api.Action;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
@@ -36,6 +38,9 @@ public class GradlePluginsDefaultsUtil {
 			"/public";
 
 	public static final String TMP_MAVEN_REPOSITORY_DIR_NAME = ".m2-tmp";
+
+	public static final Pattern jsonVersionPattern = Pattern.compile(
+		"\\n\\t\"version\": \"(.+)\"");
 
 	public static void configureRepositories(
 		Project project, File portalRootDir) {

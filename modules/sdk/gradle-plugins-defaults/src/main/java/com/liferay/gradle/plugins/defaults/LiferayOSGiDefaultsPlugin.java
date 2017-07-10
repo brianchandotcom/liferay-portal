@@ -1368,7 +1368,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		String json = new String(
 			Files.readAllBytes(path), StandardCharsets.UTF_8);
 
-		Matcher matcher = _jsonVersionPattern.matcher(json);
+		Matcher matcher = GradlePluginsDefaultsUtil.jsonVersionPattern.matcher(
+			json);
 
 		if (!matcher.find()) {
 			return;
@@ -2997,14 +2998,16 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		if (npmShrinkwrapJsonFile.exists()) {
 			replaceRegexTask.match(
-				_jsonVersionPattern.pattern(), npmShrinkwrapJsonFile);
+				GradlePluginsDefaultsUtil.jsonVersionPattern.pattern(),
+				npmShrinkwrapJsonFile);
 		}
 
 		File packageJsonFile = project.file("package.json");
 
 		if (packageJsonFile.exists()) {
 			replaceRegexTask.match(
-				_jsonVersionPattern.pattern(), packageJsonFile);
+				GradlePluginsDefaultsUtil.jsonVersionPattern.pattern(),
+				packageJsonFile);
 		}
 	}
 
@@ -4059,8 +4062,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	private static final BackupFilesBuildAdapter _backupFilesBuildAdapter =
 		new BackupFilesBuildAdapter();
-	private static final Pattern _jsonVersionPattern = Pattern.compile(
-		"\\n\\t\"version\": \"(.+)\"");
 
 	private static class GitRepo {
 

@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+AssetCategory assetCategory = (AssetCategory)request.getAttribute(WebKeys.ASSET_CATEGORY);
+
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 CPDefinition cpDefinition = (CPDefinition)row.getObject();
@@ -26,6 +28,7 @@ CPDefinition cpDefinition = (CPDefinition)row.getObject();
 	<portlet:actionURL name="deleteAssetCategoryCPDefinition" var="deleteURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinition.getCPDefinitionId()) %>" />
+		<portlet:param name="categoryId" value="<%= String.valueOf(assetCategory.getCategoryId()) %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon-delete

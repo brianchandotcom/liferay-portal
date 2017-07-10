@@ -1,0 +1,217 @@
+<?xml version="1.0"?>
+
+<project default="prepare-working-dir" xmlns:unless="ant:unless">
+	<dirname file="${ant.file.build-common}" property="project.dir.native" />
+
+	<pathconvert property="project.dir" targetos="unix">
+		<path location="${project.dir.native}" />
+	</pathconvert>
+
+	<property file="${project.dir}/working.dir.${user.name}.properties" />
+	<property file="${project.dir}/working.dir.${env.COMPUTERNAME}.properties" />
+	<property file="${project.dir}/working.dir.${env.HOST}.properties" />
+	<property file="${project.dir}/working.dir.${env.HOSTNAME}.properties" />
+	<property file="${project.dir}/working.dir.properties" />
+
+	<condition property="prepare.working.dir.private">
+		<not>
+			<available file="git-commit-portal" />
+		</not>
+	</condition>
+
+	<macrodef name="prepare-working-dir">
+		<attribute name="private.branch.name" />
+		<attribute name="public.branch.name" />
+
+		<sequential>
+
+			<!-- build.properties -->
+
+			<replace
+				failOnNoReplacements="true"
+				file="build.properties"
+				token="build.repository.private.password=${build.repository.private.password[@{public.branch.name}]}"
+				value="build.repository.private.password=${build.repository.private.password[@{private.branch.name}]}"
+			/>
+			<replace
+				failOnNoReplacements="true"
+				file="build.properties"
+				token="build.repository.private.url=${build.repository.private.url[@{public.branch.name}]}"
+				value="build.repository.private.url=${build.repository.private.url[@{private.branch.name}]}"
+			/>
+			<replace
+				failOnNoReplacements="true"
+				file="build.properties"
+				token="build.repository.private.username=${build.repository.private.username[@{public.branch.name}]}"
+				value="build.repository.private.username=${build.repository.private.username[@{private.branch.name}]}"
+			/>
+
+			<replace
+				failOnNoReplacements="true"
+				file="build.properties"
+				token="git.working.branch.name=@{public.branch.name}"
+				value="git.working.branch.name=@{private.branch.name}"
+			/>
+
+			<!-- release.properties -->
+
+			<replace
+				failOnNoReplacements="true"
+				file="release.properties"
+				token="lp.version=${lp.version[@{public.branch.name}]}"
+				value="lp.version=${lp.version[@{private.branch.name}]}"
+			/>
+			<replace
+				failOnNoReplacements="true"
+				file="release.properties"
+				token="lp.version.dtd=${lp.version.dtd[@{public.branch.name}]}"
+				value="lp.version.dtd=${lp.version.dtd[@{private.branch.name}]}"
+			/>
+
+			<!-- test.properties -->
+
+			<replace
+				file="test.properties"
+				token="liferay.portal.branch=${liferay.portal.branch[@{public.branch.name}]}"
+				value="liferay.portal.branch=${liferay.portal.branch[@{private.branch.name}]}"
+			/>
+			<replace
+				file="test.properties"
+				token="test.run.environment=CE"
+				value="test.run.environment=EE"
+			/>
+			<replace
+				file="test.properties"
+				token="testray.build.type=${testray.build.type[@{public.branch.name}]}"
+				value="testray.build.type=${testray.build.type[@{private.branch.name}]}"
+			/>
+
+			<!-- portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java -->
+
+			<replace
+				failOnNoReplacements="true"
+				file="portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java"
+				token="${release.info.build[@{public.branch.name}]}"
+				value="${release.info.build[@{private.branch.name}]}"
+			/>
+			<replace
+				failOnNoReplacements="true"
+				file="portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java"
+				token="${release.info.date[@{public.branch.name}]}"
+				value="${release.info.date[@{private.branch.name}]}"
+			/>
+			<replace
+				failOnNoReplacements="true"
+				file="portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java"
+				token="${release.info.name[@{public.branch.name}]}"
+				value="${release.info.name[@{private.branch.name}]}"
+			/>
+			<replace
+				failOnNoReplacements="true"
+				file="portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java"
+				token="${release.info.version[@{public.branch.name}]}"
+				value="${release.info.version[@{private.branch.name}]}"
+			/>
+			<replace
+				failOnNoReplacements="true"
+				file="portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java"
+				token="${release.info.version.display.name[@{public.branch.name}]}"
+				value="${release.info.version.display.name[@{private.branch.name}]}"
+			/>
+
+			<!-- sql/portal-data-release.sql -->
+
+			<replace
+				failOnNoReplacements="true"
+				file="sql/portal-data-release.sql"
+				token="${portal.data.release[@{public.branch.name}]}"
+				value="${portal.data.release[@{private.branch.name}]}"
+			/>
+
+			<!-- sql/sql.properties -->
+
+			<replace
+				failOnNoReplacements="true"
+				file="sql/sql.properties"
+				token="database.types=${database.types[@{public.branch.name}]}"
+				value="database.types=${database.types[@{private.branch.name}]}"
+			/>
+		</sequential>
+	</macrodef>
+
+	<target name="checkout-portal" unless="prepare.working.dir.private">
+		<loadfile property="portal.git.commit" srcFile="git-commit-portal">
+			<filterchain>
+				<striplinebreaks />
+			</filterchain>
+		</loadfile>
+
+		<move todir="${basedir}">
+			<filelist dir="${basedir}">
+				<file name=".gitignore" />
+				<file name="modules/.gitignore" />
+				<file name="README.markdown" />
+			</filelist>
+			<globmapper from="*" to="*.checkout-ignore" />
+		</move>
+
+		<exec executable="git" failonerror="true">
+			<arg value="checkout" />
+			<arg value="${portal.git.commit}" />
+			<arg value="." />
+		</exec>
+
+		<exec executable="git">
+			<arg value="reset" />
+			<arg value="HEAD" />
+			<arg value="." />
+		</exec>
+
+		<move todir="${basedir}">
+			<fileset dir="${basedir}" includes="**/*.checkout-ignore" />
+			<globmapper from="*.checkout-ignore" to="*" />
+		</move>
+	</target>
+
+	<target if="prepare.working.dir.private" name="checkout-portal-private">
+		<loadfile property="portal.private.git.commit" srcFile="git-commit-portal-ee">
+			<filterchain>
+				<striplinebreaks />
+			</filterchain>
+		</loadfile>
+
+		<exec executable="git" resultproperty="portal.private.git.commit.result">
+			<arg value="cat-file" />
+			<arg value="-e" />
+			<arg value="${portal.private.git.commit}" />
+		</exec>
+
+		<fail message="Please run this command from the liferay-portal-ee repository.">
+			<condition>
+				<not>
+					<equals arg1="${portal.private.git.commit.result}" arg2="0" />
+				</not>
+			</condition>
+		</fail>
+
+		<exec executable="git" failonerror="true">
+			<arg value="checkout" />
+			<arg value="${portal.private.git.commit}" />
+			<arg value="modules/private" />
+		</exec>
+
+		<exec executable="git">
+			<arg value="reset" />
+			<arg value="HEAD" />
+			<arg value="modules/private" />
+		</exec>
+	</target>
+
+	<target depends="checkout-portal,checkout-portal-private" name="prepare-working-dir">
+		<prepare-working-dir
+			private.branch.name="${private.branch.name}"
+			public.branch.name="${public.branch.name}"
+			unless:true="${prepare.working.dir.private}"
+		/>
+	</target>
+</project>

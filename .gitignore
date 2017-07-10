@@ -308,6 +308,7 @@
 /lib/portal/xuggle-xuggler-noarch.jar
 /lib/portal/xz.jar
 /lib/portal/yui-compressor.jar
+/modules/private
 /nbproject/private
 /out
 /portal-client/*.ipr

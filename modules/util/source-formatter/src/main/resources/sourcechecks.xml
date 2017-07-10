@@ -23,6 +23,12 @@
 		<check name="BNDIncludeResourceCheck" />
 		<check name="BNDWebContextPathCheck" />
 	</source-processor>
+	<source-processor name="CQLSourceProcessor">
+		<check name="CQLKeywordCheck" />
+		<check name="WhitespaceCheck">
+			<property name="allowLeadingSpaces" value="true" />
+		</check>
+	</source-processor>
 	<source-processor name="CSSSourceProcessor">
 		<check name="WhitespaceCheck" />
 	</source-processor>

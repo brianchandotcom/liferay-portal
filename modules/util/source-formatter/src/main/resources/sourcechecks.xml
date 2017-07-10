@@ -26,6 +26,9 @@
 	<source-processor name="CSSSourceProcessor">
 		<check name="WhitespaceCheck" />
 	</source-processor>
+	<source-processor name="DockerfileSourceProcessor">
+		<check name="WhitespaceCheck" />
+	</source-processor>
 	<source-processor name="FTLSourceProcessor">
 		<check name="FTLEmptyLinesCheck" />
 		<check name="FTLIfStatementCheck" />

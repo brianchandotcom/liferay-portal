@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project default="prepare-working-dir">
+<project default="prepare-working-dir" xmlns:unless="ant:unless">
 	<dirname file="${ant.file.build-common}" property="project.dir.native" />
 
 	<pathconvert property="project.dir" targetos="unix">
@@ -12,6 +12,12 @@
 	<property file="${project.dir}/working.dir.${env.HOST}.properties" />
 	<property file="${project.dir}/working.dir.${env.HOSTNAME}.properties" />
 	<property file="${project.dir}/working.dir.properties" />
+
+	<condition property="prepare.working.dir.private">
+		<not>
+			<available file="git-commit-portal" />
+		</not>
+	</condition>
 
 	<macrodef name="prepare-working-dir">
 		<attribute name="private.branch.name" />
@@ -133,7 +139,7 @@
 		</sequential>
 	</macrodef>
 
-	<target name="checkout-portal">
+	<target name="checkout-portal" unless="prepare.working.dir.private">
 		<loadfile property="portal.git.commit" srcFile="git-commit-portal">
 			<filterchain>
 				<striplinebreaks />
@@ -167,10 +173,31 @@
 		</move>
 	</target>
 
-	<target depends="checkout-portal" name="prepare-working-dir">
+	<target if="prepare.working.dir.private" name="checkout-portal-private">
+		<loadfile property="portal.private.git.commit" srcFile="git-commit-portal-ee">
+			<filterchain>
+				<striplinebreaks />
+			</filterchain>
+		</loadfile>
+
+		<exec executable="git" failonerror="true">
+			<arg value="checkout" />
+			<arg value="${portal.private.git.commit}" />
+			<arg value="modules/private" />
+		</exec>
+
+		<exec executable="git">
+			<arg value="reset" />
+			<arg value="HEAD" />
+			<arg value="modules/private" />
+		</exec>
+	</target>
+
+	<target depends="checkout-portal,checkout-portal-private" name="prepare-working-dir">
 		<prepare-working-dir
 			private.branch.name="${private.branch.name}"
 			public.branch.name="${public.branch.name}"
+			unless:true="${prepare.working.dir.private}"
 		/>
 	</target>
 </project>

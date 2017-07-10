@@ -40,7 +40,7 @@ cpDefinitionSearchContainer.setResults(cpDefinitions);
 <div id="<portlet:namespace />productsContainer">
 	<div class="products-container" id="<portlet:namespace />entriesContainer">
 		<liferay-ui:search-container
-			emptyResultsMessage="there-are-no-products"
+			emptyResultsMessage="no-products-were-found"
 			id="cpDefinitions"
 			searchContainer="<%= cpDefinitionSearchContainer %>"
 		>

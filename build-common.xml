@@ -1306,8 +1306,8 @@ rerun your task.
 			<echoproperties destfile="${gradle.properties.file}" >
 				<propertyset>
 					<propertyref name="app.server.type" />
-                    <propertyref name="aspectj.agent" />
-                    <propertyref name="aspectj.configuration" />
+					<propertyref name="aspectj.agent" />
+					<propertyref name="aspectj.configuration" />
 					<propertyref name="baseline.jar.report.level" />
 					<propertyref name="baseline.jar.report.only.dirty.packages" />
 					<propertyref name="git.working.branch.name" />

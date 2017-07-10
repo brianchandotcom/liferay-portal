@@ -192,15 +192,12 @@ gradlew.bat:${GRADLEW_BAT_REMOTE_SHA}
 			for i in {1..2}; do
 				OUTPUT=$(curl -d "{${DATA}}" --header "Authorization: token ${GITHUB_API_TOKEN}" -s "https://api.github.com/repos/liferay/${SUBREPO}/contents/${GRADLE_FILE}" -X PUT 2>&1)
 
-				EXIT_CODE=$?
-
-				if [[ "${EXIT_CODE}" == "0" ]] || [[ "$(echo ${OUTPUT} | grep "message.*${COMMIT_MESSAGE}")" ]]
-				then
+				if [[ "$(echo ${OUTPUT} | grep "message.*${COMMIT_MESSAGE}")" ]]; then
 					break
 				fi
 			done
 
-			if [[ "${EXIT_CODE}" != "0" ]] || [[ -z "$(echo ${OUTPUT} | grep "message.*${COMMIT_MESSAGE}")" ]]; then
+			if [[ -z "$(echo ${OUTPUT} | grep "message.*${COMMIT_MESSAGE}")" ]]; then
 				warn "Failed to update ${GRADLE_FILE} at liferay/${SUBREPO}:${BRANCH}."
 
 				warn "${OUTPUT}"
@@ -208,3 +205,5 @@ gradlew.bat:${GRADLEW_BAT_REMOTE_SHA}
 		fi
 	done
 done
+
+curl --header "Authorization: token ${GITHUB_API_TOKEN}" -s https://api.github.com/rate_limit

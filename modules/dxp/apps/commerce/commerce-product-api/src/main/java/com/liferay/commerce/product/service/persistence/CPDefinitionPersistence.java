@@ -21,6 +21,8 @@ import com.liferay.commerce.product.model.CPDefinition;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.util.Date;
+
 /**
  * The persistence interface for the cp definition service.
  *
@@ -698,52 +700,56 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	public int countByCompanyId(long companyId);
 
 	/**
-	* Returns all the cp definitions where status = &#63;.
+	* Returns all the cp definitions where displayDate &lt; &#63; and status = &#63;.
 	*
+	* @param displayDate the display date
 	* @param status the status
 	* @return the matching cp definitions
 	*/
-	public java.util.List<CPDefinition> findByStatus(int status);
+	public java.util.List<CPDefinition> findByLtD_S(Date displayDate, int status);
 
 	/**
-	* Returns a range of all the cp definitions where status = &#63;.
+	* Returns a range of all the cp definitions where displayDate &lt; &#63; and status = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
+	* @param displayDate the display date
 	* @param status the status
 	* @param start the lower bound of the range of cp definitions
 	* @param end the upper bound of the range of cp definitions (not inclusive)
 	* @return the range of matching cp definitions
 	*/
-	public java.util.List<CPDefinition> findByStatus(int status, int start,
-		int end);
+	public java.util.List<CPDefinition> findByLtD_S(Date displayDate,
+		int status, int start, int end);
 
 	/**
-	* Returns an ordered range of all the cp definitions where status = &#63;.
+	* Returns an ordered range of all the cp definitions where displayDate &lt; &#63; and status = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
+	* @param displayDate the display date
 	* @param status the status
 	* @param start the lower bound of the range of cp definitions
 	* @param end the upper bound of the range of cp definitions (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp definitions
 	*/
-	public java.util.List<CPDefinition> findByStatus(int status, int start,
-		int end,
+	public java.util.List<CPDefinition> findByLtD_S(Date displayDate,
+		int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition> orderByComparator);
 
 	/**
-	* Returns an ordered range of all the cp definitions where status = &#63;.
+	* Returns an ordered range of all the cp definitions where displayDate &lt; &#63; and status = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
+	* @param displayDate the display date
 	* @param status the status
 	* @param start the lower bound of the range of cp definitions
 	* @param end the upper bound of the range of cp definitions (not inclusive)
@@ -751,83 +757,90 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp definitions
 	*/
-	public java.util.List<CPDefinition> findByStatus(int status, int start,
-		int end,
+	public java.util.List<CPDefinition> findByLtD_S(Date displayDate,
+		int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition> orderByComparator,
 		boolean retrieveFromCache);
 
 	/**
-	* Returns the first cp definition in the ordered set where status = &#63;.
+	* Returns the first cp definition in the ordered set where displayDate &lt; &#63; and status = &#63;.
 	*
+	* @param displayDate the display date
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp definition
 	* @throws NoSuchCPDefinitionException if a matching cp definition could not be found
 	*/
-	public CPDefinition findByStatus_First(int status,
+	public CPDefinition findByLtD_S_First(Date displayDate, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition> orderByComparator)
 		throws NoSuchCPDefinitionException;
 
 	/**
-	* Returns the first cp definition in the ordered set where status = &#63;.
+	* Returns the first cp definition in the ordered set where displayDate &lt; &#63; and status = &#63;.
 	*
+	* @param displayDate the display date
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp definition, or <code>null</code> if a matching cp definition could not be found
 	*/
-	public CPDefinition fetchByStatus_First(int status,
+	public CPDefinition fetchByLtD_S_First(Date displayDate, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition> orderByComparator);
 
 	/**
-	* Returns the last cp definition in the ordered set where status = &#63;.
+	* Returns the last cp definition in the ordered set where displayDate &lt; &#63; and status = &#63;.
 	*
+	* @param displayDate the display date
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp definition
 	* @throws NoSuchCPDefinitionException if a matching cp definition could not be found
 	*/
-	public CPDefinition findByStatus_Last(int status,
+	public CPDefinition findByLtD_S_Last(Date displayDate, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition> orderByComparator)
 		throws NoSuchCPDefinitionException;
 
 	/**
-	* Returns the last cp definition in the ordered set where status = &#63;.
+	* Returns the last cp definition in the ordered set where displayDate &lt; &#63; and status = &#63;.
 	*
+	* @param displayDate the display date
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp definition, or <code>null</code> if a matching cp definition could not be found
 	*/
-	public CPDefinition fetchByStatus_Last(int status,
+	public CPDefinition fetchByLtD_S_Last(Date displayDate, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition> orderByComparator);
 
 	/**
-	* Returns the cp definitions before and after the current cp definition in the ordered set where status = &#63;.
+	* Returns the cp definitions before and after the current cp definition in the ordered set where displayDate &lt; &#63; and status = &#63;.
 	*
 	* @param CPDefinitionId the primary key of the current cp definition
+	* @param displayDate the display date
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next cp definition
 	* @throws NoSuchCPDefinitionException if a cp definition with the primary key could not be found
 	*/
-	public CPDefinition[] findByStatus_PrevAndNext(long CPDefinitionId,
-		int status,
+	public CPDefinition[] findByLtD_S_PrevAndNext(long CPDefinitionId,
+		Date displayDate, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition> orderByComparator)
 		throws NoSuchCPDefinitionException;
 
 	/**
-	* Removes all the cp definitions where status = &#63; from the database.
+	* Removes all the cp definitions where displayDate &lt; &#63; and status = &#63; from the database.
 	*
+	* @param displayDate the display date
 	* @param status the status
 	*/
-	public void removeByStatus(int status);
+	public void removeByLtD_S(Date displayDate, int status);
 
 	/**
-	* Returns the number of cp definitions where status = &#63;.
+	* Returns the number of cp definitions where displayDate &lt; &#63; and status = &#63;.
 	*
+	* @param displayDate the display date
 	* @param status the status
 	* @return the number of matching cp definitions
 	*/
-	public int countByStatus(int status);
+	public int countByLtD_S(Date displayDate, int status);
 
 	/**
 	* Returns all the cp definitions where groupId = &#63; and status = &#63;.

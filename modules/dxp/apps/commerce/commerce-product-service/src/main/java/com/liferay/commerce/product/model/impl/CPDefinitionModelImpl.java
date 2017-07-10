@@ -146,10 +146,10 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 				"value.object.column.bitmask.enabled.com.liferay.commerce.product.model.CPDefinition"),
 			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
-	public static final long GROUPID_COLUMN_BITMASK = 2L;
-	public static final long STATUS_COLUMN_BITMASK = 4L;
-	public static final long UUID_COLUMN_BITMASK = 8L;
-	public static final long DISPLAYDATE_COLUMN_BITMASK = 16L;
+	public static final long DISPLAYDATE_COLUMN_BITMASK = 2L;
+	public static final long GROUPID_COLUMN_BITMASK = 4L;
+	public static final long STATUS_COLUMN_BITMASK = 8L;
+	public static final long UUID_COLUMN_BITMASK = 16L;
 	public static final long CREATEDATE_COLUMN_BITMASK = 32L;
 
 	/**
@@ -809,7 +809,15 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 	public void setDisplayDate(Date displayDate) {
 		_columnBitmask = -1L;
 
+		if (_originalDisplayDate == null) {
+			_originalDisplayDate = _displayDate;
+		}
+
 		_displayDate = displayDate;
+	}
+
+	public Date getOriginalDisplayDate() {
+		return _originalDisplayDate;
 	}
 
 	@JSON
@@ -1278,6 +1286,8 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 
 		cpDefinitionModelImpl._setModifiedDate = false;
 
+		cpDefinitionModelImpl._originalDisplayDate = cpDefinitionModelImpl._displayDate;
+
 		cpDefinitionModelImpl._originalStatus = cpDefinitionModelImpl._status;
 
 		cpDefinitionModelImpl._setOriginalStatus = false;
@@ -1582,6 +1592,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 	private boolean _availableIndividually;
 	private String _DDMStructureKey;
 	private Date _displayDate;
+	private Date _originalDisplayDate;
 	private Date _expirationDate;
 	private Date _lastPublishDate;
 	private int _status;

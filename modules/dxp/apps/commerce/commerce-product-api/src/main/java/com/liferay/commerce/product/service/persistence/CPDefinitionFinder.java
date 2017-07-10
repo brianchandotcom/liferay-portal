@@ -36,7 +36,7 @@ public interface CPDefinitionFinder {
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.commerce.product.model.CPDefinition> queryDefinition);
 
 	public java.util.List<com.liferay.commerce.product.model.CPDefinition> findByExpirationDate(
-		java.util.Date date,
+		java.util.Date expirationDate,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.commerce.product.model.CPDefinition> queryDefinition);
 
 	public java.util.List<com.liferay.commerce.product.model.CPDefinition> findByG_P_S(

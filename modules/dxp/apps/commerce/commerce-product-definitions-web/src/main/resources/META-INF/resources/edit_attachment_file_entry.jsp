@@ -59,6 +59,20 @@ renderResponse.setTitle((cpDefinition == null) ? LanguageUtil.get(request, addMe
 		<aui:input name="cpAttachmentFileEntryId" type="hidden" value="<%= cpAttachmentFileEntryId %>" />
 		<aui:input name="toolbarItem" type="hidden" value="<%= toolbarItem %>" />
 		<aui:input name="type" type="hidden" value="<%= type %>" />
+		<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
+
+		<c:if test="<%= (cpAttachmentFileEntry != null) && !cpAttachmentFileEntry.isNew() %>">
+			<liferay-frontend:info-bar>
+				<aui:workflow-status
+					id="<%= String.valueOf(cpAttachmentFileEntryId) %>"
+					markupView="lexicon"
+					showHelpMessage="<%= false %>"
+					showIcon="<%= false %>"
+					showLabel="<%= false %>"
+					status="<%= cpAttachmentFileEntry.getStatus() %>"
+				/>
+			</liferay-frontend:info-bar>
+		</c:if>
 
 		<div class="lfr-form-content">
 			<liferay-ui:form-navigator
@@ -66,8 +80,38 @@ renderResponse.setTitle((cpDefinition == null) ? LanguageUtil.get(request, addMe
 				formModelBean="<%= cpAttachmentFileEntry %>"
 				id="<%= CPAttachmentFileEntryFormNavigatorConstants.FORM_NAVIGATOR_ID_CP_ATTACHMENT_FILE_ENTRY %>"
 				markupView="lexicon"
+				showButtons="<%= false %>"
 			/>
 		</div>
+
+		<aui:button-row cssClass="product-definition-button-row">
+
+			<%
+			boolean pending = false;
+
+			if (cpAttachmentFileEntry != null) {
+				pending = cpAttachmentFileEntry.isPending();
+			}
+
+			String saveButtonLabel = "save";
+
+			if ((cpAttachmentFileEntry == null) || cpAttachmentFileEntry.isDraft() || cpAttachmentFileEntry.isApproved() || cpAttachmentFileEntry.isExpired() || cpAttachmentFileEntry.isScheduled()) {
+				saveButtonLabel = "save-as-draft";
+			}
+
+			String publishButtonLabel = "publish";
+
+			if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, CPAttachmentFileEntry.class.getName())) {
+				publishButtonLabel = "submit-for-publication";
+			}
+			%>
+
+			<aui:button cssClass="btn-lg" disabled="<%= pending %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
+
+			<aui:button cssClass="btn-lg" name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
+
+			<aui:button cssClass="btn-lg" href="<%= backURL %>" type="cancel" />
+		</aui:button-row>
 	</aui:form>
 </div>
 
@@ -83,4 +127,19 @@ renderResponse.setTitle((cpDefinition == null) ? LanguageUtil.get(request, addMe
 
 		submitForm(form);
 	}
+</aui:script>
+
+<aui:script use="aui-base,event-input">
+	var publishButton = A.one('#<portlet:namespace />publishButton');
+
+	publishButton.on(
+		'click',
+		function() {
+			var workflowActionInput = A.one('#<portlet:namespace />workflowAction');
+
+			if (workflowActionInput) {
+				workflowActionInput.val('<%= WorkflowConstants.ACTION_PUBLISH %>');
+			}
+		}
+	);
 </aui:script>

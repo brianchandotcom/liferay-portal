@@ -37,6 +37,7 @@ renderResponse.setTitle((cpAttachmentFileEntry == null) ? LanguageUtil.get(reque
 	<aui:input name="assetCategoryId" type="hidden" value="<%= assetCategoryId %>" />
 	<aui:input name="cpAttachmentFileEntryId" type="hidden" value="<%= (cpAttachmentFileEntry == null) ? 0 : cpAttachmentFileEntry.getCPAttachmentFileEntryId() %>" />
 	<aui:input name="type" type="hidden" value="<%= CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE %>" />
+	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
 
 	<div class="lfr-form-content">
 		<liferay-ui:form-navigator
@@ -44,6 +45,51 @@ renderResponse.setTitle((cpAttachmentFileEntry == null) ? LanguageUtil.get(reque
 			formModelBean="<%= cpAttachmentFileEntry %>"
 			id="<%= CategoryCPAttachmentFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_CP_ATTACHMENT_FILE_ENTRY %>"
 			markupView="lexicon"
+			showButtons="<%= false %>"
 		/>
 	</div>
+
+	<aui:button-row cssClass="product-definition-button-row">
+
+		<%
+		boolean pending = false;
+
+		if (cpAttachmentFileEntry != null) {
+			pending = cpAttachmentFileEntry.isPending();
+		}
+
+		String saveButtonLabel = "save";
+
+		if ((cpAttachmentFileEntry == null) || cpAttachmentFileEntry.isDraft() || cpAttachmentFileEntry.isApproved() || cpAttachmentFileEntry.isExpired() || cpAttachmentFileEntry.isScheduled()) {
+			saveButtonLabel = "save-as-draft";
+		}
+
+		String publishButtonLabel = "publish";
+
+		if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, CPAttachmentFileEntry.class.getName())) {
+			publishButtonLabel = "submit-for-publication";
+		}
+		%>
+
+		<aui:button cssClass="btn-lg" disabled="<%= pending %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
+
+		<aui:button cssClass="btn-lg" name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
+
+		<aui:button cssClass="btn-lg" href="<%= backURL %>" type="cancel" />
+	</aui:button-row>
 </aui:form>
+
+<aui:script use="aui-base,event-input">
+	var publishButton = A.one('#<portlet:namespace />publishButton');
+
+	publishButton.on(
+		'click',
+		function() {
+			var workflowActionInput = A.one('#<portlet:namespace />workflowAction');
+
+			if (workflowActionInput) {
+				workflowActionInput.val('<%= WorkflowConstants.ACTION_PUBLISH %>');
+			}
+		}
+	);
+</aui:script>

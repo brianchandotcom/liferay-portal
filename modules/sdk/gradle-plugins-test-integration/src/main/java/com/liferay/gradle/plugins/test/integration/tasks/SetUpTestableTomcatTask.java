@@ -50,7 +50,6 @@ import org.gradle.api.Action;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
 import org.gradle.api.file.CopySpec;
-import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.util.VersionNumber;
@@ -105,6 +104,10 @@ public class SetUpTestableTomcatTask
 		};
 	}
 
+	/**
+	 * @deprecated As of 1.2.0, with no direct replacement
+	 */
+	@Deprecated
 	public SetUpTestableTomcatTask catalinaOptsReplacement(
 		String oldSub, Object newSub) {
 
@@ -113,6 +116,10 @@ public class SetUpTestableTomcatTask
 		return this;
 	}
 
+	/**
+	 * @deprecated As of 1.2.0, with no direct replacement
+	 */
+	@Deprecated
 	public SetUpTestableTomcatTask catalinaOptsReplacements(
 		Map<String, ?> catalinaOptsReplacements) {
 
@@ -125,6 +132,10 @@ public class SetUpTestableTomcatTask
 		return new File(getDir(), "bin");
 	}
 
+	/**
+	 * @deprecated As of 1.2.0, with no direct replacement
+	 */
+	@Deprecated
 	@Input
 	public Map<String, Object> getCatalinaOptsReplacements() {
 		return _catalinaOptsReplacements;
@@ -184,6 +195,10 @@ public class SetUpTestableTomcatTask
 		return _overwriteTestModules;
 	}
 
+	/**
+	 * @deprecated As of 1.2.0, with no direct replacement
+	 */
+	@Deprecated
 	public void setCatalinaOptsReplacements(
 		Map<String, ?> catalinaOptsReplacements) {
 
@@ -234,7 +249,6 @@ public class SetUpTestableTomcatTask
 
 	@TaskAction
 	public void setUpTestableTomcat() throws Exception {
-		_setUpCatalinaOpts();
 		_setUpJmx();
 		_setUpLogging();
 		_setUpManager();
@@ -280,44 +294,6 @@ public class SetUpTestableTomcatTask
 		sb.append(isJmxRemoteSsl());
 
 		return sb.toString();
-	}
-
-	private void _replace(String fileName, Map<String, Object> replacements)
-		throws IOException {
-
-		Logger logger = getLogger();
-
-		File dir = getDir();
-
-		Path dirPath = dir.toPath();
-
-		Path path = dirPath.resolve(fileName);
-
-		String content = new String(Files.readAllBytes(path));
-
-		for (Map.Entry<String, Object> entry : replacements.entrySet()) {
-			String oldSub = entry.getKey();
-			String newSub = GradleUtil.toString(entry.getValue());
-
-			if (logger.isWarnEnabled() && !content.contains(oldSub)) {
-				logger.warn("Unable to find \"{}\" in {}", oldSub, path);
-			}
-
-			content = content.replace(oldSub, newSub);
-		}
-
-		Files.write(path, content.getBytes());
-	}
-
-	private void _setUpCatalinaOpts() throws IOException {
-		Map<String, Object> replacements = getCatalinaOptsReplacements();
-
-		if (replacements.isEmpty()) {
-			return;
-		}
-
-		_replace("bin/setenv.bat", replacements);
-		_replace("bin/setenv.sh", replacements);
 	}
 
 	private void _setUpJmx() throws IOException {

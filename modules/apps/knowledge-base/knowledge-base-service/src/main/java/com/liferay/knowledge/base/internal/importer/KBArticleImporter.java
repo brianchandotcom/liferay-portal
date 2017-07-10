@@ -20,11 +20,10 @@ import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.exception.KBArticleImportException;
 import com.liferay.knowledge.base.internal.importer.util.KBArticleMarkdownConverter;
 import com.liferay.knowledge.base.model.KBArticle;
-import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
+import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StreamUtil;
@@ -42,16 +41,21 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author James Hinkey
  * @author Sergio González
  * @author Jesse Rao
  */
-@Component(service = KBArticleImporter.class)
 public class KBArticleImporter {
+
+	public KBArticleImporter(
+		KBArchiveFactory kbArchiveFactory,
+		KBArticleLocalService kbArticleLocalService, Portal portal) {
+
+		_kbArchiveFactory = kbArchiveFactory;
+		_kbArticleLocalService = kbArticleLocalService;
+		_portal = portal;
+	}
 
 	public int processZipFile(
 			long userId, long groupId, long parentKBFolderId,
@@ -97,9 +101,8 @@ public class KBArticleImporter {
 
 		String urlTitle = kbArticleMarkdownConverter.getUrlTitle();
 
-		KBArticle kbArticle =
-			KBArticleLocalServiceUtil.fetchKBArticleByUrlTitle(
-				groupId, parentKBFolderId, urlTitle);
+		KBArticle kbArticle = _kbArticleLocalService.fetchKBArticleByUrlTitle(
+			groupId, parentKBFolderId, urlTitle);
 
 		boolean newKBArticle = false;
 
@@ -114,7 +117,7 @@ public class KBArticleImporter {
 				serviceContext.setWorkflowAction(
 					WorkflowConstants.ACTION_SAVE_DRAFT);
 
-				kbArticle = KBArticleLocalServiceUtil.addKBArticle(
+				kbArticle = _kbArticleLocalService.addKBArticle(
 					userId, parentResourceClassNameId, parentResourcePrimaryKey,
 					kbArticleMarkdownConverter.getTitle(), urlTitle, markdown,
 					null, kbArticleMarkdownConverter.getSourceURL(), null, null,
@@ -140,10 +143,9 @@ public class KBArticleImporter {
 		try {
 			String html =
 				kbArticleMarkdownConverter.processAttachmentsReferences(
-					userId, kbArticle, zipReader,
-					new HashMap<String, FileEntry>());
+					userId, kbArticle, zipReader, new HashMap<>());
 
-			kbArticle = KBArticleLocalServiceUtil.updateKBArticle(
+			kbArticle = _kbArticleLocalService.updateKBArticle(
 				userId, kbArticle.getResourcePrimKey(),
 				kbArticleMarkdownConverter.getTitle(), html,
 				kbArticle.getDescription(),
@@ -293,17 +295,11 @@ public class KBArticleImporter {
 		return importedKBArticlesCount;
 	}
 
-	@Reference(unbind = "-")
-	protected void setKBArchiveFactory(KBArchiveFactory kbArchiveFactory) {
-		_kbArchiveFactory = kbArchiveFactory;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		KBArticleImporter.class);
 
-	private KBArchiveFactory _kbArchiveFactory;
-
-	@Reference
-	private Portal _portal;
+	private final KBArchiveFactory _kbArchiveFactory;
+	private final KBArticleLocalService _kbArticleLocalService;
+	private final Portal _portal;
 
 }

@@ -77,6 +77,20 @@ public class CPDefinitionItemSelectorViewDisplayContext
 	}
 
 	@Override
+	public PortletURL getPortletURL() {
+		PortletURL portletURL = super.getPortletURL();
+
+		long cpDefinitionId = getCPDefinitionId();
+
+		if (cpDefinitionId > 0) {
+			portletURL.setParameter(
+				"cpDefinitionId", String.valueOf(cpDefinitionId));
+		}
+
+		return portletURL;
+	}
+
+	@Override
 	public SearchContainer<CPDefinition> getSearchContainer()
 		throws PortalException {
 

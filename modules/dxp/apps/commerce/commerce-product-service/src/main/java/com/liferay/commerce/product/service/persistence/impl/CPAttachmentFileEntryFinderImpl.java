@@ -39,7 +39,8 @@ public class CPAttachmentFileEntryFinderImpl
 
 	@Override
 	public List<CPAttachmentFileEntry> findByExpirationDate(
-		Date expirationDate, QueryDefinition<CPAttachmentFileEntry> queryDefinition) {
+		Date expirationDate,
+		QueryDefinition<CPAttachmentFileEntry> queryDefinition) {
 
 		return doFindByExpirationDate(expirationDate, queryDefinition, false);
 	}
@@ -83,4 +84,5 @@ public class CPAttachmentFileEntryFinderImpl
 			closeSession(session);
 		}
 	}
+
 }

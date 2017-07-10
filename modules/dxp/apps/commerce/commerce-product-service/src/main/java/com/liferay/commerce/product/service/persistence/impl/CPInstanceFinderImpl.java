@@ -80,4 +80,5 @@ public class CPInstanceFinderImpl
 			closeSession(session);
 		}
 	}
+
 }

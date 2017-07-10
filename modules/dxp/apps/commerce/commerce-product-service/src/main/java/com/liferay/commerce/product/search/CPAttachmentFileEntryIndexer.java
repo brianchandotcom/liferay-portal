@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -40,7 +41,6 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -80,7 +80,7 @@ public class CPAttachmentFileEntryIndexer
 	@Override
 	public void postProcessContextBooleanFilter(
 			BooleanFilter contextBooleanFilter, SearchContext searchContext)
-			throws Exception {
+		throws Exception {
 
 		int status = GetterUtil.getInteger(
 			searchContext.getAttribute(Field.STATUS),

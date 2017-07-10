@@ -8382,64 +8382,58 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 		<if>
 			<equals arg1="${app.server.type}" arg2="tomcat" />
 			<then>
-				<local name="enable.ext.environment" />
-
-				<if>
-					<and>
-						<matches pattern="https?://" string="${test.build.bundle.zip.url}" />
-						<matches pattern="https?://" string="${test.build.fix.pack.zip.url}" />
-					</and>
-					<then>
-						<get-patch-requirements patch.file.zip.url="${test.build.fix.pack.zip.url}" />
-
-						<beanshell>
-							<![CDATA[
-								import java.util.regex.Matcher;
-								import java.util.regex.Pattern;
-
-								int fixpackVersion = -1;
-
-								String fixPackZipURL = project.getProperty("test.build.fix.pack.zip.url");
-								String patchRequirements = project.getProperty("patch.requirements");
-
-								Pattern pattern = Pattern.compile("https?://.*/liferay-fix-pack-de-(\\d+)-\\d{4}[^/]*.zip");
-
-								Matcher matcher = pattern.matcher(fixPackZipURL);
-
-								if (matcher.find()) {
-									fixpackVersion = Integer.valueOf(matcher.group(1));
-								}
-								else if ((patchRequirements != null) && patchRequirements.startsWith("de-")) {
-									fixpackVersion = Integer.valueOf(patchRequirements.substring(3));
-								}
-
-								if (fixpackVersion >= 16) {
-									project.setProperty("enable.ext.environment", "true");
-								}
-							]]>
-						</beanshell>
-					</then>
-				</if>
-
-				<if>
-					<equals arg1="${enable.ext.environment}" arg2="true" />
-					<then>
-						<antcall target="prepare-tomcat-ext-environment" />
-					</then>
-				</if>
+				<antcall target="prepare-tomcat-ext-environment" />
 			</then>
 		</if>
 	</target>
 
 	<target name="prepare-tomcat-ext-environment">
 		<if>
-			<not>
-				<resourcecontains resource="${app.server.dir}/conf/Catalina/localhost/ROOT.xml" substring="ExtResourceSet" />
-			</not>
+			<and>
+				<matches pattern="https?://" string="${test.build.bundle.zip.url}" />
+				<matches pattern="https?://" string="${test.build.fix.pack.zip.url}" />
+				<not>
+					<resourcecontains resource="${app.server.dir}/conf/Catalina/localhost/ROOT.xml" substring="ExtResourceSet" />
+				</not>
+			</and>
 			<then>
-				<replace file="${app.server.dir}/conf/Catalina/localhost/ROOT.xml">
-					<replacetoken><![CDATA[</Context>]]></replacetoken>
-					<replacevalue><![CDATA[	<Resources>
+				<local name="enable.ext.environment" />
+
+				<get-patch-requirements patch.file.zip.url="${test.build.fix.pack.zip.url}" />
+
+				<beanshell>
+					<![CDATA[
+						import java.util.regex.Matcher;
+						import java.util.regex.Pattern;
+
+						int fixpackVersion = -1;
+
+						String fixPackZipURL = project.getProperty("test.build.fix.pack.zip.url");
+						String patchRequirements = project.getProperty("patch.requirements");
+
+						Pattern pattern = Pattern.compile("https?://.*/liferay-fix-pack-de-(\\d+)-\\d{4}[^/]*.zip");
+
+						Matcher matcher = pattern.matcher(fixPackZipURL);
+
+						if (matcher.find()) {
+							fixpackVersion = Integer.valueOf(matcher.group(1));
+						}
+						else if ((patchRequirements != null) && patchRequirements.startsWith("de-")) {
+							fixpackVersion = Integer.valueOf(patchRequirements.substring(3));
+						}
+
+						if (fixpackVersion >= 16) {
+							project.setProperty("enable.ext.environment", "true");
+						}
+					]]>
+				</beanshell>
+
+				<if>
+					<equals arg1="${enable.ext.environment}" arg2="true" />
+					<then>
+						<replace file="${app.server.dir}/conf/Catalina/localhost/ROOT.xml">
+							<replacetoken><![CDATA[</Context>]]></replacetoken>
+							<replacevalue><![CDATA[	<Resources>
 		<PreResources
 			className="com.liferay.support.tomcat.webresources.ExtResourceSet"
 			base="${catalina.base}/lib/ext/portal"
@@ -8447,7 +8441,9 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 		/>
 	</Resources>
 </Context>]]></replacevalue>
-				</replace>
+						</replace>
+					</then>
+				</if>
 			</then>
 		</if>
 	</target>

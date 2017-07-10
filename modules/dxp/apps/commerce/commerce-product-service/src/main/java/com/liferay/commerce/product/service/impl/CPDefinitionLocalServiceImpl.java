@@ -206,7 +206,7 @@ public class CPDefinitionLocalServiceImpl
 			long cpDefinitionId, long categoryId)
 		throws PortalException {
 
-		AssetEntry assetEntry = assetEntryLocalService.fetchEntry(
+		AssetEntry assetEntry = assetEntryLocalService.getEntry(
 			CPDefinition.class.getName(), cpDefinitionId);
 
 		assetEntryLocalService.deleteAssetCategoryAssetEntry(

@@ -1847,6 +1847,9 @@ to version 2.0.28.
 dependency to version 2.1.15.
 - [LPS-73472]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
 version 2.3.15.
+- [LPS-73495]: Update the [Liferay CSS Builder] dependency to version 1.0.28.
+- [LPS-73495]: Update the [Liferay Gradle Plugins CSS Builder] dependency to
+version 2.0.1.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
@@ -2015,4 +2018,5 @@ version 2.3.15.
 [LPS-73156]: https://issues.liferay.com/browse/LPS-73156
 [LPS-73383]: https://issues.liferay.com/browse/LPS-73383
 [LPS-73472]: https://issues.liferay.com/browse/LPS-73472
+[LPS-73495]: https://issues.liferay.com/browse/LPS-73495
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

@@ -53,6 +53,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.impl.CriteriaImpl;
@@ -130,11 +131,15 @@ public class DummyReferenceStagedModelRepository
 	public DummyReference fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		List<DummyReference> dummies = _dummyReferences.stream().filter(
+		Stream<DummyReference> dummyReferenceStream = _dummyReferences.stream();
+
+		List<DummyReference> dummies = dummyReferenceStream.filter(
 			dummyReference ->
 				dummyReference.getUuid().equals(uuid) &&
 				(dummyReference.getGroupId() == groupId)
-		).collect(Collectors.toList());
+		).collect(
+			Collectors.toList()
+		);
 
 		if (dummies.isEmpty()) {
 			return null;
@@ -147,11 +152,15 @@ public class DummyReferenceStagedModelRepository
 	public List<DummyReference> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return _dummyReferences.stream().filter(
+		Stream<DummyReference> dummyReferenceStream = _dummyReferences.stream();
+
+		return dummyReferenceStream.filter(
 			dummyReference ->
 				dummyReference.getUuid().equals(uuid) &&
 				(dummyReference.getCompanyId() == companyId)
-		).collect(Collectors.toList());
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	@Override
@@ -188,8 +197,11 @@ public class DummyReferenceStagedModelRepository
 
 		exportActionableDynamicQuery.setBaseLocalService(
 			new DummyReferenceBaseLocalServiceImpl());
-		exportActionableDynamicQuery.setClassLoader(
-			getClass().getClassLoader());
+
+		Class<?> clazz = getClass();
+
+		exportActionableDynamicQuery.setClassLoader(clazz.getClassLoader());
+
 		exportActionableDynamicQuery.setModelClass(DummyReference.class);
 
 		exportActionableDynamicQuery.setPrimaryKeyPropertyName("id");
@@ -373,9 +385,14 @@ public class DummyReferenceStagedModelRepository
 					CriteriaImpl.CriterionEntry criteriaImpl =
 						(CriteriaImpl.CriterionEntry)iterator.next();
 
-					result = result.stream().filter(
+					Stream<DummyReference> dummyReferenceStream =
+						result.stream();
+
+					result = dummyReferenceStream.filter(
 						getPredicate(criteriaImpl.toString())
-					).collect(Collectors.toList());
+					).collect(
+						Collectors.toList()
+					);
 				}
 			}
 			catch (Exception e) {

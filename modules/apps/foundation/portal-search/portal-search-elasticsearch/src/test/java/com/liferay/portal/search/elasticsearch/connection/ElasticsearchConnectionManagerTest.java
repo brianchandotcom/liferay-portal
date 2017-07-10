@@ -75,13 +75,17 @@ public class ElasticsearchConnectionManagerTest {
 
 		_elasticsearchConnectionManager.getClient();
 
-		Mockito.verify(_embeddedElasticsearchConnection).getClient();
+		Mockito.verify(
+			_embeddedElasticsearchConnection
+		).getClient();
 
 		modify(OperationMode.REMOTE);
 
 		_elasticsearchConnectionManager.getClient();
 
-		Mockito.verify(_remoteElasticsearchConnection).getClient();
+		Mockito.verify(
+			_remoteElasticsearchConnection
+		).getClient();
 	}
 
 	@Test

@@ -71,7 +71,11 @@ public class CopyRecordSetMVCActionCommandTest extends PowerMockito {
 		DDMFormValues ddmFormValues = createDDMFormValues(
 			expectedRecordSetSettingsDDMForm);
 
-		when(recordSet.getSettingsDDMFormValues()).thenReturn(ddmFormValues);
+		when(
+			recordSet.getSettingsDDMFormValues()
+		).thenReturn(
+			ddmFormValues
+		);
 
 		String expectedStorageType = StringUtil.randomString();
 

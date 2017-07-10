@@ -80,7 +80,9 @@ public abstract class BaseFacetedSearcherTestCase {
 	}
 
 	protected void assertAllHitsAreUsers(String keywords, Hits hits) {
-		List<Document> documents = Stream.of(hits.getDocs()).filter(
+		Stream<Document> documentsStream = Stream.of(hits.getDocs());
+
+		List<Document> documents = documentsStream.filter(
 			this::isMissingScreenName
 		).collect(
 			Collectors.toList()

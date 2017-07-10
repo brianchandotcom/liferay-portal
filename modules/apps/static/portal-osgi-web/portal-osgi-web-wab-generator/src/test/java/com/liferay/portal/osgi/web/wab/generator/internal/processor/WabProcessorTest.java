@@ -46,6 +46,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -375,7 +376,9 @@ public class WabProcessorTest {
 	}
 
 	protected ClassLoader getClassLoader() {
-		return getClass().getClassLoader();
+		Class<?> clazz = getClass();
+
+		return clazz.getClassLoader();
 	}
 
 	protected File getFile(String fileName) throws URISyntaxException {
@@ -412,9 +415,9 @@ public class WabProcessorTest {
 
 				File parent = deployDir.getParentFile();
 
-				Files.walk(
-					parent.toPath()
-				).sorted(
+				Stream<Path> pathsStream = Files.walk(parent.toPath());
+
+				pathsStream.sorted(
 					Comparator.reverseOrder()
 				).map(
 					Path::toFile

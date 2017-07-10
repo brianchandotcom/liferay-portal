@@ -53,6 +53,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.impl.CriteriaImpl;
@@ -128,11 +129,15 @@ public class DummyFolderStagedModelRepository
 	public DummyFolder fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		List<DummyFolder> dummyFolders = _dummyFolders.stream().filter(
+		Stream<DummyFolder> dummyFoldersStream = _dummyFolders.stream();
+
+		List<DummyFolder> dummyFolders = dummyFoldersStream.filter(
 			dummyFolder ->
 				dummyFolder.getUuid().equals(uuid) &&
 				(dummyFolder.getGroupId() == groupId)
-		).collect(Collectors.toList());
+		).collect(
+			Collectors.toList()
+		);
 
 		if (dummyFolders.isEmpty()) {
 			return null;
@@ -145,17 +150,25 @@ public class DummyFolderStagedModelRepository
 	public List<DummyFolder> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return _dummyFolders.stream().filter(
+		Stream<DummyFolder> dummyFoldersStream = _dummyFolders.stream();
+
+		return dummyFoldersStream.filter(
 			dummyFolder ->
 				dummyFolder.getUuid().equals(uuid) &&
 				(dummyFolder.getCompanyId() == companyId)
-		).collect(Collectors.toList());
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	public List<DummyFolder> getDummyFolders(long groupId) {
-		return _dummyFolders.stream().filter(
+		Stream<DummyFolder> dummyFoldersStream = _dummyFolders.stream();
+
+		return dummyFoldersStream.filter(
 			d -> d.getGroupId() == groupId
-		).collect(Collectors.toList());
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	@Override
@@ -192,8 +205,11 @@ public class DummyFolderStagedModelRepository
 
 		exportActionableDynamicQuery.setBaseLocalService(
 			new DummyFolderBaseLocalServiceImpl());
-		exportActionableDynamicQuery.setClassLoader(
-			getClass().getClassLoader());
+
+		Class<?> clazz = getClass();
+
+		exportActionableDynamicQuery.setClassLoader(clazz.getClassLoader());
+
 		exportActionableDynamicQuery.setModelClass(DummyFolder.class);
 
 		exportActionableDynamicQuery.setPrimaryKeyPropertyName("id");
@@ -319,8 +335,13 @@ public class DummyFolderStagedModelRepository
 	}
 
 	public DummyFolder getFolder(long folderId) {
-		List<DummyFolder> dummyFolders = _dummyFolders.stream().filter(
-			f -> f.getId() == folderId).collect(Collectors.toList());
+		Stream<DummyFolder> dummyFoldersStream = _dummyFolders.stream();
+
+		List<DummyFolder> dummyFolders = dummyFoldersStream.filter(
+			f -> f.getId() == folderId
+		).collect(
+			Collectors.toList()
+		);
 
 		if (dummyFolders.isEmpty()) {
 			throw new RuntimeException(new NoSuchModelException());
@@ -385,9 +406,13 @@ public class DummyFolderStagedModelRepository
 					CriteriaImpl.CriterionEntry criteriaImpl =
 						(CriteriaImpl.CriterionEntry)iterator.next();
 
-					result = result.stream().filter(
+					Stream<DummyFolder> dummyFoldersStream = result.stream();
+
+					result = dummyFoldersStream.filter(
 						getPredicate(criteriaImpl.toString())
-					).collect(Collectors.toList());
+					).collect(
+						Collectors.toList()
+					);
 				}
 			}
 			catch (Exception e) {

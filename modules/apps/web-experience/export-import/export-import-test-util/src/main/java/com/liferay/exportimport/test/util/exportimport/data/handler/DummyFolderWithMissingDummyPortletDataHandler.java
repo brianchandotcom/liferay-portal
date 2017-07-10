@@ -103,7 +103,9 @@ public class DummyFolderWithMissingDummyPortletDataHandler
 		List<DummyFolder> dummyFolders = (
 			(DummyFolderStagedModelRepository)
 				_dummyFolderStagedModelRepository
-		).getDummyFolders(portletDataContext.getScopeGroupId());
+		).getDummyFolders(
+			portletDataContext.getScopeGroupId()
+		);
 
 		for (DummyFolder dummyFolder : dummyFolders) {
 			Element dummyFolderElement =

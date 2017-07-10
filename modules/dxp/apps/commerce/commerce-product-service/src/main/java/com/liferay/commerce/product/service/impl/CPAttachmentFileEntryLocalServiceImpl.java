@@ -43,7 +43,9 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 
 import java.io.Serializable;
+
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -384,7 +386,9 @@ public class CPAttachmentFileEntryLocalServiceImpl
 			cpAttachmentFileEntryPersistence.findByLtD_S(
 				new Date(), WorkflowConstants.STATUS_SCHEDULED);
 
-		for (CPAttachmentFileEntry cpAttachmentFileEntry : cpAttachmentFileEntries) {
+		for (CPAttachmentFileEntry cpAttachmentFileEntry :
+				cpAttachmentFileEntries) {
+
 			long userId = PortalUtil.getValidUserId(
 				cpAttachmentFileEntry.getCompanyId(),
 				cpAttachmentFileEntry.getUserId());
@@ -415,8 +419,12 @@ public class CPAttachmentFileEntryLocalServiceImpl
 					" commerce product attachment file entries");
 		}
 
-		if ((cpAttachmentFileEntries != null) && !cpAttachmentFileEntries.isEmpty()) {
-			for (CPAttachmentFileEntry cpAttachmentFileEntry : cpAttachmentFileEntries) {
+		if ((cpAttachmentFileEntries != null) &&
+			!cpAttachmentFileEntries.isEmpty()) {
+
+			for (CPAttachmentFileEntry cpAttachmentFileEntry :
+					cpAttachmentFileEntries) {
+
 				long userId = PortalUtil.getValidUserId(
 					cpAttachmentFileEntry.getCompanyId(),
 					cpAttachmentFileEntry.getUserId());

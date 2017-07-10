@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -45,7 +46,6 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletURL;
 
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -173,8 +173,8 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 		else if (cpAttachmentFileEntry != null) {
 			portletURL.setParameter(
 				"cpAttachmentFileEntryId",
-					String.valueOf(
-						cpAttachmentFileEntry.getCPAttachmentFileEntryId()));
+				String.valueOf(
+					cpAttachmentFileEntry.getCPAttachmentFileEntryId()));
 		}
 
 		long cpDefinitionId = ParamUtil.getLong(

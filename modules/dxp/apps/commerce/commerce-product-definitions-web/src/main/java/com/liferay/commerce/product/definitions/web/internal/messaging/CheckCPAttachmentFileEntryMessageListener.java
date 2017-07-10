@@ -15,21 +15,25 @@
 package com.liferay.commerce.product.definitions.web.internal.messaging;
 
 import com.liferay.commerce.product.definitions.web.internal.configuration.CPAttachmentFileEntryConfiguration;
-import com.liferay.commerce.product.definitions.web.internal.configuration.CPInstanceConfiguration;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
-import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.scheduler.*;
+
+import java.util.Map;
+
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
+import com.liferay.portal.kernel.scheduler.SchedulerEntry;
+import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
+import com.liferay.portal.kernel.scheduler.TimeUnit;
+import com.liferay.portal.kernel.scheduler.Trigger;
+import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-
-import java.util.Map;
 
 /**
  * @author Alessio Antonio Rendina
@@ -38,7 +42,8 @@ import java.util.Map;
 	configurationPid = "com.liferay.commerce.product.definitions.web.internal.configuration.CPAttachmentFileEntryConfiguration",
 	immediate = true, service = CheckCPAttachmentFileEntryMessageListener.class
 )
-public class CheckCPAttachmentFileEntryMessageListener extends BaseMessageListener {
+public class CheckCPAttachmentFileEntryMessageListener
+	extends BaseMessageListener {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {

@@ -1066,7 +1066,7 @@ public abstract class BaseSearchTestCase {
 		throws Exception {
 	}
 
-	protected final boolean CHECK_BASE_MODEL_PERMISSION = true;
+	protected static final boolean CHECK_BASE_MODEL_PERMISSION = true;
 
 	protected BaseModel<?> baseModel;
 

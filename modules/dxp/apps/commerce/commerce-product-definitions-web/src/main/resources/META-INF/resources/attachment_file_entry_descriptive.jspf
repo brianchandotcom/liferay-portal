@@ -74,6 +74,9 @@
 	}
 	%>
 
+	<h6 class="text-default">
+		<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= cpAttachmentFileEntry.getStatus() %>" />
+	</h6>
 </liferay-ui:search-container-column-text>
 
 <liferay-ui:search-container-column-jsp

@@ -60,6 +60,10 @@ if (ListUtil.isEmpty(cpAttachmentFileEntries)) {
 			</p>
 
 			<h5><liferay-ui:message key="status" /></h5>
+
+			<p>
+				<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= cpAttachmentFileEntry.getStatus() %>" />
+			</p>
 		</div>
 	</c:when>
 	<c:otherwise>

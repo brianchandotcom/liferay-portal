@@ -238,13 +238,13 @@ public class CPAttachmentFileEntriesDisplayContext extends
 		if (!isSearch()) {
 			int total =
 				_cpAttachmentFileEntryService.getCPAttachmentFileEntriesCount(
-					classNameId, getCPDefinitionId(), _type);
+					classNameId, getCPDefinitionId(), _type, getStatus());
 
 			searchContainer.setTotal(total);
 
 			List<CPAttachmentFileEntry> results =
 				_cpAttachmentFileEntryService.getCPAttachmentFileEntries(
-					classNameId, getCPDefinitionId(), _type,
+					classNameId, getCPDefinitionId(), _type, getStatus(),
 					searchContainer.getStart(), searchContainer.getEnd(),
 					orderByComparator);
 

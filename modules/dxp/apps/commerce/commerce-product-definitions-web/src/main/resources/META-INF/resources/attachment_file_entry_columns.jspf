@@ -77,6 +77,12 @@ for (CPDefinitionOptionRel cpDefinitionOptionRel : cpDefinitionOptionRels) {
 }
 %>
 
+<liferay-ui:search-container-column-status
+	cssClass="table-cell-content"
+	name="status"
+	status="<%= cpAttachmentFileEntry.getStatus() %>"
+/>
+
 <liferay-ui:search-container-column-date
 	cssClass="table-cell-content"
 	name="modified-date"

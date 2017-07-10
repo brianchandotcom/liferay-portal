@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Collections;
 import java.util.List;
@@ -160,7 +161,8 @@ public class CPAssetCategoriesNavigationDisplayContext {
 		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
 			_cpAttachmentFileEntryService.getCPAttachmentFileEntries(
 				classNameId, categoryId,
-				CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE, 0, 1);
+				CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE,
+				WorkflowConstants.STATUS_APPROVED, 0, 1);
 
 		if (cpAttachmentFileEntries.isEmpty()) {
 			return null;

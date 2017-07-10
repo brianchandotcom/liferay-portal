@@ -53,4 +53,5 @@
 	}
 	%>
 
+	<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= cpAttachmentFileEntry.getStatus() %>" />
 </liferay-frontend:vertical-card-footer>

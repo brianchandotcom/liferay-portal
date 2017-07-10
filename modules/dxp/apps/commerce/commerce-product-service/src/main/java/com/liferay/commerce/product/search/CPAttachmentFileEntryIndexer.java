@@ -40,6 +40,7 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -79,7 +80,15 @@ public class CPAttachmentFileEntryIndexer
 	@Override
 	public void postProcessContextBooleanFilter(
 			BooleanFilter contextBooleanFilter, SearchContext searchContext)
-		throws Exception {
+			throws Exception {
+
+		int status = GetterUtil.getInteger(
+			searchContext.getAttribute(Field.STATUS),
+			WorkflowConstants.STATUS_APPROVED);
+
+		if (status != WorkflowConstants.STATUS_ANY) {
+			contextBooleanFilter.addRequiredTerm(Field.STATUS, status);
+		}
 
 		long classNameId = GetterUtil.getLong(
 			searchContext.getAttribute(FIELD_RELATED_ENTITY_CLASS_NAME_ID));

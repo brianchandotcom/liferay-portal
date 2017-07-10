@@ -69,14 +69,15 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 	}
 
 	@Override
-	public void deleteAssetCategoryCPDefinition(long cpDefinitionId)
+	public void deleteAssetCategoryCPDefinition(
+			long cpDefinitionId, long categoryId)
 		throws PortalException {
 
 		CPDefinitionPermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
 
 		cpDefinitionLocalService.deleteAssetCategoryCPDefinition(
-			cpDefinitionId);
+			cpDefinitionId, categoryId);
 	}
 
 	@Override

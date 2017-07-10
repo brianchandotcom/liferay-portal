@@ -204,11 +204,15 @@ public class CPDefinitionLocalServiceImpl
 	}
 
 	@Override
-	public void deleteAssetCategoryCPDefinition(long cpDefinitionId)
+	public void deleteAssetCategoryCPDefinition(
+			long cpDefinitionId, long categoryId)
 		throws PortalException {
 
-		assetEntryLocalService.deleteEntry(
+		AssetEntry assetEntry = assetEntryLocalService.fetchEntry(
 			CPDefinition.class.getName(), cpDefinitionId);
+
+		assetEntryLocalService.deleteAssetCategoryAssetEntry(
+			categoryId, assetEntry.getEntryId());
 	}
 
 	@Indexable(type = IndexableType.DELETE)

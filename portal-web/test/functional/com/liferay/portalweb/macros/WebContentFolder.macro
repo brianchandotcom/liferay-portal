@@ -4,14 +4,9 @@
 
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<if>
-			<condition function="IsElementPresent" locator1="MenuItem#FOLDER" />
-			<then>
-				<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Folder">
-					<var name="key_menuItem" value="Folder" />
-				</execute>
-			</then>
-		</if>
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Folder">
+			<var name="key_menuItem" value="Folder" />
+		</execute>
 
 		<execute macro="PortletEntry#inputName">
 			<var name="name" value="${folderName}" />

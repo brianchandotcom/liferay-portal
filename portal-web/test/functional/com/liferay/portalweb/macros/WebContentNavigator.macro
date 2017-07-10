@@ -28,14 +28,9 @@
 
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<if>
-			<condition function="IsElementPresent" locator1="MenuItem#BASIC_WEB_CONTENT" />
-			<then>
-				<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Basic Web Content">
-					<var name="key_menuItem" value="Basic Web Content" />
-				</execute>
-			</then>
-		</if>
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Basic Web Content">
+			<var name="key_menuItem" value="Basic Web Content" />
+		</execute>
 
 		<execute function="AssertVisible" locator1="TextInput#TITLE" />
 	</command>

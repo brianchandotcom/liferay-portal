@@ -24,7 +24,7 @@ CPOptionValue cpOptionValue = (CPOptionValue)request.getAttribute(CPWebKeys.CP_O
 
 <aui:model-context bean="<%= cpOptionValue %>" model="<%= CPOptionValue.class %>" />
 
-<liferay-ui:error exception="<%= CPOptionValueKeyException.class %>" message="please-enter-unique-key" />
+<liferay-ui:error exception="<%= CPOptionValueKeyException.class %>" message="please-enter-a-unique-key" />
 
 <aui:fieldset>
 	<aui:input name="title" />

@@ -28,7 +28,7 @@ List<DDMFormFieldType> ddmFormFieldTypes = cpOptionDisplayContext.getDDMFormFiel
 
 <aui:model-context bean="<%= cpOption %>" model="<%= CPOption.class %>" />
 
-<liferay-ui:error exception="<%= CPOptionKeyException.class %>" message="please-enter-unique-key" />
+<liferay-ui:error exception="<%= CPOptionKeyException.class %>" message="please-enter-a-unique-key" />
 
 <aui:fieldset>
 	<aui:input name="title" />

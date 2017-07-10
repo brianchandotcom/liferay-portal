@@ -24,7 +24,7 @@ CPDefinitionOptionValueRel cpDefinitionOptionValueRel = (CPDefinitionOptionValue
 
 <aui:model-context bean="<%= cpDefinitionOptionValueRel %>" model="<%= CPDefinitionOptionValueRel.class %>" />
 
-<liferay-ui:error exception="<%= CPDefinitionOptionValueRelKeyException.class %>" message="please-enter-unique-key" />
+<liferay-ui:error exception="<%= CPDefinitionOptionValueRelKeyException.class %>" message="please-enter-a-unique-key" />
 
 <aui:fieldset>
 	<aui:input name="title" />

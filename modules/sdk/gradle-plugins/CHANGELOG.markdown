@@ -1851,7 +1851,7 @@ version 2.3.15.
 - [LPS-73495]: Update the [Liferay Gradle Plugins CSS Builder] dependency to
 version 2.0.1.
 
-## 3.3.37 - 2017-07-10
+## 3.3.38 - 2017-07-10
 
 ### Changed
 - [LPS-72705]: Update the [Liferay Gradle Plugins Source Formatter] dependency

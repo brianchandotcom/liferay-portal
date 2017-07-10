@@ -8,6 +8,7 @@ dependencies {
 	testIntegrationCompile project(":apps:collaboration:blogs:blogs-service")
 	testIntegrationCompile project(":apps:collaboration:blogs:blogs-test-util")
 	testIntegrationCompile project(":apps:collaboration:subscription:subscription-api")
+	testIntegrationCompile project(":apps:foundation:portal-search:portal-search-test-util")
 	testIntegrationCompile project(":apps:web-experience:export-import:export-import-api")
 	testIntegrationCompile project(":apps:web-experience:export-import:export-import-test-util")
 	testIntegrationCompile project(":apps:web-experience:trash:trash-api")

@@ -46,7 +46,6 @@ public class DeleteAssetCategoryCPDefinitionMVCActionCommand
 
 		long cpDefinitionId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionId");
-
 		long categoryId = ParamUtil.getLong(actionRequest, "categoryId");
 
 		_cpDefinitionService.deleteAssetCategoryCPDefinition(

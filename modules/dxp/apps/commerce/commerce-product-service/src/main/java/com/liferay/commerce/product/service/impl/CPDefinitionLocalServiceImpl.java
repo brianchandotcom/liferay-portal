@@ -198,7 +198,6 @@ public class CPDefinitionLocalServiceImpl
 	@Override
 	public void checkCPDefinitions() throws PortalException {
 		checkCPDefinitionsByDisplayDate();
-
 		checkCPDefinitionsByExpirationDate();
 	}
 

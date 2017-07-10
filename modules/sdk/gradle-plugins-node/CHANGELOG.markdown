@@ -137,6 +137,18 @@ when compiling a Java project.
 - [LPS-73472]: The `NpmInstallTask`'s `nodeModulesCacheRemoveBinDirs` property
 is no longer available.
 
+## 3.1.0 - 2017-08-29
+
+### Added
+- [LPS-73070]: Add the ability to run `ExecuteNpmTask` instances concurrently
+even when pointing to a shared NPM's cache directory, if supported.
+- [LPS-73070]: By default, use the current user NPM's cache directory
+concurrently if running on NPM 5.
+- [LPS-73070]: Delete the `package-lock.json` file when running the `cleanNPM`
+task, if present.
+- [LPS-73070]: Use the `package-lock.json` file to calculate the `node_modules`
+cache digest.
+
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
@@ -152,4 +164,5 @@ is no longer available.
 [LPS-71826]: https://issues.liferay.com/browse/LPS-71826
 [LPS-72152]: https://issues.liferay.com/browse/LPS-72152
 [LPS-72340]: https://issues.liferay.com/browse/LPS-72340
+[LPS-73070]: https://issues.liferay.com/browse/LPS-73070
 [LPS-73472]: https://issues.liferay.com/browse/LPS-73472

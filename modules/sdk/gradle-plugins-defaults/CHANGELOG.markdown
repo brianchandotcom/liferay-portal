@@ -1661,6 +1661,15 @@ if the system property `jacoco.code.coverage` is set to `true`.
 ### Changed
 - [LPS-72705]: Update the [Liferay Gradle Plugins] dependency to version 3.3.36.
 
+## 3.8.5 - 2017-07-07
+
+*No changes.*
+
+## 3.8.6 - 2017-07-10
+
+### Changed
+- [LPS-72705]: Update the [Liferay Gradle Plugins] dependency to version 3.3.37.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins

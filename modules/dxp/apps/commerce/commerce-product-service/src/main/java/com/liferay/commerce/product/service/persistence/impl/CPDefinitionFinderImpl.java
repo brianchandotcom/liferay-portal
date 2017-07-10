@@ -79,9 +79,9 @@ public class CPDefinitionFinderImpl
 
 	@Override
 	public List<CPDefinition> findByExpirationDate(
-		Date date, QueryDefinition<CPDefinition> queryDefinition) {
+		Date expirationDate, QueryDefinition<CPDefinition> queryDefinition) {
 
-		return doFindByExpirationDate(date, queryDefinition, false);
+		return doFindByExpirationDate(expirationDate, queryDefinition, false);
 	}
 
 	@Override
@@ -163,7 +163,7 @@ public class CPDefinitionFinderImpl
 	}
 
 	protected List<CPDefinition> doFindByExpirationDate(
-		Date date, QueryDefinition<CPDefinition> queryDefinition,
+		Date expirationDate, QueryDefinition<CPDefinition> queryDefinition,
 		boolean inlineSQLHelper) {
 
 		Session session = null;
@@ -181,11 +181,11 @@ public class CPDefinitionFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			if (date != null) {
-				qPos.add(date);
+			if (expirationDate != null) {
+				qPos.add(expirationDate);
 			}
 
-			qPos.add(WorkflowConstants.STATUS_APPROVED);
+			qPos.add(queryDefinition.getStatus());
 
 			return (List<CPDefinition>)QueryUtil.list(
 				q, getDialect(), queryDefinition.getStart(),

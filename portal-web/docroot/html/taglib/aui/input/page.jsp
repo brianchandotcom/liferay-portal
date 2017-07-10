@@ -16,6 +16,12 @@
 
 <%@ include file="/html/taglib/aui/input/init.jsp" %>
 
+<%
+if (BrowserSnifferUtil.isIe(request) && ((BrowserSnifferUtil.getMajorVersion(request) == 10.0) || (BrowserSnifferUtil.getMajorVersion(request) == 11.0)) && type.equals("textarea")) {
+	placeholder = StringPool.BLANK;
+}
+%>
+
 <c:if test="<%= Validator.isNotNull(helpMessage) %>">
 	<liferay-util:buffer var="helpMessageContent">
 		<liferay-ui:icon-help message="<%= helpMessage %>" />

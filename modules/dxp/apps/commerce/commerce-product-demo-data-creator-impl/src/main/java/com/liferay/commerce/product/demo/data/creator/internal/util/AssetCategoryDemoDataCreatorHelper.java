@@ -125,6 +125,8 @@ public class AssetCategoryDemoDataCreatorHelper
 			userId, groupId, parentCategoryId, titleMap, null, vocabularyId,
 			null, serviceContext);
 
+		_assetCategories.put(key, assetCategory);
+
 		titleMap = _getUniqueUrlTitles(assetCategory);
 
 		_cpFriendlyURLEntryLocalService.addCPFriendlyURLEntries(
@@ -137,11 +139,10 @@ public class AssetCategoryDemoDataCreatorHelper
 
 		JSONArray imagesJSONArray = categoryJSONObject.getJSONArray("images");
 
-		_assetCategories.put(key, assetCategory);
-
 		_cpAttachmentFileEntryDemoDataCreatorHelper.
 			addAssetCategoryAttachmentFileEntries(
-				userId, groupId, parentCategoryId, imagesJSONArray);
+				userId, groupId, assetCategory.getCategoryId(),
+				imagesJSONArray);
 
 		return assetCategory;
 	}

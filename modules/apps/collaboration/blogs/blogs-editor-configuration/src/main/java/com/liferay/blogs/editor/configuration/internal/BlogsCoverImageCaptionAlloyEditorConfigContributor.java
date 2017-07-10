@@ -17,6 +17,8 @@ package com.liferay.blogs.editor.configuration.internal;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -47,6 +49,54 @@ public class BlogsCoverImageCaptionAlloyEditorConfigContributor
 
 		jsonObject.put(
 			"extraPlugins", "ae_placeholder,ae_selectionregion,ae_uicore");
+
+		jsonObject.put("toolbars", getToolbarsJSONObject());
+	}
+
+	protected JSONObject getToolbarsJSONObject() {
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("styles", getToolbarsStylesJSONObject());
+
+		return jsonObject;
+	}
+
+	protected JSONObject getToolbarsStylesJSONObject() {
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("selections", getToolbarStylesSelectionsJSONArray());
+		jsonObject.put("tabIndex", 1);
+
+		return jsonObject;
+	}
+
+	protected JSONArray getToolbarStylesSelectionsJSONArray() {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		jsonArray.put(getToolbarStylesSelectionsLinkJSONObject());
+		jsonArray.put(getToolbarStylesSelectionsTextJSONObject());
+
+		return jsonArray;
+	}
+
+	protected JSONObject getToolbarStylesSelectionsLinkJSONObject() {
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("buttons", toJSONArray("['linkEdit']"));
+		jsonObject.put("name", "link");
+		jsonObject.put("test", "AlloyEditor.SelectionTest.link");
+
+		return jsonObject;
+	}
+
+	protected JSONObject getToolbarStylesSelectionsTextJSONObject() {
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("buttons", toJSONArray("['link']"));
+		jsonObject.put("name", "text");
+		jsonObject.put("test", "AlloyEditor.SelectionTest.text");
+
+		return jsonObject;
 	}
 
 }

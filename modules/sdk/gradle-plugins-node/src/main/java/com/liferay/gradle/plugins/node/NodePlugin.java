@@ -113,7 +113,8 @@ public class NodePlugin implements Plugin<Project> {
 		Delete delete = GradleUtil.addTask(
 			project, CLEAN_NPM_TASK_NAME, Delete.class);
 
-		delete.delete("node_modules", "npm-shrinkwrap.json");
+		delete.delete(
+			"node_modules", "npm-shrinkwrap.json", "package-lock.json");
 		delete.setDescription("Deletes NPM files from this project.");
 
 		return delete;

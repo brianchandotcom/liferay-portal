@@ -83,7 +83,7 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 
 		key = FriendlyURLNormalizerUtil.normalize(key);
 
-		validate(cpDefinitionOptionRelId, key);
+		validate(0, cpDefinitionOptionRelId, key);
 
 		long cpDefinitionOptionValueRelId = counterLocalService.increment();
 
@@ -255,7 +255,9 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 
 		key = FriendlyURLNormalizerUtil.normalize(key);
 
-		validate(cpDefinitionOptionValueRel.getCPDefinitionOptionRelId(), key);
+		validate(
+			cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId(),
+			cpDefinitionOptionValueRel.getCPDefinitionOptionRelId(), key);
 
 		cpDefinitionOptionValueRel.setTitleMap(titleMap);
 		cpDefinitionOptionValueRel.setPriority(priority);
@@ -348,14 +350,19 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 			"Unable to fix the search index after 10 attempts");
 	}
 
-	protected void validate(long cpDefinitionOptionRelId, String key)
+	protected void validate(
+			long cpDefinitionOptionValueRelId, long cpDefinitionOptionRelId,
+			String key)
 		throws PortalException {
 
 		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
 			cpDefinitionOptionValueRelPersistence.fetchByC_K(
 				cpDefinitionOptionRelId, key);
 
-		if (cpDefinitionOptionValueRel != null) {
+		if ((cpDefinitionOptionValueRel != null) &&
+			(cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId() !=
+				cpDefinitionOptionValueRelId)) {
+
 			throw new CPDefinitionOptionValueRelKeyException();
 		}
 	}

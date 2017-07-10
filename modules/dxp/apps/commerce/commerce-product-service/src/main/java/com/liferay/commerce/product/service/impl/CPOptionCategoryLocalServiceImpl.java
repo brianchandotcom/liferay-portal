@@ -50,7 +50,7 @@ public class CPOptionCategoryLocalServiceImpl
 
 		key = FriendlyURLNormalizerUtil.normalize(key);
 
-		validate(groupId, key);
+		validate(0, groupId, key);
 
 		long cpOptionCategoryId = counterLocalService.increment();
 
@@ -152,7 +152,9 @@ public class CPOptionCategoryLocalServiceImpl
 
 		key = FriendlyURLNormalizerUtil.normalize(key);
 
-		validate(cpOptionCategory.getGroupId(), key);
+		validate(
+			cpOptionCategory.getCPOptionCategoryId(),
+			cpOptionCategory.getGroupId(), key);
 
 		cpOptionCategory.setTitleMap(titleMap);
 		cpOptionCategory.setDescriptionMap(descriptionMap);
@@ -164,11 +166,15 @@ public class CPOptionCategoryLocalServiceImpl
 		return cpOptionCategory;
 	}
 
-	protected void validate(long groupId, String key) throws PortalException {
+	protected void validate(long cpOptionCategoryId, long groupId, String key)
+		throws PortalException {
+
 		CPOptionCategory cpOptionCategory =
 			cpOptionCategoryPersistence.fetchByG_K(groupId, key);
 
-		if (cpOptionCategory != null) {
+		if ((cpOptionCategory != null) &&
+			(cpOptionCategory.getCPOptionCategoryId() != cpOptionCategoryId)) {
+
 			throw new CPOptionCategoryKeyException();
 		}
 	}

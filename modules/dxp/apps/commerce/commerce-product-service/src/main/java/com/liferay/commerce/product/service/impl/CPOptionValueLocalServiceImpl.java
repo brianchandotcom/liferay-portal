@@ -67,7 +67,7 @@ public class CPOptionValueLocalServiceImpl
 
 		key = FriendlyURLNormalizerUtil.normalize(key);
 
-		validate(cpOptionId, key);
+		validate(0, cpOptionId, key);
 
 		long cpOptionValueId = counterLocalService.increment();
 
@@ -187,7 +187,9 @@ public class CPOptionValueLocalServiceImpl
 
 		key = FriendlyURLNormalizerUtil.normalize(key);
 
-		validate(cpOptionValue.getCPOptionId(), key);
+		validate(
+			cpOptionValue.getCPOptionValueId(), cpOptionValue.getCPOptionId(),
+			key);
 
 		cpOptionValue.setTitleMap(titleMap);
 		cpOptionValue.setPriority(priority);
@@ -276,13 +278,15 @@ public class CPOptionValueLocalServiceImpl
 			"Unable to fix the search index after 10 attempts");
 	}
 
-	protected void validate(long cpOptionId, String key)
+	protected void validate(long cpOptionValueId, long cpOptionId, String key)
 		throws PortalException {
 
 		CPOptionValue cpOptionValue = cpOptionValuePersistence.fetchByC_K(
 			cpOptionId, key);
 
-		if (cpOptionValue != null) {
+		if ((cpOptionValue != null) &&
+			(cpOptionValue.getCPOptionValueId() != cpOptionValueId)) {
+
 			throw new CPOptionValueKeyException();
 		}
 	}

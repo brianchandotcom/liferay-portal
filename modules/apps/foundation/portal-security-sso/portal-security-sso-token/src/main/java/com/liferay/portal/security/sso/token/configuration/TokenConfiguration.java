@@ -26,7 +26,7 @@ import com.liferay.portal.security.sso.token.security.auth.TokenLocation;
 @ExtendedObjectClassDefinition(category = "foundation")
 @Meta.OCD(
 	id = "com.liferay.portal.security.sso.token.configuration.TokenConfiguration",
-	localization = "content/Language", name = "token.configuration.name"
+	localization = "content/Language", name = "token-configuration-name"
 )
 public interface TokenConfiguration {
 

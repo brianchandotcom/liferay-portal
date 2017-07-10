@@ -28,7 +28,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	factory = true,
 	id = "com.liferay.portal.security.ldap.configuration.SystemLDAPConfiguration",
-	localization = "content/Language", name = "system.ldap.configuration.name"
+	localization = "content/Language", name = "system-ldap-configuration-name"
 )
 public interface SystemLDAPConfiguration extends CompanyScopedConfiguration {
 

@@ -32,7 +32,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @ExtendedObjectClassDefinition(category = "foundation")
 @Meta.OCD(
 	id = "com.liferay.portal.security.sso.opensso.configuration.OpenSSOConfiguration",
-	localization = "content/Language", name = "opensso.configuration.name"
+	localization = "content/Language", name = "opensso-configuration-name"
 )
 public interface OpenSSOConfiguration {
 

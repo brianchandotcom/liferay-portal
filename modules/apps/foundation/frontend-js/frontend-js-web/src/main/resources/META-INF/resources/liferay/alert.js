@@ -194,27 +194,30 @@ AUI.add(
 						var parentNode = instance._getParentNode();
 
 						if (!visible || !parentNode.test('.in')) {
-							parentNode.transition(
-								{
-									duration: instance.get('duration') / 1000,
-									easing: 'ease-out',
-									height: visible ? instance.get('boundingBox').outerHeight() + 'px' : 0
-								},
-								function() {
-									parentNode.toggleClass('in', visible);
+							try {
+								parentNode.transition(
+									{
+										duration: instance.get('duration') / 1000,
+										easing: 'ease-out',
+										height: visible ? instance.get('boundingBox').outerHeight() + 'px' : 0
+									},
+									function() {
+										parentNode.toggleClass('in', visible);
 
-									instance._uiSetVisibleHost(visible);
+										instance._uiSetVisibleHost(visible);
 
-									var delay = instance.get('delay');
+										var delay = instance.get('delay');
 
-									if (visible && delay.hide) {
-										instance.hide();
+										if (visible && delay.hide) {
+											instance.hide();
+										}
+										else if (instance.get('destroyOnHide')) {
+											A.soon(A.bind('destroy', instance));
+										}
 									}
-									else if (instance.get('destroyOnHide')) {
-										A.soon(A.bind('destroy', instance));
-									}
-								}
-							);
+								);
+							} catch (error) {
+							}
 						}
 					},
 

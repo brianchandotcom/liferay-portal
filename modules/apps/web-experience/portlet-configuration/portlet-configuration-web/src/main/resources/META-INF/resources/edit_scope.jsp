@@ -91,7 +91,7 @@ for (Layout scopeGroupLayout : LayoutLocalServiceUtil.getScopeGroupLayouts(layou
 								String value = availableGroupScopeType + "," + availableGroupScopeLayoutUuid;
 							%>
 
-								<aui:option label="<%= HtmlUtil.escape(availableGroup.getDescriptiveName(locale)) %>" value="<%= value %>" />
+								<aui:option label="<%= HtmlUtil.escape(availableGroup.getDescriptiveName(locale)) %>" selected="<%= availableGroupScopeLayoutUuid.equals(scopeLayoutUuid) %>" value="<%= value %>" />
 
 							<%
 							}

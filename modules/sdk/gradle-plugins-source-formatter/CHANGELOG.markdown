@@ -749,6 +749,12 @@ available.
 - [LPS-72705]: Update the [Liferay Source Formatter] dependency to version
 1.0.416.
 
+## 2.0.28 - 2017-07-07
+
+### Changed
+- [LPS-72705]: Update the [Liferay Source Formatter] dependency to version
+1.0.417.
+
 [Liferay Source Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/util/source-formatter
 [LPS-52675]: https://issues.liferay.com/browse/LPS-52675
 [LPS-62970]: https://issues.liferay.com/browse/LPS-62970

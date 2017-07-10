@@ -87,7 +87,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 					eventName: 'selectContent',
 					id: 'selectContent',
 					title: '<liferay-ui:message key="select-web-content" />',
-					uri: baseSelectWebContentURI.replace(encodeURIComponent('[$ARTICLE_REFERER_ASSET_ENTRY_ID$]'), form.attr('<portlet:namespace/>assetEntryId').val())
+					uri: baseSelectWebContentURI.replace(encodeURIComponent('[$ARTICLE_REFERER_ASSET_ENTRY_ID$]'), form.attr('<portlet:namespace />assetEntryId').val())
 				},
 				function(event) {
 					retrieveWebContent(event.assetclasspk);

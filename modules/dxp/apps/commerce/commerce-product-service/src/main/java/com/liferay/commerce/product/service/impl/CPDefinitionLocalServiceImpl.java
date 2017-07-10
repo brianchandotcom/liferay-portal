@@ -198,10 +198,9 @@ public class CPDefinitionLocalServiceImpl
 
 	@Override
 	public void checkCPDefinitions() throws PortalException {
-		Date now = new Date();
+		checkCPDefinitionsByDisplayDate();
 
-		checkCPDefinitionsByDisplayDate(now);
-		checkCPDefinitionsByExpirationDate(now);
+		checkCPDefinitionsByExpirationDate();
 	}
 
 	@Override
@@ -886,35 +885,27 @@ public class CPDefinitionLocalServiceImpl
 		return searchContext;
 	}
 
-	protected void checkCPDefinitionsByDisplayDate(Date displayDate)
-		throws PortalException {
-
-		List<CPDefinition> cpDefinitions = cpDefinitionPersistence.findByStatus(
-			WorkflowConstants.STATUS_SCHEDULED);
+	protected void checkCPDefinitionsByDisplayDate() throws PortalException {
+		List<CPDefinition> cpDefinitions = cpDefinitionPersistence.findByLtD_S(
+			new Date(), WorkflowConstants.STATUS_SCHEDULED);
 
 		for (CPDefinition cpDefinition : cpDefinitions) {
-			if (DateUtil.compareTo(
-					cpDefinition.getDisplayDate(), displayDate) <= 0) {
+			long userId = PortalUtil.getValidUserId(
+				cpDefinition.getCompanyId(), cpDefinition.getUserId());
 
-				long userId = PortalUtil.getValidUserId(
-					cpDefinition.getCompanyId(), cpDefinition.getUserId());
+			ServiceContext serviceContext = new ServiceContext();
 
-				ServiceContext serviceContext = new ServiceContext();
+			serviceContext.setCommand(Constants.UPDATE);
+			serviceContext.setScopeGroupId(cpDefinition.getGroupId());
 
-				serviceContext.setCommand(Constants.UPDATE);
-				serviceContext.setScopeGroupId(cpDefinition.getGroupId());
-
-				cpDefinitionLocalService.updateStatus(
-					userId, cpDefinition.getCPDefinitionId(),
-					WorkflowConstants.STATUS_APPROVED, serviceContext,
-					new HashMap<String, Serializable>());
-			}
+			cpDefinitionLocalService.updateStatus(
+				userId, cpDefinition.getCPDefinitionId(),
+				WorkflowConstants.STATUS_APPROVED, serviceContext,
+				new HashMap<String, Serializable>());
 		}
 	}
 
-	protected void checkCPDefinitionsByExpirationDate(Date expirationDate)
-		throws PortalException {
-
+	protected void checkCPDefinitionsByExpirationDate() throws PortalException {
 		List<CPDefinition> cpDefinitions =
 			cpDefinitionFinder.findByExpirationDate(
 				new Date(),

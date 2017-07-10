@@ -115,15 +115,7 @@ public class NpmInstallTask extends ExecuteNpmTask {
 	}
 
 	public File getShrinkwrapJsonFile() {
-		Project project = getProject();
-
-		File shrinkwrapJsonFile = project.file("npm-shrinkwrap.json");
-
-		if (!shrinkwrapJsonFile.exists()) {
-			shrinkwrapJsonFile = null;
-		}
-
-		return shrinkwrapJsonFile;
+		return _getExistentFile("npm-shrinkwrap.json");
 	}
 
 	public boolean isNodeModulesCacheNativeSync() {
@@ -367,6 +359,18 @@ public class NpmInstallTask extends ExecuteNpmTask {
 				}
 
 			});
+	}
+
+	private File _getExistentFile(String fileName) {
+		Project project = getProject();
+
+		File file = project.file(fileName);
+
+		if (!file.exists()) {
+			file = null;
+		}
+
+		return file;
 	}
 
 	private boolean _isCacheEnabled() {

@@ -17,4 +17,5 @@ dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":apps:collaboration:blogs:blogs-api")
+	testIntegrationCompile project(":apps:foundation:portal-search:portal-search-test-util")
 }

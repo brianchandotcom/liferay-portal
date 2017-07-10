@@ -38,7 +38,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.search.test.BaseSearchTestCase;
+import com.liferay.portal.search.test.util.BaseSearchTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 import com.liferay.portlet.messageboards.util.test.MBTestUtil;

@@ -8,9 +8,15 @@
 error() {
 	MESSAGE=$1
 
-	echo "error: ${MESSAGE}" >&2
+	warn "error: ${MESSAGE}"
 
 	exit 1
+}
+
+warn() {
+	MESSAGE=$1
+
+	echo "${MESSAGE}" >&2
 }
 
 if [[ "${PWD}" != *"/tools/subrepo" ]]; then
@@ -21,9 +27,9 @@ if [[ "${PWD}" != *"liferay-portal/tools/subrepo" ]]; then
 	error "This script can only be run from within the liferay-portal repository."
 fi
 
-if [[ "$(git rev-parse --abbrev-ref HEAD)" != "master" ]]; then
-	error "This script can only be run from the master branch."
-fi
+# if [[ "$(git rev-parse --abbrev-ref HEAD)" != "master" ]]; then
+# 	error "This script can only be run from the master branch."
+# fi
 
 if [[ -z "${GITHUB_API_TOKEN}" ]]; then
 	GITHUB_API_TOKEN="$(git config github.token)"
@@ -55,7 +61,7 @@ LOCAL_SHAS=($(
 SUBREPO=$1
 
 if [[ -z "${SUBREPO}" ]]; then
-	echo "Usage: ./push_to_subrepos.sh SUBREPO" >&2
+	warn "Usage: ./push_to_subrepos.sh SUBREPO"
 
 	exit 1
 fi
@@ -86,6 +92,11 @@ for BRANCH in "${BRANCHES[@]}"; do
 		REMOTE="${REMOTE}-private"
 	fi
 
+	#
+	# Retrieve the shas for the files in gradle/wrapper.
+	# Also check for any errors interacting with the repo via the api.
+	#
+
 	GRADLE_WRAPPER_JSON=
 
 	for i in {1..2}; do
@@ -96,15 +107,44 @@ for BRANCH in "${BRANCHES[@]}"; do
 		fi
 	done
 
-	if [[ -z $(echo "${GRADLE_WRAPPER_JSON[@]}" | grep '\"sha\"') ]] && [[ -z $(echo "${GRADLE_WRAPPER_JSON[@]}" | grep '\"NotFound\"') ]]; then
-		error "Failed to get contents of gradle/wrapper directory via the api for liferay/${SUBREPO}:${BRANCH}"
+	if [[ -z $(echo "${GRADLE_WRAPPER_JSON[@]}" | grep '\"sha\"') ]] && [[ -z $(echo "${GRADLE_WRAPPER_JSON[@]}" | grep -i '\"notfound\"') ]]; then
+		warn "Skipping liferay/${SUBREPO}:${BRANCH}."
+		warn ".. Failed to get contents of the gradle/wrapper directory via the api."
+
+		continue
 	fi
 
 	GRADLE_WRAPPER_JAR_REMOTE_SHA="$(printf '%s\n' "${GRADLE_WRAPPER_JSON[@]}" | grep '"gradle-wrapper.jar"' | sed 's/",/&\'$'\n/g' | grep '"sha"' | sed 's/"[^"]*$//' | sed 's/.*"//')"
 	GRADLE_WRAPPER_PROPERTIES_REMOTE_SHA="$(printf '%s\n' "${GRADLE_WRAPPER_JSON[@]}" | grep '"gradle-wrapper.properties"' | sed 's/",/&\'$'\n/g' | grep '"sha"' | sed 's/"[^"]*$//' | sed 's/.*"//')"
 
-	GRADLEW_REMOTE_SHA="$(curl --header "Authorization: token ${GITHUB_API_TOKEN}" -s "https://api.github.com/repos/liferay/${SUBREPO}/contents/gradlew?ref=${BRANCH}" -X GET | grep '"sha"' | sed 's/"[^"]*$//' | sed 's/.*"//')"
-	GRADLEW_BAT_REMOTE_SHA="$(curl --header "Authorization: token ${GITHUB_API_TOKEN}" -s "https://api.github.com/repos/liferay/${SUBREPO}/contents/gradlew.bat?ref=${BRANCH}" -X GET | grep '"sha"' | sed 's/"[^"]*$//' | sed 's/.*"//')"
+	#
+	# Retrieve the shas for gradlew and gradlew.bat.
+	# Assume "Not Found" just means the file doesn't exist.
+	#
+
+	GRADLEW_JSON=
+
+	for i in {1..2}; do
+		GRADLEW_JSON="$(curl --header "Authorization: token ${GITHUB_API_TOKEN}" -s "https://api.github.com/repos/liferay/${SUBREPO}/contents/gradlew?ref=${BRANCH}" -X GET)"
+
+		if [[ $(echo "${GRADLEW_JSON[@]}" | grep '\"sha\"') ]] || [[ $(echo "${GRADLEW_JSON[@]}" | grep -i '\"not found\"') ]]; then
+			break;
+		fi
+	done
+
+	GRADLEW_REMOTE_SHA="$(echo "${GRADLEW_JSON}" | grep '"sha"' | sed 's/"[^"]*$//' | sed 's/.*"//')"
+
+	GRADLEW_BAT_JSON=
+
+	for i in {1..2}; do
+		GRADLEW_BAT_JSON="$(curl --header "Authorization: token ${GITHUB_API_TOKEN}" -s "https://api.github.com/repos/liferay/${SUBREPO}/contents/gradlew.bat?ref=${BRANCH}" -X GET)"
+
+		if [[ $(echo "${GRADLEW_BAT_JSON[@]}" | grep '\"sha\"') ]] || [[ $(echo "${GRADLEW_BAT_JSON[@]}" | grep -i '\"not found\"') ]]; then
+			break;
+		fi
+	done
+
+	GRADLEW_BAT_REMOTE_SHA="$(echo "${GRADLEW_JSON}" | grep '"sha"' | sed 's/"[^"]*$//' | sed 's/.*"//')"
 
 	REMOTE_SHAS=(
 		"gradle/wrapper/gradle-wrapper.jar:${GRADLE_WRAPPER_JAR_REMOTE_SHA}"

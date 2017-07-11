@@ -72,8 +72,10 @@ import java.nio.channels.ServerSocketChannel;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.BlockingQueue;
@@ -706,6 +708,50 @@ public class LocalProcessExecutorTest {
 		_localProcessExecutor.destroy();
 
 		Assert.assertNull(_getThreadPoolExecutor());
+	}
+
+	@Test
+	public void testEnvironment() throws Exception {
+
+		// Default environment
+
+		Builder builder = new Builder();
+
+		builder.setArguments(_createArguments(_JPDA_OPTIONS1));
+		builder.setBootstrapClassPath(System.getProperty("java.class.path"));
+		builder.setReactClassLoader(
+			LocalProcessExecutorTest.class.getClassLoader());
+
+		GetEnviornmentProcessCallable getEnviornmentProcessCallable =
+			new GetEnviornmentProcessCallable();
+
+		ProcessChannel<HashMap<String, String>> processChannel =
+			_localProcessExecutor.execute(
+				builder.build(), getEnviornmentProcessCallable);
+
+		Future<HashMap<String, String>> future =
+			processChannel.getProcessNoticeableFuture();
+
+		Assert.assertEquals(System.getenv(), future.get());
+
+		// Overrided environment
+
+		Map<String, String> environmentMap = new HashMap<>();
+
+		environmentMap.put("key1", "value1");
+		environmentMap.put("key2", "value2");
+
+		builder.setEnvironment(environmentMap);
+
+		processChannel = _localProcessExecutor.execute(
+			builder.build(), getEnviornmentProcessCallable);
+
+		future = processChannel.getProcessNoticeableFuture();
+
+		Map<String, String> actualEnvironmentMap = future.get();
+
+		Assert.assertEquals("value1", actualEnvironmentMap.get("key1"));
+		Assert.assertEquals("value2", actualEnvironmentMap.get("key2"));
 	}
 
 	@Test
@@ -2142,6 +2188,18 @@ public class LocalProcessExecutorTest {
 			}
 
 			return null;
+		}
+
+		private static final long serialVersionUID = 1L;
+
+	}
+
+	private static class GetEnviornmentProcessCallable
+		implements ProcessCallable<HashMap<String, String>> {
+
+		@Override
+		public HashMap<String, String> call() throws ProcessException {
+			return new HashMap<>(System.getenv());
 		}
 
 		private static final long serialVersionUID = 1L;

@@ -17,7 +17,6 @@ package com.liferay.source.formatter;
 import java.util.List;
 
 /**
- * @author Hugo Huijser
  * @author Peter Shin
  */
 public class CQLSourceProcessor extends BaseSourceProcessor {

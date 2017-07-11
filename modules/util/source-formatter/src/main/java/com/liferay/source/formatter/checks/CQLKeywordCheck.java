@@ -15,7 +15,6 @@
 package com.liferay.source.formatter.checks;
 
 /**
- * @author Hugo Huijser
  * @author Peter Shin
  */
 public class CQLKeywordCheck extends BaseFileCheck {

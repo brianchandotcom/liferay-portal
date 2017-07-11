@@ -69,8 +69,8 @@ public class ModuleResourceLoader implements ServiceComponentConfiguration {
 		URL url = _bundle.getResource(location);
 
 		if (url == null) {
-			if (_log.isInfoEnabled()) {
-				_log.info("Unable to find " + location);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to find " + location);
 			}
 
 			return null;

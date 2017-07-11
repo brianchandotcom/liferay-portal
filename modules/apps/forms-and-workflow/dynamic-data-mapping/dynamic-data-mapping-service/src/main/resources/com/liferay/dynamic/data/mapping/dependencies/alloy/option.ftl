@@ -43,7 +43,14 @@
 	<#assign
 		checked = paramUtil.getString(request, namespacedParentFieldName, parentFieldRawValue) == fieldStructure.value
 	/>
-	<@liferay_aui.input checked=checked cssClass=cssClass label=escape(fieldStructure.label) name="${namespacedParentFieldName}" type="radio" value=fieldStructure.value>
+	<@liferay_aui.input
+		checked=checked
+		cssClass=cssClass
+		label=escape(fieldStructure.label)
+		name="${namespacedParentFieldName}"
+		type="radio"
+		value=fieldStructure.value
+	>
 		<#if stringUtil.equals(parentFieldStructure.required, "true")>
 			<@liferay_aui.validator name="required" />
 		</#if>

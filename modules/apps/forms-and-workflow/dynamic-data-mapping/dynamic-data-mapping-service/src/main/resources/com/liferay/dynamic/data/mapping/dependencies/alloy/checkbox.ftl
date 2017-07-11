@@ -1,6 +1,9 @@
 <#include "../init.ftl">
 
-<@liferay_aui["field-wrapper"] cssClass="form-builder-field" data=data>
+<@liferay_aui["field-wrapper"]
+	cssClass="form-builder-field"
+	data=data
+>
 	<div class="clearfix form-group">
 		<@liferay_aui.input
 			cssClass=cssClass

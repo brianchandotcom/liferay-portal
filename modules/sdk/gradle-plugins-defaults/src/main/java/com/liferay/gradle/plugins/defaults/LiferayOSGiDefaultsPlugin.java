@@ -1368,7 +1368,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		String json = new String(
 			Files.readAllBytes(path), StandardCharsets.UTF_8);
 
-		Matcher matcher = _jsonVersionPattern.matcher(json);
+		Matcher matcher = GradlePluginsDefaultsUtil.jsonVersionPattern.matcher(
+			json);
 
 		if (!matcher.find()) {
 			return;
@@ -1405,8 +1406,11 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			project.setVersion(bundleVersion);
 
 			try {
-				_applyVersionOverrideJson(project, "npm-shrinkwrap.json");
-				_applyVersionOverrideJson(project, "package.json");
+				for (String fileName :
+						GradlePluginsDefaultsUtil.JSON_VERSION_FILE_NAMES) {
+
+					_applyVersionOverrideJson(project, fileName);
+				}
 			}
 			catch (IOException ioe) {
 				throw new UncheckedIOException(ioe);
@@ -1554,8 +1558,12 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _checkVersion(Project project) {
-		_checkJsonVersion(project, "npm-shrinkwrap.json");
-		_checkJsonVersion(project, "package.json");
+		for (String fileName :
+				GradlePluginsDefaultsUtil.JSON_VERSION_FILE_NAMES) {
+
+			_checkJsonVersion(project, fileName);
+			_checkJsonVersion(project, fileName);
+		}
 	}
 
 	private void _configureArtifacts(
@@ -2993,18 +3001,16 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		Project project = replaceRegexTask.getProject();
 
-		File npmShrinkwrapJsonFile = project.file("npm-shrinkwrap.json");
+		for (String fileName :
+				GradlePluginsDefaultsUtil.JSON_VERSION_FILE_NAMES) {
 
-		if (npmShrinkwrapJsonFile.exists()) {
-			replaceRegexTask.match(
-				_jsonVersionPattern.pattern(), npmShrinkwrapJsonFile);
-		}
+			File file = project.file(fileName);
 
-		File packageJsonFile = project.file("package.json");
-
-		if (packageJsonFile.exists()) {
-			replaceRegexTask.match(
-				_jsonVersionPattern.pattern(), packageJsonFile);
+			if (file.exists()) {
+				replaceRegexTask.match(
+					GradlePluginsDefaultsUtil.jsonVersionPattern.pattern(),
+					file);
+			}
 		}
 	}
 
@@ -4059,8 +4065,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	private static final BackupFilesBuildAdapter _backupFilesBuildAdapter =
 		new BackupFilesBuildAdapter();
-	private static final Pattern _jsonVersionPattern = Pattern.compile(
-		"\\n\\t\"version\": \"(.+)\"");
 
 	private static class GitRepo {
 

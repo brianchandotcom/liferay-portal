@@ -5,7 +5,10 @@
 	layoutService = serviceLocator.findService("com.liferay.portal.kernel.service.LayoutService")
 />
 
-<@liferay_aui["field-wrapper"] cssClass="form-builder-field" data=data>
+<@liferay_aui["field-wrapper"]
+	cssClass="form-builder-field"
+	data=data
+>
 	<#assign
 		selectedLayoutName = ""
 

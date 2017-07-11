@@ -4,7 +4,11 @@
 	<#assign fieldRawValue = predefinedValue />
 </#if>
 
-<@liferay_aui["field-wrapper"] cssClass="form-builder-field" data=data required=required>
+<@liferay_aui["field-wrapper"]
+	cssClass="form-builder-field"
+	data=data
+	required=required
+>
 	<div class="form-group">
 		<@liferay_aui.input
 			cssClass="selector-input"
@@ -17,7 +21,12 @@
 			value=escape(fieldStructure.tip)
 		/>
 
-		<@liferay_aui.input cssClass="color-value" name=namespacedFieldName type="hidden" value=fieldRawValue>
+		<@liferay_aui.input
+			cssClass="color-value"
+			name=namespacedFieldName
+			type="hidden"
+			value=fieldRawValue
+		>
 			<#if required>
 				<@liferay_aui.validator name="required" />
 			</#if>

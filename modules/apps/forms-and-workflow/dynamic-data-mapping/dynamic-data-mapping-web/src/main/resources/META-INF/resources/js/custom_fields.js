@@ -74,7 +74,7 @@ AUI.add(
 
 		TPL_OPTIONS_CONTAINER = '<div class="' + CSS_FORM_BUILDER_FIELD_OPTIONS_CONTAINER + '"></div>',
 		TPL_RADIO =
-			'<div class="' + CSS_RADIO + '"><label class="field-label" for="{id}"><input id="{id}" class="' +
+			'<div class="' + CSS_RADIO + '"><label class="radio-inline" for="{id}"><input id="{id}" class="' +
 			[CSS_FIELD, CSS_FIELD_CHOICE, CSS_FIELD_RADIO, CSS_FORM_BUILDER_FIELD_NODE].join(' ') +
 			'" name="{name}" type="radio" value="{value}" {checked} {disabled} />{label}</label></div>';
 

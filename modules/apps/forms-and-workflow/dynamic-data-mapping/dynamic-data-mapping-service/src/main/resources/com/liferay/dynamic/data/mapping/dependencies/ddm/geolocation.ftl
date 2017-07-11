@@ -16,7 +16,13 @@
 	/>
 </#if>
 
-<@liferay_aui["field-wrapper"] cssClass="form-builder-field geolocation-field" data=data helpMessage=escape(fieldStructure.tip) label=label required=required>
+<@liferay_aui["field-wrapper"]
+	cssClass="form-builder-field geolocation-field"
+	data=data
+	helpMessage=escape(fieldStructure.tip)
+	label=label
+	required=required
+>
 	<div class="form-group">
 		<@liferay_aui.input
 			name=namespacedFieldName

@@ -398,7 +398,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 			serviceContext.setCommand(Constants.UPDATE);
 			serviceContext.setScopeGroupId(cpAttachmentFileEntry.getGroupId());
 
-			cpInstanceLocalService.updateStatus(
+			cpAttachmentFileEntryLocalService.updateStatus(
 				userId, cpAttachmentFileEntry.getCPAttachmentFileEntryId(),
 				WorkflowConstants.STATUS_APPROVED, serviceContext,
 				new HashMap<String, Serializable>());
@@ -435,7 +435,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 				serviceContext.setScopeGroupId(
 					cpAttachmentFileEntry.getGroupId());
 
-				cpInstanceLocalService.updateStatus(
+				cpAttachmentFileEntryLocalService.updateStatus(
 					userId, cpAttachmentFileEntry.getCPAttachmentFileEntryId(),
 					WorkflowConstants.STATUS_EXPIRED, serviceContext,
 					new HashMap<String, Serializable>());

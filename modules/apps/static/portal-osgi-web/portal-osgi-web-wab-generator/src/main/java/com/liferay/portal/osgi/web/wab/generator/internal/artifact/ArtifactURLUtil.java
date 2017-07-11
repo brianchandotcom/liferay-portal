@@ -76,12 +76,9 @@ public class ArtifactURLUtil {
 		sb.append(symbolicName);
 		sb.append("&Web-ContextPath=/");
 		sb.append(contextName);
+		sb.append("&protocol=file");
 
-		URL url = new URL("file", null, sb.toString());
-
-		url = new URL("webbundle", null, url.toString());
-
-		return url;
+		return new URL("webbundle", null, sb.toString());
 	}
 
 	private static String _readServletContextName(Jar jar) throws Exception {

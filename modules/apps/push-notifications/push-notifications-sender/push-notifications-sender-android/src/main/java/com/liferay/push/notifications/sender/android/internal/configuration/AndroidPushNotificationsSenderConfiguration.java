@@ -25,18 +25,18 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.push.notifications.sender.android.internal.configuration.AndroidPushNotificationsSenderConfiguration",
 	localization = "content/Language",
-	name = "android.push.notifications.sender.configuration.name"
+	name = "android-push-notifications-sender-configuration-name"
 )
 public interface AndroidPushNotificationsSenderConfiguration {
 
 	@Meta.AD(
-		description = "android.api.key.description",
-		name = "android.api.key.name", required = false
+		description = "android-api-key-description",
+		name = "android-api-key-name", required = false
 	)
 	public String apiKey();
 
 	@Meta.AD(
-		description = "retries.description", name = "retries.name",
+		description = "retries-description", name = "retries-name",
 		required = false
 	)
 	public int retries();

@@ -41,8 +41,6 @@ import java.text.SimpleDateFormat;
 
 import java.util.Date;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
@@ -104,41 +102,8 @@ public class SetUpTestableTomcatTask
 		};
 	}
 
-	/**
-	 * @deprecated As of 1.2.0, with no direct replacement
-	 */
-	@Deprecated
-	public SetUpTestableTomcatTask catalinaOptsReplacement(
-		String oldSub, Object newSub) {
-
-		_catalinaOptsReplacements.put(oldSub, newSub);
-
-		return this;
-	}
-
-	/**
-	 * @deprecated As of 1.2.0, with no direct replacement
-	 */
-	@Deprecated
-	public SetUpTestableTomcatTask catalinaOptsReplacements(
-		Map<String, ?> catalinaOptsReplacements) {
-
-		_catalinaOptsReplacements.putAll(catalinaOptsReplacements);
-
-		return this;
-	}
-
 	public File getBinDir() {
 		return new File(getDir(), "bin");
-	}
-
-	/**
-	 * @deprecated As of 1.2.0, with no direct replacement
-	 */
-	@Deprecated
-	@Input
-	public Map<String, Object> getCatalinaOptsReplacements() {
-		return _catalinaOptsReplacements;
 	}
 
 	@Input
@@ -201,18 +166,6 @@ public class SetUpTestableTomcatTask
 
 	public void setAspectJConfiguration(String aspectJConfiguration) {
 		_aspectJConfiguration = aspectJConfiguration;
-	}
-
-	/**
-	 * @deprecated As of 1.2.0, with no direct replacement
-	 */
-	@Deprecated
-	public void setCatalinaOptsReplacements(
-		Map<String, ?> catalinaOptsReplacements) {
-
-		_catalinaOptsReplacements.clear();
-
-		catalinaOptsReplacements(catalinaOptsReplacements);
 	}
 
 	public void setDebugLogging(boolean debugLogging) {
@@ -549,8 +502,6 @@ public class SetUpTestableTomcatTask
 
 	private String _aspectJAgent;
 	private String _aspectJConfiguration;
-	private final Map<String, Object> _catalinaOptsReplacements =
-		new LinkedHashMap<>();
 	private boolean _debugLogging;
 	private Object _dir;
 	private boolean _jmxRemoteAuthenticate;

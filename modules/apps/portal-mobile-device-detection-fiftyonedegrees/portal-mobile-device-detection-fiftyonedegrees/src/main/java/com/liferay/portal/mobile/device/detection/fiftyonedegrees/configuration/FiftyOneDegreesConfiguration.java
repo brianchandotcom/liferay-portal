@@ -26,7 +26,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.portal.mobile.device.detection.fiftyonedegrees.configuration.FiftyOneDegreesConfiguration",
 	localization = "content/Language",
-	name = "51degrees.device.detection.configuration.name"
+	name = "51degrees-device-detection-configuration-name"
 )
 public interface FiftyOneDegreesConfiguration {
 

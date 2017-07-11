@@ -34,10 +34,6 @@ public interface SitemapURLProvider {
 			ThemeDisplay themeDisplay)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
-	 */
-	@Deprecated
 	public void visitLayoutSet(
 			Element element, LayoutSet layoutSet, ThemeDisplay themeDisplay)
 		throws PortalException;

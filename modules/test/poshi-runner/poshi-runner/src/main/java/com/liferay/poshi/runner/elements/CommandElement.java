@@ -132,9 +132,6 @@ public class CommandElement extends PoshiElement {
 				continue;
 			}
 
-			sb.append(line);
-			sb.append("\n");
-
 			String readableBlock = sb.toString();
 
 			readableBlock = readableBlock.trim();
@@ -144,6 +141,9 @@ public class CommandElement extends PoshiElement {
 
 				sb.setLength(0);
 			}
+
+			sb.append(line);
+			sb.append("\n");
 		}
 
 		return readableBlocks;

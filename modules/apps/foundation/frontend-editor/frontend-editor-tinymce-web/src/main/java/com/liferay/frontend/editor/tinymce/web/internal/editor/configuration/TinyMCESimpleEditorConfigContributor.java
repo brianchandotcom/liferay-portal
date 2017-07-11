@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.editor.tinymce.web.internal.editor.configuration;
 
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ambrin Chaudhary
@@ -63,5 +65,13 @@ public class TinyMCESimpleEditorConfigContributor
 
 		jsonObject.put("toolbar", toolbar);
 	}
+
+	@Override
+	protected ItemSelector getItemSelector() {
+		return _itemSelector;
+	}
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 }

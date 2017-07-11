@@ -17,6 +17,7 @@ package com.liferay.gradle.plugins.test.integration.tasks;
 import com.liferay.gradle.plugins.test.integration.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.test.integration.internal.util.StringUtil;
 import com.liferay.gradle.util.FileUtil;
+import com.liferay.gradle.util.Validator;
 import com.liferay.gradle.util.copy.ExcludeExistingFileAction;
 import com.liferay.gradle.util.copy.StripPathSegmentsAction;
 
@@ -49,6 +50,7 @@ import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.util.VersionNumber;
 
@@ -100,6 +102,18 @@ public class SetUpTestableTomcatTask
 			}
 
 		};
+	}
+
+	@Input
+	@Optional
+	public String getAspectJAgent() {
+		return GradleUtil.toString(_aspectJAgent);
+	}
+
+	@Input
+	@Optional
+	public String getAspectJConfiguration() {
+		return GradleUtil.toString(_aspectJConfiguration);
 	}
 
 	public File getBinDir() {
@@ -160,11 +174,11 @@ public class SetUpTestableTomcatTask
 		return _overwriteTestModules;
 	}
 
-	public void setAspectJAgent(String aspectJAgent) {
+	public void setAspectJAgent(Object aspectJAgent) {
 		_aspectJAgent = aspectJAgent;
 	}
 
-	public void setAspectJConfiguration(String aspectJConfiguration) {
+	public void setAspectJConfiguration(Object aspectJConfiguration) {
 		_aspectJConfiguration = aspectJConfiguration;
 	}
 
@@ -258,8 +272,10 @@ public class SetUpTestableTomcatTask
 	}
 
 	private void _setUpAspectJ() throws IOException {
-		if ((_aspectJAgent != null) &&
-			!_contains("bin/setenv.sh", _aspectJAgent)) {
+		String aspectJAgent = getAspectJAgent();
+
+		if (Validator.isNotNull(aspectJAgent) &&
+			!_contains("bin/setenv.sh", aspectJAgent)) {
 
 			try (PrintWriter printWriter = _getAppendPrintWriter(
 					"bin/setenv.sh")) {
@@ -267,12 +283,14 @@ public class SetUpTestableTomcatTask
 				printWriter.println();
 
 				printWriter.print("CATALINA_OPTS=\"${CATALINA_OPTS} ");
-				printWriter.print(_aspectJAgent);
+				printWriter.print(aspectJAgent);
 				printWriter.print(
 					" -Dorg.aspectj.weaver.loadtime.configuration=");
 
-				if (_aspectJConfiguration != null) {
-					printWriter.print(_aspectJConfiguration);
+				String aspectJConfiguration = getAspectJConfiguration();
+
+				if (Validator.isNotNull(aspectJConfiguration)) {
+					printWriter.print(aspectJConfiguration);
 				}
 
 				printWriter.println("\"");
@@ -500,8 +518,8 @@ public class SetUpTestableTomcatTask
 		"tomcat"
 	};
 
-	private String _aspectJAgent;
-	private String _aspectJConfiguration;
+	private Object _aspectJAgent;
+	private Object _aspectJConfiguration;
 	private boolean _debugLogging;
 	private Object _dir;
 	private boolean _jmxRemoteAuthenticate;

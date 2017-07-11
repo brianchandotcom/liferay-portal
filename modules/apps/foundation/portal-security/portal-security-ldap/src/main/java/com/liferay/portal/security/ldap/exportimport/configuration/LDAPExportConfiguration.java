@@ -29,7 +29,7 @@ import com.liferay.portal.security.ldap.configuration.CompanyScopedConfiguration
 @Meta.OCD(
 	factory = true,
 	id = "com.liferay.portal.security.ldap.exportimport.configuration.LDAPExportConfiguration",
-	localization = "content/Language", name = "ldap.export.configuration.name"
+	localization = "content/Language", name = "ldap-export-configuration-name"
 )
 public interface LDAPExportConfiguration extends CompanyScopedConfiguration {
 

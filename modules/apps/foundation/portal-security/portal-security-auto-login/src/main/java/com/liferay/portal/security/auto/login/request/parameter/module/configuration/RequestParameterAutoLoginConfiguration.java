@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.portal.security.auto.login.request.parameter.module.configuration.RequestParameterAutoLoginConfiguration",
 	localization = "content/Language",
-	name = "request.parameter.auto.login.configuration.name"
+	name = "request-parameter-auto-login-configuration-name"
 )
 public interface RequestParameterAutoLoginConfiguration {
 

@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.portal.scheduler.configuration.SchedulerEngineHelperConfiguration",
 	localization = "content/Language",
-	name = "scheduler.engine.helper.configuration.name"
+	name = "scheduler-engine-helper-configuration-name"
 )
 public interface SchedulerEngineHelperConfiguration {
 

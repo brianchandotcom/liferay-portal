@@ -32,7 +32,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @ExtendedObjectClassDefinition(category = "foundation")
 @Meta.OCD(
 	id = "com.liferay.portal.security.sso.openid.configuration.OpenIdConfiguration",
-	localization = "content/Language", name = "open.id.configuration.name"
+	localization = "content/Language", name = "open-id-configuration-name"
 )
 public interface OpenIdConfiguration {
 

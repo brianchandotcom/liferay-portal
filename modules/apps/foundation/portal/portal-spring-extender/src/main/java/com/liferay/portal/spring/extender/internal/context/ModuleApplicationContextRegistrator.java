@@ -16,6 +16,8 @@ package com.liferay.portal.spring.extender.internal.context;
 
 import com.liferay.portal.bean.BeanLocatorImpl;
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.configuration.configurator.ServiceConfigurator;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.spring.bean.BeanReferenceRefreshUtil;
@@ -25,8 +27,6 @@ import com.liferay.portal.spring.extender.internal.classloader.BundleResolverCla
 import com.liferay.portal.spring.extender.loader.ModuleResourceLoader;
 
 import java.beans.Introspector;
-
-import org.apache.felix.utils.log.Logger;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.wiring.BundleWiring;
@@ -51,8 +51,6 @@ public class ModuleApplicationContextRegistrator {
 		BundleWiring bundleWiring = _extendeeBundle.adapt(BundleWiring.class);
 
 		_extendeeClassLoader = bundleWiring.getClassLoader();
-
-		_logger = new Logger(_extendeeBundle.getBundleContext());
 	}
 
 	protected void start() throws Exception {
@@ -79,8 +77,7 @@ public class ModuleApplicationContextRegistrator {
 			_applicationContextServicePublisher.register();
 		}
 		catch (Exception e) {
-			_logger.log(
-				Logger.LOG_ERROR,
+			_log.error(
 				"Unable to start " + _extendeeBundle.getSymbolicName(), e);
 
 			throw e;
@@ -152,8 +149,7 @@ public class ModuleApplicationContextRegistrator {
 				applicationContext.getAutowireCapableBeanFactory());
 		}
 		catch (Exception e) {
-			_logger.log(
-				Logger.LOG_ERROR,
+			_log.error(
 				"Unable to refresh " + applicationContext.getDisplayName() +
 					". This may result in memory leaks on multiple " +
 						"redeployments.");
@@ -170,13 +166,15 @@ public class ModuleApplicationContextRegistrator {
 			new BeanLocatorImpl(classLoader, applicationContext));
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		ModuleApplicationContextRegistrator.class);
+
 	private ApplicationContextServicePublisher
 		_applicationContextServicePublisher;
 	private ConfigurableApplicationContext _configurableApplicationContext;
 	private final Bundle _extendeeBundle;
 	private final ClassLoader _extendeeClassLoader;
 	private final Bundle _extenderBundle;
-	private final Logger _logger;
 	private final ServiceConfigurator _serviceConfigurator;
 
 }

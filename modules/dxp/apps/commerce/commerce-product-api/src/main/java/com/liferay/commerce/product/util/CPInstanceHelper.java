@@ -51,7 +51,7 @@ public interface CPInstanceHelper {
 		throws PortalException;
 
 	public String render(
-			long cpDefinitionId, String json, boolean requierd,
+			long cpDefinitionId, String json, boolean required,
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortalException;
 

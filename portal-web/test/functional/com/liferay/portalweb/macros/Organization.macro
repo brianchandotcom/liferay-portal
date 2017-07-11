@@ -205,17 +205,8 @@
 	</command>
 
 	<command name="addSiteCP">
-		<execute macro="Organization#gotoActionsCmd">
+		<execute macro="Organization#editOrganizationInformationCP">
 			<var name="orgName" value="${orgName}" />
-		</execute>
-
-		<var name="key_orgName" value="${orgName}" />
-
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
-
-		<execute function="Pause" locator1="3000" />
-
-		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Organization Site" />
 		</execute>
 

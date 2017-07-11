@@ -89,7 +89,6 @@ public class TestIntegrationDefaultsPlugin
 
 		setUpTestableTomcatTask.setAspectJAgent(
 			GradleUtil.getProperty(project, "aspectj.agent", (String)null));
-
 		setUpTestableTomcatTask.setAspectJConfiguration(
 			GradleUtil.getProperty(
 				project, "aspectj.configuration", (String)null));

@@ -24,7 +24,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @ExtendedObjectClassDefinition(category = "foundation")
 @Meta.OCD(
 	id = "com.liferay.portal.store.jcr.configuration.JCRStoreConfiguration",
-	localization = "content/Language", name = "jcr.store.configuration.name"
+	localization = "content/Language", name = "jcr-store-configuration-name"
 )
 public interface JCRStoreConfiguration {
 

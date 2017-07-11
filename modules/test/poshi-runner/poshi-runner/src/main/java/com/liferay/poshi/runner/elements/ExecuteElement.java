@@ -31,6 +31,14 @@ public class ExecuteElement extends PoshiElement {
 		super("execute", readableSyntax);
 	}
 
+	public ExecuteElement(String name, Element element) {
+		super(name, element);
+	}
+
+	public ExecuteElement(String name, String readableSyntax) {
+		super(name, readableSyntax);
+	}
+
 	@Override
 	public void parseReadableSyntax(String readableSyntax) {
 		String executeType = "macro";

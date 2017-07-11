@@ -75,10 +75,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	@Override
 	public final void format() throws Exception {
-		if (sourceFormatterArgs.isShowDocumentation()) {
-			System.setProperty("java.awt.headless", "false");
-		}
-
 		List<String> fileNames = getFileNames();
 
 		if (fileNames.isEmpty()) {

@@ -47,6 +47,32 @@
         <property name="portal.smoke" value="true" />
         <property name="test.assert.warning.exceptions" value="true" />
 
+        <if>
+            <isset var="duplicate" />
+            <then>
+                <execute macro="Alert#viewErrorMessage">
+                    <var name="errorMessage" value="A configuration with this ID already exists. Please enter a unique ID." />
+                </execute>
+            </then>
+            <else>
+                <execute macro="Alert#viewSuccessMessage" />
+            </else>
+        </if>
+
+        <if>
+            <equals arg1="${check}" arg2="true" />
+            <then>
+                <execute macro="Alert#viewSuccessMessage" />
+            </then>
+        </if>
+
+        <if>
+            <condition function="IsElementPresent" locator1="Blogs#ADD_BLOGS_ENTRY" />
+            <then>
+                <execute macro="Alert#viewSuccessMessage" />
+            </then>
+        </if>
+
         <execute macro="Smoke#viewWelcomePage" />
 
         <execute macro="Smoke#runSmoke" />

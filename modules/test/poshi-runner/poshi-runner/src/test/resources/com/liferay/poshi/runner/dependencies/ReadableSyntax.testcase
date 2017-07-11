@@ -48,6 +48,23 @@ definition {
 		property portal.smoke = "true";
 		property test.assert.warning.exceptions = "true";
 
+		if (isset(duplicate)) {
+			Alert.viewErrorMessage(
+				errorMessage = "A configuration with this ID already exists. Please enter a unique ID."
+			);
+		}
+		else {
+			Alert.viewSuccessMessage();
+		}
+
+		if ("${check}" == "true") {
+			Alert.viewSuccessMessage();
+		}
+
+		if (IsElementPresent(locator1 = "Blogs#ADD_BLOGS_ENTRY")) {
+			Alert.viewSuccessMessage();
+		}
+
 		Smoke.viewWelcomePage();
 
 		Smoke.runSmoke();

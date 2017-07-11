@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.ip.geocoder.internal.IPGeocoderConfiguration",
 	localization = "content/Language",
-	name = "ip.geocoder.service.configuration.name"
+	name = "ip-geocoder-service-configuration-name"
 )
 public interface IPGeocoderConfiguration {
 

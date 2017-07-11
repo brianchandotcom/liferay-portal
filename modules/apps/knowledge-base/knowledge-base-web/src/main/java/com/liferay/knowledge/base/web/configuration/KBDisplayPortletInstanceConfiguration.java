@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.util.StringPool;
 @Meta.OCD(
 	id = "com.liferay.knowledge.base.web.configuration.KBDisplayPortletInstanceConfiguration",
 	localization = "content/Language",
-	name = "knowledge.base.display.portlet.instance.configuration.name"
+	name = "knowledge-base-display-portlet-instance-configuration-name"
 )
 public interface KBDisplayPortletInstanceConfiguration {
 

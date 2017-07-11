@@ -28,7 +28,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.knowledge.base.configuration.KBGroupServiceConfiguration",
 	localization = "content/Language",
-	name = "knowledge.base.group.service.configuration.name"
+	name = "knowledge-base-group-service-configuration-name"
 )
 public interface KBGroupServiceConfiguration {
 

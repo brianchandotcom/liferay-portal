@@ -103,7 +103,7 @@ public class NodePlugin implements Plugin<Project> {
 				public void execute(Project project) {
 					_configureTaskDownloadNodeGlobal(
 						downloadNodeTask, nodeExtension);
-					_configureTasksExecuteNpm(project, nodeExtension);
+					_configureTasksExecuteNpmArgs(project, nodeExtension);
 				}
 
 			});
@@ -392,7 +392,7 @@ public class NodePlugin implements Plugin<Project> {
 		executeNodeTask.setUseGradleExec(useGradleExec);
 	}
 
-	private void _configureTaskExecuteNpm(
+	private void _configureTaskExecuteNpmArgs(
 		ExecuteNpmTask executeNpmTask, NodeExtension nodeExtension) {
 
 		executeNpmTask.args(nodeExtension.getNpmArgs());
@@ -496,7 +496,7 @@ public class NodePlugin implements Plugin<Project> {
 			});
 	}
 
-	private void _configureTasksExecuteNpm(
+	private void _configureTasksExecuteNpmArgs(
 		Project project, final NodeExtension nodeExtension) {
 
 		TaskContainer taskContainer = project.getTasks();
@@ -507,7 +507,7 @@ public class NodePlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(ExecuteNpmTask executeNpmTask) {
-					_configureTaskExecuteNpm(executeNpmTask, nodeExtension);
+					_configureTaskExecuteNpmArgs(executeNpmTask, nodeExtension);
 				}
 
 			});

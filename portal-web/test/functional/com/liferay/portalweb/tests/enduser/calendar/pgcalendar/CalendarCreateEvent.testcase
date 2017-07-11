@@ -397,6 +397,8 @@
 				<execute function="Pause" locator1="1000" />
 
 				<execute function="AssertConsoleTextNotPresent" value1="OutOfMemoryError" />
+
+				<var method="MathUtil#sum('${refreshCount}', '1')" name="refreshCount" />
 			</then>
 		</while>
 	</command>

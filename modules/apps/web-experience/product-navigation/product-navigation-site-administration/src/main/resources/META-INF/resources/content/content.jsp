@@ -80,9 +80,9 @@ PanelCategoryHelper panelCategoryHelper = (PanelCategoryHelper)request.getAttrib
 
 									<ul class="dropdown-menu dropdown-menu-center">
 										<li class="<%= (curScopeGroup.getGroupId() == curSite.getGroupId()) ? "active" : StringPool.BLANK %>">
-										<a class="truncate-text" href="<%= portletURL.toString() %>">
-											<liferay-ui:message key="default-scope" />
-										</a>
+											<a class="truncate-text" href="<%= portletURL.toString() %>">
+												<liferay-ui:message key="default-scope" />
+											</a>
 										</li>
 
 										<%

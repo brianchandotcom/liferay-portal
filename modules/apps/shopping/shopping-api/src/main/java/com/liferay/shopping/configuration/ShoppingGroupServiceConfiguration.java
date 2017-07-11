@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 @Meta.OCD(
 	id = "com.liferay.shopping.configuration.ShoppingGroupServiceConfiguration",
 	localization = "content/Language",
-	name = "shopping.group.service.configuration.name"
+	name = "shopping-group-service-configuration-name"
 )
 public interface ShoppingGroupServiceConfiguration {
 

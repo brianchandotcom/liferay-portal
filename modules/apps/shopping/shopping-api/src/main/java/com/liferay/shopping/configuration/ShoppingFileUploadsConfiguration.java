@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.shopping.configuration.ShoppingFileUploadsConfiguration",
 	localization = "content/Language",
-	name = "shopping.file.uploads.configuration.name"
+	name = "shopping-file-uploads-configuration-name"
 )
 public interface ShoppingFileUploadsConfiguration {
 

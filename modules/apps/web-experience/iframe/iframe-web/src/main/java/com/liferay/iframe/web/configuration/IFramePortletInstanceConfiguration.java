@@ -28,7 +28,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.iframe.web.configuration.IFramePortletInstanceConfiguration",
 	localization = "content/Language",
-	name = "iframe.portlet.instance.configuration.name"
+	name = "iframe-portlet-instance-configuration-name"
 )
 public interface IFramePortletInstanceConfiguration {
 

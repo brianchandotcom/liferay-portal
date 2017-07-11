@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfiguration",
 	localization = "content/Language",
-	name = "asset.publisher.web.configuration.name"
+	name = "asset-publisher-web-configuration-name"
 )
 public interface AssetPublisherWebConfiguration {
 

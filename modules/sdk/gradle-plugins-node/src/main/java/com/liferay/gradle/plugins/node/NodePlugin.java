@@ -405,7 +405,7 @@ public class NodePlugin implements Plugin<Project> {
 						return null;
 					}
 
-					return new File(executeNpmTask.getNodeDir(), ".cache");
+					return new File(nodeDir, ".cache");
 				}
 
 			});

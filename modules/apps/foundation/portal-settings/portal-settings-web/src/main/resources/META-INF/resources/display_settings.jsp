@@ -54,6 +54,8 @@
 
 	</aui:select>
 
+	<div id="languageWarning"></div>
+
 	<aui:fieldset cssClass="available-languages" label="available-languages">
 
 		<%
@@ -176,3 +178,25 @@
 		</c:if>
 	</aui:select>
 </aui:fieldset>
+
+<aui:script use="aui-base,aui-alert">
+	var languageSelectInput = A.one('#<portlet:namespace />languageId');
+
+	if (languageSelectInput) {
+		languageSelectInput.on(
+			'change',
+			function() {
+				new A.Alert(
+					{
+						bodyContent: '<liferay-ui:message key="this-change-will-only-affect-the-newly-created-localized-content" />',
+						boundingBox: '#languageWarning',
+						closeable: true,
+						cssClass: 'alert-warning',
+						destroyOnHide: false,
+						render: true
+					}
+				);
+			}
+		);
+	}
+</aui:script>

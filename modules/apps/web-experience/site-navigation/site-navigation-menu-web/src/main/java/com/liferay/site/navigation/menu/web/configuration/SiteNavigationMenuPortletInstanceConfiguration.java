@@ -28,7 +28,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuPortletInstanceConfiguration",
 	localization = "content/Language",
-	name = "site.navigation.menu.portlet.instance.configuration.name"
+	name = "site-navigation-menu-portlet-instance-configuration-name"
 )
 public interface SiteNavigationMenuPortletInstanceConfiguration {
 

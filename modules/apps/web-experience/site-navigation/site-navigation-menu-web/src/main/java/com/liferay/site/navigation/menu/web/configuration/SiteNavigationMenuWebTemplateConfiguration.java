@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuWebTemplateConfiguration",
 	localization = "content/Language",
-	name = "site.navigation.menu.web.template.configuration.name"
+	name = "site-navigation-menu-web-template-configuration-name"
 )
 public interface SiteNavigationMenuWebTemplateConfiguration {
 

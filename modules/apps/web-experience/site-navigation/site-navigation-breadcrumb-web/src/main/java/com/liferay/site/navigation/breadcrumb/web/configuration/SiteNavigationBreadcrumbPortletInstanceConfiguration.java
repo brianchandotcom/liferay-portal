@@ -28,7 +28,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.site.navigation.breadcrumb.web.configuration.SiteNavigationBreadcrumbPortletInstanceConfiguration",
 	localization = "content/Language",
-	name = "site.navigation.breadcrumb.portlet.instance.configuration.name"
+	name = "site-navigation-breadcrumb-portlet-instance-configuration-name"
 )
 public interface SiteNavigationBreadcrumbPortletInstanceConfiguration {
 

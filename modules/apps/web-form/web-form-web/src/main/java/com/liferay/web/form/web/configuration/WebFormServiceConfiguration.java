@@ -28,7 +28,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.web.form.web.configuration.WebFormServiceConfiguration",
 	localization = "content/Language",
-	name = "web.form.service.configuration.name"
+	name = "web-form-service-configuration-name"
 )
 public interface WebFormServiceConfiguration {
 

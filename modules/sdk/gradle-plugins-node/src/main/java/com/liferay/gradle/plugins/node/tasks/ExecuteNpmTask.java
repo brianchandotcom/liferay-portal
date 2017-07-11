@@ -100,8 +100,9 @@ public class ExecuteNpmTask extends ExecuteNodeScriptTask {
 
 		File cacheDir = getCacheDir();
 
-		if ((cacheDir != null) &&
-			FileUtil.isChild(cacheDir, project.getProjectDir())) {
+		if (isCacheConcurrent() ||
+			((cacheDir != null) &&
+			 FileUtil.isChild(cacheDir, project.getProjectDir()))) {
 
 			super.executeNode();
 		}
@@ -124,8 +125,16 @@ public class ExecuteNpmTask extends ExecuteNodeScriptTask {
 		return GradleUtil.toString(_registry);
 	}
 
+	public boolean isCacheConcurrent() {
+		return GradleUtil.toBoolean(_cacheConcurrent);
+	}
+
 	public boolean isProgress() {
 		return _progress;
+	}
+
+	public void setCacheConcurrent(Object cacheConcurrent) {
+		_cacheConcurrent = cacheConcurrent;
 	}
 
 	public void setCacheDir(Object cacheDir) {
@@ -175,6 +184,7 @@ public class ExecuteNpmTask extends ExecuteNodeScriptTask {
 		return completeArgs;
 	}
 
+	private Object _cacheConcurrent;
 	private Object _cacheDir;
 	private Object _logLevel;
 	private boolean _progress = true;

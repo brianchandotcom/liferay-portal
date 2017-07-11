@@ -112,14 +112,4 @@ public class ForElement extends PoshiElement {
 		return readableBlocks;
 	}
 
-	protected boolean isBalanceValidationRequired(String readableSyntax) {
-		readableSyntax = readableSyntax.trim();
-
-		if (readableSyntax.endsWith(";") || readableSyntax.endsWith("}")) {
-			return true;
-		}
-
-		return false;
-	}
-
 }

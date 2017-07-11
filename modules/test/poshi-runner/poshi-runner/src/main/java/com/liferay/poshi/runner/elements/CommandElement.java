@@ -153,15 +153,4 @@ public class CommandElement extends PoshiElement {
 		return "test" + attributeValue("name");
 	}
 
-	@Override
-	protected boolean isBalanceValidationRequired(String readableSyntax) {
-		readableSyntax = readableSyntax.trim();
-
-		if (readableSyntax.endsWith(";") || readableSyntax.endsWith("}")) {
-			return true;
-		}
-
-		return false;
-	}
-
 }

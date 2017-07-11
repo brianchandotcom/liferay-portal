@@ -194,6 +194,12 @@ public abstract class PoshiElement extends DefaultElement {
 	}
 
 	protected boolean isBalanceValidationRequired(String readableSyntax) {
+		readableSyntax = readableSyntax.trim();
+
+		if (readableSyntax.endsWith(";") || readableSyntax.endsWith("}")) {
+			return true;
+		}
+
 		return false;
 	}
 

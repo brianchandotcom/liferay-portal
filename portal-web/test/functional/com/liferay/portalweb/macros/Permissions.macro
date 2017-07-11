@@ -104,12 +104,31 @@
 	</command>
 
 	<command name="definePermissionViaJSONAPI">
+		<if>
+			<not>
+				<isset var="groupName" />
+			</not>
+			<then>
+				<var name="groupName" value="Global" />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="roleType" />
+			</not>
+			<then>
+				<var name="roleType" value="regular" />
+			</then>
+		</if>
+
 		<execute macro="JSONPermission#editPermission">
-			<var name="groupName" value="Global" />
+			<var name="groupName" value="${groupName}" />
 			<var name="method" value="add-resource-permission" />
 			<var name="resourceAction" value="${resourceAction}" />
 			<var name="resourceName" value="${resourceName}" />
 			<var name="roleTitle" value="${roleTitle}" />
+			<var name="roleType" value="${roleType}" />
 		</execute>
 	</command>
 
@@ -148,12 +167,31 @@
 	</command>
 
 	<command name="removePermissionViaAPI">
+		<if>
+			<not>
+				<isset var="groupName" />
+			</not>
+			<then>
+				<var name="groupName" value="Global" />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="roleType" />
+			</not>
+			<then>
+				<var name="roleType" value="regular" />
+			</then>
+		</if>
+
 		<execute macro="JSONPermission#editPermission">
-			<var name="groupName" value="Global" />
+			<var name="groupName" value="${groupName}" />
 			<var name="method" value="remove-resource-permission" />
 			<var name="resourceAction" value="${resourceAction}" />
 			<var name="resourceName" value="${resourceName}" />
 			<var name="roleTitle" value="${roleTitle}" />
+			<var name="roleType" value="${roleType}" />
 		</execute>
 	</command>
 

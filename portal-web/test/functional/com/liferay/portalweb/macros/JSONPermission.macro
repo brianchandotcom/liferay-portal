@@ -13,6 +13,27 @@
 			<return from="companyId" name="companyId" />
 		</execute>
 
+		<if>
+			<equals arg1="${roleType}" arg2="regular" />
+			<then>
+				<var name="primKey" value="${companyId}" />
+				<var name="scope" value="1"/>
+			</then>
+			<elseif>
+				<or>
+					<equals arg1="${roleType}" arg2="site" />
+					<equals arg1="${roleType}" arg2="organization" />
+				</or>
+				<then>
+					<var name="primKey" value="0" />
+					<var name="scope" value="3"/>
+				</then>
+			</elseif>
+			<else>
+				<fail message="Invalid 'roleType', '${roleType}' must be 'regular/site/organization'." />
+			</else>
+		</if>
+
 		<execute macro="JSONGroup#getGroupIdByName">
 			<var name="groupName" value="${groupName}" />
 			<return from="groupId" name="groupId" />
@@ -24,8 +45,8 @@
 				-d groupId=${groupId} \
 				-d companyId=${companyId} \
 				-d name=${resourceName} \
-				-d scope=1 \
-				-d primKey=${companyId} \
+				-d scope=${scope} \
+				-d primKey=${primKey} \
 				-d roleId=${roleId} \
 				-d actionId=${resourceAction}
 		</var>

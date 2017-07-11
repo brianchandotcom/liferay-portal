@@ -32,22 +32,6 @@ import org.gradle.api.logging.Logger;
 public class ExecuteNpmTask extends ExecuteNodeScriptTask {
 
 	public ExecuteNpmTask() {
-		setCacheDir(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					File nodeDir = getNodeDir();
-
-					if (nodeDir == null) {
-						return null;
-					}
-
-					return new File(getNodeDir(), ".cache");
-				}
-
-			});
-
 		setCommand(
 			new Callable<String>() {
 

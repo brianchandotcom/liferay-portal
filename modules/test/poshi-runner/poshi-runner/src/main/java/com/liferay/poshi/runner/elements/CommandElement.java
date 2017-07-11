@@ -132,14 +132,16 @@ public class CommandElement extends PoshiElement {
 				continue;
 			}
 
-			String readableBlock = sb.toString();
+			if (!line.startsWith("else {")) {
+				String readableBlock = sb.toString();
 
-			readableBlock = readableBlock.trim();
+				readableBlock = readableBlock.trim();
 
-			if (isValidReadableBlock(readableBlock)) {
-				readableBlocks.add(readableBlock);
+				if (isValidReadableBlock(readableBlock)) {
+					readableBlocks.add(readableBlock);
 
-				sb.setLength(0);
+					sb.setLength(0);
+				}
 			}
 
 			sb.append(line);

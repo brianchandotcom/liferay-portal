@@ -349,7 +349,11 @@ public class PoshiRunnerValidation {
 					element, possibleAttributeNames, filePath);
 			}
 
-			validateHasNoChildElements(element, filePath);
+			List<Element> varElements = element.elements("var");
+
+			for (Element varElement : varElements) {
+				validateVarElement(varElement, filePath);
+			}
 		}
 		else if (elementName.equals("contains")) {
 			List<String> attributeNames = Arrays.asList(

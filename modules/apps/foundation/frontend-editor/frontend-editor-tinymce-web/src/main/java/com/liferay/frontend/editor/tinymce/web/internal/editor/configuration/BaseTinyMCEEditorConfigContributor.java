@@ -73,13 +73,13 @@ public abstract class BaseTinyMCEEditorConfigContributor
 		String filebrowserImageBrowseUrl = jsonObject.getString(
 			"filebrowserImageBrowseUrl");
 
-		String itemSelectedEventName =
-			getItemSelector().getItemSelectedEventName(
-				filebrowserImageBrowseUrl);
+		ItemSelector itemSelector = getItemSelector();
+
+		String itemSelectedEventName = itemSelector.getItemSelectedEventName(
+			filebrowserImageBrowseUrl);
 
 		List<ItemSelectorCriterion> itemSelectorCriteria =
-			getItemSelector().getItemSelectorCriteria(
-				filebrowserImageBrowseUrl);
+			itemSelector.getItemSelectorCriteria(filebrowserImageBrowseUrl);
 
 		ImageItemSelectorCriterion imageItemSelectorCriterion =
 			new ImageItemSelectorCriterion();
@@ -90,7 +90,7 @@ public abstract class BaseTinyMCEEditorConfigContributor
 
 		itemSelectorCriteria.add(imageItemSelectorCriterion);
 
-		PortletURL itemSelectorURL = getItemSelector().getItemSelectorURL(
+		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(
 			requestBackedPortletURLFactory, itemSelectedEventName,
 			itemSelectorCriteria.toArray(
 				new ItemSelectorCriterion[itemSelectorCriteria.size()]));

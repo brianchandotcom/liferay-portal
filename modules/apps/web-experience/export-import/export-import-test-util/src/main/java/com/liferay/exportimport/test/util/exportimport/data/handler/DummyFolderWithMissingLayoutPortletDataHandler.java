@@ -104,7 +104,9 @@ public class DummyFolderWithMissingLayoutPortletDataHandler
 		List<DummyFolder> dummyFolders = (
 			(DummyFolderStagedModelRepository)
 				_dummyFolderStagedModelRepository
-		).getDummyFolders(portletDataContext.getScopeGroupId());
+		).getDummyFolders(
+			portletDataContext.getScopeGroupId()
+		);
 
 		List<Layout> layouts = _layoutLocalService.getLayouts(
 			portletDataContext.getScopeGroupId(), false);

@@ -526,6 +526,20 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 			}
 		}
 
+		matcher = _incorrectLineBreakInsideChainPattern4.matcher(content);
+
+		while (matcher.find()) {
+			String s = matcher.group(2);
+
+			if (!s.equals(");")) {
+				addMessage(
+					fileName,
+					"There should be a line break after '" + matcher.group(1) +
+						"'",
+					getLineCount(content, matcher.start()));
+			}
+		}
+
 		return content;
 	}
 
@@ -711,6 +725,8 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 		Pattern.compile("\t\\)\\..*\\(\n");
 	private final Pattern _incorrectLineBreakInsideChainPattern3 =
 		Pattern.compile("\n(.*\\S)\\)\\.(.*)\\(\n");
+	private final Pattern _incorrectLineBreakInsideChainPattern4 =
+		Pattern.compile("\t(\\)\\.[^\\)\\(]+\\()(.+)\n");
 	private final Pattern _incorrectLineBreakPattern1 = Pattern.compile(
 		"\n(\t*)(.*\\) \\{)([\t ]*\\}\n)");
 	private final Pattern _incorrectLineBreakPattern2 = Pattern.compile(

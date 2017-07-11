@@ -25,24 +25,24 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.push.notifications.sender.apple.internal.configuration.ApplePushNotificationsSenderConfiguration",
 	localization = "content/Language",
-	name = "apple.push.notifications.sender.configuration.name"
+	name = "apple-push-notifications-sender-configuration-name"
 )
 public interface ApplePushNotificationsSenderConfiguration {
 
 	@Meta.AD(
-		description = "certificate.password.description",
-		name = "certificate.password.name", required = false
+		description = "certificate-password-description",
+		name = "certificate-password-name", required = false
 	)
 	public String certificatePassword();
 
 	@Meta.AD(
-		description = "certificate.path.description",
-		name = "certificate.path.name", required = false
+		description = "certificate-path-description",
+		name = "certificate-path-name", required = false
 	)
 	public String certificatePath();
 
 	@Meta.AD(
-		description = "sandbox.description", name = "sandbox.name",
+		description = "sandbox-description", name = "sandbox-name",
 		required = false
 	)
 	public boolean sandbox();

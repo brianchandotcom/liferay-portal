@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.portal.scripting.javascript.configuration.JavaScriptExecutorConfiguration",
 	localization = "content/Language",
-	name = "javascript.executor.configuration.name"
+	name = "javascript-executor-configuration-name"
 )
 public interface JavaScriptExecutorConfiguration {
 

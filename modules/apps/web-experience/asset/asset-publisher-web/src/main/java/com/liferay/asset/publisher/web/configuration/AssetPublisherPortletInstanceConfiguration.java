@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 @Meta.OCD(
 	id = "com.liferay.asset.publisher.web.configuration.AssetPublisherPortletInstanceConfiguration",
 	localization = "content/Language",
-	name = "asset.publisher.portlet.instance.configuration.name"
+	name = "asset-publisher-portlet-instance-configuration-name"
 )
 public interface AssetPublisherPortletInstanceConfiguration {
 

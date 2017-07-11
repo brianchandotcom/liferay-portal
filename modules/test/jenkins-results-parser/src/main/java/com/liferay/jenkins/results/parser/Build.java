@@ -74,6 +74,8 @@ public interface Build {
 
 	public String getJDK();
 
+	public Element getJenkinsReportElement();
+
 	public String getJobName();
 
 	public String getJobURL();

@@ -26,7 +26,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 @Meta.OCD(
 	id = "com.liferay.chat.configuration.ChatConfiguration",
-	localization = "content/Language", name = "chat.service.configuration.name"
+	localization = "content/Language", name = "chat-service-configuration-name"
 )
 public interface ChatGroupServiceConfiguration {
 

@@ -26,7 +26,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.portal.search.configuration.IndexStatusManagerConfiguration",
 	localization = "content/Language",
-	name = "index.status.manager.configuration.name"
+	name = "index-status-manager-configuration-name"
 )
 @ProviderType
 public interface IndexStatusManagerConfiguration {

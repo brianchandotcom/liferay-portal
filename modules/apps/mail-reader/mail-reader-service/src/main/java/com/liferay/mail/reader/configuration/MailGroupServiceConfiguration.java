@@ -26,7 +26,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 @Meta.OCD(
 	id = "com.liferay.mail.reader.configuration.MailConfiguration",
-	localization = "content/Language", name = "mail.service.configuration.name"
+	localization = "content/Language", name = "mail-service-configuration-name"
 )
 public interface MailGroupServiceConfiguration {
 

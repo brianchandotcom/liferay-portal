@@ -26,7 +26,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 @Meta.OCD(
 	id = "com.liferay.wsrp.configuration.WSRPConfiguration",
-	localization = "content/Language", name = "wsrp.service.configuration.name"
+	localization = "content/Language", name = "wsrp-service-configuration-name"
 )
 public interface WSRPGroupServiceConfiguration {
 

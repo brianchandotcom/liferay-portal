@@ -56,14 +56,17 @@ public class BuildTest extends BaseJenkinsResultsParserTestCase {
 			"test-portal-acceptance-pullrequest(master)_passed", "446",
 			"test-portal-acceptance-pullrequest(master)", "test-1-8");
 		downloadSample(
-			"test-portal-acceptance-pullrequest(ee-7.0.x)_unresolved-req-startup-failure", "495",
-			"test-portal-acceptance-pullrequest(ee-7.0.x)", "test-1-18");
+			"test-portal-acceptance-pullrequest(ee-7.0.x)" +
+				"_unresolved-req-startup-failure",
+			"495", "test-portal-acceptance-pullrequest(ee-7.0.x)", "test-1-18");
 		downloadSample(
-			"test-portal-acceptance-pullrequest(master)_semantic_versioning_failure", "2003",
-			"test-portal-acceptance-pullrequest(master)", "test-1-3");
+			"test-portal-acceptance-pullrequest(master)" +
+				"_semantic_versioning_failure",
+			"2003", "test-portal-acceptance-pullrequest(master)", "test-1-3");
 		downloadSample(
-				"test-portal-acceptance-pullrequest(ee-7.0.x)_modules_compilation_failure", "492",
-				"test-portal-acceptance-pullrequest(ee-7.0.x)", "test-1-6");
+			"test-portal-acceptance-pullrequest(ee-7.0.x)" +
+				"_modules_compilation_failure",
+			"492", "test-portal-acceptance-pullrequest(ee-7.0.x)", "test-1-6");
 	}
 
 	@After

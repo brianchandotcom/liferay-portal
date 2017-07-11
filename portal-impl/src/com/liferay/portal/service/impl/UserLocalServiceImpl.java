@@ -2982,7 +2982,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @param  user the user
 	 * @return <code>true</code> if the user's password is expiring soon;
 	 *         <code>false</code> otherwise
+	 * @deprecated As of 7.0.0
 	 */
+	@Deprecated
 	@Override
 	public boolean isPasswordExpiringSoon(User user) throws PortalException {
 		PasswordPolicy passwordPolicy = user.getPasswordPolicy();

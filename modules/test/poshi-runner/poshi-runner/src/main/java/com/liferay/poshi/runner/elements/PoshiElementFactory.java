@@ -44,6 +44,10 @@ public class PoshiElementFactory {
 			return new DefinitionElement(element);
 		}
 
+		if (elementName.equals("description")) {
+			return new DescriptionElement(element);
+		}
+
 		if (elementName.equals("else")) {
 			return new ElseElement(element);
 		}

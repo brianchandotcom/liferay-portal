@@ -213,6 +213,7 @@ public class SourceFormatter {
 
 		sourceProcessors.add(new BNDSourceProcessor());
 		sourceProcessors.add(new CSSSourceProcessor());
+		sourceProcessors.add(new DockerfileSourceProcessor());
 		sourceProcessors.add(new FTLSourceProcessor());
 		sourceProcessors.add(new GradleSourceProcessor());
 		sourceProcessors.add(new GroovySourceProcessor());
@@ -350,7 +351,7 @@ public class SourceFormatter {
 		_allFileNames = SourceFormatterUtil.scanForFiles(
 			_sourceFormatterArgs.getBaseDirName(),
 			excludesList.toArray(new String[excludesList.size()]),
-			new String[] {"**/*.*"},
+			new String[] {"**/*.*", "**/Dockerfile"},
 			_sourceFormatterArgs.isIncludeSubrepositories());
 	}
 

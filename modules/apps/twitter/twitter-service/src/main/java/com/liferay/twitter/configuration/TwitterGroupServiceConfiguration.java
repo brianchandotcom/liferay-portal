@@ -27,7 +27,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.twitter.configuration.TwitterConfiguration",
 	localization = "content/Language",
-	name = "twitter.service.configuration.name"
+	name = "twitter-service-configuration-name"
 )
 public interface TwitterGroupServiceConfiguration {
 

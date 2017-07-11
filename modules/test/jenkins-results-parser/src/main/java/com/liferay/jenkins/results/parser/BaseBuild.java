@@ -2001,7 +2001,8 @@ public abstract class BaseBuild implements Build {
 		"http://cloud-10-0-0-31.lax.liferay.com/osb-jenkins-web/map/";
 	protected static final String upstreamFailuresJobBaseURL =
 		"https://test-1-0.liferay.com/userContent/testResults/";
-	protected static JSONObject upstreamFailuresJobJSONObject;
+	protected static JSONObject upstreamFailuresJobJSONObject =
+		new JSONObject("{\"SHA\":\"\",\"failedBatches\":[]}");
 
 	protected String archiveName;
 	protected List<Integer> badBuildNumbers = new ArrayList<>();

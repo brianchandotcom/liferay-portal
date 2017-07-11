@@ -89,9 +89,11 @@ public class CacheResponseData implements Serializable {
 
 		_length = objectInputStream.readInt();
 
-		_content = new byte[_length];
+		if (_length > 0) {
+			_content = new byte[_length];
 
-		objectInputStream.readFully(_content);
+			objectInputStream.readFully(_content);
+		}
 	}
 
 	private void writeObject(ObjectOutputStream objectOutputStream)
@@ -100,7 +102,10 @@ public class CacheResponseData implements Serializable {
 		objectOutputStream.defaultWriteObject();
 
 		objectOutputStream.writeInt(_length);
-		objectOutputStream.write(_content, _offset, _length);
+
+		if (_length > 0) {
+			objectOutputStream.write(_content, _offset, _length);
+		}
 	}
 
 	private final Map<String, Object> _attributes = new HashMap<>();

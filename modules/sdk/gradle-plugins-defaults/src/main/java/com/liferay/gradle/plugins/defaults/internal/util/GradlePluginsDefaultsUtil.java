@@ -37,6 +37,9 @@ public class GradlePluginsDefaultsUtil {
 		"https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups" +
 			"/public";
 
+	public static final String[] JSON_VERSION_FILE_NAMES =
+		{"npm-shrinkwrap.json", "package.json"};
+
 	public static final String TMP_MAVEN_REPOSITORY_DIR_NAME = ".m2-tmp";
 
 	public static final Pattern jsonVersionPattern = Pattern.compile(

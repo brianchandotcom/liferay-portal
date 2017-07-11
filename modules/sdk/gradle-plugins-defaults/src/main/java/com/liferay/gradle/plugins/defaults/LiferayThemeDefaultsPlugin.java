@@ -410,20 +410,20 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 
 		replaceRegexTask.finalizedBy(writeParentThemesDigestTask);
 
-		File npmShrinkwrapJsonFile = project.file("npm-shrinkwrap.json");
+		for (String fileName :
+				GradlePluginsDefaultsUtil.JSON_VERSION_FILE_NAMES) {
 
-		if (npmShrinkwrapJsonFile.exists()) {
-			replaceRegexTask.match(
-				GradlePluginsDefaultsUtil.jsonVersionPattern.pattern(),
-				npmShrinkwrapJsonFile);
+			File file = project.file(fileName);
+
+			if (file.exists()) {
+				replaceRegexTask.match(
+					GradlePluginsDefaultsUtil.jsonVersionPattern.pattern(),
+					file);
+			}
 		}
 
-		replaceRegexTask.match(
-			GradlePluginsDefaultsUtil.jsonVersionPattern.pattern(),
-			"package.json");
-
 		replaceRegexTask.setDescription(
-			"Updates the project version in the package.json file.");
+			"Updates the project version in the NPM files.");
 		replaceRegexTask.setReplacement(
 			IncrementVersionClosure.MICRO_INCREMENT);
 

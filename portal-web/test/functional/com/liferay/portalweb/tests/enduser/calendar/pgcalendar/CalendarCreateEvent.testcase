@@ -379,12 +379,11 @@
 
 		<execute macro="CalendarEvent#publish" />
 
-		<var name="i" value="0" />
-		<var name="refreshCount" value="5" />
+		<var name="refreshCount" value="0" />
 
 		<while>
 			<not>
-				<equals arg1="${i}" arg2="${refreshCount}" />
+				<equals arg1="${refreshCount}" arg2="${refreshCount}" />
 			</not>
 			<then>
 				<execute macro="Navigator#gotoPage">

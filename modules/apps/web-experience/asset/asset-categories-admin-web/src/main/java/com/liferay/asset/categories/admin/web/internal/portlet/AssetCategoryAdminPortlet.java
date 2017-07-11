@@ -26,6 +26,7 @@ import com.liferay.asset.kernel.exception.DuplicateCategoryException;
 import com.liferay.asset.kernel.exception.DuplicateCategoryPropertyException;
 import com.liferay.asset.kernel.exception.DuplicateVocabularyException;
 import com.liferay.asset.kernel.exception.NoSuchCategoryException;
+import com.liferay.asset.kernel.exception.NoSuchEntryException;
 import com.liferay.asset.kernel.exception.NoSuchVocabularyException;
 import com.liferay.asset.kernel.exception.VocabularyNameException;
 import com.liferay.asset.kernel.model.AssetCategory;
@@ -167,7 +168,6 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
 		long vocabularyId = ParamUtil.getLong(actionRequest, "vocabularyId");
-		String[] categoryProperties = getCategoryProperties(actionRequest);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			AssetCategory.class.getName(), actionRequest);
@@ -178,8 +178,7 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 
 			_assetCategoryService.addCategory(
 				serviceContext.getScopeGroupId(), parentCategoryId, titleMap,
-				descriptionMap, vocabularyId, categoryProperties,
-				serviceContext);
+				descriptionMap, vocabularyId, null, serviceContext);
 		}
 		else {
 
@@ -187,8 +186,32 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 
 			_assetCategoryService.updateCategory(
 				categoryId, parentCategoryId, titleMap, descriptionMap,
-				vocabularyId, categoryProperties, serviceContext);
+				vocabularyId, null, serviceContext);
 		}
+	}
+
+	public void editProperties(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long categoryId = ParamUtil.getLong(actionRequest, "categoryId", 0);
+
+		AssetCategory category = _assetCategoryService.fetchCategory(
+			categoryId);
+
+		if ((categoryId <= 0) || (category == null)) {
+			throw new NoSuchEntryException();
+		}
+
+		String[] categoryProperties = getCategoryProperties(actionRequest);
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			AssetCategory.class.getName(), actionRequest);
+
+		_assetCategoryService.updateCategory(
+			categoryId, category.getParentCategoryId(), category.getTitleMap(),
+			category.getDescriptionMap(), category.getVocabularyId(),
+			categoryProperties, serviceContext);
 	}
 
 	public void editVocabulary(
@@ -380,6 +403,7 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 			cause instanceof DuplicateVocabularyException ||
 			cause instanceof NoSuchCategoryException ||
 			cause instanceof NoSuchClassTypeException ||
+			cause instanceof NoSuchEntryException ||
 			cause instanceof NoSuchVocabularyException ||
 			cause instanceof PrincipalException ||
 			cause instanceof VocabularyNameException) {

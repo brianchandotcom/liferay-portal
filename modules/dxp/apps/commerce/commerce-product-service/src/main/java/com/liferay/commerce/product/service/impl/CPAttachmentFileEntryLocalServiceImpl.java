@@ -26,11 +26,13 @@ import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -61,6 +63,8 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
+
+		Locale locale = LocaleUtil.getSiteDefault();
 
 		Date displayDate = null;
 		Date expirationDate = null;
@@ -94,6 +98,13 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		cpAttachmentFileEntry.setFileEntryId(fileEntryId);
 		cpAttachmentFileEntry.setDisplayDate(displayDate);
 		cpAttachmentFileEntry.setExpirationDate(expirationDate);
+
+		if (titleMap.get(locale).isEmpty()) {
+			FileEntry fileEntry = cpAttachmentFileEntry.getFileEntry();
+
+			titleMap.put(locale, fileEntry.getFileName());
+		}
+
 		cpAttachmentFileEntry.setTitleMap(titleMap);
 		cpAttachmentFileEntry.setJson(json);
 		cpAttachmentFileEntry.setPriority(priority);
@@ -219,6 +230,9 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		throws PortalException {
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
+
+		Locale locale = LocaleUtil.getSiteDefault();
+
 		CPAttachmentFileEntry cpAttachmentFileEntry =
 			cpAttachmentFileEntryPersistence.findByPrimaryKey(
 				cpAttachmentFileEntryId);
@@ -243,6 +257,13 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		cpAttachmentFileEntry.setFileEntryId(fileEntryId);
 		cpAttachmentFileEntry.setDisplayDate(displayDate);
 		cpAttachmentFileEntry.setExpirationDate(expirationDate);
+
+		if (titleMap.get(locale).isEmpty()) {
+			FileEntry fileEntry = cpAttachmentFileEntry.getFileEntry();
+
+			titleMap.put(locale, fileEntry.getFileName());
+		}
+
 		cpAttachmentFileEntry.setTitleMap(titleMap);
 		cpAttachmentFileEntry.setJson(json);
 		cpAttachmentFileEntry.setPriority(priority);

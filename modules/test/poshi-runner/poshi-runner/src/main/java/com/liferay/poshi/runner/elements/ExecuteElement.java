@@ -16,6 +16,11 @@ package com.liferay.poshi.runner.elements;
 
 import com.liferay.poshi.runner.util.RegexUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.dom4j.Element;
 
 /**
@@ -62,7 +67,13 @@ public class ExecuteElement extends PoshiElement {
 			return;
 		}
 
-		String[] assignments = content.split(",");
+		List<String> assignments = new ArrayList<>();
+
+		Matcher matcher = _assignmentRegex.matcher(content);
+
+		while (matcher.find()) {
+			assignments.add(matcher.group());
+		}
 
 		for (String assignment : assignments) {
 			assignment = assignment.trim();
@@ -149,5 +160,8 @@ public class ExecuteElement extends PoshiElement {
 
 		return attributeValue("macro");
 	}
+
+	private static final Pattern _assignmentRegex = Pattern.compile(
+		"([^,]*? = \".*?\")");
 
 }

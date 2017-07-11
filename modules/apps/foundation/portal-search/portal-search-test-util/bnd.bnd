@@ -3,7 +3,12 @@ Bundle-SymbolicName: com.liferay.portal.search.test.util
 Bundle-Version: 1.2.0
 Export-Package: com.liferay.portal.search.test.util
 Import-Package:\
+	com.liferay.portal.kernel.model.*,\
 	com.liferay.portal.kernel.search.*,\
+	com.liferay.portal.kernel.service.*,\
+	com.liferay.portal.kernel.test.util.*,\
+	com.liferay.portal.kernel.util.*,\
+	com.liferay.portal.kernel.workflow.*,\
 	\
 	org.junit
 Liferay-Releng-Module-Group-Description:

@@ -1675,7 +1675,7 @@ if the system property `jacoco.code.coverage` is set to `true`.
 ### Changed
 - [LPS-72705]: Update the [Liferay Gradle Plugins] dependency to version 3.3.38.
 
-## 3.9.0 - 2017-07-10
+## 3.9.0 - 2017-07-11
 
 ### Added
 - [LPS-73489]: Add plugin `LiferayRootDefaultsPlugin` that can be applied to

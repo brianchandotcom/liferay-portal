@@ -34,6 +34,7 @@
 	<suppress checks="JavaXMLSecurityCheck" files="util-java/src/com/liferay/util/log4j/Log4JUtil\.java" />
 	<suppress checks="JavaXMLSecurityCheck" files="util-java/src/com/liferay/util/xml/Dom4jUtil\.java" />
 	<suppress checks="JavaXMLSecurityCheck" files="util-java/src/com/liferay/util/xml/XMLMergerRunner\.java" />
+	<suppress checks="JSONWhitespaceCheck" files="**/package\.json" />
 	<suppress checks="JSPLineBreakCheck" files="portal-web/docroot/html/portal/progress_poller\.jsp" />
 	<suppress checks="MethodCallsOrderCheck" files="portal-impl/src/com/liferay/portal/util/PortalImpl\.java" />
 </suppressions>

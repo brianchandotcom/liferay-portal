@@ -16,6 +16,8 @@ package com.liferay.frontend.editor.tinymce.web.internal.editor.configuration;
 
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
+import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -29,6 +31,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -78,7 +81,14 @@ public abstract class BaseTinyMCEEditorConfigContributor
 			getItemSelector().getItemSelectorCriteria(
 				filebrowserImageBrowseUrl);
 
-		itemSelectorCriteria.add(new ImageItemSelectorCriterion());
+		ImageItemSelectorCriterion imageItemSelectorCriterion =
+			new ImageItemSelectorCriterion();
+
+		imageItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			Arrays.<ItemSelectorReturnType>asList(
+				new URLItemSelectorReturnType()));
+
+		itemSelectorCriteria.add(imageItemSelectorCriterion);
 
 		PortletURL itemSelectorURL = getItemSelector().getItemSelectorURL(
 			requestBackedPortletURLFactory, itemSelectedEventName,

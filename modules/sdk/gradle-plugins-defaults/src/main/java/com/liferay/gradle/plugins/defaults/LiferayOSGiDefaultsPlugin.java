@@ -522,15 +522,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			});
 	}
 
-	/**
-	 * @deprecated As of 3.8.0, replaced by {@link
-	 *             GradlePluginsDefaultsUtil#configureRepositories(Project, File)}
-	 */
-	@Deprecated
-	protected static void configureRepositories(Project project) {
-		GradlePluginsDefaultsUtil.configureRepositories(project, null);
-	}
-
 	private Configuration _addConfigurationPortalTest(Project project) {
 		Configuration configuration = GradleUtil.addConfiguration(
 			project, PORTAL_TEST_CONFIGURATION_NAME);

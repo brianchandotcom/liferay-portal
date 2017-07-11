@@ -180,10 +180,10 @@
 	<command name="gotoMoreStructuresViaPlusButton">
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<var name="key_menuItem" value="More" />
-
 		<if>
-			<condition function="IsElementPresent" locator1="MenuItem#ANY_MENU_ITEM" />
+			<condition function="IsElementPresent" locator1="MenuItem#ANY_MENU_ITEM">
+				<var name="key_menuItem" value="More" />
+			</condition>
 			<then>
 				<execute function="AssertTextEquals" locator1="Pagination#SHOWING_TOTAL_ITEMS" value1="Showing ${pageMod} Items">
 					<var name="key_pageMod" value="${pageMod}" />

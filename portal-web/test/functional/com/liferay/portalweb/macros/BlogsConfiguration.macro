@@ -156,10 +156,10 @@
 					<var name="key_menuItem" value="Permissions" />
 				</execute>
 
-				<var name="key_menuItem" value="Configuration" />
-
 				<if>
-					<condition function="IsElementPresent" locator1="MenuItem#ANY_MENU_ITEM" />
+					<condition function="IsElementPresent" locator1="MenuItem#ANY_MENU_ITEM">
+						<var name="key_menuItem" value="Configuration" />
+					</condition>
 					<then>
 						<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Configuration">
 							<var name="key_menuItem" value="Configuration" />

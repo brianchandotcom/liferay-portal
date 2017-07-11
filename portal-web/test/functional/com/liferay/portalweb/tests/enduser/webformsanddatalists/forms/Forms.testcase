@@ -2226,8 +2226,9 @@
 		</for>
 	</command>
 
-	<command name="SubmitFormWithAllFieldTypesAfterEditingFields" priority="5">
-		<property name="portal.acceptance" value="true" />
+	<command name="SubmitFormWithAllFieldTypesAfterEditingFieldsAndExportImportLAR" priority="5">
+		<property name="portal.acceptance" value="quarantine" />
+		<property name="testray.component.names" value="Training" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -2598,6 +2599,88 @@
 		<execute macro="FormsAdmin#viewCheckboxEntry">
 			<var name="fieldLabel" value="New Checkbox" />
 			<var name="fieldName" value="Checkbox" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="LAR#exportPortlet">
+			<var name="larFileName" value="FormsExport.lar" />
+		</execute>
+
+		<execute function="Pause" locator1="5000" />
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Site Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="LAR#importPortlet">
+			<var name="larFileName" value="FormsExport.lar" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoViewEntries" />
+
+		<execute macro="FormsAdminNavigator#gotoView" />
+
+		<execute macro="FormFields#viewParagraphField">
+			<var name="fieldTitle" value="New Paragraph" />
+			<var name="fieldValue" value="New Paragraph body text." />
+		</execute>
+
+		<execute macro="FormsAdmin#viewTextEntry">
+			<var name="fieldLabel" value="New Text" />
+			<var name="fieldName" value="NewText" />
+			<var name="fieldValue" value="Text" />
+		</execute>
+
+		<execute macro="FormsAdmin#viewSelectEntry">
+			<var name="fieldLabel" value="New Select" />
+			<var name="fieldName" value="NewSelect" />
+			<var name="selectOption" value="New Select 2" />
+		</execute>
+
+		<execute macro="FormsAdmin#viewRadioEntry">
+			<var name="fieldLabel" value="New Radio" />
+			<var name="fieldName" value="NewRadio" />
+			<var name="fieldValue" value="New Option 1" />
+		</execute>
+
+		<execute macro="FormsAdmin#viewDateEntry">
+			<var name="fieldLabel" value="New Date" />
+			<var name="fieldName" value="NewDate" />
+			<var name="fieldValue" value="05/02/2016" />
+		</execute>
+
+		<execute macro="FormsAdmin#viewCheckboxEntry">
+			<var name="fieldLabel" value="New Checkbox" />
+			<var name="fieldName" value="NewCheckbox" />
 		</execute>
 	</command>
 

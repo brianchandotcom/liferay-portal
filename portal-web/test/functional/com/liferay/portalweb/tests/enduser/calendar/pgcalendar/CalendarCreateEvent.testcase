@@ -360,6 +360,49 @@
 		</execute>
 	</command>
 
+	<command name="AddEventWithLargeDateRange" priority="5">
+		<description message="This is a use case for LPS-61427." />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoAddEvent" />
+
+		<execute macro="CalendarEvent#editTitle">
+			<var name="eventTitle" value="Calendar Event Title" />
+		</execute>
+
+		<execute macro="CalendarEvent#setEndDate">
+			<var name="endDate" value="01/01/200000" />
+		</execute>
+
+		<execute macro="CalendarEvent#publish" />
+
+		<var name="refreshCount" value="0" />
+
+		<while>
+			<not>
+				<equals arg1="${refreshCount}" arg2="5" />
+			</not>
+			<then>
+				<execute macro="Navigator#gotoPage">
+					<var name="pageName" value="Calendar Page" />
+				</execute>
+
+				<execute macro="CalendarEvent#view">
+					<var name="eventTitle" value="Calendar Event Title" />
+				</execute>
+
+				<execute function="Pause" locator1="1000" />
+
+				<execute function="AssertConsoleTextNotPresent" value1="OutOfMemoryError" />
+
+				<var method="MathUtil#sum('${refreshCount}', '1')" name="refreshCount" />
+			</then>
+		</while>
+	</command>
+
 	<command name="AddRegular" priority="4">
 		<execute macro="CalendarNavigator#gotoAddEvent" />
 

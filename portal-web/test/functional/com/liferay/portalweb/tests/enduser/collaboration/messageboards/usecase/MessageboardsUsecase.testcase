@@ -150,6 +150,79 @@
 		</execute>
 	</command>
 
+	<command ignore="true" name="ImportLAR" priority="5">
+		<property name="portal.acceptance" value="pending" />
+		<property name="testray.component.names" value="Training" />
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Site Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
+		</execute>
+
+		<execute macro="LAR#importPortlet">
+			<var name="larFileName" value="space-message-boards.lar" />
+			<var name="uploadFrom" value="dependencies" />
+		</execute>
+
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#viewCP">
+			<var name="categoryName" value="General Discussion" />
+			<var name="subcategoriesNumber" value="0" />
+			<var name="threadsNumber" value="1" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewReplyWithUpvote">
+			<var name="postCount" value="5" />
+			<var name="threadBody" value="Super embarrassing, but does anybody know what to do when the Anti-Gravity Chamber door gets stuck and maintenance has gone for the day? Yesterday was the second time I’ve been in there all night, and I have to say, not liking the ambience." />
+			<var name="threadReplyBodyList" value="Couldn’t you just call somebody?,lol Jonny never has his cell,dude seriously creepy,As the Anti-Gravity Chamber handbook" />
+			<var name="threadSubject" value="Stuck in the Anti-Gravity Chamber" />
+		</execute>
+
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#viewCP">
+			<var name="categoryName" value="Homework Discussion" />
+			<var name="subcategoriesNumber" value="0" />
+			<var name="threadsNumber" value="1" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewReplyWithUpvote">
+			<var name="postCount" value="4" />
+			<var name="threadBody" value="I’m writing a paper called Mars on a Budget, and I’d be curious to hear from other departments about their thoughts on reducing overall costs of missions and how that can happen at every level without compromising safety or efficiency. After the economic downturn of 2062, budgetary restrictions remain an important concern. Thanks!" />
+			<var name="threadReplyBodyList" value="dr novola has some thoughts,one barrier is the inflated cost of materials combined with worker compensation,Are you factoring in environmental impact?" />
+			<var name="threadSubject" value="Cost Reduction for Mars" />
+		</execute>
+	</command>
+
 	<command name="RestoreMessageboardsThread" priority="5">
 		<execute macro="Navigator#openURL" />
 

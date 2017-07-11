@@ -1466,6 +1466,10 @@
 		<execute function="Type" locator1="CalendarEditEvent#END_DATE" value1="${endDate}" />
 	</command>
 
+	<command name="setEndDate">
+		<execute function="Type" locator1="CalendarEditEvent#END_DATE" value1="${endDate}" />
+	</command>
+
 	<command name="setEndDateTomorrow">
 		<execute function="Click" locator1="CalendarEditEvent#END_DATE" />
 

@@ -294,6 +294,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRIVATE_PAGES_ENABLE_PROPAGATION</td>
+	<td>//label[contains(.,'Enable propagation of changes')]/input[@type='checkbox' and contains(@id,'privateLayoutSetPrototype')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RANK_BY_CONTRIBUTION</td>
 	<td>//label[contains(.,'Rank by Contribution')]/input[@type='checkbox']</td>
 	<td></td>

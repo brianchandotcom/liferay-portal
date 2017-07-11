@@ -80,6 +80,33 @@
 		</execute>
 	</command>
 
+	<command name="ViewNonASCIICharactersWithSPADisabled" priority="4">
+		<description message="This is a use case for LPS-70390." />
+		<property name="custom.properties" value="javascript.single.page.application.enabled=false" />
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="skandi@liferay.com" />
+			<var name="userFirstName" value="Skändi" />
+			<var name="userLastName" value="Ääkkönen" />
+			<var name="userScreenName" value="uskandi" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#viewCP">
+			<var name="userEmailAddress" value="skandi@liferay.com" />
+			<var name="userFirstName" value="Skändi" />
+			<var name="userLastName" value="Ääkkönen" />
+			<var name="userScreenName" value="uskandi" />
+		</execute>
+	</command>
+
 	<command name="ViewSuccessMessageText" priority="5">
 		<property name="portal.acceptance" value="true" />
 

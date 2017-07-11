@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.internal;
+package com.liferay.gradle.plugins;
 
-import com.liferay.gradle.plugins.BasePortalToolDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.source.formatter.FormatSourceTask;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
@@ -65,17 +64,17 @@ public class SourceFormatterDefaultsPlugin
 	private void _configureTasksFormatSource(
 		FormatSourceTask formatSourceTask) {
 
+		Project project = formatSourceTask.getProject();
+
 		String gitWorkingBranchName = GradleUtil.getProperty(
-			formatSourceTask.getProject(), "git.working.branch.name",
-			(String)null);
+			project, "git.working.branch.name", (String)null);
 
 		if (Validator.isNotNull(gitWorkingBranchName)) {
 			formatSourceTask.setGitWorkingBranchName(gitWorkingBranchName);
 		}
 
 		String includeSubrepositories = GradleUtil.getProperty(
-			formatSourceTask.getProject(),
-			"source.formatter.include.subrepositories", (String)null);
+			project, "source.formatter.include.subrepositories", (String)null);
 
 		if (Validator.isNotNull(includeSubrepositories)) {
 			formatSourceTask.setIncludeSubrepositories(
@@ -83,16 +82,14 @@ public class SourceFormatterDefaultsPlugin
 		}
 
 		String maxLineLength = GradleUtil.getProperty(
-			formatSourceTask.getProject(), "source.formatter.max.line.length",
-			(String)null);
+			project, "source.formatter.max.line.length", (String)null);
 
 		if (Validator.isNotNull(maxLineLength)) {
 			formatSourceTask.setMaxLineLength(Integer.parseInt(maxLineLength));
 		}
 
 		String showDocumentation = GradleUtil.getProperty(
-			formatSourceTask.getProject(),
-			"source.formatter.show.documentation", (String)null);
+			project, "source.formatter.show.documentation", (String)null);
 
 		if (Validator.isNotNull(showDocumentation)) {
 			formatSourceTask.setShowDocumentation(
@@ -100,8 +97,7 @@ public class SourceFormatterDefaultsPlugin
 		}
 
 		String processorThreadCount = GradleUtil.getProperty(
-			formatSourceTask.getProject(),
-			"source.formatter.processor.thread.count", (String)null);
+			project, "source.formatter.processor.thread.count", (String)null);
 
 		if (Validator.isNotNull(processorThreadCount)) {
 			formatSourceTask.setProcessorThreadCount(

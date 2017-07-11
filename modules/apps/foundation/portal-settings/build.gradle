@@ -13,6 +13,4 @@ buildscript {
 	}
 }
 
-configure(subprojects.findAll {!it.childProjects}) {
-	apply plugin: "com.liferay.defaults.plugin"
-}
+apply plugin: "com.liferay.root.defaults.plugin"

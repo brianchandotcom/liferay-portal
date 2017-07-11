@@ -512,12 +512,6 @@ public class ModulesStructureTest {
 			Path dirPath, String buildGradleTemplate)
 		throws IOException {
 
-		if (Files.notExists(dirPath.resolve("app.bnd"))) {
-			buildGradleTemplate = StringUtil.removeSubstring(
-				buildGradleTemplate,
-				_APP_BUILD_GRADLE + StringPool.NEW_LINE + StringPool.NEW_LINE);
-		}
-
 		if (Files.notExists(dirPath.resolve("build-ext.gradle"))) {
 			buildGradleTemplate = StringUtil.removeSubstring(
 				buildGradleTemplate,
@@ -719,11 +713,14 @@ public class ModulesStructureTest {
 		Path gradlePropertiesPath = dirPath.resolve("gradle.properties");
 		Path settingsGradlePath = dirPath.resolve("settings.gradle");
 
-		String buildGradle = ModulesStructureTestUtil.read(buildGradlePath);
+		if (!_isInGitRepoReadOnly(dirPath) && !privateRepo) {
+			String buildGradle = ModulesStructureTestUtil.read(buildGradlePath);
 
-		Assert.assertEquals(
-			"Incorrect " + buildGradlePath,
-			_getGitRepoBuildGradle(dirPath, buildGradleTemplate), buildGradle);
+			Assert.assertEquals(
+				"Incorrect " + buildGradlePath,
+				_getGitRepoBuildGradle(dirPath, buildGradleTemplate),
+				buildGradle);
+		}
 
 		String gradleProperties = ModulesStructureTestUtil.read(
 			gradlePropertiesPath);

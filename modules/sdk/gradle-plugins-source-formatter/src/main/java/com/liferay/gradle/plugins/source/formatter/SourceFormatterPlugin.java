@@ -20,9 +20,13 @@ import com.liferay.gradle.util.Validator;
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
+import org.gradle.api.execution.TaskExecutionGraph;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.invocation.Gradle;
+import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.language.base.plugins.LifecycleBasePlugin;
 
@@ -83,6 +87,7 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 		FormatSourceTask formatSourceTask = GradleUtil.addTask(
 			project, CHECK_SOURCE_FORMATTING_TASK_NAME, FormatSourceTask.class);
 
+		formatSourceTask.onlyIf(_skipIfExecutingParentTaskSpec);
 		formatSourceTask.setAutoFix(false);
 		formatSourceTask.setDescription(
 			"Checks the source formatting of this project.");
@@ -97,6 +102,7 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 		FormatSourceTask formatSourceTask = GradleUtil.addTask(
 			project, FORMAT_SOURCE_TASK_NAME, FormatSourceTask.class);
 
+		formatSourceTask.onlyIf(_skipIfExecutingParentTaskSpec);
 		formatSourceTask.setDescription(
 			"Runs Liferay Source Formatter to format the project files.");
 		formatSourceTask.setGroup("formatting");
@@ -150,5 +156,37 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 
 			});
 	}
+
+	private static final Spec<Task> _skipIfExecutingParentTaskSpec =
+		new Spec<Task>() {
+
+			@Override
+			public boolean isSatisfiedBy(Task task) {
+				Project project = task.getProject();
+
+				Gradle gradle = project.getGradle();
+
+				TaskExecutionGraph taskExecutionGraph = gradle.getTaskGraph();
+
+				Project parentProject = project;
+
+				while ((parentProject = parentProject.getParent()) != null) {
+					TaskContainer parentProjectTaskContainer =
+						parentProject.getTasks();
+
+					Task parentProjectTask =
+						parentProjectTaskContainer.findByName(task.getName());
+
+					if ((parentProjectTask != null) &&
+						taskExecutionGraph.hasTask(parentProjectTask)) {
+
+						return false;
+					}
+				}
+
+				return true;
+			}
+
+		};
 
 }

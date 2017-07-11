@@ -383,7 +383,7 @@
 
 		<while>
 			<not>
-				<equals arg1="${refreshCount}" arg2="${refreshCount}" />
+				<equals arg1="${refreshCount}" arg2="5" />
 			</not>
 			<then>
 				<execute macro="Navigator#gotoPage">

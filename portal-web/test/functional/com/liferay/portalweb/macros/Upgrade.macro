@@ -623,6 +623,34 @@
 		</execute>
 	</command>
 
+	<command name="ViewDroolsAppManager">
+		<execute macro="ProductMenu#gotoControlPanelApps">
+			<var name="portlet" value="App Manager" />
+		</execute>
+
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="Drools" />
+		</execute>
+
+		<execute macro="AppManager#viewAppCP">
+			<var name="appName" value="Liferay Drools" />
+		</execute>
+
+		<execute macro="AppManager#viewAppCP">
+			<var name="appName" value="Liferay Portal Rules Engine Drools" />
+		</execute>
+
+		<execute macro="AppManager#viewStatus">
+			<var name="appName" value="Liferay Drools" />
+			<var name="appStatus" value="Active" />
+		</execute>
+
+		<execute macro="AppManager#viewStatus">
+			<var name="appName" value="Liferay Portal Rules Engine Drools" />
+			<var name="appStatus" value="Active" />
+		</execute>
+	</command>
+
 	<command name="viewNestedPortlets">
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Nested Portlets" />

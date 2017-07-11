@@ -1859,7 +1859,7 @@ to version 2.0.29.
 - [LPS-72705]: Update the [Liferay Source Formatter] dependency to version
 1.0.418.
 
-## 3.4.0 - 2017-07-10
+## 3.4.0 - 2017-07-11
 
 ### Changed
 - [LPS-73489]: Move `SourceFormatterDefaultsPlugin` class to exported package.

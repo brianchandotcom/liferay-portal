@@ -761,7 +761,7 @@ available.
 - [LPS-72705]: Update the [Liferay Source Formatter] dependency to version
 1.0.418.
 
-## 2.0.30 - 2017-07-10
+## 2.0.30 - 2017-07-11
 
 ### Changed
 - [LPS-73489]: Skip `checkSourceFormatting` and `formatSource` tasks if another

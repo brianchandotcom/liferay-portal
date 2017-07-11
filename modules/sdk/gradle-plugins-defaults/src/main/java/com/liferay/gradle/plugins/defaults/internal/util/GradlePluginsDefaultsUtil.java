@@ -38,7 +38,7 @@ public class GradlePluginsDefaultsUtil {
 			"/public";
 
 	public static final String[] JSON_VERSION_FILE_NAMES =
-		{"npm-shrinkwrap.json", "package.json"};
+		{"npm-shrinkwrap.json", "package-lock.json", "package.json"};
 
 	public static final String TMP_MAVEN_REPOSITORY_DIR_NAME = ".m2-tmp";
 

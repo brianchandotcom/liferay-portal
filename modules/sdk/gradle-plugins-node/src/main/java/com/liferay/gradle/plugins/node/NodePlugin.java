@@ -43,6 +43,7 @@ import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.TaskContainer;
+import org.gradle.util.VersionNumber;
 
 /**
  * @author Andrea Di Giorgi
@@ -93,7 +94,7 @@ public class NodePlugin implements Plugin<Project> {
 
 		_configureTasksExecuteNode(
 			project, nodeExtension, GradleUtil.isRunningInsideDaemon());
-		_configureTasksExecuteNpm(project);
+		_configureTasksExecuteNpm(project, nodeExtension);
 
 		_configureTasksPublishNodeModule(project);
 
@@ -393,12 +394,41 @@ public class NodePlugin implements Plugin<Project> {
 		executeNodeTask.setUseGradleExec(useGradleExec);
 	}
 
-	private void _configureTaskExecuteNpm(final ExecuteNpmTask executeNpmTask) {
+	private void _configureTaskExecuteNpm(
+		final ExecuteNpmTask executeNpmTask,
+		final NodeExtension nodeExtension) {
+
+		final Callable<Boolean> useGlobalConcurrentCacheCallable =
+			new Callable<Boolean>() {
+
+				@Override
+				public Boolean call() throws Exception {
+					if ((_node8VersionNumber.compareTo(
+							VersionNumber.parse(
+								nodeExtension.getNodeVersion())) <= 0) ||
+						(_npm5VersionNumber.compareTo(
+							VersionNumber.parse(
+								nodeExtension.getNpmVersion())) <= 0)) {
+
+						return true;
+					}
+
+					return false;
+				}
+
+			};
+
+		executeNpmTask.setCacheConcurrent(useGlobalConcurrentCacheCallable);
+
 		executeNpmTask.setCacheDir(
 			new Callable<File>() {
 
 				@Override
 				public File call() throws Exception {
+					if (useGlobalConcurrentCacheCallable.call()) {
+						return null;
+					}
+
 					File nodeDir = executeNpmTask.getNodeDir();
 
 					if (nodeDir == null) {
@@ -515,7 +545,9 @@ public class NodePlugin implements Plugin<Project> {
 			});
 	}
 
-	private void _configureTasksExecuteNpm(Project project) {
+	private void _configureTasksExecuteNpm(
+		Project project, final NodeExtension nodeExtension) {
+
 		TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(
@@ -524,7 +556,7 @@ public class NodePlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(ExecuteNpmTask executeNpmTask) {
-					_configureTaskExecuteNpm(executeNpmTask);
+					_configureTaskExecuteNpm(executeNpmTask, nodeExtension);
 				}
 
 			});
@@ -564,6 +596,10 @@ public class NodePlugin implements Plugin<Project> {
 			});
 	}
 
+	private static final VersionNumber _node8VersionNumber =
+		VersionNumber.version(8);
+	private static final VersionNumber _npm5VersionNumber =
+		VersionNumber.version(5);
 	private static final OsgiHelper _osgiHelper = new OsgiHelper();
 
 }

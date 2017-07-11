@@ -101,7 +101,7 @@ public class BatchBuild extends BaseBuild {
 		if (!upstreamJobFailureElements.isEmpty()) {
 			upstreamJobFailureMessageElement = messageElement.createCopy();
 
-			Dom4JUtil.getTruncatedOrderedListElement(
+			Dom4JUtil.getOrderedListElement(
 				upstreamJobFailureElements, upstreamJobFailureMessageElement,
 				4);
 		}

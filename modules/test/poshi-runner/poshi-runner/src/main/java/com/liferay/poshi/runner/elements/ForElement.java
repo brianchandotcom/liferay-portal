@@ -14,10 +14,10 @@
 
 package com.liferay.poshi.runner.elements;
 
-import org.dom4j.Element;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.dom4j.Element;
 
 /**
  * @author Kenji Heigel
@@ -60,8 +60,8 @@ public class ForElement extends PoshiElement {
 				String parentheticalContent = getParentheticalContent(
 					readableBlock);
 
-				String[] parentheticalContentArray =
-					parentheticalContent.split(":");
+				String[] parentheticalContentArray = parentheticalContent.split(
+					":");
 
 				String param = parentheticalContentArray[0].trim();
 
@@ -99,6 +99,8 @@ public class ForElement extends PoshiElement {
 			}
 
 			String readableBlock = sb.toString();
+
+			readableBlock = readableBlock.trim();
 
 			if (isValidReadableBlock(readableBlock)) {
 				readableBlocks.add(readableBlock);

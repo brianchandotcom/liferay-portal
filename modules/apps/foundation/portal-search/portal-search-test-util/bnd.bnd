@@ -3,7 +3,18 @@ Bundle-SymbolicName: com.liferay.portal.search.test.util
 Bundle-Version: 1.2.0
 Export-Package: com.liferay.portal.search.test.util
 Import-Package:\
+	com.liferay.portal.kernel.comment.*,\
+	com.liferay.portal.kernel.model.*,\
 	com.liferay.portal.kernel.search.*,\
+	com.liferay.portal.kernel.security.auth.*,\
+	com.liferay.portal.kernel.security.permission.*,\
+	com.liferay.portal.kernel.service.*,\
+	com.liferay.portal.kernel.test.randomizerbumpers.*,\
+	com.liferay.portal.kernel.test.util.*,\
+	com.liferay.portal.kernel.trash.*,\
+	com.liferay.portal.kernel.util.*,\
+	com.liferay.portal.kernel.workflow.*,\
+	com.liferay.portal.test.randomizerbumpers.*,\
 	\
 	org.junit
 Liferay-Releng-Module-Group-Description:

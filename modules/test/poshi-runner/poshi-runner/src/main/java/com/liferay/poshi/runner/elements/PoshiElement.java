@@ -83,6 +83,10 @@ public abstract class PoshiElement extends DefaultElement {
 		return sb.toString();
 	}
 
+	protected static String getBracedContent(String readableSyntax) {
+		return RegexUtil.getGroup(readableSyntax, ".*?\\{(.*)\\}", 1);
+	}
+
 	protected static String getNameFromAssignment(String assignment) {
 		String name = assignment.split("=")[0];
 

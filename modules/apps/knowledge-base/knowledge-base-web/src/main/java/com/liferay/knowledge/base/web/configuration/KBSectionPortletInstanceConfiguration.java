@@ -28,7 +28,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.knowledge.base.web.configuration.KBSectionPortletInstanceConfiguration",
 	localization = "content/Language",
-	name = "knowledge.base.section.portlet.instance.configuration.name"
+	name = "knowledge-base-section-portlet-instance-configuration-name"
 )
 public interface KBSectionPortletInstanceConfiguration {
 

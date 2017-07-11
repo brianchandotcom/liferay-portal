@@ -30,4 +30,6 @@ public @interface Sync {
 
 	public boolean cleanTransaction() default false;
 
+	public String[] destinationNames() default {};
+
 }

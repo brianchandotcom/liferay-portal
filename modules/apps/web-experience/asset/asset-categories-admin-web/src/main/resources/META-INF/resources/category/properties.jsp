@@ -59,37 +59,57 @@ else {
 		categoryPropertiesIndexes = new int[0];
 	}
 }
+
+String redirect = ParamUtil.getString(request, "redirect", assetCategoriesDisplayContext.getEditCategoryRedirect());
+
+long vocabularyId = ParamUtil.getLong(request, "vocabularyId");
 %>
 
-<div id="<portlet:namespace />categoryPropertiesId">
-	<p class="text-muted">
-		<liferay-ui:message key="properties-are-a-way-to-add-more-detailed-information-to-a-specific-category" />
-	</p>
+<portlet:actionURL name="editProperties" var="editPropertiesURL">
+	<portlet:param name="mvcPath" value="/edit_category.jsp" />
+	<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabularyId) %>" />
+</portlet:actionURL>
 
-	<%
-	for (int i = 0; i < categoryPropertiesIndexes.length; i++) {
-		int categoryPropertiesIndex = categoryPropertiesIndexes[i];
+<aui:form action="<%= editPropertiesURL %>" name="fm">
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="categoryId" type="hidden" value="<%= categoryId %>" />
 
-		AssetCategoryProperty categoryProperty = categoryProperties.get(i);
-	%>
+	<div id="<portlet:namespace />categoryPropertiesId">
+		<p class="text-muted">
+			<liferay-ui:message key="properties-are-a-way-to-add-more-detailed-information-to-a-specific-category" />
+		</p>
 
-		<aui:model-context bean="<%= categoryProperty %>" model="<%= AssetCategoryProperty.class %>" />
+		<%
+		for (int i = 0; i < categoryPropertiesIndexes.length; i++) {
+			int categoryPropertiesIndex = categoryPropertiesIndexes[i];
 
-		<div class="lfr-form-row lfr-form-row-inline">
-			<div class="row-fields">
-				<aui:input fieldParam='<%= "key" + categoryPropertiesIndex %>' id='<%= "key" + categoryPropertiesIndex %>' name="key" />
+			AssetCategoryProperty categoryProperty = categoryProperties.get(i);
+		%>
 
-				<aui:input fieldParam='<%= "value" + categoryPropertiesIndex %>' id='<%= "value" + categoryPropertiesIndex %>' name="value" />
+			<aui:model-context bean="<%= categoryProperty %>" model="<%= AssetCategoryProperty.class %>" />
+
+			<div class="lfr-form-row lfr-form-row-inline">
+				<div class="row-fields">
+					<aui:input fieldParam='<%= "key" + categoryPropertiesIndex %>' id='<%= "key" + categoryPropertiesIndex %>' name="key" />
+
+					<aui:input fieldParam='<%= "value" + categoryPropertiesIndex %>' id='<%= "value" + categoryPropertiesIndex %>' name="value" />
+				</div>
 			</div>
-		</div>
 
-	<%
-	}
-	%>
+		<%
+		}
+		%>
 
-</div>
+	</div>
 
-<aui:input name="categoryPropertiesIndexes" type="hidden" value="<%= StringUtil.merge(categoryPropertiesIndexes) %>" />
+	<aui:input name="categoryPropertiesIndexes" type="hidden" value="<%= StringUtil.merge(categoryPropertiesIndexes) %>" />
+
+	<aui:button-row>
+		<aui:button cssClass="btn-lg" type="submit" />
+
+		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+	</aui:button-row>
+</aui:form>
 
 <aui:script use="liferay-auto-fields">
 	var autoFields = new Liferay.AutoFields(

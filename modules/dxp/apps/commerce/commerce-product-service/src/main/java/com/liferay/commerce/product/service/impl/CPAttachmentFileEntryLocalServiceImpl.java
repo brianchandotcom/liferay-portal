@@ -83,6 +83,12 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 		validate(fileEntryId);
 
+		if (titleMap.get(locale).isEmpty()) {
+			FileEntry fileEntry = dlAppLocalService.getFileEntry(fileEntryId);
+
+			titleMap.put(locale, fileEntry.getFileName());
+		}
+
 		long cpAttachmentFileEntryId = counterLocalService.increment();
 
 		CPAttachmentFileEntry cpAttachmentFileEntry =
@@ -98,13 +104,6 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		cpAttachmentFileEntry.setFileEntryId(fileEntryId);
 		cpAttachmentFileEntry.setDisplayDate(displayDate);
 		cpAttachmentFileEntry.setExpirationDate(expirationDate);
-
-		if (titleMap.get(locale).isEmpty()) {
-			FileEntry fileEntry = cpAttachmentFileEntry.getFileEntry();
-
-			titleMap.put(locale, fileEntry.getFileName());
-		}
-
 		cpAttachmentFileEntry.setTitleMap(titleMap);
 		cpAttachmentFileEntry.setJson(json);
 		cpAttachmentFileEntry.setPriority(priority);
@@ -254,16 +253,15 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 		validate(fileEntryId);
 
-		cpAttachmentFileEntry.setFileEntryId(fileEntryId);
-		cpAttachmentFileEntry.setDisplayDate(displayDate);
-		cpAttachmentFileEntry.setExpirationDate(expirationDate);
-
 		if (titleMap.get(locale).isEmpty()) {
-			FileEntry fileEntry = cpAttachmentFileEntry.getFileEntry();
+			FileEntry fileEntry = dlAppLocalService.getFileEntry(fileEntryId);
 
 			titleMap.put(locale, fileEntry.getFileName());
 		}
 
+		cpAttachmentFileEntry.setFileEntryId(fileEntryId);
+		cpAttachmentFileEntry.setDisplayDate(displayDate);
+		cpAttachmentFileEntry.setExpirationDate(expirationDate);
 		cpAttachmentFileEntry.setTitleMap(titleMap);
 		cpAttachmentFileEntry.setJson(json);
 		cpAttachmentFileEntry.setPriority(priority);

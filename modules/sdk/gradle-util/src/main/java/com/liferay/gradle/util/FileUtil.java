@@ -110,9 +110,19 @@ public class FileUtil {
 		return get(project, url, destinationFile, false, true);
 	}
 
-	public static synchronized File get(
+	public static File get(
 			Project project, String url, File destinationFile,
 			boolean ignoreErrors, boolean tryLocalNetwork)
+		throws IOException {
+
+		return get(
+			project, url, null, null, destinationFile, ignoreErrors,
+			tryLocalNetwork);
+	}
+
+	public static synchronized File get(
+			Project project, String url, String username, String password,
+			File destinationFile, boolean ignoreErrors, boolean tryLocalNetwork)
 		throws IOException {
 
 		String mirrorsCacheArtifactSubdir = url.replaceFirst(
@@ -135,15 +145,19 @@ public class FileUtil {
 			if (tryLocalNetwork) {
 				try {
 					_get(
-						project, mirrorsUrl, mirrorsCacheArtifactFile,
-						ignoreErrors);
+						project, mirrorsUrl, null, null,
+						mirrorsCacheArtifactFile, ignoreErrors);
 				}
 				catch (Exception e) {
-					_get(project, url, mirrorsCacheArtifactFile, ignoreErrors);
+					_get(
+						project, url, username, password,
+						mirrorsCacheArtifactFile, ignoreErrors);
 				}
 			}
 			else {
-				_get(project, url, mirrorsCacheArtifactFile, ignoreErrors);
+				_get(
+					project, url, username, password, mirrorsCacheArtifactFile,
+					ignoreErrors);
 			}
 		}
 
@@ -450,7 +464,8 @@ public class FileUtil {
 	}
 
 	private static void _get(
-		Project project, final String url, File destinationFile,
+		Project project, final String url, final String username,
+		final String password, File destinationFile,
 		final boolean ignoreErrors) {
 
 		final File tmpFile = new File(
@@ -468,6 +483,13 @@ public class FileUtil {
 				args.put("dest", tmpFile);
 				args.put("ignoreerrors", ignoreErrors);
 				args.put("src", url);
+
+				if (Validator.isNotNull(username) &&
+					Validator.isNotNull(password)) {
+
+					args.put("password", password);
+					args.put("username", username);
+				}
 
 				if (_logger.isLifecycleEnabled()) {
 					_logger.lifecycle(

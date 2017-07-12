@@ -35,23 +35,22 @@
 
 	<command name="AddCheckboxOptionsEntry" priority="5">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Checkbox Option Description 1" />
+			<var name="optionDescription" value="Checkbox Option 1 Description" />
 			<var name="optionFieldType" value="Checkbox" />
-			<var name="optionName" value="Checkbox Option Name 1" />
-			<var name="optionTitle" value="Checkbox Option Title 1" />
+			<var name="optionTitle" value="Checkbox Option 1 Title" />
 		</execute>
 
 		<execute macro="CommerceEntry#saveEntry" />
 
 		<execute macro="CommerceNavigator#gotoEntry">
-			<var name="entryTitle" value="Checkbox Option Title 1" />
+			<var name="entryTitle" value="Checkbox Option 1 Title" />
 			<var name="portlet" value="Options" />
 		</execute>
 
 		<execute macro="CommerceEntry#viewOptionsEntry">
-			<var name="optionDescription" value="Checkbox Option Description 1" />
-			<var name="optionName" value="Checkbox Option Name 1" />
-			<var name="optionTitle" value="Checkbox Option Title 1" />
+			<var name="optionDescription" value="Checkbox Option 1 Description" />
+			<var name="optionKey" value="checkbox-option-1-title" />
+			<var name="optionTitle" value="Checkbox Option 1 Title" />
 		</execute>
 	</command>
 
@@ -282,10 +281,9 @@
 
 	<command name="AddFacetableCheckboxOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Checkbox Option Description 1" />
+			<var name="optionDescription" value="Checkbox Option 1 Description" />
 			<var name="optionFieldType" value="Checkbox" />
-			<var name="optionName" value="Checkbox Option Name 1" />
-			<var name="optionTitle" value="Checkbox Option Title 1" />
+			<var name="optionTitle" value="Checkbox Option 1 Title" />
 		</execute>
 
 		<execute function="Check" locator1="CommerceEntry#FACETABLE_CHECKBOX" value1="Facetable" />
@@ -327,10 +325,9 @@
 
 	<command name="AddFacetableContributorCheckboxOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Checkbox Option Description 1" />
+			<var name="optionDescription" value="Checkbox Option 1 Description" />
 			<var name="optionFieldType" value="Checkbox" />
-			<var name="optionName" value="Checkbox Option Name 1" />
-			<var name="optionTitle" value="Checkbox Option Title 1" />
+			<var name="optionTitle" value="Checkbox Option 1 Title" />
 		</execute>
 
 		<execute macro="CommerceOptions#setTwoCpOptions">
@@ -382,10 +379,9 @@
 
 	<command name="AddFacetableContributorDateOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Date Option Description 1" />
+			<var name="optionDescription" value="Date Option 1 Description" />
 			<var name="optionFieldType" value="Date" />
-			<var name="optionName" value="Date Option Name 1" />
-			<var name="optionTitle" value="Date Option Title 1" />
+			<var name="optionTitle" value="Date Option 1 Title" />
 		</execute>
 
 		<execute macro="CommerceOptions#setTwoCpOptions">
@@ -437,10 +433,9 @@
 
 	<command name="AddFacetableContributorParagraphOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Paragraph Option Description 1" />
+			<var name="optionDescription" value="Paragraph Option 1 Description" />
 			<var name="optionFieldType" value="Paragraph" />
-			<var name="optionName" value="Paragraph Option Name 1" />
-			<var name="optionTitle" value="Paragraph Option Title 1" />
+			<var name="optionTitle" value="Paragraph Option 1 Title" />
 		</execute>
 
 		<execute macro="CommerceOptions#setTwoCpOptions">
@@ -492,10 +487,9 @@
 
 	<command name="AddFacetableContributorRadioOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Radio Option Description 1" />
+			<var name="optionDescription" value="Radio Option 1 Description" />
 			<var name="optionFieldType" value="Radio" />
-			<var name="optionName" value="Radio Option Name 1" />
-			<var name="optionTitle" value="Radio Option Title 1" />
+			<var name="optionTitle" value="Radio Option 1 Title" />
 		</execute>
 
 		<execute macro="CommerceOptions#setTwoCpOptions">
@@ -547,10 +541,9 @@
 
 	<command name="AddFacetableContributorSelectOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Select Option Description 1" />
+			<var name="optionDescription" value="Select Option 1 Description" />
 			<var name="optionFieldType" value="Select" />
-			<var name="optionName" value="Select Option Name 1" />
-			<var name="optionTitle" value="Select Option Title 1" />
+			<var name="optionTitle" value="Select Option 1 Title" />
 		</execute>
 
 		<execute macro="CommerceOptions#setTwoCpOptions">
@@ -602,10 +595,9 @@
 
 	<command name="AddFacetableContributorTextOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Text Option Description 1" />
+			<var name="optionDescription" value="Text Option 1 Description" />
 			<var name="optionFieldType" value="Text" />
-			<var name="optionName" value="Text Option Name 1" />
-			<var name="optionTitle" value="Text Option Title 1" />
+			<var name="optionTitle" value="Text Option 1 Title" />
 		</execute>
 
 		<execute macro="CommerceOptions#setTwoCpOptions">
@@ -657,10 +649,9 @@
 
 	<command name="AddFacetableDateOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Date Option Description 1" />
+			<var name="optionDescription" value="Date Option 1 Description" />
 			<var name="optionFieldType" value="Date" />
-			<var name="optionName" value="Date Option Name 1" />
-			<var name="optionTitle" value="Date Option Title 1" />
+			<var name="optionTitle" value="Date Option 1 Title" />
 		</execute>
 
 		<execute function="Check" locator1="CommerceEntry#FACETABLE_CHECKBOX" value1="Facetable" />
@@ -702,10 +693,9 @@
 
 	<command name="AddFacetableParagraphOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Paragraph Option Description 1" />
+			<var name="optionDescription" value="Paragraph Option 1 Description" />
 			<var name="optionFieldType" value="Paragraph" />
-			<var name="optionName" value="Paragraph Option Name 1" />
-			<var name="optionTitle" value="Paragraph Option Title 1" />
+			<var name="optionTitle" value="Paragraph Option 1 Title" />
 		</execute>
 
 		<execute function="Check" locator1="CommerceEntry#FACETABLE_CHECKBOX" value1="Facetable" />
@@ -747,10 +737,9 @@
 
 	<command name="AddFacetableRadioOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Radio Option Description 1" />
+			<var name="optionDescription" value="Radio Option 1 Description" />
 			<var name="optionFieldType" value="Radio" />
-			<var name="optionName" value="Radio Option Name 1" />
-			<var name="optionTitle" value="Radio Option Title 1" />
+			<var name="optionTitle" value="Radio Option 1 Title" />
 		</execute>
 
 		<execute function="Check" locator1="CommerceEntry#FACETABLE_CHECKBOX" value1="Facetable" />
@@ -792,10 +781,9 @@
 
 	<command name="AddFacetableRequiredCheckboxOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Checkbox Option Description 1" />
+			<var name="optionDescription" value="Checkbox Option 1 Description" />
 			<var name="optionFieldType" value="Checkbox" />
-			<var name="optionName" value="Checkbox Option Name 1" />
-			<var name="optionTitle" value="Checkbox Option Title 1" />
+			<var name="optionTitle" value="Checkbox Option 1 Title" />
 		</execute>
 
 		<execute macro="CommerceOptions#setTwoCpOptions">
@@ -847,10 +835,9 @@
 
 	<command name="AddFacetableRequiredContributorCheckboxOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Checkbox Option Description 1" />
+			<var name="optionDescription" value="Checkbox Option 1 Description" />
 			<var name="optionFieldType" value="Checkbox" />
-			<var name="optionName" value="Checkbox Option Name 1" />
-			<var name="optionTitle" value="Checkbox Option Title 1" />
+			<var name="optionTitle" value="Checkbox Option 1 Title" />
 		</execute>
 
 		<execute macro="CommerceOptions#setThreeCpOptions">
@@ -873,10 +860,9 @@
 
 	<command name="AddFacetableRequiredContributorDateOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Date Option Description 1" />
+			<var name="optionDescription" value="Date Option 1 Description" />
 			<var name="optionFieldType" value="Date" />
-			<var name="optionName" value="Date Option Name 1" />
-			<var name="optionTitle" value="Date Option Title 1" />
+			<var name="optionTitle" value="Date Option 1 Title" />
 		</execute>
 
 		<execute macro="CommerceOptions#setThreeCpOptions">
@@ -899,10 +885,9 @@
 
 	<command name="AddFacetableRequiredContributorParagraphOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Paragraph Option Description 1" />
+			<var name="optionDescription" value="Paragraph Option 1 Description" />
 			<var name="optionFieldType" value="Paragraph" />
-			<var name="optionName" value="Paragraph Option Name 1" />
-			<var name="optionTitle" value="Paragraph Option Title 1" />
+			<var name="optionTitle" value="Paragraph Option 1 Title" />
 		</execute>
 
 		<execute macro="CommerceOptions#setThreeCpOptions">
@@ -925,10 +910,9 @@
 
 	<command name="AddFacetableRequiredContributorRadioOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Radio Option Description 1" />
+			<var name="optionDescription" value="Radio Option 1 Description" />
 			<var name="optionFieldType" value="Radio" />
-			<var name="optionName" value="Radio Option Name 1" />
-			<var name="optionTitle" value="Radio Option Title 1" />
+			<var name="optionTitle" value="Radio Option 1 Title" />
 		</execute>
 
 		<execute macro="CommerceOptions#setThreeCpOptions">
@@ -951,10 +935,9 @@
 
 	<command name="AddFacetableRequiredContributorSelectOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Select Option Description 1" />
+			<var name="optionDescription" value="Select Option 1 Description" />
 			<var name="optionFieldType" value="Select" />
-			<var name="optionName" value="Select Option Name 1" />
-			<var name="optionTitle" value="Select Option Title 1" />
+			<var name="optionTitle" value="Select Option 1 Title" />
 		</execute>
 
 		<execute macro="CommerceOptions#setThreeCpOptions">
@@ -977,10 +960,9 @@
 
 	<command name="AddFacetableRequiredContributorTextOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Text Option Description 1" />
+			<var name="optionDescription" value="Text Option 1 Description" />
 			<var name="optionFieldType" value="Text" />
-			<var name="optionName" value="Text Option Name 1" />
-			<var name="optionTitle" value="Text Option Title 1" />
+			<var name="optionTitle" value="Text Option 1 Title" />
 		</execute>
 
 		<execute macro="CommerceOptions#setThreeCpOptions">
@@ -1003,10 +985,9 @@
 
 	<command name="AddFacetableRequiredDateOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Date Option Description 1" />
+			<var name="optionDescription" value="Date Option 1 Description" />
 			<var name="optionFieldType" value="Date" />
-			<var name="optionName" value="Date Option Name 1" />
-			<var name="optionTitle" value="Date Option Title 1" />
+			<var name="optionTitle" value="Date Option 1 Title" />
 		</execute>
 
 		<execute macro="CommerceOptions#setTwoCpOptions">
@@ -1058,10 +1039,9 @@
 
 	<command name="AddFacetableRequiredParagraphOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Paragraph Option Description 1" />
+			<var name="optionDescription" value="Paragraph Option 1 Description" />
 			<var name="optionFieldType" value="Paragraph" />
-			<var name="optionName" value="Paragraph Option Name 1" />
-			<var name="optionTitle" value="Paragraph Option Title 1" />
+			<var name="optionTitle" value="Paragraph Option 1 Title" />
 		</execute>
 
 		<execute macro="CommerceOptions#setTwoCpOptions">
@@ -1113,10 +1093,9 @@
 
 	<command name="AddFacetableRequiredRadioOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Radio Option Description 1" />
+			<var name="optionDescription" value="Radio Option 1 Description" />
 			<var name="optionFieldType" value="Radio" />
-			<var name="optionName" value="Radio Option Name 1" />
-			<var name="optionTitle" value="Radio Option Title 1" />
+			<var name="optionTitle" value="Radio Option 1 Title" />
 		</execute>
 
 		<execute macro="CommerceOptions#setTwoCpOptions">
@@ -1168,10 +1147,9 @@
 
 	<command name="AddFacetableRequiredSelectOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Select Option Description 1" />
+			<var name="optionDescription" value="Select Option 1 Description" />
 			<var name="optionFieldType" value="Select" />
-			<var name="optionName" value="Select Option Name 1" />
-			<var name="optionTitle" value="Select Option Title 1" />
+			<var name="optionTitle" value="Select Option 1 Title" />
 		</execute>
 
 		<execute macro="CommerceOptions#setTwoCpOptions">
@@ -1223,10 +1201,9 @@
 
 	<command name="AddFacetableRequiredTextOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Text Option Description 1" />
+			<var name="optionDescription" value="Text Option 1 Description" />
 			<var name="optionFieldType" value="Text" />
-			<var name="optionName" value="Text Option Name 1" />
-			<var name="optionTitle" value="Text Option Title 1" />
+			<var name="optionTitle" value="Text Option 1 Title" />
 		</execute>
 
 		<execute macro="CommerceOptions#setTwoCpOptions">
@@ -1278,10 +1255,9 @@
 
 	<command name="AddFacetableSelectOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Select Option Description 1" />
+			<var name="optionDescription" value="Select Option 1 Description" />
 			<var name="optionFieldType" value="Select" />
-			<var name="optionName" value="Select Option Name 1" />
-			<var name="optionTitle" value="Select Option Title 1" />
+			<var name="optionTitle" value="Select Option 1 Title" />
 		</execute>
 
 		<execute function="Check" locator1="CommerceEntry#FACETABLE_CHECKBOX" value1="Facetable" />
@@ -1323,10 +1299,9 @@
 
 	<command name="AddFacetableTextOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Text Option Description 1" />
+			<var name="optionDescription" value="Text Option 1 Description" />
 			<var name="optionFieldType" value="Text" />
-			<var name="optionName" value="Text Option Name 1" />
-			<var name="optionTitle" value="Text Option Title 1" />
+			<var name="optionTitle" value="Text Option 1 Title" />
 		</execute>
 
 		<execute function="Check" locator1="CommerceEntry#FACETABLE_CHECKBOX" value1="Facetable" />
@@ -1440,23 +1415,22 @@
 
 	<command name="AddParagraphOptionsEntry" priority="5">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Paragraph Option Description 1" />
+			<var name="optionDescription" value="Paragraph Option 1 Description" />
 			<var name="optionFieldType" value="Paragraph" />
-			<var name="optionName" value="Paragraph Option Name 1" />
-			<var name="optionTitle" value="Paragraph Option Title 1" />
+			<var name="optionTitle" value="Paragraph Option 1 Title" />
 		</execute>
 
 		<execute macro="CommerceEntry#saveEntry" />
 
 		<execute macro="CommerceNavigator#gotoEntry">
-			<var name="entryTitle" value="Paragraph Option Title 1" />
+			<var name="entryTitle" value="Paragraph Option 1 Title" />
 			<var name="portlet" value="Options" />
 		</execute>
 
 		<execute macro="CommerceEntry#viewOptionsEntry">
-			<var name="optionDescription" value="Paragraph Option Description 1" />
-			<var name="optionName" value="Paragraph Option Name 1" />
-			<var name="optionTitle" value="Paragraph Option Title 1" />
+			<var name="optionDescription" value="Paragraph Option 1 Description" />
+			<var name="optionKey" value="paragraph-option-1-title" />
+			<var name="optionTitle" value="Paragraph Option 1 Title" />
 		</execute>
 	</command>
 
@@ -1482,23 +1456,22 @@
 
 	<command name="AddRadioOptionsEntry" priority="5">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Radio Option Description 1" />
+			<var name="optionDescription" value="Radio Option 1 Description" />
 			<var name="optionFieldType" value="Radio" />
-			<var name="optionName" value="Radio Option Name 1" />
-			<var name="optionTitle" value="Radio Option Title 1" />
+			<var name="optionTitle" value="Radio Option 1 Title" />
 		</execute>
 
 		<execute macro="CommerceEntry#saveEntry" />
 
 		<execute macro="CommerceNavigator#gotoEntry">
-			<var name="entryTitle" value="Radio Option Title 1" />
+			<var name="entryTitle" value="Radio Option 1 Title" />
 			<var name="portlet" value="Options" />
 		</execute>
 
 		<execute macro="CommerceEntry#viewOptionsEntry">
-			<var name="optionDescription" value="Radio Option Description 1" />
-			<var name="optionName" value="Radio Option Name 1" />
-			<var name="optionTitle" value="Radio Option Title 1" />
+			<var name="optionDescription" value="Radio Option 1 Description" />
+			<var name="optionKey" value="radio-option-1-title" />
+			<var name="optionTitle" value="Radio Option 1 Title" />
 		</execute>
 	</command>
 
@@ -1528,10 +1501,9 @@
 
 	<command name="AddRequiredCheckboxOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Checkbox Option Description 1" />
+			<var name="optionDescription" value="Checkbox Option 1 Description" />
 			<var name="optionFieldType" value="Checkbox" />
-			<var name="optionName" value="Checkbox Option Name 1" />
-			<var name="optionTitle" value="Checkbox Option Title 1" />
+			<var name="optionTitle" value="Checkbox Option 1 Title" />
 		</execute>
 
 		<execute function="Check" locator1="CommerceEntry#REQUIRED_CHECKBOX" value1="Required" />
@@ -1573,10 +1545,9 @@
 
 	<command name="AddRequiredContributorCheckboxOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Checkbox Option Description 1" />
+			<var name="optionDescription" value="Checkbox Option 1 Description" />
 			<var name="optionFieldType" value="Checkbox" />
-			<var name="optionName" value="Checkbox Option Name 1" />
-			<var name="optionTitle" value="Checkbox Option Title 1" />
+			<var name="optionTitle" value="Checkbox Option 1 Title" />
 		</execute>
 
 		<execute macro="CommerceOptions#setTwoCpOptions">
@@ -1628,10 +1599,9 @@
 
 	<command name="AddRequiredContributorDateOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Date Option Description 1" />
+			<var name="optionDescription" value="Date Option 1 Description" />
 			<var name="optionFieldType" value="Date" />
-			<var name="optionName" value="Date Option Name 1" />
-			<var name="optionTitle" value="Date Option Title 1" />
+			<var name="optionTitle" value="Date Option 1 Title" />
 		</execute>
 
 		<execute macro="CommerceOptions#setTwoCpOptions">
@@ -1683,10 +1653,9 @@
 
 	<command name="AddRequiredContributorParagraphOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Paragraph Option Description 1" />
+			<var name="optionDescription" value="Paragraph Option 1 Description" />
 			<var name="optionFieldType" value="Paragraph" />
-			<var name="optionName" value="Paragraph Option Name 1" />
-			<var name="optionTitle" value="Paragraph Option Title 1" />
+			<var name="optionTitle" value="Paragraph Option 1 Title" />
 		</execute>
 
 		<execute macro="CommerceOptions#setTwoCpOptions">
@@ -1738,10 +1707,9 @@
 
 	<command name="AddRequiredContributorRadioOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Radio Option Description 1" />
+			<var name="optionDescription" value="Radio Option 1 Description" />
 			<var name="optionFieldType" value="Radio" />
-			<var name="optionName" value="Radio Option Name 1" />
-			<var name="optionTitle" value="Radio Option Title 1" />
+			<var name="optionTitle" value="Radio Option 1 Title" />
 		</execute>
 
 		<execute macro="CommerceOptions#setTwoCpOptions">
@@ -1793,10 +1761,9 @@
 
 	<command name="AddRequiredContributorSelectOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Select Option Description 1" />
+			<var name="optionDescription" value="Select Option 1 Description" />
 			<var name="optionFieldType" value="Select" />
-			<var name="optionName" value="Select Option Name 1" />
-			<var name="optionTitle" value="Select Option Title 1" />
+			<var name="optionTitle" value="Select Option 1 Title" />
 		</execute>
 
 		<execute macro="CommerceOptions#setTwoCpOptions">
@@ -1848,10 +1815,9 @@
 
 	<command name="AddRequiredContributorTextOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Text Option Description 1" />
+			<var name="optionDescription" value="Text Option 1 Description" />
 			<var name="optionFieldType" value="Text" />
-			<var name="optionName" value="Text Option Name 1" />
-			<var name="optionTitle" value="Text Option Title 1" />
+			<var name="optionTitle" value="Text Option 1 Title" />
 		</execute>
 
 		<execute macro="CommerceOptions#setTwoCpOptions">
@@ -1903,10 +1869,9 @@
 
 	<command name="AddRequiredDateOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Date Option Description 1" />
+			<var name="optionDescription" value="Date Option 1 Description" />
 			<var name="optionFieldType" value="Date" />
-			<var name="optionName" value="Date Option Name 1" />
-			<var name="optionTitle" value="Date Option Title 1" />
+			<var name="optionTitle" value="Date Option 1 Title" />
 		</execute>
 
 		<execute function="Check" locator1="CommerceEntry#REQUIRED_CHECKBOX" value1="Required" />
@@ -1948,10 +1913,9 @@
 
 	<command name="AddRequiredParagraphOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Paragraph Option Description 1" />
+			<var name="optionDescription" value="Paragraph Option 1 Description" />
 			<var name="optionFieldType" value="Paragraph" />
-			<var name="optionName" value="Paragraph Option Name 1" />
-			<var name="optionTitle" value="Paragraph Option Title 1" />
+			<var name="optionTitle" value="Paragraph Option 1 Title" />
 		</execute>
 
 		<execute function="Check" locator1="CommerceEntry#REQUIRED_CHECKBOX" value1="Required" />
@@ -1993,10 +1957,9 @@
 
 	<command name="AddRequiredRadioOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Radio Option Description 1" />
+			<var name="optionDescription" value="Radio Option 1 Description" />
 			<var name="optionFieldType" value="Radio" />
-			<var name="optionName" value="Radio Option Name 1" />
-			<var name="optionTitle" value="Radio Option Title 1" />
+			<var name="optionTitle" value="Radio Option 1 Title" />
 		</execute>
 
 		<execute function="Check" locator1="CommerceEntry#REQUIRED_CHECKBOX" value1="Required" />
@@ -2038,10 +2001,9 @@
 
 	<command name="AddRequiredSelectOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Select Option Description 1" />
+			<var name="optionDescription" value="Select Option 1 Description" />
 			<var name="optionFieldType" value="Select" />
-			<var name="optionName" value="Select Option Name 1" />
-			<var name="optionTitle" value="Select Option Title 1" />
+			<var name="optionTitle" value="Select Option 1 Title" />
 		</execute>
 
 		<execute function="Check" locator1="CommerceEntry#REQUIRED_CHECKBOX" value1="Required" />
@@ -2083,10 +2045,9 @@
 
 	<command name="AddRequiredTextOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Text Option Description 1" />
+			<var name="optionDescription" value="Text Option 1 Description" />
 			<var name="optionFieldType" value="Text" />
-			<var name="optionName" value="Text Option Name 1" />
-			<var name="optionTitle" value="Text Option Title 1" />
+			<var name="optionTitle" value="Text Option 1 Title" />
 		</execute>
 
 		<execute function="Check" locator1="CommerceEntry#REQUIRED_CHECKBOX" value1="Required" />
@@ -2128,23 +2089,22 @@
 
 	<command name="AddSelectOptionsEntry" priority="5">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Select Option Description 1" />
+			<var name="optionDescription" value="Select Option 1 Description" />
 			<var name="optionFieldType" value="Select" />
-			<var name="optionName" value="Select Option Name 1" />
-			<var name="optionTitle" value="Select Option Title 1" />
+			<var name="optionTitle" value="Select Option 1 Title" />
 		</execute>
 
 		<execute macro="CommerceEntry#saveEntry" />
 
 		<execute macro="CommerceNavigator#gotoEntry">
-			<var name="entryTitle" value="Select Option Title 1" />
+			<var name="entryTitle" value="Select Option 1 Title" />
 			<var name="portlet" value="Options" />
 		</execute>
 
 		<execute macro="CommerceEntry#viewOptionsEntry">
-			<var name="optionDescription" value="Select Option Description 1" />
-			<var name="optionName" value="Select Option Name 1" />
-			<var name="optionTitle" value="Select Option Title 1" />
+			<var name="optionDescription" value="Select Option 1 Description" />
+			<var name="optionKey" value="select-option-1-title" />
+			<var name="optionTitle" value="Select Option 1 Title" />
 		</execute>
 	</command>
 
@@ -2174,25 +2134,25 @@
 
 	<command name="AddSimpleCatalogEntry" priority="5">
 		<execute macro="CommerceCatalog#addEntry">
-			<var name="baseSku" value="Simple Product SKU" />
+			<var name="baseSku" value="Simple Product 1 SKU" />
 			<var name="plusMenu" value="Simple" />
-			<var name="productFullDescription" value="Simple Product Full Description 1" />
-			<var name="productShortDescription" value="Simple Product Short Description 1" />
-			<var name="productTitle" value="Simple Product Title 1" />
+			<var name="productFullDescription" value="Simple Product 1 Full Description" />
+			<var name="productShortDescription" value="Simple Product 1 Short Description" />
+			<var name="productTitle" value="Simple Product 1 Title" />
 		</execute>
 
 		<execute macro="CommerceEntry#publishEntry" />
 
 		<execute macro="CommerceNavigator#gotoEntry">
-			<var name="entryTitle" value="Simple Product Title 1" />
+			<var name="entryTitle" value="Simple Product 1 Title" />
 			<var name="portlet" value="Catalog" />
 		</execute>
 
 		<execute macro="CommerceEntry#viewCatalogEntry">
-			<var name="baseSku" value="Simple Product SKU" />
-			<var name="productFullDescription" value="Simple Product Full Description 1" />
-			<var name="productShortDescription" value="Simple Product Short Description 1" />
-			<var name="productTitle" value="Simple Product Title 1" />
+			<var name="baseSku" value="Simple Product 1 SKU" />
+			<var name="productFullDescription" value="Simple Product 1 Full Description" />
+			<var name="productShortDescription" value="Simple Product 1 Short Description" />
+			<var name="productTitle" value="Simple Product 1 Title" />
 		</execute>
 	</command>
 
@@ -2200,17 +2160,17 @@
 		<property name="portal.acceptance" value="true" />
 
 		<execute macro="CommerceCatalog#addEntry">
-			<var name="baseSku" value="ProductSKU" />
+			<var name="baseSku" value="Product 1 SKU" />
 			<var name="plusMenu" value="Simple" />
-			<var name="productFullDescription" value="Product Full Description 1" />
-			<var name="productShortDescription" value="Product Short Description 1" />
-			<var name="productTitle" value="Product Title 1" />
+			<var name="productFullDescription" value="Product 1 Full Description" />
+			<var name="productShortDescription" value="Product 1 Short Description" />
+			<var name="productTitle" value="Product 1 Title" />
 		</execute>
 
 		<execute macro="CommerceEntry#publishEntry" />
 
 		<execute macro="CommerceNavigator#gotoEntry">
-			<var name="entryTitle" value="Product Title 1" />
+			<var name="entryTitle" value="Product 1 Title" />
 			<var name="portlet" value="Catalog" />
 		</execute>
 
@@ -2222,34 +2182,33 @@
 
 	<command name="AddSimpleDraftCatalogEntry" priority="5">
 		<execute macro="CommerceCatalog#addEntry">
-			<var name="baseSku" value="Simple Product SKU" />
+			<var name="baseSku" value="Simple Product 1 SKU" />
 			<var name="plusMenu" value="Simple" />
-			<var name="productFullDescription" value="Simple Product Full Description 1" />
-			<var name="productShortDescription" value="Simple Product Short Description 1" />
-			<var name="productTitle" value="Simple Product Title 1" />
+			<var name="productFullDescription" value="Simple Product 1 Full Description" />
+			<var name="productShortDescription" value="Simple Product 1 Short Description" />
+			<var name="productTitle" value="Simple Product 1 Title" />
 		</execute>
 
 		<execute macro="CommerceEntry#saveEntryAsDraft" />
 
 		<execute macro="CommerceNavigator#gotoEntry">
-			<var name="entryTitle" value="Simple Product Title 1" />
+			<var name="entryTitle" value="Simple Product 1 Title" />
 			<var name="portlet" value="Catalog" />
 		</execute>
 
 		<execute macro="CommerceEntry#viewCatalogEntry">
-			<var name="baseSku" value="Simple Product SKU" />
-			<var name="productFullDescription" value="Simple Product Full Description 1" />
-			<var name="productShortDescription" value="Simple Product Short Description 1" />
-			<var name="productTitle" value="Simple Product Title 1" />
+			<var name="baseSku" value="Simple Product 1 SKU" />
+			<var name="productFullDescription" value="Simple Product 1 Full Description" />
+			<var name="productShortDescription" value="Simple Product 1 Short Description" />
+			<var name="productTitle" value="Simple Product 1 Title" />
 		</execute>
 	</command>
 
 	<command name="AddSKUContributorCheckboxOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Checkbox Option Description 1" />
+			<var name="optionDescription" value="Checkbox Option 1 Description" />
 			<var name="optionFieldType" value="Checkbox" />
-			<var name="optionName" value="Checkbox Option Name 1" />
-			<var name="optionTitle" value="Checkbox Option Title 1" />
+			<var name="optionTitle" value="Checkbox Option 1 Title" />
 		</execute>
 
 		<execute function="Check" locator1="CommerceEntry#SKU_CONTRIBUTOR_CHECKBOX" value1="SKU Contributor" />
@@ -2265,10 +2224,9 @@
 
 	<command name="AddSKUContributorDateOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Date Option Description 1" />
+			<var name="optionDescription" value="Date Option 1 Description" />
 			<var name="optionFieldType" value="Date" />
-			<var name="optionName" value="Date Option Name 1" />
-			<var name="optionTitle" value="Date Option Title 1" />
+			<var name="optionTitle" value="Date Option 1 Title" />
 		</execute>
 
 		<execute function="Check" locator1="CommerceEntry#SKU_CONTRIBUTOR_CHECKBOX" value1="SKU Contributor" />
@@ -2284,10 +2242,9 @@
 
 	<command name="AddSKUContributorParagraphOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Paragraph Option Description 1" />
+			<var name="optionDescription" value="Paragraph Option 1 Description" />
 			<var name="optionFieldType" value="Paragraph" />
-			<var name="optionName" value="Paragraph Option Name 1" />
-			<var name="optionTitle" value="Paragraph Option Title 1" />
+			<var name="optionTitle" value="Paragraph Option 1 Title" />
 		</execute>
 
 		<execute function="Check" locator1="CommerceEntry#SKU_CONTRIBUTOR_CHECKBOX" value1="SKU Contributor" />
@@ -2303,10 +2260,9 @@
 
 	<command name="AddSKUContributorRadioOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Radio Option Description 1" />
+			<var name="optionDescription" value="Radio Option 1 Description" />
 			<var name="optionFieldType" value="Radio" />
-			<var name="optionName" value="Radio Option Name 1" />
-			<var name="optionTitle" value="Radio Option Title 1" />
+			<var name="optionTitle" value="Radio Option 1 Title" />
 		</execute>
 
 		<execute function="Check" locator1="CommerceEntry#SKU_CONTRIBUTOR_CHECKBOX" value1="SKU Contributor" />
@@ -2322,10 +2278,9 @@
 
 	<command name="AddSKUContributorSelectOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Select Option Description 1" />
+			<var name="optionDescription" value="Select Option 1 Description" />
 			<var name="optionFieldType" value="Select" />
-			<var name="optionName" value="Select Option Name 1" />
-			<var name="optionTitle" value="Select Option Title 1" />
+			<var name="optionTitle" value="Select Option 1 Title" />
 		</execute>
 
 		<execute function="Check" locator1="CommerceEntry#SKU_CONTRIBUTOR_CHECKBOX" value1="SKU Contributor" />
@@ -2341,10 +2296,9 @@
 
 	<command name="AddSKUContributorTextOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Text Option Description 1" />
+			<var name="optionDescription" value="Text Option 1 Description" />
 			<var name="optionFieldType" value="Text" />
-			<var name="optionName" value="Text Option Name 1" />
-			<var name="optionTitle" value="Text Option Title 1" />
+			<var name="optionTitle" value="Text Option 1 Title" />
 		</execute>
 
 		<execute function="Check" locator1="CommerceEntry#SKU_CONTRIBUTOR_CHECKBOX" value1="SKU Contributor" />
@@ -2360,23 +2314,22 @@
 
 	<command name="AddTextOptionsEntry" priority="5">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Text Option Description 1" />
+			<var name="optionDescription" value="Text Option 1 Description" />
 			<var name="optionFieldType" value="Text" />
-			<var name="optionName" value="Text Option Name 1" />
-			<var name="optionTitle" value="Text Option Title 1" />
+			<var name="optionTitle" value="Text Option 1 Title" />
 		</execute>
 
 		<execute macro="CommerceEntry#saveEntry" />
 
 		<execute macro="CommerceNavigator#gotoEntry">
-			<var name="entryTitle" value="Text Option Title 1" />
+			<var name="entryTitle" value="Text Option 1 Title" />
 			<var name="portlet" value="Options" />
 		</execute>
 
 		<execute macro="CommerceEntry#viewOptionsEntry">
-			<var name="optionDescription" value="Text Option Description 1" />
-			<var name="optionName" value="Text Option Name 1" />
-			<var name="optionTitle" value="Text Option Title 1" />
+			<var name="optionDescription" value="Text Option 1 Description" />
+			<var name="optionKey" value="text-option-1-title" />
+			<var name="optionTitle" value="Text Option 1 Title" />
 		</execute>
 	</command>
 
@@ -2406,25 +2359,25 @@
 
 	<command name="AddVirtualCatalogEntry" priority="5">
 		<execute macro="CommerceCatalog#addEntry">
-			<var name="baseSku" value="Virtual Product SKU" />
+			<var name="baseSku" value="Virtual Product 1 SKU" />
 			<var name="plusMenu" value="Virtual" />
-			<var name="productFullDescription" value="Virtual Product Full Description 1" />
-			<var name="productShortDescription" value="Virtual Product Short Description 1" />
-			<var name="productTitle" value="Virtual Product Title 1" />
+			<var name="productFullDescription" value="Virtual Product 1 Full Description" />
+			<var name="productShortDescription" value="Virtual Product 1 Short Description" />
+			<var name="productTitle" value="Virtual Product 1 Title" />
 		</execute>
 
 		<execute macro="CommerceEntry#publishEntry" />
 
 		<execute macro="CommerceNavigator#gotoEntry">
-			<var name="entryTitle" value="Virtual Product Title 1" />
+			<var name="entryTitle" value="Virtual Product 1 Title" />
 			<var name="portlet" value="Catalog" />
 		</execute>
 
 		<execute macro="CommerceEntry#viewCatalogEntry">
-			<var name="baseSku" value="Virtual Product SKU" />
-			<var name="productFullDescription" value="Virtual Product Full Description 1" />
-			<var name="productShortDescription" value="Virtual Product Short Description 1" />
-			<var name="productTitle" value="Virtual Product Title 1" />
+			<var name="baseSku" value="Virtual Product 1 SKU" />
+			<var name="productFullDescription" value="Virtual Product 1 Full Description" />
+			<var name="productShortDescription" value="Virtual Product 1 Short Description" />
+			<var name="productTitle" value="Virtual Product 1 Title" />
 		</execute>
 	</command>
 
@@ -2432,17 +2385,17 @@
 		<property name="portal.acceptance" value="true" />
 
 		<execute macro="CommerceCatalog#addEntry">
-			<var name="baseSku" value="ProductSKU" />
+			<var name="baseSku" value="Product 1 SKU" />
 			<var name="plusMenu" value="Virtual" />
-			<var name="productFullDescription" value="Product Full Description 1" />
-			<var name="productShortDescription" value="Product Short Description 1" />
-			<var name="productTitle" value="Product Title 1" />
+			<var name="productFullDescription" value="Product 1 Full Description" />
+			<var name="productShortDescription" value="Product 1 Short Description" />
+			<var name="productTitle" value="Product 1 Title" />
 		</execute>
 
 		<execute macro="CommerceEntry#publishEntry" />
 
 		<execute macro="CommerceNavigator#gotoEntry">
-			<var name="entryTitle" value="Product Title 1" />
+			<var name="entryTitle" value="Product 1 Title" />
 			<var name="portlet" value="Catalog" />
 		</execute>
 
@@ -2454,35 +2407,35 @@
 
 	<command name="AddVirtualDraftCatalogEntry" priority="5">
 		<execute macro="CommerceCatalog#addEntry">
-			<var name="baseSku" value="Virtual Product SKU" />
+			<var name="baseSku" value="Virtual Product 1 SKU" />
 			<var name="plusMenu" value="Virtual" />
-			<var name="productFullDescription" value="Virtual Product Full Description 1" />
-			<var name="productShortDescription" value="Virtual Product Short Description 1" />
-			<var name="productTitle" value="Virtual Product Title 1" />
+			<var name="productFullDescription" value="Virtual Product 1 Full Description" />
+			<var name="productShortDescription" value="Virtual Product 1 Short Description" />
+			<var name="productTitle" value="Virtual Product 1 Title" />
 		</execute>
 
 		<execute macro="CommerceEntry#saveEntryAsDraft" />
 
 		<execute macro="CommerceNavigator#gotoEntry">
-			<var name="entryTitle" value="Virtual Product Title 1" />
+			<var name="entryTitle" value="Virtual Product 1 Title" />
 			<var name="portlet" value="Catalog" />
 		</execute>
 
 		<execute macro="CommerceEntry#viewCatalogEntry">
-			<var name="baseSku" value="Virtual Product SKU" />
-			<var name="productFullDescription" value="Virtual Product Full Description 1" />
-			<var name="productShortDescription" value="Virtual Product Short Description 1" />
-			<var name="productTitle" value="Virtual Product Title 1" />
+			<var name="baseSku" value="Virtual Product 1 SKU" />
+			<var name="productFullDescription" value="Virtual Product 1 Full Description" />
+			<var name="productShortDescription" value="Virtual Product 1 Short Description" />
+			<var name="productTitle" value="Virtual Product 1 Title" />
 		</execute>
 	</command>
 
 	<command name="AssertCatalogEntriesSearchResultsNotInTrashBin" priority="5">
 		<execute macro="CommerceCatalog#addEntry">
-			<var name="baseSku" value="ProductSKU" />
+			<var name="baseSku" value="Product_1_SKU" />
 			<var name="plusMenu" value="Simple" />
-			<var name="productFullDescription" value="Product_Full_Description_1" />
-			<var name="productShortDescription" value="Product_Short_Description_1" />
-			<var name="productTitle" value="Product_Title_1" />
+			<var name="productFullDescription" value="Product_1_Full_Description" />
+			<var name="productShortDescription" value="Product_1_Short_Description" />
+			<var name="productTitle" value="Product_1_Title" />
 		</execute>
 
 		<execute macro="CommerceEntry#publishEntry" />
@@ -2492,11 +2445,11 @@
 		</execute>
 
 		<execute macro="CommerceCatalog#moveCatalogEntryToRecycleBinViaCheckbox" >
-			<var name="productTitle" value="Product_Title_1" />
+			<var name="productTitle" value="Product_1_Title" />
 		</execute>
 
 		<execute macro="CommerceNavigator#searchEntry">
-			<var name="entryTitle" value="Product_Title_1" />
+			<var name="entryTitle" value="Product_1_Title" />
 		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="CommerceNavigation#ENTRY_TITLE" />
@@ -2505,11 +2458,11 @@
 	<command name="DeleteAllCatalogEntriesViaCheckbox" priority="5">
 		<for list="1,2,3" param="entryNumber">
 			<execute macro="CommerceCatalog#addEntry">
-				<var name="baseSku" value="ProductSKU ${entryNumber}" />
+				<var name="baseSku" value="Product${entryNumber}SKU" />
 				<var name="plusMenu" value="Simple" />
-				<var name="productFullDescription" value="Product Full Description ${entryNumber}" />
-				<var name="productShortDescription" value="Product Short Description ${entryNumber}" />
-				<var name="productTitle" value="Product Title ${entryNumber}" />
+				<var name="productFullDescription" value="Product ${entryNumber} Full Description" />
+				<var name="productShortDescription" value="Product ${entryNumber} Short Description" />
+				<var name="productTitle" value="Product ${entryNumber} Title" />
 			</execute>
 
 			<execute macro="CommerceEntry#publishEntry" />
@@ -2526,11 +2479,11 @@
 
 	<command name="DeleteCatalogEntryViaCheckbox" priority="5">
 		<execute macro="CommerceCatalog#addEntry">
-			<var name="baseSku" value="ProductSKU" />
+			<var name="baseSku" value="Product 1 SKU" />
 			<var name="plusMenu" value="Simple" />
-			<var name="productFullDescription" value="Product Full Description 1" />
-			<var name="productShortDescription" value="Product Short Description 1" />
-			<var name="productTitle" value="Product Title 1" />
+			<var name="productFullDescription" value="Product 1 Full Description" />
+			<var name="productShortDescription" value="Product 1 Short Description" />
+			<var name="productTitle" value="Product 1 Title" />
 		</execute>
 
 		<execute macro="CommerceEntry#publishEntry" />
@@ -2540,13 +2493,13 @@
 		</execute>
 
 		<execute macro="CommerceCatalog#moveCatalogEntryToRecycleBinViaCheckbox" >
-			<var name="productTitle" value="Product Title 1" />
+			<var name="productTitle" value="Product 1 Title" />
 		</execute>
 	</command>
 
 	<command name="EditCatalogEntry" priority="5">
 		<execute macro="CommerceCatalog#addEntry">
-			<var name="baseSku" value="ProductSKU" />
+			<var name="baseSku" value="Product 1 SKU" />
 			<var name="plusMenu" value="Simple" />
 			<var name="productFullDescription" value="Product Full Description" />
 			<var name="productShortDescription" value="Product Short Description" />
@@ -2607,17 +2560,17 @@
 
 	<command name="SetCatalogEntryExpirationDate" priority="5">
 		<execute macro="CommerceCatalog#addEntry">
-			<var name="baseSku" value="ProductSKU" />
+			<var name="baseSku" value="Product 1 SKU" />
 			<var name="plusMenu" value="Simple" />
-			<var name="productFullDescription" value="Product Full Description 1" />
-			<var name="productShortDescription" value="Product Short Description 1" />
-			<var name="productTitle" value="Product Title 1" />
+			<var name="productFullDescription" value="Product 1 Full Description" />
+			<var name="productShortDescription" value="Product 1 Short Description" />
+			<var name="productTitle" value="Product 1 Title" />
 		</execute>
 
 		<execute macro="CommerceEntry#publishEntry" />
 
 		<execute macro="CommerceNavigator#gotoEntry">
-			<var name="entryTitle" value="Product Title 1" />
+			<var name="entryTitle" value="Product 1 Title" />
 			<var name="portlet" value="Catalog" />
 		</execute>
 
@@ -2632,7 +2585,7 @@
 		</execute>
 
 		<execute macro="CommerceNavigator#gotoEntry">
-			<var name="entryTitle" value="Product Title 1" />
+			<var name="entryTitle" value="Product 1 Title" />
 			<var name="portlet" value="Catalog" />
 		</execute>
 

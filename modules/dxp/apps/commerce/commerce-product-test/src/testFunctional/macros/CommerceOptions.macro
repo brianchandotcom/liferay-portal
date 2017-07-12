@@ -9,7 +9,6 @@
 		<execute macro="CommerceEntry#addOptionsEntry">
 			<var name="optionDescription" value="${optionDescription}" />
 			<var name="optionFieldType" value="${optionFieldType}" />
-			<var name="optionName" value="${optionName}" />
 			<var name="optionTitle" value="${optionTitle}" />
 		</execute>
 	</command>

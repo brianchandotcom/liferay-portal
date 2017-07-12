@@ -55,6 +55,7 @@
 
 		<!-- References -->
 
+		<reference entity="DLApp" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
 	<entity local-service="true" name="CPDefinition" remote-service="true" trash-enabled="true" uuid="true">

@@ -244,7 +244,8 @@ public class ChainingCheck extends AbstractCheck {
 		String classOrVariableName = nameAST.getText();
 
 		if (classOrVariableName.matches(".*[Bb]uilder") ||
-			classOrVariableName.equals("Mockito")) {
+			classOrVariableName.equals("Mockito") ||
+			classOrVariableName.equals("RestAssured")) {
 
 			return true;
 		}

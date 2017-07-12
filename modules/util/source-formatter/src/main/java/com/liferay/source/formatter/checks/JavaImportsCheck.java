@@ -48,9 +48,9 @@ public class JavaImportsCheck extends BaseFileCheck {
 			StringBundler sb = new StringBundler();
 
 			sb.append("Do not import method '");
-			sb.append(matcher.group(2));
+			sb.append(matcher.group(1));
 			sb.append("', import class '");
-			sb.append(matcher.group(3));
+			sb.append(matcher.group(2));
 			sb.append("' instead");
 
 			addMessage(
@@ -61,6 +61,6 @@ public class JavaImportsCheck extends BaseFileCheck {
 	}
 
 	private final Pattern _importMethodPattern = Pattern.compile(
-		"\nimport (static )?((.*\\.[A-Z]\\w*)\\.[a-z]\\w*);");
+		"\nimport static ((.*\\.(Assert|(Power)?Mockito))\\.[a-z]\\w*);");
 
 }

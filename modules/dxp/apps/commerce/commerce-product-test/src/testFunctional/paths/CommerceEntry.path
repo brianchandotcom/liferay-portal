@@ -59,6 +59,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_MENU_TAB</td>
+	<td>//a[@role="menuitem" and @title="${key_menuTab}"]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EXPIRATION_DATE_FIELD</td>
 	<td>//span/input[contains(@id,'expirationDate') and (@placeholder='mm/dd/yyyy')]</td>
 	<td></td>

@@ -40,7 +40,7 @@ public interface AssetPublisherPortletInstanceConfiguration {
 	 */
 	@Meta.AD(
 		deflt = "abstracts",
-		description = "default.display.style.key.description", required = false
+		description = "default-display-style-key-description", required = false
 	)
 	public String defaultDisplayStyle();
 
@@ -52,7 +52,7 @@ public interface AssetPublisherPortletInstanceConfiguration {
 	 */
 	@Meta.AD(
 		deflt = "table|title-list|abstracts|full-content",
-		description = "display.styles.key.description", required = false
+		description = "display-styles-key-description", required = false
 	)
 	public String[] displayStyles();
 

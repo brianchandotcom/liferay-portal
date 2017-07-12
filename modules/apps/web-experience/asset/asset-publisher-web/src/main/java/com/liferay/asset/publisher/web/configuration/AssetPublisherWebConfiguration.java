@@ -37,7 +37,7 @@ public interface AssetPublisherWebConfiguration {
 	 * @return interval in hours on how often to check for new assets.
 	 */
 	@Meta.AD(
-		deflt = "24", description = "check.interval.key.description",
+		deflt = "24", description = "check-interval-key-description",
 		required = false
 	)
 	public int checkInterval();
@@ -49,7 +49,7 @@ public interface AssetPublisherWebConfiguration {
 	 * @return <code>true</code> if dynamic export is enabled.
 	 */
 	@Meta.AD(
-		deflt = "true", description = "dynamic.export.enabled.key.description",
+		deflt = "true", description = "dynamic-export-enabled-key-description",
 		required = false
 	)
 	public boolean dynamicExportEnabled();
@@ -61,7 +61,7 @@ public interface AssetPublisherWebConfiguration {
 	 * @return maximum number of entries to export for dynamic selection.
 	 */
 	@Meta.AD(
-		deflt = "20", description = "dynamic.export.limit.key.description",
+		deflt = "20", description = "dynamic-export-limit-key-description",
 		required = false
 	)
 	public int dynamicExportLimit();
@@ -74,7 +74,7 @@ public interface AssetPublisherWebConfiguration {
 	 */
 	@Meta.AD(
 		deflt = "20",
-		description = "dynamic.subscription.limit.key.description",
+		description = "dynamic-subscription-limit-key-description",
 		required = false
 	)
 	public int dynamicSubscriptionLimit();
@@ -86,7 +86,7 @@ public interface AssetPublisherWebConfiguration {
 	 * @return <code>true</code> if manual export is enabled.
 	 */
 	@Meta.AD(
-		deflt = "true", description = "manual.export.enabled.key.description",
+		deflt = "true", description = "manual-export-enabled-key-description",
 		required = false
 	)
 	public boolean manualExportEnabled();
@@ -98,7 +98,7 @@ public interface AssetPublisherWebConfiguration {
 	 * @return <code>true</code> search with index is enabled.
 	 */
 	@Meta.AD(
-		deflt = "true", description = "search.with.index.key.description",
+		deflt = "true", description = "search-with-index-key-description",
 		required = false
 	)
 	public boolean searchWithIndex();
@@ -113,7 +113,7 @@ public interface AssetPublisherWebConfiguration {
 	 */
 	@Meta.AD(
 		deflt = "false",
-		description = "permission.checking.configurable.key.description",
+		description = "permission-checking-configurable-key-description",
 		required = false
 	)
 	public boolean permissionCheckingConfigurable();

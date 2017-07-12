@@ -50,7 +50,7 @@ CPSearchResultsDisplayContext cpSearchResultsDisplayContext = (CPSearchResultsDi
 						<div class="lfr-use-categories-content toggler-content-collapsed">
 							<aui:input id="preferencesAssetCategoryIds" name="preferences--assetCategoryIds--" type="hidden" />
 
-							<liferay-asset:asset-categories-selector
+							<liferay-ui:asset-categories-selector
 								curCategoryIds="<%= cpSearchResultsDisplayContext.getCategoryIds() %>"
 								hiddenInput="assetCategoriesSelectorCategoryIds"
 							/>
@@ -72,12 +72,17 @@ CPSearchResultsDisplayContext cpSearchResultsDisplayContext = (CPSearchResultsDi
 	submitButton.on(
 		'click',
 		function() {
-			var preferencesAssetCategoryIds = A.one('#<portlet:namespace />preferencesAssetCategoryIds');
-			var assetCategoriesSelectorCategoryIds = A.one('#<portlet:namespace />assetCategoriesSelectorCategoryIds');
+			if (A.one('#<portlet:namespace />useAssetCategories').attr('checked')) {
+				var preferencesAssetCategoryIds = A.one('#<portlet:namespace />preferencesAssetCategoryIds');
+				var assetCategoriesSelectorCategoryIds = A.one('#<portlet:namespace />assetCategoriesSelectorCategoryIds');
 
-			preferencesAssetCategoryIds.val(assetCategoriesSelectorCategoryIds.val());
+				preferencesAssetCategoryIds.val(assetCategoriesSelectorCategoryIds.val());
 
-			submitForm(A.one('#<portlet:namespace />fm'));
+				submitForm(A.one('#<portlet:namespace />fm'));
+			}
+			else {
+				submitForm(A.one('#<portlet:namespace />fm'));
+			}
 		}
 	);
 </aui:script>

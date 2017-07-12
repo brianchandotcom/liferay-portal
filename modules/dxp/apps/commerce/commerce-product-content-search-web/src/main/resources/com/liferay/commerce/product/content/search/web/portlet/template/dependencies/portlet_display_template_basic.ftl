@@ -29,6 +29,8 @@
 				</div>
 
 				<div class="row">
+
+				<#assign count = 0 />
 			</#if>
 		</#list>
 	</div>

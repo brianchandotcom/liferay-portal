@@ -3,7 +3,7 @@
 
 <resource-action-mapping>
 	<portlet-resource>
-		<portlet-name>com_liferay_commerce_product_content_web_internal_portlet_CPSearchResultsPortlet</portlet-name>
+		<portlet-name>com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet</portlet-name>
 		<permissions>
 			<supports>
 				<action-key>ADD_PORTLET_DISPLAY_TEMPLATE</action-key>

@@ -128,7 +128,7 @@ public class CPSearchResultsDisplayContext {
 			return DLUtil.getThumbnailSrc(fileEntry, themeDisplay);
 		}
 
-		return null;
+		return StringPool.BLANK;
 	}
 
 	public String getProductFriendlyURL(String baseUrl, Document document) {

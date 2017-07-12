@@ -64,7 +64,7 @@ public class TrashVersionLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 1.0.0, replaced by {@link #fetchVersion(String, long)}
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #fetchVersion(String, long)}
 	 */
 	@Deprecated
 	@Override

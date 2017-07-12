@@ -72,7 +72,7 @@ public interface Http {
 	public String decodeURL(String url);
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #decodeURL(String)}
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #decodeURL(String)}
 	 */
 	@Deprecated
 	public String decodeURL(String url, boolean unescapeSpaces);
@@ -82,13 +82,13 @@ public interface Http {
 	public String encodePath(String path);
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link URLCodec#encodeURL(String)}
+	 * @deprecated As of NEXT-VERSION, replaced by {@link URLCodec#encodeURL(String)}
 	 */
 	@Deprecated
 	public String encodeURL(String url);
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by
+	 * @deprecated As of NEXT-VERSION, replaced by
 	 *     {@link URLCodec#encodeURL(String, boolean)}
 	 */
 	@Deprecated

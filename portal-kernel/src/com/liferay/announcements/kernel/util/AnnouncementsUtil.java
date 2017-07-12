@@ -59,7 +59,7 @@ import java.util.Set;
 public class AnnouncementsUtil {
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getAnnouncementScopes(User)}
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #getAnnouncementScopes(User)}
 	 */
 	@Deprecated
 	public static LinkedHashMap<Long, long[]> getAnnouncementScopes(long userId)

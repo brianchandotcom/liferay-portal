@@ -592,7 +592,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #isKeepFileVersionLabel(long,
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #isKeepFileVersionLabel(long,
 	 *             boolean, ServiceContext)}
 	 */
 	@Deprecated

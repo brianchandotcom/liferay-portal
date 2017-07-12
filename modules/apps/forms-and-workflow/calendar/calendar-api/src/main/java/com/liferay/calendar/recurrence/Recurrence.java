@@ -26,7 +26,7 @@ import java.util.TimeZone;
 public class Recurrence {
 
 	/**
-	 * @deprecated As of 2.1.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	public void addExceptionDate(Calendar jCalendar) {

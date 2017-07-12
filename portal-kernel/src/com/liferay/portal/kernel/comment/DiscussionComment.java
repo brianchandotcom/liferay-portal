@@ -39,13 +39,13 @@ public interface DiscussionComment extends Comment {
 	public RatingsStats getRatingsStats();
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getDescendantComments()}
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #getDescendantComments()}
 	 */
 	@Deprecated
 	public List<DiscussionComment> getThreadComments();
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             #getDescendantCommentsCount()}
 	 */
 	@Deprecated

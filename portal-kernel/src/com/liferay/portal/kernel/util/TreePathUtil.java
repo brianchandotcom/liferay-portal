@@ -25,7 +25,7 @@ import java.util.concurrent.RecursiveAction;
 
 /**
  * @author     Shinn Lok
- * @deprecated As of 7.0.0, moved to {@link
+ * @deprecated As of NEXT-VERSION, moved to {@link
  *             com.liferay.portal.kernel.tree.TreePathUtil}
  */
 @Deprecated

@@ -38,7 +38,7 @@ import javax.servlet.jsp.JspException;
 public class SelectTag extends BaseSelectTag {
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -47,7 +47,7 @@ public class SelectTag extends BaseSelectTag {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -58,7 +58,7 @@ public class SelectTag extends BaseSelectTag {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -223,7 +223,7 @@ public class SelectTag extends BaseSelectTag {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	protected void updateFormValidators() {

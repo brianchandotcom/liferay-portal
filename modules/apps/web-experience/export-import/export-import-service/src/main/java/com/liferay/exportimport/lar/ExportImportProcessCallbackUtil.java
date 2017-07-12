@@ -34,7 +34,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ExportImportProcessCallbackUtil {
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	public static List<Callable<?>> popCallbackList() {
@@ -53,7 +53,7 @@ public class ExportImportProcessCallbackUtil {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	public static void pushCallbackList() {
@@ -73,7 +73,7 @@ public class ExportImportProcessCallbackUtil {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	public static void registerCallback(Callable<?> callable) {

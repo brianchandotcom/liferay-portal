@@ -159,7 +159,7 @@ public class VerifyPermission extends VerifyProcess {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	protected void deleteDefaultPrivateLayoutPermissions() throws Exception {
@@ -180,7 +180,7 @@ public class VerifyPermission extends VerifyProcess {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	protected void deleteDefaultPrivateLayoutPermissions_6(long companyId)
@@ -469,7 +469,7 @@ public class VerifyPermission extends VerifyProcess {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	protected boolean isPrivateLayout(String name, String primKey)

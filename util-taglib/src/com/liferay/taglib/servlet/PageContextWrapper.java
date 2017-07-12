@@ -101,7 +101,7 @@ public class PageContextWrapper extends PageContext {
 	}
 
 	/**
-	 * @deprecated As of 6.1.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -145,7 +145,7 @@ public class PageContextWrapper extends PageContext {
 	}
 
 	/**
-	 * @deprecated As of 6.1.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	@Override

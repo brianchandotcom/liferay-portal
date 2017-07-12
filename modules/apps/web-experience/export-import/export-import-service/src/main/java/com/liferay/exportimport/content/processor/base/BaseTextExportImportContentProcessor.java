@@ -74,7 +74,7 @@ import java.util.regex.Pattern;
 /**
  * @author Gergely Mathe
  *
- * @deprecated As of 4.0.0
+ * @deprecated As of NEXT-VERSION
  */
 @Deprecated
 public class BaseTextExportImportContentProcessor

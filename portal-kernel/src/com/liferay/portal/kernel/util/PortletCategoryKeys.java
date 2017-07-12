@@ -28,13 +28,13 @@ public class PortletCategoryKeys {
 	};
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #CONTROL_PANEL_APPS}
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #CONTROL_PANEL_APPS}
 	 */
 	@Deprecated
 	public static final String APPS = "apps";
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #CONTROL_PANEL_CONFIGURATION}
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #CONTROL_PANEL_CONFIGURATION}
 	 */
 	@Deprecated
 	public static final String CONFIGURATION = "control_panel.configuration";
@@ -53,7 +53,7 @@ public class PortletCategoryKeys {
 	public static final String CURRENT_SITE = "current_site";
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #USER_MY_ACCOUNT}
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #USER_MY_ACCOUNT}
 	 */
 	@Deprecated
 	public static final String MY = "user";
@@ -85,7 +85,7 @@ public class PortletCategoryKeys {
 		"site_administration.navigation";
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             #SITE_ADMINISTRATION_NAVIGATION}
 	 */
 	@Deprecated
@@ -96,14 +96,14 @@ public class PortletCategoryKeys {
 		"site_administration.publishing";
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #SITE_ADMINISTRATION_MEMBERS}
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #SITE_ADMINISTRATION_MEMBERS}
 	 */
 	@Deprecated
 	public static final String SITE_ADMINISTRATION_USERS =
 		"site_administration.users";
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #CONTROL_PANEL_SITES}
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #CONTROL_PANEL_SITES}
 	 */
 	@Deprecated
 	public static final String SITES = "sites";
@@ -111,7 +111,7 @@ public class PortletCategoryKeys {
 	public static final String USER_MY_ACCOUNT = "user.my_account";
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #CONTROL_PANEL_USERS}
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #CONTROL_PANEL_USERS}
 	 */
 	@Deprecated
 	public static final String USERS = "users";

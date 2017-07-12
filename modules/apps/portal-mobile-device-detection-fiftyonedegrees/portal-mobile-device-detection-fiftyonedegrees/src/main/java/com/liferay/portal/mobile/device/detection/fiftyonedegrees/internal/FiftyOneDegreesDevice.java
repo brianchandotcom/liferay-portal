@@ -56,7 +56,7 @@ public class FiftyOneDegreesDevice extends AbstractDevice {
 	}
 
 	/**
-	 * @deprecated As of 1.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -65,7 +65,7 @@ public class FiftyOneDegreesDevice extends AbstractDevice {
 	}
 
 	/**
-	 * @deprecated As of 1.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	@Override

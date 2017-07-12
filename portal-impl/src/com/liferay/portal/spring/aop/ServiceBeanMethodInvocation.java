@@ -40,7 +40,7 @@ public class ServiceBeanMethodInvocation
 	implements MethodInvocation, Serializable {
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             #ServiceBeanMethodInvocation(Object, Method, Object[])}
 	 */
 	@Deprecated
@@ -178,7 +178,7 @@ public class ServiceBeanMethodInvocation
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public ServiceBeanMethodInvocation toCacheKeyModel() {

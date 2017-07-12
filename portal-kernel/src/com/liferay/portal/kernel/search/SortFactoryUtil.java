@@ -58,7 +58,7 @@ public class SortFactoryUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #_getSortFactory()}
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #_getSortFactory()}
 	 */
 	@Deprecated
 	public static SortFactory getSortFactory() {

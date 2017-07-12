@@ -17,7 +17,7 @@ package com.liferay.portlet;
 /**
  * @author     Jorge Ferrer
  * @author     Brian Wing Shun Chan
- * @deprecated As of 6.2.0, moved to {@link
+ * @deprecated As of NEXT-VERSION, moved to {@link
  *             com.liferay.portal.kernel.portlet.BaseFriendlyURLMapper}
  */
 @Deprecated

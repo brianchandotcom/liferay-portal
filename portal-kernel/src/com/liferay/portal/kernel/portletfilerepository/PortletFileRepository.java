@@ -78,7 +78,7 @@ public interface PortletFileRepository {
 		throws PortalException;
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #deletePortletFolder}
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #deletePortletFolder}
 	 */
 	@Deprecated
 	public void deleteFolder(long folderId) throws PortalException;

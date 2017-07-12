@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of 6.2.0, moved to {@link
+ * @deprecated As of NEXT-VERSION, moved to {@link
  *             com.liferay.portal.kernel.servlet.ProtectedServletRequest}
  */
 @Deprecated

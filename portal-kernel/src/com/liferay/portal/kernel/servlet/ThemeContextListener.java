@@ -20,7 +20,7 @@ import javax.servlet.ServletContextListener;
 /**
  * @author     Ivica Cardic
  * @author     Brian Wing Shun Chan
- * @deprecated As of 6.2.0
+ * @deprecated As of NEXT-VERSION
  */
 @Deprecated
 public class ThemeContextListener implements ServletContextListener {

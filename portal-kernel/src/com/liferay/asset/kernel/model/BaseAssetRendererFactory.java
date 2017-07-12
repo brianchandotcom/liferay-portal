@@ -99,7 +99,7 @@ public abstract class BaseAssetRendererFactory<T>
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -123,7 +123,7 @@ public abstract class BaseAssetRendererFactory<T>
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -148,7 +148,7 @@ public abstract class BaseAssetRendererFactory<T>
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -168,7 +168,7 @@ public abstract class BaseAssetRendererFactory<T>
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -195,7 +195,7 @@ public abstract class BaseAssetRendererFactory<T>
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -241,7 +241,7 @@ public abstract class BaseAssetRendererFactory<T>
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getTypeName(Locale)}
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #getTypeName(Locale)}
 	 */
 	@Deprecated
 	@Override
@@ -255,7 +255,7 @@ public abstract class BaseAssetRendererFactory<T>
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -296,7 +296,7 @@ public abstract class BaseAssetRendererFactory<T>
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	@Override

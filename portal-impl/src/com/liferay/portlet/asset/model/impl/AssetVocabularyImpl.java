@@ -85,7 +85,7 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -228,7 +228,7 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #isRequired(long, long)}
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #isRequired(long, long)}
 	 */
 	@Deprecated
 	@Override
@@ -254,7 +254,7 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	@Override

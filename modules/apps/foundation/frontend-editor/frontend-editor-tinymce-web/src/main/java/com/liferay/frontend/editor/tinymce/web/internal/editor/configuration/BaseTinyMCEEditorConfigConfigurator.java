@@ -16,7 +16,7 @@ package com.liferay.frontend.editor.tinymce.web.internal.editor.configuration;
 
 /**
  * @author Ambrin Chaudhary
- * @deprecated As of 1.0.0, replaced by {@link BaseTinyMCEEditorConfigContributor}
+ * @deprecated As of NEXT-VERSION, replaced by {@link BaseTinyMCEEditorConfigContributor}
  */
 @Deprecated
 public abstract class BaseTinyMCEEditorConfigConfigurator

@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
 /**
  * @author     Brian Wing Shun Chan
  * @author     Scott Lee
- * @deprecated As of 6.2.0, replaced by {@link PasswordEncryptorUtil}
+ * @deprecated As of NEXT-VERSION, replaced by {@link PasswordEncryptorUtil}
  */
 @Deprecated
 public class PwdEncryptor extends PasswordEncryptorUtil {

@@ -33,7 +33,7 @@ public class ExportImportLifecycleEventFactoryImpl
 	implements ExportImportLifecycleEventFactory {
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	@Override

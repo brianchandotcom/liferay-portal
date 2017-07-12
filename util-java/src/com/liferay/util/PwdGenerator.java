@@ -18,7 +18,7 @@ package com.liferay.util;
  * @author     Brian Wing Shun Chan
  * @author     Amos Fong
  * @author     Shuyang Zhou
- * @deprecated As of 7.0.0, moved to {@link
+ * @deprecated As of NEXT-VERSION, moved to {@link
  *             com.liferay.portal.kernel.util.PwdGenerator}
  */
 @Deprecated

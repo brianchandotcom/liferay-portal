@@ -120,7 +120,7 @@ public class AnnouncementsEntryLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #addEntry(long, long, long,
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #addEntry(long, long, long,
 	 *             String, String, String, String, Date, Date, int, boolean)}
 	 */
 	@Deprecated
@@ -341,7 +341,7 @@ public class AnnouncementsEntryLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, String,
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #updateEntry(long, String,
 	 *             String, String, String, Date, Date, int)}
 	 */
 	@Deprecated

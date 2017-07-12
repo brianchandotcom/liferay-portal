@@ -16,7 +16,7 @@ package com.liferay.portal.kernel.search;
 
 /**
  * @author     Raymond Augé
- * @deprecated As of 7.0.0, , replaced by {@link
+ * @deprecated As of NEXT-VERSION, , replaced by {@link
  *             com.liferay.portal.kernel.search.generic.TermRangeQueryImpl}
  */
 @Deprecated

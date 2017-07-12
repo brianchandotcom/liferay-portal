@@ -28,7 +28,7 @@ import java.io.IOException;
 public class LocationVariableResolver {
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #LocationVariableResolver(
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #LocationVariableResolver(
 	 *			   ResourceManager, SettingsLocatorHelper)}
 	 */
 	@Deprecated

@@ -20,7 +20,7 @@ import java.util.Collection;
 /**
  * @author     Brian Wing Shun Chan
  * @author     Shuyang Zhou
- * @deprecated As of 7.0.0, with no direct replacement
+ * @deprecated As of NEXT-VERSION, with no direct replacement
  */
 @Deprecated
 public class UniqueList<E> extends ArrayList<E> {

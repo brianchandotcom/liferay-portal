@@ -36,7 +36,7 @@ import javax.servlet.http.HttpSession;
 public class PublicRenderParametersPool {
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             #get(HttpServletRequest, long)}
 	 */
 	@Deprecated

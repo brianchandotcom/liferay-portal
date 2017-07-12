@@ -723,7 +723,7 @@ public class DLFileEntryTypeLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #_updateDDMStructure(long,
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #_updateDDMStructure(long,
 	 *             String, long, long, Map, Map, long[], ServiceContext)}
 	 */
 	@Deprecated

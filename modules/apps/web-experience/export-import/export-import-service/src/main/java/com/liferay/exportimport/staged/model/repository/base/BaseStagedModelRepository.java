@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * @author Daniel Kocsis
  *
- * @deprecated As of 4.0.0
+ * @deprecated As of NEXT-VERSION
  */
 @Deprecated
 public abstract class BaseStagedModelRepository<T extends StagedModel>

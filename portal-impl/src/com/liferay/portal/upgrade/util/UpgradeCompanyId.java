@@ -37,7 +37,7 @@ import java.util.concurrent.Future;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link
+ * @deprecated As of NEXT-VERSION, replaced by {@link
  *             com.liferay.portal.kernel.upgrade.BaseUpgradeCompanyId}
  */
 @Deprecated

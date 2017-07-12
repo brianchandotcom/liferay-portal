@@ -90,7 +90,7 @@ public abstract class BaseSearcher extends BaseIndexer<Object> {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, added strictly to support backwards
+	 * @deprecated As of NEXT-VERSION, added strictly to support backwards
 	 *             compatibility of {@link
 	 *             Indexer#postProcessSearchQuery(BooleanQuery, SearchContext)}
 	 */

@@ -60,7 +60,7 @@ public class TestPortalCache<K extends Serializable, V>
 	}
 
 	/**
-	 * @deprecated As of 1.1.0, replaced by {@link #getPortalCacheName()}
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #getPortalCacheName()}
 	 */
 	@Deprecated
 	@Override

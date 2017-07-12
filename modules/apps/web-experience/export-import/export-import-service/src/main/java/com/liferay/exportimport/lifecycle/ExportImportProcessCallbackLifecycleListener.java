@@ -29,7 +29,7 @@ import java.util.concurrent.Callable;
 /**
  * @author Daniel Kocsis
  *
- * @deprecated As of 4.0.0
+ * @deprecated As of NEXT-VERSION
  */
 @Deprecated
 @ProviderType

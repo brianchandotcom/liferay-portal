@@ -65,7 +65,7 @@ public interface AssetRendererFactory<T> {
 	public long getClassNameId();
 
 	/**
-	 * @deprecated As of 7.0.0, see {@link
+	 * @deprecated As of NEXT-VERSION, see {@link
 	 *             com.liferay.portlet.asset.model.ClassTypeReader}
 	 */
 	@Deprecated
@@ -74,7 +74,7 @@ public interface AssetRendererFactory<T> {
 		throws Exception;
 
 	/**
-	 * @deprecated As of 7.0.0, see {@link
+	 * @deprecated As of NEXT-VERSION, see {@link
 	 *             com.liferay.portlet.asset.model.ClassTypeReader}
 	 */
 	@Deprecated
@@ -83,7 +83,7 @@ public interface AssetRendererFactory<T> {
 		throws Exception;
 
 	/**
-	 * @deprecated As of 7.0.0, see {@link
+	 * @deprecated As of NEXT-VERSION, see {@link
 	 *             com.liferay.portlet.asset.model.ClassTypeReader}
 	 */
 	@Deprecated
@@ -93,7 +93,7 @@ public interface AssetRendererFactory<T> {
 	public ClassTypeReader getClassTypeReader();
 
 	/**
-	 * @deprecated As of 7.0.0, see {@link
+	 * @deprecated As of NEXT-VERSION, see {@link
 	 *             com.liferay.portlet.asset.model.ClassTypeReader}
 	 */
 	@Deprecated
@@ -103,7 +103,7 @@ public interface AssetRendererFactory<T> {
 	public String getIconCssClass();
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public String getIconPath(PortletRequest portletRequest);
@@ -117,7 +117,7 @@ public interface AssetRendererFactory<T> {
 	public String getTypeName(Locale locale);
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getTypeName(Locale)}
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #getTypeName(Locale)}
 	 */
 	@Deprecated
 	public String getTypeName(Locale locale, boolean hasSubtypes);
@@ -125,7 +125,7 @@ public interface AssetRendererFactory<T> {
 	public String getTypeName(Locale locale, long subtypeId);
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             #getURLAdd(LiferayPortletRequest, LiferayPortletResponse,
 	 *             long)}
 	 */
@@ -150,7 +150,7 @@ public interface AssetRendererFactory<T> {
 		throws Exception;
 
 	/**
-	 * @deprecated As of 7.0.0, see {@link
+	 * @deprecated As of NEXT-VERSION, see {@link
 	 *             com.liferay.portlet.asset.model.ClassTypeReader}
 	 */
 	@Deprecated

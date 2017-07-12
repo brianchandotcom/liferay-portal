@@ -39,7 +39,7 @@ public class SettingsLocatorHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             #getConfigurationBeanSettings(String)}
 	 */
 	@Deprecated
@@ -65,7 +65,7 @@ public class SettingsLocatorHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public Settings getPortalPropertiesSettings() {

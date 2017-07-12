@@ -24,14 +24,14 @@ public interface BooleanClauseFactory {
 	public BooleanClause<Query> create(Query query, String occur);
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #create(Query, String)}
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #create(Query, String)}
 	 */
 	@Deprecated
 	public BooleanClause<Query> create(
 		SearchContext searchContext, Query query, String occur);
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #create(String, String,
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #create(String, String,
 	 *             String)}}
 	 */
 	@Deprecated

@@ -51,7 +51,7 @@ public interface MessagingConfigurator {
 
 	/**
 	 * @param      replacementDestinations
-	 * @deprecated As of 7.0.0, replaced by {@link #setDestinations(List)}
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #setDestinations(List)}
 	 */
 	@Deprecated
 	public void setReplacementDestinations(

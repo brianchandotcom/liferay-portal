@@ -119,7 +119,7 @@ public class RegistryAwareMBeanServer implements MBeanServer {
 	}
 
 	/**
-	 * @deprecated As of 3.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -132,7 +132,7 @@ public class RegistryAwareMBeanServer implements MBeanServer {
 	}
 
 	/**
-	 * @deprecated As of 3.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -143,7 +143,7 @@ public class RegistryAwareMBeanServer implements MBeanServer {
 	}
 
 	/**
-	 * @deprecated As of 3.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	@Override

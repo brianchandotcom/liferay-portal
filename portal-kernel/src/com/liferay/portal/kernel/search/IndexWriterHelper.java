@@ -102,7 +102,7 @@ public interface IndexWriterHelper {
 		throws SearchException;
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             com.liferay.portal.search.index.IndexStatusManager#
 	 *             isIndexReadOnly}
 	 */
@@ -110,7 +110,7 @@ public interface IndexWriterHelper {
 	public boolean isIndexReadOnly();
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             com.liferay.portal.search.index.IndexStatusManager#
 	 *             isIndexReadOnly(String)}
 	 */
@@ -138,7 +138,7 @@ public interface IndexWriterHelper {
 		throws SearchException;
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             com.liferay.portal.search.index.IndexStatusManager#
 	 *             setIndexReadOnly(boolean)}
 	 */
@@ -146,7 +146,7 @@ public interface IndexWriterHelper {
 	public void setIndexReadOnly(boolean indexReadOnly);
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             com.liferay.portal.search.index.IndexStatusManager#
 	 *             setIndexReadOnly(String, boolean)}
 	 */

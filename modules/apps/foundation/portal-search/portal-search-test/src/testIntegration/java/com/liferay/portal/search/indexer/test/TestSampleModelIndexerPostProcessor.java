@@ -43,7 +43,7 @@ public class TestSampleModelIndexerPostProcessor
 	}
 
 	/**
-	 * @deprecated As of 1.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -71,7 +71,7 @@ public class TestSampleModelIndexerPostProcessor
 	}
 
 	/**
-	 * @deprecated As of 1.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	@Override

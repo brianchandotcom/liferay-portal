@@ -104,7 +104,7 @@ public class CustomSQLUtil {
 	}
 
 	/**
-	 * @deprecated As of 1.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public static void reloadCustomSQL(Class<?> clazz) throws SQLException {

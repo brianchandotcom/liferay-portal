@@ -86,7 +86,7 @@ public class MBTreeWalkerImpl implements MBTreeWalker {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #MBTreeWalkerImpl(long, int,
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #MBTreeWalkerImpl(long, int,
 	 *             MBMessageLocalService, Comparator)}
 	 */
 	@Deprecated

@@ -383,7 +383,7 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public String getFacebookCanvasPageURL() {
@@ -1011,7 +1011,7 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public String getURLAddContent() {
@@ -1031,7 +1031,7 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public String getURLLayoutTemplates() {
@@ -1057,7 +1057,7 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	@JSON(include = false)
@@ -1131,7 +1131,7 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public boolean isFacebook() {
@@ -1204,7 +1204,7 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public boolean isShowAddContentIcon() {
@@ -1212,7 +1212,7 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public boolean isShowAddContentIconPermission() {
@@ -1376,7 +1376,7 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public void setFacebookCanvasPageURL(String facebookCanvasPageURL) {
@@ -1689,14 +1689,14 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public void setShowAddContentIcon(boolean showAddContentIcon) {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public void setShowAddContentIconPermission(
@@ -1825,7 +1825,7 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public void setURLAddContent(String urlAddContent) {
@@ -1848,7 +1848,7 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public void setURLMyAccount(PortletURL urlMyAccount) {
@@ -1856,7 +1856,7 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public void setURLPageSettings(PortletURL urlPageSettings) {
@@ -1880,7 +1880,7 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public void setURLUpdateManager(PortletURL urlUpdateManager) {
@@ -1960,7 +1960,7 @@ public class ThemeDisplay
 	private String _doAsUserLanguageId = StringPool.BLANK;
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	private String _facebookCanvasPageURL;

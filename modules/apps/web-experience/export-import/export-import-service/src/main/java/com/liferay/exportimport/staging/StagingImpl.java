@@ -2915,7 +2915,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setExportImportConfigurationLocalService(
@@ -2924,14 +2924,14 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setGroupLocalService(GroupLocalService groupLocalService) {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setLayoutBranchLocalService(
@@ -2939,7 +2939,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setLayoutLocalService(
@@ -2947,7 +2947,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setLayoutRevisionLocalService(
@@ -2955,14 +2955,14 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setLayoutService(LayoutService layoutService) {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setLayoutSetBranchLocalService(
@@ -2970,7 +2970,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setLockManager(LockManager lockManager) {
@@ -3014,7 +3014,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setRecentLayoutBranchLocalService(
@@ -3075,7 +3075,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setRecentLayoutRevisionLocalService(
@@ -3121,7 +3121,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setRecentLayoutSetBranchLocalService(
@@ -3129,7 +3129,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setStagingLocalService(
@@ -3137,14 +3137,14 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setUserLocalService(UserLocalService userLocalService) {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setWorkflowInstanceLinkLocalService(

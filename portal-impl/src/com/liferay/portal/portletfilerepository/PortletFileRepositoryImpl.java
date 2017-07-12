@@ -279,7 +279,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #deletePortletFolder}
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #deletePortletFolder}
 	 */
 	@Deprecated
 	@Override

@@ -251,7 +251,7 @@ public class LocalizationUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getLocalizedName(String,
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #getLocalizedName(String,
 	 *             String)}
 	 */
 	@Deprecated

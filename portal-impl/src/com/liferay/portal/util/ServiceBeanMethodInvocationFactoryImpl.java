@@ -70,7 +70,7 @@ public class ServiceBeanMethodInvocationFactoryImpl
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	protected ServiceBeanMethodInvocation create(

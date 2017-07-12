@@ -21,7 +21,7 @@ import javax.portlet.PortletResponse;
 
 /**
  * @author     Adolfo Pérez
- * @deprecated As of 7.0.0, replaced by {@link com.liferay.upload.UploadHandler}
+ * @deprecated As of NEXT-VERSION, replaced by {@link com.liferay.upload.UploadHandler}
  */
 @Deprecated
 public interface UploadHandler {

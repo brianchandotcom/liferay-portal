@@ -37,7 +37,7 @@ import com.liferay.portal.repository.util.RepositoryWrapperAware;
 
 /**
  * @author Adolfo Pérez
- * @deprecated As of 7.0.0, replaced by {@link
+ * @deprecated As of NEXT-VERSION, replaced by {@link
  *             com.liferay.document.library.internal.capabilities.LiferayWorkflowCapability}
  */
 @Deprecated

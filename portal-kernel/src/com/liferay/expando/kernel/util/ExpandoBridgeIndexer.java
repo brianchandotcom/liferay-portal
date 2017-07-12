@@ -28,7 +28,7 @@ public interface ExpandoBridgeIndexer {
 	public void addAttributes(Document document, ExpandoBridge expandoBridge);
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #encodeFieldName(String,
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #encodeFieldName(String,
 	 *             int)}
 	 */
 	@Deprecated

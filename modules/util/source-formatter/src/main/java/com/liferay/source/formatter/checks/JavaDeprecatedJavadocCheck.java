@@ -128,8 +128,8 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 	private static final String _NEXT_VERSION = "NEXT-VERSION";
 
 	private final Pattern _deprecatedPattern = Pattern.compile(
-		"(\n\\s*\\* @deprecated)( As of ([\\w\\.]+#)?([0-9\\.]+|NEXT-VERSION)" +
-			"(.*?)\n\\s*\\*( @|/))?",
+		"(\n\\s*\\* @deprecated)( As of[\\s\\*]+([\\w\\.]+#)?" +
+			"([0-9\\.]+|NEXT-VERSION)(.*?)\n\\s*\\*( @|/))?",
 		Pattern.DOTALL);
 
 }

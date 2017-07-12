@@ -227,9 +227,6 @@ import org.w3c.dom.NodeList;
  */
 public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
-	public static final String ASPECTJ_WEAVER_CONFIGURATION_NAME =
-		"aspectJWeaver";
-
 	public static final String CHECK_OSGI_BUNDLE_STATE_TASK_NAME =
 		"checkOSGiBundleState";
 
@@ -338,8 +335,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 			WhipDefaultsPlugin.INSTANCE.apply(project);
 
-			Configuration aspectJWeaverConfiguration =
-				_addConfigurationAspectJWeaver(project);
 			Configuration portalConfiguration = GradleUtil.getConfiguration(
 				project, LiferayBasePlugin.PORTAL_CONFIGURATION_NAME);
 			Configuration portalTestConfiguration = _addConfigurationPortalTest(
@@ -353,11 +348,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				project, portalConfiguration, portalTestConfiguration);
 			_configureSourceSetTestIntegration(
 				project, portalConfiguration, portalTestConfiguration);
-			_configureTaskTestAspectJWeaver(
-				project, JavaPlugin.TEST_TASK_NAME, aspectJWeaverConfiguration);
-			_configureTaskTestAspectJWeaver(
-				project, TestIntegrationBasePlugin.TEST_INTEGRATION_TASK_NAME,
-				aspectJWeaverConfiguration);
 
 			if (Boolean.getBoolean("jacoco.code.coverage")) {
 				JaCoCoPlugin.INSTANCE.apply(project);
@@ -532,39 +522,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			});
 	}
 
-	/**
-	 * @deprecated As of 3.8.0, replaced by {@link
-	 *             GradlePluginsDefaultsUtil#configureRepositories(Project, File)}
-	 */
-	@Deprecated
-	protected static void configureRepositories(Project project) {
-		GradlePluginsDefaultsUtil.configureRepositories(project, null);
-	}
-
-	private Configuration _addConfigurationAspectJWeaver(
-		final Project project) {
-
-		Configuration configuration = GradleUtil.addConfiguration(
-			project, ASPECTJ_WEAVER_CONFIGURATION_NAME);
-
-		configuration.defaultDependencies(
-			new Action<DependencySet>() {
-
-				@Override
-				public void execute(DependencySet dependencySet) {
-					_addDependenciesAspectJWeaver(project);
-				}
-
-			});
-
-		configuration.setDescription(
-			"Configures AspectJ Weaver to apply to the test tasks.");
-		configuration.setTransitive(false);
-		configuration.setVisible(false);
-
-		return configuration;
-	}
-
 	private Configuration _addConfigurationPortalTest(Project project) {
 		Configuration configuration = GradleUtil.addConfiguration(
 			project, PORTAL_TEST_CONFIGURATION_NAME);
@@ -575,12 +532,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		configuration.setVisible(false);
 
 		return configuration;
-	}
-
-	private void _addDependenciesAspectJWeaver(Project project) {
-		GradleUtil.addDependency(
-			project, ASPECTJ_WEAVER_CONFIGURATION_NAME, "org.aspectj",
-			"aspectjweaver", "1.8.9");
 	}
 
 	private void _addDependenciesPmd(Project project) {
@@ -3137,32 +3088,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		_configureTaskTestLogging(test);
 
 		test.setEnableAssertions(false);
-	}
-
-	private void _configureTaskTestAspectJWeaver(
-		Project project, String taskName,
-		final Configuration aspectJWeaverConfiguration) {
-
-		Test test = (Test)GradleUtil.getTask(project, taskName);
-
-		test.doFirst(
-			new Action<Task>() {
-
-				@Override
-				public void execute(Task task) {
-					Test test = (Test)task;
-
-					test.jvmArgs(
-						"-javaagent:" +
-							FileUtil.getAbsolutePath(
-								aspectJWeaverConfiguration.getSingleFile()));
-				}
-
-			});
-
-		test.systemProperty(
-			"org.aspectj.weaver.loadtime.configuration",
-			"com/liferay/aspectj/modules/aop.xml");
 	}
 
 	private void _configureTaskTestIgnoreFailures(Test test) {

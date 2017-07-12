@@ -23,7 +23,7 @@ with proxy settings and a mirror URL.
 ## 1.1.1 - 2017-03-17
 
 ### Added
-- [LPS-71264]: Add ability to configure the Maven invocations with a local
+- [LPS-71264]: Add the ability to configure the Maven invocations with a local
 repository. By default, the value is copied from the `maven.repo.local` system
 property.
 

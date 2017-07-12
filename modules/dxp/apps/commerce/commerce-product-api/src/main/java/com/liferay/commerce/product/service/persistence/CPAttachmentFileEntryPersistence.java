@@ -523,6 +523,153 @@ public interface CPAttachmentFileEntryPersistence extends BasePersistence<CPAtta
 	public int countByC_C(long classNameId, long classPK);
 
 	/**
+	* Returns all the cp attachment file entries where displayDate &lt; &#63; and status = &#63;.
+	*
+	* @param displayDate the display date
+	* @param status the status
+	* @return the matching cp attachment file entries
+	*/
+	public java.util.List<CPAttachmentFileEntry> findByLtD_S(Date displayDate,
+		int status);
+
+	/**
+	* Returns a range of all the cp attachment file entries where displayDate &lt; &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPAttachmentFileEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param displayDate the display date
+	* @param status the status
+	* @param start the lower bound of the range of cp attachment file entries
+	* @param end the upper bound of the range of cp attachment file entries (not inclusive)
+	* @return the range of matching cp attachment file entries
+	*/
+	public java.util.List<CPAttachmentFileEntry> findByLtD_S(Date displayDate,
+		int status, int start, int end);
+
+	/**
+	* Returns an ordered range of all the cp attachment file entries where displayDate &lt; &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPAttachmentFileEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param displayDate the display date
+	* @param status the status
+	* @param start the lower bound of the range of cp attachment file entries
+	* @param end the upper bound of the range of cp attachment file entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching cp attachment file entries
+	*/
+	public java.util.List<CPAttachmentFileEntry> findByLtD_S(Date displayDate,
+		int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CPAttachmentFileEntry> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the cp attachment file entries where displayDate &lt; &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPAttachmentFileEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param displayDate the display date
+	* @param status the status
+	* @param start the lower bound of the range of cp attachment file entries
+	* @param end the upper bound of the range of cp attachment file entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching cp attachment file entries
+	*/
+	public java.util.List<CPAttachmentFileEntry> findByLtD_S(Date displayDate,
+		int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CPAttachmentFileEntry> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first cp attachment file entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
+	*
+	* @param displayDate the display date
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cp attachment file entry
+	* @throws NoSuchCPAttachmentFileEntryException if a matching cp attachment file entry could not be found
+	*/
+	public CPAttachmentFileEntry findByLtD_S_First(Date displayDate,
+		int status,
+		com.liferay.portal.kernel.util.OrderByComparator<CPAttachmentFileEntry> orderByComparator)
+		throws NoSuchCPAttachmentFileEntryException;
+
+	/**
+	* Returns the first cp attachment file entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
+	*
+	* @param displayDate the display date
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cp attachment file entry, or <code>null</code> if a matching cp attachment file entry could not be found
+	*/
+	public CPAttachmentFileEntry fetchByLtD_S_First(Date displayDate,
+		int status,
+		com.liferay.portal.kernel.util.OrderByComparator<CPAttachmentFileEntry> orderByComparator);
+
+	/**
+	* Returns the last cp attachment file entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
+	*
+	* @param displayDate the display date
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cp attachment file entry
+	* @throws NoSuchCPAttachmentFileEntryException if a matching cp attachment file entry could not be found
+	*/
+	public CPAttachmentFileEntry findByLtD_S_Last(Date displayDate, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<CPAttachmentFileEntry> orderByComparator)
+		throws NoSuchCPAttachmentFileEntryException;
+
+	/**
+	* Returns the last cp attachment file entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
+	*
+	* @param displayDate the display date
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cp attachment file entry, or <code>null</code> if a matching cp attachment file entry could not be found
+	*/
+	public CPAttachmentFileEntry fetchByLtD_S_Last(Date displayDate,
+		int status,
+		com.liferay.portal.kernel.util.OrderByComparator<CPAttachmentFileEntry> orderByComparator);
+
+	/**
+	* Returns the cp attachment file entries before and after the current cp attachment file entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
+	*
+	* @param CPAttachmentFileEntryId the primary key of the current cp attachment file entry
+	* @param displayDate the display date
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next cp attachment file entry
+	* @throws NoSuchCPAttachmentFileEntryException if a cp attachment file entry with the primary key could not be found
+	*/
+	public CPAttachmentFileEntry[] findByLtD_S_PrevAndNext(
+		long CPAttachmentFileEntryId, Date displayDate, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<CPAttachmentFileEntry> orderByComparator)
+		throws NoSuchCPAttachmentFileEntryException;
+
+	/**
+	* Removes all the cp attachment file entries where displayDate &lt; &#63; and status = &#63; from the database.
+	*
+	* @param displayDate the display date
+	* @param status the status
+	*/
+	public void removeByLtD_S(Date displayDate, int status);
+
+	/**
+	* Returns the number of cp attachment file entries where displayDate &lt; &#63; and status = &#63;.
+	*
+	* @param displayDate the display date
+	* @param status the status
+	* @return the number of matching cp attachment file entries
+	*/
+	public int countByLtD_S(Date displayDate, int status);
+
+	/**
 	* Returns all the cp attachment file entries where classNameId = &#63; and classPK = &#63; and type = &#63; and status = &#63;.
 	*
 	* @param classNameId the class name ID
@@ -871,153 +1018,6 @@ public interface CPAttachmentFileEntryPersistence extends BasePersistence<CPAtta
 	*/
 	public int countByC_C_T_NotST(long classNameId, long classPK, int type,
 		int status);
-
-	/**
-	* Returns all the cp attachment file entries where displayDate &lt; &#63; and status = &#63;.
-	*
-	* @param displayDate the display date
-	* @param status the status
-	* @return the matching cp attachment file entries
-	*/
-	public java.util.List<CPAttachmentFileEntry> findByLtD_S(Date displayDate,
-		int status);
-
-	/**
-	* Returns a range of all the cp attachment file entries where displayDate &lt; &#63; and status = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPAttachmentFileEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param displayDate the display date
-	* @param status the status
-	* @param start the lower bound of the range of cp attachment file entries
-	* @param end the upper bound of the range of cp attachment file entries (not inclusive)
-	* @return the range of matching cp attachment file entries
-	*/
-	public java.util.List<CPAttachmentFileEntry> findByLtD_S(Date displayDate,
-		int status, int start, int end);
-
-	/**
-	* Returns an ordered range of all the cp attachment file entries where displayDate &lt; &#63; and status = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPAttachmentFileEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param displayDate the display date
-	* @param status the status
-	* @param start the lower bound of the range of cp attachment file entries
-	* @param end the upper bound of the range of cp attachment file entries (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching cp attachment file entries
-	*/
-	public java.util.List<CPAttachmentFileEntry> findByLtD_S(Date displayDate,
-		int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<CPAttachmentFileEntry> orderByComparator);
-
-	/**
-	* Returns an ordered range of all the cp attachment file entries where displayDate &lt; &#63; and status = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPAttachmentFileEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param displayDate the display date
-	* @param status the status
-	* @param start the lower bound of the range of cp attachment file entries
-	* @param end the upper bound of the range of cp attachment file entries (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching cp attachment file entries
-	*/
-	public java.util.List<CPAttachmentFileEntry> findByLtD_S(Date displayDate,
-		int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<CPAttachmentFileEntry> orderByComparator,
-		boolean retrieveFromCache);
-
-	/**
-	* Returns the first cp attachment file entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	*
-	* @param displayDate the display date
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching cp attachment file entry
-	* @throws NoSuchCPAttachmentFileEntryException if a matching cp attachment file entry could not be found
-	*/
-	public CPAttachmentFileEntry findByLtD_S_First(Date displayDate,
-		int status,
-		com.liferay.portal.kernel.util.OrderByComparator<CPAttachmentFileEntry> orderByComparator)
-		throws NoSuchCPAttachmentFileEntryException;
-
-	/**
-	* Returns the first cp attachment file entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	*
-	* @param displayDate the display date
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching cp attachment file entry, or <code>null</code> if a matching cp attachment file entry could not be found
-	*/
-	public CPAttachmentFileEntry fetchByLtD_S_First(Date displayDate,
-		int status,
-		com.liferay.portal.kernel.util.OrderByComparator<CPAttachmentFileEntry> orderByComparator);
-
-	/**
-	* Returns the last cp attachment file entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	*
-	* @param displayDate the display date
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching cp attachment file entry
-	* @throws NoSuchCPAttachmentFileEntryException if a matching cp attachment file entry could not be found
-	*/
-	public CPAttachmentFileEntry findByLtD_S_Last(Date displayDate, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<CPAttachmentFileEntry> orderByComparator)
-		throws NoSuchCPAttachmentFileEntryException;
-
-	/**
-	* Returns the last cp attachment file entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	*
-	* @param displayDate the display date
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching cp attachment file entry, or <code>null</code> if a matching cp attachment file entry could not be found
-	*/
-	public CPAttachmentFileEntry fetchByLtD_S_Last(Date displayDate,
-		int status,
-		com.liferay.portal.kernel.util.OrderByComparator<CPAttachmentFileEntry> orderByComparator);
-
-	/**
-	* Returns the cp attachment file entries before and after the current cp attachment file entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	*
-	* @param CPAttachmentFileEntryId the primary key of the current cp attachment file entry
-	* @param displayDate the display date
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next cp attachment file entry
-	* @throws NoSuchCPAttachmentFileEntryException if a cp attachment file entry with the primary key could not be found
-	*/
-	public CPAttachmentFileEntry[] findByLtD_S_PrevAndNext(
-		long CPAttachmentFileEntryId, Date displayDate, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<CPAttachmentFileEntry> orderByComparator)
-		throws NoSuchCPAttachmentFileEntryException;
-
-	/**
-	* Removes all the cp attachment file entries where displayDate &lt; &#63; and status = &#63; from the database.
-	*
-	* @param displayDate the display date
-	* @param status the status
-	*/
-	public void removeByLtD_S(Date displayDate, int status);
-
-	/**
-	* Returns the number of cp attachment file entries where displayDate &lt; &#63; and status = &#63;.
-	*
-	* @param displayDate the display date
-	* @param status the status
-	* @return the number of matching cp attachment file entries
-	*/
-	public int countByLtD_S(Date displayDate, int status);
 
 	/**
 	* Caches the cp attachment file entry in the entity cache if it is enabled.

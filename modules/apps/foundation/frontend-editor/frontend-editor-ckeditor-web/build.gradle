@@ -4,17 +4,20 @@ import com.liferay.gradle.util.tasks.ConcatenateTask
 
 task buildCKEditorBBCode(type: ConcatenateTask)
 task buildCKEditor(type: Copy)
+task buildCKEditorScayt(type: Copy)
+task buildCKEditorWsc(type: Copy)
 
-String ckEditorVersion = "4.7.1"
+String ckEditorVersion = "4.6.0"
 
-String ckEditorUrl = "https://api.github.com/repos/ckeditor/ckeditor-releases/zipball/full/${ckEditorVersion}"
+String ckEditorScaytUrl = "http://download.ckeditor.com/scayt/releases/scayt_${ckEditorVersion}.zip"
+String ckEditorWscUrl = "http://download.ckeditor.com/wsc/releases/wsc_${ckEditorVersion}.zip"
 
 File editorDestinationDir = file("tmp/META-INF/resources")
 File editorSrcDir = file("src/main/resources/META-INF/resources")
 
 buildCKEditor {
 	File ckEditorDestinationDir = new File(editorDestinationDir, "ckeditor")
-	File ckEditorZipFile = FileUtil.get(project, ckEditorUrl)
+	File ckEditorZipFile = file("third-party/ckeditor_${ckEditorVersion}_liferay.zip")
 
 	doFirst {
 		delete ckEditorDestinationDir
@@ -52,8 +55,32 @@ buildCKEditorBBCode {
 	sourceFiles new File(bbCodeDir, "converter.js")
 }
 
-classes {
+buildCKEditorScayt {
 	dependsOn buildCKEditor
+
+	from {
+		File ckEditorScaytFile = FileUtil.get(project, ckEditorScaytUrl)
+
+		zipTree(ckEditorScaytFile)
+	}
+
+	into new File(editorDestinationDir, "ckeditor/plugins")
+}
+
+buildCKEditorWsc {
+	dependsOn buildCKEditor
+
+	from {
+		File ckEditorWscFile = FileUtil.get(project, ckEditorWscUrl)
+
+		zipTree(ckEditorWscFile)
+	}
+
+	into new File(editorDestinationDir, "ckeditor/plugins")
+}
+
+classes {
+	dependsOn buildCKEditor, buildCKEditorScayt, buildCKEditorWsc
 }
 
 clean {

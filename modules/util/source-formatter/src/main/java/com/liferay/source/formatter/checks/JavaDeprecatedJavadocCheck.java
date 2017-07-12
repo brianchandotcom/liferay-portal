@@ -85,7 +85,7 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 			String deprecatedInfo = matcher.group(4);
 
 			if (Validator.isNull(deprecatedInfo)) {
-				return content;
+				continue;
 			}
 
 			if (!deprecatedInfo.startsWith(StringPool.COMMA)) {

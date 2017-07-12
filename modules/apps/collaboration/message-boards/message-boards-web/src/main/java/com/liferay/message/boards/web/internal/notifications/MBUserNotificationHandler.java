@@ -15,13 +15,8 @@
 package com.liferay.message.boards.web.internal.notifications;
 
 import com.liferay.message.boards.web.constants.MBPortletKeys;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -39,20 +34,6 @@ public class MBUserNotificationHandler
 
 	public MBUserNotificationHandler() {
 		setPortletId(MBPortletKeys.MESSAGE_BOARDS);
-	}
-
-	@Override
-	protected String getFormattedMessage(
-		JSONObject jsonObject, ServiceContext serviceContext, String message,
-		String typeName) {
-
-		return LanguageUtil.format(
-			serviceContext.getLocale(), message,
-			new String[] {
-				HtmlUtil.escape(jsonObject.getString("fullName")),
-				StringUtil.toLowerCase(HtmlUtil.escape(typeName))
-			},
-			false);
 	}
 
 }

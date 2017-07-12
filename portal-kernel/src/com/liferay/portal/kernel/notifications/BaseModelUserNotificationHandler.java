@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Brian Wing Shun Chan
@@ -106,9 +107,7 @@ public abstract class BaseModelUserNotificationHandler
 		return LanguageUtil.format(
 			serviceContext.getLocale(), message,
 			new String[] {
-				HtmlUtil.escape(
-					PortalUtil.getUserName(
-						jsonObject.getLong("userId"), StringPool.BLANK)),
+				HtmlUtil.escape(_getUserFullName(jsonObject)),
 				StringUtil.toLowerCase(HtmlUtil.escape(typeName))
 			},
 			false);
@@ -167,6 +166,17 @@ public abstract class BaseModelUserNotificationHandler
 
 		return getFormattedMessage(
 			jsonObject, serviceContext, message, typeName);
+	}
+
+	private String _getUserFullName(JSONObject jsonObject) {
+		String fullName = jsonObject.getString("fullName");
+
+		if (Validator.isNotNull(fullName)) {
+			return fullName;
+		}
+
+		return PortalUtil.getUserName(
+			jsonObject.getLong("userId"), StringPool.BLANK);
 	}
 
 }

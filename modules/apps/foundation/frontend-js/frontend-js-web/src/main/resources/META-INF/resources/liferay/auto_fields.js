@@ -435,9 +435,13 @@ AUI.add(
 					_createCloneFromMarkup: function(node, guid, formValidator, inputsLocalized) {
 						var instance = this;
 
+						var fieldStrings;
+
 						var rules;
 
 						if (formValidator) {
+							fieldStrings = formValidator.get('fieldStrings');
+
 							rules = formValidator.get('rules');
 						}
 
@@ -465,6 +469,10 @@ AUI.add(
 								else {
 									item.attr('name', newName);
 									item.attr('id', newName);
+								}
+
+								if (fieldStrings && fieldStrings[oldName]) {
+									fieldStrings[newName] = fieldStrings[oldName];
 								}
 
 								if (rules && rules[oldName]) {

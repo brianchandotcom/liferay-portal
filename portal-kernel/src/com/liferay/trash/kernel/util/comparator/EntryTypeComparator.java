@@ -19,7 +19,7 @@ import com.liferay.trash.kernel.model.TrashEntry;
 
 /**
  * @author Sergio González
- * @deprecated As of NEXT-VERSION, replaced by {@link
+ * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
  *             com.liferay.trash.util.comparator.EntryTypeComparator}
  */
 @Deprecated

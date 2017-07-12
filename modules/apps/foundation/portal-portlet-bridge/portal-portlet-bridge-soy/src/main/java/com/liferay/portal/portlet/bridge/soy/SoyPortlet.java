@@ -203,7 +203,7 @@ public class SoyPortlet extends MVCPortlet {
 	protected boolean propagateRequestParameters;
 
 	/**
-	 * @deprecated As of NEXT-VERSION, use {@link SoyPortlet#getTemplate(
+	 * @deprecated As of com.liferay.portal.portlet.bridge.soy#NEXT-VERSION, use {@link SoyPortlet#getTemplate(
 	 * PortletRequest)}} instead
 	 */
 	@Deprecated

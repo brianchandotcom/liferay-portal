@@ -97,7 +97,7 @@ public class PortletURLImpl
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
 	 *             #PortletURLImpl(HttpServletRequest, Portlet, Layout, String)}
 	 */
 	@Deprecated
@@ -109,7 +109,7 @@ public class PortletURLImpl
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
 	 *             #PortletURLImpl(HttpServletRequest, String, Layout, String)}
 	 */
 	@Deprecated
@@ -130,7 +130,7 @@ public class PortletURLImpl
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
 	 *             #PortletURLImpl(PortletRequest, Portlet, Layout, String)}
 	 */
 	@Deprecated
@@ -144,7 +144,7 @@ public class PortletURLImpl
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
 	 *             #PortletURLImpl(PortletRequest, String, Layout, String)}
 	 */
 	@Deprecated
@@ -299,7 +299,7 @@ public class PortletURLImpl
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #visitReservedParameters(
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #visitReservedParameters(
 	 *             BiConsumer)}
 	 */
 	@Deprecated
@@ -744,7 +744,7 @@ public class PortletURLImpl
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
 	 *             #PortletURLImpl(PortletRequest, String, PortletRequest, Layout, String)}
 	 */
 	@Deprecated
@@ -1186,7 +1186,7 @@ public class PortletURLImpl
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	protected void mergeRenderParameters() {
@@ -1194,7 +1194,7 @@ public class PortletURLImpl
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	protected String prependNamespace(String name) {

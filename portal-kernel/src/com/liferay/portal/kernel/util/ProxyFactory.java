@@ -60,7 +60,7 @@ public class ProxyFactory {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #newServiceTrackedInstance(Class, Class, String)}
 	 */
 	@Deprecated
@@ -71,7 +71,7 @@ public class ProxyFactory {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             ServiceProxyFactory#newServiceTrackedInstance(Class, Class,
 	 *             String, boolean)}
 	 */
@@ -84,7 +84,7 @@ public class ProxyFactory {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             ServiceProxyFactory#newServiceTrackedInstance(Class, Class,
 	 *             String, String, boolean)}
 	 */
@@ -98,7 +98,7 @@ public class ProxyFactory {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #newServiceTrackedInstance(Class, Class, String, String)}
 	 */
 	@Deprecated
@@ -112,7 +112,7 @@ public class ProxyFactory {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             ServiceProxyFactory#newServiceTrackedInstance(Class, Class,
 	 *             String, boolean)}
 	 */
@@ -125,7 +125,7 @@ public class ProxyFactory {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             ServiceProxyFactory#newServiceTrackedInstance(Class, Class,
 	 *             String, String, boolean)}
 	 */

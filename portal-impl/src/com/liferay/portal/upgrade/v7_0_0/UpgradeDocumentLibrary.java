@@ -148,7 +148,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #hasFileEntry(long, long,
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #hasFileEntry(long, long,
 	 *             long, String, String)}
 	 */
 	@Deprecated

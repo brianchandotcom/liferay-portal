@@ -298,7 +298,7 @@ public class MBUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
 	 *             com.liferay.message.boards.web.internal.util.
 	 *             MBSubscriptionUtil#getCategorySubscriptionClassPKs(long)}
 	 */
@@ -762,7 +762,7 @@ public class MBUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
 	 *             com.liferay.message.boards.web.internal.util.
 	 *             MBSubscriptionUtil#getThreadSubscriptionClassPKs(long)}
 	 */

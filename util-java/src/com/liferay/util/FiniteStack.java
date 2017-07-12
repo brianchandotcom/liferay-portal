@@ -18,7 +18,7 @@ import java.util.Stack;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of NEXT-VERSION, replaced by
+ * @deprecated As of com.liferay.util.java#NEXT-VERSION, replaced by
  *             {com.liferay.petra.collection.stack.FiniteStack}
  */
 @Deprecated

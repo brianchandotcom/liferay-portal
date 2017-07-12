@@ -33,7 +33,7 @@ public class RequestParameterAuthVerifier
 	extends RequestParameterAutoLogin implements AuthVerifier {
 
 	/**
-	 * @deprecated As of 2.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.portal.security.auth.verifier#2.0.0, replaced by {@link
 	 *		#RequestParameterAuthVerifier(ConfigurationProvider, Portal,
 	 *		UserLocalService)}
 	 */

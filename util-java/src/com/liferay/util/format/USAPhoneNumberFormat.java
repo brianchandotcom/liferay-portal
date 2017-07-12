@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.util.Validator;
 /**
  * @author     Brian Wing Shun Chan
  * @author     Manuel de la Peña
- * @deprecated As of NEXT-VERSION, replaced by {@link
+ * @deprecated As of com.liferay.util.java#NEXT-VERSION, replaced by {@link
  *             com.liferay.portal.format.USAPhoneNumberFormatImpl}
  */
 @Deprecated

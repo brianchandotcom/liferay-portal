@@ -55,14 +55,14 @@ public interface SchedulerEngine {
 	public static final String MESSAGE = "MESSAGE";
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	public static final String MESSAGE_LISTENER_CLASS_NAME =
 		"MESSAGE_LISTENER_CLASS_NAME";
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	public static final String MESSAGE_LISTENER_UUID = "MESSAGE_LISTENER_UUID";
@@ -70,7 +70,7 @@ public interface SchedulerEngine {
 	public static final String NEXT_FIRE_TIME = "NEXT_FIRE_TIME";
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	public static final String PORTLET_ID = "PORTLET_ID";
@@ -78,7 +78,7 @@ public interface SchedulerEngine {
 	public static final String PREVIOUS_FIRE_TIME = "PREVIOUS_FIRE_TIME";
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	public static final String RECEIVER_KEY = "RECEIVER_KEY";

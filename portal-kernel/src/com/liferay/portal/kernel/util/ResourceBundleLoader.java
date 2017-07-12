@@ -28,7 +28,7 @@ public interface ResourceBundleLoader {
 	public ResourceBundle loadResourceBundle(Locale locale);
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #loadResourceBundle(Locale)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #loadResourceBundle(Locale)}
 	 */
 	@Deprecated
 	public ResourceBundle loadResourceBundle(String languageId);

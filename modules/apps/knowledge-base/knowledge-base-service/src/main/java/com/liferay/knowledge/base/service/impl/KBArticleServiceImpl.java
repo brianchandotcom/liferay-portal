@@ -219,7 +219,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 1.1.0, replaced by {@link
+	 * @deprecated As of com.liferay.knowledge.base.service#1.1.0, replaced by {@link
 	 *             #getAllDescendantKBArticles(long, long, int,
 	 *             OrderByComparator)}
 	 */
@@ -323,7 +323,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 1.1.0, replaced by {@link
+	 * @deprecated As of com.liferay.knowledge.base.service#1.1.0, replaced by {@link
 	 *             #getKBArticleAndAllDescendantKBArticles(long, int,
 	 *             OrderByComparator)}
 	 */
@@ -662,7 +662,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 1.1.0, replaced by {@link #getKBArticles(long, long,
+	 * @deprecated As of com.liferay.knowledge.base.service#1.1.0, replaced by {@link #getKBArticles(long, long,
 	 *             int, int, int, OrderByComparator)}
 	 */
 	@Deprecated
@@ -677,7 +677,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 1.1.0, replaced by {@link #getKBArticlesCount(long,
+	 * @deprecated As of com.liferay.knowledge.base.service#1.1.0, replaced by {@link #getKBArticlesCount(long,
 	 *             long, int)}
 	 */
 	@Deprecated
@@ -950,7 +950,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 1.1.0, replaced by {@link
+	 * @deprecated As of com.liferay.knowledge.base.service#1.1.0, replaced by {@link
 	 *             #getAllDescendantKBArticles(long, long, int,
 	 *             OrderByComparator, boolean)}
 	 */

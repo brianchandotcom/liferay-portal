@@ -24,7 +24,7 @@ import org.osgi.framework.BundleContext;
 
 /**
  * @author Peter Fellwock
- * @deprecated As of NEXT-VERSION, with no direct replacement
+ * @deprecated As of com.liferay.portal.dao.orm.custom.sql#NEXT-VERSION, with no direct replacement
  */
 @Deprecated
 public class CustomSQLPool {

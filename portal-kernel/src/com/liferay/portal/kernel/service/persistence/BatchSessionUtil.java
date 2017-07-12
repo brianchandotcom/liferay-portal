@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
 /**
  * @author     Brian Wing Shun Chan
  * @see        BatchSession
- * @deprecated As of NEXT-VERSION, see LPS-30598
+ * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, see LPS-30598
  */
 @Deprecated
 public class BatchSessionUtil {

@@ -173,7 +173,7 @@ public class ResourceActionsImpl implements ResourceActions {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -190,7 +190,7 @@ public class ResourceActionsImpl implements ResourceActions {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -677,7 +677,7 @@ public class ResourceActionsImpl implements ResourceActions {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override

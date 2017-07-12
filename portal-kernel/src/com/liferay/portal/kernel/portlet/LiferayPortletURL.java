@@ -89,7 +89,7 @@ public interface LiferayPortletURL
 	 * </p>
 	 *
 	 * @return the reserved parameter names and values in a read-only map
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #visitReservedParameters(
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #visitReservedParameters(
 	 *             BiConsumer)}
 	 */
 	@Deprecated

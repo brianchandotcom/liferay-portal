@@ -354,7 +354,7 @@ public class LayoutExportController implements ExportController {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	protected File doExport(
@@ -365,7 +365,7 @@ public class LayoutExportController implements ExportController {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void exportLayout(
@@ -378,7 +378,7 @@ public class LayoutExportController implements ExportController {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void getLayoutPortlets(
@@ -433,7 +433,7 @@ public class LayoutExportController implements ExportController {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	protected boolean prepareLayoutStagingHandler(
@@ -444,7 +444,7 @@ public class LayoutExportController implements ExportController {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setBackgroundTaskLocalService(
@@ -452,7 +452,7 @@ public class LayoutExportController implements ExportController {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setExportImportLifecycleManager(
@@ -460,21 +460,21 @@ public class LayoutExportController implements ExportController {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setGroupLocalService(GroupLocalService groupLocalService) {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setImageLocalService(ImageLocalService imageLocalService) {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setLayoutLocalService(
@@ -482,7 +482,7 @@ public class LayoutExportController implements ExportController {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setLayoutPrototypeLocalService(
@@ -492,7 +492,7 @@ public class LayoutExportController implements ExportController {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setLayoutRevisionLocalService(
@@ -500,7 +500,7 @@ public class LayoutExportController implements ExportController {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setLayoutSetBranchLocalService(
@@ -508,7 +508,7 @@ public class LayoutExportController implements ExportController {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setLayoutSetLocalService(
@@ -516,7 +516,7 @@ public class LayoutExportController implements ExportController {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setLayoutSetPrototypeLocalService(
@@ -524,7 +524,7 @@ public class LayoutExportController implements ExportController {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setPortletExportController(
@@ -532,7 +532,7 @@ public class LayoutExportController implements ExportController {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setUserLocalService(UserLocalService userLocalService) {

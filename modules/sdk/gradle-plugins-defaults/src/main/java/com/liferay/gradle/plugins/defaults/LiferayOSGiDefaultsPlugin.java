@@ -533,7 +533,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	/**
-	 * @deprecated As of 3.8.0, replaced by {@link
+	 * @deprecated As of com.liferay.gradle.plugins.defaults#3.8.0, replaced by {@link
 	 *             GradlePluginsDefaultsUtil#configureRepositories(Project, File)}
 	 */
 	@Deprecated

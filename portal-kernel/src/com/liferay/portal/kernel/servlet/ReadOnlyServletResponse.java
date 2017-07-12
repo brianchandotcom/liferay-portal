@@ -106,7 +106,7 @@ public class ReadOnlyServletResponse extends HttpServletResponseWrapper {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override

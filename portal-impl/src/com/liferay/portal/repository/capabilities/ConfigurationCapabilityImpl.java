@@ -26,7 +26,7 @@ import com.liferay.portal.repository.capabilities.util.RepositoryServiceAdapter;
 
 /**
  * @author Iván Zaera
- * @deprecated As of NEXT-VERSION, replaced by {@link
+ * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
  *             com.liferay.document.library.internal.capabilities.ConfigurationCapabilityImpl}
  */
 @Deprecated

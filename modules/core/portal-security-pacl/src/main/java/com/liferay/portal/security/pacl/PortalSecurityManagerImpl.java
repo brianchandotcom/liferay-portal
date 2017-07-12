@@ -239,7 +239,7 @@ public class PortalSecurityManagerImpl
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.security.pacl#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override

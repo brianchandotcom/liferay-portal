@@ -28,14 +28,14 @@ public interface MultiVMPool {
 	public void clear();
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #getPortalCache(String)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getPortalCache(String)}
 	 */
 	@Deprecated
 	public PortalCache<? extends Serializable, ? extends Serializable>
 		getCache(String portalCacheName);
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #getPortalCache(String,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getPortalCache(String,
 	 *             boolean)}
 	 */
 	@Deprecated
@@ -43,7 +43,7 @@ public interface MultiVMPool {
 		getCache(String portalCacheName, boolean blocking);
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #getPortalCacheManager()}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getPortalCacheManager()}
 	 */
 	@Deprecated
 	public PortalCacheManager<? extends Serializable, ? extends Serializable>
@@ -62,7 +62,7 @@ public interface MultiVMPool {
 		getPortalCacheManager();
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #removePortalCache(String)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #removePortalCache(String)}
 	 */
 	@Deprecated
 	public void removeCache(String portalCacheName);

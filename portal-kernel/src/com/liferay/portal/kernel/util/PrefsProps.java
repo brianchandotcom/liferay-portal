@@ -32,7 +32,7 @@ public interface PrefsProps {
 		long companyId, String name, boolean defaultValue);
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #getBoolean(PortletPreferences, String)}
 	 */
 	@Deprecated
@@ -40,7 +40,7 @@ public interface PrefsProps {
 		PortletPreferences preferences, long companyId, String name);
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #getBoolean(PortletPreferences, String, boolean)}
 	 */
 	@Deprecated
@@ -60,7 +60,7 @@ public interface PrefsProps {
 	public String getContent(long companyId, String name);
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #getContent(PortletPreferences, String)}
 	 */
 	@Deprecated
@@ -76,7 +76,7 @@ public interface PrefsProps {
 	public double getDouble(long companyId, String name, double defaultValue);
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #getDouble(PortletPreferences, String)}
 	 */
 	@Deprecated
@@ -84,7 +84,7 @@ public interface PrefsProps {
 		PortletPreferences preferences, long companyId, String name);
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #getDouble(PortletPreferences, String, double)}
 	 */
 	@Deprecated
@@ -106,7 +106,7 @@ public interface PrefsProps {
 	public int getInteger(long companyId, String name, int defaultValue);
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #getInteger(PortletPreferences, String)}
 	 */
 	@Deprecated
@@ -114,7 +114,7 @@ public interface PrefsProps {
 		PortletPreferences preferences, long companyId, String name);
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #getInteger(PortletPreferences, String, int)}
 	 */
 	@Deprecated
@@ -136,7 +136,7 @@ public interface PrefsProps {
 	public long getLong(long companyId, String name, long defaultValue);
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #getLong(PortletPreferences,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getLong(PortletPreferences,
 	 *             String)}
 	 */
 	@Deprecated
@@ -144,7 +144,7 @@ public interface PrefsProps {
 		PortletPreferences preferences, long companyId, String name);
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #getLong(PortletPreferences,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getLong(PortletPreferences,
 	 *             String, long)}
 	 */
 	@Deprecated
@@ -170,7 +170,7 @@ public interface PrefsProps {
 	public PortletPreferences getPreferences(long companyId, boolean readOnly);
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #getProperties(PortletPreferences, String, boolean)}
 	 */
 	@Deprecated
@@ -188,7 +188,7 @@ public interface PrefsProps {
 	public short getShort(long companyId, String name, short defaultValue);
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #getShort(PortletPreferences,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getShort(PortletPreferences,
 	 *             String)}
 	 */
 	@Deprecated
@@ -196,7 +196,7 @@ public interface PrefsProps {
 		PortletPreferences preferences, long companyId, String name);
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #getShort(PortletPreferences,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getShort(PortletPreferences,
 	 *             String, short)}
 	 */
 	@Deprecated
@@ -218,7 +218,7 @@ public interface PrefsProps {
 	public String getString(long companyId, String name, String defaultValue);
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #getString(PortletPreferences, String)}
 	 */
 	@Deprecated
@@ -226,7 +226,7 @@ public interface PrefsProps {
 		PortletPreferences preferences, long companyId, String name);
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #getString(PortletPreferences, String, boolean)}
 	 */
 	@Deprecated
@@ -235,7 +235,7 @@ public interface PrefsProps {
 		boolean defaultValue);
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #getString(PortletPreferences, String, double)}
 	 */
 	@Deprecated
@@ -244,7 +244,7 @@ public interface PrefsProps {
 		double defaultValue);
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #getString(PortletPreferences, String, int)}
 	 */
 	@Deprecated
@@ -253,7 +253,7 @@ public interface PrefsProps {
 		int defaultValue);
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #getString(PortletPreferences, String, long)}
 	 */
 	@Deprecated
@@ -262,7 +262,7 @@ public interface PrefsProps {
 		long defaultValue);
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #getString(PortletPreferences, String, short)}
 	 */
 	@Deprecated
@@ -271,7 +271,7 @@ public interface PrefsProps {
 		short defaultValue);
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #getString(PortletPreferences, String, String)}
 	 */
 	@Deprecated
@@ -310,7 +310,7 @@ public interface PrefsProps {
 		long companyId, String name, String delimiter, String[] defaultValue);
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #getStringArray(PortletPreferences, String, String)}
 	 */
 	@Deprecated
@@ -319,7 +319,7 @@ public interface PrefsProps {
 		String delimiter);
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #getStringArray(PortletPreferences, String, String,
 	 *             String[])}
 	 */

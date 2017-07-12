@@ -24,7 +24,7 @@ import org.osgi.util.tracker.ServiceTracker;
 /**
  * @author     Michael C. Han
  * @author     Raymond Augé
- * @deprecated As of NEXT-VERSION
+ * @deprecated As of com.liferay.portal.rules.engine.api#NEXT-VERSION
  */
 @Deprecated
 public class RulesEngineUtil {

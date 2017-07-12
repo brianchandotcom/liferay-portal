@@ -27,7 +27,7 @@ import java.util.concurrent.Callable;
 public class ExportImportProcessCallbackRegistryUtil {
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	public static void registerCallback(Callable<?> callable) {

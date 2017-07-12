@@ -25,7 +25,7 @@ import java.lang.reflect.InvocationTargetException;
 public class PortalClassInvoker {
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #invoke(MethodKey,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #invoke(MethodKey,
 	 *             Object...)}
 	 */
 	@Deprecated

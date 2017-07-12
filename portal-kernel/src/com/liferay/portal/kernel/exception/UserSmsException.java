@@ -20,14 +20,14 @@ package com.liferay.portal.kernel.exception;
 public class UserSmsException extends PortalException {
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by the inner classes
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the inner classes
 	 */
 	@Deprecated
 	public UserSmsException() {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by the inner classes
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the inner classes
 	 */
 	@Deprecated
 	public UserSmsException(String msg) {
@@ -35,7 +35,7 @@ public class UserSmsException extends PortalException {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by the inner classes
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the inner classes
 	 */
 	@Deprecated
 	public UserSmsException(String msg, Throwable cause) {
@@ -43,7 +43,7 @@ public class UserSmsException extends PortalException {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by the inner classes
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the inner classes
 	 */
 	@Deprecated
 	public UserSmsException(Throwable cause) {

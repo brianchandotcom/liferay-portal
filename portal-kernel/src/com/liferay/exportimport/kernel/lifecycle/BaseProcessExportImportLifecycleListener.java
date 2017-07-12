@@ -48,7 +48,7 @@ import java.util.List;
 
 /**
  * @author Daniel Kocsis
- * @deprecated As of NEXT-VERSION
+ * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
  */
 @Deprecated
 public abstract class BaseProcessExportImportLifecycleListener
@@ -145,7 +145,7 @@ public abstract class BaseProcessExportImportLifecycleListener
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void onProcessFailed(List<Serializable> attributes)
@@ -158,7 +158,7 @@ public abstract class BaseProcessExportImportLifecycleListener
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void onProcessStarted(List<Serializable> attributes)
@@ -171,7 +171,7 @@ public abstract class BaseProcessExportImportLifecycleListener
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void onProcessSucceeded(List<Serializable> attributes)

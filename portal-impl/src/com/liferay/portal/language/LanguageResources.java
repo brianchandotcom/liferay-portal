@@ -65,7 +65,7 @@ public class LanguageResources {
 			}
 
 			/**
-			 * @deprecated As of NEXT-VERSION, replaced by {@link #loadResourceBundle(
+			 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #loadResourceBundle(
 			 *             Locale)}
 			 */
 			@Deprecated

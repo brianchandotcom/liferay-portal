@@ -61,7 +61,7 @@ public class AuthTokenWhitelistUtilTest {
 			new SyntheticBundleRule("bundle.authtokenwhitelistutil"));
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION
 	 */
 	@Deprecated
 	@Test
@@ -75,7 +75,7 @@ public class AuthTokenWhitelistUtilTest {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION
 	 */
 	@Deprecated
 	@Test
@@ -92,7 +92,7 @@ public class AuthTokenWhitelistUtilTest {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION
 	 */
 	@Deprecated
 	@Test
@@ -107,7 +107,7 @@ public class AuthTokenWhitelistUtilTest {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION
 	 */
 	@Deprecated
 	@Test
@@ -124,7 +124,7 @@ public class AuthTokenWhitelistUtilTest {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION
 	 */
 	@Deprecated
 	@Test
@@ -140,7 +140,7 @@ public class AuthTokenWhitelistUtilTest {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION
 	 */
 	@Deprecated
 	@Test
@@ -158,7 +158,7 @@ public class AuthTokenWhitelistUtilTest {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION
 	 */
 	@Deprecated
 	@Test
@@ -174,7 +174,7 @@ public class AuthTokenWhitelistUtilTest {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION
 	 */
 	@Deprecated
 	@Test

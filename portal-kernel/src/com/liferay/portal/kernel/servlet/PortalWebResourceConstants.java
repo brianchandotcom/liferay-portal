@@ -24,7 +24,7 @@ public class PortalWebResourceConstants {
 	public static final String RESOURCE_TYPE_EDITOR_ALLOYEDITOR = "alloyeditor";
 
 	/**
-	 * @deprecated As of NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public static final String RESOURCE_TYPE_EDITOR_BBCODEEDITOR =

@@ -84,7 +84,7 @@ public class TextFormatter {
 	public static final int O = 14;
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #K}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #K}
 	 */
 	@Deprecated
 	public static final int P = 15;

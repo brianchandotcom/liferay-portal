@@ -76,7 +76,7 @@ public class TableMapperFactory {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	protected static final Set<String> cacheMappingTableNames = null;

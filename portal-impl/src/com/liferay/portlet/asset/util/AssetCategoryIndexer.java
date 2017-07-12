@@ -49,7 +49,7 @@ import javax.portlet.PortletResponse;
 
 /**
  * @author Istvan Andras Dezsi
- * @deprecated As of NEXT-VERSION, moved to {@link
+ * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, moved to {@link
  *             com.liferay.asset.categories.internal.search.AssetCategoryIndexer}
  */
 @Deprecated

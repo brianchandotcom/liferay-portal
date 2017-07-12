@@ -25,7 +25,7 @@ import java.io.Serializable;
 public interface ExportImportLifecycleManager {
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	public void fireExportImportLifecycleEvent(

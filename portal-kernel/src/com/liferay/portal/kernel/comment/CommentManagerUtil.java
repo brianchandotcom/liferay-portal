@@ -88,7 +88,7 @@ public class CommentManagerUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #_getCommentManager()}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #_getCommentManager()}
 	 */
 	@Deprecated
 	public static CommentManager getCommentManager() {

@@ -187,7 +187,7 @@ public class HtmlUtil {
 	 * @param      text the text
 	 * @return     the converted text, or <code>null</code> if the text is
 	 *             <code>null</code>
-	 * @deprecated As of NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public static String replaceMsWordCharacters(String text) {

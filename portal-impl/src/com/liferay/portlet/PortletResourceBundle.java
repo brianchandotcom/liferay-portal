@@ -70,7 +70,7 @@ public class PortletResourceBundle extends ResourceBundle {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link PortletResourceBundle(
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link PortletResourceBundle(
 	 *             ResourceBundle, Map)}
 	 */
 	@Deprecated
@@ -86,7 +86,7 @@ public class PortletResourceBundle extends ResourceBundle {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link PortletResourceBundle(
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link PortletResourceBundle(
 	 *             ResourceBundle, Map)}
 	 */
 	@Deprecated

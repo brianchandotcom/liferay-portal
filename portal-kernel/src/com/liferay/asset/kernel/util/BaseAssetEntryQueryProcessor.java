@@ -25,14 +25,14 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author     Julio Camarero
- * @deprecated As of NEXT-VERSION
+ * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
  */
 @Deprecated
 public abstract class BaseAssetEntryQueryProcessor
 	implements AssetEntryQueryProcessor {
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -43,7 +43,7 @@ public abstract class BaseAssetEntryQueryProcessor
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -53,7 +53,7 @@ public abstract class BaseAssetEntryQueryProcessor
 
 	/**
 	 * @throws     IOException
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override

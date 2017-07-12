@@ -27,7 +27,7 @@ import java.util.Calendar;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of NEXT-VERSION, replaced by {@link
+ * @deprecated As of com.liferay.util.java#NEXT-VERSION, replaced by {@link
  *             com.liferay.shopping.util.CreditCard)}
  */
 @Deprecated

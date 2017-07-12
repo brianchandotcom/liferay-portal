@@ -53,7 +53,7 @@ public abstract class BaseQueryImpl implements Query {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override

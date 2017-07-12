@@ -41,7 +41,7 @@ public class EventResponseImpl
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
 	 *             #init(PortletRequestImpl, HttpServletResponse, User, Layout)}
 	 */
 	@Deprecated

@@ -20,7 +20,7 @@ import java.lang.reflect.Method;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of NEXT-VERSION
+ * @deprecated As of com.liferay.portal.security.pacl#NEXT-VERSION
  */
 @Deprecated
 public class PACLBeanHandler implements InvocationHandler {

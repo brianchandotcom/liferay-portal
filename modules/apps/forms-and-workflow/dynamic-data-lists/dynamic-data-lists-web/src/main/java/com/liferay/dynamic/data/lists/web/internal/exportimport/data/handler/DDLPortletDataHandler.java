@@ -79,7 +79,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.dynamic.data.lists.web#NEXT-VERSION
 	 */
 	@Deprecated
 	protected DynamicQuery createRecordSetDynamicQuery() {
@@ -87,7 +87,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.dynamic.data.lists.web#NEXT-VERSION
 	 */
 	@Deprecated
 	protected DynamicQuery createRecordVersionDynamicQuery() {
@@ -95,7 +95,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.dynamic.data.lists.web#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void deleteDDMStructures(Set<Long> ddmStructureIds)
@@ -103,7 +103,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.dynamic.data.lists.web#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void deleteRecordSets(PortletDataContext portletDataContext)
@@ -239,7 +239,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.dynamic.data.lists.web#NEXT-VERSION
 	 */
 	@Deprecated
 	protected ActionableDynamicQuery getRecordActionableDynamicQuery(
@@ -250,7 +250,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.dynamic.data.lists.web#NEXT-VERSION
 	 */
 	@Deprecated
 	protected ActionableDynamicQuery getRecordSetActionableDynamicQuery(
@@ -261,7 +261,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.dynamic.data.lists.web#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setDDLRecordLocalService(
@@ -269,7 +269,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.dynamic.data.lists.web#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setDDLRecordSetLocalService(
@@ -297,7 +297,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.dynamic.data.lists.web#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setDDMStructureLocalService(

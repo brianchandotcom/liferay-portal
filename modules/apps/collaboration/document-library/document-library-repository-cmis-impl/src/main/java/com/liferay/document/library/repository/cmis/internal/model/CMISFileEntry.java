@@ -517,7 +517,7 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link CMISFileVersion#getUserId()}
+	 * @deprecated As of com.liferay.document.library.repository.cmis.impl#NEXT-VERSION, replaced by {@link CMISFileVersion#getUserId()}
 	 */
 	@Deprecated
 	@Override
@@ -537,7 +537,7 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.document.library.repository.cmis.impl#NEXT-VERSION, replaced by {@link
 	 *             CMISFileVersion#getUserName()}
 	 */
 	@Deprecated
@@ -558,7 +558,7 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.document.library.repository.cmis.impl#NEXT-VERSION, replaced by {@link
 	 *             CMISFileVersion#getUserUuid()}
 	 */
 	@Deprecated

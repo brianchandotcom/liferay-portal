@@ -37,7 +37,7 @@ public class ClassResourceBundleLoader implements ResourceBundleLoader {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #loadResourceBundle(Locale)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #loadResourceBundle(Locale)}
 	 */
 	@Deprecated
 	@Override

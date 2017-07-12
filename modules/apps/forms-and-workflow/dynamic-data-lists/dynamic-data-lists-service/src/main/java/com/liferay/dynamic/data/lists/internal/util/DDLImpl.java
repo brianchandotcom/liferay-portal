@@ -68,7 +68,7 @@ import org.osgi.service.component.annotations.Reference;
 public class DDLImpl implements DDL {
 
 	/**
-	 * @deprecated As of 1.1.0
+	 * @deprecated As of com.liferay.dynamic.data.lists.service#1.1.0
 	 */
 	@Deprecated
 	@Override
@@ -229,7 +229,7 @@ public class DDLImpl implements DDL {
 	}
 
 	/**
-	 * @deprecated As of 1.1.0
+	 * @deprecated As of com.liferay.dynamic.data.lists.service#1.1.0
 	 */
 	@Deprecated
 	@Override
@@ -243,7 +243,7 @@ public class DDLImpl implements DDL {
 	}
 
 	/**
-	 * @deprecated As of 1.1.0
+	 * @deprecated As of com.liferay.dynamic.data.lists.service#1.1.0
 	 */
 	@Deprecated
 	@Override
@@ -280,7 +280,7 @@ public class DDLImpl implements DDL {
 	}
 
 	/**
-	 * @deprecated As of 1.1.0, with no direct replacement
+	 * @deprecated As of com.liferay.dynamic.data.lists.service#1.1.0, with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -293,7 +293,7 @@ public class DDLImpl implements DDL {
 	}
 
 	/**
-	 * @deprecated As of 1.1.0, with no direct replacement
+	 * @deprecated As of com.liferay.dynamic.data.lists.service#1.1.0, with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -358,7 +358,7 @@ public class DDLImpl implements DDL {
 	}
 
 	/**
-	 * @deprecated As of 1.1.0
+	 * @deprecated As of com.liferay.dynamic.data.lists.service#1.1.0
 	 */
 	@Deprecated
 	@Override

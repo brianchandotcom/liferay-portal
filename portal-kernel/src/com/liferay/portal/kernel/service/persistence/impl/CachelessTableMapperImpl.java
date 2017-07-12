@@ -104,7 +104,7 @@ public class CachelessTableMapperImpl
 		}
 
 		/**
-		 * @deprecated As of NEXT-VERSION, replaced by {@link #getPortalCacheName()}
+		 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getPortalCacheName()}
 		 */
 		@Deprecated
 		@Override

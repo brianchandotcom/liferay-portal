@@ -89,7 +89,7 @@ public class StagedModelDataHandlerUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #exportReferenceStagedModel(PortletDataContext, StagedModel,
 	 *             StagedModel, String)}
 	 */
@@ -107,7 +107,7 @@ public class StagedModelDataHandlerUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #exportReferenceStagedModel(PortletDataContext, StagedModel,
 	 *             StagedModel, String)}
 	 */
@@ -189,7 +189,7 @@ public class StagedModelDataHandlerUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #importReferenceStagedModel(PortletDataContext, Class,
 	 *             Serializable)}
 	 */
@@ -227,7 +227,7 @@ public class StagedModelDataHandlerUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #importReferenceStagedModel(PortletDataContext, String,
 	 *             Serializable)}
 	 */
@@ -268,7 +268,7 @@ public class StagedModelDataHandlerUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #importReferenceStagedModel(PortletDataContext, StagedModel,
 	 *             Class, Serializable)}
 	 */
@@ -309,7 +309,7 @@ public class StagedModelDataHandlerUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #importReferenceStagedModel(PortletDataContext, StagedModel,
 	 *             String, Serializable)}
 	 */

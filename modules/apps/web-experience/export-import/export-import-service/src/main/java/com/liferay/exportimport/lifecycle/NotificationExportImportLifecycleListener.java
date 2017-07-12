@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Akos Thurzo
  *
- * @deprecated As of NEXT-VERSION
+ * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
  */
 @Deprecated
 @ProviderType

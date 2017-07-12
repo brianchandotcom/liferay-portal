@@ -615,7 +615,7 @@ public class BookmarksFolderLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 1.0.0, replaced by {@link #updateFolder(long, long,
+	 * @deprecated As of com.liferay.bookmarks.service#1.0.0, replaced by {@link #updateFolder(long, long,
 	 *             long, String, String, ServiceContext)} and {@link
 	 *             #mergeFolders(long, long)}
 	 */

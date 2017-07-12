@@ -57,7 +57,7 @@ public class PortletConfigurationViewPortletProvider
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portlet.configuration.web#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override

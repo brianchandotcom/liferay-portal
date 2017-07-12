@@ -213,7 +213,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of 3.0.0, replaced by {@link #getRemoteSiteURL(Group,
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link #getRemoteSiteURL(Group,
 	 *             boolean)}
 	 */
 	@Deprecated
@@ -242,7 +242,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of 3.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
 	 *             _stagingLocalService#checkDefaultLayoutSetBranches(long,
 	 *             Group, boolean, boolean, boolean, ServiceContext)}
 	 */
@@ -341,7 +341,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of 3.0.0, replaced by {@link #publishPortlet(long, long,
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link #publishPortlet(long, long,
 	 *             long, long, long, String, Map)}
 	 */
 	@Deprecated
@@ -419,7 +419,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of 3.0.0, replaced by {@link #copyRemoteLayouts(long,
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link #copyRemoteLayouts(long,
 	 *             boolean, Map, Map, String, int, String, boolean, long,
 	 *             boolean)}
 	 */
@@ -548,7 +548,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of 3.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
 	 *             #deleteRecentLayoutRevisionId(long, long, long)}
 	 */
 	@Deprecated
@@ -647,7 +647,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of 3.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
 	 *             #getErrorMessagesJSONArray(Locale, Map<String,
 	 *             MissingReference>)}
 	 */
@@ -1109,7 +1109,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of 3.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
 	 *             #getExceptionMessagesJSONObject(Locale, Exception,
 	 *             ExportImportConfiguration)}
 	 */
@@ -1165,7 +1165,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of 3.0.0, moved to {@link
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, moved to {@link
 	 *             ExportImportHelperUtil#getMissingParentLayouts(Layout, long)}
 	 */
 	@Deprecated
@@ -1329,7 +1329,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of 3.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
 	 *             ExportImportConfigurationParameterMapFactory#buildParameterMap(
 	 *             )}
 	 */
@@ -1340,7 +1340,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of 3.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
 	 *             ExportImportConfigurationParameterMapFactory#buildParameterMap(
 	 *             PortletRequest)}
 	 */
@@ -1395,7 +1395,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of 3.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
 	 *             #getWarningMessagesJSONArray(Locale, Map<String,
 	 *             MissingReference>)}
 	 */
@@ -1513,7 +1513,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of 3.0.0, see {@link
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, see {@link
 	 *             com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor#getIsolationLevel(
 	 *             )}
 	 */
@@ -1626,7 +1626,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of 3.0.0, replaced by {@link #publishLayouts(long, long,
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link #publishLayouts(long, long,
 	 *             long, boolean, long[], Map)}
 	 */
 	@Deprecated
@@ -1686,7 +1686,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of 3.0.0, replaced by {@link #publishLayouts(long, long,
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link #publishLayouts(long, long,
 	 *             long, boolean, long[], Map)}
 	 */
 	@Deprecated
@@ -1719,7 +1719,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of 3.0.0, replaced by {@link #publishLayouts(long, long,
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link #publishLayouts(long, long,
 	 *             long, boolean, Map)}
 	 */
 	@Deprecated
@@ -2303,7 +2303,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of 3.0.0, see {@link
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, see {@link
 	 *             com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor#getIsolationLevel(
 	 *             )}
 	 */
@@ -2429,7 +2429,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of 3.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
 	 *             ExportImportDateUtil#updateLastPublishDate(long, boolean,
 	 *             DateRange, Date)}
 	 */
@@ -2444,7 +2444,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of 3.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
 	 *             ExportImportDateUtil#updateLastPublishDate(String,
 	 *             PortletPreferences, DateRange, Date)}
 	 */
@@ -2570,7 +2570,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of 3.0.0, replaced by {@link #validateRemote(long, String,
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link #validateRemote(long, String,
 	 *             int, String, boolean, long)}
 	 */
 	@Deprecated
@@ -2839,7 +2839,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of 3.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct replacement
 	 */
 	@Deprecated
 	protected long publishLayouts(
@@ -2904,7 +2904,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of 3.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct replacement
 	 */
 	@Deprecated
 	protected long publishToRemote(
@@ -2915,7 +2915,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setExportImportConfigurationLocalService(
@@ -2924,14 +2924,14 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setGroupLocalService(GroupLocalService groupLocalService) {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setLayoutBranchLocalService(
@@ -2939,7 +2939,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setLayoutLocalService(
@@ -2947,7 +2947,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setLayoutRevisionLocalService(
@@ -2955,14 +2955,14 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setLayoutService(LayoutService layoutService) {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setLayoutSetBranchLocalService(
@@ -2970,7 +2970,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setLockManager(LockManager lockManager) {
@@ -3014,7 +3014,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setRecentLayoutBranchLocalService(
@@ -3075,7 +3075,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setRecentLayoutRevisionLocalService(
@@ -3121,7 +3121,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setRecentLayoutSetBranchLocalService(
@@ -3129,7 +3129,7 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setStagingLocalService(
@@ -3137,14 +3137,14 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setUserLocalService(UserLocalService userLocalService) {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setWorkflowInstanceLinkLocalService(

@@ -39,7 +39,7 @@ import org.apache.commons.lang.time.StopWatch;
 
 /**
  * @author     Jorge Ferrer
- * @deprecated As of 1.2.0, replaced by {@link WikiCacheHelper}
+ * @deprecated As of com.liferay.wiki.service#1.2.0, replaced by {@link WikiCacheHelper}
  */
 @Deprecated
 public class WikiCacheUtil {

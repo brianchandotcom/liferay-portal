@@ -16,7 +16,7 @@ package com.liferay.portal.kernel.util;
 
 /**
  * @author     Julio Camarero
- * @deprecated As of NEXT-VERSION, moved to {@link
+ * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, moved to {@link
  *             com.liferay.portal.kernel.diff.DiffHtmlUtil}
  */
 @Deprecated

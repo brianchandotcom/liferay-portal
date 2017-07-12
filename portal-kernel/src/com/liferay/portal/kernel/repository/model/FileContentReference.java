@@ -101,7 +101,7 @@ public class FileContentReference {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #FileContentReference(long,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #FileContentReference(long,
 	 *             String, String, String, File, InputStream, long)}
 	 */
 	@Deprecated

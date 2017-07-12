@@ -471,7 +471,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -493,7 +493,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -829,7 +829,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setSupportsDataStrategyCopyAsNew(

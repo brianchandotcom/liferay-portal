@@ -152,7 +152,7 @@ public abstract class BaseSocialActivityInterpreter
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	protected String cleanContent(String content) {
@@ -197,7 +197,7 @@ public abstract class BaseSocialActivityInterpreter
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	protected SocialActivityFeedEntry doInterpret(
@@ -282,7 +282,7 @@ public abstract class BaseSocialActivityInterpreter
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #getGroupName(long,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getGroupName(long,
 	 *             ServiceContext)}
 	 */
 	@Deprecated
@@ -490,7 +490,7 @@ public abstract class BaseSocialActivityInterpreter
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #getUserName(long,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getUserName(long,
 	 *             ServiceContext)}
 	 */
 	@Deprecated
@@ -528,7 +528,7 @@ public abstract class BaseSocialActivityInterpreter
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #getJSONValue(String, String,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getJSONValue(String, String,
 	 *             String)}
 	 */
 	@Deprecated

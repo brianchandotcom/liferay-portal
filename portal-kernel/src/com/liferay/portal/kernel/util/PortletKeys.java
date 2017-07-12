@@ -41,7 +41,7 @@ public class PortletKeys {
 	public static final String CALENDAR = "8";
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             com.liferay.chat.constants.ChatPortletKeys#CHAT}
 	 */
 	@Deprecated

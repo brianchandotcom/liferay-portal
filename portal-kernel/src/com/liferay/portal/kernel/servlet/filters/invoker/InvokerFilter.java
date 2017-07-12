@@ -219,7 +219,7 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #getURI(HttpServletRequest,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getURI(HttpServletRequest,
 	 *             String)}
 	 */
 	@Deprecated
@@ -239,7 +239,7 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	protected String getURL(HttpServletRequest request) {

@@ -387,7 +387,7 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link DLFileVersion#getUserId()}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link DLFileVersion#getUserId()}
 	 */
 	@Deprecated
 	@Override
@@ -407,7 +407,7 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link DLFileVersion#getUserName()}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link DLFileVersion#getUserName()}
 	 */
 	@Deprecated
 	@Override
@@ -427,7 +427,7 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link DLFileVersion#getUserUuid()}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link DLFileVersion#getUserUuid()}
 	 */
 	@Deprecated
 	@Override

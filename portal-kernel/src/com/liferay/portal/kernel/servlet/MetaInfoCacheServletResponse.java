@@ -199,7 +199,7 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #finishResponse()}}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #finishResponse()}}
 	 */
 	@Deprecated
 	public void finishResponse(boolean reapplyMetaData) throws IOException {

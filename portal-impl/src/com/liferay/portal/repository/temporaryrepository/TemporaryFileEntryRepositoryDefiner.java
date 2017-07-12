@@ -76,7 +76,7 @@ public class TemporaryFileEntryRepositoryDefiner extends BaseRepositoryDefiner {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	protected PortalCapabilityLocator portalCapabilityLocator;

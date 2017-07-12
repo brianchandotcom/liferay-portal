@@ -33,7 +33,7 @@ import java.util.concurrent.Callable;
 
 /**
  * @author Adolfo Pérez
- * @deprecated As of NEXT-VERSION, replaced by {@link
+ * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
  *             com.liferay.document.library.internal.capabilities.LiferayProcessorCapability}
  */
 @Deprecated

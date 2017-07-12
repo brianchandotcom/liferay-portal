@@ -46,7 +46,7 @@ import java.util.List;
 
 /**
  * @author Mika Koivisto
- * @deprecated As of NEXT-VERSION, replaced by {@link
+ * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
  *             com.liferay.document.library.internal.util.
  *             DLProcessorRegistryImpl}
  */

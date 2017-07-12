@@ -52,7 +52,7 @@ public class UserConstants {
 		PropsKeys.USERS_EMAIL_ADDRESS_AUTO_SUFFIX);
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #getPortraitURL(String,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getPortraitURL(String,
 	 *             boolean, long, String)}
 	 */
 	@Deprecated

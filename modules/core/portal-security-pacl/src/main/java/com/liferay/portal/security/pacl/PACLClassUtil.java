@@ -16,7 +16,7 @@ package com.liferay.portal.security.pacl;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of NEXT-VERSION
+ * @deprecated As of com.liferay.portal.security.pacl#NEXT-VERSION
  */
 @Deprecated
 public class PACLClassUtil {

@@ -53,7 +53,7 @@ public class LayoutPrototypeServiceImpl extends LayoutPrototypeServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #addLayoutPrototype(Map, Map,
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #addLayoutPrototype(Map, Map,
 	 *             boolean, ServiceContext)}
 	 */
 	@Deprecated
@@ -150,7 +150,7 @@ public class LayoutPrototypeServiceImpl extends LayoutPrototypeServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #updateLayoutPrototype(long,
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #updateLayoutPrototype(long,
 	 *             Map, Map, boolean, ServiceContext)}
 	 */
 	@Deprecated

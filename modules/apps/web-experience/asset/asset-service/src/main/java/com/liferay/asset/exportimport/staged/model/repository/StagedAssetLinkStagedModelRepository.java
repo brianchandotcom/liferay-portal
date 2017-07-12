@@ -425,7 +425,7 @@ public class StagedAssetLinkStagedModelRepository
 	}
 
 	/**
-	 * @deprecated As of 1.0.0
+	 * @deprecated As of com.liferay.asset.service#1.0.0
 	 */
 	@Deprecated
 	protected void setAssetEntryLocalService(
@@ -433,7 +433,7 @@ public class StagedAssetLinkStagedModelRepository
 	}
 
 	/**
-	 * @deprecated As of 1.0.0
+	 * @deprecated As of com.liferay.asset.service#1.0.0
 	 */
 	@Deprecated
 	protected void setAssetLinkLocalService(

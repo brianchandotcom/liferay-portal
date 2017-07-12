@@ -84,7 +84,7 @@ public class DDLDisplayAddPortletProvider
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.dynamic.data.lists.web#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override

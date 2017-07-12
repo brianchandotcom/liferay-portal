@@ -27,7 +27,7 @@ public class AntivirusScannerException extends PortalException {
 	public static final int VIRUS_DETECTED = 2;
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #AntivirusScannerException(int)}
 	 */
 	@Deprecated
@@ -45,7 +45,7 @@ public class AntivirusScannerException extends PortalException {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #AntivirusScannerException(String, int)}
 	 */
 	@Deprecated

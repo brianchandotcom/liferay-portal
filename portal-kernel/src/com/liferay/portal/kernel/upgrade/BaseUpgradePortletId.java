@@ -129,7 +129,7 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	protected String getNewTypeSettings(

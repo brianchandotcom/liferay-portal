@@ -95,7 +95,7 @@ public class AssetPublisherAddPortletProvider
 	}
 
 	/**
-	 * @deprecated As of 1.2.0
+	 * @deprecated As of com.liferay.asset.publisher.web#1.2.0
 	 */
 	@Deprecated
 	@Override

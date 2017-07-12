@@ -32,7 +32,7 @@ public class OrganizationConstants {
 	public static final String NAME_RESERVED_WORDS = StringPool.NULL;
 
 	/**
-	 * @deprecated As of NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public static final String TYPE_LOCATION = "location";
@@ -40,7 +40,7 @@ public class OrganizationConstants {
 	public static final String TYPE_ORGANIZATION = "organization";
 
 	/**
-	 * @deprecated As of NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public static final String TYPE_REGULAR_ORGANIZATION =

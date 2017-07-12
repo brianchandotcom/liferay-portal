@@ -154,7 +154,7 @@ public class DeployUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #getResourcePath(
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #getResourcePath(
 	 *			   Set, String)}
 	 */
 	@Deprecated

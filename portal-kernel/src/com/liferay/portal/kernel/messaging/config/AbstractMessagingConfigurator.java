@@ -251,7 +251,7 @@ public abstract class AbstractMessagingConfigurator
 
 	/**
 	 * @param      replacementDestinations
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #setDestinations(List)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #setDestinations(List)}
 	 */
 	@Deprecated
 	@Override

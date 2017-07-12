@@ -43,7 +43,7 @@ public class TestSingleEntityIndexerPostProcessor
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.search.test#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -71,7 +71,7 @@ public class TestSingleEntityIndexerPostProcessor
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.search.test#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override

@@ -385,7 +385,7 @@ public class DLStoreImpl implements DLStore {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
 	 *             DLValidatorUtil#isValidName(String)}
 	 */
 	@Deprecated
@@ -617,7 +617,7 @@ public class DLStoreImpl implements DLStore {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
 	 *             DLValidatorUtil#validateDirectoryName(String)}
 	 */
 	@Deprecated

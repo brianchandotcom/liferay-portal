@@ -49,7 +49,7 @@ public class ExportImportLifecycleManagerImpl
 	implements ExportImportLifecycleManager {
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override

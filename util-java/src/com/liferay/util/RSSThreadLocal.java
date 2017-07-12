@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 /**
  * @author Shuyang Zhou
  * @see    com.liferay.rss.util.RSSThreadLocal
- * @deprecated As of NEXT-VERSION, with no direct replacement
+ * @deprecated As of com.liferay.util.java#NEXT-VERSION, with no direct replacement
  */
 @Deprecated
 public class RSSThreadLocal {

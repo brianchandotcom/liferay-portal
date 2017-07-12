@@ -18,7 +18,7 @@ import java.util.Arrays;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of NEXT-VERSION, replaced by {@link
+ * @deprecated As of com.liferay.util.java#NEXT-VERSION, replaced by {@link
  *             com.liferay.shopping.util.StateUtil)}
  */
 @Deprecated

@@ -16,7 +16,7 @@ package com.liferay.util;
 
 /**
  * @author     Jorge Ferrer
- * @deprecated As of NEXT-VERSION, replaced by {@link
+ * @deprecated As of com.liferay.util.java#NEXT-VERSION, replaced by {@link
  *             com.liferay.portal.kernel.plugin.Version}
  */
 @Deprecated

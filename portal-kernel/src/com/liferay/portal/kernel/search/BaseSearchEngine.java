@@ -38,7 +38,7 @@ public class BaseSearchEngine implements SearchEngine {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -51,7 +51,7 @@ public class BaseSearchEngine implements SearchEngine {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -76,7 +76,7 @@ public class BaseSearchEngine implements SearchEngine {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -91,7 +91,7 @@ public class BaseSearchEngine implements SearchEngine {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -135,7 +135,7 @@ public class BaseSearchEngine implements SearchEngine {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	public void setBooleanClauseFactory(
@@ -145,7 +145,7 @@ public class BaseSearchEngine implements SearchEngine {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	public void setBooleanQueryFactory(
@@ -163,7 +163,7 @@ public class BaseSearchEngine implements SearchEngine {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	public void setTermQueryFactory(TermQueryFactory termQueryFactory) {
@@ -171,7 +171,7 @@ public class BaseSearchEngine implements SearchEngine {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	public void setTermRangeQueryFactory(

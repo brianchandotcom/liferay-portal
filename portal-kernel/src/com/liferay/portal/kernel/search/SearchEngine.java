@@ -24,13 +24,13 @@ public interface SearchEngine {
 		throws SearchException;
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link BooleanClauseFactoryUtil}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link BooleanClauseFactoryUtil}
 	 */
 	@Deprecated
 	public BooleanClauseFactory getBooleanClauseFactory();
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	public BooleanQueryFactory getBooleanQueryFactory();
@@ -40,13 +40,13 @@ public interface SearchEngine {
 	public IndexWriter getIndexWriter();
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	public TermQueryFactory getTermQueryFactory();
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	public TermRangeQueryFactory getTermRangeQueryFactory();

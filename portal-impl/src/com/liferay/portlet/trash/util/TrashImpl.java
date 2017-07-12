@@ -78,7 +78,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Sergio González
  * @author Julio Camarero
- * @deprecated As of NEXT-VERSION
+ * @deprecated As of com.liferay.portal.impl#NEXT-VERSION
  */
 @Deprecated
 @DoPrivileged

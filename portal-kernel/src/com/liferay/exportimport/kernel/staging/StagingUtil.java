@@ -66,7 +66,7 @@ public class StagingUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #getRemoteSiteURL(Group,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getRemoteSiteURL(Group,
 	 *             boolean)}
 	 */
 	@Deprecated
@@ -86,7 +86,7 @@ public class StagingUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             com.liferay.exportimport.kernel.service.StagingLocalServiceUtil#
 	 *             checkDefaultLayoutSetBranches(long, Group, boolean, boolean,
 	 *             boolean, ServiceContext)}
@@ -117,7 +117,7 @@ public class StagingUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #publishPortlet(long, long,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #publishPortlet(long, long,
 	 *             long, long, long, String, Map)}
 	 */
 	@Deprecated
@@ -160,7 +160,7 @@ public class StagingUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #copyRemoteLayouts(long,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #copyRemoteLayouts(long,
 	 *             boolean, Map, Map, String, int, String, boolean, long,
 	 *             boolean)}
 	 */
@@ -213,7 +213,7 @@ public class StagingUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #deleteRecentLayoutRevisionId(long, long, long)}
 	 */
 	@Deprecated
@@ -230,7 +230,7 @@ public class StagingUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #getErrorMessagesJSONArray(Locale, Map<String,
 	 *             MissingReference>)}
 	 */
@@ -252,7 +252,7 @@ public class StagingUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #getExceptionMessagesJSONObject(Locale, Exception,
 	 *             ExportImportConfiguration)}
 	 */
@@ -276,7 +276,7 @@ public class StagingUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, moved to {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, moved to {@link
 	 *             com.liferay.exportimport.kernel.lar.ExportImportHelperUtil#getMissingParentLayouts(
 	 *             Layout, long)}
 	 */
@@ -342,7 +342,7 @@ public class StagingUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactory#buildParameterMap(
 	 *             )}
 	 */
@@ -352,7 +352,7 @@ public class StagingUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactory#buildParameterMap(
 	 *             PortletRequest)}
 	 */
@@ -370,7 +370,7 @@ public class StagingUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #getWarningMessagesJSONArray(Locale, Map<String,
 	 *             MissingReference>)}
 	 */
@@ -412,7 +412,7 @@ public class StagingUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, see {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, see {@link
 	 *             com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor#getIsolationLevel(
 	 *             )}
 	 */
@@ -457,7 +457,7 @@ public class StagingUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #publishLayouts(long, long,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #publishLayouts(long, long,
 	 *             long, boolean, long[], Map)}
 	 */
 	@Deprecated
@@ -484,7 +484,7 @@ public class StagingUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #publishLayouts(long, long,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #publishLayouts(long, long,
 	 *             long, boolean, long[], Map)}
 	 */
 	@Deprecated
@@ -509,7 +509,7 @@ public class StagingUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #publishLayouts(long, long,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #publishLayouts(long, long,
 	 *             long, boolean, Map)}
 	 */
 	@Deprecated
@@ -642,7 +642,7 @@ public class StagingUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, see {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, see {@link
 	 *             com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor#getIsolationLevel(
 	 *             )}
 	 */
@@ -679,7 +679,7 @@ public class StagingUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             com.liferay.exportimport.kernel.lar.ExportImportDateUtil#updateLastPublishDate(
 	 *             long, boolean, com.liferay.portal.kernel.util.DateRange,
 	 *             Date)}
@@ -694,7 +694,7 @@ public class StagingUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             com.liferay.exportimport.kernel.lar.ExportImportDateUtil#updateLastPublishDate(
 	 *             String, PortletPreferences,
 	 *             com.liferay.portal.kernel.util.DateRange, Date)}
@@ -728,7 +728,7 @@ public class StagingUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #validateRemote(long, String,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #validateRemote(long, String,
 	 *             int, String, boolean, long)}
 	 */
 	@Deprecated

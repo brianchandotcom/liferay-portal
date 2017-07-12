@@ -47,14 +47,14 @@ public interface ResourceActions {
 	public String getActionNamePrefix();
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	public List<String> getActionsNames(
 		HttpServletRequest request, List<String> actions);
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	public List<String> getActionsNames(
@@ -143,7 +143,7 @@ public interface ResourceActions {
 		throws Exception;
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	public void read(String servletContextName, InputStream inputStream)

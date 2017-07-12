@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
 public class RolesAdminUtil {
 
 	/**
-	 * @deprecated As of NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public static String getCssClassName(Role role) {

@@ -44,7 +44,7 @@ public class TestSingleIndexerPostProcessor implements IndexerPostProcessor {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.search.test#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -72,7 +72,7 @@ public class TestSingleIndexerPostProcessor implements IndexerPostProcessor {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.search.test#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override

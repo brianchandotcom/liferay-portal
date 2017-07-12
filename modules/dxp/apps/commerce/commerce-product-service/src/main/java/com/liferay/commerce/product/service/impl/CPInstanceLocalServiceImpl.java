@@ -232,7 +232,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	@Override
 	public void checkCPInstances() throws PortalException {
 		checkCPInstancesByDisplayDate();
-
 		checkCPInstancesByExpirationDate();
 	}
 

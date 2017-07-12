@@ -51,6 +51,10 @@
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
+		<finder name="LtD_S" return-type="Collection">
+			<finder-column comparator="&lt;" name="displayDate" />
+			<finder-column name="status" />
+		</finder>
 		<finder name="C_C_T_ST" return-type="Collection">
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
@@ -62,10 +66,6 @@
 			<finder-column name="classPK" />
 			<finder-column name="type" />
 			<finder-column comparator="!=" name="status" />
-		</finder>
-		<finder name="LtD_S" return-type="Collection">
-			<finder-column comparator="&lt;" name="displayDate" />
-			<finder-column name="status" />
 		</finder>
 
 		<!-- References -->

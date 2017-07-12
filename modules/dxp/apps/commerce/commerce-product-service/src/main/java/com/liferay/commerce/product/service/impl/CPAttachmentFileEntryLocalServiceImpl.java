@@ -139,7 +139,6 @@ public class CPAttachmentFileEntryLocalServiceImpl
 	@Override
 	public void checkCPAttachmentFileEntries() throws PortalException {
 		checkCPAttachmentFileEntriesByDisplayDate();
-
 		checkCPAttachmentFileEntriesByExpirationDate();
 	}
 

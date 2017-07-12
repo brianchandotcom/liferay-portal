@@ -340,10 +340,29 @@ public class BatchBuild extends BaseBuild {
 
 		int failCount = getDownstreamBuildCountByResult("FAILURE");
 		int successCount = getDownstreamBuildCountByResult("SUCCESS");
+		int upstreamFailCount = 0;
 
 		if (result.equals("UNSTABLE")) {
 			failCount = getTestCountByStatus("FAILURE");
 			successCount = getTestCountByStatus("SUCCESS");
+
+			if (getCompareToUpstream()) {
+				for (TestResult testResult : getTestResults(null)) {
+					String testStatus = testResult.getStatus();
+
+					if (testStatus.equals("PASSED") ||
+						testStatus.equals("SKIPPED")) {
+
+						continue;
+					}
+
+					if (isTestFailingInUpstreamJob(testResult)) {
+						upstreamFailCount++;
+					}
+				}
+
+				failCount = failCount - upstreamFailCount;
+			}
 		}
 
 		return Dom4JUtil.getNewElement(

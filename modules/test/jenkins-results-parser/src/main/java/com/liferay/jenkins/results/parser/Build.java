@@ -124,6 +124,8 @@ public interface Build {
 
 	public String replaceBuildURL(String text);
 
+	public void setCompareToUpstream(boolean compareToUpstream);
+
 	public void update();
 
 }

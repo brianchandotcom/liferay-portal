@@ -184,6 +184,11 @@ public class TopLevelBuild extends BaseBuild {
 		_updateDuration = System.currentTimeMillis() - start;
 	}
 
+	@Override
+	public void setCompareToUpstream(boolean compareToUpstream) {
+		_compareToUpstream = compareToUpstream;
+	}
+
 	protected TopLevelBuild(String url) {
 		this(url, null);
 	}
@@ -483,7 +488,9 @@ public class TopLevelBuild extends BaseBuild {
 		String result = getResult();
 
 		if (!result.equals("SUCCESS")) {
-			setUpstreamJobFailuresJSONObject();
+			if (getCompareToUpstream()) {
+				setUpstreamJobFailuresJSONObject();
+			}
 
 			Dom4JUtil.addToElement(
 				rootElement, Dom4JUtil.getNewElement("hr"),
@@ -592,6 +599,11 @@ public class TopLevelBuild extends BaseBuild {
 		return upstreamBranchSHA;
 	}
 
+	@Override
+	protected boolean getCompareToUpstream() {
+		return _compareToUpstream;
+	}
+
 	protected static final Pattern gitRepositoryTempMapNamePattern =
 		Pattern.compile("git\\.(?<repositoryType>.*)\\.properties");
 
@@ -609,6 +621,7 @@ public class TopLevelBuild extends BaseBuild {
 			new GenericFailureMessageGenerator()
 		};
 
+	private boolean _compareToUpstream = true;
 	private long _lastDownstreamBuildsListingTimestamp = -1L;
 	private long _updateDuration;
 

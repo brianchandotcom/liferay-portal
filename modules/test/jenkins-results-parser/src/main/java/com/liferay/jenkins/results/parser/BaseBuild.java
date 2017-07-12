@@ -287,6 +287,12 @@ public abstract class BaseBuild implements Build {
 		return buildURLRegex;
 	}
 
+	protected boolean getCompareToUpstream() {
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		return topLevelBuild.getCompareToUpstream();
+	}
+
 	@Override
 	public String getConsoleText() {
 		if (_consoleText != null) {
@@ -900,6 +906,10 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return text;
+	}
+
+	@Override
+	public void setCompareToUpstream(boolean compareToUpstream) {
 	}
 
 	@Override

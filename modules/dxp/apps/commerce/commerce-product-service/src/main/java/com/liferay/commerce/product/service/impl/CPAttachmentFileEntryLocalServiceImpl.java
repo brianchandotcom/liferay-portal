@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 
@@ -93,7 +94,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 		validate(fileEntryId);
 
-		if (titleMap.get(locale).isEmpty()) {
+		if (Validator.isNull(titleMap.get(locale))) {
 			FileEntry fileEntry = dlAppLocalService.getFileEntry(fileEntryId);
 
 			titleMap.put(locale, fileEntry.getFileName());
@@ -299,7 +300,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 		validate(fileEntryId);
 
-		if (titleMap.get(locale).isEmpty()) {
+		if (Validator.isNull(titleMap.get(locale))) {
 			FileEntry fileEntry = dlAppLocalService.getFileEntry(fileEntryId);
 
 			titleMap.put(locale, fileEntry.getFileName());

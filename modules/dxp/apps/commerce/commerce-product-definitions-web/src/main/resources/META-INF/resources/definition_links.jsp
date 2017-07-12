@@ -32,7 +32,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-product-d
 portletURL.setParameter("toolbarItem", toolbarItem);
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
+portletDisplay.setURLBack(catalogURL);
 
 renderResponse.setTitle(cpDefinition.getTitle(languageId));
 
@@ -130,7 +130,6 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 							PortletURL rowURL = renderResponse.createRenderURL();
 
 							rowURL.setParameter("mvcRenderCommandName", "editCPDefinitionLink");
-							rowURL.setParameter("redirect", currentURL);
 							rowURL.setParameter("cpDefinitionLinkId", String.valueOf(cpDefinitionLink.getCPDefinitionLinkId()));
 
 							CPDefinition cpDefinition2 = cpDefinitionLink.getCPDefinition2();
@@ -172,8 +171,6 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 
 <aui:form action="<%= addCPDefinitionLinkURL %>" cssClass="hide" name="addCPDefinitionLinkFm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 	<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinitionId %>" />
 	<aui:input name="cpDefinitionIds" type="hidden" value="" />
 </aui:form>

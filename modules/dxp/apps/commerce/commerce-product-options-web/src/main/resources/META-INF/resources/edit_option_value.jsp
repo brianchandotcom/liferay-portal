@@ -23,8 +23,13 @@ long cpOptionValueId = BeanParamUtil.getLong(cpOptionValue, request, "cpOptionVa
 
 long cpOptionId = ParamUtil.getLong(request, "cpOptionId");
 
+PortletURL optionValuesURL = renderResponse.createRenderURL();
+
+optionValuesURL.setParameter("mvcRenderCommandName", "viewProductOptionValues");
+optionValuesURL.setParameter("cpOptionId", String.valueOf(cpOptionId));
+
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
+portletDisplay.setURLBack(optionValuesURL.toString());
 
 renderResponse.setTitle((cpOptionValue == null) ? LanguageUtil.get(request, "add-option-value") : cpOptionValue.getTitle(locale));
 %>
@@ -33,14 +38,13 @@ renderResponse.setTitle((cpOptionValue == null) ? LanguageUtil.get(request, "add
 
 <aui:form action="<%= editProductOptionValueActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpOptionValue == null) ? Constants.ADD : Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
+	<aui:input name="redirect" type="hidden" value="<%= optionValuesURL %>" />
 	<aui:input name="cpOptionId" type="hidden" value="<%= cpOptionId %>" />
 	<aui:input name="cpOptionValueId" type="hidden" value="<%= cpOptionValueId %>" />
 
 	<div class="lfr-form-content">
 		<liferay-ui:form-navigator
-			backURL="<%= backURL %>"
+			backURL="<%= optionValuesURL.toString() %>"
 			formModelBean="<%= cpOptionValue %>"
 			id="<%= CPOptionValueFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_OPTION_VALUE %>"
 			markupView="lexicon"

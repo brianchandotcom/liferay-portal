@@ -32,8 +32,6 @@ else {
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<portlet:renderURL var="editURL">
 		<portlet:param name="mvcRenderCommandName" value="editProductDefinitionOptionRel" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="backURL" value="<%= backURL %>" />
 		<portlet:param name="cpDefinitionOptionRelId" value="<%= String.valueOf(cpDefinitionOptionRel.getCPDefinitionOptionRelId()) %>" />
 	</portlet:renderURL>
 
@@ -45,7 +43,6 @@ else {
 	<portlet:actionURL name="editProductDefinitionOptionRel" var="setFacetableURL">
 		<portlet:param name="<%= Constants.CMD %>" value="setFacetable" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="backURL" value="<%= backURL %>" />
 		<portlet:param name="cpDefinitionOptionRelId" value="<%= String.valueOf(cpDefinitionOptionRel.getCPDefinitionOptionRelId()) %>" />
 		<portlet:param name="facetable" value="<%= String.valueOf(!cpDefinitionOptionRel.getFacetable()) %>" />
 	</portlet:actionURL>
@@ -58,7 +55,6 @@ else {
 	<portlet:actionURL name="editProductDefinitionOptionRel" var="setRequiredURL">
 		<portlet:param name="<%= Constants.CMD %>" value="setRequired" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="backURL" value="<%= backURL %>" />
 		<portlet:param name="cpDefinitionOptionRelId" value="<%= String.valueOf(cpDefinitionOptionRel.getCPDefinitionOptionRelId()) %>" />
 		<portlet:param name="required" value="<%= String.valueOf(!cpDefinitionOptionRel.getRequired()) %>" />
 	</portlet:actionURL>
@@ -71,7 +67,6 @@ else {
 	<portlet:actionURL name="editProductDefinitionOptionRel" var="setSkuContributorURL">
 		<portlet:param name="<%= Constants.CMD %>" value="setSkuContributor" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="backURL" value="<%= backURL %>" />
 		<portlet:param name="cpDefinitionOptionRelId" value="<%= String.valueOf(cpDefinitionOptionRel.getCPDefinitionOptionRelId()) %>" />
 		<portlet:param name="skuContributor" value="<%= String.valueOf(!cpDefinitionOptionRel.getSkuContributor()) %>" />
 	</portlet:actionURL>
@@ -84,7 +79,6 @@ else {
 	<portlet:actionURL name="editProductDefinitionOptionRel" var="deleteURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="backURL" value="<%= backURL %>" />
 		<portlet:param name="cpDefinitionOptionRelId" value="<%= String.valueOf(cpDefinitionOptionRel.getCPDefinitionOptionRelId()) %>" />
 	</portlet:actionURL>
 

@@ -32,7 +32,6 @@ else {
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<portlet:renderURL var="editURL">
 		<portlet:param name="mvcRenderCommandName" value="editProductDefinition" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinition.getCPDefinitionId()) %>" />
 		<portlet:param name="toolbarItem" value="view-product-definition-details" />
 	</portlet:renderURL>
@@ -44,7 +43,7 @@ else {
 
 	<portlet:actionURL name="editProductDefinition" var="deleteURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
-		<portlet:param name="redirect" value="<%= redirect %>" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinition.getCPDefinitionId()) %>" />
 	</portlet:actionURL>
 

@@ -24,7 +24,7 @@ CPOptionCategory cpOptionCategory = (CPOptionCategory)request.getAttribute(CPWeb
 long cpOptionCategoryId = BeanParamUtil.getLong(cpOptionCategory, request, "cpOptionCategoryId");
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
+portletDisplay.setURLBack(optionCategoriesURL);
 
 renderResponse.setTitle((cpOptionCategory == null) ? LanguageUtil.get(request, "add-option-category") : cpOptionCategory.getTitle(locale));
 
@@ -42,8 +42,7 @@ Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLoca
 
 <aui:form action="<%= editProductOptionCategoryActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpOptionCategory == null) ? Constants.ADD : Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
+	<aui:input name="redirect" type="hidden" value="<%= optionCategoriesURL %>" />
 	<aui:input name="cpOptionCategoryId" type="hidden" value="<%= String.valueOf(cpOptionCategoryId) %>" />
 
 	<aui:translation-manager
@@ -54,7 +53,7 @@ Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLoca
 
 	<div class="lfr-form-content">
 		<liferay-ui:form-navigator
-			backURL="<%= backURL %>"
+			backURL="<%= optionCategoriesURL %>"
 			formModelBean="<%= cpOptionCategory %>"
 			id="<%= CPOptionCategoryFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_OPTION_CATEGORY %>"
 			markupView="lexicon"

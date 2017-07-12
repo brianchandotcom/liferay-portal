@@ -25,8 +25,13 @@ CPInstance cpInstance = cpInstanceDisplayContext.getCPInstance();
 
 long cpInstanceId = cpInstanceDisplayContext.getCPInstanceId();
 
+PortletURL productSkusURL = renderResponse.createRenderURL();
+
+productSkusURL.setParameter("mvcRenderCommandName", "viewProductInstances");
+productSkusURL.setParameter("cpDefinitionId", String.valueOf(cpDefinition.getCPDefinitionId()));
+
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
+portletDisplay.setURLBack(productSkusURL.toString());
 
 renderResponse.setTitle((cpInstance == null) ? LanguageUtil.get(request, "add-sku") : cpDefinition.getTitle(languageId) + " - " + cpInstance.getSku());
 %>
@@ -35,15 +40,14 @@ renderResponse.setTitle((cpInstance == null) ? LanguageUtil.get(request, "add-sk
 
 <aui:form action="<%= editProductInstanceActionURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveInstance();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpInstance == null) ? Constants.ADD : Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
+	<aui:input name="redirect" type="hidden" value="<%= productSkusURL %>" />
 	<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinition.getCPDefinitionId() %>" />
 	<aui:input name="cpInstanceId" type="hidden" value="<%= String.valueOf(cpInstanceId) %>" />
 	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
 
 	<div class="lfr-form-content">
 		<liferay-ui:form-navigator
-			backURL="<%= backURL %>"
+			backURL="<%= productSkusURL.toString() %>"
 			formModelBean="<%= cpInstance %>"
 			id="<%= CPInstanceFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_INSTANCE %>"
 			markupView="lexicon"
@@ -77,7 +81,7 @@ renderResponse.setTitle((cpInstance == null) ? LanguageUtil.get(request, "add-sk
 
 		<aui:button cssClass="btn-lg" name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
 
-		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= productSkusURL.toString() %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
 

@@ -35,8 +35,13 @@ portletURL.setParameter("toolbarItem", toolbarItem);
 
 request.setAttribute("view.jsp-portletURL", portletURL);
 
+PortletURL productOptionRelsURL = renderResponse.createRenderURL();
+
+productOptionRelsURL.setParameter("mvcRenderCommandName", "viewProductDefinitionOptionRels");
+productOptionRelsURL.setParameter("cpDefinitionId", String.valueOf(cpDefinitionOptionRel.getCPDefinitionId()));
+
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
+portletDisplay.setURLBack(productOptionRelsURL.toString());
 
 renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpDefinitionOptionRel.getTitle(languageId));
 %>
@@ -128,7 +133,6 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpDefinition
 							PortletURL rowURL = renderResponse.createRenderURL();
 
 							rowURL.setParameter("mvcRenderCommandName", "editProductDefinitionOptionValueRel");
-							rowURL.setParameter("redirect", currentURL);
 							rowURL.setParameter("cpDefinitionOptionValueRelId", String.valueOf(cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId()));
 							%>
 
@@ -166,8 +170,6 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpDefinition
 
 <liferay-portlet:renderURL var="addProductDefinitionOptionValueRelURL">
 	<portlet:param name="mvcRenderCommandName" value="editProductDefinitionOptionValueRel" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-	<portlet:param name="backURL" value="<%= backURL %>" />
 	<portlet:param name="cpDefinitionOptionRelId" value="<%= String.valueOf(cpDefinitionOptionRelId) %>" />
 </liferay-portlet:renderURL>
 

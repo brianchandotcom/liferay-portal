@@ -29,7 +29,7 @@ SearchContainer<CPDefinitionGroupedEntry> cpDefinitionGroupedEntrySearchContaine
 PortletURL portletURL = cpDefinitionGroupedEntriesDisplayContext.getPortletURL();
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
+portletDisplay.setURLBack(catalogURL);
 
 renderResponse.setTitle(cpDefinition.getTitle(themeDisplay.getLanguageId()));
 
@@ -129,7 +129,6 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 							PortletURL rowURL = renderResponse.createRenderURL();
 
 							rowURL.setParameter("mvcRenderCommandName", "editCPDefinitionGroupedEntry");
-							rowURL.setParameter("redirect", currentURL);
 							rowURL.setParameter("cpDefinitionId", String.valueOf(cpDefinitionGroupedEntry.getCPDefinitionId()));
 							rowURL.setParameter("cpDefinitionGroupedEntryId", String.valueOf(cpDefinitionGroupedEntry.getCPDefinitionGroupedEntryId()));
 
@@ -174,7 +173,6 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 <aui:form action="<%= addDefinitionGroupedEntryURL %>" cssClass="hide" name="addCPDefinitionGroupedEntryFm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 	<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinition.getCPDefinitionId() %>" />
 	<aui:input name="entryCPDefinitionIds" type="hidden" value="" />
 </aui:form>

@@ -73,7 +73,11 @@ page import="java.util.Set" %>
 <portlet:defineObjects />
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
+String lifecycle = (String)request.getAttribute(liferayPortletRequest.LIFECYCLE_PHASE);
 
-String backURL = ParamUtil.getString(request, "backURL", redirect);
+PortletURL optionsURLObj = PortalUtil.getControlPanelPortletURL(request, CPPortletKeys.COMMERCE_PRODUCT_OPTIONS, lifecycle);
+PortletURL optionCategoriesURLObj = PortalUtil.getControlPanelPortletURL(request, CPPortletKeys.COMMERCE_PRODUCT_OPTION_CATEGORIES, lifecycle);
+
+String optionsURL = optionsURLObj.toString();
+String optionCategoriesURL = optionCategoriesURLObj.toString();
 %>

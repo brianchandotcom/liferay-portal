@@ -79,7 +79,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 							PortletURL rowURL = renderResponse.createRenderURL();
 
 							rowURL.setParameter("mvcRenderCommandName", "editProductOption");
-							rowURL.setParameter("redirect", currentURL);
 							rowURL.setParameter("cpOptionId", String.valueOf(cpOption.getCPOptionId()));
 							%>
 
@@ -140,7 +139,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 <liferay-portlet:renderURL var="addProductOptionURL">
 	<portlet:param name="mvcRenderCommandName" value="editProductOption" />
-	<portlet:param name="backURL" value="<%= PortalUtil.getCurrentCompleteURL(request) %>" />
 	<portlet:param name="toolbarItem" value="view-product-option-details" />
 </liferay-portlet:renderURL>
 

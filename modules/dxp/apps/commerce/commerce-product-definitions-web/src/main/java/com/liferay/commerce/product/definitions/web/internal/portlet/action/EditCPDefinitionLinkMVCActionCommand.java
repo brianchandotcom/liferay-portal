@@ -111,13 +111,8 @@ public class EditCPDefinitionLinkMVCActionCommand extends BaseMVCActionCommand {
 		long cpDefinitionId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionId");
 
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		String backURL = ParamUtil.getString(
-			actionRequest, "backURL", redirect);
-
-		redirect = getSaveAndContinueRedirect(
-			actionRequest, cpDefinitionId, redirect, backURL);
+		String redirect = getSaveAndContinueRedirect(
+			actionRequest, cpDefinitionId);
 
 		try {
 			if (cmd.equals(Constants.ADD)) {
@@ -149,8 +144,7 @@ public class EditCPDefinitionLinkMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected String getSaveAndContinueRedirect(
-			ActionRequest actionRequest, long cpDefinitionId, String redirect,
-			String backURL)
+			ActionRequest actionRequest, long cpDefinitionId)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -162,8 +156,6 @@ public class EditCPDefinitionLinkMVCActionCommand extends BaseMVCActionCommand {
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "viewCPDefinitionLinks");
-		portletURL.setParameter("redirect", redirect);
-		portletURL.setParameter("backURL", backURL);
 		portletURL.setParameter(
 			"cpDefinitionId", String.valueOf(cpDefinitionId));
 

@@ -31,7 +31,7 @@ CPDefinition cpDefinition = cpDefinitionsDisplayContext.getCPDefinition();
 long cpDefinitionId = cpDefinitionsDisplayContext.getCPDefinitionId();
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
+portletDisplay.setURLBack(catalogURL);
 
 renderResponse.setTitle((cpDefinition == null) ? LanguageUtil.get(request, "add-product") : cpDefinition.getTitle(languageId));
 
@@ -57,8 +57,7 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 
 <aui:form action="<%= editProductDefinitionActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpDefinition == null) ? Constants.ADD : Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="cpDefinitionId" type="hidden" value="<%= String.valueOf(cpDefinitionId) %>" />
 	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
 
@@ -83,7 +82,7 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 
 	<div class="lfr-form-content">
 		<liferay-ui:form-navigator
-			backURL="<%= backURL %>"
+			backURL="<%= catalogURL %>"
 			formModelBean="<%= cpDefinition %>"
 			id="<%= CPDefinitionFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_DEFINITION %>"
 			markupView="lexicon"
@@ -117,7 +116,7 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 
 		<aui:button cssClass="btn-lg" name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
 
-		<aui:button cssClass="btn-lg" href="<%= backURL %>" type="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= catalogURL %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
 

@@ -32,7 +32,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-product-d
 portletURL.setParameter("toolbarItem", toolbarItem);
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
+portletDisplay.setURLBack(catalogURL);
 
 renderResponse.setTitle(cpDefinition.getTitle(languageId));
 
@@ -130,7 +130,6 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 							PortletURL rowURL = renderResponse.createRenderURL();
 
 							rowURL.setParameter("mvcRenderCommandName", "editProductDefinitionOptionRel");
-							rowURL.setParameter("redirect", currentURL);
 							rowURL.setParameter("cpDefinitionOptionRelId", String.valueOf(cpDefinitionOptionRel.getCPDefinitionOptionRelId()));
 							%>
 

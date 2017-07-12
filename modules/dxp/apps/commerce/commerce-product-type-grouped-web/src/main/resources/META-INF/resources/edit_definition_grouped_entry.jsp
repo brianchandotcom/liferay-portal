@@ -24,8 +24,13 @@ CPDefinitionGroupedEntry cpDefinitionGroupedEntry = cpDefinitionGroupedEntriesDi
 CPDefinition cpDefinition = cpDefinitionGroupedEntry.getCPDefinition();
 CPDefinition entryCPDefinition = cpDefinitionGroupedEntry.getEntryCPDefinition();
 
+PortletURL groupedProductsURL = renderResponse.createRenderURL();
+
+groupedProductsURL.setParameter("mvcRenderCommandName", "viewCPDefinitionGroupedEntries");
+groupedProductsURL.setParameter("cpDefinitionId", String.valueOf(cpDefinition.getCPDefinitionId()));
+
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
+portletDisplay.setURLBack(groupedProductsURL.toString());
 
 renderResponse.setTitle(cpDefinition.getTitle(themeDisplay.getLanguageId()) + " - " + entryCPDefinition.getTitle(themeDisplay.getLanguageId()));
 %>
@@ -36,8 +41,7 @@ renderResponse.setTitle(cpDefinition.getTitle(themeDisplay.getLanguageId()) + " 
 
 <aui:form action="<%= editCPDefinitionGroupedEntryActionURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCPDefinitionGroupedEntry();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
+	<aui:input name="redirect" type="hidden" value="<%= groupedProductsURL %>" />
 	<aui:input name="cpDefinitionGroupedEntryId" type="hidden" value="<%= cpDefinitionGroupedEntry.getCPDefinitionGroupedEntryId() %>" />
 
 	<aui:model-context bean="<%= cpDefinitionGroupedEntry %>" model="<%= CPDefinitionGroupedEntry.class %>" />
@@ -57,7 +61,7 @@ renderResponse.setTitle(cpDefinition.getTitle(themeDisplay.getLanguageId()) + " 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />
 
-		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= groupedProductsURL.toString() %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
 

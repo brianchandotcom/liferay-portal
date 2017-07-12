@@ -32,8 +32,6 @@ else {
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<portlet:renderURL var="editURL">
 		<portlet:param name="mvcRenderCommandName" value="editProductOption" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="backURL" value="<%= backURL %>" />
 		<portlet:param name="cpOptionId" value="<%= String.valueOf(cpOption.getCPOptionId()) %>" />
 		<portlet:param name="toolbarItem" value="view-product-option-details" />
 	</portlet:renderURL>
@@ -46,7 +44,6 @@ else {
 	<portlet:actionURL name="editProductOption" var="setFacetableURL">
 		<portlet:param name="<%= Constants.CMD %>" value="setFacetable" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="backURL" value="<%= backURL %>" />
 		<portlet:param name="cpOptionId" value="<%= String.valueOf(cpOption.getCPOptionId()) %>" />
 		<portlet:param name="facetable" value="<%= String.valueOf(!cpOption.getFacetable()) %>" />
 	</portlet:actionURL>
@@ -59,7 +56,6 @@ else {
 	<portlet:actionURL name="editProductOption" var="setRequiredURL">
 		<portlet:param name="<%= Constants.CMD %>" value="setRequired" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="backURL" value="<%= backURL %>" />
 		<portlet:param name="cpOptionId" value="<%= String.valueOf(cpOption.getCPOptionId()) %>" />
 		<portlet:param name="required" value="<%= String.valueOf(!cpOption.getRequired()) %>" />
 	</portlet:actionURL>
@@ -72,7 +68,6 @@ else {
 	<portlet:actionURL name="editProductOption" var="setSkuContributorURL">
 		<portlet:param name="<%= Constants.CMD %>" value="setSkuContributor" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="backURL" value="<%= backURL %>" />
 		<portlet:param name="cpOptionId" value="<%= String.valueOf(cpOption.getCPOptionId()) %>" />
 		<portlet:param name="skuContributor" value="<%= String.valueOf(!cpOption.getSkuContributor()) %>" />
 	</portlet:actionURL>
@@ -85,7 +80,6 @@ else {
 	<portlet:actionURL name="editProductOption" var="deleteURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="backURL" value="<%= backURL %>" />
 		<portlet:param name="cpOptionId" value="<%= String.valueOf(cpOption.getCPOptionId()) %>" />
 	</portlet:actionURL>
 

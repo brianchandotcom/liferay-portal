@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -98,33 +97,14 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		String backURL = ParamUtil.getString(
-			actionRequest, "backURL", redirect);
-
-		CPAttachmentFileEntry cpAttachmentFileEntry = null;
-
-		int workflowAction = ParamUtil.getInteger(
-			actionRequest, "workflowAction",
-			WorkflowConstants.ACTION_SAVE_DRAFT);
+		String redirect = getSaveAndContinueRedirect(actionRequest);
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				cpAttachmentFileEntry = updateCPAttachmentFileEntry(
-					actionRequest);
+				updateCPAttachmentFileEntry(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteCPAttachmentFileEntry(actionRequest);
-			}
-
-			if ((cpAttachmentFileEntry != null) &&
-				(workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT)) {
-
-				redirect = getSaveAndContinueRedirect(
-					actionRequest, cpAttachmentFileEntry, redirect, backURL);
-
-				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 		}
 		catch (Exception e) {
@@ -141,18 +121,12 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 
 				SessionErrors.add(actionRequest, e.getClass());
 
-				redirect = getSaveAndContinueRedirect(
-					actionRequest, cpAttachmentFileEntry, redirect, backURL);
-
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 		}
 	}
 
-	protected String getSaveAndContinueRedirect(
-			ActionRequest actionRequest,
-			CPAttachmentFileEntry cpAttachmentFileEntry, String redirect,
-			String backURL)
+	protected String getSaveAndContinueRedirect(ActionRequest actionRequest)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -170,12 +144,6 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 				"cpAttachmentFileEntryId",
 				String.valueOf(cpAttachmentFileEntryId));
 		}
-		else if (cpAttachmentFileEntry != null) {
-			portletURL.setParameter(
-				"cpAttachmentFileEntryId",
-				String.valueOf(
-					cpAttachmentFileEntry.getCPAttachmentFileEntryId()));
-		}
 
 		long cpDefinitionId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionId");
@@ -184,8 +152,6 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "editCPAttachmentFileEntry");
-		portletURL.setParameter("redirect", redirect);
-		portletURL.setParameter("backURL", backURL);
 		portletURL.setParameter(
 			"cpDefinitionId", String.valueOf(cpDefinitionId));
 		portletURL.setParameter("toolbarItem", toolbarItem);
@@ -194,8 +160,7 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 		return portletURL.toString();
 	}
 
-	protected CPAttachmentFileEntry updateCPAttachmentFileEntry(
-			ActionRequest actionRequest)
+	protected void updateCPAttachmentFileEntry(ActionRequest actionRequest)
 		throws Exception {
 
 		Locale locale = actionRequest.getLocale();
@@ -255,32 +220,24 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CPAttachmentFileEntry.class.getName(), actionRequest);
 
-		CPAttachmentFileEntry cpAttachmentFileEntry = null;
-
 		if (cpAttachmentFileEntryId > 0) {
-			cpAttachmentFileEntry =
-				_cpAttachmentFileEntryService.updateCPAttachmentFileEntry(
-					cpAttachmentFileEntryId, fileEntryId, displayDateMonth,
-					displayDateDay, displayDateYear, displayDateHour,
-					displayDateMinute, expirationDateMonth, expirationDateDay,
-					expirationDateYear, expirationDateHour,
-					expirationDateMinute, neverExpire, titleMap, json, priority,
-					type, serviceContext);
+			_cpAttachmentFileEntryService.updateCPAttachmentFileEntry(
+				cpAttachmentFileEntryId, fileEntryId, displayDateMonth,
+				displayDateDay, displayDateYear, displayDateHour,
+				displayDateMinute, expirationDateMonth, expirationDateDay,
+				expirationDateYear, expirationDateHour, expirationDateMinute,
+				neverExpire, titleMap, json, priority, type, serviceContext);
 		}
 		else {
 			long classNameId = _portal.getClassNameId(CPDefinition.class);
 
-			cpAttachmentFileEntry =
-				_cpAttachmentFileEntryService.addCPAttachmentFileEntry(
-					classNameId, cpDefinitionId, fileEntryId, displayDateMonth,
-					displayDateDay, displayDateYear, displayDateHour,
-					displayDateMinute, expirationDateMonth, expirationDateDay,
-					expirationDateYear, expirationDateHour,
-					expirationDateMinute, neverExpire, titleMap, json, priority,
-					type, serviceContext);
+			_cpAttachmentFileEntryService.addCPAttachmentFileEntry(
+				classNameId, cpDefinitionId, fileEntryId, displayDateMonth,
+				displayDateDay, displayDateYear, displayDateHour,
+				displayDateMinute, expirationDateMonth, expirationDateDay,
+				expirationDateYear, expirationDateHour, expirationDateMinute,
+				neverExpire, titleMap, json, priority, type, serviceContext);
 		}
-
-		return cpAttachmentFileEntry;
 	}
 
 	@Reference

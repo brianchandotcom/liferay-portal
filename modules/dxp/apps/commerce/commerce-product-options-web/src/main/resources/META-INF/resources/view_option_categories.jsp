@@ -120,7 +120,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 							PortletURL rowURL = renderResponse.createRenderURL();
 
 							rowURL.setParameter("mvcRenderCommandName", "editProductOptionCategory");
-							rowURL.setParameter("redirect", currentURL);
 							rowURL.setParameter("cpOptionCategoryId", String.valueOf(cpOptionCategory.getCPOptionCategoryId()));
 							%>
 
@@ -170,7 +169,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 <liferay-portlet:renderURL var="addProductOptionCategoryURL">
 	<portlet:param name="mvcRenderCommandName" value="editProductOptionCategory" />
-	<portlet:param name="backURL" value="<%= PortalUtil.getCurrentCompleteURL(request) %>" />
 </liferay-portlet:renderURL>
 
 <liferay-frontend:add-menu>

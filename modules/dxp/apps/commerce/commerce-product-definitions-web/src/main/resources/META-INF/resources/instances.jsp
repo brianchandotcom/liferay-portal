@@ -36,7 +36,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-product-i
 portletURL.setParameter("toolbarItem", toolbarItem);
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
+portletDisplay.setURLBack(catalogURL);
 
 renderResponse.setTitle(cpDefinition.getTitle(languageId));
 
@@ -144,7 +144,6 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 							PortletURL rowURL = renderResponse.createRenderURL();
 
 							rowURL.setParameter("mvcRenderCommandName", "editProductInstance");
-							rowURL.setParameter("redirect", currentURL);
 							rowURL.setParameter("cpDefinitionId", String.valueOf(cpDefinitionId));
 							rowURL.setParameter("cpInstanceId", String.valueOf(cpInstance.getCPInstanceId()));
 							%>
@@ -189,14 +188,12 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 
 <liferay-portlet:renderURL var="addProductInstanceURL">
 	<portlet:param name="mvcRenderCommandName" value="editProductInstance" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
 	<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />
 </liferay-portlet:renderURL>
 
 <liferay-portlet:actionURL name="editProductInstance" var="addProductInstancesURL">
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_MULTIPLE %>" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
-	<portlet:param name="backURL" value="<%= backURL %>" />
 	<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />
 	<portlet:param name="toolbarItem" value="view-product-instances" />
 </liferay-portlet:actionURL>

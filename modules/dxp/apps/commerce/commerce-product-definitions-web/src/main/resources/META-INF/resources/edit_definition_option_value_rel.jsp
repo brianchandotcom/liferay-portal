@@ -33,8 +33,13 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "editProductDefinitionOptionValueRel");
 
+PortletURL productOptionValueRelsURL = renderResponse.createRenderURL();
+
+productOptionValueRelsURL.setParameter("mvcRenderCommandName", "viewProductDefinitionOptionValueRels");
+productOptionValueRelsURL.setParameter("cpDefinitionOptionRelId", String.valueOf(cpDefinitionOptionRel.getCPDefinitionOptionRelId()));
+
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
+portletDisplay.setURLBack(productOptionValueRelsURL.toString());
 
 String contextTitle = cpDefinition.getTitle(languageId) + " - " + cpDefinitionOptionRel.getTitle(locale);
 
@@ -54,14 +59,13 @@ renderResponse.setTitle(title);
 
 <aui:form action="<%= editProductDefinitionOptionValueRelActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpDefinitionOptionValueRel == null) ? Constants.ADD : Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
+	<aui:input name="redirect" type="hidden" value="<%= productOptionValueRelsURL %>" />
 	<aui:input name="cpDefinitionOptionRelId" type="hidden" value="<%= String.valueOf(cpDefinitionOptionRelId) %>" />
 	<aui:input name="cpDefinitionOptionValueRelId" type="hidden" value="<%= String.valueOf(cpDefinitionOptionValueRelId) %>" />
 
 	<div class="lfr-form-content">
 		<liferay-ui:form-navigator
-			backURL="<%= backURL %>"
+			backURL="<%= productOptionValueRelsURL.toString() %>"
 			formModelBean="<%= cpDefinitionOptionValueRel %>"
 			id="<%= CPDefinitionOptionValueRelFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_DEFINITION_OPTION_VALUE_REL %>"
 			markupView="lexicon"

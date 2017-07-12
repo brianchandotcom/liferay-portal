@@ -30,6 +30,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.asset.kernel.model.AssetRenderer" %><%@
 page import="com.liferay.commerce.product.constants.CPConstants" %><%@
+page import="com.liferay.commerce.product.constants.CPPortletKeys" %><%@
 page import="com.liferay.commerce.product.constants.CPWebKeys" %><%@
 page import="com.liferay.commerce.product.definitions.web.internal.display.context.CPAttachmentFileEntriesDisplayContext" %><%@
 page import="com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionLinkDisplayContext" %><%@
@@ -107,9 +108,11 @@ page import="java.util.StringJoiner" %>
 <portlet:defineObjects />
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
+String lifecycle = (String)request.getAttribute(liferayPortletRequest.LIFECYCLE_PHASE);
 
-String backURL = ParamUtil.getString(request, "backURL", redirect);
+PortletURL catalogURLObj = PortalUtil.getControlPanelPortletURL(request, CPPortletKeys.COMMERCE_PRODUCT_DEFINITIONS, lifecycle);
+
+String catalogURL = catalogURLObj.toString();
 
 String languageId = LanguageUtil.getLanguageId(locale);
 %>

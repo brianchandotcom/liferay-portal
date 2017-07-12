@@ -40,7 +40,7 @@ if (toolbarItem.equals("view-product-definition-attachments")) {
 PortletURL portletURL = cpAttachmentFileEntriesDisplayContext.getPortletURL();
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
+portletDisplay.setURLBack(catalogURL);
 
 renderResponse.setTitle(cpDefinition.getTitle(languageId));
 
@@ -144,15 +144,14 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 
 							<%
 							Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
-									cpDefinitionOptionRelListMap =
-										cpAttachmentFileEntriesDisplayContext.
-												parseCPAttachmentFileEntry(
-													cpAttachmentFileEntry.getCPAttachmentFileEntryId());
+								cpDefinitionOptionRelListMap =
+									cpAttachmentFileEntriesDisplayContext.
+										parseCPAttachmentFileEntry(
+											cpAttachmentFileEntry.getCPAttachmentFileEntryId());
 
 							PortletURL rowURL = renderResponse.createRenderURL();
 
 							rowURL.setParameter("mvcRenderCommandName", "editCPAttachmentFileEntry");
-							rowURL.setParameter("redirect", currentURL);
 							rowURL.setParameter("cpDefinitionId", String.valueOf(cpDefinitionId));
 							rowURL.setParameter("cpAttachmentFileEntryId", String.valueOf(cpAttachmentFileEntry.getCPAttachmentFileEntryId()));
 							rowURL.setParameter("toolbarItem", toolbarItem);
@@ -183,7 +182,7 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 													resultRow="<%= row %>"
 													rowChecker="<%= cpAttachmentFileEntriesDisplayContext.getRowChecker() %>"
 													title="<%= cpAttachmentFileEntry.getTitle(languageId) %>"
-													url="<%= rowURL != null ? rowURL.toString() : null %>"
+													url="<%= rowURL != null ? rowURL.toString() : StringPool.BLANK %>"
 												>
 													<%@ include file="/attachment_file_entry_vertical_card.jspf" %>
 												</liferay-frontend:icon-vertical-card>
@@ -197,7 +196,7 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 													resultRow="<%= row %>"
 													rowChecker="<%= cpAttachmentFileEntriesDisplayContext.getRowChecker() %>"
 													title="<%= cpAttachmentFileEntry.getTitle(languageId) %>"
-													url="<%= rowURL != null ? rowURL.toString() : null %>"
+													url="<%= rowURL != null ? rowURL.toString() : StringPool.BLANK %>"
 												>
 													<%@ include file="/attachment_file_entry_vertical_card.jspf" %>
 												</liferay-frontend:vertical-card>
@@ -221,7 +220,6 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 
 <liferay-portlet:renderURL var="addAttachmentFileEntryURL">
 	<portlet:param name="mvcRenderCommandName" value="editCPAttachmentFileEntry" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
 	<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />
 	<portlet:param name="toolbarItem" value="<%= toolbarItem %>" />
 </liferay-portlet:renderURL>

@@ -42,8 +42,14 @@ if (toolbarItem.equals("view-product-definition-attachments")) {
 	addMenuTitle = LanguageUtil.get(request, "add-attachment");
 }
 
+PortletURL productAttachmentsURL = renderResponse.createRenderURL();
+
+productAttachmentsURL.setParameter("mvcRenderCommandName", "viewAttachmentFileEntries");
+productAttachmentsURL.setParameter("cpDefinitionId", String.valueOf(cpDefinition.getCPDefinitionId()));
+productAttachmentsURL.setParameter("type", String.valueOf(type));
+
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
+portletDisplay.setURLBack(productAttachmentsURL.toString());
 
 renderResponse.setTitle((cpDefinition == null) ? LanguageUtil.get(request, addMenuTitle) : cpDefinition.getTitle(languageId));
 %>
@@ -53,8 +59,7 @@ renderResponse.setTitle((cpDefinition == null) ? LanguageUtil.get(request, addMe
 <div class="container-fluid-1280 entry-body">
 	<aui:form action="<%= editProductDefinitionOptionRelActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveAttachmentFileEntry();" %>'>
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpAttachmentFileEntry == null) ? Constants.ADD : Constants.UPDATE %>" />
-		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-		<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
+		<aui:input name="redirect" type="hidden" value="<%= productAttachmentsURL %>" />
 		<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinitionId %>" />
 		<aui:input name="cpAttachmentFileEntryId" type="hidden" value="<%= cpAttachmentFileEntryId %>" />
 		<aui:input name="toolbarItem" type="hidden" value="<%= toolbarItem %>" />
@@ -76,7 +81,7 @@ renderResponse.setTitle((cpDefinition == null) ? LanguageUtil.get(request, addMe
 
 		<div class="lfr-form-content">
 			<liferay-ui:form-navigator
-				backURL="<%= redirect %>"
+				backURL="<%= productAttachmentsURL.toString() %>"
 				formModelBean="<%= cpAttachmentFileEntry %>"
 				id="<%= CPAttachmentFileEntryFormNavigatorConstants.FORM_NAVIGATOR_ID_CP_ATTACHMENT_FILE_ENTRY %>"
 				markupView="lexicon"

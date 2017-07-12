@@ -31,8 +31,13 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "editCPDefinitionLink");
 
+PortletURL relatedProductsURL = renderResponse.createRenderURL();
+
+relatedProductsURL.setParameter("mvcRenderCommandName", "viewCPDefinitionLinks");
+relatedProductsURL.setParameter("cpDefinitionId", String.valueOf(cpDefinition.getCPDefinitionId()));
+
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
+portletDisplay.setURLBack(relatedProductsURL.toString());
 
 renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpDefinition2.getTitle(languageId));
 %>
@@ -41,8 +46,7 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpDefinition
 
 <aui:form action="<%= editCPDefinitionLinkActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
+	<aui:input name="redirect" type="hidden" value="<%= relatedProductsURL %>" />
 	<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinition.getCPDefinitionId() %>" />
 	<aui:input name="cpDefinitionLinkId" type="hidden" value="<%= cpDefinitionLinkId %>" />
 
@@ -56,7 +60,7 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpDefinition
 		<aui:button-row>
 			<aui:button cssClass="btn-lg" name="saveButton" type="submit" value="save" />
 
-			<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+			<aui:button cssClass="btn-lg" href="<%= relatedProductsURL.toString() %>" type="cancel" />
 		</aui:button-row>
 	</div>
 </aui:form>

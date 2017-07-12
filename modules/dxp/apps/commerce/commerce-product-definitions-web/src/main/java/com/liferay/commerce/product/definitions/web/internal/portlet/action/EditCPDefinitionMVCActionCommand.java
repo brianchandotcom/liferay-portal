@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.trash.kernel.service.TrashEntryService;
@@ -127,11 +126,6 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		String backURL = ParamUtil.getString(
-			actionRequest, "backURL", redirect);
-
 		CPDefinition cpDefinition = null;
 
 		int workflowAction = ParamUtil.getInteger(
@@ -147,8 +141,8 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 				cpDefinition = updateCPDefinition(actionRequest);
 
-				redirect = getSaveAndContinueRedirect(
-					actionRequest, cpDefinition, redirect, backURL);
+				String redirect = getSaveAndContinueRedirect(
+					actionRequest, cpDefinition);
 
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
@@ -162,8 +156,8 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			if ((cpDefinition != null) &&
 				(workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT)) {
 
-				redirect = getSaveAndContinueRedirect(
-					actionRequest, cpDefinition, redirect, backURL);
+				String redirect = getSaveAndContinueRedirect(
+					actionRequest, cpDefinition);
 
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
@@ -188,8 +182,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected String getSaveAndContinueRedirect(
-			ActionRequest actionRequest, CPDefinition cpDefinition,
-			String redirect, String backURL)
+			ActionRequest actionRequest, CPDefinition cpDefinition)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -201,12 +194,6 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "editProductDefinition");
-
-		if (Validator.isNotNull(redirect)) {
-			portletURL.setParameter("redirect", redirect);
-		}
-
-		portletURL.setParameter("backURL", backURL);
 		portletURL.setParameter(
 			"cpDefinitionId", String.valueOf(cpDefinition.getCPDefinitionId()));
 

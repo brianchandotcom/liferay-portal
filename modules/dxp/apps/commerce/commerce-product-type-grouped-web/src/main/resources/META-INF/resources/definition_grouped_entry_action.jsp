@@ -34,8 +34,6 @@ else {
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<portlet:renderURL var="editURL">
 		<portlet:param name="mvcRenderCommandName" value="editCPDefinitionGroupedEntry" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="backURL" value="<%= currentURL %>" />
 		<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionGroupedEntry.getCPDefinitionId()) %>" />
 		<portlet:param name="cpDefinitionGroupedEntryId" value="<%= String.valueOf(cpDefinitionGroupedEntry.getCPDefinitionGroupedEntryId()) %>" />
 		<portlet:param name="toolbarItem" value="<%= toolbarItem %>" />

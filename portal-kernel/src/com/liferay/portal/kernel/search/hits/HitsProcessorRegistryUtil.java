@@ -25,7 +25,8 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
 public class HitsProcessorRegistryUtil {
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static HitsProcessorRegistry getHitsProcessorRegistry() {

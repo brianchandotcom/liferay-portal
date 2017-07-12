@@ -36,8 +36,8 @@ import javax.servlet.http.HttpSession;
 public class PublicRenderParametersPool {
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
-	 *             #get(HttpServletRequest, long)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #get(HttpServletRequest, long)}
 	 */
 	@Deprecated
 	public static Map<String, String[]> get(

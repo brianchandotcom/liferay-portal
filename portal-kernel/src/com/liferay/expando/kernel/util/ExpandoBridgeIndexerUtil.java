@@ -30,8 +30,8 @@ public class ExpandoBridgeIndexerUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #encodeFieldName(
-	 *             String, int)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #encodeFieldName(String, int)}
 	 */
 	@Deprecated
 	public static String encodeFieldName(String columnName) {

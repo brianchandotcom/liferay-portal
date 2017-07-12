@@ -52,14 +52,15 @@ public interface WorkflowHandler<T> {
 	public String getIconCssClass();
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public String getIconPath(LiferayPortletRequest liferayPortletRequest);
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getSummary(long,
-	 *             PortletRequest, PortletResponse)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getSummary(long, PortletRequest, PortletResponse)}
 	 */
 	@Deprecated
 	public String getSummary(long classPK, Locale locale);

@@ -81,7 +81,8 @@ public class TemplatePortletPreferences {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public void reset() {
@@ -92,7 +93,8 @@ public class TemplatePortletPreferences {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public void setValue(String key, String value) throws ReadOnlyException {
@@ -103,7 +105,8 @@ public class TemplatePortletPreferences {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public void setValues(String key, String[] values)

@@ -73,8 +73,9 @@ public class WikiPageAssetRenderer
 	}
 
 	/**
-	 * @deprecated As of com.liferay.wiki.service#1.6.0, replaced by {@link #WikiPageAssetRenderer(WikiPage,
-	 *             WikiEngineRenderer, TrashHelper)}
+	 * @deprecated As of com.liferay.wiki.service#1.6.0, replaced by {@link
+	 *             #WikiPageAssetRenderer(WikiPage, WikiEngineRenderer,
+	 *             TrashHelper)}
 	 */
 	@Deprecated
 	public WikiPageAssetRenderer(
@@ -133,7 +134,8 @@ public class WikiPageAssetRenderer
 	}
 
 	/**
-	 * @deprecated As of com.liferay.wiki.service#1.2.0, with no direct replacement
+	 * @deprecated As of com.liferay.wiki.service#1.2.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override

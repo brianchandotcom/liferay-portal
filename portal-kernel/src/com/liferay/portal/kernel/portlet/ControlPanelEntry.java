@@ -29,15 +29,15 @@ public interface ControlPanelEntry {
 		throws Exception;
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement.<p>This method was
-	 *             originally defined to determine if a portlet should be
-	 *             displayed in the Control Panel. In this version, this method
-	 *             should always return <code>false</code> and remains only to
-	 *             preserve binary compatibility. This method will be
-	 *             permanently removed in a future version.</p><p>In lieu of
-	 *             this method, the Control Panel now uses {@link
-	 *             #hasAccessPermission} to determine if a portlet should be
-	 *             displayed in the Control Panel.</p>
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement.<p>This method was originally defined to
+	 *             determine if a portlet should be displayed in the Control
+	 *             Panel. In this version, this method should always return
+	 *             <code>false</code> and remains only to preserve binary
+	 *             compatibility. This method will be permanently removed in a
+	 *             future version.</p><p>In lieu of this method, the Control
+	 *             Panel now uses {@link #hasAccessPermission} to determine if a
+	 *             portlet should be displayed in the Control Panel.</p>
 	 */
 	@Deprecated
 	public boolean isVisible(
@@ -45,15 +45,15 @@ public interface ControlPanelEntry {
 		throws Exception;
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement.<p>This method was
-	 *             originally defined to determine if a portlet should be
-	 *             displayed in the Control Panel. In this version, this method
-	 *             should always return <code>false</code> and remains only to
-	 *             preserve binary compatibility. This method will be
-	 *             permanently removed in a future version.</p><p>In lieu of
-	 *             this method, the Control Panel now uses {@link
-	 *             #hasAccessPermission} to determine if a portlet should be
-	 *             displayed in the Control Panel.</p>
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement.<p>This method was originally defined to
+	 *             determine if a portlet should be displayed in the Control
+	 *             Panel. In this version, this method should always return
+	 *             <code>false</code> and remains only to preserve binary
+	 *             compatibility. This method will be permanently removed in a
+	 *             future version.</p><p>In lieu of this method, the Control
+	 *             Panel now uses {@link #hasAccessPermission} to determine if a
+	 *             portlet should be displayed in the Control Panel.</p>
 	 */
 	@Deprecated
 	public boolean isVisible(

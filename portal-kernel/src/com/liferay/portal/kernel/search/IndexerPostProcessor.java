@@ -28,8 +28,8 @@ public interface IndexerPostProcessor {
 		throws Exception;
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #postProcessContextBooleanFilter(BooleanFilter,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #postProcessContextBooleanFilter(BooleanFilter,
 	 *             SearchContext)}
 	 */
 	@Deprecated
@@ -50,8 +50,8 @@ public interface IndexerPostProcessor {
 		throws Exception;
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #postProcessSearchQuery(BooleanQuery, BooleanFilter,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #postProcessSearchQuery(BooleanQuery, BooleanFilter,
 	 *             SearchContext)}
 	 */
 	@Deprecated

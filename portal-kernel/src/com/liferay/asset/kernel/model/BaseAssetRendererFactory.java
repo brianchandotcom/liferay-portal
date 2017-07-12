@@ -195,7 +195,8 @@ public abstract class BaseAssetRendererFactory<T>
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -241,7 +242,8 @@ public abstract class BaseAssetRendererFactory<T>
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getTypeName(Locale)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getTypeName(Locale)}
 	 */
 	@Deprecated
 	@Override

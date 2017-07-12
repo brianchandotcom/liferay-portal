@@ -116,8 +116,8 @@ public class ResourceBundleUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getString(ResourceBundle,
-	 *             String, Object...)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getString(ResourceBundle, String, Object...)}
 	 */
 	@Deprecated
 	public static String getString(
@@ -164,7 +164,8 @@ public class ResourceBundleUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static void loadResourceBundles(
@@ -177,7 +178,8 @@ public class ResourceBundleUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static void loadResourceBundles(

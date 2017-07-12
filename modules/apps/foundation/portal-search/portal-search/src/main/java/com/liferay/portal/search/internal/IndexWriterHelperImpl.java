@@ -393,8 +393,8 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.search#3.3.0, replaced by {@link IndexStatusManager#
-	 *             isIndexReadWrite}
+	 * @deprecated As of com.liferay.portal.search#3.3.0, replaced by {@link
+	 *             IndexStatusManager# isIndexReadWrite}
 	 */
 	@Deprecated
 	@Override
@@ -403,8 +403,8 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.search#3.3.0, replaced by {@link IndexStatusManager#
-	 *             isIndexReadWrite(String)}
+	 * @deprecated As of com.liferay.portal.search#3.3.0, replaced by {@link
+	 *             IndexStatusManager# isIndexReadWrite(String)}
 	 */
 	@Deprecated
 	@Override
@@ -537,8 +537,8 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.search#3.3.0, replaced by {@link IndexStatusManager.
-	 *             setIndexReadOnly(boolean)}
+	 * @deprecated As of com.liferay.portal.search#3.3.0, replaced by {@link
+	 *             IndexStatusManager. setIndexReadOnly(boolean)}
 	 */
 	@Deprecated
 	@Override
@@ -547,8 +547,8 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.search#3.3.0, replaced by {@link IndexStatusManager.
-	 *             setIndexReadOnly(String, boolean)}
+	 * @deprecated As of com.liferay.portal.search#3.3.0, replaced by {@link
+	 *             IndexStatusManager. setIndexReadOnly(String, boolean)}
 	 */
 	@Deprecated
 	@Override

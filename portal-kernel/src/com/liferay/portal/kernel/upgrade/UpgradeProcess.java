@@ -569,8 +569,9 @@ public abstract class UpgradeProcess
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             DBInspector#normalizeName(java.lang.String, DatabaseMetaData)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link DBInspector#normalizeName(java.lang.String,
+	 *             DatabaseMetaData)}
 	 */
 	@Deprecated
 	protected String normalizeName(

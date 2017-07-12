@@ -989,7 +989,8 @@ public class MainServlet extends ActionServlet {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	protected void initServerDetector() throws Exception {
@@ -1143,7 +1144,8 @@ public class MainServlet extends ActionServlet {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	protected void processInactiveRequest(

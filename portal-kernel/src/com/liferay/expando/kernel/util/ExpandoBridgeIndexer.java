@@ -28,8 +28,8 @@ public interface ExpandoBridgeIndexer {
 	public void addAttributes(Document document, ExpandoBridge expandoBridge);
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #encodeFieldName(String,
-	 *             int)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #encodeFieldName(String, int)}
 	 */
 	@Deprecated
 	public String encodeFieldName(String columnName);

@@ -31,8 +31,8 @@ public class BaseIndexerPostProcessor implements IndexerPostProcessor {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #postProcessContextBooleanFilter(BooleanFilter,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #postProcessContextBooleanFilter(BooleanFilter,
 	 *             SearchContext)}
 	 */
 	@Deprecated
@@ -61,8 +61,8 @@ public class BaseIndexerPostProcessor implements IndexerPostProcessor {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #postProcessSearchQuery(BooleanQuery, BooleanFilter,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #postProcessSearchQuery(BooleanQuery, BooleanFilter,
 	 *             SearchContext)}
 	 */
 	@Deprecated

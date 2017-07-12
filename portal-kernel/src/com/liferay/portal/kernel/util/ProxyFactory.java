@@ -60,8 +60,8 @@ public class ProxyFactory {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #newServiceTrackedInstance(Class, Class, String)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #newServiceTrackedInstance(Class, Class, String)}
 	 */
 	@Deprecated
 	public static <T> T newServiceTrackedInstance(Class<T> interfaceClass) {
@@ -71,9 +71,9 @@ public class ProxyFactory {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             ServiceProxyFactory#newServiceTrackedInstance(Class, Class,
-	 *             String, boolean)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link ServiceProxyFactory#newServiceTrackedInstance(Class,
+	 *             Class, String, boolean)}
 	 */
 	@Deprecated
 	public static <T> T newServiceTrackedInstance(
@@ -84,9 +84,9 @@ public class ProxyFactory {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             ServiceProxyFactory#newServiceTrackedInstance(Class, Class,
-	 *             String, String, boolean)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link ServiceProxyFactory#newServiceTrackedInstance(Class,
+	 *             Class, String, String, boolean)}
 	 */
 	@Deprecated
 	public static <T> T newServiceTrackedInstance(
@@ -98,8 +98,9 @@ public class ProxyFactory {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #newServiceTrackedInstance(Class, Class, String, String)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #newServiceTrackedInstance(Class, Class, String,
+	 *             String)}
 	 */
 	@Deprecated
 	public static <T> T newServiceTrackedInstance(
@@ -112,9 +113,9 @@ public class ProxyFactory {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             ServiceProxyFactory#newServiceTrackedInstance(Class, Class,
-	 *             String, boolean)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link ServiceProxyFactory#newServiceTrackedInstance(Class,
+	 *             Class, String, boolean)}
 	 */
 	@Deprecated
 	public static <T> T newServiceTrackedInstanceWithoutDummyService(
@@ -125,9 +126,9 @@ public class ProxyFactory {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             ServiceProxyFactory#newServiceTrackedInstance(Class, Class,
-	 *             String, String, boolean)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link ServiceProxyFactory#newServiceTrackedInstance(Class,
+	 *             Class, String, String, boolean)}
 	 */
 	@Deprecated
 	public static <T> T newServiceTrackedInstanceWithoutDummyService(

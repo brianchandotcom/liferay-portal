@@ -641,7 +641,8 @@ public class PortalImpl implements Portal {
 	 * notified whenever the portal port is set.
 	 *
 	 * @param      portalPortEventListener the portal port event listener to add
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link
 	 *             #addPortalInetSocketAddressEventListener(
 	 *             PortalInetSocketAddressEventListener)}
 	 */
@@ -1228,7 +1229,8 @@ public class PortalImpl implements Portal {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link
 	 *             HttpAuthManagerUtil#getBasicUserId(HttpServletRequest)}
 	 */
 	@Deprecated
@@ -1242,7 +1244,8 @@ public class PortalImpl implements Portal {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link
 	 *             HttpAuthManagerUtil#getBasicUserId(HttpServletRequest)}
 	 */
 	@Deprecated
@@ -2010,7 +2013,8 @@ public class PortalImpl implements Portal {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link
 	 *             HttpAuthManagerUtil#getDigestUserId(HttpServletRequest)}
 	 */
 	@Deprecated
@@ -2279,7 +2283,8 @@ public class PortalImpl implements Portal {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -2595,7 +2600,8 @@ public class PortalImpl implements Portal {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -2624,7 +2630,8 @@ public class PortalImpl implements Portal {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -2818,8 +2825,8 @@ public class PortalImpl implements Portal {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
-	 *             #getLayoutFriendlyURLSeparatorComposite(long, boolean,
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #getLayoutFriendlyURLSeparatorComposite(long, boolean,
 	 *             String, Map<String, String[]>, Map<String, Object>)}
 	 */
 	@Deprecated
@@ -3993,8 +4000,8 @@ public class PortalImpl implements Portal {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
-	 *             #getPortalServerPort(boolean)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #getPortalServerPort(boolean)}
 	 */
 	@Deprecated
 	@Override
@@ -4144,7 +4151,8 @@ public class PortalImpl implements Portal {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link
 	 *             BreadcrumbUtil#getPortletBreadcrumbEntries(
 	 *             HttpServletRequest)}
 	 */
@@ -4927,9 +4935,9 @@ public class PortalImpl implements Portal {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
-	 *             #getControlPanelPortletURL(PortletRequest, Group, String,
-	 *             String)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #getControlPanelPortletURL(PortletRequest, Group,
+	 *             String, String)}
 	 */
 	@Deprecated
 	@Override
@@ -4946,9 +4954,9 @@ public class PortalImpl implements Portal {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
-	 *             #getControlPanelPortletURL(PortletRequest, Group, String,
-	 *             String)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #getControlPanelPortletURL(PortletRequest, Group,
+	 *             String, String)}
 	 */
 	@Deprecated
 	@Override
@@ -5014,8 +5022,8 @@ public class PortalImpl implements Portal {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #getSiteAdminURL(Company,
-	 *             Group, String, Map)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #getSiteAdminURL(Company, Group, String, Map)}
 	 */
 	@Deprecated
 	@Override
@@ -5030,8 +5038,8 @@ public class PortalImpl implements Portal {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
-	 *             #getCurrentAndAncestorSiteGroupIds(long)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #getCurrentAndAncestorSiteGroupIds(long)}
 	 */
 	@Deprecated
 	@Override
@@ -5061,8 +5069,8 @@ public class PortalImpl implements Portal {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
-	 *             #getCurrentAndAncestorSiteGroupIds(long)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #getCurrentAndAncestorSiteGroupIds(long)}
 	 */
 	@Deprecated
 	@Override
@@ -5857,7 +5865,8 @@ public class PortalImpl implements Portal {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -5948,7 +5957,8 @@ public class PortalImpl implements Portal {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -5977,7 +5987,8 @@ public class PortalImpl implements Portal {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -6107,7 +6118,8 @@ public class PortalImpl implements Portal {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -6122,7 +6134,8 @@ public class PortalImpl implements Portal {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -6585,7 +6598,8 @@ public class PortalImpl implements Portal {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link
 	 *             #removePortalInetSocketAddressEventListener(
 	 *             PortalInetSocketAddressEventListener)}
 	 */
@@ -6923,8 +6937,8 @@ public class PortalImpl implements Portal {
 	/**
 	 * Sets the port obtained on the first request to the portal.
 	 *
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
-	 *             #setPortalInetSocketAddresses(HttpServletRequest)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #setPortalInetSocketAddresses(HttpServletRequest)}
 	 */
 	@Deprecated
 	@Override
@@ -7337,8 +7351,8 @@ public class PortalImpl implements Portal {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #addRootModelResource(long,
-	 *             long, String)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #addRootModelResource(long, long, String)}
 	 */
 	@Deprecated
 	protected void addRootModelResource(
@@ -8082,7 +8096,8 @@ public class PortalImpl implements Portal {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link
 	 *             #notifyPortalInetSocketAddressEventListeners(
 	 *             InetSocketAddress, boolean, boolean)}
 	 */
@@ -8723,15 +8738,15 @@ public class PortalImpl implements Portal {
 		_portalLocalInetSocketAddress = new AtomicReference<>();
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
-	 *             #_portalServerInetSocketAddress}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #_portalServerInetSocketAddress}
 	 */
 	@Deprecated
 	private final AtomicInteger _portalPort = new AtomicInteger(-1);
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
-	 *             #_portalInetSocketAddressEventListeners}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #_portalInetSocketAddressEventListeners}
 	 */
 	@Deprecated
 	private final List<com.liferay.portal.kernel.util.PortalPortEventListener>
@@ -8744,8 +8759,8 @@ public class PortalImpl implements Portal {
 		_securePortalLocalInetSocketAddress = new AtomicReference<>();
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
-	 *             #_securePortalServerInetSocketAddress}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #_securePortalServerInetSocketAddress}
 	 */
 	@Deprecated
 	private final AtomicInteger _securePortalPort = new AtomicInteger(-1);

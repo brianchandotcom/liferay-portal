@@ -306,8 +306,8 @@ public class DLAppHelperLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
-	 *             #moveDependentsToTrash(DLFolder)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #moveDependentsToTrash(DLFolder)}
 	 */
 	@Deprecated
 	@Override
@@ -578,8 +578,8 @@ public class DLAppHelperLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
-	 *             #restoreDependentsFromTrash(DLFolder)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #restoreDependentsFromTrash(DLFolder)}
 	 */
 	@Deprecated
 	@Override
@@ -617,8 +617,8 @@ public class DLAppHelperLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
-	 *             #restoreDependentsFromTrash(List)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #restoreDependentsFromTrash(List)}
 	 */
 	@Deprecated
 	@Override

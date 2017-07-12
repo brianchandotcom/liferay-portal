@@ -16,7 +16,8 @@ package com.liferay.portal.kernel.util.comparator;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, renamed to {@link UserJobTitleComparator}
+ * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, renamed to {@link
+ *             UserJobTitleComparator}
  */
 @Deprecated
 public class ContactJobTitleComparator extends UserJobTitleComparator {

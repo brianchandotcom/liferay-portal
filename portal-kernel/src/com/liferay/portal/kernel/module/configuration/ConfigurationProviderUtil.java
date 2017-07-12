@@ -62,8 +62,9 @@ public class ConfigurationProviderUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #getPortletInstanceConfiguration(Class, Layout, String)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getPortletInstanceConfiguration(Class, Layout,
+	 *             String)}
 	 */
 	@Deprecated
 	public static <T> T getPortletInstanceConfiguration(

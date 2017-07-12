@@ -723,8 +723,9 @@ public class DLFileEntryTypeLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #_updateDDMStructure(long,
-	 *             String, long, long, Map, Map, long[], ServiceContext)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #_updateDDMStructure(long, String, long, long, Map,
+	 *             Map, long[], ServiceContext)}
 	 */
 	@Deprecated
 	protected long updateDDMStructure(

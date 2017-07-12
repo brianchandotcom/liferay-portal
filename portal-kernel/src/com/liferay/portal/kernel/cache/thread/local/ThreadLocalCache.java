@@ -32,8 +32,8 @@ public class ThreadLocalCache<T> {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *			   #ThreadLocalCache(Object, Lifecycle)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #ThreadLocalCache(Object, Lifecycle)}
 	 */
 	@Deprecated
 	public ThreadLocalCache(Serializable name, Lifecycle lifecycle) {
@@ -58,7 +58,8 @@ public class ThreadLocalCache<T> {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getId()}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getId()}
 	 */
 	@Deprecated
 	public Serializable getName() {

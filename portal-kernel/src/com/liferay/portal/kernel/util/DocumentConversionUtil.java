@@ -18,9 +18,9 @@ import java.io.File;
 import java.io.InputStream;
 
 /**
- * @author Bruno Farache
-* @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
- * 			   com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil}
+ * @author     Bruno Farache
+ * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
+ *             com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil}
  */
 @Deprecated
 public class DocumentConversionUtil {

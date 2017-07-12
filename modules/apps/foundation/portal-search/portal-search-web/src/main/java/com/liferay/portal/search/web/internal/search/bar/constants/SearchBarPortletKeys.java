@@ -16,7 +16,7 @@ package com.liferay.portal.search.web.internal.search.bar.constants;
 
 /**
  * @author André de Oliveira
-*/
+ */
 public class SearchBarPortletKeys {
 
 	public static final String SEARCH_BAR =

@@ -213,8 +213,8 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link #getRemoteSiteURL(Group,
-	 *             boolean)}
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link #getRemoteSiteURL(Group, boolean)}
 	 */
 	@Deprecated
 	@Override
@@ -242,7 +242,8 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link
 	 *             _stagingLocalService#checkDefaultLayoutSetBranches(long,
 	 *             Group, boolean, boolean, boolean, ServiceContext)}
 	 */
@@ -341,8 +342,9 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link #publishPortlet(long, long,
-	 *             long, long, long, String, Map)}
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link #publishPortlet(long, long, long, long, long, String,
+	 *             Map)}
 	 */
 	@Deprecated
 	@Override
@@ -419,9 +421,9 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link #copyRemoteLayouts(long,
-	 *             boolean, Map, Map, String, int, String, boolean, long,
-	 *             boolean)}
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link #copyRemoteLayouts(long, boolean, Map, Map, String,
+	 *             int, String, boolean, long, boolean)}
 	 */
 	@Deprecated
 	@Override
@@ -548,8 +550,8 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
-	 *             #deleteRecentLayoutRevisionId(long, long, long)}
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link #deleteRecentLayoutRevisionId(long, long, long)}
 	 */
 	@Deprecated
 	@Override
@@ -647,8 +649,8 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
-	 *             #getErrorMessagesJSONArray(Locale, Map<String,
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link #getErrorMessagesJSONArray(Locale, Map<String,
 	 *             MissingReference>)}
 	 */
 	@Deprecated
@@ -1109,8 +1111,8 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
-	 *             #getExceptionMessagesJSONObject(Locale, Exception,
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link #getExceptionMessagesJSONObject(Locale, Exception,
 	 *             ExportImportConfiguration)}
 	 */
 	@Deprecated
@@ -1329,7 +1331,8 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link
 	 *             ExportImportConfigurationParameterMapFactory#buildParameterMap(
 	 *             )}
 	 */
@@ -1340,7 +1343,8 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link
 	 *             ExportImportConfigurationParameterMapFactory#buildParameterMap(
 	 *             PortletRequest)}
 	 */
@@ -1395,8 +1399,8 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
-	 *             #getWarningMessagesJSONArray(Locale, Map<String,
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link #getWarningMessagesJSONArray(Locale, Map<String,
 	 *             MissingReference>)}
 	 */
 	@Deprecated
@@ -1626,8 +1630,9 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link #publishLayouts(long, long,
-	 *             long, boolean, long[], Map)}
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link #publishLayouts(long, long, long, boolean, long[],
+	 *             Map)}
 	 */
 	@Deprecated
 	@Override
@@ -1686,8 +1691,9 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link #publishLayouts(long, long,
-	 *             long, boolean, long[], Map)}
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link #publishLayouts(long, long, long, boolean, long[],
+	 *             Map)}
 	 */
 	@Deprecated
 	@Override
@@ -1719,8 +1725,8 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link #publishLayouts(long, long,
-	 *             long, boolean, Map)}
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link #publishLayouts(long, long, long, boolean, Map)}
 	 */
 	@Deprecated
 	@Override
@@ -2429,9 +2435,9 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
-	 *             ExportImportDateUtil#updateLastPublishDate(long, boolean,
-	 *             DateRange, Date)}
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link ExportImportDateUtil#updateLastPublishDate(long,
+	 *             boolean, DateRange, Date)}
 	 */
 	@Deprecated
 	@Override
@@ -2444,8 +2450,8 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
-	 *             ExportImportDateUtil#updateLastPublishDate(String,
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link ExportImportDateUtil#updateLastPublishDate(String,
 	 *             PortletPreferences, DateRange, Date)}
 	 */
 	@Deprecated
@@ -2570,8 +2576,9 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link #validateRemote(long, String,
-	 *             int, String, boolean, long)}
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link #validateRemote(long, String, int, String, boolean,
+	 *             long)}
 	 */
 	@Deprecated
 	@Override
@@ -2839,7 +2846,8 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	protected long publishLayouts(
@@ -2904,7 +2912,8 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	protected long publishToRemote(

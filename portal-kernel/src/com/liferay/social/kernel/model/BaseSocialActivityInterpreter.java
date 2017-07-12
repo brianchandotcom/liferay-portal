@@ -282,8 +282,8 @@ public abstract class BaseSocialActivityInterpreter
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getGroupName(long,
-	 *             ServiceContext)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getGroupName(long, ServiceContext)}
 	 */
 	@Deprecated
 	protected String getGroupName(long groupId, ThemeDisplay themeDisplay) {
@@ -490,8 +490,8 @@ public abstract class BaseSocialActivityInterpreter
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getUserName(long,
-	 *             ServiceContext)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getUserName(long, ServiceContext)}
 	 */
 	@Deprecated
 	protected String getUserName(long userId, ThemeDisplay themeDisplay) {
@@ -528,8 +528,8 @@ public abstract class BaseSocialActivityInterpreter
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getJSONValue(String, String,
-	 *             String)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getJSONValue(String, String, String)}
 	 */
 	@Deprecated
 	protected String getValue(String json, String key, String defaultValue) {

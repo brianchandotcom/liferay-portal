@@ -68,7 +68,8 @@ public class HttpUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #decodeURL(String)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #decodeURL(String)}
 	 */
 	@Deprecated
 	public static String decodeURL(String url, boolean unescapeSpaces) {
@@ -84,7 +85,8 @@ public class HttpUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link URLCodec#encodeURL(String)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link URLCodec#encodeURL(String)}
 	 */
 	@Deprecated
 	public static String encodeURL(String url) {
@@ -93,7 +95,7 @@ public class HttpUtil {
 
 	/**
 	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
-	 *     {@link URLCodec#encodeURL(String, boolean)}
+	 *             {@link URLCodec#encodeURL(String, boolean)}
 	 */
 	@Deprecated
 	public static String encodeURL(String url, boolean escapeSpaces) {

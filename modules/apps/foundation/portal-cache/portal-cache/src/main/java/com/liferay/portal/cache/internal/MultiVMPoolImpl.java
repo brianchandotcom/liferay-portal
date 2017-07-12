@@ -51,7 +51,8 @@ public class MultiVMPoolImpl implements MultiVMPool {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.cache#2.1.0, replaced by {@link #getPortalCache(String)}
+	 * @deprecated As of com.liferay.portal.cache#2.1.0, replaced by {@link
+	 *             #getPortalCache(String)}
 	 */
 	@Deprecated
 	@Override
@@ -62,8 +63,8 @@ public class MultiVMPoolImpl implements MultiVMPool {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.cache#2.1.0, replaced by {@link #getPortalCache(String,
-	 *             boolean)}
+	 * @deprecated As of com.liferay.portal.cache#2.1.0, replaced by {@link
+	 *             #getPortalCache(String, boolean)}
 	 */
 	@Deprecated
 	@Override
@@ -74,7 +75,8 @@ public class MultiVMPoolImpl implements MultiVMPool {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.cache#2.1.0, replaced by {@link #getPortalCacheManager()}
+	 * @deprecated As of com.liferay.portal.cache#2.1.0, replaced by {@link
+	 *             #getPortalCacheManager()}
 	 */
 	@Deprecated
 	@Override
@@ -114,7 +116,8 @@ public class MultiVMPoolImpl implements MultiVMPool {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.cache#2.1.0, replaced by {@link #removePortalCache(String)}
+	 * @deprecated As of com.liferay.portal.cache#2.1.0, replaced by {@link
+	 *             #removePortalCache(String)}
 	 */
 	@Deprecated
 	@Override

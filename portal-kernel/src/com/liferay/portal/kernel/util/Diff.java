@@ -16,7 +16,8 @@ package com.liferay.portal.kernel.util;
 
 /**
  * @author     Bruno Farache
- * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, moved to {@link com.liferay.portal.kernel.diff.Diff}
+ * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, moved to {@link
+ *             com.liferay.portal.kernel.diff.Diff}
  */
 @Deprecated
 public interface Diff extends com.liferay.portal.kernel.diff.Diff {

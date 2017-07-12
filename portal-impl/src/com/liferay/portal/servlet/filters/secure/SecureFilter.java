@@ -195,7 +195,8 @@ public class SecureFilter extends BasePortalFilter {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	protected void initThreadLocals(HttpServletRequest request)
@@ -340,9 +341,9 @@ public class SecureFilter extends BasePortalFilter {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
-	 *             #setCredentials(
-	 *             HttpServletRequest, HttpSession, User, String)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #setCredentials(HttpServletRequest, HttpSession, User,
+	 *             String)}
 	 */
 	@Deprecated
 	protected HttpServletRequest setCredentials(

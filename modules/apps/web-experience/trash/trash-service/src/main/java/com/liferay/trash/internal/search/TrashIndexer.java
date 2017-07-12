@@ -192,8 +192,8 @@ public class TrashIndexer extends BaseIndexer<TrashEntry> {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.trash.service#NEXT-VERSION, added strictly to support backwards
-	 *             compatibility of {@link
+	 * @deprecated As of com.liferay.trash.service#NEXT-VERSION, added strictly
+	 *             to support backwards compatibility of {@link
 	 *             TrashHandler#getExcludeQuery(SearchContext)}
 	 */
 	@Deprecated

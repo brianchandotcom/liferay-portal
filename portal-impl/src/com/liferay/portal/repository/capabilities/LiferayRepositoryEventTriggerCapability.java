@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.repository.event.RepositoryEventTrigger;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 
 /**
- * @author Adolfo Pérez
+ * @author     Adolfo Pérez
  * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
  *             com.liferay.document.library.internal.capabilities.LiferayRepositoryEventTriggerCapability}
  */

@@ -37,7 +37,8 @@ public class BooleanClauseFactoryImpl implements BooleanClauseFactory {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #create(Query, String)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #create(Query, String)}
 	 */
 	@Deprecated
 	@Override
@@ -48,8 +49,8 @@ public class BooleanClauseFactoryImpl implements BooleanClauseFactory {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #create(String, String,
-	 *             String)}}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #create(String, String, String)}}
 	 */
 	@Deprecated
 	@Override

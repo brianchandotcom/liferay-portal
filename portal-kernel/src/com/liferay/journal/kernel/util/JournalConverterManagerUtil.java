@@ -22,7 +22,8 @@ import java.util.Locale;
  * @author     Marcellus Tavares
  * @author     Bruno Basto
  * @author     Leonardo Barros
- * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+ * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+ *             replacement
  */
 @Deprecated
 public class JournalConverterManagerUtil {

@@ -26,8 +26,9 @@ import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 
 /**
- * @author Shuyang Zhou
- * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
+ * @author     Shuyang Zhou
+ * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+ *             replacement
  */
 @Deprecated
 public class TempFileMethodInterceptor implements MethodInterceptor {

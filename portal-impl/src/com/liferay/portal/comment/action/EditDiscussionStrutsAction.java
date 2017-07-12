@@ -51,7 +51,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Adolfo Pérez
+ * @author     Adolfo Pérez
  * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
  *             com.liferay.comment.taglib.internal.action.
  *             EditDiscussionStrutsAction}

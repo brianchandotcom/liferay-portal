@@ -82,7 +82,8 @@ public class DLFolderAssetRenderer
 	}
 
 	/**
-	 * @deprecated As of com.liferay.document.library.web#1.1.0, with no direct replacement
+	 * @deprecated As of com.liferay.document.library.web#1.1.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override

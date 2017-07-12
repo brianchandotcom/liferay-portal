@@ -47,7 +47,8 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 		new String[] {"icon", "descriptive", "list"};
 
 	/**
-	 * @deprecated As of com.liferay.item.selector.taglib#1.1.0, with no direct replacement
+	 * @deprecated As of com.liferay.item.selector.taglib#1.1.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public void setDesiredItemSelectorReturnTypes(

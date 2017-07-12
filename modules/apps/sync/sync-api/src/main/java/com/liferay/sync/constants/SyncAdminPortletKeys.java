@@ -16,7 +16,8 @@ package com.liferay.sync.constants;
 
 /**
  * @author     Shinn Lok
- * @deprecated As of com.liferay.sync.api#2.1.0, replaced by {@link SyncPortletKeys}
+ * @deprecated As of com.liferay.sync.api#2.1.0, replaced by {@link
+ *             SyncPortletKeys}
  */
 @Deprecated
 public class SyncAdminPortletKeys {

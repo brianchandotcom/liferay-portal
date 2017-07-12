@@ -37,7 +37,8 @@ public interface AutoLogin {
 		"AUTO_LOGIN_REDIRECT_AND_CONTINUE";
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public String[] handleException(

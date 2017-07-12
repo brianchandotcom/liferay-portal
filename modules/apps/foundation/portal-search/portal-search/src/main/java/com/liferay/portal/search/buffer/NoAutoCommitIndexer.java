@@ -73,7 +73,8 @@ public class NoAutoCommitIndexer<T> implements Indexer<T> {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.search#3.3.0, replaced by {@link #getSearchClassNames}
+	 * @deprecated As of com.liferay.portal.search#3.3.0, replaced by {@link
+	 *             #getSearchClassNames}
 	 */
 	@Deprecated
 	@Override
@@ -107,7 +108,8 @@ public class NoAutoCommitIndexer<T> implements Indexer<T> {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.search#3.3.0, replaced by {@link #getClassName}
+	 * @deprecated As of com.liferay.portal.search#3.3.0, replaced by {@link
+	 *             #getClassName}
 	 */
 	@Deprecated
 	@Override
@@ -136,8 +138,9 @@ public class NoAutoCommitIndexer<T> implements Indexer<T> {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.search#3.3.0, replaced by {@link #getSummary(Document, String,
-	 *             PortletRequest, PortletResponse)}
+	 * @deprecated As of com.liferay.portal.search#3.3.0, replaced by {@link
+	 *             #getSummary(Document, String, PortletRequest,
+	 *             PortletResponse)}
 	 */
 	@Deprecated
 	@Override

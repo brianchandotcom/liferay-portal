@@ -50,8 +50,8 @@ public class AuthTokenUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #checkCSRFToken(HttpServletRequest, String)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #checkCSRFToken(HttpServletRequest, String)}
 	 */
 	@Deprecated
 	public static void check(HttpServletRequest request)
@@ -110,9 +110,9 @@ public class AuthTokenUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #isValidPortletInvocationToken(HttpServletRequest, Layout,
-	 *             Portlet)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #isValidPortletInvocationToken(HttpServletRequest,
+	 *             Layout, Portlet)}
 	 */
 	@Deprecated
 	public static boolean isValidPortletInvocationToken(

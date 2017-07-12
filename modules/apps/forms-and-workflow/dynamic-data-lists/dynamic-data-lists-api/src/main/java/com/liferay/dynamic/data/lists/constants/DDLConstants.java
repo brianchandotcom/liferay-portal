@@ -65,7 +65,8 @@ public class DDLConstants {
 		"reserved_record_set_name";
 
 	/**
-	 * @deprecated As of com.liferay.dynamic.data.lists.api#2.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.dynamic.data.lists.api#2.0.0, with no
+	 *             direct replacement
 	 */
 	@Deprecated
 	public static final String SERVICE_NAME = "com.liferay.dynamic.data.lists";

@@ -372,7 +372,8 @@ public class AssetPublisherUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.asset.publisher.web#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.asset.publisher.web#NEXT-VERSION, with no
+	 *             direct replacement
 	 */
 	@Deprecated
 	public static List<AssetEntry> getAssetEntries(
@@ -1244,7 +1245,8 @@ public class AssetPublisherUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.asset.publisher.web#1.2.0, with no direct replacement
+	 * @deprecated As of com.liferay.asset.publisher.web#1.2.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static void notifySubscriber(
@@ -1276,7 +1278,8 @@ public class AssetPublisherUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.asset.publisher.web#1.2.0, with no direct replacement
+	 * @deprecated As of com.liferay.asset.publisher.web#1.2.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static void registerAssetQueryProcessor(
@@ -1338,7 +1341,8 @@ public class AssetPublisherUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.asset.publisher.web#1.2.0, with no direct replacement
+	 * @deprecated As of com.liferay.asset.publisher.web#1.2.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static void unregisterAssetQueryProcessor(
@@ -1362,7 +1366,8 @@ public class AssetPublisherUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.asset.publisher.web#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.asset.publisher.web#NEXT-VERSION, with no
+	 *             direct replacement
 	 */
 	@Deprecated
 	public void checkAssetEntries() throws Exception {
@@ -1661,7 +1666,8 @@ public class AssetPublisherUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.asset.publisher.web#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.asset.publisher.web#NEXT-VERSION, with no
+	 *             direct replacement
 	 */
 	@Deprecated
 	protected void setSubscriptionLocalService(
@@ -1677,7 +1683,8 @@ public class AssetPublisherUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.asset.publisher.web#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.asset.publisher.web#NEXT-VERSION, with no
+	 *             direct replacement
 	 */
 	@Deprecated
 	protected void setUserLocalService(UserLocalService userLocalService) {

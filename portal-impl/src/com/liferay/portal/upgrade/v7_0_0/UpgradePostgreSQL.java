@@ -51,7 +51,8 @@ public class UpgradePostgreSQL extends UpgradeProcess {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	protected String getCurrentSchema() throws Exception {
@@ -68,7 +69,8 @@ public class UpgradePostgreSQL extends UpgradeProcess {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	protected Map<String, String> getOidColumnNames() throws Exception {
@@ -107,7 +109,8 @@ public class UpgradePostgreSQL extends UpgradeProcess {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	protected void updateOrphanedLargeObjects(

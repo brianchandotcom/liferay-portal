@@ -885,7 +885,8 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	protected boolean hasGuestPermission(
@@ -902,7 +903,8 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	protected boolean hasPermissionImpl(
@@ -919,7 +921,8 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	protected boolean hasUserPermissionImpl(
@@ -1174,7 +1177,8 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	protected boolean isGroupAdminImpl(long groupId) throws Exception {

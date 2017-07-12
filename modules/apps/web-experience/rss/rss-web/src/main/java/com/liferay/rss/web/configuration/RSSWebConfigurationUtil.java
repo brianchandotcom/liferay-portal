@@ -18,8 +18,9 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 
 /**
- * @author Eudaldo Alonso
- * @deprecated As of com.liferay.rss.web#NEXT-VERSION, with no direct replacement
+ * @author     Eudaldo Alonso
+ * @deprecated As of com.liferay.rss.web#NEXT-VERSION, with no direct
+ *             replacement
  */
 @Deprecated
 public class RSSWebConfigurationUtil {

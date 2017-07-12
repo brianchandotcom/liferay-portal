@@ -15,8 +15,9 @@
 package com.liferay.users.admin.web.portlet.action;
 
 /**
- * @author Pei-Jung Lan
- * @deprecated As of com.liferay.users.admin.web#2.1.0, with no direct replacement
+ * @author     Pei-Jung Lan
+ * @deprecated As of com.liferay.users.admin.web#2.1.0, with no direct
+ *             replacement
  */
 @Deprecated
 public class EditOrganizationAssignmentsMVCRenderCommand

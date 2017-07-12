@@ -280,7 +280,8 @@ public class DDLImpl implements DDL {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.dynamic.data.lists.service#1.1.0, with no direct replacement
+	 * @deprecated As of com.liferay.dynamic.data.lists.service#1.1.0, with no
+	 *             direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -293,7 +294,8 @@ public class DDLImpl implements DDL {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.dynamic.data.lists.service#1.1.0, with no direct replacement
+	 * @deprecated As of com.liferay.dynamic.data.lists.service#1.1.0, with no
+	 *             direct replacement
 	 */
 	@Deprecated
 	@Override

@@ -17,8 +17,9 @@ package com.liferay.portal.kernel.security.permission;
 import java.util.Set;
 
 /**
- * @author László Csontos
- * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+ * @author     László Csontos
+ * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+ *             replacement
  */
 @Deprecated
 public interface ResourceActionsBag {

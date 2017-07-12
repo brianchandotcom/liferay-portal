@@ -28,9 +28,10 @@ import javax.servlet.http.HttpSession;
  * See https://issues.liferay.com/browse/LEP-1466.
  * </p>
  *
- * @author Rudy Hilado
- * @author Shuyang Zhou
- * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+ * @author     Rudy Hilado
+ * @author     Shuyang Zhou
+ * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+ *             replacement
  */
 @Deprecated
 public class PortletSessionTracker {

@@ -27,7 +27,8 @@ public class MicrosoftTranslatorFactoryUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static MicrosoftTranslator getMicrosoftTranslator(
@@ -45,7 +46,8 @@ public class MicrosoftTranslatorFactoryUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public void setMicrosoftTranslatorFactory(

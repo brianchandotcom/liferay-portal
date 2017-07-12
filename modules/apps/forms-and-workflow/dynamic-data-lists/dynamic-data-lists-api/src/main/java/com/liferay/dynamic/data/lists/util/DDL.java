@@ -53,8 +53,8 @@ public interface DDL {
 	 * @param      record the record to transform
 	 * @return     the record's JSON Object representation
 	 * @throws     Exception if an unexpected exception occurred
-	 * @deprecated As of com.liferay.dynamic.data.lists.api#2.0.0, replaced by {@link
-	 *             #getRecordJSONObject(DDLRecord,boolean,locale)}
+	 * @deprecated As of com.liferay.dynamic.data.lists.api#2.0.0, replaced by
+	 *             {@link #getRecordJSONObject(DDLRecord,boolean,locale)}
 	 */
 	@Deprecated
 	public JSONObject getRecordJSONObject(DDLRecord record) throws Exception;
@@ -102,8 +102,8 @@ public interface DDL {
 	 * @param      recordSet the record set from which to extract records
 	 * @return     the record set's records as a JSON Array
 	 * @throws     Exception if an unexpected exception occurred
-	 * @deprecated As of com.liferay.dynamic.data.lists.api#2.0.0, replaced by {@link
-	 *             #getRecordsJSONArray(List,boolean,locale)}
+	 * @deprecated As of com.liferay.dynamic.data.lists.api#2.0.0, replaced by
+	 *             {@link #getRecordsJSONArray(List,boolean,locale)}
 	 */
 	@Deprecated
 	public JSONArray getRecordsJSONArray(DDLRecordSet recordSet)
@@ -121,8 +121,8 @@ public interface DDL {
 	 * @param      records the records to transform
 	 * @return     the records as a JSON Array
 	 * @throws     Exception if an unexpected exception occurred
-	 * @deprecated As of com.liferay.dynamic.data.lists.api#2.0.0, replaced by {@link
-	 *             #getRecordsJSONArray(List,boolean,locale)}
+	 * @deprecated As of com.liferay.dynamic.data.lists.api#2.0.0, replaced by
+	 *             {@link #getRecordsJSONArray(List,boolean,locale)}
 	 */
 	@Deprecated
 	public JSONArray getRecordsJSONArray(List<DDLRecord> records)
@@ -149,7 +149,8 @@ public interface DDL {
 		throws Exception;
 
 	/**
-	 * @deprecated As of com.liferay.dynamic.data.lists.api#2.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.dynamic.data.lists.api#2.0.0, with no
+	 *             direct replacement
 	 */
 	@Deprecated
 	public boolean isEditable(
@@ -157,7 +158,8 @@ public interface DDL {
 		throws Exception;
 
 	/**
-	 * @deprecated As of com.liferay.dynamic.data.lists.api#2.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.dynamic.data.lists.api#2.0.0, with no
+	 *             direct replacement
 	 */
 	@Deprecated
 	public boolean isEditable(
@@ -201,7 +203,8 @@ public interface DDL {
 	 * @param      serviceContext the service context to be applied
 	 * @return     the record
 	 * @throws     Exception if an unexpected exception occurred
-	 * @deprecated As of com.liferay.dynamic.data.lists.api#2.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.dynamic.data.lists.api#2.0.0, replaced by
+	 *             {@link
 	 *             #updateRecord(long,long,boolean,boolean,ServiceContext)}
 	 */
 	@Deprecated

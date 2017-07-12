@@ -27,14 +27,16 @@ import com.liferay.portal.kernel.util.StringUtil;
 public class UserScreenNameException extends PortalException {
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the inner classes
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the
+	 *             inner classes
 	 */
 	@Deprecated
 	public UserScreenNameException() {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the inner classes
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the
+	 *             inner classes
 	 */
 	@Deprecated
 	public UserScreenNameException(String msg) {
@@ -42,7 +44,8 @@ public class UserScreenNameException extends PortalException {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the inner classes
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the
+	 *             inner classes
 	 */
 	@Deprecated
 	public UserScreenNameException(String msg, Throwable cause) {
@@ -50,7 +53,8 @@ public class UserScreenNameException extends PortalException {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the inner classes
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the
+	 *             inner classes
 	 */
 	@Deprecated
 	public UserScreenNameException(Throwable cause) {

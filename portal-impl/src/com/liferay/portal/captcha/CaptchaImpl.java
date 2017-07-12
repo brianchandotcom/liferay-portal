@@ -36,9 +36,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Brian Wing Shun Chan
- * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
-*/
+ * @author     Brian Wing Shun Chan
+ * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+ *             replacement
+ */
 @Deprecated
 @DoPrivileged
 public class CaptchaImpl implements Captcha {

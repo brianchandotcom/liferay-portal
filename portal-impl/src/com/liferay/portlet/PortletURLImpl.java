@@ -97,8 +97,9 @@ public class PortletURLImpl
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
-	 *             #PortletURLImpl(HttpServletRequest, Portlet, Layout, String)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #PortletURLImpl(HttpServletRequest, Portlet, Layout,
+	 *             String)}
 	 */
 	@Deprecated
 	public PortletURLImpl(
@@ -109,8 +110,9 @@ public class PortletURLImpl
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
-	 *             #PortletURLImpl(HttpServletRequest, String, Layout, String)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #PortletURLImpl(HttpServletRequest, String, Layout,
+	 *             String)}
 	 */
 	@Deprecated
 	public PortletURLImpl(
@@ -130,8 +132,9 @@ public class PortletURLImpl
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
-	 *             #PortletURLImpl(PortletRequest, Portlet, Layout, String)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #PortletURLImpl(PortletRequest, Portlet, Layout,
+	 *             String)}
 	 */
 	@Deprecated
 	public PortletURLImpl(
@@ -144,8 +147,9 @@ public class PortletURLImpl
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
-	 *             #PortletURLImpl(PortletRequest, String, Layout, String)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #PortletURLImpl(PortletRequest, String, Layout,
+	 *             String)}
 	 */
 	@Deprecated
 	public PortletURLImpl(
@@ -299,8 +303,8 @@ public class PortletURLImpl
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #visitReservedParameters(
-	 *             BiConsumer)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #visitReservedParameters(BiConsumer)}
 	 */
 	@Deprecated
 	@Override
@@ -744,8 +748,9 @@ public class PortletURLImpl
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
-	 *             #PortletURLImpl(PortletRequest, String, PortletRequest, Layout, String)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #PortletURLImpl(PortletRequest, String,
+	 *             PortletRequest, Layout, String)}
 	 */
 	@Deprecated
 	protected PortletURLImpl(
@@ -1186,7 +1191,8 @@ public class PortletURLImpl
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	protected void mergeRenderParameters() {
@@ -1194,7 +1200,8 @@ public class PortletURLImpl
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	protected String prependNamespace(String name) {

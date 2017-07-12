@@ -1020,8 +1020,8 @@ public class LayoutImportController implements ImportController {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
-	 *             #validateLayoutPrototypes(long, Element, Element)}
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link #validateLayoutPrototypes(long, Element, Element)}
 	 */
 	@Deprecated
 	protected void validateLayoutPrototypes(

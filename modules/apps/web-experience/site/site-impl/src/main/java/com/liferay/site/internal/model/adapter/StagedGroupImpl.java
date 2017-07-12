@@ -544,7 +544,8 @@ public class StagedGroupImpl implements StagedGroup {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.site.impl#NEXT-VERSION, replaced by {@link #hasAncestor}
+	 * @deprecated As of com.liferay.site.impl#NEXT-VERSION, replaced by {@link
+	 *             #hasAncestor}
 	 */
 	@Deprecated
 	@Override

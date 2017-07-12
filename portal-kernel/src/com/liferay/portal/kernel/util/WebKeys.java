@@ -101,7 +101,8 @@ public interface WebKeys {
 	public static final String CTX = "CTX";
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static final String CTX_PATH = "CTX_PATH";
@@ -170,7 +171,10 @@ public interface WebKeys {
 	public static final String FORWARD_URL = "FORWARD_URL";
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link com.liferay.taglib.util.FriendlyURLUtil.getFriendlyURL(HttpServletRequest, javax.servlet.jsp.PageContext)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link
+	 *             com.liferay.taglib.util.FriendlyURLUtil.getFriendlyURL(
+	 *             HttpServletRequest, javax.servlet.jsp.PageContext)}
 	 */
 	@Deprecated
 	public static final String FRIENDLY_URL = "FRIENDLY_URL";
@@ -489,7 +493,8 @@ public interface WebKeys {
 	public static final String SEARCH_CONTAINER = "SEARCH_CONTAINER";
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static final String SEARCH_CONTAINER_REFERENCE = "LIFERAY_SHARED_SEARCH_CONTAINER_REFERENCE";
@@ -642,7 +647,8 @@ public interface WebKeys {
 	public static final String USER_PASSWORD = "USER_PASSWORD";
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static final String USER_UUID = "USER_UUID";

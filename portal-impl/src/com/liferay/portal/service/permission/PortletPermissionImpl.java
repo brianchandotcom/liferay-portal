@@ -611,9 +611,9 @@ public class PortletPermissionImpl implements PortletPermission {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
-	 *             #hasConfigurePermission(
-	 *             PermissionChecker, Layout, Portlet, String)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #hasConfigurePermission(PermissionChecker, Layout,
+	 *             Portlet, String)}
 	 */
 	@Deprecated
 	protected boolean hasConfigurePermission(
@@ -657,9 +657,9 @@ public class PortletPermissionImpl implements PortletPermission {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
-	 *             #hasCustomizePermission(
-	 *             PermissionChecker, Layout, Portlet, String)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #hasCustomizePermission(PermissionChecker, Layout,
+	 *             Portlet, String)}
 	 */
 	@Deprecated
 	protected boolean hasCustomizePermission(

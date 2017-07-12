@@ -21,8 +21,9 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import java.util.Set;
 
 /**
- * @author Michael C. Han
- * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
+ * @author     Michael C. Han
+ * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+ *             replacement
  */
 @Deprecated
 @DoPrivileged

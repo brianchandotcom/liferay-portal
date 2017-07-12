@@ -36,8 +36,9 @@ import javax.portlet.filter.FilterConfig;
 import javax.portlet.filter.ResourceFilter;
 
 /**
- * @author Julio Camarero
- * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
+ * @author     Julio Camarero
+ * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+ *             replacement
  */
 @Deprecated
 public class CheckboxParametersPortletFilter

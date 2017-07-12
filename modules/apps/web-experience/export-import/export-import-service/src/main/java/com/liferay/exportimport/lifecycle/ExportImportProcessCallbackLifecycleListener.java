@@ -27,8 +27,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 /**
- * @author Daniel Kocsis
- *
+ * @author     Daniel Kocsis
  * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
  */
 @Deprecated

@@ -151,9 +151,9 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 *             staging
 	 * @return     the group
 	 * @throws     PortalException if a portal exception occurred
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #addGroup(long, long, Map,
-	 *             Map, int, boolean, int, String, boolean, boolean,
-	 *             ServiceContext)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #addGroup(long, long, Map, Map, int, boolean, int,
+	 *             String, boolean, boolean, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -986,9 +986,9 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 *             tag names for the group.
 	 * @return     the group
 	 * @throws     PortalException if a portal exception occurred
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #updateGroup(long, long, Map,
-	 *             Map, int, boolean, int, String, boolean, boolean,
-	 *             ServiceContext)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #updateGroup(long, long, Map, Map, int, boolean, int,
+	 *             String, boolean, boolean, ServiceContext)}
 	 */
 	@Deprecated
 	@Override

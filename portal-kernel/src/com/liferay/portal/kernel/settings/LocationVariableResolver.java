@@ -28,8 +28,9 @@ import java.io.IOException;
 public class LocationVariableResolver {
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #LocationVariableResolver(
-	 *			   ResourceManager, SettingsLocatorHelper)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #LocationVariableResolver(ResourceManager,
+	 *             SettingsLocatorHelper)}
 	 */
 	@Deprecated
 	public LocationVariableResolver(

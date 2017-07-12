@@ -17,8 +17,9 @@ package com.liferay.rss.web.configuration;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 /**
- * @author Eudaldo Alonso
- * @deprecated As of com.liferay.rss.web#NEXT-VERSION, with no direct replacement
+ * @author     Eudaldo Alonso
+ * @deprecated As of com.liferay.rss.web#NEXT-VERSION, with no direct
+ *             replacement
  */
 @Deprecated
 public class RSSWebConfigurationValues {

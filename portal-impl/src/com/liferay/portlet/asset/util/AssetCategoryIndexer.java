@@ -48,7 +48,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 /**
- * @author Istvan Andras Dezsi
+ * @author     Istvan Andras Dezsi
  * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, moved to {@link
  *             com.liferay.asset.categories.internal.search.AssetCategoryIndexer}
  */

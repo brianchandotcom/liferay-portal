@@ -159,7 +159,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link
 	 *             com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler#exportAssetCategories(
 	 *             PortletDataContext, StagedModel)}
 	 */
@@ -185,7 +186,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link
 	 *             BaseStagedModelDataHandler#exportAssetTags(
 	 *             PortletDataContext, StagedModel)}
 	 */
@@ -251,7 +253,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link
 	 *             com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler#exportComments(
 	 *             PortletDataContext, StagedModel)}
 	 */
@@ -261,7 +264,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link
 	 *             com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler#exportComments(
 	 *             PortletDataContext, StagedModel)}
 	 */
@@ -320,8 +324,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link #addPermissions(Class,
-	 *             Serializable)}
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link #addPermissions(Class, Serializable)}
 	 */
 	@Deprecated
 	@Override
@@ -431,7 +435,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link
 	 *             com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler#exportRatings(
 	 *             PortletDataContext, StagedModel)}
 	 */
@@ -441,7 +446,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link
 	 *             com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler#exportRatings(
 	 *             PortletDataContext, StagedModel)}
 	 */
@@ -452,7 +458,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -678,8 +685,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link #getAssetCategoryIds(Class,
-	 *             Serializable)}
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link #getAssetCategoryIds(Class, Serializable)}
 	 */
 	@Deprecated
 	@Override
@@ -700,7 +707,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -709,7 +717,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -723,7 +732,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link #getAssetLinkIds()}
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link #getAssetLinkIds()}
 	 */
 	@Deprecated
 	@Override
@@ -732,8 +742,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link #getAssetTagNames(Class,
-	 *             Serializable)}
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link #getAssetTagNames(Class, Serializable)}
 	 */
 	@Deprecated
 	@Override
@@ -747,8 +757,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link #getAssetTagNames(String,
-	 *             Serializable)}
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link #getAssetTagNames(String, Serializable)}
 	 */
 	@Deprecated
 	@Override
@@ -798,7 +808,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -871,8 +882,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
-	 *             #getExportDataElement(ClassedModel, String)}
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link #getExportDataElement(ClassedModel, String)}
 	 */
 	@Deprecated
 	@Override
@@ -1030,8 +1041,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
-	 *             #getNewPrimaryKeysMap(String)}
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link #getNewPrimaryKeysMap(String)}
 	 */
 	@Deprecated
 	@Override
@@ -1063,7 +1074,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -1097,7 +1109,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -1161,7 +1174,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -1199,8 +1213,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link #getReferenceElement(Class,
-	 *             Serializable)}
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link #getReferenceElement(Class, Serializable)}
 	 */
 	@Deprecated
 	@Override
@@ -1229,8 +1243,9 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
-	 *             #getReferenceElement(StagedModel, Class, Serializable)}
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link #getReferenceElement(StagedModel, Class,
+	 *             Serializable)}
 	 */
 	@Deprecated
 	@Override
@@ -1249,8 +1264,9 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
-	 *             #getReferenceElement(StagedModel, String, Serializable)}
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link #getReferenceElement(StagedModel, String,
+	 *             Serializable)}
 	 */
 	@Deprecated
 	@Override
@@ -1276,8 +1292,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link #getReferenceElement(String,
-	 *             Serializable)}
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link #getReferenceElement(String, Serializable)}
 	 */
 	@Deprecated
 	@Override
@@ -1313,7 +1329,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -1382,7 +1399,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -1440,7 +1458,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -1549,7 +1568,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link
 	 *             com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler#importComments(
 	 *             PortletDataContext, StagedModel)}
 	 */
@@ -1585,8 +1605,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link #importPermissions(Class,
-	 *             Serializable, Serializable)}
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link #importPermissions(Class, Serializable, Serializable)}
 	 */
 	@Deprecated
 	@Override
@@ -1707,7 +1727,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link
 	 *             com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler#importRatings(
 	 *             PortletDataContext, StagedModel)}
 	 */
@@ -1818,8 +1839,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link #isModelCounted(String,
-	 *             Serializable)}
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link #isModelCounted(String, Serializable)}
 	 */
 	@Deprecated
 	@Override
@@ -1841,7 +1862,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -1988,7 +2010,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override

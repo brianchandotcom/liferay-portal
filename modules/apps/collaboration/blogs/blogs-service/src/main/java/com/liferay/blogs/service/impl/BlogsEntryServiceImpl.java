@@ -72,10 +72,10 @@ import java.util.List;
 public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 
 	/**
-	 * @deprecated As of com.liferay.blogs.service#1.1.0, replaced by {@link #addEntry(String, String,
-	 *             String, String, int, int, int, int, int, boolean, boolean,
-	 *             String[], String, ImageSelector, ImageSelector,
-	 *             ServiceContext)}
+	 * @deprecated As of com.liferay.blogs.service#1.1.0, replaced by {@link
+	 *             #addEntry(String, String, String, String, int, int, int, int,
+	 *             int, boolean, boolean, String[], String, ImageSelector,
+	 *             ImageSelector, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -544,10 +544,10 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.blogs.service#1.1.0, replaced by {@link #updateEntry(long, String,
-	 *             String, String, String, int, int, int, int, int, boolean,
-	 *             boolean, String[], String, ImageSelector, ImageSelector,
-	 *             ServiceContext)}
+	 * @deprecated As of com.liferay.blogs.service#1.1.0, replaced by {@link
+	 *             #updateEntry(long, String, String, String, String, int, int,
+	 *             int, int, int, boolean, boolean, String[], String,
+	 *             ImageSelector, ImageSelector, ServiceContext)}
 	 */
 	@Deprecated
 	@Override

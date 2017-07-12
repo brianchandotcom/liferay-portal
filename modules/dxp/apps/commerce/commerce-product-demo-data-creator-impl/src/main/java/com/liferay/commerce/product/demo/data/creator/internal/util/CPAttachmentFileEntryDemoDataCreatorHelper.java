@@ -107,6 +107,8 @@ public class CPAttachmentFileEntryDemoDataCreatorHelper
 			Map<Locale, String> titleMap = Collections.singletonMap(
 				Locale.US, fileName);
 
+			int priority = i + 1;
+
 			String uniqueFileName = _portletFileRepository.getUniqueFileName(
 				groupId, folder.getFolderId(), fileName);
 
@@ -127,6 +129,8 @@ public class CPAttachmentFileEntryDemoDataCreatorHelper
 
 			JSONArray optionIdsJSONArray = JSONFactoryUtil.createJSONArray();
 
+			StringBuilder sb = new StringBuilder(9);
+
 			for (CPDefinitionOptionRel cpDefinitionOptionRel :
 					cpDefinitionOptionRels) {
 
@@ -145,27 +149,23 @@ public class CPAttachmentFileEntryDemoDataCreatorHelper
 								getCPDefinitionOptionRelId() ==
 									cpDefinitionOptionRelId) {
 
-							optionIdsJSONArray.put(
-								cpDefinitionOptionValueRel.
-									getCPDefinitionOptionValueRelId());
+							if (fileName.contains(
+									cpDefinitionOptionValueRel.getKey())) {
 
-							StringBuilder sb = new StringBuilder(9);
+								optionIdsJSONArray.put(
+									cpDefinitionOptionValueRel.
+										getCPDefinitionOptionValueRelId());
 
-							sb.append("[{\"cpDefinitionOptionRelId\":\"");
-							sb.append(optionIdsJSONArray.get(0));
-							sb.append(StringPool.QUOTE);
-							sb.append(StringPool.COMMA);
-							sb.append("\"cpDefinitionOptionValueRelId\"");
-							sb.append(StringPool.COLON);
-							sb.append(StringPool.QUOTE);
-							sb.append(optionIdsJSONArray.get(1));
-							sb.append("\"}]");
-
-							createCPAttachmentFileEntry(
-								userId, groupId, classeNameId, cpDefinitionId,
-								fileEntry.getFileEntryId(), titleMap,
-								sb.toString(), 0,
-								CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE);
+								sb.append("[{\"cpDefinitionOptionRelId\":\"");
+								sb.append(optionIdsJSONArray.get(0));
+								sb.append(StringPool.QUOTE);
+								sb.append(StringPool.COMMA);
+								sb.append("\"cpDefinitionOptionValueRelId\"");
+								sb.append(StringPool.COLON);
+								sb.append(StringPool.QUOTE);
+								sb.append(optionIdsJSONArray.get(1));
+								sb.append("\"}]");
+							}
 						}
 						else {
 							continue;
@@ -176,6 +176,11 @@ public class CPAttachmentFileEntryDemoDataCreatorHelper
 					continue;
 				}
 			}
+
+			createCPAttachmentFileEntry(
+				userId, groupId, classeNameId, cpDefinitionId,
+				fileEntry.getFileEntryId(), titleMap, sb.toString(), priority,
+				CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE);
 		}
 	}
 

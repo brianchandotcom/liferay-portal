@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -119,7 +120,7 @@ public class UserIndexerTest {
 
 	@Test
 	public void testEmptyQuery() throws Exception {
-		User user = addUser();
+		User user = UserTestUtil.addUser();
 
 		assertSearch(StringPool.BLANK, user);
 	}
@@ -155,7 +156,7 @@ public class UserIndexerTest {
 
 	@Test
 	public void testLikeCharacter() throws Exception {
-		User user = addUser();
+		User user = UserTestUtil.addUser();
 
 		assertSearch(StringPool.PERCENT, user);
 
@@ -164,7 +165,7 @@ public class UserIndexerTest {
 
 	@Test
 	public void testLuceneQueryParserUnfriendlyCharacters() throws Exception {
-		User user = addUser();
+		User user = UserTestUtil.addUser();
 
 		assertSearch(StringPool.AT, user);
 
@@ -270,17 +271,6 @@ public class UserIndexerTest {
 
 	@Rule
 	public TestName testName = new TestName();
-
-	protected User addUser() throws Exception {
-		String emailAddress = RandomTestUtil.randomString() + "@liferay.com";
-		String firstName = RandomTestUtil.randomString();
-		String lastName = RandomTestUtil.randomString();
-		String middleName = RandomTestUtil.randomString();
-		String screenName = testName.getMethodName();
-
-		return addUser(
-			firstName, lastName, middleName, screenName, emailAddress);
-	}
 
 	protected User addUser(
 			String firstName, String lastName, String middleName,

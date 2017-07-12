@@ -252,7 +252,8 @@ public interface RatingsEntryLocalService extends BaseLocalService,
 		long classPK, double score);
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -163,8 +163,8 @@ public class ResourcePermissionLocalServiceWrapper
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getRoles(long, String, int,
-	String, String}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #getRoles(long, String, int, String, String}
 	*/
 	@Deprecated
 	@Override
@@ -568,9 +568,9 @@ public class ResourcePermissionLocalServiceWrapper
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	#getAvailableResourcePermissionActionIds(long, String, int,
-	String, Collection)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #getAvailableResourcePermissionActionIds(long, String,
+	int, String, Collection)}
 	*/
 	@Deprecated
 	@Override

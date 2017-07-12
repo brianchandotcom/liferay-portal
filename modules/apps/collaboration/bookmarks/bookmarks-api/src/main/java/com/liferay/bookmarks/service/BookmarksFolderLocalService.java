@@ -193,9 +193,9 @@ public interface BookmarksFolderLocalService extends BaseLocalService,
 		BookmarksFolder bookmarksFolder);
 
 	/**
-	* @deprecated As of 1.0.0, replaced by {@link #updateFolder(long, long,
-	long, String, String, ServiceContext)} and {@link
-	#mergeFolders(long, long)}
+	* @deprecated As of com.liferay.bookmarks.service#1.0.0, replaced by {@link
+	#updateFolder(long, long, long, String, String,
+	ServiceContext)} and {@link #mergeFolders(long, long)}
 	*/
 	@java.lang.Deprecated
 	@Indexable(type = IndexableType.REINDEX)

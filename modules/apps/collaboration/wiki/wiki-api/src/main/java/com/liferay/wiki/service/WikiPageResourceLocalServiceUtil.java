@@ -74,8 +74,8 @@ public class WikiPageResourceLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 1.2.0, replaced by {@link #addPageResource(long, long,
-	String)}
+	* @deprecated As of com.liferay.wiki.service#1.2.0, replaced by {@link
+	#addPageResource(long, long, String)}
 	*/
 	@Deprecated
 	public static com.liferay.wiki.model.WikiPageResource addPageResource(
@@ -351,8 +351,8 @@ public class WikiPageResourceLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 1.2.0, replaced by {@link #getPageResourcePrimKey(long,
-	long, String)}
+	* @deprecated As of com.liferay.wiki.service#1.2.0, replaced by {@link
+	#getPageResourcePrimKey(long, long, String)}
 	*/
 	@Deprecated
 	public static long getPageResourcePrimKey(long nodeId,

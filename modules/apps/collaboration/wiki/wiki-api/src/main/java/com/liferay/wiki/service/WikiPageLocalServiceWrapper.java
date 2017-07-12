@@ -357,8 +357,8 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	}
 
 	/**
-	* @deprecated As of 1.2.0, replaced by {@link #movePageFromTrash(long,
-	long, String, long, String)} *
+	* @deprecated As of com.liferay.wiki.service#1.2.0, replaced by {@link
+	#movePageFromTrash(long, long, String, long, String)} *
 	*/
 	@Deprecated
 	@Override
@@ -423,8 +423,8 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	}
 
 	/**
-	* @deprecated As of 1.2.0, replaced by {@link #updateStatus(long, WikiPage,
-	int, ServiceContext, Map)}
+	* @deprecated As of com.liferay.wiki.service#1.2.0, replaced by {@link
+	#updateStatus(long, WikiPage, int, ServiceContext, Map)}
 	*/
 	@Deprecated
 	@Override
@@ -926,8 +926,9 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	}
 
 	/**
-	* @deprecated As of 1.2.0, replaced by {@link #addTempFileEntry(long, long,
-	String, String, InputStream, String)}
+	* @deprecated As of com.liferay.wiki.service#1.2.0, replaced by {@link
+	#addTempFileEntry(long, long, String, String, InputStream,
+	String)}
 	*/
 	@Deprecated
 	@Override
@@ -1006,8 +1007,8 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	}
 
 	/**
-	* @deprecated As of 1.2.0, replaced by {@link #renamePage(long, long,
-	String, String, ServiceContext)}
+	* @deprecated As of com.liferay.wiki.service#1.2.0, replaced by {@link
+	#renamePage(long, long, String, String, ServiceContext)}
 	*/
 	@Deprecated
 	@Override
@@ -1074,7 +1075,7 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	}
 
 	/**
-	* @deprecated As of 1.2.0, replaced by {@link
+	* @deprecated As of com.liferay.wiki.service#1.2.0, replaced by {@link
 	WikiPageTitleValidator#validate(String)}
 	*/
 	@Deprecated

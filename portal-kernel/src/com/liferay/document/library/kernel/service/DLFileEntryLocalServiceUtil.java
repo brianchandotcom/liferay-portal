@@ -64,8 +64,9 @@ public class DLFileEntryLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #isKeepFileVersionLabel(long,
-	boolean, ServiceContext)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #isKeepFileVersionLabel(long, boolean,
+	ServiceContext)}
 	*/
 	@Deprecated
 	public static boolean isKeepFileVersionLabel(long fileEntryId,
@@ -443,7 +444,8 @@ public class DLFileEntryLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@Deprecated
 	public static int getFileEntriesCount(long groupId,
@@ -508,8 +510,8 @@ public class DLFileEntryLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getFile(long, String,
-	boolean)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #getFile(long, String, boolean)}
 	*/
 	@Deprecated
 	public static java.io.File getFile(long userId, long fileEntryId,
@@ -520,8 +522,8 @@ public class DLFileEntryLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getFile(long, String,
-	boolean, int)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #getFile(long, String, boolean, int)}
 	*/
 	@Deprecated
 	public static java.io.File getFile(long userId, long fileEntryId,
@@ -554,8 +556,8 @@ public class DLFileEntryLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getFileAsStream(long,
-	String)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #getFileAsStream(long, String)}
 	*/
 	@Deprecated
 	public static java.io.InputStream getFileAsStream(long userId,
@@ -565,8 +567,8 @@ public class DLFileEntryLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getFileAsStream(long,
-	String, boolean)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #getFileAsStream(long, String, boolean)}
 	*/
 	@Deprecated
 	public static java.io.InputStream getFileAsStream(long userId,
@@ -578,8 +580,8 @@ public class DLFileEntryLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getFileAsStream(long,
-	String, boolean, int)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #getFileAsStream(long, String, boolean, int)}
 	*/
 	@Deprecated
 	public static java.io.InputStream getFileAsStream(long userId,

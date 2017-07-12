@@ -65,10 +65,10 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	}
 
 	/**
-	* @deprecated As of 1.1.0, replaced by {@link #addEntry(long, String,
-	String, String, String, int, int, int, int, int, boolean,
-	boolean, String[], String, ImageSelector, ImageSelector,
-	ServiceContext)}
+	* @deprecated As of com.liferay.blogs.service#1.1.0, replaced by {@link
+	#addEntry(long, String, String, String, String, int, int,
+	int, int, int, boolean, boolean, String[], String,
+	ImageSelector, ImageSelector, ServiceContext)}
 	*/
 	@Deprecated
 	@Override
@@ -337,10 +337,10 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	}
 
 	/**
-	* @deprecated As of 1.1.0, replaced by {@link #updateEntry(long, long,
-	String, String, String, String, int, int, int, int, int,
-	boolean, boolean, String[], String, ImageSelector,
-	ImageSelector, ServiceContext)}
+	* @deprecated As of com.liferay.blogs.service#1.1.0, replaced by {@link
+	#updateEntry(long, long, String, String, String, String, int,
+	int, int, int, int, boolean, boolean, String[], String,
+	ImageSelector, ImageSelector, ServiceContext)}
 	*/
 	@Deprecated
 	@Override
@@ -436,8 +436,8 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	}
 
 	/**
-	* @deprecated As of 1.1.0, replaced by {@link #updateStatus(long, long,
-	int, ServiceContext, Map)}
+	* @deprecated As of com.liferay.blogs.service#1.1.0, replaced by {@link
+	#updateStatus(long, long, int, ServiceContext, Map)}
 	*/
 	@Deprecated
 	@Override

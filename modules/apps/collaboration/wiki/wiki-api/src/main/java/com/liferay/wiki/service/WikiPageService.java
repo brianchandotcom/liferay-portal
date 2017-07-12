@@ -208,8 +208,8 @@ public interface WikiPageService extends BaseService {
 		int start, int end) throws PortalException;
 
 	/**
-	* @deprecated As of 1.2.0, replaced by {@link #addTempFileEntry(long,
-	String, String, InputStream, String)}
+	* @deprecated As of com.liferay.wiki.service#1.2.0, replaced by {@link
+	#addTempFileEntry(long, String, String, InputStream, String)}
 	*/
 	@java.lang.Deprecated
 	public void addTempPageAttachment(long nodeId, java.lang.String fileName,

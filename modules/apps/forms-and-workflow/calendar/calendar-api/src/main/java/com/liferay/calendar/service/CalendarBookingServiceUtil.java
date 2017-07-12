@@ -46,9 +46,10 @@ public class CalendarBookingServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 2.2.0, replaced by {@link #addCalendarBooking(long,
-	long[], long, long, Map, Map, String, long, long, boolean,
-	String, long, String, long, String, ServiceContext)}
+	* @deprecated As of com.liferay.calendar.service#NEXT-VERSION, replaced by
+	{@link #addCalendarBooking(long, long[], long, long, Map,
+	Map, String, long, long, boolean, String, long, String, long,
+	String, ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.calendar.model.CalendarBooking addCalendarBooking(
@@ -75,7 +76,7 @@ public class CalendarBookingServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 2.2.0
+	* @deprecated As of com.liferay.calendar.service#NEXT-VERSION
 	*/
 	@Deprecated
 	public static com.liferay.calendar.model.CalendarBooking addCalendarBooking(
@@ -365,10 +366,10 @@ public class CalendarBookingServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 2.2.0, replaced by {@link
-	#updateRecurringCalendarBooking(long, long, long[], Map, Map,
-	String, long, long, boolean, long, String, long, String,
-	ServiceContext)
+	* @deprecated As of com.liferay.calendar.service#NEXT-VERSION, replaced by
+	{@link #updateRecurringCalendarBooking(long, long, long[],
+	Map, Map, String, long, long, boolean, long, String, long,
+	String, ServiceContext)
 	*/
 	@Deprecated
 	public static com.liferay.calendar.model.CalendarBooking updateRecurringCalendarBooking(
@@ -541,8 +542,9 @@ public class CalendarBookingServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 2.2.0, replaced by {@link #invokeTransition(long, int,
-	long, boolean, boolean, ServiceContext)}
+	* @deprecated As of com.liferay.calendar.service#NEXT-VERSION, replaced by
+	{@link #invokeTransition(long, int, long, boolean, boolean,
+	ServiceContext)}
 	*/
 	@Deprecated
 	public static void invokeTransition(long calendarBookingId, int status,

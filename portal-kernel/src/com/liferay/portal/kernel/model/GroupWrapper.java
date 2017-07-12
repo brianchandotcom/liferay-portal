@@ -329,7 +329,8 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #hasAncestor}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #hasAncestor}
 	*/
 	@Deprecated
 	@Override
@@ -907,8 +908,8 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	#getChildrenWithLayouts(boolean, int, int,
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #getChildrenWithLayouts(boolean, int, int,
 	OrderByComparator)}
 	*/
 	@Deprecated

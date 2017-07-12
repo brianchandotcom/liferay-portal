@@ -70,14 +70,16 @@ public interface RepositoryService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String[] getSupportedConfigurations(long classNameId);
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -85,7 +87,8 @@ public interface RepositoryService extends BaseService {
 		java.lang.String className, java.lang.String configuration);
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

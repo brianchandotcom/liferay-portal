@@ -168,8 +168,8 @@ public class ResourcePermissionLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getRoles(long, String, int,
-	String, String}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #getRoles(long, String, int, String, String}
 	*/
 	@Deprecated
 	public static boolean[] hasResourcePermissions(long companyId,
@@ -547,9 +547,9 @@ public class ResourcePermissionLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	#getAvailableResourcePermissionActionIds(long, String, int,
-	String, Collection)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #getAvailableResourcePermissionActionIds(long, String,
+	int, String, Collection)}
 	*/
 	@Deprecated
 	public static java.util.Map<java.lang.Long, java.util.Set<java.lang.String>> getAvailableResourcePermissionActionIds(

@@ -218,8 +218,9 @@ public interface DLFolderLocalService extends BaseLocalService,
 	public DLFolder updateDLFolder(DLFolder dlFolder);
 
 	/**
-	* @deprecated As of 7.0.0, replaced {@link #updateFolder(long, long,
-	String, String, long, List, int, ServiceContext)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced {@link
+	#updateFolder(long, long, String, String, long, List, int,
+	ServiceContext)}
 	*/
 	@java.lang.Deprecated
 	public DLFolder updateFolder(long folderId, java.lang.String name,
@@ -234,8 +235,9 @@ public interface DLFolderLocalService extends BaseLocalService,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #updateFolder(long, long,
-	String, String, long, List, int, ServiceContext)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #updateFolder(long, long, String, String, long, List,
+	int, ServiceContext)}
 	*/
 	@java.lang.Deprecated
 	public DLFolder updateFolder(long folderId, long parentFolderId,
@@ -252,9 +254,9 @@ public interface DLFolderLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #
-	updateFolderAndFileEntryTypes(long, long, long, String,
-	String, long, List, int, ServiceContext)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link # updateFolderAndFileEntryTypes(long, long, long,
+	String, String, long, List, int, ServiceContext)}
 	*/
 	@java.lang.Deprecated
 	public DLFolder updateFolderAndFileEntryTypes(long userId, long folderId,
@@ -448,8 +450,8 @@ public interface DLFolderLocalService extends BaseLocalService,
 		long folderId, QueryDefinition<?> queryDefinition);
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getGroupFolderIds(long,
-	long)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #getGroupFolderIds(long, long)}
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -544,7 +546,8 @@ public interface DLFolderLocalService extends BaseLocalService,
 	public void clearDLFileEntryTypeDLFolders(long fileEntryTypeId);
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #deleteAllByGroup(long)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #deleteAllByGroup(long)}
 	*/
 	@java.lang.Deprecated
 	public void deleteAll(long groupId) throws PortalException;
@@ -575,8 +578,8 @@ public interface DLFolderLocalService extends BaseLocalService,
 		long repositoryId, long folderId);
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getGroupSubfolderIds(List,
-	long, long)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #getGroupSubfolderIds(List, long, long)}
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

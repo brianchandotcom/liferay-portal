@@ -18,7 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, with no direct replacement
+ * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+            replacement
  * @generated
  */
 @Deprecated

@@ -268,7 +268,8 @@ public class LayoutServiceSoap {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link
 	com.liferay.exportimport.kernel.service.ExportImportService#exportLayoutsAsFileInBackground(
 	ExportImportConfiguration)}
 	*/
@@ -290,7 +291,8 @@ public class LayoutServiceSoap {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link
 	com.liferay.exportimport.kernel.service.ExportImportService#exportLayoutsAsFileInBackground(
 	long)}
 	*/

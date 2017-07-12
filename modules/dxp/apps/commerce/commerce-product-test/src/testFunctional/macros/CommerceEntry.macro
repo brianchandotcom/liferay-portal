@@ -26,8 +26,6 @@
 	</command>
 
 	<command name="addOptionsEntry">
-		<execute function="Type" locator1="CommerceEntry#NAME_FIELD" value1="${optionName}" />
-
 		<execute function="Type" locator1="CommerceEntry#TITLE_FIELD" value1="${optionTitle}" />
 
 		<execute function="Type" locator1="CommerceEntry#DESCRIPTION_FIELD" value1="${optionDescription}" />
@@ -128,8 +126,6 @@
 	</command>
 
 	<command name="viewOptionsEntry">
-		<execute function="AssertTextEquals" locator1="CommerceEntry#NAME_FIELD" value1="${optionName}" />
-
 		<execute function="AssertTextEquals" locator1="CommerceEntry#TITLE_FIELD" value1="${optionTitle}" />
 
 		<execute function="AssertTextEquals" locator1="CommerceEntry#DESCRIPTION_FIELD" value1="${optionDescription}" />

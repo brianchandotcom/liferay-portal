@@ -13,6 +13,22 @@
 		</execute>
 	</command>
 
+	<command name="addOptionValueEntry">
+		<execute macro="CommerceEntry#gotoEntryMenu">
+			<var name="menuTab" value="Values" />
+		</execute>
+
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute macro="CommerceEntry#addOptionValue">
+			<var name="valueName" value="${optionValueName}" />
+			<var name="valuePriority" value="${optionValuePriority}" />
+			<var name="valueTitle" value="${optionValueTitle}" />
+		</execute>
+
+		<execute macro="CommerceEntry#saveEntry" />
+	</command>
+
 	<command name="assertAllCpOptionsSet">
 		<for list="${setCpOption1},${setCpOption2},${setCpOption3}" param="cpOption" >
 			<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >

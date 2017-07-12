@@ -70,6 +70,17 @@
 		</execute>
 	</command>
 
+	<command name="addMessageBoards">
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Message Boards" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="Message Boards Body" />
+			<var name="threadSubject" value="Message Boards Subject 3" />
+		</execute>
+	</command>
+
 	<command name="addOrganization">
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
@@ -566,6 +577,49 @@
 
 		<execute macro="CalendarEvent#view">
 			<var name="eventTitle" value="Post Upgrade Calendar Event" />
+		</execute>
+	</command>
+
+	<command name="viewDocument">
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Document" />
+		</execute>
+
+		<execute macro="DMPortlet#setDescriptiveView" />
+
+		<execute macro="DMDocument#enableActionsMenuOnPortlet" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Document" />
+		</execute>
+
+		<execute macro="DMDocument#viewAllPG">
+			<var name="commentBody" value="Document Comment" />
+			<var name="dmDocumentTitle" value="Document1" />
+		</execute>
+
+		<execute macro="DMDocument#viewDocumentDetailsCmdPG">
+			<var name="dmDocumentTitle" value="Document1" />
+		</execute>
+
+		<execute macro="DMDocument#viewDocumentMetadataCP">
+			<var name="metadataData" value="application/msword" />
+			<var name="metadataLabel" value="Content Type" />
+		</execute>
+
+		<execute macro="DMDocument#viewDocumentMetadataCP">
+			<var name="metadataData" value="Liferay" />
+			<var name="metadataLabel" value="Creator" />
+		</execute>
+	</command>
+
+	<command name="viewMessageBoards">
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Message Boards" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewLockedPG">
+			<var name="threadSubject" value="Message Boards Subject 2" />
 		</execute>
 	</command>
 

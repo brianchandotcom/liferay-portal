@@ -32,6 +32,10 @@ import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -39,6 +43,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -138,7 +143,7 @@ public class FinderCacheImpl
 
 		if (primaryKey != null) {
 			return _primaryKeyToResult(
-				finderPath, basePersistenceImpl, primaryKey);
+				finderPath, args, basePersistenceImpl, primaryKey);
 		}
 
 		return null;
@@ -179,7 +184,8 @@ public class FinderCacheImpl
 		}
 
 		String encodedArguments = finderPath.encodeArguments(args);
-		Serializable primaryKey = _resultToPrimaryKey((Serializable)result);
+		Serializable primaryKey = _resultToPrimaryKey(
+			args, (Serializable)result);
 
 		if (_localCacheAvailable) {
 			Map<Serializable, Serializable> localCache = _localCache.get();
@@ -310,16 +316,22 @@ public class FinderCacheImpl
 	}
 
 	private Serializable _primaryKeyToResult(
-		FinderPath finderPath,
+		FinderPath finderPath, Object[] args,
 		BasePersistenceImpl<? extends BaseModel<?>> basePersistenceImpl,
 		Serializable primaryKey) {
 
-		if (primaryKey instanceof List<?>) {
-			List<Serializable> primaryKeys = (List<Serializable>)primaryKey;
+		if (primaryKey instanceof EmptyResult) {
+			EmptyResult emptyResult = (EmptyResult)primaryKey;
 
-			if (primaryKeys.isEmpty()) {
+			if (emptyResult.matches(args)) {
 				return (Serializable)Collections.emptyList();
 			}
+
+			return null;
+		}
+
+		if (primaryKey instanceof List<?>) {
+			List<Serializable> primaryKeys = (List<Serializable>)primaryKey;
 
 			Set<Serializable> primaryKeysSet = new HashSet<>(primaryKeys);
 
@@ -349,7 +361,9 @@ public class FinderCacheImpl
 		return primaryKey;
 	}
 
-	private Serializable _resultToPrimaryKey(Serializable result) {
+	private Serializable _resultToPrimaryKey(
+		Object[] args, Serializable result) {
+
 		if (result instanceof BaseModel<?>) {
 			BaseModel<?> model = (BaseModel<?>)result;
 
@@ -359,13 +373,13 @@ public class FinderCacheImpl
 			List<Serializable> list = (List<Serializable>)result;
 
 			if (list.isEmpty()) {
-				return (Serializable)Collections.emptyList();
+				return new EmptyResult(args);
 			}
 
 			ArrayList<Serializable> cachedList = new ArrayList<>(list.size());
 
 			for (Serializable curResult : list) {
-				Serializable primaryKey = _resultToPrimaryKey(curResult);
+				Serializable primaryKey = _resultToPrimaryKey(args, curResult);
 
 				cachedList.add(primaryKey);
 			}
@@ -388,5 +402,56 @@ public class FinderCacheImpl
 	private Props _props;
 	private boolean _valueObjectEntityBlockingCacheEnabled;
 	private boolean _valueObjectFinderCacheEnabled;
+
+	private static class EmptyResult implements Externalizable {
+
+		public EmptyResult() {
+		}
+
+		public boolean matches(Object[] args) {
+			if (args.length != _args.length) {
+				return false;
+			}
+
+			for (int i = 0; i < _args.length; i++) {
+				if (!Objects.equals(args[i], _args[i])) {
+					return false;
+				}
+			}
+
+			return true;
+		}
+
+		@Override
+		public void readExternal(ObjectInput objectInput)
+			throws ClassNotFoundException, IOException {
+
+			int length = objectInput.readInt();
+
+			_args = new Object[length];
+
+			for (int i = 0; i < length; i++) {
+				_args[i] = objectInput.readObject();
+			}
+		}
+
+		@Override
+		public void writeExternal(ObjectOutput objectOutput)
+			throws IOException {
+
+			objectOutput.writeInt(_args.length);
+
+			for (Object arg : _args) {
+				objectOutput.writeObject(arg);
+			}
+		}
+
+		private EmptyResult(Object[] args) {
+			_args = args;
+		}
+
+		private Object[] _args;
+
+	}
 
 }

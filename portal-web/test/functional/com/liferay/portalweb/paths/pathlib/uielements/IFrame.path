@@ -167,7 +167,7 @@
  	<td>SELECT_USER_SITES</td>
  	<td>//iframe[contains(@id,'selectSite_iframe_')]</td>
  	<td></td>
- </tr>
+</tr>
 <tr>
 	<td>SELECT_STRUCTURE_FIELD</td>
 	<td>//div[contains(@class,'dialog-iframe-bd')]/iframe[contains(@src,'select_structure_field')]</td>

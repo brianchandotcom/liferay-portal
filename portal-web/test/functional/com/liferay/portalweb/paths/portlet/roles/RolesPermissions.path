@@ -174,7 +174,7 @@
 <!--CONTROL_PANEL_SITES_SITES_RESOURCE_PERMISSIONS-->
 <tr>
 	<td>CONTROL_PANEL_SITES_SITES_RESOURCE_PERMISSIONS_SITE_MANAGE_PAGES_CHECKBOX</td>
-	<td>//input[contains(@value,'GroupMANAGE_LAYOUTS') and contains(@title,'Select')] </td>
+	<td>//input[contains(@value,'GroupMANAGE_LAYOUTS') and contains(@title,'Select')]</td>
 	<td></td>
 </tr>
 <tr>

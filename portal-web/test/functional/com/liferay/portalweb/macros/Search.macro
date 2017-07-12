@@ -219,6 +219,8 @@
 
 		<var method="StringUtil#lowerCase('${userLoginFullName}')" name="userLoginFullName" />
 
+		<var name="key_userLoginFullName" value="${userLoginFullName}" />
+
 		<execute function="AssertTextEquals#assertPartialText" locator1="SearchResults#USER_FACET_FREQUENCY" value1="${facetFrequency}" />
 
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="SearchResults#USER_FACET_USER_NAME" value1="${userLoginFullName}" />

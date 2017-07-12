@@ -65,7 +65,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author Lino Alves
  * @author André de Oliveira
-*/
+ */
 @PrepareOnlyThisForTest(
 	{DDMStructureLocalServiceUtil.class, ResourceBundleUtil.class}
 )

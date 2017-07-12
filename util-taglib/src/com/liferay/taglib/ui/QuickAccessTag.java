@@ -23,7 +23,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author     Eudaldo Alonso
+ * @author Eudaldo Alonso
  */
 public class QuickAccessTag extends IncludeTag {
 

@@ -84,8 +84,8 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 		java.lang.String title);
 
 	/**
-	* @deprecated As of 1.2.0, replaced by {@link #addPageResource(long, long,
-	String)}
+	* @deprecated As of com.liferay.wiki.service#1.2.0, replaced by {@link
+	#addPageResource(long, long, String)}
 	*/
 	@java.lang.Deprecated
 	public WikiPageResource addPageResource(long nodeId, java.lang.String title);
@@ -308,8 +308,8 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 		java.lang.String title);
 
 	/**
-	* @deprecated As of 1.2.0, replaced by {@link #getPageResourcePrimKey(long,
-	long, String)}
+	* @deprecated As of com.liferay.wiki.service#1.2.0, replaced by {@link
+	#getPageResourcePrimKey(long, long, String)}
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

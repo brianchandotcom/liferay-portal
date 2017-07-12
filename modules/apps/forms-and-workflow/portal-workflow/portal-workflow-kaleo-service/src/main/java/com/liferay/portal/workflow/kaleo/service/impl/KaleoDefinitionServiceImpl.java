@@ -20,7 +20,7 @@ import com.liferay.portal.workflow.kaleo.service.base.KaleoDefinitionServiceBase
 import java.util.List;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author     Brian Wing Shun Chan
  * @deprecated As of 2.0.0, with no direct replacement
  */
 @Deprecated

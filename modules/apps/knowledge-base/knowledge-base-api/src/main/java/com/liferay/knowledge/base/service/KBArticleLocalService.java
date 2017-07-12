@@ -292,8 +292,8 @@ public interface KBArticleLocalService extends BaseLocalService,
 		java.lang.String[] sections, int status);
 
 	/**
-	* @deprecated As of 1.1.0, replaced by {@link #getKBArticlesCount(long,
-	long, int)}
+	* @deprecated As of com.liferay.knowledge.base.service#1.1.0, replaced by
+	{@link #getKBArticlesCount(long, long, int)}
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -368,8 +368,8 @@ public interface KBArticleLocalService extends BaseLocalService,
 		OrderByComparator<KBArticle> orderByComparator);
 
 	/**
-	* @deprecated As of 1.1.0, replaced by {@link
-	#getKBArticleAndAllDescendantKBArticles(long, int,
+	* @deprecated As of com.liferay.knowledge.base.service#1.1.0, replaced by
+	{@link #getKBArticleAndAllDescendantKBArticles(long, int,
 	OrderByComparator)}
 	*/
 	@java.lang.Deprecated
@@ -440,8 +440,9 @@ public interface KBArticleLocalService extends BaseLocalService,
 		OrderByComparator<KBArticle> orderByComparator);
 
 	/**
-	* @deprecated As of 1.1.0, replaced by {@link #getKBArticles(long, long,
-	int, int, int, OrderByComparator)}
+	* @deprecated As of com.liferay.knowledge.base.service#1.1.0, replaced by
+	{@link #getKBArticles(long, long, int, int, int,
+	OrderByComparator)}
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

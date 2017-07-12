@@ -62,8 +62,8 @@ public class ExpandoBridgeIndexerImpl implements ExpandoBridgeIndexer {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #encodeFieldName(String,
-	 *             int)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #encodeFieldName(String, int)}
 	 */
 	@Deprecated
 	@Override

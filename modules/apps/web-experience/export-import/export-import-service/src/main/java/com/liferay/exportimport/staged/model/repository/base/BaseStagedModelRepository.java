@@ -30,9 +30,8 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import java.util.List;
 
 /**
- * @author Daniel Kocsis
- *
- * @deprecated As of 4.0.0
+ * @author     Daniel Kocsis
+ * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
  */
 @Deprecated
 public abstract class BaseStagedModelRepository<T extends StagedModel>

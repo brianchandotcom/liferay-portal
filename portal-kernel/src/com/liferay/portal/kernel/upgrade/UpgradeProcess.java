@@ -143,7 +143,7 @@ public abstract class UpgradeProcess
 		}
 
 		/**
-		 * @deprecated As of 7.0.0, with no direct replacement
+		 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
 		 */
 		@Deprecated
 		public String getIndexedColumnName();
@@ -174,7 +174,7 @@ public abstract class UpgradeProcess
 		}
 
 		/**
-		 * @deprecated As of 7.0.0, with no direct replacement
+		 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
 		 */
 		@Deprecated
 		@Override
@@ -220,7 +220,7 @@ public abstract class UpgradeProcess
 		}
 
 		/**
-		 * @deprecated As of 7.0.0, with no direct replacement
+		 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
 		 */
 		@Deprecated
 		@Override
@@ -264,7 +264,7 @@ public abstract class UpgradeProcess
 		}
 
 		/**
-		 * @deprecated As of 7.0.0, with no direct replacement
+		 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
 		 */
 		@Deprecated
 		@Override
@@ -305,7 +305,7 @@ public abstract class UpgradeProcess
 		}
 
 		/**
-		 * @deprecated As of 7.0.0, with no direct replacement
+		 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
 		 */
 		@Deprecated
 		@Override
@@ -569,8 +569,9 @@ public abstract class UpgradeProcess
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             DBInspector#normalizeName(java.lang.String, DatabaseMetaData)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link DBInspector#normalizeName(java.lang.String,
+	 *             DatabaseMetaData)}
 	 */
 	@Deprecated
 	protected String normalizeName(

@@ -60,8 +60,8 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 	public java.util.List<Group> getChildren(boolean site);
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	#getChildrenWithLayouts(boolean, int, int,
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #getChildrenWithLayouts(boolean, int, int,
 	OrderByComparator)}
 	*/
 	@java.lang.Deprecated()
@@ -161,7 +161,8 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 	public boolean hasStagingGroup();
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #hasAncestor}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #hasAncestor}
 	*/
 	@java.lang.Deprecated()
 	public boolean isChild(long groupId);

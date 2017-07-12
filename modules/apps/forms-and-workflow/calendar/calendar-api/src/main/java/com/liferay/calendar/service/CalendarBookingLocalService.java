@@ -87,9 +87,10 @@ public interface CalendarBookingLocalService extends BaseLocalService,
 	public CalendarBooking addCalendarBooking(CalendarBooking calendarBooking);
 
 	/**
-	* @deprecated As of 2.2.0, replaced by {@link #addCalendarBooking(long,
-	long, long[], long, long, Map, Map, String, long, long,
-	boolean, String, long, String, long, String, ServiceContext)}
+	* @deprecated As of com.liferay.calendar.service#NEXT-VERSION, replaced by
+	{@link #addCalendarBooking(long, long, long[], long, long,
+	Map, Map, String, long, long, boolean, String, long, String,
+	long, String, ServiceContext)}
 	*/
 	@java.lang.Deprecated
 	public CalendarBooking addCalendarBooking(long userId, long calendarId,

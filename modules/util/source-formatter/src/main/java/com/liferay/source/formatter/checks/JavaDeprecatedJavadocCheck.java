@@ -15,7 +15,6 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -36,19 +35,24 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		content = _formatDeprecatedJavadoc(fileName, absolutePath, content);
+		content = _formatDeprecatedJavadoc(fileName, content);
 
 		return content;
 	}
 
-	private String _formatDeprecatedJavadoc(
-			String fileName, String absolutePath, String content)
+	private String _formatDeprecatedJavadoc(String fileName, String content)
 		throws Exception {
 
-		ComparableVersion mainReleaseComparableVersion =
-			_getMainReleaseComparableVersion(fileName, absolutePath);
+		BNDSettings bndSettings = getBNDSettings(fileName);
 
-		if (mainReleaseComparableVersion == null) {
+		if (bndSettings == null) {
+			return content;
+		}
+
+		ComparableVersion releaseComparableVersion =
+			bndSettings.getReleaseComparableVersion();
+
+		if (releaseComparableVersion == null) {
 			return content;
 		}
 
@@ -57,35 +61,54 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 		while (matcher.find()) {
 			if (matcher.group(2) == null) {
 				return StringUtil.insert(
-					content,
-					" As of " + mainReleaseComparableVersion.toString(),
-					matcher.end(1));
+					content, " As of " + _NEXT_VERSION, matcher.end(1));
 			}
 
-			String version = matcher.group(3);
+			String bundleSymbolicName = bndSettings.getBundleSymbolicName();
 
-			ComparableVersion comparableVersion = new ComparableVersion(
-				version);
+			if (Validator.isNull(bundleSymbolicName)) {
+				return content;
+			}
 
-			if (comparableVersion.compareTo(mainReleaseComparableVersion) > 0) {
+			String symbolicName = matcher.group(3);
+
+			if (symbolicName == null) {
+				return StringUtil.insert(
+					content, bundleSymbolicName + "#", matcher.start(4));
+			}
+
+			if (symbolicName.equals(bundleSymbolicName)) {
 				return StringUtil.replaceFirst(
-					content, version, mainReleaseComparableVersion.toString(),
-					matcher.start());
+					content, symbolicName, bundleSymbolicName, matcher.start());
 			}
 
-			if (StringUtil.count(version, CharPool.PERIOD) == 1) {
-				return StringUtil.insert(content, ".0", matcher.end(3));
+			String version = matcher.group(4);
+
+			if (!version.equals(_NEXT_VERSION)) {
+				ComparableVersion comparableVersion = new ComparableVersion(
+					version);
+
+				if (comparableVersion.compareTo(releaseComparableVersion) >=
+						0) {
+
+					return StringUtil.replaceFirst(
+						content, version, _NEXT_VERSION, matcher.start());
+				}
+
+				if (StringUtil.count(version, CharPool.PERIOD) == 1) {
+					return StringUtil.insert(content, ".0", matcher.end(4));
+				}
 			}
 
-			String deprecatedInfo = matcher.group(4);
+			String deprecatedInfo = matcher.group(5);
 
 			if (Validator.isNull(deprecatedInfo)) {
-				return content;
+				continue;
 			}
 
 			if (!deprecatedInfo.startsWith(StringPool.COMMA)) {
 				return StringUtil.insert(
-					content, StringPool.COMMA, matcher.end(3));
+					content, StringPool.COMMA, matcher.end(4));
 			}
 
 			if (deprecatedInfo.endsWith(StringPool.PERIOD) &&
@@ -93,65 +116,20 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 
 				return StringUtil.replaceFirst(
 					content, StringPool.PERIOD, StringPool.BLANK,
-					matcher.end(4) - 1);
+					matcher.end(5) - 1);
 			}
 		}
+
+		putBNDSettings(bndSettings);
 
 		return content;
 	}
 
-	private ComparableVersion _getMainReleaseComparableVersion(
-			String fileName, String absolutePath)
-		throws Exception {
-
-		boolean usePortalReleaseVersion = false;
-
-		if (isPortalSource() && !isModulesFile(absolutePath)) {
-			usePortalReleaseVersion = true;
-		}
-
-		String releaseVersion = StringPool.BLANK;
-
-		if (usePortalReleaseVersion) {
-			if (_mainReleaseComparableVersion != null) {
-				return _mainReleaseComparableVersion;
-			}
-
-			releaseVersion = ReleaseInfo.getVersion();
-		}
-		else {
-			BNDSettings bndSettings = getBNDSettings(fileName);
-
-			if (bndSettings == null) {
-				return null;
-			}
-
-			releaseVersion = bndSettings.getReleaseVersion();
-
-			if (releaseVersion == null) {
-				return null;
-			}
-
-			putBNDSettings(bndSettings);
-		}
-
-		int pos = releaseVersion.lastIndexOf(CharPool.PERIOD);
-
-		String mainReleaseVersion = releaseVersion.substring(0, pos) + ".0";
-
-		ComparableVersion mainReleaseComparableVersion = new ComparableVersion(
-			mainReleaseVersion);
-
-		if (usePortalReleaseVersion) {
-			_mainReleaseComparableVersion = mainReleaseComparableVersion;
-		}
-
-		return mainReleaseComparableVersion;
-	}
+	private static final String _NEXT_VERSION = "NEXT-VERSION";
 
 	private final Pattern _deprecatedPattern = Pattern.compile(
-		"(\n\\s*\\* @deprecated)( As of ([0-9\\.]+)(.*?)\n\\s*\\*( @|/))?",
+		"(\n\\s*\\* @deprecated)( As of[\\s\\*]+([\\w\\.]+#)?" +
+			"([0-9\\.]+|NEXT-VERSION)(.*?)\n\\s*\\*( @|/))?",
 		Pattern.DOTALL);
-	private ComparableVersion _mainReleaseComparableVersion;
 
 }

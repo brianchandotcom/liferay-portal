@@ -126,8 +126,9 @@ public class UserGroupLocalServiceWrapper implements UserGroupLocalService,
 	* @param name the user group's name
 	* @param description the user group's description
 	* @return the user group
-	* @deprecated As of 6.2.0, replaced by {@link #addUserGroup(long, long,
-	String, String, ServiceContext)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #addUserGroup(long, long, String, String,
+	ServiceContext)}
 	*/
 	@Deprecated
 	@Override
@@ -296,8 +297,9 @@ public class UserGroupLocalServiceWrapper implements UserGroupLocalService,
 	* @param name the user group's name
 	* @param description the user group's description
 	* @return the user group
-	* @deprecated As of 6.2.0, replaced by {@link #updateUserGroup(long, long,
-	String, String, ServiceContext)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #updateUserGroup(long, long, String, String,
+	ServiceContext)}
 	*/
 	@Deprecated
 	@Override
@@ -889,7 +891,7 @@ public class UserGroupLocalServiceWrapper implements UserGroupLocalService,
 	*
 	* @param userGroupId the primary key of the user group
 	* @param userId the primary key of the user
-	* @deprecated As of 6.2.0
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION
 	*/
 	@Deprecated
 	@Override
@@ -904,7 +906,7 @@ public class UserGroupLocalServiceWrapper implements UserGroupLocalService,
 	*
 	* @param userGroupId the primary key of the user group
 	* @param userIds the primary keys of the users
-	* @deprecated As of 6.1.0
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION
 	*/
 	@Deprecated
 	@Override
@@ -918,7 +920,7 @@ public class UserGroupLocalServiceWrapper implements UserGroupLocalService,
 	*
 	* @param userGroupIds the primary keys of the user groups
 	* @param userId the primary key of the user
-	* @deprecated As of 6.1.0
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION
 	*/
 	@Deprecated
 	@Override

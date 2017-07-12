@@ -56,7 +56,6 @@ public interface AdaptiveMedia<T> {
 	 * @param  adaptiveMediaAttribute the adaptive media attribute
 	 * @return the attribute value wrapped in an {@link Optional}; {@link
 	 *         Optional#EMPTY} otherwise
-	 * @review
 	 */
 	public <V> Optional<V> getValueOptional(
 		AdaptiveMediaAttribute<T, V> adaptiveMediaAttribute);

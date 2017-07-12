@@ -33,8 +33,8 @@ import java.io.File;
 import java.io.InputStream;
 
 /**
- * @author Adolfo Pérez
- * @deprecated As of 7.0.0, replaced by {@link
+ * @author     Adolfo Pérez
+ * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
  *             com.liferay.document.library.internal.util.DLValidatorImpl}
  */
 @Deprecated

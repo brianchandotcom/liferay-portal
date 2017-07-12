@@ -28,14 +28,14 @@ import java.util.Collection;
 public interface AdaptiveMediaImageConfigurationDemoDataCreator {
 
 	/**
-	  * Creates a collection of {@link AdaptiveMediaImageConfigurationEntry}
-	  * configurations based on the
-	  * {@link DemoAdaptiveMediaImageConfigurationVariant} enum
-	  *
-	  * @param companyId ID of the company where the configurations will be
-	  * created
-	  * @return a list of the configurations
-	  */
+	 * Creates a collection of {@link AdaptiveMediaImageConfigurationEntry}
+	 * configurations based on the {@link
+	 * DemoAdaptiveMediaImageConfigurationVariant} enum
+	 *
+	 * @param  companyId ID of the company where the configurations will be
+	 *         created
+	 * @return a list of the configurations
+	 */
 	public Collection<AdaptiveMediaImageConfigurationEntry> create(
 			long companyId)
 		throws IOException;
@@ -43,10 +43,10 @@ public interface AdaptiveMediaImageConfigurationDemoDataCreator {
 	/**
 	 * Creates a {@link AdaptiveMediaImageConfigurationEntry} for a company
 	 *
-	 * @param companyId ID of the company where the configuration will be
-	 * created
-	 * @param demoAdaptiveMediaImageConfigurationVariant the configuration to
-	 *        create
+	 * @param  companyId ID of the company where the configuration will be
+	 *         created
+	 * @param  demoAdaptiveMediaImageConfigurationVariant the configuration to
+	 *         create
 	 * @return the configuration
 	 */
 	public AdaptiveMediaImageConfigurationEntry create(

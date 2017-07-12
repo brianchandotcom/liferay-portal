@@ -45,7 +45,7 @@ public class TestMultipleIndexerPostProcessor implements IndexerPostProcessor {
 	}
 
 	/**
-	 * @deprecated As of 1.0.0
+	 * @deprecated As of com.liferay.portal.search.test#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -73,7 +73,7 @@ public class TestMultipleIndexerPostProcessor implements IndexerPostProcessor {
 	}
 
 	/**
-	 * @deprecated As of 1.0.0
+	 * @deprecated As of com.liferay.portal.search.test#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override

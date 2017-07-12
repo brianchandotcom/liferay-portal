@@ -44,7 +44,7 @@ public class PortalCacheWrapper<K extends Serializable, V>
 	}
 
 	/**
-	 * @deprecated As of 2.1.0
+	 * @deprecated As of com.liferay.portal.cache#2.1.0
 	 */
 	@Deprecated
 	@Override

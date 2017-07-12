@@ -19,8 +19,8 @@ import org.apache.jasper.compiler.tagplugin.TagPluginContext;
 
 /**
  * @author Preston Crary
- * @see ChooseTagPlugin
- * @see OtherwiseTagPlugin
+ * @see    ChooseTagPlugin
+ * @see    OtherwiseTagPlugin
  */
 public class WhenTagPlugin implements TagPlugin {
 

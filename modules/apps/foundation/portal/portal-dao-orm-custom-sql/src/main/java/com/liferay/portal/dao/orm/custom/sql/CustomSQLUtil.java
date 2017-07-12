@@ -104,7 +104,8 @@ public class CustomSQLUtil {
 	}
 
 	/**
-	 * @deprecated As of 1.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.dao.orm.custom.sql#NEXT-VERSION,
+	 *             with no direct replacement
 	 */
 	@Deprecated
 	public static void reloadCustomSQL(Class<?> clazz) throws SQLException {

@@ -178,7 +178,7 @@ public class AssetCategoryPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	/**
-	 * @deprecated As of 1.0.0
+	 * @deprecated As of com.liferay.asset.categories.admin.web#1.0.0
 	 */
 	@Deprecated
 	protected ActionableDynamicQuery getCategoryActionableDynamicQuery(
@@ -196,7 +196,7 @@ public class AssetCategoryPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	/**
-	 * @deprecated As of 1.0.0
+	 * @deprecated As of com.liferay.asset.categories.admin.web#1.0.0
 	 */
 	@Deprecated
 	protected ActionableDynamicQuery getVocabularyActionableDynamicQuery(

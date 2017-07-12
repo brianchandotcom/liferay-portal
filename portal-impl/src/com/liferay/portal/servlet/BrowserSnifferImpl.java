@@ -372,7 +372,8 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link BrowserMetadata#isIe()}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link BrowserMetadata#isIe()}
 	 */
 	@Deprecated
 	protected boolean isIe(String userAgent) {

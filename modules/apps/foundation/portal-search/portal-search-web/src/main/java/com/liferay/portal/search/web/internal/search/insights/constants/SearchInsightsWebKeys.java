@@ -16,7 +16,7 @@ package com.liferay.portal.search.web.internal.search.insights.constants;
 
 /**
  * @author André de Oliveira
-*/
+ */
 public class SearchInsightsWebKeys {
 
 	public static final String DISPLAY_CONTEXT =

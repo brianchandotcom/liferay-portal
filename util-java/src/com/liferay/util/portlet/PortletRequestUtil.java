@@ -22,7 +22,8 @@ import javax.portlet.PortletResponse;
 /**
  * @author     Brian Wing Shun Chan
  * @author     Raymond Augé
- * @deprecated As of 7.0.0, replaced by {@link PortletRequestModel}
+ * @deprecated As of com.liferay.util.java#NEXT-VERSION, replaced by {@link
+ *             PortletRequestModel}
  */
 @Deprecated
 public class PortletRequestUtil {

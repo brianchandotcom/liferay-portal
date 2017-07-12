@@ -58,8 +58,6 @@ import org.osgi.framework.FrameworkUtil;
  * </p>
  *
  * @author Sergio González
- *
- * @review
  */
 public class AdaptiveMediaImageEntryLocalServiceImpl
 	extends AdaptiveMediaImageEntryLocalServiceBaseImpl {
@@ -80,8 +78,6 @@ public class AdaptiveMediaImageEntryLocalServiceImpl
 	 * @return the adaptive media image
 	 * @throws PortalException if an adaptive media image already exists for the
 	 *         file version and configuration
-	 *
-	 * @review
 	 */
 	@Override
 	public AdaptiveMediaImageEntry addAdaptiveMediaImageEntry(
@@ -140,11 +136,9 @@ public class AdaptiveMediaImageEntryLocalServiceImpl
 	 * it also deletes the bytes from the file store.
 	 * </p>
 	 *
-	 * @param  companyId the primary key of the company
-	 * @param  configurationEntry the configuration used to create the adaptive
-	 *         media image
-	 *
-	 * @review
+	 * @param companyId the primary key of the company
+	 * @param configurationEntry the configuration used to create the adaptive
+	 *        media image
 	 */
 	@Override
 	public void deleteAdaptiveMediaImageEntries(
@@ -167,8 +161,6 @@ public class AdaptiveMediaImageEntryLocalServiceImpl
 	 *
 	 * @param  fileVersion the FileVersion
 	 * @throws PortalException if the file version cannot be found
-	 *
-	 * @review
 	 */
 	@Override
 	public void deleteAdaptiveMediaImageEntryFileVersion(
@@ -208,8 +200,6 @@ public class AdaptiveMediaImageEntryLocalServiceImpl
 	 * @param  configurationUuid the configuration UUID
 	 * @param  fileVersionId the primary key of the file version
 	 * @throws PortalException if the file version cannot be found
-	 *
-	 * @review
 	 */
 	@Override
 	public void deleteAdaptiveMediaImageEntryFileVersion(
@@ -245,8 +235,6 @@ public class AdaptiveMediaImageEntryLocalServiceImpl
 	 * @param  fileVersionId the primary key of the file version
 	 * @return the matching adaptive media image entry, or <code>null</code> if
 	 *         a matching adaptive media image entry could not be found
-	 *
-	 * @review
 	 */
 	@Override
 	public AdaptiveMediaImageEntry fetchAdaptiveMediaImageEntry(
@@ -265,8 +253,6 @@ public class AdaptiveMediaImageEntryLocalServiceImpl
 	 *         the adaptive media image
 	 * @return the number of adaptive media image entries in the company for the
 	 *         configuration
-	 *
-	 * @review
 	 */
 	@Override
 	public int getAdaptiveMediaImageEntriesCount(
@@ -286,8 +272,6 @@ public class AdaptiveMediaImageEntryLocalServiceImpl
 	 *         image
 	 * @return the input stream of the adaptive media image generated for a file
 	 *         version and configuration
-	 *
-	 * @review
 	 */
 	@Override
 	public InputStream getAdaptiveMediaImageEntryContentStream(
@@ -310,8 +294,6 @@ public class AdaptiveMediaImageEntryLocalServiceImpl
 	 *
 	 * @param  companyId the primary key of the company
 	 * @return the number of expected adaptive media images for a company
-	 *
-	 * @review
 	 */
 	@Override
 	public int getExpectedAdaptiveMediaImageEntriesCount(long companyId) {
@@ -338,8 +320,6 @@ public class AdaptiveMediaImageEntryLocalServiceImpl
 	 *         the adaptive media image
 	 * @return the percentage of images that have an adaptive media image out of
 	 *         the expected adaptive media images
-	 *
-	 * @review
 	 */
 	@Override
 	public int getPercentage(long companyId, String configurationUuid) {

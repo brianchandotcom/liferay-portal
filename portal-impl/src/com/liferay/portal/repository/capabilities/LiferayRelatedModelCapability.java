@@ -21,8 +21,8 @@ import com.liferay.portal.repository.capabilities.util.RepositoryEntryChecker;
 import com.liferay.portal.repository.capabilities.util.RepositoryEntryConverter;
 
 /**
- * @author Iván Zaera
- * @deprecated As of 7.0.0, replaced by {@link
+ * @author     Iván Zaera
+ * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
  *             com.liferay.document.library.internal.capabilities.LiferayRelatedModelCapability}
  */
 @Deprecated

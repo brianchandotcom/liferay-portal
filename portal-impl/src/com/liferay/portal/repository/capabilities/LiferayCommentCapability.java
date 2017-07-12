@@ -25,8 +25,8 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
 
 /**
- * @author Adolfo Pérez
- * @deprecated As of 7.0.0, replaced by {@link
+ * @author     Adolfo Pérez
+ * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
  *             com.liferay.document.library.internal.capabilities.LiferayCommentCapability}
  */
 @Deprecated

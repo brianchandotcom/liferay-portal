@@ -27,7 +27,7 @@ public class InitializedLocalRepository
 	implements LocalRepository {
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override

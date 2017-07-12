@@ -76,9 +76,9 @@ import javax.portlet.PortletURL;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Sergio González
- * @author Julio Camarero
- * @deprecated As of 7.0.0
+ * @author     Sergio González
+ * @author     Julio Camarero
+ * @deprecated As of com.liferay.portal.impl#NEXT-VERSION
  */
 @Deprecated
 @DoPrivileged

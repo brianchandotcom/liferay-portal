@@ -52,7 +52,7 @@ public class BlogsEntryImpl extends BlogsEntryBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 1.1.0, replaced by {@link
+	 * @deprecated As of com.liferay.blogs.service#1.1.0, replaced by {@link
 	 *             #getSmallImageURL(ThemeDisplay)}
 	 */
 	@Deprecated

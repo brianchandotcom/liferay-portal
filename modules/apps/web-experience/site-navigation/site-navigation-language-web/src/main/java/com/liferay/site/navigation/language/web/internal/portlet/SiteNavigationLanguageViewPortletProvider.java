@@ -56,7 +56,7 @@ public class SiteNavigationLanguageViewPortletProvider
 	}
 
 	/**
-	 * @deprecated As of 2.1.0
+	 * @deprecated As of com.liferay.site.navigation.language.web#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override

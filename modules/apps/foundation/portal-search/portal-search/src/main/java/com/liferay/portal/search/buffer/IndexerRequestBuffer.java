@@ -64,7 +64,7 @@ public class IndexerRequestBuffer {
 
 	/**
 	/**
-	 * @deprecated As of 2.1.0, replaced by {@link #add(
+	 * @deprecated As of com.liferay.portal.search#2.1.0, replaced by {@link #add(
 	 *             IndexerRequest, IndexerRequestBufferOverflowHandler, int)}
 	 *
 	 * @param indexerRequest

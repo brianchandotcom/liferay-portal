@@ -20,8 +20,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * @author László Csontos
- * @deprecated As of 7.0.0, with no direct replacement
+ * @author     László Csontos
+ * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+ *             replacement
  */
 @Deprecated
 public class ResourceActionsBagImpl implements Cloneable, ResourceActionsBag {

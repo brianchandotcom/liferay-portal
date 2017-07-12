@@ -21,8 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
 /**
- * @author Julio Camarero
- * @deprecated As of 2.0.0, with no direct replacement
+ * @author     Julio Camarero
+ * @deprecated As of com.liferay.flags.taglib#2.0.0, with no direct replacement
  */
 @Deprecated
 public class FlagsTag extends IncludeTag {

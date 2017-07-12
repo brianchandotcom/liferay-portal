@@ -64,7 +64,7 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @author     Eudaldo Alonso
  * @author     Roberto Díaz
- * @deprecated As of 1.1.0, moved to {@link
+ * @deprecated As of com.liferay.wiki.service#1.1.0, moved to {@link
  *             com.liferay.wiki.internal.trash.WikiPageTrashHandler}
  */
 @Deprecated

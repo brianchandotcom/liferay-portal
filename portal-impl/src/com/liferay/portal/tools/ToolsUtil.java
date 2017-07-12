@@ -229,8 +229,8 @@ public class ToolsUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #stripFullyQualifiedClassNames(String, String)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #stripFullyQualifiedClassNames(String, String)}
 	 */
 	@Deprecated
 	public static String stripFullyQualifiedClassNames(String content)

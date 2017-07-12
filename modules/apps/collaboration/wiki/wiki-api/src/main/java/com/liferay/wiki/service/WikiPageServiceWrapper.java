@@ -301,8 +301,8 @@ public class WikiPageServiceWrapper implements WikiPageService,
 	}
 
 	/**
-	* @deprecated As of 1.2.0, replaced by {@link #addTempFileEntry(long,
-	String, String, InputStream, String)}
+	* @deprecated As of com.liferay.wiki.service#1.2.0, replaced by {@link
+	#addTempFileEntry(long, String, String, InputStream, String)}
 	*/
 	@Deprecated
 	@Override

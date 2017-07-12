@@ -33,7 +33,7 @@ public class ExportImportLifecycleEventFactoryImpl
 	implements ExportImportLifecycleEventFactory {
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override

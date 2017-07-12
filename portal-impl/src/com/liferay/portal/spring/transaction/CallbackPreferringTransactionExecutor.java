@@ -75,7 +75,8 @@ public class CallbackPreferringTransactionExecutor
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link
 	 *             #createTransactionCallback(
 	 *             CallbackPreferringPlatformTransactionManager,
 	 *             TransactionAttributeAdapter, MethodInvocation)}

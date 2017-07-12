@@ -592,8 +592,9 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #isKeepFileVersionLabel(long,
-	 *             boolean, ServiceContext)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #isKeepFileVersionLabel(long, boolean,
+	 *             ServiceContext)}
 	 */
 	@Deprecated
 	@Override

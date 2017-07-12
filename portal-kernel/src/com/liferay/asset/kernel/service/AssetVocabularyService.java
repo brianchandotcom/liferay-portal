@@ -121,7 +121,8 @@ public interface AssetVocabularyService extends BaseService {
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -165,8 +166,9 @@ public interface AssetVocabularyService extends BaseService {
 		java.lang.String className, long classTypePK);
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	AssetUtil#filterVocabularyIds(PermissionChecker, long[])}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link AssetUtil#filterVocabularyIds(PermissionChecker,
+	long[])}
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

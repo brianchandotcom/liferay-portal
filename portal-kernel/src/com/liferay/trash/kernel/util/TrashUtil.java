@@ -36,8 +36,8 @@ import javax.portlet.PortletURL;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Julio Camarero
- * @deprecated As of 7.0.0
+ * @author     Julio Camarero
+ * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
  */
 @Deprecated
 @ProviderType

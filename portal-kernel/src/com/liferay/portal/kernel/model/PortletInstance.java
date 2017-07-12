@@ -21,9 +21,9 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.Objects;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Jorge Ferrer
- * @deprecated As of 7.0.0, replaced by {@link
+ * @author     Brian Wing Shun Chan
+ * @author     Jorge Ferrer
+ * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
  *             PortletIdCodec}
  */
 @Deprecated

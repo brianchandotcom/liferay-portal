@@ -69,7 +69,6 @@ import org.osgi.service.component.annotations.Component;
  * </ul>
  *
  * @author Adolfo Pérez
- * @review
  */
 @Component(
 	immediate = true, service = AdaptiveMediaImageConfigurationEntryParser.class

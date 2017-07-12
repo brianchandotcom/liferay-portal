@@ -31,6 +31,16 @@
 		<execute function="Type" locator1="CommerceEntry#DESCRIPTION_FIELD" value1="${optionDescription}" />
 
 		<execute function="Select" locator1="CommerceEntry#FIELD_TYPE_SELECT" value1="${optionFieldType}" />
+
+		<execute function="AssertTextEquals" locator1="CommerceEntry#KEY_FIELD" value1="${optionTitle}" />
+	</command>
+
+	<command name="addOptionValue">
+		<execute function="Type" locator1="CommerceEntry#TITLE_FIELD" value1="${valueTitle}" />
+
+		<execute function="Type" locator1="CommerceEntry#PRIORITY_FIELD" value1="${valuePriority}" />
+
+		<execute function="AssertTextEquals" locator1="CommerceEntry#KEY_FIELD" value1="${valueTitle}" />
 	</command>
 
 	<command name="editEntryBaseSKU">
@@ -129,5 +139,7 @@
 		<execute function="AssertTextEquals" locator1="CommerceEntry#TITLE_FIELD" value1="${optionTitle}" />
 
 		<execute function="AssertTextEquals" locator1="CommerceEntry#DESCRIPTION_FIELD" value1="${optionDescription}" />
+
+		<execute function="AssertTextEquals" locator1="CommerceEntry#KEY_FIELD" value1="${optionKey}" />
 	</command>
 </definition>

@@ -4,6 +4,7 @@
 	<bean class="com.liferay.commerce.product.service.impl.CPAttachmentFileEntryLocalServiceImpl" id="com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPAttachmentFileEntryServiceImpl" id="com.liferay.commerce.product.service.CPAttachmentFileEntryService" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPAttachmentFileEntryPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CPAttachmentFileEntryFinderImpl" id="com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryFinder" parent="basePersistence" />
 	<bean class="com.liferay.commerce.product.service.impl.CPDefinitionLocalServiceImpl" id="com.liferay.commerce.product.service.CPDefinitionLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPDefinitionServiceImpl" id="com.liferay.commerce.product.service.CPDefinitionService" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPDefinitionPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPDefinitionPersistence" parent="basePersistence" />
@@ -27,6 +28,7 @@
 	<bean class="com.liferay.commerce.product.service.impl.CPInstanceLocalServiceImpl" id="com.liferay.commerce.product.service.CPInstanceLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPInstanceServiceImpl" id="com.liferay.commerce.product.service.CPInstanceService" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPInstancePersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPInstancePersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CPInstanceFinderImpl" id="com.liferay.commerce.product.service.persistence.CPInstanceFinder" parent="basePersistence" />
 	<bean class="com.liferay.commerce.product.service.impl.CPOptionLocalServiceImpl" id="com.liferay.commerce.product.service.CPOptionLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPOptionServiceImpl" id="com.liferay.commerce.product.service.CPOptionService" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPOptionPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPOptionPersistence" parent="basePersistence" />

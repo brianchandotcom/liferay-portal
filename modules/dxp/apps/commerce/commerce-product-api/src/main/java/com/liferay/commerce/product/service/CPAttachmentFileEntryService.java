@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.io.Serializable;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -95,9 +97,15 @@ public interface CPAttachmentFileEntryService extends BaseService {
 		double priority, int type, ServiceContext serviceContext)
 		throws PortalException;
 
+	public CPAttachmentFileEntry updateStatus(long userId,
+		long cpAttachmentFileEntryId, int status,
+		ServiceContext serviceContext,
+		Map<java.lang.String, Serializable> workflowContext)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCPAttachmentFileEntriesCount(long classNameId, long classPK,
-		int type);
+		int type, int status);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -108,12 +116,12 @@ public interface CPAttachmentFileEntryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
-		long classNameId, long classPK, int type, int start, int end)
+		long classNameId, long classPK, int type, int status, int start, int end)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
-		long classNameId, long classPK, int type, int start, int end,
-		OrderByComparator<CPAttachmentFileEntry> orderByComparator)
+		long classNameId, long classPK, int type, int status, int start,
+		int end, OrderByComparator<CPAttachmentFileEntry> orderByComparator)
 		throws PortalException;
 }

@@ -66,7 +66,7 @@ public class CPAttachmentFileEntryCacheModel implements CacheModel<CPAttachmentF
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(45);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -104,6 +104,14 @@ public class CPAttachmentFileEntryCacheModel implements CacheModel<CPAttachmentF
 		sb.append(type);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", status=");
+		sb.append(status);
+		sb.append(", statusByUserId=");
+		sb.append(statusByUserId);
+		sb.append(", statusByUserName=");
+		sb.append(statusByUserName);
+		sb.append(", statusDate=");
+		sb.append(statusDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -189,6 +197,23 @@ public class CPAttachmentFileEntryCacheModel implements CacheModel<CPAttachmentF
 					lastPublishDate));
 		}
 
+		cpAttachmentFileEntryImpl.setStatus(status);
+		cpAttachmentFileEntryImpl.setStatusByUserId(statusByUserId);
+
+		if (statusByUserName == null) {
+			cpAttachmentFileEntryImpl.setStatusByUserName(StringPool.BLANK);
+		}
+		else {
+			cpAttachmentFileEntryImpl.setStatusByUserName(statusByUserName);
+		}
+
+		if (statusDate == Long.MIN_VALUE) {
+			cpAttachmentFileEntryImpl.setStatusDate(null);
+		}
+		else {
+			cpAttachmentFileEntryImpl.setStatusDate(new Date(statusDate));
+		}
+
 		cpAttachmentFileEntryImpl.resetOriginalValues();
 
 		return cpAttachmentFileEntryImpl;
@@ -223,6 +248,12 @@ public class CPAttachmentFileEntryCacheModel implements CacheModel<CPAttachmentF
 
 		type = objectInput.readInt();
 		lastPublishDate = objectInput.readLong();
+
+		status = objectInput.readInt();
+
+		statusByUserId = objectInput.readLong();
+		statusByUserName = objectInput.readUTF();
+		statusDate = objectInput.readLong();
 	}
 
 	@Override
@@ -279,6 +310,19 @@ public class CPAttachmentFileEntryCacheModel implements CacheModel<CPAttachmentF
 
 		objectOutput.writeInt(type);
 		objectOutput.writeLong(lastPublishDate);
+
+		objectOutput.writeInt(status);
+
+		objectOutput.writeLong(statusByUserId);
+
+		if (statusByUserName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(statusByUserName);
+		}
+
+		objectOutput.writeLong(statusDate);
 	}
 
 	public String uuid;
@@ -299,4 +343,8 @@ public class CPAttachmentFileEntryCacheModel implements CacheModel<CPAttachmentF
 	public double priority;
 	public int type;
 	public long lastPublishDate;
+	public int status;
+	public long statusByUserId;
+	public String statusByUserName;
+	public long statusDate;
 }

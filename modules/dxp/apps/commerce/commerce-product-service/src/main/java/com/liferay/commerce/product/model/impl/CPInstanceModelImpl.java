@@ -139,11 +139,11 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 			true);
 	public static final long CPDEFINITIONID_COLUMN_BITMASK = 1L;
 	public static final long COMPANYID_COLUMN_BITMASK = 2L;
-	public static final long GROUPID_COLUMN_BITMASK = 4L;
-	public static final long SKU_COLUMN_BITMASK = 8L;
-	public static final long STATUS_COLUMN_BITMASK = 16L;
-	public static final long UUID_COLUMN_BITMASK = 32L;
-	public static final long DISPLAYDATE_COLUMN_BITMASK = 64L;
+	public static final long DISPLAYDATE_COLUMN_BITMASK = 4L;
+	public static final long GROUPID_COLUMN_BITMASK = 8L;
+	public static final long SKU_COLUMN_BITMASK = 16L;
+	public static final long STATUS_COLUMN_BITMASK = 32L;
+	public static final long UUID_COLUMN_BITMASK = 64L;
 	public static final long CREATEDATE_COLUMN_BITMASK = 128L;
 
 	/**
@@ -606,7 +606,15 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 	public void setDisplayDate(Date displayDate) {
 		_columnBitmask = -1L;
 
+		if (_originalDisplayDate == null) {
+			_originalDisplayDate = _displayDate;
+		}
+
 		_displayDate = displayDate;
+	}
+
+	public Date getOriginalDisplayDate() {
+		return _originalDisplayDate;
 	}
 
 	@JSON
@@ -1062,6 +1070,8 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 
 		cpInstanceModelImpl._originalSku = cpInstanceModelImpl._sku;
 
+		cpInstanceModelImpl._originalDisplayDate = cpInstanceModelImpl._displayDate;
+
 		cpInstanceModelImpl._originalStatus = cpInstanceModelImpl._status;
 
 		cpInstanceModelImpl._setOriginalStatus = false;
@@ -1340,6 +1350,7 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 	private String _originalSku;
 	private String _DDMContent;
 	private Date _displayDate;
+	private Date _originalDisplayDate;
 	private Date _expirationDate;
 	private Date _lastPublishDate;
 	private int _status;

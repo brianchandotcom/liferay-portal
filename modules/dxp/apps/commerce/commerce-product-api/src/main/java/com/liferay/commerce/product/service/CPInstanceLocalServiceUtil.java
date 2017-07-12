@@ -399,6 +399,11 @@ public class CPInstanceLocalServiceUtil {
 		getService().buildCPInstances(cpDefinitionId, serviceContext);
 	}
 
+	public static void checkCPInstances()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().checkCPInstances();
+	}
+
 	public static void deleteCPInstances(long cpDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteCPInstances(cpDefinitionId);

@@ -187,6 +187,16 @@ public class CPAttachmentFileEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.product.model.CPAttachmentFileEntry updateStatus(
+		long userId, long cpAttachmentFileEntryId, int status,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext,
+		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpAttachmentFileEntryLocalService.updateStatus(userId,
+			cpAttachmentFileEntryId, status, serviceContext, workflowContext);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _cpAttachmentFileEntryLocalService.getActionableDynamicQuery();
 	}
@@ -244,9 +254,9 @@ public class CPAttachmentFileEntryLocalServiceWrapper
 
 	@Override
 	public int getCPAttachmentFileEntriesCount(long classNameId, long classPK,
-		int type) {
+		int type, int status) {
 		return _cpAttachmentFileEntryLocalService.getCPAttachmentFileEntriesCount(classNameId,
-			classPK, type);
+			classPK, type, status);
 	}
 
 	/**
@@ -333,19 +343,20 @@ public class CPAttachmentFileEntryLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.commerce.product.model.CPAttachmentFileEntry> getCPAttachmentFileEntries(
-		long classNameId, long classPK, int type, int start, int end)
+		long classNameId, long classPK, int type, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpAttachmentFileEntryLocalService.getCPAttachmentFileEntries(classNameId,
-			classPK, type, start, end);
+			classPK, type, status, start, end);
 	}
 
 	@Override
 	public java.util.List<com.liferay.commerce.product.model.CPAttachmentFileEntry> getCPAttachmentFileEntries(
-		long classNameId, long classPK, int type, int start, int end,
+		long classNameId, long classPK, int type, int status, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPAttachmentFileEntry> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpAttachmentFileEntryLocalService.getCPAttachmentFileEntries(classNameId,
-			classPK, type, start, end, orderByComparator);
+			classPK, type, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -405,6 +416,12 @@ public class CPAttachmentFileEntryLocalServiceWrapper
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _cpAttachmentFileEntryLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
+	}
+
+	@Override
+	public void checkCPAttachmentFileEntries()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_cpAttachmentFileEntryLocalService.checkCPAttachmentFileEntries();
 	}
 
 	@Override

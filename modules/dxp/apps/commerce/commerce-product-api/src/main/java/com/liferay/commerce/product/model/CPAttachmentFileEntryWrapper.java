@@ -79,6 +79,10 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 		attributes.put("priority", getPriority());
 		attributes.put("type", getType());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("status", getStatus());
+		attributes.put("statusByUserId", getStatusByUserId());
+		attributes.put("statusByUserName", getStatusByUserName());
+		attributes.put("statusDate", getStatusDate());
 
 		return attributes;
 	}
@@ -193,6 +197,30 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
 		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
+		}
+
+		Long statusByUserId = (Long)attributes.get("statusByUserId");
+
+		if (statusByUserId != null) {
+			setStatusByUserId(statusByUserId);
+		}
+
+		String statusByUserName = (String)attributes.get("statusByUserName");
+
+		if (statusByUserName != null) {
+			setStatusByUserName(statusByUserName);
+		}
+
+		Date statusDate = (Date)attributes.get("statusDate");
+
+		if (statusDate != null) {
+			setStatusDate(statusDate);
+		}
 	}
 
 	@Override
@@ -205,9 +233,39 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 		return new CPAttachmentFileEntryWrapper(_cpAttachmentFileEntry.toUnescapedModel());
 	}
 
+	/**
+	* Returns <code>true</code> if this cp attachment file entry is approved.
+	*
+	* @return <code>true</code> if this cp attachment file entry is approved; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isApproved() {
+		return _cpAttachmentFileEntry.isApproved();
+	}
+
 	@Override
 	public boolean isCachedModel() {
 		return _cpAttachmentFileEntry.isCachedModel();
+	}
+
+	/**
+	* Returns <code>true</code> if this cp attachment file entry is denied.
+	*
+	* @return <code>true</code> if this cp attachment file entry is denied; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isDenied() {
+		return _cpAttachmentFileEntry.isDenied();
+	}
+
+	/**
+	* Returns <code>true</code> if this cp attachment file entry is a draft.
+	*
+	* @return <code>true</code> if this cp attachment file entry is a draft; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isDraft() {
+		return _cpAttachmentFileEntry.isDraft();
 	}
 
 	@Override
@@ -215,9 +273,59 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 		return _cpAttachmentFileEntry.isEscapedModel();
 	}
 
+	/**
+	* Returns <code>true</code> if this cp attachment file entry is expired.
+	*
+	* @return <code>true</code> if this cp attachment file entry is expired; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isExpired() {
+		return _cpAttachmentFileEntry.isExpired();
+	}
+
+	/**
+	* Returns <code>true</code> if this cp attachment file entry is inactive.
+	*
+	* @return <code>true</code> if this cp attachment file entry is inactive; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isInactive() {
+		return _cpAttachmentFileEntry.isInactive();
+	}
+
+	/**
+	* Returns <code>true</code> if this cp attachment file entry is incomplete.
+	*
+	* @return <code>true</code> if this cp attachment file entry is incomplete; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isIncomplete() {
+		return _cpAttachmentFileEntry.isIncomplete();
+	}
+
 	@Override
 	public boolean isNew() {
 		return _cpAttachmentFileEntry.isNew();
+	}
+
+	/**
+	* Returns <code>true</code> if this cp attachment file entry is pending.
+	*
+	* @return <code>true</code> if this cp attachment file entry is pending; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isPending() {
+		return _cpAttachmentFileEntry.isPending();
+	}
+
+	/**
+	* Returns <code>true</code> if this cp attachment file entry is scheduled.
+	*
+	* @return <code>true</code> if this cp attachment file entry is scheduled; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isScheduled() {
+		return _cpAttachmentFileEntry.isScheduled();
 	}
 
 	@Override
@@ -249,6 +357,16 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 	@Override
 	public int compareTo(CPAttachmentFileEntry cpAttachmentFileEntry) {
 		return _cpAttachmentFileEntry.compareTo(cpAttachmentFileEntry);
+	}
+
+	/**
+	* Returns the status of this cp attachment file entry.
+	*
+	* @return the status of this cp attachment file entry
+	*/
+	@Override
+	public int getStatus() {
+		return _cpAttachmentFileEntry.getStatus();
 	}
 
 	/**
@@ -299,6 +417,26 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 	@Override
 	public java.lang.String getJson() {
 		return _cpAttachmentFileEntry.getJson();
+	}
+
+	/**
+	* Returns the status by user name of this cp attachment file entry.
+	*
+	* @return the status by user name of this cp attachment file entry
+	*/
+	@Override
+	public java.lang.String getStatusByUserName() {
+		return _cpAttachmentFileEntry.getStatusByUserName();
+	}
+
+	/**
+	* Returns the status by user uuid of this cp attachment file entry.
+	*
+	* @return the status by user uuid of this cp attachment file entry
+	*/
+	@Override
+	public java.lang.String getStatusByUserUuid() {
+		return _cpAttachmentFileEntry.getStatusByUserUuid();
 	}
 
 	/**
@@ -464,6 +602,16 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 	}
 
 	/**
+	* Returns the status date of this cp attachment file entry.
+	*
+	* @return the status date of this cp attachment file entry
+	*/
+	@Override
+	public Date getStatusDate() {
+		return _cpAttachmentFileEntry.getStatusDate();
+	}
+
+	/**
 	* Returns a map of the locales and localized titles of this cp attachment file entry.
 	*
 	* @return the locales and localized titles of this cp attachment file entry
@@ -541,6 +689,16 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 	@Override
 	public long getPrimaryKey() {
 		return _cpAttachmentFileEntry.getPrimaryKey();
+	}
+
+	/**
+	* Returns the status by user ID of this cp attachment file entry.
+	*
+	* @return the status by user ID of this cp attachment file entry
+	*/
+	@Override
+	public long getStatusByUserId() {
+		return _cpAttachmentFileEntry.getStatusByUserId();
 	}
 
 	/**
@@ -745,6 +903,56 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 	@Override
 	public void setPriority(double priority) {
 		_cpAttachmentFileEntry.setPriority(priority);
+	}
+
+	/**
+	* Sets the status of this cp attachment file entry.
+	*
+	* @param status the status of this cp attachment file entry
+	*/
+	@Override
+	public void setStatus(int status) {
+		_cpAttachmentFileEntry.setStatus(status);
+	}
+
+	/**
+	* Sets the status by user ID of this cp attachment file entry.
+	*
+	* @param statusByUserId the status by user ID of this cp attachment file entry
+	*/
+	@Override
+	public void setStatusByUserId(long statusByUserId) {
+		_cpAttachmentFileEntry.setStatusByUserId(statusByUserId);
+	}
+
+	/**
+	* Sets the status by user name of this cp attachment file entry.
+	*
+	* @param statusByUserName the status by user name of this cp attachment file entry
+	*/
+	@Override
+	public void setStatusByUserName(java.lang.String statusByUserName) {
+		_cpAttachmentFileEntry.setStatusByUserName(statusByUserName);
+	}
+
+	/**
+	* Sets the status by user uuid of this cp attachment file entry.
+	*
+	* @param statusByUserUuid the status by user uuid of this cp attachment file entry
+	*/
+	@Override
+	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
+		_cpAttachmentFileEntry.setStatusByUserUuid(statusByUserUuid);
+	}
+
+	/**
+	* Sets the status date of this cp attachment file entry.
+	*
+	* @param statusDate the status date of this cp attachment file entry
+	*/
+	@Override
+	public void setStatusDate(Date statusDate) {
+		_cpAttachmentFileEntry.setStatusDate(statusDate);
 	}
 
 	/**

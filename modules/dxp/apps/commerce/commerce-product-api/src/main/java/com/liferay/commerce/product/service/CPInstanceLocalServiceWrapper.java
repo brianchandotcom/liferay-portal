@@ -425,6 +425,12 @@ public class CPInstanceLocalServiceWrapper implements CPInstanceLocalService,
 	}
 
 	@Override
+	public void checkCPInstances()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_cpInstanceLocalService.checkCPInstances();
+	}
+
+	@Override
 	public void deleteCPInstances(long cpDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_cpInstanceLocalService.deleteCPInstances(cpDefinitionId);

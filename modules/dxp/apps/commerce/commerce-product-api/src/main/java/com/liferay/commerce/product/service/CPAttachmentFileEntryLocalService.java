@@ -182,6 +182,13 @@ public interface CPAttachmentFileEntryLocalService extends BaseLocalService,
 		double priority, int type, ServiceContext serviceContext)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
+	public CPAttachmentFileEntry updateStatus(long userId,
+		long cpAttachmentFileEntryId, int status,
+		ServiceContext serviceContext,
+		Map<java.lang.String, Serializable> workflowContext)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -220,7 +227,7 @@ public interface CPAttachmentFileEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCPAttachmentFileEntriesCount(long classNameId, long classPK,
-		int type);
+		int type, int status);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -285,13 +292,13 @@ public interface CPAttachmentFileEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
-		long classNameId, long classPK, int type, int start, int end)
+		long classNameId, long classPK, int type, int status, int start, int end)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
-		long classNameId, long classPK, int type, int start, int end,
-		OrderByComparator<CPAttachmentFileEntry> orderByComparator)
+		long classNameId, long classPK, int type, int status, int start,
+		int end, OrderByComparator<CPAttachmentFileEntry> orderByComparator)
 		throws PortalException;
 
 	/**
@@ -337,6 +344,8 @@ public interface CPAttachmentFileEntryLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	public void checkCPAttachmentFileEntries() throws PortalException;
 
 	public void deleteCPAttachmentFileEntries(java.lang.String className,
 		long classPK) throws PortalException;

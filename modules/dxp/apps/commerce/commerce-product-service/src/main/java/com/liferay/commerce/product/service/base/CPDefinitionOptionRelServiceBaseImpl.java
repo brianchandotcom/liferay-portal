@@ -16,6 +16,7 @@ package com.liferay.commerce.product.service.base;
 
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
+import com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryFinder;
 import com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionFinder;
 import com.liferay.commerce.product.service.persistence.CPDefinitionLinkPersistence;
@@ -25,6 +26,7 @@ import com.liferay.commerce.product.service.persistence.CPDefinitionOptionValueR
 import com.liferay.commerce.product.service.persistence.CPDefinitionPersistence;
 import com.liferay.commerce.product.service.persistence.CPDisplayLayoutPersistence;
 import com.liferay.commerce.product.service.persistence.CPFriendlyURLEntryPersistence;
+import com.liferay.commerce.product.service.persistence.CPInstanceFinder;
 import com.liferay.commerce.product.service.persistence.CPInstancePersistence;
 import com.liferay.commerce.product.service.persistence.CPOptionCategoryPersistence;
 import com.liferay.commerce.product.service.persistence.CPOptionPersistence;
@@ -123,6 +125,25 @@ public abstract class CPDefinitionOptionRelServiceBaseImpl
 	public void setCPAttachmentFileEntryPersistence(
 		CPAttachmentFileEntryPersistence cpAttachmentFileEntryPersistence) {
 		this.cpAttachmentFileEntryPersistence = cpAttachmentFileEntryPersistence;
+	}
+
+	/**
+	 * Returns the cp attachment file entry finder.
+	 *
+	 * @return the cp attachment file entry finder
+	 */
+	public CPAttachmentFileEntryFinder getCPAttachmentFileEntryFinder() {
+		return cpAttachmentFileEntryFinder;
+	}
+
+	/**
+	 * Sets the cp attachment file entry finder.
+	 *
+	 * @param cpAttachmentFileEntryFinder the cp attachment file entry finder
+	 */
+	public void setCPAttachmentFileEntryFinder(
+		CPAttachmentFileEntryFinder cpAttachmentFileEntryFinder) {
+		this.cpAttachmentFileEntryFinder = cpAttachmentFileEntryFinder;
 	}
 
 	/**
@@ -562,6 +583,24 @@ public abstract class CPDefinitionOptionRelServiceBaseImpl
 	}
 
 	/**
+	 * Returns the cp instance finder.
+	 *
+	 * @return the cp instance finder
+	 */
+	public CPInstanceFinder getCPInstanceFinder() {
+		return cpInstanceFinder;
+	}
+
+	/**
+	 * Sets the cp instance finder.
+	 *
+	 * @param cpInstanceFinder the cp instance finder
+	 */
+	public void setCPInstanceFinder(CPInstanceFinder cpInstanceFinder) {
+		this.cpInstanceFinder = cpInstanceFinder;
+	}
+
+	/**
 	 * Returns the cp option local service.
 	 *
 	 * @return the cp option local service
@@ -974,6 +1013,8 @@ public abstract class CPDefinitionOptionRelServiceBaseImpl
 	protected com.liferay.commerce.product.service.CPAttachmentFileEntryService cpAttachmentFileEntryService;
 	@BeanReference(type = CPAttachmentFileEntryPersistence.class)
 	protected CPAttachmentFileEntryPersistence cpAttachmentFileEntryPersistence;
+	@BeanReference(type = CPAttachmentFileEntryFinder.class)
+	protected CPAttachmentFileEntryFinder cpAttachmentFileEntryFinder;
 	@BeanReference(type = com.liferay.commerce.product.service.CPDefinitionLocalService.class)
 	protected com.liferay.commerce.product.service.CPDefinitionLocalService cpDefinitionLocalService;
 	@BeanReference(type = com.liferay.commerce.product.service.CPDefinitionService.class)
@@ -1020,6 +1061,8 @@ public abstract class CPDefinitionOptionRelServiceBaseImpl
 	protected com.liferay.commerce.product.service.CPInstanceService cpInstanceService;
 	@BeanReference(type = CPInstancePersistence.class)
 	protected CPInstancePersistence cpInstancePersistence;
+	@BeanReference(type = CPInstanceFinder.class)
+	protected CPInstanceFinder cpInstanceFinder;
 	@BeanReference(type = com.liferay.commerce.product.service.CPOptionLocalService.class)
 	protected com.liferay.commerce.product.service.CPOptionLocalService cpOptionLocalService;
 	@BeanReference(type = com.liferay.commerce.product.service.CPOptionService.class)

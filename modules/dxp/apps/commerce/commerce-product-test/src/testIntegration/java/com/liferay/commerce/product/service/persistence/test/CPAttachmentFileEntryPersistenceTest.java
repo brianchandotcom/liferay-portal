@@ -160,6 +160,14 @@ public class CPAttachmentFileEntryPersistenceTest {
 
 		newCPAttachmentFileEntry.setLastPublishDate(RandomTestUtil.nextDate());
 
+		newCPAttachmentFileEntry.setStatus(RandomTestUtil.nextInt());
+
+		newCPAttachmentFileEntry.setStatusByUserId(RandomTestUtil.nextLong());
+
+		newCPAttachmentFileEntry.setStatusByUserName(RandomTestUtil.randomString());
+
+		newCPAttachmentFileEntry.setStatusDate(RandomTestUtil.nextDate());
+
 		_cpAttachmentFileEntries.add(_persistence.update(
 				newCPAttachmentFileEntry));
 
@@ -207,6 +215,15 @@ public class CPAttachmentFileEntryPersistenceTest {
 				existingCPAttachmentFileEntry.getLastPublishDate()),
 			Time.getShortTimestamp(
 				newCPAttachmentFileEntry.getLastPublishDate()));
+		Assert.assertEquals(existingCPAttachmentFileEntry.getStatus(),
+			newCPAttachmentFileEntry.getStatus());
+		Assert.assertEquals(existingCPAttachmentFileEntry.getStatusByUserId(),
+			newCPAttachmentFileEntry.getStatusByUserId());
+		Assert.assertEquals(existingCPAttachmentFileEntry.getStatusByUserName(),
+			newCPAttachmentFileEntry.getStatusByUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingCPAttachmentFileEntry.getStatusDate()),
+			Time.getShortTimestamp(newCPAttachmentFileEntry.getStatusDate()));
 	}
 
 	@Test
@@ -245,11 +262,29 @@ public class CPAttachmentFileEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_C_T() throws Exception {
-		_persistence.countByC_C_T(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+	public void testCountByC_C_T_ST() throws Exception {
+		_persistence.countByC_C_T_ST(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt(),
+			RandomTestUtil.nextInt());
 
-		_persistence.countByC_C_T(0L, 0L, 0);
+		_persistence.countByC_C_T_ST(0L, 0L, 0, 0);
+	}
+
+	@Test
+	public void testCountByC_C_T_NotST() throws Exception {
+		_persistence.countByC_C_T_NotST(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByC_C_T_NotST(0L, 0L, 0, 0);
+	}
+
+	@Test
+	public void testCountByLtD_S() throws Exception {
+		_persistence.countByLtD_S(RandomTestUtil.nextDate(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByLtD_S(RandomTestUtil.nextDate(), 0);
 	}
 
 	@Test
@@ -282,7 +317,8 @@ public class CPAttachmentFileEntryPersistenceTest {
 			true, "modifiedDate", true, "classNameId", true, "classPK", true,
 			"fileEntryId", true, "displayDate", true, "expirationDate", true,
 			"title", true, "priority", true, "type", true, "lastPublishDate",
-			true);
+			true, "status", true, "statusByUserId", true, "statusByUserName",
+			true, "statusDate", true);
 	}
 
 	@Test
@@ -544,6 +580,14 @@ public class CPAttachmentFileEntryPersistenceTest {
 		cpAttachmentFileEntry.setType(RandomTestUtil.nextInt());
 
 		cpAttachmentFileEntry.setLastPublishDate(RandomTestUtil.nextDate());
+
+		cpAttachmentFileEntry.setStatus(RandomTestUtil.nextInt());
+
+		cpAttachmentFileEntry.setStatusByUserId(RandomTestUtil.nextLong());
+
+		cpAttachmentFileEntry.setStatusByUserName(RandomTestUtil.randomString());
+
+		cpAttachmentFileEntry.setStatusDate(RandomTestUtil.nextDate());
 
 		_cpAttachmentFileEntries.add(_persistence.update(cpAttachmentFileEntry));
 

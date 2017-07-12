@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
+import com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryFinder;
 import com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionFinder;
 import com.liferay.commerce.product.service.persistence.CPDefinitionLinkPersistence;
@@ -27,6 +28,7 @@ import com.liferay.commerce.product.service.persistence.CPDefinitionOptionValueR
 import com.liferay.commerce.product.service.persistence.CPDefinitionPersistence;
 import com.liferay.commerce.product.service.persistence.CPDisplayLayoutPersistence;
 import com.liferay.commerce.product.service.persistence.CPFriendlyURLEntryPersistence;
+import com.liferay.commerce.product.service.persistence.CPInstanceFinder;
 import com.liferay.commerce.product.service.persistence.CPInstancePersistence;
 import com.liferay.commerce.product.service.persistence.CPOptionCategoryPersistence;
 import com.liferay.commerce.product.service.persistence.CPOptionPersistence;
@@ -37,6 +39,8 @@ import com.liferay.expando.kernel.service.persistence.ExpandoRowPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
@@ -46,7 +50,10 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Conjunction;
+import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -54,6 +61,7 @@ import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
@@ -66,6 +74,7 @@ import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
@@ -334,8 +343,41 @@ public abstract class CPAttachmentFileEntryLocalServiceBaseImpl
 		exportActionableDynamicQuery.setAddCriteriaMethod(new ActionableDynamicQuery.AddCriteriaMethod() {
 				@Override
 				public void addCriteria(DynamicQuery dynamicQuery) {
-					portletDataContext.addDateRangeCriteria(dynamicQuery,
-						"modifiedDate");
+					Criterion modifiedDateCriterion = portletDataContext.getDateRangeCriteria(
+							"modifiedDate");
+
+					if (modifiedDateCriterion != null) {
+						Conjunction conjunction = RestrictionsFactoryUtil.conjunction();
+
+						conjunction.add(modifiedDateCriterion);
+
+						Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
+
+						disjunction.add(RestrictionsFactoryUtil.gtProperty(
+								"modifiedDate", "lastPublishDate"));
+
+						Property lastPublishDateProperty = PropertyFactoryUtil.forName(
+								"lastPublishDate");
+
+						disjunction.add(lastPublishDateProperty.isNull());
+
+						conjunction.add(disjunction);
+
+						modifiedDateCriterion = conjunction;
+					}
+
+					Criterion statusDateCriterion = portletDataContext.getDateRangeCriteria(
+							"statusDate");
+
+					if ((modifiedDateCriterion != null) &&
+							(statusDateCriterion != null)) {
+						Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
+
+						disjunction.add(modifiedDateCriterion);
+						disjunction.add(statusDateCriterion);
+
+						dynamicQuery.add(disjunction);
+					}
 
 					StagedModelType stagedModelType = exportActionableDynamicQuery.getStagedModelType();
 
@@ -351,6 +393,20 @@ public abstract class CPAttachmentFileEntryLocalServiceBaseImpl
 					}
 					else if (referrerClassNameId == StagedModelType.REFERRER_CLASS_NAME_ID_ANY) {
 						dynamicQuery.add(classNameIdProperty.isNotNull());
+					}
+
+					Property workflowStatusProperty = PropertyFactoryUtil.forName(
+							"status");
+
+					if (portletDataContext.isInitialPublication()) {
+						dynamicQuery.add(workflowStatusProperty.ne(
+								WorkflowConstants.STATUS_IN_TRASH));
+					}
+					else {
+						StagedModelDataHandler<?> stagedModelDataHandler = StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(CPAttachmentFileEntry.class.getName());
+
+						dynamicQuery.add(workflowStatusProperty.in(
+								stagedModelDataHandler.getExportableStatuses()));
 					}
 				}
 			});
@@ -511,6 +567,25 @@ public abstract class CPAttachmentFileEntryLocalServiceBaseImpl
 	public void setCPAttachmentFileEntryPersistence(
 		CPAttachmentFileEntryPersistence cpAttachmentFileEntryPersistence) {
 		this.cpAttachmentFileEntryPersistence = cpAttachmentFileEntryPersistence;
+	}
+
+	/**
+	 * Returns the cp attachment file entry finder.
+	 *
+	 * @return the cp attachment file entry finder
+	 */
+	public CPAttachmentFileEntryFinder getCPAttachmentFileEntryFinder() {
+		return cpAttachmentFileEntryFinder;
+	}
+
+	/**
+	 * Sets the cp attachment file entry finder.
+	 *
+	 * @param cpAttachmentFileEntryFinder the cp attachment file entry finder
+	 */
+	public void setCPAttachmentFileEntryFinder(
+		CPAttachmentFileEntryFinder cpAttachmentFileEntryFinder) {
+		this.cpAttachmentFileEntryFinder = cpAttachmentFileEntryFinder;
 	}
 
 	/**
@@ -814,6 +889,24 @@ public abstract class CPAttachmentFileEntryLocalServiceBaseImpl
 	public void setCPInstancePersistence(
 		CPInstancePersistence cpInstancePersistence) {
 		this.cpInstancePersistence = cpInstancePersistence;
+	}
+
+	/**
+	 * Returns the cp instance finder.
+	 *
+	 * @return the cp instance finder
+	 */
+	public CPInstanceFinder getCPInstanceFinder() {
+		return cpInstanceFinder;
+	}
+
+	/**
+	 * Sets the cp instance finder.
+	 *
+	 * @param cpInstanceFinder the cp instance finder
+	 */
+	public void setCPInstanceFinder(CPInstanceFinder cpInstanceFinder) {
+		this.cpInstanceFinder = cpInstanceFinder;
 	}
 
 	/**
@@ -1155,6 +1248,8 @@ public abstract class CPAttachmentFileEntryLocalServiceBaseImpl
 	protected CPAttachmentFileEntryLocalService cpAttachmentFileEntryLocalService;
 	@BeanReference(type = CPAttachmentFileEntryPersistence.class)
 	protected CPAttachmentFileEntryPersistence cpAttachmentFileEntryPersistence;
+	@BeanReference(type = CPAttachmentFileEntryFinder.class)
+	protected CPAttachmentFileEntryFinder cpAttachmentFileEntryFinder;
 	@BeanReference(type = com.liferay.commerce.product.service.CPDefinitionLocalService.class)
 	protected com.liferay.commerce.product.service.CPDefinitionLocalService cpDefinitionLocalService;
 	@BeanReference(type = CPDefinitionPersistence.class)
@@ -1187,6 +1282,8 @@ public abstract class CPAttachmentFileEntryLocalServiceBaseImpl
 	protected com.liferay.commerce.product.service.CPInstanceLocalService cpInstanceLocalService;
 	@BeanReference(type = CPInstancePersistence.class)
 	protected CPInstancePersistence cpInstancePersistence;
+	@BeanReference(type = CPInstanceFinder.class)
+	protected CPInstanceFinder cpInstanceFinder;
 	@BeanReference(type = com.liferay.commerce.product.service.CPOptionLocalService.class)
 	protected com.liferay.commerce.product.service.CPOptionLocalService cpOptionLocalService;
 	@BeanReference(type = CPOptionPersistence.class)

@@ -149,12 +149,12 @@ public class CPAttachmentFileEntryServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CPAttachmentFileEntrySoap[] getCPAttachmentFileEntries(
-		long classNameId, long classPK, int type, int start, int end)
+		long classNameId, long classPK, int type, int status, int start, int end)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.commerce.product.model.CPAttachmentFileEntry> returnValue =
 				CPAttachmentFileEntryServiceUtil.getCPAttachmentFileEntries(classNameId,
-					classPK, type, start, end);
+					classPK, type, status, start, end);
 
 			return com.liferay.commerce.product.model.CPAttachmentFileEntrySoap.toSoapModels(returnValue);
 		}
@@ -166,13 +166,14 @@ public class CPAttachmentFileEntryServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CPAttachmentFileEntrySoap[] getCPAttachmentFileEntries(
-		long classNameId, long classPK, int type, int start, int end,
+		long classNameId, long classPK, int type, int status, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPAttachmentFileEntry> orderByComparator)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.commerce.product.model.CPAttachmentFileEntry> returnValue =
 				CPAttachmentFileEntryServiceUtil.getCPAttachmentFileEntries(classNameId,
-					classPK, type, start, end, orderByComparator);
+					classPK, type, status, start, end, orderByComparator);
 
 			return com.liferay.commerce.product.model.CPAttachmentFileEntrySoap.toSoapModels(returnValue);
 		}
@@ -184,10 +185,10 @@ public class CPAttachmentFileEntryServiceSoap {
 	}
 
 	public static int getCPAttachmentFileEntriesCount(long classNameId,
-		long classPK, int type) throws RemoteException {
+		long classPK, int type, int status) throws RemoteException {
 		try {
 			int returnValue = CPAttachmentFileEntryServiceUtil.getCPAttachmentFileEntriesCount(classNameId,
-					classPK, type);
+					classPK, type, status);
 
 			return returnValue;
 		}

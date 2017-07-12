@@ -341,6 +341,8 @@ public interface CPInstanceLocalService extends BaseLocalService,
 	public void buildCPInstances(long cpDefinitionId,
 		ServiceContext serviceContext) throws PortalException;
 
+	public void checkCPInstances() throws PortalException;
+
 	public void deleteCPInstances(long cpDefinitionId)
 		throws PortalException;
 }

@@ -7,7 +7,7 @@ task buildCKEditor(type: Copy)
 task buildCKEditorScayt(type: Copy)
 task buildCKEditorWsc(type: Copy)
 
-String ckEditorVersion = "4.6.2"
+String ckEditorVersion = "4.6.0"
 
 String ckEditorScaytUrl = "http://download.ckeditor.com/scayt/releases/scayt_${ckEditorVersion}.zip"
 String ckEditorWscUrl = "http://download.ckeditor.com/wsc/releases/wsc_${ckEditorVersion}.zip"
@@ -17,7 +17,7 @@ File editorSrcDir = file("src/main/resources/META-INF/resources")
 
 buildCKEditor {
 	File ckEditorDestinationDir = new File(editorDestinationDir, "ckeditor")
-	File ckEditorZipFile = file("third-party/ckeditor_${ckEditorVersion}.zip")
+	File ckEditorZipFile = file("third-party/ckeditor_${ckEditorVersion}_liferay.zip")
 
 	doFirst {
 		delete ckEditorDestinationDir

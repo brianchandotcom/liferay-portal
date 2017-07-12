@@ -1693,6 +1693,11 @@ root projects in order to:
 ### Changed
 - [LPS-72705]: Update the [Liferay Gradle Plugins] dependency to version 3.4.1.
 
+## 3.9.2 - 2017-07-12
+
+### Changed
+- [LPS-73584]: Update the [Liferay Gradle Plugins] dependency to version 3.4.2.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
@@ -1873,6 +1878,7 @@ root projects in order to:
 [LPS-73383]: https://issues.liferay.com/browse/LPS-73383
 [LPS-73489]: https://issues.liferay.com/browse/LPS-73489
 [LPS-73495]: https://issues.liferay.com/browse/LPS-73495
+[LPS-73584]: https://issues.liferay.com/browse/LPS-73584
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

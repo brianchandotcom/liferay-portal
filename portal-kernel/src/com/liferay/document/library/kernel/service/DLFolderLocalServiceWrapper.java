@@ -272,8 +272,9 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced {@link #updateFolder(long, long,
-	String, String, long, List, int, ServiceContext)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced {@link
+	#updateFolder(long, long, String, String, long, List, int,
+	ServiceContext)}
 	*/
 	@Deprecated
 	@Override
@@ -302,8 +303,9 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #updateFolder(long, long,
-	String, String, long, List, int, ServiceContext)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #updateFolder(long, long, String, String, long, List,
+	int, ServiceContext)}
 	*/
 	@Deprecated
 	@Override
@@ -332,9 +334,9 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #
-	updateFolderAndFileEntryTypes(long, long, long, String,
-	String, long, List, int, ServiceContext)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link # updateFolderAndFileEntryTypes(long, long, long,
+	String, String, long, List, int, ServiceContext)}
 	*/
 	@Deprecated
 	@Override
@@ -642,8 +644,8 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getGroupFolderIds(long,
-	long)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #getGroupFolderIds(long, long)}
 	*/
 	@Deprecated
 	@Override
@@ -808,7 +810,8 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #deleteAllByGroup(long)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #deleteAllByGroup(long)}
 	*/
 	@Deprecated
 	@Override
@@ -872,8 +875,8 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getGroupSubfolderIds(List,
-	long, long)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #getGroupSubfolderIds(List, long, long)}
 	*/
 	@Deprecated
 	@Override

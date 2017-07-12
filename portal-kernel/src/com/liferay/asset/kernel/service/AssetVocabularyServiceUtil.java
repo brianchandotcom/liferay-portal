@@ -149,7 +149,8 @@ public class AssetVocabularyServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@Deprecated
 	public static java.util.List<com.liferay.asset.kernel.model.AssetVocabulary> getCompanyVocabularies(
@@ -214,8 +215,9 @@ public class AssetVocabularyServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	AssetUtil#filterVocabularyIds(PermissionChecker, long[])}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link AssetUtil#filterVocabularyIds(PermissionChecker,
+	long[])}
 	*/
 	@Deprecated
 	public static java.util.List<com.liferay.asset.kernel.model.AssetVocabulary> getVocabularies(

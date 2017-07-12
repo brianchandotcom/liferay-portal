@@ -75,9 +75,9 @@ public class BookmarksFolderServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 1.0.0, replaced by {@link #updateFolder(long, long,
-	String, String, ServiceContext)} and {@link
-	#mergeFolders(long, long)}
+	* @deprecated As of com.liferay.bookmarks.service#1.0.0, replaced by {@link
+	#updateFolder(long, long, String, String, ServiceContext)}
+	and {@link #mergeFolders(long, long)}
 	*/
 	@Deprecated
 	public static com.liferay.bookmarks.model.BookmarksFolder updateFolder(
@@ -186,8 +186,8 @@ public class BookmarksFolderServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 1.0.0, replaced by {@link #getSubfolderIds(List, long,
-	long, boolean)}
+	* @deprecated As of com.liferay.bookmarks.service#1.0.0, replaced by {@link
+	#getSubfolderIds(List, long, long, boolean)}
 	*/
 	@Deprecated
 	public static void getSubfolderIds(

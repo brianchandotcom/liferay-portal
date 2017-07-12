@@ -107,8 +107,8 @@ public interface TeamLocalService extends BaseLocalService,
 	public Team addTeam(Team team);
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #addTeam(long, long, String,
-	String, ServiceContext)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #addTeam(long, long, String, String, ServiceContext)}
 	*/
 	@java.lang.Deprecated
 	public Team addTeam(long userId, long groupId, java.lang.String name,

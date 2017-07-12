@@ -271,8 +271,8 @@ public interface WikiPageLocalService extends BaseLocalService,
 		long groupId) throws PortalException;
 
 	/**
-	* @deprecated As of 1.2.0, replaced by {@link #movePageFromTrash(long,
-	long, String, long, String)} *
+	* @deprecated As of com.liferay.wiki.service#1.2.0, replaced by {@link
+	#movePageFromTrash(long, long, String, long, String)} *
 	*/
 	@java.lang.Deprecated
 	public WikiPage movePageFromTrash(long userId, long nodeId,
@@ -303,8 +303,8 @@ public interface WikiPageLocalService extends BaseLocalService,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
-	* @deprecated As of 1.2.0, replaced by {@link #updateStatus(long, WikiPage,
-	int, ServiceContext, Map)}
+	* @deprecated As of com.liferay.wiki.service#1.2.0, replaced by {@link
+	#updateStatus(long, WikiPage, int, ServiceContext, Map)}
 	*/
 	@java.lang.Deprecated
 	public WikiPage updateStatus(long userId, WikiPage page, int status,
@@ -612,8 +612,9 @@ public interface WikiPageLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* @deprecated As of 1.2.0, replaced by {@link #addTempFileEntry(long, long,
-	String, String, InputStream, String)}
+	* @deprecated As of com.liferay.wiki.service#1.2.0, replaced by {@link
+	#addTempFileEntry(long, long, String, String, InputStream,
+	String)}
 	*/
 	@java.lang.Deprecated
 	public void addTempPageAttachment(long groupId, long userId,
@@ -653,8 +654,8 @@ public interface WikiPageLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* @deprecated As of 1.2.0, replaced by {@link #renamePage(long, long,
-	String, String, ServiceContext)}
+	* @deprecated As of com.liferay.wiki.service#1.2.0, replaced by {@link
+	#renamePage(long, long, String, String, ServiceContext)}
 	*/
 	@java.lang.Deprecated
 	public void movePage(long userId, long nodeId, java.lang.String title,
@@ -688,7 +689,7 @@ public interface WikiPageLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* @deprecated As of 1.2.0, replaced by {@link
+	* @deprecated As of com.liferay.wiki.service#1.2.0, replaced by {@link
 	WikiPageTitleValidator#validate(String)}
 	*/
 	@java.lang.Deprecated

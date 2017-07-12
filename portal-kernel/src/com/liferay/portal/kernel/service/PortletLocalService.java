@@ -303,7 +303,8 @@ public interface PortletLocalService extends BaseLocalService,
 	public Map<java.lang.String, Portlet> loadGetPortletsMap(long companyId);
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #loadGetPortletsMap(long))}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #loadGetPortletsMap(long))}
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -338,7 +339,8 @@ public interface PortletLocalService extends BaseLocalService,
 	public void clearCache();
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #clearPortletsMap)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #clearPortletsMap)}
 	*/
 	@Clusterable
 	@java.lang.Deprecated

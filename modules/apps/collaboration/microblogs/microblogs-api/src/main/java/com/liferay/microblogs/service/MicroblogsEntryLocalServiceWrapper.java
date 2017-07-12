@@ -227,7 +227,7 @@ public class MicroblogsEntryLocalServiceWrapper
 	}
 
 	/**
-	* @deprecated As of 2.1.0
+	* @deprecated As of com.liferay.microblogs.service#NEXT-VERSION
 	*/
 	@Deprecated
 	@Override
@@ -238,7 +238,7 @@ public class MicroblogsEntryLocalServiceWrapper
 	}
 
 	/**
-	* @deprecated As of 2.1.0
+	* @deprecated As of com.liferay.microblogs.service#NEXT-VERSION
 	*/
 	@Deprecated
 	@Override
@@ -249,7 +249,7 @@ public class MicroblogsEntryLocalServiceWrapper
 	}
 
 	/**
-	* @deprecated As of 2.1.0
+	* @deprecated As of com.liferay.microblogs.service#NEXT-VERSION
 	*/
 	@Deprecated
 	@Override
@@ -260,7 +260,7 @@ public class MicroblogsEntryLocalServiceWrapper
 	}
 
 	/**
-	* @deprecated As of 2.1.0
+	* @deprecated As of com.liferay.microblogs.service#NEXT-VERSION
 	*/
 	@Deprecated
 	@Override
@@ -418,7 +418,7 @@ public class MicroblogsEntryLocalServiceWrapper
 	}
 
 	/**
-	* @deprecated As of 2.1.0
+	* @deprecated As of com.liferay.microblogs.service#NEXT-VERSION
 	*/
 	@Deprecated
 	@Override
@@ -430,7 +430,7 @@ public class MicroblogsEntryLocalServiceWrapper
 	}
 
 	/**
-	* @deprecated As of 2.1.0
+	* @deprecated As of com.liferay.microblogs.service#NEXT-VERSION
 	*/
 	@Deprecated
 	@Override
@@ -442,7 +442,7 @@ public class MicroblogsEntryLocalServiceWrapper
 	}
 
 	/**
-	* @deprecated As of 2.1.0
+	* @deprecated As of com.liferay.microblogs.service#NEXT-VERSION
 	*/
 	@Deprecated
 	@Override
@@ -453,7 +453,7 @@ public class MicroblogsEntryLocalServiceWrapper
 	}
 
 	/**
-	* @deprecated As of 2.1.0
+	* @deprecated As of com.liferay.microblogs.service#NEXT-VERSION
 	*/
 	@Deprecated
 	@Override
@@ -465,7 +465,7 @@ public class MicroblogsEntryLocalServiceWrapper
 	}
 
 	/**
-	* @deprecated As of 2.1.0
+	* @deprecated As of com.liferay.microblogs.service#NEXT-VERSION
 	*/
 	@Deprecated
 	@Override

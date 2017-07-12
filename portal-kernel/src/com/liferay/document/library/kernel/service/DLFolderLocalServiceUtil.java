@@ -248,8 +248,9 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced {@link #updateFolder(long, long,
-	String, String, long, List, int, ServiceContext)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced {@link
+	#updateFolder(long, long, String, String, long, List, int,
+	ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.document.library.kernel.model.DLFolder updateFolder(
@@ -278,8 +279,9 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #updateFolder(long, long,
-	String, String, long, List, int, ServiceContext)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #updateFolder(long, long, String, String, long, List,
+	int, ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.document.library.kernel.model.DLFolder updateFolder(
@@ -308,9 +310,9 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #
-	updateFolderAndFileEntryTypes(long, long, long, String,
-	String, long, List, int, ServiceContext)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link # updateFolderAndFileEntryTypes(long, long, long,
+	String, String, long, List, int, ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.document.library.kernel.model.DLFolder updateFolderAndFileEntryTypes(
@@ -592,8 +594,8 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getGroupFolderIds(long,
-	long)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #getGroupFolderIds(long, long)}
 	*/
 	@Deprecated
 	public static java.util.List<java.lang.Long> getFolderIds(long groupId,
@@ -734,7 +736,8 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #deleteAllByGroup(long)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #deleteAllByGroup(long)}
 	*/
 	@Deprecated
 	public static void deleteAll(long groupId)
@@ -784,8 +787,8 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getGroupSubfolderIds(List,
-	long, long)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #getGroupSubfolderIds(List, long, long)}
 	*/
 	@Deprecated
 	public static void getSubfolderIds(

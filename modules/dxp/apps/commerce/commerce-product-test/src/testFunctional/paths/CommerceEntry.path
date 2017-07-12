@@ -9,43 +9,23 @@
 </thead>
 <tbody>
 <tr>
-	<td>TITLE_FIELD</td>
-	<td>//div/span/input[contains(@id,'title')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SHORT_DESCRIPTION_FIELD</td>
-	<td>//textarea[contains (@id,'shortDescription')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PRODUCT_TYPE_SELECT</td>
-	<td>//div/select[contains(@id,'entryType')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BASE_SKU_FIELD</td>
-	<td>//div/input[contains(@id,'baseSKU')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TAGS_FIELD</td>
-	<td>//div/ul/li/span/span/input[contains(@id,'assetTagName')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADD_TAG_BUTTON</td>
 	<td>//div/button[@title='Add Tags']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SELECT_TAG_BUTTON</td>
-	<td>//div/button[@title='Select Tags']</td>
+	<td>BASE_INFORMATION_TITLE_BAR</td>
+	<td>//div[contains (@id, 'baseInformationTitle')]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PUBLISHED_CHECKBOX</td>
-	<td>//input[contains(@id,'published') and (@type='checkbox')]</td>
+	<td>BASE_SKU_FIELD</td>
+	<td>//div/input[contains(@id, 'baseSKU')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCRIPTION_FIELD</td>
+	<td>//textarea[contains (@id,'description')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -74,58 +54,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>NEVER_EXPIRE_CHECKBOX</td>
-	<td>//input[contains(@name,'neverExpire') and (@type='checkbox')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SAVE_BUTTON</td>
-	<td>//div[contains(@class,'button-holder')]/button[@type='submit']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>WORKFLOW_STATUS</td>
-	<td>//span[@class='workflow-status']//span[contains(.,'Approved')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FULL_DESCRIPTION_FIELD</td>
-	<td>//div[contains(@id,'descriptionMap') and contains(@aria-label,'Rich Text Editor')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BASE_SKU_FIELD</td>
-	<td>//div/input[contains(@id, 'baseSKU')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BASE_INFORMATION_TITLE_BAR</td>
-	<td>//div[contains (@id, 'baseInformationTitle')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_MENU_TAB</td>
-	<td>//a[@role="menuitem" and @title="${key_menuTab}"]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PLUS_MENU</td>
-	<td>//div[contains (@class, 'dropdown')]//li/a[contains (.,'${key_plusMenu}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PRODUCT_IMAGE_SELECT_FILE</td>
-	<td>//div[contains(@class,'image-selector')]//a[contains(.,'Select File')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAME_FIELD</td>
-	<td>//div/input[contains(@id,'name')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DESCRIPTION_FIELD</td>
-	<td>//textarea[contains (@id,'description')]</td>
+	<td>FACETABLE_CHECKBOX</td>
+	<td>//input[contains(@id,'facetable') and (@type='checkbox')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -134,8 +64,48 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FACETABLE_CHECKBOX</td>
-	<td>//input[contains(@id,'facetable') and (@type='checkbox')]</td>
+	<td>FULL_DESCRIPTION_FIELD</td>
+	<td>//div[contains(@id,'descriptionMap') and contains(@aria-label,'Rich Text Editor')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>KEY_FIELD</td>
+	<td>//div/input[contains(@id,'key')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAME_FIELD</td>
+	<td>//div/input[contains(@id,'name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEVER_EXPIRE_CHECKBOX</td>
+	<td>//input[contains(@name,'neverExpire') and (@type='checkbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PLUS_MENU</td>
+	<td>//div[contains (@class, 'dropdown')]//li/a[contains (.,'${key_plusMenu}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRIORITY_FIELD</td>
+	<td>//div/label[contains (@for,'priority')]/../input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCT_IMAGE_SELECT_FILE</td>
+	<td>//div[contains(@class,'image-selector')]//a[contains(.,'Select File')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCT_TYPE_SELECT</td>
+	<td>//div/select[contains(@id,'entryType')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISHED_CHECKBOX</td>
+	<td>//input[contains(@id,'published') and (@type='checkbox')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -144,8 +114,38 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SAVE_BUTTON</td>
+	<td>//div[contains(@class,'button-holder')]/button[@type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_TAG_BUTTON</td>
+	<td>//div/button[@title='Select Tags']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHORT_DESCRIPTION_FIELD</td>
+	<td>//textarea[contains (@id,'shortDescription')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SKU_CONTRIBUTOR_CHECKBOX</td>
 	<td>//input[contains(@id,'skuContributor') and (@type='checkbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAGS_FIELD</td>
+	<td>//div/ul/li/span/span/input[contains(@id,'assetTagName')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE_FIELD</td>
+	<td>//div/span/input[contains(@id,'title')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_STATUS</td>
+	<td>//span[@class='workflow-status']//span[contains(.,'Approved')]</td>
 	<td></td>
 </tr>
 </tbody>

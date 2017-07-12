@@ -15,27 +15,14 @@
 package com.liferay.portal.cache.internal.dao.orm;
 
 import com.liferay.portal.kernel.cache.MultiVMPool;
-import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.PortalCacheManager;
-import com.liferay.portal.kernel.io.Deserializer;
-import com.liferay.portal.kernel.io.Serializer;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.RegistryUtil;
 
 import java.io.Serializable;
-
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-
-import java.nio.ByteBuffer;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -71,7 +58,7 @@ public class EntityCacheImplTest {
 		entityCacheImpl.setMultiVMPool(
 			(MultiVMPool)ProxyUtil.newProxyInstance(
 				_classLoader, new Class<?>[] {MultiVMPool.class},
-				new MultiVMPoolInvocationHandler(serialized)));
+				new MultiVMPoolInvocationHandler(_classLoader, serialized)));
 		entityCacheImpl.setProps(_props);
 
 		entityCacheImpl.activate();
@@ -88,125 +75,5 @@ public class EntityCacheImplTest {
 	private ClassLoader _classLoader;
 	private Serializable _nullModel;
 	private Props _props;
-
-	private class MultiVMPoolInvocationHandler implements InvocationHandler {
-
-		@Override
-		public Object invoke(Object proxy, Method method, Object[] args)
-			throws Throwable {
-
-			String methodName = method.getName();
-
-			if (methodName.equals("getPortalCache")) {
-				return ProxyUtil.newProxyInstance(
-					_classLoader, new Class<?>[] {PortalCache.class},
-					new PortalCacheInvocationHandler(_serialized));
-			}
-
-			if (methodName.equals("getPortalCacheManager")) {
-				return ProxyUtil.newProxyInstance(
-					_classLoader, new Class<?>[] {PortalCacheManager.class},
-					new InvocationHandler() {
-
-						@Override
-						public Object invoke(
-								Object proxy, Method method, Object[] args)
-							throws Throwable {
-
-							String methodName = method.getName();
-
-							if (methodName.equals(
-									"registerPortalCacheManagerListener")) {
-
-								return true;
-							}
-
-							return null;
-						}
-
-					});
-			}
-
-			return null;
-		}
-
-		private MultiVMPoolInvocationHandler(boolean serialized) {
-			_serialized = serialized;
-		}
-
-		private final boolean _serialized;
-
-	}
-
-	private class PortalCacheInvocationHandler implements InvocationHandler {
-
-		@Override
-		public Object invoke(Object proxy, Method method, Object[] args)
-			throws Throwable {
-
-			String methodName = method.getName();
-
-			if (methodName.equals("get")) {
-				if (_serialized) {
-					byte[] bytes = (byte[])_map.get(args[0]);
-
-					Deserializer deserializer = new Deserializer(
-						ByteBuffer.wrap(bytes));
-
-					return deserializer.readObject();
-				}
-
-				return _map.get(args[0]);
-			}
-
-			if (methodName.equals("put")) {
-				if (_serialized) {
-					Serializer serializer = new Serializer();
-
-					serializer.writeObject((Serializable)args[1]);
-
-					ByteBuffer byteBuffer = serializer.toByteBuffer();
-
-					_map.put((Serializable)args[0], byteBuffer.array());
-				}
-				else {
-					_map.put((Serializable)args[0], args[1]);
-				}
-			}
-
-			return null;
-		}
-
-		private PortalCacheInvocationHandler(boolean serialized) {
-			_serialized = serialized;
-		}
-
-		private final Map<Serializable, Object> _map = new HashMap<>();
-		private final boolean _serialized;
-
-	}
-
-	private class PropsInvocationHandler implements InvocationHandler {
-
-		@Override
-		public Object invoke(Object proxy, Method method, Object[] args) {
-			String methodName = method.getName();
-
-			if (methodName.equals("get")) {
-				String key = (String)args[0];
-
-				if (key.equals(PropsKeys.VALUE_OBJECT_ENTITY_BLOCKING_CACHE) ||
-					key.equals(PropsKeys.VALUE_OBJECT_ENTITY_CACHE_ENABLED) ||
-					key.equals(
-						PropsKeys.VALUE_OBJECT_MVCC_ENTITY_CACHE_ENABLED)) {
-
-					return "true";
-				}
-			}
-
-			return null;
-		}
-
-	}
 
 }

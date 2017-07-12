@@ -22,18 +22,14 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -42,17 +38,14 @@ import com.liferay.registry.RegistryUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
 
 /**
@@ -79,8 +72,6 @@ public class UserIndexerTest {
 			IndexerRegistry.class);
 
 		_indexer = indexerRegistry.getIndexer(User.class);
-
-		_serviceContext = ServiceContextTestUtil.getServiceContext();
 	}
 
 	@Test
@@ -314,48 +305,6 @@ public class UserIndexerTest {
 		Assert.assertEquals("open4life", actualUser.getScreenName());
 	}
 
-	@Rule
-	public TestName testName = new TestName();
-
-	protected User addUser(
-			String firstName, String lastName, String middleName,
-			String screenName, String emailAddress)
-		throws Exception {
-
-		long creatorUserId = TestPropsValues.getUserId();
-		long companyId = TestPropsValues.getCompanyId();
-		boolean autoPassword = true;
-		String password1 = null;
-		String password2 = null;
-		boolean autoScreenName = false;
-		long facebookId = 0;
-		String openId = null;
-		Locale locale = LocaleUtil.getDefault();
-		long prefixId = 0;
-		long suffixId = 0;
-		boolean male = false;
-		int birthdayMonth = Calendar.JANUARY;
-		int birthdayDay = 1;
-		int birthdayYear = 1970;
-		String jobTitle = null;
-		long[] groupIds = new long[] {TestPropsValues.getGroupId()};
-		long[] organizationIds = null;
-		long[] roleIds = null;
-		long[] userGroupIds = null;
-		boolean sendMail = false;
-
-		User user = _userLocalService.addUser(
-			creatorUserId, companyId, autoPassword, password1, password2,
-			autoScreenName, screenName, emailAddress, facebookId, openId,
-			locale, firstName, middleName, lastName, prefixId, suffixId, male,
-			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
-			organizationIds, roleIds, userGroupIds, sendMail, _serviceContext);
-
-		_users.add(user);
-
-		return user;
-	}
-
 	protected void assertLength(Hits hits, int length) {
 		Assert.assertEquals(hits.toString(), length, hits.getLength());
 	}
@@ -517,10 +466,6 @@ public class UserIndexerTest {
 	}
 
 	private Indexer<User> _indexer;
-	private ServiceContext _serviceContext;
 	private UserLocalService _userLocalService;
-
-	@DeleteAfterTestRun
-	private final List<User> _users = new ArrayList<>();
 
 }

@@ -350,9 +350,8 @@ public class FinderCacheImpl
 
 			return (Serializable)Collections.unmodifiableList(list);
 		}
-		else if (BaseModel.class.isAssignableFrom(
-					finderPath.getResultClass())) {
 
+		if (BaseModel.class.isAssignableFrom(finderPath.getResultClass())) {
 			return _entityCache.loadResult(
 				finderPath.isEntityCacheEnabled(), finderPath.getResultClass(),
 				primaryKey, basePersistenceImpl);
@@ -369,7 +368,8 @@ public class FinderCacheImpl
 
 			return model.getPrimaryKeyObj();
 		}
-		else if (result instanceof List<?>) {
+
+		if (result instanceof List<?>) {
 			List<Serializable> list = (List<Serializable>)result;
 
 			if (list.isEmpty()) {

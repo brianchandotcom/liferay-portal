@@ -29,7 +29,7 @@
 
 	<command name="AddFolder" priority="5">
 		<property name="portal.acceptance" value="true" />
-		<property name="testray.component.names" value="Web Content Administration" />
+		<property name="testray.component.names" value="Training,Web Content Administration" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -43,8 +43,9 @@
 		</execute>
 	</command>
 
-	<command name="AddStructures" priority="4">
-		<property name="testray.component.names" value="Web Content Administration" />
+	<command name="AddStructures" priority="5">
+		<property name="portal.acceptance" value="pending" />
+		<property name="testray.component.names" value="Training,Web Content Administration" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -612,8 +613,9 @@
 		</execute>
 	</command>
 
-	<command name="AddTemplateXSL" priority="3">
-		<property name="testray.component.names" value="Web Content Administration,XSL" />
+	<command name="AddTemplateXSL" priority="5">
+		<property name="portal.acceptance" value="pending" />
+		<property name="testray.component.names" value="Training,Web Content Administration,XSL" />
 
 		<execute macro="Navigator#openURL" />
 

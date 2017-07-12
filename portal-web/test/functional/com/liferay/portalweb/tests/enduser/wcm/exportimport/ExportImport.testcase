@@ -388,6 +388,9 @@
 	</command>
 
 	<command name="ExportImportPrivatePage" priority="5">
+		<property name="portal.acceptance" value="pending" />
+		<property name="testray.component.names" value="Training" />
+
 		<execute macro="Page#add">
 			<var name="pageName" value="Private Page" />
 			<var name="sitePagePrivacy" value="Private" />
@@ -509,6 +512,9 @@
 	</command>
 
 	<command name="ExportImportSmoke" priority="5">
+		<property name="portal.acceptance" value="pending" />
+		<property name="testray.component.names" value="Training" />
+
 		<execute macro="User#firstLoginPG" />
 
 		<execute macro="LAR#configureExportSiteCP" />
@@ -610,7 +616,11 @@
 		</execute>
 	</command>
 
-	<command name="ExportImportValidation" priority="4">
+	<command name="ExportImportValidation" priority="5">
+		<property name="portal.acceptance" value="pending" />
+		<property name="test.name.skip.portal.instance" value="ExportImport#ExportImportValidation" />
+		<property name="testray.component.names" value="Training" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">

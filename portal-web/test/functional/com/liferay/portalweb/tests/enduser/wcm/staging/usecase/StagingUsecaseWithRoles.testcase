@@ -675,7 +675,10 @@
 		</execute>
 	</command>
 
-	<command name="StagingDemoLocalLive4" priority="4">
+	<command name="StagingDemoLocalLive4" priority="5">
+		<property name="portal.acceptance" value="pending" />
+		<property name="testray.component.names" value="Training" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -1178,6 +1181,9 @@
 	</command>
 
 	<command name="StagingPublishPage" priority="5">
+		<property name="portal.acceptance" value="pending" />
+		<property name="testray.component.names" value="Training" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>

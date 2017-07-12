@@ -27,8 +27,8 @@
 		</if>
 	</tear-down>
 
-	<command name="Smoke" priority="5">
-		<description message="Ensure that the super admin can add pages, add portlets, navigate to the product menu, use the WYSIWYG editor, and view alert messages." />
+	<command description="Ensure that the super admin can add pages, add portlets, navigate to the product menu, use the WYSIWYG editor, and view alert messages." name="Smoke" priority="5">
+		<property name="testray.component.names" value="Training" />
 
 		<execute macro="Smoke#viewWelcomePage" />
 

@@ -32,7 +32,8 @@ public class PropsInvocationHandler implements InvocationHandler {
 		if (methodName.equals("get")) {
 			String key = (String)args[0];
 
-			if (key.equals(PropsKeys.VALUE_OBJECT_ENTITY_BLOCKING_CACHE) ||
+			if (key.equals(PropsKeys.VALUE_OBJECT_FINDER_CACHE_ENABLED) ||
+				key.equals(PropsKeys.VALUE_OBJECT_ENTITY_BLOCKING_CACHE) ||
 				key.equals(PropsKeys.VALUE_OBJECT_ENTITY_CACHE_ENABLED) ||
 				key.equals(PropsKeys.VALUE_OBJECT_MVCC_ENTITY_CACHE_ENABLED)) {
 

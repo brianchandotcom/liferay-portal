@@ -195,9 +195,7 @@
 
 <#macro getRelatedAssets>
 	<#if getterUtil.getBoolean(enableRelatedAssets)>
-		<@liferay_ui["asset-links"]
-			assetEntryId=entry.getEntryId()
-		/>
+		<@liferay_ui["asset-links"] assetEntryId=entry.getEntryId() />
 	</#if>
 </#macro>
 

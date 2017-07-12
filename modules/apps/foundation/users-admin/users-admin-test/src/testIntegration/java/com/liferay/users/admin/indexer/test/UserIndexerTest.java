@@ -277,37 +277,41 @@ public class UserIndexerTest {
 
 	@Test
 	public void testScreenName() throws Exception {
-		User user = addUserScreenName("Open4Life");
+		User expectedUser = UserTestUtil.addUser(
+			"Open4Life", new long[] {TestPropsValues.getGroupId()});
 
-		user = assertSearchOneUser("Open4Life", user);
+		User actualUser = assertSearchOneUser("Open4Life", expectedUser);
 
-		Assert.assertEquals("open4life", user.getScreenName());
+		Assert.assertEquals("open4life", actualUser.getScreenName());
 	}
 
 	@Test
 	public void testScreenNameField() throws Exception {
-		User user = addUserScreenName("Open4Life");
+		User expectedUser = UserTestUtil.addUser(
+			"Open4Life", new long[] {TestPropsValues.getGroupId()});
 
-		user = assertSearchOneUser("screenName", "open4life", user);
+		User actualUser = assertSearchOneUser(
+			"screenName", "open4life", expectedUser);
 
-		Assert.assertEquals("open4life", user.getScreenName());
+		Assert.assertEquals("open4life", actualUser.getScreenName());
 	}
 
 	@Test
 	public void testScreenNameSubstring() throws Exception {
-		User user = addUserScreenName("Open4Life");
+		User expectedUser = UserTestUtil.addUser(
+			"Open4Life", new long[] {TestPropsValues.getGroupId()});
 
-		user = assertSearchOneUser("open lite", user);
+		User actualUser = assertSearchOneUser("open lite", expectedUser);
 
-		Assert.assertEquals("open4life", user.getScreenName());
+		Assert.assertEquals("open4life", actualUser.getScreenName());
 
-		user = assertSearchOneUser("OPE", user);
+		actualUser = assertSearchOneUser("OPE", expectedUser);
 
-		Assert.assertEquals("open4life", user.getScreenName());
+		Assert.assertEquals("open4life", actualUser.getScreenName());
 
-		user = assertSearchOneUser("4lif", user);
+		actualUser = assertSearchOneUser("4lif", expectedUser);
 
-		Assert.assertEquals("open4life", user.getScreenName());
+		Assert.assertEquals("open4life", actualUser.getScreenName());
 	}
 
 	@Rule
@@ -350,16 +354,6 @@ public class UserIndexerTest {
 		_users.add(user);
 
 		return user;
-	}
-
-	protected User addUserScreenName(String screenName) throws Exception {
-		String firstName = RandomTestUtil.randomString();
-		String lastName = RandomTestUtil.randomString();
-		String middleName = RandomTestUtil.randomString();
-		String emailAddress = RandomTestUtil.randomString() + "@liferay.com";
-
-		return addUser(
-			firstName, lastName, middleName, screenName, emailAddress);
 	}
 
 	protected void assertLength(Hits hits, int length) {

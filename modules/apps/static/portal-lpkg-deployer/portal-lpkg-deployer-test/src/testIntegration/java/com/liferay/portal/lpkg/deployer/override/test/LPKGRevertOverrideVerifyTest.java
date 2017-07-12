@@ -121,7 +121,7 @@ public class LPKGRevertOverrideVerifyTest {
 
 				Assert.assertTrue(
 					"WAR not sucessfully reverted: " + symbolicName,
-					location.contains("lpkg://"));
+					location.contains("lpkg:/"));
 			}
 		}
 

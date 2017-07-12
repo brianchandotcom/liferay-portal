@@ -27,7 +27,7 @@ import java.io.Serializable;
 public class ExportImportLifecycleEventFactoryUtil {
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	public static ExportImportLifecycleEvent create(

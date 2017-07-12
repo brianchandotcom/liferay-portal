@@ -120,7 +120,7 @@ public class SchedulerEventMessageListenerWrapper
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	public void setGroupName(String groupName) {
@@ -128,7 +128,7 @@ public class SchedulerEventMessageListenerWrapper
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	public void setJobName(String jobName) {
@@ -155,14 +155,14 @@ public class SchedulerEventMessageListenerWrapper
 		SchedulerEventMessageListenerWrapper.class);
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	@SuppressWarnings("unused")
 	private String _groupName;
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	@SuppressWarnings("unused")

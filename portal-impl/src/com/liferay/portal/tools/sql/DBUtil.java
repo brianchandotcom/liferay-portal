@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 /**
  * @author     Alexander Chow
  * @author     Ganesh Ram
- * @deprecated As of NEXT-VERSION
+ * @deprecated As of com.liferay.portal.impl#NEXT-VERSION
  */
 @Deprecated
 public abstract class DBUtil implements DB {

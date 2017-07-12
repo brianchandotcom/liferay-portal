@@ -2367,7 +2367,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *             <code>null</code>)
 	 * @return     the ordered range of users with a social relation of the type
 	 *             with the user
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #getSocialUsers(long, int,
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #getSocialUsers(long, int,
 	 *             String, int, int, OrderByComparator)}
 	 */
 	@Deprecated
@@ -2401,7 +2401,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *             <code>null</code>)
 	 * @return     the ordered range of users with a social relation with the
 	 *             user
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #getSocialUsers(long, int,
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #getSocialUsers(long, int,
 	 *             String, int, int, OrderByComparator)}
 	 */
 	@Deprecated
@@ -2563,7 +2563,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *
 	 * @param      userId the primary key of the user
 	 * @return     the number of users with a social relation with the user
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #getSocialUsersCount(long,
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #getSocialUsersCount(long,
 	 *             int, String)}
 	 */
 	@Deprecated
@@ -2583,7 +2583,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *             types can be found in {@link SocialRelationConstants}.
 	 * @return     the number of users with a social relation of the type with
 	 *             the user
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #getSocialUsersCount(long,
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #getSocialUsersCount(long,
 	 *             int, String)}
 	 */
 	@Deprecated
@@ -5092,7 +5092,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @param      userId the primary key of the user
 	 * @param      status the user's new workflow status
 	 * @return     the user
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #updateStatus(long, int,
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #updateStatus(long, int,
 	 *             ServiceContext)}
 	 */
 	@Deprecated
@@ -5509,7 +5509,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *             <code>uuid</code> attribute), asset category IDs, asset tag
 	 *             names, and expando bridge attributes for the user.
 	 * @return     the user
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #updateUser(long, String,
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #updateUser(long, String,
 	 *             String, String, boolean, String, String, String, String,
 	 *             long, String, boolean, byte[], String, String, String,
 	 *             String, String, String, String, long, long, boolean, int,

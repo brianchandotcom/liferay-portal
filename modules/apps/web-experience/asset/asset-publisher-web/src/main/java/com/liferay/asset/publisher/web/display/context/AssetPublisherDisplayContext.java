@@ -133,7 +133,7 @@ public class AssetPublisherDisplayContext {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.asset.publisher.web#NEXT-VERSION, replaced by {@link
 	 *             #AssetPublisherDisplayContext(AssetPublisherCustomizer,
 	 *             PortletRequest,PortletResponse, PortletPreferences)}
 	 */
@@ -752,7 +752,7 @@ public class AssetPublisherDisplayContext {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.asset.publisher.web#NEXT-VERSION, replaced by {@link
 	 *             #getScopeAssetPublisherAddItemHolders(int)}
 	 */
 	@Deprecated

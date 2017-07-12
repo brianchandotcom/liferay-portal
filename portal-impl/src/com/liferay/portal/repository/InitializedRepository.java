@@ -40,7 +40,7 @@ public class InitializedRepository
 	extends InitializedDocumentRepository<Repository> implements Repository {
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -58,7 +58,7 @@ public class InitializedRepository
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -76,7 +76,7 @@ public class InitializedRepository
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -99,7 +99,7 @@ public class InitializedRepository
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -115,7 +115,7 @@ public class InitializedRepository
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -153,7 +153,7 @@ public class InitializedRepository
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -483,7 +483,7 @@ public class InitializedRepository
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -498,7 +498,7 @@ public class InitializedRepository
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -536,7 +536,7 @@ public class InitializedRepository
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -606,7 +606,7 @@ public class InitializedRepository
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -624,7 +624,7 @@ public class InitializedRepository
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override

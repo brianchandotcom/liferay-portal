@@ -292,7 +292,7 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 	 *             <code>instanceId</code>.
 	 * @return     the portlet ID, including the instance ID if applicable, or
 	 *             <code>null</code> if it cannot be determined
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #getPortletInstanceKey(Map)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getPortletInstanceKey(Map)}
 	 */
 	@Deprecated
 	protected String getPortletId(Map<String, String> routeParameters) {

@@ -51,7 +51,7 @@ public class TestTrashHandler implements TrashHandler {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.trash.test#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -60,7 +60,7 @@ public class TestTrashHandler implements TrashHandler {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.trash.test#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -93,7 +93,7 @@ public class TestTrashHandler implements TrashHandler {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.trash.test#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -141,7 +141,7 @@ public class TestTrashHandler implements TrashHandler {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.trash.test#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -211,7 +211,7 @@ public class TestTrashHandler implements TrashHandler {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.trash.test#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -232,7 +232,7 @@ public class TestTrashHandler implements TrashHandler {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.trash.test#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -258,7 +258,7 @@ public class TestTrashHandler implements TrashHandler {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.trash.test#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override

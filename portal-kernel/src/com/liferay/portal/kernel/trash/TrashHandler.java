@@ -103,7 +103,7 @@ public interface TrashHandler {
 		throws PortalException;
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #checkRestorableEntry(long,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #checkRestorableEntry(long,
 	 *             long, String)}
 	 */
 	@Deprecated
@@ -126,7 +126,7 @@ public interface TrashHandler {
 	 * @param      newName the new name to be assigned to the trash entry
 	 *             (optionally <code>null</code> to forego renaming the trash
 	 *             entry)
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #checkRestorableEntry(TrashEntry, long, String)}
 	 */
 	@Deprecated
@@ -182,7 +182,7 @@ public interface TrashHandler {
 	/**
 	 * Returns the parent container model's class name.
 	 *
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #getContainerModelClassName(long)}
 	 */
 	@Deprecated
@@ -271,7 +271,7 @@ public interface TrashHandler {
 	public Filter getExcludeFilter(SearchContext searchContext);
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #getExcludeFilter(SearchContext)}
 	 */
 	@Deprecated
@@ -409,7 +409,7 @@ public interface TrashHandler {
 	 * @return the range of trash renderers of model entities (excluding
 	 *         container models) that are children of the parent container model
 	 *         identified by the primary key
-	 * @deprecated As of NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public List<TrashRenderer> getTrashContainedModelTrashRenderers(
@@ -468,7 +468,7 @@ public interface TrashHandler {
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching trash renderers of model entities
-	 * @deprecated As of NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public List<TrashRenderer> getTrashContainerModelTrashRenderers(
@@ -499,7 +499,7 @@ public interface TrashHandler {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #getTrashModelTrashedModels(long, int, int, OrderByComparator)}
 	 */
 	@Deprecated

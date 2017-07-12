@@ -38,7 +38,7 @@ public interface Query extends Serializable {
 	public QueryConfig getQueryConfig();
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	public Object getWrappedQuery();

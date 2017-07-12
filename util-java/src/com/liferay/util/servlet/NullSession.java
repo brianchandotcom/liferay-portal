@@ -80,7 +80,7 @@ public class NullSession implements HttpSession {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.util.java#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -89,7 +89,7 @@ public class NullSession implements HttpSession {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.util.java#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -98,7 +98,7 @@ public class NullSession implements HttpSession {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.util.java#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -119,7 +119,7 @@ public class NullSession implements HttpSession {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.util.java#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -133,7 +133,7 @@ public class NullSession implements HttpSession {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.util.java#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override

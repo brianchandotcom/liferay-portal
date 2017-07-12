@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.InitialThreadLocal;
 /**
  * @author     Raymond Augé
  * @author     Brian Wing Shun Chan
- * @deprecated As of NEXT-VERSION, see LPS-30598
+ * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, see LPS-30598
  */
 @Deprecated
 public class BatchSessionImpl implements BatchSession {

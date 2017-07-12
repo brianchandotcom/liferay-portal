@@ -182,7 +182,7 @@ public class AssetRSSUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.asset.publisher.web#NEXT-VERSION, replaced by {@link
 	 *             #getAssetEntries(PortletRequest, PortletResponse,
 	 *             PortletPreferences)}
 	 */

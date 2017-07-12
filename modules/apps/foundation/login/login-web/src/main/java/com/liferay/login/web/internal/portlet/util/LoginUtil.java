@@ -58,7 +58,7 @@ import javax.servlet.http.HttpSession;
 public class LoginUtil {
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.login.web#NEXT-VERSION, replaced by {@link
 	 *             AuthenticatedSessionManagerUtil#getAuthenticatedUserId(
 	 *             HttpServletRequest, String, String, String)}
 	 */
@@ -179,7 +179,7 @@ public class LoginUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.login.web#NEXT-VERSION, replaced by {@link
 	 *             AuthenticatedSessionManagerUtil#login(HttpServletRequest,
 	 *             HttpServletResponse, String, String, boolean, String)}
 	 */
@@ -194,7 +194,7 @@ public class LoginUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.login.web#NEXT-VERSION, replaced by {@link
 	 *             AuthenticatedSessionManagerUtil#renewSession(
 	 *             HttpServletRequest, HttpSession)}
 	 */
@@ -240,7 +240,7 @@ public class LoginUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.login.web#NEXT-VERSION, replaced by {@link
 	 *             AuthenticatedSessionManagerUtil#signOutSimultaneousLogins(
 	 *             long)}
 	 */

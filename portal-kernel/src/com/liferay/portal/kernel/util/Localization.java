@@ -333,7 +333,7 @@ public interface Localization {
 	 * @param      key the preferences key
 	 * @param      languageId the ID of the language
 	 * @return     the localized preferences key
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #getLocalizedName(String,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getLocalizedName(String,
 	 *             String)}
 	 */
 	@Deprecated

@@ -21,7 +21,7 @@ import java.util.TimeZone;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of NEXT-VERSION, replaced by {@link DateFormatFactoryUtil} or {@link
+ * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link DateFormatFactoryUtil} or {@link
  *             FastDateFormatFactoryUtil}
  */
 @Deprecated

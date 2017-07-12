@@ -16,7 +16,7 @@ package com.liferay.portal.kernel.search;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of NEXT-VERSION, , replaced by {@link
+ * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, , replaced by {@link
  *             com.liferay.portal.kernel.search.generic.BooleanQueryImpl}
  */
 @Deprecated

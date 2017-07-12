@@ -46,7 +46,7 @@ public class FrontendEditorLangResourceBundleLoader
 	}
 
 	/**
-	 * @deprecated As of 1.1.0, replaced by {@link #loadResourceBundle(Locale)}
+	 * @deprecated As of com.liferay.frontend.editor.lang#1.1.0, replaced by {@link #loadResourceBundle(Locale)}
 	 */
 	@Deprecated
 	@Override

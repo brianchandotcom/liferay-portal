@@ -88,7 +88,7 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.configuration.module.configuration#NEXT-VERSION, replaced by {@link
 	 *             #getPortletInstanceConfiguration(Class, Layout, String)}
 	 */
 	@Deprecated

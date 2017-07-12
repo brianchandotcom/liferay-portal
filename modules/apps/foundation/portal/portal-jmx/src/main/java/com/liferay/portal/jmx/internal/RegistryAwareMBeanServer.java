@@ -119,7 +119,7 @@ public class RegistryAwareMBeanServer implements MBeanServer {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.jmx#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -132,7 +132,7 @@ public class RegistryAwareMBeanServer implements MBeanServer {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.jmx#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -143,7 +143,7 @@ public class RegistryAwareMBeanServer implements MBeanServer {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.jmx#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override

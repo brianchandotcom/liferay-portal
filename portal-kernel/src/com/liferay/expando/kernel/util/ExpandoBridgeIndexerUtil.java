@@ -30,7 +30,7 @@ public class ExpandoBridgeIndexerUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #encodeFieldName(
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #encodeFieldName(
 	 *             String, int)}
 	 */
 	@Deprecated

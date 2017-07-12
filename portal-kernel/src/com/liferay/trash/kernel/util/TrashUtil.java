@@ -37,7 +37,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Julio Camarero
- * @deprecated As of NEXT-VERSION
+ * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
  */
 @Deprecated
 @ProviderType

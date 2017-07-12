@@ -25,7 +25,7 @@ import java.util.Date;
 
 /**
  * @author     Daniel Kocsis
- * @deprecated As of NEXT-VERSION
+ * @deprecated As of com.liferay.portal.impl#NEXT-VERSION
  */
 @Deprecated
 public class StagedGroupImpl extends GroupImpl implements StagedGroup {

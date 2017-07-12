@@ -95,7 +95,7 @@ public class MBDiscussionCommentImpl
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.message.boards.comment#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -104,7 +104,7 @@ public class MBDiscussionCommentImpl
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.message.boards.comment#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override

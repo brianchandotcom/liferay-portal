@@ -91,7 +91,7 @@ public class DefineObjectsTag extends TagSupport {
 	}
 
 	/**
-	 * @deprecated As of 2.1.0, with no direct replacement
+	 * @deprecated As of com.liferay.frontend.taglib#2.1.0, with no direct replacement
 	 */
 	@Deprecated
 	protected PortletURL getCurrentURLObj() {
@@ -112,7 +112,7 @@ public class DefineObjectsTag extends TagSupport {
 	}
 
 	/**
-	 * @deprecated As of 2.1.0, with no direct replacement
+	 * @deprecated As of com.liferay.frontend.taglib#2.1.0, with no direct replacement
 	 */
 	@Deprecated
 	protected LiferayPortletRequest getLiferayPortletRequest() {
@@ -130,7 +130,7 @@ public class DefineObjectsTag extends TagSupport {
 	}
 
 	/**
-	 * @deprecated As of 2.1.0, with no direct replacement
+	 * @deprecated As of com.liferay.frontend.taglib#2.1.0, with no direct replacement
 	 */
 	@Deprecated
 	protected LiferayPortletResponse getLiferayPortletResponse() {
@@ -148,7 +148,7 @@ public class DefineObjectsTag extends TagSupport {
 	}
 
 	/**
-	 * @deprecated As of 2.1.0, with no direct replacement
+	 * @deprecated As of com.liferay.frontend.taglib#2.1.0, with no direct replacement
 	 */
 	@Deprecated
 	protected ResourceBundle getResourceBundle() {
@@ -165,7 +165,7 @@ public class DefineObjectsTag extends TagSupport {
 	}
 
 	/**
-	 * @deprecated As of 2.1.0, with no direct replacement
+	 * @deprecated As of com.liferay.frontend.taglib#2.1.0, with no direct replacement
 	 */
 	@Deprecated
 	protected WindowState getWindowState() {

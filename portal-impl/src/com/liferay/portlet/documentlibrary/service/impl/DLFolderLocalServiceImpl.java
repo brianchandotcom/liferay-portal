@@ -152,7 +152,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #deleteAllByGroup(long)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #deleteAllByGroup(long)}
 	 */
 	@Deprecated
 	@Override
@@ -377,7 +377,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #getGroupFolderIds(long,
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #getGroupFolderIds(long,
 	 *             long)}
 	 */
 	@Deprecated
@@ -590,7 +590,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #getGroupSubfolderIds(List,
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #getGroupSubfolderIds(List,
 	 *             long, long)}
 	 */
 	@Deprecated
@@ -770,7 +770,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #updateFolder(long, long,
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #updateFolder(long, long,
 	 *             String, String, long, List, int, ServiceContext)}
 	 */
 	@Deprecated
@@ -913,7 +913,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced {@link #updateFolder(long, long,
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced {@link #updateFolder(long, long,
 	 *             String, String, long, List, int, ServiceContext)}
 	 */
 	@Deprecated
@@ -960,7 +960,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #
 	 *             updateFolderAndFileEntryTypes(long, long, long, String,
 	 *             String, long, List, int, ServiceContext)}
 	 */

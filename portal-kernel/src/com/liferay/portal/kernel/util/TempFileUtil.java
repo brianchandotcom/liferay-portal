@@ -25,7 +25,7 @@ import java.io.InputStream;
  * @author     Matthew Kong
  * @author     Alexander Chow
  * @author     Iván Zaera
- * @deprecated As of NEXT-VERSION, replaced by {@link TempFileEntryUtil}
+ * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link TempFileEntryUtil}
  */
 @Deprecated
 public class TempFileUtil {

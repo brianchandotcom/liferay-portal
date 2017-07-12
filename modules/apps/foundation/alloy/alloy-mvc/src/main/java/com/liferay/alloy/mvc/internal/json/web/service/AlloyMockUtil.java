@@ -359,7 +359,7 @@ public class AlloyMockUtil {
 		}
 
 		/**
-		 * @deprecated As of NEXT-VERSION
+		 * @deprecated As of com.liferay.alloy.mvc#NEXT-VERSION
 		 */
 		@Deprecated
 		@Override
@@ -463,7 +463,7 @@ public class AlloyMockUtil {
 		}
 
 		/**
-		 * @deprecated As of NEXT-VERSION
+		 * @deprecated As of com.liferay.alloy.mvc#NEXT-VERSION
 		 */
 		@Deprecated
 		@Override
@@ -560,7 +560,7 @@ public class AlloyMockUtil {
 		}
 
 		/**
-		 * @deprecated As of NEXT-VERSION
+		 * @deprecated As of com.liferay.alloy.mvc#NEXT-VERSION
 		 */
 		@Deprecated
 		@Override
@@ -574,7 +574,7 @@ public class AlloyMockUtil {
 		}
 
 		/**
-		 * @deprecated As of NEXT-VERSION
+		 * @deprecated As of com.liferay.alloy.mvc#NEXT-VERSION
 		 */
 		@Deprecated
 		@Override
@@ -718,7 +718,7 @@ public class AlloyMockUtil {
 		}
 
 		/**
-		 * @deprecated As of NEXT-VERSION
+		 * @deprecated As of com.liferay.alloy.mvc#NEXT-VERSION
 		 */
 		@Deprecated
 		@Override
@@ -766,7 +766,7 @@ public class AlloyMockUtil {
 		}
 
 		/**
-		 * @deprecated As of NEXT-VERSION
+		 * @deprecated As of com.liferay.alloy.mvc#NEXT-VERSION
 		 */
 		@Deprecated
 		@Override
@@ -775,7 +775,7 @@ public class AlloyMockUtil {
 		}
 
 		/**
-		 * @deprecated As of NEXT-VERSION
+		 * @deprecated As of com.liferay.alloy.mvc#NEXT-VERSION
 		 */
 		@Deprecated
 		@Override
@@ -784,7 +784,7 @@ public class AlloyMockUtil {
 		}
 
 		/**
-		 * @deprecated As of NEXT-VERSION
+		 * @deprecated As of com.liferay.alloy.mvc#NEXT-VERSION
 		 */
 		@Deprecated
 		@Override
@@ -803,7 +803,7 @@ public class AlloyMockUtil {
 		}
 
 		/**
-		 * @deprecated As of NEXT-VERSION
+		 * @deprecated As of com.liferay.alloy.mvc#NEXT-VERSION
 		 */
 		@Deprecated
 		@Override
@@ -817,7 +817,7 @@ public class AlloyMockUtil {
 		}
 
 		/**
-		 * @deprecated As of NEXT-VERSION
+		 * @deprecated As of com.liferay.alloy.mvc#NEXT-VERSION
 		 */
 		@Deprecated
 		@Override
@@ -882,7 +882,7 @@ public class AlloyMockUtil {
 		}
 
 		/**
-		 * @deprecated As of NEXT-VERSION
+		 * @deprecated As of com.liferay.alloy.mvc#NEXT-VERSION
 		 */
 		@Deprecated
 		@Override
@@ -926,7 +926,7 @@ public class AlloyMockUtil {
 		}
 
 		/**
-		 * @deprecated As of NEXT-VERSION
+		 * @deprecated As of com.liferay.alloy.mvc#NEXT-VERSION
 		 */
 		@Deprecated
 		@Override

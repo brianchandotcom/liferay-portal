@@ -165,7 +165,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 	}
 
 	/**
-	 * @deprecated As of 2.0.0
+	 * @deprecated As of com.liferay.portlet.display.template#2.0.0
 	 */
 	@Deprecated
 	@Override
@@ -244,7 +244,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 	}
 
 	/**
-	 * @deprecated As of 2.0.0
+	 * @deprecated As of com.liferay.portlet.display.template#2.0.0
 	 */
 	@Deprecated
 	@Override

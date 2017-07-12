@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author     Levente Hudák
- * @deprecated As of NEXT-VERSION, moved to {@link
+ * @deprecated As of com.liferay.exportimport.web#NEXT-VERSION, moved to {@link
  *             com.liferay.exportimport.web.internal.trash.ExportImportConfigurationTrashHandler}
  */
 @Deprecated

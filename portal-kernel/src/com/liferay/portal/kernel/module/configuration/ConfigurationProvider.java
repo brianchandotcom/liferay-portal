@@ -37,7 +37,7 @@ public interface ConfigurationProvider {
 		throws ConfigurationException;
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #getPortletInstanceConfiguration(Class, Layout, String)}
 	 */
 	@Deprecated

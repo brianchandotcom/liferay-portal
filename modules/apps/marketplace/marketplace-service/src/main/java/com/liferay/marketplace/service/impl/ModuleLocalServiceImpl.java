@@ -30,7 +30,7 @@ import java.util.List;
 public class ModuleLocalServiceImpl extends ModuleLocalServiceBaseImpl {
 
 	/**
-	 * @deprecated As of 1.1.0, replaced by {@link #addModule(long, String,
+	 * @deprecated As of com.liferay.marketplace.service#1.1.0, replaced by {@link #addModule(long, String,
 	 *             String, String)}
 	 */
 	@Deprecated

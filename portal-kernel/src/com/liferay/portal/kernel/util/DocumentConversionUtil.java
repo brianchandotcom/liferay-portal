@@ -19,7 +19,7 @@ import java.io.InputStream;
 
 /**
  * @author Bruno Farache
-* @deprecated As of NEXT-VERSION, replaced by {@link
+* @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
  * 			   com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil}
  */
 @Deprecated

@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 
 /**
  * @author Eudaldo Alonso
- * @deprecated As of NEXT-VERSION, with no direct replacement
+ * @deprecated As of com.liferay.rss.web#NEXT-VERSION, with no direct replacement
  */
 @Deprecated
 public class RSSWebConfigurationValues {

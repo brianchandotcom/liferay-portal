@@ -21,25 +21,25 @@ package com.liferay.portal.kernel.exception;
 public class GroupParentException extends PortalException {
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	public static final int CHILD_DESCENDANT = 3;
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	public static final int SELF_DESCENDANT = 1;
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	public static final int STAGING_DESCENDANT = 2;
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by the inner classes
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the inner classes
 	 */
 	@Deprecated
 	public GroupParentException() {
@@ -47,7 +47,7 @@ public class GroupParentException extends PortalException {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by the inner classes
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the inner classes
 	 */
 	@Deprecated
 	public GroupParentException(int type) {
@@ -55,7 +55,7 @@ public class GroupParentException extends PortalException {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by the inner classes
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the inner classes
 	 */
 	@Deprecated
 	public GroupParentException(String msg) {
@@ -65,7 +65,7 @@ public class GroupParentException extends PortalException {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by the inner classes
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the inner classes
 	 */
 	@Deprecated
 	public GroupParentException(String msg, Throwable cause) {
@@ -75,7 +75,7 @@ public class GroupParentException extends PortalException {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by the inner classes
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the inner classes
 	 */
 	@Deprecated
 	public GroupParentException(Throwable cause) {
@@ -85,7 +85,7 @@ public class GroupParentException extends PortalException {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by the inner classes
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the inner classes
 	 */
 	@Deprecated
 	public int getType() {

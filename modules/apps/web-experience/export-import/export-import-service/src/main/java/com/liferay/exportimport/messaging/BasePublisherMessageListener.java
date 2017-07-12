@@ -54,7 +54,7 @@ public abstract class BasePublisherMessageListener
 	extends BaseMessageStatusMessageListener {
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #initialize(ComponentContext,
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION, replaced by {@link #initialize(ComponentContext,
 	 *             SingleDestinationMessageSenderFactory))}
 	 */
 	@Deprecated

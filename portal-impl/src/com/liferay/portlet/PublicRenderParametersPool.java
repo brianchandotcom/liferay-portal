@@ -36,7 +36,7 @@ import javax.servlet.http.HttpSession;
 public class PublicRenderParametersPool {
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
 	 *             #get(HttpServletRequest, long)}
 	 */
 	@Deprecated

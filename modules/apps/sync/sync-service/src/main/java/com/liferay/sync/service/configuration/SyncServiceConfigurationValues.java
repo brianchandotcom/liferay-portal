@@ -80,7 +80,7 @@ public class SyncServiceConfigurationValues {
 					SYNC_FILE_CHECKSUM_THRESHOLD_SIZE));
 
 	/**
-	 * @deprecated As of 1.3.0, with no direct replacement
+	 * @deprecated As of com.liferay.sync.service#1.3.0, with no direct replacement
 	 */
 	@Deprecated
 	public static final int SYNC_FILE_DIFF_CACHE_DELETE_INTERVAL =

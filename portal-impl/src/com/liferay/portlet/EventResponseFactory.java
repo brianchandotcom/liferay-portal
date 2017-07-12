@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 public class EventResponseFactory {
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
 	 *             #create(EventRequestImpl, HttpServletResponse, User, Layout)}
 	 */
 	@Deprecated

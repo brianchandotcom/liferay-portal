@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * @author Manuel de la Peña
  * @author José Manuel Navarro
- * @deprecated As of 2.1.0, replaced by {@link
+ * @deprecated As of com.liferay.portal.test.integration#2.1.0, replaced by {@link
  *             com.liferay.portal.test.mail.MailServiceTestUtil}
  */
 @Deprecated

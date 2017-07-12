@@ -92,7 +92,7 @@ public class ResourceBundleUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	public static Map<Locale, String> getLocalizationMap(
@@ -116,7 +116,7 @@ public class ResourceBundleUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #getString(ResourceBundle,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getString(ResourceBundle,
 	 *             String, Object...)}
 	 */
 	@Deprecated
@@ -164,7 +164,7 @@ public class ResourceBundleUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public static void loadResourceBundles(
@@ -177,7 +177,7 @@ public class ResourceBundleUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public static void loadResourceBundles(

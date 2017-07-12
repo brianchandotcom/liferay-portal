@@ -52,7 +52,7 @@ public class BookmarksFolderAssetRenderer
 	public static final String TYPE = "bookmarks_folder";
 
 	/**
-	 * @deprecated As of 1.1.0, replaced by {@link #BookmarksFolderAssetRenderer(
+	 * @deprecated As of com.liferay.bookmarks.service#1.1.0, replaced by {@link #BookmarksFolderAssetRenderer(
 	 *             BookmarksFolder, TrashHelper)}
 	 */
 	@Deprecated
@@ -83,7 +83,7 @@ public class BookmarksFolderAssetRenderer
 	}
 
 	/**
-	 * @deprecated As of 1.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.bookmarks.service#1.0.0, with no direct replacement
 	 */
 	@Deprecated
 	@Override

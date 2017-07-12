@@ -81,7 +81,7 @@ public class LayoutIconTag
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #doTag(Layout, PageContext)}
+	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, replaced by {@link #doTag(Layout, PageContext)}
 	 */
 	@Deprecated
 	public static void doTag(
@@ -93,7 +93,7 @@ public class LayoutIconTag
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #doTag(Layout, PageContext)}
+	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, replaced by {@link #doTag(Layout, PageContext)}
 	 */
 	@Deprecated
 	public static void doTag(

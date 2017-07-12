@@ -37,7 +37,7 @@ import java.util.Set;
 /**
  * @author Shuyang Zhou
  * @author Brian Wing Shun Chan
- * @deprecated As of NEXT-VERSION, with no direct replacement
+ * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
  */
 @Deprecated
 public class RatingsStatsFinderImpl

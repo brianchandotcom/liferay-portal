@@ -95,7 +95,7 @@ public class TestAssetRendererFactory
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.asset.test#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -106,7 +106,7 @@ public class TestAssetRendererFactory
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.asset.test#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -117,7 +117,7 @@ public class TestAssetRendererFactory
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.asset.test#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -131,7 +131,7 @@ public class TestAssetRendererFactory
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.asset.test#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -145,7 +145,7 @@ public class TestAssetRendererFactory
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.asset.test#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -174,7 +174,7 @@ public class TestAssetRendererFactory
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.asset.test#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -188,7 +188,7 @@ public class TestAssetRendererFactory
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.asset.test#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -223,7 +223,7 @@ public class TestAssetRendererFactory
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.asset.test#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override

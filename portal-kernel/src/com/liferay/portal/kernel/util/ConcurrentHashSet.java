@@ -18,7 +18,7 @@ import java.util.Set;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of NEXT-VERSION, replaced by {@link
+ * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
  *             com.liferay.portal.kernel.concurrent.ConcurrentHashSet}
  */
 @Deprecated

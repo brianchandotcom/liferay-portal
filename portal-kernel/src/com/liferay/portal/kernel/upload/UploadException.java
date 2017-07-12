@@ -45,7 +45,7 @@ public class UploadException extends PortalException {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #
 	 *             isExceededUploadRequestSizeLimit()}
 	 */
 	@Deprecated
@@ -68,7 +68,7 @@ public class UploadException extends PortalException {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #
 	 *             setExceededUploadRequestSizeLimit(boolean)}
 	 */
 	@Deprecated

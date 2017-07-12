@@ -101,7 +101,7 @@ public interface DL {
 		FileEntry fileEntry, ThemeDisplay themeDisplay);
 
 	/**
-	 * @deprecated As of NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public Set<Long> getFileEntryTypeSubscriptionClassPKs(long userId);
@@ -142,7 +142,7 @@ public interface DL {
 	public String getTempFileId(long id, String version, String languageId);
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #getThumbnailSrc(FileEntry,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getThumbnailSrc(FileEntry,
 	 *             ThemeDisplay)}
 	 */
 	@Deprecated
@@ -152,7 +152,7 @@ public interface DL {
 		throws Exception;
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #getThumbnailSrc(FileEntry,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getThumbnailSrc(FileEntry,
 	 *             FileVersion, ThemeDisplay)}
 	 */
 	@Deprecated
@@ -208,7 +208,7 @@ public interface DL {
 	public abstract boolean isOfficeExtension(String extension);
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             com.liferay.document.library.web.internal.util.
 	 *             DLSubscriptionUtil#isSubscribedToFileEntryType(
 	 *             long, long, long, long)}
@@ -218,7 +218,7 @@ public interface DL {
 		long companyId, long groupId, long userId, long fileEntryTypeId);
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             com.liferay.document.library.web.internal.util.
 	 *             DLSubscriptionUtil#isSubscribedToFolder(
 	 *             long, long, long, long)}
@@ -229,7 +229,7 @@ public interface DL {
 		throws PortalException;
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             com.liferay.document.library.web.internal.util.
 	 *             DLSubscriptionUtil#isSubscribedToFolder(
 	 *             long, long, long, long, boolean)}

@@ -91,7 +91,7 @@ public class CustomSQL {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.dao.orm.custom.sql#NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public CustomSQL(Class<?> clazz) throws SQLException {
@@ -207,7 +207,7 @@ public class CustomSQL {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.dao.orm.custom.sql#NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public String get(String id) {
@@ -393,7 +393,7 @@ public class CustomSQL {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.dao.orm.custom.sql#NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public void reloadCustomSQL(Class<?> clazz) throws SQLException {
@@ -665,7 +665,7 @@ public class CustomSQL {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.dao.orm.custom.sql#NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	protected String[] getConfigs() {
@@ -691,7 +691,7 @@ public class CustomSQL {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.dao.orm.custom.sql#NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	protected void read(

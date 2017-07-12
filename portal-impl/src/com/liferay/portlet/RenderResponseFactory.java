@@ -32,7 +32,7 @@ public class RenderResponseFactory {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
 	 *             #create(RenderRequestImpl, HttpServletResponse)}
 	 */
 	@Deprecated
@@ -45,7 +45,7 @@ public class RenderResponseFactory {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
 	 *             #create(RenderRequestImpl, HttpServletResponse)}
 	 */
 	@Deprecated

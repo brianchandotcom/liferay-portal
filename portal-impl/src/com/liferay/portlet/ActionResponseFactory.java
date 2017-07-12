@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ActionResponseFactory {
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
 	 *             #create(ActionRequestImpl, HttpServletResponse, User, Layout)}
 	 */
 	@Deprecated

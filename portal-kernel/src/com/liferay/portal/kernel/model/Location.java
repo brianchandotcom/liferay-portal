@@ -18,7 +18,7 @@ import java.io.Serializable;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of NEXT-VERSION
+ * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
  */
 @Deprecated
 public interface Location extends Serializable {

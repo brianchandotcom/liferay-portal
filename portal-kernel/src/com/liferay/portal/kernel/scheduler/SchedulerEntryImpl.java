@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.StringPool;
 public class SchedulerEntryImpl implements SchedulerEntry {
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #SchedulerEntryImpl(String, Trigger, String)}
 	 */
 	@Deprecated
@@ -59,7 +59,7 @@ public class SchedulerEntryImpl implements SchedulerEntry {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public void setDescription(String description) {
@@ -67,7 +67,7 @@ public class SchedulerEntryImpl implements SchedulerEntry {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public void setEventListenerClass(String eventListenerClass) {
@@ -75,7 +75,7 @@ public class SchedulerEntryImpl implements SchedulerEntry {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public void setTrigger(Trigger trigger) {

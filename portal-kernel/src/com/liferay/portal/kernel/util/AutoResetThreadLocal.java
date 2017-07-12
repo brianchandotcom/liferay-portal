@@ -30,7 +30,7 @@ public class AutoResetThreadLocal<T> extends InitialThreadLocal<T> {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #AutoResetThreadLocal(
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #AutoResetThreadLocal(
 	 *             String, Supplier)}
 	 */
 	@Deprecated

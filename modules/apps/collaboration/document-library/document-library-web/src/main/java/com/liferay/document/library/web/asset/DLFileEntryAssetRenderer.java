@@ -70,7 +70,7 @@ public class DLFileEntryAssetRenderer
 	extends BaseJSPAssetRenderer<FileEntry> implements TrashRenderer {
 
 	/**
-	 * @deprecated As of 1.2.0
+	 * @deprecated As of com.liferay.document.library.web#1.2.0
 	 */
 	@Deprecated
 	public DLFileEntryAssetRenderer(
@@ -80,7 +80,7 @@ public class DLFileEntryAssetRenderer
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.document.library.web#NEXT-VERSION
 	 */
 	@Deprecated
 	public DLFileEntryAssetRenderer(
@@ -141,7 +141,7 @@ public class DLFileEntryAssetRenderer
 	}
 
 	/**
-	 * @deprecated As of 1.1.0, with no direct replacement
+	 * @deprecated As of com.liferay.document.library.web#1.1.0, with no direct replacement
 	 */
 	@Deprecated
 	@Override

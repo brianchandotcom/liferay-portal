@@ -275,7 +275,7 @@ public class CalendarBookingLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #addCalendarBooking(long,
+	 * @deprecated As of com.liferay.calendar.service#NEXT-VERSION, replaced by {@link #addCalendarBooking(long,
 	 *             long, long[], long, long, Map, Map, String, long, long,
 	 *             boolean, String, long, String, long, String, ServiceContext)}
 	 */

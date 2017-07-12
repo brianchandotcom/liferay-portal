@@ -240,7 +240,7 @@ public class LanguageExtension implements Extension {
 		}
 
 		/**
-		 * @deprecated As of NEXT-VERSION, replaced by {@link #loadResourceBundle(
+		 * @deprecated As of com.liferay.portal.language.extender#NEXT-VERSION, replaced by {@link #loadResourceBundle(
 		 *             Locale)}
 		 */
 		@Deprecated

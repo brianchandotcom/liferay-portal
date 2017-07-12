@@ -47,7 +47,7 @@ public class InitialThreadLocal<T> extends CentralizedThreadLocal<T> {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #InitialThreadLocal(
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #InitialThreadLocal(
 	 *             String, Supplier, boolean)}
 	 */
 	@Deprecated
@@ -56,7 +56,7 @@ public class InitialThreadLocal<T> extends CentralizedThreadLocal<T> {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #InitialThreadLocal(
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #InitialThreadLocal(
 	 *             String, Supplier, boolean)}
 	 */
 	@Deprecated

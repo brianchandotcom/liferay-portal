@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.verify.model.VerifiableResourcedModel;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of NEXT-VERSION, replaced by {@link
+ * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
  *             com.liferay.blogs.internal.verify.model.BlogsEntryVerifiableModel}
  */
 @Deprecated

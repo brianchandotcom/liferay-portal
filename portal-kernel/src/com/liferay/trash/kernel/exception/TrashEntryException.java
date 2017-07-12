@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Eduardo Garcia
- * @deprecated As of NEXT-VERSION, replaced by {@link
+ * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
  *             com.liferay.trash.exception.TrashEntryException}
  */
 @Deprecated

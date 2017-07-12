@@ -79,7 +79,7 @@ public class CardinalityAssetEntryValidator implements AssetEntryValidator {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.asset.categories.service#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override

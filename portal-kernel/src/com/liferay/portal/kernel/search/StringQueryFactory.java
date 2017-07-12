@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.search;
 /**
  * @author     Raymond Augé
  * @author     Brian Wing Shun Chan
- * @deprecated As of NEXT-VERSION
+ * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
  */
 @Deprecated
 public interface StringQueryFactory {

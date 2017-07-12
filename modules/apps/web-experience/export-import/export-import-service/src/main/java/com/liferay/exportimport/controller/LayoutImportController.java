@@ -298,7 +298,7 @@ public class LayoutImportController implements ImportController {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void deleteMissingLayouts(
@@ -677,7 +677,7 @@ public class LayoutImportController implements ImportController {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void importLayout(
@@ -724,7 +724,7 @@ public class LayoutImportController implements ImportController {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setExportImportLifecycleManager(
@@ -732,14 +732,14 @@ public class LayoutImportController implements ImportController {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setGroupLocalService(GroupLocalService groupLocalService) {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setLayoutLocalService(
@@ -747,7 +747,7 @@ public class LayoutImportController implements ImportController {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setLayoutPrototypeLocalService(
@@ -755,7 +755,7 @@ public class LayoutImportController implements ImportController {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setLayoutSetLocalService(
@@ -763,7 +763,7 @@ public class LayoutImportController implements ImportController {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setLayoutSetPrototypeLocalService(
@@ -771,7 +771,7 @@ public class LayoutImportController implements ImportController {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setPortletImportController(
@@ -779,7 +779,7 @@ public class LayoutImportController implements ImportController {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setPortletLocalService(
@@ -787,7 +787,7 @@ public class LayoutImportController implements ImportController {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void setPortletScope(
@@ -795,7 +795,7 @@ public class LayoutImportController implements ImportController {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void updateLayoutPriorities(
@@ -1020,7 +1020,7 @@ public class LayoutImportController implements ImportController {
 	}
 
 	/**
-	 * @deprecated As of 3.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
 	 *             #validateLayoutPrototypes(long, Element, Element)}
 	 */
 	@Deprecated

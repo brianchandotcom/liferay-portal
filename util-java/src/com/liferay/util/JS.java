@@ -75,7 +75,7 @@ public class JS {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #encodeURIComponent}
+	 * @deprecated As of com.liferay.util.java#NEXT-VERSION, replaced by {@link #encodeURIComponent}
 	 */
 	@Deprecated
 	public static String escape(String s) {
@@ -144,7 +144,7 @@ public class JS {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #decodeURIComponent}
+	 * @deprecated As of com.liferay.util.java#NEXT-VERSION, replaced by {@link #decodeURIComponent}
 	 */
 	@Deprecated
 	public static String unescape(String s) {

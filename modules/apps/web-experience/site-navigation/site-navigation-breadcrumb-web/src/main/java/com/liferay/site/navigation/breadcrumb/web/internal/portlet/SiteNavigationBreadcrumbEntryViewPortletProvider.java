@@ -56,7 +56,7 @@ public class SiteNavigationBreadcrumbEntryViewPortletProvider
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.site.navigation.breadcrumb.web#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override

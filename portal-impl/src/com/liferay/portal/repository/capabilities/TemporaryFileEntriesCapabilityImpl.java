@@ -49,7 +49,7 @@ import java.util.List;
 
 /**
  * @author Iván Zaera
- * @deprecated As of NEXT-VERSION, replaced by {@link
+ * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
  *             com.liferay.document.library.internal.capabilities.TemporaryFileEntriesCapabilityImpl}
  */
 @Deprecated

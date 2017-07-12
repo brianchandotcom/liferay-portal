@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.model.StagedModel;
 
 /**
  * @author     Mate Thurzo
- * @deprecated As of NEXT-VERSION
+ * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
  */
 @Deprecated
 public abstract class BaseStagedModelDataHandler<T extends StagedModel>

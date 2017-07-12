@@ -26,7 +26,7 @@ import java.util.TimeZone;
 public class Recurrence {
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.calendar.api#NEXT-VERSION
 	 */
 	@Deprecated
 	public void addExceptionDate(Calendar jCalendar) {

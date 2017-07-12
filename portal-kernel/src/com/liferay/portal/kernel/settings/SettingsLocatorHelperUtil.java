@@ -39,7 +39,7 @@ public class SettingsLocatorHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #getConfigurationBeanSettings(String)}
 	 */
 	@Deprecated
@@ -65,7 +65,7 @@ public class SettingsLocatorHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public Settings getPortalPropertiesSettings() {

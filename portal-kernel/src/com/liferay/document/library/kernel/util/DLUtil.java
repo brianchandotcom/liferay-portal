@@ -140,7 +140,7 @@ public class DLUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public static Set<Long> getFileEntryTypeSubscriptionClassPKs(long userId) {
@@ -220,7 +220,7 @@ public class DLUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #getThumbnailSrc(FileEntry,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getThumbnailSrc(FileEntry,
 	 *             ThemeDisplay)}
 	 */
 	@Deprecated
@@ -233,7 +233,7 @@ public class DLUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #getThumbnailSrc(FileEntry,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getThumbnailSrc(FileEntry,
 	 *             FileVersion, ThemeDisplay)}
 	 */
 	@Deprecated
@@ -335,7 +335,7 @@ public class DLUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             com.liferay.document.library.web.internal.util.
 	 *             DLSubscriptionUtil#isSubscribedToFileEntryType(
 	 *             long, long, long, long)}
@@ -349,7 +349,7 @@ public class DLUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             com.liferay.document.library.web.internal.util.
 	 *             DLSubscriptionUtil#isSubscribedToFolder(
 	 *             long, long, long, long)}
@@ -364,7 +364,7 @@ public class DLUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             com.liferay.document.library.web.internal.util.
 	 *             DLSubscriptionUtil#isSubscribedToFolder(
 	 *             long, long, long, long, boolean)}

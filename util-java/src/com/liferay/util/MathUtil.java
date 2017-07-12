@@ -16,7 +16,7 @@ package com.liferay.util;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of NEXT-VERSION, moved to {@link
+ * @deprecated As of com.liferay.util.java#NEXT-VERSION, moved to {@link
  *             com.liferay.portal.kernel.util.MathUtil}
  */
 @Deprecated

@@ -29,7 +29,7 @@ import java.util.List;
 
 /**
  * @author     Roberto Díaz
- * @deprecated As of 1.1.0, moved to {@link
+ * @deprecated As of com.liferay.wiki.service#1.1.0, moved to {@link
  *             com.liferay.wiki.internal.trash.BaseWikiTrashHandler}
  */
 @Deprecated

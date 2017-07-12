@@ -100,7 +100,7 @@ public class LanguageFilterTracker {
 		}
 
 		/**
-		 * @deprecated As of NEXT-VERSION, replaced by {@link #loadResourceBundle(
+		 * @deprecated As of com.liferay.portal.language.servlet.filter#NEXT-VERSION, replaced by {@link #loadResourceBundle(
 		 *             Locale)}
 		 */
 		@Deprecated

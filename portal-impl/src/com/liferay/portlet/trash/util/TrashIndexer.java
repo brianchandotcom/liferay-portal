@@ -43,7 +43,7 @@ import javax.portlet.PortletResponse;
 /**
  * @author Julio Camarero
  * @author Zsolt Berentey
- * @deprecated As of NEXT-VERSION, replaced by {@link
+ * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
  *             com.liferay.trash.internal.search.TrashIndexer}
  */
 @Deprecated
@@ -191,7 +191,7 @@ public class TrashIndexer extends BaseIndexer<TrashEntry> {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, added strictly to support backwards
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, added strictly to support backwards
 	 *             compatibility of {@link
 	 *             TrashHandler#getExcludeQuery(SearchContext)}
 	 */

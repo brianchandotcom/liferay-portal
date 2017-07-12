@@ -72,7 +72,7 @@ public class MBMessageAssetRenderer
 	}
 
 	/**
-	 * @deprecated As of 1.1.0, with no direct replacement
+	 * @deprecated As of com.liferay.message.boards.web#1.1.0, with no direct replacement
 	 */
 	@Deprecated
 	@Override

@@ -25,7 +25,7 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 
 /**
  * @author Iván Zaera
- * @deprecated As of NEXT-VERSION, replaced by {@link
+ * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
  *             com.liferay.document.library.internal.capabilities.LiferayThumbnailCapability}
  */
 @Deprecated

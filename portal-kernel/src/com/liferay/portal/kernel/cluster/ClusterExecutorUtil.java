@@ -38,7 +38,7 @@ public class ClusterExecutorUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #_getClusterExecutor()}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #_getClusterExecutor()}
 	 */
 	@Deprecated
 	public static ClusterExecutor getClusterExecutor() {

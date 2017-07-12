@@ -16,7 +16,7 @@ package com.liferay.portlet.asset.util;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of NEXT-VERSION, replaced by {@link
+ * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
  *             com.liferay.asset.categories.validator.CardinalityAssetEntryValidator}
  */
 @Deprecated

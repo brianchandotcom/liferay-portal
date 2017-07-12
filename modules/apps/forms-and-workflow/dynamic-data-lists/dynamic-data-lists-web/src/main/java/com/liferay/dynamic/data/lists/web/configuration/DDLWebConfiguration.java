@@ -31,7 +31,7 @@ public interface DDLWebConfiguration {
 	@Meta.AD(
 		deflt = "false",
 		description = "changeable-default-language-description",
-		name = "changeable.default.language", required = false
+		name = "changeable-default-language", required = false
 	)
 	public boolean changeableDefaultLanguage();
 

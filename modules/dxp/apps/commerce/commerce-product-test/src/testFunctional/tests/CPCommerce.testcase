@@ -251,9 +251,9 @@
 		</execute>
 
 		<execute macro="CommerceEntry#viewOptionsEntry">
-			<var name="optionDescription" value="Date Option Description 1" />
-			<var name="optionName" value="Date Option Name 1" />
-			<var name="optionTitle" value="Date Option Title 1" />
+			<var name="optionDescription" value="Date Option 1 Description" />
+			<var name="optionKey" value="date-option-1-title" />
+			<var name="optionTitle" value="Date Option 1 Title" />
 		</execute>
 	</command>
 

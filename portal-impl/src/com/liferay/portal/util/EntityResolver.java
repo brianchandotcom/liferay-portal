@@ -255,6 +255,9 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 			"-//Liferay//DTD Plugin Package 7.0.0//EN",
 			"liferay-plugin-package_7_0_0.dtd"),
 		new KeyValuePair(
+			"-//Liferay//DTD Plugin Package 7.1.0//EN",
+			"liferay-plugin-package_7_1_0.dtd"),
+		new KeyValuePair(
 			"-//Liferay//DTD Plugin Repository 4.3.0//EN",
 			"liferay-plugin-repository_4_3_0.dtd"),
 		new KeyValuePair(
@@ -278,6 +281,9 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 		new KeyValuePair(
 			"-//Liferay//DTD Plugin Repository 7.0.0//EN",
 			"liferay-plugin-repository_7_0_0.dtd"),
+		new KeyValuePair(
+			"-//Liferay//DTD Plugin Repository 7.1.0//EN",
+			"liferay-plugin-repository_7_1_0.dtd"),
 		new KeyValuePair(
 			"-//Liferay//DTD Portlet Application 3.5.0//EN",
 			"liferay-portlet-app_3_5_0.dtd"),
@@ -346,6 +352,9 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 			"-//Liferay//DTD Resource Action Mapping 7.0.0//EN",
 			"liferay-resource-action-mapping_7_0_0.dtd"),
 		new KeyValuePair(
+			"-//Liferay//DTD Resource Action Mapping 7.1.0//EN",
+			"liferay-resource-action-mapping_7_1_0.dtd"),
+		new KeyValuePair(
 			"-//Liferay//DTD Service Builder 3.5.0//EN",
 			"liferay-service-builder_3_5_0.dtd"),
 		new KeyValuePair(
@@ -397,6 +406,8 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 		new KeyValuePair(
 			"-//Liferay//DTD Social 7.0.0//EN", "liferay-social_7_0_0.dtd"),
 		new KeyValuePair(
+			"-//Liferay//DTD Social 7.1.0//EN", "liferay-social_7_1_0.dtd"),
+		new KeyValuePair(
 			"-//Liferay//DTD Theme Loader 4.3.0//EN",
 			"liferay-theme-loader_4_3_0.dtd"),
 		new KeyValuePair(
@@ -421,11 +432,17 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 			"-//Liferay//DTD Theme Loader 7.0.0//EN",
 			"liferay-theme-loader_7_0_0.dtd"),
 		new KeyValuePair(
+			"-//Liferay//DTD Theme Loader 7.1.0//EN",
+			"liferay-theme-loader_7_1_0.dtd"),
+		new KeyValuePair(
 			"-//Liferay//DTD User Notification Definition 6.2.0//EN",
 			"liferay-user-notification-definitions_6_2_0.dtd"),
 		new KeyValuePair(
 			"-//Liferay//DTD User Notification Definition 7.0.0//EN",
 			"liferay-user-notification-definitions_7_0_0.dtd"),
+		new KeyValuePair(
+			"-//Liferay//DTD User Notification Definition 7.1.0//EN",
+			"liferay-user-notification-definitions_7_1_0.dtd"),
 		new KeyValuePair(
 			"-//MuleSource //DTD mule-configuration XML V1.0//EN",
 			"mule-configuration.dtd"),
@@ -507,6 +524,9 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 			"http://www.liferay.com/dtd/liferay-ddm-structure_7_0_0.xsd",
 			"liferay-ddm-structure_7_0_0.xsd"),
 		new KeyValuePair(
+			"http://www.liferay.com/dtd/liferay-ddm-structure_7_1_0.xsd",
+			"liferay-ddm-structure_7_1_0.xsd"),
+		new KeyValuePair(
 			"http://www.liferay.com/dtd/liferay-workflow-definition_6_0_0.xsd",
 			"liferay-workflow-definition_6_0_0.xsd"),
 		new KeyValuePair(
@@ -518,6 +538,9 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 		new KeyValuePair(
 			"http://www.liferay.com/dtd/liferay-workflow-definition_7_0_0.xsd",
 			"liferay-workflow-definition_7_0_0.xsd"),
+		new KeyValuePair(
+			"http://www.liferay.com/dtd/liferay-workflow-definition_7_1_0.xsd",
+			"liferay-workflow-definition_7_1_0.xsd"),
 		new KeyValuePair("http://www.w3.org/2001/xml.xsd", "xml.xsd")
 	};
 

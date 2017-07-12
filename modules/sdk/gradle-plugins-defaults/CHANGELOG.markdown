@@ -1707,12 +1707,12 @@ available.
 ## 4.0.1 - 2017-07-13
 
 ### Changed
-- [LPS-72705]: Update the [Liferay Gradle Plugins] dependency to version 3.4.3.
+- [LPS-73584]: Update the [Liferay Gradle Plugins] dependency to version 3.4.3.
 
 ## 4.0.2 - 2017-07-13
 
 ### Changed
-- [LPS-72705]: Update the [Liferay Gradle Plugins] dependency to version 3.4.4.
+- [LPS-73584]: Update the [Liferay Gradle Plugins] dependency to version 3.4.4.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -1895,6 +1895,7 @@ available.
 [LPS-73489]: https://issues.liferay.com/browse/LPS-73489
 [LPS-73495]: https://issues.liferay.com/browse/LPS-73495
 [LPS-73525]: https://issues.liferay.com/browse/LPS-73525
+[LPS-73584]: https://issues.liferay.com/browse/LPS-73584
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

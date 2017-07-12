@@ -237,16 +237,15 @@
 
 	<command name="AddDateOptionsEntry" priority="5">
 		<execute macro="CommerceOptions#addEntry">
-			<var name="optionDescription" value="Date Option Description 1" />
+			<var name="optionDescription" value="Date Option 1 Description" />
 			<var name="optionFieldType" value="Date" />
-			<var name="optionName" value="Date Option Name 1" />
-			<var name="optionTitle" value="Date Option Title 1" />
+			<var name="optionTitle" value="Date Option 1 Title" />
 		</execute>
 
 		<execute macro="CommerceEntry#saveEntry" />
 
 		<execute macro="CommerceNavigator#gotoEntry">
-			<var name="entryTitle" value="Date Option Title 1" />
+			<var name="entryTitle" value="Date Option 1 Title" />
 			<var name="portlet" value="Options" />
 		</execute>
 

@@ -9,8 +9,23 @@
 </thead>
 <tbody>
 <tr>
+	<td>CPOPTIONS_STATUS</td>
+	<td>//table[contains (@data-searchcontainerid,'cpOptions')]/tbody//td[contains (@class,'${key_cpOption}') and contains (.,'${key_cpOptionStatus}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMPTY_SEARCH_CONTAINER</td>
+	<td>//div[contains (@class,'empty-result-message-header')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_TITLE</td>
 	<td>//tr[@data-qa-id='row']//a[contains(.,'${key_entryTitle}')] | //div/h5/a[contains(.,'${key_entryTitle}')] | //div/span/a[contains(.,'${key_entryTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH</td>
+	<td>//*[@data-qa-id='searchButton'] | //button[contains(.,'search')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -23,21 +38,7 @@
 	<td>//*[@data-qa-id='row' and contains(.,'${key_entryTitle}')]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
-<tr>
-	<td>EMPTY_SEARCH_CONTAINER</td>
-	<td>//div[contains (@class,'empty-result-message-header')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEARCH</td>
-	<td>//*[@data-qa-id='searchButton'] | //button[contains(.,'search')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CPOPTIONS_STATUS</td>
-	<td>//table[contains (@data-searchcontainerid,'cpOptions')]/tbody//td[contains (@class,'${key_cpOption}') and contains (.,'${key_cpOptionStatus}')]</td>
-	<td></td>
-</tr>
+
 </tbody>
 </table>
 </body>

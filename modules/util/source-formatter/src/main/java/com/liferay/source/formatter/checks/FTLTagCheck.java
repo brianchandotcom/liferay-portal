@@ -88,7 +88,7 @@ public class FTLTagCheck extends BaseFileCheck {
 			Map<String, String> attributesMap = _getAttributesMap(match);
 
 			if (attributesMap.isEmpty()) {
-				return content;
+				continue;
 			}
 
 			String tabs = matcher.group(2);

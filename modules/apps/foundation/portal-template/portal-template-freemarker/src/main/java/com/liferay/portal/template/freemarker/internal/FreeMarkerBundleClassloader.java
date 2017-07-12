@@ -78,7 +78,7 @@ public class FreeMarkerBundleClassloader extends URLClassLoader {
 	}
 
 	/**
-	 * @deprecated As of 2.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public Bundle[] getBundles() {

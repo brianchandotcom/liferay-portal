@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 /**
  * @author Michael C. Han
  * @author Shuyang Zhou
- * @deprecated As of 7.0.0, moved to {@link HashCodeHexStringCacheKeyGenerator}
+ * @deprecated As of NEXT-VERSION, moved to {@link HashCodeHexStringCacheKeyGenerator}
  */
 @Deprecated
 public class HashCodeCacheKeyGenerator extends BaseCacheKeyGenerator {

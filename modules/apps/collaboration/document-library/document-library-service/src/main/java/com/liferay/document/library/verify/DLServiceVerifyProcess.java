@@ -76,7 +76,7 @@ import org.springframework.context.ApplicationContext;
  * @author Raymond Augé
  * @author Douglas Wong
  * @author Alexander Chow
- * @deprecated As of 1.1.0, replaced by {@link
+ * @deprecated As of NEXT-VERSION, replaced by {@link
  *             com.liferay.document.library.internal.verify.DLServiceVerifyProcess}
  */
 @Deprecated

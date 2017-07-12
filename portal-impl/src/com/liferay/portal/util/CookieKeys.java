@@ -17,7 +17,7 @@ package com.liferay.portal.util;
 /**
  * @author     Brian Wing Shun Chan
  * @author     Minhchau Dang
- * @deprecated As of 6.2.0, replaced by {@link
+ * @deprecated As of NEXT-VERSION, replaced by {@link
  *             com.liferay.portal.kernel.util.CookieKeys}
  */
 @Deprecated

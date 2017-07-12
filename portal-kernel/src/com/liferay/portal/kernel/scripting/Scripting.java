@@ -35,7 +35,7 @@ public interface Scripting {
 		throws ScriptingException;
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #eval(Set, Map, Set, String,
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #eval(Set, Map, Set, String,
 	 *             String)}
 	 */
 	@Deprecated
@@ -51,7 +51,7 @@ public interface Scripting {
 		throws ScriptingException;
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #exec(Set, Map, String,
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #exec(Set, Map, String,
 	 *             String)}
 	 */
 	@Deprecated

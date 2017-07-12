@@ -32,19 +32,19 @@ import javax.servlet.http.HttpServletResponse;
 public interface AssetEntryQueryProcessor {
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	public String getKey();
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	public String getTitle(Locale locale);
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	public void include(

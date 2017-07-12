@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author     Adolfo Pérez
- * @deprecated As of 7.0.0, with no direct replacement
+ * @deprecated As of NEXT-VERSION, with no direct replacement
  */
 @Deprecated
 public class RepositoryUserUtil {
@@ -31,7 +31,7 @@ public class RepositoryUserUtil {
 	/**
 	 * See {@link BaseServiceImpl#getUserId()}
 	 *
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public static long getUserId() throws PrincipalException {

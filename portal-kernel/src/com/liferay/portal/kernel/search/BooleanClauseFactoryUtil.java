@@ -27,7 +27,7 @@ public class BooleanClauseFactoryUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link create(Query, String)}
+	 * @deprecated As of NEXT-VERSION, replaced by {@link create(Query, String)}
 	 */
 	@Deprecated
 	public static BooleanClause<Query> create(
@@ -37,7 +37,7 @@ public class BooleanClauseFactoryUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link create(String, String,
+	 * @deprecated As of NEXT-VERSION, replaced by {@link create(String, String,
 	 *             String)}
 	 */
 	@Deprecated
@@ -89,7 +89,7 @@ public class BooleanClauseFactoryUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link getBooleanClauseFactory()}
+	 * @deprecated As of NEXT-VERSION, replaced by {@link getBooleanClauseFactory()}
 	 */
 	@Deprecated
 	public static BooleanClauseFactory getBooleanClauseFactory(

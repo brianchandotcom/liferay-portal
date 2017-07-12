@@ -16,7 +16,7 @@ package com.liferay.portal.kernel.model;
 
 /**
  * @author Alexander Chow
- * @deprecated As of 7.0.0, replaced by {@link
+ * @deprecated As of NEXT-VERSION, replaced by {@link
  *             com.liferay.subscription.constants.SubscriptionConstants}
  */
 @Deprecated

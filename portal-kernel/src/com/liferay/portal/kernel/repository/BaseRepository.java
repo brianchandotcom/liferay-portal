@@ -31,7 +31,7 @@ public interface BaseRepository extends Repository {
 	public LocalRepository getLocalRepository();
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             com.liferay.portal.kernel.repository.registry.RepositoryDefiner#getSupportedConfigurations(
 	 *             )}
 	 */
@@ -39,7 +39,7 @@ public interface BaseRepository extends Repository {
 	public String[] getSupportedConfigurations();
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             com.liferay.portal.kernel.repository.registry.RepositoryDefiner#getSupportedParameters(
 	 *             )}
 	 */

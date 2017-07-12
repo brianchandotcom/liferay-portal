@@ -1100,7 +1100,7 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getFile(long, String,
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #getFile(long, String,
 	 *             boolean)}
 	 */
 	@Deprecated
@@ -1114,7 +1114,7 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getFile(long, String,
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #getFile(long, String,
 	 *             boolean, int)}
 	 */
 	@Deprecated
@@ -1155,7 +1155,7 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getFileAsStream(long,
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #getFileAsStream(long,
 	 *             String)}
 	 */
 	@Deprecated
@@ -1168,7 +1168,7 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getFileAsStream(long,
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #getFileAsStream(long,
 	 *             String, boolean)}
 	 */
 	@Deprecated
@@ -1182,7 +1182,7 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getFileAsStream(long,
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #getFileAsStream(long,
 	 *             String, boolean, int)}
 	 */
 	@Deprecated
@@ -1297,7 +1297,7 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -1663,7 +1663,7 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #isKeepFileVersionLabel(long,
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #isKeepFileVersionLabel(long,
 	 *             boolean, ServiceContext)}
 	 */
 	@Deprecated

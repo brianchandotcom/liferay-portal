@@ -40,7 +40,7 @@ import java.util.Set;
 public class UserBagImpl implements UserBag {
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public UserBagImpl(
@@ -63,7 +63,7 @@ public class UserBagImpl implements UserBag {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public UserBagImpl(
@@ -90,7 +90,7 @@ public class UserBagImpl implements UserBag {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public UserBagImpl(
@@ -117,7 +117,7 @@ public class UserBagImpl implements UserBag {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public UserBagImpl(

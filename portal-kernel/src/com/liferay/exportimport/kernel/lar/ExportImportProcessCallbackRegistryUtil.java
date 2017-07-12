@@ -27,7 +27,7 @@ import java.util.concurrent.Callable;
 public class ExportImportProcessCallbackRegistryUtil {
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	public static void registerCallback(Callable<?> callable) {

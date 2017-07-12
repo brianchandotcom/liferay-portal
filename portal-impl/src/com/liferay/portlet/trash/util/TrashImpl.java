@@ -78,7 +78,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Sergio González
  * @author Julio Camarero
- * @deprecated As of 7.0.0
+ * @deprecated As of NEXT-VERSION
  */
 @Deprecated
 @DoPrivileged

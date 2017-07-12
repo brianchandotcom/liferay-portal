@@ -24,7 +24,7 @@ import javax.servlet.http.HttpSessionEvent;
 
 /**
  * @author Alexander Chow
- * @deprecated As of 7.0.0, with no direct replacement
+ * @deprecated As of NEXT-VERSION, with no direct replacement
  */
 @Deprecated
 public class PortalSessionActivationListener

@@ -28,7 +28,7 @@ public interface IndexerPostProcessor {
 		throws Exception;
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             #postProcessContextBooleanFilter(BooleanFilter,
 	 *             SearchContext)}
 	 */
@@ -50,7 +50,7 @@ public interface IndexerPostProcessor {
 		throws Exception;
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             #postProcessSearchQuery(BooleanQuery, BooleanFilter,
 	 *             SearchContext)}
 	 */

@@ -28,7 +28,7 @@ public interface ResourceBundleLoader {
 	public ResourceBundle loadResourceBundle(Locale locale);
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #loadResourceBundle(Locale)}
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #loadResourceBundle(Locale)}
 	 */
 	@Deprecated
 	public ResourceBundle loadResourceBundle(String languageId);

@@ -23,28 +23,28 @@ import java.util.Map;
  * @author     Bruno Farache
  * @author     Raymond Augé
  * @author     Michael C. Han
- * @deprecated As of 7.0.0, replaced by {@link IndexWriterHelperUtil,
+ * @deprecated As of NEXT-VERSION, replaced by {@link IndexWriterHelperUtil,
  *             IndexSearcherHelperUtil, SearchEngineHelperUtil}
  */
 @Deprecated
 public class SearchEngineUtil extends SearchEngineHelperUtil {
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	public static final String GENERIC_ENGINE_ID =
 		SearchEngineHelper.GENERIC_ENGINE_ID;
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	public static final String SYSTEM_ENGINE_ID =
 		SearchEngineHelper.SYSTEM_ENGINE_ID;
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             IndexWriterHelperUtil#addDocument(String, long, Document,
 	 *             boolean)}
 	 */
@@ -58,7 +58,7 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             IndexWriterHelperUtil#addDocuments(String, long, Collection,
 	 *             boolean)}
 	 */
@@ -73,7 +73,7 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             IndexWriterHelperUtil#addDocuments(String, long, Collection,
 	 *             boolean)}
 	 */
@@ -88,7 +88,7 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             IndexWriterHelperUtil#addDocuments(String, long, Collection,
 	 *             boolean)}
 	 */
@@ -103,7 +103,7 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             IndexWriterHelperUtil#commit(String)}
 	 */
 	@Deprecated
@@ -112,7 +112,7 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             IndexWriterHelperUtil#commit(String, long)}
 	 */
 	@Deprecated
@@ -123,7 +123,7 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             IndexWriterHelperUtil#deleteDocument(String, long, String,
 	 *             boolean)}
 	 */
@@ -137,7 +137,7 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             IndexWriterHelperUtil#deleteDocument(String, long, String,
 	 *             boolean)}
 	 */
@@ -152,7 +152,7 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             IndexWriterHelperUtil#deleteDocuments(String, long,
 	 *             Collection, boolean)}
 	 */
@@ -166,7 +166,7 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             IndexWriterHelperUtil#deleteDocuments(String, long,
 	 *             Collection, boolean)}
 	 */
@@ -181,7 +181,7 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             IndexWriterHelperUtil#deleteEntityDocuments(String, long,
 	 *             String, boolean)}
 	 */
@@ -196,7 +196,7 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             IndexWriterHelperUtil#deleteEntityDocuments(String, long,
 	 *             String, boolean)}
 	 */
@@ -210,7 +210,7 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             IndexSearcherHelperUtil#getQueryString(SearchContext, Query)}
 	 */
 	@Deprecated
@@ -221,7 +221,7 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             IndexWriterHelperUtil#indexKeyword(long, String, float,
 	 *             String, Locale)}
 	 */
@@ -236,7 +236,7 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             IndexWriterHelperUtil#indexKeyword(String, long, String,
 	 *             float, String, Locale)}
 	 */
@@ -252,7 +252,7 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             IndexWriterHelperUtil#indexQuerySuggestionDictionaries(long)}
 	 */
 	@Deprecated
@@ -263,7 +263,7 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             IndexWriterHelperUtil#indexQuerySuggestionDictionaries(
 	 *             String, long)}
 	 */
@@ -277,7 +277,7 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             IndexWriterHelperUtil#indexQuerySuggestionDictionary(long,
 	 *             Locale)}
 	 */
@@ -290,7 +290,7 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             IndexWriterHelperUtil#indexQuerySuggestionDictionary(String,
 	 *             long, Locale)}
 	 */
@@ -304,7 +304,7 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             IndexWriterHelperUtil#indexSpellCheckerDictionaries(long)}
 	 */
 	@Deprecated
@@ -315,7 +315,7 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             IndexWriterHelperUtil#indexSpellCheckerDictionaries(String,
 	 *             long)}
 	 */
@@ -329,7 +329,7 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             IndexWriterHelperUtil#indexSpellCheckerDictionary(long,
 	 *             Locale)}
 	 */
@@ -342,7 +342,7 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             IndexWriterHelperUtil#indexSpellCheckerDictionary(String,
 	 *             long, Locale)}
 	 */
@@ -356,7 +356,7 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             IndexWriterHelperUtil#isIndexReadOnly()}
 	 */
 	@Deprecated
@@ -365,7 +365,7 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             IndexWriterHelperUtil#partiallyUpdateDocument(String, long,
 	 *             Document, boolean)}
 	 */
@@ -380,7 +380,7 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             IndexWriterHelperUtil#partiallyUpdateDocuments(String, long,
 	 *             Collection, boolean)}
 	 */
@@ -395,7 +395,7 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             IndexSearcherHelperUtil#search(SearchContext, Query)}
 	 */
 	@Deprecated
@@ -406,7 +406,7 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             IndexSearcherHelperUtil#search(SearchContext, Query)}
 	 */
 	@Deprecated
@@ -421,7 +421,7 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             IndexSearcherHelperUtil#search(SearchContext, Query)}
 	 */
 	@Deprecated
@@ -435,7 +435,7 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             IndexSearcherHelperUtil#search(SearchContext, Query)}
 	 */
 	@Deprecated
@@ -456,7 +456,7 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             IndexSearcherHelperUtil#searchCount(SearchContext, Query)}
 	 */
 	@Deprecated
@@ -467,7 +467,7 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             IndexWriterHelperUtil#setIndexReadOnly(boolean)}
 	 */
 	@Deprecated
@@ -476,7 +476,7 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             IndexSearcherHelperUtil#spellCheckKeywords(SearchContext)}
 	 */
 	@Deprecated
@@ -487,7 +487,7 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             IndexSearcherHelperUtil#spellCheckKeywords(SearchContext,
 	 *             int)}
 	 */
@@ -500,7 +500,7 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             IndexSearcherHelperUtil#suggestKeywordQueries(SearchContext,
 	 *             int)}
 	 */
@@ -514,7 +514,7 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             IndexWriterHelperUtil#updateDocument(String, long, Document,
 	 *             boolean)}
 	 */
@@ -528,7 +528,7 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             IndexWriterHelperUtil#updateDocument(String, long, Document,
 	 *             boolean)}
 	 */
@@ -543,7 +543,7 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             IndexWriterHelperUtil#updateDocuments(String, long,
 	 *             Collection, boolean)}
 	 */
@@ -558,7 +558,7 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             IndexWriterHelperUtil#updateDocuments(String, long,
 	 *             Collection, boolean)}
 	 */
@@ -573,7 +573,7 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             IndexWriterHelperUtil#updatePermissionFields(String, String)}
 	 */
 	@Deprecated

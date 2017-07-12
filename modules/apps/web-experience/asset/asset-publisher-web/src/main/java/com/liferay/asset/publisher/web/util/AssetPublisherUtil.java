@@ -372,7 +372,7 @@ public class AssetPublisherUtil {
 	}
 
 	/**
-	 * @deprecated As of 2.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public static List<AssetEntry> getAssetEntries(
@@ -1362,7 +1362,7 @@ public class AssetPublisherUtil {
 	}
 
 	/**
-	 * @deprecated As of 2.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public void checkAssetEntries() throws Exception {
@@ -1661,7 +1661,7 @@ public class AssetPublisherUtil {
 	}
 
 	/**
-	 * @deprecated As of 2.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	protected void setSubscriptionLocalService(
@@ -1677,7 +1677,7 @@ public class AssetPublisherUtil {
 	}
 
 	/**
-	 * @deprecated As of 2.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	protected void setUserLocalService(UserLocalService userLocalService) {

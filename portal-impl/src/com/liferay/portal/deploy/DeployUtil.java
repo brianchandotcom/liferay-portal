@@ -154,7 +154,7 @@ public class DeployUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getResourcePath(
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #getResourcePath(
 	 *			   Set, String)}
 	 */
 	@Deprecated

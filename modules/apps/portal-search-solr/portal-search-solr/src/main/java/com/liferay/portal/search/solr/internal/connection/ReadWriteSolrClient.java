@@ -61,7 +61,7 @@ public class ReadWriteSolrClient extends SolrClient {
 	}
 
 	/**
-	 * @deprecated As of 2.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	@Override

@@ -385,7 +385,7 @@ public class DLStoreImpl implements DLStore {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             DLValidatorUtil#isValidName(String)}
 	 */
 	@Deprecated
@@ -617,7 +617,7 @@ public class DLStoreImpl implements DLStore {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             DLValidatorUtil#validateDirectoryName(String)}
 	 */
 	@Deprecated

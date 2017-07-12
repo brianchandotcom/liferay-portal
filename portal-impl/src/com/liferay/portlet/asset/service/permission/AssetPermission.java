@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 
 /**
  * @author Jorge Ferrer
- * @deprecated As of 7.0.0, replaced by {@link AssetCategoriesPermission} and
+ * @deprecated As of NEXT-VERSION, replaced by {@link AssetCategoriesPermission} and
  * {@link AssetTagsPermission}
  */
 @Deprecated

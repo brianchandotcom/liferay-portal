@@ -30,7 +30,7 @@ public class ExpandoBridgeIndexerUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #encodeFieldName(
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #encodeFieldName(
 	 *             String, int)}
 	 */
 	@Deprecated

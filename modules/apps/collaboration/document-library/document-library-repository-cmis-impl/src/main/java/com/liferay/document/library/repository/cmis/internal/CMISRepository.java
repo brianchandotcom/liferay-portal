@@ -926,7 +926,7 @@ public class CMISRepository extends BaseCmisRepository {
 	}
 
 	/**
-	 * @deprecated As of 2.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -935,7 +935,7 @@ public class CMISRepository extends BaseCmisRepository {
 	}
 
 	/**
-	 * @deprecated As of 2.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	@Override

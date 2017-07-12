@@ -35,7 +35,7 @@ public interface TemplateConstants {
 	public static final String DEFAUT_ENCODING = StringPool.UTF8;
 
 	/**
-	 * @deprecated As of 6.2.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	public static final String JOURNAL_SEPARATOR = "_JOURNAL_CONTEXT_";

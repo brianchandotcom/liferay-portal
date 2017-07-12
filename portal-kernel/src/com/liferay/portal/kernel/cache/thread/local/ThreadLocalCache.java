@@ -32,7 +32,7 @@ public class ThreadLocalCache<T> {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *			   #ThreadLocalCache(Object, Lifecycle)}
 	 */
 	@Deprecated
@@ -58,7 +58,7 @@ public class ThreadLocalCache<T> {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getId()}
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #getId()}
 	 */
 	@Deprecated
 	public Serializable getName() {

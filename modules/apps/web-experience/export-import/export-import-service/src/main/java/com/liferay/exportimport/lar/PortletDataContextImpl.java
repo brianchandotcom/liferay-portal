@@ -177,7 +177,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	public void addAssetLinks(Class<?> clazz, long classPK) {
@@ -2103,7 +2103,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	protected void addAssetPriority(
@@ -2483,7 +2483,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	protected String getPrimaryKeyString(Class<?> clazz, long primaryKey) {
@@ -2497,7 +2497,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	protected String getPrimaryKeyString(Class<?> clazz, String primaryKey) {
@@ -2505,7 +2505,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	protected String getPrimaryKeyString(String className, long primaryKey) {
@@ -2520,7 +2520,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	protected String getPrimaryKeyString(String className, String primaryKey) {
@@ -2577,7 +2577,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	protected List<Element> getReferenceElements(
@@ -2640,7 +2640,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	protected List<Element> getReferenceElements(

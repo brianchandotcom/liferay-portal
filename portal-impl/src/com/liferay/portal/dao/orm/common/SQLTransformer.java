@@ -43,7 +43,7 @@ public class SQLTransformer {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #transformFromHQLToJQPL(
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #transformFromHQLToJQPL(
 	 *             String)}
 	 */
 	@Deprecated
@@ -56,7 +56,7 @@ public class SQLTransformer {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #transformFromJPQLToHQL(
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #transformFromJPQLToHQL(
 	 *             String)}
 	 */
 	@Deprecated

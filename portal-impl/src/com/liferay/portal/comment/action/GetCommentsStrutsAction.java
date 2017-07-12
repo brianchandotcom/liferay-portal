@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Adolfo Pérez
- * @deprecated As of 7.0.0, replaced by {@link
+ * @deprecated As of NEXT-VERSION, replaced by {@link
  *             com.liferay.comment.taglib.internal.action.
  *             GetCommentsStrutsAction}
  */

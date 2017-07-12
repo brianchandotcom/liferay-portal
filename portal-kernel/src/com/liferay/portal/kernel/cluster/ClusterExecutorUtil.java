@@ -38,7 +38,7 @@ public class ClusterExecutorUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #_getClusterExecutor()}
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #_getClusterExecutor()}
 	 */
 	@Deprecated
 	public static ClusterExecutor getClusterExecutor() {

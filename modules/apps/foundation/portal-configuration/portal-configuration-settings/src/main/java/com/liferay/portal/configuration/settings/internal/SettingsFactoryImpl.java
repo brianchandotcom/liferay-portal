@@ -102,7 +102,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 	}
 
 	/**
-	 * @deprecated As of 2.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             SettingsLocatorHelperImpl#getServerSettings(String)}
 	 */
 	@Deprecated

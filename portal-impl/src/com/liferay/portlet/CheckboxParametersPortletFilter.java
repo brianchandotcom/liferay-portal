@@ -37,7 +37,7 @@ import javax.portlet.filter.ResourceFilter;
 
 /**
  * @author Julio Camarero
- * @deprecated As of 7.0.0, with no direct replacement
+ * @deprecated As of NEXT-VERSION, with no direct replacement
  */
 @Deprecated
 public class CheckboxParametersPortletFilter

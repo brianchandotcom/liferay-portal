@@ -381,7 +381,7 @@ public class AssetUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             #getAddPortletURL(LiferayPortletRequest,
 	 *             LiferayPortletResponse, long, String, long, long[], String[],
 	 *             String)}
@@ -405,7 +405,7 @@ public class AssetUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             #getAssetPublisherAddItemHolders(LiferayPortletRequest,
 	 *             LiferayPortletResponse, long, long[],
 	 *             long[], long[], String[], String)}
@@ -439,7 +439,7 @@ public class AssetUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             #getAssetPublisherAddItemHolders(LiferayPortletRequest,
 	 *             LiferayPortletResponse, long, long[], long[], long[],
 	 *             String[], String)}
@@ -488,7 +488,7 @@ public class AssetUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getAddURLPopUp(long, long,
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #getAddURLPopUp(long, long,
 	 *             PortletURL, boolean, Layout)}
 	 */
 	@Deprecated
@@ -654,7 +654,7 @@ public class AssetUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public static String getClassNameMessage(String className, Locale locale) {

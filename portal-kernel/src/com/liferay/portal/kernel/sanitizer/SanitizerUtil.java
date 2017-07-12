@@ -34,7 +34,7 @@ import java.util.Map;
 public class SanitizerUtil {
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public static Sanitizer getSanitizer() {
@@ -42,7 +42,7 @@ public class SanitizerUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #sanitize(long, long, long,
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #sanitize(long, long, long,
 	 *             String, long, String, String)}
 	 */
 	@Deprecated
@@ -57,7 +57,7 @@ public class SanitizerUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #sanitize(long, long, long,
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #sanitize(long, long, long,
 	 *             String, long, String, String)}
 	 */
 	@Deprecated
@@ -83,7 +83,7 @@ public class SanitizerUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #sanitize(long, long, long,
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #sanitize(long, long, long,
 	 *             String, long, String, String, String, Map)}
 	 */
 	@Deprecated
@@ -99,7 +99,7 @@ public class SanitizerUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #sanitize(long, long, long,
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #sanitize(long, long, long,
 	 *             String, long, String, String, String, Map)}
 	 */
 	@Deprecated
@@ -127,7 +127,7 @@ public class SanitizerUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #sanitize(long, long, long,
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #sanitize(long, long, long,
 	 *             String, long, String, String[], String, Map)}
 	 */
 	@Deprecated
@@ -149,7 +149,7 @@ public class SanitizerUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #sanitize(long, long, long,
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #sanitize(long, long, long,
 	 *             String, long, String, String[], String, Map)}
 	 */
 	@Deprecated
@@ -202,7 +202,7 @@ public class SanitizerUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public void setSanitizer(Sanitizer sanitizer) {

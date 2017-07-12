@@ -84,7 +84,7 @@ public class DDLDisplayAddPortletProvider
 	}
 
 	/**
-	 * @deprecated As of 1.1.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	@Override

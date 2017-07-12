@@ -24,7 +24,7 @@ import com.liferay.portal.servlet.filters.cache.CacheUtil;
 /**
  * @author Mate Thurzo
  *
- * @deprecated As of 4.0.0
+ * @deprecated As of NEXT-VERSION
  */
 @Deprecated
 @ProviderType

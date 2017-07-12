@@ -36,7 +36,7 @@ import com.liferay.portlet.asset.util.AssetUtil;
  * the page.
  *
  * @author Zsolt Berentey
- * @deprecated As of 2.0.0, with not direct replacement
+ * @deprecated As of NEXT-VERSION, with not direct replacement
  */
 @Deprecated
 public class AssetPublisherPortletLayoutListener

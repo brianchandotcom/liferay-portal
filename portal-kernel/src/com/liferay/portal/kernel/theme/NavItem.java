@@ -64,7 +64,7 @@ public class NavItem implements Serializable {
 	 * @return a single level of navigation items from the layouts, or
 	 *         <code>null</code> if the collection of layouts was
 	 *         <code>null</code>.
-	 * @deprecated As of 7.0.0, replaced by {@link #fromLayouts(
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #fromLayouts(
 	 *             HttpServletRequest, ThemeDisplay, Map)}
 	 */
 	@Deprecated

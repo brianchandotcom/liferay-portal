@@ -309,7 +309,7 @@ public class TabsTag extends IncludeTag {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #setUrls(String[])}
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #setUrls(String[])}
 	 */
 	@Deprecated
 	public void setUrl0(String url0) {
@@ -317,7 +317,7 @@ public class TabsTag extends IncludeTag {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #setUrls(String[])}
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #setUrls(String[])}
 	 */
 	@Deprecated
 	public void setUrl1(String url1) {
@@ -325,7 +325,7 @@ public class TabsTag extends IncludeTag {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #setUrls(String[])}
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #setUrls(String[])}
 	 */
 	@Deprecated
 	public void setUrl2(String url2) {
@@ -333,7 +333,7 @@ public class TabsTag extends IncludeTag {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #setUrls(String[])}
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #setUrls(String[])}
 	 */
 	@Deprecated
 	public void setUrl3(String url3) {
@@ -341,7 +341,7 @@ public class TabsTag extends IncludeTag {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #setUrls(String[])}
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #setUrls(String[])}
 	 */
 	@Deprecated
 	public void setUrl4(String url4) {
@@ -349,7 +349,7 @@ public class TabsTag extends IncludeTag {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #setUrls(String[])}
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #setUrls(String[])}
 	 */
 	@Deprecated
 	public void setUrl5(String url5) {
@@ -357,7 +357,7 @@ public class TabsTag extends IncludeTag {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #setUrls(String[])}
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #setUrls(String[])}
 	 */
 	@Deprecated
 	public void setUrl6(String url6) {
@@ -365,7 +365,7 @@ public class TabsTag extends IncludeTag {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #setUrls(String[])}
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #setUrls(String[])}
 	 */
 	@Deprecated
 	public void setUrl7(String url7) {
@@ -373,7 +373,7 @@ public class TabsTag extends IncludeTag {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #setUrls(String[])}
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #setUrls(String[])}
 	 */
 	@Deprecated
 	public void setUrl8(String url8) {
@@ -381,7 +381,7 @@ public class TabsTag extends IncludeTag {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #setUrls(String[])}
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #setUrls(String[])}
 	 */
 	@Deprecated
 	public void setUrl9(String url9) {

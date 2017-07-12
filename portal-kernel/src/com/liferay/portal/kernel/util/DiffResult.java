@@ -18,7 +18,7 @@ import java.util.List;
 
 /**
  * @author     Bruno Farache
- * @deprecated As of 7.0.0, moved to {@link
+ * @deprecated As of NEXT-VERSION, moved to {@link
  *             com.liferay.portal.kernel.diff.DiffResult}
  */
 @Deprecated

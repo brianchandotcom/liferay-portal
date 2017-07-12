@@ -15,7 +15,7 @@
 package com.liferay.trash.kernel.model;
 
 /**
- * @author Zsolt Berentey
+ * @author     Zsolt Berentey
  * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
  *             com.liferay.trash.model.TrashEntryConstants}
  */

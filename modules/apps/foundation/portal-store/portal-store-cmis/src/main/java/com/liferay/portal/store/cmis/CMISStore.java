@@ -73,10 +73,11 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 
 /**
- * @author Alexander Chow
- * @author Edward Han
- * @author Manuel de la Peña
- * @deprecated As of com.liferay.portal.store.cmis#NEXT-VERSION, with no direct replacement
+ * @author     Alexander Chow
+ * @author     Edward Han
+ * @author     Manuel de la Peña
+ * @deprecated As of com.liferay.portal.store.cmis#NEXT-VERSION, with no direct
+ *             replacement
  */
 @Component(
 	configurationPid = "com.liferay.portal.store.cmis.configuration.CMISStoreConfiguration",

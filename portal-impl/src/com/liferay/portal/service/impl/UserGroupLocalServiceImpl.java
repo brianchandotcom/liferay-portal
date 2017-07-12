@@ -96,8 +96,9 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 * @param      name the user group's name
 	 * @param      description the user group's description
 	 * @return     the user group
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #addUserGroup(long, long,
-	 *             String, String, ServiceContext)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #addUserGroup(long, long, String, String,
+	 *             ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -870,8 +871,9 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 * @param      name the user group's name
 	 * @param      description the user group's description
 	 * @return     the user group
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #updateUserGroup(long, long,
-	 *             String, String, ServiceContext)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #updateUserGroup(long, long, String, String,
+	 *             ServiceContext)}
 	 */
 	@Deprecated
 	@Override

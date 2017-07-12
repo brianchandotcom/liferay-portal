@@ -463,7 +463,8 @@ public class DLImpl implements DL {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -700,8 +701,8 @@ public class DLImpl implements DL {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #getThumbnailSrc(FileEntry,
-	 *             ThemeDisplay)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #getThumbnailSrc(FileEntry, ThemeDisplay)}
 	 */
 	@Deprecated
 	@Override
@@ -715,8 +716,9 @@ public class DLImpl implements DL {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #getThumbnailSrc(FileEntry,
-	 *             FileVersion, ThemeDisplay)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #getThumbnailSrc(FileEntry, FileVersion,
+	 *             ThemeDisplay)}
 	 */
 	@Deprecated
 	@Override
@@ -995,10 +997,10 @@ public class DLImpl implements DL {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
-	 *             com.liferay.document.library.web.internal.util.
-	 *             DLSubscriptionUtil#isSubscribedToFileEntryType(
-	 *             long, long, long, long)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link com.liferay.document.library.web.internal.util.
+	 *             DLSubscriptionUtil#isSubscribedToFileEntryType(long, long,
+	 *             long, long)}
 	 */
 	@Deprecated
 	@Override
@@ -1017,10 +1019,10 @@ public class DLImpl implements DL {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
-	 *             com.liferay.document.library.web.internal.util.
-	 *             DLSubscriptionUtil#isSubscribedToFolder(
-	 *             long, long, long, long)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link com.liferay.document.library.web.internal.util.
+	 *             DLSubscriptionUtil#isSubscribedToFolder(long, long, long,
+	 *             long)}
 	 */
 	@Deprecated
 	@Override
@@ -1032,10 +1034,10 @@ public class DLImpl implements DL {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
-	 *             com.liferay.document.library.web.internal.util.
-	 *             DLSubscriptionUtil#isSubscribedToFolder(
-	 *             long, long, long, long, boolean)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link com.liferay.document.library.web.internal.util.
+	 *             DLSubscriptionUtil#isSubscribedToFolder(long, long, long,
+	 *             long, boolean)}
 	 */
 	@Deprecated
 	@Override

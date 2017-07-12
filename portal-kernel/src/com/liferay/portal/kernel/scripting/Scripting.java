@@ -35,8 +35,8 @@ public interface Scripting {
 		throws ScriptingException;
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #eval(Set, Map, Set, String,
-	 *             String)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #eval(Set, Map, Set, String, String)}
 	 */
 	@Deprecated
 	public Map<String, Object> eval(
@@ -51,8 +51,8 @@ public interface Scripting {
 		throws ScriptingException;
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #exec(Set, Map, String,
-	 *             String)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #exec(Set, Map, String, String)}
 	 */
 	@Deprecated
 	public void exec(

@@ -116,8 +116,8 @@ public class PipingServletResponse extends HttpServletResponseWrapper {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, replaced by {@link
-	 *             #createPipingServletResponseIfNeeded(PageContext)}
+	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, replaced by
+	 *             {@link #createPipingServletResponseIfNeeded(PageContext)}
 	 */
 	@Deprecated
 	public PipingServletResponse(PageContext pageContext) {

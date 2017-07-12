@@ -49,8 +49,9 @@ import javax.servlet.jsp.PageContext;
 public class IconTag extends BaseIconTag {
 
 	/**
-	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, replaced by {@link DirectTag#doTagAsString(
-	 *			   HttpServletRequest, HttpServletResponse)}
+	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, replaced by
+	 *             {@link DirectTag#doTagAsString(HttpServletRequest,
+	 *             HttpServletResponse)}
 	 */
 	@Deprecated
 	public static String doTag(

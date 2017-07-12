@@ -67,11 +67,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Jorge Ferrer
- * @author Shuyang Zhou
- * @author Marco Leo
- * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
+ * @author     Brian Wing Shun Chan
+ * @author     Jorge Ferrer
+ * @author     Shuyang Zhou
+ * @author     Marco Leo
+ * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+ *             replacement
  */
 @Deprecated
 public class FriendlyURLServlet extends HttpServlet {
@@ -168,7 +169,8 @@ public class FriendlyURLServlet extends HttpServlet {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link
 	 *             com.liferay.taglib.util.FriendlyURLUtil.getFriendlyURL(
 	 *             HttpServletRequest, javax.servlet.jsp.PageContext)}
 	 */
@@ -398,7 +400,8 @@ public class FriendlyURLServlet extends HttpServlet {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	protected Object[] getRedirect(

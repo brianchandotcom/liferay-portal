@@ -149,8 +149,8 @@ public class GroupImpl extends GroupBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
-	 *             #getChildrenWithLayouts(boolean, int, int,
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #getChildrenWithLayouts(boolean, int, int,
 	 *             OrderByComparator)}
 	 */
 	@Deprecated
@@ -827,7 +827,8 @@ public class GroupImpl extends GroupBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #hasAncestor}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #hasAncestor}
 	 */
 	@Deprecated
 	@Override

@@ -30,8 +30,8 @@ public interface SettingsFactory {
 		long groupId, String portletId);
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             SettingsLocatorHelper#getServerSettings(String)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link SettingsLocatorHelper#getServerSettings(String)}
 	 */
 	@Deprecated
 	public Settings getServerSettings(String settingsId);

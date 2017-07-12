@@ -34,7 +34,8 @@ import javax.servlet.http.HttpSessionListener;
  * </p>
  *
  * @author     Michael C. Han
- * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
+ * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+ *             replacement
  */
 @Deprecated
 public class SharedSessionAttributeListener

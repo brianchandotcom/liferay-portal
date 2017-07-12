@@ -483,8 +483,8 @@ public class StringUtil {
 	 *
 	 * @param  s1 the first string to compare
 	 * @param  s2 the second string to compare
-	 * @return <code>true</code> if the strings are equal;
-	 *         <code>false</code> otherwise
+	 * @return <code>true</code> if the strings are equal; <code>false</code>
+	 *         otherwise
 	 */
 	public static boolean equals(String s1, String s2) {
 		if (s1 == s2) {
@@ -809,8 +809,8 @@ public class StringUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, moved to {@link HighlightUtil#highlight(String,
-	 *             String[])}}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, moved to {@link
+	 *             HighlightUtil#highlight(String, String[])}}
 	 */
 	@Deprecated
 	public static String highlight(String s, String[] queryTerms) {
@@ -818,8 +818,8 @@ public class StringUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, moved to {@link HighlightUtil#highlight(String,
-	 *             String[], String, String)}}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, moved to {@link
+	 *             HighlightUtil#highlight(String, String[], String, String)}}
 	 */
 	@Deprecated
 	public static String highlight(
@@ -2347,8 +2347,8 @@ public class StringUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #removeFromList(String,
-	 *             String)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #removeFromList(String, String)}
 	 */
 	@Deprecated
 	public static String remove(String s, String element) {
@@ -2356,8 +2356,8 @@ public class StringUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #removeFromList(String,
-	 *             String, String)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #removeFromList(String, String, String)}
 	 */
 	@Deprecated
 	public static String remove(String s, String element, String delimiter) {

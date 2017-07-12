@@ -71,9 +71,9 @@ public class ResourceBlockPermissionLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
-	 *             #getAvailableResourceBlockPermissionActionIds(String, long,
-	 *             List)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #getAvailableResourceBlockPermissionActionIds(String,
+	 *             long, List)}
 	 */
 	@Deprecated
 	@Override

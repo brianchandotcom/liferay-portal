@@ -159,8 +159,8 @@ public class SyncChunkedFile implements ChunkedInput<ByteBuf> {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.sync.engine#3.3.0, As of Netty 4.1.0, replaced by {@link
-	 *             #readChunk(ByteBufAllocator)}
+	 * @deprecated As of com.liferay.sync.engine#3.3.0, As of Netty 4.1.0,
+	 *             replaced by {@link #readChunk(ByteBufAllocator)}
 	 */
 	@Deprecated
 	@Override

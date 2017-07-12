@@ -26,7 +26,8 @@ public class FacetedSearcherManagerUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static FacetedSearcherManager getFacetedSearcherManager() {

@@ -39,7 +39,8 @@ public class GroupParentException extends PortalException {
 	public static final int STAGING_DESCENDANT = 2;
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the inner classes
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the
+	 *             inner classes
 	 */
 	@Deprecated
 	public GroupParentException() {
@@ -47,7 +48,8 @@ public class GroupParentException extends PortalException {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the inner classes
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the
+	 *             inner classes
 	 */
 	@Deprecated
 	public GroupParentException(int type) {
@@ -55,7 +57,8 @@ public class GroupParentException extends PortalException {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the inner classes
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the
+	 *             inner classes
 	 */
 	@Deprecated
 	public GroupParentException(String msg) {
@@ -65,7 +68,8 @@ public class GroupParentException extends PortalException {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the inner classes
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the
+	 *             inner classes
 	 */
 	@Deprecated
 	public GroupParentException(String msg, Throwable cause) {
@@ -75,7 +79,8 @@ public class GroupParentException extends PortalException {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the inner classes
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the
+	 *             inner classes
 	 */
 	@Deprecated
 	public GroupParentException(Throwable cause) {
@@ -85,7 +90,8 @@ public class GroupParentException extends PortalException {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the inner classes
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the
+	 *             inner classes
 	 */
 	@Deprecated
 	public int getType() {

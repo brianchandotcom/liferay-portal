@@ -62,7 +62,8 @@ import javax.portlet.WindowState;
 public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -105,7 +106,8 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -120,7 +122,8 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -134,7 +137,8 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -161,8 +165,8 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getSummary(PortletRequest,
-	 *             PortletResponse)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getSummary(PortletRequest, PortletResponse)}
 	 */
 	@Deprecated
 	@Override
@@ -371,7 +375,8 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override

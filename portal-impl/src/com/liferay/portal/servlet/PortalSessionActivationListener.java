@@ -23,8 +23,9 @@ import javax.servlet.http.HttpSessionActivationListener;
 import javax.servlet.http.HttpSessionEvent;
 
 /**
- * @author Alexander Chow
- * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
+ * @author     Alexander Chow
+ * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+ *             replacement
  */
 @Deprecated
 public class PortalSessionActivationListener

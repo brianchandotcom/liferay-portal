@@ -18,7 +18,8 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of com.liferay.util.bridges#NEXT-VERSION, renamed to {@link MVCPortlet}
+ * @deprecated As of com.liferay.util.bridges#NEXT-VERSION, renamed to {@link
+ *             MVCPortlet}
  */
 @Deprecated
 public class JSPPortlet extends MVCPortlet {

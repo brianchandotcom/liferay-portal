@@ -150,8 +150,8 @@ public class NpmInstallTask extends ExecuteNpmTask {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.gradle.plugins.node#1.3.0, replaced by {@link
-	 *             #setRemoveShrinkwrappedUrls(Object)}
+	 * @deprecated As of com.liferay.gradle.plugins.node#1.3.0, replaced by
+	 *             {@link #setRemoveShrinkwrappedUrls(Object)}
 	 */
 	@Deprecated
 	public void setRemoveShrinkwrappedUrls(boolean removeShrinkwrappedUrls) {

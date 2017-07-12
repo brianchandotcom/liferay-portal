@@ -133,7 +133,8 @@ public class AssetPublisherDisplayContext {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.asset.publisher.web#NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.asset.publisher.web#NEXT-VERSION, replaced
+	 *             by {@link
 	 *             #AssetPublisherDisplayContext(AssetPublisherCustomizer,
 	 *             PortletRequest,PortletResponse, PortletPreferences)}
 	 */
@@ -752,8 +753,8 @@ public class AssetPublisherDisplayContext {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.asset.publisher.web#NEXT-VERSION, replaced by {@link
-	 *             #getScopeAssetPublisherAddItemHolders(int)}
+	 * @deprecated As of com.liferay.asset.publisher.web#NEXT-VERSION, replaced
+	 *             by {@link #getScopeAssetPublisherAddItemHolders(int)}
 	 */
 	@Deprecated
 	public Map<Long, Map<String, PortletURL>> getScopeAddPortletURLs(int max)

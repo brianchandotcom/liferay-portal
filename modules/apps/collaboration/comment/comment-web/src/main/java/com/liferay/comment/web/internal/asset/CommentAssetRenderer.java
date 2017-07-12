@@ -82,7 +82,8 @@ public class CommentAssetRenderer
 	}
 
 	/**
-	 * @deprecated As of com.liferay.comment.web#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.comment.web#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override

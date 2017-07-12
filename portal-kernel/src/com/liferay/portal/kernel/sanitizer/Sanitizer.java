@@ -58,8 +58,9 @@ public interface Sanitizer {
 	 * @param      options a map of options for the sanitizer
 	 * @return     the sanitized content
 	 * @throws     SanitizerException if a sanitizer exception occurred
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #sanitize(long, long, long,
-	 *             String, long, String, String[], String, Map)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #sanitize(long, long, long, String, long, String,
+	 *             String[], String, Map)}
 	 */
 	@Deprecated
 	public byte[] sanitize(
@@ -86,8 +87,9 @@ public interface Sanitizer {
 	 * @param      outputStream the result of the sanitizing process
 	 * @param      options a map of options for the sanitizer
 	 * @throws     SanitizerException if a sanitizer exception occurred
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #sanitize(long, long, long,
-	 *             String, long, String, String[], String, Map)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #sanitize(long, long, long, String, long, String,
+	 *             String[], String, Map)}
 	 */
 	@Deprecated
 	public void sanitize(

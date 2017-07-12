@@ -30,7 +30,8 @@ import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
 public abstract class BaseProxyBean {
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             link
 	 */
 	@Deprecated
 	public void afterPropertiesSet() {
@@ -49,7 +50,8 @@ public abstract class BaseProxyBean {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #setDestinationName)
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #setDestinationName)
 	 */
 	@Deprecated
 	public void setSingleDestinationMessageSender(
@@ -57,8 +59,8 @@ public abstract class BaseProxyBean {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #setSynchronousMessageSenderMode} and {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #setSynchronousMessageSenderMode} and {@link
 	 *             #setSynchronousDestinationName}
 	 */
 	@Deprecated

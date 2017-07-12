@@ -39,7 +39,8 @@ public abstract class BaseFacet implements Facet {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getFacetFilterBooleanClause}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getFacetFilterBooleanClause}
 	 */
 	@Deprecated
 	@Override
@@ -120,8 +121,8 @@ public abstract class BaseFacet implements Facet {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #doGetFacetFilterBooleanClause}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #doGetFacetFilterBooleanClause}
 	 */
 	@Deprecated
 	protected BooleanClause<Query> doGetFacetClause() {

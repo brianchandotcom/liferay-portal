@@ -250,8 +250,9 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, replaced by {@link #breadcrumb(long, String,
-	 *             boolean, boolean, boolean, boolean)}}
+	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, replaced by
+	 *             {@link #breadcrumb(long, String, boolean, boolean, boolean,
+	 *             boolean)}}
 	 */
 	@Deprecated
 	@Override
@@ -336,7 +337,8 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -370,7 +372,8 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -389,7 +392,8 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -494,7 +498,8 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -559,7 +564,8 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -573,7 +579,8 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -587,7 +594,8 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -615,7 +623,8 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -837,7 +846,8 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -893,7 +903,8 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override

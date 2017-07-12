@@ -35,7 +35,8 @@ public class ManagementBarSidenavTogglerButtonTag
 	}
 
 	/**
-	 * @deprecated As of com.liferay.frontend.taglib#2.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.frontend.taglib#2.0.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public void setSidenavId(String sidenavId) {

@@ -99,7 +99,8 @@ public class MicroblogsEntryFinderImpl
 		MicroblogsEntryFinder.class.getName() + ".findByC_CCNI_CCPK_ATN";
 
 	/**
-	 * @deprecated As of com.liferay.microblogs.service#NEXT-VERSION, replaced by {@link #countByC_U(long, long)}
+	 * @deprecated As of com.liferay.microblogs.service#NEXT-VERSION, replaced
+	 *             by {@link #countByC_U(long, long)}
 	 */
 	@Deprecated
 	@Override
@@ -228,8 +229,8 @@ public class MicroblogsEntryFinderImpl
 	}
 
 	/**
-	 * @deprecated As of com.liferay.microblogs.service#NEXT-VERSION, replaced by {@link #countByC_U_ATN(long, long,
-	 *             String)}
+	 * @deprecated As of com.liferay.microblogs.service#NEXT-VERSION, replaced
+	 *             by {@link #countByC_U_ATN(long, long, String)}
 	 */
 	@Deprecated
 	@Override
@@ -274,8 +275,8 @@ public class MicroblogsEntryFinderImpl
 	}
 
 	/**
-	 * @deprecated As of com.liferay.microblogs.service#NEXT-VERSION, replaced by {@link #countByC_CCNI_ATN(long,
-	 *             long, String)}
+	 * @deprecated As of com.liferay.microblogs.service#NEXT-VERSION, replaced
+	 *             by {@link #countByC_CCNI_ATN(long, long, String)}
 	 */
 	@Deprecated
 	@Override
@@ -444,8 +445,9 @@ public class MicroblogsEntryFinderImpl
 	}
 
 	/**
-	 * @deprecated As of com.liferay.microblogs.service#NEXT-VERSION, replaced by {@link #countByC_CCNI_CCPK_ATN(long,
-	 *             long, long, String, boolean)}
+	 * @deprecated As of com.liferay.microblogs.service#NEXT-VERSION, replaced
+	 *             by {@link #countByC_CCNI_CCPK_ATN(long, long, long, String,
+	 *             boolean)}
 	 */
 	@Deprecated
 	@Override
@@ -539,8 +541,8 @@ public class MicroblogsEntryFinderImpl
 	}
 
 	/**
-	 * @deprecated As of com.liferay.microblogs.service#NEXT-VERSION, replaced by {@link #findByC_U(long, long, int,
-	 *             int)}
+	 * @deprecated As of com.liferay.microblogs.service#NEXT-VERSION, replaced
+	 *             by {@link #findByC_U(long, long, int, int)}
 	 */
 	@Deprecated
 	@Override
@@ -666,8 +668,8 @@ public class MicroblogsEntryFinderImpl
 	}
 
 	/**
-	 * @deprecated As of com.liferay.microblogs.service#NEXT-VERSION, replaced by {@link #findByC_U_ATN(long, long,
-	 *             String, int, int)}
+	 * @deprecated As of com.liferay.microblogs.service#NEXT-VERSION, replaced
+	 *             by {@link #findByC_U_ATN(long, long, String, int, int)}
 	 */
 	@Deprecated
 	@Override
@@ -705,8 +707,8 @@ public class MicroblogsEntryFinderImpl
 	}
 
 	/**
-	 * @deprecated As of com.liferay.microblogs.service#NEXT-VERSION, replaced by {@link #findByC_CCNI_ATN(long, long,
-	 *             String, int, int)}
+	 * @deprecated As of com.liferay.microblogs.service#NEXT-VERSION, replaced
+	 *             by {@link #findByC_CCNI_ATN(long, long, String, int, int)}
 	 */
 	@Deprecated
 	@Override
@@ -842,8 +844,9 @@ public class MicroblogsEntryFinderImpl
 	}
 
 	/**
-	 * @deprecated As of com.liferay.microblogs.service#NEXT-VERSION, replaced by {@link #findByC_CCNI_CCPK_ATN(long,
-	 *             long, long, String, boolean, int, int)}
+	 * @deprecated As of com.liferay.microblogs.service#NEXT-VERSION, replaced
+	 *             by {@link #findByC_CCNI_CCPK_ATN(long, long, long, String,
+	 *             boolean, int, int)}
 	 */
 	@Deprecated
 	@Override

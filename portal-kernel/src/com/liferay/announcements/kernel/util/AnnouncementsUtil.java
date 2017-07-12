@@ -59,7 +59,8 @@ import java.util.Set;
 public class AnnouncementsUtil {
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getAnnouncementScopes(User)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getAnnouncementScopes(User)}
 	 */
 	@Deprecated
 	public static LinkedHashMap<Long, long[]> getAnnouncementScopes(long userId)

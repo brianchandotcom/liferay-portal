@@ -22,8 +22,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Shinn Lok
- * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+ * @author     Shinn Lok
+ * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+ *             replacement
  */
 @Deprecated
 public class SearchContainerReference {

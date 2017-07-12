@@ -15,8 +15,9 @@
 package com.liferay.portal.kernel.servlet.taglib.aui;
 
 /**
- * @author Brian Wing Shun Chan
- * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+ * @author     Brian Wing Shun Chan
+ * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+ *             replacement
  */
 @Deprecated
 public interface ToolTag {

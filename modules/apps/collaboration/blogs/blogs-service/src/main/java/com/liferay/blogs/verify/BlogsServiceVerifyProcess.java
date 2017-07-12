@@ -29,7 +29,7 @@ import java.util.List;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Raymond Augé
+ * @author     Raymond Augé
  * @deprecated As of com.liferay.blogs.service#1.1.0, replaced by {@link
  *             com.liferay.blogs.internal.verify.BlogsServiceVerifyProcess}
  */

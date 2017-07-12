@@ -90,8 +90,8 @@ public class FinderPath {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #encodeCacheKey(String)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #encodeCacheKey(String)}
 	 */
 	@Deprecated
 	public Serializable encodeCacheKey(Object[] arguments) {
@@ -114,8 +114,8 @@ public class FinderPath {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #encodeLocalCacheKey(String)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #encodeLocalCacheKey(String)}
 	 */
 	@Deprecated
 	public Serializable encodeLocalCacheKey(Object[] arguments) {

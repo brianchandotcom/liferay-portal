@@ -80,7 +80,8 @@ public class UserPasswordException extends PortalException {
 	public static final int PASSWORDS_DO_NOT_MATCH = 10;
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the inner classes
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the
+	 *             inner classes
 	 */
 	@Deprecated
 	public UserPasswordException(int type) {
@@ -88,7 +89,8 @@ public class UserPasswordException extends PortalException {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the inner classes
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the
+	 *             inner classes
 	 */
 	@Deprecated
 	public int getType() {

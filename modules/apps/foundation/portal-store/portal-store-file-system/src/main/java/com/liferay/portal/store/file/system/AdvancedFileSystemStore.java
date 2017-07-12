@@ -141,8 +141,8 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.store.file.system#NEXT-VERSION, replaced by {@link #getFileNames(List, String,
-	 *             String)}
+	 * @deprecated As of com.liferay.portal.store.file.system#NEXT-VERSION,
+	 *             replaced by {@link #getFileNames(List, String, String)}
 	 */
 	@Deprecated
 	protected List<String> getAdvancedFileNames(

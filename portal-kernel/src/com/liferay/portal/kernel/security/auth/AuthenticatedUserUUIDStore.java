@@ -15,8 +15,9 @@
 package com.liferay.portal.kernel.security.auth;
 
 /**
- * @author Michael C. Han
- * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+ * @author     Michael C. Han
+ * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+ *             replacement
  */
 @Deprecated
 public interface AuthenticatedUserUUIDStore {

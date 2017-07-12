@@ -17,9 +17,10 @@ package com.liferay.portal.kernel.security.auth;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 /**
- * @author Michael C. Han
- * @author Raymond Augé
- * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+ * @author     Michael C. Han
+ * @author     Raymond Augé
+ * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+ *             replacement
  */
 @Deprecated
 public class AuthenticatedUserUUIDStoreUtil {

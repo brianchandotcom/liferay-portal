@@ -90,8 +90,9 @@ public class MVCCommandCache {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #MVCCommandCache(MVCCommand,
-	 *             String, String, Class, String)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #MVCCommandCache(MVCCommand, String, String, Class,
+	 *             String)}
 	 */
 	@Deprecated
 	public MVCCommandCache(

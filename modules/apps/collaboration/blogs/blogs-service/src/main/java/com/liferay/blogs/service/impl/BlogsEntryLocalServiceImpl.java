@@ -200,10 +200,10 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.blogs.service#1.1.0, replaced by {@link #addEntry(long, String,
-	 *             String, String, String, int, int, int, int, int, boolean,
-	 *             boolean, String[], String, ImageSelector, ImageSelector,
-	 *             ServiceContext)}
+	 * @deprecated As of com.liferay.blogs.service#1.1.0, replaced by {@link
+	 *             #addEntry(long, String, String, String, String, int, int,
+	 *             int, int, int, boolean, boolean, String[], String,
+	 *             ImageSelector, ImageSelector, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -1136,10 +1136,10 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.blogs.service#1.1.0, replaced by {@link #updateEntry(long, long,
-	 *             String, String, String, String, int, int, int, int, int,
-	 *             boolean, boolean, String[], String, ImageSelector,
-	 *             ImageSelector, ServiceContext)}
+	 * @deprecated As of com.liferay.blogs.service#1.1.0, replaced by {@link
+	 *             #updateEntry(long, long, String, String, String, String, int,
+	 *             int, int, int, int, boolean, boolean, String[], String,
+	 *             ImageSelector, ImageSelector, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -1439,8 +1439,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.blogs.service#1.1.0, replaced by {@link #updateStatus(long, long,
-	 *             int, ServiceContext, Map)}
+	 * @deprecated As of com.liferay.blogs.service#1.1.0, replaced by {@link
+	 *             #updateStatus(long, long, int, ServiceContext, Map)}
 	 */
 	@Deprecated
 	@Override
@@ -1665,7 +1665,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.blogs.service#1.1.0, with no direct replacement
+	 * @deprecated As of com.liferay.blogs.service#1.1.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	protected void addDiscussion(BlogsEntry entry, long userId, long groupId)
@@ -1825,7 +1826,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.blogs.service#1.1.0, with no direct replacement
+	 * @deprecated As of com.liferay.blogs.service#1.1.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	protected String getUniqueUrlTitle(
@@ -2239,8 +2241,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.blogs.service#1.1.0, replaced by {@link #validate(String, String,
-	 *             String, int)}
+	 * @deprecated As of com.liferay.blogs.service#1.1.0, replaced by {@link
+	 *             #validate(String, String, String, int)}
 	 */
 	@Deprecated
 	protected void validate(String title, String urlTitle, String content)

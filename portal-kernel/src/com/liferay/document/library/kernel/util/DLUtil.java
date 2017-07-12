@@ -140,7 +140,8 @@ public class DLUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static Set<Long> getFileEntryTypeSubscriptionClassPKs(long userId) {
@@ -220,8 +221,8 @@ public class DLUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getThumbnailSrc(FileEntry,
-	 *             ThemeDisplay)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getThumbnailSrc(FileEntry, ThemeDisplay)}
 	 */
 	@Deprecated
 	public static String getThumbnailSrc(
@@ -233,8 +234,9 @@ public class DLUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getThumbnailSrc(FileEntry,
-	 *             FileVersion, ThemeDisplay)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getThumbnailSrc(FileEntry, FileVersion,
+	 *             ThemeDisplay)}
 	 */
 	@Deprecated
 	public static String getThumbnailSrc(
@@ -335,10 +337,10 @@ public class DLUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             com.liferay.document.library.web.internal.util.
-	 *             DLSubscriptionUtil#isSubscribedToFileEntryType(
-	 *             long, long, long, long)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link com.liferay.document.library.web.internal.util.
+	 *             DLSubscriptionUtil#isSubscribedToFileEntryType(long, long,
+	 *             long, long)}
 	 */
 	@Deprecated
 	public static boolean isSubscribedToFileEntryType(
@@ -349,10 +351,10 @@ public class DLUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             com.liferay.document.library.web.internal.util.
-	 *             DLSubscriptionUtil#isSubscribedToFolder(
-	 *             long, long, long, long)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link com.liferay.document.library.web.internal.util.
+	 *             DLSubscriptionUtil#isSubscribedToFolder(long, long, long,
+	 *             long)}
 	 */
 	@Deprecated
 	public static boolean isSubscribedToFolder(
@@ -364,10 +366,10 @@ public class DLUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             com.liferay.document.library.web.internal.util.
-	 *             DLSubscriptionUtil#isSubscribedToFolder(
-	 *             long, long, long, long, boolean)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link com.liferay.document.library.web.internal.util.
+	 *             DLSubscriptionUtil#isSubscribedToFolder(long, long, long,
+	 *             long, boolean)}
 	 */
 	@Deprecated
 	public static boolean isSubscribedToFolder(

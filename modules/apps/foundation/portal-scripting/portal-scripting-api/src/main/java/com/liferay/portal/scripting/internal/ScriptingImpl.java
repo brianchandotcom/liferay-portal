@@ -99,8 +99,8 @@ public class ScriptingImpl implements Scripting {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.scripting.api#NEXT-VERSION, replaced by {@link #eval(Set, Map, Set, String,
-	 *             String)}
+	 * @deprecated As of com.liferay.portal.scripting.api#NEXT-VERSION, replaced
+	 *             by {@link #eval(Set, Map, Set, String, String)}
 	 */
 	@Deprecated
 	public Map<String, Object> eval(
@@ -123,8 +123,8 @@ public class ScriptingImpl implements Scripting {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.scripting.api#NEXT-VERSION, replaced by {@link #exec(Set, Map, String,
-	 *             String)}
+	 * @deprecated As of com.liferay.portal.scripting.api#NEXT-VERSION, replaced
+	 *             by {@link #exec(Set, Map, String, String)}
 	 */
 	@Deprecated
 	@Override

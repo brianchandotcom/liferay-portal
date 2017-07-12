@@ -42,8 +42,8 @@ public class BackgroundTaskDisplayFactoryUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #_getBackgroundTaskDisplayFactory()}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #_getBackgroundTaskDisplayFactory()}
 	 */
 	@Deprecated
 	public static BackgroundTaskDisplayFactory

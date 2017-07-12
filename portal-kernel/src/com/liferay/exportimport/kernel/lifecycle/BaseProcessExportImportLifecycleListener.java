@@ -47,7 +47,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @author Daniel Kocsis
+ * @author     Daniel Kocsis
  * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
  */
 @Deprecated

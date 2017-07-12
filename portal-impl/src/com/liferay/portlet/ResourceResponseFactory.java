@@ -32,8 +32,8 @@ public class ResourceResponseFactory {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
-	 *             #create(ResourceRequestImpl, HttpServletResponse)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #create(ResourceRequestImpl, HttpServletResponse)}
 	 */
 	@Deprecated
 	public static ResourceResponseImpl create(
@@ -45,8 +45,8 @@ public class ResourceResponseFactory {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
-	 *             #create(ResourceRequestImpl, HttpServletResponse)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #create(ResourceRequestImpl, HttpServletResponse)}
 	 */
 	@Deprecated
 	public static ResourceResponseImpl create(

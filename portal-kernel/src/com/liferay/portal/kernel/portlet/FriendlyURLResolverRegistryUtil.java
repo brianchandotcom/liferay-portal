@@ -45,8 +45,8 @@ public class FriendlyURLResolverRegistryUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #getFriendlyURLResolversAsCollection()}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getFriendlyURLResolversAsCollection()}
 	 */
 	@Deprecated
 	public static List<FriendlyURLResolver> getFriendlyURLResolvers() {

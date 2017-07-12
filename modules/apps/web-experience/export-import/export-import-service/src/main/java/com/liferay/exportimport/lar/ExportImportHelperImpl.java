@@ -233,7 +233,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -258,8 +259,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
-	 *             #getExportPortletControlsMap(long, String, Map)}
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link #getExportPortletControlsMap(long, String, Map)}
 	 */
 	@Deprecated
 	@Override
@@ -273,8 +274,9 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
-	 *             #getExportPortletControlsMap(long, String, Map, String)}
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link #getExportPortletControlsMap(long, String, Map,
+	 *             String)}
 	 */
 	@Deprecated
 	@Override
@@ -329,9 +331,9 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
-	 *             #getImportPortletControlsMap(long, String, Map, Element,
-	 *             ManifestSummary)}
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link #getImportPortletControlsMap(long, String, Map,
+	 *             Element, ManifestSummary)}
 	 */
 	@Deprecated
 	@Override
@@ -345,9 +347,9 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
-	 *             #getImportPortletControlsMap(long, String, Map, Element,
-	 *             ManifestSummary)}
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link #getImportPortletControlsMap(long, String, Map,
+	 *             Element, ManifestSummary)}
 	 */
 	@Deprecated
 	@Override
@@ -516,8 +518,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
-	 *             #getManifestSummary(PortletDataContext)}
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link #getManifestSummary(PortletDataContext)}
 	 */
 	@Deprecated
 	@Override
@@ -777,7 +779,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link
 	 *             com.liferay.exportimport.content.processor.ExportImportContentProcessor#replaceExportContentReferences(
 	 *             PortletDataContext, StagedModel, String, boolean, boolean)}
 	 */
@@ -793,7 +796,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link
 	 *             com.liferay.exportimport.content.processor.ExportImportContentProcessor#replaceExportContentReferences(
 	 *             PortletDataContext, StagedModel, String, boolean, boolean)}
 	 */
@@ -809,7 +813,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link
 	 *             com.liferay.exportimport.content.processor.ExportImportContentProcessor#replaceExportContentReferences(
 	 *             PortletDataContext, StagedModel, String, boolean, boolean)}
 	 */
@@ -825,7 +830,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -839,7 +845,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -853,7 +860,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -865,7 +873,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -878,7 +887,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -892,7 +902,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -905,7 +916,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link
 	 *             com.liferay.exportimport.content.processor.ExportImportContentProcessor#replaceImportContentReferences(
 	 *             PortletDataContext, StagedModel, String)}
 	 */
@@ -920,7 +932,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link
 	 *             com.liferay.exportimport.content.processor.ExportImportContentProcessor#replaceImportContentReferences(
 	 *             PortletDataContext, StagedModel, String)}
 	 */
@@ -935,7 +948,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -948,7 +962,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -961,7 +976,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -973,7 +989,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -986,7 +1003,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -998,7 +1016,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -1025,7 +1044,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link
 	 *             #updateExportPortletPreferencesClassPKs(PortletDataContext,
 	 *             Portlet, PortletPreferences, String, String)}
 	 */
@@ -1056,8 +1076,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by {@link
-	 *             #validateMissingReferences(PortletDataContext)}
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, replaced by
+	 *             {@link #validateMissingReferences(PortletDataContext)}
 	 */
 	@Deprecated
 	@Override

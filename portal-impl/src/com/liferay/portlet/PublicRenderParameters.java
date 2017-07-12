@@ -18,8 +18,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author Julio Camarero
- * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
+ * @author     Julio Camarero
+ * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+ *             replacement
  */
 @Deprecated
 public class PublicRenderParameters extends HashMap<String, String[]> {

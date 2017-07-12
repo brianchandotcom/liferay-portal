@@ -32,8 +32,8 @@ public class RenderResponseFactory {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
-	 *             #create(RenderRequestImpl, HttpServletResponse)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #create(RenderRequestImpl, HttpServletResponse)}
 	 */
 	@Deprecated
 	public static RenderResponseImpl create(
@@ -45,8 +45,8 @@ public class RenderResponseFactory {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
-	 *             #create(RenderRequestImpl, HttpServletResponse)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #create(RenderRequestImpl, HttpServletResponse)}
 	 */
 	@Deprecated
 	public static RenderResponseImpl create(

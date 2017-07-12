@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.trash.kernel.model.TrashEntry;
 
 /**
- * @author Sergio González
+ * @author     Sergio González
  * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
  *             com.liferay.trash.util.comparator.EntryTypeComparator}
  */

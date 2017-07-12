@@ -38,8 +38,8 @@ import java.util.function.Function;
 public final class AdaptiveMediaAttribute<T, V> {
 
 	/**
-	 * Returns a string-attribute map containing the available
-	 * name-attribute pairs.
+	 * Returns a string-attribute map containing the available name-attribute
+	 * pairs.
 	 *
 	 * @return the list of available attributes
 	 */
@@ -50,9 +50,8 @@ public final class AdaptiveMediaAttribute<T, V> {
 	}
 
 	/**
-	 * Returns a generic attribute representing the configuration UUID used
-	 * to generate the media. This attribute can be used with any kind of
-	 * media.
+	 * Returns a generic attribute representing the configuration UUID used to
+	 * generate the media. This attribute can be used with any kind of media.
 	 *
 	 * @return the configuration UUID
 	 */
@@ -73,8 +72,8 @@ public final class AdaptiveMediaAttribute<T, V> {
 	}
 
 	/**
-	 * Returns a generic attribute representing the media's content type.
-	 * This attribute can be used with any kind of media.
+	 * Returns a generic attribute representing the media's content type. This
+	 * attribute can be used with any kind of media.
 	 *
 	 * @return the content type attribute
 	 */

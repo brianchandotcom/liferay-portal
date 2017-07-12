@@ -65,7 +65,8 @@ public class CacheResourceBundleLoader implements ResourceBundleLoader {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #loadResourceBundle(Locale)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #loadResourceBundle(Locale)}
 	 */
 	@Deprecated
 	@Override

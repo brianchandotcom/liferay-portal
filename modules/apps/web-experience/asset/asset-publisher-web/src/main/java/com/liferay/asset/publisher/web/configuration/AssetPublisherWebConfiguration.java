@@ -31,8 +31,8 @@ public interface AssetPublisherWebConfiguration {
 
 	/**
 	 * Set the interval in hours on how often CheckAssetEntryMessageListener
-	 * will run to check for new assets. Users will be notified via email of
-	 * new assets.
+	 * will run to check for new assets. Users will be notified via email of new
+	 * assets.
 	 *
 	 * @return interval in hours on how often to check for new assets.
 	 */
@@ -43,8 +43,8 @@ public interface AssetPublisherWebConfiguration {
 	public int checkInterval();
 
 	/**
-	 * Set this to true to enable exporting contents related to asset entries
-	 * for dynamic selection.
+	 * Set this to <code>true</code> to enable exporting contents related to
+	 * asset entries for dynamic selection.
 	 *
 	 * @return <code>true</code> if dynamic export is enabled.
 	 */
@@ -80,8 +80,8 @@ public interface AssetPublisherWebConfiguration {
 	public int dynamicSubscriptionLimit();
 
 	/**
-	 * Set this to true to enable exporting contents related to asset entries
-	 * for manual selection.
+	 * Set this to <code>true</code> to enable exporting contents related to
+	 * asset entries for manual selection.
 	 *
 	 * @return <code>true</code> if manual export is enabled.
 	 */
@@ -92,8 +92,9 @@ public interface AssetPublisherWebConfiguration {
 	public boolean manualExportEnabled();
 
 	/**
-	 * Set this to true to search assets in Asset Publisher from the index. Set
-	 * this to false to search assets in Asset Publisher from the database.
+	 * Set this to <code>true</code> to search assets in Asset Publisher from
+	 * the index. Set this to <code>false</code> to search assets in Asset
+	 * Publisher from the database.
 	 *
 	 * @return <code>true</code> search with index is enabled.
 	 */
@@ -104,10 +105,11 @@ public interface AssetPublisherWebConfiguration {
 	public boolean searchWithIndex();
 
 	/**
-	 * Set this to true to allow users to configure Asset Publisher, Most Viewed
-	 * Assets, and Highest Rated Assets to skip the permissions checking on the
-	 * displayed assets. Enabling this property will allow regular users to view
-	 * assets that they do not have permission to view.
+	 * Set this to <code>true</code> to allow users to configure Asset
+	 * Publisher, Most Viewed Assets, and Highest Rated Assets to skip the
+	 * permissions checking on the displayed assets. Enabling this property will
+	 * allow regular users to view assets that they do not have permission to
+	 * view.
 	 *
 	 * @return <code>true</code> if permission checking is configurable.
 	 */

@@ -24,15 +24,16 @@ public interface BooleanClauseFactory {
 	public BooleanClause<Query> create(Query query, String occur);
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #create(Query, String)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #create(Query, String)}
 	 */
 	@Deprecated
 	public BooleanClause<Query> create(
 		SearchContext searchContext, Query query, String occur);
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #create(String, String,
-	 *             String)}}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #create(String, String, String)}}
 	 */
 	@Deprecated
 	public BooleanClause<Query> create(

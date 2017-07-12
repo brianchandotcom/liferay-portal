@@ -101,8 +101,8 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.configuration.settings#NEXT-VERSION, replaced by {@link
-	 *             #getConfigurationBeanSettings(String)}
+	 * @deprecated As of com.liferay.portal.configuration.settings#NEXT-VERSION,
+	 *             replaced by {@link #getConfigurationBeanSettings(String)}
 	 */
 	@Deprecated
 	@Override
@@ -144,7 +144,8 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.configuration.settings#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.configuration.settings#NEXT-VERSION,
+	 *             with no direct replacement
 	 */
 	@Deprecated
 	@Override

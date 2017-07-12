@@ -40,8 +40,9 @@ public class ServiceBeanMethodInvocation
 	implements MethodInvocation, Serializable {
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
-	 *             #ServiceBeanMethodInvocation(Object, Method, Object[])}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #ServiceBeanMethodInvocation(Object, Method,
+	 *             Object[])}
 	 */
 	@Deprecated
 	public ServiceBeanMethodInvocation(
@@ -178,7 +179,8 @@ public class ServiceBeanMethodInvocation
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public ServiceBeanMethodInvocation toCacheKeyModel() {

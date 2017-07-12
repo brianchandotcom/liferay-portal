@@ -24,7 +24,8 @@ public interface SearchEngine {
 		throws SearchException;
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link BooleanClauseFactoryUtil}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link BooleanClauseFactoryUtil}
 	 */
 	@Deprecated
 	public BooleanClauseFactory getBooleanClauseFactory();

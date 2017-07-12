@@ -47,7 +47,7 @@ import com.liferay.trash.kernel.service.TrashVersionLocalService;
 import java.util.List;
 
 /**
- * @author Adolfo Pérez
+ * @author     Adolfo Pérez
  * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
  *             com.liferay.document.library.internal.capabilities.LiferayTrashCapability}
  */

@@ -66,9 +66,10 @@ public class MBMessageDisplayImpl implements MBMessageDisplay {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #MBMessageDisplayImpl(long,
-	 *             MBMessage, MBMessage, MBCategory, MBThread, int,
-	 *             MBMessageLocalService, Comparator)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #MBMessageDisplayImpl(long, MBMessage, MBMessage,
+	 *             MBCategory, MBThread, int, MBMessageLocalService,
+	 *             Comparator)}
 	 */
 	@Deprecated
 	public MBMessageDisplayImpl(
@@ -82,9 +83,10 @@ public class MBMessageDisplayImpl implements MBMessageDisplay {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
-	 *             #MBMessageDisplayImpl(MBMessage, MBMessage, MBCategory,
-	 *             MBThread, int, MBMessageLocalService, Comparator)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #MBMessageDisplayImpl(MBMessage, MBMessage,
+	 *             MBCategory, MBThread, int, MBMessageLocalService,
+	 *             Comparator)}
 	 */
 	@Deprecated
 	public MBMessageDisplayImpl(
@@ -136,7 +138,8 @@ public class MBMessageDisplayImpl implements MBMessageDisplay {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -150,7 +153,8 @@ public class MBMessageDisplayImpl implements MBMessageDisplay {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -164,7 +168,8 @@ public class MBMessageDisplayImpl implements MBMessageDisplay {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override

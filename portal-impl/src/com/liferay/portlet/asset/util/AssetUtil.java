@@ -381,8 +381,8 @@ public class AssetUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
-	 *             #getAddPortletURL(LiferayPortletRequest,
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #getAddPortletURL(LiferayPortletRequest,
 	 *             LiferayPortletResponse, long, String, long, long[], String[],
 	 *             String)}
 	 */
@@ -405,10 +405,11 @@ public class AssetUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link
 	 *             #getAssetPublisherAddItemHolders(LiferayPortletRequest,
-	 *             LiferayPortletResponse, long, long[],
-	 *             long[], long[], String[], String)}
+	 *             LiferayPortletResponse, long, long[], long[], long[],
+	 *             String[], String)}
 	 */
 	@Deprecated
 	public static Map<String, PortletURL> getAddPortletURLs(
@@ -439,7 +440,8 @@ public class AssetUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link
 	 *             #getAssetPublisherAddItemHolders(LiferayPortletRequest,
 	 *             LiferayPortletResponse, long, long[], long[], long[],
 	 *             String[], String)}
@@ -488,8 +490,9 @@ public class AssetUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #getAddURLPopUp(long, long,
-	 *             PortletURL, boolean, Layout)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #getAddURLPopUp(long, long, PortletURL, boolean,
+	 *             Layout)}
 	 */
 	@Deprecated
 	public static String getAddURLPopUp(
@@ -654,7 +657,8 @@ public class AssetUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static String getClassNameMessage(String className, Locale locale) {

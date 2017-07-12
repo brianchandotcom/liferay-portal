@@ -338,10 +338,10 @@ public class PortletImportController implements ImportController {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION, replaced by {@link
-	 *             #importPortletData(PortletDataContext portletDataContext,
-	 *             javax.portlet.PortletPreferences portletPreferences, Element
-	 *             portletDataElement)}
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION, replaced
+	 *             by {@link #importPortletData(PortletDataContext
+	 *             portletDataContext, javax.portlet.PortletPreferences
+	 *             portletPreferences, Element portletDataElement)}
 	 */
 	@Deprecated
 	public String importPortletData(
@@ -759,9 +759,10 @@ public class PortletImportController implements ImportController {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION, replaced by {@link
-	 *             deletePortletData(PortletDataContext portletDataContext,
-	 *             javax.portlet.PortletPreferences portletPreferences)}
+	 * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION, replaced
+	 *             by {@link deletePortletData(PortletDataContext
+	 *             portletDataContext, javax.portlet.PortletPreferences
+	 *             portletPreferences)}
 	 */
 	@Deprecated
 	protected String deletePortletData(
@@ -1308,7 +1309,8 @@ public class PortletImportController implements ImportController {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.exportimport.service#3.0.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Reference(unbind = "-")

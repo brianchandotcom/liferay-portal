@@ -43,8 +43,8 @@ public class SQLTransformer {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #transformFromHQLToJQPL(
-	 *             String)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #transformFromHQLToJQPL(String)}
 	 */
 	@Deprecated
 	public static String transformFromHqlToJpql(String sql) {
@@ -56,8 +56,8 @@ public class SQLTransformer {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #transformFromJPQLToHQL(
-	 *             String)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #transformFromJPQLToHQL(String)}
 	 */
 	@Deprecated
 	public static String transformFromJpqlToHql(String sql) {

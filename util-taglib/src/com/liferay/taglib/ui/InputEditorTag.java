@@ -120,7 +120,8 @@ public class InputEditorTag extends BaseValidatorTagSupport {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, replaced by {@link #setEditorName(String)}
+	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, replaced by
+	 *             {@link #setEditorName(String)}
 	 */
 	@Deprecated
 	public void setEditorImpl(String editorImpl) {
@@ -140,7 +141,8 @@ public class InputEditorTag extends BaseValidatorTagSupport {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, replaced by {@link #setContents(String)}
+	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, replaced by
+	 *             {@link #setContents(String)}
 	 */
 	@Deprecated
 	public void setInitMethod(String initMethod) {

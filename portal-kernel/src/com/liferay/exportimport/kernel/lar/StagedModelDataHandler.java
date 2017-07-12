@@ -143,8 +143,8 @@ public interface StagedModelDataHandler<T extends StagedModel> {
 		PortletDataContext portletDataContext, T stagedModel);
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #importMissingReference(PortletDataContext, Element)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #importMissingReference(PortletDataContext, Element)}
 	 */
 	@Deprecated
 	public void importCompanyStagedModel(
@@ -152,9 +152,9 @@ public interface StagedModelDataHandler<T extends StagedModel> {
 		throws PortletDataException;
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #importMissingReference(PortletDataContext, String, long,
-	 *             long)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #importMissingReference(PortletDataContext, String,
+	 *             long, long)}
 	 */
 	@Deprecated
 	public void importCompanyStagedModel(

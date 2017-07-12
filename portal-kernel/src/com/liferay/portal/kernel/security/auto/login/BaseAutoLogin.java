@@ -29,7 +29,8 @@ import javax.servlet.http.HttpServletResponse;
 public abstract class BaseAutoLogin implements AutoLogin {
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override

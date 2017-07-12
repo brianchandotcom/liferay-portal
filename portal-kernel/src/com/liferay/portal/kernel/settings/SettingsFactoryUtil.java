@@ -42,8 +42,8 @@ public class SettingsFactoryUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             SettingsLocatorHelperUtil#getServerSettings(String)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link SettingsLocatorHelperUtil#getServerSettings(String)}
 	 */
 	@Deprecated
 	public static Settings getServerSettings(String settingsId) {

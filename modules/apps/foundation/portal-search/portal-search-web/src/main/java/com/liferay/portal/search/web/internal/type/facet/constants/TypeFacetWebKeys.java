@@ -16,7 +16,7 @@ package com.liferay.portal.search.web.internal.type.facet.constants;
 
 /**
  * @author André de Oliveira
-*/
+ */
 public class TypeFacetWebKeys {
 
 	public static final String DISPLAY_CONTEXT =

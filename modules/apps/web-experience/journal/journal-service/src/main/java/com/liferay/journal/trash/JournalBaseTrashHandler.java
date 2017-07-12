@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Eudaldo Alonso
+ * @author     Eudaldo Alonso
  * @deprecated As of 4.0.0, moved to {@link
  *             com.liferay.journal.internal.trash.JournalBaseTrashHandler}
  */

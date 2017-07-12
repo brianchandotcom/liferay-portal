@@ -56,8 +56,8 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @author Daniel Kocsis
- * @author Mate Thurzo
+ * @author     Daniel Kocsis
+ * @author     Mate Thurzo
  * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
  */
 @Deprecated

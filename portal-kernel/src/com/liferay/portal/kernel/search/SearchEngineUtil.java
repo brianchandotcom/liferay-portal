@@ -23,8 +23,9 @@ import java.util.Map;
  * @author     Bruno Farache
  * @author     Raymond Augé
  * @author     Michael C. Han
- * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link IndexWriterHelperUtil,
- *             IndexSearcherHelperUtil, SearchEngineHelperUtil}
+ * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
+ *             IndexWriterHelperUtil, IndexSearcherHelperUtil,
+ *             SearchEngineHelperUtil}
  */
 @Deprecated
 public class SearchEngineUtil extends SearchEngineHelperUtil {
@@ -44,9 +45,9 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 		SearchEngineHelper.SYSTEM_ENGINE_ID;
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             IndexWriterHelperUtil#addDocument(String, long, Document,
-	 *             boolean)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link IndexWriterHelperUtil#addDocument(String, long,
+	 *             Document, boolean)}
 	 */
 	@Deprecated
 	public static void addDocument(
@@ -58,9 +59,9 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             IndexWriterHelperUtil#addDocuments(String, long, Collection,
-	 *             boolean)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link IndexWriterHelperUtil#addDocuments(String, long,
+	 *             Collection, boolean)}
 	 */
 	@Deprecated
 	public static void addDocument(
@@ -73,9 +74,9 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             IndexWriterHelperUtil#addDocuments(String, long, Collection,
-	 *             boolean)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link IndexWriterHelperUtil#addDocuments(String, long,
+	 *             Collection, boolean)}
 	 */
 	@Deprecated
 	public static void addDocuments(
@@ -88,9 +89,9 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             IndexWriterHelperUtil#addDocuments(String, long, Collection,
-	 *             boolean)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link IndexWriterHelperUtil#addDocuments(String, long,
+	 *             Collection, boolean)}
 	 */
 	@Deprecated
 	public static void addDocuments(
@@ -103,8 +104,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             IndexWriterHelperUtil#commit(String)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link IndexWriterHelperUtil#commit(String)}
 	 */
 	@Deprecated
 	public static void commit(String searchEngineId) throws SearchException {
@@ -112,8 +113,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             IndexWriterHelperUtil#commit(String, long)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link IndexWriterHelperUtil#commit(String, long)}
 	 */
 	@Deprecated
 	public static void commit(String searchEngineId, long companyId)
@@ -123,9 +124,9 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             IndexWriterHelperUtil#deleteDocument(String, long, String,
-	 *             boolean)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link IndexWriterHelperUtil#deleteDocument(String, long,
+	 *             String, boolean)}
 	 */
 	@Deprecated
 	public static void deleteDocument(
@@ -137,9 +138,9 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             IndexWriterHelperUtil#deleteDocument(String, long, String,
-	 *             boolean)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link IndexWriterHelperUtil#deleteDocument(String, long,
+	 *             String, boolean)}
 	 */
 	@Deprecated
 	public static void deleteDocument(
@@ -152,8 +153,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             IndexWriterHelperUtil#deleteDocuments(String, long,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link IndexWriterHelperUtil#deleteDocuments(String, long,
 	 *             Collection, boolean)}
 	 */
 	@Deprecated
@@ -166,8 +167,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             IndexWriterHelperUtil#deleteDocuments(String, long,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link IndexWriterHelperUtil#deleteDocuments(String, long,
 	 *             Collection, boolean)}
 	 */
 	@Deprecated
@@ -181,9 +182,9 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             IndexWriterHelperUtil#deleteEntityDocuments(String, long,
-	 *             String, boolean)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link IndexWriterHelperUtil#deleteEntityDocuments(String,
+	 *             long, String, boolean)}
 	 */
 	@Deprecated
 	public static void deleteEntityDocuments(
@@ -196,9 +197,9 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             IndexWriterHelperUtil#deleteEntityDocuments(String, long,
-	 *             String, boolean)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link IndexWriterHelperUtil#deleteEntityDocuments(String,
+	 *             long, String, boolean)}
 	 */
 	@Deprecated
 	public static void deletePortletDocuments(
@@ -210,8 +211,9 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             IndexSearcherHelperUtil#getQueryString(SearchContext, Query)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link IndexSearcherHelperUtil#getQueryString(SearchContext,
+	 *             Query)}
 	 */
 	@Deprecated
 	public static String getQueryString(
@@ -221,9 +223,9 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             IndexWriterHelperUtil#indexKeyword(long, String, float,
-	 *             String, Locale)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link IndexWriterHelperUtil#indexKeyword(long, String,
+	 *             float, String, Locale)}
 	 */
 	@Deprecated
 	public static void indexKeyword(
@@ -236,9 +238,9 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             IndexWriterHelperUtil#indexKeyword(String, long, String,
-	 *             float, String, Locale)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link IndexWriterHelperUtil#indexKeyword(String, long,
+	 *             String, float, String, Locale)}
 	 */
 	@Deprecated
 	public static void indexKeyword(
@@ -252,7 +254,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link
 	 *             IndexWriterHelperUtil#indexQuerySuggestionDictionaries(long)}
 	 */
 	@Deprecated
@@ -263,7 +266,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link
 	 *             IndexWriterHelperUtil#indexQuerySuggestionDictionaries(
 	 *             String, long)}
 	 */
@@ -277,7 +281,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link
 	 *             IndexWriterHelperUtil#indexQuerySuggestionDictionary(long,
 	 *             Locale)}
 	 */
@@ -290,7 +295,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link
 	 *             IndexWriterHelperUtil#indexQuerySuggestionDictionary(String,
 	 *             long, Locale)}
 	 */
@@ -304,7 +310,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link
 	 *             IndexWriterHelperUtil#indexSpellCheckerDictionaries(long)}
 	 */
 	@Deprecated
@@ -315,7 +322,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link
 	 *             IndexWriterHelperUtil#indexSpellCheckerDictionaries(String,
 	 *             long)}
 	 */
@@ -329,7 +337,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link
 	 *             IndexWriterHelperUtil#indexSpellCheckerDictionary(long,
 	 *             Locale)}
 	 */
@@ -342,7 +351,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link
 	 *             IndexWriterHelperUtil#indexSpellCheckerDictionary(String,
 	 *             long, Locale)}
 	 */
@@ -356,8 +366,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             IndexWriterHelperUtil#isIndexReadOnly()}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link IndexWriterHelperUtil#isIndexReadOnly()}
 	 */
 	@Deprecated
 	public static boolean isIndexReadOnly() {
@@ -365,9 +375,9 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             IndexWriterHelperUtil#partiallyUpdateDocument(String, long,
-	 *             Document, boolean)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link IndexWriterHelperUtil#partiallyUpdateDocument(String,
+	 *             long, Document, boolean)}
 	 */
 	@Deprecated
 	public static void partiallyUpdateDocument(
@@ -380,9 +390,9 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             IndexWriterHelperUtil#partiallyUpdateDocuments(String, long,
-	 *             Collection, boolean)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link IndexWriterHelperUtil#partiallyUpdateDocuments(String,
+	 *             long, Collection, boolean)}
 	 */
 	@Deprecated
 	public static void partiallyUpdateDocuments(
@@ -395,8 +405,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             IndexSearcherHelperUtil#search(SearchContext, Query)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link IndexSearcherHelperUtil#search(SearchContext, Query)}
 	 */
 	@Deprecated
 	public static Hits search(SearchContext searchContext, Query query)
@@ -406,8 +416,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             IndexSearcherHelperUtil#search(SearchContext, Query)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link IndexSearcherHelperUtil#search(SearchContext, Query)}
 	 */
 	@Deprecated
 	public static Hits search(
@@ -421,8 +431,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             IndexSearcherHelperUtil#search(SearchContext, Query)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link IndexSearcherHelperUtil#search(SearchContext, Query)}
 	 */
 	@Deprecated
 	public static Hits search(
@@ -435,8 +445,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             IndexSearcherHelperUtil#search(SearchContext, Query)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link IndexSearcherHelperUtil#search(SearchContext, Query)}
 	 */
 	@Deprecated
 	public static Hits search(
@@ -456,8 +466,9 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             IndexSearcherHelperUtil#searchCount(SearchContext, Query)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link IndexSearcherHelperUtil#searchCount(SearchContext,
+	 *             Query)}
 	 */
 	@Deprecated
 	public static long searchCount(SearchContext searchContext, Query query)
@@ -467,8 +478,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             IndexWriterHelperUtil#setIndexReadOnly(boolean)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link IndexWriterHelperUtil#setIndexReadOnly(boolean)}
 	 */
 	@Deprecated
 	public static void setIndexReadOnly(boolean readOnly) {
@@ -476,7 +487,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link
 	 *             IndexSearcherHelperUtil#spellCheckKeywords(SearchContext)}
 	 */
 	@Deprecated
@@ -487,7 +499,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link
 	 *             IndexSearcherHelperUtil#spellCheckKeywords(SearchContext,
 	 *             int)}
 	 */
@@ -500,7 +513,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link
 	 *             IndexSearcherHelperUtil#suggestKeywordQueries(SearchContext,
 	 *             int)}
 	 */
@@ -514,9 +528,9 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             IndexWriterHelperUtil#updateDocument(String, long, Document,
-	 *             boolean)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link IndexWriterHelperUtil#updateDocument(String, long,
+	 *             Document, boolean)}
 	 */
 	@Deprecated
 	public static void updateDocument(
@@ -528,9 +542,9 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             IndexWriterHelperUtil#updateDocument(String, long, Document,
-	 *             boolean)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link IndexWriterHelperUtil#updateDocument(String, long,
+	 *             Document, boolean)}
 	 */
 	@Deprecated
 	public static void updateDocument(
@@ -543,8 +557,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             IndexWriterHelperUtil#updateDocuments(String, long,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link IndexWriterHelperUtil#updateDocuments(String, long,
 	 *             Collection, boolean)}
 	 */
 	@Deprecated
@@ -558,8 +572,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             IndexWriterHelperUtil#updateDocuments(String, long,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link IndexWriterHelperUtil#updateDocuments(String, long,
 	 *             Collection, boolean)}
 	 */
 	@Deprecated
@@ -573,8 +587,9 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             IndexWriterHelperUtil#updatePermissionFields(String, String)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link IndexWriterHelperUtil#updatePermissionFields(String,
+	 *             String)}
 	 */
 	@Deprecated
 	public static void updatePermissionFields(String name, String primKey) {

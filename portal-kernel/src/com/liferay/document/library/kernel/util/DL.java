@@ -101,7 +101,8 @@ public interface DL {
 		FileEntry fileEntry, ThemeDisplay themeDisplay);
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public Set<Long> getFileEntryTypeSubscriptionClassPKs(long userId);
@@ -142,8 +143,8 @@ public interface DL {
 	public String getTempFileId(long id, String version, String languageId);
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getThumbnailSrc(FileEntry,
-	 *             ThemeDisplay)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getThumbnailSrc(FileEntry, ThemeDisplay)}
 	 */
 	@Deprecated
 	public String getThumbnailSrc(
@@ -152,8 +153,9 @@ public interface DL {
 		throws Exception;
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getThumbnailSrc(FileEntry,
-	 *             FileVersion, ThemeDisplay)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getThumbnailSrc(FileEntry, FileVersion,
+	 *             ThemeDisplay)}
 	 */
 	@Deprecated
 	public String getThumbnailSrc(
@@ -208,20 +210,20 @@ public interface DL {
 	public abstract boolean isOfficeExtension(String extension);
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             com.liferay.document.library.web.internal.util.
-	 *             DLSubscriptionUtil#isSubscribedToFileEntryType(
-	 *             long, long, long, long)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link com.liferay.document.library.web.internal.util.
+	 *             DLSubscriptionUtil#isSubscribedToFileEntryType(long, long,
+	 *             long, long)}
 	 */
 	@Deprecated
 	public boolean isSubscribedToFileEntryType(
 		long companyId, long groupId, long userId, long fileEntryTypeId);
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             com.liferay.document.library.web.internal.util.
-	 *             DLSubscriptionUtil#isSubscribedToFolder(
-	 *             long, long, long, long)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link com.liferay.document.library.web.internal.util.
+	 *             DLSubscriptionUtil#isSubscribedToFolder(long, long, long,
+	 *             long)}
 	 */
 	@Deprecated
 	public boolean isSubscribedToFolder(
@@ -229,10 +231,10 @@ public interface DL {
 		throws PortalException;
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             com.liferay.document.library.web.internal.util.
-	 *             DLSubscriptionUtil#isSubscribedToFolder(
-	 *             long, long, long, long, boolean)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link com.liferay.document.library.web.internal.util.
+	 *             DLSubscriptionUtil#isSubscribedToFolder(long, long, long,
+	 *             long, boolean)}
 	 */
 	@Deprecated
 	public boolean isSubscribedToFolder(

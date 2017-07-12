@@ -795,8 +795,8 @@ public class CustomSQL {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.util.java#NEXT-VERSION, replaced by {@link #_read(ClassLoader, String,
-	 *             Map)}
+	 * @deprecated As of com.liferay.util.java#NEXT-VERSION, replaced by {@link
+	 *             #_read(ClassLoader, String, Map)}
 	 */
 	@Deprecated
 	protected void read(ClassLoader classLoader, String source) {

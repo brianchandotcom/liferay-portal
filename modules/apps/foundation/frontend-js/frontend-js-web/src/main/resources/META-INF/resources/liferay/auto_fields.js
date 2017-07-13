@@ -9,6 +9,7 @@ AUI.add(
 		var CSS_VALIDATION_HELPER_CLASSES = [
 			'error',
 			'error-field',
+			'has-error',
 			'success',
 			'success-field'
 		];
@@ -435,9 +436,13 @@ AUI.add(
 					_createCloneFromMarkup: function(node, guid, formValidator, inputsLocalized) {
 						var instance = this;
 
+						var fieldStrings;
+
 						var rules;
 
 						if (formValidator) {
+							fieldStrings = formValidator.get('fieldStrings');
+
 							rules = formValidator.get('rules');
 						}
 
@@ -465,6 +470,10 @@ AUI.add(
 								else {
 									item.attr('name', newName);
 									item.attr('id', newName);
+								}
+
+								if (fieldStrings && fieldStrings[oldName]) {
+									fieldStrings[newName] = fieldStrings[oldName];
 								}
 
 								if (rules && rules[oldName]) {
@@ -501,6 +510,7 @@ AUI.add(
 							}
 						);
 
+						node.all('.form-validator-stack').remove();
 						node.all('.help-inline').remove();
 
 						instance._clearForm(node);

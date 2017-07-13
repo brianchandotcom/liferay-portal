@@ -14,13 +14,19 @@
 
 package com.liferay.commerce.product.content.search.web.internal.display.context;
 
+import com.liferay.commerce.product.content.search.web.internal.util.CPOptionFacetsUtil;
+import com.liferay.commerce.product.model.CPOption;
+import com.liferay.commerce.product.service.CPOptionService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.facet.Facet;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.portlet.RenderRequest;
 
 /**
  * @author Marco Leo
@@ -28,23 +34,73 @@ import javax.servlet.http.HttpServletRequest;
 public class CPOptionFacetsDisplayContext {
 
 	public CPOptionFacetsDisplayContext(
-		HttpServletRequest httpServletRequest, List<Facet> facets,
+		CPOptionService cpOptionService, RenderRequest renderRequest,
+		List<Facet> facets,
 		PortletSharedSearchResponse portletSharedSearchResponse) {
 
-		_httpServletRequest = httpServletRequest;
+		_cpOptionService = cpOptionService;
+		_renderRequest = renderRequest;
 		_facets = facets;
 		_portletSharedSearchResponse = portletSharedSearchResponse;
 
-		_locale = httpServletRequest.getLocale();
+		_locale = _renderRequest.getLocale();
+	}
+
+	public CPOption getCPOption(long groupId, String fieldName)
+		throws PortalException {
+
+		String cpOptionKey =
+			CPOptionFacetsUtil.getCPOptionKeyFromIndexFieldName(fieldName);
+
+		CPOption cpOption = _cpOptionService.fetchCPOption(
+			groupId, cpOptionKey);
+
+		return cpOption;
+	}
+
+	public String getCPOptionKey(long groupId, String fieldName)
+		throws PortalException {
+
+		CPOption cpOption = getCPOption(groupId, fieldName);
+
+		return cpOption.getKey();
+	}
+
+	public String getCPOptionTitle(long groupId, String fieldName)
+		throws PortalException {
+
+		CPOption cpOption = getCPOption(groupId, fieldName);
+
+		return cpOption.getTitle(_locale);
 	}
 
 	public List<Facet> getFacets() {
 		return _facets;
 	}
 
+	public boolean isCPOptionValueSelected(
+			long groupId, String fieldName, String fieldValue)
+		throws PortalException {
+
+		CPOption cpOption = getCPOption(groupId, fieldName);
+
+		Optional<String[]> parameterValuesOptional =
+			_portletSharedSearchResponse.getParameterValues(
+				cpOption.getKey(), _renderRequest);
+
+		if (parameterValuesOptional.isPresent()) {
+			String[] parameterValues = parameterValuesOptional.get();
+
+			return ArrayUtil.contains(parameterValues, fieldValue);
+		}
+
+		return false;
+	}
+
+	private final CPOptionService _cpOptionService;
 	private final List<Facet> _facets;
-	private final HttpServletRequest _httpServletRequest;
 	private final Locale _locale;
 	private final PortletSharedSearchResponse _portletSharedSearchResponse;
+	private final RenderRequest _renderRequest;
 
 }

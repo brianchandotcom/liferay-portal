@@ -28,11 +28,12 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.model.SocialActivityFeedEntry;
 import com.liferay.social.kernel.model.SocialActivityInterpreter;
 import com.liferay.social.kernel.service.SocialActivityLocalServiceUtil;
-import com.liferay.trash.kernel.util.TrashUtil;
+import com.liferay.trash.TrashHelper;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -45,8 +46,10 @@ import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -57,9 +60,25 @@ import org.springframework.mock.web.MockHttpServletResponse;
  */
 public abstract class BaseSocialActivityInterpreterTestCase {
 
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(TrashHelper.class);
+
+		_serviceTracker.open();
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_serviceTracker.close();
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		group = GroupTestUtil.addGroup();
+
+		trashHelper = _serviceTracker.getService();
 
 		HttpServletRequest request = new MockHttpServletRequest();
 
@@ -160,7 +179,7 @@ public abstract class BaseSocialActivityInterpreterTestCase {
 				SocialActivityFeedEntry activityFeedEntry =
 					activityInterpreter.interpret(activity, serviceContext);
 
-				PortletURL portletURL = TrashUtil.getViewContentURL(
+				PortletURL portletURL = trashHelper.getViewContentURL(
 					serviceContext.getRequest(), activity.getClassName(),
 					activity.getClassPK());
 
@@ -259,5 +278,8 @@ public abstract class BaseSocialActivityInterpreterTestCase {
 	protected Group group;
 
 	protected ServiceContext serviceContext;
+	protected TrashHelper trashHelper;
+
+	private static ServiceTracker<TrashHelper, TrashHelper> _serviceTracker;
 
 }

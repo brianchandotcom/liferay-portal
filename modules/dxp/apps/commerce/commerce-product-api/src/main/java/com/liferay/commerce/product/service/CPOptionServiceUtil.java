@@ -71,6 +71,12 @@ public class CPOptionServiceUtil {
 		return getService().fetchCPOption(cpOptionId);
 	}
 
+	public static com.liferay.commerce.product.model.CPOption fetchCPOption(
+		long groupId, java.lang.String key)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().fetchCPOption(groupId, key);
+	}
+
 	public static com.liferay.commerce.product.model.CPOption getCPOption(
 		long cpOptionId)
 		throws com.liferay.portal.kernel.exception.PortalException {

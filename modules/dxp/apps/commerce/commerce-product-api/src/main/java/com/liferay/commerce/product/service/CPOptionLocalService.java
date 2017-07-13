@@ -120,6 +120,10 @@ public interface CPOptionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPOption fetchCPOption(long CPOptionId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPOption fetchCPOption(long groupId, java.lang.String key)
+		throws PortalException;
+
 	/**
 	* Returns the cp option matching the UUID and group.
 	*
@@ -140,6 +144,10 @@ public interface CPOptionLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPOption getCPOption(long CPOptionId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPOption getCPOption(long groupId, java.lang.String key)
+		throws PortalException;
 
 	/**
 	* Returns the cp option matching the UUID and group.

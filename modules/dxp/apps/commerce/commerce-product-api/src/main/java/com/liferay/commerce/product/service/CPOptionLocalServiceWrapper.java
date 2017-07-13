@@ -104,6 +104,13 @@ public class CPOptionLocalServiceWrapper implements CPOptionLocalService,
 		return _cpOptionLocalService.fetchCPOption(CPOptionId);
 	}
 
+	@Override
+	public com.liferay.commerce.product.model.CPOption fetchCPOption(
+		long groupId, java.lang.String key)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpOptionLocalService.fetchCPOption(groupId, key);
+	}
+
 	/**
 	* Returns the cp option matching the UUID and group.
 	*
@@ -129,6 +136,13 @@ public class CPOptionLocalServiceWrapper implements CPOptionLocalService,
 		long CPOptionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpOptionLocalService.getCPOption(CPOptionId);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPOption getCPOption(
+		long groupId, java.lang.String key)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpOptionLocalService.getCPOption(groupId, key);
 	}
 
 	/**

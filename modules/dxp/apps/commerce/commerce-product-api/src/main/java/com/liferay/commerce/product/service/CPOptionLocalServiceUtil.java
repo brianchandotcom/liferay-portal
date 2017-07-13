@@ -107,6 +107,12 @@ public class CPOptionLocalServiceUtil {
 		return getService().fetchCPOption(CPOptionId);
 	}
 
+	public static com.liferay.commerce.product.model.CPOption fetchCPOption(
+		long groupId, java.lang.String key)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().fetchCPOption(groupId, key);
+	}
+
 	/**
 	* Returns the cp option matching the UUID and group.
 	*
@@ -130,6 +136,12 @@ public class CPOptionLocalServiceUtil {
 		long CPOptionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCPOption(CPOptionId);
+	}
+
+	public static com.liferay.commerce.product.model.CPOption getCPOption(
+		long groupId, java.lang.String key)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCPOption(groupId, key);
 	}
 
 	/**

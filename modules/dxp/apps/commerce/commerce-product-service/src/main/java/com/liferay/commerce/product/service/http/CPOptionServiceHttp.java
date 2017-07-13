@@ -189,12 +189,44 @@ public class CPOptionServiceHttp {
 		}
 	}
 
+	public static com.liferay.commerce.product.model.CPOption fetchCPOption(
+		HttpPrincipal httpPrincipal, long groupId, java.lang.String key)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CPOptionServiceUtil.class,
+					"fetchCPOption", _fetchCPOptionParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					key);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.product.model.CPOption)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.commerce.product.model.CPOption getCPOption(
 		HttpPrincipal httpPrincipal, long cpOptionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPOptionServiceUtil.class,
-					"getCPOption", _getCPOptionParameterTypes4);
+					"getCPOption", _getCPOptionParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpOptionId);
@@ -225,7 +257,7 @@ public class CPOptionServiceHttp {
 		HttpPrincipal httpPrincipal, long groupId, int start, int end) {
 		try {
 			MethodKey methodKey = new MethodKey(CPOptionServiceUtil.class,
-					"getCPOptions", _getCPOptionsParameterTypes5);
+					"getCPOptions", _getCPOptionsParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					start, end);
@@ -253,7 +285,7 @@ public class CPOptionServiceHttp {
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPOption> orderByComparator) {
 		try {
 			MethodKey methodKey = new MethodKey(CPOptionServiceUtil.class,
-					"getCPOptions", _getCPOptionsParameterTypes6);
+					"getCPOptions", _getCPOptionsParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					start, end, orderByComparator);
@@ -280,7 +312,7 @@ public class CPOptionServiceHttp {
 		long groupId) {
 		try {
 			MethodKey methodKey = new MethodKey(CPOptionServiceUtil.class,
-					"getCPOptionsCount", _getCPOptionsCountParameterTypes7);
+					"getCPOptionsCount", _getCPOptionsCountParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -307,7 +339,7 @@ public class CPOptionServiceHttp {
 		com.liferay.portal.kernel.search.SearchContext searchContext) {
 		try {
 			MethodKey methodKey = new MethodKey(CPOptionServiceUtil.class,
-					"search", _searchParameterTypes8);
+					"search", _searchParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					searchContext);
@@ -337,7 +369,7 @@ public class CPOptionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPOptionServiceUtil.class,
-					"searchCPOptions", _searchCPOptionsParameterTypes9);
+					"searchCPOptions", _searchCPOptionsParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					companyId, groupId, keywords, start, end, sort);
@@ -369,7 +401,7 @@ public class CPOptionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPOptionServiceUtil.class,
-					"setFacetable", _setFacetableParameterTypes10);
+					"setFacetable", _setFacetableParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpOptionId, facetable);
@@ -401,7 +433,7 @@ public class CPOptionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPOptionServiceUtil.class,
-					"setRequired", _setRequiredParameterTypes11);
+					"setRequired", _setRequiredParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpOptionId, required);
@@ -433,7 +465,7 @@ public class CPOptionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPOptionServiceUtil.class,
-					"setSkuContributor", _setSkuContributorParameterTypes12);
+					"setSkuContributor", _setSkuContributorParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpOptionId, skuContributor);
@@ -470,7 +502,7 @@ public class CPOptionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPOptionServiceUtil.class,
-					"updateCPOption", _updateCPOptionParameterTypes13);
+					"updateCPOption", _updateCPOptionParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpOptionId, titleMap, descriptionMap, ddmFormFieldTypeName,
@@ -513,36 +545,39 @@ public class CPOptionServiceHttp {
 	private static final Class<?>[] _fetchCPOptionParameterTypes3 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getCPOptionParameterTypes4 = new Class[] {
+	private static final Class<?>[] _fetchCPOptionParameterTypes4 = new Class[] {
+			long.class, java.lang.String.class
+		};
+	private static final Class<?>[] _getCPOptionParameterTypes5 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getCPOptionsParameterTypes5 = new Class[] {
+	private static final Class<?>[] _getCPOptionsParameterTypes6 = new Class[] {
 			long.class, int.class, int.class
 		};
-	private static final Class<?>[] _getCPOptionsParameterTypes6 = new Class[] {
+	private static final Class<?>[] _getCPOptionsParameterTypes7 = new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getCPOptionsCountParameterTypes7 = new Class[] {
+	private static final Class<?>[] _getCPOptionsCountParameterTypes8 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _searchParameterTypes8 = new Class[] {
+	private static final Class<?>[] _searchParameterTypes9 = new Class[] {
 			com.liferay.portal.kernel.search.SearchContext.class
 		};
-	private static final Class<?>[] _searchCPOptionsParameterTypes9 = new Class[] {
+	private static final Class<?>[] _searchCPOptionsParameterTypes10 = new Class[] {
 			long.class, long.class, java.lang.String.class, int.class, int.class,
 			com.liferay.portal.kernel.search.Sort.class
 		};
-	private static final Class<?>[] _setFacetableParameterTypes10 = new Class[] {
+	private static final Class<?>[] _setFacetableParameterTypes11 = new Class[] {
 			long.class, boolean.class
 		};
-	private static final Class<?>[] _setRequiredParameterTypes11 = new Class[] {
+	private static final Class<?>[] _setRequiredParameterTypes12 = new Class[] {
 			long.class, boolean.class
 		};
-	private static final Class<?>[] _setSkuContributorParameterTypes12 = new Class[] {
+	private static final Class<?>[] _setSkuContributorParameterTypes13 = new Class[] {
 			long.class, boolean.class
 		};
-	private static final Class<?>[] _updateCPOptionParameterTypes13 = new Class[] {
+	private static final Class<?>[] _updateCPOptionParameterTypes14 = new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class,
 			java.lang.String.class, boolean.class, boolean.class, boolean.class,
 			java.lang.String.class,

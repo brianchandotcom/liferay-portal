@@ -29,18 +29,23 @@ import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Carlos Sierra Andrés
  */
-@Component(immediate = true, service = JSLoaderModulesTracker.class)
+@Component(
+	configurationPid = "com.liferay.frontend.js.loader.modules.extender.internal.Details",
+	immediate = true, service = JSLoaderModulesTracker.class
+)
 public class JSLoaderModulesTracker
 	implements ServiceTrackerCustomizer
 		<ServletContext, ServiceReference<ServletContext>> {
 
 	@Activate
+	@Modified
 	public void activate(
 			ComponentContext componentContext, Map<String, Object> properties)
 		throws Exception {
@@ -50,6 +55,8 @@ public class JSLoaderModulesTracker
 		}
 
 		setDetails(Converter.cnv(Details.class, properties));
+
+		_jsLoaderModules.clear();
 
 		_serviceTracker = ServiceTrackerFactory.open(
 			componentContext.getBundleContext(),

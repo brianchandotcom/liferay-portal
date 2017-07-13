@@ -16,7 +16,14 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+long categoryId = ParamUtil.getLong(request, "categoryId");
+
+AssetCategory category = AssetCategoryLocalServiceUtil.fetchCategory(categoryId);
+%>
+
 <liferay-frontend:screen-navigation
 	key="<%= AssetCategoriesConstants.CATEGORY_KEY_GENERAL %>"
+	modelBean="<%= category %>"
 	portletURL="<%= currentURLObj %>"
 />

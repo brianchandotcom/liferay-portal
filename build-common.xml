@@ -715,8 +715,8 @@ information.
 				<sysproperty key="whip.agent" value="${whip.agent}" />
 				<sysproperty file="test-coverage/@{test.type}/whip.dat" key="whip.datafile" />
 				<sysproperty key="whip.instrument.dump" value="${whip.instrument.dump}" />
-				<jvmarg if:true="${aspectj.weaver.enabled}" line="${aspectj.agent}" />
 				<jvmarg if:true="${jvm.debug}" line="${jpda.settings}" />
+				<jvmarg if:true="${aspectj.weaver.enabled}" line="${aspectj.agent}" />
 				<jvmarg line="${junit.java.gc}" />
 				<jvmarg line="${whip.agent}" />
 				<jvmarg value="-Xss2m" />

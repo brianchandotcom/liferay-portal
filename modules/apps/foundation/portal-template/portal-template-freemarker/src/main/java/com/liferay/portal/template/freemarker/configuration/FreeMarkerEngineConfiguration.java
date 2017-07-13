@@ -32,7 +32,7 @@ public interface FreeMarkerEngineConfiguration {
 	@Meta.AD(deflt = "false", required = false)
 	public boolean localizedLookup();
 
-	@Meta.AD(deflt = "60", required = false)
+	@Meta.AD(deflt = "60000", required = false)
 	public int resourceModificationCheck();
 
 	@Meta.AD(required = false)

@@ -349,6 +349,7 @@ private void _cherryPickPrepNext(Commit commit) {
 	if (moduleOSGi) {
 		StartParameter startParameter = gradle.startParameter.newBuild()
 
+		String syncRelease = System.setProperty("org.gradle.project.syncRelease", "true")
 		String baselineIgnoreFailures = System.setProperty("baseline.ignoreFailures", "true")
 
 		startParameter.projectProperties = ["syncRelease": "true"]
@@ -369,6 +370,13 @@ private void _cherryPickPrepNext(Commit commit) {
 			}
 			else {
 				System.properties.remove "baseline.ignoreFailures"
+			}
+
+			if (syncRelease) {
+				System.setProperty "org.gradle.project.syncRelease", syncRelease
+			}
+			else {
+				System.properties.remove "org.gradle.project.syncRelease"
 			}
 		}
 	}

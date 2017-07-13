@@ -222,10 +222,8 @@ public class CPSearchResultsPortlet
 		paginationStartOptional.ifPresent(
 			portletSharedSearchSettings::setPaginationStart);
 
-		int paginationDelta = 20;
-
 		portletSharedSearchSettings.setPaginationDeltaParameterName("delta");
-		portletSharedSearchSettings.setPaginationDelta(paginationDelta);
+		portletSharedSearchSettings.setPaginationDelta(20);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashHandler;
@@ -33,6 +35,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.trash.TrashHelper;
 import com.liferay.trash.model.TrashEntry;
@@ -43,6 +46,10 @@ import com.liferay.trash.service.TrashVersionLocalService;
 import java.text.Format;
 
 import java.util.Date;
+
+import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -113,6 +120,56 @@ public class TrashHelperImpl implements TrashHelper {
 	@Override
 	public String getTrashTitle(long entryId) {
 		return _getTrashTitle(entryId, _TRASH_PREFIX);
+	}
+
+	@Override
+	public PortletURL getViewContentURL(
+			HttpServletRequest request, String className, long classPK)
+		throws PortalException {
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			className);
+
+		if (trashHandler.isInTrashContainer(classPK)) {
+			com.liferay.trash.kernel.model.TrashEntry trashEntry =
+				trashHandler.getTrashEntry(classPK);
+
+			className = trashEntry.getClassName();
+			classPK = trashEntry.getClassPK();
+
+			trashHandler = TrashHandlerRegistryUtil.getTrashHandler(className);
+		}
+
+		TrashRenderer trashRenderer = trashHandler.getTrashRenderer(classPK);
+
+		if (trashRenderer == null) {
+			return null;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletURL portletURL = PortletProviderUtil.getPortletURL(
+			request, TrashEntry.class.getName(), PortletProvider.Action.VIEW);
+
+		portletURL.setParameter("mvcPath", "/view_content.jsp");
+		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+
+		TrashEntry trashEntry = _trashEntryLocalService.getEntry(
+			className, classPK);
+
+		if (trashEntry.getRootEntry() != null) {
+			portletURL.setParameter("className", className);
+			portletURL.setParameter("classPK", String.valueOf(classPK));
+		}
+		else {
+			portletURL.setParameter(
+				"trashEntryId", String.valueOf(trashEntry.getEntryId()));
+		}
+
+		portletURL.setParameter("showAssetMetadata", Boolean.TRUE.toString());
+
+		return portletURL;
 	}
 
 	@Override

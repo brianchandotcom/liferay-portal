@@ -16,6 +16,7 @@ package com.liferay.asset.categories.admin.web.internal.servlet.taglib.ui;
 
 import com.liferay.asset.categories.admin.web.constants.AssetCategoriesConstants;
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -34,11 +35,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jürgen Kappler
  */
 @Component(
-	property = {"screen.navigation.entry.order:Integer=10"},
-	service = ScreenNavigationEntry.class
+	property = {
+		"screen.navigation.category.order:Integer=10",
+		"screen.navigation.entry.order:Integer=10"
+	},
+	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
 )
 public class CategoryDetailsScreenNavigationEntry
-	implements ScreenNavigationEntry<AssetCategory> {
+	implements ScreenNavigationCategory, ScreenNavigationEntry<AssetCategory> {
 
 	@Override
 	public String getCategoryKey() {

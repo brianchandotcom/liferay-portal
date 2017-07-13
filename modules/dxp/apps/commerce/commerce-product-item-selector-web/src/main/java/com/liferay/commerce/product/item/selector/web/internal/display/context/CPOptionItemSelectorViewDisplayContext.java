@@ -41,8 +41,6 @@ public class CPOptionItemSelectorViewDisplayContext
 			httpServletRequest, portletURL, itemSelectedEventName,
 			"CPOptionItemSelectorView");
 
-		setDefaultOrderByCol("name");
-
 		_cpOptionService = cpOptionService;
 	}
 

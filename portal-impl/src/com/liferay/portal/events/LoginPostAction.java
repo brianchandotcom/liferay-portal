@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -116,22 +117,7 @@ public class LoginPostAction extends Action {
 			if ((passwordPolicy != null) && passwordPolicy.isExpireable() &&
 				(passwordPolicy.getWarningTime() > 0)) {
 
-				int passwordExpireInXDays = _getPasswordRemainingDays(
-					passwordPolicy, user);
-
-				if (passwordExpireInXDays >= 0) {
-					SessionMessages.add(
-						request, "passwordExpireInXDays",
-						passwordExpireInXDays);
-				}
-				else if (passwordExpireInXDays == -1) {
-					int graceLoginRemaining =
-						passwordPolicy.getGraceLimit() -
-							user.getGraceLoginCount();
-
-					SessionMessages.add(
-						request, "graceLoginRemaining", graceLoginRemaining);
-				}
+				_setPasswordExpirationMessage(request, passwordPolicy, user);
 			}
 		}
 		catch (Exception e) {
@@ -139,8 +125,9 @@ public class LoginPostAction extends Action {
 		}
 	}
 
-	private int _getPasswordRemainingDays(
-			PasswordPolicy passwordPolicy, User user)
+	private void _setPasswordExpirationMessage(
+			HttpServletRequest request, PasswordPolicy passwordPolicy,
+			User user)
 		throws PortalException {
 
 		Date now = new Date();
@@ -160,15 +147,22 @@ public class LoginPostAction extends Action {
 			passwordExpiresOn - (passwordPolicy.getWarningTime() * 1000);
 
 		if (now.getTime() > timeStartWarning) {
-			long dayTime = 24 * 60 * 60 * 1000;
+			int daysUntilPasswordExpiration =
+				(int)((passwordExpiresOn - now.getTime()) / Time.DAY);
 
-			int remainingDays =
-				(int)((passwordExpiresOn - now.getTime()) / dayTime);
+			if (daysUntilPasswordExpiration >= 0) {
+				SessionMessages.add(
+					request, "daysUntilPasswordExpiration",
+					daysUntilPasswordExpiration);
+			}
+			else {
+				int graceLoginsRemaining =
+					passwordPolicy.getGraceLimit() - user.getGraceLoginCount();
 
-			return (remainingDays > -1) ? remainingDays : -1;
+				SessionMessages.add(
+					request, "graceLoginsRemaining", graceLoginsRemaining);
+			}
 		}
-
-		return -2;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -14,7 +14,6 @@ task buildTheme
 task publishNodeModule(type: PublishNodeModuleTask)
 
 String alloyUIVersion = "3.1.0-deprecated.23"
-String lexiconVersion = "1.0.24"
 
 File themeDestinationDir = file("src/main/resources/META-INF/resources/_unstyled");
 
@@ -48,6 +47,8 @@ buildCSS {
 }
 
 buildLexicon {
+	dependsOn npmInstall
+
 	File lexiconDestinationDir = new File(themeDestinationDir, "css/aui/lexicon")
 
 	doFirst {
@@ -61,6 +62,8 @@ buildLexicon {
 
 				if (line == "// INSERT CUSTOM EXTENSIONS") {
 					line = """\
+@import \"lexicon-base/variables\";
+
 @import \"../../liferay_variables_custom\";
 @import \"../../liferay_variables\";
 @import \"bourbon\";
@@ -87,6 +90,8 @@ buildLexicon {
 				}
 				else if (line == "// INSERT CUSTOM VARS") {
 					line = """\
+@import \"lexicon-base/variables\";
+
 @import \"../../liferay_variables_custom\";
 @import \"../../liferay_variables\";"""
 				}
@@ -96,18 +101,17 @@ buildLexicon {
 		}
 	}
 
-	eachFile new StripPathSegmentsAction(7)
+	eachFile new StripPathSegmentsAction(3)
 
-	from {
-		zipTree(configurations.lexicon.singleFile)
-	}
-
-	include "META-INF/resources/webjars/lexicon/${lexiconVersion}/release/scss/"
+	from npmInstall.nodeModulesDir
+	include "clay/src/scss/"
 	includeEmptyDirs = false
 	into lexiconDestinationDir
 }
 
 buildLexiconFonts {
+	dependsOn npmInstall
+
 	File lexiconFontsDestinationDir = new File(themeDestinationDir, "css/aui/lexicon/fonts")
 
 	dependsOn buildLexicon
@@ -116,31 +120,27 @@ buildLexiconFonts {
 		delete lexiconFontsDestinationDir
 	}
 
-	eachFile new StripPathSegmentsAction(7)
+	eachFile new StripPathSegmentsAction(3)
 
-	from {
-		zipTree(configurations.lexicon.singleFile)
-	}
-
-	include "META-INF/resources/webjars/lexicon/${lexiconVersion}/release/fonts/"
+	from npmInstall.nodeModulesDir
+	include "clay/release/fonts/"
 	includeEmptyDirs = false
 	into lexiconFontsDestinationDir
 }
 
 buildLexiconIcons {
+	dependsOn npmInstall
+
 	File lexiconIconsDestinationDir = new File(themeDestinationDir, "images/lexicon")
 
 	doFirst {
 		delete lexiconIconsDestinationDir
 	}
 
-	eachFile new StripPathSegmentsAction(8)
+	eachFile new StripPathSegmentsAction(4)
 
-	from {
-		zipTree(configurations.lexicon.singleFile)
-	}
-
-	include "META-INF/resources/webjars/lexicon/${lexiconVersion}/release/images/icons/"
+	from npmInstall.nodeModulesDir
+	include "clay/release/images/icons/"
 	includeEmptyDirs = false
 	into lexiconIconsDestinationDir
 }
@@ -157,8 +157,6 @@ classes {
 
 dependencies {
 	alloyUI group: "com.liferay.webjars", name: "com.liferay.webjars.alloy-ui", transitive: false, version: alloyUIVersion
-
-	lexicon group: "com.liferay.webjars", name: "com.liferay.webjars.lexicon", transitive: false, version: lexiconVersion
 }
 
 publishNodeModule {

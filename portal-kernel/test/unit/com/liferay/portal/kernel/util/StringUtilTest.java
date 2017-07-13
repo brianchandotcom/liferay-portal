@@ -733,6 +733,10 @@ public class StringUtilTest {
 		// Surrounding spaces
 
 		Assert.assertEquals("ab", StringUtil.trim(" \t\r\nab \t\r\n"));
+
+		// UTF-8 spaces
+
+		Assert.assertEquals("ab", StringUtil.trim("\u3000ab\u3000"));
 	}
 
 	@Test

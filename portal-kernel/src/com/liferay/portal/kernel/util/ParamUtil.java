@@ -181,7 +181,7 @@ public class ParamUtil {
 			request.getParameter(param), defaultValue);
 
 		if (returnValue != null) {
-			return returnValue.trim();
+			return StringUtil.trim(returnValue);
 		}
 
 		return null;
@@ -341,7 +341,7 @@ public class ParamUtil {
 			portletRequest.getParameter(param), defaultValue);
 
 		if (returnValue != null) {
-			return returnValue.trim();
+			return StringUtil.trim(returnValue);
 		}
 
 		return null;
@@ -501,7 +501,7 @@ public class ParamUtil {
 			serviceContext.getAttribute(param), defaultValue);
 
 		if (returnValue != null) {
-			return returnValue.trim();
+			return StringUtil.trim(returnValue);
 		}
 
 		return null;

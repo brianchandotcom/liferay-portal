@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.service.RepositoryService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
+import com.liferay.portal.kernel.util.UnsafeRunnable;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 
 /**
@@ -121,13 +122,6 @@ public class TemporaryFileEntryRepository extends LiferayRepository {
 		finally {
 			SystemEventHierarchyEntryThreadLocal.pop(DLFileEntry.class);
 		}
-	}
-
-	@FunctionalInterface
-	private interface UnsafeRunnable<E extends Throwable> {
-
-		public void run() throws E;
-
 	}
 
 }

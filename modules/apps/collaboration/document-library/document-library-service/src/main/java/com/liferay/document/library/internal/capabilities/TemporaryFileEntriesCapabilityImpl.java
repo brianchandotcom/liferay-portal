@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnsafeRunnable;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.File;
@@ -356,13 +357,6 @@ public class TemporaryFileEntriesCapabilityImpl
 				_documentRepository.deleteFolder(folderId);
 			}
 		}
-
-	}
-
-	@FunctionalInterface
-	private interface UnsafeRunnable<E extends Throwable> {
-
-		public void run() throws E;
 
 	}
 

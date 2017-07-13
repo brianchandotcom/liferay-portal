@@ -146,9 +146,7 @@ public abstract class PoshiElement extends DefaultElement {
 	protected boolean isBalancedReadableSyntax(String readableSyntax) {
 		Stack<Character> stack = new Stack<>();
 
-		for (int i = 0; i < readableSyntax.length(); i++) {
-			char c = readableSyntax.charAt(i);
-
+		for (char c : readableSyntax.toCharArray()) {
 			if (!stack.isEmpty() && (stack.peek() == '\"')) {
 				if (c == '\"') {
 					stack.pop();

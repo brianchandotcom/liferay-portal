@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -191,7 +192,10 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 			JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-			StringBuilder sku = new StringBuilder(cpDefinition.getBaseSKU());
+			StringBundler sku = new StringBundler(
+				cpDefinitionOptionValueRels.length + 1);
+
+			sku.append(cpDefinition.getBaseSKU());
 
 			for (CPDefinitionOptionValueRel
 					cpDefinitionOptionValueRel :

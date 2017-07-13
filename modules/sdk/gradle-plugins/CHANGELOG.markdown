@@ -1893,6 +1893,22 @@ to version 2.0.0.
 - [LPS-73525]: The project properties `app.server.tomcat.setenv.gc.new` and
 `app.server.tomcat.setenv.gc.old` are no longer available.
 
+## 3.4.3 - 2017-07-13
+
+### Changed
+- [LPS-72705]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.0.33.
+- [LPS-72705]: Update the [Liferay Source Formatter] dependency to version
+1.0.422.
+
+## 3.4.4 - 2017-07-13
+
+### Changed
+- [LPS-72705]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.0.34.
+- [LPS-72705]: Update the [Liferay Source Formatter] dependency to version
+1.0.423.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd

@@ -15,9 +15,10 @@
 package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PredicateFilter;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
@@ -45,25 +46,15 @@ public class ScreenNavigationTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		ScreenNavigationRegistry screenNavigationRegistry =
 			ServletContextUtil.getScreenNavigationRegistry();
 
-		_screenNavigationCategories = ListUtil.filter(
-			screenNavigationRegistry.getScreenNavigationCategories(_key),
-			new PredicateFilter<ScreenNavigationCategory>() {
-
-				@Override
-				public boolean filter(
-					ScreenNavigationCategory screenNavigationCategory) {
-
-					List<ScreenNavigationEntry> screenNavigationEntries =
-						screenNavigationRegistry.getScreenNavigationEntries(
-							screenNavigationCategory);
-
-					return ListUtil.isNotEmpty(screenNavigationEntries);
-				}
-
-			});
+		_screenNavigationCategories =
+			screenNavigationRegistry.getScreenNavigationCategories(
+				_key, themeDisplay.getUser(), _modelBean);
 
 		return super.doStartTag();
 	}

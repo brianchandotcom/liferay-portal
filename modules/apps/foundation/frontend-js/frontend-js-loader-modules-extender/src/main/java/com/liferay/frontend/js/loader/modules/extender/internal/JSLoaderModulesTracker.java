@@ -18,12 +18,15 @@ import aQute.lib.converter.Converter;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
 
+import java.net.URL;
+
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListMap;
 
 import javax.servlet.ServletContext;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
@@ -64,6 +67,14 @@ public class JSLoaderModulesTracker
 
 		String contextPath = (String)serviceReference.getProperty(
 			"osgi.web.contextpath");
+
+		Bundle bundle = serviceReference.getBundle();
+
+		URL url = bundle.getEntry(Details.CONFIG_JSON);
+
+		if (url == null) {
+			return serviceReference;
+		}
 
 		JSLoaderModule jsLoaderModule = new JSLoaderModule(
 			_details.applyVersioning(), serviceReference.getBundle(),

@@ -20,7 +20,12 @@ import com.liferay.commerce.product.util.comparator.CPDefinitionDisplayDateCompa
 import com.liferay.commerce.product.util.comparator.CPDefinitionModifiedDateComparator;
 import com.liferay.commerce.product.util.comparator.CPDefinitionTitleComparator;
 import com.liferay.commerce.product.util.comparator.CPOptionTitleComparator;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.Objects;
 
 /**
  * @author Alessio Antonio Rendina
@@ -70,6 +75,48 @@ public class CPItemSelectorViewUtil {
 		}
 
 		return orderByComparator;
+	}
+
+	public static Sort getCPDefinitionSort(
+		String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (Objects.equals(orderByType, "asc")) {
+			orderByAsc = true;
+		}
+
+		Sort sort = null;
+
+		if (orderByCol.equals("display-date")) {
+			sort = SortFactoryUtil.create("display-date", orderByAsc);
+		}
+		else if (orderByCol.equals("modified-date")) {
+			sort = SortFactoryUtil.create(Field.MODIFIED_DATE, orderByAsc);
+		}
+		else if (orderByCol.equals("title")) {
+			sort = SortFactoryUtil.create(
+				Field.TITLE, Sort.STRING_TYPE, orderByAsc);
+		}
+
+		return sort;
+	}
+
+	public static Sort getCPOptionSort(String orderByCol, String orderByType) {
+		boolean orderByAsc = false;
+
+		if (Objects.equals(orderByType, "asc")) {
+			orderByAsc = true;
+		}
+
+		Sort sort = null;
+
+		if (Objects.equals(orderByCol, "title")) {
+			sort = SortFactoryUtil.create(
+				"title", Sort.STRING_TYPE, orderByAsc);
+		}
+
+		return sort;
 	}
 
 }

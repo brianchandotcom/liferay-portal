@@ -1,9 +1,7 @@
 <#if entries?has_content>
 	<@liferay_aui.row>
 		<#list entries as entry>
-			<@liferay_aui.col
-				width=25
-			>
+			<@liferay_aui.col width=25>
 				<div class="results-header">
 					<h3>
 						<a

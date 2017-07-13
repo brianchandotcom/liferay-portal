@@ -162,10 +162,10 @@
 			/>
 
 			<@liferay_ui.icon
-				image = "edit"
-				label = true
-				message = "edit"
-				url = taglibEditURL
+				image="edit"
+				label=true
+				message="edit"
+				url=taglibEditURL
 			/>
 		</#if>
 

@@ -155,9 +155,7 @@ public int countBy${finder.name}(
 					QueryPos qPos = QueryPos.getInstance(q);
 				</#if>
 
-				<@finderQPos
-					_arrayable=true
-				/>
+				<@finderQPos _arrayable=true />
 
 				count = (Long)q.uniqueResult();
 
@@ -390,9 +388,7 @@ public int countBy${finder.name}(
 						QueryPos qPos = QueryPos.getInstance(q);
 					</#if>
 
-					<@finderQPos
-						_arrayable=true
-					/>
+					<@finderQPos _arrayable=true />
 
 					Long count = (Long)q.uniqueResult();
 
@@ -438,9 +434,7 @@ public int countBy${finder.name}(
 						QueryPos qPos = QueryPos.getInstance(q);
 					</#if>
 
-					<@finderQPos
-						_arrayable=true
-					/>
+					<@finderQPos _arrayable=true />
 
 					Long count = (Long)q.uniqueResult();
 

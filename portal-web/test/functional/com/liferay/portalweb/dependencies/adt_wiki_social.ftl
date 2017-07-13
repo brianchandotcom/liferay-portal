@@ -250,8 +250,6 @@
 
 <#macro getRelatedAssets>
 	<#if assetEntry?? && wikiPortletInstanceConfiguration.enableRelatedAssets()>
-		<@liferay_ui["asset-links"]
-			assetEntryId=assetEntry.getEntryId()
-		/>
+		<@liferay_ui["asset-links"] assetEntryId=assetEntry.getEntryId() />
 	</#if>
 </#macro>

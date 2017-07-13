@@ -15,6 +15,7 @@
 package com.liferay.asset.categories.admin.web.internal.servlet.taglib.ui;
 
 import com.liferay.asset.categories.admin.web.constants.AssetCategoriesConstants;
+import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -37,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = ScreenNavigationEntry.class
 )
 public class CategoryDetailsScreenNavigationEntry
-	implements ScreenNavigationEntry {
+	implements ScreenNavigationEntry<AssetCategory> {
 
 	@Override
 	public String getCategoryKey() {

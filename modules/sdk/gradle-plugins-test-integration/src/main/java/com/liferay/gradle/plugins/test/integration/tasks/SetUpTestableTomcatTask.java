@@ -190,6 +190,14 @@ public class SetUpTestableTomcatTask
 		_dir = dir;
 	}
 
+	public void setJaCoCoAgentConfiguration(String jaCoCoAgentConfiguration) {
+		_jaCoCoAgentConfiguration = jaCoCoAgentConfiguration;
+	}
+
+	public void setJaCoCoAgentJar(String jaCoCoAgentJar) {
+		_jaCoCoAgentJar = jaCoCoAgentJar;
+	}
+
 	public void setJmxRemoteAuthenticate(boolean jmxRemoteAuthenticate) {
 		_jmxRemoteAuthenticate = jmxRemoteAuthenticate;
 	}
@@ -294,6 +302,41 @@ public class SetUpTestableTomcatTask
 				}
 
 				printWriter.println("\"");
+			}
+		}
+	}
+
+	private void _setUpJaCoCo() throws IOException {
+		File targetJaCoCoAgentJar = new File(getDir(), "bin/jacocoagent.jar");
+
+		if ((_jaCoCoAgentJar != null) && !targetJaCoCoAgentJar.exists()) {
+			File sourceJaCoCoAgentJar = new File(_jaCoCoAgentJar);
+
+			Files.copy(
+				sourceJaCoCoAgentJar.toPath(), targetJaCoCoAgentJar.toPath());
+		}
+
+		String jaCoCoJvmArg =
+			"-javaagent:" + targetJaCoCoAgentJar.getAbsolutePath();
+
+		if (_jaCoCoAgentConfiguration != null) {
+			jaCoCoJvmArg += _jaCoCoAgentConfiguration;
+		}
+
+		if (!_contains("bin/setenv.sh", jaCoCoJvmArg)) {
+			try (PrintWriter printWriter = _getAppendPrintWriter(
+					"bin/setenv.sh")) {
+
+				printWriter.println();
+
+				printWriter.println("if [ \"$1\" = \"jacoco\" ] ; then");
+				printWriter.print("    JACOCO_OPTS=\"");
+				printWriter.print(jaCoCoJvmArg);
+				printWriter.println("\"");
+				printWriter.println(
+					"    CATALINA_OPTS=\"${CATALINA_OPTS} ${JACOCO_OPTS}\"");
+				printWriter.println("    shift");
+				printWriter.println("fi");
 			}
 		}
 	}
@@ -508,6 +551,7 @@ public class SetUpTestableTomcatTask
 	}
 
 	private void _setUpSetEnv() throws IOException {
+		_setUpJaCoCo();
 		_setUpAspectJ();
 		_setUpJmx();
 		_setUpJpda();
@@ -522,6 +566,8 @@ public class SetUpTestableTomcatTask
 	private Object _aspectJConfiguration;
 	private boolean _debugLogging;
 	private Object _dir;
+	private String _jaCoCoAgentConfiguration;
+	private String _jaCoCoAgentJar;
 	private boolean _jmxRemoteAuthenticate;
 	private Object _jmxRemotePort;
 	private boolean _jmxRemoteSsl;

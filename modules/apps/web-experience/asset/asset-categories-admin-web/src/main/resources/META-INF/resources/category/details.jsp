@@ -49,13 +49,23 @@ renderResponse.setTitle(((category == null) ? LanguageUtil.get(request, "add-new
 	<liferay-ui:error exception="<%= DuplicateCategoryException.class %>" message="please-enter-a-unique-name" />
 	<liferay-ui:error exception="<%= DuplicateCategoryPropertyException.class %>" message="please-enter-a-unique-property-key" />
 
-	<liferay-ui:form-navigator
-		formModelBean="<%= category %>"
-		formName="fm1"
-		id="<%= AssetCategoriesConstants.FORM_NAVIGATOR_ID_EDIT_CATEGORY %>"
-		markupView="lexicon"
-		showButtons="<%= false %>"
-	/>
+	<aui:model-context bean="<%= category %>" model="<%= AssetCategory.class %>" />
+
+	<aui:input autoFocus="<%= true %>" label="name" name="title" placeholder="name" />
+
+	<aui:input name="description" placeholder="description" />
+
+	<c:if test="<%= assetCategoriesDisplayContext.isFlattenedNavigationAllowed() %>">
+		<aui:field-wrapper label="parent-category">
+			<liferay-asset:asset-categories-selector categoryIds="<%= String.valueOf(parentCategoryId) %>" hiddenInput="parentCategoryId" singleSelect="<%= true %>" />
+		</aui:field-wrapper>
+	</c:if>
+
+	<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" markupView="lexicon" persistState="<%= true %>" title="permissions">
+		<liferay-ui:input-permissions
+			modelName="<%= AssetCategory.class.getName() %>"
+		/>
+	</liferay-ui:panel>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />

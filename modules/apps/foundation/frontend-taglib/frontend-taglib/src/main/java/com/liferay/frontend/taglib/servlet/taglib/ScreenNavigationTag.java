@@ -72,6 +72,10 @@ public class ScreenNavigationTag extends IncludeTag {
 		_key = key;
 	}
 
+	public void setModelBean(Object modelBean) {
+		_modelBean = modelBean;
+	}
+
 	@Override
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
@@ -86,6 +90,7 @@ public class ScreenNavigationTag extends IncludeTag {
 	@Override
 	protected void cleanUp() {
 		_key = null;
+		_modelBean = null;
 	}
 
 	@Override
@@ -191,6 +196,7 @@ public class ScreenNavigationTag extends IncludeTag {
 	private static final String _PAGE = "/screen_navigation/page.jsp";
 
 	private String _key;
+	private Object _modelBean;
 	private PortletURL _portletURL;
 	private List<ScreenNavigationCategory> _screenNavigationCategories;
 

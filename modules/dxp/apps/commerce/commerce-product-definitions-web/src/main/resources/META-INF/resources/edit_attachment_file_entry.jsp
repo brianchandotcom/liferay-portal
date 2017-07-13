@@ -115,7 +115,7 @@ renderResponse.setTitle((cpDefinition == null) ? LanguageUtil.get(request, addMe
 
 			<aui:button cssClass="btn-lg" name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
 
-			<aui:button cssClass="btn-lg" href="<%= backURL %>" type="cancel" />
+			<aui:button cssClass="btn-lg" href="<%= productAttachmentsURL.toString() %>" type="cancel" />
 		</aui:button-row>
 	</aui:form>
 </div>

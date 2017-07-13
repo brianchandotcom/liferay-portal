@@ -72,9 +72,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @author Gergely Mathe
- *
- * @deprecated As of 4.0.0
+ * @author     Gergely Mathe
+ * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
  */
 @Deprecated
 public class BaseTextExportImportContentProcessor

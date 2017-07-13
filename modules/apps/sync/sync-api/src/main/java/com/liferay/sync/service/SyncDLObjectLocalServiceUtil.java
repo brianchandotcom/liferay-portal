@@ -101,10 +101,11 @@ public class SyncDLObjectLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 1.3.0, replaced by {@link #addSyncDLObject(long, long,
-	String, long, long, long, String, String, String, String,
-	String, String, String, String, long, long, String, String,
-	String, Date, long, String, String, long, String)}
+	* @deprecated As of com.liferay.sync.service#1.3.0, replaced by {@link
+	#addSyncDLObject(long, long, String, long, long, long,
+	String, String, String, String, String, String, String,
+	String, long, long, String, String, String, Date, long,
+	String, String, long, String)}
 	*/
 	@Deprecated
 	public static com.liferay.sync.model.SyncDLObject addSyncDLObject(

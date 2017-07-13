@@ -34,9 +34,8 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * @author Daniel Kocsis
- *
- * @deprecated As of 4.0.0
+ * @author     Daniel Kocsis
+ * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
  */
 @Deprecated
 @ProviderType

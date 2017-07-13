@@ -72,9 +72,9 @@ public class BookmarksFolderServiceWrapper implements BookmarksFolderService,
 	}
 
 	/**
-	* @deprecated As of 1.0.0, replaced by {@link #updateFolder(long, long,
-	String, String, ServiceContext)} and {@link
-	#mergeFolders(long, long)}
+	* @deprecated As of com.liferay.bookmarks.service#1.0.0, replaced by {@link
+	#updateFolder(long, long, String, String, ServiceContext)}
+	and {@link #mergeFolders(long, long)}
 	*/
 	@Deprecated
 	@Override
@@ -203,8 +203,8 @@ public class BookmarksFolderServiceWrapper implements BookmarksFolderService,
 	}
 
 	/**
-	* @deprecated As of 1.0.0, replaced by {@link #getSubfolderIds(List, long,
-	long, boolean)}
+	* @deprecated As of com.liferay.bookmarks.service#1.0.0, replaced by {@link
+	#getSubfolderIds(List, long, long, boolean)}
 	*/
 	@Deprecated
 	@Override

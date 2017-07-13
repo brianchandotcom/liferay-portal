@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.repository.event.RepositoryEventTrigger;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 
 /**
- * @author Adolfo Pérez
- * @deprecated As of 7.0.0, replaced by {@link
+ * @author     Adolfo Pérez
+ * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
  *             com.liferay.document.library.internal.capabilities.LiferayRepositoryEventTriggerCapability}
  */
 @Deprecated

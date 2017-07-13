@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 /**
  * @author     Raymond Augé
- * @deprecated As of 3.0.0, see {@link
+ * @deprecated As of com.liferay.exportimport.service#3.0.0, see {@link
  *             com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleEvent}
  */
 @Deprecated

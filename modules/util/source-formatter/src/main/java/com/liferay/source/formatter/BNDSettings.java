@@ -14,12 +14,18 @@
 
 package com.liferay.source.formatter;
 
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.source.formatter.util.FileUtil;
+
 import java.io.File;
 import java.io.FileInputStream;
 
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.maven.artifact.versioning.ComparableVersion;
 
 /**
  * @author Hugo Huijser
@@ -29,6 +35,51 @@ public class BNDSettings {
 	public BNDSettings(String fileLocation, String content) {
 		_fileLocation = fileLocation;
 		_content = content;
+	}
+
+	public String getBundleSymbolicName() throws Exception {
+		if (_bundleSymbolicName != null) {
+			return _bundleSymbolicName;
+		}
+
+		Matcher matcher = _bundleSymbolicNamePattern.matcher(_content);
+
+		if (!matcher.find()) {
+			return null;
+		}
+
+		String bundleSymbolicName = matcher.group(1);
+
+		if (!bundleSymbolicName.matches("\\$\\{.*\\}")) {
+			_bundleSymbolicName = bundleSymbolicName;
+
+			return _bundleSymbolicName;
+		}
+
+		File buildFile = new File(_fileLocation + "build.xml");
+
+		if (!buildFile.exists()) {
+			_bundleSymbolicName = StringPool.BLANK;
+
+			return _bundleSymbolicName;
+		}
+
+		String propertyName = bundleSymbolicName.substring(
+			2, bundleSymbolicName.length() - 1);
+
+		Pattern pattern = Pattern.compile(
+			"name=\"" + propertyName + "\" value=\"(.*?)[;\"]");
+
+		matcher = pattern.matcher(FileUtil.read(buildFile));
+
+		if (matcher.find()) {
+			_bundleSymbolicName = matcher.group(1);
+		}
+		else {
+			_bundleSymbolicName = StringPool.BLANK;
+		}
+
+		return _bundleSymbolicName;
 	}
 
 	public String getContent() {
@@ -73,9 +124,9 @@ public class BNDSettings {
 		return _languageProperties;
 	}
 
-	public String getReleaseVersion() {
-		if (_releaseVersion != null) {
-			return _releaseVersion;
+	public ComparableVersion getReleaseComparableVersion() {
+		if (_releaseComparableVersion != null) {
+			return _releaseComparableVersion;
 		}
 
 		Matcher matcher = _releaseVersionPattern.matcher(_content);
@@ -84,17 +135,26 @@ public class BNDSettings {
 			return null;
 		}
 
-		_releaseVersion = matcher.group(1);
+		String releaseVersion = matcher.group(1);
 
-		return _releaseVersion;
+		int pos = releaseVersion.lastIndexOf(CharPool.PERIOD);
+
+		releaseVersion = releaseVersion.substring(0, pos) + ".0";
+
+		_releaseComparableVersion = new ComparableVersion(releaseVersion);
+
+		return _releaseComparableVersion;
 	}
 
+	private String _bundleSymbolicName;
+	private final Pattern _bundleSymbolicNamePattern = Pattern.compile(
+		"Bundle-SymbolicName: (.*)(\n|\\Z)");
 	private final String _content;
 	private final Pattern _contentDirPattern = Pattern.compile(
 		"\\scontent=(.*?)(,\\\\|\n|$)");
 	private final String _fileLocation;
 	private Properties _languageProperties;
-	private String _releaseVersion;
+	private ComparableVersion _releaseComparableVersion;
 	private final Pattern _releaseVersionPattern = Pattern.compile(
 		"Bundle-Version: (.*)(\n|\\Z)");
 

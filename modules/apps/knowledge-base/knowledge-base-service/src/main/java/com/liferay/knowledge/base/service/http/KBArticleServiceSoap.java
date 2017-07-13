@@ -175,8 +175,8 @@ public class KBArticleServiceSoap {
 	}
 
 	/**
-	* @deprecated As of 1.1.0, replaced by {@link
-	#getAllDescendantKBArticles(long, long, int,
+	* @deprecated As of com.liferay.knowledge.base.service#1.1.0, replaced by
+	{@link #getAllDescendantKBArticles(long, long, int,
 	OrderByComparator)}
 	*/
 	@Deprecated
@@ -283,8 +283,8 @@ public class KBArticleServiceSoap {
 	}
 
 	/**
-	* @deprecated As of 1.1.0, replaced by {@link
-	#getKBArticleAndAllDescendantKBArticles(long, int,
+	* @deprecated As of com.liferay.knowledge.base.service#1.1.0, replaced by
+	{@link #getKBArticleAndAllDescendantKBArticles(long, int,
 	OrderByComparator)}
 	*/
 	@Deprecated
@@ -508,8 +508,9 @@ public class KBArticleServiceSoap {
 	}
 
 	/**
-	* @deprecated As of 1.1.0, replaced by {@link #getKBArticles(long, long,
-	int, int, int, OrderByComparator)}
+	* @deprecated As of com.liferay.knowledge.base.service#1.1.0, replaced by
+	{@link #getKBArticles(long, long, int, int, int,
+	OrderByComparator)}
 	*/
 	@Deprecated
 	public static com.liferay.knowledge.base.model.KBArticleSoap[] getSiblingKBArticles(
@@ -532,8 +533,8 @@ public class KBArticleServiceSoap {
 	}
 
 	/**
-	* @deprecated As of 1.1.0, replaced by {@link #getKBArticlesCount(long,
-	long, int)}
+	* @deprecated As of com.liferay.knowledge.base.service#1.1.0, replaced by
+	{@link #getKBArticlesCount(long, long, int)}
 	*/
 	@Deprecated
 	public static int getSiblingKBArticlesCount(long groupId,

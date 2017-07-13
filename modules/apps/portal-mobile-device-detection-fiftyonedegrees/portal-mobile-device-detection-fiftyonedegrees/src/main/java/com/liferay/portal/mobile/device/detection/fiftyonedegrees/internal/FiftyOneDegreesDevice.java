@@ -56,7 +56,9 @@ public class FiftyOneDegreesDevice extends AbstractDevice {
 	}
 
 	/**
-	 * @deprecated As of 1.0.0, with no direct replacement
+	 * @deprecated As of
+	 *             com.liferay.portal.mobile.device.detection.fiftyonedegrees#NEXT-VERSION,
+	 *             with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -65,7 +67,9 @@ public class FiftyOneDegreesDevice extends AbstractDevice {
 	}
 
 	/**
-	 * @deprecated As of 1.0.0, with no direct replacement
+	 * @deprecated As of
+	 *             com.liferay.portal.mobile.device.detection.fiftyonedegrees#NEXT-VERSION,
+	 *             with no direct replacement
 	 */
 	@Deprecated
 	@Override

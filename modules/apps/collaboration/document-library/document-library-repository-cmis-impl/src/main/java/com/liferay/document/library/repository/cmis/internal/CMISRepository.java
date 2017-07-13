@@ -926,7 +926,8 @@ public class CMISRepository extends BaseCmisRepository {
 	}
 
 	/**
-	 * @deprecated As of 2.0.0
+	 * @deprecated As of
+	 *             com.liferay.document.library.repository.cmis.impl#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -935,7 +936,8 @@ public class CMISRepository extends BaseCmisRepository {
 	}
 
 	/**
-	 * @deprecated As of 2.0.0
+	 * @deprecated As of
+	 *             com.liferay.document.library.repository.cmis.impl#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override

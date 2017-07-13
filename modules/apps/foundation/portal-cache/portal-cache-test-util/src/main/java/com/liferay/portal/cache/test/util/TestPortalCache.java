@@ -60,7 +60,8 @@ public class TestPortalCache<K extends Serializable, V>
 	}
 
 	/**
-	 * @deprecated As of 1.1.0, replaced by {@link #getPortalCacheName()}
+	 * @deprecated As of com.liferay.portal.cache.test.util#NEXT-VERSION,
+	 *             replaced by {@link #getPortalCacheName()}
 	 */
 	@Deprecated
 	@Override

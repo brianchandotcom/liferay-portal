@@ -18,8 +18,8 @@ import com.liferay.portal.kernel.model.Subscription;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
- * @author Peter Shin
- * @deprecated As of 7.0.0, replaced by {@link
+ * @author     Peter Shin
+ * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
  *             com.liferay.subscription.util.comparator.SubscriptionClassNameIdComparator}
  */
 @Deprecated

@@ -33,7 +33,8 @@ public class StagingLocalServiceWrapper implements StagingLocalService,
 	}
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@Deprecated
 	@Override
@@ -55,8 +56,8 @@ public class StagingLocalServiceWrapper implements StagingLocalService,
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #publishStagingRequest(long,
-	long, boolean, Map)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #publishStagingRequest(long, long, boolean, Map)}
 	*/
 	@Deprecated
 	@Override

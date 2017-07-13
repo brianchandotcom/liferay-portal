@@ -49,7 +49,8 @@ public class MicrosoftTranslatorFactoryImpl
 	}
 
 	/**
-	 * @deprecated As of 1.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.microsoft.translator#NEXT-VERSION, with no
+	 *             direct replacement
 	 */
 	@Deprecated
 	@Override

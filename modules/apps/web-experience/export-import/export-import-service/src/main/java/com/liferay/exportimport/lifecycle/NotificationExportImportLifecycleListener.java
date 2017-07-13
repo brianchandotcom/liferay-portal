@@ -37,9 +37,8 @@ import java.util.Map;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Akos Thurzo
- *
- * @deprecated As of 4.0.0
+ * @author     Akos Thurzo
+ * @deprecated As of com.liferay.exportimport.service#NEXT-VERSION
  */
 @Deprecated
 @ProviderType

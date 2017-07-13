@@ -135,7 +135,8 @@ public class LayoutRevisionLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@Deprecated
 	public static com.liferay.portal.kernel.model.LayoutRevision fetchLayoutRevision(
@@ -171,7 +172,8 @@ public class LayoutRevisionLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@Deprecated
 	public static com.liferay.portal.kernel.model.LayoutRevision getLayoutRevision(

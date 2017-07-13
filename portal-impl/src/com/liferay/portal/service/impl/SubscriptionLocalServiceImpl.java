@@ -27,9 +27,9 @@ import java.util.List;
  * different places in the portal, including message boards, blogs, and
  * documents and media.
  *
- * @author Charles May
- * @author Zsolt Berentey
- * @deprecated As of 7.0.0, replaced by {@link
+ * @author     Charles May
+ * @author     Zsolt Berentey
+ * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
  *             com.liferay.subscription.service.impl.SubscriptionLocalServiceImpl}
  */
 @Deprecated

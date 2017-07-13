@@ -49,7 +49,8 @@ public class FiftyOneDegreesDeviceRecognitionProvider
 	}
 
 	/**
-	 * @deprecated As of 1.0.0
+	 * @deprecated As of
+	 *             com.liferay.portal.mobile.device.detection.fiftyonedegrees#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override

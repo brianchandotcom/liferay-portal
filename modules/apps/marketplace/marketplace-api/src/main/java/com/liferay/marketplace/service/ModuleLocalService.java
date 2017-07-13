@@ -75,8 +75,8 @@ public interface ModuleLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* @deprecated As of 1.1.0, replaced by {@link #addModule(long, String,
-	String, String)}
+	* @deprecated As of com.liferay.marketplace.service#1.1.0, replaced by
+	{@link #addModule(long, String, String, String)}
 	*/
 	@java.lang.Deprecated
 	public Module addModule(long userId, long appId,

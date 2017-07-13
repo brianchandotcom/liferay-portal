@@ -160,7 +160,8 @@ public interface AssetCategoryService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
-	* @deprecated As of 7.0.0, Replaced by {@link #deleteCategories(long[])}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, Replaced by
+	{@link #deleteCategories(long[])}
 	*/
 	@java.lang.Deprecated
 	public List<AssetCategory> deleteCategories(long[] categoryIds,

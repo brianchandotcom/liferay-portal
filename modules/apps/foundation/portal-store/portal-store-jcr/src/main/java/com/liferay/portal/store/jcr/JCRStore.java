@@ -67,7 +67,8 @@ import org.osgi.service.component.annotations.Modified;
  * @author     Brian Wing Shun Chan
  * @author     Edward Han
  * @author     Manuel de la Peña
- * @deprecated As of 2.0.0, with no direct replacement
+ * @deprecated As of com.liferay.portal.store.jcr#NEXT-VERSION, with no direct
+ *             replacement
  */
 @Component(
 	configurationPid = "com.liferay.portal.store.jcr.configuration.JCRStoreConfiguration",

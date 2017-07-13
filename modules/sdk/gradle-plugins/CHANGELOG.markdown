@@ -1876,7 +1876,7 @@ to version 2.0.32.
 - [LPS-72705]: Update the [Liferay Source Formatter] dependency to version
 1.0.421.
 
-## 3.4.2 - 2017-07-11
+## 3.4.2 - 2017-07-12
 
 ### Added
 - [LPS-73525]: Add the ability to configure the `aspectJAgent` property in the

@@ -1693,7 +1693,7 @@ root projects in order to:
 ### Changed
 - [LPS-72705]: Update the [Liferay Gradle Plugins] dependency to version 3.4.1.
 
-## 4.0.0 - 2017-07-11
+## 4.0.0 - 2017-07-12
 
 ### Changed
 - [LPS-73525]: Update the [Liferay Gradle Plugins] dependency to version 3.4.2.

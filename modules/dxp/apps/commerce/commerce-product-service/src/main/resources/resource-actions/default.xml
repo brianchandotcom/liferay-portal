@@ -50,7 +50,9 @@
 				<action-key>VIEW</action-key>
 			</supports>
 			<site-member-defaults />
-			<guest-defaults />
+			<guest-defaults>
+				<action-key>VIEW</action-key>
+			</guest-defaults>
 			<guest-unsupported>
 				<action-key>ADD_COMMERCE_PRODUCT_INSTANCE</action-key>
 				<action-key>DELETE</action-key>
@@ -78,7 +80,9 @@
 				<action-key>VIEW</action-key>
 			</supports>
 			<site-member-defaults />
-			<guest-defaults />
+			<guest-defaults>
+				<action-key>VIEW</action-key>
+			</guest-defaults>
 			<guest-unsupported>
 				<action-key>ADD_COMMERCE_PRODUCT_OPTION_VALUE</action-key>
 				<action-key>DELETE</action-key>

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -142,9 +143,10 @@ public class LayoutPrototypeLocalServiceImpl
 
 		// Group
 
-		if (layoutPersistence.countByC_L(
+		if (!CompanyThreadLocal.isDeleteInProcess() &&
+			(layoutPersistence.countByC_L(
 				layoutPrototype.getCompanyId(),
-				layoutPrototype.getUuid()) > 0) {
+				layoutPrototype.getUuid()) > 0)) {
 
 			throw new RequiredLayoutPrototypeException();
 		}

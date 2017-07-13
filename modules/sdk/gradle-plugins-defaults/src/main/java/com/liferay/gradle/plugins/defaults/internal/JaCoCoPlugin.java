@@ -28,7 +28,7 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
-import org.gradle.api.tasks.TaskContainer;
+import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.testing.Test;
 
 /**
@@ -46,7 +46,10 @@ public class JaCoCoPlugin implements Plugin<Project> {
 		Configuration jaCoCoAgentConfiguration = _addConfigurationJaCoCoAgent(
 			project);
 
-		_configureTasksTest(project, jaCoCoAgentConfiguration);
+		Test test = (Test)GradleUtil.getTask(
+			project, JavaPlugin.TEST_TASK_NAME);
+
+		_configureTaskTest(test, jaCoCoAgentConfiguration);
 	}
 
 	private JaCoCoPlugin() {
@@ -78,23 +81,6 @@ public class JaCoCoPlugin implements Plugin<Project> {
 		GradleUtil.addDependency(
 			project, JACOCO_AGENT_CONFIGURATION_NAME, "org.jacoco",
 			"org.jacoco.agent", "0.7.9", "runtime", true);
-	}
-
-	private void _configureTasksTest(
-		Project project, final Configuration jaCoCoAgentConfiguration) {
-
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			Test.class,
-			new Action<Test>() {
-
-				@Override
-				public void execute(Test test) {
-					_configureTaskTest(test, jaCoCoAgentConfiguration);
-				}
-
-			});
 	}
 
 	private void _configureTaskTest(

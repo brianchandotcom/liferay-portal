@@ -42,10 +42,34 @@ public interface S3StoreConfiguration {
 	public String bucketName();
 
 	@Meta.AD(
+		description = "signer-override-help", name = "signer-override",
+		required = false
+	)
+	public String signerOverride();
+
+	@Meta.AD(
+		deflt = "false", description = "s3-pathstyle-help",
+		name = "s3-pathstyle", required = false
+	)
+	public boolean s3PathStyle();
+
+	@Meta.AD(
+		description = "s3-endpoint-help", name = "s3-endpoint", required = false
+	)
+	public String s3Endpoint();
+
+	@Meta.AD(
 		deflt = "us-east-1", description = "s3-region-help", name = "s3-region",
 		required = false
 	)
 	public String s3Region();
+
+	@Meta.AD(
+		deflt = "DEFAULT", description = "connection-protocol-help",
+		name = "connection-protocol",
+		optionValues = {"HTTP", "HTTPS", "DEFAULT"}, required = false
+	)
+	public String connectionProtocol();
 
 	@Meta.AD(
 		deflt = "STANDARD", description = "s3-storage-class-help",

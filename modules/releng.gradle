@@ -192,7 +192,7 @@ syncGitRepoReleases {
 			try {
 				assert settingsGradleFile.renameTo(settingsGradleBackupFile)
 
-				syncRelease = System.setProperty("org.gradle.project.syncRelease", "true")
+				syncRelease = _setSystemProperty("org.gradle.project.syncRelease", "true")
 
 				StartParameter startParameter = gradle.startParameter.newBuild()
 
@@ -211,12 +211,7 @@ syncGitRepoReleases {
 
 				assert settingsGradleBackupFile.renameTo(settingsGradleFile)
 
-				if (syncRelease) {
-					System.setProperty "org.gradle.project.syncRelease", syncRelease
-				}
-				else {
-					System.properties.remove "org.gradle.project.syncRelease"
-				}
+				_setSystemProperty "org.gradle.project.syncRelease", syncRelease
 			}
 		}
 	}
@@ -349,8 +344,8 @@ private void _cherryPickPrepNext(Commit commit) {
 	if (moduleOSGi) {
 		StartParameter startParameter = gradle.startParameter.newBuild()
 
-		String syncRelease = System.setProperty("org.gradle.project.syncRelease", "true")
-		String baselineIgnoreFailures = System.setProperty("baseline.ignoreFailures", "true")
+		String syncRelease = _setSystemProperty("org.gradle.project.syncRelease", "true")
+		String baselineIgnoreFailures = _setSystemProperty("baseline.ignoreFailures", "true")
 
 		startParameter.projectProperties = ["syncRelease": "true"]
 		startParameter.taskNames = [moduleTaskPrefix + "baseline"]
@@ -365,19 +360,8 @@ private void _cherryPickPrepNext(Commit commit) {
 		finally {
 			gradleLauncher.stop()
 
-			if (baselineIgnoreFailures) {
-				System.setProperty "baseline.ignoreFailures", baselineIgnoreFailures
-			}
-			else {
-				System.properties.remove "baseline.ignoreFailures"
-			}
-
-			if (syncRelease) {
-				System.setProperty "org.gradle.project.syncRelease", syncRelease
-			}
-			else {
-				System.properties.remove "org.gradle.project.syncRelease"
-			}
+			_setSystemProperty "baseline.ignoreFailures", baselineIgnoreFailures
+			_setSystemProperty "org.gradle.project.syncRelease", syncRelease
 		}
 	}
 }
@@ -457,4 +441,17 @@ private boolean _isGitRepoReadOnly(File dir) {
 	}
 
 	return _contains(gitRepoDir, ".gitrepo", "mode = pull")
+}
+
+private String _setSystemProperty(String key, String value) {
+	String oldValue
+
+	if (value) {
+		oldValue = System.setProperty(key, value)
+	}
+	else {
+		oldValue = System.properties.remove(key)
+	}
+
+	return oldValue
 }

@@ -1716,6 +1716,10 @@ available.
 
 ## 4.0.3 - 2017-07-14
 
+### Added
+- [LPS-73607]: Add the ability to force deployment in a different directory by
+setting the project property `forced.deploy.dir`.
+
 ### Changed
 - [LPS-73470]: Update the [Liferay Gradle Plugins] dependency to version 3.4.5.
 
@@ -1906,6 +1910,7 @@ with the full path of the `baseline` task.
 [LPS-73495]: https://issues.liferay.com/browse/LPS-73495
 [LPS-73525]: https://issues.liferay.com/browse/LPS-73525
 [LPS-73584]: https://issues.liferay.com/browse/LPS-73584
+[LPS-73607]: https://issues.liferay.com/browse/LPS-73607
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

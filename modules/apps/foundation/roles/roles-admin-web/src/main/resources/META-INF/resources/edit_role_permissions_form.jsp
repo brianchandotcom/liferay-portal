@@ -51,6 +51,12 @@ List modelResources = null;
 if (Validator.isNotNull(portletResource)) {
 	modelResources = ResourceActionsUtil.getPortletModelResources(portletResource);
 }
+
+List<String> resourceBlockSelected = new ArrayList<>();
+List<String> resourceBlockUnselected = new ArrayList<>();
+
+request.setAttribute("edit_role_permissions_form.jsp-resourceBlockSelected", resourceBlockSelected);
+request.setAttribute("edit_role_permissions_form.jsp-resourceBlockUnselected", resourceBlockUnselected);
 %>
 
 <portlet:actionURL name="updateActions" var="editRolePermissionsURL">
@@ -207,7 +213,7 @@ if (Validator.isNotNull(portletResource)) {
 	</c:if>
 
 	<div class="form-group">
-		<aui:button cssClass="btn-lg" onClick='<%= liferayPortletResponse.getNamespace() + "updateActions();" %>' value="save" />
+		<aui:button cssClass="btn-lg" onClick='<%= liferayPortletResponse.getNamespace() + "updateActions(" + "\'" + StringUtil.merge(resourceBlockSelected) + "\'" + ", " + "\'" + StringUtil.merge(resourceBlockUnselected) + "\'" + ");" %>' value="save" />
 	</div>
 </aui:form>
 

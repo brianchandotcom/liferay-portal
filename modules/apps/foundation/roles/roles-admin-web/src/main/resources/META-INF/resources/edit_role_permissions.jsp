@@ -421,13 +421,39 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 </aui:script>
 
 <aui:script>
-	function <portlet:namespace />updateActions() {
+	function <portlet:namespace />updateActions(selected, unselected) {
+		var oldSelectedPermissions = selected.split(",");
+		var oldUnselectedPermissions = unselected.split(",");
+
 		var form = AUI.$(document.<portlet:namespace />fm);
 
 		form.fm('redirect').val('<%= HtmlUtil.escapeJS(portletURL.toString()) %>');
-		form.fm('selectedTargets').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-		form.fm('unselectedTargets').val(Liferay.Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'));
+		var selectedPermissions = form.fm('selectedTargets').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));form.fm('unselectedTargets').val(Liferay.Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'));
+		var unselectedPermissions = form.fm('unselectedTargets').val(Liferay.Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'));
+
+		selectedPermissions = String(selectedPermissions.val()).split(",");
+		unselectedPermissions = String(unselectedPermissions.val()).split(",");
+
+		if (arrayShares(selectedPermissions, oldUnselectedPermissions) || arrayShares(unselectedPermissions, oldSelectedPermissions)) {
+			if (!confirm('<liferay-ui:message key="changing-these-permissions-will-overwrite-all-permissions-of-that-type-previously-configured-on-this-entity" />')) {
+				return;
+			}
+		}
 
 		submitForm(form);
+	}
+
+	function arrayShares(array1, array2) {
+		if ((array1 !== "") && (array2 !== "")) {
+			for (i = 0; i < array1.length; i++) {
+				for (var j = 0; j < array2.length; j++) {
+					if ( array1[i] === array2[j] ) {
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
 	}
 </aui:script>

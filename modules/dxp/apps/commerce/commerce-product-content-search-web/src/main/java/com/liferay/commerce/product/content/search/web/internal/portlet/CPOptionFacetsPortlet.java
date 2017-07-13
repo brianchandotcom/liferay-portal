@@ -17,8 +17,10 @@ package com.liferay.commerce.product.content.search.web.internal.portlet;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.search.web.internal.display.context.CPOptionFacetsDisplayContext;
+import com.liferay.commerce.product.content.search.web.internal.util.CPOptionFacetsUtil;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.search.CPDefinitionIndexer;
+import com.liferay.commerce.product.service.CPOptionService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -26,14 +28,12 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.facet.AssetEntriesFacetFactory;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.MultiValueFacet;
 import com.liferay.portal.kernel.search.facet.SimpleFacet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
-import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -53,8 +53,6 @@ import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -96,31 +94,33 @@ public class CPOptionFacetsPortlet
 			portletSharedSearchSettings.getRenderRequest();
 
 		try {
-			List<Facet> facets = getFacets(renderRequest);
-
 			SearchContext searchContext =
 				portletSharedSearchSettings.getSearchContext();
 
+			List<Facet> facets = getFacets(renderRequest);
+
 			for (Facet facet : facets) {
-				Optional<String[]> parameterValuesOptional =
-					portletSharedSearchSettings.getParameterValues(
+				String cpOptionKey =
+					CPOptionFacetsUtil.getCPOptionKeyFromIndexFieldName(
 						facet.getFieldName());
 
-				if (parameterValuesOptional.isPresent()) {
-					if (facet instanceof MultiValueFacet) {
-						MultiValueFacet multiValueFacet =
-							(MultiValueFacet)facet;
+				Optional<String[]> parameterValuesOptional =
+					portletSharedSearchSettings.getParameterValues(cpOptionKey);
 
-						multiValueFacet.setValues(
-							parameterValuesOptional.get());
-					}
+				MultiValueFacet multiValueFacet = new MultiValueFacet(
+					searchContext);
+
+				multiValueFacet.setFieldName(facet.getFieldName());
+
+				if (parameterValuesOptional.isPresent()) {
+					multiValueFacet.setValues(parameterValuesOptional.get());
 
 					searchContext.setAttribute(
 						facet.getFieldName(),
 						StringUtil.merge(parameterValuesOptional.get()));
 				}
 
-				portletSharedSearchSettings.addFacet(facet);
+				portletSharedSearchSettings.addFacet(multiValueFacet);
 			}
 		}
 		catch (Exception e) {
@@ -136,9 +136,6 @@ public class CPOptionFacetsPortlet
 		PortletSharedSearchResponse portletSharedSearchResponse =
 			portletSharedSearchRequest.search(renderRequest);
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			renderRequest);
-
 		try {
 			List<Facet> facets = getFacets(renderRequest);
 
@@ -151,7 +148,7 @@ public class CPOptionFacetsPortlet
 
 			CPOptionFacetsDisplayContext cpOptionFacetsDisplayContext =
 				new CPOptionFacetsDisplayContext(
-					httpServletRequest, filledFacets,
+					_cpOptionService, renderRequest, filledFacets,
 					portletSharedSearchResponse);
 
 			renderRequest.setAttribute(
@@ -184,7 +181,7 @@ public class CPOptionFacetsPortlet
 	}
 
 	protected List<Facet> getFacets(RenderRequest renderRequest)
-		throws SearchException {
+		throws Exception {
 
 		List<Facet> facets = new ArrayList<>();
 
@@ -198,13 +195,14 @@ public class CPOptionFacetsPortlet
 
 		Facet facet = new SimpleFacet(searchContext);
 
-		facet.setFieldName(CPDefinitionIndexer.FIELD_OPTION_IDS);
+		facet.setFieldName(CPDefinitionIndexer.FIELD_OPTION_NAMES);
 
 		searchContext.addFacet(facet);
 
 		QueryConfig queryConfig = new QueryConfig();
 
-		queryConfig.addSelectedFieldNames(CPDefinitionIndexer.FIELD_OPTION_IDS);
+		queryConfig.addSelectedFieldNames(
+			CPDefinitionIndexer.FIELD_OPTION_NAMES);
 
 		queryConfig.setHighlightEnabled(false);
 		queryConfig.setScoreEnabled(false);
@@ -223,17 +221,7 @@ public class CPOptionFacetsPortlet
 				searchContext);
 
 			multiValueFacet.setFieldName(
-				"ATTRIBUTE_" + termCollector.getTerm() + "_VALUES_NAMES");
-
-			FacetConfiguration facetConfiguration = new FacetConfiguration();
-
-			facetConfiguration.setFieldName(multiValueFacet.getFieldName());
-			facetConfiguration.setLabel("any-user");
-			facetConfiguration.setOrder("OrderHitsDesc");
-			facetConfiguration.setStatic(false);
-			facetConfiguration.setWeight(1.1);
-
-			multiValueFacet.setFacetConfiguration(facetConfiguration);
+				CPOptionFacetsUtil.getIndexFieldName(termCollector.getTerm()));
 
 			facets.add(multiValueFacet);
 		}
@@ -249,6 +237,9 @@ public class CPOptionFacetsPortlet
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPOptionFacetsPortlet.class);
+
+	@Reference
+	private CPOptionService _cpOptionService;
 
 	@Reference
 	private Portal _portal;

@@ -26,6 +26,8 @@ import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -119,18 +121,40 @@ public class CPDefinitionItemSelectorViewDisplayContext
 		searchContainer.setOrderByType(getOrderByType());
 		searchContainer.setRowChecker(rowChecker);
 
-		int total = _cpDefinitionService.getCPDefinitionsCount(
-			getScopeGroupId(), StringPool.BLANK, themeDisplay.getLanguageId(),
-			WorkflowConstants.STATUS_ANY);
+		if (isSearch()) {
+			Sort sort = CPItemSelectorViewUtil.getCPDefinitionSort(
+				getOrderByCol(), getOrderByType());
 
-		searchContainer.setTotal(total);
+			BaseModelSearchResult<CPDefinition>
+				cpDefinitionBaseModelSearchResult =
+					_cpDefinitionService.searchCPDefinitions(
+						themeDisplay.getCompanyId(),
+						themeDisplay.getScopeGroupId(),
+						getKeywords(), WorkflowConstants.STATUS_APPROVED,
+						searchContainer.getStart(), searchContainer.getEnd(),
+						sort);
 
-		List<CPDefinition> results = _cpDefinitionService.getCPDefinitions(
-			getScopeGroupId(), StringPool.BLANK, themeDisplay.getLanguageId(),
-			WorkflowConstants.STATUS_ANY, searchContainer.getStart(),
-			searchContainer.getEnd(), orderByComparator);
+			searchContainer.setTotal(
+				cpDefinitionBaseModelSearchResult.getLength());
+			searchContainer.setResults(
+				cpDefinitionBaseModelSearchResult.getBaseModels());
+		}
+		else {
+			int total = _cpDefinitionService.getCPDefinitionsCount(
+				getScopeGroupId(), StringPool.BLANK,
+				themeDisplay.getLanguageId(),
+				WorkflowConstants.STATUS_APPROVED);
 
-		searchContainer.setResults(results);
+			searchContainer.setTotal(total);
+
+			List<CPDefinition> results = _cpDefinitionService.getCPDefinitions(
+				getScopeGroupId(), StringPool.BLANK,
+				themeDisplay.getLanguageId(), WorkflowConstants.STATUS_APPROVED,
+				searchContainer.getStart(), searchContainer.getEnd(),
+				orderByComparator);
+
+			searchContainer.setResults(results);
+		}
 
 		return searchContainer;
 	}

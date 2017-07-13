@@ -1568,6 +1568,36 @@
 		</execute>
 	</command>
 
+	<command name="ViewRequiredDateField" priority="4">
+		<description message="This is a use case for LPS-53009" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoDocumentType" />
+
+		<execute macro="DMDocumentType#edit">
+			<var name="dmDocumentTypeEditRequiredField" value="Effective Date" />
+			<var name="dmDocumentTypeName" value="Contract" />
+		</execute>
+
+		<execute macro="DMDocumentType#edit">
+			<var name="dmDocumentTypeEditRequiredField" value="Expiration Date" />
+			<var name="dmDocumentTypeName" value="Contract" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoAddDocumentType">
+			<var name="dmDocumentTypeName" value="Contract" />
+		</execute>
+
+		<execute function="AssertElementPresent" locator1="Icon#ASTERISK" />
+	</command>
+
 	<command name="ViewSingleDocumentSelectionDoesNotCheckAllFileSelectionCP" priority="4">
 		<execute macro="Navigator#openURL" />
 

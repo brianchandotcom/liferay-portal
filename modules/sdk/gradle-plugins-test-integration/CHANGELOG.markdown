@@ -17,7 +17,7 @@ execution of a `SetUpTestableTomcatTask` instance.
 - [LPS-72365]: Automatically deploy version 1.1.7 of Apache Aries JMX Core (and
 its transitive dependencies) when executing the `setUpTestableTomcat` task.
 
-## 2.0.0 - 2017-07-11
+## 2.0.0 - 2017-07-12
 
 ### Added
 - [LPS-73525]: Add the ability to configure an AspectJ weaver in the `setenv.sh`

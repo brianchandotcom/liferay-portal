@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins.node.tasks;
 
 import com.liferay.gradle.plugins.node.internal.util.FileUtil;
 import com.liferay.gradle.plugins.node.internal.util.GradleUtil;
+import com.liferay.gradle.util.OSDetector;
 import com.liferay.gradle.util.Validator;
 
 import groovy.json.JsonSlurper;
@@ -24,6 +25,7 @@ import java.io.File;
 import java.io.IOException;
 
 import java.nio.charset.StandardCharsets;
+import java.nio.file.DirectoryStream;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -220,6 +222,58 @@ public class NpmInstallTask extends ExecuteNpmTask {
 		return completeArgs;
 	}
 
+	private static void _createBinDirLinks(Logger logger, File nodeModulesDir)
+		throws IOException {
+
+		JsonSlurper jsonSlurper = new JsonSlurper();
+
+		Path nodeModulesDirPath = nodeModulesDir.toPath();
+
+		Path nodeModulesBinDirPath = nodeModulesDirPath.resolve(
+			_NODE_MODULES_BIN_DIR_NAME);
+
+		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
+				nodeModulesDirPath, _directoryStreamFilter)) {
+
+			for (Path dirPath : directoryStream) {
+				Path packageJsonPath = dirPath.resolve("package.json");
+
+				if (Files.notExists(packageJsonPath)) {
+					continue;
+				}
+
+				Map<String, Object> packageJsonMap =
+					(Map<String, Object>)jsonSlurper.parse(
+						packageJsonPath.toFile());
+
+				Map<String, String> binJsonMap =
+					(Map<String, String>)packageJsonMap.get("bin");
+
+				if ((binJsonMap == null) || binJsonMap.isEmpty()) {
+					continue;
+				}
+
+				Files.createDirectories(nodeModulesBinDirPath);
+
+				for (Map.Entry<String, String> entry : binJsonMap.entrySet()) {
+					String linkFileName = entry.getKey();
+					String linkTargetFileName = entry.getValue();
+
+					Path linkPath = nodeModulesBinDirPath.resolve(linkFileName);
+					Path linkTargetPath = dirPath.resolve(linkTargetFileName);
+
+					Files.createSymbolicLink(linkPath, linkTargetPath);
+
+					if (logger.isInfoEnabled()) {
+						logger.info(
+							"Created binary symbolic link {} which targets {}",
+							linkPath, linkTargetPath);
+					}
+				}
+			}
+		}
+	}
+
 	private static String _getNodeModulesCacheDigest(
 		NpmInstallTask npmInstallTask) {
 
@@ -300,6 +354,10 @@ public class NpmInstallTask extends ExecuteNpmTask {
 
 			FileUtil.syncDir(
 				project, nodeModulesDir, nodeModulesCacheDir, nativeSync);
+		}
+
+		if (removeBinDirs && !OSDetector.isWindows()) {
+			_createBinDirLinks(logger, nodeModulesDir);
 		}
 	}
 
@@ -393,6 +451,16 @@ public class NpmInstallTask extends ExecuteNpmTask {
 	}
 
 	private static final String _NODE_MODULES_BIN_DIR_NAME = ".bin";
+
+	private static final DirectoryStream.Filter<Path> _directoryStreamFilter =
+		new DirectoryStream.Filter<Path>() {
+
+			@Override
+			public boolean accept(Path path) throws IOException {
+				return Files.isDirectory(path);
+			}
+
+		};
 
 	private Object _nodeModulesCacheDir;
 	private boolean _nodeModulesCacheNativeSync = true;

@@ -48,7 +48,6 @@ renderResponse.setTitle(((category == null) ? LanguageUtil.get(request, "add-new
 	<liferay-ui:error exception="<%= CategoryPropertyValueException.class %>" message="please-enter-a-valid-property-value" />
 	<liferay-ui:error exception="<%= DuplicateCategoryException.class %>" message="please-enter-a-unique-name" />
 	<liferay-ui:error exception="<%= DuplicateCategoryPropertyException.class %>" message="please-enter-a-unique-property-key" />
-	<liferay-ui:error exception="<%= NoSuchEntryException.class %>" message="please-create-a-category-first" />
 
 	<liferay-ui:form-navigator
 		formModelBean="<%= category %>"

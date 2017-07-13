@@ -199,10 +199,6 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 		AssetCategory category = _assetCategoryService.fetchCategory(
 			categoryId);
 
-		if ((categoryId <= 0) || (category == null)) {
-			throw new NoSuchEntryException();
-		}
-
 		String[] categoryProperties = getCategoryProperties(actionRequest);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(

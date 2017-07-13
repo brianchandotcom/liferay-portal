@@ -24,10 +24,13 @@ import java.io.File;
 import java.io.IOException;
 
 import java.nio.charset.StandardCharsets;
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.List;
 import java.util.Map;
@@ -279,16 +282,14 @@ public class NpmInstallTask extends ExecuteNpmTask {
 				project, nodeModulesCacheDir, nodeModulesDir, nativeSync);
 
 			if (removeBinDirs) {
-				FileUtil.removeDirs(
-					project, nodeModulesDir, _NODE_MODULES_BIN_DIR_NAME);
+				_removeBinDirLinks(logger, nodeModulesDir);
 			}
 		}
 		else {
 			npmInstallTask._npmInstall(reset);
 
 			if (removeBinDirs) {
-				FileUtil.removeDirs(
-					project, nodeModulesDir, _NODE_MODULES_BIN_DIR_NAME);
+				_removeBinDirLinks(logger, nodeModulesDir);
 			}
 
 			if (logger.isLifecycleEnabled()) {
@@ -300,6 +301,39 @@ public class NpmInstallTask extends ExecuteNpmTask {
 			FileUtil.syncDir(
 				project, nodeModulesDir, nodeModulesCacheDir, nativeSync);
 		}
+	}
+
+	private static void _removeBinDirLinks(
+			final Logger logger, File nodeModulesDir)
+		throws IOException {
+
+		Files.walkFileTree(
+			nodeModulesDir.toPath(),
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult preVisitDirectory(
+						Path dirPath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					String dirName = String.valueOf(dirPath.getFileName());
+
+					if (dirName.equals(_NODE_MODULES_BIN_DIR_NAME)) {
+						if (logger.isInfoEnabled()) {
+							logger.info(
+								"Removing binary symbolic links from {}",
+								dirPath);
+						}
+
+						FileUtil.deleteSymbolicLinks(dirPath);
+
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
 	}
 
 	private boolean _isCacheEnabled() {

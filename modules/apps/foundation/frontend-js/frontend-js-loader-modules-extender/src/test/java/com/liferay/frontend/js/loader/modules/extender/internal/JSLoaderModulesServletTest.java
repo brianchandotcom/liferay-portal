@@ -337,42 +337,6 @@ public class JSLoaderModulesServletTest extends PowerMockito {
 	}
 
 	@Test
-	public void testSingleModuleOutputNoConfiguration() throws Exception {
-		JSLoaderModulesServlet jsLoaderModulesServlet =
-			buildJSLoaderModulesServlet();
-
-		JSLoaderModulesTracker jsLoaderModulesTracker =
-			new JSLoaderModulesTracker();
-
-		jsLoaderModulesTracker.setDetails(
-			Converter.cnv(Details.class, new HashMap<>()));
-
-		jsLoaderModulesServlet.setJSLoaderModulesTracker(
-			jsLoaderModulesTracker);
-
-		ServiceReference<ServletContext> serviceReference =
-			buildServiceReference("test", new Version("1.0.0"), true, 0, null);
-
-		jsLoaderModulesTracker.addingService(serviceReference);
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
-		jsLoaderModulesServlet.service(
-			mockHttpServletRequest, mockHttpServletResponse);
-
-		String content = mockHttpServletResponse.getContentAsString();
-
-		content = content.replace('"', '\'');
-
-		assertContains("'test': '/test-1.0.0'", content);
-		assertContains("'test@1.0.0': '/test-1.0.0'", content);
-		assertNotContains("':{'dependencies':['", content);
-	}
-
-	@Test
 	public void testUnversionedModuleOutput() throws Exception {
 		JSLoaderModulesServlet jsLoaderModulesServlet =
 			buildJSLoaderModulesServlet(

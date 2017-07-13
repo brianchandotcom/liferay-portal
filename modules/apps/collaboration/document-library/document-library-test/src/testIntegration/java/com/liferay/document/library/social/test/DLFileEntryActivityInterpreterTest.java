@@ -35,7 +35,7 @@ import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
-import com.liferay.portlet.social.test.BaseSocialActivityInterpreterTestCase;
+import com.liferay.social.activity.test.util.BaseSocialActivityInterpreterTestCase;
 import com.liferay.social.kernel.model.SocialActivityConstants;
 import com.liferay.social.kernel.model.SocialActivityInterpreter;
 

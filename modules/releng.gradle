@@ -344,8 +344,8 @@ private void _cherryPickPrepNext(Commit commit) {
 	if (moduleOSGi) {
 		StartParameter startParameter = gradle.startParameter.newBuild()
 
-		String syncRelease = _setSystemProperty("org.gradle.project.syncRelease", "true")
 		String baselineIgnoreFailures = _setSystemProperty("baseline.ignoreFailures", "true")
+		String syncRelease = _setSystemProperty("org.gradle.project.syncRelease", "true")
 
 		startParameter.projectProperties = ["syncRelease": "true"]
 		startParameter.taskNames = [moduleTaskPrefix + "baseline"]

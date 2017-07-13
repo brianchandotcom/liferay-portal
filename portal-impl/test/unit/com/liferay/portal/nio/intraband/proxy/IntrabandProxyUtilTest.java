@@ -195,6 +195,14 @@ public class IntrabandProxyUtilTest {
 			methods, TestProxyMethodsClass.class.getDeclaredMethods());
 
 		for (int i = 0; i < methods.size(); i++) {
+			Method method = methods.get(i);
+
+			Proxy proxy = method.getAnnotation(Proxy.class);
+
+			if (proxy == null) {
+				continue;
+			}
+
 			_doTestCreateProxyMethodNode(
 				methods.get(i), i, "skeletonId", "TestClassStub");
 		}

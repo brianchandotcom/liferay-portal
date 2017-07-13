@@ -59,24 +59,6 @@ public class CPItemSelectorViewUtil {
 		return orderByComparator;
 	}
 
-	public static OrderByComparator<CPOption> getCPOptionOrderByComparator(
-		String orderByCol, String orderByType) {
-
-		boolean orderByAsc = false;
-
-		if (orderByType.equals("asc")) {
-			orderByAsc = true;
-		}
-
-		OrderByComparator<CPOption> orderByComparator = null;
-
-		if (orderByCol.equals("title")) {
-			orderByComparator = new CPOptionTitleComparator(orderByAsc);
-		}
-
-		return orderByComparator;
-	}
-
 	public static Sort getCPDefinitionSort(
 		String orderByCol, String orderByType) {
 
@@ -100,6 +82,24 @@ public class CPItemSelectorViewUtil {
 		}
 
 		return sort;
+	}
+
+	public static OrderByComparator<CPOption> getCPOptionOrderByComparator(
+		String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<CPOption> orderByComparator = null;
+
+		if (orderByCol.equals("title")) {
+			orderByComparator = new CPOptionTitleComparator(orderByAsc);
+		}
+
+		return orderByComparator;
 	}
 
 	public static Sort getCPOptionSort(String orderByCol, String orderByType) {

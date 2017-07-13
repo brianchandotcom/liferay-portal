@@ -79,7 +79,13 @@ AUI.add(
 					newParameters = FacetUtil.addURLParameter(key, selections[i], newParameters);
 				}
 
-				document.location.search = newParameters.join('&');
+				newParameters = newParameters.join('&');
+
+				if (newParameters.startsWith('&')) {
+					newParameters = newParameters.substr(1);
+				}
+
+				document.location.search = newParameters;
 			}
 		};
 

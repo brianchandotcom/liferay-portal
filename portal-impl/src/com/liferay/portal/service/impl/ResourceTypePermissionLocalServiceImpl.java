@@ -38,6 +38,14 @@ public class ResourceTypePermissionLocalServiceImpl
 	extends ResourceTypePermissionLocalServiceBaseImpl {
 
 	@Override
+	public ResourceTypePermission fetchResourceTypePermission(
+		long companyId, long groupId, String name, long roleId) {
+
+		return resourceTypePermissionPersistence.fetchByC_G_N_R(
+			companyId, groupId, name, roleId);
+	}
+
+	@Override
 	public long getCompanyScopeActionIds(
 		long companyId, String name, long roleId) {
 

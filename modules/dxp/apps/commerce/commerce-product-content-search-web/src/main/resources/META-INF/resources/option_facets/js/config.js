@@ -3,7 +3,7 @@
 		{
 			groups: {
 				search: {
-					base: MODULE_PATH + '/js/',
+					base: MODULE_PATH + '/option_facets/js/',
 					combine: Liferay.AUI.getCombine(),
 					modules: {
 						'liferay-cp-option-facets-util': {
@@ -11,7 +11,7 @@
 							requires: []
 						}
 					},
-					root: MODULE_PATH + '/js/'
+					root: MODULE_PATH + '/option_facets/js/'
 				}
 			}
 		}

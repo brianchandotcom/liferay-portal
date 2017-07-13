@@ -931,43 +931,6 @@ information.
 		</sequential>
 	</macrodef>
 
-	<macrodef name="report-test-coverage">
-		<attribute name="test.type" />
-
-		<sequential>
-			<if>
-				<equals arg1="${junit.code.coverage}" arg2="true" />
-				<then>
-					<mkdir dir="test-coverage/@{test.type}" />
-
-					<if>
-						<available file="test-coverage/@{test.type}/cobertura.ser" type="file" />
-						<then>
-							<cobertura-report
-								datafile="test-coverage/@{test.type}/cobertura.ser"
-								destdir="test-coverage/@{test.type}"
-								format="${junit.cobertura.report.format}"
-							>
-								<fileset dir="${project.dir}/portal-impl/src">
-									<include name="**/*.java" />
-								</fileset>
-								<fileset dir="${project.dir}/portal-kernel/src">
-									<include name="**/*.java" />
-								</fileset>
-								<fileset dir="${project.dir}/util-java/src">
-									<include name="**/*.java" />
-								</fileset>
-								<fileset dir="${project.dir}/util-taglib/src">
-									<include name="**/*.java" />
-								</fileset>
-							</cobertura-report>
-						</then>
-					</if>
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="set-test-type">
 		<sequential>
 			<if>
@@ -1616,10 +1579,6 @@ rerun your task.
 			test.includes="**/${test.class}.class"
 			test.type="${test.type}"
 		/>
-
-		<report-test-coverage
-			test.type="${test.type}"
-		/>
 	</target>
 
 	<target depends="compile,compile-test" name="test-class-group">
@@ -1649,10 +1608,6 @@ rerun your task.
 					test.includes="${test.classes}"
 					test.type="unit"
 				/>
-
-				<report-test-coverage
-					test.type="unit"
-				/>
 			</then>
 		</if>
 
@@ -1669,10 +1624,6 @@ rerun your task.
 					test.includes="${test.classes}"
 					test.type="integration"
 				/>
-
-				<report-test-coverage
-					test.type="integration"
-				/>
 			</then>
 		</if>
 	</target>
@@ -1683,10 +1634,6 @@ rerun your task.
 		<test-cmd
 			junit.forkmode="once"
 			test.includes="**/*Test.class"
-			test.type="integration"
-		/>
-
-		<report-test-coverage
 			test.type="integration"
 		/>
 	</target>
@@ -1798,17 +1745,9 @@ rerun your task.
 			test.type="integration"
 		/>
 
-		<report-test-coverage
-			test.type="integration"
-		/>
-
 		<test-cmd
 			junit.forkmode="perTest"
 			test.includes="**/${test.package.dir}/*Test.class"
-			test.type="unit"
-		/>
-
-		<report-test-coverage
 			test.type="unit"
 		/>
 	</target>
@@ -1821,10 +1760,6 @@ rerun your task.
 		<test-cmd
 			junit.forkmode="perTest"
 			test.includes="**/*Test.class"
-			test.type="unit"
-		/>
-
-		<report-test-coverage
 			test.type="unit"
 		/>
 	</target>

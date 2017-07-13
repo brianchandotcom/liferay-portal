@@ -145,7 +145,7 @@ public class UserIndexerTest {
 		_expectedUser.setMiddleName(middleName);
 		_expectedUser.setLastName(lastName);
 
-		_userLocalService.updateUser(_expectedUser);
+		_expectedUser = _userLocalService.updateUser(_expectedUser);
 
 		User actualUser = assertSearchOneUser(
 			"firstName", "\"Mary Jane\"", _expectedUser);
@@ -165,7 +165,7 @@ public class UserIndexerTest {
 		_expectedUser.setMiddleName(middleName);
 		_expectedUser.setLastName(lastName);
 
-		_userLocalService.updateUser(_expectedUser);
+		_expectedUser = _userLocalService.updateUser(_expectedUser);
 
 		assertNoHits("firstName", "\"Mary Watson\"");
 		assertNoHits("firstName", "\"Mary Jane\" Missingword");
@@ -226,7 +226,7 @@ public class UserIndexerTest {
 		_expectedUser.setMiddleName(middleName);
 		_expectedUser.setLastName(lastName);
 
-		_userLocalService.updateUser(_expectedUser);
+		_expectedUser = _userLocalService.updateUser(_expectedUser);
 
 		User actualUser = assertSearchOneUser("Fir", _expectedUser);
 
@@ -253,7 +253,7 @@ public class UserIndexerTest {
 		_expectedUser.setMiddleName(middleName);
 		_expectedUser.setLastName(lastName);
 
-		_userLocalService.updateUser(_expectedUser);
+		_expectedUser = _userLocalService.updateUser(_expectedUser);
 
 		User actualUser = assertSearchOneUser("Fir", _expectedUser);
 
@@ -444,7 +444,7 @@ public class UserIndexerTest {
 		_expectedUser.setMiddleName(middleName);
 		_expectedUser.setLastName(lastName);
 
-		_userLocalService.updateUser(_expectedUser);
+		_expectedUser = _userLocalService.updateUser(_expectedUser);
 
 		User actualUser = assertSearchOneUser(
 			"firstName", firstName, _expectedUser);

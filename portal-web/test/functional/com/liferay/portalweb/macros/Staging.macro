@@ -473,6 +473,26 @@
 		<execute function="Click" locator1="MenuItem#DELETE" />
 	</command>
 
+	<command name="deleteSitePagesVariationPG">
+		<execute macro="Staging#navigateToSitePageVariation" />
+
+		<var name="key_rowEntry" value="${sitePagesVariationName}" />
+
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+
+		<execute function="ClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
+
+		<var name="key_sitePagesVariationName" value="${sitePagesVariationName}" />
+
+		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute function="Click" locator1="Icon#CLOSE" />
+	</command>
+
 	<command name="editPublishTemplate">
 		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 

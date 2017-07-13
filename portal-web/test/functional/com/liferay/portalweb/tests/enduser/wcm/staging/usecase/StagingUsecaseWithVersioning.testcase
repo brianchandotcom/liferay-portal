@@ -231,6 +231,72 @@
 		<execute macro="Staging#publishToLive" />
 	</command>
 
+	<command name="StagingDeleteSitePagesVariation" priority="4">
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Staging#viewSitePagesVariationPG">
+			<var name="sitePagesVariationName" value="Main Variation" />
+		</execute>
+
+		<execute macro="Staging#addSitePagesVariationPG">
+			<var name="sitePagesVariationName" value="Monday" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="Staging#markAsReadyForPublication" />
+
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute macro="Staging#publishToLive" />
+
+		<execute macro="ProductMenu#gotoLiveSite" />
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Staging#addSitePagesVariationPG">
+			<var name="sitePagesVariationName" value="Wednesday" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="YouTube" />
+		</execute>
+
+		<execute macro="Staging#deleteSitePagesVariationPG">
+			<var name="sitePagesVariationName" value="Monday" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Staging#markAsReadyForPublication" />
+
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute macro="Staging#publishToLive" />
+
+		<execute macro="ProductMenu#gotoLiveSite" />
+
+		<execute function="IsElementPresent" locator1="Home#PORTLET" >
+			<var name="portletTypeKey" value="YouTube" />
+			<var name="portletTypeKey" value="Web Content Display" />
+		</execute>
+	</command>
+
 	<command name="StagingLogo" priority="3">
 		<execute macro="Page#viewDefaultLogoPG" />
 

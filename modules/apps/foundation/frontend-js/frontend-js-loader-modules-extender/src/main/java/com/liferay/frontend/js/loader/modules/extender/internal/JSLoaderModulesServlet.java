@@ -107,29 +107,33 @@ public class JSLoaderModulesServlet extends HttpServlet {
 			_jsLoaderModulesTracker.getJSLoaderModules();
 
 		for (JSLoaderModule jsLoaderModule : jsLoaderModules) {
-			printWriter.write(delimiter);
-			printWriter.write("\"");
-			printWriter.write(jsLoaderModule.getName());
-			printWriter.write("@");
-			printWriter.write(jsLoaderModule.getVersion());
-			printWriter.write("\": \"");
-			printWriter.write(_portal.getPathProxy());
-			printWriter.write(jsLoaderModule.getContextPath());
-			printWriter.write("\"");
+			if (_details.applyVersioning()) {
+				printWriter.println(delimiter);
+				printWriter.write("\"");
+				printWriter.write(jsLoaderModule.getName());
+				printWriter.write("@");
+				printWriter.write(jsLoaderModule.getVersion());
+				printWriter.write("\": \"");
+				printWriter.write(_portal.getPathProxy());
+				printWriter.write(jsLoaderModule.getContextPath());
+				printWriter.write("\"");
+
+				delimiter = ",";
+			}
 
 			if (!processedNames.contains(jsLoaderModule.getName())) {
 				processedNames.add(jsLoaderModule.getName());
 
-				printWriter.println(",");
+				printWriter.println(delimiter);
 				printWriter.write("\"");
 				printWriter.write(jsLoaderModule.getName());
 				printWriter.write("\": \"");
 				printWriter.write(_portal.getPathProxy());
 				printWriter.write(jsLoaderModule.getContextPath());
 				printWriter.write("\"");
-			}
 
-			delimiter = ",\n";
+				delimiter = ",";
+			}
 		}
 
 		Collection<JSModule> resolvedJSModules =
@@ -262,16 +266,18 @@ public class JSLoaderModulesServlet extends HttpServlet {
 
 			processedNames.add(jsLoaderModule.getName());
 
-			printWriter.write(delimiter);
-			printWriter.write("\"");
-			printWriter.write(jsLoaderModule.getName());
-			printWriter.write("\": \"");
-			printWriter.write(jsLoaderModule.getName());
-			printWriter.write("@");
-			printWriter.write(jsLoaderModule.getVersion());
-			printWriter.write("\"");
+			if (_details.applyVersioning()) {
+				printWriter.write(delimiter);
+				printWriter.write("\"");
+				printWriter.write(jsLoaderModule.getName());
+				printWriter.write("\": \"");
+				printWriter.write(jsLoaderModule.getName());
+				printWriter.write("@");
+				printWriter.write(jsLoaderModule.getVersion());
+				printWriter.write("\"");
 
-			delimiter = ",\n";
+				delimiter = ",\n";
+			}
 
 			String unversionedMapsConfiguration =
 				jsLoaderModule.getUnversionedMapsConfiguration();
@@ -279,6 +285,8 @@ public class JSLoaderModulesServlet extends HttpServlet {
 			if (!unversionedMapsConfiguration.equals("")) {
 				printWriter.write(delimiter);
 				printWriter.write(unversionedMapsConfiguration);
+
+				delimiter = ",\n";
 			}
 		}
 
@@ -303,6 +311,9 @@ public class JSLoaderModulesServlet extends HttpServlet {
 
 		printWriter.println(
 			"Liferay.EXPOSE_GLOBAL = " + _details.exposeGlobal() + ";\n");
+
+		printWriter.println(
+			"Liferay.IGNORE_VERSIONS = " + !_details.applyVersioning() + ";\n");
 
 		printWriter.println("}());");
 

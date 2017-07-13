@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.test.util;
 
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.EmailAddress;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.OrgLabor;
@@ -35,8 +34,6 @@ import com.liferay.portal.kernel.service.PasswordPolicyRelLocalServiceUtil;
 import com.liferay.portal.kernel.service.PhoneLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WebsiteLocalServiceUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.passwordpoliciesadmin.util.test.PasswordPolicyTestUtil;
 
 import java.util.List;
@@ -147,33 +144,6 @@ public class OrganizationTestUtil {
 			organization.getOrganizationId(), "http://www.test.com",
 			_getListTypeId(ListTypeConstants.ORGANIZATION_WEBSITE), false,
 			new ServiceContext());
-	}
-
-	public static String getTreePath(Organization[] organizations) {
-		StringBundler sb = new StringBundler();
-
-		sb.append(StringPool.FORWARD_SLASH);
-
-		for (Organization organization : organizations) {
-			sb.append(organization.getOrganizationId());
-			sb.append(StringPool.FORWARD_SLASH);
-		}
-
-		return sb.toString();
-	}
-
-	public static Organization updateOrganization(Organization organization)
-		throws Exception {
-
-		Group organizationGroup = organization.getGroup();
-
-		return OrganizationLocalServiceUtil.updateOrganization(
-			organization.getCompanyId(), organization.getOrganizationId(),
-			organization.getParentOrganizationId(), organization.getName(),
-			organization.getType(), organization.getRegionId(),
-			organization.getCountryId(), organization.getStatusId(),
-			organization.getComments(), false, null, organizationGroup.isSite(),
-			null);
 	}
 
 	private static long _getListTypeId(String type) throws Exception {

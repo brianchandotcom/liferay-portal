@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -635,7 +636,7 @@ public class OrganizationLocalServiceTest {
 		organizationA.setParentOrganizationId(
 			organizationAAAA.getOrganizationId());
 
-		OrganizationTestUtil.updateOrganization(organizationA);
+		_updateOrganization(organizationA);
 	}
 
 	@Test
@@ -660,7 +661,7 @@ public class OrganizationLocalServiceTest {
 		_organizations.add(organizationB);
 		_organizations.add(organizationA);
 
-		String shallowTreePath = OrganizationTestUtil.getTreePath(
+		String shallowTreePath = _getTreePath(
 			new Organization[] {
 				organizationB, organizationBB, organizationBBB
 			});
@@ -670,12 +671,12 @@ public class OrganizationLocalServiceTest {
 		organizationB.setParentOrganizationId(
 			organizationA.getOrganizationId());
 
-		OrganizationTestUtil.updateOrganization(organizationB);
+		_updateOrganization(organizationB);
 
 		organizationBBB = OrganizationLocalServiceUtil.fetchOrganization(
 			organizationBBB.getOrganizationId());
 
-		String deepTreePath = OrganizationTestUtil.getTreePath(
+		String deepTreePath = _getTreePath(
 			new Organization[] {
 				organizationA, organizationB, organizationBB, organizationBBB
 			});
@@ -685,7 +686,7 @@ public class OrganizationLocalServiceTest {
 		organizationB.setParentOrganizationId(
 			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);
 
-		OrganizationTestUtil.updateOrganization(organizationB);
+		_updateOrganization(organizationB);
 
 		organizationBBB = OrganizationLocalServiceUtil.fetchOrganization(
 			organizationBBB.getOrganizationId());
@@ -852,6 +853,33 @@ public class OrganizationLocalServiceTest {
 			parentOrganization.getOrganizationId(), keywords,
 			WorkflowConstants.STATUS_ANY, null, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
+	}
+
+	private String _getTreePath(Organization[] organizations) {
+		StringBundler sb = new StringBundler();
+
+		sb.append(StringPool.FORWARD_SLASH);
+
+		for (Organization organization : organizations) {
+			sb.append(organization.getOrganizationId());
+			sb.append(StringPool.FORWARD_SLASH);
+		}
+
+		return sb.toString();
+	}
+
+	private Organization _updateOrganization(Organization organization)
+		throws Exception {
+
+		Group organizationGroup = organization.getGroup();
+
+		return OrganizationLocalServiceUtil.updateOrganization(
+			organization.getCompanyId(), organization.getOrganizationId(),
+			organization.getParentOrganizationId(), organization.getName(),
+			organization.getType(), organization.getRegionId(),
+			organization.getCountryId(), organization.getStatusId(),
+			organization.getComments(), false, null, organizationGroup.isSite(),
+			null);
 	}
 
 	@DeleteAfterTestRun

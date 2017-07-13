@@ -47,20 +47,7 @@ import org.osgi.framework.Version;
 public class LPKGRevertOverrideVerifyTest {
 
 	@Test
-	public void testCleanStartUp() throws Exception {
-		if (Boolean.getBoolean("lpkg.clean.startup")) {
-			_testRevertOverriddenLPKGs();
-		}
-	}
-
-	@Test
-	public void testSecondStartup() throws Exception {
-		if (!Boolean.getBoolean("lpkg.clean.startup")) {
-			_testRevertOverriddenLPKGs();
-		}
-	}
-
-	private void _testRevertOverriddenLPKGs() throws Exception {
+	public void testRevertOverriddenLPKGs() throws Exception {
 		Bundle testBundle = FrameworkUtil.getBundle(
 			LPKGRevertOverrideVerifyTest.class);
 

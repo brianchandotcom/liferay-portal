@@ -126,7 +126,11 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		CPDefinition cpDefinition = null;
+		long cpDefinitionId = ParamUtil.getLong(
+			actionRequest, "cpDefinitionId");
+
+		CPDefinition cpDefinition = _cpDefinitionService.fetchCPDefinition(
+			cpDefinitionId);
 
 		int workflowAction = ParamUtil.getInteger(
 			actionRequest, "workflowAction",
@@ -174,6 +178,11 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 					 e instanceof AssetTagException) {
 
 				SessionErrors.add(actionRequest, e.getClass(), e);
+
+				String redirect = getSaveAndContinueRedirect(
+					actionRequest, cpDefinition);
+
+				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else {
 				throw e;
@@ -188,14 +197,24 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			actionRequest, themeDisplay.getScopeGroup(),
-			CPDefinition.class.getName(), PortletProvider.Action.EDIT);
+		PortletURL portletURL = null;
 
-		portletURL.setParameter(
-			"mvcRenderCommandName", "editProductDefinition");
-		portletURL.setParameter(
-			"cpDefinitionId", String.valueOf(cpDefinition.getCPDefinitionId()));
+		if (cpDefinition == null) {
+			portletURL = PortletProviderUtil.getPortletURL(
+				actionRequest, themeDisplay.getScopeGroup(),
+				CPDefinition.class.getName(), PortletProvider.Action.VIEW);
+		}
+		else {
+			portletURL = PortletProviderUtil.getPortletURL(
+				actionRequest, themeDisplay.getScopeGroup(),
+				CPDefinition.class.getName(), PortletProvider.Action.EDIT);
+
+			portletURL.setParameter(
+				"mvcRenderCommandName", "editProductDefinition");
+			portletURL.setParameter(
+				"cpDefinitionId",
+				String.valueOf(cpDefinition.getCPDefinitionId()));
+		}
 
 		return portletURL.toString();
 	}

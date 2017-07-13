@@ -9,6 +9,7 @@ AUI.add(
 		var CSS_VALIDATION_HELPER_CLASSES = [
 			'error',
 			'error-field',
+			'has-error',
 			'success',
 			'success-field'
 		];
@@ -509,6 +510,7 @@ AUI.add(
 							}
 						);
 
+						node.all('.form-validator-stack').remove();
 						node.all('.help-inline').remove();
 
 						instance._clearForm(node);

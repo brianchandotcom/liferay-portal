@@ -394,7 +394,6 @@ app.server.type=@{app.server.type}]]></echo>
 /release.*.properties
 /sql/sql.*.properties
 /test.*.properties
-/tools/cobertura-agent/classes
 /tools/maven/*.asc
 /tools/node*
 /tools/selenium/*.exe

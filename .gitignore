@@ -48,7 +48,6 @@
 /lib/development/ant-apache-bsf.jar
 /lib/development/appium.jar
 /lib/development/catalina.jar
-/lib/development/cobertura.jar
 /lib/development/com.liferay.ant.bnd.jar
 /lib/development/com.liferay.util.taglib.compat.jar
 /lib/development/db2jcc.jar
@@ -423,7 +422,6 @@
 /test-results
 /test.*.properties
 /tmp
-/tools/cobertura-agent/classes
 /tools/maven/*.asc
 /tools/node*
 /tools/sdk
@@ -462,4 +460,3 @@
 /util-taglib/util-taglib*.jar
 /WEB-INF
 _sass_cache_*.css
-cobertura.ser

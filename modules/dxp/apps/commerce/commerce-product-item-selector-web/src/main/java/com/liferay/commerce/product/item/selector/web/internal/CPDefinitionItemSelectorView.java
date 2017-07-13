@@ -81,7 +81,7 @@ public class CPDefinitionItemSelectorView
 
 	@Override
 	public boolean isShowSearch() {
-		return false;
+		return true;
 	}
 
 	@Override

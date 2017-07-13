@@ -514,6 +514,20 @@ public class ServiceBuilder {
 		return humanName;
 	}
 
+	public static String toMethodName(String name) {
+		if (name == null) {
+			return null;
+		}
+
+		String methodName = TextFormatter.format(name, TextFormatter.G);
+
+		if (methodName.matches("^Lcs[A-Z].*$")) {
+			methodName = "LCS" + methodName.substring(3, methodName.length());
+		}
+
+		return methodName;
+	}
+
 	public ServiceBuilder(
 			String apiDirName, boolean autoImportDefaultReferences,
 			boolean autoNamespaceTables, String beanLocatorUtil,

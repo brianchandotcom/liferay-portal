@@ -78,7 +78,9 @@ public class TestResult {
 
 		status = caseJSONObject.getString("status");
 
-		if (status.equals("FAILED")) {
+		if (status.equals("FAILED") && caseJSONObject.has("errorDetails") &&
+			caseJSONObject.has("errorStackTrace")) {
+
 			errorDetails = caseJSONObject.getString("errorDetails");
 			errorStackTrace = caseJSONObject.getString("errorStackTrace");
 		}
@@ -132,8 +134,12 @@ public class TestResult {
 					getPoshiSummaryURL(testrayLogsURL), "Poshi Summary"),
 				" - ",
 				Dom4JUtil.getNewAnchorElement(
-					getConsoleOutputURL(testrayLogsURL), "Console Output"),
-				Dom4JUtil.toCodeSnippetElement(errorDetails));
+					getConsoleOutputURL(testrayLogsURL), "Console Output"));
+
+			if (errorDetails != null) {
+				Dom4JUtil.addToElement(
+					Dom4JUtil.toCodeSnippetElement(errorDetails));
+			}
 
 			if (hasLiferayLog(testrayLogsURL)) {
 				Dom4JUtil.addToElement(

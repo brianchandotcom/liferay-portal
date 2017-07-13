@@ -134,7 +134,7 @@ public class CPSearchResultsDisplayContext {
 	public String getProductFriendlyURL(String baseUrl, Document document) {
 		String url = document.get(_locale, Field.URL);
 
-		return baseUrl + CPConstants.PRODUCT_URL_SEPARATOR + url;
+		return baseUrl + CPConstants.SEPARATOR_PRODUCT_URL + url;
 	}
 
 	public SearchContainer<Document> getSearchContainer()

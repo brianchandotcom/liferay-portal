@@ -210,7 +210,7 @@ public class CPAssetCategoriesNavigationDisplayContext {
 
 		String url =
 			themeDisplay.getPortalURL() +
-				CPConstants.ASSET_CATEGORY_URL_SEPARATOR +
+				CPConstants.SEPARATOR_ASSET_CATEGORY_URL +
 					cpFriendlyURLEntry.getUrlTitle();
 
 		return url;

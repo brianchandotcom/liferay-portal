@@ -64,7 +64,7 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 		String languageId = LanguageUtil.getLanguageId(locale);
 
 		String urlTitle = friendlyURL.substring(
-			CPConstants.PRODUCT_URL_SEPARATOR.length());
+			CPConstants.SEPARATOR_PRODUCT_URL.length());
 
 		long classNameId = _portal.getClassNameId(CPDefinition.class);
 
@@ -139,7 +139,7 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 		String languageId = LanguageUtil.getLanguageId(locale);
 
 		String urlTitle = friendlyURL.substring(
-			CPConstants.PRODUCT_URL_SEPARATOR.length());
+			CPConstants.SEPARATOR_PRODUCT_URL.length());
 		long classNameId = _portal.getClassNameId(CPDefinition.class);
 
 		CPFriendlyURLEntry cpFriendlyURLEntry =
@@ -165,7 +165,7 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 
 	@Override
 	public String getURLSeparator() {
-		return CPConstants.PRODUCT_URL_SEPARATOR;
+		return CPConstants.SEPARATOR_PRODUCT_URL;
 	}
 
 	protected Layout getProductLayout(

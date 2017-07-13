@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String friendlyURLBase = themeDisplay.getPortalURL() + CPConstants.ASSET_CATEGORY_URL_SEPARATOR;
+String friendlyURLBase = themeDisplay.getPortalURL() + CPConstants.SEPARATOR_ASSET_CATEGORY_URL;
 String itemSelectorURL = (String)request.getAttribute("itemSelectorURL");
 String layoutBreadcrumb = (String)request.getAttribute("layoutBreadcrumb");
 String layoutUuid = (String)request.getAttribute("layoutUuid");

@@ -67,7 +67,7 @@ public class AssetCategoryFriendlyURLResolver implements FriendlyURLResolver {
 		String languageId = LanguageUtil.getLanguageId(locale);
 
 		String urlTitle = friendlyURL.substring(
-			CPConstants.ASSET_CATEGORY_URL_SEPARATOR.length());
+			CPConstants.SEPARATOR_ASSET_CATEGORY_URL.length());
 
 		long classNameId = _portal.getClassNameId(AssetCategory.class);
 
@@ -148,7 +148,7 @@ public class AssetCategoryFriendlyURLResolver implements FriendlyURLResolver {
 		String languageId = LanguageUtil.getLanguageId(locale);
 
 		String urlTitle = friendlyURL.substring(
-			CPConstants.ASSET_CATEGORY_URL_SEPARATOR.length());
+			CPConstants.SEPARATOR_ASSET_CATEGORY_URL.length());
 		long classNameId = _portal.getClassNameId(AssetCategory.class);
 
 		CPFriendlyURLEntry cpFriendlyURLEntry =
@@ -178,7 +178,7 @@ public class AssetCategoryFriendlyURLResolver implements FriendlyURLResolver {
 
 	@Override
 	public String getURLSeparator() {
-		return CPConstants.ASSET_CATEGORY_URL_SEPARATOR;
+		return CPConstants.SEPARATOR_ASSET_CATEGORY_URL;
 	}
 
 	protected Layout getAssetCategoryLayout(

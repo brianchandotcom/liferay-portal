@@ -16,7 +16,6 @@ task buildSvg4everybody(type: Copy)
 
 String jqueryPluginsFormVersion = "3.51"
 String jQueryVersion = "2.1.4"
-String lexiconVersion = "1.0.24"
 String lodashVersion = "3.10.1"
 
 File jsDestinationDir = file("tmp/META-INF/resources")
@@ -54,13 +53,14 @@ buildJQueryPluginsForm {
 }
 
 buildLexicon {
+	dependsOn npmInstall
 	File lexiconDestinationDir = new File(jsDestinationDir, "lexicon")
 
 	doFirst {
 		delete lexiconDestinationDir
 	}
 
-	eachFile new StripPathSegmentsAction(7)
+	eachFile new StripPathSegmentsAction(3)
 
 	filter {
 		String line ->
@@ -68,11 +68,8 @@ buildLexicon {
 		line.replace ".offsetWidth // force reflow", ".offsetWidth.toFixed() // force reflow"
 	}
 
-	from {
-		zipTree(configurations.lexicon.singleFile)
-	}
-
-	include "META-INF/resources/webjars/lexicon/${lexiconVersion}/release/js/"
+	from npmInstall.nodeModulesDir
+	include "clay/release/js/"
 	includeEmptyDirs = false
 	into lexiconDestinationDir
 }
@@ -136,8 +133,6 @@ clean {
 
 dependencies {
 	jQuery group: "org.webjars.npm", name: "jquery", transitive: false, version: jQueryVersion
-
-	lexicon group: "com.liferay.webjars", name: "com.liferay.webjars.lexicon", transitive: false, version: lexiconVersion
 
 	lodash group: "org.webjars.bower", name: "lodash", transitive: false, version: lodashVersion
 

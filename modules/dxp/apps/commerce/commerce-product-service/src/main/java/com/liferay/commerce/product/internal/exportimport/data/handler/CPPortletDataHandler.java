@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "javax.portlet.name=" + CPPortletKeys.COMMERCE_PRODUCT_DEFINITIONS,
+	property = "javax.portlet.name=" + CPPortletKeys.CP_DEFINITIONS,
 	service = PortletDataHandler.class
 )
 public class CPPortletDataHandler extends BasePortletDataHandler {

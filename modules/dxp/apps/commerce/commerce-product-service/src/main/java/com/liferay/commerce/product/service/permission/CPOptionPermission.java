@@ -89,8 +89,7 @@ public class CPOptionPermission implements BaseModelPermissionChecker {
 
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
 			permissionChecker, cpOption.getGroupId(), CPOption.class.getName(),
-			cpOption.getCPOptionId(), CPPortletKeys.COMMERCE_PRODUCT_OPTIONS,
-			actionId);
+			cpOption.getCPOptionId(), CPPortletKeys.CP_OPTIONS, actionId);
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();

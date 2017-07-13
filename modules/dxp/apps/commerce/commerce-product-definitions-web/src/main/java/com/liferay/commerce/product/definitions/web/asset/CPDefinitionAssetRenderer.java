@@ -154,8 +154,7 @@ public class CPDefinitionAssetRenderer
 			_cpDefinition.getGroupId());
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, group,
-			CPPortletKeys.COMMERCE_PRODUCT_DEFINITIONS, 0, 0,
+			liferayPortletRequest, group, CPPortletKeys.CP_DEFINITIONS, 0, 0,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(

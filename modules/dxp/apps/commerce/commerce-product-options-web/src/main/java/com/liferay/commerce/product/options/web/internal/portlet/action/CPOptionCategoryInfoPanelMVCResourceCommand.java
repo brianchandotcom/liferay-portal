@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CPPortletKeys.COMMERCE_PRODUCT_OPTION_CATEGORIES,
+		"javax.portlet.name=" + CPPortletKeys.CP_OPTION_CATEGORIES,
 		"mvc.command.name=cpOptionCategoryInfoPanel"
 	},
 	service = MVCResourceCommand.class

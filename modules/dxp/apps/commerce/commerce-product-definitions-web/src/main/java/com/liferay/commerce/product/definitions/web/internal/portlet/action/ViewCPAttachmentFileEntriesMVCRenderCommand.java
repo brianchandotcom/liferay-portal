@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.commerce.product.definitions.web.configuration.AttachmentsConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
-		"javax.portlet.name=" + CPPortletKeys.COMMERCE_PRODUCT_DEFINITIONS,
+		"javax.portlet.name=" + CPPortletKeys.CP_DEFINITIONS,
 		"mvc.command.name=viewAttachmentFileEntries"
 	},
 	service = MVCRenderCommand.class

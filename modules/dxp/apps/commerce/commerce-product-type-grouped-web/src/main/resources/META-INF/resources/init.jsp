@@ -53,7 +53,7 @@ page import="java.util.List" %>
 <%
 String lifecycle = (String)request.getAttribute(liferayPortletRequest.LIFECYCLE_PHASE);
 
-PortletURL catalogURLObj = PortalUtil.getControlPanelPortletURL(request, CPPortletKeys.COMMERCE_PRODUCT_DEFINITIONS, lifecycle);
+PortletURL catalogURLObj = PortalUtil.getControlPanelPortletURL(request, CPPortletKeys.CP_DEFINITIONS, lifecycle);
 
 String catalogURL = catalogURLObj.toString();
 %>

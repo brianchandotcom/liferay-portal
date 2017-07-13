@@ -19,18 +19,6 @@ package com.liferay.commerce.product.constants;
  */
 public class CPPortletKeys {
 
-	public static final String COMMERCE_PRODUCT_DEFINITIONS =
-		"com_liferay_commerce_product_definitions_web_internal_portlet_" +
-			"CPDefinitionsPortlet";
-
-	public static final String COMMERCE_PRODUCT_OPTION_CATEGORIES =
-		"com_liferay_commerce_product_options_web_internal_portlet_" +
-			"CPOptionCategoriesPortlet";
-
-	public static final String COMMERCE_PRODUCT_OPTIONS =
-		"com_liferay_commerce_product_options_web_internal_portlet_" +
-			"CPOptionsPortlet";
-
 	public static final String CP_ASSET_CATEGORY_NAVIGATION =
 		"com_liferay_commerce_product_asset_category_navigation_web_internal" +
 			"_portlet_CPAssetCategoryNavigationPortlet";
@@ -43,9 +31,21 @@ public class CPPortletKeys {
 		"com_liferay_commerce_product_content_web_internal_portlet_" +
 			"CPContentPortlet";
 
+	public static final String CP_DEFINITIONS =
+		"com_liferay_commerce_product_definitions_web_internal_portlet_" +
+			"CPDefinitionsPortlet";
+
+	public static final String CP_OPTION_CATEGORIES =
+		"com_liferay_commerce_product_options_web_internal_portlet_" +
+			"CPOptionCategoriesPortlet";
+
 	public static final String CP_OPTION_FACETS =
 		"com_liferay_commerce_product_content_search_web_internal_portlet_" +
 			"CPOptionFacetsPortlet";
+
+	public static final String CP_OPTIONS =
+		"com_liferay_commerce_product_options_web_internal_portlet_" +
+			"CPOptionsPortlet";
 
 	public static final String CP_SEARCH_RESULTS =
 		"com_liferay_commerce_product_content_search_web_internal_portlet_" +

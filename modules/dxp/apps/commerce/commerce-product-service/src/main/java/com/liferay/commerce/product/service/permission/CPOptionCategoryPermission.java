@@ -68,7 +68,7 @@ public class CPOptionCategoryPermission implements BaseModelPermissionChecker {
 			permissionChecker, cpOptionCategory.getGroupId(),
 			CPOptionCategory.class.getName(),
 			cpOptionCategory.getCPOptionCategoryId(),
-			CPPortletKeys.COMMERCE_PRODUCT_OPTION_CATEGORIES, actionId);
+			CPPortletKeys.CP_OPTION_CATEGORIES, actionId);
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();

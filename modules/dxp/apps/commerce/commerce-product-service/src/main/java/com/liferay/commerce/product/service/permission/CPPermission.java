@@ -49,8 +49,8 @@ public class CPPermission extends BaseResourcePermissionChecker {
 		PermissionChecker permissionChecker, long classPK, String actionId) {
 
 		return contains(
-			permissionChecker, RESOURCE_NAME,
-			CPPortletKeys.COMMERCE_PRODUCT_DEFINITIONS, classPK, actionId);
+			permissionChecker, RESOURCE_NAME, CPPortletKeys.CP_DEFINITIONS,
+			classPK, actionId);
 	}
 
 	@Override

@@ -16,7 +16,7 @@
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
-		<liferay-portlet:renderURL portletName="<%= CPPortletKeys.COMMERCE_PRODUCT_OPTIONS %>" varImpl="viewProductOptionsURL">
+		<liferay-portlet:renderURL portletName="<%= CPPortletKeys.CP_OPTIONS %>" varImpl="viewProductOptionsURL">
 			<portlet:param name="toolbarItem" value="view-all-product-options" />
 			<portlet:param name="mvcPath" value="/view.jsp" />
 		</liferay-portlet:renderURL>
@@ -27,7 +27,7 @@
 			selected='<%= toolbarItem.equals("view-all-product-options") %>'
 		/>
 
-		<liferay-portlet:renderURL portletName="<%= CPPortletKeys.COMMERCE_PRODUCT_OPTION_CATEGORIES %>" varImpl="viewProductOptionCategoriesURL">
+		<liferay-portlet:renderURL portletName="<%= CPPortletKeys.CP_OPTION_CATEGORIES %>" varImpl="viewProductOptionCategoriesURL">
 			<portlet:param name="toolbarItem" value="view-all-product-option-categories" />
 			<portlet:param name="mvcPath" value="/view_option_categories.jsp" />
 		</liferay-portlet:renderURL>

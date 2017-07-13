@@ -38,12 +38,12 @@ public class CPDefinitionsPanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {
-		return CPPortletKeys.COMMERCE_PRODUCT_DEFINITIONS;
+		return CPPortletKeys.CP_DEFINITIONS;
 	}
 
 	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + CPPortletKeys.COMMERCE_PRODUCT_DEFINITIONS + ")",
+		target = "(javax.portlet.name=" + CPPortletKeys.CP_DEFINITIONS + ")",
 		unbind = "-"
 	)
 	public void setPortlet(Portlet portlet) {

@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "javax.portlet.name=" + CPPortletKeys.COMMERCE_PRODUCT_DEFINITIONS,
+	property = "javax.portlet.name=" + CPPortletKeys.CP_DEFINITIONS,
 	service = AssetRendererFactory.class
 )
 public class CPDefinitionAssetRendererFactory
@@ -60,7 +60,7 @@ public class CPDefinitionAssetRendererFactory
 	public CPDefinitionAssetRendererFactory() {
 		setClassName(CPDefinition.class.getName());
 		setLinkable(true);
-		setPortletId(CPPortletKeys.COMMERCE_PRODUCT_DEFINITIONS);
+		setPortletId(CPPortletKeys.CP_DEFINITIONS);
 		setSearchable(true);
 	}
 
@@ -102,8 +102,7 @@ public class CPDefinitionAssetRendererFactory
 
 		PortletURL portletURL = _portal.getControlPanelPortletURL(
 			liferayPortletRequest, getGroup(liferayPortletRequest),
-			CPPortletKeys.COMMERCE_PRODUCT_DEFINITIONS, 0, 0,
-			PortletRequest.RENDER_PHASE);
+			CPPortletKeys.CP_DEFINITIONS, 0, 0, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "editProductDefinition");
@@ -118,8 +117,7 @@ public class CPDefinitionAssetRendererFactory
 
 		LiferayPortletURL liferayPortletURL =
 			liferayPortletResponse.createLiferayPortletURL(
-				CPPortletKeys.COMMERCE_PRODUCT_DEFINITIONS,
-				PortletRequest.RENDER_PHASE);
+				CPPortletKeys.CP_DEFINITIONS, PortletRequest.RENDER_PHASE);
 
 		try {
 			liferayPortletURL.setWindowState(windowState);

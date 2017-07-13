@@ -57,7 +57,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.display-name=Catalog",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + CPPortletKeys.COMMERCE_PRODUCT_DEFINITIONS,
+		"javax.portlet.name=" + CPPortletKeys.CP_DEFINITIONS,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user",
 		"javax.portlet.supports.mime-type=text/html"

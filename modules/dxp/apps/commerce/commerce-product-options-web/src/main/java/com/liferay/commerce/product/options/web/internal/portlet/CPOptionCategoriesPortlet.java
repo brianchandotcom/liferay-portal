@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.display-name=Product Option Categories",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.view-template=/view_option_categories.jsp",
-		"javax.portlet.name=" + CPPortletKeys.COMMERCE_PRODUCT_OPTION_CATEGORIES,
+		"javax.portlet.name=" + CPPortletKeys.CP_OPTION_CATEGORIES,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user",
 		"javax.portlet.supports.mime-type=text/html"

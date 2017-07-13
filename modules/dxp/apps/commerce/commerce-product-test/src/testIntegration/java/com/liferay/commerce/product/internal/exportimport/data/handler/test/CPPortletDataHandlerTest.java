@@ -100,7 +100,7 @@ public class CPPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 
 	@Override
 	protected String getPortletId() {
-		return CPPortletKeys.COMMERCE_PRODUCT_DEFINITIONS;
+		return CPPortletKeys.CP_DEFINITIONS;
 	}
 
 }

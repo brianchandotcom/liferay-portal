@@ -39,7 +39,7 @@ public class CPDefinitionsPortletProvider
 
 	@Override
 	public String getPortletName() {
-		return CPPortletKeys.COMMERCE_PRODUCT_DEFINITIONS;
+		return CPPortletKeys.CP_DEFINITIONS;
 	}
 
 }

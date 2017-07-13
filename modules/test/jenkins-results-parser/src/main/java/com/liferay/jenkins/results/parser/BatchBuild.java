@@ -99,7 +99,7 @@ public class BatchBuild extends BaseBuild {
 		}
 
 		if (!upstreamJobFailureElements.isEmpty()) {
-			upstreamJobFailureMessageElement = messageElement.createCopy();
+			upstreamJobFailureMessageElement = getGitHubMessageElement(true);
 
 			Dom4JUtil.getOrderedListElement(
 				upstreamJobFailureElements, upstreamJobFailureMessageElement,
@@ -336,6 +336,12 @@ public class BatchBuild extends BaseBuild {
 
 	@Override
 	protected Element getGitHubMessageJobResultsElement() {
+		return getGitHubMessageJobResultsElement(false);
+	}
+
+	protected Element getGitHubMessageJobResultsElement(
+		boolean upstreamFailureElement) {
+
 		String result = getResult();
 
 		int failCount = getDownstreamBuildCountByResult("FAILURE");
@@ -361,7 +367,12 @@ public class BatchBuild extends BaseBuild {
 					}
 				}
 
-				failCount = failCount - upstreamFailCount;
+				if (upstreamFailureElement) {
+					failCount = upstreamFailCount;
+				}
+				else {
+					failCount = failCount - upstreamFailCount;
+				}
 			}
 		}
 

@@ -415,6 +415,10 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public Element getGitHubMessageElement() {
+		return getGitHubMessageElement(false);
+	}
+
+	public Element getGitHubMessageElement(boolean upstreamFailureElement) {
 		String status = getStatus();
 
 		if (!status.equals("completed") && (getParentBuild() != null)) {
@@ -433,8 +437,17 @@ public abstract class BaseBuild implements Build {
 			messageElement,
 			Dom4JUtil.getNewElement(
 				"h5", null,
-				Dom4JUtil.getNewAnchorElement(getBuildURL(), getDisplayName())),
-			getGitHubMessageJobResultsElement());
+				Dom4JUtil.getNewAnchorElement(getBuildURL(), getDisplayName())));
+
+		if (upstreamFailureElement) {
+			Dom4JUtil.addToElement(
+				messageElement,
+				getGitHubMessageJobResultsElement(upstreamFailureElement));
+		}
+		else {
+			Dom4JUtil.addToElement(
+				messageElement, getGitHubMessageJobResultsElement());
+		}
 
 		if (result.equals("ABORTED") && (getDownstreamBuildCount(null) == 0)) {
 			messageElement.add(
@@ -1536,6 +1549,12 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected abstract Element getGitHubMessageJobResultsElement();
+
+	protected Element getGitHubMessageJobResultsElement(
+		boolean upstreamFailureElement) {
+
+		return getGitHubMessageJobResultsElement();
+	}
 
 	protected Set<String> getJobParameterNames() {
 		JSONObject jsonObject;

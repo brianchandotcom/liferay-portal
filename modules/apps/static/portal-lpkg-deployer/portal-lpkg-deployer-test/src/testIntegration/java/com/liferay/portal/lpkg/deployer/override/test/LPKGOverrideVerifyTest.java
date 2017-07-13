@@ -100,7 +100,7 @@ public class LPKGOverrideVerifyTest {
 
 				Assert.assertTrue(
 					"WAR not sucessfully overridden: " + symbolicName,
-					!location.contains("lpkg://"));
+					location.contains("protocol=file"));
 			}
 		}
 

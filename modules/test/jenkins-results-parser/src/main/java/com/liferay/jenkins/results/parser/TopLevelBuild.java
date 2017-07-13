@@ -176,17 +176,17 @@ public class TopLevelBuild extends BaseBuild {
 	}
 
 	@Override
+	public void setCompareToUpstream(boolean compareToUpstream) {
+		_compareToUpstream = compareToUpstream;
+	}
+
+	@Override
 	public void update() {
 		long start = System.currentTimeMillis();
 
 		super.update();
 
 		_updateDuration = System.currentTimeMillis() - start;
-	}
-
-	@Override
-	public void setCompareToUpstream(boolean compareToUpstream) {
-		_compareToUpstream = compareToUpstream;
 	}
 
 	protected TopLevelBuild(String url) {
@@ -308,6 +308,11 @@ public class TopLevelBuild extends BaseBuild {
 		return Dom4JUtil.getNewElement(
 			"p", null, "Build Time: ",
 			JenkinsResultsParserUtil.toDurationString(getDuration()));
+	}
+
+	@Override
+	protected boolean getCompareToUpstream() {
+		return _compareToUpstream;
 	}
 
 	protected Element getDownstreamGitHubMessageElement() {
@@ -597,11 +602,6 @@ public class TopLevelBuild extends BaseBuild {
 		}
 
 		return upstreamBranchSHA;
-	}
-
-	@Override
-	protected boolean getCompareToUpstream() {
-		return _compareToUpstream;
 	}
 
 	protected static final Pattern gitRepositoryTempMapNamePattern =

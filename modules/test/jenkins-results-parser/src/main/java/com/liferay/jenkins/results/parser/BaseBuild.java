@@ -287,12 +287,6 @@ public abstract class BaseBuild implements Build {
 		return buildURLRegex;
 	}
 
-	protected boolean getCompareToUpstream() {
-		TopLevelBuild topLevelBuild = getTopLevelBuild();
-
-		return topLevelBuild.getCompareToUpstream();
-	}
-
 	@Override
 	public String getConsoleText() {
 		if (_consoleText != null) {
@@ -437,7 +431,8 @@ public abstract class BaseBuild implements Build {
 			messageElement,
 			Dom4JUtil.getNewElement(
 				"h5", null,
-				Dom4JUtil.getNewAnchorElement(getBuildURL(), getDisplayName())));
+				Dom4JUtil.getNewAnchorElement(
+					getBuildURL(), getDisplayName())));
 
 		if (upstreamFailureElement) {
 			Dom4JUtil.addToElement(
@@ -1051,8 +1046,8 @@ public abstract class BaseBuild implements Build {
 			JSONObject failedBatchJSONObject =
 				failedBatchesJSONArray.getJSONObject(i);
 
-			JSONArray failedTestsJSONArray =
-				failedBatchJSONObject.getJSONArray("failedTests");
+			JSONArray failedTestsJSONArray = failedBatchJSONObject.getJSONArray(
+				"failedTests");
 
 			StringBuilder sb = new StringBuilder();
 
@@ -1104,9 +1099,11 @@ public abstract class BaseBuild implements Build {
 			testResults.addAll(build.getTestResults("REGRESSION"));
 
 			if (testResults.isEmpty()) {
-				for (String upstreamJobFailure : getUpstreamJobFailures("build")) {
+				for (String upstreamJobFailure :
+						getUpstreamJobFailures("build")) {
+
 					if (upstreamJobFailure.contains(jobVariant) &&
-					upstreamJobFailure.contains(result)) {
+						upstreamJobFailure.contains(result)) {
 
 						return true;
 					}
@@ -1117,7 +1114,7 @@ public abstract class BaseBuild implements Build {
 		}
 		catch (Exception e) {
 			System.out.println(
-			"Unable to get upstream acceptance failure data.");
+				"Unable to get upstream acceptance failure data.");
 
 			e.printStackTrace();
 
@@ -1503,6 +1500,12 @@ public abstract class BaseBuild implements Build {
 			false);
 
 		return jsonObject.getJSONArray("builds");
+	}
+
+	protected boolean getCompareToUpstream() {
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		return topLevelBuild.getCompareToUpstream();
 	}
 
 	protected int getDownstreamBuildCountByResult(String result) {
@@ -2030,8 +2033,8 @@ public abstract class BaseBuild implements Build {
 		"http://cloud-10-0-0-31.lax.liferay.com/osb-jenkins-web/map/";
 	protected static final String upstreamFailuresJobBaseURL =
 		"https://test-1-0.liferay.com/userContent/testResults/";
-	protected static JSONObject upstreamFailuresJobJSONObject =
-		new JSONObject("{\"SHA\":\"\",\"failedBatches\":[]}");
+	protected static JSONObject upstreamFailuresJobJSONObject = new JSONObject(
+		"{\"SHA\":\"\",\"failedBatches\":[]}");
 
 	protected String archiveName;
 	protected List<Integer> badBuildNumbers = new ArrayList<>();

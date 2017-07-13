@@ -279,7 +279,8 @@ public class AxisBuild extends BaseBuild {
 					continue;
 				}
 
-				failureElements.add(testResult.getGitHubElement(getTestrayLogsURL()));
+				failureElements.add(
+					testResult.getGitHubElement(getTestrayLogsURL()));
 			}
 
 			if (!upstreamJobFailureElements.isEmpty()) {

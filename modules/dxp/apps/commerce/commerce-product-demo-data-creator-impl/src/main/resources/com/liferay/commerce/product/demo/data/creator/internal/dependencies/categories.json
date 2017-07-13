@@ -10,7 +10,7 @@
 									"category-women.png"
 								],
 								"key": "women-clothes-dressers",
-								"title": "Dressers & Skirts"
+								"title": "Dressers"
 							},
 							{
 								"images": [
@@ -24,7 +24,7 @@
 									"category-women.png"
 								],
 								"key": "women-clothes-skirts",
-								"title": "Sweat skirts"
+								"title": "Skirts"
 							},
 							{
 								"images": [
@@ -60,13 +60,6 @@
 								],
 								"key": "women-clothes-shorts",
 								"title": "Trousers & Shorts"
-							},
-							{
-								"images": [
-									"category-women.png"
-								],
-								"key": "women-clothes-blazers",
-								"title": "Blazers"
 							}
 						],
 						"images": [
@@ -102,29 +95,8 @@
 								"images": [
 									"category-accessories.png"
 								],
-								"key": "women-accessories-belts",
-								"title": "Belts"
-							},
-							{
-								"images": [
-									"category-accessories.png"
-								],
-								"key": "women-accessories-hats",
-								"title": "Hats, Scarves, & Gloves"
-							},
-							{
-								"images": [
-									"category-accessories.png"
-								],
 								"key": "women-accessories-jewellery",
 								"title": "Watch & Jewellery"
-							},
-							{
-								"images": [
-									"category-accessories.png"
-								],
-								"key": "women-accessories-perfumes",
-								"title": "Perfumes"
 							},
 							{
 								"images": [
@@ -524,13 +496,6 @@
 	},
 	{
 		"categories": [
-			{
-				"images": [
-					"category-loewe.png"
-				],
-				"key": "calvin-klein",
-				"title": "Calvin Klein"
-			},
 			{
 				"images": [
 					"category-loewe.png"

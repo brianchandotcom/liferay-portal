@@ -129,7 +129,7 @@ public class CPAttachmentFileEntryDemoDataCreatorHelper
 
 			JSONArray optionIdsJSONArray = JSONFactoryUtil.createJSONArray();
 
-			StringBuilder sb = new StringBuilder(9);
+			StringBuilder sb = new StringBuilder();
 
 			for (CPDefinitionOptionRel cpDefinitionOptionRel :
 					cpDefinitionOptionRels) {

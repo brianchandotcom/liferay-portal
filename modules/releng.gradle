@@ -349,6 +349,8 @@ private void _cherryPickPrepNext(Commit commit) {
 	if (moduleOSGi) {
 		StartParameter startParameter = gradle.startParameter.newBuild()
 
+		String baselineIgnoreFailures = System.setProperty("baseline.ignoreFailures", "true")
+
 		startParameter.projectProperties = ["syncRelease": "true"]
 		startParameter.taskNames = [moduleTaskPrefix + "baseline"]
 
@@ -361,6 +363,13 @@ private void _cherryPickPrepNext(Commit commit) {
 		}
 		finally {
 			gradleLauncher.stop()
+
+			if (baselineIgnoreFailures) {
+				System.setProperty "baseline.ignoreFailures", baselineIgnoreFailures
+			}
+			else {
+				System.properties.remove "baseline.ignoreFailures"
+			}
 		}
 	}
 }

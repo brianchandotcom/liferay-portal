@@ -74,6 +74,10 @@ long vocabularyId = ParamUtil.getLong(request, "vocabularyId");
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="categoryId" type="hidden" value="<%= categoryId %>" />
 
+	<liferay-ui:error exception="<%= CategoryPropertyKeyException.class %>" message="please-enter-a-valid-property-key" />
+	<liferay-ui:error exception="<%= CategoryPropertyValueException.class %>" message="please-enter-a-valid-property-value" />
+	<liferay-ui:error exception="<%= DuplicateCategoryPropertyException.class %>" message="please-enter-a-unique-property-key" />
+
 	<div id="<portlet:namespace />categoryPropertiesId">
 		<p class="text-muted">
 			<liferay-ui:message key="properties-are-a-way-to-add-more-detailed-information-to-a-specific-category" />

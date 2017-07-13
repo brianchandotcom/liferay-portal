@@ -98,6 +98,8 @@ public class SPIAgentSerializableTest {
 			new URL[0], currentThread.getContextClassLoader());
 
 		ClassLoaderPool.register(_SERVLET_CONTEXT_NAME, _classLoader);
+
+		ClassLoaderPool.unregister(ClassLoaderPool.class.getClassLoader());
 	}
 
 	@Test

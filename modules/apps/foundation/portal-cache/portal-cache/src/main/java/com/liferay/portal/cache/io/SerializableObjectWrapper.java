@@ -27,7 +27,10 @@ import java.nio.ByteBuffer;
 
 /**
  * @author Tina Tian
+ * @deprecated As of 2.2.0, replaced by {@link
+ *             com.liferay.portal.kernel.io.SerializableObjectWrapper}
  */
+@Deprecated
 public class SerializableObjectWrapper implements Serializable {
 
 	public static <T> T unwrap(Object object) {

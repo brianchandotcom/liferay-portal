@@ -210,26 +210,46 @@ public class WikiPageStagedModelDataHandler
 			nodeId, page.getTitle());
 
 		if (existingPage == null) {
-			importedPage = _wikiPageLocalService.addPage(
-				userId, nodeId, page.getTitle(), page.getVersion(),
-				page.getContent(), page.getSummary(), page.isMinorEdit(),
-				page.getFormat(), page.getHead(), page.getParentTitle(),
-				page.getRedirectTitle(), serviceContext);
+			existingPage = fetchStagedModelByUuidAndGroupId(
+				page.getUuid(), portletDataContext.getScopeGroupId());
 
-			WikiPageResource pageResource =
-				_wikiPageResourceLocalService.getPageResource(
-					importedPage.getResourcePrimKey());
+			WikiPageResource importedPageResource = null;
 
-			String pageResourceUuid = GetterUtil.getString(
-				pageElement.attributeValue("page-resource-uuid"));
+			if (existingPage == null) {
+				importedPage = _wikiPageLocalService.addPage(
+					userId, nodeId, page.getTitle(), page.getVersion(),
+					page.getContent(), page.getSummary(), page.isMinorEdit(),
+					page.getFormat(), page.getHead(), page.getParentTitle(),
+					page.getRedirectTitle(), serviceContext);
 
-			if (Validator.isNotNull(pageResourceUuid)) {
-				pageResource.setUuid(
+				importedPageResource =
+					_wikiPageResourceLocalService.getPageResource(
+						importedPage.getResourcePrimKey());
+
+				String pageResourceUuid = GetterUtil.getString(
 					pageElement.attributeValue("page-resource-uuid"));
 
-				_wikiPageResourceLocalService.updateWikiPageResource(
-					pageResource);
+				if (Validator.isNotNull(pageResourceUuid)) {
+					importedPageResource.setUuid(
+						pageElement.attributeValue("page-resource-uuid"));
+				}
 			}
+			else {
+				existingPage.setModifiedDate(page.getModifiedDate());
+				existingPage.setTitle(page.getTitle());
+
+				importedPage = _wikiPageLocalService.updateWikiPage(
+					existingPage);
+
+				importedPageResource =
+					_wikiPageResourceLocalService.getPageResource(
+						importedPage.getResourcePrimKey());
+
+				importedPageResource.setTitle(page.getTitle());
+			}
+
+			_wikiPageResourceLocalService.updateWikiPageResource(
+				importedPageResource);
 		}
 		else {
 			existingPage = fetchStagedModelByUuidAndGroupId(

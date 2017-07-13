@@ -216,15 +216,18 @@ public class CPDefinitionsDisplayContext
 			Sort sort = CPDefinitionsPortletUtil.getCPDefinitionSort(
 				getOrderByCol(), getOrderByType());
 
-			BaseModelSearchResult<CPDefinition> cpOptionBaseModelSearchResult =
-				_cpDefinitionService.searchCPDefinitions(
-					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
-					getKeywords(), getStatus(), searchContainer.getStart(),
-					searchContainer.getEnd(), sort);
+			BaseModelSearchResult<CPDefinition>
+				cpDefinitionBaseModelSearchResult =
+					_cpDefinitionService.searchCPDefinitions(
+						themeDisplay.getCompanyId(),
+						themeDisplay.getScopeGroupId(), getKeywords(),
+						getStatus(), searchContainer.getStart(),
+						searchContainer.getEnd(), sort);
 
-			searchContainer.setTotal(cpOptionBaseModelSearchResult.getLength());
+			searchContainer.setTotal(
+				cpDefinitionBaseModelSearchResult.getLength());
 			searchContainer.setResults(
-				cpOptionBaseModelSearchResult.getBaseModels());
+				cpDefinitionBaseModelSearchResult.getBaseModels());
 		}
 		else {
 			int total = _cpDefinitionService.getCPDefinitionsCount(

@@ -91,6 +91,7 @@ public class ScreenNavigationTag extends IncludeTag {
 	protected void cleanUp() {
 		_key = null;
 		_modelBean = null;
+		_portletURL = null;
 	}
 
 	@Override

@@ -147,6 +147,13 @@ public class ResourceTypePermissionLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.ResourceTypePermission fetchResourceTypePermission(
+		long companyId, long groupId, java.lang.String name, long roleId) {
+		return _resourceTypePermissionLocalService.fetchResourceTypePermission(companyId,
+			groupId, name, roleId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.ResourceTypePermission fetchResourceTypePermission(
 		long resourceTypePermissionId) {
 		return _resourceTypePermissionLocalService.fetchResourceTypePermission(resourceTypePermissionId);
 	}

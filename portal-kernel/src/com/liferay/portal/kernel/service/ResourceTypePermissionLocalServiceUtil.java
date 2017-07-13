@@ -145,6 +145,12 @@ public class ResourceTypePermissionLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.ResourceTypePermission fetchResourceTypePermission(
+		long companyId, long groupId, java.lang.String name, long roleId) {
+		return getService()
+				   .fetchResourceTypePermission(companyId, groupId, name, roleId);
+	}
+
+	public static com.liferay.portal.kernel.model.ResourceTypePermission fetchResourceTypePermission(
 		long resourceTypePermissionId) {
 		return getService().fetchResourceTypePermission(resourceTypePermissionId);
 	}

@@ -63,6 +63,7 @@
 /lib/development/hamcrest-library.jar
 /lib/development/hsql.jar
 /lib/development/j2h.jar
+/lib/development/jacocoagent.jar
 /lib/development/jalopy.jar
 /lib/development/jargs.jar
 /lib/development/jarjar.jar

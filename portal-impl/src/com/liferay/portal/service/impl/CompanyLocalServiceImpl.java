@@ -511,6 +511,13 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			return doDeleteCompany(companyId);
 		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
+			throw pe;
+		}
 		finally {
 			CompanyThreadLocal.setCompanyId(currentCompanyId);
 			CompanyThreadLocal.setDeleteInProcess(deleteInProcess);

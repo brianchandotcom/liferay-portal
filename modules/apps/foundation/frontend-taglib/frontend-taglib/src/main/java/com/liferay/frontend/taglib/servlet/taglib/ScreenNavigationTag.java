@@ -141,6 +141,9 @@ public class ScreenNavigationTag extends IncludeTag {
 	}
 
 	private List<ScreenNavigationEntry> _getScreenNavigationEntries() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		ScreenNavigationRegistry screenNavigationRegistry =
 			ServletContextUtil.getScreenNavigationRegistry();
 
@@ -148,7 +151,8 @@ public class ScreenNavigationTag extends IncludeTag {
 			_getSelectedScreenNavigationCategory();
 
 		return screenNavigationRegistry.getScreenNavigationEntries(
-			selectedScreenNavigationCategory);
+			selectedScreenNavigationCategory, themeDisplay.getUser(),
+			_modelBean);
 	}
 
 	private ScreenNavigationCategory _getSelectedScreenNavigationCategory() {

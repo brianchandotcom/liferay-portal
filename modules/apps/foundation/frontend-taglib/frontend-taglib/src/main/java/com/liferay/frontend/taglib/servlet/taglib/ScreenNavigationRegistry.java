@@ -18,6 +18,7 @@ import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReference
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Collections;
@@ -41,14 +42,18 @@ public class ScreenNavigationRegistry {
 		return _screenNavigationCategoriesMap.getService(screenNavigationId);
 	}
 
-	public List<ScreenNavigationEntry> getScreenNavigationEntries(
-		ScreenNavigationCategory screenNavigationCategory) {
+	public <T> List<ScreenNavigationEntry> getScreenNavigationEntries(
+		ScreenNavigationCategory screenNavigationCategory, User user,
+		T screenModelBean) {
 
 		String key = _getKey(
 			screenNavigationCategory.getScreenNavigationKey(),
 			screenNavigationCategory.getCategoryKey());
 
-		return _screenNavigationEntriesMap.getService(key);
+		return ListUtil.filter(
+			_screenNavigationEntriesMap.getService(key),
+			screenNavigationEntry -> screenNavigationEntry.isVisible(
+				user, screenModelBean));
 	}
 
 	@Activate

@@ -330,6 +330,10 @@ public class StringUtil {
 		return true;
 	}
 
+	public static int length(String s) {
+		return s.length();
+	}
+
 	public static String lowerCase(String s) {
 		return toLowerCase(s);
 	}

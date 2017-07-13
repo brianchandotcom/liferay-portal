@@ -31,8 +31,10 @@ for (Facet facet : cpOptionFacetsDisplayContext.getFacets()) {
 %>
 
 	<liferay-ui:panel-container extended="<%= true %>" markupView="lexicon" persistState="<%= true %>">
-		<liferay-ui:panel collapsible="<%= true %>" cssClass="search-facet" markupView="lexicon" persistState="<%= true %>" title="<%= facet.getFieldName() %>">
-			<aui:form method="post" name="assetEntriesFacetForm">
+		<liferay-ui:panel collapsible="<%= true %>" cssClass="search-facet" markupView="lexicon" persistState="<%= true %>" title="<%= cpOptionFacetsDisplayContext.getCPOptionTitle(scopeGroupId, facet.getFieldName()) %>">
+			<aui:form method="post" name='<%= "assetEntriesFacetForm_" + facet.getFieldName() %>'>
+				<aui:input cssClass="facet-parameter-name" name="facet-parameter-name" type="hidden" value="<%= cpOptionFacetsDisplayContext.getCPOptionKey(scopeGroupId, facet.getFieldName()) %>" />
+
 				<aui:fieldset>
 				<ul class="asset-type list-unstyled">
 
@@ -51,8 +53,9 @@ for (Facet facet : cpOptionFacetsDisplayContext.getFacets()) {
 									data-term-id="<%= termCollector.getTerm() %>"
 									id="<portlet:namespace />term_<%= i %>"
 									name="<portlet:namespace />term_<%= i %>"
-									onChange='Liferay.Search.FacetUtil.changeSelection(event);'
+									onChange='Liferay.Commerce.FacetUtil.changeSelection(event);'
 									type="checkbox"
+									<%= cpOptionFacetsDisplayContext.isCPOptionValueSelected(scopeGroupId, facet.getFieldName(), termCollector.getTerm()) ? "checked" : "" %>
 								/>
 
 								<span class="term-name">

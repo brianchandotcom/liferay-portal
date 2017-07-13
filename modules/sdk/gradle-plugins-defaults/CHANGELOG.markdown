@@ -1714,6 +1714,12 @@ available.
 ### Changed
 - [LPS-73584]: Update the [Liferay Gradle Plugins] dependency to version 3.4.4.
 
+## 4.0.3 - 2017-07-13
+
+### Fixed
+- [LPS-73584]: Trigger the `-PsyncRelease` logic even when Gradle is invoked
+with the full path of the `baseline` task.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
@@ -1892,6 +1898,7 @@ available.
 [LPS-73327]: https://issues.liferay.com/browse/LPS-73327
 [LPS-73352]: https://issues.liferay.com/browse/LPS-73352
 [LPS-73383]: https://issues.liferay.com/browse/LPS-73383
+[LPS-73465]: https://issues.liferay.com/browse/LPS-73465
 [LPS-73489]: https://issues.liferay.com/browse/LPS-73489
 [LPS-73495]: https://issues.liferay.com/browse/LPS-73495
 [LPS-73525]: https://issues.liferay.com/browse/LPS-73525

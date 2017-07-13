@@ -83,7 +83,7 @@ AUI.add(
 			}
 		};
 
-		Liferay.namespace('Search').FacetUtil = FacetUtil;
+		Liferay.namespace('Commerce').FacetUtil = FacetUtil;
 	},
 	'',
 	{

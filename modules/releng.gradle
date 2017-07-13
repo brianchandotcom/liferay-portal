@@ -349,7 +349,7 @@ private void _cherryPickPrepNext(Commit commit) {
 	if (moduleOSGi) {
 		StartParameter startParameter = gradle.startParameter.newBuild()
 
-		startParameter.projectProperties = ["syncRelease": true]
+		startParameter.projectProperties = ["syncRelease": "true"]
 		startParameter.taskNames = [moduleTaskPrefix + "baseline"]
 
 		NestedBuildFactory nestedBuildFactory = gradle.services.get(NestedBuildFactory)

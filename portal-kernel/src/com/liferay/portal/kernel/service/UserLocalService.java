@@ -160,7 +160,9 @@ public interface UserLocalService extends BaseLocalService,
 	* @param user the user
 	* @return <code>true</code> if the user's password is expiring soon;
 	<code>false</code> otherwise
+	* @deprecated As of 7.0.0
 	*/
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isPasswordExpiringSoon(User user) throws PortalException;
 

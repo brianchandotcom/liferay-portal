@@ -230,9 +230,9 @@ public class LPKGDeployerTest {
 						Files.delete(tempFilePath);
 					}
 
-					StringBundler sb = new StringBundler(10);
+					StringBundler sb = new StringBundler(11);
 
-					sb.append("webbundle:lpkg://");
+					sb.append("webbundle:/");
 					sb.append(URLCodec.encodeURL(lpkgBundle.getSymbolicName()));
 					sb.append(StringPool.DASH);
 					sb.append(lpkgBundle.getVersion());
@@ -242,6 +242,7 @@ public class LPKGDeployerTest {
 					sb.append(bundle.getVersion());
 					sb.append("&Web-ContextPath=/");
 					sb.append(contextName);
+					sb.append("&protocol=lpkg");
 
 					String location = sb.toString();
 

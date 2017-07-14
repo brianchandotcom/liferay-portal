@@ -68,23 +68,29 @@ public class URLStreamHandlerServiceServiceTrackerCustomizer
 
 			URL wabURL = new URL(
 				"webbundle", null, -1,
-				_lpkgURL.toExternalForm() + "?" + Constants.BUNDLE_VERSION +
-					"=" + bundle.getVersion() + "&Web-ContextPath=/" +
-						_contextName,
+				_lpkgURL.getPath() + "?" + Constants.BUNDLE_VERSION + "=" +
+					bundle.getVersion() + "&Web-ContextPath=/" + _contextName +
+						"&protocol=lpkg",
 				abstractURLStreamHandlerService);
 
 			URLConnection urlConnection =
 				abstractURLStreamHandlerService.openConnection(wabURL);
 
-			Bundle newBundle = _bundleContext.installBundle(
-				wabURL.toExternalForm(), urlConnection.getInputStream());
+			String location = wabURL.toExternalForm();
 
-			BundleStartLevel bundleStartLevel = newBundle.adapt(
-				BundleStartLevel.class);
+			Bundle newBundle = _bundleContext.getBundle(location);
 
-			bundleStartLevel.setStartLevel(_startLevel);
+			if (newBundle == null) {
+				newBundle = _bundleContext.installBundle(
+					location, urlConnection.getInputStream());
 
-			newBundle.start();
+				BundleStartLevel bundleStartLevel = newBundle.adapt(
+					BundleStartLevel.class);
+
+				bundleStartLevel.setStartLevel(_startLevel);
+
+				newBundle.start();
+			}
 
 			return newBundle;
 		}

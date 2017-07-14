@@ -467,7 +467,7 @@ public class LPKGBundleTrackerCustomizer
 
 		StringBundler sb = new StringBundler(7);
 
-		sb.append("lpkg://");
+		sb.append("lpkg:/");
 		sb.append(URLCodec.encodeURL(bundle.getSymbolicName()));
 		sb.append(StringPool.DASH);
 		sb.append(bundle.getVersion());

@@ -595,6 +595,7 @@ app.server.type=@{app.server.type}]]></echo>
 		<attribute default="${app.server.@{app.server.type}.version}" name="app.server.version" />
 		<attribute name="database.type" />
 		<attribute default="${database.@{database.type}.version}" name="database.version" />
+		<attribute default="true" name="setup.proxy" />
 		<attribute default="true" name="setup.testable.tomcat" />
 		<attribute default="" name="test.build.fix.pack.zip.url" />
 		<attribute default="" name="test.fix.pack.base.url" />
@@ -751,7 +752,7 @@ app.server.type=@{app.server.type}]]></echo>
 								<then>
 									<setup-testable-tomcat />
 
-									<setup-test-batch-testable-tomcat />
+									<setup-test-batch-testable-tomcat setup.proxy="@{setup.proxy}" />
 								</then>
 							</if>
 						</then>
@@ -788,7 +789,7 @@ app.server.type=@{app.server.type}]]></echo>
 								<then>
 									<setup-testable-tomcat />
 
-									<setup-test-batch-testable-tomcat />
+									<setup-test-batch-testable-tomcat setup.proxy="@{setup.proxy}" />
 								</then>
 							</if>
 						</else>
@@ -1390,8 +1391,15 @@ app.server.type=@{app.server.type}]]></echo>
 	</macrodef>
 
 	<macrodef name="setup-test-batch-testable-tomcat">
+		<attribute default="true" name="setup.proxy" />
+
 		<sequential>
-			<setup-testable-tomcat-dummy-socket-proxy />
+			<if>
+				<equals arg1="@{setup.proxy}" arg2="true" />
+				<then>
+					<setup-testable-tomcat-dummy-socket-proxy />
+				</then>
+			</if>
 
 			<setup-testable-tomcat-gc />
 
@@ -1729,6 +1737,7 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test
 			app.server.type="tomcat"
 			database.type="mariadb"
+			setup.proxy="false"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
@@ -1747,6 +1756,7 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test
 			app.server.type="tomcat"
 			database.type="mysql"
+			setup.proxy="false"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
@@ -1765,6 +1775,7 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test
 			app.server.type="tomcat"
 			database.type="mysql"
+			setup.proxy="false"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
@@ -1783,6 +1794,7 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test
 			app.server.type="tomcat"
 			database.type="oracle"
+			setup.proxy="false"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
@@ -1801,6 +1813,7 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test
 			app.server.type="tomcat"
 			database.type="postgresql"
+			setup.proxy="false"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
@@ -1819,6 +1832,7 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test
 			app.server.type="tomcat"
 			database.type="sybase"
+			setup.proxy="false"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"

@@ -15,26 +15,25 @@
 package com.liferay.commerce.product.search;
 
 import com.liferay.commerce.product.model.CPOption;
+import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.BaseIndexer;
-import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.IndexWriterHelper;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.search.*;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 
-import java.util.Locale;
+import java.util.*;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import com.liferay.portal.kernel.util.Validator;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -47,6 +46,8 @@ public class CPOptionIndexer extends BaseIndexer<CPOption> {
 	public static final String CLASS_NAME = CPOption.class.getName();
 
 	public static final String FIELD_KEY = "key";
+
+	public static final String FIELD_OPTION_VALUE_TITLE = "optionValueTitle";
 
 	public CPOptionIndexer() {
 		setDefaultSelectedFieldNames(
@@ -63,6 +64,36 @@ public class CPOptionIndexer extends BaseIndexer<CPOption> {
 	}
 
 	@Override
+	public void postProcessSearchQuery(
+			BooleanQuery searchQuery, BooleanFilter fullQueryBooleanFilter,
+			SearchContext searchContext)
+		throws Exception {
+
+		addSearchLocalizedTerm(
+			searchQuery, searchContext, Field.DESCRIPTION, false);
+		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
+		addSearchTerm(searchQuery, searchContext, FIELD_KEY, false);
+		addSearchTerm(
+			searchQuery, searchContext, FIELD_OPTION_VALUE_TITLE, false);
+		addSearchLocalizedTerm(
+			searchQuery, searchContext, FIELD_OPTION_VALUE_TITLE, false);
+		addSearchTerm(searchQuery, searchContext, Field.TITLE, false);
+		addSearchLocalizedTerm(searchQuery, searchContext, Field.TITLE, false);
+		addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
+
+		LinkedHashMap<String, Object> params =
+			(LinkedHashMap<String, Object>)searchContext.getAttribute("params");
+
+		if (params != null) {
+			String expandoAttributes = (String)params.get("expandoAttributes");
+
+			if (Validator.isNotNull(expandoAttributes)) {
+				addSearchExpando(searchQuery, searchContext, expandoAttributes);
+			}
+		}
+	}
+
+	@Override
 	protected void doDelete(CPOption cpOption) throws Exception {
 		deleteDocument(cpOption.getCompanyId(), cpOption.getCPOptionId());
 	}
@@ -75,6 +106,8 @@ public class CPOptionIndexer extends BaseIndexer<CPOption> {
 
 		Document document = getBaseModelDocument(CLASS_NAME, cpOption);
 
+		List<CPOptionValue> cpOptionValues = cpOption.getCPOptionValues();
+
 		String cpOptionDefaultLanguageId =
 			LocalizationUtil.getDefaultLanguageId(cpOption.getTitle());
 
@@ -84,9 +117,18 @@ public class CPOptionIndexer extends BaseIndexer<CPOption> {
 		for (String languageId : languageIds) {
 			String description = cpOption.getDescription(languageId);
 			String title = cpOption.getTitle(languageId);
+			List<String> cpOptionValueTitlesList = new ArrayList<>();
+
+			for (CPOptionValue cpOptionValue : cpOptionValues) {
+				cpOptionValueTitlesList.add(cpOptionValue.getTitle(languageId));
+			}
+
+			String[] cpOptionValueTitles = cpOptionValueTitlesList.toArray(
+				new String[cpOptionValueTitlesList.size()]);
 
 			if (languageId.equals(cpOptionDefaultLanguageId)) {
 				document.addText(Field.DESCRIPTION, description);
+				document.addText(FIELD_OPTION_VALUE_TITLE, cpOptionValueTitles);
 				document.addText(Field.TITLE, title);
 				document.addText("defaultLanguageId", languageId);
 			}
@@ -101,6 +143,11 @@ public class CPOptionIndexer extends BaseIndexer<CPOption> {
 
 			document.addText(FIELD_KEY, cpOption.getKey());
 			document.addText(Field.CONTENT, title);
+
+			document.addText(
+				LocalizationUtil.getLocalizedName(
+					FIELD_OPTION_VALUE_TITLE, languageId),
+				cpOptionValueTitles);
 		}
 
 		if (_log.isDebugEnabled()) {

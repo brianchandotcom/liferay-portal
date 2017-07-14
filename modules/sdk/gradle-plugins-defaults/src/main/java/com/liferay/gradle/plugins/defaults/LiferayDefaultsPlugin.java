@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.defaults;
 
 import com.liferay.gradle.plugins.LiferayPlugin;
+import com.liferay.gradle.plugins.defaults.internal.LiferayBaseDefaultsPlugin;
 import com.liferay.gradle.plugins.defaults.internal.LiferayCIPlugin;
 import com.liferay.gradle.plugins.defaults.internal.LiferayRelengPlugin;
 import com.liferay.gradle.plugins.defaults.internal.MavenDefaultsPlugin;
@@ -37,6 +38,7 @@ public class LiferayDefaultsPlugin extends LiferayPlugin {
 			LiferayCIPlugin.INSTANCE.apply(project);
 		}
 
+		LiferayBaseDefaultsPlugin.INSTANCE.apply(project);
 		LiferayRelengPlugin.INSTANCE.apply(project);
 		MavenDefaultsPlugin.INSTANCE.apply(project);
 		NodeDefaultsPlugin.INSTANCE.apply(project);

@@ -112,12 +112,6 @@ gradle.beforeProject {
 		pluginManager.withPlugin("com.liferay.osgi.plugin") {
 			afterEvaluate {
 				bundle.jarBuilderFactory.contextClassLoader = buildscript.classLoader
-
-				File forcedDeployDir = GradleUtil.getProperty(project, "forced.deploy.dir", (File)null)
-
-				if (forcedDeployDir) {
-					liferay.deployDir = forcedDeployDir
-				}
 			}
 
 			configurations {

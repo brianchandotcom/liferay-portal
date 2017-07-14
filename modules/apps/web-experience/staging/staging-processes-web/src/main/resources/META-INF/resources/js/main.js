@@ -111,7 +111,7 @@ AUI.add(
 						};
 
 						if (instance._isChecked('rangeDateRangeNode')) {
-							dateRangeChecker.validRange = instance._rangeEndsLater() && instance._rangeEndsInPast(today) && instance._rangeStartsInPast(today);
+							dateRangeChecker.validRange = instance._rangeEndsLater() && instance._rangeEndsInPast(adjustedDate) && instance._rangeStartsInPast(adjustedDate);
 						}
 
 						return dateRangeChecker;

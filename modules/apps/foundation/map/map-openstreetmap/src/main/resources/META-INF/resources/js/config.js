@@ -11,7 +11,8 @@
 							requires: [
 								'jsonp',
 								'liferay-map-common',
-								'timers'
+								'timers',
+								'aui-component'
 							]
 						}
 					},

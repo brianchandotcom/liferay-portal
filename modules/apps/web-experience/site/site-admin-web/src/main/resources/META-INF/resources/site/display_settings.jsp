@@ -173,7 +173,7 @@ if (publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLayo
 	</aui:fieldset>
 </aui:fieldset>
 
-<aui:script use="aui-base,aui-alert">
+<aui:script>
 	Liferay.Util.toggleRadio('<portlet:namespace />customLocales', '<portlet:namespace />inheritLocalesFieldset', '<portlet:namespace />customLocalesFieldset');
 	Liferay.Util.toggleRadio('<portlet:namespace />inheritLocales', '<portlet:namespace />customLocalesFieldset', '<portlet:namespace />inheritLocalesFieldset');
 
@@ -182,7 +182,9 @@ if (publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLayo
 
 		form.fm('<%= PropsKeys.LOCALES %>').val(Liferay.Util.listSelect(form.fm('currentLanguageIds')));
 	}
+</aui:script>
 
+<aui:script use="aui-base,aui-alert">
 	var languageSelectInput = A.one('#<portlet:namespace />languageId');
 
 	if (languageSelectInput) {

@@ -24,7 +24,7 @@ error() {
 }
 
 help() {
-	warn "Usage: ./push_to_subrepos.sh [-a] [-p PATTERN] [-v] [SUBREPO_NAME]"
+	warn "Usage: ./push_to_subrepos.sh [-a] [-d] [-f] [-p PATTERN] [-v] [SUBREPO_NAME]"
 	warn " -a: All subrepos. Must omit -p and SUBREPO_NAME."
 	warn " -d: Debug mode. More verbose console logging."
 	warn " -f: Force update a subrepo that is either lacking gitrepo information or is in push mode."
@@ -233,7 +233,12 @@ fi
 TOTAL_SUBREPOS="$(printf '%s\n' "${SUBREPO_BRANCHES[@]}" | sed 's/.*://' | sort -u | wc -l | sed 's/ //g')"
 TOTAL_BRANCHES="$(printf '%s\n' "${SUBREPO_BRANCHES[@]}" | wc -l | sed 's/ //g')"
 
-info "Updating ${TOTAL_BRANCHES} branches across ${TOTAL_SUBREPOS} subrepos..."
+if [[ "${OPTION_VERIFY}" ]]; then
+	info "Verifying ${TOTAL_BRANCHES} branches across ${TOTAL_SUBREPOS} subrepos..."
+else
+	info "Updating ${TOTAL_BRANCHES} branches across ${TOTAL_SUBREPOS} subrepos..."
+fi
+
 
 MINIMUM_API_CALLS_PER_BRANCH=3
 MAXIMUM_API_CALLS_PER_BRANCH=7
@@ -325,7 +330,9 @@ gradlew.bat:${GRADLEW_BAT_REMOTE_SHA}
 		REMOTE_SHA="$(echo "${REMOTE_SHAS}" | grep "^${GRADLE_FILE}:" | sed 's/.*://')"
 
 		if [[ "${LOCAL_SHA}" != "${REMOTE_SHA}" ]]; then
-			if [[ -z "${OPTION_VERIFY}" ]]; then
+			if [[ "${OPTION_VERIFY}" ]]; then
+				info "liferay/${SUBREPO}:${BRANCH} ${GRADLE_FILE}"
+			else
 				COMMIT_MESSAGE="LPS-0 Update ${GRADLE_FILE}"
 				CONTENT_VAR="$(get_content_var "${GRADLE_FILE}")"
 
@@ -358,7 +365,16 @@ gradlew.bat:${GRADLEW_BAT_REMOTE_SHA}
 done
 
 info
-info "${TOTAL_FILES_COUNTER} files were successfully updated."
+
+if [[ "${OPTION_VERIFY}" ]]; then
+	if ((TOTAL_FILES_COUNTER > 0)); then
+		info "${TOTAL_FILES_COUNTER} files require updating."
+	else
+		info "All files up to date."
+	fi
+else
+	info "${TOTAL_FILES_COUNTER} files were successfully updated."
+fi
 
 REMAINING_RATE="$(get_remaining_rate)"
 

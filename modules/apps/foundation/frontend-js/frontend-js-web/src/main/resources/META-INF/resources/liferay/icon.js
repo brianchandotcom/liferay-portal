@@ -94,6 +94,9 @@ AUI.add(
 				Liferay.Util.openInDialog(
 					event,
 					{
+						dialog: {
+							destroyOnHide: true
+						},
 						dialogIframe: {
 							bodyCssClass: 'dialog-with-footer'
 						}

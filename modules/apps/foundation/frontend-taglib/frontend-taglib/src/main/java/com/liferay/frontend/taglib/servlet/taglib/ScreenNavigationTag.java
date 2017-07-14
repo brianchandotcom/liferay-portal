@@ -15,9 +15,10 @@
 package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PredicateFilter;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
@@ -45,31 +46,25 @@ public class ScreenNavigationTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		ScreenNavigationRegistry screenNavigationRegistry =
 			ServletContextUtil.getScreenNavigationRegistry();
 
-		_screenNavigationCategories = ListUtil.filter(
-			screenNavigationRegistry.getScreenNavigationCategories(_key),
-			new PredicateFilter<ScreenNavigationCategory>() {
-
-				@Override
-				public boolean filter(
-					ScreenNavigationCategory screenNavigationCategory) {
-
-					List<ScreenNavigationEntry> screenNavigationEntries =
-						screenNavigationRegistry.getScreenNavigationEntries(
-							screenNavigationCategory);
-
-					return ListUtil.isNotEmpty(screenNavigationEntries);
-				}
-
-			});
+		_screenNavigationCategories =
+			screenNavigationRegistry.getScreenNavigationCategories(
+				_key, themeDisplay.getUser(), _modelBean);
 
 		return super.doStartTag();
 	}
 
 	public void setKey(String key) {
 		_key = key;
+	}
+
+	public void setModelBean(Object modelBean) {
+		_modelBean = modelBean;
 	}
 
 	@Override
@@ -86,6 +81,8 @@ public class ScreenNavigationTag extends IncludeTag {
 	@Override
 	protected void cleanUp() {
 		_key = null;
+		_modelBean = null;
+		_portletURL = null;
 	}
 
 	@Override
@@ -135,6 +132,9 @@ public class ScreenNavigationTag extends IncludeTag {
 	}
 
 	private List<ScreenNavigationEntry> _getScreenNavigationEntries() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		ScreenNavigationRegistry screenNavigationRegistry =
 			ServletContextUtil.getScreenNavigationRegistry();
 
@@ -142,7 +142,8 @@ public class ScreenNavigationTag extends IncludeTag {
 			_getSelectedScreenNavigationCategory();
 
 		return screenNavigationRegistry.getScreenNavigationEntries(
-			selectedScreenNavigationCategory);
+			selectedScreenNavigationCategory, themeDisplay.getUser(),
+			_modelBean);
 	}
 
 	private ScreenNavigationCategory _getSelectedScreenNavigationCategory() {
@@ -191,6 +192,7 @@ public class ScreenNavigationTag extends IncludeTag {
 	private static final String _PAGE = "/screen_navigation/page.jsp";
 
 	private String _key;
+	private Object _modelBean;
 	private PortletURL _portletURL;
 	private List<ScreenNavigationCategory> _screenNavigationCategories;
 

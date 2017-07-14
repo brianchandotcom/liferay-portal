@@ -18,6 +18,8 @@ import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReference
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Collections;
@@ -35,20 +37,32 @@ import org.osgi.service.component.annotations.Deactivate;
 @Component(immediate = true, service = ScreenNavigationRegistry.class)
 public class ScreenNavigationRegistry {
 
-	public List<ScreenNavigationCategory> getScreenNavigationCategories(
-		String screenNavigationId) {
+	public <T> List<ScreenNavigationCategory> getScreenNavigationCategories(
+		String screenNavigationId, User user, T screenModelBean) {
 
-		return _screenNavigationCategoriesMap.getService(screenNavigationId);
+		return ListUtil.filter(
+			_screenNavigationCategoriesMap.getService(screenNavigationId),
+			screenNavigationCategory -> {
+				List<ScreenNavigationEntry> screenNavigationEntries =
+					getScreenNavigationEntries(
+						screenNavigationCategory, user, screenModelBean);
+
+				return ListUtil.isNotEmpty(screenNavigationEntries);
+			});
 	}
 
-	public List<ScreenNavigationEntry> getScreenNavigationEntries(
-		ScreenNavigationCategory screenNavigationCategory) {
+	public <T> List<ScreenNavigationEntry> getScreenNavigationEntries(
+		ScreenNavigationCategory screenNavigationCategory, User user,
+		T screenModelBean) {
 
 		String key = _getKey(
 			screenNavigationCategory.getScreenNavigationKey(),
 			screenNavigationCategory.getCategoryKey());
 
-		return _screenNavigationEntriesMap.getService(key);
+		return ListUtil.filter(
+			_screenNavigationEntriesMap.getService(key),
+			screenNavigationEntry -> screenNavigationEntry.isVisible(
+				user, screenModelBean));
 	}
 
 	@Activate

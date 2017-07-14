@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Locale;
@@ -35,6 +36,8 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -86,7 +89,12 @@ public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 			else if (cmd.equals(Constants.ADD) ||
 					 cmd.equals(Constants.UPDATE)) {
 
-				updateCPOption(cpOptionId, actionRequest);
+				CPOption cpOption = updateCPOption(cpOptionId, actionRequest);
+
+				String redirect = getSaveAndContinueRedirect(
+					actionRequest, cpOption);
+
+				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else if (cmd.equals("setFacetable")) {
 				boolean facetable = ParamUtil.getBoolean(
@@ -132,6 +140,24 @@ public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	protected String getSaveAndContinueRedirect(
+			ActionRequest actionRequest, CPOption cpOption)
+		throws Exception {
+
+		PortletURL portletURL = _portal.getControlPanelPortletURL(
+			actionRequest, CPPortletKeys.COMMERCE_PRODUCT_OPTIONS,
+			PortletRequest.RENDER_PHASE);
+
+		if (cpOption != null) {
+			portletURL.setParameter(
+				"mvcRenderCommandName", "editProductOption");
+			portletURL.setParameter(
+				"cpOptionId", String.valueOf(cpOption.getCPOptionId()));
+		}
+
+		return portletURL.toString();
+	}
+
 	protected CPOption updateCPOption(
 			long cpOptionId, ActionRequest actionRequest)
 		throws Exception {
@@ -175,5 +201,8 @@ public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CPOptionService _cpOptionService;
+
+	@Reference
+	private Portal _portal;
 
 }

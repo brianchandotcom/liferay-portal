@@ -130,7 +130,7 @@ AUI.add(
 					_setSourcePage: function(pageIndex) {
 						var instance = this;
 
-						instance._sourceField.setValue(String(pageIndex));
+						instance._sourceField.setValue([String(pageIndex)]);
 					},
 
 					_setTargetOptions: function(pages) {

@@ -15,6 +15,7 @@
 package com.liferay.asset.kernel.util.comparator;
 
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.portal.kernel.util.CollatorUtil;
 
 import java.io.Serializable;
 
@@ -32,7 +33,7 @@ public class AssetRendererFactoryTypeNameComparator
 	public AssetRendererFactoryTypeNameComparator(Locale locale) {
 		_locale = locale;
 
-		_collator = Collator.getInstance(_locale);
+		_collator = CollatorUtil.getInstance(_locale);
 	}
 
 	@Override

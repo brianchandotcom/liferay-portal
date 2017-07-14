@@ -15,6 +15,7 @@
 package com.liferay.social.kernel.util.comparator;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.CollatorUtil;
 
 import java.text.Collator;
 
@@ -29,7 +30,7 @@ public class SocialActivityCounterNameComparator implements Comparator<String> {
 	public SocialActivityCounterNameComparator(Locale locale) {
 		_locale = locale;
 
-		_collator = Collator.getInstance(_locale);
+		_collator = CollatorUtil.getInstance(_locale);
 	}
 
 	@Override

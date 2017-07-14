@@ -16,6 +16,7 @@ package com.liferay.portlet.asset.util;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.util.CollatorUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.text.Collator;
@@ -40,7 +41,7 @@ public class AssetPublisherAddItemHolder
 		_locale = locale;
 		_portletURL = portletURL;
 
-		_collator = Collator.getInstance(locale);
+		_collator = CollatorUtil.getInstance(locale);
 		_modelResource = _getModelResource(resourceBundle);
 	}
 

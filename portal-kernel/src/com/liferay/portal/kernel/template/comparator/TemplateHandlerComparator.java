@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.template.comparator;
 
 import com.liferay.portal.kernel.template.TemplateHandler;
+import com.liferay.portal.kernel.util.CollatorUtil;
 
 import java.io.Serializable;
 
@@ -32,7 +33,7 @@ public class TemplateHandlerComparator
 	public TemplateHandlerComparator(Locale locale) {
 		_locale = locale;
 
-		_collator = Collator.getInstance(_locale);
+		_collator = CollatorUtil.getInstance(_locale);
 	}
 
 	@Override

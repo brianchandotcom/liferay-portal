@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.util.comparator;
 
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.util.CollatorUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -44,7 +45,7 @@ public class PortletTitleComparator
 		_servletContext = servletContext;
 		_locale = locale;
 
-		_collator = Collator.getInstance(_locale);
+		_collator = CollatorUtil.getInstance(_locale);
 	}
 
 	@Override

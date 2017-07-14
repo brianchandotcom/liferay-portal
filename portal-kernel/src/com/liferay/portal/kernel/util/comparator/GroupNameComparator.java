@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.util.comparator;
 
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.util.CollatorUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -44,7 +45,7 @@ public class GroupNameComparator extends OrderByComparator<Group> {
 	public GroupNameComparator(boolean ascending, Locale locale) {
 		_ascending = ascending;
 
-		_collator = Collator.getInstance(locale);
+		_collator = CollatorUtil.getInstance(locale);
 		_languageId = LocaleUtil.toLanguageId(locale);
 	}
 

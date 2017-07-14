@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.LayoutTemplate;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
+import com.liferay.portal.kernel.util.CollatorUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -41,7 +42,7 @@ public class PluginComparator implements Comparator, Serializable {
 		_locale = LocaleUtil.getDefault();
 		_servletContext = ServletContextPool.get(PortalUtil.getPathContext());
 
-		_collator = Collator.getInstance(_locale);
+		_collator = CollatorUtil.getInstance(_locale);
 	}
 
 	public PluginComparator(ServletContext servletContext, Locale locale) {
@@ -49,7 +50,7 @@ public class PluginComparator implements Comparator, Serializable {
 
 		_locale = locale;
 
-		_collator = Collator.getInstance(_locale);
+		_collator = CollatorUtil.getInstance(_locale);
 	}
 
 	@Override

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.mobile.device.detection.fiftyonedegrees.internal.lite;
+package com.liferay.portal.mobile.device.detection.fiftyonedegrees.internal.data;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.mobile.device.detection.fiftyonedegrees.configuration.FiftyOneDegreesConfiguration;
@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Modified;
 	immediate = true, property = {"service.ranking:Integer=1"},
 	service = DataFileProvider.class
 )
-public class LiteDataFileProvider implements DataFileProvider {
+public class FiftyOneDegreesDataFileProvider implements DataFileProvider {
 
 	@Override
 	public InputStream getDataFileInputStream() throws IOException {

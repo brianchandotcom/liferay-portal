@@ -38,9 +38,7 @@ public class IfElement extends PoshiElement {
 
 		sb.append("if");
 
-		String[] conditionNames = {"condition", "equals", "isset"};
-
-		for (String conditionName : conditionNames) {
+		for (String conditionName : _conditionNames) {
 			if (element(conditionName) != null) {
 				PoshiElement poshiElement = (PoshiElement)element(
 					conditionName);
@@ -135,5 +133,8 @@ public class IfElement extends PoshiElement {
 
 		return readableBlocks;
 	}
+
+	private static final String[] _conditionNames =
+		{"condition", "equals", "isset"};
 
 }

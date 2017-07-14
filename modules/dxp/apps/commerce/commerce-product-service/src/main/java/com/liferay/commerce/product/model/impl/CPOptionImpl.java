@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.service.CPOptionValueLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;

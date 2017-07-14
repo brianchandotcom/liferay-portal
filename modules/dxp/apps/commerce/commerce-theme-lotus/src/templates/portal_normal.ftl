@@ -61,8 +61,8 @@
 						<div id="foocont">
 							<#if fullScreenNavigation>
 								<@liferay_ui["asset-display"]
-									className = "com.liferay.journal.model.JournalArticle"
-									classPK = footer_content_id
+									className="com.liferay.journal.model.JournalArticle"
+									classPK=footer_content_id
 								/>
 							</#if>
 						</div>

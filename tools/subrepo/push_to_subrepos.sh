@@ -26,6 +26,8 @@ error() {
 help() {
 	warn "Usage: ./push_to_subrepos.sh [-a] [-p PATTERN] [-v] [SUBREPO_NAME]"
 	warn " -a: All subrepos. Must omit -p and SUBREPO_NAME."
+	warn " -d: Debug mode. More verbose console logging."
+	warn " -f: Force update a subrepo that is either lacking gitrepo information or is in push mode."
 	warn " -p: Update subrepos matching a regex pattern. Must omit -a and SUBREPO_NAME."
 	warn " -v: Verify only. Lists all subrepos/branches/files out of date."
 }
@@ -44,13 +46,21 @@ warn() {
 
 PATTERN=
 OPTION_ALL=
+OPTION_DEBUG=
+OPTION_FORCE=
 OPTION_VERIFY=
 
-while getopts "ap:v" OPT
+while getopts "adfp:v" OPT
 do
 	case ${OPT} in
 	a)
 		OPTION_ALL=true
+		;;
+	d)
+		OPTION_DEBUG=true
+		;;
+	f)
+		OPTION_FORCE=true
 		;;
 	p)
 		PATTERN="${OPTARG}"
@@ -160,9 +170,9 @@ master
 		fi
 	done
 else
-	SUBREPOS_7_0_X=($(git  -C ../.. grep 'git@github.com' 7.0.x -- '*.gitrepo' | grep ':modules/apps/' | sed 's@:.*/@:@' | sed 's/\.git//'))
-	SUBREPOS_7_0_X_PRIVATE=($(git -C ../../../liferay-portal-ee grep 'git@github.com' ee-7.0.x -- '*.gitrepo' | grep ':modules/private/apps/' | sed 's@:.*/@:@' | sed 's/\.git//' | sed 's/ee-7.0.x/7.0.x-private/'))
-	SUBREPOS_MASTER=($(git  -C ../.. grep 'git@github.com' master -- '*.gitrepo' | grep ':modules/apps/' | sed 's@:.*/@:@' | sed 's/\.git//'))
+	SUBREPOS_7_0_X=($(git -C ../.. grep -l 'mode.*=.*pull' 7.0.x -- '*.gitrepo' | grep ':modules/apps/' | sed 's/.*://' | xargs git -C ../.. grep 'git@github.com' 7.0.x -- | sed 's@:.*/@:@' | sed 's/\.git//'))
+	SUBREPOS_7_0_X_PRIVATE=($(git -C ../../../liferay-portal-ee grep -l 'mode.*=.*pull' ee-7.0.x -- '*.gitrepo' | grep ':modules/private/apps/' | sed 's/.*://' | xargs git -C ../../../liferay-portal-ee grep 'git@github.com' ee-7.0.x -- | sed 's@:.*/@:@' | sed 's/\.git//' | sed 's/ee-7.0.x/7.0.x-private/'))
+	SUBREPOS_MASTER=($(git -C ../.. grep -l 'mode.*=.*pull' master -- '*.gitrepo' | grep ':modules/apps/' | sed 's/.*://' | xargs git -C ../.. grep 'git@github.com' master -- | sed 's@:.*/@:@' | sed 's/\.git//'))
 
 	ALL_SUBREPOS=("${SUBREPOS_7_0_X[@]}" "${SUBREPOS_7_0_X_PRIVATE[@]}" "${SUBREPOS_MASTER[@]}")
 
@@ -224,21 +234,24 @@ TOTAL_SUBREPOS="$(printf '%s\n' "${SUBREPO_BRANCHES[@]}" | sed 's/.*://' | sort 
 TOTAL_BRANCHES="$(printf '%s\n' "${SUBREPO_BRANCHES[@]}" | wc -l | sed 's/ //g')"
 
 info "Updating ${TOTAL_BRANCHES} branches across ${TOTAL_SUBREPOS} subrepos..."
-info
 
 MINIMUM_API_CALLS_PER_BRANCH=3
 MAXIMUM_API_CALLS_PER_BRANCH=7
 
-MINIMUM_RATE=$((MINIMUM_API_CALLS_PER_BRANCH*TOTAL_BRANCHES))
-MAXIMUM_RATE=$((MAXIMUM_API_CALLS_PER_BRANCH*TOTAL_BRANCHES))
+if [[ "${REMAINING_RATE}" ]]; then
+	MINIMUM_RATE=$((MINIMUM_API_CALLS_PER_BRANCH*TOTAL_BRANCHES))
+	MAXIMUM_RATE=$((MAXIMUM_API_CALLS_PER_BRANCH*TOTAL_BRANCHES))
 
-if ((REMAINING_RATE < MINIMUM_RATE)); then
-	error "Your current rate limit is insufficient, a minimum of ${MINIMUM_RATE} api calls will be made. Try again in an hour when your rate limit resets."
+	if ((REMAINING_RATE < MINIMUM_RATE)); then
+		error "Your current rate limit is insufficient, a minimum of ${MINIMUM_RATE} api calls will be made. Try again in an hour when your rate limit resets."
+	fi
+
+	if ((REMAINING_RATE < MAXIMUM_RATE)); then
+		warn "Warning: your current rate limit may be insufficient, up to ${MAXIMUM_RATE} api calls may be made."
+	fi
 fi
 
-if ((REMAINING_RATE < MAXIMUM_RATE)); then
-	warn "Warning: your current rate limit may be insufficient, up to ${MAXIMUM_RATE} api calls may be made."
-fi
+info
 
 TOTAL_FILES_COUNTER=0
 

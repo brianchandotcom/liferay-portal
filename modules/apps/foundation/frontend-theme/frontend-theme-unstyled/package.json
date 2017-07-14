@@ -3,5 +3,5 @@
 		"clay": "liferay/clay#develop-compat-layer"
 	},
 	"name": "liferay-frontend-theme-unstyled",
-	"version": "2.1.14"
+	"version": "2.2.0"
 }

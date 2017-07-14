@@ -18,7 +18,9 @@ import com.liferay.poshi.runner.util.Dom4JUtil;
 import com.liferay.poshi.runner.util.RegexUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Stack;
 
 import org.dom4j.Attribute;
@@ -147,48 +149,28 @@ public abstract class PoshiElement extends DefaultElement {
 		Stack<Character> stack = new Stack<>();
 
 		for (char c : readableSyntax.toCharArray()) {
-			if (!stack.isEmpty() && (stack.peek() == '\"')) {
-				if (c == '\"') {
+			if (!stack.isEmpty()) {
+				Character topCodeBoundary = stack.peek();
+
+				if (c == _codeBoundariesMap.get(topCodeBoundary)) {
 					stack.pop();
+
+					continue;
 				}
+
+				if (topCodeBoundary == '\"') {
+					continue;
+				}
+			}
+
+			if (_codeBoundariesMap.containsKey(c)) {
+				stack.push(c);
 
 				continue;
 			}
 
-			if (c == '\"') {
-				stack.push('\"');
-			}
-
-			if (c == '{') {
-				stack.push('{');
-
-				continue;
-			}
-
-			if (c == '(') {
-				stack.push('(');
-
-				continue;
-			}
-
-			if (c == '}') {
-				if (stack.isEmpty()) {
-					return false;
-				}
-
-				if (stack.pop() != '{') {
-					return false;
-				}
-			}
-
-			if (c == ')') {
-				if (stack.isEmpty()) {
-					return false;
-				}
-
-				if (stack.pop() != '(') {
-					return false;
-				}
+			if (_codeBoundariesMap.containsValue(c)) {
+				return false;
 			}
 		}
 
@@ -270,6 +252,16 @@ public abstract class PoshiElement extends DefaultElement {
 
 			add(PoshiElementFactory.newPoshiElement(childElement));
 		}
+	}
+
+	private static final Map<Character, Character> _codeBoundariesMap =
+		new HashMap<>();
+
+	static {
+		_codeBoundariesMap.put('\"', '\"');
+		_codeBoundariesMap.put('(', ')');
+		_codeBoundariesMap.put('{', '}');
+		_codeBoundariesMap.put('[', ']');
 	}
 
 }

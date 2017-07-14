@@ -962,6 +962,7 @@ Boolean renderPortletBoundary = GetterUtil.getBoolean(request.getAttribute(WebKe
 	%>
 
 	<div class="<%= cssClasses %>" id="p_p_id<%= HtmlUtil.escapeAttribute(renderResponseImpl.getNamespace()) %>" <%= freeformStyles %>>
+		<span id="p_<%= HtmlUtil.escapeAttribute(portletId) %>"></span>
 </c:if>
 
 <c:choose>

@@ -120,7 +120,13 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 	<%
 	ServletContext servletContext = ServletContextPool.get(selTheme.getServletContextName());
 
-	ResourceBundle selThemeResourceBundle = ResourceBundleUtil.getBundle("content.Language", servletContext.getClassLoader());
+	ResourceBundle selThemeResourceBundle = resourceBundle;
+
+	try {
+		selThemeResourceBundle = ResourceBundleUtil.getBundle("content.Language", servletContext.getClassLoader());
+	}
+	catch (Exception e) {
+	}
 
 	for (Map.Entry<String, ThemeSetting> entry : configurableSettings.entrySet()) {
 		String name = LanguageUtil.get(selThemeResourceBundle, entry.getKey());

@@ -1678,12 +1678,12 @@ if the system property `jacoco.code.coverage` is set to `true`.
 ## 3.9.0 - 2017-07-11
 
 ### Added
-- [LPS-73489]: Add plugin `LiferayRootDefaultsPlugin` that can be applied to
-root projects in order to:
-	- apply [Liferay Gradle Plugins Source Formatter]
-	- apply `com.liferay.app.defaults.plugin`
-	- automatically configure the subprojects
-	- configure default Maven repositories
+- [LPS-73489]: Add the plugin `LiferayRootDefaultsPlugin`, which can be applied
+to root projects to
+	- apply the [Liferay Gradle Plugins Source Formatter].
+	- apply `com.liferay.app.defaults.plugin`.
+	- automatically configure the subprojects.
+	- configure default Maven repositories.
 
 ### Changed
 - [LPS-73489]: Update the [Liferay Gradle Plugins] dependency to version 3.4.0.

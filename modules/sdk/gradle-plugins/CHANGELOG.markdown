@@ -1864,7 +1864,8 @@ to version 2.0.29.
 ### Changed
 - [LPS-73261]: Update the [Liferay Source Formatter] dependency to version
 1.0.420.
-- [LPS-73489]: Move `SourceFormatterDefaultsPlugin` class to exported package.
+- [LPS-73489]: Move the `SourceFormatterDefaultsPlugin` class to an exported
+package.
 - [LPS-73489]: Update the [Liferay Gradle Plugins Source Formatter] dependency
 to version 2.0.31.
 

@@ -766,8 +766,8 @@ available.
 ### Changed
 - [LPS-73261]: Update the [Liferay Source Formatter] dependency to version
 1.0.419.
-- [LPS-73489]: Skip `checkSourceFormatting` and `formatSource` tasks if another
-task with the same name is being executed in a parent project.
+- [LPS-73489]: Skip the `checkSourceFormatting` and `formatSource` tasks if
+another task with the same name is being executed in a parent project.
 
 ## 2.0.31 - 2017-07-11
 

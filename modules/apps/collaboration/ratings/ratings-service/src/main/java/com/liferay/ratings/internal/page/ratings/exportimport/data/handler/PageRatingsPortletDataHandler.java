@@ -15,11 +15,11 @@
 package com.liferay.ratings.internal.page.ratings.exportimport.data.handler;
 
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
-import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
-import com.liferay.exportimport.kernel.lar.ExportImportProcessCallbackRegistryUtil;
+import com.liferay.exportimport.kernel.lar.ExportImportHelper;
+import com.liferay.exportimport.kernel.lar.ExportImportProcessCallbackRegistry;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
+import com.liferay.exportimport.kernel.lar.PortletDataContextFactory;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
@@ -110,10 +110,10 @@ public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		PortletDataContext clonedPortletDataContext =
-			PortletDataContextFactoryUtil.clonePortletDataContext(
+			_portletDataContextFactory.clonePortletDataContext(
 				portletDataContext);
 
-		ExportImportProcessCallbackRegistryUtil.registerCallback(
+		_exportImportProcessCallbackRegistry.registerCallback(
 			portletDataContext.getExportImportProcessId(),
 			new ImportRatingsCallable(clonedPortletDataContext));
 
@@ -241,7 +241,7 @@ public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 						exportActionableDynamicQuery.getStagedModelType();
 
 					long modelDeletionCount =
-						ExportImportHelperUtil.getModelDeletionCount(
+						_exportImportHelper.getModelDeletionCount(
 							portletDataContext, stagedModelType);
 
 					manifestSummary.addModelDeletionCount(
@@ -265,6 +265,16 @@ public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PageRatingsPortletDataHandler.class);
+
+	@Reference
+	private ExportImportHelper _exportImportHelper;
+
+	@Reference
+	private ExportImportProcessCallbackRegistry
+		_exportImportProcessCallbackRegistry;
+
+	@Reference
+	private PortletDataContextFactory _portletDataContextFactory;
 
 	private RatingsEntryLocalService _ratingsEntryLocalService;
 

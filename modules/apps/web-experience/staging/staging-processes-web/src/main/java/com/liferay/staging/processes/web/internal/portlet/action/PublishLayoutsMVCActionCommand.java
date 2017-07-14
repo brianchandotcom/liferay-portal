@@ -15,7 +15,7 @@
 package com.liferay.staging.processes.web.internal.portlet.action;
 
 import com.liferay.exportimport.kernel.exception.RemoteExportException;
-import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
+import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.portal.kernel.exception.LayoutPrototypeException;
 import com.liferay.portal.kernel.exception.RemoteOptionsException;
@@ -166,12 +166,14 @@ public class PublishLayoutsMVCActionCommand extends BaseMVCActionCommand {
 		String openNodes = SessionTreeJSClicks.getOpenNodes(
 			portletRequest, treeId + "SelectedNode");
 
-		String selectedLayoutsJSON =
-			ExportImportHelperUtil.getSelectedLayoutsJSON(
-				groupId, privateLayout, openNodes);
+		String selectedLayoutsJSON = _exportImportHelper.getSelectedLayoutsJSON(
+			groupId, privateLayout, openNodes);
 
 		actionRequest.setAttribute("layoutIdMap", selectedLayoutsJSON);
 	}
+
+	@Reference
+	private ExportImportHelper _exportImportHelper;
 
 	@Reference
 	private Portal _portal;

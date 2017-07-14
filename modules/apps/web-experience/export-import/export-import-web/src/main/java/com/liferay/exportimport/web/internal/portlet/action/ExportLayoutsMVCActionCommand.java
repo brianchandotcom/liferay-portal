@@ -18,7 +18,7 @@ import com.liferay.exportimport.constants.ExportImportPortletKeys;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactory;
 import com.liferay.exportimport.kernel.exception.LARFileNameException;
-import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
+import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.service.ExportImportService;
@@ -173,7 +173,7 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 
 		Set<Layout> layouts = new LinkedHashSet<>();
 
-		Map<Long, Boolean> layoutIdMap = ExportImportHelperUtil.getLayoutIdMap(
+		Map<Long, Boolean> layoutIdMap = _exportImportHelper.getLayoutIdMap(
 			portletRequest);
 
 		for (Map.Entry<Long, Boolean> entry : layoutIdMap.entrySet()) {
@@ -191,8 +191,7 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 
-		return ExportImportHelperUtil.getLayoutIds(
-			new ArrayList<Layout>(layouts));
+		return _exportImportHelper.getLayoutIds(new ArrayList<Layout>(layouts));
 	}
 
 	@Reference(unbind = "-")
@@ -224,9 +223,8 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 		String openNodes = SessionTreeJSClicks.getOpenNodes(
 			portletRequest, treeId + "SelectedNode");
 
-		String selectedLayoutsJSON =
-			ExportImportHelperUtil.getSelectedLayoutsJSON(
-				groupId, privateLayout, openNodes);
+		String selectedLayoutsJSON = _exportImportHelper.getSelectedLayoutsJSON(
+			groupId, privateLayout, openNodes);
 
 		actionRequest.setAttribute("layoutIdMap", selectedLayoutsJSON);
 	}
@@ -243,6 +241,10 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 
 	private ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
+
+	@Reference
+	private ExportImportHelper _exportImportHelper;
+
 	private ExportImportService _exportImportService;
 	private LayoutLocalService _layoutLocalService;
 

@@ -1838,7 +1838,7 @@ to version 2.0.27.
 to version 2.0.28.
 - [LPS-72705]: Update the [Liferay Source Formatter] dependency to version
 1.0.417.
-- [LPS-73472]: Apply [Liferay Gradle Plugins JS Module Config Generator] and
+- [LPS-73472]: Apply the [Liferay Gradle Plugins JS Module Config Generator] and
 [Liferay Gradle Plugins JS Transpiler] to an OSGi project only if the
 `package.json` file does not declare a script named `"build"`.
 - [LPS-73472]: Update the [Liferay Gradle Plugins Gulp] dependency to version

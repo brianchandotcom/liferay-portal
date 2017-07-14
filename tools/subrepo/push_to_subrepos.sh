@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Author: Samuel Trong Tran <samuel.tran@liferay.com>
-# Platform: MacOS
+# Platform: Linux/Unix
 # Revision: 0.1.0
 #
 
@@ -24,12 +24,12 @@ error() {
 }
 
 help() {
-	warn "Usage: ./push_to_subrepos.sh [-a] [-d] [-f] [-p PATTERN] [-v] [SUBREPO_NAME]"
-	warn " -a: All subrepos. Must omit -p and SUBREPO_NAME."
-	warn " -d: Debug mode. More verbose console logging."
-	warn " -f: Force update a subrepo that is either lacking gitrepo information or is in push mode."
-	warn " -p: Update subrepos matching a regex pattern. Must omit -a and SUBREPO_NAME."
-	warn " -v: Verify only. Lists all subrepos/branches/files out of date."
+	info "Usage: ./push_to_subrepos.sh [-a] [-d] [-f] [-p PATTERN] [-v] [SUBREPO_NAME]"
+	info " -a: All subrepos. Must omit -p and SUBREPO_NAME."
+	info " -d: Debug mode. More verbose console logging."
+	info " -f: Force update a subrepo that is either lacking gitrepo information or is not configured for pushing."
+	info " -p: Update subrepos matching a regex pattern. Must omit -a and SUBREPO_NAME."
+	info " -v: Verify only. Lists all subrepos/branches/files out of date."
 }
 
 info() {
@@ -99,10 +99,6 @@ fi
 #
 # Verify environment.
 #
-
-if [[ "$(uname)" != "Darwin" ]]; then
-	error "This script is only compatible with MacOS systems."
-fi
 
 if [[ "${PWD}" != *"/tools/subrepo" ]]; then
 	error "This script can only be run from within the tools/subrepo directory."
@@ -180,9 +176,9 @@ else
 
 	if [[ -z "${SUBREPO_BRANCHES[@]}" ]]; then
 		if [[ "${PATTERN}" ]]; then
-			error "No subrepos found matching the specified filter."
+			error "No pull-mode subrepos found matching the specified filter."
 		else
-			error "No subrepos found."
+			error "No pull-mode subrepos found."
 		fi
 	fi
 fi

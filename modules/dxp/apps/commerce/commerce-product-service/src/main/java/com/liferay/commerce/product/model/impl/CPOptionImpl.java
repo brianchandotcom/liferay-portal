@@ -15,6 +15,11 @@
 package com.liferay.commerce.product.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
+import com.liferay.commerce.product.model.CPOptionValue;
+import com.liferay.commerce.product.service.CPOptionValueLocalServiceUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+
+import java.util.List;
 
 /**
  * @author Marco Leo
@@ -23,6 +28,12 @@ import aQute.bnd.annotation.ProviderType;
 public class CPOptionImpl extends CPOptionBaseImpl {
 
 	public CPOptionImpl() {
+	}
+
+	@Override
+	public List<CPOptionValue> getCPOptionValues() {
+		return CPOptionValueLocalServiceUtil.getCPOptionValues(
+			getCPOptionId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 }

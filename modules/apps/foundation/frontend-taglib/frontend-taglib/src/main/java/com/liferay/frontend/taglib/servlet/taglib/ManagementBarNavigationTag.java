@@ -160,6 +160,16 @@ public class ManagementBarNavigationTag extends IncludeTag implements BodyTag {
 				_managementBarFilterItems.get(0);
 
 			_label = managementBarFilterItem.getLabel();
+
+			for (ManagementBarFilterItem curManagementBarFilterItem :
+					_managementBarFilterItems) {
+
+				if (curManagementBarFilterItem.isActive()) {
+					_label = curManagementBarFilterItem.getLabel();
+
+					break;
+				}
+			}
 		}
 
 		request.setAttribute(

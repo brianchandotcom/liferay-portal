@@ -27,6 +27,7 @@ import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
+import com.liferay.frontend.taglib.servlet.taglib.ManagementBarFilterItem;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
@@ -37,15 +38,20 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -191,6 +197,34 @@ public class CPAttachmentFileEntriesDisplayContext extends
 
 	public long getImageMaxSize() {
 		return _attachmentsConfiguration.imageMaxSize();
+	}
+
+	@Override
+	public List<ManagementBarFilterItem> getManagementBarStatusFilterItems()
+		throws PortalException, PortletException {
+
+		List<ManagementBarFilterItem> managementBarFilterItems =
+			super.getManagementBarStatusFilterItems();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		int workflowDefinitionLinksCount =
+			WorkflowDefinitionLinkLocalServiceUtil.
+				getWorkflowDefinitionLinksCount(
+					themeDisplay.getCompanyId(),
+					WorkflowConstants.DEFAULT_GROUP_ID,
+					CPAttachmentFileEntry.class.getName());
+
+		if (workflowDefinitionLinksCount > 0) {
+			managementBarFilterItems.add(
+				getManagementBarFilterItem(WorkflowConstants.STATUS_PENDING));
+			managementBarFilterItems.add(
+				getManagementBarFilterItem(WorkflowConstants.STATUS_DENIED));
+		}
+
+		return managementBarFilterItems;
 	}
 
 	@Override

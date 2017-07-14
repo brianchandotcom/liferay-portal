@@ -20,6 +20,7 @@ import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.type.CPType;
+import com.liferay.frontend.taglib.servlet.taglib.ManagementBarFilterItem;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -40,12 +42,14 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
+import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -135,6 +139,33 @@ public class CPDefinitionsDisplayContext
 		}
 
 		return _cpDefinitionService.getLayoutUuid(cpDefinitionId);
+	}
+
+	@Override
+	public List<ManagementBarFilterItem> getManagementBarStatusFilterItems()
+			throws PortalException, PortletException {
+		List<ManagementBarFilterItem> managementBarFilterItems =
+			super.getManagementBarStatusFilterItems();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		int workflowDefinitionLinksCount =
+			WorkflowDefinitionLinkLocalServiceUtil.
+				getWorkflowDefinitionLinksCount(
+					themeDisplay.getCompanyId(),
+					WorkflowConstants.DEFAULT_GROUP_ID,
+					CPDefinition.class.getName());
+
+		if (workflowDefinitionLinksCount > 0) {
+			managementBarFilterItems.add(
+				getManagementBarFilterItem(WorkflowConstants.STATUS_PENDING));
+			managementBarFilterItems.add(
+				getManagementBarFilterItem(WorkflowConstants.STATUS_DENIED));
+		}
+
+		return managementBarFilterItems;
 	}
 
 	public String getNavigation() {

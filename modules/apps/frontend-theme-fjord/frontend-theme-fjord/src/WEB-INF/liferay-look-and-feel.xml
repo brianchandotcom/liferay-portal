@@ -8,12 +8,12 @@
 	<theme id="fjord" name="Fjord">
 		<template-extension>ftl</template-extension>
 		<settings>
-			<setting configurable="true" key="full-screen-navigation" type="checkbox" value="false" />
-			<setting configurable="true" key="site-logo-retina" type="checkbox" value="true" />
-			<setting configurable="true" key="social-media-facebook" type="checkbox" value="true" />
-			<setting configurable="true" key="social-media-facebook-url" value="http://www.facebook.com" />
-			<setting configurable="true" key="social-media-twitter" type="checkbox" value="true" />
-			<setting configurable="true" key="social-media-twitter-url" value="http://www.twitter.com" />
+			<setting configurable="true" key="facebook-icon" type="checkbox" value="true" />
+			<setting configurable="true" key="facebook-icon-link-url" value="http://www.facebook.com" />
+			<setting configurable="true" key="show-main-navigation-in-full-screen" type="checkbox" value="false" />
+			<setting configurable="true" key="twitter-icon" type="checkbox" value="true" />
+			<setting configurable="true" key="twitter-icon-link-url" value="http://www.twitter.com" />
+			<setting configurable="true" key="use-a-retina-logo" type="checkbox" value="true" />
 		</settings>
 		<portlet-decorator id="barebone" name="Barebone">
 			<portlet-decorator-css-class>portlet-barebone</portlet-decorator-css-class>

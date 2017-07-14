@@ -1701,7 +1701,7 @@ to root projects to
 ### Removed
 - [LPS-73525]: Remove all deprecated methods.
 - [LPS-73525]: The tasks `test` and `testIntegration` are no longer configurated
-with an Aspectj weaver, hence the configuration `aspectJWeaver` is no longer
+with an AspectJ weaver; hence the configuration `aspectJWeaver` is no longer
 available.
 
 ## 4.0.1 - 2017-07-13

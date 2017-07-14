@@ -27,8 +27,7 @@ file during the execution of a `SetUpTestableTomcatTask` instance.
 `SetUpTestableTomcatTask` instance.
 
 ### Removed
-- [LPS-73525]: Remove property `catalinaOptsReplacements` from
-`SetUpTestableTomcatTask`.
+- [LPS-73525]: Remove the `SetUpTestableTomcatTask`'s `catalinaOptsReplacements` property.
 
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
 [LPS-69492]: https://issues.liferay.com/browse/LPS-69492

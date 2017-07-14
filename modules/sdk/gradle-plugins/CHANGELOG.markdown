@@ -1880,10 +1880,10 @@ to version 2.0.32.
 ## 3.4.2 - 2017-07-12
 
 ### Added
-- [LPS-73525]: Add the ability to configure the `aspectJAgent` property in the
-`setUpTestableTomcat` task by setting the project property `aspectj.agent`.
-- [LPS-73525]: Add the ability to configure the `aspectJConfiguration` property
-in the `setUpTestableTomcat` task by setting the project property
+- [LPS-73525]: Add the ability to configure the `setUpTestableTomcat` task's
+`aspectJAgent` property by setting the project property `aspectj.agent`.
+- [LPS-73525]: Add the ability to configure the `setUpTestableTomcat` task's
+`aspectJConfiguration` property by setting the project property
 `aspectj.configuration`.
 
 ### Changed

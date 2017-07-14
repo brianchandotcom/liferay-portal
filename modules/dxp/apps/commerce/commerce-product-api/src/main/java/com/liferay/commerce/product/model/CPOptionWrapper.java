@@ -529,6 +529,11 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 		return _cpOption.getModifiedDate();
 	}
 
+	@Override
+	public java.util.List<CPOptionValue> getCPOptionValues() {
+		return _cpOption.getCPOptionValues();
+	}
+
 	/**
 	* Returns a map of the locales and localized descriptions of this cp option.
 	*

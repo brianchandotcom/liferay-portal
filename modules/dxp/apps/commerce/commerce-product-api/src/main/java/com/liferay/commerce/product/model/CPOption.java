@@ -53,4 +53,6 @@ public interface CPOption extends CPOptionModel, PersistedModel {
 				return CPOption.class;
 			}
 		};
+
+	public java.util.List<CPOptionValue> getCPOptionValues();
 }

@@ -9,6 +9,7 @@
 						'liferay-map-openstreetmap': {
 							path: 'map.js',
 							requires: [
+								'aui-component',
 								'jsonp',
 								'liferay-map-common',
 								'timers'

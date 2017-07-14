@@ -271,7 +271,9 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 
 		List<String> taskNames = startParameter.getTaskNames();
 
-		if (taskNames.contains(taskName)) {
+		if (taskNames.contains(taskName) ||
+			taskNames.contains(project.getPath() + ":" + taskName)) {
+
 			return true;
 		}
 

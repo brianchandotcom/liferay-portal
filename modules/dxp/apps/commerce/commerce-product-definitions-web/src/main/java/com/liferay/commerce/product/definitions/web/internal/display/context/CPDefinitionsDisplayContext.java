@@ -143,7 +143,8 @@ public class CPDefinitionsDisplayContext
 
 	@Override
 	public List<ManagementBarFilterItem> getManagementBarStatusFilterItems()
-			throws PortalException, PortletException {
+		throws PortalException, PortletException {
+
 		List<ManagementBarFilterItem> managementBarFilterItems =
 			super.getManagementBarStatusFilterItems();
 

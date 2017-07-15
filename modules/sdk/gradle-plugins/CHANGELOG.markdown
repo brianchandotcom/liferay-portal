@@ -1838,7 +1838,7 @@ to version 2.0.27.
 to version 2.0.28.
 - [LPS-72705]: Update the [Liferay Source Formatter] dependency to version
 1.0.417.
-- [LPS-73472]: Apply [Liferay Gradle Plugins JS Module Config Generator] and
+- [LPS-73472]: Apply the [Liferay Gradle Plugins JS Module Config Generator] and
 [Liferay Gradle Plugins JS Transpiler] to an OSGi project only if the
 `package.json` file does not declare a script named `"build"`.
 - [LPS-73472]: Update the [Liferay Gradle Plugins Gulp] dependency to version
@@ -1864,7 +1864,8 @@ to version 2.0.29.
 ### Changed
 - [LPS-73261]: Update the [Liferay Source Formatter] dependency to version
 1.0.420.
-- [LPS-73489]: Move `SourceFormatterDefaultsPlugin` class to exported package.
+- [LPS-73489]: Move the `SourceFormatterDefaultsPlugin` class to an exported
+package.
 - [LPS-73489]: Update the [Liferay Gradle Plugins Source Formatter] dependency
 to version 2.0.31.
 
@@ -1879,10 +1880,10 @@ to version 2.0.32.
 ## 3.4.2 - 2017-07-12
 
 ### Added
-- [LPS-73525]: Add the ability to configure the `aspectJAgent` property in the
-`setUpTestableTomcat` task by setting the project property `aspectj.agent`.
-- [LPS-73525]: Add the ability to configure the `aspectJConfiguration` property
-in the `setUpTestableTomcat` task by setting the project property
+- [LPS-73525]: Add the ability to configure the `setUpTestableTomcat` task's
+`aspectJAgent` property by setting the project property `aspectj.agent`.
+- [LPS-73525]: Add the ability to configure the `setUpTestableTomcat` task's
+`aspectJConfiguration` property by setting the project property
 `aspectj.configuration`.
 
 ### Changed

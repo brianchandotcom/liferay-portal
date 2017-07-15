@@ -134,45 +134,66 @@ fi
 
 #
 # Get subrepos and branches.
+# BRANCH_NAME:REPO_PATH:SUBREPOS_PATH
 #
 
+SUBREPO_SEARCH_PARAMETERS=(
+	"7.0.x:../..:modules/apps"
+	"ee-7.0.x:../../../liferay-portal-ee:modules/private/apps"
+	"master:../..:modules/apps"
+)
+
 if [[ "${SUBREPO_NAME}" ]]; then
-	VALID_BRANCHES="
+	if [[ "${OPTION_FORCE}" ]]; then
+		VALID_BRANCHES="
 7.0.x
 master
 "
 
-	if [[ "${SUBREPO_NAME}" == *-private ]]; then
-		VALID_BRANCHES=$(echo "${VALID_BRANCHES}" | sed 's/[a-z0-9]$/&-private/')
-	fi
-
-	OUTPUT=$(curl --header "Authorization: token ${GITHUB_API_TOKEN}" -s "https://api.github.com/repos/liferay/${SUBREPO_NAME}/branches" -X GET 2>&1)
-
-	if [[ "$?" != "0" ]] || [[ "$(echo "${OUTPUT}" | grep -i '\"not found\"')" ]]; then
-		warn "${OUTPUT}"
-
-		error "Failed to list the remote branches at liferay/${SUBREPO_NAME} via the GitHub api."
-	fi
-
-	REMOTE_BRANCHES=($(echo "${OUTPUT}" | grep '"name"' | sed 's/"[^"]*$//' | sed 's/.*"//'))
-
-	if [[ -z "${REMOTE_BRANCHES[@]}" ]]; then
-		error "No valid branches found at liferay/${SUBREPO_NAME}."
-	fi
-
-	SUBREPO_BRANCHES=()
-
-	for REMOTE_BRANCH in "${REMOTE_BRANCHES[@]}"; do
-		if [[ "$(echo "${VALID_BRANCHES}" | grep "^${REMOTE_BRANCH}\$")" ]]; then
-			SUBREPO_BRANCHES=("${SUBREPO_BRANCHES[@]}" "${REMOTE_BRANCH}:${SUBREPO_NAME}")
+		if [[ "${SUBREPO_NAME}" == *-private ]]; then
+			VALID_BRANCHES=$(echo "${VALID_BRANCHES}" | sed 's/[a-z0-9]$/&-private/')
 		fi
-	done
-else
-	SUBREPOS_7_0_X=($(git -C ../.. grep -l 'mode.*=.*pull' 7.0.x -- '*.gitrepo' | grep ':modules/apps/' | sed 's/.*://' | xargs git -C ../.. grep 'git@github.com' 7.0.x -- | sed 's@:.*/@:@' | sed 's/\.git//'))
-	SUBREPOS_7_0_X_PRIVATE=($(git -C ../../../liferay-portal-ee grep -l 'mode.*=.*pull' ee-7.0.x -- '*.gitrepo' | grep ':modules/private/apps/' | sed 's/.*://' | xargs git -C ../../../liferay-portal-ee grep 'git@github.com' ee-7.0.x -- | sed 's@:.*/@:@' | sed 's/\.git//' | sed 's/ee-7.0.x/7.0.x-private/'))
-	SUBREPOS_MASTER=($(git -C ../.. grep -l 'mode.*=.*pull' master -- '*.gitrepo' | grep ':modules/apps/' | sed 's/.*://' | xargs git -C ../.. grep 'git@github.com' master -- | sed 's@:.*/@:@' | sed 's/\.git//'))
 
-	ALL_SUBREPOS=("${SUBREPOS_7_0_X[@]}" "${SUBREPOS_7_0_X_PRIVATE[@]}" "${SUBREPOS_MASTER[@]}")
+		OUTPUT=$(curl --header "Authorization: token ${GITHUB_API_TOKEN}" -s "https://api.github.com/repos/liferay/${SUBREPO_NAME}/branches" -X GET 2>&1)
+
+		if [[ "$?" != "0" ]] || [[ "$(echo "${OUTPUT}" | grep -i '\"not found\"')" ]]; then
+			warn "${OUTPUT}"
+
+			error "Failed to list the remote branches at liferay/${SUBREPO_NAME} via the GitHub api."
+		fi
+
+		REMOTE_BRANCHES=($(echo "${OUTPUT}" | grep '"name"' | sed 's/"[^"]*$//' | sed 's/.*"//'))
+
+		if [[ -z "${REMOTE_BRANCHES[@]}" ]]; then
+			error "No valid branches found at liferay/${SUBREPO_NAME}."
+		fi
+
+		SUBREPO_BRANCHES=()
+
+		for REMOTE_BRANCH in "${REMOTE_BRANCHES[@]}"; do
+			if [[ "$(echo "${VALID_BRANCHES}" | grep "^${REMOTE_BRANCH}\$")" ]]; then
+				SUBREPO_BRANCHES=("${SUBREPO_BRANCHES[@]}" "${REMOTE_BRANCH}:${SUBREPO_NAME}")
+			fi
+		done
+	fi
+else
+	ALL_SUBREPOS=()
+
+	for SUBREPO_SEARCH_PARAMETER in "${SUBREPO_SEARCH_PARAMETERS[@]}"; do
+		BRANCH_NAME="${SUBREPO_SEARCH_PARAMETER%%:*}"
+		REPO_PATH="$(echo "${SUBREPO_SEARCH_PARAMETER}" | sed 's/:[^:]*$//' | sed 's/.*://')"
+		SUBREPOS_PATH="${SUBREPO_SEARCH_PARAMETER##*:}"
+
+		SUBREPO_SEARCH=($(git -C "${REPO_PATH}" grep -l 'mode.*=.*pull' "${BRANCH_NAME}" -- '*.gitrepo' | grep ":${SUBREPOS_PATH}/" | sed 's/.*://' | xargs git -C "${REPO_PATH}" grep 'git@github.com' "${BRANCH_NAME}" -- | sed 's@:.*/@:@' | sed 's/\.git//'))
+
+		ALL_SUBREPOS=("${ALL_SUBREPOS[@]}" "${SUBREPO_SEARCH[@]}")
+	done
+
+	#
+	# Fix for ee-7.0.x.
+	#
+
+	ALL_SUBREPOS=($(printf '%s\n' "${ALL_SUBREPOS[@]}" | sed 's/^ee-7.0.x/7.0.x-private/'))
 
 	SUBREPO_BRANCHES=($(printf '%s\n' "${ALL_SUBREPOS[@]}" | grep "^[^:]*:.*${PATTERN}"))
 

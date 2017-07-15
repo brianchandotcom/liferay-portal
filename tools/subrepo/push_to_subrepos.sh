@@ -5,6 +5,8 @@
 # Revision: 0.1.0
 #
 
+set -o pipefail
+
 get_content_var() {
 	FILE=$1
 
@@ -199,9 +201,15 @@ for GRADLE_FILE in "${GRADLE_FILES[@]}"; do
 		error "${GRADLE_FILE} does not exist."
 	fi
 
+	CONTENT="$(cat "${GRADLE_FILE}" | base64 -b 60 | awk '{printf "%s\\n", $0}')"
+
+	if [[ "$?" != "0" ]]; then
+		error "Failed to parse the sha for ${GRADLE_FILE}"
+	fi
+
 	CONTENT_VAR="$(get_content_var "${GRADLE_FILE}")"
 
-	declare $CONTENT_VAR="$(cat "${GRADLE_FILE}" | base64 -b 60 | awk '{printf "%s\\n", $0}')"
+	declare $CONTENT_VAR="${CONTENT}"
 done
 
 LOCAL_SHAS="$(

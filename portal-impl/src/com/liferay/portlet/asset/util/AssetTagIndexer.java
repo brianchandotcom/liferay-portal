@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.service.permission.AssetTagPermission;
@@ -45,8 +44,10 @@ import javax.portlet.PortletResponse;
 
 /**
  * @author Pavel Savinov
+ * @deprecated As of 7.0.0, moved to {@link
+ *             com.liferay.asset.tags.internal.search.AssetTagIndexer}
  */
-@OSGiBeanProperties
+@Deprecated
 public class AssetTagIndexer extends BaseIndexer<AssetTag> {
 
 	public static final String CLASS_NAME = AssetTag.class.getName();

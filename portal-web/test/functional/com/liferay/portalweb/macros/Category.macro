@@ -37,59 +37,6 @@
 		<execute macro="PortletEntry#save" />
 	</command>
 
-	<command name="addCategoryPropertyCP">
-		<var name="key_categoryName" value="${categoryName}" />
-		<var name="key_vocabularyName" value="${vocabularyName}" />
-
-		<var name="key_rowEntry" value="${vocabularyName}" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ADD_CATEGORY" value1="Add Category" />
-
-		<execute macro="PortletEntry#inputTitle">
-			<var name="title" value="${categoryName}" />
-		</execute>
-
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Properties" />
-		</execute>
-
-		<var name="i" value="0" />
-		<var name="pathNumber" value="0" />
-
-		<if>
-			<equals arg1="${propertyNumber}" arg2="0" />
-			<then>
-				<var name="key_pathNumber" value="${pathNumber}" />
-
-				<execute function="Type" locator1="CategoriesEditCategory#PROPERTIES_KEY_FIELD" value1="${propertiesKeyField}" />
-				<execute function="Type" locator1="CategoriesEditCategory#PROPERTIES_VALUE_FIELD" value1="${propertiesValueField}" />
-
-				<execute function="Click" locator1="Button#ADD_ROW_LAST" />
-			</then>
-			<else>
-				<while>
-					<not>
-						<equals arg1="${i}" arg2="${propertyNumber}" />
-					</not>
-					<then>
-						<var method="MathUtil#sum('${i}', '1')" name="i" />
-						<var name="key_pathNumber" value="${pathNumber}" />
-						<var method="MathUtil#sum('${pathNumber}', '2')" name="pathNumber" />
-
-						<execute function="Type" locator1="CategoriesEditCategory#PROPERTIES_KEY_FIELD" value1="${propertiesKeyField} ${i}" />
-						<execute function="Type" locator1="CategoriesEditCategory#PROPERTIES_VALUE_FIELD" value1="${propertiesValueField} ${i}" />
-
-						<execute function="Click" locator1="Button#ADD_ROW_LAST" />
-					</then>
-				</while>
-			</else>
-		</if>
-
-		<execute macro="PortletEntry#save" />
-	</command>
-
 	<command name="addCategoryViewableByCP">
 		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_vocabularyName" value="${vocabularyName}" />
@@ -163,6 +110,51 @@
 		<execute macro="Button#clickSave" />
 
 		<execute function="AssertTextEquals" locator1="Message#ERROR_FIELD_REQUIRED" value1="This field is required." />
+	</command>
+
+	<command name="addPropertyCP">
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="${categoryName}" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="Properties" />
+		</execute>
+
+		<var name="i" value="0" />
+		<var name="pathNumber" value="0" />
+
+		<if>
+			<equals arg1="${propertyNumber}" arg2="0" />
+			<then>
+				<var name="key_pathNumber" value="${pathNumber}" />
+
+				<execute function="Type" locator1="CategoriesEditCategory#PROPERTIES_KEY_FIELD" value1="${propertiesKeyField}" />
+				<execute function="Type" locator1="CategoriesEditCategory#PROPERTIES_VALUE_FIELD" value1="${propertiesValueField}" />
+
+				<execute function="Click" locator1="Button#ADD_ROW_LAST" />
+			</then>
+			<else>
+				<while>
+					<not>
+						<equals arg1="${i}" arg2="${propertyNumber}" />
+					</not>
+					<then>
+						<var method="MathUtil#sum('${i}', '1')" name="i" />
+						<var name="key_pathNumber" value="${pathNumber}" />
+						<var method="MathUtil#sum('${pathNumber}', '2')" name="pathNumber" />
+
+						<execute function="Type" locator1="CategoriesEditCategory#PROPERTIES_KEY_FIELD" value1="${propertiesKeyField} ${i}" />
+						<execute function="Type" locator1="CategoriesEditCategory#PROPERTIES_VALUE_FIELD" value1="${propertiesValueField} ${i}" />
+
+						<execute function="Click" locator1="Button#ADD_ROW_LAST" />
+					</then>
+				</while>
+			</else>
+		</if>
+
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="deleteByIconCP">

@@ -55,7 +55,7 @@ public class VarElement extends PoshiElement {
 
 		addAttribute("name", name);
 
-		String value = getValueFromAssignment(readableSyntax);
+		String value = getQuotedContent(readableSyntax);
 
 		if (value.contains("Util.")) {
 			value = value.replace("Util.", "Util#");

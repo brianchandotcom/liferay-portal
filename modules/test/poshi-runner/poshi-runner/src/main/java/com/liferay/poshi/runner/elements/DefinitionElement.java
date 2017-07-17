@@ -14,6 +14,9 @@
 
 package com.liferay.poshi.runner.elements;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.dom4j.Element;
 
 /**
@@ -31,52 +34,20 @@ public class DefinitionElement extends PoshiElement {
 
 	@Override
 	public void parseReadableSyntax(String readableSyntax) {
-		StringBuilder sb = new StringBuilder();
+		for (String readableBlock : getReadableBlocks(readableSyntax)) {
+			if (readableBlock.startsWith("@") &&
+				!readableBlock.startsWith("@description") &&
+				!readableBlock.startsWith("@priority")) {
 
-		for (String line : readableSyntax.split("\n")) {
-			line = line.trim();
-
-			if (line.length() == 0) {
-				continue;
-			}
-
-			if (line.startsWith("@") && !line.contains("@description") &&
-				!line.contains("@priority")) {
-
-				String name = getNameFromAssignment(line);
-				String value = getValueFromAssignment(line);
+				String name = getNameFromAssignment(readableBlock);
+				String value = getQuotedContent(readableBlock);
 
 				addAttribute(name, value);
 
 				continue;
 			}
 
-			if (line.startsWith("definition {")) {
-				continue;
-			}
-
-			if ((line.startsWith("property") || line.startsWith("var")) &&
-				(sb.length() == 0)) {
-
-				addElementFromReadableSyntax(line);
-
-				continue;
-			}
-
-			if (line.equals("}")) {
-				sb.append(line);
-
-				if (sb.length() > 1) {
-					addElementFromReadableSyntax(sb.toString());
-
-					sb.setLength(0);
-
-					continue;
-				}
-			}
-
-			sb.append(line);
-			sb.append("\n");
+			addElementFromReadableSyntax(readableBlock);
 		}
 	}
 
@@ -134,6 +105,62 @@ public class DefinitionElement extends PoshiElement {
 	@Override
 	protected String getPad() {
 		return "";
+	}
+
+	protected List<String> getReadableBlocks(String readableSyntax) {
+		StringBuilder sb = new StringBuilder();
+
+		List<String> readableBlocks = new ArrayList<>();
+
+		for (String line : readableSyntax.split("\n")) {
+			line = line.trim();
+
+			if (line.length() == 0) {
+				continue;
+			}
+
+			if (line.startsWith("@") && !line.startsWith("@description") &&
+				!line.startsWith("@priority")) {
+
+				readableBlocks.add(line);
+
+				continue;
+			}
+
+			if (line.startsWith("definition {")) {
+				continue;
+			}
+
+			String readableBlock = sb.toString();
+
+			readableBlock = readableBlock.trim();
+
+			if (isValidReadableBlock(readableBlock)) {
+				readableBlocks.add(readableBlock);
+
+				sb.setLength(0);
+			}
+
+			sb.append(line);
+			sb.append("\n");
+		}
+
+		return readableBlocks;
+	}
+
+	@Override
+	protected boolean isBalanceValidationRequired(String readableSyntax) {
+		readableSyntax = readableSyntax.trim();
+
+		if ((readableSyntax.startsWith("@") && readableSyntax.contains("{")) ||
+			readableSyntax.startsWith("setUp") ||
+			readableSyntax.startsWith("tearDown") ||
+			readableSyntax.startsWith("test")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

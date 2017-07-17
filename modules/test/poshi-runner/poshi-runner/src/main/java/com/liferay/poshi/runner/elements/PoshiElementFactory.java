@@ -36,12 +36,40 @@ public class PoshiElementFactory {
 			return new CommandElement(element);
 		}
 
+		if (elementName.equals("condition")) {
+			return new ConditionElement(element);
+		}
+
 		if (elementName.equals("definition")) {
 			return new DefinitionElement(element);
 		}
 
+		if (elementName.equals("description")) {
+			return new DescriptionElement(element);
+		}
+
+		if (elementName.equals("else")) {
+			return new ElseElement(element);
+		}
+
+		if (elementName.equals("equals")) {
+			return new EqualsElement(element);
+		}
+
 		if (elementName.equals("execute")) {
 			return new ExecuteElement(element);
+		}
+
+		if (elementName.equals("for")) {
+			return new ForElement(element);
+		}
+
+		if (elementName.equals("if")) {
+			return new IfElement(element);
+		}
+
+		if (elementName.equals("isset")) {
+			return new IssetElement(element);
 		}
 
 		if (elementName.equals("property")) {
@@ -54,6 +82,10 @@ public class PoshiElementFactory {
 
 		if (elementName.equals("tear-down")) {
 			return new TearDownElement(element);
+		}
+
+		if (elementName.equals("then")) {
+			return new ThenElement(element);
 		}
 
 		if (elementName.equals("var")) {
@@ -80,12 +112,42 @@ public class PoshiElementFactory {
 					return new ExecuteElement(readableSyntax);
 				}
 
+				if (line.startsWith("@description") &&
+					!readableSyntax.endsWith("}")) {
+
+					return new DescriptionElement(readableSyntax);
+				}
+
 				if (line.startsWith("@")) {
 					continue;
 				}
 
 				if (line.startsWith("definition {")) {
 					return new DefinitionElement(readableSyntax);
+				}
+
+				if (line.startsWith("else {")) {
+					return new ElseElement(readableSyntax);
+				}
+
+				if (line.startsWith("for (")) {
+					return new ForElement(readableSyntax);
+				}
+
+				if (line.startsWith("if (")) {
+					return new IfElement(readableSyntax);
+				}
+
+				if (line.contains("==")) {
+					return new EqualsElement(readableSyntax);
+				}
+
+				if (line.startsWith("isset(")) {
+					return new IssetElement(readableSyntax);
+				}
+
+				if (line.endsWith(")")) {
+					return new ConditionElement(readableSyntax);
 				}
 
 				if (line.startsWith("property ")) {

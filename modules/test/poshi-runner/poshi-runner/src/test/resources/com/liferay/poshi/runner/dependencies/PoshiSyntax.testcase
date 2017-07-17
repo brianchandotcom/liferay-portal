@@ -24,6 +24,14 @@
             <var name="portlet" value="Users and Organizations" />
         </execute>
 
+        <for list="${breadcrumbListVisible}" param="breadcrumbName">
+            <var name="key_breadcrumbName" value="${breadcrumbName}" />
+
+            <var method="StringUtil#upperCase('${breadcrumbName}')" name="breadcrumbNameUppercase" />
+
+            <execute function="AssertTextEquals" locator1="Breadcrumb#BREADCRUMB_ENTRY" value1="${breadcrumbNameUppercase}" />
+        </for>
+
         <execute macro="User#addCP">
             <var name="userEmailAddress" value="${userEmailAddress}" />
             <var name="userFirstName" value="${userFirstName}" />
@@ -33,9 +41,37 @@
         </execute>
     </command>
 
-    <command description="Ensure that the super admin can add pages, add portlets, navigate to the product menu, use the WYSIWYG editor, and view alert messages." name="Smoke" priority="5">
+    <command name="Smoke" priority="5">
+        <description message="Ensure that the super admin can add pages, add portlets, navigate to the product menu, use the WYSIWYG editor, and view alert messages." />
+
         <property name="portal.smoke" value="true" />
         <property name="test.assert.warning.exceptions" value="true" />
+
+        <if>
+            <isset var="duplicate" />
+            <then>
+                <execute macro="Alert#viewErrorMessage">
+                    <var name="errorMessage" value="A configuration with this ID already exists. Please enter a unique ID." />
+                </execute>
+            </then>
+            <else>
+                <execute macro="Alert#viewSuccessMessage" />
+            </else>
+        </if>
+
+        <if>
+            <equals arg1="${check}" arg2="true" />
+            <then>
+                <execute macro="Alert#viewSuccessMessage" />
+            </then>
+        </if>
+
+        <if>
+            <condition function="IsElementPresent" locator1="Blogs#ADD_BLOGS_ENTRY" />
+            <then>
+                <execute macro="Alert#viewSuccessMessage" />
+            </then>
+        </if>
 
         <execute macro="Smoke#viewWelcomePage" />
 

@@ -14,33 +14,39 @@
 
 package com.liferay.poshi.runner.elements;
 
+import java.util.List;
+
 import org.dom4j.Element;
 
 /**
  * @author Kenji Heigel
  */
-public class UnsupportedElement extends PoshiElement {
+public class ElseElement extends ThenElement {
 
-	public UnsupportedElement(Element element) {
-		super(element.getName(), element);
+	public ElseElement(Element element) {
+		super("else", element);
 	}
 
-	public UnsupportedElement(String readableSyntax) {
-		super("unsupported", readableSyntax);
+	public ElseElement(String readableSyntax) {
+		super("else", readableSyntax);
 	}
 
 	@Override
-	public void parseReadableSyntax(String readableSyntax) {
+	public String getBlockName() {
+		return "else";
 	}
 
 	@Override
 	public String toReadableSyntax() {
-		return "Unsupported element\n";
+		String readableSyntax = super.toReadableSyntax();
+
+		return createReadableBlock(readableSyntax);
 	}
 
-	@Override
-	protected String getBlockName() {
-		return null;
+	protected List<String> getReadableBlocks(String readableSyntax) {
+		String content = getBracedContent(readableSyntax);
+
+		return super.getReadableBlocks(content);
 	}
 
 }

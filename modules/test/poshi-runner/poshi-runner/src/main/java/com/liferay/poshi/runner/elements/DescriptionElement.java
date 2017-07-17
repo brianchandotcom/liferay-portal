@@ -19,28 +19,26 @@ import org.dom4j.Element;
 /**
  * @author Kenji Heigel
  */
-public class UnsupportedElement extends PoshiElement {
+public class DescriptionElement extends PoshiElement {
 
-	public UnsupportedElement(Element element) {
-		super(element.getName(), element);
+	public DescriptionElement(Element element) {
+		super("description", element);
 	}
 
-	public UnsupportedElement(String readableSyntax) {
-		super("unsupported", readableSyntax);
+	public DescriptionElement(String readableSyntax) {
+		super("description", readableSyntax);
+	}
+
+	@Override
+	public String getBlockName() {
+		return "description";
 	}
 
 	@Override
 	public void parseReadableSyntax(String readableSyntax) {
-	}
+		String message = getQuotedContent(readableSyntax);
 
-	@Override
-	public String toReadableSyntax() {
-		return "Unsupported element\n";
-	}
-
-	@Override
-	protected String getBlockName() {
-		return null;
+		addAttribute("message", message);
 	}
 
 }

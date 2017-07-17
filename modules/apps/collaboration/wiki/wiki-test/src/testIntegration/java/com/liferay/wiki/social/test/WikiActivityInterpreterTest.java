@@ -21,13 +21,9 @@ import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
 import com.liferay.social.activity.test.util.BaseSocialActivityInterpreterTestCase;
 import com.liferay.social.kernel.model.SocialActivityConstants;
 import com.liferay.social.kernel.model.SocialActivityInterpreter;
-import com.liferay.trash.TrashHelper;
 import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.service.TrashEntryLocalServiceUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
@@ -37,9 +33,6 @@ import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.social.WikiActivityKeys;
 import com.liferay.wiki.util.test.WikiTestUtil;
 
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -58,28 +51,6 @@ public class WikiActivityInterpreterTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
-
-	@BeforeClass
-	public static void setUpClass() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(TrashHelper.class.getName());
-
-		_serviceTracker.open();
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
-		_serviceTracker.close();
-	}
-
-	@Before
-	@Override
-	public void setUp() throws Exception {
-		super.setUp();
-
-		_trashHelper = _serviceTracker.getService();
-	}
 
 	@Override
 	protected void addActivities() throws Exception {
@@ -137,7 +108,7 @@ public class WikiActivityInterpreterTest
 		TrashEntry trashEntry = TrashEntryLocalServiceUtil.getEntry(
 			WikiPage.class.getName(), _page.getResourcePrimKey());
 
-		String trashTitle = _trashHelper.getTrashTitle(trashEntry.getEntryId());
+		String trashTitle = trashHelper.getTrashTitle(trashEntry.getEntryId());
 
 		_page.setTitle(trashTitle);
 
@@ -149,10 +120,7 @@ public class WikiActivityInterpreterTest
 			TestPropsValues.getUserId(), _page);
 	}
 
-	private static ServiceTracker<TrashHelper, TrashHelper> _serviceTracker;
-
 	private String _attachmentFileName;
 	private WikiPage _page;
-	private TrashHelper _trashHelper;
 
 }

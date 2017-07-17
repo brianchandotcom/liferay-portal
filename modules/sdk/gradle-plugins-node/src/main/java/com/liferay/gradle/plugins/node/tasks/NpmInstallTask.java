@@ -144,15 +144,6 @@ public class NpmInstallTask extends ExecuteNpmTask {
 		_nodeModulesCacheNativeSync = nodeModulesCacheNativeSync;
 	}
 
-	/**
-	 * @deprecated As of 1.3.0, replaced by {@link
-	 *             #setRemoveShrinkwrappedUrls(Object)}
-	 */
-	@Deprecated
-	public void setRemoveShrinkwrappedUrls(boolean removeShrinkwrappedUrls) {
-		_removeShrinkwrappedUrls = removeShrinkwrappedUrls;
-	}
-
 	public void setRemoveShrinkwrappedUrls(Object removeShrinkwrappedUrls) {
 		_removeShrinkwrappedUrls = removeShrinkwrappedUrls;
 	}

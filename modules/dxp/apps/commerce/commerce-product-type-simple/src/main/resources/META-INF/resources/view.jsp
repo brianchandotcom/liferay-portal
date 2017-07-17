@@ -28,7 +28,7 @@ CPDefinition cpDefinition = cpSimpleCPTypeDisplayContext.getCPDefinition();
 				<div class="col-md-3">
 
 					<%
-						for (CPAttachmentFileEntry cpAttachmentFileEntry : cpSimpleCPTypeDisplayContext.getImages()) {
+					for (CPAttachmentFileEntry cpAttachmentFileEntry : cpSimpleCPTypeDisplayContext.getImages()) {
 						String url = cpSimpleCPTypeDisplayContext.getImageURL(cpAttachmentFileEntry.getFileEntry(), themeDisplay);
 					%>
 
@@ -37,13 +37,17 @@ CPDefinition cpDefinition = cpSimpleCPTypeDisplayContext.getCPDefinition();
 								<img src="<%= url %>">
 							</div>
 						</div>
-					<% } %>
+
+					<%
+					}
+					%>
+
 				</div>
 
 				<div class="col-md-9 full-image">
 
 					<%
-						CPAttachmentFileEntry cpAttachmentFileEntry = cpSimpleCPTypeDisplayContext.getDefaultImage();
+					CPAttachmentFileEntry cpAttachmentFileEntry = cpSimpleCPTypeDisplayContext.getDefaultImage();
 					%>
 
 					<c:if test="<%= cpAttachmentFileEntry != null %>">
@@ -76,7 +80,6 @@ CPDefinition cpDefinition = cpSimpleCPTypeDisplayContext.getCPDefinition();
 
 			<div class="row-fluid">
 				<div class="col-md-12">
-
 				</div>
 
 				<div class="col-md-9">
@@ -86,16 +89,13 @@ CPDefinition cpDefinition = cpSimpleCPTypeDisplayContext.getCPDefinition();
 	</div>
 
 	<script>
-
 		$(document).ready(
 			function() {
-
 				$(".thumb").click(
 					function() {
 					$("#full-image").attr("src",$(this).attr("data-url"));
 				});
 			});
-
 	</script>
 </c:if>
 
@@ -122,5 +122,4 @@ CPDefinition cpDefinition = cpSimpleCPTypeDisplayContext.getCPDefinition();
 	.product-detail .full-image{
 		text-align: center;
 	}
-
 </style>

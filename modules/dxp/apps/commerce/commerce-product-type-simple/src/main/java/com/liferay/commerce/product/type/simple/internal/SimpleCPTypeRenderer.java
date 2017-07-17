@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"commerce.product.type.name=" + SimpleCPTypeConstants.NAME},
+	property = "commerce.product.type.name=" + SimpleCPTypeConstants.NAME,
 	service = CPTypeRenderer.class
 )
 public class SimpleCPTypeRenderer implements CPTypeRenderer {

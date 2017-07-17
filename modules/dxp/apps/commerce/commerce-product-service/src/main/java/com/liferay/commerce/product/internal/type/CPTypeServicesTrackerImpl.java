@@ -100,7 +100,6 @@ public class CPTypeServicesTrackerImpl implements CPTypeServicesTracker {
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, CPTypeRenderer.class,
 				"commerce.product.type.name");
-
 		_cpTypeServiceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, CPType.class, "commerce.product.type.name",
 			ServiceTrackerCustomizerFactory.<CPType>serviceWrapper(

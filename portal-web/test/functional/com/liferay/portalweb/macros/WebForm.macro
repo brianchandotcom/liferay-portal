@@ -59,6 +59,8 @@
 	</command>
 
 	<command name="sendPG">
+		<execute function="Click" locator1="WebForm#FORM_INFORMATION_TITLE" />
+
 		<execute function="AssertClick" locator1="Button#SEND" value1="Send" />
 
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />

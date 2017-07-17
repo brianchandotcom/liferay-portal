@@ -120,11 +120,11 @@ if [[ ! -e ../../../liferay-portal-ee ]]; then
 	error "liferay-portal-ee does not exist at ../../../liferay-portal-ee"
 fi
 
-# git update-index -q --ignore-submodules --refresh
-#
-# git diff-files --quiet --ignore-submodules -- || error "Unstaged changes."
-#
-# git diff-index --cached --quiet HEAD -- || error "Uncommitted changes."
+git update-index -q --ignore-submodules --refresh
+
+git diff-files --quiet --ignore-submodules -- || error "Unstaged changes."
+
+git diff-index --cached --quiet HEAD -- || error "Uncommitted changes."
 
 if [[ -z "${GITHUB_API_TOKEN}" ]]; then
 	GITHUB_API_TOKEN="$(git config github.token)"
@@ -389,27 +389,27 @@ gradlew.bat:${GRADLEW_BAT_REMOTE_SHA}
 				COMMIT_MESSAGE="LPS-0 Update ${GRADLE_FILE}"
 				CONTENT_VAR="$(get_content_var "${GRADLE_FILE}")"
 
-				# DATA="\"branch\":\"${BRANCH}\",\"content\":\"${!CONTENT_VAR}\",\"message\":\"${COMMIT_MESSAGE}\",\"path\": \"${GRADLE_FILE}\""
-				#
-				# if [[ "${REMOTE_SHA}" ]]; then
-				# 	DATA="${DATA},\"sha\": \"${REMOTE_SHA}\""
-				# fi
-				#
-				# for i in {1..2}; do
-				# 	OUTPUT=$(curl -d "{${DATA}}" --header "Authorization: token ${GITHUB_API_TOKEN}" -s "https://api.github.com/repos/liferay/${SUBREPO}/contents/${GRADLE_FILE}" -X PUT 2>&1)
-				#
-				# 	if [[ "$(echo ${OUTPUT} | grep "message.*${COMMIT_MESSAGE}")" ]]; then
-				# 		break
-				# 	fi
-				# done
-				#
-				# if [[ -z "$(echo ${OUTPUT} | grep "message.*${COMMIT_MESSAGE}")" ]]; then
-				# 	warn "${OUTPUT}"
-				#
-				# 	warn "Failed to update ${GRADLE_FILE} at liferay/${SUBREPO}:${BRANCH}."
-				#
-				# 	continue
-				# fi
+				DATA="\"branch\":\"${BRANCH}\",\"content\":\"${!CONTENT_VAR}\",\"message\":\"${COMMIT_MESSAGE}\",\"path\": \"${GRADLE_FILE}\""
+
+				if [[ "${REMOTE_SHA}" ]]; then
+					DATA="${DATA},\"sha\": \"${REMOTE_SHA}\""
+				fi
+
+				for i in {1..2}; do
+					OUTPUT=$(curl -d "{${DATA}}" --header "Authorization: token ${GITHUB_API_TOKEN}" -s "https://api.github.com/repos/liferay/${SUBREPO}/contents/${GRADLE_FILE}" -X PUT 2>&1)
+
+					if [[ "$(echo ${OUTPUT} | grep "message.*${COMMIT_MESSAGE}")" ]]; then
+						break
+					fi
+				done
+
+				if [[ -z "$(echo ${OUTPUT} | grep "message.*${COMMIT_MESSAGE}")" ]]; then
+					warn "${OUTPUT}"
+
+					warn "Failed to update ${GRADLE_FILE} at liferay/${SUBREPO}:${BRANCH}."
+
+					continue
+				fi
 			fi
 
 			let TOTAL_FILES_COUNTER++

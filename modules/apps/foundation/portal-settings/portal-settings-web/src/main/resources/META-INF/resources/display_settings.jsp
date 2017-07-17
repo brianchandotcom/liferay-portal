@@ -54,7 +54,7 @@
 
 	</aui:select>
 
-	<div id="languageWarning"></div>
+	<div id="<portlet:namespace />languageWarning"></div>
 
 	<aui:fieldset cssClass="available-languages" label="available-languages">
 
@@ -189,7 +189,7 @@
 				new A.Alert(
 					{
 						bodyContent: '<liferay-ui:message key="this-change-will-only-affect-the-newly-created-localized-content" />',
-						boundingBox: '#languageWarning',
+						boundingBox: '#<portlet:namespace />languageWarning',
 						closeable: true,
 						cssClass: 'alert-warning',
 						destroyOnHide: false,

@@ -131,7 +131,7 @@ if (publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLayo
 		</aui:select>
 	</aui:fieldset>
 
-	<div id="languageWarning"></div>
+	<div id="<portlet:namespace />languageWarning"></div>
 
 	<aui:fieldset cssClass="available-languages">
 		<h4 class="text-default"><liferay-ui:message key="available-languages" /></h4>
@@ -194,7 +194,7 @@ if (publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLayo
 				new A.Alert(
 					{
 						bodyContent: '<liferay-ui:message key="this-change-will-only-affect-the-newly-created-localized-content" />',
-						boundingBox: '#languageWarning',
+						boundingBox: '#<portlet:namespace />languageWarning',
 						closeable: true,
 						cssClass: 'alert-warning',
 						destroyOnHide: false,

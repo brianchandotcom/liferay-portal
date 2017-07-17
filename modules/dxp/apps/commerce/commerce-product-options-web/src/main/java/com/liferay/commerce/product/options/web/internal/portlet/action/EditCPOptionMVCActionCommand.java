@@ -145,7 +145,7 @@ public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			actionRequest, CPPortletKeys.COMMERCE_PRODUCT_OPTIONS,
+			actionRequest, CPPortletKeys.CP_OPTIONS,
 			PortletRequest.RENDER_PHASE);
 
 		if (cpOption != null) {

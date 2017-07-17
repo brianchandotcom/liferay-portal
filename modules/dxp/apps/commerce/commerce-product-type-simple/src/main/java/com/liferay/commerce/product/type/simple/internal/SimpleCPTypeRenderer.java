@@ -17,10 +17,11 @@ package com.liferay.commerce.product.type.simple.internal;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
 import com.liferay.commerce.product.type.CPTypeRenderer;
-import com.liferay.commerce.product.type.renderer.BaseCPTypeRenderer;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
 import com.liferay.commerce.product.type.simple.internal.display.context.CPSimpleCPTypeDisplayContext;
 import com.liferay.commerce.product.util.CPInstanceHelper;
+import com.liferay.commerce.product.util.JSPRenderer;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -34,13 +35,14 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
+ * @author Andrea Di Giorgi
  */
 @Component(
 	immediate = true,
 	property = {"commerce.product.type.name=" + SimpleCPTypeConstants.NAME},
 	service = CPTypeRenderer.class
 )
-public class SimpleCPTypeRenderer extends BaseCPTypeRenderer {
+public class SimpleCPTypeRenderer implements CPTypeRenderer {
 
 	@Override
 	public void render(
@@ -50,22 +52,15 @@ public class SimpleCPTypeRenderer extends BaseCPTypeRenderer {
 
 		CPSimpleCPTypeDisplayContext cpSimpleCPTypeDisplayContext =
 			new CPSimpleCPTypeDisplayContext(
-				cpDefinition, _cpAttachmentFileEntryLocalService, portal,
+				cpDefinition, _cpAttachmentFileEntryLocalService, _portal,
 				_cpInstanceHelper);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, cpSimpleCPTypeDisplayContext);
 
-		renderJSP(httpServletRequest, httpServletResponse, "/view.jsp");
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.product.type.simple)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
+		_jspRenderer.renderJSP(
+			_servletContext, httpServletRequest, httpServletResponse,
+			"/view.jsp");
 	}
 
 	@Reference
@@ -74,5 +69,16 @@ public class SimpleCPTypeRenderer extends BaseCPTypeRenderer {
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;
+
+	@Reference
+	private JSPRenderer _jspRenderer;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.commerce.product.type.simple)"
+	)
+	private ServletContext _servletContext;
 
 }

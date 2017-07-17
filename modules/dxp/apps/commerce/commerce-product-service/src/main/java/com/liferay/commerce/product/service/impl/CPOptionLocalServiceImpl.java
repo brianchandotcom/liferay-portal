@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
@@ -53,6 +55,7 @@ import java.util.Map;
  */
 public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPOption addCPOption(
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
@@ -96,6 +99,7 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 		return cpOption;
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CPOption deleteCPOption(CPOption cpOption) throws PortalException {
@@ -235,6 +239,7 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 		return cpOption;
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPOption updateCPOption(
 			long cpOptionId, Map<Locale, String> titleMap,

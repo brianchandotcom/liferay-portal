@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.asset.util;
+package com.liferay.asset.tags.internal.search;
 
 import com.liferay.asset.kernel.model.AssetTag;
-import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
@@ -42,12 +43,13 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Pavel Savinov
- * @deprecated As of 7.0.0, moved to {@link
- *             com.liferay.asset.tags.internal.search.AssetTagIndexer}
  */
-@Deprecated
+@Component(immediate = true, service = Indexer.class)
 public class AssetTagIndexer extends BaseIndexer<AssetTag> {
 
 	public static final String CLASS_NAME = AssetTag.class.getName();
@@ -70,7 +72,7 @@ public class AssetTagIndexer extends BaseIndexer<AssetTag> {
 			long entryClassPK, String actionId)
 		throws Exception {
 
-		AssetTag tag = AssetTagLocalServiceUtil.getTag(entryClassPK);
+		AssetTag tag = _assetTagLocalService.getTag(entryClassPK);
 
 		return AssetTagPermission.contains(
 			permissionChecker, tag, ActionKeys.VIEW);
@@ -135,7 +137,7 @@ public class AssetTagIndexer extends BaseIndexer<AssetTag> {
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		AssetTag tag = AssetTagLocalServiceUtil.getTag(classPK);
+		AssetTag tag = _assetTagLocalService.getTag(classPK);
 
 		doReindex(tag);
 	}
@@ -149,7 +151,7 @@ public class AssetTagIndexer extends BaseIndexer<AssetTag> {
 
 	protected void reindexTags(final long companyId) throws PortalException {
 		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			AssetTagLocalServiceUtil.getIndexableActionableDynamicQuery();
+			_assetTagLocalService.getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
@@ -183,5 +185,8 @@ public class AssetTagIndexer extends BaseIndexer<AssetTag> {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetTagIndexer.class);
+
+	@Reference
+	private AssetTagLocalService _assetTagLocalService;
 
 }

@@ -27,35 +27,29 @@ List<AssetCategory> assetCategories = cpAssetCategoriesNavigationDisplayContext.
 		for (AssetCategory assetCategory : assetCategories) {
 		%>
 
-			<li>
-				<a><span><%= HtmlUtil.escape(assetCategory.getTitle(locale)) %></span></a>
+			<li class="lfr-nav-item">
+				<a href="#" class="dropdown-toggle"><span><%= HtmlUtil.escape(assetCategory.getTitle(locale)) %></span></a>
 
-				<div class="child-menu dropdown-menu" role="menu">
+				<ul class="child-menu dropdown-menu" role="menu">
 
 					<%
 					for (AssetCategory assetCategoryLevel1 : cpAssetCategoriesNavigationDisplayContext.getChildAssetCategories(assetCategory.getCategoryId())) {
 					%>
 
-						<div class="child-menu-level-1">
-							<h5><%= HtmlUtil.escape(assetCategoryLevel1.getTitle(locale)) %></h5>
+						<li class="dropdown-header"><%= HtmlUtil.escape(assetCategoryLevel1.getTitle(locale)) %></li>
+						<li class="child-menu-level-1">
+							<%
+							for (AssetCategory assetCategoryLevel2 : cpAssetCategoriesNavigationDisplayContext.getChildAssetCategories(assetCategoryLevel1.getCategoryId())) {
+							%>
 
-							<ul>
+								<li>
+									<a href="<%= cpAssetCategoriesNavigationDisplayContext.getFriendlyURL(assetCategoryLevel2.getCategoryId(), themeDisplay) %>" role="menuitem"><%= HtmlUtil.escape(assetCategoryLevel2.getTitle(locale)) %></a>
+								</li>
 
-								<%
-								for (AssetCategory assetCategoryLevel2 : cpAssetCategoriesNavigationDisplayContext.getChildAssetCategories(assetCategoryLevel1.getCategoryId())) {
-								%>
-
-									<li>
-										<a href="<%= cpAssetCategoriesNavigationDisplayContext.getFriendlyURL(assetCategoryLevel2.getCategoryId(), themeDisplay) %>" role="menuitem"><%= HtmlUtil.escape(assetCategoryLevel2.getTitle(locale)) %></a>
-									</li>
-
-								<%
-								}
-								%>
-
-							</ul>
-
-						</div>
+							<%
+							}
+							%>
+						</li>
 
 					<%
 					}
@@ -71,10 +65,10 @@ List<AssetCategory> assetCategories = cpAssetCategoriesNavigationDisplayContext.
 							<img src="<%= imgURL %>" />
 						</c:if>
 
-						<h5><%= assetCategory.getTitle(locale) %></h5>
+						<span class="dropdown-header"><%= assetCategory.getTitle(locale) %></span>
 						<p class="description"><%= assetCategory.getDescription(locale) %></p>
 					</div>
-				</div>
+				</ul>
 			</li>
 
 		<%

@@ -632,7 +632,7 @@
 
 		<execute function="AssertTextEquals" locator1="Portlet#TITLE" value1="Nested Applications" />
 
-		<execute function="AssertTextNotEquals" locator1="Message#INFO" value1="Drag portlets below to nest them." />
+		<execute function="AssertTextNotEquals" locator1="Message#INFO" value1="Drag applications below to nest them." />
 
 		<execute macro="NestedPortlets#viewPG">
 			<var name="portletColumnNumberTo" value="1" />

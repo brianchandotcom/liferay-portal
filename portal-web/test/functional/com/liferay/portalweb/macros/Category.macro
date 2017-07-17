@@ -94,24 +94,6 @@
 		<execute macro="PortletEntry#save" />
 	</command>
 
-	<command name="addWithNullTitleCP">
-		<var name="key_vocabularyName" value="${vocabularyName}" />
-
-		<var name="key_rowEntry" value="${vocabularyName}" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ADD_CATEGORY" value1="Add Category" />
-
-		<execute macro="PortletEntry#inputTitle">
-			<var name="title" value=" " />
-		</execute>
-
-		<execute macro="Button#clickSave" />
-
-		<execute function="AssertTextEquals" locator1="Message#ERROR_FIELD_REQUIRED" value1="This field is required." />
-	</command>
-
 	<command name="addPropertyCP">
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
 			<var name="menuItem" value="Edit" />
@@ -155,6 +137,24 @@
 		</if>
 
 		<execute macro="PortletEntry#save" />
+	</command>
+
+	<command name="addWithNullTitleCP">
+		<var name="key_vocabularyName" value="${vocabularyName}" />
+
+		<var name="key_rowEntry" value="${vocabularyName}" />
+
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#ADD_CATEGORY" value1="Add Category" />
+
+		<execute macro="PortletEntry#inputTitle">
+			<var name="title" value=" " />
+		</execute>
+
+		<execute macro="Button#clickSave" />
+
+		<execute function="AssertTextEquals" locator1="Message#ERROR_FIELD_REQUIRED" value1="This field is required." />
 	</command>
 
 	<command name="deleteByIconCP">

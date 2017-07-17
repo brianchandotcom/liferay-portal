@@ -838,6 +838,12 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 	private boolean _hasProjectDependencies(Project project) {
 		for (Configuration configuration : project.getConfigurations()) {
+			String name = configuration.getName();
+
+			if (name.startsWith("test")) {
+				continue;
+			}
+
 			for (Dependency dependency : configuration.getDependencies()) {
 				if (dependency instanceof ProjectDependency) {
 					return true;

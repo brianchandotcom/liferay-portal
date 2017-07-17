@@ -59,7 +59,7 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		_accessor = accessor;
 		_filterPrimary = filterPrimary;
 		_humanName = ServiceBuilder.toHumanName(name);
-		_methodName = TextFormatter.format(name, TextFormatter.G);
+		_methodName = ServiceBuilder.toMethodName(name);
 		_ejbName = ejbName;
 		_mappingTable = mappingTable;
 		_caseSensitive = caseSensitive;

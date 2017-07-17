@@ -132,10 +132,6 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		CPDefinition cpDefinition = _cpDefinitionService.fetchCPDefinition(
 			cpDefinitionId);
 
-		int workflowAction = ParamUtil.getInteger(
-			actionRequest, "workflowAction",
-			WorkflowConstants.ACTION_SAVE_DRAFT);
-
 		try {
 			if (cmd.equals(Constants.DELETE)) {
 				deleteCPDefinitions(actionRequest, false);
@@ -155,15 +151,6 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			}
 			else if (cmd.equals(Constants.RESTORE)) {
 				restoreTrashEntries(actionRequest);
-			}
-
-			if ((cpDefinition != null) &&
-				(workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT)) {
-
-				String redirect = getSaveAndContinueRedirect(
-					actionRequest, cpDefinition);
-
-				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 		}
 		catch (Exception e) {

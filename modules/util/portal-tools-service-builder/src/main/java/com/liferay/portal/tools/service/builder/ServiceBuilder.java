@@ -1678,9 +1678,13 @@ public class ServiceBuilder {
 		String methodName = method.getName();
 
 		if (methodName.equals("afterPropertiesSet") ||
+			methodName.equals("clearService") ||
 			methodName.equals("destroy") || methodName.equals("equals") ||
-			methodName.equals("getClass") || methodName.equals("hashCode") ||
-			methodName.equals("notify") || methodName.equals("notifyAll") ||
+			methodName.equals("getClass") || methodName.equals("getService") ||
+			methodName.equals("getWrappedService") ||
+			methodName.equals("hashCode") || methodName.equals("notify") ||
+			methodName.equals("notifyAll") ||
+			methodName.equals("setWrappedService") ||
 			methodName.equals("toString") || methodName.equals("wait")) {
 
 			return false;
@@ -1698,27 +1702,57 @@ public class ServiceBuilder {
 
 			return false;
 		}
-		else if (methodName.endsWith("Finder") &&
-				 (methodName.startsWith("get") ||
-				  methodName.startsWith("set"))) {
 
-			return false;
-		}
-		else if (methodName.endsWith("Persistence") &&
-				 (methodName.startsWith("get") ||
-				  methodName.startsWith("set"))) {
+		JavaClass javaClass = method.getParentClass();
 
-			return false;
-		}
-		else if (methodName.endsWith("Service") &&
-				 (methodName.startsWith("get") ||
-				  methodName.startsWith("set"))) {
+		String packageName = javaClass.getPackageName();
 
-			return false;
+		if (packageName.endsWith(".service.base")) {
+			if (!methodName.endsWith("Finder") &&
+				!methodName.endsWith("Persistence") &&
+				!methodName.endsWith("Service")) {
+
+				return true;
+			}
+
+			Type[] parameterTypes = method.getParameterTypes(true);
+			Type returnType = method.getReturnType(true);
+
+			Type checkType = null;
+
+			if (methodName.startsWith("get")) {
+				if (ArrayUtil.isEmpty(parameterTypes)) {
+					checkType = returnType;
+				}
+			}
+			else if (methodName.startsWith("set")) {
+				if ((parameterTypes != null) && (parameterTypes.length == 1)) {
+					checkType = parameterTypes[0];
+				}
+			}
+
+			if (checkType == null) {
+				return true;
+			}
+
+			String checkTypeName = checkType.getFullyQualifiedName();
+
+			int pos = checkTypeName.lastIndexOf(CharPool.PERIOD);
+
+			if (pos == -1) {
+				return true;
+			}
+
+			String checkPackageName = checkTypeName.substring(0, pos);
+
+			if (checkPackageName.endsWith(".persistence") ||
+				checkPackageName.endsWith(".service")) {
+
+				return false;
+			}
 		}
-		else {
-			return true;
-		}
+
+		return true;
 	}
 
 	public boolean isHBMCamelCasePropertyAccessor(String propertyName) {

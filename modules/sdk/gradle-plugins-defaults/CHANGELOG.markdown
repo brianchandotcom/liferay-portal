@@ -1727,6 +1727,12 @@ setting the project property `forced.deploy.dir`.
 - [LPS-73584]: Trigger the `-PsyncRelease` logic even when Gradle is invoked
 with the full path of the `baseline` task.
 
+## 4.0.4 - 2017-07-17
+
+### Fixed
+- [LPS-73652]: Ignore test project dependencies in the `printDependentArtifact`
+and `writeArtifactPublishCommands` tasks.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
@@ -1911,6 +1917,7 @@ with the full path of the `baseline` task.
 [LPS-73525]: https://issues.liferay.com/browse/LPS-73525
 [LPS-73584]: https://issues.liferay.com/browse/LPS-73584
 [LPS-73607]: https://issues.liferay.com/browse/LPS-73607
+[LPS-73652]: https://issues.liferay.com/browse/LPS-73652
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

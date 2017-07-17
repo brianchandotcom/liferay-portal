@@ -14,6 +14,7 @@
 
 package com.liferay.powwow.service.persistence.impl;
 
+import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -31,7 +32,6 @@ import com.liferay.powwow.model.PowwowMeeting;
 import com.liferay.powwow.model.PowwowMeetingConstants;
 import com.liferay.powwow.model.impl.PowwowMeetingImpl;
 import com.liferay.powwow.service.persistence.PowwowMeetingFinder;
-import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.Collections;
 import java.util.Iterator;
@@ -56,7 +56,7 @@ public class PowwowMeetingFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(COUNT_BY_U_S);
+			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_U_S);
 
 			sql = StringUtil.replace(
 				sql, "[$STATUSES$]", getStatusesSQL(statuses));
@@ -107,7 +107,7 @@ public class PowwowMeetingFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_U_S);
+			String sql = CustomSQLUtil.get(getClass(), FIND_BY_U_S);
 
 			sql = StringUtil.replace(
 				sql, "[$STATUSES$]", getStatusesSQL(statuses));

@@ -22,8 +22,11 @@ String currentLanguageId = LanguageUtil.getLanguageId(request);
 String emailSubjectParam = "emailSubject_" + currentLanguageId;
 String emailBodyParam = "emailBody_" + currentLanguageId;
 
-String defaultEmailSubject = ContentUtil.get(PortletPropsValues.POWWOW_INVITATION_EMAIL_SUBJECT);
-String defaultEmailBody = ContentUtil.get(PortletPropsValues.POWWOW_INVITATION_EMAIL_BODY);
+Class<?> jspClass = getClass();
+ClassLoader jspClassLoader = jspClass.getClassLoader();
+
+String defaultEmailSubject = ContentUtil.get(jspClassLoader, PortletPropsValues.POWWOW_INVITATION_EMAIL_SUBJECT);
+String defaultEmailBody = ContentUtil.get(jspClassLoader, PortletPropsValues.POWWOW_INVITATION_EMAIL_BODY);
 
 String emailSubject = PrefsParamUtil.getString(portletPreferences, request, emailSubjectParam, defaultEmailSubject);
 String emailBody = PrefsParamUtil.getString(portletPreferences, request, emailBodyParam, defaultEmailBody);

@@ -14,6 +14,7 @@
 
 package com.liferay.powwow.provider.bbb;
 
+import com.liferay.petra.content.ContentUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -32,7 +33,6 @@ import com.liferay.powwow.model.PowwowMeeting;
 import com.liferay.powwow.model.PowwowParticipantConstants;
 import com.liferay.powwow.model.PowwowServer;
 import com.liferay.powwow.provider.BasePowwowServiceProvider;
-import com.liferay.util.ContentUtil;
 
 import java.io.Serializable;
 
@@ -140,6 +140,7 @@ public class BBBPowwowServiceProvider extends BasePowwowServiceProvider {
 		sb.append("&welcome=");
 
 		String welcomeMessage = ContentUtil.get(
+			BBBPowwowServiceProvider.class.getClassLoader(),
 			"com/liferay/powwow/dependencies/meeting_welcome_message.tmpl");
 
 		sb.append(HtmlUtil.escapeURL(welcomeMessage));

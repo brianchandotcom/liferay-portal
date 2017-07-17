@@ -11,6 +11,6 @@
 	</info>
 
 	<dependencies defaultconf="default">
-		<dependency name="com.liferay.portal.dao.orm.custom.sql" org="com.liferay" rev="latest.integration" />
+		<dependency name="com.liferay.portal.dao.orm.custom.sql" org="com.liferay" rev="1.0.7" />
 	</dependencies>
 </ivy-module>

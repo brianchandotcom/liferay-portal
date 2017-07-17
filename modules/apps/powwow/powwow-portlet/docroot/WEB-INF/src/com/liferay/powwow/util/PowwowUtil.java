@@ -16,6 +16,7 @@ package com.liferay.powwow.util;
 
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
+import com.liferay.petra.content.ContentUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -59,7 +60,6 @@ import com.liferay.powwow.model.PowwowParticipantConstants;
 import com.liferay.powwow.provider.PowwowServiceProviderUtil;
 import com.liferay.powwow.service.PowwowMeetingLocalServiceUtil;
 import com.liferay.powwow.service.PowwowParticipantLocalServiceUtil;
-import com.liferay.util.ContentUtil;
 
 import java.text.Format;
 
@@ -202,11 +202,11 @@ public class PowwowUtil {
 		long powwowMeetingId = ParamUtil.getLong(
 			actionRequest, "powwowMeetingId");
 
-		String participantJSON = ParamUtil.getString(
-			actionRequest, "powwowParticipantData");
+		String powwowParticipantJSONString = ParamUtil.getString(
+			actionRequest, "powwowParticipantJSONString");
 
 		JSONArray participantsJSONArray = JSONFactoryUtil.createJSONArray(
-			participantJSON);
+			powwowParticipantJSONString);
 
 		for (int i = 0; i < participantsJSONArray.length(); i++) {
 			JSONObject participantJSONObject =
@@ -318,11 +318,13 @@ public class PowwowUtil {
 			portletPreferences.getValue(
 				"emailBody_" + powwowMeeting.getLanguageId(),
 				ContentUtil.get(
+					PowwowUtil.class.getClassLoader(),
 					PortletPropsValues.POWWOW_INVITATION_EMAIL_BODY)));
 		powwowSubscriptionSender.setSubject(
 			portletPreferences.getValue(
 				"emailSubject_" + powwowMeeting.getLanguageId(),
 				ContentUtil.get(
+					PowwowUtil.class.getClassLoader(),
 					PortletPropsValues.POWWOW_INVITATION_EMAIL_SUBJECT)));
 		powwowSubscriptionSender.setMailId(
 			"powwowMeeting", powwowMeeting.getPowwowMeetingId());

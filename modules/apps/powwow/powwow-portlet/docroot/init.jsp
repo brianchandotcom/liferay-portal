@@ -27,6 +27,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.calendar.model.CalendarBooking" %><%@
 page import="com.liferay.calendar.service.CalendarBookingServiceUtil" %><%@
+page import="com.liferay.petra.content.ContentUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
@@ -70,8 +71,7 @@ page import="com.liferay.powwow.service.permission.MeetingsPermission" %><%@
 page import="com.liferay.powwow.service.permission.PowwowMeetingPermission" %><%@
 page import="com.liferay.powwow.util.ActionKeys" %><%@
 page import="com.liferay.powwow.util.PortletPropsValues" %><%@
-page import="com.liferay.powwow.util.PowwowUtil" %><%@
-page import="com.liferay.util.ContentUtil" %>
+page import="com.liferay.powwow.util.PowwowUtil" %>
 
 <%@ page import="java.text.Format" %>
 

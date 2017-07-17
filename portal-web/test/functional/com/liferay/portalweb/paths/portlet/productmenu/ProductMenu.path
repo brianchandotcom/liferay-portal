@@ -286,7 +286,7 @@
 </tr>
 <tr>
 	<td>PRODUCT_MENU_TABS_EXPANDED_PANEL</td>
-	<td>//div[(@class='collapse panel-collapse in' or @class='panel-collapse collapse in' or @class='panel-collapse collapse show') and contains(@id,'${key_panelId}')]</td>
+	<td>//div[contains(@class,'collapse') and contains(@class,'panel-collapse') and contains(@class,'show') and contains(@id,'${key_panelId}')]</td>
 	<td></td>
 </tr>
 <tr>

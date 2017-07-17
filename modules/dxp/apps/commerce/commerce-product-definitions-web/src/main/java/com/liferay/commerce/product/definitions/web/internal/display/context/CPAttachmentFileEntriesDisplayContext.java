@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -72,7 +73,8 @@ public class CPAttachmentFileEntriesDisplayContext extends
 			CPInstanceHelper cpInstanceHelper,
 			DLMimeTypeDisplayContext dlMimeTypeDisplayContext,
 			HttpServletRequest httpServletRequest, ItemSelector itemSelector,
-			Portal portal)
+			Portal portal, WorkflowDefinitionLinkLocalService
+				workflowDefinitionLinkLocalService)
 		throws PortalException {
 
 		super(
@@ -89,6 +91,8 @@ public class CPAttachmentFileEntriesDisplayContext extends
 		_dlMimeTypeDisplayContext = dlMimeTypeDisplayContext;
 		_itemSelector = itemSelector;
 		_portal = portal;
+		_workflowDefinitionLinkLocalService =
+			workflowDefinitionLinkLocalService;
 
 		_type = ParamUtil.get(
 			httpServletRequest, "type",
@@ -211,11 +215,9 @@ public class CPAttachmentFileEntriesDisplayContext extends
 				WebKeys.THEME_DISPLAY);
 
 		int workflowDefinitionLinksCount =
-			WorkflowDefinitionLinkLocalServiceUtil.
-				getWorkflowDefinitionLinksCount(
-					themeDisplay.getCompanyId(),
-					WorkflowConstants.DEFAULT_GROUP_ID,
-					CPAttachmentFileEntry.class.getName());
+			_workflowDefinitionLinkLocalService.getWorkflowDefinitionLinksCount(
+				themeDisplay.getCompanyId(), WorkflowConstants.DEFAULT_GROUP_ID,
+				CPAttachmentFileEntry.class.getName());
 
 		if (workflowDefinitionLinksCount > 0) {
 			managementBarFilterItems.add(
@@ -346,6 +348,8 @@ public class CPAttachmentFileEntriesDisplayContext extends
 	private final DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
 	private final ItemSelector _itemSelector;
 	private final Portal _portal;
+	private final WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
 	private final int _type;
 
 }

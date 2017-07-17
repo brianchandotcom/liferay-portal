@@ -26,6 +26,7 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -74,7 +75,8 @@ public class ViewCPAttachmentFileEntriesMVCRenderCommand
 						_cpAttachmentFileEntryService,
 						_cpDefinitionOptionRelService, _cpInstanceHelper,
 						_dlMimeTypeDisplayContext, httpServletRequest,
-						_itemSelector, _portal);
+						_itemSelector, _portal,
+						_workflowDefinitionLinkLocalService);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -115,5 +117,9 @@ public class ViewCPAttachmentFileEntriesMVCRenderCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
 
 }

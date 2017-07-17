@@ -659,9 +659,13 @@ while (manageableCalendarsIterator.hasNext()) {
 		{
 			after: {
 				calendarRemoved: function(event) {
-					var calendarId = event.calendar.get('calendarId');
+					var calendar = event.calendar;
 
-					window.<portlet:namespace />reinvitableCalendarIds.push(calendarId);
+					if (calendar) {
+						var calendarId = calendar.get('calendarId');
+
+						window.<portlet:namespace />reinvitableCalendarIds.push(calendarId);
+					}
 				},
 				calendarsChange: function(event) {
 					var instance = this;

@@ -66,7 +66,7 @@ public class FriendlyURLEntryCacheModel implements CacheModel<FriendlyURLEntry>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -84,10 +84,8 @@ public class FriendlyURLEntryCacheModel implements CacheModel<FriendlyURLEntry>,
 		sb.append(classNameId);
 		sb.append(", classPK=");
 		sb.append(classPK);
-		sb.append(", urlTitle=");
-		sb.append(urlTitle);
-		sb.append(", main=");
-		sb.append(main);
+		sb.append(", defaultLanguageId=");
+		sb.append(defaultLanguageId);
 		sb.append("}");
 
 		return sb.toString();
@@ -125,14 +123,12 @@ public class FriendlyURLEntryCacheModel implements CacheModel<FriendlyURLEntry>,
 		friendlyURLEntryImpl.setClassNameId(classNameId);
 		friendlyURLEntryImpl.setClassPK(classPK);
 
-		if (urlTitle == null) {
-			friendlyURLEntryImpl.setUrlTitle(StringPool.BLANK);
+		if (defaultLanguageId == null) {
+			friendlyURLEntryImpl.setDefaultLanguageId(StringPool.BLANK);
 		}
 		else {
-			friendlyURLEntryImpl.setUrlTitle(urlTitle);
+			friendlyURLEntryImpl.setDefaultLanguageId(defaultLanguageId);
 		}
-
-		friendlyURLEntryImpl.setMain(main);
 
 		friendlyURLEntryImpl.resetOriginalValues();
 
@@ -154,9 +150,7 @@ public class FriendlyURLEntryCacheModel implements CacheModel<FriendlyURLEntry>,
 		classNameId = objectInput.readLong();
 
 		classPK = objectInput.readLong();
-		urlTitle = objectInput.readUTF();
-
-		main = objectInput.readBoolean();
+		defaultLanguageId = objectInput.readUTF();
 	}
 
 	@Override
@@ -181,14 +175,12 @@ public class FriendlyURLEntryCacheModel implements CacheModel<FriendlyURLEntry>,
 
 		objectOutput.writeLong(classPK);
 
-		if (urlTitle == null) {
+		if (defaultLanguageId == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
-			objectOutput.writeUTF(urlTitle);
+			objectOutput.writeUTF(defaultLanguageId);
 		}
-
-		objectOutput.writeBoolean(main);
 	}
 
 	public String uuid;
@@ -199,6 +191,5 @@ public class FriendlyURLEntryCacheModel implements CacheModel<FriendlyURLEntry>,
 	public long modifiedDate;
 	public long classNameId;
 	public long classPK;
-	public String urlTitle;
-	public boolean main;
+	public String defaultLanguageId;
 }

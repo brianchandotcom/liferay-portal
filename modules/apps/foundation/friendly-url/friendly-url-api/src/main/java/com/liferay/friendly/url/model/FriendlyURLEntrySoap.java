@@ -41,8 +41,7 @@ public class FriendlyURLEntrySoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
-		soapModel.setUrlTitle(model.getUrlTitle());
-		soapModel.setMain(model.getMain());
+		soapModel.setDefaultLanguageId(model.getDefaultLanguageId());
 
 		return soapModel;
 	}
@@ -161,24 +160,12 @@ public class FriendlyURLEntrySoap implements Serializable {
 		_classPK = classPK;
 	}
 
-	public String getUrlTitle() {
-		return _urlTitle;
+	public String getDefaultLanguageId() {
+		return _defaultLanguageId;
 	}
 
-	public void setUrlTitle(String urlTitle) {
-		_urlTitle = urlTitle;
-	}
-
-	public boolean getMain() {
-		return _main;
-	}
-
-	public boolean isMain() {
-		return _main;
-	}
-
-	public void setMain(boolean main) {
-		_main = main;
+	public void setDefaultLanguageId(String defaultLanguageId) {
+		_defaultLanguageId = defaultLanguageId;
 	}
 
 	private String _uuid;
@@ -189,6 +176,5 @@ public class FriendlyURLEntrySoap implements Serializable {
 	private Date _modifiedDate;
 	private long _classNameId;
 	private long _classPK;
-	private String _urlTitle;
-	private boolean _main;
+	private String _defaultLanguageId;
 }

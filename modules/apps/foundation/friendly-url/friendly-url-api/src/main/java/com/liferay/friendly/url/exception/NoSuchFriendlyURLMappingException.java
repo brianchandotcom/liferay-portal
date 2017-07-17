@@ -11,32 +11,31 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-
-package com.liferay.friendly.url.model.impl;
+package com.liferay.friendly.url.exception;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.friendly.url.model.FriendlyURLEntry;
-import com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 
 /**
- * @author Pavel Savinov
+ * @author Brian Wing Shun Chan
  */
 @ProviderType
-public class FriendlyURLEntryImpl extends FriendlyURLEntryBaseImpl {
+public class NoSuchFriendlyURLMappingException extends NoSuchModelException {
 
-	@Override
-	public boolean isMain() throws PortalException {
-		FriendlyURLEntry friendlyURLEntry =
-			FriendlyURLEntryLocalServiceUtil.getMainFriendlyURLEntry(
-				getGroupId(), getClassNameId(), getClassPK());
+	public NoSuchFriendlyURLMappingException() {
+	}
 
-		if (friendlyURLEntry.getPrimaryKey() == getPrimaryKey()) {
-			return true;
-		}
+	public NoSuchFriendlyURLMappingException(String msg) {
+		super(msg);
+	}
 
-		return false;
+	public NoSuchFriendlyURLMappingException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public NoSuchFriendlyURLMappingException(Throwable cause) {
+		super(cause);
 	}
 
 }

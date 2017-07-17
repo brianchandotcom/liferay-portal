@@ -1912,6 +1912,20 @@ to version 2.0.34.
 1.0.423.
 - [LPS-73584]: Update the [Liferay Gradle Util] dependency to version 1.0.29.
 
+## 3.4.5 - 2017-07-14
+
+### Changed
+- [LPS-73470]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.0.35.
+- [LPS-73470]: Update the [Liferay Source Formatter] dependency to version
+1.0.424.
+
+## 3.4.6 - 2017-07-17
+
+### Added
+- [LPS-73642]: Apply the [Liferay Gradle Plugins Lang Builder] to theme
+projects. By default, the language directory is set as `src/WEB-INF/src/content`.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -2079,9 +2093,11 @@ to version 2.0.34.
 [LPS-73156]: https://issues.liferay.com/browse/LPS-73156
 [LPS-73261]: https://issues.liferay.com/browse/LPS-73261
 [LPS-73383]: https://issues.liferay.com/browse/LPS-73383
+[LPS-73470]: https://issues.liferay.com/browse/LPS-73470
 [LPS-73472]: https://issues.liferay.com/browse/LPS-73472
 [LPS-73489]: https://issues.liferay.com/browse/LPS-73489
 [LPS-73495]: https://issues.liferay.com/browse/LPS-73495
 [LPS-73525]: https://issues.liferay.com/browse/LPS-73525
 [LPS-73584]: https://issues.liferay.com/browse/LPS-73584
+[LPS-73642]: https://issues.liferay.com/browse/LPS-73642
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

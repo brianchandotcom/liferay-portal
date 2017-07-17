@@ -130,10 +130,6 @@ public class NpmInstallTask extends ExecuteNpmTask {
 		return _nodeModulesCacheNativeSync;
 	}
 
-	public boolean isNodeModulesCacheRemoveBinDirs() {
-		return _nodeModulesCacheRemoveBinDirs;
-	}
-
 	public boolean isRemoveShrinkwrappedUrls() {
 		return GradleUtil.toBoolean(_removeShrinkwrappedUrls);
 	}
@@ -146,12 +142,6 @@ public class NpmInstallTask extends ExecuteNpmTask {
 		boolean nodeModulesCacheNativeSync) {
 
 		_nodeModulesCacheNativeSync = nodeModulesCacheNativeSync;
-	}
-
-	public void setNodeModulesCacheRemoveBinDirs(
-		boolean nodeModulesCacheRemoveBinDirs) {
-
-		_nodeModulesCacheRemoveBinDirs = nodeModulesCacheRemoveBinDirs;
 	}
 
 	/**
@@ -318,8 +308,6 @@ public class NpmInstallTask extends ExecuteNpmTask {
 		File nodeModulesDir = npmInstallTask.getNodeModulesDir();
 
 		boolean nativeSync = npmInstallTask.isNodeModulesCacheNativeSync();
-		boolean removeBinDirs =
-			npmInstallTask.isNodeModulesCacheRemoveBinDirs();
 
 		if (reset) {
 			project.delete(nodeModulesCacheDir);
@@ -335,16 +323,12 @@ public class NpmInstallTask extends ExecuteNpmTask {
 			FileUtil.syncDir(
 				project, nodeModulesCacheDir, nodeModulesDir, nativeSync);
 
-			if (removeBinDirs) {
-				_removeBinDirLinks(logger, nodeModulesDir);
-			}
+			_removeBinDirLinks(logger, nodeModulesDir);
 		}
 		else {
 			npmInstallTask._npmInstall(reset);
 
-			if (removeBinDirs) {
-				_removeBinDirLinks(logger, nodeModulesDir);
-			}
+			_removeBinDirLinks(logger, nodeModulesDir);
 
 			if (logger.isLifecycleEnabled()) {
 				logger.lifecycle(
@@ -356,7 +340,7 @@ public class NpmInstallTask extends ExecuteNpmTask {
 				project, nodeModulesDir, nodeModulesCacheDir, nativeSync);
 		}
 
-		if (removeBinDirs && !OSDetector.isWindows()) {
+		if (!OSDetector.isWindows()) {
 			_createBinDirLinks(logger, nodeModulesDir);
 		}
 	}
@@ -464,7 +448,6 @@ public class NpmInstallTask extends ExecuteNpmTask {
 
 	private Object _nodeModulesCacheDir;
 	private boolean _nodeModulesCacheNativeSync = true;
-	private boolean _nodeModulesCacheRemoveBinDirs = true;
 	private Object _removeShrinkwrappedUrls;
 
 }

@@ -23,6 +23,9 @@
 
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
+
+		<!-- Localized entity -->
+
 		<localized-entity>
 			<column name="groupId" type="long" />
 			<column name="classNameId" type="long" />
@@ -31,17 +34,17 @@
 
 			<!-- Finder methods -->
 
-			<finder name="G_C_C_U" return-type="FriendlyURLEntryLocalization" unique="true">
+			<finder name="G_C_U" return-type="FriendlyURLEntryLocalization" unique="true">
 				<finder-column name="groupId" />
-				<finder-column name="companyId" />
 				<finder-column name="classNameId" />
 				<finder-column name="urlTitle" />
 			</finder>
 		</localized-entity>
 
-		<finder name="G_C_C_C" return-type="Collection">
+		<!-- Finder methods -->
+
+		<finder name="G_C_C" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="companyId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>

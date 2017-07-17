@@ -72,10 +72,6 @@ public class FileUtil {
 		final List<PathMatcher> pathMatchers = new ArrayList<>();
 
 		for (String include : includes) {
-			if (OSDetector.isWindows()) {
-				include = include.replace("/", "\\");
-			}
-
 			pathMatchers.add(fileSystem.getPathMatcher("glob:" + include));
 		}
 

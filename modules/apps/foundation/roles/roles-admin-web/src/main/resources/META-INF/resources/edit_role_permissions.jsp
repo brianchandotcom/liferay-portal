@@ -423,14 +423,14 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 <aui:script>
 	function <portlet:namespace />updateActions(selected, unselected) {
 		var form = AUI.$(document.<portlet:namespace />fm);
-		var oldSelectedPermissions = selected.split(",");
-		var oldUnselectedPermissions = unselected.split(",");
+		var oldSelectedPermissions = selected.split(',');
+		var oldUnselectedPermissions = unselected.split(',');
 
 		var selectedPermissionsString = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
 		var unselectedPermissionsString = Liferay.Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds');
 
-		var selectedPermissions = selectedPermissionsString.split(",");
-		var unselectedPermissions = unselectedPermissionsString.split(",");
+		var selectedPermissions = selectedPermissionsString.split(',');
+		var unselectedPermissions = unselectedPermissionsString.split(',');
 
 		if (AUI._.intersection(selectedPermissions, oldUnselectedPermissions).length || AUI._.intersection(unselectedPermissions, oldSelectedPermissions).length) {
 			if (!confirm('<liferay-ui:message key="changing-these-permissions-will-overwrite-all-permissions-of-that-type-previously-configured-on-this-entity" />')) {

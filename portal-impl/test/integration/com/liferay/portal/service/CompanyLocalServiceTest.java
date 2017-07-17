@@ -254,6 +254,32 @@ public class CompanyLocalServiceTest {
 	}
 
 	@Test
+	public void testAddAndDeleteCompanyWithLayoutSetPrototypeLinkedUserGroup()
+		throws Exception {
+
+		Company company = addCompany();
+
+		long companyId = company.getCompanyId();
+
+		long userId = UserLocalServiceUtil.getDefaultUserId(companyId);
+
+		Group group = GroupTestUtil.addGroup(
+			companyId, userId, GroupConstants.DEFAULT_PARENT_GROUP_ID);
+
+		UserGroup userGroup = UserGroupTestUtil.addUserGroup(
+			group.getGroupId());
+
+		LayoutSetPrototype layoutSetPrototype = addLayoutSetPrototype(
+			companyId, userId, RandomTestUtil.randomString());
+
+		SitesUtil.updateLayoutSetPrototypesLinks(
+			userGroup.getGroup(), layoutSetPrototype.getLayoutSetPrototypeId(),
+			0, true, false);
+
+		CompanyLocalServiceUtil.deleteCompany(companyId);
+	}
+
+	@Test
 	public void testAddAndDeleteCompanyWithParentGroup() throws Exception {
 		Company company = addCompany();
 

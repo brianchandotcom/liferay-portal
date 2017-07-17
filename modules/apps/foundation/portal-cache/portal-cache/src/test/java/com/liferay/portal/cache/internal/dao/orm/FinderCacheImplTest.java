@@ -28,6 +28,7 @@ import java.util.Collections;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -35,17 +36,29 @@ import org.junit.Test;
  */
 public class FinderCacheImplTest {
 
-	@Before
-	public void setUp() {
-		RegistryUtil.setRegistry(new BasicRegistryImpl());
+	@BeforeClass
+	public static void setUpClass() {
+		_props = (Props)ProxyUtil.newProxyInstance(
+			_classLoader, new Class<?>[] {Props.class},
+			new PropsInvocationHandler());
 
-		_classLoader = FinderCacheImplTest.class.getClassLoader();
+		_serializedMultiVMPool = (MultiVMPool)ProxyUtil.newProxyInstance(
+			_classLoader, new Class<?>[] {MultiVMPool.class},
+			new MultiVMPoolInvocationHandler(_classLoader, true));
+		_notSerializedMultiVMPool = (MultiVMPool)ProxyUtil.newProxyInstance(
+			_classLoader, new Class<?>[] {MultiVMPool.class},
+			new MultiVMPoolInvocationHandler(_classLoader, false));
+
+		RegistryUtil.setRegistry(new BasicRegistryImpl());
 
 		CacheKeyGeneratorUtil cacheKeyGeneratorUtil =
 			new CacheKeyGeneratorUtil();
 
 		cacheKeyGeneratorUtil.setDefaultCacheKeyGenerator(_cacheKeyGenerator);
+	}
 
+	@Before
+	public void setUp() {
 		_finderPath = new FinderPath(
 			true, true, FinderCacheImplTest.class,
 			FinderCacheImplTest.class.getName(), "test",
@@ -53,23 +66,19 @@ public class FinderCacheImplTest {
 
 		_finderCacheImpl = new FinderCacheImpl();
 
-		Props props = (Props)ProxyUtil.newProxyInstance(
-			_classLoader, new Class<?>[] {Props.class},
-			new PropsInvocationHandler());
-
-		_finderCacheImpl.setProps(props);
+		_finderCacheImpl.setProps(_props);
 	}
 
 	@Test
 	public void testPutEmptyListInvalid() {
-		_assertPutEmptyListInvalid(false);
-		_assertPutEmptyListInvalid(true);
+		_assertPutEmptyListInvalid(_notSerializedMultiVMPool);
+		_assertPutEmptyListInvalid(_serializedMultiVMPool);
 	}
 
 	@Test
 	public void testPutEmptyListValid() {
-		_assertPutEmptyListValid(false);
-		_assertPutEmptyListValid(true);
+		_assertPutEmptyListValid(_notSerializedMultiVMPool);
+		_assertPutEmptyListValid(_serializedMultiVMPool);
 	}
 
 	@Test
@@ -79,11 +88,7 @@ public class FinderCacheImplTest {
 			_cacheKeyGenerator.getCacheKey(_key2));
 	}
 
-	private void _activateFinderCache(boolean serialized) {
-		MultiVMPool multiVMPool = (MultiVMPool)ProxyUtil.newProxyInstance(
-			_classLoader, new Class<?>[] {MultiVMPool.class},
-			new MultiVMPoolInvocationHandler(_classLoader, serialized));
-
+	private void _activateFinderCache(MultiVMPool multiVMPool) {
 		EntityCacheImpl entityCacheImpl = new EntityCacheImpl();
 
 		entityCacheImpl.setMultiVMPool(multiVMPool);
@@ -95,8 +100,8 @@ public class FinderCacheImplTest {
 		_finderCacheImpl.activate();
 	}
 
-	private void _assertPutEmptyListInvalid(boolean serialized) {
-		_activateFinderCache(serialized);
+	private void _assertPutEmptyListInvalid(MultiVMPool multiVMPool) {
+		_activateFinderCache(multiVMPool);
 
 		_finderCacheImpl.putResult(
 			_finderPath, _key1, Collections.emptyList(), true);
@@ -106,8 +111,8 @@ public class FinderCacheImplTest {
 		Assert.assertNull(result);
 	}
 
-	private void _assertPutEmptyListValid(boolean serialized) {
-		_activateFinderCache(serialized);
+	private void _assertPutEmptyListValid(MultiVMPool multiVMPool) {
+		_activateFinderCache(multiVMPool);
 
 		_finderCacheImpl.putResult(
 			_finderPath, _key1, Collections.emptyList(), true);
@@ -119,10 +124,14 @@ public class FinderCacheImplTest {
 
 	private static final CacheKeyGenerator _cacheKeyGenerator =
 		new HashCodeHexStringCacheKeyGenerator();
+	private static final ClassLoader _classLoader =
+		FinderCacheImplTest.class.getClassLoader();
 	private static final String[] _key1 = new String[] {"home"};
 	private static final String[] _key2 = new String[] {"j1me"};
+	private static MultiVMPool _notSerializedMultiVMPool;
+	private static Props _props;
+	private static MultiVMPool _serializedMultiVMPool;
 
-	private ClassLoader _classLoader;
 	private FinderCacheImpl _finderCacheImpl;
 	private FinderPath _finderPath;
 

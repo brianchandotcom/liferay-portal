@@ -310,7 +310,7 @@ public class InstrumentationAgent {
 
 			sb.append("%n[Whip] %s is not fully covered.%n[Whip]Branch ");
 			sb.append("coverage rate : %.2f, line coverage rate : ");
-			sb.append("%.2f.%n[Whip]");
+			sb.append("%.2f.%n");
 
 			System.out.printf(
 				sb.toString(), classData.getName(),

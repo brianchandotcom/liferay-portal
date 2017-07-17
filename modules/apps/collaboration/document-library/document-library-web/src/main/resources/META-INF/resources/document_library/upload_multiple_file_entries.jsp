@@ -152,7 +152,7 @@ if (portletTitleBasedNavigation) {
 
 													selectedItems.removeClass('selectable').removeClass('selected').addClass('upload-error');
 
-													selectedItems.append('<span class="error-message"><%= UnicodeLanguageUtil.get(request, "an-unexpected-error-occurred-while-deleting-the-file") %></span>');
+													selectedItems.append('<span class="card-bottom error-message"><%= UnicodeLanguageUtil.get(request, "an-unexpected-error-occurred-while-deleting-the-file") %></span>');
 
 													selectedItems.all('input').remove(true);
 
@@ -187,16 +187,16 @@ if (portletTitleBasedNavigation) {
 															}
 
 															if (originalFileName === item.fileName) {
-																childHTML = '<span class="success-message"><%= UnicodeLanguageUtil.get(request, "successfully-saved") %></span>';
+																childHTML = '<span class="card-bottom success-message"><%= UnicodeLanguageUtil.get(request, "successfully-saved") %></span>';
 															}
 															else {
-																childHTML = '<span class="success-message"><%= UnicodeLanguageUtil.get(request, "successfully-saved") %> (' + item.fileName + ')</span>';
+																childHTML = '<span class="card-bottom success-message"><%= UnicodeLanguageUtil.get(request, "successfully-saved") %> (' + item.fileName + ')</span>';
 															}
 														}
 														else {
 															cssClass = 'upload-error';
 
-															childHTML = '<span class="error-message">' + item.errorMessage + '</span>';
+															childHTML = '<span class="card-bottom error-message">' + item.errorMessage + '</span>';
 														}
 
 														li.addClass(cssClass);

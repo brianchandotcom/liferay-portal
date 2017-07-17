@@ -149,7 +149,6 @@ public class FriendlyURLEntryStagedModelRepository
 			friendlyURLEntryLocalization.setUrlTitle(
 				_friendlyURLEntryLocalService.getUniqueUrlTitle(
 					friendlyURLEntry.getGroupId(),
-					friendlyURLEntry.getCompanyId(),
 					friendlyURLEntry.getClassNameId(),
 					friendlyURLEntry.getClassPK(),
 					friendlyURLEntryLocalization.getUrlTitle()));

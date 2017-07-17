@@ -426,9 +426,12 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 		var oldSelectedPermissions = selected.split(",");
 		var oldUnselectedPermissions = unselected.split(",");
 
+		var selectedPermissionsString = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
+		var unselectedPermissionsString = Liferay.Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds');
+
 		form.fm('redirect').val('<%= HtmlUtil.escapeJS(portletURL.toString()) %>');
-		var selectedPermissions = form.fm('selectedTargets').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-		var unselectedPermissions = form.fm('unselectedTargets').val(Liferay.Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'));
+		var selectedPermissions = form.fm('selectedTargets').val(selectedPermissionsString);
+		var unselectedPermissions = form.fm('unselectedTargets').val(unselectedPermissionsString);
 
 		selectedPermissions = String(selectedPermissions.val()).split(",");
 		unselectedPermissions = String(unselectedPermissions.val()).split(",");

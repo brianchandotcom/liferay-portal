@@ -429,10 +429,6 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 		var selectedPermissionsString = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
 		var unselectedPermissionsString = Liferay.Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds');
 
-		form.fm('redirect').val('<%= HtmlUtil.escapeJS(portletURL.toString()) %>');
-		form.fm('selectedTargets').val(selectedPermissionsString);
-		form.fm('unselectedTargets').val(unselectedPermissionsString);
-
 		var selectedPermissions = selectedPermissionsString.split(",");
 		var unselectedPermissions = unselectedPermissionsString.split(",");
 
@@ -441,6 +437,10 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 				return;
 			}
 		}
+
+		form.fm('redirect').val('<%= HtmlUtil.escapeJS(portletURL.toString()) %>');
+		form.fm('selectedTargets').val(selectedPermissionsString);
+		form.fm('unselectedTargets').val(unselectedPermissionsString);
 
 		submitForm(form);
 	}

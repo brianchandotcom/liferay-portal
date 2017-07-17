@@ -290,6 +290,10 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#assertCpOptionSet">
 			<var name="notSetCpOption1" value="required" />
 			<var name="notSetCpOption2" value="contributor" />
@@ -338,6 +342,10 @@
 		</execute>
 
 		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
 
 		<execute macro="CommerceOptions#assertTwoCpOptionsSet">
 			<var name="notSetCpOption" value="required" />
@@ -393,6 +401,10 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#assertTwoCpOptionsSet">
 			<var name="notSetCpOption" value="required" />
 			<var name="setCpOption1" value="facetable" />
@@ -446,6 +458,10 @@
 		</execute>
 
 		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
 
 		<execute macro="CommerceOptions#assertTwoCpOptionsSet">
 			<var name="notSetCpOption" value="required" />
@@ -501,6 +517,10 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#assertTwoCpOptionsSet">
 			<var name="notSetCpOption" value="required" />
 			<var name="setCpOption1" value="facetable" />
@@ -554,6 +574,10 @@
 		</execute>
 
 		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
 
 		<execute macro="CommerceOptions#assertTwoCpOptionsSet">
 			<var name="notSetCpOption" value="required" />
@@ -609,6 +633,10 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#assertTwoCpOptionsSet">
 			<var name="notSetCpOption" value="required" />
 			<var name="setCpOption1" value="facetable" />
@@ -658,6 +686,10 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#assertCpOptionSet">
 			<var name="notSetCpOption1" value="required" />
 			<var name="notSetCpOption2" value="contributor" />
@@ -702,6 +734,10 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#assertCpOptionSet">
 			<var name="notSetCpOption1" value="required" />
 			<var name="notSetCpOption2" value="contributor" />
@@ -745,6 +781,10 @@
 		<execute function="Check" locator1="CommerceEntry#FACETABLE_CHECKBOX" value1="Facetable" />
 
 		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
 
 		<execute macro="CommerceOptions#assertCpOptionSet">
 			<var name="notSetCpOption1" value="required" />
@@ -794,6 +834,10 @@
 		</execute>
 
 		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
 
 		<execute macro="CommerceOptions#assertTwoCpOptionsSet">
 			<var name="notSetCpOption" value="contributor" />
@@ -851,6 +895,10 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#assertAllCpOptionsSet">
 			<var name="setCpOption1" value="facetable" />
 			<var name="setCpOption2" value="required" />
@@ -875,6 +923,10 @@
 		</execute>
 
 		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
 
 		<execute macro="CommerceOptions#assertAllCpOptionsSet">
 			<var name="setCpOption1" value="facetable" />
@@ -901,6 +953,10 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#assertAllCpOptionsSet">
 			<var name="setCpOption1" value="facetable" />
 			<var name="setCpOption2" value="required" />
@@ -925,6 +981,10 @@
 		</execute>
 
 		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
 
 		<execute macro="CommerceOptions#assertAllCpOptionsSet">
 			<var name="setCpOption1" value="facetable" />
@@ -951,6 +1011,10 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#assertAllCpOptionsSet">
 			<var name="setCpOption1" value="facetable" />
 			<var name="setCpOption2" value="required" />
@@ -976,6 +1040,10 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#assertAllCpOptionsSet">
 			<var name="setCpOption1" value="facetable" />
 			<var name="setCpOption2" value="required" />
@@ -998,6 +1066,10 @@
 		</execute>
 
 		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
 
 		<execute macro="CommerceOptions#assertTwoCpOptionsSet">
 			<var name="notSetCpOption" value="contributor" />
@@ -1053,6 +1125,10 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#assertTwoCpOptionsSet">
 			<var name="notSetCpOption" value="contributor" />
 			<var name="setCpOption1" value="facetable" />
@@ -1106,6 +1182,10 @@
 		</execute>
 
 		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
 
 		<execute macro="CommerceOptions#assertTwoCpOptionsSet">
 			<var name="notSetCpOption" value="contributor" />
@@ -1161,6 +1241,10 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#assertTwoCpOptionsSet">
 			<var name="notSetCpOption" value="contributor" />
 			<var name="setCpOption1" value="facetable" />
@@ -1215,6 +1299,10 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#assertTwoCpOptionsSet">
 			<var name="notSetCpOption" value="contributor" />
 			<var name="setCpOption1" value="facetable" />
@@ -1264,6 +1352,10 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#assertCpOptionSet">
 			<var name="notSetCpOption1" value="required" />
 			<var name="notSetCpOption2" value="contributor" />
@@ -1307,6 +1399,10 @@
 		<execute function="Check" locator1="CommerceEntry#FACETABLE_CHECKBOX" value1="Facetable" />
 
 		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
 
 		<execute macro="CommerceOptions#assertCpOptionSet">
 			<var name="notSetCpOption1" value="required" />
@@ -1510,6 +1606,10 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#assertCpOptionSet">
 			<var name="notSetCpOption1" value="facetable" />
 			<var name="notSetCpOption2" value="contributor" />
@@ -1558,6 +1658,10 @@
 		</execute>
 
 		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
 
 		<execute macro="CommerceOptions#assertTwoCpOptionsSet">
 			<var name="notSetCpOption" value="facetable" />
@@ -1613,6 +1717,10 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#assertTwoCpOptionsSet">
 			<var name="notSetCpOption" value="facetable" />
 			<var name="setCpOption1" value="required" />
@@ -1666,6 +1774,10 @@
 		</execute>
 
 		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
 
 		<execute macro="CommerceOptions#assertTwoCpOptionsSet">
 			<var name="notSetCpOption" value="facetable" />
@@ -1721,6 +1833,10 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#assertTwoCpOptionsSet">
 			<var name="notSetCpOption" value="facetable" />
 			<var name="setCpOption1" value="required" />
@@ -1774,6 +1890,10 @@
 		</execute>
 
 		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
 
 		<execute macro="CommerceOptions#assertTwoCpOptionsSet">
 			<var name="notSetCpOption" value="facetable" />
@@ -1829,6 +1949,10 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#assertTwoCpOptionsSet">
 			<var name="notSetCpOption" value="facetable" />
 			<var name="setCpOption1" value="required" />
@@ -1878,6 +2002,10 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#assertCpOptionSet">
 			<var name="notSetCpOption1" value="facetable" />
 			<var name="notSetCpOption2" value="contributor" />
@@ -1921,6 +2049,10 @@
 		<execute function="Check" locator1="CommerceEntry#REQUIRED_CHECKBOX" value1="Required" />
 
 		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
 
 		<execute macro="CommerceOptions#assertCpOptionSet">
 			<var name="notSetCpOption1" value="facetable" />
@@ -1966,6 +2098,10 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#assertCpOptionSet">
 			<var name="notSetCpOption1" value="facetable" />
 			<var name="notSetCpOption2" value="contributor" />
@@ -2010,6 +2146,10 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#assertCpOptionSet">
 			<var name="notSetCpOption1" value="facetable" />
 			<var name="notSetCpOption2" value="contributor" />
@@ -2053,6 +2193,10 @@
 		<execute function="Check" locator1="CommerceEntry#REQUIRED_CHECKBOX" value1="Required" />
 
 		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
 
 		<execute macro="CommerceOptions#assertCpOptionSet">
 			<var name="notSetCpOption1" value="facetable" />
@@ -2215,6 +2359,10 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#assertCpOptionSet">
 			<var name="notSetCpOption1" value="facetable" />
 			<var name="notSetCpOption2" value="required" />
@@ -2232,6 +2380,10 @@
 		<execute function="Check" locator1="CommerceEntry#SKU_CONTRIBUTOR_CHECKBOX" value1="SKU Contributor" />
 
 		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
 
 		<execute macro="CommerceOptions#assertCpOptionSet">
 			<var name="notSetCpOption1" value="facetable" />
@@ -2251,6 +2403,10 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#assertCpOptionSet">
 			<var name="notSetCpOption1" value="facetable" />
 			<var name="notSetCpOption2" value="required" />
@@ -2268,6 +2424,10 @@
 		<execute function="Check" locator1="CommerceEntry#SKU_CONTRIBUTOR_CHECKBOX" value1="SKU Contributor" />
 
 		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
 
 		<execute macro="CommerceOptions#assertCpOptionSet">
 			<var name="notSetCpOption1" value="facetable" />
@@ -2287,6 +2447,10 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#assertCpOptionSet">
 			<var name="notSetCpOption1" value="facetable" />
 			<var name="notSetCpOption2" value="required" />
@@ -2304,6 +2468,10 @@
 		<execute function="Check" locator1="CommerceEntry#SKU_CONTRIBUTOR_CHECKBOX" value1="SKU Contributor" />
 
 		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
 
 		<execute macro="CommerceOptions#assertCpOptionSet">
 			<var name="notSetCpOption1" value="facetable" />

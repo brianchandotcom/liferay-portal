@@ -432,10 +432,8 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 		var selectedPermissions = selectedPermissionsString.split(',');
 		var unselectedPermissions = unselectedPermissionsString.split(',');
 
-		if (AUI._.intersection(selectedPermissions, oldUnselectedPermissions).length || AUI._.intersection(unselectedPermissions, oldSelectedPermissions).length) {
-			if (!confirm('<liferay-ui:message key="changing-these-permissions-will-overwrite-all-permissions-of-that-type-previously-configured-on-this-entity" />')) {
-				return;
-			}
+		if ((AUI._.intersection(selectedPermissions, oldUnselectedPermissions).length || AUI._.intersection(unselectedPermissions, oldSelectedPermissions).length) && !confirm('<liferay-ui:message key="changing-these-permissions-will-overwrite-all-permissions-of-that-type-previously-configured-on-this-entity" />')) {
+			return;
 		}
 
 		form.fm('redirect').val('<%= HtmlUtil.escapeJS(portletURL.toString()) %>');

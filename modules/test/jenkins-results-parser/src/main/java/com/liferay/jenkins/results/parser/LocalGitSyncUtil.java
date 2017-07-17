@@ -730,12 +730,12 @@ public class LocalGitSyncUtil {
 					return cacheBranchName;
 				}
 
+				gitWorkingDirectory.fetch(
+					cacheBranchName, senderBranchName, senderRemoteConfig);
+
 				updateLocalUpstreamBranch(
 					gitWorkingDirectory, upstreamBranchName, upstreamBranchSHA,
 					upstreamRemoteConfig);
-
-				gitWorkingDirectory.fetch(
-					cacheBranchName, senderBranchName, senderRemoteConfig);
 
 				gitWorkingDirectory.createLocalBranch(
 					cacheBranchName, true, senderBranchSHA);

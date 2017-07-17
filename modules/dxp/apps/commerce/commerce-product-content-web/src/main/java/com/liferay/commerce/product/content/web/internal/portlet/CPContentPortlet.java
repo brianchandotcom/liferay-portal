@@ -15,11 +15,24 @@
 package com.liferay.commerce.product.content.web.internal.portlet;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.constants.CPWebKeys;
+import com.liferay.commerce.product.content.web.internal.display.context.CPContentDisplayContext;
+import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
+import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.io.IOException;
 
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -48,4 +61,34 @@ import org.osgi.service.component.annotations.Component;
 	service = {CPContentPortlet.class, Portlet.class}
 )
 public class CPContentPortlet extends MVCPortlet {
+
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		CPDefinition cpDefinition = (CPDefinition)renderRequest.getAttribute(
+			CPWebKeys.CP_DEFINITION);
+
+		CPContentDisplayContext cpContentDisplayContext =
+			new CPContentDisplayContext(
+				cpDefinition, _cpAttachmentFileEntryLocalService, _portal,
+				_cpInstanceHelper);
+
+		renderRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT, cpContentDisplayContext);
+
+		super.render(renderRequest, renderResponse);
+	}
+
+	@Reference
+	private CPAttachmentFileEntryLocalService
+		_cpAttachmentFileEntryLocalService;
+
+	@Reference
+	private CPInstanceHelper _cpInstanceHelper;
+
+	@Reference
+	private Portal _portal;
+
 }

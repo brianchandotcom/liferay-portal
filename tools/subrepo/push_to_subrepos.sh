@@ -112,9 +112,9 @@ if [[ "${PWD}" != *"liferay-portal/tools/subrepo" ]]; then
 	error "This script can only be run from within the liferay-portal repository."
 fi
 
-# if [[ "$(git rev-parse --abbrev-ref HEAD)" != "master" ]]; then
-# 	error "This script can only be run from the master branch."
-# fi
+if [[ "$(git rev-parse --abbrev-ref HEAD)" != "master" ]]; then
+	error "This script can only be run from the master branch."
+fi
 
 if [[ ! -e ../../../liferay-portal-ee ]]; then
 	error "liferay-portal-ee does not exist at ../../../liferay-portal-ee"

@@ -257,9 +257,7 @@ public class CPOptionValueLocalServiceImpl
 		return searchContext;
 	}
 
-	protected void doCPOptionReindex(long cpOptionId)
-		throws PortalException {
-
+	protected void doCPOptionReindex(long cpOptionId) throws PortalException {
 		Indexer<CPOption> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			CPOption.class);
 

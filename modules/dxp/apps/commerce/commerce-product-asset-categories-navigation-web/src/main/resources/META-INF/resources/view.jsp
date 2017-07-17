@@ -20,8 +20,8 @@
 List<AssetCategory> assetCategories = cpAssetCategoriesNavigationDisplayContext.getAssetCategories();
 %>
 
-<div class="cp-asset-category-navigation" id="<portlet:namespace />cpAssetCategoryNavigation">
-	<ul class="navbar-site split-button-dropdowns">
+<div id="<portlet:namespace />cpAssetCategoryNavigation">
+	<ul class="navbar-site">
 
 		<%
 		for (AssetCategory assetCategory : assetCategories) {
@@ -31,50 +31,48 @@ List<AssetCategory> assetCategories = cpAssetCategoriesNavigationDisplayContext.
 				<a><span><%= HtmlUtil.escape(assetCategory.getTitle(locale)) %></span></a>
 
 				<div class="child-menu dropdown-menu" role="menu">
-					<div class="container-fluid-1280">
 
-						<%
-						for (AssetCategory assetCategoryLevel1 : cpAssetCategoriesNavigationDisplayContext.getChildAssetCategories(assetCategory.getCategoryId())) {
-						%>
+					<%
+					for (AssetCategory assetCategoryLevel1 : cpAssetCategoriesNavigationDisplayContext.getChildAssetCategories(assetCategory.getCategoryId())) {
+					%>
 
-							<div class="child-menu-level-1">
-								<h5><%= HtmlUtil.escape(assetCategoryLevel1.getTitle(locale)) %></h5>
+						<div class="child-menu-level-1">
+							<h5><%= HtmlUtil.escape(assetCategoryLevel1.getTitle(locale)) %></h5>
 
-								<ul>
+							<ul>
 
-									<%
-									for (AssetCategory assetCategoryLevel2 : cpAssetCategoriesNavigationDisplayContext.getChildAssetCategories(assetCategoryLevel1.getCategoryId())) {
-									%>
+								<%
+								for (AssetCategory assetCategoryLevel2 : cpAssetCategoriesNavigationDisplayContext.getChildAssetCategories(assetCategoryLevel1.getCategoryId())) {
+								%>
 
-										<li>
-											<a href="<%= cpAssetCategoriesNavigationDisplayContext.getFriendlyURL(assetCategoryLevel2.getCategoryId(), themeDisplay) %>" role="menuitem"><%= HtmlUtil.escape(assetCategoryLevel2.getTitle(locale)) %></a>
-										</li>
+									<li>
+										<a href="<%= cpAssetCategoriesNavigationDisplayContext.getFriendlyURL(assetCategoryLevel2.getCategoryId(), themeDisplay) %>" role="menuitem"><%= HtmlUtil.escape(assetCategoryLevel2.getTitle(locale)) %></a>
+									</li>
 
-									<%
-									}
-									%>
+								<%
+								}
+								%>
 
-								</ul>
+							</ul>
 
-							</div>
-
-						<%
-						}
-						%>
-
-						<div class="category-description">
-
-							<%
-							String imgURL = cpAssetCategoriesNavigationDisplayContext.getDefaultImageSrc(assetCategory.getCategoryId(), themeDisplay);
-							%>
-
-							<c:if test="<%= Validator.isNotNull(imgURL) %>">
-								<img src="<%= imgURL %>" />
-							</c:if>
-
-							<h5><%= assetCategory.getTitle(locale) %></h5>
-							<p class="description"><%= assetCategory.getDescription(locale) %></p>
 						</div>
+
+					<%
+					}
+					%>
+
+					<div class="category-description">
+
+						<%
+						String imgURL = cpAssetCategoriesNavigationDisplayContext.getDefaultImageSrc(assetCategory.getCategoryId(), themeDisplay);
+						%>
+
+						<c:if test="<%= Validator.isNotNull(imgURL) %>">
+							<img src="<%= imgURL %>" />
+						</c:if>
+
+						<h5><%= assetCategory.getTitle(locale) %></h5>
+						<p class="description"><%= assetCategory.getDescription(locale) %></p>
 					</div>
 				</div>
 			</li>

@@ -103,9 +103,7 @@ for (int i = 0; i < results.size(); i++) {
 	List<String> groupNames = new ArrayList<String>();
 
 	if (ResourceBlockLocalServiceUtil.isSupported(curResource)) {
-		if (ResourceTypePermissionLocalServiceUtil.hasEitherScopePermission(
-			role.getCompanyId(), curModelResource, role.getRoleId(), actionId)) {
-
+		if (ResourceTypePermissionLocalServiceUtil.hasEitherScopePermission(role.getCompanyId(), curModelResource, role.getRoleId(), actionId)) {
 			resourceBlockSelected.add(target);
 		}
 		else {

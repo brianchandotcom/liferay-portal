@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.product.type.renderer;
 
-import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.type.CPTypeRenderer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -39,11 +38,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 public abstract class BaseCPTypeRenderer implements CPTypeRenderer {
-
-	public abstract void render(
-			CPDefinition cpDefinition, HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws Exception;
 
 	public void renderJSP(
 			HttpServletRequest httpServletRequest,

@@ -151,6 +151,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--MENUITEMS-->
+<tr>
+	<td>PUBLISH_TEMPLATES_BUTTON</td>
+	<td>xpath=(//a[contains(.,'Publish Templates')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SITE_PAGES_VARIATION_MENULIST-->
 <tr>
 	<td>SITE_PAGES_VARIATION_MENULIST_NAME</td>

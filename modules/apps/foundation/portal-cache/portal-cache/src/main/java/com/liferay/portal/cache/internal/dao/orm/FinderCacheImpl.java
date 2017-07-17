@@ -426,24 +426,14 @@ public class FinderCacheImpl
 		public void readExternal(ObjectInput objectInput)
 			throws ClassNotFoundException, IOException {
 
-			int length = objectInput.readInt();
-
-			_args = new Object[length];
-
-			for (int i = 0; i < length; i++) {
-				_args[i] = objectInput.readObject();
-			}
+			_args = (Object[])objectInput.readObject();
 		}
 
 		@Override
 		public void writeExternal(ObjectOutput objectOutput)
 			throws IOException {
 
-			objectOutput.writeInt(_args.length);
-
-			for (Object arg : _args) {
-				objectOutput.writeObject(arg);
-			}
+			objectOutput.writeObject(_args);
 		}
 
 		private EmptyResult(Object[] args) {

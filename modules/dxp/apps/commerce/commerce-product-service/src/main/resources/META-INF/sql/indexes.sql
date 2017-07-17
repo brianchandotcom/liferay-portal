@@ -6,13 +6,11 @@ create unique index IX_BFCBDC82 on CPAttachmentFileEntry (uuid_[$COLUMN_LENGTH:7
 create index IX_217AF702 on CPDefinition (companyId);
 create index IX_A465D100 on CPDefinition (displayDate, status);
 create index IX_419350EA on CPDefinition (groupId, status);
-create index IX_7E7BCA4C on CPDefinition (status);
 create index IX_8EA585DA on CPDefinition (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_BA9BADC on CPDefinition (uuid_[$COLUMN_LENGTH:75$], groupId);
 
 create unique index IX_EA724334 on CPDefinitionLink (CPDefinitionId1, CPDefinitionId2, type_);
-create index IX_31ED1AF on CPDefinitionLink (CPDefinitionId1, type_);
-create index IX_F76842CE on CPDefinitionLink (CPDefinitionId2, type_);
+create index IX_E8875D27 on CPDefinitionLink (CPDefinitionId2);
 create index IX_220CC8F4 on CPDefinitionLink (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_865AFC76 on CPDefinitionLink (uuid_[$COLUMN_LENGTH:75$], groupId);
 
@@ -31,9 +29,8 @@ create index IX_CD95E77 on CPDefinitionOptionValueRel (uuid_[$COLUMN_LENGTH:75$]
 create unique index IX_34516B9 on CPDefinitionOptionValueRel (uuid_[$COLUMN_LENGTH:75$], groupId);
 
 create unique index IX_290BF7BA on CPDisplayLayout (classNameId, classPK);
-create unique index IX_4F7D5638 on CPDisplayLayout (groupId, classNameId, classPK);
 create index IX_EEFA81D9 on CPDisplayLayout (uuid_[$COLUMN_LENGTH:75$], companyId);
-create unique index IX_F4054FDD on CPDisplayLayout (uuid_[$COLUMN_LENGTH:75$], groupId);
+create unique index IX_68BBAA9B on CPDisplayLayout (uuid_[$COLUMN_LENGTH:75$], groupId);
 
 create index IX_71874AE8 on CPFriendlyURLEntry (groupId, companyId, classNameId, classPK, languageId[$COLUMN_LENGTH:75$], main);
 create index IX_393BFCD8 on CPFriendlyURLEntry (groupId, companyId, classNameId, classPK, languageId[$COLUMN_LENGTH:75$], urlTitle[$COLUMN_LENGTH:255$]);
@@ -41,9 +38,8 @@ create index IX_C13D69E1 on CPFriendlyURLEntry (groupId, companyId, classNameId,
 create index IX_3E26073 on CPFriendlyURLEntry (groupId, companyId, classNameId, languageId[$COLUMN_LENGTH:75$], urlTitle[$COLUMN_LENGTH:255$]);
 create index IX_C7AAAB6C on CPFriendlyURLEntry (groupId, companyId, classNameId, urlTitle[$COLUMN_LENGTH:255$]);
 create unique index IX_4BAE95CD on CPFriendlyURLEntry (groupId, languageId[$COLUMN_LENGTH:75$], urlTitle[$COLUMN_LENGTH:255$]);
-create unique index IX_A05A30D on CPFriendlyURLEntry (groupId, urlTitle[$COLUMN_LENGTH:255$], languageId[$COLUMN_LENGTH:75$]);
 create index IX_BD972D55 on CPFriendlyURLEntry (uuid_[$COLUMN_LENGTH:75$], companyId);
-create unique index IX_FA808117 on CPFriendlyURLEntry (uuid_[$COLUMN_LENGTH:75$], groupId);
+create unique index IX_F4450517 on CPFriendlyURLEntry (uuid_[$COLUMN_LENGTH:75$], groupId);
 
 create unique index IX_7E830576 on CPInstance (CPDefinitionId, sku[$COLUMN_LENGTH:75$]);
 create index IX_F4C9CDD on CPInstance (CPDefinitionId, status);

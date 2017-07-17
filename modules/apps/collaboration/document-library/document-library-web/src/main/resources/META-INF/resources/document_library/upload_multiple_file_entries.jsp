@@ -161,6 +161,8 @@ if (portletTitleBasedNavigation) {
 												success: function(event, id, obj) {
 													var jsonArray = this.get('responseData');
 
+													var itemFailed = false;
+
 													for (var i = 0; i < jsonArray.length; i++) {
 														var item = jsonArray[i];
 
@@ -197,6 +199,8 @@ if (portletTitleBasedNavigation) {
 															cssClass = 'upload-error';
 
 															childHTML = '<span class="card-bottom error-message">' + item.errorMessage + '</span>';
+
+															itemFailed = true;
 														}
 
 														li.addClass(cssClass);
@@ -218,6 +222,10 @@ if (portletTitleBasedNavigation) {
 													Liferay.fire('filesSaved');
 
 													commonFileMetadataContainer.unplug(A.LoadingMask);
+
+													if (!itemFailed) {
+														location.href = '<%= HtmlUtil.escape(redirect) %>';
+													}
 												}
 											},
 											dataType: 'JSON',

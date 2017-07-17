@@ -1,32 +1,37 @@
 <definition>
-	<command name="addCP">
-		<var name="key_categoryName" value="${categoryName}" />
-		<var name="key_vocabularyName" value="${vocabularyName}" />
+	<command name="_addCP">
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="${vocabularyName}" />
+		</execute>
 
-		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
-
-		<execute function="Pause" locator1="1000" />
-
-		<var name="key_rowEntry" value="${categoryName}" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ADD_SUBCATEGORY" value1="Add Subcategory" />
-
-		<var name="key_subcategoryName" value="${subCategoryName}" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Add Subcategory" />
+			<var name="rowEntry" value="${categoryName}" />
+		</execute>
 
 		<execute macro="PortletEntry#inputTitle">
 			<var name="title" value="${subcategoryName}" />
 		</execute>
 
 		<if>
-			<isset var="subcategoryDescription" />
+			<not>
+				<contains string="${subcategoryDescription}" substring="{subcategoryDescription}" />
+			</not>
 			<then>
 				<execute macro="PortletEntry#inputDescription">
 					<var name="description" value="${subcategoryDescription}" />
 				</execute>
 			</then>
 		</if>
+	</command>
+
+	<command name="addCP">
+		<execute macro="Subcategory#_addCP">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="subcategoryDescription" value="${subcategoryDescription}" />
+			<var name="subcategoryName" value="${subcategoryName}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
 
 		<execute macro="PortletEntry#save" />
 	</command>
@@ -54,25 +59,14 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="Please enter a unique name." />
 	</command>
 
-	<command name="addWithPropertyCP">
-		<var name="key_vocabularyName" value="${vocabularyName}" />
-
-		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
-
-		<var name="key_rowEntry" value="${categoryName}" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ADD_SUBCATEGORY" value1="Add Subcategory" />
-
-		<var name="key_subcategoryName" value="${subCategoryName}" />
-
-		<execute macro="PortletEntry#inputTitle">
-			<var name="title" value="${subcategoryName}" />
+	<command name="addPropertyCP">
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="${subcategoryName}" />
 		</execute>
 
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Properties" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Properties" />
 		</execute>
 
 		<execute function="Type" locator1="CategoriesEditSubcategory#PROPERTIES_KEY_FIELD_DEFAULT" value1="${propertiesKeyField}" />
@@ -194,8 +188,8 @@
 
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Properties" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Properties" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="CategoriesEditSubcategory#PROPERTIES_KEY_FIELD_DEFAULT" value1="${propertiesKeyField}" />

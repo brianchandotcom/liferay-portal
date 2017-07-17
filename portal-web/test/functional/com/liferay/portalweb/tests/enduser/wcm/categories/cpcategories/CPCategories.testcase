@@ -143,12 +143,16 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Category#addCategoryPropertyCP">
+		<execute macro="Category#addCP">
+			<var name="categoryName" value="Category Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Category#addPropertyCP">
 			<var name="categoryName" value="Category Name" />
 			<var name="propertiesKeyField" value="Category Property" />
 			<var name="propertiesValueField" value="Category Property" />
 			<var name="propertyNumber" value="2" />
-			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -191,12 +195,16 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Category#addCategoryPropertyCP">
+		<execute macro="Category#addCP">
+			<var name="categoryName" value="Category Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Category#addPropertyCP">
 			<var name="categoryName" value="Category Name" />
 			<var name="propertiesKeyField" value="Category Property" />
 			<var name="propertiesValueField" value="Category Property" />
 			<var name="propertyNumber" value="0" />
-			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -932,12 +940,16 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Category#addCategoryPropertyCP">
+		<execute macro="Category#addCP">
+			<var name="categoryName" value="Category Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Category#addPropertyCP">
 			<var name="categoryName" value="Category Name" />
 			<var name="propertiesKeyField" value="Category Property" />
 			<var name="propertiesValueField" value="Category Property" />
 			<var name="propertyNumber" value="2" />
-			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -1135,12 +1147,16 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Category#addCategoryPropertyCP">
+		<execute macro="Category#addCP">
+			<var name="categoryName" value="Category Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Category#addPropertyCP">
 			<var name="categoryName" value="Category Name" />
 			<var name="propertiesKeyField" value="Category Key" />
 			<var name="propertiesValueField" value="Category Value" />
 			<var name="propertyNumber" value="1" />
-			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />

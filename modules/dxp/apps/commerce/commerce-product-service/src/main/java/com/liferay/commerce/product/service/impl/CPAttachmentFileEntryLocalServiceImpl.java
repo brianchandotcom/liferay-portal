@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -459,10 +460,11 @@ public class CPAttachmentFileEntryLocalServiceImpl
 	protected void reindex(long classNameId, long classPK)
 		throws PortalException {
 
-		String className = String.valueOf(
-			classNameLocalService.getClassName(classNameId));
+		ClassName className = classNameLocalService.getClassName(classNameId);
 
-		if (className.equals(CPDefinition.class.getName())) {
+		String classNameValue = className.getValue();
+
+		if (classNameValue.equals(CPDefinition.class.getName())) {
 			Indexer<CPDefinition> indexer =
 				IndexerRegistryUtil.nullSafeGetIndexer(CPDefinition.class);
 

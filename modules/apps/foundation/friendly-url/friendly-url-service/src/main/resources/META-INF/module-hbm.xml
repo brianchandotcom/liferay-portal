@@ -4,6 +4,7 @@
 <hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.liferay.friendly.url.model.FriendlyURLEntry" />
 	<import class="com.liferay.friendly.url.model.FriendlyURLEntryLocalization" />
+	<import class="com.liferay.friendly.url.model.FriendlyURLMapping" />
 	<class name="com.liferay.friendly.url.model.impl.FriendlyURLEntryImpl" table="FriendlyURLEntry">
 		<id name="friendlyURLEntryId" type="long">
 			<generator class="assigned" />
@@ -15,17 +16,26 @@
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="urlTitle" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="main" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="defaultLanguageId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
-	<class name="com.liferay.friendly.url.model.impl.FriendlyURLEntryLocalizationImpl" table="FriendlyURLEntryLocalization">
+	<class dynamic-update="true" name="com.liferay.friendly.url.model.impl.FriendlyURLEntryLocalizationImpl" table="FriendlyURLEntryLocalization">
 		<id name="friendlyURLEntryLocalizationId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="friendlyURLEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="urlTitle" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="languageId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="urlTitle" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="com.liferay.friendly.url.model.impl.FriendlyURLMappingImpl" table="FriendlyURLMapping">
+		<composite-id class="com.liferay.friendly.url.service.persistence.FriendlyURLMappingPK" name="primaryKey">
+			<key-property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+		<property name="friendlyURLId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 </hibernate-mapping>

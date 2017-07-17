@@ -33,12 +33,15 @@ public class FriendlyURLEntryLocalizationSoap implements Serializable {
 		FriendlyURLEntryLocalization model) {
 		FriendlyURLEntryLocalizationSoap soapModel = new FriendlyURLEntryLocalizationSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setFriendlyURLEntryLocalizationId(model.getFriendlyURLEntryLocalizationId());
-		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setFriendlyURLEntryId(model.getFriendlyURLEntryId());
-		soapModel.setUrlTitle(model.getUrlTitle());
 		soapModel.setLanguageId(model.getLanguageId());
+		soapModel.setUrlTitle(model.getUrlTitle());
+		soapModel.setGroupId(model.getGroupId());
+		soapModel.setClassNameId(model.getClassNameId());
+		soapModel.setClassPK(model.getClassPK());
 
 		return soapModel;
 	}
@@ -94,6 +97,14 @@ public class FriendlyURLEntryLocalizationSoap implements Serializable {
 		setFriendlyURLEntryLocalizationId(pk);
 	}
 
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	public long getFriendlyURLEntryLocalizationId() {
 		return _friendlyURLEntryLocalizationId;
 	}
@@ -101,14 +112,6 @@ public class FriendlyURLEntryLocalizationSoap implements Serializable {
 	public void setFriendlyURLEntryLocalizationId(
 		long friendlyURLEntryLocalizationId) {
 		_friendlyURLEntryLocalizationId = friendlyURLEntryLocalizationId;
-	}
-
-	public long getGroupId() {
-		return _groupId;
-	}
-
-	public void setGroupId(long groupId) {
-		_groupId = groupId;
 	}
 
 	public long getCompanyId() {
@@ -127,14 +130,6 @@ public class FriendlyURLEntryLocalizationSoap implements Serializable {
 		_friendlyURLEntryId = friendlyURLEntryId;
 	}
 
-	public String getUrlTitle() {
-		return _urlTitle;
-	}
-
-	public void setUrlTitle(String urlTitle) {
-		_urlTitle = urlTitle;
-	}
-
 	public String getLanguageId() {
 		return _languageId;
 	}
@@ -143,10 +138,45 @@ public class FriendlyURLEntryLocalizationSoap implements Serializable {
 		_languageId = languageId;
 	}
 
+	public String getUrlTitle() {
+		return _urlTitle;
+	}
+
+	public void setUrlTitle(String urlTitle) {
+		_urlTitle = urlTitle;
+	}
+
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
+	public long getClassNameId() {
+		return _classNameId;
+	}
+
+	public void setClassNameId(long classNameId) {
+		_classNameId = classNameId;
+	}
+
+	public long getClassPK() {
+		return _classPK;
+	}
+
+	public void setClassPK(long classPK) {
+		_classPK = classPK;
+	}
+
+	private long _mvccVersion;
 	private long _friendlyURLEntryLocalizationId;
-	private long _groupId;
 	private long _companyId;
 	private long _friendlyURLEntryId;
-	private String _urlTitle;
 	private String _languageId;
+	private String _urlTitle;
+	private long _groupId;
+	private long _classNameId;
+	private long _classPK;
 }

@@ -19,8 +19,10 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -40,8 +42,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface FriendlyURLEntryLocalizationModel extends BaseModel<FriendlyURLEntryLocalization>,
-	ShardedModel {
+public interface FriendlyURLEntryLocalizationModel extends AttachedModel,
+	BaseModel<FriendlyURLEntryLocalization>, MVCCModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -63,6 +65,22 @@ public interface FriendlyURLEntryLocalizationModel extends BaseModel<FriendlyURL
 	public void setPrimaryKey(long primaryKey);
 
 	/**
+	 * Returns the mvcc version of this friendly url entry localization.
+	 *
+	 * @return the mvcc version of this friendly url entry localization
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this friendly url entry localization.
+	 *
+	 * @param mvccVersion the mvcc version of this friendly url entry localization
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
+
+	/**
 	 * Returns the friendly url entry localization ID of this friendly url entry localization.
 	 *
 	 * @return the friendly url entry localization ID of this friendly url entry localization
@@ -76,20 +94,6 @@ public interface FriendlyURLEntryLocalizationModel extends BaseModel<FriendlyURL
 	 */
 	public void setFriendlyURLEntryLocalizationId(
 		long friendlyURLEntryLocalizationId);
-
-	/**
-	 * Returns the group ID of this friendly url entry localization.
-	 *
-	 * @return the group ID of this friendly url entry localization
-	 */
-	public long getGroupId();
-
-	/**
-	 * Sets the group ID of this friendly url entry localization.
-	 *
-	 * @param groupId the group ID of this friendly url entry localization
-	 */
-	public void setGroupId(long groupId);
 
 	/**
 	 * Returns the company ID of this friendly url entry localization.
@@ -122,6 +126,21 @@ public interface FriendlyURLEntryLocalizationModel extends BaseModel<FriendlyURL
 	public void setFriendlyURLEntryId(long friendlyURLEntryId);
 
 	/**
+	 * Returns the language ID of this friendly url entry localization.
+	 *
+	 * @return the language ID of this friendly url entry localization
+	 */
+	@AutoEscape
+	public String getLanguageId();
+
+	/**
+	 * Sets the language ID of this friendly url entry localization.
+	 *
+	 * @param languageId the language ID of this friendly url entry localization
+	 */
+	public void setLanguageId(String languageId);
+
+	/**
 	 * Returns the url title of this friendly url entry localization.
 	 *
 	 * @return the url title of this friendly url entry localization
@@ -137,19 +156,60 @@ public interface FriendlyURLEntryLocalizationModel extends BaseModel<FriendlyURL
 	public void setUrlTitle(String urlTitle);
 
 	/**
-	 * Returns the language ID of this friendly url entry localization.
+	 * Returns the group ID of this friendly url entry localization.
 	 *
-	 * @return the language ID of this friendly url entry localization
+	 * @return the group ID of this friendly url entry localization
 	 */
-	@AutoEscape
-	public String getLanguageId();
+	public long getGroupId();
 
 	/**
-	 * Sets the language ID of this friendly url entry localization.
+	 * Sets the group ID of this friendly url entry localization.
 	 *
-	 * @param languageId the language ID of this friendly url entry localization
+	 * @param groupId the group ID of this friendly url entry localization
 	 */
-	public void setLanguageId(String languageId);
+	public void setGroupId(long groupId);
+
+	/**
+	 * Returns the fully qualified class name of this friendly url entry localization.
+	 *
+	 * @return the fully qualified class name of this friendly url entry localization
+	 */
+	@Override
+	public String getClassName();
+
+	public void setClassName(String className);
+
+	/**
+	 * Returns the class name ID of this friendly url entry localization.
+	 *
+	 * @return the class name ID of this friendly url entry localization
+	 */
+	@Override
+	public long getClassNameId();
+
+	/**
+	 * Sets the class name ID of this friendly url entry localization.
+	 *
+	 * @param classNameId the class name ID of this friendly url entry localization
+	 */
+	@Override
+	public void setClassNameId(long classNameId);
+
+	/**
+	 * Returns the class pk of this friendly url entry localization.
+	 *
+	 * @return the class pk of this friendly url entry localization
+	 */
+	@Override
+	public long getClassPK();
+
+	/**
+	 * Sets the class pk of this friendly url entry localization.
+	 *
+	 * @param classPK the class pk of this friendly url entry localization
+	 */
+	@Override
+	public void setClassPK(long classPK);
 
 	@Override
 	public boolean isNew();

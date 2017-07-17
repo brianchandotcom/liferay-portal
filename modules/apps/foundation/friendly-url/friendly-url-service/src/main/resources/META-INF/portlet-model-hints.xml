@@ -10,7 +10,6 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
-		<field name="main" type="boolean" />
 		<field name="defaultLanguageId" type="String" />
 	</model>
 	<model name="com.liferay.friendly.url.model.FriendlyURLEntryLocalization">
@@ -25,5 +24,10 @@
 		<field name="groupId" type="long" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
+	</model>
+	<model name="com.liferay.friendly.url.model.FriendlyURLMapping">
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="friendlyURLId" type="long" />
 	</model>
 </model-hints>

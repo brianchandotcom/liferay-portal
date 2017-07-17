@@ -7,15 +7,24 @@ create table FriendlyURLEntry (
 	modifiedDate DATE null,
 	classNameId LONG,
 	classPK LONG,
-	urlTitle VARCHAR(255) null,
-	main BOOLEAN
+	defaultLanguageId VARCHAR(75) null
 );
 
 create table FriendlyURLEntryLocalization (
+	mvccVersion LONG default 0 not null,
 	friendlyURLEntryLocalizationId LONG not null primary key,
-	groupId LONG,
 	companyId LONG,
 	friendlyURLEntryId LONG,
+	languageId VARCHAR(75) null,
 	urlTitle VARCHAR(255) null,
-	languageId VARCHAR(75) null
+	groupId LONG,
+	classNameId LONG,
+	classPK LONG
+);
+
+create table FriendlyURLMapping (
+	classNameId LONG not null,
+	classPK LONG not null,
+	friendlyURLId LONG,
+	primary key (classNameId, classPK)
 );

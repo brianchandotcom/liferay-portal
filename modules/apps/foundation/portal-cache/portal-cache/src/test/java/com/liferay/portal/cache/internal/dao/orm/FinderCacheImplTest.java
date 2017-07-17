@@ -15,7 +15,6 @@
 package com.liferay.portal.cache.internal.dao.orm;
 
 import com.liferay.portal.cache.key.HashCodeHexStringCacheKeyGenerator;
-import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
 import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
@@ -41,8 +40,6 @@ public class FinderCacheImplTest {
 		RegistryUtil.setRegistry(new BasicRegistryImpl());
 
 		_classLoader = FinderCacheImplTest.class.getClassLoader();
-
-		CacheRegistryUtil.setActive(true);
 
 		CacheKeyGeneratorUtil cacheKeyGeneratorUtil =
 			new CacheKeyGeneratorUtil();

@@ -19,11 +19,9 @@ import com.liferay.gradle.util.OSDetector;
 import java.io.File;
 import java.io.IOException;
 
-import java.nio.file.FileVisitResult;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
 
 import org.gradle.api.Action;
 import org.gradle.api.Project;
@@ -36,31 +34,16 @@ import org.gradle.process.ExecSpec;
  */
 public class FileUtil extends com.liferay.gradle.util.FileUtil {
 
-	public static void removeDirs(
-			final Project project, File rootDir, final String dirName)
-		throws IOException {
+	public static void deleteSymbolicLinks(Path dirPath) throws IOException {
+		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
+				dirPath)) {
 
-		Files.walkFileTree(
-			rootDir.toPath(),
-			new SimpleFileVisitor<Path>() {
-
-				@Override
-				public FileVisitResult preVisitDirectory(
-						Path dirPath, BasicFileAttributes basicFileAttributes)
-					throws IOException {
-
-					Path dirNamePath = dirPath.getFileName();
-
-					if (!dirName.equals(dirNamePath.toString())) {
-						return FileVisitResult.CONTINUE;
-					}
-
-					project.delete(dirPath.toFile());
-
-					return FileVisitResult.SKIP_SUBTREE;
+			for (Path path : directoryStream) {
+				if (Files.isSymbolicLink(path)) {
+					Files.delete(path);
 				}
-
-			});
+			}
+		}
 	}
 
 	public static void syncDir(

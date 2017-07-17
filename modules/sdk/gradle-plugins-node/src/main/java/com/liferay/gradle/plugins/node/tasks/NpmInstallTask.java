@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins.node.tasks;
 
 import com.liferay.gradle.plugins.node.internal.util.FileUtil;
 import com.liferay.gradle.plugins.node.internal.util.GradleUtil;
+import com.liferay.gradle.util.OSDetector;
 import com.liferay.gradle.util.Validator;
 
 import groovy.json.JsonSlurper;
@@ -24,10 +25,14 @@ import java.io.File;
 import java.io.IOException;
 
 import java.nio.charset.StandardCharsets;
+import java.nio.file.DirectoryStream;
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.List;
 import java.util.Map;
@@ -125,10 +130,6 @@ public class NpmInstallTask extends ExecuteNpmTask {
 		return _nodeModulesCacheNativeSync;
 	}
 
-	public boolean isNodeModulesCacheRemoveBinDirs() {
-		return _nodeModulesCacheRemoveBinDirs;
-	}
-
 	public boolean isRemoveShrinkwrappedUrls() {
 		return GradleUtil.toBoolean(_removeShrinkwrappedUrls);
 	}
@@ -141,21 +142,6 @@ public class NpmInstallTask extends ExecuteNpmTask {
 		boolean nodeModulesCacheNativeSync) {
 
 		_nodeModulesCacheNativeSync = nodeModulesCacheNativeSync;
-	}
-
-	public void setNodeModulesCacheRemoveBinDirs(
-		boolean nodeModulesCacheRemoveBinDirs) {
-
-		_nodeModulesCacheRemoveBinDirs = nodeModulesCacheRemoveBinDirs;
-	}
-
-	/**
-	 * @deprecated As of 1.3.0, replaced by {@link
-	 *             #setRemoveShrinkwrappedUrls(Object)}
-	 */
-	@Deprecated
-	public void setRemoveShrinkwrappedUrls(boolean removeShrinkwrappedUrls) {
-		_removeShrinkwrappedUrls = removeShrinkwrappedUrls;
 	}
 
 	public void setRemoveShrinkwrappedUrls(Object removeShrinkwrappedUrls) {
@@ -217,6 +203,58 @@ public class NpmInstallTask extends ExecuteNpmTask {
 		return completeArgs;
 	}
 
+	private static void _createBinDirLinks(Logger logger, File nodeModulesDir)
+		throws IOException {
+
+		JsonSlurper jsonSlurper = new JsonSlurper();
+
+		Path nodeModulesDirPath = nodeModulesDir.toPath();
+
+		Path nodeModulesBinDirPath = nodeModulesDirPath.resolve(
+			_NODE_MODULES_BIN_DIR_NAME);
+
+		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
+				nodeModulesDirPath, _directoryStreamFilter)) {
+
+			for (Path dirPath : directoryStream) {
+				Path packageJsonPath = dirPath.resolve("package.json");
+
+				if (Files.notExists(packageJsonPath)) {
+					continue;
+				}
+
+				Map<String, Object> packageJsonMap =
+					(Map<String, Object>)jsonSlurper.parse(
+						packageJsonPath.toFile());
+
+				Map<String, String> binJsonMap =
+					(Map<String, String>)packageJsonMap.get("bin");
+
+				if ((binJsonMap == null) || binJsonMap.isEmpty()) {
+					continue;
+				}
+
+				Files.createDirectories(nodeModulesBinDirPath);
+
+				for (Map.Entry<String, String> entry : binJsonMap.entrySet()) {
+					String linkFileName = entry.getKey();
+					String linkTargetFileName = entry.getValue();
+
+					Path linkPath = nodeModulesBinDirPath.resolve(linkFileName);
+					Path linkTargetPath = dirPath.resolve(linkTargetFileName);
+
+					Files.createSymbolicLink(linkPath, linkTargetPath);
+
+					if (logger.isInfoEnabled()) {
+						logger.info(
+							"Created binary symbolic link {} which targets {}",
+							linkPath, linkTargetPath);
+					}
+				}
+			}
+		}
+	}
+
 	private static String _getNodeModulesCacheDigest(
 		NpmInstallTask npmInstallTask) {
 
@@ -261,8 +299,6 @@ public class NpmInstallTask extends ExecuteNpmTask {
 		File nodeModulesDir = npmInstallTask.getNodeModulesDir();
 
 		boolean nativeSync = npmInstallTask.isNodeModulesCacheNativeSync();
-		boolean removeBinDirs =
-			npmInstallTask.isNodeModulesCacheRemoveBinDirs();
 
 		if (reset) {
 			project.delete(nodeModulesCacheDir);
@@ -278,18 +314,12 @@ public class NpmInstallTask extends ExecuteNpmTask {
 			FileUtil.syncDir(
 				project, nodeModulesCacheDir, nodeModulesDir, nativeSync);
 
-			if (removeBinDirs) {
-				FileUtil.removeDirs(
-					project, nodeModulesDir, _NODE_MODULES_BIN_DIR_NAME);
-			}
+			_removeBinDirLinks(logger, nodeModulesDir);
 		}
 		else {
 			npmInstallTask._npmInstall(reset);
 
-			if (removeBinDirs) {
-				FileUtil.removeDirs(
-					project, nodeModulesDir, _NODE_MODULES_BIN_DIR_NAME);
-			}
+			_removeBinDirLinks(logger, nodeModulesDir);
 
 			if (logger.isLifecycleEnabled()) {
 				logger.lifecycle(
@@ -300,6 +330,43 @@ public class NpmInstallTask extends ExecuteNpmTask {
 			FileUtil.syncDir(
 				project, nodeModulesDir, nodeModulesCacheDir, nativeSync);
 		}
+
+		if (!OSDetector.isWindows()) {
+			_createBinDirLinks(logger, nodeModulesDir);
+		}
+	}
+
+	private static void _removeBinDirLinks(
+			final Logger logger, File nodeModulesDir)
+		throws IOException {
+
+		Files.walkFileTree(
+			nodeModulesDir.toPath(),
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult preVisitDirectory(
+						Path dirPath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					String dirName = String.valueOf(dirPath.getFileName());
+
+					if (dirName.equals(_NODE_MODULES_BIN_DIR_NAME)) {
+						if (logger.isInfoEnabled()) {
+							logger.info(
+								"Removing binary symbolic links from {}",
+								dirPath);
+						}
+
+						FileUtil.deleteSymbolicLinks(dirPath);
+
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
 	}
 
 	private boolean _isCacheEnabled() {
@@ -360,9 +427,18 @@ public class NpmInstallTask extends ExecuteNpmTask {
 
 	private static final String _NODE_MODULES_BIN_DIR_NAME = ".bin";
 
+	private static final DirectoryStream.Filter<Path> _directoryStreamFilter =
+		new DirectoryStream.Filter<Path>() {
+
+			@Override
+			public boolean accept(Path path) throws IOException {
+				return Files.isDirectory(path);
+			}
+
+		};
+
 	private Object _nodeModulesCacheDir;
 	private boolean _nodeModulesCacheNativeSync = true;
-	private boolean _nodeModulesCacheRemoveBinDirs = true;
 	private Object _removeShrinkwrappedUrls;
 
 }

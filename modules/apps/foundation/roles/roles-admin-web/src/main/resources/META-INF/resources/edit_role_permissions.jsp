@@ -428,7 +428,7 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 		var form = AUI.$(document.<portlet:namespace />fm);
 
 		form.fm('redirect').val('<%= HtmlUtil.escapeJS(portletURL.toString()) %>');
-		var selectedPermissions = form.fm('selectedTargets').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));form.fm('unselectedTargets').val(Liferay.Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'));
+		var selectedPermissions = form.fm('selectedTargets').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 		var unselectedPermissions = form.fm('unselectedTargets').val(Liferay.Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'));
 
 		selectedPermissions = String(selectedPermissions.val()).split(",");

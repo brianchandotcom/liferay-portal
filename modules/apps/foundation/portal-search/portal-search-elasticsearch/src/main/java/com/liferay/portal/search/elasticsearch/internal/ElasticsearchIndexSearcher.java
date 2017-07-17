@@ -15,6 +15,8 @@
 package com.liferay.portal.search.elasticsearch.internal;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexSearcher;
@@ -50,9 +52,9 @@ import com.liferay.portal.search.elasticsearch.groupby.GroupByTranslator;
 import com.liferay.portal.search.elasticsearch.index.IndexNameBuilder;
 import com.liferay.portal.search.elasticsearch.internal.facet.CompositeFacetProcessor;
 import com.liferay.portal.search.elasticsearch.internal.facet.FacetCollectorFactory;
-import com.liferay.portal.search.elasticsearch.internal.pagination.Pagination;
 import com.liferay.portal.search.elasticsearch.internal.util.DocumentTypes;
 import com.liferay.portal.search.elasticsearch.stats.StatsTranslator;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -60,7 +62,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang.time.StopWatch;
@@ -120,28 +121,39 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		stopWatch.start();
 
 		try {
-			Pagination pagination = new Pagination(
-				searchContext.getStart(), searchContext.getEnd());
+			int start = searchContext.getStart();
+			int end = searchContext.getEnd();
+
+			if (start == QueryUtil.ALL_POS) {
+				start = 0;
+			}
+			else if (start < 0) {
+				throw new IllegalArgumentException("Invalid start " + start);
+			}
+
+			if (end == QueryUtil.ALL_POS) {
+				end = PropsValues.INDEX_SEARCH_LIMIT;
+			}
+			else if (end < 0) {
+				throw new IllegalArgumentException("Invalid end " + end);
+			}
 
 			Hits hits = null;
 
 			while (true) {
-				hits = doSearchHits(searchContext, query, pagination);
+				hits = doSearchHits(searchContext, query, start, end);
 
 				Document[] documents = hits.getDocs();
 
-				if (documents.length != 0) {
+				if ((documents.length != 0) || (start == 0)) {
 					break;
 				}
 
-				Optional<Pagination> paginationOptional =
-					pagination.repageToLast(hits.getLength());
+				int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(
+					start, end, hits.getLength());
 
-				if (!paginationOptional.isPresent()) {
-					break;
-				}
-
-				pagination = paginationOptional.get();
+				start = startAndEnd[0];
+				end = startAndEnd[1];
 			}
 
 			hits.setStart(stopWatch.getStartTime());
@@ -154,7 +166,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			}
 
 			if (!_logExceptionsOnly) {
-				throw new SearchException(e.toString(), e);
+				throw new SearchException(e.getMessage(), e);
 			}
 
 			return new HitsImpl();
@@ -235,7 +247,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 	protected void addGroupBy(
 		SearchRequestBuilder searchRequestBuilder, SearchContext searchContext,
-		Pagination pagination) {
+		int start, int end) {
 
 		GroupBy groupBy = searchContext.getGroupBy();
 
@@ -244,8 +256,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		}
 
 		groupByTranslator.translate(
-			searchRequestBuilder, searchContext, pagination.getStart(),
-			pagination.getEnd());
+			searchRequestBuilder, searchContext, start, end);
 	}
 
 	protected void addHighlightedField(
@@ -285,15 +296,10 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 	}
 
 	protected void addPagination(
-		SearchRequestBuilder searchRequestBuilder, Pagination pagination) {
+		SearchRequestBuilder searchRequestBuilder, int start, int end) {
 
-		Optional<Integer> fromOptional = pagination.getFrom();
-
-		fromOptional.ifPresent(searchRequestBuilder::setFrom);
-
-		Optional<Integer> sizeOptional = pagination.getSize();
-
-		sizeOptional.ifPresent(searchRequestBuilder::setSize);
+		searchRequestBuilder.setFrom(start);
+		searchRequestBuilder.setSize(end - start);
 	}
 
 	protected void addSelectedFields(
@@ -452,7 +458,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 	}
 
 	protected SearchResponse doSearch(
-			SearchContext searchContext, Query query, Pagination pagination,
+			SearchContext searchContext, Query query, int start, int end,
 			boolean count)
 		throws Exception {
 
@@ -469,9 +475,9 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 		if (!count) {
 			addFacets(searchRequestBuilder, searchContext);
-			addGroupBy(searchRequestBuilder, searchContext, pagination);
+			addGroupBy(searchRequestBuilder, searchContext, start, end);
 			addHighlights(searchRequestBuilder, queryConfig);
-			addPagination(searchRequestBuilder, pagination);
+			addPagination(searchRequestBuilder, start, end);
 			addSelectedFields(searchRequestBuilder, queryConfig);
 			addSort(searchRequestBuilder, searchContext.getSorts());
 
@@ -528,7 +534,8 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		throws Exception {
 
 		SearchResponse searchResponse = doSearch(
-			searchContext, query, null, true);
+			searchContext, query, searchContext.getStart(),
+			searchContext.getEnd(), true);
 
 		SearchHits searchHits = searchResponse.getHits();
 
@@ -536,11 +543,11 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 	}
 
 	protected Hits doSearchHits(
-			SearchContext searchContext, Query query, Pagination pagination)
+			SearchContext searchContext, Query query, int start, int end)
 		throws Exception {
 
 		SearchResponse searchResponse = doSearch(
-			searchContext, query, pagination, false);
+			searchContext, query, start, end, false);
 
 		return processResponse(searchResponse, searchContext, query);
 	}

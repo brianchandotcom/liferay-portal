@@ -19,6 +19,7 @@ import com.liferay.commerce.product.exception.CPAttachmentFileEntryFileEntryIdEx
 import com.liferay.commerce.product.exception.CPDefinitionDisplayDateException;
 import com.liferay.commerce.product.exception.CPDefinitionExpirationDateException;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.base.CPAttachmentFileEntryLocalServiceBaseImpl;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
@@ -33,6 +34,8 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Constants;
@@ -131,6 +134,8 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 		cpAttachmentFileEntryPersistence.update(cpAttachmentFileEntry);
 
+		doCPDefinitionReindex(classNameId, classPK);
+
 		// Workflow
 
 		return startWorkflowInstance(
@@ -175,6 +180,10 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 		expandoRowLocalService.deleteRows(
 			cpAttachmentFileEntry.getCPAttachmentFileEntryId());
+
+		doCPDefinitionReindex(
+			cpAttachmentFileEntry.getClassNameId(),
+			cpAttachmentFileEntry.getClassPK());
 
 		return cpAttachmentFileEntry;
 	}
@@ -376,6 +385,10 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 		cpAttachmentFileEntryPersistence.update(cpAttachmentFileEntry);
 
+		doCPDefinitionReindex(
+			cpAttachmentFileEntry.getClassNameId(),
+			cpAttachmentFileEntry.getClassPK());
+
 		return cpAttachmentFileEntry;
 	}
 
@@ -440,6 +453,20 @@ public class CPAttachmentFileEntryLocalServiceImpl
 					WorkflowConstants.STATUS_EXPIRED, serviceContext,
 					new HashMap<String, Serializable>());
 			}
+		}
+	}
+
+	protected void doCPDefinitionReindex(long classNameId, long classPK)
+		throws PortalException {
+
+		String className = String.valueOf(
+			classNameLocalService.getClassName(classNameId));
+
+		if (className.equals(CPDefinition.class.getName())) {
+			Indexer<CPDefinition> indexer =
+				IndexerRegistryUtil.nullSafeGetIndexer(CPDefinition.class);
+
+			indexer.reindex(CPDefinition.class.getName(), classPK);
 		}
 	}
 

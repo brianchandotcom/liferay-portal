@@ -19,6 +19,8 @@ import com.liferay.commerce.product.model.CPDefinitionLink;
 import com.liferay.commerce.product.service.base.CPDefinitionLinkLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -57,6 +59,8 @@ public class CPDefinitionLinkLocalServiceImpl
 		cpDefinitionLink.setType(type);
 
 		cpDefinitionLinkPersistence.update(cpDefinitionLink);
+
+		doCPDefinitionReindex(cpDefinitionId1);
 
 		return cpDefinitionLink;
 	}
@@ -105,6 +109,8 @@ public class CPDefinitionLinkLocalServiceImpl
 
 		cpDefinitionLinkPersistence.update(cpDefinitionLink);
 
+		doCPDefinitionReindex(cpDefinitionLink.getCPDefinitionId1());
+
 		return cpDefinitionLink;
 	}
 
@@ -143,6 +149,15 @@ public class CPDefinitionLinkLocalServiceImpl
 				}
 			}
 		}
+	}
+
+	protected void doCPDefinitionReindex(long cpDefinitionId)
+		throws PortalException {
+
+		Indexer<CPDefinition> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			CPDefinition.class);
+
+		indexer.reindex(CPDefinition.class.getName(), cpDefinitionId);
 	}
 
 }

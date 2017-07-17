@@ -134,6 +134,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		cpInstancePersistence.update(cpInstance);
 
+		doCPDefinitionReindex(cpDefinitionId);
+
 		// Workflow
 
 		return startWorkflowInstance(
@@ -259,6 +261,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			cpInstance.getCompanyId(), cpInstance.getGroupId(),
 			CPInstance.class.getName(), cpInstance.getCPInstanceId());
 
+		doCPDefinitionReindex(cpInstance.getCPDefinitionId());
+
 		return cpInstance;
 	}
 
@@ -347,7 +351,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	}
 
 	@Override
-	public BaseModelSearchResult<CPInstance> searchCPOptions(
+	public BaseModelSearchResult<CPInstance> searchCPInstances(
 			long companyId, long groupId, long cpDefinitionId, String keywords,
 			int status, int start, int end, Sort sort)
 		throws PortalException {
@@ -408,6 +412,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		cpInstance.setExpandoBridgeAttributes(serviceContext);
 
 		cpInstancePersistence.update(cpInstance);
+
+		doCPDefinitionReindex(cpInstance.getCPDefinitionId());
 
 		// Workflow
 
@@ -596,6 +602,15 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 					new HashMap<String, Serializable>());
 			}
 		}
+	}
+
+	protected void doCPDefinitionReindex(long cpDefinitionId)
+		throws PortalException {
+
+		Indexer<CPDefinition> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			CPDefinition.class);
+
+		indexer.reindex(CPDefinition.class.getName(), cpDefinitionId);
 	}
 
 	protected BaseModelSearchResult<CPInstance> searchCPInstances(

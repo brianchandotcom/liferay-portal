@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.service.impl;
 
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.base.CPDefinitionOptionRelLocalServiceBaseImpl;
@@ -26,6 +27,8 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
@@ -68,6 +71,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			cpOption.getSkuContributor(), importOptionValue, serviceContext);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPDefinitionOptionRel addCPDefinitionOptionRel(
 			long cpDefinitionId, long cpOptionId, Map<Locale, String> titleMap,
@@ -112,6 +116,8 @@ public class CPDefinitionOptionRelLocalServiceImpl
 				cpDefinitionOptionRelId, serviceContext);
 		}
 
+		doCPDefinitionReindex(cpDefinitionId);
+
 		return cpDefinitionOptionRel;
 	}
 
@@ -124,6 +130,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			cpDefinitionId, cpOptionId, true, serviceContext);
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CPDefinitionOptionRel deleteCPDefinitionOptionRel(
@@ -144,6 +151,8 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 		expandoRowLocalService.deleteRows(
 			cpDefinitionOptionRel.getCPDefinitionOptionRelId());
+
+		doCPDefinitionReindex(cpDefinitionOptionRel.getCPDefinitionId());
 
 		return cpDefinitionOptionRel;
 	}
@@ -292,6 +301,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		return cpDefinitionOptionRel;
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPDefinitionOptionRel updateCPDefinitionOptionRel(
 			long cpDefinitionOptionRelId, long cpOptionId,
@@ -316,6 +326,8 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		cpDefinitionOptionRel.setExpandoBridgeAttributes(serviceContext);
 
 		cpDefinitionOptionRelPersistence.update(cpDefinitionOptionRel);
+
+		doCPDefinitionReindex(cpDefinitionOptionRel.getCPDefinitionId());
 
 		return cpDefinitionOptionRel;
 	}
@@ -361,6 +373,15 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		}
 
 		return searchContext;
+	}
+
+	protected void doCPDefinitionReindex(long cpDefinitionId)
+		throws PortalException {
+
+		Indexer<CPDefinition> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			CPDefinition.class);
+
+		indexer.reindex(CPDefinition.class.getName(), cpDefinitionId);
 	}
 
 	protected BaseModelSearchResult<CPDefinitionOptionRel> searchCPOptions(

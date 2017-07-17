@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.extensions.AppServer;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
+import com.liferay.gradle.plugins.internal.LangBuilderDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.NodeDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.util.FileUtil;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
@@ -52,6 +53,7 @@ public class LiferayBasePlugin implements Plugin<Project> {
 	public void apply(Project project) {
 		LiferayExtension liferayExtension = _addLiferayExtension(project);
 
+		LangBuilderDefaultsPlugin.INSTANCE.apply(project);
 		NodeDefaultsPlugin.INSTANCE.apply(project);
 		SourceFormatterDefaultsPlugin.INSTANCE.apply(project);
 

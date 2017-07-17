@@ -422,10 +422,9 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 
 <aui:script>
 	function <portlet:namespace />updateActions(selected, unselected) {
+		var form = AUI.$(document.<portlet:namespace />fm);
 		var oldSelectedPermissions = selected.split(",");
 		var oldUnselectedPermissions = unselected.split(",");
-
-		var form = AUI.$(document.<portlet:namespace />fm);
 
 		form.fm('redirect').val('<%= HtmlUtil.escapeJS(portletURL.toString()) %>');
 		var selectedPermissions = form.fm('selectedTargets').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));

@@ -432,7 +432,7 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 		var selectedPermissions = selectedPermissionsString.split(",");
 		var unselectedPermissions = unselectedPermissionsString.split(",");
 
-		if (arrayShares(selectedPermissions, oldUnselectedPermissions) || arrayShares(unselectedPermissions, oldSelectedPermissions)) {
+		if (AUI._.intersection(selectedPermissions, oldUnselectedPermissions).length || AUI._.intersection(unselectedPermissions, oldSelectedPermissions).length) {
 			if (!confirm('<liferay-ui:message key="changing-these-permissions-will-overwrite-all-permissions-of-that-type-previously-configured-on-this-entity" />')) {
 				return;
 			}

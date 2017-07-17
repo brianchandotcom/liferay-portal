@@ -275,17 +275,23 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 
 	keys.forEach(
 		function(key) {
-			var field = A.one('[name="<portlet:namespace />' + key + '"]');
+			var fields = A.all('[name="<portlet:namespace />' + key + '"]');
 
-			field.on(
-				'blur',
-				function(event) {
-					if (!validateField(key)) {
-						event.halt();
-						event.stopImmediatePropagation();
+			var addOnBlurFieldValidation = function(field) {
+				field.on(
+					'blur',
+					function(event) {
+						if (!validateField(key)) {
+							event.halt();
+							event.stopImmediatePropagation();
+						}
 					}
-				});
-		});
+				);
+			};
+
+			fields.each(addOnBlurFieldValidation);
+		}
+	);
 
 	var form = A.one('#<portlet:namespace />fm');
 

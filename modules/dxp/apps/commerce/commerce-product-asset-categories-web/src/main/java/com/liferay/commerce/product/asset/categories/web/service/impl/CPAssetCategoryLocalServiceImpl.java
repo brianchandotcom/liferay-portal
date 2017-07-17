@@ -19,13 +19,17 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalServiceWrapper;
 import com.liferay.commerce.product.service.CPDisplayLayoutLocalService;
 import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import com.liferay.portal.kernel.util.Validator;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -60,9 +64,15 @@ public class CPAssetCategoryLocalServiceImpl
 		Map<Locale, String> urlTitleMap = LocalizationUtil.getLocalizationMap(
 			urlTitleMapAsXML);
 
+		urlTitleMap = _getUniqueUrlTitles(assetCategory, urlTitleMap);
+
+		// Commerce product display layout
+
 		_cpDisplayLayoutLocalService.addCPDisplayLayout(
 			AssetCategory.class, assetCategory.getCategoryId(), layoutUuid,
 			serviceContext);
+
+		// Commerce product friendly URL
 
 		_cpFriendlyURLEntryLocalService.addCPFriendlyURLEntries(
 			groupId, serviceContext.getCompanyId(), AssetCategory.class,
@@ -88,9 +98,13 @@ public class CPAssetCategoryLocalServiceImpl
 		Map<Locale, String> urlTitleMap = LocalizationUtil.getLocalizationMap(
 			serviceContext.getRequest(), "urlTitleMapAsXML");
 
+		// Commerce product display layout
+
 		_cpDisplayLayoutLocalService.addCPDisplayLayout(
 			AssetCategory.class, assetCategory.getCategoryId(), layoutUuid,
 			serviceContext);
+
+		// Commerce product friendly URL
 
 		_cpFriendlyURLEntryLocalService.addCPFriendlyURLEntries(
 			serviceContext.getScopeGroupId(), serviceContext.getCompanyId(),
@@ -98,6 +112,40 @@ public class CPAssetCategoryLocalServiceImpl
 
 		return assetCategory;
 	}
+
+	private Map<Locale, String> _getUniqueUrlTitles(
+			AssetCategory assetCategory, Map<Locale, String> urlTitleMap)
+		throws PortalException {
+
+		Map<Locale, String> newUrlTitleMap = new HashMap<>();
+
+		Map<Locale, String> titleMap = assetCategory.getTitleMap();
+
+		long classNameId = _classNameLocalService.getClassNameId(
+			AssetCategory.class);
+
+		for (Map.Entry<Locale, String> titleEntry : titleMap.entrySet()) {
+			String urlTitle = urlTitleMap.get(titleEntry.getKey());
+
+			if (Validator.isNull(urlTitle)) {
+				urlTitle = titleEntry.getValue();
+			}
+
+			String languageId = LanguageUtil.getLanguageId(titleEntry.getKey());
+
+			urlTitle = _cpFriendlyURLEntryLocalService.buildUrlTitle(
+				assetCategory.getGroupId(), assetCategory.getCompanyId(),
+				classNameId, assetCategory.getCategoryId(), languageId,
+				urlTitle);
+
+			newUrlTitleMap.put(titleEntry.getKey(), urlTitle);
+		}
+
+		return newUrlTitleMap;
+	}
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private CPDisplayLayoutLocalService _cpDisplayLayoutLocalService;

@@ -27,6 +27,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Function;
 
 /**
  * @author Carlos Sierra Andrés
@@ -35,6 +36,18 @@ public class RegistryWrapper implements Registry {
 
 	public RegistryWrapper(Registry registry) {
 		_registry = registry;
+	}
+
+	@Override
+	public <S, R> R callService(
+		Class<S> serviceClass, Function<S, R> function) {
+
+		return _registry.callService(serviceClass, function);
+	}
+
+	@Override
+	public <S, R> R callService(String className, Function<S, R> function) {
+		return _registry.callService(className, function);
 	}
 
 	@Override
@@ -47,6 +60,10 @@ public class RegistryWrapper implements Registry {
 		return this;
 	}
 
+	/**
+	 * @deprecated As of 1.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public <T> T getService(Class<T> clazz) {
 		ServiceReference<T> serviceReference = _registry.getServiceReference(
@@ -77,6 +94,10 @@ public class RegistryWrapper implements Registry {
 		return _registry.getService(serviceReference);
 	}
 
+	/**
+	 * @deprecated As of 1.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public <T> T getService(String className) {
 		ServiceReference<Object> serviceReference =

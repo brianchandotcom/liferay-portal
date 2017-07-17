@@ -15,7 +15,7 @@
 package com.liferay.asset.tags.internal.search;
 
 import com.liferay.asset.kernel.model.AssetTag;
-import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -44,6 +44,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
@@ -71,7 +72,7 @@ public class AssetTagIndexer extends BaseIndexer<AssetTag> {
 			long entryClassPK, String actionId)
 		throws Exception {
 
-		AssetTag tag = AssetTagLocalServiceUtil.getTag(entryClassPK);
+		AssetTag tag = _assetTagLocalService.getTag(entryClassPK);
 
 		return AssetTagPermission.contains(
 			permissionChecker, tag, ActionKeys.VIEW);
@@ -136,7 +137,7 @@ public class AssetTagIndexer extends BaseIndexer<AssetTag> {
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		AssetTag tag = AssetTagLocalServiceUtil.getTag(classPK);
+		AssetTag tag = _assetTagLocalService.getTag(classPK);
 
 		doReindex(tag);
 	}
@@ -150,7 +151,7 @@ public class AssetTagIndexer extends BaseIndexer<AssetTag> {
 
 	protected void reindexTags(final long companyId) throws PortalException {
 		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			AssetTagLocalServiceUtil.getIndexableActionableDynamicQuery();
+			_assetTagLocalService.getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
@@ -184,5 +185,8 @@ public class AssetTagIndexer extends BaseIndexer<AssetTag> {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetTagIndexer.class);
+
+	@Reference
+	private AssetTagLocalService _assetTagLocalService;
 
 }

@@ -1736,7 +1736,7 @@ and `writeArtifactPublishCommands` tasks.
 ## 4.0.5 - 2017-07-17
 
 ### Changed
-- [LPS-73472]: Update the [Liferay Gradle Plugins] dependency to version 3.4.6.
+- [LPS-73462]: Update the [Liferay Gradle Plugins] dependency to version 3.4.6.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -1917,12 +1917,12 @@ and `writeArtifactPublishCommands` tasks.
 [LPS-73352]: https://issues.liferay.com/browse/LPS-73352
 [LPS-73383]: https://issues.liferay.com/browse/LPS-73383
 [LPS-73470]: https://issues.liferay.com/browse/LPS-73470
-[LPS-73472]: https://issues.liferay.com/browse/LPS-73472
 [LPS-73489]: https://issues.liferay.com/browse/LPS-73489
 [LPS-73495]: https://issues.liferay.com/browse/LPS-73495
 [LPS-73525]: https://issues.liferay.com/browse/LPS-73525
 [LPS-73584]: https://issues.liferay.com/browse/LPS-73584
 [LPS-73607]: https://issues.liferay.com/browse/LPS-73607
+[LPS-73642]: https://issues.liferay.com/browse/LPS-73642
 [LPS-73652]: https://issues.liferay.com/browse/LPS-73652
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841

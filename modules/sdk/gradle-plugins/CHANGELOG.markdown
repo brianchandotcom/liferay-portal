@@ -1922,6 +1922,10 @@ to version 2.0.35.
 
 ## 3.4.6 - 2017-07-17
 
+### Added
+- [LPS-73642]: Apply the [Liferay Gradle Plugins Lang Builder] to theme
+projects. By default, the language directory is set as `src/WEB-INF/src/content`.
+
 ### Changed
 - [LPS-73472]: Update the [Liferay Gradle Plugins Gulp] dependency to version
 2.0.17.
@@ -2103,4 +2107,5 @@ version 2.3.16.
 [LPS-73495]: https://issues.liferay.com/browse/LPS-73495
 [LPS-73525]: https://issues.liferay.com/browse/LPS-73525
 [LPS-73584]: https://issues.liferay.com/browse/LPS-73584
+[LPS-73642]: https://issues.liferay.com/browse/LPS-73642
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

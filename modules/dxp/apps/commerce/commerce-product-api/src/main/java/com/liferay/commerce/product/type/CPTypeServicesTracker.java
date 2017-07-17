@@ -29,6 +29,8 @@ public interface CPTypeServicesTracker {
 
 	public Set<String> getCPTypeNames();
 
+	public CPTypeRenderer getCPTypeRenderer(String name);
+
 	public List<CPType> getCPTypes();
 
 }

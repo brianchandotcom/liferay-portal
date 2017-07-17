@@ -16,6 +16,7 @@ package com.liferay.commerce.product.internal.type;
 
 import com.liferay.commerce.product.internal.type.comparator.CPTypeServiceWrapperDisplayOrderComparator;
 import com.liferay.commerce.product.type.CPType;
+import com.liferay.commerce.product.type.CPTypeRenderer;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
@@ -70,6 +71,11 @@ public class CPTypeServicesTrackerImpl implements CPTypeServicesTracker {
 	}
 
 	@Override
+	public CPTypeRenderer getCPTypeRenderer(String name) {
+		return _cpTypeRendererServiceTrackerMap.getService(name);
+	}
+
+	@Override
 	public List<CPType> getCPTypes() {
 		List<CPType> cpTypes = new ArrayList<>();
 
@@ -90,6 +96,11 @@ public class CPTypeServicesTrackerImpl implements CPTypeServicesTracker {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
+		_cpTypeRendererServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, CPTypeRenderer.class,
+				"commerce.product.type.name");
+
 		_cpTypeServiceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, CPType.class, "commerce.product.type.name",
 			ServiceTrackerCustomizerFactory.<CPType>serviceWrapper(
@@ -98,12 +109,15 @@ public class CPTypeServicesTrackerImpl implements CPTypeServicesTracker {
 
 	@Deactivate
 	protected void deactivate() {
+		_cpTypeRendererServiceTrackerMap.close();
 		_cpTypeServiceTrackerMap.close();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPTypeServicesTrackerImpl.class);
 
+	private ServiceTrackerMap<String, CPTypeRenderer>
+		_cpTypeRendererServiceTrackerMap;
 	private ServiceTrackerMap<String, ServiceWrapper<CPType>>
 		_cpTypeServiceTrackerMap;
 	private final Comparator<ServiceWrapper<CPType>>

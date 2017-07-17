@@ -126,6 +126,17 @@ declared in the `package.json` file.
 - [LPS-73472]: Run the `"build"` script (if declared in the `package.json` file)
 when compiling a Java project.
 
+## 3.0.0 - 2017-07-17
+
+### Added
+- [LPS-73472]: Recreate symbolic links in the `.bin` directories of
+`node_modules` if the `nodeModulesCacheDir` property of `NpmInstallTask` is set.
+
+### Removed
+- [LPS-73472]: Remove all deprecated methods.
+- [LPS-73472]: The property `nodeModulesCacheRemoveBinDirs` of `NpmInstallTask`
+is no longer available.
+
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573

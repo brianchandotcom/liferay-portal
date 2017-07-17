@@ -20,8 +20,8 @@
 List<AssetCategory> assetCategories = cpAssetCategoriesNavigationDisplayContext.getAssetCategories();
 %>
 
-<div id="<portlet:namespace />cpAssetCategoryNavigation">
-	<ul class="navbar-site">
+<div class="navbar" id="<portlet:namespace />cpAssetCategoryNavigation">
+	<ul class="nav navbar-blank navbar-nav navbar-site">
 
 		<%
 		for (AssetCategory assetCategory : assetCategories) {

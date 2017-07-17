@@ -1,0 +1,183 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portal.test.rule.callback;
+
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
+
+/**
+ * @author Preston Crary
+ */
+public class InjectTestBag {
+
+	public InjectTestBag(Class<?> testClass) throws Exception {
+		this(testClass, null);
+	}
+
+	public InjectTestBag(Class<?> testClass, Object target) throws Exception {
+		_target = target;
+
+		while (testClass != Object.class) {
+			for (Field field : testClass.getDeclaredFields()) {
+				boolean staticField = Modifier.isStatic(field.getModifiers());
+
+				if (((_target == null) == staticField) &&
+					field.isAnnotationPresent(Inject.class)) {
+
+					if (!field.isAccessible()) {
+						field.setAccessible(true);
+					}
+
+					_fields.add(field);
+				}
+			}
+
+			testClass = testClass.getSuperclass();
+		}
+	}
+
+	public void injectFields() throws Exception {
+		Registry registry = RegistryUtil.getRegistry();
+
+		for (Field field : _fields) {
+			Inject inject = field.getAnnotation(Inject.class);
+
+			Class<?> clazz = inject.type();
+
+			if (clazz == Object.class) {
+				clazz = field.getType();
+			}
+
+			ServiceReference<?> serviceReference = _getServiceReference(
+				registry, clazz, inject.filter(), inject.blocking());
+
+			if (serviceReference != null) {
+				_serviceReferences.add(serviceReference);
+
+				Object service = registry.getService(serviceReference);
+
+				field.set(_target, service);
+			}
+		}
+	}
+
+	public void resetFields() throws Exception {
+		for (Field field : _fields) {
+			field.set(_target, null);
+		}
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		for (ServiceReference<?> serviceReference : _serviceReferences) {
+			registry.ungetService(serviceReference);
+		}
+	}
+
+	private <T> ServiceReference<T> _getServiceReference(
+			Registry registry, Class<T> clazz, String filter)
+		throws Exception {
+
+		if (filter.isEmpty()) {
+			return registry.getServiceReference(clazz);
+		}
+
+		if ((clazz != Object.class) && !filter.contains("objectClass")) {
+			int index = filter.indexOf('&');
+
+			StringBundler sb = new StringBundler(5);
+
+			if (index < 0) {
+				sb.append("(&(objectClass=");
+				sb.append(clazz.getName());
+				sb.append(")(");
+				sb.append(filter);
+				sb.append("))");
+			}
+			else {
+				sb.append(filter.substring(0, index));
+				sb.append("&(objectClass=");
+				sb.append(clazz.getName());
+				sb.append(")");
+				sb.append(filter.substring(index + 1));
+			}
+
+			filter = sb.toString();
+		}
+
+		Collection<ServiceReference<T>> serviceReferences =
+			registry.getServiceReferences(clazz, filter);
+
+		Stream<ServiceReference<T>> stream = serviceReferences.stream();
+
+		Optional<ServiceReference<T>> optional = stream.findFirst();
+
+		return optional.orElse(null);
+	}
+
+	private <T> ServiceReference<T> _getServiceReference(
+			Registry registry, Class<T> clazz, String filter, boolean blocking)
+		throws Exception {
+
+		ServiceReference<T> serviceReference = _getServiceReference(
+			registry, clazz, filter);
+
+		if (blocking) {
+			int waitTime = 0;
+
+			String className = clazz.getName();
+
+			while (serviceReference == null) {
+				waitTime += _SLEEP_TIME;
+
+				if (waitTime >= TestPropsValues.CI_TEST_TIMEOUT_TIME) {
+					throw new IllegalStateException(
+						"Timed out while waiting for service " + className +
+							" " + filter);
+				}
+
+				System.out.println(
+					"Waiting for service " + className + " " + filter);
+
+				Thread.sleep(_SLEEP_TIME);
+
+				serviceReference = _getServiceReference(
+					registry, clazz, filter);
+			}
+		}
+
+		return serviceReference;
+	}
+
+	private static final int _SLEEP_TIME = 2000;
+
+	private final List<Field> _fields = new ArrayList<>();
+	private final List<ServiceReference<?>> _serviceReferences =
+		new ArrayList<>();
+	private final Object _target;
+
+}

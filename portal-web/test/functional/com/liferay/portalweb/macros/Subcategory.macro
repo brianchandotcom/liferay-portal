@@ -27,8 +27,10 @@
 
 	<command name="addCP">
 		<execute macro="Subcategory#_addCP">
+			<var name="categoryName" value="${categoryName}" />
 			<var name="subcategoryDescription" value="${subcategoryDescription}" />
 			<var name="subcategoryName" value="${subcategoryName}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 
 		<execute macro="PortletEntry#save" />
@@ -59,8 +61,10 @@
 
 	<command name="addWithPropertyCP">
 		<execute macro="Subcategory#_addCP">
+			<var name="categoryName" value="${categoryName}" />
 			<var name="subcategoryDescription" value="${subcategoryDescription}" />
 			<var name="subcategoryName" value="${subcategoryName}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 
 		<execute macro="Navigator#gotoNavItem">

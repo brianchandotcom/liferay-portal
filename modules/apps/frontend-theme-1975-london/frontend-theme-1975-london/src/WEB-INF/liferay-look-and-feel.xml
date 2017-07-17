@@ -8,9 +8,9 @@
 	<theme id="1975-london" name="1975 London">
 		<template-extension>ftl</template-extension>
 		<settings>
-			<setting configurable="true" key="floating-header" type="checkbox" value="true" />
-			<setting configurable="true" key="full-screen-navigation" type="checkbox" value="false" />
-			<setting configurable="true" key="site-logo-retina" type="checkbox" value="true" />
+			<setting configurable="true" key="header-floating-on-screen-top" type="checkbox" value="true" />
+			<setting configurable="true" key="show-main-navigation-in-full-screen" type="checkbox" value="false" />
+			<setting configurable="true" key="use-a-retina-logo" type="checkbox" value="true" />
 		</settings>
 		<portlet-decorator id="barebone" name="Barebone">
 			<portlet-decorator-css-class>portlet-barebone</portlet-decorator-css-class>

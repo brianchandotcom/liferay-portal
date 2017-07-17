@@ -118,8 +118,18 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 	<h4><liferay-ui:message key="settings" /></h4>
 
 	<%
+	ServletContext servletContext = ServletContextPool.get(selTheme.getServletContextName());
+
+	ResourceBundle selThemeResourceBundle = resourceBundle;
+
+	try {
+		selThemeResourceBundle = ResourceBundleUtil.getBundle("content.Language", servletContext.getClassLoader());
+	}
+	catch (Exception e) {
+	}
+
 	for (Map.Entry<String, ThemeSetting> entry : configurableSettings.entrySet()) {
-		String name = entry.getKey();
+		String name = LanguageUtil.get(selThemeResourceBundle, entry.getKey());
 		ThemeSetting themeSetting = entry.getValue();
 
 		String type = GetterUtil.getString(themeSetting.getType(), "text");

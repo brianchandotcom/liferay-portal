@@ -35,6 +35,16 @@
 		<execute macro="Smoke#runSmoke" />
 	</command>
 
+	<command name="SmokeWithDeveloperProperties" priority="5">
+		<property name="custom.properties" value="include-and-override=portal-developer.properties" />
+		<property name="portal.acceptance" value="true" />
+		<property name="portal.smoke" value="false" />
+
+		<execute macro="Smoke#viewWelcomePage" />
+
+		<execute macro="Smoke#runSmoke" />
+	</command>
+
 	<command name="SmokeWithSPADisabled" priority="5">
 		<property name="custom.properties" value="javascript.single.page.application.enabled=false" />
 

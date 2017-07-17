@@ -440,12 +440,16 @@
 			<var name="portlet" value="Categories" />
 		</execute>
 
-		<execute macro="Subcategory#addWithPropertyCP">
+		<execute macro="Subcategory#addCP">
 			<var name="categoryName" value="Category Name" />
+			<var name="subcategoryName" value="Subcategory Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Subcategory#addPropertyCP">
 			<var name="propertiesKeyField" value="Subcategory Key" />
 			<var name="propertiesValueField" value="Subcategory Value" />
 			<var name="subcategoryName" value="Subcategory Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />

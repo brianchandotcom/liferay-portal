@@ -135,62 +135,60 @@ GroupSearch groupSearch = siteItemSelectorViewDisplayContext.getGroupSearch();
 					%>
 
 					<liferay-ui:search-container-column-text>
-						<div role="button">
-							<c:choose>
-								<c:when test="<%= Validator.isNotNull(group.getLogoURL(themeDisplay, false)) %>">
-									<liferay-frontend:vertical-card
-										imageUrl="<%= group.getLogoURL(themeDisplay, false) %>"
-										resultRow="<%= row %>"
-										rowChecker="<%= searchContainer.getRowChecker() %>"
-										showCheckbox="<%= false %>"
-									>
-										<liferay-frontend:vertical-card-header>
-											<h5>
-												<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
-													<%= HtmlUtil.escape(siteItemSelectorViewDisplayContext.getGroupName(group)) %>
-												</aui:a>
+						<c:choose>
+							<c:when test="<%= Validator.isNotNull(group.getLogoURL(themeDisplay, false)) %>">
+								<liferay-frontend:vertical-card
+									imageUrl="<%= group.getLogoURL(themeDisplay, false) %>"
+									resultRow="<%= row %>"
+									rowChecker="<%= searchContainer.getRowChecker() %>"
+									showCheckbox="<%= false %>"
+								>
+									<liferay-frontend:vertical-card-header>
+										<h5>
+											<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+												<%= HtmlUtil.escape(siteItemSelectorViewDisplayContext.getGroupName(group)) %>
+											</aui:a>
 
-												<aui:a href="<%= groupURLProvider.getGroupURL(group, liferayPortletRequest) %>" target="_blank" />
-											</h5>
-										</liferay-frontend:vertical-card-header>
+											<aui:a href="<%= groupURLProvider.getGroupURL(group, liferayPortletRequest) %>" target="_blank" />
+										</h5>
+									</liferay-frontend:vertical-card-header>
 
-										<c:if test="<%= siteItemSelectorViewDisplayContext.isShowChildSitesLink() %>">
-											<liferay-frontend:vertical-card-footer>
-												<aui:a cssClass='<%= !childGroups.isEmpty() ? "text-default" : "disabled text-muted" %>' data="<%= linkData %>" href="<%= childGroupsHREF %>">
-													<liferay-ui:message arguments="<%= String.valueOf(childGroups.size()) %>" key="x-child-sites" />
-												</aui:a>
-											</liferay-frontend:vertical-card-footer>
-										</c:if>
-									</liferay-frontend:vertical-card>
-								</c:when>
-								<c:otherwise>
-									<liferay-frontend:icon-vertical-card
-										icon="sites"
-										resultRow="<%= row %>"
-										rowChecker="<%= searchContainer.getRowChecker() %>"
-										showCheckbox="<%= false %>"
-									>
-										<liferay-frontend:vertical-card-header>
-											<h5>
-												<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
-													<%= HtmlUtil.escape(siteItemSelectorViewDisplayContext.getGroupName(group)) %>
-												</aui:a>
-
-												<aui:a href="<%= groupURLProvider.getGroupURL(group, liferayPortletRequest) %>" target="_blank" />
-											</h5>
-										</liferay-frontend:vertical-card-header>
-
+									<c:if test="<%= siteItemSelectorViewDisplayContext.isShowChildSitesLink() %>">
 										<liferay-frontend:vertical-card-footer>
-											<c:if test="<%= siteItemSelectorViewDisplayContext.isShowChildSitesLink() %>">
-												<aui:a cssClass='<%= !childGroups.isEmpty() ? "text-default" : "disabled text-muted" %>' data="<%= linkData %>" href="<%= childGroupsHREF %>">
-													<liferay-ui:message arguments="<%= String.valueOf(childGroups.size()) %>" key="x-child-sites" />
-												</aui:a>
-											</c:if>
+											<aui:a cssClass='<%= !childGroups.isEmpty() ? "text-default" : "disabled text-muted" %>' data="<%= linkData %>" href="<%= childGroupsHREF %>">
+												<liferay-ui:message arguments="<%= String.valueOf(childGroups.size()) %>" key="x-child-sites" />
+											</aui:a>
 										</liferay-frontend:vertical-card-footer>
-									</liferay-frontend:icon-vertical-card>
-								</c:otherwise>
-							</c:choose>
-						</div>
+									</c:if>
+								</liferay-frontend:vertical-card>
+							</c:when>
+							<c:otherwise>
+								<liferay-frontend:icon-vertical-card
+									icon="sites"
+									resultRow="<%= row %>"
+									rowChecker="<%= searchContainer.getRowChecker() %>"
+									showCheckbox="<%= false %>"
+								>
+									<liferay-frontend:vertical-card-header>
+										<h5>
+											<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+												<%= HtmlUtil.escape(siteItemSelectorViewDisplayContext.getGroupName(group)) %>
+											</aui:a>
+
+											<aui:a href="<%= groupURLProvider.getGroupURL(group, liferayPortletRequest) %>" target="_blank" />
+										</h5>
+									</liferay-frontend:vertical-card-header>
+
+									<liferay-frontend:vertical-card-footer>
+										<c:if test="<%= siteItemSelectorViewDisplayContext.isShowChildSitesLink() %>">
+											<aui:a cssClass='<%= !childGroups.isEmpty() ? "text-default" : "disabled text-muted" %>' data="<%= linkData %>" href="<%= childGroupsHREF %>">
+												<liferay-ui:message arguments="<%= String.valueOf(childGroups.size()) %>" key="x-child-sites" />
+											</aui:a>
+										</c:if>
+									</liferay-frontend:vertical-card-footer>
+								</liferay-frontend:icon-vertical-card>
+							</c:otherwise>
+						</c:choose>
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test='<%= displayStyle.equals("list") %>'>

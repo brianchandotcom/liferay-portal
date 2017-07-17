@@ -163,9 +163,9 @@ public class CategoryCPFriendlyURLFormNavigatorEntry
 		long classNameId = _portal.getClassNameId(AssetCategory.class);
 		String itemSelectorURL = getItemSelectorUrl(renderRequest);
 
-		String titleMapAsXML = null;
+		String titleMapAsXML = StringPool.BLANK;
 		String layoutBreadcrumb = StringPool.BLANK;
-		String layoutUuid = null;
+		String layoutUuid = StringPool.BLANK;
 
 		try {
 			assetCategory = _assetCategoryService.fetchCategory(categoryId);

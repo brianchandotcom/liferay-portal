@@ -82,6 +82,7 @@ public interface CPOptionValueLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CPOptionValue addCPOptionValue(CPOptionValue cpOptionValue);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public CPOptionValue addCPOptionValue(long cpOptionId,
 		Map<Locale, java.lang.String> titleMap, double priority,
 		java.lang.String key, ServiceContext serviceContext)
@@ -164,6 +165,7 @@ public interface CPOptionValueLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CPOptionValue updateCPOptionValue(CPOptionValue cpOptionValue);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public CPOptionValue updateCPOptionValue(long cpOptionValueId,
 		Map<Locale, java.lang.String> titleMap, double priority,
 		java.lang.String key, ServiceContext serviceContext)

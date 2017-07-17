@@ -91,6 +91,7 @@ public interface CPDefinitionOptionRelLocalService extends BaseLocalService,
 		long cpOptionId, ServiceContext serviceContext)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public CPDefinitionOptionRel addCPDefinitionOptionRel(long cpDefinitionId,
 		long cpOptionId, Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> descriptionMap,
@@ -189,6 +190,7 @@ public interface CPDefinitionOptionRelLocalService extends BaseLocalService,
 	public CPDefinitionOptionRel updateCPDefinitionOptionRel(
 		CPDefinitionOptionRel cpDefinitionOptionRel);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public CPDefinitionOptionRel updateCPDefinitionOptionRel(
 		long cpDefinitionOptionRelId, long cpOptionId,
 		Map<Locale, java.lang.String> titleMap,

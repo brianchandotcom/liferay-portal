@@ -205,7 +205,7 @@ public interface CPInstanceLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BaseModelSearchResult<CPInstance> searchCPOptions(long companyId,
+	public BaseModelSearchResult<CPInstance> searchCPInstances(long companyId,
 		long groupId, long cpDefinitionId, java.lang.String keywords,
 		int status, int start, int end, Sort sort) throws PortalException;
 

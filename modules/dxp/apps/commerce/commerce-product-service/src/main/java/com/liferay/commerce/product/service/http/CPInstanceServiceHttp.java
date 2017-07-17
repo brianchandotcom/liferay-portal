@@ -348,14 +348,14 @@ public class CPInstanceServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPInstance> searchCPOptions(
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPInstance> searchCPInstances(
 		HttpPrincipal httpPrincipal, long companyId, long groupId,
 		long cpDefinitionId, java.lang.String keywords, int status, int start,
 		int end, com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPInstanceServiceUtil.class,
-					"searchCPOptions", _searchCPOptionsParameterTypes9);
+					"searchCPInstances", _searchCPInstancesParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					companyId, groupId, cpDefinitionId, keywords, status,
@@ -491,7 +491,7 @@ public class CPInstanceServiceHttp {
 	private static final Class<?>[] _searchParameterTypes8 = new Class[] {
 			com.liferay.portal.kernel.search.SearchContext.class
 		};
-	private static final Class<?>[] _searchCPOptionsParameterTypes9 = new Class[] {
+	private static final Class<?>[] _searchCPInstancesParameterTypes9 = new Class[] {
 			long.class, long.class, long.class, java.lang.String.class,
 			int.class, int.class, int.class,
 			com.liferay.portal.kernel.search.Sort.class

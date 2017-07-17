@@ -219,13 +219,13 @@ public class CPInstanceLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPInstance> searchCPOptions(
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPInstance> searchCPInstances(
 		long companyId, long groupId, long cpDefinitionId,
 		java.lang.String keywords, int status, int start, int end,
 		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .searchCPOptions(companyId, groupId, cpDefinitionId,
+				   .searchCPInstances(companyId, groupId, cpDefinitionId,
 			keywords, status, start, end, sort);
 	}
 

@@ -16,13 +16,11 @@ package com.liferay.commerce.product.content.web.internal.portlet;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.constants.CPWebKeys;
-import com.liferay.commerce.product.content.web.internal.display.context.CPContentDisplayContext;
 import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
-import com.liferay.commerce.product.util.CPInstanceHelper;
+import com.liferay.commerce.product.type.CPTypeRenderer;
+import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
@@ -30,6 +28,9 @@ import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -70,23 +71,24 @@ public class CPContentPortlet extends MVCPortlet {
 		CPDefinition cpDefinition = (CPDefinition)renderRequest.getAttribute(
 			CPWebKeys.CP_DEFINITION);
 
-		CPContentDisplayContext cpContentDisplayContext =
-			new CPContentDisplayContext(
-				cpDefinition, _cpAttachmentFileEntryLocalService, _portal,
-				_cpInstanceHelper);
+		CPTypeRenderer cpTypeRenderer =
+			_cpTypeServicesTracker.getCPTypeRenderer(
+				cpDefinition.getProductTypeName());
 
-		renderRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT, cpContentDisplayContext);
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			renderRequest);
+
+		HttpServletResponse httpServletResponse =
+			_portal.getHttpServletResponse(renderResponse);
+
+		cpTypeRenderer.render(
+			cpDefinition, httpServletRequest, httpServletResponse);
 
 		super.render(renderRequest, renderResponse);
 	}
 
 	@Reference
-	private CPAttachmentFileEntryLocalService
-		_cpAttachmentFileEntryLocalService;
-
-	@Reference
-	private CPInstanceHelper _cpInstanceHelper;
+	private CPTypeServicesTracker _cpTypeServicesTracker;
 
 	@Reference
 	private Portal _portal;

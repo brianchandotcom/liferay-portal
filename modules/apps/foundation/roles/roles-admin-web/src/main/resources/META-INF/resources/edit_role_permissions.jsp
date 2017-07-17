@@ -430,11 +430,11 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 		var unselectedPermissionsString = Liferay.Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds');
 
 		form.fm('redirect').val('<%= HtmlUtil.escapeJS(portletURL.toString()) %>');
-		var selectedPermissions = form.fm('selectedTargets').val(selectedPermissionsString);
-		var unselectedPermissions = form.fm('unselectedTargets').val(unselectedPermissionsString);
+		form.fm('selectedTargets').val(selectedPermissionsString);
+		form.fm('unselectedTargets').val(unselectedPermissionsString);
 
-		selectedPermissions = selectedPermissionsString.split(",");
-		unselectedPermissions = unselectedPermissionsString.split(",");
+		var selectedPermissions = selectedPermissionsString.split(",");
+		var unselectedPermissions = unselectedPermissionsString.split(",");
 
 		if (arrayShares(selectedPermissions, oldUnselectedPermissions) || arrayShares(unselectedPermissions, oldSelectedPermissions)) {
 			if (!confirm('<liferay-ui:message key="changing-these-permissions-will-overwrite-all-permissions-of-that-type-previously-configured-on-this-entity" />')) {

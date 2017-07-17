@@ -228,8 +228,6 @@
 		</execute>
 
 		<execute function="Type" locator1="Portlet#BORDER_WIDTH_TOP_INPUT" value1="20" />
-
-		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="configureCustomTitleViaLookandfeelPG">
@@ -301,8 +299,6 @@
 
 	<command name="selectApplicationDecorator">
 		<execute function="Select" locator1="Select#APPLICATION_DECORATORS" value1="${decorator}" />
-
-		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="selectTreeNode">

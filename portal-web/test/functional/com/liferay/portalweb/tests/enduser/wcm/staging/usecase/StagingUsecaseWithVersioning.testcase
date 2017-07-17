@@ -148,6 +148,8 @@
 			<var name="portletName" value="Sites Directory" />
 		</execute>
 
+		<execute macro="PortletEntry#save" />
+
 		<execute macro="Portlet#configureApplicationDecoratorViaLookandfeelPG">
 			<var name="applicationDecorator" value="Decorate" />
 		</execute>

@@ -38,6 +38,8 @@
 
 		<execute macro="Portlet#configureCustomStylesViaLookandfeelPG" />
 
+		<execute macro="PortletEntry#save" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="Portlet#viewCustomStylesViaLookandfeelPG" />
@@ -82,6 +84,8 @@
 			<var name="decorator" value="Borderless" />
 		</execute>
 
+		<execute macro="PortletEntry#save" />
+
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Web Content Display" />
 			<var name="portletOption" value="Look and Feel Configuration" />
@@ -90,6 +94,8 @@
 		<execute macro="Portlet#selectApplicationDecorator">
 			<var name="decorator" value="Barebone" />
 		</execute>
+
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="Navigator#openURL" />
 

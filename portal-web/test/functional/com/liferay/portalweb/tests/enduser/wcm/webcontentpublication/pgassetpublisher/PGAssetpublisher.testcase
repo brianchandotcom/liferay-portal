@@ -66,6 +66,8 @@
 			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
+		<execute macro="PortletEntry#save" />
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
@@ -83,6 +85,8 @@
 		<execute macro="Portlet#selectApplicationDecorator">
 			<var name="decorator" value="Barebone" />
 		</execute>
+
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Asset Publisher Page" />
@@ -350,6 +354,8 @@
 		<execute macro="Portlet#configureCustomTitleViaLookandfeelPG">
 			<var name="portletName" value="Asset Publisher" />
 		</execute>
+
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="Portlet#configureApplicationDecoratorViaLookandfeelPG">
 			<var name="applicationDecorator" value="Decorate" />

@@ -60,7 +60,7 @@ public class CPDefinitionLinkLocalServiceImpl
 
 		cpDefinitionLinkPersistence.update(cpDefinitionLink);
 
-		doCPDefinitionReindex(cpDefinitionId1);
+		reindexCPDefinition(cpDefinitionId1);
 
 		return cpDefinitionLink;
 	}
@@ -109,7 +109,7 @@ public class CPDefinitionLinkLocalServiceImpl
 
 		cpDefinitionLinkPersistence.update(cpDefinitionLink);
 
-		doCPDefinitionReindex(cpDefinitionLink.getCPDefinitionId1());
+		reindexCPDefinition(cpDefinitionLink.getCPDefinitionId1());
 
 		return cpDefinitionLink;
 	}
@@ -151,7 +151,7 @@ public class CPDefinitionLinkLocalServiceImpl
 		}
 	}
 
-	protected void doCPDefinitionReindex(long cpDefinitionId)
+	protected void reindexCPDefinition(long cpDefinitionId)
 		throws PortalException {
 
 		Indexer<CPDefinition> indexer = IndexerRegistryUtil.nullSafeGetIndexer(

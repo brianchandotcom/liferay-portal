@@ -134,7 +134,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 		cpAttachmentFileEntryPersistence.update(cpAttachmentFileEntry);
 
-		doCPDefinitionReindex(classNameId, classPK);
+		reindex(classNameId, classPK);
 
 		// Workflow
 
@@ -181,7 +181,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		expandoRowLocalService.deleteRows(
 			cpAttachmentFileEntry.getCPAttachmentFileEntryId());
 
-		doCPDefinitionReindex(
+		reindex(
 			cpAttachmentFileEntry.getClassNameId(),
 			cpAttachmentFileEntry.getClassPK());
 
@@ -385,7 +385,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 		cpAttachmentFileEntryPersistence.update(cpAttachmentFileEntry);
 
-		doCPDefinitionReindex(
+		reindex(
 			cpAttachmentFileEntry.getClassNameId(),
 			cpAttachmentFileEntry.getClassPK());
 
@@ -456,7 +456,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		}
 	}
 
-	protected void doCPDefinitionReindex(long classNameId, long classPK)
+	protected void reindex(long classNameId, long classPK)
 		throws PortalException {
 
 		String className = String.valueOf(

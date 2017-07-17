@@ -116,7 +116,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 				cpDefinitionOptionRelId, serviceContext);
 		}
 
-		doCPDefinitionReindex(cpDefinitionId);
+		reindexCPDefinition(cpDefinitionId);
 
 		return cpDefinitionOptionRel;
 	}
@@ -152,7 +152,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		expandoRowLocalService.deleteRows(
 			cpDefinitionOptionRel.getCPDefinitionOptionRelId());
 
-		doCPDefinitionReindex(cpDefinitionOptionRel.getCPDefinitionId());
+		reindexCPDefinition(cpDefinitionOptionRel.getCPDefinitionId());
 
 		return cpDefinitionOptionRel;
 	}
@@ -327,7 +327,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 		cpDefinitionOptionRelPersistence.update(cpDefinitionOptionRel);
 
-		doCPDefinitionReindex(cpDefinitionOptionRel.getCPDefinitionId());
+		reindexCPDefinition(cpDefinitionOptionRel.getCPDefinitionId());
 
 		return cpDefinitionOptionRel;
 	}
@@ -375,7 +375,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		return searchContext;
 	}
 
-	protected void doCPDefinitionReindex(long cpDefinitionId)
+	protected void reindexCPDefinition(long cpDefinitionId)
 		throws PortalException {
 
 		Indexer<CPDefinition> indexer = IndexerRegistryUtil.nullSafeGetIndexer(

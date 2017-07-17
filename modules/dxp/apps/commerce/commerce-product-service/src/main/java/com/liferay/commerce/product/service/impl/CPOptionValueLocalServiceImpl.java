@@ -91,7 +91,7 @@ public class CPOptionValueLocalServiceImpl
 
 		cpOptionValuePersistence.update(cpOptionValue);
 
-		doCPOptionReindex(cpOptionId);
+		reindexCPOption(cpOptionId);
 
 		return cpOptionValue;
 	}
@@ -110,7 +110,7 @@ public class CPOptionValueLocalServiceImpl
 
 		expandoRowLocalService.deleteRows(cpOptionValue.getCPOptionValueId());
 
-		doCPOptionReindex(cpOptionValue.getCPOptionId());
+		reindexCPOption(cpOptionValue.getCPOptionId());
 
 		return cpOptionValue;
 	}
@@ -208,7 +208,7 @@ public class CPOptionValueLocalServiceImpl
 
 		cpOptionValuePersistence.update(cpOptionValue);
 
-		doCPOptionReindex(cpOptionValue.getCPOptionId());
+		reindexCPOption(cpOptionValue.getCPOptionId());
 
 		return cpOptionValue;
 	}
@@ -257,7 +257,7 @@ public class CPOptionValueLocalServiceImpl
 		return searchContext;
 	}
 
-	protected void doCPOptionReindex(long cpOptionId) throws PortalException {
+	protected void reindexCPOption(long cpOptionId) throws PortalException {
 		Indexer<CPOption> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			CPOption.class);
 

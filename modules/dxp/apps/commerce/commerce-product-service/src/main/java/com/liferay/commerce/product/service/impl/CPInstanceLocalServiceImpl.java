@@ -134,7 +134,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		cpInstancePersistence.update(cpInstance);
 
-		doCPDefinitionReindex(cpDefinitionId);
+		reindexCPDefinition(cpDefinitionId);
 
 		// Workflow
 
@@ -261,7 +261,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			cpInstance.getCompanyId(), cpInstance.getGroupId(),
 			CPInstance.class.getName(), cpInstance.getCPInstanceId());
 
-		doCPDefinitionReindex(cpInstance.getCPDefinitionId());
+		reindexCPDefinition(cpInstance.getCPDefinitionId());
 
 		return cpInstance;
 	}
@@ -413,7 +413,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		cpInstancePersistence.update(cpInstance);
 
-		doCPDefinitionReindex(cpInstance.getCPDefinitionId());
+		reindexCPDefinition(cpInstance.getCPDefinitionId());
 
 		// Workflow
 
@@ -604,7 +604,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		}
 	}
 
-	protected void doCPDefinitionReindex(long cpDefinitionId)
+	protected void reindexCPDefinition(long cpDefinitionId)
 		throws PortalException {
 
 		Indexer<CPDefinition> indexer = IndexerRegistryUtil.nullSafeGetIndexer(

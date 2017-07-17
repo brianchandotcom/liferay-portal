@@ -48,10 +48,12 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Nested Portlets" />
+			<var name="portletName" value="Nested Applications" />
 		</execute>
 
-		<execute macro="NestedPortlets#viewConfigurationDefaultLayoutTemplate" />
+		<execute macro="NestedPortlets#viewConfigurationDefaultLayoutTemplate">
+			<var name="portletName" value="Nested Applications" />
+		</execute>
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Nested Portlets Page" />

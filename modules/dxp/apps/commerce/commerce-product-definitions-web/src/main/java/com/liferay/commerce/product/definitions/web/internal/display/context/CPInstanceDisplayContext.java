@@ -176,7 +176,7 @@ public class CPInstanceDisplayContext
 				getOrderByCol(), getOrderByType());
 
 			BaseModelSearchResult<CPInstance> cpInstanceBaseModelSearchResult =
-				_cpInstanceService.searchCPOptions(
+				_cpInstanceService.searchCPInstances(
 					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
 					getCPDefinitionId(), getKeywords(), getStatus(),
 					searchContainer.getStart(), searchContainer.getEnd(), sort);

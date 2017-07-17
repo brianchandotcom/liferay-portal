@@ -26,33 +26,10 @@
 	</command>
 
 	<command name="addCP">
-		<var name="key_categoryName" value="${categoryName}" />
-		<var name="key_vocabularyName" value="${vocabularyName}" />
-
-		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
-
-		<execute function="Pause" locator1="1000" />
-
-		<var name="key_rowEntry" value="${categoryName}" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ADD_SUBCATEGORY" value1="Add Subcategory" />
-
-		<var name="key_subcategoryName" value="${subCategoryName}" />
-
-		<execute macro="PortletEntry#inputTitle">
-			<var name="title" value="${subcategoryName}" />
+		<execute macro="Subcategory#_addCP">
+			<var name="subcategoryDescription" value="${subcategoryDescription}" />
+			<var name="subcategoryName" value="${subcategoryName}" />
 		</execute>
-
-		<if>
-			<isset var="subcategoryDescription" />
-			<then>
-				<execute macro="PortletEntry#inputDescription">
-					<var name="description" value="${subcategoryDescription}" />
-				</execute>
-			</then>
-		</if>
 
 		<execute macro="PortletEntry#save" />
 	</command>
@@ -81,20 +58,9 @@
 	</command>
 
 	<command name="addWithPropertyCP">
-		<var name="key_vocabularyName" value="${vocabularyName}" />
-
-		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
-
-		<var name="key_rowEntry" value="${categoryName}" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ADD_SUBCATEGORY" value1="Add Subcategory" />
-
-		<var name="key_subcategoryName" value="${subCategoryName}" />
-
-		<execute macro="PortletEntry#inputTitle">
-			<var name="title" value="${subcategoryName}" />
+		<execute macro="Subcategory#_addCP">
+			<var name="subcategoryDescription" value="${subcategoryDescription}" />
+			<var name="subcategoryName" value="${subcategoryName}" />
 		</execute>
 
 		<execute macro="Panel#expandPanel">

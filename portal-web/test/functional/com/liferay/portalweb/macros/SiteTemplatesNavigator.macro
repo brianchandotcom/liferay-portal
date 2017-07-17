@@ -14,7 +14,7 @@
 
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName}" />
 
-		<execute function="SelectWindow" locator1="home - ${siteTemplateName} - ${siteName}" />
+		<execute function="SelectWindow" locator1="Home - ${siteTemplateName} - ${siteName}" />
 
 		<execute macro="Navigator#_gotoPage">
 			<var name="pageName" value="${pageName}" />

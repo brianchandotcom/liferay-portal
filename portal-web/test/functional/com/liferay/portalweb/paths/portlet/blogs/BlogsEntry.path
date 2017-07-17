@@ -135,7 +135,7 @@
 </tr>
 <tr>
 	<td>FLAG_LINK</td>
-	<td>//div[contains(@class,'taglib-flags')]//a[@class='taglib-icon']</td>
+	<td>//div[contains(@class,'taglib-flags')]//span[contains(@class,'taglib-text')]</td>
 	<td></td>
 </tr>
 <tr>

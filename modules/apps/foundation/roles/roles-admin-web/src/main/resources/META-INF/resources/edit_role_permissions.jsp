@@ -433,8 +433,8 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 		var selectedPermissions = form.fm('selectedTargets').val(selectedPermissionsString);
 		var unselectedPermissions = form.fm('unselectedTargets').val(unselectedPermissionsString);
 
-		selectedPermissions = String(selectedPermissions.val()).split(",");
-		unselectedPermissions = String(unselectedPermissions.val()).split(",");
+		selectedPermissions = selectedPermissionsString.split(",");
+		unselectedPermissions = unselectedPermissionsString.split(",");
 
 		if (arrayShares(selectedPermissions, oldUnselectedPermissions) || arrayShares(unselectedPermissions, oldSelectedPermissions)) {
 			if (!confirm('<liferay-ui:message key="changing-these-permissions-will-overwrite-all-permissions-of-that-type-previously-configured-on-this-entity" />')) {

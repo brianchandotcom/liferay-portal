@@ -96,6 +96,8 @@ elif [[ "${SUBREPO_NAME}" ]] && [[ "${PATTERN}" || "${OPTION_ALL}" ]]; then
 	error "Bad usage. Specifiying SUBREPO_NAME cannot be used together with -a or -p."
 elif [[ "${PATTERN}" ]] && [[ "${OPTION_ALL}" ]]; then
 	error "Bad usage. The -a option cannot be combined with -p."
+elif [[ "${OPTION_FORCE}" ]] && [[ "${OPTION_ALL}" || "${PATTERN}" ]]; then
+	error "Bad usage. The -f option can only be used with SUBREPO_NAME."
 fi
 
 #
@@ -164,8 +166,8 @@ master
 
 		REMOTE_BRANCHES=($(echo "${OUTPUT}" | grep '"name"' | sed 's/"[^"]*$//' | sed 's/.*"//'))
 
-		if [[ -z "${REMOTE_BRANCHES[@]}" ]]; then
-			error "No valid branches found at liferay/${SUBREPO_NAME}."
+		if [[ -z "$(echo "${REMOTE_BRANCHES[@]}" | grep '[a-zA-Z]')" ]]; then
+			error "No branches found on GitHub at liferay/${SUBREPO_NAME}."
 		fi
 
 		SUBREPO_BRANCHES=()
@@ -175,6 +177,32 @@ master
 				SUBREPO_BRANCHES=("${SUBREPO_BRANCHES[@]}" "${REMOTE_BRANCH}:${SUBREPO_NAME}")
 			fi
 		done
+
+		if [[ -z "$(echo "${SUBREPO_BRANCHES[@]}" | grep '[a-zA-Z]')" ]]; then
+			error "No valid branches found on GitHub at liferay/${SUBREPO_NAME}."
+		fi
+	else
+		SUBREPO_BRANCHES=()
+
+		for SUBREPO_SEARCH_PARAMETER in "${SUBREPO_SEARCH_PARAMETERS[@]}"; do
+			BRANCH_NAME="${SUBREPO_SEARCH_PARAMETER%%:*}"
+			REPO_PATH="$(echo "${SUBREPO_SEARCH_PARAMETER}" | sed 's/:[^:]*$//' | sed 's/.*://')"
+			SUBREPOS_PATH="${SUBREPO_SEARCH_PARAMETER##*:}"
+
+			GITREPO_PATH="$(git -C "${REPO_PATH}" grep -l "/${SUBREPO_NAME}.git" "${BRANCH_NAME}" -- '*.gitrepo' | grep ":${SUBREPOS_PATH}/" | sed 's/.*://')"
+
+			if [[ -z "${GITREPO_PATH}" ]]; then
+				continue
+			fi
+
+			if [[ "$(git -C "${REPO_PATH}" grep 'mode.*=.*pull' "${BRANCH_NAME}" -- "${GITREPO_PATH##*:}")" ]]; then
+				SUBREPO_BRANCHES=("${SUBREPO_BRANCHES[@]}" "$(git -C "${REPO_PATH}" grep 'git@github.com'  "${BRANCH_NAME}" -- "${GITREPO_PATH##*:}" | sed 's@:.*/@:@' | sed 's/\.git//')")
+			fi
+		done
+
+		if [[ -z "$(echo "${SUBREPO_BRANCHES[@]}" | grep '[a-zA-Z]')" ]]; then
+			error "Failed to find a valid .gitrepo file and validate mode for ${SUBREPO_NAME}. Use the -f flag to force update the subrepo."
+		fi
 	fi
 else
 	ALL_SUBREPOS=()
@@ -197,7 +225,7 @@ else
 
 	SUBREPO_BRANCHES=($(printf '%s\n' "${ALL_SUBREPOS[@]}" | grep "^[^:]*:.*${PATTERN}"))
 
-	if [[ -z "${SUBREPO_BRANCHES[@]}" ]]; then
+	if [[ -z "$(echo "${SUBREPO_BRANCHES[@]}" | grep '[a-zA-Z]')" ]]; then
 		if [[ "${PATTERN}" ]]; then
 			error "No pull-mode subrepos found matching the specified filter."
 		else

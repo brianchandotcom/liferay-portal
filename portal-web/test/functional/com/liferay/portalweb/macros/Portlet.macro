@@ -212,6 +212,8 @@
 		</execute>
 
 		<execute function="Select" locator1="Portlet#APPLICATION_DECORATOR_SELECT" value1="${applicationDecorator}" />
+
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="configureCustomStylesViaLookandfeelPG">

@@ -163,9 +163,7 @@ public class CPDefinitionLocalServiceImpl
 
 		// Commerce product friendly URL
 
-		if (Validator.isNull(urlTitleMap)) {
-			urlTitleMap = _getUniqueUrlTitles(cpDefinition);
-		}
+		urlTitleMap = _getUniqueUrlTitles(cpDefinition, urlTitleMap);
 
 		cpFriendlyURLEntryLocalService.addCPFriendlyURLEntries(
 			groupId, serviceContext.getCompanyId(), CPDefinition.class,
@@ -720,7 +718,7 @@ public class CPDefinitionLocalServiceImpl
 		cpDefinitionPersistence.update(cpDefinition);
 
 		if (Validator.isNull(urlTitleMap)) {
-			urlTitleMap = _getUniqueUrlTitles(cpDefinition);
+			urlTitleMap = _getUniqueUrlTitles(cpDefinition, urlTitleMap);
 		}
 
 		// Commerce product definition localization
@@ -1097,10 +1095,11 @@ public class CPDefinitionLocalServiceImpl
 			cpDefinitionLocalization);
 	}
 
-	private Map<Locale, String> _getUniqueUrlTitles(CPDefinition cpDefinition)
+	private Map<Locale, String> _getUniqueUrlTitles(
+			CPDefinition cpDefinition, Map<Locale, String> urlTitleMap)
 		throws PortalException {
 
-		Map<Locale, String> urlTitleMap = new HashMap<>();
+		Map<Locale, String> newUrlTitleMap = new HashMap<>();
 
 		Map<Locale, String> titleMap = cpDefinition.getTitleMap();
 
@@ -1108,17 +1107,23 @@ public class CPDefinitionLocalServiceImpl
 			CPDefinition.class);
 
 		for (Map.Entry<Locale, String> titleEntry : titleMap.entrySet()) {
+			String urlTitle = urlTitleMap.get(titleEntry.getKey());
+
+			if (Validator.isNull(urlTitle)) {
+				urlTitle = titleEntry.getValue();
+			}
+
 			String languageId = LanguageUtil.getLanguageId(titleEntry.getKey());
 
-			String urlTitle = cpFriendlyURLEntryLocalService.buildUrlTitle(
+			urlTitle = cpFriendlyURLEntryLocalService.buildUrlTitle(
 				cpDefinition.getGroupId(), cpDefinition.getCompanyId(),
 				classNameId, cpDefinition.getCPDefinitionId(), languageId,
-				titleEntry.getValue());
+				urlTitle);
 
-			urlTitleMap.put(titleEntry.getKey(), urlTitle);
+			newUrlTitleMap.put(titleEntry.getKey(), urlTitle);
 		}
 
-		return urlTitleMap;
+		return newUrlTitleMap;
 	}
 
 	private List<CPDefinitionLocalization> _updateCPDefinitionLocalizedFields(

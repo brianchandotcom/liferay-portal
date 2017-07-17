@@ -105,3 +105,21 @@ String friendlyURLBase = themeDisplay.getPortalURL() + CPConstants.SEPARATOR_PRO
 	translationManager.on('deleteAvailableLocale', afterDeletingAvailableLocale)
 	translationManager.on('editingLocaleChange', afterEditingLocaleChange)
 </aui:script>
+
+<c:if test="<%= cpDefinition == null %>">
+	<aui:script sandbox="<%= true %>">
+		var form = $(document.<portlet:namespace />fm);
+
+		var titleInput = form.fm('titleMapAsXML');
+		var urlInput = form.fm('urlTitleMapAsXML');
+
+		var onTitleInput = _.debounce(
+			function(event) {
+				urlInput.val(titleInput.val());
+			},
+			200
+		);
+
+		titleInput.on('input', onTitleInput);
+	</aui:script>
+</c:if>

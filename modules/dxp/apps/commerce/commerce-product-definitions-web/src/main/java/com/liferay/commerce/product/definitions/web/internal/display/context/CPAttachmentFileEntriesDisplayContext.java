@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
-import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -73,7 +72,8 @@ public class CPAttachmentFileEntriesDisplayContext extends
 			CPInstanceHelper cpInstanceHelper,
 			DLMimeTypeDisplayContext dlMimeTypeDisplayContext,
 			HttpServletRequest httpServletRequest, ItemSelector itemSelector,
-			Portal portal, WorkflowDefinitionLinkLocalService
+			Portal portal,
+			WorkflowDefinitionLinkLocalService
 				workflowDefinitionLinkLocalService)
 		throws PortalException {
 
@@ -348,8 +348,8 @@ public class CPAttachmentFileEntriesDisplayContext extends
 	private final DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
 	private final ItemSelector _itemSelector;
 	private final Portal _portal;
+	private final int _type;
 	private final WorkflowDefinitionLinkLocalService
 		_workflowDefinitionLinkLocalService;
-	private final int _type;
 
 }

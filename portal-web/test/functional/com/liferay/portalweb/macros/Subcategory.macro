@@ -1,4 +1,30 @@
 <definition>
+	<command name="_addCP">
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Add Subcategory" />
+			<var name="rowEntry" value="${categoryName}" />
+		</execute>
+
+		<execute macro="PortletEntry#inputTitle">
+			<var name="title" value="${subcategoryName}" />
+		</execute>
+
+		<if>
+			<not>
+				<contains string="subcategoryDescription" substring="{subcategoryDescription}" />
+			</not>
+			<then>
+				<execute macro="PortletEntry#inputDescription">
+					<var name="description" value="${subcategoryDescription}" />
+				</execute>
+			</then>
+		</if>
+	</command>
+
 	<command name="addCP">
 		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_vocabularyName" value="${vocabularyName}" />

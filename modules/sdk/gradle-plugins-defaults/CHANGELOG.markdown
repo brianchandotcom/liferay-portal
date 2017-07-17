@@ -1714,7 +1714,14 @@ available.
 ### Changed
 - [LPS-73584]: Update the [Liferay Gradle Plugins] dependency to version 3.4.4.
 
-## 4.0.3 - 2017-07-13
+## 4.0.3 - 2017-07-14
+
+### Added
+- [LPS-73607]: Add the ability to force deployment in a different directory by
+setting the project property `forced.deploy.dir`.
+
+### Changed
+- [LPS-73470]: Update the [Liferay Gradle Plugins] dependency to version 3.4.5.
 
 ### Fixed
 - [LPS-73584]: Trigger the `-PsyncRelease` logic even when Gradle is invoked
@@ -1898,11 +1905,12 @@ with the full path of the `baseline` task.
 [LPS-73327]: https://issues.liferay.com/browse/LPS-73327
 [LPS-73352]: https://issues.liferay.com/browse/LPS-73352
 [LPS-73383]: https://issues.liferay.com/browse/LPS-73383
-[LPS-73465]: https://issues.liferay.com/browse/LPS-73465
+[LPS-73470]: https://issues.liferay.com/browse/LPS-73470
 [LPS-73489]: https://issues.liferay.com/browse/LPS-73489
 [LPS-73495]: https://issues.liferay.com/browse/LPS-73495
 [LPS-73525]: https://issues.liferay.com/browse/LPS-73525
 [LPS-73584]: https://issues.liferay.com/browse/LPS-73584
+[LPS-73607]: https://issues.liferay.com/browse/LPS-73607
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

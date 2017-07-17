@@ -160,7 +160,7 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 			function(key) {
 				var field = A.one('[name="<portlet:namespace />' + key + '"]');
 
-				if ((field.attr('type') === 'checkbox') || (field.attr('type') === 'radio')) {
+				if (field && ((field.attr('type') === 'checkbox') || (field.attr('type') === 'radio'))) {
 					field = A.one('[name="<portlet:namespace />' + key + '"]:checked');
 
 					fieldsMap[key] = '';
@@ -199,7 +199,9 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 				optionalFieldError.replace(optionalFieldError);
 			}
 
-			field.attr('aria-invalid', true);
+			if (field) {
+				field.attr('aria-invalid', true);
+			}
 		}
 		else if (!fieldValidationFunctions[key](currentFieldValue, fieldsMap)) {
 			A.all('.alert-success').hide();
@@ -213,7 +215,9 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 				validationError.replace(validationError);
 			}
 
-			field.attr('aria-invalid', true);
+			if (field) {
+				field.attr('aria-invalid', true);
+			}
 		}
 		else {
 			if (optionalFieldError) {
@@ -224,7 +228,9 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 				validationError.hide();
 			}
 
-			field.attr('aria-invalid', false);
+			if (field) {
+				field.attr('aria-invalid', false);
+			}
 
 			return true;
 		}

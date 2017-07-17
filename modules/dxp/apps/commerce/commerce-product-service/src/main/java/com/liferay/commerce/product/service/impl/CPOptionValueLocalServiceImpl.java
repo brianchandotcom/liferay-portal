@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.exception.CPOptionValueKeyException;
+import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.service.base.CPOptionValueLocalServiceBaseImpl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -26,6 +27,8 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
@@ -54,6 +57,7 @@ import java.util.Map;
 public class CPOptionValueLocalServiceImpl
 	extends CPOptionValueLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPOptionValue addCPOptionValue(
 			long cpOptionId, Map<Locale, String> titleMap, double priority,
@@ -87,9 +91,12 @@ public class CPOptionValueLocalServiceImpl
 
 		cpOptionValuePersistence.update(cpOptionValue);
 
+		doCPOptionReindex(cpOptionId);
+
 		return cpOptionValue;
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CPOptionValue deleteCPOptionValue(CPOptionValue cpOptionValue)
@@ -102,6 +109,8 @@ public class CPOptionValueLocalServiceImpl
 		// Expando
 
 		expandoRowLocalService.deleteRows(cpOptionValue.getCPOptionValueId());
+
+		doCPOptionReindex(cpOptionValue.getCPOptionId());
 
 		return cpOptionValue;
 	}
@@ -174,6 +183,7 @@ public class CPOptionValueLocalServiceImpl
 		return searchCPOptions(searchContext);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPOptionValue updateCPOptionValue(
 			long cpOptionValueId, Map<Locale, String> titleMap, double priority,
@@ -197,6 +207,8 @@ public class CPOptionValueLocalServiceImpl
 		cpOptionValue.setExpandoBridgeAttributes(serviceContext);
 
 		cpOptionValuePersistence.update(cpOptionValue);
+
+		doCPOptionReindex(cpOptionValue.getCPOptionId());
 
 		return cpOptionValue;
 	}
@@ -243,6 +255,15 @@ public class CPOptionValueLocalServiceImpl
 		}
 
 		return searchContext;
+	}
+
+	protected void doCPOptionReindex(long cpOptionId)
+		throws PortalException {
+
+		Indexer<CPOption> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			CPOption.class);
+
+		indexer.reindex(CPOption.class.getName(), cpOptionId);
 	}
 
 	protected BaseModelSearchResult<CPOptionValue> searchCPOptions(

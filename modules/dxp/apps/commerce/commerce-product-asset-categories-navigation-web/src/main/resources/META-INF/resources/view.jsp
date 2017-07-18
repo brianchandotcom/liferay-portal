@@ -28,7 +28,7 @@ List<AssetCategory> assetCategories = cpAssetCategoriesNavigationDisplayContext.
 		%>
 
 			<li class="lfr-nav-item">
-				<a href="#" class="dropdown-toggle"><span><%= HtmlUtil.escape(assetCategory.getTitle(locale)) %></span></a>
+				<a class="dropdown-toggle" href="#"><span><%= HtmlUtil.escape(assetCategory.getTitle(locale)) %></span></a>
 
 				<ul class="child-menu dropdown-menu" role="menu">
 
@@ -40,6 +40,7 @@ List<AssetCategory> assetCategories = cpAssetCategoriesNavigationDisplayContext.
 							<ul class="link-list">
 								<li class="dropdown-header"><%= HtmlUtil.escape(assetCategoryLevel1.getTitle(locale)) %></li>
 								<li class="child-menu-level-2">
+
 									<%
 									for (AssetCategory assetCategoryLevel2 : cpAssetCategoriesNavigationDisplayContext.getChildAssetCategories(assetCategoryLevel1.getCategoryId())) {
 									%>
@@ -51,9 +52,11 @@ List<AssetCategory> assetCategories = cpAssetCategoriesNavigationDisplayContext.
 									<%
 									}
 									%>
+
 								</li>
 							</ul>
 						</li>
+
 					<%
 					}
 					%>

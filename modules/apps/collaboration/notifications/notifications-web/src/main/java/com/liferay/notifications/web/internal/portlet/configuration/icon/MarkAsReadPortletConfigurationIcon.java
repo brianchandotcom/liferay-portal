@@ -16,11 +16,15 @@ package com.liferay.notifications.web.internal.portlet.configuration.icon;
 
 import com.liferay.notifications.web.internal.constants.NotificationsPortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ResourceBundle;
 
@@ -30,6 +34,7 @@ import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
@@ -67,12 +72,33 @@ public class MarkAsReadPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		return !ParamUtil.getBoolean(portletRequest, "actionRequired");
+		if (!ParamUtil.getBoolean(portletRequest, "actionRequired")) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			int unreadNotificationEventsCount =
+				_userNotificationEventLocalService.
+					getArchivedUserNotificationEventsCount(
+						themeDisplay.getUserId(),
+						UserNotificationDeliveryConstants.TYPE_WEBSITE, false,
+						false);
+
+			if (unreadNotificationEventsCount > 0) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Override
 	public boolean isToolTip() {
 		return false;
 	}
+
+	@Reference
+	private UserNotificationEventLocalService
+		_userNotificationEventLocalService;
 
 }

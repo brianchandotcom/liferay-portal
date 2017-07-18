@@ -228,13 +228,6 @@ public class CPOptionPersistenceTest {
 	}
 
 	@Test
-	public void testCountByCompanyId() throws Exception {
-		_persistence.countByCompanyId(RandomTestUtil.nextLong());
-
-		_persistence.countByCompanyId(0L);
-	}
-
-	@Test
 	public void testCountByG_K() throws Exception {
 		_persistence.countByG_K(RandomTestUtil.nextLong(), StringPool.BLANK);
 

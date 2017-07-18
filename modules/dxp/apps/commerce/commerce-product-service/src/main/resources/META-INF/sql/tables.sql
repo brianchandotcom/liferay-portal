@@ -107,6 +107,20 @@ create table CPDefinitionOptionValueRel (
 	key_ VARCHAR(75) null
 );
 
+create table CPDisplayLayout (
+	uuid_ VARCHAR(75) null,
+	CPFriendlyURLEntryId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	classNameId LONG,
+	classPK LONG,
+	layoutUuid VARCHAR(75) null
+);
+
 create table CPFriendlyURLEntry (
 	uuid_ VARCHAR(75) null,
 	CPFriendlyURLEntryId LONG not null primary key,
@@ -193,18 +207,4 @@ create table CPOptionValue (
 	priority DOUBLE,
 	key_ VARCHAR(75) null,
 	lastPublishDate DATE null
-);
-
-create table CPDisplayLayout (
-	uuid_ VARCHAR(75) null,
-	CPFriendlyURLEntryId LONG not null primary key,
-	groupId LONG,
-	companyId LONG,
-	userId LONG,
-	userName VARCHAR(75) null,
-	createDate DATE null,
-	modifiedDate DATE null,
-	classNameId LONG,
-	classPK LONG,
-	layoutUuid VARCHAR(75) null
 );

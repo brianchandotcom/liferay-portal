@@ -36,21 +36,24 @@ List<AssetCategory> assetCategories = cpAssetCategoriesNavigationDisplayContext.
 					for (AssetCategory assetCategoryLevel1 : cpAssetCategoriesNavigationDisplayContext.getChildAssetCategories(assetCategory.getCategoryId())) {
 					%>
 
-						<li class="dropdown-header"><%= HtmlUtil.escape(assetCategoryLevel1.getTitle(locale)) %></li>
 						<li class="child-menu-level-1">
-							<%
-							for (AssetCategory assetCategoryLevel2 : cpAssetCategoriesNavigationDisplayContext.getChildAssetCategories(assetCategoryLevel1.getCategoryId())) {
-							%>
+							<ul class="link-list">
+								<li class="dropdown-header"><%= HtmlUtil.escape(assetCategoryLevel1.getTitle(locale)) %></li>
+								<li class="child-menu-level-2">
+									<%
+									for (AssetCategory assetCategoryLevel2 : cpAssetCategoriesNavigationDisplayContext.getChildAssetCategories(assetCategoryLevel1.getCategoryId())) {
+									%>
 
-								<li>
-									<a href="<%= cpAssetCategoriesNavigationDisplayContext.getFriendlyURL(assetCategoryLevel2.getCategoryId(), themeDisplay) %>" role="menuitem"><%= HtmlUtil.escape(assetCategoryLevel2.getTitle(locale)) %></a>
+										<li>
+											<a href="<%= cpAssetCategoriesNavigationDisplayContext.getFriendlyURL(assetCategoryLevel2.getCategoryId(), themeDisplay) %>" role="menuitem"><%= HtmlUtil.escape(assetCategoryLevel2.getTitle(locale)) %></a>
+										</li>
+
+									<%
+									}
+									%>
 								</li>
-
-							<%
-							}
-							%>
+							</ul>
 						</li>
-
 					<%
 					}
 					%>

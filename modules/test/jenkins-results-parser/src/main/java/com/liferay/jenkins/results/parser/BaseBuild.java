@@ -1499,12 +1499,6 @@ public abstract class BaseBuild implements Build {
 		return jsonObject.getJSONArray("builds");
 	}
 
-	protected boolean getCompareToUpstream() {
-		TopLevelBuild topLevelBuild = getTopLevelBuild();
-
-		return topLevelBuild.getCompareToUpstream();
-	}
-
 	protected int getDownstreamBuildCountByResult(String result) {
 		int count = 0;
 
@@ -1762,6 +1756,12 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return null;
+	}
+
+	protected boolean isCompareToUpstream() {
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		return topLevelBuild.isCompareToUpstream();
 	}
 
 	protected boolean isParentBuildRoot() {

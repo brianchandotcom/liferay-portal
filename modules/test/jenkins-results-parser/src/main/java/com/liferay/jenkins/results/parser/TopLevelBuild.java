@@ -310,11 +310,6 @@ public class TopLevelBuild extends BaseBuild {
 			JenkinsResultsParserUtil.toDurationString(getDuration()));
 	}
 
-	@Override
-	protected boolean getCompareToUpstream() {
-		return _compareToUpstream;
-	}
-
 	protected Element getDownstreamGitHubMessageElement() {
 		String status = getStatus();
 
@@ -493,7 +488,7 @@ public class TopLevelBuild extends BaseBuild {
 		String result = getResult();
 
 		if (!result.equals("SUCCESS")) {
-			if (getCompareToUpstream()) {
+			if (isCompareToUpstream()) {
 				loadUpstreamJobFailuresJSONObject();
 			}
 
@@ -603,6 +598,11 @@ public class TopLevelBuild extends BaseBuild {
 		}
 
 		return upstreamBranchSHA;
+	}
+
+	@Override
+	protected boolean isCompareToUpstream() {
+		return _compareToUpstream;
 	}
 
 	protected static final Pattern gitRepositoryTempMapNamePattern =

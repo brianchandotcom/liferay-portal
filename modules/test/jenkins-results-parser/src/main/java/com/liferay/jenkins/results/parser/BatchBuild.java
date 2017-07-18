@@ -354,7 +354,7 @@ public class BatchBuild extends BaseBuild {
 			failCount = getTestCountByStatus("FAILURE");
 			successCount = getTestCountByStatus("SUCCESS");
 
-			if (getCompareToUpstream()) {
+			if (isCompareToUpstream()) {
 				for (TestResult testResult : getTestResults(null)) {
 					String testStatus = testResult.getStatus();
 

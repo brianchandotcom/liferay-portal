@@ -150,7 +150,9 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#gotoAssignedToMyRoles" />
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="Assigned to My Roles" />
+		</execute>
 
 		<execute macro="Workflow#viewTaskAssignedToMyRolesDetails">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
@@ -618,7 +620,9 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#gotoAssignedToMyRoles" />
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="Assigned to My Roles" />
+		</execute>
 
 		<execute macro="Workflow#viewPendingTasks">
 			<var name="workflowAssetTitle" value="Kaleo Forms 2 Process" />
@@ -972,7 +976,9 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#gotoAssignedToMe" />
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="Assigned to Me" />
+		</execute>
 
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
@@ -1134,7 +1140,9 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#gotoAssignedToMyRoles" />
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="Assigned to My Roles" />
+		</execute>
 
 		<execute macro="Workflow#viewPendingTasks">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
@@ -1367,7 +1375,9 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#gotoAssignedToMe" />
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="Assigned to Me" />
+		</execute>
 
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
@@ -1589,7 +1599,9 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#gotoAssignedToMyRoles" />
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="Assigned to My Roles" />
+		</execute>
 
 		<execute macro="Workflow#viewPendingTasks">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />

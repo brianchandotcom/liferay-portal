@@ -258,7 +258,9 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#gotoAssignedToMe" />
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="Assigned to Me" />
+		</execute>
 
 		<execute macro="Workflow#viewCompletedTasksTaskNotPresentCP">
 			<var name="workflowAssetTitle" value="${pageName}" />

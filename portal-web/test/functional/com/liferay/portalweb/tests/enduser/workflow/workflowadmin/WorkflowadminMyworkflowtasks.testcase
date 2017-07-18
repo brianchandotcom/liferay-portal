@@ -114,7 +114,9 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#gotoAssignedToMyRoles" />
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="Assigned to My Roles" />
+		</execute>
 
 		<execute macro="Workflow#gotoAssetViaTableTitle">
 			<var name="workflowAssetTitle" value="Blogs Entry Title" />
@@ -128,7 +130,9 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#gotoAssignedToMyRoles" />
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="Assigned to My Roles" />
+		</execute>
 
 		<execute macro="Workflow#gotoAssetViaTableTitle">
 			<var name="workflowAssetTitle" value="Blogs Entry Title" />

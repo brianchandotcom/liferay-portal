@@ -386,7 +386,9 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#gotoAssignedToMe" />
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="Assigned to Me" />
+		</execute>
 
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />

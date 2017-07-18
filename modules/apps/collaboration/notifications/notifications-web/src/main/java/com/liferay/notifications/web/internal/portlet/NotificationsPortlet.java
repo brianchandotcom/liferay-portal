@@ -96,6 +96,11 @@ public class NotificationsPortlet extends MVCPortlet {
 		_setRedirect(actionRequest, actionResponse);
 	}
 
+	public void markAllNotificationsAsRead(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+	}
+
 	public void markAsRead(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {

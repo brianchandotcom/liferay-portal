@@ -16,6 +16,7 @@ package com.liferay.notifications.web.internal.portlet.configuration.icon;
 
 import com.liferay.notifications.web.internal.constants.NotificationsPortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -23,8 +24,10 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.ResourceBundle;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -52,7 +55,14 @@ public class MarkAsReadPortletConfigurationIcon
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		return "http://localhost:8080";
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+			portletRequest, NotificationsPortletKeys.NOTIFICATIONS,
+			PortletRequest.ACTION_PHASE);
+
+		portletURL.setParameter(
+			ActionRequest.ACTION_NAME, "markAllNotificationsAsRead");
+
+		return portletURL.toString();
 	}
 
 	@Override

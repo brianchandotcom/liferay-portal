@@ -68,7 +68,7 @@
 		<portlet-ref>
 			<portlet-name>com_liferay_commerce_product_options_web_internal_portlet_CPOptionsPortlet</portlet-name>
 		</portlet-ref>
-		<weight>2</weight>
+		<weight>1</weight>
 		<permissions>
 			<supports>
 				<action-key>ADD_COMMERCE_PRODUCT_OPTION_VALUE</action-key>
@@ -98,7 +98,7 @@
 		<portlet-ref>
 			<portlet-name>com_liferay_commerce_product_options_web_internal_portlet_CPOptionCategoriesPortlet</portlet-name>
 		</portlet-ref>
-		<weight>2</weight>
+		<weight>1</weight>
 		<permissions>
 			<supports>
 				<action-key>DELETE</action-key>

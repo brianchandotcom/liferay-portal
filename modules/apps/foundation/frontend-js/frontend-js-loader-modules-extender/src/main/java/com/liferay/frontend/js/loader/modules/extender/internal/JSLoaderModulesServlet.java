@@ -277,16 +277,27 @@ public class JSLoaderModulesServlet extends HttpServlet {
 				printWriter.write("\"");
 
 				delimiter = ",\n";
+
+				String versionedMapsConfiguration =
+					jsLoaderModule.getVersionedMapsConfiguration();
+
+				if (!versionedMapsConfiguration.equals("")) {
+					printWriter.write(delimiter);
+					printWriter.write(versionedMapsConfiguration);
+
+					delimiter = ",\n";
+				}
 			}
+			else {
+				String unversionedMapsConfiguration =
+					jsLoaderModule.getUnversionedMapsConfiguration();
 
-			String unversionedMapsConfiguration =
-				jsLoaderModule.getUnversionedMapsConfiguration();
+				if (!unversionedMapsConfiguration.equals("")) {
+					printWriter.write(delimiter);
+					printWriter.write(unversionedMapsConfiguration);
 
-			if (!unversionedMapsConfiguration.equals("")) {
-				printWriter.write(delimiter);
-				printWriter.write(unversionedMapsConfiguration);
-
-				delimiter = ",\n";
+					delimiter = ",\n";
+				}
 			}
 		}
 

@@ -104,6 +104,10 @@ public class JSLoaderModule {
 		return _versionedConfiguration;
 	}
 
+	public String getVersionedMapsConfiguration() {
+		return _versionedMapsConfiguration;
+	}
+
 	protected String generateConfiguration(
 		JSONObject jsonObject, BundleWiring bundleWiring,
 		boolean versionedModuleName) {
@@ -246,6 +250,12 @@ public class JSLoaderModule {
 					generateMapsConfiguration(
 						_unversionedConfiguration,
 						StringUtil.split(exportJSSubmodules)));
+
+				_versionedMapsConfiguration = normalize(
+					generateMapsConfiguration(
+						_versionedConfiguration,
+						StringUtil.split(exportJSSubmodules)));
+
 			}
 		}
 		catch (IOException ioe) {
@@ -261,5 +271,6 @@ public class JSLoaderModule {
 	private String _unversionedMapsConfiguration = "";
 	private final String _version;
 	private String _versionedConfiguration = "";
+	private String _versionedMapsConfiguration = "";
 
 }

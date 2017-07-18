@@ -19,7 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Marco Leo
+ * @author Andrea Di Giorgi
  */
 @ProviderType
 public class CPSpecificationOptionKeyException extends PortalException {
@@ -37,6 +37,24 @@ public class CPSpecificationOptionKeyException extends PortalException {
 
 	public CPSpecificationOptionKeyException(Throwable cause) {
 		super(cause);
+	}
+
+	public static class MustNotBeDuplicate
+		extends CPSpecificationOptionKeyException {
+
+		public MustNotBeDuplicate(String key) {
+			super("Duplicate key " + key);
+		}
+
+	}
+
+	public static class MustNotBeNull
+		extends CPSpecificationOptionKeyException {
+
+		public MustNotBeNull() {
+			super("Key must not be null");
+		}
+
 	}
 
 }

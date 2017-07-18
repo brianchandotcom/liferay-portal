@@ -14,8 +14,10 @@
 
 package com.liferay.commerce.product.service.impl;
 
+import com.liferay.commerce.product.constants.CPOptionCategoryConstants;
 import com.liferay.commerce.product.exception.CPOptionCategoryKeyException;
 import com.liferay.commerce.product.model.CPOptionCategory;
+import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.service.base.CPOptionCategoryLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -97,6 +99,20 @@ public class CPOptionCategoryLocalServiceImpl
 		// Commerce product option category
 
 		cpOptionCategoryPersistence.remove(cpOptionCategory);
+
+		// Commerce product specification options
+
+		List<CPSpecificationOption> cpSpecificationOptions =
+			cpSpecificationOptionPersistence.findByCPOptionCategoryId(
+				cpOptionCategory.getCPOptionCategoryId());
+
+		for (CPSpecificationOption cpSpecificationOption :
+				cpSpecificationOptions) {
+
+			cpSpecificationOptionLocalService.updateCPOptionCategoryId(
+				cpSpecificationOption.getCPSpecificationOptionId(),
+				CPOptionCategoryConstants.DEFAULT_CP_OPTION_CATEGORY_ID);
+		}
 
 		// Resources
 

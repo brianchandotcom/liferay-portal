@@ -1052,24 +1052,23 @@ public abstract class BaseBuild implements Build {
 			JSONArray failedTestsJSONArray = failedBatchJSONObject.getJSONArray(
 				"failedTests");
 
-			StringBuilder sb = new StringBuilder();
+			String jobVariant = failedBatchJSONObject.getString("jobVariant");
 
 			if (type.equals("build")) {
 				if (failedTestsJSONArray.length() == 0) {
-					sb.append(failedBatchJSONObject.getString("jobVariant"));
-					sb.append(",");
-					sb.append(failedBatchJSONObject.getString("result"));
-
-					upstreamFailures.add(sb.toString());
+					upstreamFailures.add(
+						JenkinsResultsParserUtil.combine(
+							jobVariant, ",",
+							failedBatchJSONObject.getString("result")));
 				}
 			}
 			else if (type.equals("test")) {
 				for (int j = 0; j < failedTestsJSONArray.length(); j++) {
-					sb.append(failedTestsJSONArray.get(j));
-					sb.append(",");
-					sb.append(failedBatchJSONObject.getString("jobVariant"));
+					Object object = failedTestsJSONArray.get(j);
 
-					upstreamFailures.add(sb.toString());
+					upstreamFailures.add(
+						JenkinsResultsParserUtil.combine(
+							object.toString(), ",", jobVariant));
 				}
 			}
 		}

@@ -27,9 +27,12 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -93,8 +96,23 @@ public class CPDefinitionGroupedEntriesDisplayContext
 			requestBackedPortletURLFactory, "productDefinitionsSelectItem",
 			cpDefinitionItemSelectorCriterion);
 
-		itemSelectorURL.setParameter(
-			"cpDefinitionId", String.valueOf(getCPDefinitionId()));
+		long cpDefinitionId = getCPDefinitionId();
+
+		if (cpDefinitionId > 0) {
+			itemSelectorURL.setParameter(
+				"cpDefinitionId", String.valueOf(cpDefinitionId));
+
+			String checkedCPDefinitionIds = StringUtil.merge(
+				getCheckedCPDefinitionIds(cpDefinitionId));
+
+			String disabledCPDefinitionIds = StringUtil.merge(
+				getDisabledCPDefinitionIds(cpDefinitionId));
+
+			itemSelectorURL.setParameter(
+				"checkedCPDefinitionIds", checkedCPDefinitionIds);
+			itemSelectorURL.setParameter(
+				"disabledCPDefinitionIds", disabledCPDefinitionIds);
+		}
 
 		return itemSelectorURL.toString();
 	}
@@ -145,6 +163,62 @@ public class CPDefinitionGroupedEntriesDisplayContext
 		searchContainer.setResults(results);
 
 		return searchContainer;
+	}
+
+	protected List<CPDefinitionGroupedEntry> getCPDefinitionGroupedEntries(
+			long cpDefinitionId)
+		throws PortalException {
+
+		int total =
+			_cpDefinitionGroupedEntryService.getCPDefinitionGroupedEntriesCount(
+				cpDefinitionId);
+
+		return _cpDefinitionGroupedEntryService.getCPDefinitionGroupedEntries(
+			cpDefinitionId, 0, total, null);
+	}
+
+	protected long[] getCheckedCPDefinitionIds(long cpDefinitionId)
+			throws PortalException {
+
+		List<Long> cpDefinitionIdsList = new ArrayList<>();
+
+		List<CPDefinitionGroupedEntry> cpDefinitionGroupedEntries =
+			getCPDefinitionGroupedEntries(cpDefinitionId);
+
+		for (CPDefinitionGroupedEntry cpDefinitionGroupedEntry :
+				cpDefinitionGroupedEntries) {
+
+			cpDefinitionIdsList.add(
+				cpDefinitionGroupedEntry.getEntryCPDefinitionId());
+		}
+
+		if (cpDefinitionIdsList.size() > 0) {
+			return ArrayUtil.toLongArray(cpDefinitionIdsList);
+		}
+
+		return new long[0];
+	}
+
+	protected long[] getDisabledCPDefinitionIds(long cpDefinitionId)
+			throws PortalException {
+
+		List<Long> cpDefinitionIdsList = new ArrayList<>();
+
+		List<CPDefinitionGroupedEntry> cpDefinitionGroupedEntries =
+			getCPDefinitionGroupedEntries(cpDefinitionId);
+
+		for (CPDefinitionGroupedEntry cpDefinitionGroupedEntry :
+				cpDefinitionGroupedEntries) {
+
+			cpDefinitionIdsList.add(
+				cpDefinitionGroupedEntry.getCPDefinitionId());
+		}
+
+		if (cpDefinitionIdsList.size() > 0) {
+			return ArrayUtil.toLongArray(cpDefinitionIdsList);
+		}
+
+		return new long[0];
 	}
 
 	private CPDefinitionGroupedEntry _cpDefinitionGroupedEntry;

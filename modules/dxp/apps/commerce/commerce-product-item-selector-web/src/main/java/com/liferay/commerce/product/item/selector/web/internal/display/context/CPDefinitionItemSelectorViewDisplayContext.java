@@ -67,6 +67,16 @@ public class CPDefinitionItemSelectorViewDisplayContext
 		return ParamUtil.getLong(httpServletRequest, "cpDefinitionId");
 	}
 
+	public long[] getCheckedCPDefinitionIds() {
+		return ParamUtil.getLongValues(
+			httpServletRequest, "checkedCPDefinitionIds");
+	}
+
+	public long[] getDisabledCPDefinitionIds() {
+		return ParamUtil.getLongValues(
+			httpServletRequest, "disabledCPDefinitionIds");
+	}
+
 	public List<CPDefinitionLink> getCPDefinitionLinks()
 		throws PortalException {
 
@@ -114,7 +124,8 @@ public class CPDefinitionItemSelectorViewDisplayContext
 				getOrderByCol(), getOrderByType());
 
 		RowChecker rowChecker = new CPDefinitionItemSelectorChecker(
-			cpRequestHelper.getRenderResponse(), getCPDefinitionLinks());
+			cpRequestHelper.getRenderResponse(), getCheckedCPDefinitionIds(),
+			getDisabledCPDefinitionIds());
 
 		searchContainer.setOrderByCol(getOrderByCol());
 		searchContainer.setOrderByComparator(orderByComparator);

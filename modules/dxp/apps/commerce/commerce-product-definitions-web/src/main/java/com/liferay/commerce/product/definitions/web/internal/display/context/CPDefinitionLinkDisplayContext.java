@@ -28,8 +28,11 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -96,8 +99,23 @@ public class CPDefinitionLinkDisplayContext
 			requestBackedPortletURLFactory, "productDefinitionsSelectItem",
 			cpDefinitionItemSelectorCriterion);
 
-		itemSelectorURL.setParameter(
-			"cpDefinitionId", String.valueOf(getCPDefinitionId()));
+		long cpDefinitionId = getCPDefinitionId();
+
+		if (cpDefinitionId > 0) {
+			itemSelectorURL.setParameter(
+				"cpDefinitionId", String.valueOf(cpDefinitionId));
+
+			String checkedCPDefinitionIds = StringUtil.merge(
+				getCheckedCPDefinitionIds(cpDefinitionId));
+
+			String disabledCPDefinitionIds = StringUtil.merge(
+				getDisabledCPDefinitionIds(cpDefinitionId));
+
+			itemSelectorURL.setParameter(
+				"checkedCPDefinitionIds", checkedCPDefinitionIds);
+			itemSelectorURL.setParameter(
+				"disabledCPDefinitionIds", disabledCPDefinitionIds);
+		}
 
 		return itemSelectorURL.toString();
 	}
@@ -148,6 +166,50 @@ public class CPDefinitionLinkDisplayContext
 		searchContainer.setResults(results);
 
 		return searchContainer;
+	}
+
+	protected List<CPDefinitionLink> getCPDefinitionLinks(long cpDefinitionId)
+		throws PortalException {
+
+		return _cpDefinitionLinkService.getCPDefinitionLinks(cpDefinitionId);
+	}
+
+	protected long[] getCheckedCPDefinitionIds(long cpDefinitionId)
+		throws PortalException {
+
+		List<Long> cpDefinitionIdsList = new ArrayList<>();
+
+		List<CPDefinitionLink> cpDefinitionLinks = getCPDefinitionLinks(
+			cpDefinitionId);
+
+		for (CPDefinitionLink cpDefinitionLink : cpDefinitionLinks) {
+			cpDefinitionIdsList.add(cpDefinitionLink.getCPDefinitionId2());
+		}
+
+		if (cpDefinitionIdsList.size() > 0) {
+			return ArrayUtil.toLongArray(cpDefinitionIdsList);
+		}
+
+		return new long[0];
+	}
+
+	protected long[] getDisabledCPDefinitionIds(long cpDefinitionId)
+		throws PortalException {
+
+		List<Long> cpDefinitionIdsList = new ArrayList<>();
+
+		List<CPDefinitionLink> cpDefinitionLinks = getCPDefinitionLinks(
+			cpDefinitionId);
+
+		for (CPDefinitionLink cpDefinitionLink : cpDefinitionLinks) {
+			cpDefinitionIdsList.add(cpDefinitionLink.getCPDefinitionId1());
+		}
+
+		if (cpDefinitionIdsList.size() > 0) {
+			return ArrayUtil.toLongArray(cpDefinitionIdsList);
+		}
+
+		return new long[0];
 	}
 
 	private CPDefinitionLink _cpDefinitionLink;

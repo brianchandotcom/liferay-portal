@@ -46,6 +46,23 @@ public class ExecuteElement extends PoshiElement {
 
 	@Override
 	public void parseReadableSyntax(String readableSyntax) {
+		if (readableSyntax.contains("return(\n")) {
+			String returnFrom = RegexUtil.getGroup(
+				readableSyntax, ".*,(.*)\\)", 1);
+			String returnName = RegexUtil.getGroup(
+				readableSyntax, "var(.*?)=", 1);
+
+			ReturnElement returnElement = new ReturnElement(readableSyntax);
+
+			returnElement.addAttribute("from", returnFrom.trim());
+			returnElement.addAttribute("name", returnName.trim());
+
+			add(returnElement);
+
+			readableSyntax = RegexUtil.getGroup(
+				readableSyntax, "return\\((.*),", 1);
+		}
+
 		String executeType = "macro";
 
 		String content = getParentheticalContent(readableSyntax);
@@ -118,9 +135,27 @@ public class ExecuteElement extends PoshiElement {
 			return createReadableBlock(sb.toString());
 		}
 
-		String readableSyntax = super.toReadableSyntax();
+		StringBuilder sb = new StringBuilder();
 
-		return createReadableBlock(readableSyntax);
+		PoshiElement returnElement = null;
+
+		for (PoshiElement poshiElement : toPoshiElements(elements())) {
+			if (poshiElement instanceof ReturnElement) {
+				returnElement = poshiElement;
+
+				continue;
+			}
+
+			sb.append(poshiElement.toReadableSyntax());
+		}
+
+		String readableBlock = createReadableBlock(sb.toString());
+
+		if (returnElement == null) {
+			return readableBlock;
+		}
+
+		return returnElement.createReadableBlock(readableBlock);
 	}
 
 	@Override

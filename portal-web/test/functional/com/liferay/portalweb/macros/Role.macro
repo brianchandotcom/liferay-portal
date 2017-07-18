@@ -412,23 +412,15 @@
 		<var name="key_roleTitle" value="${roleTitle}" />
 
 		<if>
-			<equals arg1="${roleType}" arg2="Organization" />
+			<contains string="Organization,Site" substring="${roleType}" />
 			<then>
-				<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Organization Roles">
-					<var name="key_menuItem" value="Organization Roles" />
+				<execute macro="Navigator#gotoNavItem">
+					<var name="navItem" value="${roleType} Roles" />
 				</execute>
 			</then>
-			<elseif>
-				<equals arg1="${roleType}" arg2="Site" />
-				<then>
-					<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Site Roles">
-						<var name="key_menuItem" value="Site Roles" />
-					</execute>
-				</then>
-			</elseif>
 			<else>
-				<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Regular Roles">
-					<var name="key_menuItem" value="Regular Roles" />
+				<execute macro="Navigator#gotoNavItem">
+					<var name="navItem" value="Regular Roles" />
 				</execute>
 			</else>
 		</if>
@@ -1162,23 +1154,15 @@
 
 	<command name="viewCP">
 		<if>
-			<equals arg1="${roleType}" arg2="Organization" />
+			<contains string="Organization,Site" substring="${roleType}" />
 			<then>
-				<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Organization Roles">
-					<var name="key_menuItem" value="Organization Roles" />
+				<execute macro="Navigator#gotoNavItem">
+					<var name="navItem" value="${roleType} Roles" />
 				</execute>
 			</then>
-			<elseif>
-				<equals arg1="${roleType}" arg2="Site" />
-				<then>
-					<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Site Roles">
-						<var name="key_menuItem" value="Site Roles" />
-					</execute>
-				</then>
-			</elseif>
 			<else>
-				<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Regular Roles">
-					<var name="key_menuItem" value="Regular Roles" />
+				<execute macro="Navigator#gotoNavItem">
+					<var name="navItem" value="Regular Roles" />
 				</execute>
 			</else>
 		</if>

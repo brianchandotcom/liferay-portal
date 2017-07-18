@@ -383,8 +383,8 @@
 
 		<execute function="Click" locator1="//tr[contains(.,'${roleTitle}')]/td[1]/span/a" value1="${roleTitle}" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Available">
-			<var name="key_menuItem" value="Available" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Available" />
 		</execute>
 
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userScreenName}" />

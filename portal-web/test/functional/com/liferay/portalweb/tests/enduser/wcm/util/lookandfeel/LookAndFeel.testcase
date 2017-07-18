@@ -34,6 +34,8 @@
 			<var name="portletOption" value="Look and Feel Configuration" />
 		</execute>
 
+		<execute macro="IFrame#selectConfigurationFrame" />
+
 		<execute macro="Portlet#configureCustomStylesViaLookandfeelPG" />
 
 		<execute macro="Navigator#openURL" />

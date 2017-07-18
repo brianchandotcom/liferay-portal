@@ -76,6 +76,10 @@ public class PoshiElementFactory {
 			return new PropertyElement(element);
 		}
 
+		if (elementName.equals("return")) {
+			return new ReturnElement(element);
+		}
+
 		if (elementName.equals("set-up")) {
 			return new SetUpElement(element);
 		}
@@ -164,6 +168,10 @@ public class PoshiElementFactory {
 
 				if (line.startsWith("test") && line.endsWith(" {")) {
 					return new CommandElement(readableSyntax);
+				}
+
+				if (line.startsWith("var") && line.endsWith("return(")) {
+					return new ExecuteElement(readableSyntax);
 				}
 
 				if (line.startsWith("var ")) {

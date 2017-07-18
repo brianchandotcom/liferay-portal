@@ -676,6 +676,8 @@ public class StagingImpl implements Staging {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
+		Throwable cause = e.getCause();
+
 		if (e instanceof DuplicateFileEntryException) {
 			errorMessage = LanguageUtil.get(
 				locale, "please-enter-a-unique-document-name");
@@ -779,8 +781,17 @@ public class StagingImpl implements Staging {
 
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 		}
-		else if (e instanceof LayoutImportException) {
-			LayoutImportException lie = (LayoutImportException)e;
+		else if (e instanceof LayoutImportException ||
+				 cause instanceof LayoutImportException) {
+
+			LayoutImportException lie = null;
+
+			if (e instanceof LayoutImportException) {
+				lie = (LayoutImportException)e;
+			}
+			else {
+				lie = (LayoutImportException)cause;
+			}
 
 			if (lie.getType() ==
 					LayoutImportException.TYPE_WRONG_BUILD_NUMBER) {

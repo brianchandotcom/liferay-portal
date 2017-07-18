@@ -31,6 +31,7 @@ import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.util.ExpandoConverterUtil;
+import com.liferay.exportimport.constants.ExportImportConstants;
 import com.liferay.exportimport.kernel.controller.ExportImportController;
 import com.liferay.exportimport.kernel.controller.ImportController;
 import com.liferay.exportimport.kernel.exception.LARFileException;
@@ -78,6 +79,7 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.PortletItem;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.plugin.Version;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
@@ -119,6 +121,8 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
+import java.util.function.BiPredicate;
 
 import org.apache.commons.lang.time.StopWatch;
 
@@ -1424,17 +1428,66 @@ public class PortletImportController implements ImportController {
 
 		// Build compatibility
 
-		int buildNumber = ReleaseInfo.getBuildNumber();
-
 		Element headerElement = rootElement.element("header");
 
 		int importBuildNumber = GetterUtil.getInteger(
 			headerElement.attributeValue("build-number"));
 
-		if (buildNumber != importBuildNumber) {
-			throw new LayoutImportException(
-				LayoutImportException.TYPE_WRONG_BUILD_NUMBER,
-				new Object[] {importBuildNumber, buildNumber});
+		if (importBuildNumber < ReleaseInfo.RELEASE_7_0_0_BUILD_NUMBER) {
+			int buildNumber = ReleaseInfo.getBuildNumber();
+
+			if (buildNumber != importBuildNumber) {
+				throw new LayoutImportException(
+					LayoutImportException.TYPE_WRONG_BUILD_NUMBER,
+					new Object[] {importBuildNumber, buildNumber});
+			}
+		}
+		else {
+			BiPredicate<Version, Version> majorVersionBiPredicate =
+				(currentVersion, importVersion) -> Objects.equals(
+					currentVersion.getMajor(), importVersion.getMajor());
+
+			BiPredicate<Version, Version> minorVersionBiPredicate =
+				(currentVersion, importVersion) -> {
+					int currentMinorVersion = GetterUtil.getInteger(
+						currentVersion.getMinor(), -1);
+					int importedMinorVersion = GetterUtil.getInteger(
+						importVersion.getMinor(), -1);
+
+					if (((currentMinorVersion == -1) &&
+						 (importedMinorVersion == -1)) ||
+						(currentMinorVersion < importedMinorVersion)) {
+
+						return false;
+					}
+
+					return true;
+				};
+
+			BiPredicate<Version, Version> manifestVersionBiPredicate =
+				(currentVersion, importVersion) -> {
+					BiPredicate<Version, Version> versionBiPredicate =
+						majorVersionBiPredicate.and(minorVersionBiPredicate);
+
+					return versionBiPredicate.test(
+						currentVersion, importVersion);
+				};
+
+			String importSchemaVersion = GetterUtil.getString(
+				headerElement.attributeValue("schema-version"), "1.0.0");
+
+			if (!manifestVersionBiPredicate.test(
+				Version.getInstance(
+					ExportImportConstants.EXPORT_IMPORT_SCHEMA_VERSION),
+				Version.getInstance(importSchemaVersion))) {
+
+				throw new LayoutImportException(
+					LayoutImportException.TYPE_WRONG_LAR_SCHEMA_VERSION,
+					new Object[] {
+						importSchemaVersion,
+						ExportImportConstants.EXPORT_IMPORT_SCHEMA_VERSION
+					});
+			}
 		}
 
 		// Type

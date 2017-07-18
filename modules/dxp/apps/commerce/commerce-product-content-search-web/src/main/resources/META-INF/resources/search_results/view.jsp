@@ -33,34 +33,40 @@ SearchContainer searchContainer = cpSearchResultsDisplayContext.getSearchContain
 	displayStyleGroupId="<%= cpSearchResultsDisplayContext.getDisplayStyleGroupId() %>"
 	entries="<%= searchContainer.getResults() %>"
 >
+	<div class="row">
 
 	<%
 	for (Object object : searchContainer.getResults()) {
 		Document document = (Document)object;
 	%>
 
-		<h4>
+		<div class="col-md-4">
+			<div class="card">
+				<div class="aspect-ratio aspect-ratio-center aspect-ratio-vertical">
 
-			<%
-			String img = cpSearchResultsDisplayContext.getProductDefaultImage(document, themeDisplay);
-			%>
+					<%
+					String img = cpSearchResultsDisplayContext.getProductDefaultImage(document, themeDisplay);
+					%>
 
-			<div>
-				<c:if test="<%= Validator.isNotNull(img) %>">
-					<img src="<%= img %>">
-				</c:if>
+					<c:if test="<%= Validator.isNotNull(img) %>">
+						<img src="<%= img %>">
+					</c:if>
+				</div>
+				<div class="card-row card-row-padded card-row-valign-top">
+					<div class="card-col-content">
+						<a href="<%= cpSearchResultsDisplayContext.getProductFriendlyURL(themeDisplay.getPortalURL(), document) %>">
+							<%= cpSearchResultsDisplayContext.getTitle(document) %>
+						</a>
+					</div>
+				</div>
 			</div>
-
-			<div>
-				<a href="<%= cpSearchResultsDisplayContext.getProductFriendlyURL(themeDisplay.getPortalURL(), document) %>">
-					<strong><%= cpSearchResultsDisplayContext.getTitle(document) %></strong>
-				</a>
-			</div>
-		</h4>
+		</div>
 
 	<%
 	}
 	%>
+
+	</div>
 
 </liferay-ddm:template-renderer>
 

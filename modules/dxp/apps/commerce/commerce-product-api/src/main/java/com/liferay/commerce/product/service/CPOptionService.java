@@ -68,10 +68,6 @@ public interface CPOptionService extends BaseService {
 		boolean required, boolean skuContributor, java.lang.String key,
 		ServiceContext serviceContext) throws PortalException;
 
-	public CPOption deleteCPOption(CPOption cpOption) throws PortalException;
-
-	public CPOption deleteCPOption(long cpOptionId) throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPOption fetchCPOption(long cpOptionId) throws PortalException;
 
@@ -122,4 +118,6 @@ public interface CPOptionService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPOption> getCPOptions(long groupId, int start, int end,
 		OrderByComparator<CPOption> orderByComparator);
+
+	public void deleteCPOption(long cpOptionId) throws PortalException;
 }

@@ -46,20 +46,6 @@ public class CPOptionServiceWrapper implements CPOptionService,
 	}
 
 	@Override
-	public com.liferay.commerce.product.model.CPOption deleteCPOption(
-		com.liferay.commerce.product.model.CPOption cpOption)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpOptionService.deleteCPOption(cpOption);
-	}
-
-	@Override
-	public com.liferay.commerce.product.model.CPOption deleteCPOption(
-		long cpOptionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpOptionService.deleteCPOption(cpOptionId);
-	}
-
-	@Override
 	public com.liferay.commerce.product.model.CPOption fetchCPOption(
 		long cpOptionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -157,6 +143,12 @@ public class CPOptionServiceWrapper implements CPOptionService,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPOption> orderByComparator) {
 		return _cpOptionService.getCPOptions(groupId, start, end,
 			orderByComparator);
+	}
+
+	@Override
+	public void deleteCPOption(long cpOptionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_cpOptionService.deleteCPOption(cpOptionId);
 	}
 
 	@Override

@@ -53,18 +53,6 @@ public class CPOptionServiceUtil {
 			facetable, required, skuContributor, key, serviceContext);
 	}
 
-	public static com.liferay.commerce.product.model.CPOption deleteCPOption(
-		com.liferay.commerce.product.model.CPOption cpOption)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteCPOption(cpOption);
-	}
-
-	public static com.liferay.commerce.product.model.CPOption deleteCPOption(
-		long cpOptionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteCPOption(cpOptionId);
-	}
-
 	public static com.liferay.commerce.product.model.CPOption fetchCPOption(
 		long cpOptionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -151,6 +139,11 @@ public class CPOptionServiceUtil {
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPOption> orderByComparator) {
 		return getService().getCPOptions(groupId, start, end, orderByComparator);
+	}
+
+	public static void deleteCPOption(long cpOptionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteCPOption(cpOptionId);
 	}
 
 	public static CPOptionService getService() {

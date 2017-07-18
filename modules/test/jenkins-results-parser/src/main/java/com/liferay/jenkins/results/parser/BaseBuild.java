@@ -21,6 +21,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -37,6 +40,7 @@ import java.util.regex.Pattern;
 import org.dom4j.Element;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -240,24 +244,28 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public String getBuildURL() {
+		String jobURL = getJobURL();
+
+		if ((jobURL == null) || (_buildNumber == -1)) {
+			return null;
+		}
+
+		if (fromArchive) {
+			return jobURL + "/" + _buildNumber + "/";
+		}
+
 		try {
-			String jobURL = getJobURL();
-
-			if ((jobURL == null) || (_buildNumber == -1)) {
-				return null;
-			}
-
-			if (fromArchive) {
-				return jobURL + "/" + _buildNumber + "/";
-			}
-
 			jobURL = JenkinsResultsParserUtil.decode(jobURL);
 
 			return JenkinsResultsParserUtil.encode(
 				jobURL + "/" + _buildNumber + "/");
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (MalformedURLException | URISyntaxException e) {
+			throw new RuntimeException("Unable to encode build URL", e);
+		}
+		catch (UnsupportedEncodingException uee) {
+			throw new RuntimeException(
+				"Unable to decode job URL " + jobURL, uee);
 		}
 	}
 
@@ -497,8 +505,9 @@ public abstract class BaseBuild implements Build {
 		try {
 			return JenkinsResultsParserUtil.encode(sb.toString());
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (MalformedURLException | URISyntaxException e) {
+			throw new RuntimeException(
+				"Unable to encode URL " + sb.toString(), e);
 		}
 	}
 
@@ -523,13 +532,14 @@ public abstract class BaseBuild implements Build {
 				jobName;
 		}
 
+		String jobURL = JenkinsResultsParserUtil.combine(
+			"https://", master, ".liferay.com/job/", jobName);
+
 		try {
-			return JenkinsResultsParserUtil.encode(
-				JenkinsResultsParserUtil.combine(
-					"https://", master, ".liferay.com/job/", jobName));
+			return JenkinsResultsParserUtil.encode(jobURL);
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (MalformedURLException | URISyntaxException e) {
+			throw new RuntimeException("Unable to encode job URL " + jobURL, e);
 		}
 	}
 
@@ -596,17 +606,12 @@ public abstract class BaseBuild implements Build {
 	@Override
 	public String getResult() {
 		if ((result == null) && (getBuildURL() != null)) {
-			try {
-				JSONObject resultJSONObject = getBuildJSONObject("result");
+			JSONObject resultJSONObject = getBuildJSONObject("result");
 
-				result = resultJSONObject.optString("result");
+			result = resultJSONObject.optString("result");
 
-				if (result.equals("")) {
-					result = null;
-				}
-			}
-			catch (Exception e) {
-				throw new RuntimeException(e);
+			if (result.equals("")) {
+				result = null;
 			}
 		}
 
@@ -793,8 +798,8 @@ public abstract class BaseBuild implements Build {
 		try {
 			buildURL = JenkinsResultsParserUtil.decode(buildURL);
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (UnsupportedEncodingException uee) {
+			throw new RuntimeException("Unable to decode " + buildURL, uee);
 		}
 
 		buildURL = JenkinsResultsParserUtil.getLocalURL(buildURL);
@@ -861,7 +866,7 @@ public abstract class BaseBuild implements Build {
 						message, "jenkins", "Build Reinvoked",
 						reinvokeRule.notificationList);
 				}
-				catch (Exception e) {
+				catch (InterruptedException | IOException e) {
 					throw new RuntimeException(
 						"Unable to send reinvoke notification", e);
 				}
@@ -874,8 +879,8 @@ public abstract class BaseBuild implements Build {
 			JenkinsResultsParserUtil.toString(
 				JenkinsResultsParserUtil.getLocalURL(invocationURL));
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
 		}
 
 		System.out.println(getReinvokedMessage());
@@ -1015,8 +1020,8 @@ public abstract class BaseBuild implements Build {
 					}
 				}
 			}
-			catch (Exception e) {
-				throw new RuntimeException(e);
+			catch (IOException ioe) {
+				throw new RuntimeException(ioe);
 			}
 		}
 	}
@@ -1034,9 +1039,7 @@ public abstract class BaseBuild implements Build {
 
 	}
 
-	protected static List<String> getUpstreamJobFailures(String type)
-		throws Exception {
-
+	protected static List<String> getUpstreamJobFailures(String type) {
 		List<String> upstreamFailures = new ArrayList<>();
 
 		JSONArray failedBatchesJSONArray =
@@ -1078,11 +1081,11 @@ public abstract class BaseBuild implements Build {
 		try {
 			return upstreamFailuresJobJSONObject.getString("SHA");
 		}
-		catch (Exception e) {
+		catch (JSONException jsone) {
 			System.out.println(
 				"Unable to get upstream acceptance failure data.");
 
-			e.printStackTrace();
+			jsone.printStackTrace();
 
 			return "";
 		}
@@ -1289,12 +1292,7 @@ public abstract class BaseBuild implements Build {
 
 		JSONObject buildJSONObject;
 
-		try {
-			buildJSONObject = getBuildJSONObject("runs[number,url]");
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		buildJSONObject = getBuildJSONObject("runs[number,url]");
 
 		if ((buildJSONObject != null) && buildJSONObject.has("runs")) {
 			JSONArray runsJSONArray = buildJSONObject.getJSONArray("runs");
@@ -1491,7 +1489,7 @@ public abstract class BaseBuild implements Build {
 		return "";
 	}
 
-	protected JSONArray getBuildsJSONArray() throws Exception {
+	protected JSONArray getBuildsJSONArray() throws IOException {
 		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
 			JenkinsResultsParserUtil.getLocalURL(
 				JenkinsResultsParserUtil.combine(
@@ -1598,9 +1596,7 @@ public abstract class BaseBuild implements Build {
 		return parameterNames;
 	}
 
-	protected Map<String, String> getParameters(JSONArray jsonArray)
-		throws Exception {
-
+	protected Map<String, String> getParameters(JSONArray jsonArray) {
 		Map<String, String> parameters = new HashMap<>(jsonArray.length());
 
 		for (int i = 0; i < jsonArray.length(); i++) {
@@ -1619,9 +1615,7 @@ public abstract class BaseBuild implements Build {
 		return parameters;
 	}
 
-	protected Map<String, String> getParameters(JSONObject buildJSONObject)
-		throws Exception {
-
+	protected Map<String, String> getParameters(JSONObject buildJSONObject) {
 		JSONArray actionsJSONArray = buildJSONObject.getJSONArray("actions");
 
 		if (actionsJSONArray.length() == 0) {
@@ -1640,7 +1634,7 @@ public abstract class BaseBuild implements Build {
 		return new HashMap<>();
 	}
 
-	protected JSONObject getQueueItemJSONObject() throws Exception {
+	protected JSONObject getQueueItemJSONObject() throws IOException {
 		JSONArray queueItemsJSONArray = getQueueItemsJSONArray();
 
 		for (int i = 0; i < queueItemsJSONArray.length(); i++) {
@@ -1664,7 +1658,7 @@ public abstract class BaseBuild implements Build {
 		return null;
 	}
 
-	protected JSONArray getQueueItemsJSONArray() throws Exception {
+	protected JSONArray getQueueItemsJSONArray() throws IOException {
 		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
 			"http://" + master +
 				"/queue/api/json?tree=items[actions[parameters" +
@@ -1685,7 +1679,7 @@ public abstract class BaseBuild implements Build {
 		return sb.toString();
 	}
 
-	protected JSONObject getRunningBuildJSONObject() throws Exception {
+	protected JSONObject getRunningBuildJSONObject() throws IOException {
 		JSONArray buildsJSONArray = getBuildsJSONArray();
 
 		for (int i = 0; i < buildsJSONArray.length(); i++) {
@@ -1989,11 +1983,11 @@ public abstract class BaseBuild implements Build {
 							"/builds/latest/test.results.json");
 			}
 		}
-		catch (Exception e) {
+		catch (IOException ioe) {
 			System.out.println(
 				"Unable to set upstream acceptance failure data.");
 
-			e.printStackTrace();
+			ioe.printStackTrace();
 		}
 	}
 

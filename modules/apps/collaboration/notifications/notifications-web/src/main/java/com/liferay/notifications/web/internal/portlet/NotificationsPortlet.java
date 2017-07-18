@@ -17,6 +17,7 @@ package com.liferay.notifications.web.internal.portlet;
 import com.liferay.notifications.web.internal.constants.NotificationsPortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Release;
+import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.UserNotificationDeliveryLocalService;
@@ -31,6 +32,7 @@ import com.liferay.subscription.service.SubscriptionLocalService;
 
 import java.io.IOException;
 
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
@@ -99,6 +101,23 @@ public class NotificationsPortlet extends MVCPortlet {
 	public void markAllNotificationsAsRead(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		List<UserNotificationEvent> userNotificationEvents =
+			_userNotificationEventLocalService.
+				getArchivedUserNotificationEvents(
+					themeDisplay.getUserId(),
+					UserNotificationDeliveryConstants.TYPE_WEBSITE, false,
+					false);
+
+		for (UserNotificationEvent notification : userNotificationEvents) {
+			notification.setArchived(true);
+
+			_userNotificationEventLocalService.updateUserNotificationEvent(
+				notification);
+		}
 	}
 
 	public void markAsRead(

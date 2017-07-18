@@ -165,20 +165,8 @@ public class CPDefinitionGroupedEntriesDisplayContext
 		return searchContainer;
 	}
 
-	protected List<CPDefinitionGroupedEntry> getCPDefinitionGroupedEntries(
-			long cpDefinitionId)
-		throws PortalException {
-
-		int total =
-			_cpDefinitionGroupedEntryService.getCPDefinitionGroupedEntriesCount(
-				cpDefinitionId);
-
-		return _cpDefinitionGroupedEntryService.getCPDefinitionGroupedEntries(
-			cpDefinitionId, 0, total, null);
-	}
-
 	protected long[] getCheckedCPDefinitionIds(long cpDefinitionId)
-			throws PortalException {
+		throws PortalException {
 
 		List<Long> cpDefinitionIdsList = new ArrayList<>();
 
@@ -192,15 +180,27 @@ public class CPDefinitionGroupedEntriesDisplayContext
 				cpDefinitionGroupedEntry.getEntryCPDefinitionId());
 		}
 
-		if (cpDefinitionIdsList.size() > 0) {
+		if (!cpDefinitionIdsList.isEmpty()) {
 			return ArrayUtil.toLongArray(cpDefinitionIdsList);
 		}
 
 		return new long[0];
 	}
 
+	protected List<CPDefinitionGroupedEntry> getCPDefinitionGroupedEntries(
+			long cpDefinitionId)
+		throws PortalException {
+
+		int total =
+			_cpDefinitionGroupedEntryService.getCPDefinitionGroupedEntriesCount(
+				cpDefinitionId);
+
+		return _cpDefinitionGroupedEntryService.getCPDefinitionGroupedEntries(
+			cpDefinitionId, 0, total, null);
+	}
+
 	protected long[] getDisabledCPDefinitionIds(long cpDefinitionId)
-			throws PortalException {
+		throws PortalException {
 
 		List<Long> cpDefinitionIdsList = new ArrayList<>();
 
@@ -214,7 +214,7 @@ public class CPDefinitionGroupedEntriesDisplayContext
 				cpDefinitionGroupedEntry.getCPDefinitionId());
 		}
 
-		if (cpDefinitionIdsList.size() > 0) {
+		if (!cpDefinitionIdsList.isEmpty()) {
 			return ArrayUtil.toLongArray(cpDefinitionIdsList);
 		}
 

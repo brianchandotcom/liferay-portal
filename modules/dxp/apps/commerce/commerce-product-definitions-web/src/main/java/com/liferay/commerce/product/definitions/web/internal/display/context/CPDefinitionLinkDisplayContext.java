@@ -168,12 +168,6 @@ public class CPDefinitionLinkDisplayContext
 		return searchContainer;
 	}
 
-	protected List<CPDefinitionLink> getCPDefinitionLinks(long cpDefinitionId)
-		throws PortalException {
-
-		return _cpDefinitionLinkService.getCPDefinitionLinks(cpDefinitionId);
-	}
-
 	protected long[] getCheckedCPDefinitionIds(long cpDefinitionId)
 		throws PortalException {
 
@@ -186,11 +180,17 @@ public class CPDefinitionLinkDisplayContext
 			cpDefinitionIdsList.add(cpDefinitionLink.getCPDefinitionId2());
 		}
 
-		if (cpDefinitionIdsList.size() > 0) {
+		if (!cpDefinitionIdsList.isEmpty()) {
 			return ArrayUtil.toLongArray(cpDefinitionIdsList);
 		}
 
 		return new long[0];
+	}
+
+	protected List<CPDefinitionLink> getCPDefinitionLinks(long cpDefinitionId)
+		throws PortalException {
+
+		return _cpDefinitionLinkService.getCPDefinitionLinks(cpDefinitionId);
 	}
 
 	protected long[] getDisabledCPDefinitionIds(long cpDefinitionId)
@@ -205,7 +205,7 @@ public class CPDefinitionLinkDisplayContext
 			cpDefinitionIdsList.add(cpDefinitionLink.getCPDefinitionId1());
 		}
 
-		if (cpDefinitionIdsList.size() > 0) {
+		if (!cpDefinitionIdsList.isEmpty()) {
 			return ArrayUtil.toLongArray(cpDefinitionIdsList);
 		}
 

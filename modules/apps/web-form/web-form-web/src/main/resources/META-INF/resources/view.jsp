@@ -182,6 +182,18 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 
 		var field = A.one('[name="<portlet:namespace />' + key + '"]');
 
+		if (field && (field.attr('type') === 'radio')) {
+			var uncheckedOptions = A.all('[name="<portlet:namespace />' + key + '"]:not(:checked)');
+
+			uncheckedOptions.each(
+				function(option) {
+					option.removeAttribute('aria-invalid');
+				}
+			);
+
+			field = A.one('[name="<portlet:namespace />' + key + '"]:checked');
+		}
+
 		var currentFieldValue = fieldsMap[key];
 
 		var optionalFieldError = A.one('#<portlet:namespace />fieldOptionalError' + key);

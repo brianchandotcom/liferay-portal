@@ -24,8 +24,6 @@ import com.liferay.commerce.product.util.JSPRenderer;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.io.IOException;
-
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -48,15 +46,16 @@ public class SimpleCPTypeRenderer implements CPTypeRenderer {
 	public void render(
 			CPDefinition cpDefinition, HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
-		throws IOException {
+		throws Exception {
 
-		CPSimpleCPTypeDisplayContext cpSimpleCPTypeDisplayContext =
-			new CPSimpleCPTypeDisplayContext(
-				cpDefinition, _cpAttachmentFileEntryLocalService, _portal,
+		SimpleCPTypeDisplayContext simpleCPTypeDisplayContext =
+			new SimpleCPTypeDisplayContext(
+				cpDefinition, _cpAttachmentFileEntryLocalService,
+				_cpAttachmentFileEntryLocalService, httpServletRequest, portal,
 				_cpInstanceHelper);
 
 		httpServletRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT, cpSimpleCPTypeDisplayContext);
+			WebKeys.PORTLET_DISPLAY_CONTEXT, simpleCPTypeDisplayContext);
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,

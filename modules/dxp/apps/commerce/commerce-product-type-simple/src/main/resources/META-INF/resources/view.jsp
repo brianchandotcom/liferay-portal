@@ -17,21 +17,38 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CPSimpleCPTypeDisplayContext cpSimpleCPTypeDisplayContext = (CPSimpleCPTypeDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-CPDefinition cpDefinition = cpSimpleCPTypeDisplayContext.getCPDefinition();
+SimpleCPTypeDisplayContext simpleCPTypeDisplayContext = (SimpleCPTypeDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+Map<String, Object> contextObjects = new HashMap<>();
+
+contextObjects.put("simpleCPTypeDisplayContext", simpleCPTypeDisplayContext);
+
+SearchContainer searchContainer = simpleCPTypeDisplayContext.getSearchContainer();
 %>
 
-<c:if test="<%= cpDefinition != null %>">
+<liferay-ddm:template-renderer
+	className="<%= SimpleCPType.class.getName() %>"
+	contextObjects="<%= contextObjects %>"
+	displayStyle="<%= simpleCPTypeDisplayContext.getDisplayStyle() %>"
+	displayStyleGroupId="<%= simpleCPTypeDisplayContext.getDisplayStyleGroupId() %>"
+	entries="<%= searchContainer.getResults() %>"
+>
+
+	<%
+	for (Object object : searchContainer.getResults()) {
+		CPDefinition cpDefinition = (CPDefinition)object;
+	%>
+
 	<div class="container-fluid product-detail">
 		<div class="row">
 			<div class="col-lg-6 col-md-7">
 				<div class="row">
 					<div class="col-lg-2 col-md-3 col-xs-2">
 
-						<%
-						for (CPAttachmentFileEntry cpAttachmentFileEntry : cpSimpleCPTypeDisplayContext.getImages()) {
-							String url = cpSimpleCPTypeDisplayContext.getImageURL(cpAttachmentFileEntry.getFileEntry(), themeDisplay);
-						%>
+					<%
+					for (CPAttachmentFileEntry cpAttachmentFileEntry : simpleCPTypeDisplayContext.getImages()) {
+						String url = simpleCPTypeDisplayContext.getImageURL(cpAttachmentFileEntry.getFileEntry(), themeDisplay);
+					%>
 
 							<div class="card thumb" data-url="<%= url %>">
 								<img class="center-block img-responsive" src="<%= url %>">
@@ -46,11 +63,11 @@ CPDefinition cpDefinition = cpSimpleCPTypeDisplayContext.getCPDefinition();
 					<div class="col-lg-10 col-md-9 col-xs-10 full-image">
 
 						<%
-						CPAttachmentFileEntry cpAttachmentFileEntry = cpSimpleCPTypeDisplayContext.getDefaultImage();
+						CPAttachmentFileEntry cpAttachmentFileEntry = simpleCPTypeDisplayContext.getDefaultImage();
 						%>
 
 						<c:if test="<%= cpAttachmentFileEntry != null %>">
-							<img class="center-block img-responsive" id="full-image" src="<%= cpSimpleCPTypeDisplayContext.getImageURL(cpAttachmentFileEntry.getFileEntry(), themeDisplay) %>">
+							<img class="center-block img-responsive" id="full-image" src="<%= simpleCPTypeDisplayContext.getImageURL(cpAttachmentFileEntry.getFileEntry(), themeDisplay) %>">
 						</c:if>
 					</div>
 				</div>
@@ -63,7 +80,7 @@ CPDefinition cpDefinition = cpSimpleCPTypeDisplayContext.getCPDefinition();
 				<div class="row">
 					<div class="col-md-12">
 						<div class="options">
-							<%= cpSimpleCPTypeDisplayContext.renderOptions(renderRequest, renderResponse) %>
+							<%= simpleCPTypeDisplayContext.renderOptions(renderRequest, renderResponse) %>
 						</div>
 					</div>
 				</div>
@@ -97,4 +114,10 @@ CPDefinition cpDefinition = cpSimpleCPTypeDisplayContext.getCPDefinition();
 				});
 			});
 	</script>
-</c:if>
+	<%
+	}
+	%>
+
+</liferay-ddm:template-renderer>
+
+<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" />

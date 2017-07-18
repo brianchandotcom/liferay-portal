@@ -18,6 +18,7 @@ import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.CalendarLocalService;
+import com.liferay.calendar.service.CalendarResourceLocalService;
 import com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -151,7 +152,7 @@ public class CalendarStagedModelDataHandler
 			calendar.getCalendarResourceId());
 
 		Map<Locale, String> calendarNameMap = getCalendarNameMap(
-			portletDataContext, calendar);
+			portletDataContext, calendar, calendarResourceId);
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			calendar);
@@ -196,7 +197,8 @@ public class CalendarStagedModelDataHandler
 	}
 
 	protected Map<Locale, String> getCalendarNameMap(
-			PortletDataContext portletDataContext, Calendar calendar)
+			PortletDataContext portletDataContext, Calendar calendar,
+			long calendarResourceId)
 		throws Exception {
 
 		Group sourceGroup = _groupLocalService.fetchGroup(
@@ -204,9 +206,13 @@ public class CalendarStagedModelDataHandler
 
 		String calendarName = calendar.getName(LocaleUtil.getDefault());
 
+		CalendarResource calendarResource =
+			_calendarResourceLocalService.getCalendarResource(
+				calendarResourceId);
+
 		if (((sourceGroup == null) ||
 			 !calendarName.equals(sourceGroup.getDescriptiveName())) &&
-			!calendar.isDefaultCalendar()) {
+			!calendarResource.isGroup()) {
 
 			return calendar.getNameMap();
 		}
@@ -230,11 +236,19 @@ public class CalendarStagedModelDataHandler
 	}
 
 	@Reference(unbind = "-")
+	protected void setCalendarResourceLocalService(
+		CalendarResourceLocalService calendarResourceLocalService) {
+
+		_calendarResourceLocalService = calendarResourceLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setGroupLocalService(GroupLocalService groupLocalService) {
 		_groupLocalService = groupLocalService;
 	}
 
 	private CalendarLocalService _calendarLocalService;
+	private CalendarResourceLocalService _calendarResourceLocalService;
 	private GroupLocalService _groupLocalService;
 
 }

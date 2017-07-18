@@ -124,21 +124,23 @@ public class CPAssetCategoryLocalServiceImpl
 		long classNameId = _classNameLocalService.getClassNameId(
 			AssetCategory.class);
 
-		for (Map.Entry<Locale, String> titleEntry : titleMap.entrySet()) {
-			String urlTitle = urlTitleMap.get(titleEntry.getKey());
+		for (Map.Entry<Locale, String> entry : titleMap.entrySet()) {
+			Locale locale = entry.getKey();
+
+			String urlTitle = urlTitleMap.get(locale);
 
 			if (Validator.isNull(urlTitle)) {
-				urlTitle = titleEntry.getValue();
+				urlTitle = entry.getValue();
 			}
 
-			String languageId = LanguageUtil.getLanguageId(titleEntry.getKey());
+			String languageId = LanguageUtil.getLanguageId(locale);
 
 			urlTitle = _cpFriendlyURLEntryLocalService.buildUrlTitle(
 				assetCategory.getGroupId(), assetCategory.getCompanyId(),
 				classNameId, assetCategory.getCategoryId(), languageId,
 				urlTitle);
 
-			newUrlTitleMap.put(titleEntry.getKey(), urlTitle);
+			newUrlTitleMap.put(locale, urlTitle);
 		}
 
 		return newUrlTitleMap;

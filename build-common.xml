@@ -613,6 +613,8 @@ information.
 			<if>
 				<equals arg1="${task.available}" arg2="true" />
 				<then>
+					<var name="@{outputproperty}.error" unset="true" />
+
 					<exec dir="@{dir}" executable="${project.dir}/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
 						<args />
 						<arg value="--no-daemon" />

@@ -1137,8 +1137,6 @@
 	</command>
 
 	<command name="EditCategoryProperty" priority="4">
-		<execute macro="Navigator#openURL" />
-
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Categories" />
 		</execute>
@@ -1159,8 +1157,6 @@
 			<var name="propertyNumber" value="1" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Categories" />
 		</execute>
@@ -1172,8 +1168,6 @@
 			<var name="propertyNumber" value="1" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
-
-		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Categories" />

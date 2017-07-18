@@ -9,3 +9,4 @@ Provide-Capability:\
 	soy;\
 		type="metal";\
 		version:Version="1.0.0"
+Web-ContextPath: /frontend-js-metal-web

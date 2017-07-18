@@ -863,7 +863,7 @@ public class JenkinsResultsParserUtil {
 
 	public static void sendEmail(
 			String body, String from, String subject, String to)
-		throws Exception {
+		throws InterruptedException, IOException {
 
 		File file = new File("/tmp/" + body.hashCode() + ".txt");
 

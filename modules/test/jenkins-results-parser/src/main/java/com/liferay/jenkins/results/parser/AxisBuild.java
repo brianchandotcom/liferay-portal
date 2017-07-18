@@ -260,7 +260,8 @@ public class AxisBuild extends BaseBuild {
 		}
 
 		if (result.equals("UNSTABLE")) {
-			List<Element> elements = new ArrayList<>();
+			List<Element> failureElements = new ArrayList<>();
+			List<Element> upstreamJobFailureElements = new ArrayList<>();
 
 			for (TestResult testResult : getTestResults(null)) {
 				String testStatus = testResult.getStatus();
@@ -271,10 +272,30 @@ public class AxisBuild extends BaseBuild {
 					continue;
 				}
 
-				elements.add(testResult.getGitHubElement(getTestrayLogsURL()));
+				if (isTestFailingInUpstreamJob(testResult)) {
+					upstreamJobFailureElements.add(
+						testResult.getGitHubElement(getTestrayLogsURL()));
+
+					continue;
+				}
+
+				failureElements.add(
+					testResult.getGitHubElement(getTestrayLogsURL()));
 			}
 
-			Dom4JUtil.getOrderedListElement(elements, messageElement, 3);
+			if (!upstreamJobFailureElements.isEmpty()) {
+				upstreamJobFailureMessageElement = messageElement.createCopy();
+
+				Dom4JUtil.getOrderedListElement(
+					upstreamJobFailureElements,
+					upstreamJobFailureMessageElement, 3);
+			}
+
+			Dom4JUtil.getOrderedListElement(failureElements, messageElement, 3);
+
+			if (failureElements.isEmpty()) {
+				return null;
+			}
 		}
 
 		return messageElement;

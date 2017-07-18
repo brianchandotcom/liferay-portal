@@ -1,8 +1,8 @@
 import com.liferay.gradle.plugins.change.log.builder.BuildChangeLogTask
+import com.liferay.gradle.plugins.defaults.tasks.CopyIvyDependenciesTask
 import com.liferay.gradle.plugins.util.PortalTools
 import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.StringUtil
-import com.liferay.gradle.util.copy.RenameDependencyClosure
 
 import java.util.regex.Matcher
 
@@ -220,43 +220,26 @@ private void _createSetUpPortalToolTasks() {
 
 		String portalToolSuffix = _getPortalToolSuffix(portalToolDir.name)
 
-		Configuration portalToolConfiguration = configurations.create("portalTools" + portalToolSuffix)
+		CopyIvyDependenciesTask copyIvyDependenciesTask = tasks.create(name: "setUp" + portalToolSuffix, type: CopyIvyDependenciesTask) {
+			configuration.exclude group: "com.liferay.portal"
 
-		portalToolConfiguration.exclude group: "com.liferay.portal"
+			dependencyTransformClosure = {
+				Map<String, String> dependencyNotation ->
 
-		def ivyModuleNode = xmlSlurper.parse(ivyXmlFile)
+				String version = PortalTools.getVersion(project, dependencyNotation["name"])
 
-		def dependencyNodes = ivyModuleNode.dependencies.children()
+				if (version) {
+					dependencyNotation["version"] = version
+				}
 
-		dependencyNodes.each {
-			String dependencyConf = it.@conf
-
-			if (dependencyConf) {
-				return
+				dependencyNotation
 			}
 
-			String dependencyGroup = it.@org
-			String dependencyName = it.@name
-			String dependencyVersion = PortalTools.getVersion(project, dependencyName)
-
-			if (!dependencyVersion) {
-				dependencyVersion = it.@rev
-			}
-
-			dependencies.add portalToolConfiguration.name, "${dependencyGroup}:${dependencyName}:${dependencyVersion}"
-		}
-
-		Task portalToolTask = tasks.create(name: "setUp" + portalToolSuffix, type: Copy) {
-			doLast {
-				ant.checksum file: ivyXmlFile
-			}
-
-			from portalToolConfiguration
+			inputFile = ivyXmlFile
 			into new File(portalToolDir, "lib")
-			rename new RenameDependencyClosure(project, portalToolConfiguration.name)
 		}
 
-		setUpPortalTools.dependsOn portalToolTask
+		setUpPortalTools.dependsOn copyIvyDependenciesTask
 	}
 }
 

@@ -605,6 +605,17 @@ information.
 					<condition else="false" property="task.available" value="true">
 						<contains string="${tasks.output}" substring="@{task} -" />
 					</condition>
+
+					<local name="task.error" />
+
+					<propertycopy from="@{outputproperty}.error" name="task.error" />
+
+					<if>
+						<equals arg1="${task.error}" arg2="" />
+						<then>
+							<var name="@{outputproperty}.error" unset="true" />
+						</then>
+					</if>
 				</then>
 			</if>
 
@@ -613,8 +624,6 @@ information.
 			<if>
 				<equals arg1="${task.available}" arg2="true" />
 				<then>
-					<var name="@{outputproperty}.error" unset="true" />
-
 					<exec dir="@{dir}" executable="${project.dir}/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
 						<args />
 						<arg value="--no-daemon" />

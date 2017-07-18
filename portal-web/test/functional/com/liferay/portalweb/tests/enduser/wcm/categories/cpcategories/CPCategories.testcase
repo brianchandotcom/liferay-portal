@@ -1137,8 +1137,6 @@
 	</command>
 
 	<command name="EditCategoryProperty" priority="4">
-		<execute macro="Navigator#openURL" />
-
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Categories" />
 		</execute>
@@ -1159,8 +1157,6 @@
 			<var name="propertyNumber" value="1" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Categories" />
 		</execute>
@@ -1173,21 +1169,26 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Categories" />
+		</execute>
+
+		<execute macro="Category#editCP">
+			<var name="categoryName" value="Category Name" />
+			<var name="categoryNameEdit" value="Category Name Edit" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Categories" />
 		</execute>
 
-		<execute macro="Category#editCategoryPropertyCP">
-			<var name="categoryName" value="Category Name" />
-			<var name="categoryNameEdit" value="Category Name Edit" />
+		<execute macro="Category#editPropertyCP">
+			<var name="categoryName" value="Category Name Edit" />
 			<var name="propertiesKeyFieldEdit" value="Category Key Edit 1" />
 			<var name="propertiesValueFieldEdit" value="Category Value Edit 1" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
-
-		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Categories" />

@@ -532,9 +532,6 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
-		<finder name="CompanyId" return-type="Collection">
-			<finder-column name="companyId" />
-		</finder>
 		<finder name="G_K" return-type="CPOption" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="key" />

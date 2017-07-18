@@ -54,14 +54,6 @@ public class CPOptionServiceImpl extends CPOptionServiceBaseImpl {
 	}
 
 	@Override
-	public CPOption deleteCPOption(CPOption cpOption) throws PortalException {
-		CPOptionPermission.check(
-			getPermissionChecker(), cpOption, ActionKeys.DELETE);
-
-		return cpOptionLocalService.deleteCPOption(cpOption);
-	}
-
-	@Override
 	public CPOption deleteCPOption(long cpOptionId) throws PortalException {
 		CPOptionPermission.check(
 			getPermissionChecker(), cpOptionId, ActionKeys.DELETE);

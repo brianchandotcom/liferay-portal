@@ -14,26 +14,33 @@
 
 package com.liferay.portal.servlet;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.language.LanguageImpl;
 import com.liferay.portal.tools.ToolDependencies;
+import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.HttpImpl;
 import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PrefsPropsUtil;
+import com.liferay.portal.util.PropsImpl;
 
 import java.util.Objects;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletResponse;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -163,6 +170,20 @@ public class ComboServletTest extends PowerMockito {
 	}
 
 	@Test
+	public void testEmptyParameters() throws Exception {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_comboServlet.service(mockHttpServletRequest, mockHttpServletResponse);
+
+		Assert.assertEquals(
+			HttpServletResponse.SC_NOT_FOUND,
+			mockHttpServletResponse.getStatus());
+	}
+
+	@Test
 	public void testGetResourceRequestDispatcherWithNonexistingPortletId()
 		throws Exception {
 
@@ -198,6 +219,34 @@ public class ComboServletTest extends PowerMockito {
 		Mockito.verify(_pluginServletContext);
 
 		_pluginServletContext.getRequestDispatcher("/js/javascript.js");
+	}
+
+	@Test
+	public void testMixedExtensionsRequest() throws Exception {
+		FileUtil fileUtil = new FileUtil();
+
+		fileUtil.setFile(new FileImpl());
+
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		languageUtil.setLanguage(new LanguageImpl());
+
+		PropsUtil.setProps(new PropsImpl());
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setQueryString(
+			"/js/javascript.js&/css/styles.css");
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_comboServlet.service(mockHttpServletRequest, mockHttpServletResponse);
+
+		Assert.assertEquals(
+			HttpServletResponse.SC_BAD_REQUEST,
+			mockHttpServletResponse.getStatus());
 	}
 
 	@Test
@@ -252,6 +301,12 @@ public class ComboServletTest extends PowerMockito {
 			_portalPortletApp.getServletContext()
 		).thenReturn(
 			_portalServletContext
+		);
+
+		when(
+			_portalPortlet.getContextPath()
+		).thenReturn(
+			"portal"
 		);
 
 		when(

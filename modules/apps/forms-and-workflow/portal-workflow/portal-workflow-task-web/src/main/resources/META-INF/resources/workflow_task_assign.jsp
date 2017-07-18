@@ -64,14 +64,14 @@ String redirect = ParamUtil.getString(request, "redirect");
 </div>
 
 <aui:script use="aui-base,aui-io-request">
-	A.one('#<portlet:namespace/>done').on(
+	A.one('#<portlet:namespace />done').on(
 		'click',
 		function(event) {
 			A.io.request(
 				'<%= assignURL.toString() %>',
 				{
 					method: 'POST',
-					form: {id: '<portlet:namespace/>assignFm'},
+					form: {id: '<portlet:namespace />assignFm'},
 					on: {
 						success: function() {
 							Liferay.Util.getOpener().<portlet:namespace />refreshPortlet('<%= redirect.toString() %>');

@@ -14,12 +14,12 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal;
 
-import static java.util.Arrays.asList;
-
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 import com.liferay.dynamic.data.mapping.expression.internal.DDMExpressionFactoryImpl;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
+
+import java.util.Arrays;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -33,7 +33,8 @@ public class DDMFormRuleEvaluatorTest {
 	public void testDisabledRuleShouldNotRunConditionEvaluation()
 		throws Exception {
 
-		DDMFormRule ddmFormRule = new DDMFormRule("eval()", asList("true"));
+		DDMFormRule ddmFormRule = new DDMFormRule(
+			"eval()", Arrays.asList("true"));
 
 		ddmFormRule.setEnabled(false);
 
@@ -55,7 +56,8 @@ public class DDMFormRuleEvaluatorTest {
 
 	@Test
 	public void testEnableRuleShouldRunConditionEvaluation() throws Exception {
-		DDMFormRule ddmFormRule = new DDMFormRule("eval()", asList("true"));
+		DDMFormRule ddmFormRule = new DDMFormRule(
+			"eval()", Arrays.asList("true"));
 
 		DDMExpressionFunctionRegistry ddmExpressionFunctionRegistry =
 			new DDMExpressionFunctionRegistry();
@@ -77,7 +79,8 @@ public class DDMFormRuleEvaluatorTest {
 	public void testFalseConditionShouldNotRunActionEvaluation()
 		throws Exception {
 
-		DDMFormRule ddmFormRule = new DDMFormRule("false", asList("eval()"));
+		DDMFormRule ddmFormRule = new DDMFormRule(
+			"false", Arrays.asList("eval()"));
 
 		DDMExpressionFunctionRegistry ddmExpressionFunctionRegistry =
 			new DDMExpressionFunctionRegistry();
@@ -97,7 +100,8 @@ public class DDMFormRuleEvaluatorTest {
 
 	@Test
 	public void testTrueConditionShouldRunActionEvaluation() throws Exception {
-		DDMFormRule ddmFormRule = new DDMFormRule("true", asList("eval()"));
+		DDMFormRule ddmFormRule = new DDMFormRule(
+			"true", Arrays.asList("eval()"));
 
 		DDMExpressionFunctionRegistry ddmExpressionFunctionRegistry =
 			new DDMExpressionFunctionRegistry();

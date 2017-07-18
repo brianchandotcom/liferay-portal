@@ -14,12 +14,8 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.integration.impl.internal.util;
 
-import static com.liferay.portal.kernel.test.util.RandomTestUtil.randomLong;
-import static com.liferay.portal.kernel.util.StringUtil.randomString;
-import static com.liferay.portal.workflow.kaleo.runtime.integration.impl.internal.util.KaleoRuntimeTestUtil.assertWorkflowTaskAssignee;
-import static com.liferay.portal.workflow.kaleo.runtime.integration.impl.internal.util.KaleoRuntimeTestUtil.mockKaleoTaskAssignmentInstance;
-import static com.liferay.portal.workflow.kaleo.runtime.integration.impl.internal.util.KaleoRuntimeTestUtil.mockKaleoTaskInstanceToken;
-
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTaskAssignee;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
@@ -36,16 +32,17 @@ public class FirstWorkflowTaskAssigneeSupplierTest {
 
 	@Test
 	public void testGetWhenFirstKaleoTaskAssignmentInstanceIsNotNull() {
-		String expectedAssigneeClassName = randomString();
+		String expectedAssigneeClassName = StringUtil.randomString();
 
-		long expectedAssigneeClassPK = randomLong();
+		long expectedAssigneeClassPK = RandomTestUtil.randomLong();
 
 		KaleoTaskAssignmentInstance firstKaleoTaskAssignmentInstance =
-			mockKaleoTaskAssignmentInstance(
+			KaleoRuntimeTestUtil.mockKaleoTaskAssignmentInstance(
 				expectedAssigneeClassName, expectedAssigneeClassPK);
 
 		KaleoTaskInstanceToken kaleoTaskInstanceToken =
-			mockKaleoTaskInstanceToken(firstKaleoTaskAssignmentInstance);
+			KaleoRuntimeTestUtil.mockKaleoTaskInstanceToken(
+				firstKaleoTaskAssignmentInstance);
 
 		FirstWorkflowTaskAssigneeSupplier firstWorkflowTaskAssigneeSupplier =
 			new FirstWorkflowTaskAssigneeSupplier(kaleoTaskInstanceToken);
@@ -55,7 +52,7 @@ public class FirstWorkflowTaskAssigneeSupplierTest {
 
 		Assert.assertTrue(firstWorkflowTaskAssigneeOptional.isPresent());
 
-		assertWorkflowTaskAssignee(
+		KaleoRuntimeTestUtil.assertWorkflowTaskAssignee(
 			expectedAssigneeClassName, expectedAssigneeClassPK,
 			firstWorkflowTaskAssigneeOptional.get());
 	}
@@ -63,7 +60,7 @@ public class FirstWorkflowTaskAssigneeSupplierTest {
 	@Test
 	public void testGetWhenFirstKaleoTaskAssignmentInstanceIsNull() {
 		KaleoTaskInstanceToken kaleoTaskInstanceToken =
-			mockKaleoTaskInstanceToken();
+			KaleoRuntimeTestUtil.mockKaleoTaskInstanceToken();
 
 		FirstWorkflowTaskAssigneeSupplier firstWorkflowTaskAssigneeSupplier =
 			new FirstWorkflowTaskAssigneeSupplier(kaleoTaskInstanceToken);

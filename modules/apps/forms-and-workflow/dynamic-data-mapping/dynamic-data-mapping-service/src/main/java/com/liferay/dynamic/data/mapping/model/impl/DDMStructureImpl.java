@@ -70,7 +70,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 			List<DDMFormField> ddmFormFields =
 				fullHierarchyDDMForm.getDDMFormFields();
 
-			ddmFormFields.addAll(ancestorsDDMForm.getDDMFormFields());
+			ddmFormFields.addAll(0, ancestorsDDMForm.getDDMFormFields());
 		}
 
 		return fullHierarchyDDMForm;

@@ -14,9 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.form.renderer.internal;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldRenderer;
@@ -50,6 +47,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import org.mockito.Matchers;
+import org.mockito.Mockito;
 
 /**
  * @author Marcellus Tavares
@@ -360,17 +358,17 @@ public class DDMFormFieldTemplateContextFactoryTest {
 			DDMFormFieldTemplateContextContributor
 				ddmFormFieldTemplateContextContributor) {
 
-		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker = mock(
-			DDMFormFieldTypeServicesTracker.class);
+		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker =
+			Mockito.mock(DDMFormFieldTypeServicesTracker.class);
 
-		when(
+		Mockito.when(
 			ddmFormFieldTypeServicesTracker.getDDMFormFieldRenderer(
 				Matchers.anyString())
 		).thenReturn(
 			ddmFormFieldRenderer
 		);
 
-		when(
+		Mockito.when(
 			ddmFormFieldTypeServicesTracker.
 				getDDMFormFieldTemplateContextContributor(Matchers.anyString())
 		).thenReturn(
@@ -381,7 +379,7 @@ public class DDMFormFieldTemplateContextFactoryTest {
 	}
 
 	protected void setUpLanguageUtil() {
-		Language language = mock(Language.class);
+		Language language = Mockito.mock(Language.class);
 
 		whenLanguageGet(
 			language, LocaleUtil.US, LanguageConstants.KEY_DIR, "ltr");
@@ -394,7 +392,7 @@ public class DDMFormFieldTemplateContextFactoryTest {
 	protected void whenLanguageGet(
 		Language language, Locale locale, String key, String returnValue) {
 
-		when(
+		Mockito.when(
 			language.get(Matchers.eq(locale), Matchers.eq(key))
 		).thenReturn(
 			returnValue

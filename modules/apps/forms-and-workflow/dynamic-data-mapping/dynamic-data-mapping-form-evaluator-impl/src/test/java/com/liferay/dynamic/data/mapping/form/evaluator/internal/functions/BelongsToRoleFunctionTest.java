@@ -14,9 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.functions;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
@@ -36,6 +33,7 @@ import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 /**
@@ -131,13 +129,13 @@ public class BelongsToRoleFunctionTest {
 	}
 
 	protected void mockHasRegularRole() throws Exception {
-		when(
+		Mockito.when(
 			_role.getType()
 		).thenReturn(
 			RoleConstants.TYPE_REGULAR
 		);
 
-		when(
+		Mockito.when(
 			_userLocalService.hasRoleUser(
 				Matchers.anyLong(), Matchers.eq("Role1"), Matchers.anyLong(),
 				Matchers.eq(true))
@@ -147,13 +145,13 @@ public class BelongsToRoleFunctionTest {
 	}
 
 	protected void mockHasSiteRole() throws Exception {
-		when(
+		Mockito.when(
 			_role.getType()
 		).thenReturn(
 			RoleConstants.TYPE_SITE
 		);
 
-		when(
+		Mockito.when(
 			_userGroupRoleLocalService.hasUserGroupRole(
 				Matchers.anyLong(), Matchers.anyLong(), Matchers.eq("Role1"),
 				Matchers.eq(true))
@@ -165,16 +163,25 @@ public class BelongsToRoleFunctionTest {
 	protected void setPortalUtil() throws Exception {
 		PortalUtil portalUtil = new PortalUtil();
 
-		Portal portal = mock(Portal.class);
+		Portal portal = Mockito.mock(Portal.class);
 
-		when(portal.getUser(_request)).thenReturn(_user);
-		when(portal.getCompany(_request)).thenReturn(_company);
+		Mockito.when(
+			portal.getUser(_request)
+		).thenReturn(
+			_user
+		);
+
+		Mockito.when(
+			portal.getCompany(_request)
+		).thenReturn(
+			_company
+		);
 
 		portalUtil.setPortal(portal);
 	}
 
 	protected void setRole() throws Exception {
-		when(
+		Mockito.when(
 			_roleLocalService.fetchRole(
 				Matchers.anyLong(), Matchers.anyString())
 		).thenReturn(

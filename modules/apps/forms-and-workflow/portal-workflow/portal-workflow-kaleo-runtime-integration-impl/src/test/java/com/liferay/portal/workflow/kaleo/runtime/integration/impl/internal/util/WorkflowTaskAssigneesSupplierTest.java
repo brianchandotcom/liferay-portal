@@ -14,10 +14,6 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.integration.impl.internal.util;
 
-import static com.liferay.portal.workflow.kaleo.runtime.integration.impl.internal.util.KaleoRuntimeTestUtil.assertWorkflowTaskAssignee;
-import static com.liferay.portal.workflow.kaleo.runtime.integration.impl.internal.util.KaleoRuntimeTestUtil.mockKaleoTaskAssignmentInstance;
-import static com.liferay.portal.workflow.kaleo.runtime.integration.impl.internal.util.KaleoRuntimeTestUtil.mockKaleoTaskInstanceToken;
-
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.workflow.WorkflowTaskAssignee;
@@ -37,7 +33,7 @@ public class WorkflowTaskAssigneesSupplierTest {
 	@Test
 	public void testGetWhenKaleoTaskAssignmentsIsEmpty() {
 		KaleoTaskInstanceToken kaleoTaskInstanceToken =
-			mockKaleoTaskInstanceToken();
+			KaleoRuntimeTestUtil.mockKaleoTaskInstanceToken();
 
 		WorkflowTaskAssigneesSupplier workflowTaskAssigneesSupplier =
 			new WorkflowTaskAssigneesSupplier(kaleoTaskInstanceToken);
@@ -52,12 +48,15 @@ public class WorkflowTaskAssigneesSupplierTest {
 	public void testGetWhenKaleoTaskAssignmentsIsNotEmpty() {
 		KaleoTaskAssignmentInstance[] kaleoTaskAssignmentInstances =
 			new KaleoTaskAssignmentInstance[] {
-				mockKaleoTaskAssignmentInstance(Role.class.getName(), 1),
-				mockKaleoTaskAssignmentInstance(User.class.getName(), 2)
+				KaleoRuntimeTestUtil.mockKaleoTaskAssignmentInstance(
+					Role.class.getName(), 1),
+				KaleoRuntimeTestUtil.mockKaleoTaskAssignmentInstance(
+					User.class.getName(), 2)
 			};
 
 		KaleoTaskInstanceToken kaleoTaskInstanceToken =
-			mockKaleoTaskInstanceToken(kaleoTaskAssignmentInstances);
+			KaleoRuntimeTestUtil.mockKaleoTaskInstanceToken(
+				kaleoTaskAssignmentInstances);
 
 		WorkflowTaskAssigneesSupplier workflowTaskAssigneesSupplier =
 			new WorkflowTaskAssigneesSupplier(kaleoTaskInstanceToken);
@@ -69,9 +68,9 @@ public class WorkflowTaskAssigneesSupplierTest {
 
 		Assert.assertEquals(2, actualSize);
 
-		assertWorkflowTaskAssignee(
+		KaleoRuntimeTestUtil.assertWorkflowTaskAssignee(
 			Role.class.getName(), 1, workflowTaskAssignees.get(0));
-		assertWorkflowTaskAssignee(
+		KaleoRuntimeTestUtil.assertWorkflowTaskAssignee(
 			User.class.getName(), 2, workflowTaskAssignees.get(1));
 	}
 

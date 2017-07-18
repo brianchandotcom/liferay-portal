@@ -52,7 +52,11 @@ public class DefaultDDMFormFieldValueRendererTest {
 		_defaultDDMFormFieldValueRenderer.render(
 			ddmFormFieldValue, LocaleUtil.US);
 
-		Mockito.verify(_html).escape(Matchers.anyString());
+		Mockito.verify(
+			_html
+		).escape(
+			Matchers.anyString()
+		);
 	}
 
 	protected void setUpHtmlUtil() {

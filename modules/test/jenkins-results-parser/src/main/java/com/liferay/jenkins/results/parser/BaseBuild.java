@@ -420,7 +420,7 @@ public abstract class BaseBuild implements Build {
 		return getGitHubMessageElement(false);
 	}
 
-	public Element getGitHubMessageElement(boolean upstreamFailureElement) {
+	public Element getGitHubMessageElement(boolean showCommonFailuresCount) {
 		String status = getStatus();
 
 		if (!status.equals("completed") && (getParentBuild() != null)) {
@@ -442,10 +442,10 @@ public abstract class BaseBuild implements Build {
 				Dom4JUtil.getNewAnchorElement(
 					getBuildURL(), getDisplayName())));
 
-		if (upstreamFailureElement) {
+		if (showCommonFailuresCount) {
 			Dom4JUtil.addToElement(
 				messageElement,
-				getGitHubMessageJobResultsElement(upstreamFailureElement));
+				getGitHubMessageJobResultsElement(showCommonFailuresCount));
 		}
 		else {
 			Dom4JUtil.addToElement(
@@ -1545,7 +1545,7 @@ public abstract class BaseBuild implements Build {
 	protected abstract Element getGitHubMessageJobResultsElement();
 
 	protected Element getGitHubMessageJobResultsElement(
-		boolean upstreamFailureElement) {
+		boolean showCommonFailuresCount) {
 
 		return getGitHubMessageJobResultsElement();
 	}

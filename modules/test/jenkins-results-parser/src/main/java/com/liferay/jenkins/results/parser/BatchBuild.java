@@ -342,7 +342,7 @@ public class BatchBuild extends BaseBuild {
 	}
 
 	protected Element getGitHubMessageJobResultsElement(
-		boolean upstreamFailureElement) {
+		boolean showCommonFailuresCount) {
 
 		String result = getResult();
 
@@ -369,7 +369,7 @@ public class BatchBuild extends BaseBuild {
 					}
 				}
 
-				if (upstreamFailureElement) {
+				if (showCommonFailuresCount) {
 					failCount = upstreamFailCount;
 				}
 				else {

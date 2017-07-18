@@ -552,8 +552,9 @@ public class TopLevelBuild extends BaseBuild {
 					rootElement, Dom4JUtil.getNewElement("hr"),
 					Dom4JUtil.getNewElement(
 						"h4", null,
-						"Failures in common with upstream(" +
-							getUpstreamJobFailuresSHA() + "):"));
+						JenkinsResultsParserUtil.combine(
+							"Failures in common with upstream(",
+							getUpstreamJobFailuresSHA(), "):")));
 
 				int remainingFailureCount =
 					maxFailureCount - failureElements.size();

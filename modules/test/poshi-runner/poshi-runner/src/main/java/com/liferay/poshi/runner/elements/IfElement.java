@@ -32,11 +32,19 @@ public class IfElement extends PoshiElement {
 		super("if", readableSyntax);
 	}
 
+	public IfElement(String name, Element element) {
+		super(name, element);
+	}
+
+	public IfElement(String name, String readableSyntax) {
+		super(name, readableSyntax);
+	}
+
 	@Override
 	public String getBlockName() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("if");
+		sb.append(getName());
 
 		for (String conditionName : _conditionNames) {
 			if (element(conditionName) != null) {
@@ -57,7 +65,7 @@ public class IfElement extends PoshiElement {
 	@Override
 	public void parseReadableSyntax(String readableSyntax) {
 		for (String readableBlock : getReadableBlocks(readableSyntax)) {
-			if (readableBlock.startsWith("if (")) {
+			if (readableBlock.startsWith(getName() + " (")) {
 				String ifContent = getParentheticalContent(readableBlock);
 
 				addElementFromReadableSyntax(ifContent);
@@ -104,7 +112,7 @@ public class IfElement extends PoshiElement {
 		List<String> readableBlocks = new ArrayList<>();
 
 		for (String line : readableSyntax.split("\n")) {
-			if (line.startsWith("if (")) {
+			if (line.startsWith(getName() + " (")) {
 				readableBlocks.add(line);
 
 				continue;

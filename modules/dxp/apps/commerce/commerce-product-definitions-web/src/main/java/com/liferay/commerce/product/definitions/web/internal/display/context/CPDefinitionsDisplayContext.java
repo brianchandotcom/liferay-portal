@@ -174,6 +174,10 @@ public class CPDefinitionsDisplayContext
 	}
 
 	public String[] getNavigationKeys() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		List<String> navigationKeysList = new ArrayList<>();
 
 		navigationKeysList.add("all");
@@ -181,7 +185,7 @@ public class CPDefinitionsDisplayContext
 		List<CPType> cpTypes = getCPTypes();
 
 		for (CPType cpType : cpTypes) {
-			navigationKeysList.add(cpType.getName());
+			navigationKeysList.add(cpType.getLabel(themeDisplay.getLocale()));
 		}
 
 		String[] navigationKeys = new String[navigationKeysList.size()];

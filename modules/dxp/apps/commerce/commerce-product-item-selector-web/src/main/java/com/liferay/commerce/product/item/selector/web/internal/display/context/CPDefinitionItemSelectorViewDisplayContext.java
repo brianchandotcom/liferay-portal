@@ -63,18 +63,13 @@ public class CPDefinitionItemSelectorViewDisplayContext
 		_cpTypeServicesTracker = cpTypeServicesTracker;
 	}
 
-	public long getCPDefinitionId() {
-		return ParamUtil.getLong(httpServletRequest, "cpDefinitionId");
-	}
-
 	public long[] getCheckedCPDefinitionIds() {
 		return ParamUtil.getLongValues(
 			httpServletRequest, "checkedCPDefinitionIds");
 	}
 
-	public long[] getDisabledCPDefinitionIds() {
-		return ParamUtil.getLongValues(
-			httpServletRequest, "disabledCPDefinitionIds");
+	public long getCPDefinitionId() {
+		return ParamUtil.getLong(httpServletRequest, "cpDefinitionId");
 	}
 
 	public List<CPDefinitionLink> getCPDefinitionLinks()
@@ -86,6 +81,11 @@ public class CPDefinitionItemSelectorViewDisplayContext
 
 	public CPType getCPType(String name) {
 		return _cpTypeServicesTracker.getCPType(name);
+	}
+
+	public long[] getDisabledCPDefinitionIds() {
+		return ParamUtil.getLongValues(
+			httpServletRequest, "disabledCPDefinitionIds");
 	}
 
 	@Override

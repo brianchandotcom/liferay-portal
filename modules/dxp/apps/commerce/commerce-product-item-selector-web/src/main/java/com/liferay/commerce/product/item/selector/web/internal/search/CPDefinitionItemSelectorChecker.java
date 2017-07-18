@@ -15,19 +15,8 @@
 package com.liferay.commerce.product.item.selector.web.internal.search;
 
 import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.model.CPDefinitionLink;
-import com.liferay.commerce.product.service.CPDefinitionLinkLocalService;
-import com.liferay.commerce.product.service.CPDefinitionLinkService;
-import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import org.osgi.service.component.annotations.Reference;
-
-import java.util.Collections;
-import java.util.List;
 
 import javax.portlet.RenderResponse;
 

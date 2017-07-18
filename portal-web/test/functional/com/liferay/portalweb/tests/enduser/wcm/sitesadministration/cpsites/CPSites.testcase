@@ -25,6 +25,8 @@
 	</tear-down>
 
 	<command name="ActivateSite" priority="4">
+		<property name="test.name.skip.portal.instance" value="CPSites#ActivateSite" />
+
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="System Settings" />
 		</execute>

@@ -153,11 +153,9 @@
 			<var name="wikiPageTitle" value="Wiki FrontPage Child Page Title" />
 		</execute>
 
-		<execute function="Click#clickAt" locator1="AlloyEditor#CONTENT_FIELD" />
-
-		<execute function="Click" locator1="AlloyEditor#CONTENT_EDITOR_SWITCH_ACE_EDITOR" />
-
-		<execute function="Type#typeAceEditor" locator1="TextArea#ACE_EDITOR" value1="${welcomeToLiferay}" />
+		<execute macro="AlloyEditor#addSourceContent">
+			<var name="content" value="${welcomeToLiferay}" />
+		</execute>
 
 		<execute macro="PortletEntry#publish" />
 

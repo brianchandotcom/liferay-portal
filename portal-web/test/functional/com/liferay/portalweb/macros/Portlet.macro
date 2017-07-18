@@ -207,18 +207,16 @@
 	</command>
 
 	<command name="configureApplicationDecoratorViaLookandfeelPG">
-		<execute macro="IFrame#selectConfigurationFrame" />
-
 		<execute macro="Navigator#gotoNavTab">
 			<var name="navTab" value="General" />
 		</execute>
 
 		<execute function="Select" locator1="Portlet#APPLICATION_DECORATOR_SELECT" value1="${applicationDecorator}" />
+
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="configureCustomStylesViaLookandfeelPG">
-		<execute macro="IFrame#selectConfigurationFrame" />
-
 		<execute macro="Navigator#gotoNavTab">
 			<var name="navTab" value="Text Styles" />
 		</execute>
@@ -304,8 +302,6 @@
 	</command>
 
 	<command name="selectApplicationDecorator">
-		<execute macro="IFrame#selectConfigurationFrame" />
-
 		<execute function="Select" locator1="Select#APPLICATION_DECORATORS" value1="${decorator}" />
 
 		<execute macro="PortletEntry#save" />

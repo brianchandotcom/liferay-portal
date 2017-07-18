@@ -18,6 +18,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
+import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Eudaldo Alonso
  */
@@ -33,6 +37,10 @@ public interface TrashHelper {
 	public String getOriginalTitle(String title);
 
 	public String getTrashTitle(long entryId);
+
+	public PortletURL getViewContentURL(
+			HttpServletRequest request, String className, long classPK)
+		throws PortalException;
 
 	public boolean isTrashEnabled(Group group);
 

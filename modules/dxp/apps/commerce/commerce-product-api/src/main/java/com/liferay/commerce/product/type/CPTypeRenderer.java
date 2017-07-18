@@ -29,6 +29,6 @@ public interface CPTypeRenderer {
 	public void render(
 			CPDefinition cpDefinition, HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
-		throws IOException;
+		throws Exception;
 
 }

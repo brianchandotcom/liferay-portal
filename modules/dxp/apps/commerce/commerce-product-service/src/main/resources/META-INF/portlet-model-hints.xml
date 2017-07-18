@@ -258,10 +258,16 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="CPOptionCategoryId" type="long" />
-		<field localized="true" name="title" type="String" />
-		<field localized="true" name="description" type="String" />
+		<field localized="true" name="title" type="String">
+			<validator name="required" />
+		</field>
+		<field localized="true" name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
 		<field name="facetable" type="boolean" />
-		<field name="key" type="String" />
+		<field name="key" type="String">
+			<validator name="required" />
+		</field>
 		<field name="lastPublishDate" type="Date" />
 	</model>
 </model-hints>

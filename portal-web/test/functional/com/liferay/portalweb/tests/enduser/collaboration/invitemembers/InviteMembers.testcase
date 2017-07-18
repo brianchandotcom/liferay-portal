@@ -92,6 +92,8 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
+		<execute function="AssertVisible" locator1="Notifications#USER_BAR_BADGE_COUNT" />
+
 		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="1" />
 		</execute>

@@ -142,10 +142,28 @@
 		};
 
 		Liferay.ThemeDisplay = {
+
+			<%
+			Group scopeGroup = themeDisplay.getScopeGroup();
+
+			Group liveGroup = StagingUtil.getLiveGroup(scopeGroup);
+			%>
+
 			<c:if test="<%= layout != null %>">
 				getLayoutId: function() {
 					return '<%= layout.getLayoutId() %>';
 				},
+
+				<%
+				Layout controlPanelLayout = themeDisplay.getControlPanelLayout();
+				%>
+
+				<c:if test="<%= controlPanelLayout.getGroupId() != scopeGroup.getGroupId() %>">
+					getLayoutRelativeControlPanelURL: function() {
+						return '<%= PortalUtil.getLayoutRelativeURL(new VirtualLayout(controlPanelLayout, scopeGroup), themeDisplay) %>';
+					},
+				</c:if>
+
 				getLayoutRelativeURL: function() {
 					return '<%= PortalUtil.getLayoutRelativeURL(layout, themeDisplay) %>';
 				},
@@ -220,13 +238,6 @@
 			getPortalURL: function() {
 				return '<%= themeDisplay.getPortalURL() %>';
 			},
-
-			<%
-			Group scopeGroup = themeDisplay.getScopeGroup();
-
-			Group liveGroup = StagingUtil.getLiveGroup(scopeGroup);
-			%>
-
 			getScopeGroupId: function() {
 				return '<%= scopeGroup.getGroupId() %>';
 			},

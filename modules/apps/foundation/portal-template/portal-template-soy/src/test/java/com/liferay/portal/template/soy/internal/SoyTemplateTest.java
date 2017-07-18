@@ -60,6 +60,7 @@ public class SoyTemplateTest {
 		SoyMapData soyMapData = template.getSoyMapData();
 
 		Assert.assertEquals(0, soyMapData.getKeys().size());
+
 		Assert.assertEquals(0, template.keySet().size());
 
 		SoyMapData soyMapInjectedData = template.getSoyMapInjectedData();
@@ -124,7 +125,10 @@ public class SoyTemplateTest {
 		template.put("restrictedKey", "restrictedValue");
 
 		Mockito.verify(
-			template, Mockito.times(0)).getSoyMapValue("restrictedValue");
+			template, Mockito.times(0)
+		).getSoyMapValue(
+			"restrictedValue"
+		);
 
 		SoyMapData soyMapData = template.getSoyMapData();
 
@@ -141,7 +145,11 @@ public class SoyTemplateTest {
 		template.put("key", value);
 		template.put("key", value);
 
-		Mockito.verify(template, Mockito.times(1)).getSoyMapValue(value);
+		Mockito.verify(
+			template, Mockito.times(1)
+		).getSoyMapValue(
+			value
+		);
 
 		SoyMapData soyMapData = template.getSoyMapData();
 

@@ -36,7 +36,6 @@
 			href="<%= viewProductOptionCategoriesURL.toString() %>"
 			label="option-categories"
 			selected='<%= toolbarItem.equals("view-all-product-option-categories") %>'
-
 		/>
 	</aui:nav>
 

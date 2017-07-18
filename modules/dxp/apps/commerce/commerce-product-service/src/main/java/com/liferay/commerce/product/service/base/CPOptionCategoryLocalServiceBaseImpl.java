@@ -33,6 +33,7 @@ import com.liferay.commerce.product.service.persistence.CPInstancePersistence;
 import com.liferay.commerce.product.service.persistence.CPOptionCategoryPersistence;
 import com.liferay.commerce.product.service.persistence.CPOptionPersistence;
 import com.liferay.commerce.product.service.persistence.CPOptionValuePersistence;
+import com.liferay.commerce.product.service.persistence.CPSpecificationOptionPersistence;
 
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -942,6 +943,44 @@ public abstract class CPOptionCategoryLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the cp specification option local service.
+	 *
+	 * @return the cp specification option local service
+	 */
+	public com.liferay.commerce.product.service.CPSpecificationOptionLocalService getCPSpecificationOptionLocalService() {
+		return cpSpecificationOptionLocalService;
+	}
+
+	/**
+	 * Sets the cp specification option local service.
+	 *
+	 * @param cpSpecificationOptionLocalService the cp specification option local service
+	 */
+	public void setCPSpecificationOptionLocalService(
+		com.liferay.commerce.product.service.CPSpecificationOptionLocalService cpSpecificationOptionLocalService) {
+		this.cpSpecificationOptionLocalService = cpSpecificationOptionLocalService;
+	}
+
+	/**
+	 * Returns the cp specification option persistence.
+	 *
+	 * @return the cp specification option persistence
+	 */
+	public CPSpecificationOptionPersistence getCPSpecificationOptionPersistence() {
+		return cpSpecificationOptionPersistence;
+	}
+
+	/**
+	 * Sets the cp specification option persistence.
+	 *
+	 * @param cpSpecificationOptionPersistence the cp specification option persistence
+	 */
+	public void setCPSpecificationOptionPersistence(
+		CPSpecificationOptionPersistence cpSpecificationOptionPersistence) {
+		this.cpSpecificationOptionPersistence = cpSpecificationOptionPersistence;
+	}
+
+	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -1158,6 +1197,10 @@ public abstract class CPOptionCategoryLocalServiceBaseImpl
 	protected com.liferay.commerce.product.service.CPOptionValueLocalService cpOptionValueLocalService;
 	@BeanReference(type = CPOptionValuePersistence.class)
 	protected CPOptionValuePersistence cpOptionValuePersistence;
+	@BeanReference(type = com.liferay.commerce.product.service.CPSpecificationOptionLocalService.class)
+	protected com.liferay.commerce.product.service.CPSpecificationOptionLocalService cpSpecificationOptionLocalService;
+	@BeanReference(type = CPSpecificationOptionPersistence.class)
+	protected CPSpecificationOptionPersistence cpSpecificationOptionPersistence;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)

@@ -248,4 +248,20 @@
 		</field>
 		<field name="lastPublishDate" type="Date" />
 	</model>
+	<model name="com.liferay.commerce.product.model.CPSpecificationOption">
+		<field name="uuid" type="String" />
+		<field name="CPSpecificationOptionId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="CPOptionCategoryId" type="long" />
+		<field localized="true" name="title" type="String" />
+		<field localized="true" name="description" type="String" />
+		<field name="facetable" type="boolean" />
+		<field name="key" type="String" />
+		<field name="lastPublishDate" type="Date" />
+	</model>
 </model-hints>

@@ -208,3 +208,20 @@ create table CPOptionValue (
 	key_ VARCHAR(75) null,
 	lastPublishDate DATE null
 );
+
+create table CPSpecificationOption (
+	uuid_ VARCHAR(75) null,
+	CPSpecificationOptionId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	CPOptionCategoryId LONG,
+	title STRING null,
+	description STRING null,
+	facetable BOOLEAN,
+	key_ VARCHAR(75) null,
+	lastPublishDate DATE null
+);

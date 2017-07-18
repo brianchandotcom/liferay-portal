@@ -31,6 +31,7 @@ import com.liferay.commerce.product.service.persistence.CPInstancePersistence;
 import com.liferay.commerce.product.service.persistence.CPOptionCategoryPersistence;
 import com.liferay.commerce.product.service.persistence.CPOptionPersistence;
 import com.liferay.commerce.product.service.persistence.CPOptionValuePersistence;
+import com.liferay.commerce.product.service.persistence.CPSpecificationOptionPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -768,6 +769,63 @@ public abstract class CPDisplayLayoutServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
+	 * Returns the cp specification option local service.
+	 *
+	 * @return the cp specification option local service
+	 */
+	public com.liferay.commerce.product.service.CPSpecificationOptionLocalService getCPSpecificationOptionLocalService() {
+		return cpSpecificationOptionLocalService;
+	}
+
+	/**
+	 * Sets the cp specification option local service.
+	 *
+	 * @param cpSpecificationOptionLocalService the cp specification option local service
+	 */
+	public void setCPSpecificationOptionLocalService(
+		com.liferay.commerce.product.service.CPSpecificationOptionLocalService cpSpecificationOptionLocalService) {
+		this.cpSpecificationOptionLocalService = cpSpecificationOptionLocalService;
+	}
+
+	/**
+	 * Returns the cp specification option remote service.
+	 *
+	 * @return the cp specification option remote service
+	 */
+	public com.liferay.commerce.product.service.CPSpecificationOptionService getCPSpecificationOptionService() {
+		return cpSpecificationOptionService;
+	}
+
+	/**
+	 * Sets the cp specification option remote service.
+	 *
+	 * @param cpSpecificationOptionService the cp specification option remote service
+	 */
+	public void setCPSpecificationOptionService(
+		com.liferay.commerce.product.service.CPSpecificationOptionService cpSpecificationOptionService) {
+		this.cpSpecificationOptionService = cpSpecificationOptionService;
+	}
+
+	/**
+	 * Returns the cp specification option persistence.
+	 *
+	 * @return the cp specification option persistence
+	 */
+	public CPSpecificationOptionPersistence getCPSpecificationOptionPersistence() {
+		return cpSpecificationOptionPersistence;
+	}
+
+	/**
+	 * Sets the cp specification option persistence.
+	 *
+	 * @param cpSpecificationOptionPersistence the cp specification option persistence
+	 */
+	public void setCPSpecificationOptionPersistence(
+		CPSpecificationOptionPersistence cpSpecificationOptionPersistence) {
+		this.cpSpecificationOptionPersistence = cpSpecificationOptionPersistence;
+	}
+
+	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -1040,6 +1098,12 @@ public abstract class CPDisplayLayoutServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.commerce.product.service.CPOptionValueService cpOptionValueService;
 	@BeanReference(type = CPOptionValuePersistence.class)
 	protected CPOptionValuePersistence cpOptionValuePersistence;
+	@BeanReference(type = com.liferay.commerce.product.service.CPSpecificationOptionLocalService.class)
+	protected com.liferay.commerce.product.service.CPSpecificationOptionLocalService cpSpecificationOptionLocalService;
+	@BeanReference(type = com.liferay.commerce.product.service.CPSpecificationOptionService.class)
+	protected com.liferay.commerce.product.service.CPSpecificationOptionService cpSpecificationOptionService;
+	@BeanReference(type = CPSpecificationOptionPersistence.class)
+	protected CPSpecificationOptionPersistence cpSpecificationOptionPersistence;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)

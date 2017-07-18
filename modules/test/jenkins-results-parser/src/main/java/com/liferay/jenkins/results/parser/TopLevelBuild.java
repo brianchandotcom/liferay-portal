@@ -494,7 +494,7 @@ public class TopLevelBuild extends BaseBuild {
 
 		if (!result.equals("SUCCESS")) {
 			if (getCompareToUpstream()) {
-				setUpstreamJobFailuresJSONObject();
+				loadUpstreamJobFailuresJSONObject();
 			}
 
 			Dom4JUtil.addToElement(

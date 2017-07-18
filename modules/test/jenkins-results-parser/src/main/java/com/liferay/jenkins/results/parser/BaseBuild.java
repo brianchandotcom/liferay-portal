@@ -1837,6 +1837,26 @@ public abstract class BaseBuild implements Build {
 		}
 	}
 
+	protected void loadUpstreamJobFailuresJSONObject() {
+		try {
+			if (getJobName().contains("pullrequest")) {
+				String upstreamJobName =
+					getJobName().replace("pullrequest", "upstream");
+
+				upstreamFailuresJobJSONObject =
+					JenkinsResultsParserUtil.toJSONObject(
+						upstreamFailuresJobBaseURL + upstreamJobName +
+							"/builds/latest/test.results.json");
+			}
+		}
+		catch (IOException ioe) {
+			System.out.println(
+				"Unable to set upstream acceptance failure data.");
+
+			ioe.printStackTrace();
+		}
+	}
+
 	protected void reset() {
 		result = null;
 
@@ -1967,26 +1987,6 @@ public abstract class BaseBuild implements Build {
 			if (isParentBuildRoot()) {
 				System.out.println(getBuildMessage());
 			}
-		}
-	}
-
-	protected void setUpstreamJobFailuresJSONObject() {
-		try {
-			if (getJobName().contains("pullrequest")) {
-				String upstreamJobName =
-					getJobName().replace("pullrequest", "upstream");
-
-				upstreamFailuresJobJSONObject =
-					JenkinsResultsParserUtil.toJSONObject(
-						upstreamFailuresJobBaseURL + upstreamJobName +
-							"/builds/latest/test.results.json");
-			}
-		}
-		catch (IOException ioe) {
-			System.out.println(
-				"Unable to set upstream acceptance failure data.");
-
-			ioe.printStackTrace();
 		}
 	}
 

@@ -25,6 +25,7 @@ import java.text.RuleBasedCollator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
@@ -80,9 +81,9 @@ public class CollatorUtilTest {
 				CollatorUtilTest.class.getClassLoader(),
 				new Class<?>[] {Props.class}, (proxy, method, args) -> null));
 
-		Collator collator = CollatorUtil.getInstance(LocaleUtil.getDefault());
+		Collator collator = CollatorUtil.getInstance(Locale.US);
 
-		Assert.assertEquals(Collator.getInstance(), collator);
+		Assert.assertEquals(Collator.getInstance(Locale.US), collator);
 
 		List<String> expected = new ArrayList<>();
 

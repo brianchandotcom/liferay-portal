@@ -435,7 +435,7 @@
 		<execute macro="FormRules#addCondition" />
 
 		<execute macro="FormRules#selectRuleCondition">
-			<var name="condition" value="and" />
+			<var name="condition" value="AND" />
 		</execute>
 
 		<execute macro="FormRules#viewRuleCondition">

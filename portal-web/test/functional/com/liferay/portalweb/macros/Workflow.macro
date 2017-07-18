@@ -87,6 +87,8 @@
 			</else>
 		</if>
 
+		<execute macro="IFrame#selectConfigurationFrame" />
+
 		<if>
 			<isset var="workflowActivityComment" />
 			<then>
@@ -186,6 +188,8 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="MenuItem#ASSIGN_TO_ME" value1="Assign to Me" />
+
+		<execute macro="IFrame#selectConfigurationFrame" />
 
 		<if>
 			<isset var="workflowActivityComment" />
@@ -297,12 +301,7 @@
 	</command>
 
 	<command name="confirmAndViewSucessMessageViaActions">
-		<if>
-			<condition function="IsElementPresent" locator1="IFrame#DIALOG" />
-			<then>
-				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-			</then>
-		</if>
+		<execute macro="IFrame#selectConfigurationFrame" />
 
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#DONE" value1="Done" />
 
@@ -310,12 +309,7 @@
 	</command>
 
 	<command name="confirmAndViewSucessMessageViaDetails">
-		<if>
-			<condition function="IsElementPresent" locator1="IFrame#DIALOG" />
-			<then>
-				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-			</then>
-		</if>
+		<execute macro="IFrame#selectConfigurationFrame" />
 
 		<execute function="AssertClick" locator1="Button#DONE" value1="Done" />
 

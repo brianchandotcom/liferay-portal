@@ -27,7 +27,14 @@
 	</command>
 
 	<command name="selectConfigurationFrame">
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		<if>
+			<condition function="IsElementPresent" locator1="IFrame#DIALOG" />
+			<then>
+				<echo message="Selecting configuration iframe" />
+
+				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+			</then>
+		</if>
 	</command>
 
 	<command name="selectEditAssetFrame">

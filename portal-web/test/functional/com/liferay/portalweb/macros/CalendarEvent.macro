@@ -618,6 +618,7 @@
 
 		<execute macro="CalendarScheduler#viewRSVP">
 			<var name="eventTitle" value="${eventTitle}" />
+			<var name="rsvp" value="${rsvp}" />
 		</execute>
 	</command>
 

@@ -143,11 +143,12 @@ public abstract class CPSpecificationOptionLocalServiceBaseImpl
 	 *
 	 * @param cpSpecificationOption the cp specification option
 	 * @return the cp specification option that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public CPSpecificationOption deleteCPSpecificationOption(
-		CPSpecificationOption cpSpecificationOption) {
+		CPSpecificationOption cpSpecificationOption) throws PortalException {
 		return cpSpecificationOptionPersistence.remove(cpSpecificationOption);
 	}
 

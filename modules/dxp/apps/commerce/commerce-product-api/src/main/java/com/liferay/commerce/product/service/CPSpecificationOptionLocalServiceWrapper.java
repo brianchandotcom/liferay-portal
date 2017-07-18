@@ -46,6 +46,18 @@ public class CPSpecificationOptionLocalServiceWrapper
 		return _cpSpecificationOptionLocalService.addCPSpecificationOption(cpSpecificationOption);
 	}
 
+	@Override
+	public com.liferay.commerce.product.model.CPSpecificationOption addCPSpecificationOption(
+		long cpOptionCategoryId,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		boolean facetable, java.lang.String key,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpSpecificationOptionLocalService.addCPSpecificationOption(cpOptionCategoryId,
+			titleMap, descriptionMap, facetable, key, serviceContext);
+	}
+
 	/**
 	* Creates a new cp specification option with the primary key. Does not add the cp specification option to the database.
 	*
@@ -63,10 +75,12 @@ public class CPSpecificationOptionLocalServiceWrapper
 	*
 	* @param cpSpecificationOption the cp specification option
 	* @return the cp specification option that was removed
+	* @throws PortalException
 	*/
 	@Override
 	public com.liferay.commerce.product.model.CPSpecificationOption deleteCPSpecificationOption(
-		com.liferay.commerce.product.model.CPSpecificationOption cpSpecificationOption) {
+		com.liferay.commerce.product.model.CPSpecificationOption cpSpecificationOption)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpSpecificationOptionLocalService.deleteCPSpecificationOption(cpSpecificationOption);
 	}
 
@@ -134,6 +148,14 @@ public class CPSpecificationOptionLocalServiceWrapper
 			groupId);
 	}
 
+	@Override
+	public com.liferay.commerce.product.model.CPSpecificationOption updateCPOptionCategoryId(
+		long cpSpecificationOptionId, long cpOptionCategoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpSpecificationOptionLocalService.updateCPOptionCategoryId(cpSpecificationOptionId,
+			cpOptionCategoryId);
+	}
+
 	/**
 	* Updates the cp specification option in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -144,6 +166,19 @@ public class CPSpecificationOptionLocalServiceWrapper
 	public com.liferay.commerce.product.model.CPSpecificationOption updateCPSpecificationOption(
 		com.liferay.commerce.product.model.CPSpecificationOption cpSpecificationOption) {
 		return _cpSpecificationOptionLocalService.updateCPSpecificationOption(cpSpecificationOption);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPSpecificationOption updateCPSpecificationOption(
+		long cpSpecificationOptionId, long cpOptionCategoryId,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		boolean facetable, java.lang.String key,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpSpecificationOptionLocalService.updateCPSpecificationOption(cpSpecificationOptionId,
+			cpOptionCategoryId, titleMap, descriptionMap, facetable, key,
+			serviceContext);
 	}
 
 	@Override
@@ -333,6 +368,12 @@ public class CPSpecificationOptionLocalServiceWrapper
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _cpSpecificationOptionLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
+	}
+
+	@Override
+	public void deleteCPSpecificationOptions(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_cpSpecificationOptionLocalService.deleteCPSpecificationOptions(groupId);
 	}
 
 	@Override

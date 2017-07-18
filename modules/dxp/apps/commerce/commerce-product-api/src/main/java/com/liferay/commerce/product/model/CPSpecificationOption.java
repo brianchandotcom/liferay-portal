@@ -55,4 +55,7 @@ public interface CPSpecificationOption extends CPSpecificationOptionModel,
 				return CPSpecificationOption.class;
 			}
 		};
+
+	public CPOptionCategory getCPOptionCategory()
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

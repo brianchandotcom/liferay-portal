@@ -16,14 +16,23 @@ package com.liferay.commerce.product.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.product.model.CPSpecificationOption;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the remote service interface for CPSpecificationOption. Methods of this
@@ -49,6 +58,25 @@ public interface CPSpecificationOptionService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPSpecificationOptionServiceUtil} to access the cp specification option remote service. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPSpecificationOptionServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public CPSpecificationOption addCPSpecificationOption(
+		long cpOptionCategoryId, Map<Locale, java.lang.String> titleMap,
+		Map<Locale, java.lang.String> descriptionMap, boolean facetable,
+		java.lang.String key, ServiceContext serviceContext)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPSpecificationOption getCPSpecificationOption(
+		long cpSpecificationOptionId) throws PortalException;
+
+	public CPSpecificationOption updateCPSpecificationOption(
+		long cpSpecificationOptionId, long cpOptionCategoryId,
+		Map<Locale, java.lang.String> titleMap,
+		Map<Locale, java.lang.String> descriptionMap, boolean facetable,
+		java.lang.String key, ServiceContext serviceContext)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPSpecificationOptionsCount(long groupId);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -56,4 +84,13 @@ public interface CPSpecificationOptionService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPSpecificationOption> getCPSpecificationOptions(long groupId,
+		int start, int end,
+		OrderByComparator<CPSpecificationOption> orderByComparator)
+		throws PortalException;
+
+	public void deleteCPSpecificationOption(long cpSpecificationOptionId)
+		throws PortalException;
 }

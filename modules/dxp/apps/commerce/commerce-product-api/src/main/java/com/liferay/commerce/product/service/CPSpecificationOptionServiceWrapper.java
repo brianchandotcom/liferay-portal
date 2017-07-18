@@ -34,6 +34,43 @@ public class CPSpecificationOptionServiceWrapper
 		_cpSpecificationOptionService = cpSpecificationOptionService;
 	}
 
+	@Override
+	public com.liferay.commerce.product.model.CPSpecificationOption addCPSpecificationOption(
+		long cpOptionCategoryId,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		boolean facetable, java.lang.String key,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpSpecificationOptionService.addCPSpecificationOption(cpOptionCategoryId,
+			titleMap, descriptionMap, facetable, key, serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPSpecificationOption getCPSpecificationOption(
+		long cpSpecificationOptionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpSpecificationOptionService.getCPSpecificationOption(cpSpecificationOptionId);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPSpecificationOption updateCPSpecificationOption(
+		long cpSpecificationOptionId, long cpOptionCategoryId,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		boolean facetable, java.lang.String key,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpSpecificationOptionService.updateCPSpecificationOption(cpSpecificationOptionId,
+			cpOptionCategoryId, titleMap, descriptionMap, facetable, key,
+			serviceContext);
+	}
+
+	@Override
+	public int getCPSpecificationOptionsCount(long groupId) {
+		return _cpSpecificationOptionService.getCPSpecificationOptionsCount(groupId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -42,6 +79,21 @@ public class CPSpecificationOptionServiceWrapper
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _cpSpecificationOptionService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CPSpecificationOption> getCPSpecificationOptions(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPSpecificationOption> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpSpecificationOptionService.getCPSpecificationOptions(groupId,
+			start, end, orderByComparator);
+	}
+
+	@Override
+	public void deleteCPSpecificationOption(long cpSpecificationOptionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_cpSpecificationOptionService.deleteCPSpecificationOption(cpSpecificationOptionId);
 	}
 
 	@Override

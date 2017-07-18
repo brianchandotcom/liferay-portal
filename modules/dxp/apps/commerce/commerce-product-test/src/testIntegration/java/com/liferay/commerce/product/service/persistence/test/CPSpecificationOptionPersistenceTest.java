@@ -263,6 +263,12 @@ public class CPSpecificationOptionPersistenceTest {
 			getOrderByComparator());
 	}
 
+	@Test
+	public void testFilterFindByGroupId() throws Exception {
+		_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, getOrderByComparator());
+	}
+
 	protected OrderByComparator<CPSpecificationOption> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("CPSpecificationOption",
 			"uuid", true, "CPSpecificationOptionId", true, "groupId", true,

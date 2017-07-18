@@ -168,6 +168,12 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	}
 
 	@Override
+	public CPOptionCategory getCPOptionCategory()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpSpecificationOption.getCPOptionCategory();
+	}
+
+	@Override
 	public CPSpecificationOption toEscapedModel() {
 		return new CPSpecificationOptionWrapper(_cpSpecificationOption.toEscapedModel());
 	}

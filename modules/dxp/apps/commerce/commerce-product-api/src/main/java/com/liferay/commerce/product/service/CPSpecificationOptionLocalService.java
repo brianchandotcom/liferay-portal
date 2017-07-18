@@ -28,10 +28,13 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -40,6 +43,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the local service interface for CPSpecificationOption. Methods of this
@@ -74,6 +79,12 @@ public interface CPSpecificationOptionLocalService extends BaseLocalService,
 	public CPSpecificationOption addCPSpecificationOption(
 		CPSpecificationOption cpSpecificationOption);
 
+	public CPSpecificationOption addCPSpecificationOption(
+		long cpOptionCategoryId, Map<Locale, java.lang.String> titleMap,
+		Map<Locale, java.lang.String> descriptionMap, boolean facetable,
+		java.lang.String key, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	* Creates a new cp specification option with the primary key. Does not add the cp specification option to the database.
 	*
@@ -88,10 +99,12 @@ public interface CPSpecificationOptionLocalService extends BaseLocalService,
 	*
 	* @param cpSpecificationOption the cp specification option
 	* @return the cp specification option that was removed
+	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CPSpecificationOption deleteCPSpecificationOption(
-		CPSpecificationOption cpSpecificationOption);
+		CPSpecificationOption cpSpecificationOption) throws PortalException;
 
 	/**
 	* Deletes the cp specification option with the primary key from the database. Also notifies the appropriate model listeners.
@@ -142,6 +155,10 @@ public interface CPSpecificationOptionLocalService extends BaseLocalService,
 	public CPSpecificationOption getCPSpecificationOptionByUuidAndGroupId(
 		java.lang.String uuid, long groupId) throws PortalException;
 
+	public CPSpecificationOption updateCPOptionCategoryId(
+		long cpSpecificationOptionId, long cpOptionCategoryId)
+		throws PortalException;
+
 	/**
 	* Updates the cp specification option in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -151,6 +168,13 @@ public interface CPSpecificationOptionLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CPSpecificationOption updateCPSpecificationOption(
 		CPSpecificationOption cpSpecificationOption);
+
+	public CPSpecificationOption updateCPSpecificationOption(
+		long cpSpecificationOptionId, long cpOptionCategoryId,
+		Map<Locale, java.lang.String> titleMap,
+		Map<Locale, java.lang.String> descriptionMap, boolean facetable,
+		java.lang.String key, ServiceContext serviceContext)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -288,4 +312,7 @@ public interface CPSpecificationOptionLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	public void deleteCPSpecificationOptions(long groupId)
+		throws PortalException;
 }

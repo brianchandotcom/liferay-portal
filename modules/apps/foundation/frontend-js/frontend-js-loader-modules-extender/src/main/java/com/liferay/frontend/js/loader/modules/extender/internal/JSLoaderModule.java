@@ -113,10 +113,6 @@ public class JSLoaderModule {
 		boolean versionedModuleName) {
 
 		if (versionedModuleName) {
-			if (!_applyVersioning) {
-				return "";
-			}
-
 			return jsonObject.toString();
 		}
 		else {

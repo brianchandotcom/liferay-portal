@@ -1775,6 +1775,12 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>Whether to display the checkbox that disables input field.</description>
+			<name>showDisableCheckbox</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>A variable name to refer to the year of the component.</description>
 			<name>yearParam</name>
 			<required>false</required>

@@ -100,6 +100,10 @@ public class InputDateTag extends BaseValidatorTagSupport {
 		_required = required;
 	}
 
+	public void setShowDisableCheckbox(boolean showDisableCheckbox) {
+		_showDisableCheckbox = showDisableCheckbox;
+	}
+
 	public void setYearParam(String yearParam) {
 		_yearParam = yearParam;
 	}
@@ -126,6 +130,7 @@ public class InputDateTag extends BaseValidatorTagSupport {
 		_monthValue = -1;
 		_nullable = false;
 		_required = false;
+		_showDisableCheckbox = false;
 		_yearParam = null;
 		_yearValue = 0;
 	}
@@ -169,6 +174,9 @@ public class InputDateTag extends BaseValidatorTagSupport {
 			"liferay-ui:input-date:nullable", String.valueOf(_nullable));
 		request.setAttribute(
 			"liferay-ui:input-date:required", String.valueOf(_required));
+		request.setAttribute(
+			"liferay-ui:input-date:showDisableCheckbox",
+			String.valueOf(_showDisableCheckbox));
 		request.setAttribute("liferay-ui:input-date:yearParam", _yearParam);
 		request.setAttribute(
 			"liferay-ui:input-date:yearValue", String.valueOf(_yearValue));
@@ -193,6 +201,7 @@ public class InputDateTag extends BaseValidatorTagSupport {
 	private String _name;
 	private boolean _nullable;
 	private boolean _required;
+	private boolean _showDisableCheckbox;
 	private String _yearParam;
 	private int _yearValue;
 

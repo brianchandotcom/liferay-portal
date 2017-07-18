@@ -55,6 +55,13 @@
 		</while>
 	</command>
 
+	<command name="viewStatus">
+		<var name="key_appName" value="${appName}" />
+		<var name="key_appStatus" value="${appStatus}" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="AppManager#APP_STATUS" value1="${appStatus}" />
+	</command>
+
 	<command name="viewUninstallAppCP">
 		<var name="key_appName" value="${appName}" />
 

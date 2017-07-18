@@ -35,7 +35,7 @@ AssetCategory assetCategory = cpCategoryContentDisplayContext.getAssetCategory()
 			</c:if>
 		</div>
 
-		<div class="container-fluid-1280">
+		<div class="container-fluid">
 			<h1><%= assetCategory.getTitle(languageId) %></h1>
 			<p><%= assetCategory.getDescription(languageId) %></p>
 		</div>

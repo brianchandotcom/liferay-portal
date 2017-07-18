@@ -2,7 +2,6 @@
 #
 # Author: Samuel Trong Tran <samuel.tran@liferay.com>
 # Platform: Linux/Unix
-# Revision: 0.1.0
 #
 
 set -o pipefail

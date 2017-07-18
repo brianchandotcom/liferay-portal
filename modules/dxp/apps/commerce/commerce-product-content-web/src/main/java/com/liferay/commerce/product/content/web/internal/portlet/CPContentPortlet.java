@@ -19,6 +19,8 @@ import com.liferay.commerce.product.constants.CPWebKeys;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.type.CPTypeRenderer;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -80,8 +82,13 @@ public class CPContentPortlet extends MVCPortlet {
 		HttpServletResponse httpServletResponse =
 			_portal.getHttpServletResponse(renderResponse);
 
-		cpTypeRenderer.render(
-			cpDefinition, httpServletRequest, httpServletResponse);
+		try {
+			cpTypeRenderer.render(
+				cpDefinition, httpServletRequest, httpServletResponse);
+		}
+		catch(Exception e){
+			_log.error(e);
+		}
 
 		super.render(renderRequest, renderResponse);
 	}
@@ -91,5 +98,7 @@ public class CPContentPortlet extends MVCPortlet {
 
 	@Reference
 	private Portal _portal;
+
+	private final Log _log = LogFactoryUtil.getLog(CPContentPortlet.class);
 
 }

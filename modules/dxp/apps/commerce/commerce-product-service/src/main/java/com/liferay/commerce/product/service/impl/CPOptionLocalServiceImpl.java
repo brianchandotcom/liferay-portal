@@ -248,8 +248,6 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 			String key, ServiceContext serviceContext)
 		throws PortalException {
 
-		// Commerce product option
-
 		CPOption cpOption = cpOptionPersistence.findByPrimaryKey(cpOptionId);
 
 		key = FriendlyURLNormalizerUtil.normalize(key);

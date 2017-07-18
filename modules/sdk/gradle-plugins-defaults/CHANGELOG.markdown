@@ -1738,6 +1738,11 @@ and `writeArtifactPublishCommands` tasks.
 ### Changed
 - [LPS-73642]: Update the [Liferay Gradle Plugins] dependency to version 3.4.6.
 
+## 4.0.6 - 2017-07-18
+
+### Changed
+- [LPS-72705]: Update the [Liferay Gradle Plugins] dependency to version 3.4.7.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins

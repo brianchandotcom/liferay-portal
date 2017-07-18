@@ -20,15 +20,30 @@
 CPCategoryContentDisplayContext cpCategoryContentDisplayContext = (CPCategoryContentDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 AssetCategory assetCategory = cpCategoryContentDisplayContext.getAssetCategory();
+
+List<AssetCategory> assetCategoryList = new ArrayList<>();
+
+assetCategoryList.add(assetCategory);
+
+Map<String, Object> contextObjects = new HashMap<>();
+
+contextObjects.put("cpCategoryContentDisplayContext", cpCategoryContentDisplayContext);
 %>
 
-<c:if test="<%= assetCategory != null %>">
-	<div class="category-detail">
-		<div class="category-image">
+<liferay-ddm:template-renderer
+	className="<%= CPCategoryContentPortlet.class.getName() %>"
+	contextObjects="<%= contextObjects %>"
+	displayStyle="<%= cpCategoryContentDisplayContext.getDisplayStyle() %>"
+	displayStyleGroupId="<%= cpCategoryContentDisplayContext.getDisplayStyleGroupId() %>"
+	entries="<%= assetCategoryList %>"
+>
+	<c:if test="<%= assetCategory != null %>">
+		<div class="category-detail">
+			<div class="category-image">
 
-			<%
-			String imgURL = cpCategoryContentDisplayContext.getDefaultImageSrc(themeDisplay);
-			%>
+				<%
+				String imgURL = cpCategoryContentDisplayContext.getDefaultImageSrc(themeDisplay);
+				%>
 
 			<c:if test="<%= Validator.isNotNull(imgURL) %>">
 				<img class="img-responsive" src="<%= imgURL %>" />
@@ -39,5 +54,5 @@ AssetCategory assetCategory = cpCategoryContentDisplayContext.getAssetCategory()
 			<h1><%= assetCategory.getTitle(languageId) %></h1>
 			<p><%= assetCategory.getDescription(languageId) %></p>
 		</div>
-	</div>
-</c:if>
+	</c:if>
+</liferay-ddm:template-renderer>

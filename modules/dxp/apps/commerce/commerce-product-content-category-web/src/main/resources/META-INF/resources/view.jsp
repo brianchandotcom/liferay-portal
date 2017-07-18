@@ -31,7 +31,7 @@ AssetCategory assetCategory = cpCategoryContentDisplayContext.getAssetCategory()
 			%>
 
 			<c:if test="<%= Validator.isNotNull(imgURL) %>">
-				<img src="<%= imgURL %>" />
+				<img class="img-responsive" src="<%= imgURL %>" />
 			</c:if>
 		</div>
 

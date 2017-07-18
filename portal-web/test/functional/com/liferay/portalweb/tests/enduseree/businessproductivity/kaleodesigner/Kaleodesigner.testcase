@@ -167,7 +167,9 @@
 			<var name="portlet" value="Kaleo Designer" />
 		</execute>
 
-		<execute function="AssertVisible" locator1="MenuItem#WORKFLOW_DEFINITIONS" />
+		<execute function="AssertVisible" locator1="MenuItem#ANY_MENU_ITEM" value1="Workflow Definitions">
+			<var name="key_menuItem" value="Workflow Definitions" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="Kaleo Designer" />
 

@@ -51,7 +51,9 @@
 
 		<var name="key_scopeSelection" value="${scopeSelection}" />
 
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="MenuItem#SCOPE_SELECTION" value1="${scopeSelection}" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="MenuItem#ANY_MENU_ITEM" value1="${scopeSelection}">
+			<var name="key_menuItem" value="${scopeSelection}" />
+		</execute>
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="ProductMenu#PRODUCT_MENU_PANEL_SCOPE" value1="${scopeSelection}" />
 	</command>
@@ -99,7 +101,9 @@
 			<then>
 				<execute function="Click#mouseOverClick" locator1="Portlet#OPTIONS_ICON" />
 
-				<execute function="AssertElementNotPresent" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
+				<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
+					<var name="key_menuItem" value="Permissions" />
+				</execute>
 			</then>
 		</if>
 
@@ -148,16 +152,24 @@
 			<then>
 				<execute function="Click#mouseOverClick" locator1="Portlet#OPTIONS_ICON" />
 
-				<execute function="AssertElementNotPresent" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
+				<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
+					<var name="key_menuItem" value="Permissions" />
+				</execute>
+
+				<var name="key_menuItem" value="Configuration" />
 
 				<if>
-					<condition function="IsElementPresent" locator1="MenuItem#CONFIGURATION" />
+					<condition function="IsElementPresent" locator1="MenuItem#ANY_MENU_ITEM" />
 					<then>
-						<execute function="Click" locator1="MenuItem#CONFIGURATION" />
+						<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Configuration">
+							<var name="key_menuItem" value="Configuration" />
+						</execute>
 
 						<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
-						<execute function="AssertElementNotPresent" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
+						<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
+							<var name="key_menuItem" value="Permissions" />
+						</execute>
 					</then>
 				</if>
 			</then>
@@ -180,7 +192,9 @@
 			</then>
 		</if>
 
-		<execute function="AssertElementPresent" locator1="MenuItem#PERMISSIONS" />
+		<execute function="AssertElementPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
+			<var name="key_menuItem" value="Permissions" />
+		</execute>
 	</command>
 
 	<command name="viewScopeCP">

@@ -4,7 +4,9 @@
 	<command name="addCP">
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="AssertClick" locator1="MenuItem#FOLDER" value1="Folder" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Folder">
+			<var name="key_menuItem" value="Folder" />
+		</execute>
 
 		<execute macro="PortletEntry#inputName">
 			<var name="name" value="${folderName}" />
@@ -25,7 +27,9 @@
 	<command name="addNullCP">
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="AssertClick" locator1="MenuItem#FOLDER" value1="Folder" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Folder">
+			<var name="key_menuItem" value="Folder" />
+		</execute>
 
 		<execute macro="Button#clickSave" />
 
@@ -44,7 +48,9 @@
 
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="AssertClick" locator1="MenuItem#SUBFOLDER" value1="Subfolder" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Subfolder">
+			<var name="key_menuItem" value="Subfolder" />
+		</execute>
 
 		<execute macro="Button#clickSave" />
 
@@ -58,7 +64,9 @@
 			<var name="portletName" value="Bookmarks" />
 		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#FOLDER" value1="Folder" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Folder">
+			<var name="key_menuItem" value="Folder" />
+		</execute>
 
 		<execute macro="PortletEntry#inputName">
 			<var name="name" value="${folderName}" />
@@ -85,7 +93,9 @@
 
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="AssertClick" locator1="MenuItem#SUBFOLDER" value1="Subfolder" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Subfolder">
+			<var name="key_menuItem" value="Subfolder" />
+		</execute>
 
 		<var name="key_folderName" value="${subfolderName}" />
 
@@ -112,7 +122,9 @@
 			<var name="portletName" value="Bookmarks" />
 		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#SUBFOLDER" value1="Subfolder" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Subfolder">
+			<var name="key_menuItem" value="Subfolder" />
+		</execute>
 
 		<execute macro="PortletEntry#inputName">
 			<var name="name" value="${folderName}" />
@@ -156,7 +168,9 @@
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
 
 		<execute macro="PortletEntry#inputName">
 			<var name="name" value="${folderNameEdit}" />
@@ -179,7 +193,9 @@
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
 
 		<execute macro="PortletEntry#inputName">
 			<var name="name" value="${folderNameEdit}" />
@@ -209,7 +225,9 @@
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
 
 		<var name="key_folderName" value="${editSubfolderName}" />
 
@@ -276,7 +294,9 @@
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
 
 		<var name="key_folderName" value="${editSubfolderName}" />
 

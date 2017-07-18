@@ -108,7 +108,9 @@
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
+		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
+			<var name="key_menuItem" value="Delete" />
+		</execute>
 
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
@@ -128,7 +130,9 @@
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="Click" locator1="MenuItem#EDIT" />
+		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="AlloyEditor#TITLE_FIELD" value1="${entryTitle}" />
 
@@ -154,7 +158,9 @@
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#MARK_AS_READ" value1="Mark as Read" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Mark as Read">
+			<var name="key_menuItem" value="Mark as Read" />
+		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="Announcements#CARD_VIEW_ENTRY_CONTENT" />
 	</command>
@@ -169,7 +175,9 @@
 			<then>
 				<execute function="Click" locator1="AnnouncementsManageEntries#ENTRY_TABLE_ACTIONS_GENERIC" />
 
-				<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
+				<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
+					<var name="key_menuItem" value="Delete" />
+				</execute>
 
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 			</then>
@@ -187,7 +195,9 @@
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertTextEquals" locator1="MenuItem#SHOW" value1="Show" />
+		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Show">
+			<var name="key_menuItem" value="Show" />
+		</execute>
 
 		<execute function="SelectFrameTop" value1="relative=top" />
 

@@ -5,7 +5,9 @@
 	<command name="addCP">
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="AssertClick" locator1="MenuItem#THREAD" value1="Thread" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Thread">
+			<var name="key_menuItem" value="Thread" />
+		</execute>
 
 		<execute function="AssertElementPresent" locator1="TextInput#SUBJECT" />
 
@@ -18,7 +20,9 @@
 	<command name="addCPWithAttachment">
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="AssertClick" locator1="MenuItem#THREAD" value1="Thread" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Thread">
+			<var name="key_menuItem" value="Thread" />
+		</execute>
 
 		<execute function="Click" locator1="TextInput#SUBJECT" />
 
@@ -213,7 +217,9 @@
 	<command name="addWithWorkflowCP">
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="AssertClick" locator1="MenuItem#THREAD" value1="Thread" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Thread">
+			<var name="key_menuItem" value="Thread" />
+		</execute>
 
 		<execute function="Type" locator1="TextInput#SUBJECT" value1="${threadSubject}" />
 		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${threadBody}" />
@@ -244,7 +250,9 @@
 
 		<execute function="Click" locator1="MessageBoards#THREAD_REPLY_ACTIONS" />
 
-		<execute function="Click" locator1="MenuItem#BAN_THIS_USER" />
+		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Ban This User">
+			<var name="key_menuItem" value="Ban This User" />
+		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
@@ -274,7 +282,9 @@
 
 		<execute function="Click" locator1="MessageBoards#THREAD_LIST_ACTIONS" />
 
-		<execute function="Click" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" />
+		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Move to the Recycle Bin">
+			<var name="key_menuItem" value="Move to the Recycle Bin" />
+		</execute>
 
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 		<execute function="AssertElementNotPresent" locator1="MessageBoards#THREAD_LIST_THREAD" />
@@ -384,7 +394,9 @@
 
 		<execute function="Click" locator1="MessageBoards#VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
 
 		<execute macro="PortletEntry#publish" />
 	</command>
@@ -452,7 +464,9 @@
 
 		<execute function="Click" locator1="MessageBoards#THREAD_REPLY_ACTIONS" />
 
-		<execute function="AssertClick" locator1="MenuItem#MARK_AS_AN_ANSWER" value1="Mark as an Answer" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Mark as an Answer">
+			<var name="key_menuItem" value="Mark as an Answer" />
+		</execute>
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoardsThread#MESSAGE_ANSWER_1" value1="Answer" />
 	</command>
@@ -462,7 +476,9 @@
 
 		<execute function="Click" locator1="MessageBoards#THREAD_REPLY_ACTIONS" />
 
-		<execute function="AssertClick" locator1="MenuItem#MARK_AS_AN_ANSWER" value1="Mark as an Answer" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Mark as an Answer">
+			<var name="key_menuItem" value="Mark as an Answer" />
+		</execute>
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoardsThread#MESSAGE_ANSWER_1" value1="Answer" />
 	</command>
@@ -475,7 +491,9 @@
 
 		<execute function="Click" locator1="MessageBoards#THREAD_LIST_ACTIONS" />
 
-		<execute function="AssertClick" locator1="MenuItem#MOVE" value1="Move" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Move">
+			<var name="key_menuItem" value="Move" />
+		</execute>
 
 		<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
 
@@ -527,7 +545,9 @@
 
 		<execute function="AssertClick" locator1="MessageBoards#THREAD_TABLE_ACTIONS" />
 
-		<execute function="AssertClick" locator1="MenuItem#MOVE" value1="Move" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Move">
+			<var name="key_menuItem" value="Move" />
+		</execute>
 
 		<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
 
@@ -614,7 +634,9 @@
 
 		<execute function="Click" locator1="MessageBoards#THREAD_LIST_ACTIONS" />
 
-		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
+			<var name="key_menuItem" value="Permissions" />
+		</execute>
 
 		<execute macro="IFrame#selectPermissionsFrame" />
 
@@ -756,7 +778,9 @@
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#RESTORE" value1="Restore" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Restore">
+			<var name="key_menuItem" value="Restore" />
+		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="This message does not have file attachments in the Recycle Bin." />
@@ -793,7 +817,9 @@
 
 		<execute function="Click" locator1="MessageBoards#VERTICAL_ELLIPSIS_REPLY_CARD" />
 
-		<execute function="AssertClick" locator1="MenuItem#SPLIT_THREAD" value1="Split Thread" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Split Thread">
+			<var name="key_menuItem" value="Split Thread" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="Click OK to create a new thread with the following messages." />
 		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoardsSplitThread#THREAD_TABLE_SUBJECT" value1="${threadSubject}" />
@@ -850,7 +876,9 @@
 	<command name="viewAnonymousPostingCheckboxCP">
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="AssertClick" locator1="MenuItem#THREAD" value1="Thread" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Thread">
+			<var name="key_menuItem" value="Thread" />
+		</execute>
 
 		<execute function="AssertElementPresent" locator1="Checkbox#ANONYMOUS" />
 	</command>
@@ -975,7 +1003,9 @@
 
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="AssertClick" locator1="MenuItem#THREAD" value1="Thread" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Thread">
+			<var name="key_menuItem" value="Thread" />
+		</execute>
 
 		<execute function="AssertVisible" locator1="Button#PUBLISH" />
 
@@ -995,7 +1025,9 @@
 
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="AssertClick" locator1="MenuItem#THREAD" value1="Thread" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Thread">
+			<var name="key_menuItem" value="Thread" />
+		</execute>
 
 		<execute function="AssertVisible" locator1="Button#PUBLISH" />
 
@@ -1019,7 +1051,9 @@
 	<command name="viewNoAnonymousPostingCheckboxCP">
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="AssertClick" locator1="MenuItem#THREAD" value1="Thread" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Thread">
+			<var name="key_menuItem" value="Thread" />
+		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="Checkbox#ANONYMOUS" />
 	</command>

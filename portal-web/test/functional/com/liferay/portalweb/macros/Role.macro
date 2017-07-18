@@ -147,7 +147,9 @@
 
 		<execute function="Click" locator1="ListGroupItem#ITEM_ACTIONS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ASSIGN_MEMBERS" value1="Assign Members" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Assign Members">
+			<var name="key_menuItem" value="Assign Members" />
+		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#ORGANIZATIONS" value1="Organizations" />
 
@@ -179,7 +181,9 @@
 
 		<execute function="Click" locator1="ListGroupItem#ITEM_ACTIONS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ASSIGN_MEMBERS" value1="Assign Members" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Assign Members">
+			<var name="key_menuItem" value="Assign Members" />
+		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#SITES" value1="Sites" />
 
@@ -350,7 +354,9 @@
 
 		<execute function="Click" locator1="ListGroupItem#ITEM_ACTIONS" />
 
-		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
+		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
+			<var name="key_menuItem" value="Delete" />
+		</execute>
 
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 	</command>
@@ -366,7 +372,9 @@
 
 		<execute function="Click" locator1="ListGroupItem#ITEM_ACTIONS" />
 
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
 
 		<if>
 			<equals arg1="${localizeRoleName}" arg2="true" />
@@ -406,16 +414,22 @@
 		<if>
 			<equals arg1="${roleType}" arg2="Organization" />
 			<then>
-				<execute function="AssertClick" locator1="MenuItem#ORGANIZATION_ROLES" value1="Organization Roles" />
+				<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Organization Roles">
+					<var name="key_menuItem" value="Organization Roles" />
+				</execute>
 			</then>
 			<elseif>
 				<equals arg1="${roleType}" arg2="Site" />
 				<then>
-					<execute function="AssertClick" locator1="MenuItem#SITE_ROLES" value1="Site Roles" />
+					<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Site Roles">
+						<var name="key_menuItem" value="Site Roles" />
+					</execute>
 				</then>
 			</elseif>
 			<else>
-				<execute function="AssertClick" locator1="MenuItem#REGULAR_ROLES" value1="Regular Roles" />
+				<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Regular Roles">
+					<var name="key_menuItem" value="Regular Roles" />
+				</execute>
 			</else>
 		</if>
 
@@ -1011,7 +1025,9 @@
 			<then>
 				<execute function="Click" locator1="ListGroupItem#ITEM_ACTIONS_DEFAULT" />
 
-				<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
+				<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
+					<var name="key_menuItem" value="Delete" />
+				</execute>
 
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 			</then>
@@ -1027,7 +1043,9 @@
 
 		<execute function="Click" locator1="ListGroupItem#ITEM_ACTIONS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ASSIGN_MEMBERS" value1="Assign Members" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Assign Members">
+			<var name="key_menuItem" value="Assign Members" />
+		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#ORGANIZATIONS" value1="Organizations" />
 
@@ -1057,7 +1075,9 @@
 
 		<execute function="Click" locator1="ListGroupItem#ITEM_ACTIONS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ASSIGN_MEMBERS" value1="Assign Members" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Assign Members">
+			<var name="key_menuItem" value="Assign Members" />
+		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#SITES" value1="Sites" />
 
@@ -1089,7 +1109,9 @@
 
 		<execute function="Click" locator1="ListGroupItem#ITEM_ACTIONS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ASSIGN_MEMBERS" value1="Assign Members" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Assign Members">
+			<var name="key_menuItem" value="Assign Members" />
+		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#USER_GROUPS" value1="User Groups" />
 
@@ -1119,7 +1141,9 @@
 
 		<execute function="Click" locator1="ListGroupItem#ITEM_ACTIONS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ASSIGN_MEMBERS" value1="Assign Members" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Assign Members">
+			<var name="key_menuItem" value="Assign Members" />
+		</execute>
 
 		<var name="key_userScreenName" value="${userScreenName}" />
 
@@ -1140,16 +1164,22 @@
 		<if>
 			<equals arg1="${roleType}" arg2="Organization" />
 			<then>
-				<execute function="AssertClick" locator1="MenuItem#ORGANIZATION_ROLES" value1="Organization Roles" />
+				<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Organization Roles">
+					<var name="key_menuItem" value="Organization Roles" />
+				</execute>
 			</then>
 			<elseif>
 				<equals arg1="${roleType}" arg2="Site" />
 				<then>
-					<execute function="AssertClick" locator1="MenuItem#SITE_ROLES" value1="Site Roles" />
+					<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Site Roles">
+						<var name="key_menuItem" value="Site Roles" />
+					</execute>
 				</then>
 			</elseif>
 			<else>
-				<execute function="AssertClick" locator1="MenuItem#REGULAR_ROLES" value1="Regular Roles" />
+				<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Regular Roles">
+					<var name="key_menuItem" value="Regular Roles" />
+				</execute>
 			</else>
 		</if>
 
@@ -1159,7 +1189,9 @@
 
 		<execute function="Click" locator1="ListGroupItem#ITEM_ACTIONS" />
 
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
 
 		<execute macro="SiteAdmin#viewPortletTitle">
 			<var name="portletTitle" value="${roleTitle}" />

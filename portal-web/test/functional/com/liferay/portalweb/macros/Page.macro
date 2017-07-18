@@ -328,7 +328,9 @@
 
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 
-		<execute function="ClickNoError" locator1="MenuItem#DELETE" />
+		<execute function="ClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
+			<var name="key_menuItem" value="Delete" />
+		</execute>
 
 		<execute function="Confirm" value1="Are you sure you want to delete the selected page?" />
 
@@ -396,7 +398,9 @@
 	<command name="copyApplicationsFromPageToPage">
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#COPY_APPLICATIONS" value1="Copy Applications" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Copy Applications">
+			<var name="key_menuItem" value="Copy Applications" />
+		</execute>
 
 		<execute function="SelectFrameTop" />
 
@@ -548,7 +552,9 @@
 
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
+		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
+			<var name="key_menuItem" value="Delete" />
+		</execute>
 
 		<execute function="Confirm" value1="Are you sure you want to delete the selected page?" />
 
@@ -580,7 +586,9 @@
 
 		<execute function="Click" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_ACTIONS" value1="${siteTemplateName}" />
 
-		<execute function="Click" locator1="MenuItem#MANAGE" />
+		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Manage">
+			<var name="key_menuItem" value="Manage" />
+		</execute>
 	</command>
 
 	<command name="gotoMyAccount">
@@ -632,7 +640,9 @@
 	<command name="manageDeviceFamilyActions">
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="Click" locator1="MenuItem#MANAGE_ACTIONS" />
+		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Manage Actions">
+			<var name="key_menuItem" value="Manage Actions" />
+		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 

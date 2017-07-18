@@ -4,7 +4,9 @@
 
 		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ADD_ORGANIZATION" value1="Add Organization" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Add Organization">
+			<var name="key_menuItem" value="Add Organization" />
+		</execute>
 
 		<execute function="Type" locator1="UsersAndOrganizationsEditOrganization#DETAILS_NAME_FIELD" value1="${suborgName}" />
 
@@ -33,7 +35,9 @@
 
 		<execute function="Click" locator1="UsersAndOrganizationsOrganization#SUBORGANIZATION_TABLE_ACTIONS" />
 
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
 
 		<var name="key_orgType" value="${orgType}" />
 

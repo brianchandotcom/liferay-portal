@@ -2,11 +2,15 @@
 	<command name="clickEditFromEllipsis">
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
 	</command>
 
 	<command name="clickMoveToRecycleBin">
-		<execute function="AssertClick" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Move to the Recycle Bin">
+			<var name="key_menuItem" value="Move to the Recycle Bin" />
+		</execute>
 	</command>
 
 	<command name="deleteViaMenuItem">

@@ -8,7 +8,9 @@
 
 		<execute function="Click" locator1="Portlet#OPTIONS_ICON" />
 
-		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Configuration">
+			<var name="key_menuItem" value="Configuration" />
+		</execute>
 
 		<execute function="Pause" locator1="10000" />
 
@@ -41,7 +43,9 @@
 
 		<execute function="Click" locator1="Portlet#OPTIONS_ICON" />
 
-		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Configuration">
+			<var name="key_menuItem" value="Configuration" />
+		</execute>
 
 		<execute function="Pause" locator1="10000" />
 
@@ -66,7 +70,9 @@
 
 		<execute function="Click" locator1="Portlet#OPTIONS_ICON" />
 
-		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Configuration">
+			<var name="key_menuItem" value="Configuration" />
+		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
@@ -96,7 +102,9 @@
 
 		<execute function="Click" locator1="Portlet#OPTIONS_ICON" />
 
-		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Configuration">
+			<var name="key_menuItem" value="Configuration" />
+		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
@@ -130,7 +138,9 @@
 
 		<execute function="Click" locator1="Portlet#OPTIONS_ICON" />
 
-		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Configuration">
+			<var name="key_menuItem" value="Configuration" />
+		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
@@ -195,7 +205,9 @@
 
 		<execute function="Click" locator1="Portlet#OPTIONS_ICON" />
 
-		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Configuration">
+			<var name="key_menuItem" value="Configuration" />
+		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
@@ -225,7 +237,9 @@
 
 		<execute function="Click" locator1="Portlet#OPTIONS_ICON" />
 
-		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Configuration">
+			<var name="key_menuItem" value="Configuration" />
+		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
@@ -243,7 +257,9 @@
 
 		<execute function="Click" locator1="MessageBoardsBannedUsers#BANNED_USERS_TABLE_ACTIONS" />
 
-		<execute function="Click" locator1="MenuItem#UNBAN_THIS_USER" />
+		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Unban This User">
+			<var name="key_menuItem" value="Unban This User" />
+		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />
 		<execute function="AssertElementNotPresent" locator1="MessageBoardsBannedUsers#BANNED_USERS_TABLE_BANNED_USER" />
@@ -278,7 +294,9 @@
 		<execute function="AssertVisible" locator1="MessageBoardsBannedUsers#BANNED_USERS_TABLE_UNBAN_DATE"  />
 
 		<execute function="Click" locator1="MessageBoardsBannedUsers#BANNED_USERS_TABLE_ACTIONS" />
-		<execute function="AssertElementPresent" locator1="MenuItem#UNBAN_THIS_USER" />
+		<execute function="AssertElementPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="Unban This User">
+			<var name="key_menuItem" value="Unban This User" />
+		</execute>
 
 		<execute function="AssertClick" locator1="MessageBoardsBannedUsers#BANNED_USERS_TABLE_BANNED_USER" value1="${userScreenName}" />
 
@@ -312,7 +330,9 @@
 
 		<execute function="Click" locator1="Portlet#OPTIONS_ICON" />
 
-		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Configuration">
+			<var name="key_menuItem" value="Configuration" />
+		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 

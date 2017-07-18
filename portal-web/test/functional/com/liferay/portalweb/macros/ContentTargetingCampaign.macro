@@ -62,9 +62,9 @@
 
 		<execute function="Click" locator1="EditCampaign#CAMPAIGN_TRACKING_ACTIONS_CONTENT_SELECT_CONTENT_BUTTON" />
 
-		<var name="key_menuItem" value="${menulistContent}" />
-
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" />
+		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM">
+			<var name="key_menuItem" value="${menulistContent}" />
+		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#SELECT_CONTENT" />
 
@@ -175,7 +175,9 @@
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="ClickNoError" locator1="MenuItem#DELETE" />
+		<execute function="ClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
+			<var name="key_menuItem" value="Delete" />
+		</execute>
 
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 	</command>
@@ -189,7 +191,9 @@
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="Click" locator1="MenuItem#EDIT" />
+		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
 
 		<execute macro="PortletEntry#inputName">
 			<var name="name" value="${campaignNameEdit}" />
@@ -437,7 +441,9 @@
 			<then>
 				<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-				<execute function="Click" locator1="MenuItem#EDIT" />
+				<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+					<var name="key_menuItem" value="Edit" />
+				</execute>
 
 				<execute function="AssertTextEquals" locator1="EditCampaign#CAMPAIGN_USER_SEGMENT_APPLIED" value1="${userSegmentSelect}" />
 			</then>

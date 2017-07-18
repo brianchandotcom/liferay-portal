@@ -178,7 +178,9 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="MenuItem#BASIC_DOCUMENT" value1="Basic Document" />
+		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="Basic Document">
+			<var name="key_menuItem" value="Basic Document" />
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
@@ -253,7 +255,9 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="MenuItem#BASIC_DOCUMENT" value1="Basic Document" />
+		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="Basic Document">
+			<var name="key_menuItem" value="Basic Document" />
+		</execute>
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_DOCUMENT_CHECKBOX" />
@@ -292,7 +296,9 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="MenuItem#BASIC_DOCUMENT" value1="Basic Document" />
+		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="Basic Document">
+			<var name="key_menuItem" value="Basic Document" />
+		</execute>
 	</command>
 
 	<command name="DeleteDMFolderRegRoleInline" priority="5">

@@ -55,7 +55,9 @@
 
 		<execute function="Click#clickAt" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
+		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
+			<var name="key_menuItem" value="Delete" />
+		</execute>
 
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
@@ -84,7 +86,9 @@
 
 		<execute function="Click#clickAt" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="Click#clickAt" locator1="MenuItem#EDIT" value1="Edit" />
+		<execute function="Click#clickAt" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
 
 		<execute function="Click#clickAt" locator1="Comments#EDIT_COMMENT_FIELD" />
 

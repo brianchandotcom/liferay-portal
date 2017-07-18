@@ -22,7 +22,9 @@
 	<command name="gotoBlogsEntriesPermissionsCP">
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Entries Permissions" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Entries Permissions">
+			<var name="key_menuItem" value="Entries Permissions" />
+		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 	</command>
@@ -32,7 +34,9 @@
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Permissions" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
+			<var name="key_menuItem" value="Permissions" />
+		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 	</command>
@@ -40,7 +44,9 @@
 	<command name="gotoBlogsEntryPermissionsPG">
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Permissions" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
+			<var name="key_menuItem" value="Permissions" />
+		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 	</command>
@@ -100,7 +106,9 @@
 
 		<execute function="Click" locator1="Blogs#DESCRIPTIVE_VIEW_ENTRY_OPTIONS_DROPDOWN" />
 
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
 
 		<execute function="AssertElementPresent" locator1="Icon#BACK" />
 		<execute function="AssertVisible" locator1="AlloyEditor#TITLE_FIELD" />

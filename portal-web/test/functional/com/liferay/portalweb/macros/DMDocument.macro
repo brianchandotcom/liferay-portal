@@ -202,7 +202,9 @@
 
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="AssertClick" locator1="MenuItem#MARKETING_BANNER" value1="Marketing Banner" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Marketing Banner">
+			<var name="key_menuItem" value="Marketing Banner" />
+		</execute>
 
 		<execute function="UploadCommonFile" locator1="TextInput#FILE" value1="${dmDocumentFile}" />
 
@@ -335,7 +337,9 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#DOCUMENT_TYPE" value1="${dmDocumentTypeName}" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${dmDocumentTypeName}">
+			<var name="key_menuItem" value="${dmDocumentTypeName}" />
+		</execute>
 
 		<execute macro="DMDocument#editDocument">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
@@ -404,7 +408,9 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#GOOGLE_DOCS" value1="Google Docs" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Google Docs">
+			<var name="key_menuItem" value="Google Docs" />
+		</execute>
 
 		<execute macro="GoogleDoc#selectDocument">
 			<var name="googleDocName" value="${googleDocName}" />
@@ -418,7 +424,9 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#MULTIPLE_DOCUMENTS" value1="Multiple Documents" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Multiple Documents">
+			<var name="key_menuItem" value="Multiple Documents" />
+		</execute>
 
 		<if>
 			<isset var="dmDocumentFileList" />
@@ -469,10 +477,14 @@
 			<then>
 				<var name="key_dmDocumentTypeName" value="${dmDocumentTypeName}" />
 
-				<execute function="AssertClick" locator1="MenuItem#DOCUMENT_TYPE" value1="${dmDocumentTypeName}" />
+				<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${dmDocumentTypeName}">
+					<var name="key_menuItem" value="${dmDocumentTypeName}" />
+				</execute>
 			</then>
 			<else>
-				<execute function="AssertClick" locator1="MenuItem#BASIC_DOCUMENT" value1="Basic Document" />
+				<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Basic Document">
+					<var name="key_menuItem" value="Basic Document" />
+				</execute>
 			</else>
 		</if>
 
@@ -574,7 +586,9 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#MULTIPLE_DOCUMENTS" value1="Multiple Documents" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Multiple Documents">
+			<var name="key_menuItem" value="Multiple Documents" />
+		</execute>
 
 		<if>
 			<isset var="dmDocumentFileList" />
@@ -629,7 +643,9 @@
 			<var name="portletName" value="Media Gallery" />
 		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#BASIC_DOCUMENT" value1="Basic Document" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Basic Document">
+			<var name="key_menuItem" value="Basic Document" />
+		</execute>
 
 		<execute function="UploadCommonFile" locator1="TextInput#FILE" value1="${mgDocumentFile}" />
 
@@ -669,7 +685,9 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#SHORTCUT" value1="Shortcut" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Shortcut">
+			<var name="key_menuItem" value="Shortcut" />
+		</execute>
 
 		<var name="key_siteName" value="${siteName}" />
 
@@ -745,7 +763,9 @@
 
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#CANCEL_CHECKOUT" value1="Cancel Checkout" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Cancel Checkout">
+			<var name="key_menuItem" value="Cancel Checkout" />
+		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
@@ -794,7 +814,9 @@
 
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#CHECKIN" value1="Checkin" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Checkin">
+			<var name="key_menuItem" value="Checkin" />
+		</execute>
 
 		<if>
 			<condition function="IsElementPresent" locator1="Radio#MAJOR_VERSION" />
@@ -870,7 +892,9 @@
 
 		<execute function="Click" locator1="DocumentsAndMedia#ICON_DOCUMENT_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#CHECKIN" value1="Checkin" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Checkin">
+			<var name="key_menuItem" value="Checkin" />
+		</execute>
 
 		<if>
 			<condition function="IsElementPresent" locator1="Radio#MAJOR_VERSION" />
@@ -907,7 +931,9 @@
 
 		<execute function="Click" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#CHECKOUT" value1="Checkout" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Checkout">
+			<var name="key_menuItem" value="Checkout" />
+		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />
 
@@ -939,7 +965,9 @@
 
 		<execute function="Click" locator1="DocumentsAndMedia#ICON_DOCUMENT_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#CHECKOUT" value1="Checkout" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Checkout">
+			<var name="key_menuItem" value="Checkout" />
+		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
@@ -972,7 +1000,9 @@
 		<if>
 			<isset var="recycleBinDisabled" />
 			<then>
-				<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
+				<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
+					<var name="key_menuItem" value="Delete" />
+				</execute>
 
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
@@ -1053,7 +1083,9 @@
 
 		<execute function="Click" locator1="DocumentsAndMedia#ICON_DOCUMENT_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#DOWNLOAD" value1="Download (${dmDocumentSize})" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Download (${dmDocumentSize})">
+			<var name="key_menuItem" value="Download (${dmDocumentSize})" />
+		</execute>
 	</command>
 
 	<command name="downloadPG">
@@ -1272,7 +1304,9 @@
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="Click" locator1="MenuItem#EDIT" value1="Edit" />
+		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
 
 		<execute macro="PortletEntry#inputTitle">
 			<var name="title" value="${mgDocumentTitleEdit}" />
@@ -1399,7 +1433,9 @@
 
 		<execute function="Click" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#MOVE" value1="Move" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Move">
+			<var name="key_menuItem" value="Move" />
+		</execute>
 
 		<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
 
@@ -1431,7 +1467,9 @@
 
 		<execute function="Click" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#MOVE" value1="Move" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Move">
+			<var name="key_menuItem" value="Move" />
+		</execute>
 
 		<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
 
@@ -1467,7 +1505,9 @@
 
 		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS" value1="Actions" />
 
-		<execute function="AssertClick" locator1="MenuItem#MOVE" value1="Move" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Move">
+			<var name="key_menuItem" value="Move" />
+		</execute>
 
 		<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
 
@@ -1518,9 +1558,9 @@
 
 		<execute function="Click" locator1="DocumentsAndMedia#ICON_DOCUMENT_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertElementPresent" locator1="MenuItem#MOVE" />
-
-		<execute function="AssertClick" locator1="MenuItem#MOVE" value1="Move" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Move">
+			<var name="key_menuItem" value="Move" />
+		</execute>
 
 		<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
 
@@ -1608,7 +1648,9 @@
 
 				<execute function="AssertClick" locator1="Toolbar#ADD" value1="Add" />
 
-				<execute function="AssertClick" locator1="MenuItem#BASIC_DOCUMENT" value1="Basic Document" />
+				<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Basic Document">
+					<var name="key_menuItem" value="Basic Document" />
+				</execute>
 
 				<execute function="UploadCommonFile" locator1="TextInput#FILE" value1="${document}" />
 
@@ -1725,7 +1767,9 @@
 
 		<execute function="Click" locator1="DocumentsAndMedia#ICON_DOCUMENT_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
+			<var name="key_menuItem" value="Permissions" />
+		</execute>
 
 		<execute macro="IFrame#selectPermissionsFrame" />
 
@@ -1745,7 +1789,9 @@
 
 		<execute function="Click" locator1="DocumentsAndMedia#DOCUMENT_VERSION_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#REVERT" value1="Revert" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Revert">
+			<var name="key_menuItem" value="Revert" />
+		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
@@ -1788,7 +1834,9 @@
 	<command name="saveAsDraftPG">
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="AssertClick" locator1="MenuItem#BASIC_DOCUMENT" value1="Basic Document" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Basic Document">
+			<var name="key_menuItem" value="Basic Document" />
+		</execute>
 
 		<execute macro="DMDocument#editDocument">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
@@ -1829,7 +1877,9 @@
 
 				<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="DocumentsAndMedia#TOOLBAR_ACTIONS" value1="Actions" />
 
-				<execute function="AssertElementPresent" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" />
+				<execute function="AssertElementPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="Move to the Recycle Bin">
+					<var name="key_menuItem" value="Move to the Recycle Bin" />
+				</execute>
 
 				<execute macro="PortletEntry#clickMoveToRecycleBin" />
 			</then>
@@ -1856,7 +1906,9 @@
 
 				<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="Toolbar#ACTIONS" value1="Actions" />
 
-				<execute function="AssertElementPresent" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" />
+				<execute function="AssertElementPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="Move to the Recycle Bin">
+					<var name="key_menuItem" value="Move to the Recycle Bin" />
+				</execute>
 
 				<execute macro="PortletEntry#clickMoveToRecycleBin" />
 
@@ -2092,12 +2144,16 @@
 		<if>
 			<equals arg1="${viewCheckoutOption}" arg2="true" />
 			<then>
-				<execute function="AssertVisible" locator1="MenuItem#CHECKOUT" value1="Checkout" />
+				<execute function="AssertVisible" locator1="MenuItem#ANY_MENU_ITEM" value1="Checkout">
+					<var name="key_menuItem" value="Checkout" />
+				</execute>
 			</then>
 			<elseif>
 				<equals arg1="${viewCheckoutOption}" arg2="false" />
 				<then>
-					<execute function="AssertNotVisible" locator1="MenuItem#CHECKOUT" value1="Checkout" />
+					<execute function="AssertNotVisible" locator1="MenuItem#ANY_MENU_ITEM" value1="Checkout">
+						<var name="key_menuItem" value="Checkout" />
+					</execute>
 				</then>
 			</elseif>
 		</if>
@@ -2276,7 +2332,9 @@
 
 		<execute function="Click" locator1="DocumentsAndMedia#ICON_DOCUMENT_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
+			<var name="key_menuItem" value="Permissions" />
+		</execute>
 
 		<execute macro="IFrame#selectPermissionsFrame" />
 
@@ -2317,7 +2375,9 @@
 
 		<execute function="Click" locator1="DocumentsAndMedia#ICON_DOCUMENT_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
+			<var name="key_menuItem" value="Permissions" />
+		</execute>
 
 		<execute macro="IFrame#selectPermissionsFrame" />
 
@@ -2375,7 +2435,9 @@
 
 		<execute function="Click" locator1="DocumentsAndMedia#DOCUMENT_VERSION_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#VIEW" value1="View" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="View">
+			<var name="key_menuItem" value="View" />
+		</execute>
 
 		<var name="key_dmDocumentDescription" value="${dmDocumentDescription}" />
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
@@ -2578,15 +2640,41 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="MenuItem#FOLDER" value1="Folder" />
-		<execute function="AssertTextEquals" locator1="MenuItem#SHORTCUT" value1="Shortcut" />
-		<execute function="AssertTextEquals" locator1="MenuItem#REPOSITORY" value1="Repository" />
-		<execute function="AssertTextEquals" locator1="MenuItem#MULTIPLE_DOCUMENTS" value1="Multiple Documents" />
-		<execute function="AssertTextEquals" locator1="MenuItem#BASIC_DOCUMENT" value1="Basic Document" />
-		<execute function="AssertTextEquals" locator1="MenuItem#CONTRACT" value1="Contract" />
-		<execute function="AssertTextEquals" locator1="MenuItem#MARKETING_BANNER" value1="Marketing Banner" />
-		<execute function="AssertTextEquals" locator1="MenuItem#ONLINE_TRAINING" value1="Online Training" />
-		<execute function="AssertTextEquals" locator1="MenuItem#SALES_PRESENTATION" value1="Sales Presentation" />
+		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Folder">
+			<var name="key_menuItem" value="Folder" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Shortcut">
+			<var name="key_menuItem" value="Shortcut" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Repository">
+			<var name="key_menuItem" value="Repository" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Multiple Documents">
+			<var name="key_menuItem" value="Multiple Documents" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Basic Document">
+			<var name="key_menuItem" value="Basic Document" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Contract">
+			<var name="key_menuItem" value="Contract" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Marketing Banner">
+			<var name="key_menuItem" value="Marketing Banner" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Online Training">
+			<var name="key_menuItem" value="Online Training" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Sales Presentation">
+			<var name="key_menuItem" value="Sales Presentation" />
+		</execute>
 
 		<execute function="SelectFrameTop" />
 
@@ -2596,12 +2684,29 @@
 
 		<execute function="Click" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="MenuItem#DOWNLOAD" value1="Download" />
-		<execute function="AssertTextEquals" locator1="MenuItem#EDIT" value1="Edit" />
-		<execute function="AssertTextEquals" locator1="MenuItem#MOVE" value1="Move" />
-		<execute function="AssertTextEquals" locator1="MenuItem#CHECKOUT" value1="Checkout" />
-		<execute function="AssertTextEquals" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Permissions" />
-		<execute function="AssertTextEquals" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="MenuItem#ANY_MENU_ITEM" value1="Download">
+			<var name="key_menuItem" value="Download" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Move">
+			<var name="key_menuItem" value="Move" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Checkout">
+			<var name="key_menuItem" value="Checkout" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
+			<var name="key_menuItem" value="Permissions" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Move to the Recycle Bin">
+			<var name="key_menuItem" value="Move to the Recycle Bin" />
+		</execute>
 
 		<execute function="Check" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX" />
 
@@ -2621,8 +2726,13 @@
 
 		<execute function="Click" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="MenuItem#DOWNLOAD" value1="Download" />
-		<execute function="AssertTextEquals" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="MenuItem#ANY_MENU_ITEM" value1="Download">
+			<var name="key_menuItem" value="Download" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Move to the Recycle Bin">
+			<var name="key_menuItem" value="Move to the Recycle Bin" />
+		</execute>
 
 		<execute function="Click" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX" />
 

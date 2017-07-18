@@ -245,7 +245,9 @@
 
 		<execute function="Click#makeVisibleClickAt" locator1="Portlet#SPECIFIC_ELLIPSIS_ICON" />
 
-		<execute function="AssertClickNoError" locator1="MenuItem#REMOVE" value1="Remove" />
+		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Remove">
+			<var name="key_menuItem" value="Remove" />
+		</execute>
 
 		<execute function="Confirm" value1="Are you sure you want to remove this component?" />
 	</command>
@@ -488,12 +490,29 @@
 	<command name="viewPortletOptionsMenulist">
 		<execute function="Click#makeVisibleClickAt" locator1="Portlet#OPTIONS_ICON" />
 
-		<execute function="AssertTextEquals" locator1="MenuItem#LOOK_AND_FEEL" value1="Look and Feel Configuration" />
-		<execute function="AssertTextEquals" locator1="MenuItem#CONFIGURATION_PORTLET_OPTION" value1="Configuration" />
-		<execute function="AssertTextEquals" locator1="MenuItem#TEMPLATES" value1="Configuration Templates" />
-		<execute function="AssertTextEquals" locator1="MenuItem#EXPORT_IMPORT" value1="Export / Import" />
-		<execute function="AssertTextEquals" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
-		<execute function="AssertTextEquals" locator1="MenuItem#REMOVE" value1="Remove" />
+		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Look and Feel Configuration">
+			<var name="key_menuItem" value="Look and Feel Configuration" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Configuration">
+			<var name="key_menuItem" value="Configuration" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Configuration Templates">
+			<var name="key_menuItem" value="Configuration Templates" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Export / Import">
+			<var name="key_menuItem" value="Export / Import" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
+			<var name="key_menuItem" value="Permissions" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Remove">
+			<var name="key_menuItem" value="Remove" />
+		</execute>
 	</command>
 
 	<command name="viewSpecificPG">

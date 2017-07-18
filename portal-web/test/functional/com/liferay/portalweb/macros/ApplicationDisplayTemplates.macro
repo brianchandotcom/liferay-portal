@@ -8,7 +8,9 @@
 
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ADT_TEMPLATE" value1="${adtType} Template" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${adtType} Template">
+			<var name="key_menuItem" value="${adtType} Template" />
+		</execute>
 
 		<execute macro="SiteAdmin#viewPortletTitle">
 			<var name="portletTitle" value="New ${adtType} Template" />

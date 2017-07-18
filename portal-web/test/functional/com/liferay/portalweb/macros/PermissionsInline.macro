@@ -103,7 +103,9 @@
 
 		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
+			<var name="key_menuItem" value="Permissions" />
+		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 	</command>
@@ -142,7 +144,9 @@
 
 		<execute function="Click" locator1="MessageBoards#THREAD_REPLY_ACTIONS" />
 
-		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Permissions" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
+			<var name="key_menuItem" value="Permissions" />
+		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 	</command>
@@ -154,7 +158,9 @@
 
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 
-		<execute function="Click" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Permissions" />
+		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
+			<var name="key_menuItem" value="Permissions" />
+		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 	</command>
@@ -178,7 +184,9 @@
 
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 
-		<execute function="Click" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Permissions" />
+		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
+			<var name="key_menuItem" value="Permissions" />
+		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 	</command>
@@ -196,7 +204,9 @@
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Permissions" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
+			<var name="key_menuItem" value="Permissions" />
+		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 	</command>
@@ -209,7 +219,9 @@
 
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
+			<var name="key_menuItem" value="Permissions" />
+		</execute>
 	</command>
 
 	<command name="gotoUserGroupSitePermissionsCP">
@@ -221,7 +233,9 @@
 
 		<execute function="Click" locator1="UserGroups#USER_GROUP_TABLE_ACTIONS" />
 
-		<execute function="AssertClick" locator1="MenuItem#USER_GROUP_PAGES_PERMISSIONS" value1="User Group Pages Permissions" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="User Group Pages Permissions">
+			<var name="key_menuItem" value="User Group Pages Permissions" />
+		</execute>
 	</command>
 
 	<command name="gotoWCArticle">
@@ -229,7 +243,9 @@
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Permissions" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
+			<var name="key_menuItem" value="Permissions" />
+		</execute>
 
 		<execute macro="IFrame#selectPermissionsFrame" />
 	</command>

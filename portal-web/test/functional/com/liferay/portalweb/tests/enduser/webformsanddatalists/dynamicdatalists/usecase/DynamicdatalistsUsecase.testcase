@@ -1336,7 +1336,9 @@
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="Data Definition Title" />
 		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 		<execute function="Click#waitForMenuToggleJSClick" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
-		<execute function="AssertClick" locator1="MenuItem#MANAGE_TEMPLATES" value1="Manage Templates" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Manage Templates">
+			<var name="key_menuItem" value="Manage Templates" />
+		</execute>
 
 		<execute function="Click" locator1="Icon#ANGLE_LEFT_BACK" />
 

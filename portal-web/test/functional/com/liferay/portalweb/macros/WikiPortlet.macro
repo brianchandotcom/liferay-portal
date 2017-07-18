@@ -34,7 +34,9 @@
 	<command name="gotoConfiguration">
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Configuration">
+			<var name="key_menuItem" value="Configuration" />
+		</execute>
 	</command>
 
 	<command name="subscribeToNodeCP">
@@ -42,13 +44,17 @@
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#SUBSCRIBE" value1="Subscribe" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Subscribe">
+			<var name="key_menuItem" value="Subscribe" />
+		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertTextEquals" locator1="MenuItem#UNSUBSCRIBE" value1="Unsubscribe" />
+		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Unsubscribe">
+			<var name="key_menuItem" value="Unsubscribe" />
+		</execute>
 	</command>
 
 	<command name="tearDownCP">
@@ -62,13 +68,17 @@
 
 		<execute function="Click" locator1="Wiki#NODE_TABLE_ACTIONS_DROPDOWN" />
 
-		<execute function="AssertClick" locator1="MenuItem#UNSUBSCRIBE" value1="Unsubscribe" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Unsubscribe">
+			<var name="key_menuItem" value="Unsubscribe" />
+		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute function="Click" locator1="Wiki#NODE_TABLE_ACTIONS_DROPDOWN" />
 
-		<execute function="AssertTextEquals" locator1="MenuItem#SUBSCRIBE" value1="Subscribe" />
+		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Subscribe">
+			<var name="key_menuItem" value="Subscribe" />
+		</execute>
 	</command>
 
 	<command name="viewConfigurationTabs">

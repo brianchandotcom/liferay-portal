@@ -4,7 +4,9 @@
 	<command name="addAbstractImage">
 		<execute function="Click" locator1="Button#SELECT" />
 
-		<execute function="AssertClick" locator1="MenuItem#BASIC_DOCUMENT" value1="Basic Document" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Basic Document">
+			<var name="key_menuItem" value="Basic Document" />
+		</execute>
 
 		<execute function="UploadCommonFile" locator1="TextInput#FILE" value1="${dmDocumentFile}" />
 
@@ -197,7 +199,9 @@
 	<command name="addWithWorkflowPGViaAP">
 		<execute function="Click#makeVisibleClickAt" locator1="AP#ADD_ASSET_PLUS_ICON" />
 
-		<execute function="AssertClick" locator1="MenuItem#BLOGS_ENTRY" value1="Blogs Entry" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Blogs Entry">
+			<var name="key_menuItem" value="Blogs Entry" />
+		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
@@ -271,7 +275,9 @@
 
 		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertElementNotPresent" locator1="MenuItem#EDIT" />
+		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
 	</command>
 
 	<command name="editSubtitle">
@@ -346,7 +352,9 @@
 
 		<execute function="Click" locator1="Blogs#SCHEDULED_ENTRY_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
 	</command>
 
 	<command name="moveToRecycleBinCP">
@@ -457,7 +465,9 @@
 
 		<execute function="Click" locator1="Icon#DESCRIPTIVE_HEADER_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Permissions" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
+			<var name="key_menuItem" value="Permissions" />
+		</execute>
 
 		<execute macro="IFrame#selectPermissionsFrame" />
 
@@ -904,13 +914,17 @@
 	<command name="viewPermissionsNoPermissionPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="AssertElementNotPresent" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
+		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
+			<var name="key_menuItem" value="Permissions" />
+		</execute>
 	</command>
 
 	<command name="viewPermissionsPG">
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Permissions" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
+			<var name="key_menuItem" value="Permissions" />
+		</execute>
 
 		<execute macro="IFrame#selectPermissionsFrame" />
 

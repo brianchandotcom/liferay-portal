@@ -102,7 +102,10 @@ public class ModulesStructureTest {
 					Path buildGradlePath = dirPath.resolve("build.gradle");
 					Path buildXMLPath = dirPath.resolve("build.xml");
 
-					if (Files.exists(dirPath.resolve(_GIT_REPO_FILE_NAME))) {
+					boolean gitRepo = Files.exists(
+						dirPath.resolve(_GIT_REPO_FILE_NAME));
+
+					if (gitRepo) {
 						_testGitRepoBuildScripts(
 							dirPath, gitRepoBuildGradleTemplate,
 							gitRepoSettingsGradleTemplate);
@@ -110,7 +113,24 @@ public class ModulesStructureTest {
 					else if (Files.exists(dirPath.resolve("app.bnd"))) {
 						_testAppBuildScripts(dirPath);
 					}
-					else if (Files.exists(dirPath.resolve("bnd.bnd"))) {
+
+					if (!gitRepo) {
+						Path gradlePropertiesPath = dirPath.resolve(
+							"gradle.properties");
+
+						Assert.assertFalse(
+							"Forbidden " + gradlePropertiesPath,
+							Files.exists(gradlePropertiesPath));
+
+						Path settinsGradlePath = dirPath.resolve(
+							"settings.gradle");
+
+						Assert.assertFalse(
+							"Forbidden " + settinsGradlePath,
+							Files.deleteIfExists(settinsGradlePath));
+					}
+
+					if (Files.exists(dirPath.resolve("bnd.bnd"))) {
 						Assert.assertTrue(
 							"Missing " + buildGradlePath,
 							Files.exists(buildGradlePath));
@@ -126,14 +146,16 @@ public class ModulesStructureTest {
 
 						return FileVisitResult.SKIP_SUBTREE;
 					}
-					else if (Files.exists(buildXMLPath)) {
+
+					if (Files.exists(buildXMLPath)) {
 						Assert.assertFalse(
 							"Forbidden " + buildGradlePath,
 							Files.exists(buildGradlePath));
 
 						return FileVisitResult.SKIP_SUBTREE;
 					}
-					else if (Files.exists(dirPath.resolve("package.json"))) {
+
+					if (Files.exists(dirPath.resolve("package.json"))) {
 						_testThemeBuildScripts(dirPath);
 
 						return FileVisitResult.SKIP_SUBTREE;

@@ -96,6 +96,10 @@ public class PoshiElementFactory {
 			return new VarElement(element);
 		}
 
+		if (elementName.equals("while")) {
+			return new WhileElement(element);
+		}
+
 		return new UnsupportedElement(element);
 	}
 
@@ -140,6 +144,10 @@ public class PoshiElementFactory {
 
 				if (line.startsWith("if (")) {
 					return new IfElement(readableSyntax);
+				}
+
+				if (line.startsWith("while (")) {
+					return new WhileElement(readableSyntax);
 				}
 
 				if (line.contains("==")) {

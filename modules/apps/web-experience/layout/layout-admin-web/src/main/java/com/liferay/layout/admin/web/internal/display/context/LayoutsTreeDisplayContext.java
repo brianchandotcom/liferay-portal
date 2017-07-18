@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
+import com.liferay.portal.kernel.model.LayoutSetBranchConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
@@ -204,9 +205,15 @@ public class LayoutsTreeDisplayContext extends BaseLayoutDisplayContext {
 	public String getLayoutSetBranchName() throws PortalException {
 		LayoutSetBranch layoutSetBranch = getLayoutSetBranch();
 
-		return LanguageUtil.get(
-			PortalUtil.getHttpServletRequest(liferayPortletRequest),
-			layoutSetBranch.getName());
+		if (LayoutSetBranchConstants.MASTER_BRANCH_NAME.equals(
+				layoutSetBranch.getName())) {
+
+			return LanguageUtil.get(
+				PortalUtil.getHttpServletRequest(liferayPortletRequest),
+				layoutSetBranch.getName());
+		}
+
+		return layoutSetBranch.getName();
 	}
 
 	public String getLayoutSetBranchURL(LayoutSetBranch layoutSetBranch)

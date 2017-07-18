@@ -69,6 +69,10 @@ if (layoutRevision != null) {
 		LayoutSetBranch layoutSetBranch = LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(layoutSetBranchId);
 
 		layoutSetBranchName = layoutSetBranch.getName();
+
+		if (LayoutSetBranchConstants.MASTER_BRANCH_NAME.equals(layoutSetBranchName)) {
+			layoutSetBranchName = LanguageUtil.get(request, layoutSetBranchName);
+		}
 	}
 }
 

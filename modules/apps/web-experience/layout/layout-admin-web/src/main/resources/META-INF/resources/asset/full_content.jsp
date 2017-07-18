@@ -26,12 +26,24 @@ LayoutSetBranch layoutSetBranch = LayoutSetBranchLocalServiceUtil.getLayoutSetBr
 Layout targetLayout = LayoutLocalServiceUtil.getLayout(layoutRevision.getPlid());
 
 String layoutFriendlyURL = PortalUtil.getLayoutFriendlyURL(targetLayout, themeDisplay);
+
+String layoutSetBranchName = layoutSetBranch.getName();
+
+if (LayoutSetBranchConstants.MASTER_BRANCH_NAME.equals(layoutSetBranchName)) {
+	layoutSetBranchName = LanguageUtil.get(request, layoutSetBranchName);
+}
+
+String layoutBranchName = layoutBranch.getName();
+
+if (LayoutBranchConstants.MASTER_BRANCH_NAME.equals(layoutBranchName)) {
+	layoutBranchName = LanguageUtil.get(request, layoutBranchName);
+}
 %>
 
 <strong><liferay-ui:message key="page" />:</strong> <a href="<%= HtmlUtil.escapeHREF(layoutFriendlyURL) + "?layoutSetBranchId=" + layoutRevision.getLayoutSetBranchId() + "&layoutRevisionId=" + layoutRevision.getLayoutRevisionId() %>"><%= HtmlUtil.escape(targetLayout.getHTMLTitle(locale)) %></a><br />
 
-<strong><liferay-ui:message key="site-pages-variation" />:</strong> <%= LanguageUtil.get(request, HtmlUtil.escape(layoutSetBranch.getName())) %><br />
+<strong><liferay-ui:message key="site-pages-variation" />:</strong> <%= HtmlUtil.escape(layoutSetBranchName) %><br />
 
-<strong><liferay-ui:message key="page-variation" />:</strong> <%= LanguageUtil.get(request, HtmlUtil.escape(layoutBranch.getName())) %><br />
+<strong><liferay-ui:message key="page-variation" />:</strong> <%= HtmlUtil.escape(layoutBranchName) %><br />
 
 <strong><liferay-ui:message key="revision-id" />:</strong> <%= layoutRevision.getLayoutRevisionId() %>

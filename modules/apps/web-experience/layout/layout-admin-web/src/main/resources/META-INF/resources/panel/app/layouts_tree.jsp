@@ -223,11 +223,12 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 
 								<%
 								for (LayoutSetBranch curLayoutSetBranch : layoutsTreeDisplayContext.getLayoutSetBranches()) {
+									boolean translateBranchName = LayoutSetBranchConstants.MASTER_BRANCH_NAME.equals(curLayoutSetBranch.getName());
 								%>
 
 									<li class="<%= layoutsTreeDisplayContext.getLayoutSetBranchCssClass(curLayoutSetBranch) %>">
 										<a class="truncate-text" href="<%= layoutsTreeDisplayContext.getLayoutSetBranchURL(curLayoutSetBranch) %>">
-											<liferay-ui:message key="<%= HtmlUtil.escape(curLayoutSetBranch.getName()) %>" />
+											<liferay-ui:message key="<%= HtmlUtil.escape(curLayoutSetBranch.getName()) %>" localizeKey="<%= translateBranchName %>" />
 										</a>
 									</li>
 

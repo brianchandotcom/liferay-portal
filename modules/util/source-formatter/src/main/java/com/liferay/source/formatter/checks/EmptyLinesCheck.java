@@ -402,8 +402,16 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 					continue;
 				}
 
+				String previousLine = StringUtil.trim(matcher.group(1));
+
+				if (previousLine.startsWith("import ") ||
+					previousLine.startsWith("package ")) {
+
+					continue;
+				}
+
 				content = StringUtil.replaceFirst(
-					content, "\n", StringPool.BLANK, matcher.start());
+					content, "\n", StringPool.BLANK, matcher.end(1));
 
 				continue outerLoop;
 			}
@@ -505,7 +513,7 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 	private final Pattern _missingEmptyLinePattern8 = Pattern.compile(
 		"[^:\\{\n]\n\t*return ");
 	private final Pattern _redundantEmptyLinePattern1 = Pattern.compile(
-		"\n\npublic ((abstract|static) )*(class|enum|interface) ");
+		"\n(.*)\n\npublic ((abstract|static) )*(class|enum|interface) ");
 	private final Pattern _redundantEmptyLinePattern2 = Pattern.compile(
 		" \\* @author .*\n \\*\\/\n\n");
 	private final Pattern _redundantEmptyLinePattern3 = Pattern.compile(

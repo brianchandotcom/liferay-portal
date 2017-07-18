@@ -15,12 +15,16 @@
 package com.liferay.commerce.product.content.category.web.internal.display.context;
 
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.commerce.product.constants.CPConstants;
+import com.liferay.commerce.product.content.category.web.internal.configuration.CPCategoryContentPortletInstanceConfiguration;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
@@ -33,27 +37,43 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
 public class CPCategoryContentDisplayContext {
 
 	public CPCategoryContentDisplayContext(
 			HttpServletRequest httpServletRequest,
+			AssetCategoryService assetCategoryService,
 			CPAttachmentFileEntryService cpAttachmentFileEntryService,
 			Portal portal)
 		throws ConfigurationException {
 
 		_httpServletRequest = httpServletRequest;
+		_assetCategoryService = assetCategoryService;
 		_cpAttachmentFileEntryService = cpAttachmentFileEntryService;
 		_portal = portal;
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		_cpCategoryContentPortletInstanceConfiguration =
+			portletDisplay.getPortletInstanceConfiguration(
+				CPCategoryContentPortletInstanceConfiguration.class);
 	}
 
-	public AssetCategory getAssetCategory() {
-		if (_assetCategory != null) {
-			return _assetCategory;
+	public AssetCategory getAssetCategory() throws PortalException {
+		if (_cpCategoryContentPortletInstanceConfiguration.useAssetCategory()) {
+			_assetCategory = _assetCategoryService.fetchCategory(
+				_cpCategoryContentPortletInstanceConfiguration.
+					assetCategoryId());
 		}
-
-		_assetCategory = (AssetCategory)_httpServletRequest.getAttribute(
-			WebKeys.ASSET_CATEGORY);
+		else {
+			_assetCategory = (AssetCategory)_httpServletRequest.getAttribute(
+				WebKeys.ASSET_CATEGORY);
+		}
 
 		return _assetCategory;
 	}
@@ -98,8 +118,41 @@ public class CPCategoryContentDisplayContext {
 			StringPool.BLANK);
 	}
 
+	public String getDisplayStyle() {
+		return _cpCategoryContentPortletInstanceConfiguration.displayStyle();
+	}
+
+	public long getDisplayStyleGroupId() {
+		if (_displayStyleGroupId > 0) {
+			return _displayStyleGroupId;
+		}
+
+		_displayStyleGroupId =
+			_cpCategoryContentPortletInstanceConfiguration.
+				displayStyleGroupId();
+
+		if (_displayStyleGroupId <= 0) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)_httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			_displayStyleGroupId = themeDisplay.getScopeGroupId();
+		}
+
+		return _displayStyleGroupId;
+	}
+
+	public boolean useAssetCategory() {
+		return
+			_cpCategoryContentPortletInstanceConfiguration.useAssetCategory();
+	}
+
 	private AssetCategory _assetCategory;
+	private final AssetCategoryService _assetCategoryService;
 	private final CPAttachmentFileEntryService _cpAttachmentFileEntryService;
+	private final CPCategoryContentPortletInstanceConfiguration
+		_cpCategoryContentPortletInstanceConfiguration;
+	private long _displayStyleGroupId;
 	private final HttpServletRequest _httpServletRequest;
 	private final Portal _portal;
 

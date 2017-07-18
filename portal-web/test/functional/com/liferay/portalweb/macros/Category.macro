@@ -252,7 +252,7 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="You do not have the required permissions." />
 	</command>
 
-	<command name="editCategoryPropertyCP">
+	<command name="editPropertyCP">
 		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
@@ -263,10 +263,6 @@
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
-
-		<execute macro="PortletEntry#inputTitle">
-			<var name="title" value="${categoryNameEdit}" />
-		</execute>
 
 		<execute macro="Navigator#gotoNavItem">
 			<var name="navItem" value="Properties" />

@@ -221,7 +221,7 @@ if (ratingsEntry != null) {
 </div>
 
 <c:if test="<%= !inTrash %>">
-	<aui:script use="liferay-ratings">
+	<aui:script position="inline" use="liferay-ratings">
 		Liferay.Ratings.register(
 			{
 				averageScore: <%= formattedAverageScore %>,

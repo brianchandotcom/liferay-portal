@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Address Formatter API
+Bundle-SymbolicName: com.liferay.address.formatter.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.address.formatter,\
+	com.liferay.address.formatter.util
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+-dsannotations-options: inherit

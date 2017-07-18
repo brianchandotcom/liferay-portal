@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,25 +11,16 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%
-ListType addressListType = address.getType();
+package com.liferay.address.formatter;
 
-String mailingName = LanguageUtil.get(request, addressListType.getName());
+import com.liferay.portal.kernel.model.Address;
 
-String street1 = address.getStreet1();
-String street2 = address.getStreet2();
-String street3 = address.getStreet3();
+/**
+ * @author Pei-Jung Lan
+ */
+public interface AddressFormatter {
 
-String zipCode = address.getZip();
-String city = address.getCity();
+	public String format(Address address);
 
-Region region = address.getRegion();
-
-String regionName = region.getName();
-
-Country country = address.getCountry();
-
-String countryName = country.getName(locale);
-%>
+}

@@ -14,14 +14,10 @@
  */
 --%>
 
-<%
-ListType addressListType = address.getType();
+<%@ include file="/init.jsp" %>
 
-String mailingName = LanguageUtil.get(request, addressListType.getName());
+<%
+String formattedAddress = (String)request.getAttribute("liferay-address-formatter:address-display:formattedAddress");
 %>
 
-<em class="mailing-name"><%= mailingName %></em><br />
-
-<liferay-address-formatter:address-display address="<%= address %>" />
-
-<c:if test="<%= address.isMailing() %>">(<liferay-ui:message key="mailing" />)</c:if>
+<%= StringUtil.replace(formattedAddress, StringPool.NEW_LINE, "<br />") %>

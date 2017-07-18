@@ -80,15 +80,17 @@ public class BatchBuild extends BaseBuild {
 
 			Element failureElement = downstreamBuild.getGitHubMessageElement();
 
-			if (failureElement != null) {
-				if (isHighPriorityBuildFailureElement(failureElement)) {
-					failureElements.add(0, failureElement);
-
-					continue;
-				}
-
-				failureElements.add(failureElement);
+			if (failureElement == null) {
+				continue;
 			}
+
+			if (isHighPriorityBuildFailureElement(failureElement)) {
+				failureElements.add(0, failureElement);
+
+				continue;
+			}
+
+			failureElements.add(failureElement);
 
 			Element upstreamJobFailureElement =
 				downstreamBuild.getGitHubMessageUpstreamJobFailureElement();

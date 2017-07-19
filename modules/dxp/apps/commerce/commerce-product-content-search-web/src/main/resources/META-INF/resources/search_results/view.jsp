@@ -55,7 +55,7 @@ SearchContainer searchContainer = cpSearchResultsDisplayContext.getSearchContain
 
 				<div class="card-row card-row-padded card-row-valign-top">
 					<div class="card-col-content">
-						<a href="<%= cpSearchResultsDisplayContext.getProductFriendlyURL(themeDisplay.getPortalURL(), document) %>">
+						<a class="truncate-text" href="<%= cpSearchResultsDisplayContext.getProductFriendlyURL(themeDisplay.getPortalURL(), document) %>">
 							<%= cpSearchResultsDisplayContext.getTitle(document) %>
 						</a>
 					</div>

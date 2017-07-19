@@ -78,6 +78,8 @@
 			<var name="decorator" value="Borderless" />
 		</execute>
 
+		<execute macro="PortletEntry#save" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="Portlet#viewApplicationDecorator">

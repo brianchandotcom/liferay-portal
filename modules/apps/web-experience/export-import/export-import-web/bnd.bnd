@@ -1,6 +1,7 @@
 Bundle-Name: Liferay Export Import Web
 Bundle-SymbolicName: com.liferay.exportimport.web
 Bundle-Version: 1.0.30
+Liferay-JS-Config: /META-INF/resources/js/config.js
 Export-Package:\
 	com.liferay.exportimport.web.constants,\
 	com.liferay.exportimport.web.trash

@@ -27,7 +27,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "process-details"));
 	<liferay-util:include page="/export_import_process.jsp" servletContext="<%= application %>" />
 </div>
 
-<aui:script use="liferay-export-import">
+<aui:script use="liferay-export-import-export-import">
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="exportImport" var="exportImportProcessURL">
 		<portlet:param name="<%= Constants.CMD %>" value="export_import" />
 		<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTaskId) %>" />

@@ -393,7 +393,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 	Liferay.Util.toggleSelectBox('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>', 'false', '<portlet:namespace />selectContents');
 </aui:script>
 
-<aui:script use="liferay-export-import">
+<aui:script use="liferay-export-import-export-import">
 	new Liferay.ExportImport(
 		{
 			archivedSetupsNode: '#<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL %>',

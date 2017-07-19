@@ -1,9 +1,11 @@
 dependencies {
+	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.taglib", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.frontend.taglib", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.item.selector.api", version: "2.3.0"
 	provided group: "com.liferay", name: "com.liferay.item.selector.criteria.api", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.item.selector.taglib", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.journal.api", version: "3.0.0-20170601.182427-18"
+	provided group: "com.liferay", name: "com.liferay.portlet.display.template", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.upload.api", version: "1.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"

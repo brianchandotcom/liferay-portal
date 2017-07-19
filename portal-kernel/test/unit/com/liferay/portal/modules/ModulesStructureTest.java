@@ -703,12 +703,6 @@ public class ModulesStructureTest {
 
 		boolean privateRepo = _isInPrivateModulesDir(dirPath);
 
-		for (String fileName : _GRADLE_WRAPPER_FILE_NAMES) {
-			Path path = dirPath.resolve(fileName);
-
-			Assert.assertFalse("Forbidden " + path, Files.exists(path));
-		}
-
 		Path buildGradlePath = dirPath.resolve("build.gradle");
 		Path gradlePropertiesPath = dirPath.resolve("gradle.properties");
 		Path settingsGradlePath = dirPath.resolve("settings.gradle");
@@ -1032,9 +1026,6 @@ public class ModulesStructureTest {
 
 	private static final String _GIT_REPO_GRADLE_REPOSITORY_PRIVATE_USERNAME =
 		"systemProp.repository.private.username";
-
-	private static final String[] _GRADLE_WRAPPER_FILE_NAMES =
-		{"gradle", "gradlew", "gradlew.bat"};
 
 	private static final String _REPOSITORY_URL =
 		"https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups" +

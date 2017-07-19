@@ -49,7 +49,7 @@ public class CPOptionDisplayContext
 			DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker)
 		throws PortalException {
 
-		super(actionHelper, httpServletRequest, "CPOption");
+		super(actionHelper, httpServletRequest, CPOption.class.getSimpleName());
 
 		_cpOptionService = cpOptionService;
 		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;

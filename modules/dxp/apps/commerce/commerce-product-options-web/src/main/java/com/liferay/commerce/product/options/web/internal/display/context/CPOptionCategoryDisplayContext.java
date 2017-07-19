@@ -37,7 +37,9 @@ public class CPOptionCategoryDisplayContext
 			CPOptionCategoryService cpOptionCategoryService)
 		throws PortalException {
 
-		super(actionHelper, httpServletRequest, "CPOptionCategory");
+		super(
+			actionHelper, httpServletRequest,
+			CPOptionCategory.class.getSimpleName());
 
 		setDefaultOrderByCol("priority");
 

@@ -43,7 +43,9 @@ public class CPOptionValueDisplayContext
 			CPOptionValueService cpOptionValueService)
 		throws PortalException {
 
-		super(actionHelper, httpServletRequest, "CPOptionValue");
+		super(
+			actionHelper, httpServletRequest,
+			CPOptionValue.class.getSimpleName());
 
 		_cpOptionValueService = cpOptionValueService;
 

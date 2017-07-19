@@ -275,7 +275,7 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 		String login = ParamUtil.getString(actionRequest, "login");
 
 		if (Validator.isNotNull(login)) {
-			portletURL.setParameter("login", login);
+			SessionErrors.add(actionRequest, "login", login);
 		}
 
 		if (portletName.equals(LoginPortletKeys.LOGIN)) {

@@ -128,7 +128,7 @@ public class DefaultRuleGroupProcessorImpl implements RuleGroupProcessor {
 		List<MDRRuleGroupInstance> mdrRuleGroupInstances =
 			_mdrRuleGroupInstanceLocalService.getRuleGroupInstances(
 				className, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new RuleGroupInstancePriorityComparator());
+				RuleGroupInstancePriorityComparator.ASCENDING_INSTANCE);
 
 		for (MDRRuleGroupInstance mdrRuleGroupInstance :
 				mdrRuleGroupInstances) {

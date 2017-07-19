@@ -302,7 +302,7 @@
 			<var name="portlet" value="Blogs" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoBlogsEntriesCP" />
+		<execute macro="BlogsNavigator#gotoBlogsEntriesPermissionsCP" />
 
 		<execute macro="Role#definePermissionPG">
 			<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_ADD_ENTRY_CHECKBOX" />
@@ -332,7 +332,7 @@
 			<var name="portlet" value="Blogs" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoBlogsEntriesCP" />
+		<execute macro="BlogsNavigator#gotoBlogsEntriesPermissionsCP" />
 
 		<execute macro="Role#removePermissionPG">
 			<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_ADD_ENTRY_CHECKBOX" />
@@ -458,7 +458,7 @@
 			<var name="portlet" value="Blogs" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoBlogsEntriesCP" />
+		<execute macro="BlogsNavigator#gotoBlogsEntriesPermissionsCP" />
 
 		<execute macro="Role#definePermissionPG">
 			<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_ADD_ENTRY_CHECKBOX" />
@@ -493,7 +493,7 @@
 			<var name="portlet" value="Blogs" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoBlogsEntriesCP" />
+		<execute macro="BlogsNavigator#gotoBlogsEntriesPermissionsCP" />
 
 		<execute macro="Role#removePermissionPG">
 			<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_ADD_ENTRY_CHECKBOX" />
@@ -1664,7 +1664,7 @@
 			<var name="portlet" value="Blogs" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoBlogsEntriesCP" />
+		<execute macro="BlogsNavigator#gotoBlogsEntriesPermissionsCP" />
 
 		<execute macro="Role#definePermissionPG">
 			<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_SUBSCRIBE_CHECKBOX" />
@@ -1691,7 +1691,7 @@
 			<var name="portlet" value="Blogs" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoBlogsEntriesCP" />
+		<execute macro="BlogsNavigator#gotoBlogsEntriesPermissionsCP" />
 
 		<execute macro="Role#removePermissionPG">
 			<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_SUBSCRIBE_CHECKBOX" />

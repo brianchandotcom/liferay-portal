@@ -68,6 +68,8 @@ public interface Build {
 
 	public Element getGitHubMessageElement();
 
+	public Element getGitHubMessageUpstreamJobFailureElement();
+
 	public String getInvocationURL();
 
 	public String getJDK();
@@ -121,6 +123,8 @@ public interface Build {
 	public void reinvoke(ReinvokeRule reinvokeRule);
 
 	public String replaceBuildURL(String text);
+
+	public void setCompareToUpstream(boolean compareToUpstream);
 
 	public void update();
 

@@ -126,7 +126,7 @@
 			</then>
 		</if>
 
-		<execute function="Click" locator1="ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX">
+		<execute function="Check" locator1="ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX">
 			<var name="key_rowEntry" value="${tagName}" />
 		</execute>
 

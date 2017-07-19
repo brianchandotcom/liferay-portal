@@ -4,9 +4,16 @@
 
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Folder">
-			<var name="key_menuItem" value="Folder" />
-		</execute>
+		<if>
+			<condition function="IsElementPresent" locator1="MenuItem#ANY_MENU_ITEM">
+				<var name="key_menuItem" value="Folder" />
+			</condition>
+			<then>
+				<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Folder">
+					<var name="key_menuItem" value="Folder" />
+				</execute>
+			</then>
+		</if>
 
 		<execute macro="PortletEntry#inputName">
 			<var name="name" value="${folderName}" />

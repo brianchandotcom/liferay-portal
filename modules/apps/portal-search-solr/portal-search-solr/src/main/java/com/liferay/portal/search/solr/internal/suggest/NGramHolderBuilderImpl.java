@@ -61,6 +61,8 @@ public class NGramHolderBuilderImpl implements NGramHolderBuilder {
 
 			nGramTokenizer.setReader(new StringReader(input));
 
+			nGramTokenizer.reset();
+
 			NGramHolder nGramHolder = new NGramHolder();
 
 			CharTermAttribute charTermAttribute = nGramTokenizer.getAttribute(

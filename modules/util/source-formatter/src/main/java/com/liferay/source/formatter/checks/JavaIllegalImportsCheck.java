@@ -26,10 +26,6 @@ public class JavaIllegalImportsCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (fileName.endsWith("JavaIllegalImportsCheck.java")) {
-			return content;
-		}
-
 		content = StringUtil.replace(
 			content,
 			new String[] {

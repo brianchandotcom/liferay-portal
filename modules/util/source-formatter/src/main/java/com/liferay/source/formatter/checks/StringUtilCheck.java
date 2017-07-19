@@ -35,9 +35,7 @@ public class StringUtilCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (!absolutePath.contains("poshi") &&
-			!fileName.endsWith("StringUtilTest.java")) {
-
+		if (!absolutePath.contains("poshi")) {
 			_checkReplaceCalls(fileName, content);
 		}
 

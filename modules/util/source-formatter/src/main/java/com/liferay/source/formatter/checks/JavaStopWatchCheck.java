@@ -23,10 +23,6 @@ public class JavaStopWatchCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (fileName.endsWith("JavaStopWatchCheck.java")) {
-			return content;
-		}
-
 		int pos = content.indexOf("StopWatch stopWatch = null;");
 
 		if (pos != -1) {

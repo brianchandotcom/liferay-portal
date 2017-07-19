@@ -37,4 +37,6 @@
 	<suppress checks="JSONWhitespaceCheck" files="/package\.json" />
 	<suppress checks="JSPLineBreakCheck" files="portal-web/docroot/html/portal/progress_poller\.jsp" />
 	<suppress checks="MethodCallsOrderCheck" files="portal-impl/src/com/liferay/portal/util/PortalImpl\.java" />
+	<suppress checks="ResourceBundleCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/ResourceBundleUtil\.java" />
+	<suppress checks="StringUtilCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/util/StringUtilTest\.java" />
 </suppressions>

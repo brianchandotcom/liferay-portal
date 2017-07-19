@@ -28,10 +28,7 @@ public class ResourceBundleCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (fileName.endsWith("ResourceBundleCheck.java") ||
-			fileName.endsWith("ResourceBundleUtil.java") ||
-			isExcludedPath(RUN_OUTSIDE_PORTAL_EXCLUDES, absolutePath)) {
-
+		if (isExcludedPath(RUN_OUTSIDE_PORTAL_EXCLUDES, absolutePath)) {
 			return content;
 		}
 

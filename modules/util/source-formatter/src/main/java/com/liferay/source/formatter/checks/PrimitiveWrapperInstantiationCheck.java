@@ -25,10 +25,6 @@ public class PrimitiveWrapperInstantiationCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (fileName.endsWith("PrimitiveWrapperInstantiationCheck.java")) {
-			return content;
-		}
-
 		return StringUtil.replace(
 			content,
 			new String[] {

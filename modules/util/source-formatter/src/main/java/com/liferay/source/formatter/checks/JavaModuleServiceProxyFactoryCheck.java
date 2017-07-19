@@ -30,10 +30,6 @@ public class JavaModuleServiceProxyFactoryCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (fileName.endsWith("JavaModuleServiceProxyFactoryCheck.java")) {
-			return content;
-		}
-
 		String packagePath = JavaSourceUtil.getPackagePath(content);
 
 		if (!packagePath.startsWith("com.liferay")) {

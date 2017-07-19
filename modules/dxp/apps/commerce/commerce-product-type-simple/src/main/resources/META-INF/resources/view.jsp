@@ -22,67 +22,67 @@ CPDefinition cpDefinition = cpSimpleCPTypeDisplayContext.getCPDefinition();
 %>
 
 <c:if test="<%= cpDefinition != null %>">
-	<div class="product-detail row-fluid">
-		<div class="col-md-7">
-			<div class="row-fluid">
-				<div class="col-md-3">
+	<div class="container-fluid product-detail">
+		<div class="row">
+			<div class="col-md-7 col-lg-6">
+				<div class="row">
+					<div class="col-xs-2 col-md-3 col-lg-2">
 
-					<%
-					for (CPAttachmentFileEntry cpAttachmentFileEntry : cpSimpleCPTypeDisplayContext.getImages()) {
-						String url = cpSimpleCPTypeDisplayContext.getImageURL(cpAttachmentFileEntry.getFileEntry(), themeDisplay);
-					%>
+						<%
+						for (CPAttachmentFileEntry cpAttachmentFileEntry : cpSimpleCPTypeDisplayContext.getImages()) {
+							String url = cpSimpleCPTypeDisplayContext.getImageURL(cpAttachmentFileEntry.getFileEntry(), themeDisplay);
+						%>
 
-						<div class="row-fluid">
-							<div class="col-md-12 thumb" data-url="<%= url %>">
-								<img src="<%= url %>">
+							<div class="card thumb" data-url="<%= url %>">
+								<img class="center-block img-responsive" src="<%= url %>">
 							</div>
-						</div>
 
-					<%
-					}
-					%>
+						<%
+						}
+						%>
 
-				</div>
+					</div>
 
-				<div class="col-md-9 full-image">
+					<div class="col-xs-10 col-md-9 col-lg-10 full-image">
 
-					<%
-					CPAttachmentFileEntry cpAttachmentFileEntry = cpSimpleCPTypeDisplayContext.getDefaultImage();
-					%>
+						<%
+						CPAttachmentFileEntry cpAttachmentFileEntry = cpSimpleCPTypeDisplayContext.getDefaultImage();
+						%>
 
-					<c:if test="<%= cpAttachmentFileEntry != null %>">
-						<img id="full-image" src="<%= cpSimpleCPTypeDisplayContext.getImageURL(cpAttachmentFileEntry.getFileEntry(), themeDisplay) %>">
-					</c:if>
-				</div>
-			</div>
-		</div>
-
-		<div class="col-md-5">
-			<h1><%= cpDefinition.getTitle(languageId) %></h1>
-			<h4>Code: <%= cpDefinition.getBaseSKU() %></h4>
-
-			<div class="row-fluid">
-				<div class="col-md-12">
-					<div class="options">
-						<%= cpSimpleCPTypeDisplayContext.renderOptions(renderRequest, renderResponse) %>
+						<c:if test="<%= cpAttachmentFileEntry != null %>">
+							<img class="center-block img-responsive" id="full-image" src="<%= cpSimpleCPTypeDisplayContext.getImageURL(cpAttachmentFileEntry.getFileEntry(), themeDisplay) %>">
+						</c:if>
 					</div>
 				</div>
 			</div>
 
-			<div class="row-fluid">
-				<div class="col-md-3">
-					<aui:input cssClass="quantity" label="quantity" name="qt"></aui:input>
+			<div class="col-md-5 col-lg-6">
+				<h1><%= cpDefinition.getTitle(languageId) %></h1>
+				<h4>Code: <%= cpDefinition.getBaseSKU() %></h4>
+
+				<div class="row">
+					<div class="col-md-12">
+						<div class="options">
+							<%= cpSimpleCPTypeDisplayContext.renderOptions(renderRequest, renderResponse) %>
+						</div>
+					</div>
 				</div>
 
-				<div class="col-md-9">
-				</div>
-			</div>
+				<div class="row">
+					<div class="col-md-3">
+						<aui:input cssClass="quantity" label="quantity" name="qt"></aui:input>
+					</div>
 
-			<div class="row-fluid">
-				<div class="col-md-12">
+					<div class="col-md-9">
+					</div>
 				</div>
 
-				<div class="col-md-9">
+				<div class="row">
+					<div class="col-md-12">
+					</div>
+
+					<div class="col-md-9">
+					</div>
 				</div>
 			</div>
 		</div>
@@ -91,8 +91,7 @@ CPDefinition cpDefinition = cpSimpleCPTypeDisplayContext.getCPDefinition();
 	<script>
 		$(document).ready(
 			function() {
-				$(".thumb").click(
-					function() {
+				$(".thumb").click(function() {
 					$("#full-image").attr("src",$(this).attr("data-url"));
 				});
 			});

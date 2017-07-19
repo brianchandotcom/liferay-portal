@@ -119,7 +119,7 @@
 	<command name="editTextWithBackspace">
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute function="Click" locator1="FormFields#TEXT_FIELD" />
+		<execute function="DoubleClick" locator1="FormFields#TEXT_FIELD" />
 
 		<execute function="KeyPress" locator1="FormFields#TEXT_FIELD" value1="\BACK_SPACE" />
 	</command>

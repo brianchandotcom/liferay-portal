@@ -58,6 +58,7 @@
 			<property name="copyrightFileName" value="copyright.txt" />
 		</check>
 		<check name="ArrayCheck" />
+		<check name="CollatorUtilCheck" />
 		<check name="EmptyCollectionCheck" />
 		<check name="GetterUtilCheck" />
 		<check name="Java2HTMLCheck" />

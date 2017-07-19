@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.security.permission.comparator;
 
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.util.CollatorUtil;
 
 import java.io.Serializable;
 
@@ -32,7 +33,7 @@ public class ModelResourceComparator
 	public ModelResourceComparator(Locale locale) {
 		_locale = locale;
 
-		_collator = Collator.getInstance(_locale);
+		_collator = CollatorUtil.getInstance(_locale);
 	}
 
 	@Override

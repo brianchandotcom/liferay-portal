@@ -126,8 +126,8 @@
 			</then>
 		</if>
 
-		<execute function="Click" locator1="AssetCategorization#TAG_CHECKBOX">
-			<var name="key_tagName" value="${tagName}" />
+		<execute function="Click" locator1="ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX">
+			<var name="key_rowEntry" value="${tagName}" />
 		</execute>
 
 		<execute function="SelectFrameTop" />

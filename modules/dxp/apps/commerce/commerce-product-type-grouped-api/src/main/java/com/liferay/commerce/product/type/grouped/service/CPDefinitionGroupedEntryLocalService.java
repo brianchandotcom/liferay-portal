@@ -113,6 +113,10 @@ public interface CPDefinitionGroupedEntryLocalService extends BaseLocalService,
 	public CPDefinitionGroupedEntry fetchCPDefinitionGroupedEntry(
 		long CPDefinitionGroupedEntryId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDefinitionGroupedEntry fetchCPDefinitionGroupedEntryByC_E(
+		long cpDefinitionId, long entryCPDefinitionId);
+
 	/**
 	* Returns the cp definition grouped entry matching the UUID and group.
 	*
@@ -265,6 +269,10 @@ public interface CPDefinitionGroupedEntryLocalService extends BaseLocalService,
 	public List<CPDefinitionGroupedEntry> getCPDefinitionGroupedEntries(
 		long cpDefinitionId, int start, int end,
 		OrderByComparator<CPDefinitionGroupedEntry> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDefinitionGroupedEntry> getCPDefinitionGroupedEntriesByCPDefinitionId(
+		long cpDefinitionId);
 
 	/**
 	* Returns all the cp definition grouped entries matching the UUID and company.

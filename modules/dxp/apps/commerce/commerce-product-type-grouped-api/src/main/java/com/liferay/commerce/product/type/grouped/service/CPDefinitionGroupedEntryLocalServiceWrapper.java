@@ -100,6 +100,13 @@ public class CPDefinitionGroupedEntryLocalServiceWrapper
 		return _cpDefinitionGroupedEntryLocalService.fetchCPDefinitionGroupedEntry(CPDefinitionGroupedEntryId);
 	}
 
+	@Override
+	public com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry fetchCPDefinitionGroupedEntryByC_E(
+		long cpDefinitionId, long entryCPDefinitionId) {
+		return _cpDefinitionGroupedEntryLocalService.fetchCPDefinitionGroupedEntryByC_E(cpDefinitionId,
+			entryCPDefinitionId);
+	}
+
 	/**
 	* Returns the cp definition grouped entry matching the UUID and group.
 	*
@@ -311,6 +318,12 @@ public class CPDefinitionGroupedEntryLocalServiceWrapper
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry> orderByComparator) {
 		return _cpDefinitionGroupedEntryLocalService.getCPDefinitionGroupedEntries(cpDefinitionId,
 			start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry> getCPDefinitionGroupedEntriesByCPDefinitionId(
+		long cpDefinitionId) {
+		return _cpDefinitionGroupedEntryLocalService.getCPDefinitionGroupedEntriesByCPDefinitionId(cpDefinitionId);
 	}
 
 	/**

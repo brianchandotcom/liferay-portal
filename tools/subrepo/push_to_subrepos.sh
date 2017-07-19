@@ -324,51 +324,54 @@ for SUBREPO_BRANCH in "${SUBREPO_BRANCHES[@]}"; do
 	GRADLE_WRAPPER_JSON=
 
 	for i in {1..2}; do
-		GRADLE_WRAPPER_JSON=($(curl --header "Authorization: token ${GITHUB_API_TOKEN}" -s "https://api.github.com/repos/liferay/${SUBREPO}/contents/gradle/wrapper?ref=${BRANCH}" -X GET | tr '\n' ' ' | sed 's/ //g' | sed 's/},/\'$'\n/g'))
+		GRADLE_WRAPPER_JSON=$(curl --header "Authorization: token ${GITHUB_API_TOKEN}" -s "https://api.github.com/repos/liferay/${SUBREPO}/contents/gradle/wrapper?ref=${BRANCH}" -X GET | tr '\n' ' ' | sed 's/ //g' | sed 's/},/\'$'\n/g')
 
-		if [[ $(echo "${GRADLE_WRAPPER_JSON[@]}" | grep '\"sha\"') ]]; then
+		if [[ $(echo "${GRADLE_WRAPPER_JSON}" | grep '\"sha\"') ]]; then
 			break;
 		fi
 	done
 
-	if [[ -z $(echo "${GRADLE_WRAPPER_JSON[@]}" | grep '\"sha\"') ]] && [[ -z $(echo "${GRADLE_WRAPPER_JSON[@]}" | grep -i '\"notfound\"') ]]; then
+	if [[ -z $(echo "${GRADLE_WRAPPER_JSON}" | grep '\"sha\"') ]] && [[ -z $(echo "${GRADLE_WRAPPER_JSON}" | grep -i '\"notfound\"') ]]; then
 		warn "Skipping liferay/${SUBREPO}:${BRANCH}."
-		warn ".. Failed to get contents of the gradle/wrapper directory via the api."
+		warn ".. Failed to get contents of the gradle/wrapper directory via the GitHub API."
 
 		continue
 	fi
 
-	GRADLE_WRAPPER_JAR_REMOTE_SHA="$(printf '%s\n' "${GRADLE_WRAPPER_JSON[@]}" | grep '"gradle-wrapper.jar"' | sed 's/",/&\'$'\n/g' | grep '"sha"' | sed 's/"[^"]*$//' | sed 's/.*"//')"
-	GRADLE_WRAPPER_PROPERTIES_REMOTE_SHA="$(printf '%s\n' "${GRADLE_WRAPPER_JSON[@]}" | grep '"gradle-wrapper.properties"' | sed 's/",/&\'$'\n/g' | grep '"sha"' | sed 's/"[^"]*$//' | sed 's/.*"//')"
+	GRADLE_WRAPPER_JAR_REMOTE_SHA="$(echo "${GRADLE_WRAPPER_JSON}" | grep '"gradle-wrapper.jar"' | sed 's/",/&\'$'\n/g' | grep '"sha"' | sed 's/"[^"]*$//' | sed 's/.*"//')"
+	GRADLE_WRAPPER_PROPERTIES_REMOTE_SHA="$(echo "${GRADLE_WRAPPER_JSON}" | grep '"gradle-wrapper.properties"' | sed 's/",/&\'$'\n/g' | grep '"sha"' | sed 's/"[^"]*$//' | sed 's/.*"//')"
 
 	#
-	# Retrieve the SHAs for gradlew and gradlew.bat. Assume "Not Found" means
-	# that the file does not exist.
+	# Retrieve the SHAs for gradlew and gradlew.bat. Also check the file mode
+	# for gradlew.
 	#
-
-	GRADLEW_JSON=
 
 	for i in {1..2}; do
-		GRADLEW_JSON="$(curl --header "Authorization: token ${GITHUB_API_TOKEN}" -s "https://api.github.com/repos/liferay/${SUBREPO}/contents/gradlew?ref=${BRANCH}" -X GET)"
+		TREE_URL="$(curl -s "https://api.github.com/repos/liferay/${SUBREPO}/branches/${BRANCH}" -X GET --header "Authorization: token ${GITHUB_API_TOKEN}" | grep '/git/trees/' | sed 's/"[^"]*$//' | sed 's/.*"//')"
 
-		if [[ $(echo "${GRADLEW_JSON[@]}" | grep '\"sha\"') ]] || [[ $(echo "${GRADLEW_JSON[@]}" | grep -i '\"not found\"') ]]; then
+		if [[ "${TREE_URL}" ]]; then
 			break;
 		fi
 	done
 
-	GRADLEW_REMOTE_SHA="$(echo "${GRADLEW_JSON}" | grep '"sha"' | sed 's/"[^"]*$//' | sed 's/.*"//')"
-
-	GRADLEW_BAT_JSON=
+	if [[ -z "${TREE_URL}" ]]; then
+		error "Failed to retrieve the tree url for ${BRANCH} via the GitHub API."
+	fi
 
 	for i in {1..2}; do
-		GRADLEW_BAT_JSON="$(curl --header "Authorization: token ${GITHUB_API_TOKEN}" -s "https://api.github.com/repos/liferay/${SUBREPO}/contents/gradlew.bat?ref=${BRANCH}" -X GET)"
+		TREE_CONTENT="$(curl -s "${TREE_URL}" -X GET --header "Authorization: token ${GITHUB_API_TOKEN}" | tr '\n' ' ' | sed 's/ //g' | sed 's/},/\'$'\n/g')"
 
-		if [[ $(echo "${GRADLEW_BAT_JSON[@]}" | grep '\"sha\"') ]] || [[ $(echo "${GRADLEW_BAT_JSON[@]}" | grep -i '\"not found\"') ]]; then
+		if [[ "$(echo "${TREE_CONTENT}" | grep "\"${TREE_URL}\"")" ]]; then
 			break;
 		fi
 	done
 
-	GRADLEW_BAT_REMOTE_SHA="$(echo "${GRADLEW_BAT_JSON}" | grep '"sha"' | sed 's/"[^"]*$//' | sed 's/.*"//')"
+	if [[ -z "$(echo "${TREE_CONTENT}" | grep "\"${TREE_URL}\"")" ]]; then
+		error "Failed to retrieve the tree content for ${BRANCH} via the GitHub API."
+	fi
+
+	GRADLEW_BAT_REMOTE_SHA="$(echo "${TREE_CONTENT}" | grep '"gradlew.bat"' | sed 's/.*"sha":"//' | sed 's/".*//')"
+	GRADLEW_REMOTE_SHA="$(echo "${TREE_CONTENT}" | grep '"gradlew"' | sed 's/.*"sha":"//' | sed 's/".*//')"
 
 	REMOTE_SHAS="
 gradle/wrapper/gradle-wrapper.jar:${GRADLE_WRAPPER_JAR_REMOTE_SHA}
@@ -377,13 +380,15 @@ gradlew:${GRADLEW_REMOTE_SHA}
 gradlew.bat:${GRADLEW_BAT_REMOTE_SHA}
 "
 
+	GRADLEW_UPDATE=
+
 	for GRADLE_FILE in "${GRADLE_FILES[@]}"; do
 		LOCAL_SHA="$(echo "${LOCAL_SHAS}" | grep "^${GRADLE_FILE}:" | sed 's/.*://')"
 		REMOTE_SHA="$(echo "${REMOTE_SHAS}" | grep "^${GRADLE_FILE}:" | sed 's/.*://')"
 
 		if [[ "${LOCAL_SHA}" != "${REMOTE_SHA}" ]]; then
 			if [[ "${OPTION_VERIFY}" ]]; then
-				info "liferay/${SUBREPO}:${BRANCH} ${GRADLE_FILE}"
+				info "liferay/${SUBREPO}:${BRANCH}:${GRADLE_FILE} content"
 			else
 				COMMIT_MESSAGE="LPS-0 Update ${GRADLE_FILE}"
 				CONTENT_VAR="$(get_content_var "${GRADLE_FILE}")"
@@ -405,10 +410,14 @@ gradlew.bat:${GRADLEW_BAT_REMOTE_SHA}
 				if [[ -z "$(echo ${OUTPUT} | grep "message.*${COMMIT_MESSAGE}")" ]]; then
 					warn "${OUTPUT}"
 
-					warn "Failed to update ${GRADLE_FILE} at liferay/${SUBREPO}:${BRANCH}."
+					warn "Failed to update ${GRADLE_FILE} content at liferay/${SUBREPO}:${BRANCH}."
 
 					continue
 				fi
+			fi
+
+			if [[ "${GRADLE_FILE}" == "gradlew" ]]; then
+				GRADLEW_UPDATE=true
 			fi
 
 			let TOTAL_FILES_COUNTER++

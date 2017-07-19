@@ -69,7 +69,7 @@ AUI.add(
 
 						return {
 							action: 'auto-fill',
-							ddmDataProviderInstanceUUID: instance._getUUId(instance._dataProvidersList.getValue()),
+							ddmDataProviderInstanceUUID: instance._getUUId(instance._dataProvidersList.getValue()[0]),
 							inputs: instance._getInputValue(),
 							outputs: instance._getOutputValue(),
 							requiredInputs: instance._getRequiredInputs()
@@ -324,7 +324,7 @@ AUI.add(
 							var value = inputParameters[i].field.getValue();
 
 							if (inputParameters[i].parameter && value) {
-								inputParameterValues[inputParameters[i].parameter] = value;
+								inputParameterValues[inputParameters[i].parameter] = value[0];
 							}
 						}
 
@@ -342,7 +342,7 @@ AUI.add(
 							var value = outputParameters[i].field.getValue();
 
 							if (outputParameters[i].parameter && value) {
-								outputParameterValues[outputParameters[i].parameter] = value;
+								outputParameterValues[outputParameters[i].parameter] = value[0];
 							}
 						}
 
@@ -420,7 +420,7 @@ AUI.add(
 
 						instance._dataProvidersList.set('options', dataProvidersList);
 
-						instance._dataProvidersList.setValue(value);
+						instance._dataProvidersList.setValue([value]);
 					},
 
 					_retriveRequiredInputs: function(inputs) {

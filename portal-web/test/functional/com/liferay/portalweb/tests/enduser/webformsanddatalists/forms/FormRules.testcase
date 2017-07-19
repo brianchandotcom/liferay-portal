@@ -50,6 +50,7 @@
 
 		<execute macro="FormsAdmin#editDataProvider">
 			<var name="name" value="Liferay Countries" />
+			<var name="outputParameterLabel" value="Countries Full Name" />
 			<var name="outputParameterName" value="Country Name" />
 			<var name="outputParameterPath" value="nameCurrentValue" />
 			<var name="outputParameterType" value="List" />

@@ -118,7 +118,7 @@ public class PortletDisplayTemplateExportCapability implements Capability {
 			Portlet portlet = _portletLocalService.getPortletById(
 				portletDataContext.getCompanyId(), portletId);
 
-			if (Validator.isNotNull(portlet.getTemplateHandlerClass())) {
+			if (Validator.isNotNull(portlet.getTemplateHandlerInstance())) {
 				return portletPreferences.getValue("displayStyle", null);
 			}
 		}
@@ -136,7 +136,7 @@ public class PortletDisplayTemplateExportCapability implements Capability {
 			Portlet portlet = _portletLocalService.getPortletById(
 				portletDataContext.getCompanyId(), portletId);
 
-			if (Validator.isNotNull(portlet.getTemplateHandlerClass())) {
+			if (Validator.isNotNull(portlet.getTemplateHandlerInstance())) {
 				return GetterUtil.getLong(
 					portletPreferences.getValue("displayStyleGroupId", null));
 			}

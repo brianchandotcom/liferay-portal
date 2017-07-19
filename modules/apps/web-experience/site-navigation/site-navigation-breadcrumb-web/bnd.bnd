@@ -5,3 +5,4 @@ Export-Package: com.liferay.site.navigation.breadcrumb.web.constants
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Site Navigation
 Web-ContextPath: /site-navigation-breadcrumb-web
+-dsannotations-options: inherit

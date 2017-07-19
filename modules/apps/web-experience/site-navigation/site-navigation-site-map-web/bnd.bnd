@@ -4,3 +4,4 @@ Bundle-Version: 2.0.9
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Site Navigation
 Web-ContextPath: /site-navigation-site-map-web
+-dsannotations-options: inherit

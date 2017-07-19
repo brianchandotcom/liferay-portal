@@ -59,7 +59,7 @@ public class AssetTagsNavigationPortletDisplayTemplateHandler
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		String portletTitle = _portal.getPortletTitle(
+		String portletTitle = portal.getPortletTitle(
 			AssetTagsNavigationPortletKeys.ASSET_TAGS_NAVIGATION,
 			resourceBundle);
 
@@ -114,6 +114,6 @@ public class AssetTagsNavigationPortletDisplayTemplateHandler
 	}
 
 	@Reference
-	private Portal _portal;
+	protected Portal portal;
 
 }

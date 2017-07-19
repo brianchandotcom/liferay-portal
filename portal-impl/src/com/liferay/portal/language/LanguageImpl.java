@@ -1828,10 +1828,10 @@ public class LanguageImpl implements Language, Serializable {
 	}
 
 	private static final String _COMPANY_LOCALES_PORTAL_CACHE_NAME =
-		LanguageImpl.class + "._companyLocalesPortalCache";
+		LanguageImpl.class.getName() + "._companyLocalesPortalCache";
 
 	private static final String _GROUP_LOCALES_PORTAL_CACHE_NAME =
-		LanguageImpl.class + "._groupLocalesPortalCache";
+		LanguageImpl.class.getName() + "._groupLocalesPortalCache";
 
 	private static final Log _log = LogFactoryUtil.getLog(LanguageImpl.class);
 

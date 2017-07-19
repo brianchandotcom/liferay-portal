@@ -31,18 +31,22 @@ page import="com.liferay.commerce.product.constants.CPWebKeys" %><%@
 page import="com.liferay.commerce.product.exception.CPOptionCategoryKeyException" %><%@
 page import="com.liferay.commerce.product.exception.CPOptionKeyException" %><%@
 page import="com.liferay.commerce.product.exception.CPOptionValueKeyException" %><%@
+page import="com.liferay.commerce.product.exception.CPSpecificationOptionKeyException" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchCPOptionCategoryException" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchCPOptionException" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchCPOptionValueException" %><%@
 page import="com.liferay.commerce.product.model.CPOption" %><%@
 page import="com.liferay.commerce.product.model.CPOptionCategory" %><%@
 page import="com.liferay.commerce.product.model.CPOptionValue" %><%@
+page import="com.liferay.commerce.product.model.CPSpecificationOption" %><%@
 page import="com.liferay.commerce.product.options.web.internal.display.context.CPOptionCategoryDisplayContext" %><%@
 page import="com.liferay.commerce.product.options.web.internal.display.context.CPOptionDisplayContext" %><%@
 page import="com.liferay.commerce.product.options.web.internal.display.context.CPOptionValueDisplayContext" %><%@
+page import="com.liferay.commerce.product.options.web.internal.display.context.CPSpecificationOptionDisplayContext" %><%@
 page import="com.liferay.commerce.product.options.web.internal.servlet.taglib.ui.CPOptionCategoryFormNavigatorConstants" %><%@
 page import="com.liferay.commerce.product.options.web.internal.servlet.taglib.ui.CPOptionFormNavigatorConstants" %><%@
 page import="com.liferay.commerce.product.options.web.internal.servlet.taglib.ui.CPOptionValueFormNavigatorConstants" %><%@
+page import="com.liferay.commerce.product.options.web.internal.servlet.taglib.ui.CPSpecificationOptionFormNavigatorConstants" %><%@
 page import="com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
@@ -76,7 +80,9 @@ String lifecycle = (String)request.getAttribute(liferayPortletRequest.LIFECYCLE_
 
 PortletURL optionsURLObj = PortalUtil.getControlPanelPortletURL(request, CPPortletKeys.CP_OPTIONS, lifecycle);
 PortletURL optionCategoriesURLObj = PortalUtil.getControlPanelPortletURL(request, CPPortletKeys.CP_OPTION_CATEGORIES, lifecycle);
+PortletURL specificationOptionsURLObj = PortalUtil.getControlPanelPortletURL(request, CPPortletKeys.CP_SPECIFICATION_OPTIONS, lifecycle);
 
 String optionsURL = optionsURLObj.toString();
 String optionCategoriesURL = optionCategoriesURLObj.toString();
+String specificationOptionsURL = specificationOptionsURLObj.toString();
 %>

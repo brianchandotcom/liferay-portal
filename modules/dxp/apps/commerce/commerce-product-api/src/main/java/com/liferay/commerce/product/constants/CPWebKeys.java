@@ -61,4 +61,10 @@ public class CPWebKeys {
 
 	public static final String CP_OPTIONS = "CP_OPTIONS";
 
+	public static final String CP_SPECIFICATION_OPTION =
+		"CP_SPECIFICATION_OPTION";
+
+	public static final String CP_SPECIFICATION_OPTIONS =
+		"CP_SPECIFICATION_OPTIONS";
+
 }

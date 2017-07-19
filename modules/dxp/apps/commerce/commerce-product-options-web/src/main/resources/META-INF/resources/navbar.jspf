@@ -37,6 +37,17 @@
 			label="option-categories"
 			selected='<%= toolbarItem.equals("view-all-product-option-categories") %>'
 		/>
+
+		<liferay-portlet:renderURL portletName="<%= CPPortletKeys.CP_SPECIFICATION_OPTIONS %>" varImpl="viewProductSpecificationOptionsURL">
+			<portlet:param name="toolbarItem" value="view-all-product-specification-options" />
+			<portlet:param name="mvcPath" value="/view_specification_options.jsp" />
+		</liferay-portlet:renderURL>
+
+		<aui:nav-item
+			href="<%= viewProductSpecificationOptionsURL.toString() %>"
+			label="specification-options"
+			selected='<%= toolbarItem.equals("view-all-product-specification-options") %>'
+		/>
 	</aui:nav>
 
 	<c:if test='<%= toolbarItem.equals("view-all-product-options") %>'>

@@ -18,9 +18,11 @@ import com.liferay.commerce.product.constants.CPWebKeys;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.model.CPOptionValue;
+import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.service.CPOptionCategoryService;
 import com.liferay.commerce.product.service.CPOptionService;
 import com.liferay.commerce.product.service.CPOptionValueService;
+import com.liferay.commerce.product.service.CPSpecificationOptionService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -151,6 +153,26 @@ public class ActionHelper {
 		return cpOptionValues;
 	}
 
+	public List<CPSpecificationOption> getCPSpecificationOptions(
+			ResourceRequest resourceRequest)
+		throws PortalException {
+
+		List<CPSpecificationOption> cpSpecificationOptions = new ArrayList<>();
+
+		long[] cpSpecificationOptionIds = ParamUtil.getLongValues(
+			resourceRequest, "rowIds");
+
+		for (long cpSpecificationOptionId : cpSpecificationOptionIds) {
+			CPSpecificationOption cpSpecificationOption =
+				_cpSpecificationOptionService.getCPSpecificationOption(
+					cpSpecificationOptionId);
+
+			cpSpecificationOptions.add(cpSpecificationOption);
+		}
+
+		return cpSpecificationOptions;
+	}
+
 	@Reference
 	private CPOptionCategoryService _cpOptionCategoryService;
 
@@ -159,5 +181,8 @@ public class ActionHelper {
 
 	@Reference
 	private CPOptionValueService _cpOptionValueService;
+
+	@Reference
+	private CPSpecificationOptionService _cpSpecificationOptionService;
 
 }

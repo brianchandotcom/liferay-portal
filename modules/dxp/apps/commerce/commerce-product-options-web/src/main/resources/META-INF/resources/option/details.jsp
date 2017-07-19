@@ -35,11 +35,7 @@ List<DDMFormFieldType> ddmFormFieldTypes = cpOptionDisplayContext.getDDMFormFiel
 
 	<aui:input name="description" />
 
-	<aui:select
-		label="option-field-type"
-		name="DDMFormFieldTypeName"
-		showEmptyOption="<%= true %>"
-	>
+	<aui:select label="option-field-type" name="DDMFormFieldTypeName" showEmptyOption="<%= true %>">
 
 		<%
 		for (DDMFormFieldType ddmFormFieldType : ddmFormFieldTypes) {

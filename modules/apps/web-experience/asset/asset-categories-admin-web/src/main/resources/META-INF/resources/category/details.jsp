@@ -58,11 +58,13 @@ renderResponse.setTitle(((category == null) ? LanguageUtil.get(request, "add-new
 		</aui:field-wrapper>
 	</c:if>
 
-	<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" markupView="lexicon" persistState="<%= true %>" title="permissions">
-		<liferay-ui:input-permissions
-			modelName="<%= AssetCategory.class.getName() %>"
-		/>
-	</liferay-ui:panel>
+	<c:if test="<%= category == null %>">
+		<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" markupView="lexicon" persistState="<%= true %>" title="permissions">
+			<liferay-ui:input-permissions
+				modelName="<%= AssetCategory.class.getName() %>"
+			/>
+		</liferay-ui:panel>
+	</c:if>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />

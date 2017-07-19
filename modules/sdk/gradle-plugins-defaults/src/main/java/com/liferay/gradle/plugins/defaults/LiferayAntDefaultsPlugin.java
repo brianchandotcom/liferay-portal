@@ -16,10 +16,14 @@ package com.liferay.gradle.plugins.defaults;
 
 import com.liferay.gradle.plugins.LiferayAntPlugin;
 import com.liferay.gradle.plugins.defaults.internal.LiferayRelengPlugin;
+import com.liferay.gradle.plugins.defaults.internal.util.GradlePluginsDefaultsUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.defaults.tasks.CopyIvyDependenciesTask;
 import com.liferay.gradle.plugins.defaults.tasks.ReplaceRegexTask;
 
 import groovy.lang.Closure;
+
+import java.io.File;
 
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
@@ -29,15 +33,35 @@ import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.MavenPlugin;
+import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.Upload;
+import org.gradle.api.tasks.ant.AntTarget;
 
 /**
  * @author Andrea Di Giorgi
  */
 public class LiferayAntDefaultsPlugin implements Plugin<Project> {
 
+	public static final String COPY_IVY_DEPENDENCIES_TASK_NAME =
+		"copyIvyDependencies";
+
 	@Override
 	public void apply(Project project) {
+		File ivyXmlFile = project.file("ivy.xml");
+
+		if (ivyXmlFile.exists()) {
+			File portalRootDir = GradleUtil.getRootDir(
+				project.getRootProject(), "portal-impl");
+
+			GradlePluginsDefaultsUtil.configureRepositories(
+				project, portalRootDir);
+
+			CopyIvyDependenciesTask copyIvyDependenciesTask =
+				_addTaskCopyIvyDependencies(project, ivyXmlFile);
+
+			copyIvyDependenciesTask.writeChecksumFile();
+		}
+
 		GradleUtil.applyPlugin(project, LiferayAntPlugin.class);
 
 		_applyPlugins(project);
@@ -73,6 +97,46 @@ public class LiferayAntDefaultsPlugin implements Plugin<Project> {
 				}
 
 			});
+	}
+
+	private CopyIvyDependenciesTask _addTaskCopyIvyDependencies(
+		Project project, File inputFile) {
+
+		final CopyIvyDependenciesTask copyIvyDependenciesTask =
+			GradleUtil.addTask(
+				project, COPY_IVY_DEPENDENCIES_TASK_NAME,
+				CopyIvyDependenciesTask.class);
+
+		copyIvyDependenciesTask.setDescription(
+			"Copies the dependencies declared in the ivy.xml file.");
+
+		File destinationDir = project.file("docroot");
+
+		if (destinationDir.exists()) {
+			destinationDir = new File(destinationDir, "WEB-INF/lib");
+		}
+		else {
+			destinationDir = project.file("lib");
+		}
+
+		copyIvyDependenciesTask.setDestinationDir(destinationDir);
+
+		copyIvyDependenciesTask.setInputFile(inputFile);
+
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			AntTarget.class,
+			new Action<AntTarget>() {
+
+				@Override
+				public void execute(AntTarget antTarget) {
+					antTarget.dependsOn(copyIvyDependenciesTask);
+				}
+
+			});
+
+		return copyIvyDependenciesTask;
 	}
 
 	private Upload _addTaskInstall(Project project) {

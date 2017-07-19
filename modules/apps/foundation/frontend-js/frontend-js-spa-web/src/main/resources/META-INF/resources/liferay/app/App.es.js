@@ -172,6 +172,10 @@ class LiferayApp extends App {
 			}
 		);
 
+		if (Liferay.Data && Liferay.Data.layoutConfig) {
+			Liferay.Data.layoutConfig = nul;
+		}
+
 		this._startRequestTimer(event.path);
 	}
 

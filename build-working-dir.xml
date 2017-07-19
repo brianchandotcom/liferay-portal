@@ -174,7 +174,7 @@
 	</target>
 
 	<target if="prepare.working.dir.private" name="checkout-portal-private">
-		<loadfile property="portal.private.git.commit" srcFile="git-commit-portal-ee">
+		<loadfile property="portal.private.git.commit" srcFile="git-commit-portal-private">
 			<filterchain>
 				<striplinebreaks />
 			</filterchain>

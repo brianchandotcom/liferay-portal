@@ -744,6 +744,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				}
 			}
 
+			systemEventLocalService.deleteSystemEvents(group.getGroupId());
+
 			// Themes
 
 			ThemeLoader themeLoader =

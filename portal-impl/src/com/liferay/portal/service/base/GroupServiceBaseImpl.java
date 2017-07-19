@@ -64,6 +64,7 @@ import com.liferay.portal.kernel.service.persistence.ResourceTypePermissionFinde
 import com.liferay.portal.kernel.service.persistence.ResourceTypePermissionPersistence;
 import com.liferay.portal.kernel.service.persistence.RoleFinder;
 import com.liferay.portal.kernel.service.persistence.RolePersistence;
+import com.liferay.portal.kernel.service.persistence.SystemEventPersistence;
 import com.liferay.portal.kernel.service.persistence.TeamFinder;
 import com.liferay.portal.kernel.service.persistence.TeamPersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
@@ -2048,6 +2049,44 @@ public abstract class GroupServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
+	 * Returns the system event local service.
+	 *
+	 * @return the system event local service
+	 */
+	public com.liferay.portal.kernel.service.SystemEventLocalService getSystemEventLocalService() {
+		return systemEventLocalService;
+	}
+
+	/**
+	 * Sets the system event local service.
+	 *
+	 * @param systemEventLocalService the system event local service
+	 */
+	public void setSystemEventLocalService(
+		com.liferay.portal.kernel.service.SystemEventLocalService systemEventLocalService) {
+		this.systemEventLocalService = systemEventLocalService;
+	}
+
+	/**
+	 * Returns the system event persistence.
+	 *
+	 * @return the system event persistence
+	 */
+	public SystemEventPersistence getSystemEventPersistence() {
+		return systemEventPersistence;
+	}
+
+	/**
+	 * Sets the system event persistence.
+	 *
+	 * @param systemEventPersistence the system event persistence
+	 */
+	public void setSystemEventPersistence(
+		SystemEventPersistence systemEventPersistence) {
+		this.systemEventPersistence = systemEventPersistence;
+	}
+
+	/**
 	 * Returns the team local service.
 	 *
 	 * @return the team local service
@@ -2713,6 +2752,10 @@ public abstract class GroupServiceBaseImpl extends BaseServiceImpl
 	protected RolePersistence rolePersistence;
 	@BeanReference(type = RoleFinder.class)
 	protected RoleFinder roleFinder;
+	@BeanReference(type = com.liferay.portal.kernel.service.SystemEventLocalService.class)
+	protected com.liferay.portal.kernel.service.SystemEventLocalService systemEventLocalService;
+	@BeanReference(type = SystemEventPersistence.class)
+	protected SystemEventPersistence systemEventPersistence;
 	@BeanReference(type = com.liferay.portal.kernel.service.TeamLocalService.class)
 	protected com.liferay.portal.kernel.service.TeamLocalService teamLocalService;
 	@BeanReference(type = com.liferay.portal.kernel.service.TeamService.class)

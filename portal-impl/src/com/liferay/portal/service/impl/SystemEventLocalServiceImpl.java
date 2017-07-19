@@ -14,6 +14,8 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -27,7 +29,9 @@ import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLoca
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.base.SystemEventLocalServiceBaseImpl;
+import com.liferay.portal.util.PropsValues;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -79,6 +83,32 @@ public class SystemEventLocalServiceImpl
 			type, extraData, StringPool.BLANK);
 	}
 
+	public void checkSystemEvents() throws PortalException {
+		if (PropsValues.STAGING_SYSTEM_EVENT_MAX_AGE <= 0) {
+			return;
+		}
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			systemEventLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Calendar calendar = Calendar.getInstance();
+
+				calendar.add(
+					Calendar.HOUR, -PropsValues.STAGING_SYSTEM_EVENT_MAX_AGE);
+
+				dynamicQuery.add(
+					RestrictionsFactoryUtil.lt(
+						"createDate", calendar.getTime()));
+			});
+
+		actionableDynamicQuery.setPerformActionMethod(
+			systemEvent -> deleteSystemEvent((SystemEvent)systemEvent));
+
+		actionableDynamicQuery.performActions();
+	}
+
 	@Override
 	public void deleteSystemEvents(long groupId) {
 		systemEventPersistence.removeByGroupId(groupId);
@@ -113,6 +143,24 @@ public class SystemEventLocalServiceImpl
 			groupId, classNameId, classPK, type);
 	}
 
+	public boolean validateGroup(long groupId) throws PortalException {
+		if (groupId > 0) {
+			Group group = groupLocalService.getGroup(groupId);
+
+			if (group.hasStagingGroup() && !group.isStagedRemotely()) {
+				return false;
+			}
+
+			if (group.hasRemoteStagingGroup() &&
+				!PropsValues.STAGING_LIVE_GROUP_REMOTE_STAGING_ENABLED) {
+
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	protected SystemEvent addSystemEvent(
 			long userId, long companyId, long groupId, String className,
 			long classPK, String classUuid, String referrerClassName, int type,
@@ -142,6 +190,10 @@ public class SystemEventLocalServiceImpl
 			if (companyGroup.getGroupId() == groupId) {
 				groupId = 0;
 			}
+		}
+
+		if (!validateGroup(groupId)) {
+			return null;
 		}
 
 		if (Validator.isNotNull(referrerClassName) &&

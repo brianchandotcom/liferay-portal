@@ -49,7 +49,7 @@ public class RenderParametersPool {
 	public static Map<String, String[]> clear(
 		HttpServletRequest request, long plid, String portletId) {
 
-		Map<String, Map<String, String[]>> plidPool = clear(request, plid);
+		Map<String, Map<String, String[]>> plidPool = get(request, plid);
 
 		if (plidPool == null) {
 			return null;

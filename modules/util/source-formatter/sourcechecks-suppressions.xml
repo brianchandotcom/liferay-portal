@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 
 <suppressions>
+	<suppress checks="JavaHibernateSQLCheck" files="modules/util/source-formatter/src/main/java/com/liferay/source/formatter/checks/JavaHibernateSQLCheck\.java" />
+	<suppress checks="JavaInterfaceCheck" files="modules/util/source-formatter/src/main/java/com/liferay/source/formatter/checks/JavaInterfaceCheck\.java" />
 	<suppress checks="JavaVariableTypeCheck" files="modules/util/source-formatter/src/main/java/com/liferay/source/formatter/checks/XMLSpringFileCheck\.java" />
 	<suppress checks="JavaXMLSecurityCheck" files="modules/util/source-formatter/src/main/java/com/liferay/source/formatter/checks/JavaXMLSecurityCheck\.java" />
 </suppressions>

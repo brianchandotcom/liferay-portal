@@ -67,7 +67,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 			/>
 		</c:if>
 
-		<span><%= HtmlUtil.escape(title) %></span>
+		<span class="header-title"><%= HtmlUtil.escape(title) %></span>
 	</c:if>
 
 	<c:if test="<%= !print %>">

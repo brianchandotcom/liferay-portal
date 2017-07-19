@@ -25,11 +25,11 @@ public class JavaHibernateSQLCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (content.contains("= session.createSynchronizedSQLQuery(") &&
+		if (content.contains("= session.createSQLQuery(") &&
 			content.contains("com.liferay.portal.kernel.dao.orm.Session")) {
 
 			content = StringUtil.replace(
-				content, "= session.createSynchronizedSQLQuery(",
+				content, "= session.createSQLQuery(",
 				"= session.createSynchronizedSQLQuery(");
 		}
 

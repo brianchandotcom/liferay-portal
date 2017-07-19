@@ -25,7 +25,7 @@ public class JavaInterfaceCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		return StringUtil.replace(content, " interface ", " interface ");
+		return StringUtil.replace(content, " static interface ", " interface ");
 	}
 
 }

@@ -248,7 +248,7 @@
 				return '<%= PropsValues.SESSION_ENABLE_URL_WITH_SESSION_ID ? session.getId() : StringPool.BLANK %>';
 			},
 			getSiteAdminURL: function() {
-				return '<%= PortalUtil.getSiteAdminURL(themeDisplay.getCompany(), themeDisplay.getScopeGroup(), StringPool.BLANK, null) %>';
+				return '<%= PortalUtil.getSiteAdminURL(themeDisplay, StringPool.BLANK, null) %>';
 			},
 			getSiteGroupId: function() {
 				return '<%= themeDisplay.getSiteGroupId() %>';

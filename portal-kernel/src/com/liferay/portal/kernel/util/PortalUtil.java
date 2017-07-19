@@ -1750,6 +1750,11 @@ public class PortalUtil {
 			portletResponse, themeDisplay, portletName);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getSiteAdminURL(
+	 *             ThemeDisplay, String, Map)}
+	 */
+	@Deprecated
 	public static String getSiteAdminURL(
 			Company company, Group group, String ppid,
 			Map<String, String[]> params)
@@ -1759,8 +1764,8 @@ public class PortalUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #getSiteAdminURL(Company, Group, String, Map)}
+	 * @deprecated As of 7.0.0, replaced by {@link #getSiteAdminURL(
+	 *             ThemeDisplay, String, Map)}
 	 */
 	@Deprecated
 	public static String getSiteAdminURL(
@@ -1768,6 +1773,14 @@ public class PortalUtil {
 		throws PortalException {
 
 		return getPortal().getSiteAdminURL(group, ppid, params);
+	}
+
+	public static String getSiteAdminURL(
+			ThemeDisplay themeDisplay, String ppid,
+			Map<String, String[]> params)
+		throws PortalException {
+
+		return getPortal().getSiteAdminURL(themeDisplay, ppid, params);
 	}
 
 	/**

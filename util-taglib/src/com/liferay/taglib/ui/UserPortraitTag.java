@@ -15,6 +15,7 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageConstants;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -52,15 +53,23 @@ public class UserPortraitTag extends IncludeTag {
 
 		jspWriter.write("<div class=\"");
 
+		boolean useInitialsAsDefaultPortrait =
+			_userFileUploadsSettings.isImageDefaultUseInitials();
 		long userPortraitId = 0;
 
 		if (user != null) {
 			userPortraitId = user.getPortraitId();
+
+			String defaultPortrait = LanguageUtil.get(
+				user.getLocale(), LanguageConstants.KEY_USER_DEFAULT_PORTRAIT,
+				LanguageConstants.VALUE_INITIALS);
+
+			if (defaultPortrait.equals(LanguageConstants.VALUE_IMAGE)) {
+				useInitialsAsDefaultPortrait = false;
+			}
 		}
 
-		if (_userFileUploadsSettings.isImageDefaultUseInitials() &&
-			(userPortraitId == 0)) {
-
+		if (useInitialsAsDefaultPortrait && (userPortraitId == 0)) {
 			jspWriter.write(LexiconUtil.getUserColorCssClass(user));
 			jspWriter.write(" ");
 			jspWriter.write(_cssClass);

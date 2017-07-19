@@ -20,12 +20,12 @@ import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.CalendarLocalService;
 import com.liferay.calendar.service.CalendarResourceLocalService;
+import com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
-import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -43,6 +43,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -150,6 +151,19 @@ public class CalendarResourceStagedModelDataHandler
 				PortletDataContext.REFERENCE_TYPE_DEPENDENCY_DISPOSABLE, true);
 		}
 
+		String calendarResourceName = calendarResource.getName(
+			LocaleUtil.getDefault());
+
+		Group group = _groupLocalService.getGroup(
+			calendarResource.getGroupId());
+
+		if (!Objects.equals(calendarResourceName, group.getDescriptiveName()) ||
+			!calendarResource.isGroup()) {
+
+			calendarResourceElement.addAttribute(
+				"keepCalendarResourceName", "true");
+		}
+
 		portletDataContext.addClassedModel(
 			calendarResourceElement,
 			ExportImportPathUtil.getModelPath(calendarResource),
@@ -246,16 +260,13 @@ public class CalendarResourceStagedModelDataHandler
 			CalendarResource calendarResource)
 		throws Exception {
 
-		Group sourceGroup = _groupLocalService.fetchGroup(
-			portletDataContext.getSourceGroupId());
+		Element element = portletDataContext.getImportDataStagedModelElement(
+			calendarResource);
 
-		String calendarResourceName = calendarResource.getName(
-			LocaleUtil.getDefault());
+		boolean keepCalendarResourceName = GetterUtil.getBoolean(
+			element.attributeValue("keepCalendarResourceName"));
 
-		if (((sourceGroup == null) ||
-			 !calendarResourceName.equals(sourceGroup.getDescriptiveName())) &&
-			!calendarResource.isGroup()) {
-
+		if (keepCalendarResourceName) {
 			return calendarResource.getNameMap();
 		}
 

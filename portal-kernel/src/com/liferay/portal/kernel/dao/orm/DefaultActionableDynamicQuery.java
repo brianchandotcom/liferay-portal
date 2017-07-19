@@ -94,6 +94,8 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 			}
 		}
 		finally {
+			_offset = 0;
+
 			actionsCompleted();
 		}
 	}
@@ -238,12 +240,12 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 	}
 
 	protected void addOrderCriteria(DynamicQuery dynamicQuery) {
-		if (_addOrderCriteriaMethod != null) {
-			_addOrderCriteriaMethod.addOrderCriteria(dynamicQuery);
-		}
-		else {
+		if (_addOrderCriteriaMethod == null) {
 			dynamicQuery.addOrder(
 				OrderFactoryUtil.asc(_primaryKeyPropertyName));
+		}
+		else {
+			_addOrderCriteriaMethod.addOrderCriteria(dynamicQuery);
 		}
 	}
 
@@ -253,12 +255,17 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 		final DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			_modelClass, _classLoader);
 
-		Property property = PropertyFactoryUtil.forName(
-			_primaryKeyPropertyName);
+		if (_addOrderCriteriaMethod == null) {
+			Property property = PropertyFactoryUtil.forName(
+				_primaryKeyPropertyName);
 
-		dynamicQuery.add(property.gt(previousPrimaryKey));
+			dynamicQuery.add(property.gt(previousPrimaryKey));
 
-		dynamicQuery.setLimit(0, _interval);
+			dynamicQuery.setLimit(0, _interval);
+		}
+		else {
+			dynamicQuery.setLimit(_offset, _interval + _offset);
+		}
 
 		addDefaultCriteria(dynamicQuery);
 
@@ -272,6 +279,8 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 			public Long call() throws Exception {
 				List<Object> objects = (List<Object>)executeDynamicQuery(
 					_dynamicQueryMethod, dynamicQuery);
+
+				_offset += objects.size();
 
 				if (objects.isEmpty()) {
 					return -1L;
@@ -408,6 +417,7 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 	private String _groupIdPropertyName = "groupId";
 	private int _interval = Indexer.DEFAULT_INTERVAL;
 	private Class<?> _modelClass;
+	private int _offset;
 	private boolean _parallel;
 
 	@SuppressWarnings("rawtypes")

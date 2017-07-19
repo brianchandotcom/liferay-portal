@@ -121,16 +121,6 @@
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 	</command>
 
-	<command name="gotoDMDocumentCP">
-		<var name="key_rowEntry" value="${dmDocumentTitle}" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Permissions" />
-
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-	</command>
-
 	<command name="gotoDMFolderPG">
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />

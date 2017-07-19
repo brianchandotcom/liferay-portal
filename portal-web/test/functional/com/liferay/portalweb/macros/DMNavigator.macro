@@ -51,6 +51,16 @@
 		<execute function="AssertClick" locator1="NavBar#DETAILS" value1="Details" />
 	</command>
 
+	<command name="gotoDocumentPermissionsCP">
+		<var name="key_rowEntry" value="${dmDocumentTitle}" />
+
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Permissions" />
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+	</command>
+
 	<command name="gotoDocumentPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 

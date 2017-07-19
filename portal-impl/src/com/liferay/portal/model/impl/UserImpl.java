@@ -61,6 +61,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.RemotePreference;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -72,6 +73,7 @@ import com.liferay.portal.security.auth.EmailAddressGeneratorFactory;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.users.admin.kernel.util.UserInitialsGenerator;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -514,10 +516,7 @@ public class UserImpl extends UserBaseImpl {
 
 	@Override
 	public String getInitials() {
-		String firstInitial = StringUtil.shorten(getFirstName(), 1);
-		String lastInitial = StringUtil.shorten(getLastName(), 1);
-
-		return StringUtil.toUpperCase(firstInitial.concat(lastInitial));
+		return _userInitialsGenerator.getInitials(this);
 	}
 
 	@Override
@@ -995,6 +994,10 @@ public class UserImpl extends UserBaseImpl {
 
 	private static final boolean _hasUsersProfileFriendlyURL =
 		Validator.isNotNull(PropsValues.USERS_PROFILE_FRIENDLY_URL);
+	private static volatile UserInitialsGenerator _userInitialsGenerator =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			UserInitialsGenerator.class, UserImpl.class,
+			"_userInitialsGenerator", false);
 
 	private Contact _contact;
 	private Locale _locale;

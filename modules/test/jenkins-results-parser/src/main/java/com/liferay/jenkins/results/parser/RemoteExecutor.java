@@ -172,7 +172,7 @@ public class RemoteExecutor {
 			throws InterruptedException, IOException {
 
 			StringBuffer sb = new StringBuffer(
-				"ssh -o PasswordAuthentication=no ");
+				"ssh -o NumberOfPasswordPrompts=0 ");
 
 			sb.append(_targetSlave);
 			sb.append(" '");

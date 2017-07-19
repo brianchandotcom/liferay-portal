@@ -197,7 +197,7 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 	Liferay.Util.toggleRadio('<portlet:namespace />rangeLast', '<portlet:namespace />rangeLastInputs', ['<portlet:namespace />startEndDate']);
 </aui:script>
 
-<aui:script use="liferay-export-import">
+<aui:script use="liferay-staging-processes-export-import">
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="publishLayouts" var="publishProcessesURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= cmd %>" />
 		<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />

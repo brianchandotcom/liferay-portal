@@ -1,5 +1,5 @@
 AUI.add(
-	'liferay-export-import',
+	'liferay-staging-processes-export-import',
 	function(A) {
 		var $ = AUI.$;
 

@@ -82,7 +82,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 	</c:when>
 </c:choose>
 
-<aui:script use="liferay-export-import">
+<aui:script use="liferay-staging-processes-export-import">
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="publishLayouts" var="publishProcessesURL">
 		<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />
 		<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_DELTA_PARAM) %>" />

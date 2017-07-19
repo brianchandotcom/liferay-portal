@@ -15,6 +15,7 @@
 package com.liferay.poshi.runner.elements;
 
 import com.liferay.poshi.runner.util.RegexUtil;
+
 import org.dom4j.Element;
 
 /**
@@ -71,6 +72,7 @@ public class ReturnElement extends PoshiElement {
 			String contentPad = RegexUtil.getGroup(content, "([\\s]*).*", 1);
 
 			sb.append(contentPad);
+
 			sb.append(attributeValue("from"));
 			sb.append("\n");
 			sb.append(pad);

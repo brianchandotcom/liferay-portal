@@ -4187,6 +4187,81 @@
 		</execute>
 	</command>
 
+	<command name="SubmitWithRequiredDateField" priority="4">
+		<description message="This is a use case for LPS-73322." />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoAddForm" />
+
+		<execute macro="Form#editName" />
+
+		<execute macro="Form#editDescription" />
+
+		<execute macro="Form#gotoAddField">
+			<var name="fieldType" value="Date" />
+		</execute>
+
+		<execute macro="Form#editFieldLabel">
+			<var name="fieldValue" value="Date Field" />
+		</execute>
+
+		<execute macro="FormFields#enableSwitcher">
+			<var name="fieldName" value="required" />
+		</execute>
+
+		<execute macro="Form#closeSidebar" />
+
+		<execute macro="Form#save" />
+
+		<execute macro="Form#publishForm" />
+
+		<execute macro="FormsAdminNavigator#gotoPublishCopyURLLink" />
+
+		<execute macro="Form#getPublishedFormPublicURL">
+			<return from="publicURL" name="publishedFormPublicURL" />
+			<var name="publishedFormPublicURL" value="${publishedFormPublicURL}" />
+		</execute>
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${publishedFormPublicURL}" />
+		</execute>
+
+		<execute macro="FormFields#viewDateField">
+			<var name="fieldLabel" value="Date Field" />
+			<var name="fieldName" value="DateField" />
+		</execute>
+
+		<execute macro="FormFields#viewRequiredAsterisk" />
+
+		<execute macro="FormPortlet#submitWithValidationError" />
+
+		<execute macro="FormFields#editDate">
+			<var name="fieldName" value="DateField" />
+			<var name="fieldValue" value="01/01/2016" />
+		</execute>
+
+		<execute macro="FormPortlet#submit" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoViewEntries" />
+
+		<execute macro="FormsAdminNavigator#gotoView" />
+
+		<execute macro="FormsAdmin#viewDateEntry">
+			<var name="fieldLabel" value="Date Field" />
+			<var name="fieldName" value="DateField" />
+			<var name="fieldValue" value="01/01/2016" />
+		</execute>
+	</command>
+
 	<command name="ViewAltSuccessPagePagination" priority="2">
 		<description message="This is a use case for LPS-71485 and LPS-71512." />
 

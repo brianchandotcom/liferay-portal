@@ -201,7 +201,7 @@ public class ThemeContributorDynamicInclude implements DynamicInclude {
 		long themeLastModified, HttpServletRequest request,
 		PrintWriter printWriter) {
 
-		printWriter.write("<link data-senna-track=\"temporary\" href=\"");
+		printWriter.write("<link data-senna-track=\"permanent\" href=\"");
 
 		printWriter.write(
 			_portal.getStaticResourceURL(
@@ -215,7 +215,7 @@ public class ThemeContributorDynamicInclude implements DynamicInclude {
 		long themeLastModified, HttpServletRequest request,
 		PrintWriter printWriter) {
 
-		printWriter.write("<script data-senna-track=\"temporary\" src=\"");
+		printWriter.write("<script data-senna-track=\"permanent\" src=\"");
 
 		printWriter.write(
 			_portal.getStaticResourceURL(
@@ -235,7 +235,7 @@ public class ThemeContributorDynamicInclude implements DynamicInclude {
 				portalURL.concat(_portal.getPathProxy()).concat(resourceURL),
 				themeLastModified);
 
-			printWriter.write("<link data-senna-track=\"temporary\" href=\"");
+			printWriter.write("<link data-senna-track=\"permanent\" href=\"");
 			printWriter.write(staticResourceURL);
 			printWriter.write("\" rel=\"stylesheet\" type = \"text/css\" />\n");
 		}
@@ -251,7 +251,7 @@ public class ThemeContributorDynamicInclude implements DynamicInclude {
 				portalURL.concat(_portal.getPathProxy()).concat(resourceURL),
 				themeLastModified);
 
-			printWriter.write("<script data-senna-track=\"temporary\" src=\"");
+			printWriter.write("<script data-senna-track=\"permanent\" src=\"");
 			printWriter.write(staticResourceURL);
 			printWriter.write("\" \" type = \"text/javascript\"></script>\n");
 		}

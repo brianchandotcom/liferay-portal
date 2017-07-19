@@ -154,12 +154,16 @@
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoBlogsCP">
-			<var name="entriesPermissions" value="Entries Permissions" />
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Blogs Page" />
 			<var name="siteName" value="Organization Name" />
-			<var name="siteURL" value="true" />
 		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoBlogsEntriesPermissionsCP" />
 
 		<execute macro="Role#definePermissionPG">
 			<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_ADD_ENTRY_CHECKBOX" />
@@ -186,12 +190,16 @@
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoBlogsCP">
-			<var name="entriesPermissions" value="Entries Permissions" />
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Blogs Page" />
 			<var name="siteName" value="Organization Name" />
-			<var name="siteURL" value="true" />
 		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoBlogsEntriesPermissionsCP" />
 
 		<execute macro="Role#removePermissionPG">
 			<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_ADD_ENTRY_CHECKBOX" />
@@ -546,11 +554,16 @@
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoBlogsCP">
-			<var name="entriesPermissions" value="true" />
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Blogs Page" />
 			<var name="siteName" value="Site Name" />
 		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoBlogsEntriesPermissionsCP" />
 
 		<execute macro="Team#definePermissionPG">
 			<var name="permissionDefinitionKey" value="_ACTION_ADD_ENTRY" />
@@ -577,11 +590,16 @@
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoBlogsCP">
-			<var name="entriesPermissions" value="true" />
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Blogs Page" />
 			<var name="siteName" value="Site Name" />
 		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoBlogsEntriesPermissionsCP" />
 
 		<execute macro="Team#removePermissionPG">
 			<var name="permissionDefinitionKey" value="_ACTION_ADD_ENTRY" />
@@ -1731,11 +1749,16 @@
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoBlogsCP">
-			<var name="entriesPermissions" value="true" />
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Blogs Page" />
 			<var name="siteName" value="Site Name" />
 		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoBlogsEntriesPermissionsCP" />
 
 		<execute macro="Role#removePermissionPG">
 			<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_SUBSCRIBE_CHECKBOX" />

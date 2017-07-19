@@ -161,7 +161,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			newenvironment="true"
 		>
 			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
-			<arg value="${project.dir}/lib/versions.xml" />
+			<arg value="${project.dir}/lib/versions.xml,${project.dir}/lib/versions-ext.xml" />
 			<arg value="${project.dir}/lib/versions.xsl" />
 			<arg value="${project.dir}/lib/versions.html" />
 		</java>

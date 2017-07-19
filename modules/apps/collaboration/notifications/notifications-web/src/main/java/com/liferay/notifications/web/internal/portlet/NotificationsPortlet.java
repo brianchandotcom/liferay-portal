@@ -118,6 +118,15 @@ public class NotificationsPortlet extends MVCPortlet {
 			_userNotificationEventLocalService.updateUserNotificationEvent(
 				notification);
 		}
+
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(themeDisplay.getLocale());
+
+		SessionMessages.add(
+			actionRequest, "requestProcessed",
+			LanguageUtil.get(
+				resourceBundle,
+				"all-notifications-were-marked-as-read-sucessfully"));
 	}
 
 	public void markAsRead(

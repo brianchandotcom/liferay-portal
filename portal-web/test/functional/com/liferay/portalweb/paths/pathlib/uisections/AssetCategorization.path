@@ -110,7 +110,7 @@
 </tr>
 <tr>
 	<td>TAG_CHECKBOX</td>
-	<td>//div[contains(.,'${key_tagName}')]//input[@type='checkbox']</td>
+	<td>//tr[contains(.,'${key_tagName}')]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

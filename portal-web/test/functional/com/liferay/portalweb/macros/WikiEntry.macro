@@ -9,14 +9,6 @@
 		</execute>
 	</command>
 
-	<command name="addPageContentViaSource">
-		<execute function="Click" locator1="AlloyEditor#CONTENT_FIELD" />
-
-		<execute function="Click" locator1="AlloyEditor#CONTENT_EDITOR_SWITCH_ACE_EDITOR" />
-
-		<execute function="Type#sendKeysAceEditor" locator1="TextArea#ACE_EDITOR" value1="${wikiPageContent}" />
-	</command>
-
 	<command name="addPageTitle">
 		<execute function="Type#typeEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${wikiPageTitle}" />
 	</command>

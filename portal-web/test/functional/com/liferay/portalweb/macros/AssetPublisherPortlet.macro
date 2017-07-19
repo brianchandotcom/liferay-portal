@@ -142,6 +142,10 @@
 			<var name="navTab" value="Display Settings" />
 		</execute>
 
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Set and Enable" />
+		</execute>
+
 		<if>
 			<isset var="disableConfiguration" />
 			<then>

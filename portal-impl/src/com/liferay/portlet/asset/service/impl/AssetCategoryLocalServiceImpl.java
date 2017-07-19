@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -670,10 +671,6 @@ public class AssetCategoryLocalServiceImpl
 		name = ModelHintsUtil.trimString(
 			AssetCategory.class.getName(), "name", name);
 
-		if (categoryProperties == null) {
-			categoryProperties = new String[0];
-		}
-
 		validate(categoryId, parentCategoryId, name, vocabularyId);
 
 		if (parentCategoryId > 0) {
@@ -710,14 +707,16 @@ public class AssetCategoryLocalServiceImpl
 
 		oldCategoryProperties = ListUtil.copy(oldCategoryProperties);
 
-		for (int i = 0; i < categoryProperties.length; i++) {
+		for (int i = 0; i < ArrayUtil.getLength(categoryProperties); i++) {
 			String[] categoryProperty = StringUtil.split(
-				categoryProperties[i],
+				GetterUtil.getString(ArrayUtil.getValue(categoryProperties, i)),
 				AssetCategoryConstants.PROPERTY_KEY_VALUE_SEPARATOR);
 
 			if (categoryProperty.length <= 1) {
 				categoryProperty = StringUtil.split(
-					categoryProperties[i], CharPool.COLON);
+					GetterUtil.getString(
+						ArrayUtil.getValue(categoryProperties, i)),
+					CharPool.COLON);
 			}
 
 			String key = StringPool.BLANK;
@@ -769,9 +768,13 @@ public class AssetCategoryLocalServiceImpl
 			}
 		}
 
-		for (AssetCategoryProperty categoryProperty : oldCategoryProperties) {
-			assetCategoryPropertyLocalService.deleteAssetCategoryProperty(
-				categoryProperty);
+		if (categoryProperties != null) {
+			for (AssetCategoryProperty categoryProperty :
+					oldCategoryProperties) {
+
+				assetCategoryPropertyLocalService.deleteAssetCategoryProperty(
+					categoryProperty);
+			}
 		}
 
 		// Indexer

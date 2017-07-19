@@ -85,13 +85,13 @@ public class SystemEventCheckTest {
 
 		validate(expiredSystemEvents, false);
 
-		List<SystemEvent> nonExpiredSystemEvents = new LinkedList<>();
+		List<SystemEvent> nonexpiredSystemEvents = new LinkedList<>();
 
 		for (int i = 0; i < 7; i++) {
-			nonExpiredSystemEvents.add(addSystemEvent());
+			nonexpiredSystemEvents.add(addSystemEvent());
 		}
 
-		validate(nonExpiredSystemEvents, false);
+		validate(nonexpiredSystemEvents, false);
 
 		SystemEventLocalServiceUtil.checkSystemEvents();
 
@@ -102,7 +102,7 @@ public class SystemEventCheckTest {
 			validate(expiredSystemEvents, true);
 		}
 
-		validate(nonExpiredSystemEvents, false);
+		validate(nonexpiredSystemEvents, false);
 	}
 
 	public void setPortalProperty(String propertyName, Object value)

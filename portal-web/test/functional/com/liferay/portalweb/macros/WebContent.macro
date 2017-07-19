@@ -51,8 +51,6 @@
 		</execute>
 
 		<execute macro="Button#clickSaveAsDraft" />
-
-		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="addDraftPGViaAP">
@@ -1211,8 +1209,6 @@
 
 	<command name="saveAsDraftViaAP">
 		<execute macro="Button#clickSaveAsDraft" />
-
-		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute function="Pause" locator1="5000" />
 

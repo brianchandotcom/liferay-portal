@@ -419,14 +419,14 @@ done
 
 info
 
-if [[ "${OPTION_VERIFY}" ]]; then
-	if ((TOTAL_FILES_COUNTER > 0)); then
+if ((TOTAL_FILES_COUNTER > 0)); then
+	if [[ "${OPTION_VERIFY}" ]]; then
 		info "${TOTAL_FILES_COUNTER} files require updating."
 	else
-		info "All files up to date."
+		info "${TOTAL_FILES_COUNTER} files were successfully updated."
 	fi
 else
-	info "${TOTAL_FILES_COUNTER} files were successfully updated."
+	info "All files up to date."
 fi
 
 REMAINING_RATE="$(get_remaining_rate)"

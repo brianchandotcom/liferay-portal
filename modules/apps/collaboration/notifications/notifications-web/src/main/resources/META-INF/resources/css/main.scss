@@ -2,9 +2,13 @@
 @import "mixins";
 
 .notifications-portlet .user-notifications {
-	.archived, .archived:hover {
-		.list-group-item-content, .list-group-item-field {
-			background-color: #F3F3F3;
+	.unread {
+		.list-group-item-field:first-child {
+			border-left: 6px solid #65B3F0;
+
+			.checkbox {
+				margin-left: -6px;
+			}
 		}
 	}
 }

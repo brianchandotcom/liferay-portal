@@ -23,8 +23,10 @@ boolean anonymous = jsonObject.getBoolean("anonymous");
 
 long userNotificationEventUserId = jsonObject.getLong("userId");
 
-if (userNotificationEvent.isArchived()) {
-	row.setCssClass("archived");
+boolean unread = !userNotificationEvent.isArchived();
+
+if (unread) {
+	row.setCssClass("unread");
 }
 %>
 
@@ -55,17 +57,21 @@ if (userNotificationEvent.isArchived()) {
 		</portlet:actionURL>
 
 		<liferay-ui:search-container-column-text colspan="<%= 2 %>">
-			<a href="<%= markAsReadURL.toString() %>">
-				<div class="body-container">
+			<c:if test="<%= unread %>">
+				<h4>
+			</c:if>
+				<a href="<%= markAsReadURL.toString() %>">
 					<%= userNotificationFeedEntry.getBody() %>
-				</div>
+				</a>
+			<c:if test="<%= unread %>">
+				</h4>
+			</c:if>
 
-				<div class="timestamp">
-					<span title="<%= dateFormatDateTime.format(userNotificationEvent.getTimestamp()) %>">
-						<%= Time.getRelativeTimeDescription(userNotificationEvent.getTimestamp(), themeDisplay.getLocale(), themeDisplay.getTimeZone(), dateFormatDateTime) %>
-					</span>
-				</div>
-			</a>
+			<h5 class="text-default">
+				<span title="<%= dateFormatDateTime.format(userNotificationEvent.getTimestamp()) %>">
+					<%= Time.getRelativeTimeDescription(userNotificationEvent.getTimestamp(), themeDisplay.getLocale(), themeDisplay.getTimeZone(), dateFormatDateTime) %>
+				</span>
+			</h5>
 		</liferay-ui:search-container-column-text>
 	</c:otherwise>
 </c:choose>

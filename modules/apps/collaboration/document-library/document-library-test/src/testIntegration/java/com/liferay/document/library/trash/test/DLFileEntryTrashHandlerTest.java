@@ -445,35 +445,40 @@ public class DLFileEntryTrashHandlerTest
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
-		BaseModel<?> baseModel = addBaseModel(parentBaseModel, serviceContext);
-
-		DLAppLocalServiceUtil.addFileRank(
-			group.getGroupId(), TestPropsValues.getCompanyId(),
-			TestPropsValues.getUserId(), (Long)baseModel.getPrimaryKeyObj(),
-			serviceContext);
-
-		Assert.assertEquals(
-			1,
-			getActiveDLFileRanksCount(
-				group.getGroupId(), (Long)baseModel.getPrimaryKeyObj()));
-
-		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
-
-		Assert.assertEquals(
-			0,
-			getActiveDLFileRanksCount(
-				group.getGroupId(), (Long)baseModel.getPrimaryKeyObj()));
-
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			getBaseModelClassName());
 
-		trashHandler.restoreTrashEntry(
-			TestPropsValues.getUserId(), getTrashEntryClassPK(baseModel));
+		try {
+			baseModel = addBaseModel(parentBaseModel, serviceContext);
 
-		Assert.assertEquals(
-			1,
-			getActiveDLFileRanksCount(
-				group.getGroupId(), (Long)baseModel.getPrimaryKeyObj()));
+			DLAppLocalServiceUtil.addFileRank(
+				group.getGroupId(), TestPropsValues.getCompanyId(),
+				TestPropsValues.getUserId(), (Long)baseModel.getPrimaryKeyObj(),
+				serviceContext);
+
+			Assert.assertEquals(
+				1,
+				getActiveDLFileRanksCount(
+					group.getGroupId(), (Long)baseModel.getPrimaryKeyObj()));
+
+			moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
+
+			Assert.assertEquals(
+				0,
+				getActiveDLFileRanksCount(
+					group.getGroupId(), (Long)baseModel.getPrimaryKeyObj()));
+
+			trashHandler.restoreTrashEntry(
+				TestPropsValues.getUserId(), getTrashEntryClassPK(baseModel));
+
+			Assert.assertEquals(
+				1,
+				getActiveDLFileRanksCount(
+					group.getGroupId(), (Long)baseModel.getPrimaryKeyObj()));
+		}
+		finally {
+			trashHandler.deleteTrashEntry(getTrashEntryClassPK(baseModel));
+		}
 	}
 
 	private static final String _FILE_ENTRY_TITLE = RandomTestUtil.randomString(

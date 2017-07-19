@@ -16,7 +16,7 @@ package com.liferay.commerce.product.options.web.internal.display.context;
 
 import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.options.web.internal.portlet.action.ActionHelper;
-import com.liferay.commerce.product.options.web.internal.util.CPOptionCategoriesPortletUtil;
+import com.liferay.commerce.product.options.web.internal.util.CPOptionsPortletUtil;
 import com.liferay.commerce.product.service.CPOptionCategoryService;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -59,7 +59,7 @@ public class CPOptionCategoryDisplayContext
 			"no-option-categories-were-found");
 
 		OrderByComparator<CPOptionCategory> orderByComparator =
-			CPOptionCategoriesPortletUtil.getCPOptionCategoryOrderByComparator(
+			CPOptionsPortletUtil.getCPOptionCategoryOrderByComparator(
 				getOrderByCol(), getOrderByType());
 
 		searchContainer.setOrderByCol(getOrderByCol());

@@ -98,28 +98,3 @@ CPDefinition cpDefinition = cpSimpleCPTypeDisplayContext.getCPDefinition();
 			});
 	</script>
 </c:if>
-
-<style>
-	.product-detail .thumb{
-		margin-bottom: 30px;
-		border: 3px solid #fff;
-		cursor: pointer;
-	}
-
-	.product-detail .thumb:hover{
-		margin-bottom: 30px;
-		border: 3px solid #C9C9C9;
-	}
-
-	.product-detail .thumb img{
-		width: 100%;
-	}
-
-	.product-detail .full-image img{
-		width: 80%;
-	}
-
-	.product-detail .full-image{
-		text-align: center;
-	}
-</style>

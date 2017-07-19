@@ -31,9 +31,11 @@ import com.liferay.asset.kernel.exception.NoSuchVocabularyException;
 import com.liferay.asset.kernel.exception.VocabularyNameException;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
+import com.liferay.asset.kernel.model.AssetCategoryProperty;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.ClassTypeReader;
+import com.liferay.asset.kernel.service.AssetCategoryPropertyLocalService;
 import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -57,6 +59,7 @@ import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 
 import java.io.IOException;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -181,12 +184,18 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 				descriptionMap, vocabularyId, null, serviceContext);
 		}
 		else {
+			List<AssetCategoryProperty> categoryProperties =
+				_assetCategoryPropertyLocalService.getCategoryProperties(
+					categoryId);
+
+			String[] categoryPropertiesArray = getCategoryProperties(
+				categoryProperties);
 
 			// Update category
 
 			_assetCategoryService.updateCategory(
 				categoryId, parentCategoryId, titleMap, descriptionMap,
-				vocabularyId, null, serviceContext);
+				vocabularyId, categoryPropertiesArray, serviceContext);
 		}
 	}
 
@@ -330,6 +339,24 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 		return categoryProperties;
 	}
 
+	protected String[] getCategoryProperties(
+		List<AssetCategoryProperty> categoryProperties) {
+
+		String[] categoryPropertiesArray =
+			new String[categoryProperties.size()];
+
+		for (int i = 0; i < categoryProperties.size(); i++) {
+			AssetCategoryProperty categoryProperty = categoryProperties.get(i);
+
+			categoryPropertiesArray[i] =
+				categoryProperty.getKey() +
+					AssetCategoryConstants.PROPERTY_KEY_VALUE_SEPARATOR +
+						categoryProperty.getValue();
+		}
+
+		return categoryPropertiesArray;
+	}
+
 	protected String getSettings(ActionRequest actionRequest)
 		throws PortalException {
 
@@ -426,6 +453,11 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 
 	private AssetCategoriesAdminWebConfiguration
 		_assetCategoriesAdminWebConfiguration;
+
+	@Reference
+	private AssetCategoryPropertyLocalService
+		_assetCategoryPropertyLocalService;
+
 	private AssetCategoryService _assetCategoryService;
 	private AssetVocabularyService _assetVocabularyService;
 

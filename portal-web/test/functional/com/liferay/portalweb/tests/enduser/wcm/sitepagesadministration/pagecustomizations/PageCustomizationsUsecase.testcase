@@ -86,23 +86,15 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userScreenName" value="usersn" />
 		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
+		<execute macro="JSONRole#addRegularRole">
+			<var name="roleTitle" value="Roles Regrole Name"/>
+			<var name="roleKey" value="Roles Regrole Name"/>
 		</execute>
 
-		<execute macro="Role#add">
-			<var name="roleTitle" value="Roles Regrole Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_PAGE_CUSTOMIZE_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Customize" />
-			<var name="roleTitle" value="Roles Regrole Name" />
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="CUSTOMIZE"/>
+			<var name="resourceName" value="com.liferay.portal.kernel.model.Layout"/>
+			<var name="roleTitle" value="Roles Regrole Name"/>
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">

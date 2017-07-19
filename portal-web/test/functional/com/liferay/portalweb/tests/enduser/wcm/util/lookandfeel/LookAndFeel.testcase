@@ -84,8 +84,6 @@
 			<var name="decorator" value="Borderless" />
 		</execute>
 
-		<execute macro="PortletEntry#save" />
-
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Web Content Display" />
 			<var name="portletOption" value="Look and Feel Configuration" />

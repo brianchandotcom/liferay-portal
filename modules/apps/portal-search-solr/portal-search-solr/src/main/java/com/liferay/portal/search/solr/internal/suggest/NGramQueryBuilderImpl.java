@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.solr.client.solrj.SolrQuery;
 
 import org.osgi.service.component.annotations.Component;
@@ -79,7 +80,7 @@ public class NGramQueryBuilderImpl implements NGramQueryBuilder {
 
 		sb.append(Field.SPELL_CHECK_WORD);
 		sb.append(StringPool.COLON);
-		sb.append(input);
+		sb.append(QueryParser.escape(input));
 
 		solrQuery.setQuery(sb.toString());
 
@@ -141,7 +142,7 @@ public class NGramQueryBuilderImpl implements NGramQueryBuilder {
 
 		sb.append(fieldName);
 		sb.append(StringPool.COLON);
-		sb.append(fieldValue);
+		sb.append(QueryParser.escape(fieldValue));
 	}
 
 	@Reference(

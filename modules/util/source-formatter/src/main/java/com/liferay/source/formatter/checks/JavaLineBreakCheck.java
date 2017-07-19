@@ -317,6 +317,26 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 				"There should be a line break after '" + linePart + "'",
 				lineCount);
 		}
+
+		if (trimmedLine.matches("for \\(.*[^;{]")) {
+			x = trimmedLine.length();
+
+			while (true) {
+				x = trimmedLine.lastIndexOf(StringPool.SEMICOLON, x - 1);
+
+				if (x == -1) {
+					break;
+				}
+
+				if (!ToolsUtil.isInsideQuotes(trimmedLine, x)) {
+					addMessage(
+						fileName,
+						"There should be a line break after '" +
+							trimmedLine.substring(0, x + 1) + "'",
+						lineCount);
+				}
+			}
+		}
 	}
 
 	private String _fixArrayLineBreaks(String content) {

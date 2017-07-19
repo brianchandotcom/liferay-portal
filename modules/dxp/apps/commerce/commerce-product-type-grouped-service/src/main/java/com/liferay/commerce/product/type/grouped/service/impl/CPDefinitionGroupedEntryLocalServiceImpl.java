@@ -88,6 +88,14 @@ public class CPDefinitionGroupedEntryLocalServiceImpl
 	}
 
 	@Override
+	public CPDefinitionGroupedEntry fetchCPDefinitionGroupedEntryByC_E(
+		long cpDefinitionId, long entryCPDefinitionId) {
+
+		return cpDefinitionGroupedEntryPersistence.fetchByC_E(
+			cpDefinitionId, entryCPDefinitionId);
+	}
+
+	@Override
 	public List<CPDefinitionGroupedEntry> getCPDefinitionGroupedEntries(
 		long cpDefinitionId) {
 
@@ -102,6 +110,14 @@ public class CPDefinitionGroupedEntryLocalServiceImpl
 
 		return cpDefinitionGroupedEntryPersistence.findByCPDefinitionId(
 			cpDefinitionId, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<CPDefinitionGroupedEntry>
+		getCPDefinitionGroupedEntriesByCPDefinitionId(long cpDefinitionId) {
+
+		return cpDefinitionGroupedEntryPersistence.findByCPDefinitionId(
+			cpDefinitionId);
 	}
 
 	@Override

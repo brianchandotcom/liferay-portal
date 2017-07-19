@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.ui.util.SessionTreeJSClicks;
@@ -148,6 +150,11 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 						themeDisplay.getLocale(), themeDisplay.getTimeZone());
 		}
 
+		boolean allPages = GetterUtil.getBoolean(
+			actionRequest.getAttribute("allPages"));
+
+		exportLayoutSettingsMap.put("allPages", allPages);
+
 		String taskName = ParamUtil.getString(actionRequest, "name");
 
 		if (Validator.isNull(taskName)) {
@@ -225,6 +232,15 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 
 		String selectedLayoutsJSON = _exportImportHelper.getSelectedLayoutsJSON(
 			groupId, privateLayout, openNodes);
+
+		long[] selectedLayoutIds = StringUtil.split(openNodes, 0L);
+
+		for (int i = 0; i < selectedLayoutIds.length; i++) {
+			if (selectedLayoutIds[i] == LayoutConstants.DEFAULT_PLID) {
+				actionRequest.setAttribute("allPages", Boolean.TRUE);
+				break;
+			}
+		}
 
 		actionRequest.setAttribute("layoutIdMap", selectedLayoutsJSON);
 	}

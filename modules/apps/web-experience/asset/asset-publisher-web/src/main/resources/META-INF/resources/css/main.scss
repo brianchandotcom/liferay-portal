@@ -40,9 +40,9 @@
 
 		.form-group {
 			display: inline-block;
-			width: auto;
-			vertical-align: middle;
 			margin: 8px;
+			vertical-align: middle;
+			width: auto;
 
 			&:first-child {
 				margin-left: 0;
@@ -89,11 +89,11 @@
 			}
 
 			.btn-toolbar-content {
-				position: absolute;
-				bottom: -6px;
-				right: 0;
 				background-color: #FFF;
+				bottom: -6px;
 				padding: 15px 5px;
+				position: absolute;
+				right: 0;
 			}
 		}
 
@@ -113,8 +113,8 @@
 				line-height: 32px;
 
 				& .field-input-text {
-					padding: 0;
 					margin: 0;
+					padding: 0;
 				}
 			}
 		}
@@ -125,7 +125,7 @@
 	}
 
 	.timeline-increment-icon.add-condition:before {
-		background-color: #869cad;
+		background-color: #869CAD;
 		bottom: 37px;
 		content: '';
 		display: block;
@@ -138,9 +138,9 @@
 	.timeline-increment-icon.add-condition {
 		.form-builder-timeline-add-item {
 			border-radius: 100%;
+			color: #FFF;
 			margin-left: 3px;
 			padding: 0;
-			color: #FFF;
 		}
 	}
 }

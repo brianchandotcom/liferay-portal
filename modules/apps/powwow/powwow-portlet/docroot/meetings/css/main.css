@@ -442,6 +442,7 @@
 /* ---------- Responsive ---------- */
 
 @include respond-to(phone, tablet) {
+
 	/* ---------- View meeting ---------- */
 
 	.powwow-portlet .meeting-container .meeting-url button {
@@ -451,6 +452,7 @@
 
 @include respond-to(phone) {
 	.powwow-portlet {
+
 		/* ---------- Edit meeting ---------- */
 
 		.edit-meeting {

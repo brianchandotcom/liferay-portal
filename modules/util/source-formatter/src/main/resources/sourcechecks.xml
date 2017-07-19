@@ -30,7 +30,11 @@
 		</check>
 	</source-processor>
 	<source-processor name="CSSSourceProcessor">
-		<check name="WhitespaceCheck" />
+		<check name="CSSCommentsCheck" />
+		<check name="CSSEmptyLinesCheck" />
+		<check name="CSSHexColorsCheck" />
+		<check name="CSSPropertiesOrderCheck" />
+		<check name="CSSWhitespaceCheck" />
 	</source-processor>
 	<source-processor name="DockerfileSourceProcessor">
 		<check name="WhitespaceCheck" />

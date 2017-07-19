@@ -111,7 +111,7 @@ public class SubrepositoryGitHubMessageUtil {
 					project.getProperty("env.TOP_LEVEL_BUILD_NUMBER"));
 
 				String makeDirCommand = JenkinsResultsParserUtil.combine(
-					"ssh -o PasswordAuthentication=no ", topLevelMasterHostname,
+					"ssh -o NumberOfPasswordPrompts=0 ", topLevelMasterHostname,
 					" 'mkdir -p /opt/java/jenkins/userContent/", targetDirPath,
 					"'");
 				String rsyncCommand = JenkinsResultsParserUtil.combine(

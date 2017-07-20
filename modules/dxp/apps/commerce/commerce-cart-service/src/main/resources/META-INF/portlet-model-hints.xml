@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 
 <model-hints>
-	<model name="com.liferay.commerce.cart.model.CCart">
+	<model name="com.liferay.commerce.cart.model.CommerceCart">
 		<field name="uuid" type="String" />
-		<field name="CCartId" type="long" />
+		<field name="CommerceCartId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -11,19 +11,19 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="cartUserId" type="long" />
-		<field name="title" type="String" />
+		<field name="name" type="String" />
 		<field name="type" type="int" />
 	</model>
-	<model name="com.liferay.commerce.cart.model.CCartItem">
+	<model name="com.liferay.commerce.cart.model.CommerceCartItem">
 		<field name="uuid" type="String" />
-		<field name="CCartItemId" type="long" />
+		<field name="CommerceCartItemId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="CCartId" type="long" />
+		<field name="CommerceCartId" type="long" />
 		<field name="CPDefinitionId" type="long" />
 		<field name="CPInstanceId" type="long" />
 		<field name="quantity" type="int" />

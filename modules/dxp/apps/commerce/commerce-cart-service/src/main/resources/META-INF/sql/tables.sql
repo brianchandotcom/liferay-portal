@@ -1,6 +1,6 @@
-create table CCart (
+create table CommerceCart (
 	uuid_ VARCHAR(75) null,
-	CCartId LONG not null primary key,
+	CommerceCartId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -8,20 +8,20 @@ create table CCart (
 	createDate DATE null,
 	modifiedDate DATE null,
 	cartUserId LONG,
-	title VARCHAR(75) null,
+	name VARCHAR(75) null,
 	type_ INTEGER
 );
 
-create table CCartItem (
+create table CommerceCartItem (
 	uuid_ VARCHAR(75) null,
-	CCartItemId LONG not null primary key,
+	CommerceCartItemId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	CCartId LONG,
+	CommerceCartId LONG,
 	CPDefinitionId LONG,
 	CPInstanceId LONG,
 	quantity INTEGER,

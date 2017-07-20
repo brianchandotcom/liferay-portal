@@ -53,6 +53,10 @@ public class XSLTBuilder {
 		}
 	}
 
+	public XSLTBuilder(String xml, String xsl, String html) {
+		this(new String[] {xml}, xsl, html);
+	}
+
 	public XSLTBuilder(String[] xmls, String xsl, String html) {
 		try {
 			System.setProperty("line.separator", StringPool.NEW_LINE);

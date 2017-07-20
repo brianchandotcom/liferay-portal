@@ -100,9 +100,46 @@ public class CommandElement extends PoshiElement {
 			sb.append(poshiElementAttribute.toReadableSyntax());
 		}
 
-		String readableSyntax = super.toReadableSyntax();
+		List<String> readableBlocks = new ArrayList<>();
 
-		sb.append(createReadableBlock(readableSyntax));
+		for (PoshiElement poshiElement : toPoshiElements(elements())) {
+			readableBlocks.add(poshiElement.toReadableSyntax());
+		}
+
+		sb.append(createReadableBlock(readableBlocks));
+
+		return sb.toString();
+	}
+
+	protected String createReadableBlock(List<String> items) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("\n");
+
+		String pad = getPad();
+
+		sb.append(pad);
+
+		sb.append(getBlockName());
+		sb.append(" {");
+
+		for (int i = 0; i < items.size(); i++) {
+			String item = items.get(i);
+
+			if (i == 0) {
+				if (item.startsWith("\n\n")) {
+					item = item.replaceFirst("\n\n", "\n");
+				}
+			}
+
+			item = item.replaceAll("\n", "\n" + pad);
+
+			sb.append(item.replaceAll("\n\t\n", "\n\n"));
+		}
+
+		sb.append("\n");
+		sb.append(pad);
+		sb.append("}");
 
 		return sb.toString();
 	}

@@ -65,6 +65,12 @@ public class CreateTokenCommand implements Command {
 		String token = HttpUtil.createToken(
 			_tokenUrl.toURI(), _emailAddress, _password);
 
+		File parentFile = _tokenFile.getParentFile();
+
+		if (parentFile != null) {
+			parentFile.mkdirs();
+		}
+
 		Files.write(
 			_tokenFile.toPath(), token.getBytes(StandardCharsets.UTF_8));
 	}

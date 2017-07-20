@@ -68,24 +68,70 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
+		<execute macro="JSONRole#addSiteRole">
+			<var name="roleTitle" value="Staging Admin"/>
+			<var name="roleKey" value="Staging Admin"/>
 		</execute>
 
-		<execute macro="Role#addStagingAdminRole" />
+		<for list="PERMISSIONS,OVERRIDE_CHECKOUT,DELETE_DISCUSSION,DELETE,ADD_DISCUSSION,VIEW,UPDATE_DISCUSSION,UPDATE"
+			param="resourceActionIndex">
+			<execute macro="Permissions#definePermissionViaJSONAPI">
+				<var name="resourceAction" value="${resourceActionIndex}"/>
+				<var name="resourceName" value="com.liferay.document.library.kernel.model.DLFileEntry"/>
+				<var name="roleTitle" value="Staging Admin"/>
+				<var name="roleType" value="site"/>
+			</execute>
+		</for>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
+		<for list="DELETE,PERMISSIONS,CONFIGURE_PORTLETS,MANAGE_TEAMS,VIEW_STAGING,ASSIGN_USER_ROLES,MANAGE_SUBGROUPS,VIEW_SITE_ADMINISTRATION,ASSIGN_MEMBERS,MANAGE_STAGING,VIEW_MEMBERS,ADD_LAYOUT_SET_BRANCH,MANAGE_LAYOUTS,VIEW,ADD_LAYOUT_BRANCH,MANAGE_ARCHIVED_SETUPS,UPDATE,ADD_LAYOUT,MANAGE_ANNOUNCEMENTS,PUBLISH_STAGING,ADD_COMMUNITY,EXPORT_IMPORT_PORTLET_INFO,PUBLISH_PORTLET_INFO,EXPORT_IMPORT_LAYOUTS,PREVIEW_IN_DEVICE"
+			param="resourceActionIndex">
+			<execute macro="Permissions#definePermissionViaJSONAPI">
+				<var name="resourceAction" value="${resourceActionIndex}"/>
+				<var name="resourceName" value="com.liferay.portal.kernel.model.Group"/>
+				<var name="roleTitle" value="Staging Admin"/>
+				<var name="roleType" value="site"/>
+			</execute>
+		</for>
 
-		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_ACTION_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Action" />
-			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA" />
-			<var name="permissionNavigationValue" value="Documents and Media" />
-			<var name="roleTitle" value="Staging Admin" />
-			<var name="roleType" value="Site" />
-		</execute>
+		<for list="UPDATE_DISCUSSION,UPDATE,PERMISSIONS,DELETE_DISCUSSION,DELETE,CUSTOMIZE,CONFIGURE_PORTLETS,ADD_LAYOUT,ADD_DISCUSSION,VIEW"
+			param="resourceActionIndex">
+			<execute macro="Permissions#definePermissionViaJSONAPI">
+				<var name="resourceAction" value="${resourceActionIndex}"/>
+				<var name="resourceName" value="com.liferay.portal.kernel.model.Layout"/>
+				<var name="roleTitle" value="Staging Admin"/>
+				<var name="roleType" value="site"/>
+			</execute>
+		</for>
+
+		<for list="UPDATE,PERMISSIONS,DELETE"
+			param="resourceActionIndex">
+			<execute macro="Permissions#definePermissionViaJSONAPI">
+				<var name="resourceAction" value="${resourceActionIndex}"/>
+				<var name="resourceName" value="com.liferay.portal.kernel.model.LayoutBranch"/>
+				<var name="roleTitle" value="Staging Admin"/>
+				<var name="roleType" value="site"/>
+			</execute>
+		</for>
+
+		<for list="UPDATE,PERMISSIONS,MERGE,DELETE"
+			param="resourceActionIndex">
+			<execute macro="Permissions#definePermissionViaJSONAPI">
+				<var name="resourceAction" value="${resourceActionIndex}"/>
+				<var name="resourceName" value="com.liferay.portal.kernel.model.LayoutSetBranch"/>
+				<var name="roleTitle" value="Staging Admin"/>
+				<var name="roleType" value="site"/>
+			</execute>
+		</for>
+
+		<for list="ACCESS_IN_CONTROL_PANEL,VIEW,PREFERENCES,PERMISSIONS,CONFIGURATION,ADD_TO_PAGE"
+			param="resourceActionIndex">
+			<execute macro="Permissions#definePermissionViaJSONAPI">
+				<var name="resourceAction" value="${resourceActionIndex}"/>
+				<var name="resourceName" value="com_liferay_layout_admin_web_portlet_GroupPagesPortlet"/>
+				<var name="roleTitle" value="Staging Admin"/>
+				<var name="roleType" value="site"/>
+			</execute>
+		</for>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />

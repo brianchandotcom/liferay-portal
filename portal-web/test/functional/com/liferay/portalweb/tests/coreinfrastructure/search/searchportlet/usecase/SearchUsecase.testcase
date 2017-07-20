@@ -984,8 +984,6 @@
 	</command>
 
 	<command name="SearchXSSAsset" priority="4">
-		<property name="custom.properties" value="index.search.highlight.enabled=false" />
-
 		<execute macro="Page#add">
 			<var name="pageName" value="Message Boards Page" />
 		</execute>

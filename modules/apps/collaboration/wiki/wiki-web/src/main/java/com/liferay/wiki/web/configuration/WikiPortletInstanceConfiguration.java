@@ -56,6 +56,12 @@ public interface WikiPortletInstanceConfiguration {
 	public boolean enableComments();
 
 	/**
+	 * Set this to <code>true</code> to enable highlighting of search results in the Wiki portlet.
+	 */
+	@Meta.AD(deflt = "true", required = false)
+	public boolean enableHighlighting();
+
+	/**
 	 * Set this to <code>true</code> to enable ratings for Wiki pages.
 	 */
 	@Meta.AD(deflt = "true", required = false)

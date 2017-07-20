@@ -41,6 +41,30 @@ else {
 		url="<%= editURL %>"
 	/>
 
+	<portlet:actionURL name="editProductDefinition" var="addToCartURL">
+		<portlet:param name="<%= Constants.CMD %>" value="ADD_TO_CART" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinition.getCPDefinitionId()) %>" />
+		<portlet:param name="type" value="<%= String.valueOf(CommerceCartConstants.COMMERCE_CART_TYPE_CART) %>" />
+	</portlet:actionURL>
+
+	<liferay-ui:icon
+		message="add-to-cart"
+		url="<%= addToCartURL %>"
+	/>
+
+	<portlet:actionURL name="editProductDefinition" var="addToWishListURL">
+		<portlet:param name="<%= Constants.CMD %>" value="ADD_TO_WISH_LIST" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinition.getCPDefinitionId()) %>" />
+		<portlet:param name="type" value="<%= String.valueOf(CommerceCartConstants.COMMERCE_CART_TYPE_WISH_LIST) %>" />
+	</portlet:actionURL>
+
+	<liferay-ui:icon
+		message="add-to-wish-list"
+		url="<%= addToWishListURL %>"
+	/>
+
 	<portlet:actionURL name="editProductDefinition" var="deleteURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />

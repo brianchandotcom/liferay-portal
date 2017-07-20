@@ -111,16 +111,6 @@ public abstract class BaseCPOptionsDisplayContext<T> {
 		return _displayStyle;
 	}
 
-	public String getKeywords() {
-		if (_keywords != null) {
-			return _keywords;
-		}
-
-		_keywords = ParamUtil.getString(httpServletRequest, "keywords");
-
-		return _keywords;
-	}
-
 	public String getOrderByCol() {
 		if (_orderByCol != null) {
 			return _orderByCol;
@@ -227,37 +217,8 @@ public abstract class BaseCPOptionsDisplayContext<T> {
 		return portletURL;
 	}
 
-	public RowChecker getRowChecker() {
-		if (_rowChecker != null) {
-			return _rowChecker;
-		}
-
-		RowChecker rowChecker = new EmptyOnClickRowChecker(
-			liferayPortletResponse);
-
-		_rowChecker = rowChecker;
-
-		return _rowChecker;
-	}
-
-	public long getScopeGroupId() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		return themeDisplay.getScopeGroupId();
-	}
-
 	public abstract SearchContainer<T> getSearchContainer()
 		throws PortalException;
-
-	public boolean isSearch() {
-		if (Validator.isNotNull(getKeywords())) {
-			return true;
-		}
-
-		return false;
-	}
 
 	public boolean isShowInfoPanel() {
 		if (isSearch()) {
@@ -265,14 +226,6 @@ public abstract class BaseCPOptionsDisplayContext<T> {
 		}
 
 		return true;
-	}
-
-	public void setDefaultOrderByCol(String defaultOrderByCol) {
-		_defaultOrderByCol = defaultOrderByCol;
-	}
-
-	public void setDefaultOrderByType(String defaultOrderByType) {
-		_defaultOrderByType = defaultOrderByType;
 	}
 
 	protected String getDisplayStyle(
@@ -293,6 +246,53 @@ public abstract class BaseCPOptionsDisplayContext<T> {
 		}
 
 		return displayStyle;
+	}
+
+	protected String getKeywords() {
+		if (_keywords != null) {
+			return _keywords;
+		}
+
+		_keywords = ParamUtil.getString(httpServletRequest, "keywords");
+
+		return _keywords;
+	}
+
+	protected RowChecker getRowChecker() {
+		if (_rowChecker != null) {
+			return _rowChecker;
+		}
+
+		RowChecker rowChecker = new EmptyOnClickRowChecker(
+			liferayPortletResponse);
+
+		_rowChecker = rowChecker;
+
+		return _rowChecker;
+	}
+
+	protected long getScopeGroupId() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return themeDisplay.getScopeGroupId();
+	}
+
+	protected boolean isSearch() {
+		if (Validator.isNotNull(getKeywords())) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected void setDefaultOrderByCol(String defaultOrderByCol) {
+		_defaultOrderByCol = defaultOrderByCol;
+	}
+
+	protected void setDefaultOrderByType(String defaultOrderByType) {
+		_defaultOrderByType = defaultOrderByType;
 	}
 
 	protected final ActionHelper actionHelper;

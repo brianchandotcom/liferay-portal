@@ -39,6 +39,8 @@ import java.net.URL;
 
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -398,7 +400,8 @@ public class PoshiRunnerContext {
 	}
 
 	private static List<URL> _getPoshiURLs(
-			FileSystem fileSystem, String[] includes, String baseDirName)
+			FileSystem fileSystem, String[] includes, String baseDirName,
+			String namespace)
 		throws IOException {
 
 		List<URL> urls = null;
@@ -423,8 +426,11 @@ public class PoshiRunnerContext {
 			}
 
 			_filePaths.put(
-				PoshiRunnerGetterUtil.getFileNameFromFilePath(filePath),
+				namespace + "." +
+					PoshiRunnerGetterUtil.getFileNameFromFilePath(filePath),
 				filePath);
+
+			_filePathToNamespace.put(filePath, namespace);
 
 			_resourceURLs.add(url);
 		}
@@ -433,10 +439,10 @@ public class PoshiRunnerContext {
 	}
 
 	private static List<URL> _getPoshiURLs(
-			String[] includes, String baseDirName)
+			String[] includes, String baseDirName, String namespace)
 		throws Exception {
 
-		return _getPoshiURLs(null, includes, baseDirName);
+		return _getPoshiURLs(null, includes, baseDirName, namespace);
 	}
 
 	private static String _getTestBatchGroups() throws Exception {
@@ -833,7 +839,9 @@ public class PoshiRunnerContext {
 		throws Exception {
 
 		for (String baseDirName : baseDirNames) {
-			for (URL url : _getPoshiURLs(includes, baseDirName)) {
+			for (URL url : _getPoshiURLs(
+					includes, baseDirName, _defaultNamespace)) {
+
 				_storeRootElement(
 					PoshiRunnerGetterUtil.getRootElementFromURL(url),
 					url.getFile());
@@ -862,9 +870,23 @@ public class PoshiRunnerContext {
 						URI.create(resourceURLString.substring(0, x)),
 						new HashMap<String, String>(), classLoader)) {
 
+					Path namespacePath = fileSystem.getPath(
+						resourceName + "/namespace");
+
+					if (!Files.exists(namespacePath)) {
+						throw new RuntimeException(
+							"A namespace must be defined at " +
+								resourceURLString);
+					}
+
+					URI namespaceURI = namespacePath.toUri();
+
+					String namespace = StringUtil.trim(
+						FileUtil.read(namespaceURI.toURL()));
+
 					for (URL poshiURL : _getPoshiURLs(
 							fileSystem, includes,
-							resourceURLString.substring(x + 1))) {
+							resourceURLString.substring(x + 1), namespace)) {
 
 						_storeRootElement(
 							PoshiRunnerGetterUtil.getRootElementFromURL(
@@ -1225,6 +1247,8 @@ public class PoshiRunnerContext {
 	private static final Set<String> _componentNames = new TreeSet<>();
 	private static final String _defaultNamespace;
 	private static final Map<String, String> _filePaths = new HashMap<>();
+	private static final Map<String, String> _filePathToNamespace =
+		new HashMap<>();
 	private static final Map<String, Integer> _functionLocatorCounts =
 		new HashMap<>();
 	private static final Map<String, String> _pathExtensions = new HashMap<>();

@@ -138,7 +138,9 @@
 		<field name="CPDefinitionId" type="long" />
 		<field name="CPSpecificationOptionId" type="long" />
 		<field name="CPOptionCategoryId" type="long" />
-		<field localized="true" name="value" type="String" />
+		<field localized="true" name="value" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
 		<field name="priority" type="double" />
 		<field name="lastPublishDate" type="Date" />
 	</model>

@@ -19,7 +19,7 @@ import com.liferay.commerce.product.content.web.configuration.CPContentConfigura
 import com.liferay.commerce.product.content.web.configuration.CPContentPortletInstanceConfiguration;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
+import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -46,6 +46,7 @@ import javax.servlet.http.HttpServletRequest;
 public class CPTypeDisplayContext {
 
 	public CPTypeDisplayContext(
+			CPAttachmentFileEntryService cpAttachmentFileEntryService,
 			CPContentConfigurationHelper cpContentConfigurationHelper,
 			CPDefinition cpDefinition,
 			CPAttachmentFileEntryLocalService cpAttachmentFileEntryLocalService,
@@ -53,6 +54,7 @@ public class CPTypeDisplayContext {
 			CPInstanceHelper cpInstanceHelper)
 		throws ConfigurationException {
 
+		this.cpAttachmentFileEntryService = cpAttachmentFileEntryService;
 		this.cpContentConfigurationHelper = cpContentConfigurationHelper;
 		this.cpDefinition = cpDefinition;
 		this.cpAttachmentFileEntryLocalService =
@@ -80,7 +82,7 @@ public class CPTypeDisplayContext {
 		long classNameId = portal.getClassNameId(CPDefinition.class);
 
 		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
-			cpAttachmentFileEntryLocalService.getCPAttachmentFileEntries(
+			cpAttachmentFileEntryService.getCPAttachmentFileEntries(
 				classNameId, cpDefinition.getCPDefinitionId(),
 				CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE,
 				WorkflowConstants.STATUS_APPROVED, 0, 1);
@@ -107,7 +109,7 @@ public class CPTypeDisplayContext {
 	public List<CPAttachmentFileEntry> getImages() throws PortalException {
 		long classNameId = portal.getClassNameId(CPDefinition.class);
 
-		return cpAttachmentFileEntryLocalService.getCPAttachmentFileEntries(
+		return cpAttachmentFileEntryService.getCPAttachmentFileEntries(
 			classNameId, cpDefinition.getCPDefinitionId(),
 			CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE,
 			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
@@ -135,8 +137,7 @@ public class CPTypeDisplayContext {
 			cpDefinition.getCPDefinitionId(), renderRequest, renderResponse);
 	}
 
-	protected final CPAttachmentFileEntryLocalService
-		cpAttachmentFileEntryLocalService;
+	protected final CPAttachmentFileEntryService cpAttachmentFileEntryService;
 	protected final CPContentConfigurationHelper cpContentConfigurationHelper;
 	protected final CPContentPortletInstanceConfiguration
 		cpContentPortletInstanceConfiguration;

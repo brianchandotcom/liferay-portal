@@ -4,11 +4,11 @@
 <service-builder auto-namespace-tables="false" package-path="com.liferay.commerce.cart">
 	<author>Alessio Antonio Rendina</author>
 	<namespace>Commerce</namespace>
-	<entity local-service="true" name="CCart" remote-service="true" uuid="true">
+	<entity local-service="true" name="CommerceCart" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="CCartId" primary="true" type="long" />
+		<column name="CommerceCartId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -25,13 +25,13 @@
 		<!-- Other fields -->
 
 		<column name="cartUserId" type="long" />
-		<column name="title" type="String" />
+		<column name="name" type="String" />
 		<column name="type" type="int" />
 
 		<!-- Order -->
 
 		<order by="desc">
-			<order-column name="title" />
+			<order-column name="name" />
 		</order>
 
 		<!-- Finder methods -->
@@ -39,12 +39,22 @@
 		<finder name="Type" return-type="Collection">
 			<finder-column name="type" />
 		</finder>
+		<finder name="G_U_T" return-type="CommerceCart">
+			<finder-column name="groupId" />
+			<finder-column name="userId" />
+			<finder-column name="type" />
+		</finder>
+		<finder name="U_N_T" return-type="CommerceCart" unique="true">
+			<finder-column name="userId" />
+			<finder-column name="name" />
+			<finder-column name="type" />
+		</finder>
 	</entity>
-	<entity local-service="true" name="CCartItem" remote-service="true" uuid="true">
+	<entity local-service="true" name="CommerceCartItem" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="CCartItemId" primary="true" type="long" />
+		<column name="CommerceCartItemId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -60,7 +70,7 @@
 
 		<!-- Other fields -->
 
-		<column name="CCartId" type="long" />
+		<column name="CommerceCartId" type="long" />
 		<column name="CPDefinitionId" type="long" />
 		<column name="CPInstanceId" type="long" />
 		<column name="quantity" type="int" />
@@ -74,8 +84,8 @@
 
 		<!-- Finder methods -->
 
-		<finder name="CCartId" return-type="Collection">
-			<finder-column name="CCartId" />
+		<finder name="CommerceCartId" return-type="Collection">
+			<finder-column name="CommerceCartId" />
 		</finder>
 	</entity>
 </service-builder>

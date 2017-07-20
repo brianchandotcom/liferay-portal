@@ -126,6 +126,67 @@ public class GroupServiceTest {
 			companyGroup.getGroupId(), companyStagingGroup.getLiveGroupId());
 	}
 
+	@Test
+	public void testAddParentToStagedGroup() throws Exception {
+		Group parentGroup = GroupTestUtil.addGroup();
+
+		Group childGroup = GroupTestUtil.addGroup();
+
+		try {
+			GroupTestUtil.enableLocalStaging(childGroup);
+
+			childGroup = GroupLocalServiceUtil.updateGroup(
+				childGroup.getGroupId(), parentGroup.getGroupId(),
+				childGroup.getNameMap(), childGroup.getDescriptionMap(),
+				childGroup.getType(), childGroup.isManualMembership(),
+				childGroup.getMembershipRestriction(),
+				childGroup.getFriendlyURL(), childGroup.isInheritContent(),
+				childGroup.isActive(), null);
+
+			Group stagingGroup = childGroup.getStagingGroup();
+
+			Assert.assertEquals(
+				parentGroup.getGroupId(), stagingGroup.getParentGroupId());
+		}
+		finally {
+			GroupLocalServiceUtil.deleteGroup(childGroup);
+
+			GroupLocalServiceUtil.deleteGroup(parentGroup);
+		}
+	}
+
+	@Test
+	public void testAddStagedParentToStagedGroup() throws Exception {
+		Group parentGroup = GroupTestUtil.addGroup();
+
+		Group childGroup = GroupTestUtil.addGroup();
+
+		try {
+			GroupTestUtil.enableLocalStaging(childGroup);
+
+			GroupTestUtil.enableLocalStaging(parentGroup);
+
+			childGroup = GroupLocalServiceUtil.updateGroup(
+				childGroup.getGroupId(), parentGroup.getGroupId(),
+				childGroup.getNameMap(), childGroup.getDescriptionMap(),
+				childGroup.getType(), childGroup.isManualMembership(),
+				childGroup.getMembershipRestriction(),
+				childGroup.getFriendlyURL(), childGroup.isInheritContent(),
+				childGroup.isActive(), null);
+
+			Group childGroupStagingGroup = childGroup.getStagingGroup();
+
+			Assert.assertEquals(
+				parentGroup.getGroupId(),
+				childGroupStagingGroup.getParentGroupId());
+		}
+		finally {
+			GroupLocalServiceUtil.deleteGroup(childGroup);
+
+			GroupLocalServiceUtil.deleteGroup(parentGroup);
+		}
+	}
+
 	@Test(expected = NoSuchResourcePermissionException.class)
 	public void testDeleteGroupWithStagingGroupRemovesStagingResource()
 		throws Exception {
@@ -627,6 +688,84 @@ public class GroupServiceTest {
 	}
 
 	@Test
+	public void testRemoveParentFromStagedGroup() throws Exception {
+		Group parentGroup = GroupTestUtil.addGroup();
+
+		Group childGroup = GroupTestUtil.addGroup();
+
+		try {
+			GroupTestUtil.enableLocalStaging(childGroup);
+
+			GroupLocalServiceUtil.updateGroup(
+				childGroup.getGroupId(), parentGroup.getGroupId(),
+				childGroup.getNameMap(), childGroup.getDescriptionMap(),
+				childGroup.getType(), childGroup.isManualMembership(),
+				childGroup.getMembershipRestriction(),
+				childGroup.getFriendlyURL(), childGroup.isInheritContent(),
+				childGroup.isActive(), null);
+
+			childGroup = GroupLocalServiceUtil.updateGroup(
+				childGroup.getGroupId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
+				childGroup.getNameMap(), childGroup.getDescriptionMap(),
+				childGroup.getType(), childGroup.isManualMembership(),
+				childGroup.getMembershipRestriction(),
+				childGroup.getFriendlyURL(), childGroup.isInheritContent(),
+				childGroup.isActive(), null);
+
+			Group childGroupStagingGroup = childGroup.getStagingGroup();
+
+			Assert.assertEquals(
+				GroupConstants.DEFAULT_PARENT_GROUP_ID,
+				childGroupStagingGroup.getParentGroupId());
+		}
+		finally {
+			GroupLocalServiceUtil.deleteGroup(childGroup);
+
+			GroupLocalServiceUtil.deleteGroup(parentGroup);
+		}
+	}
+
+	@Test
+	public void testRemoveStagedParentFromStagedGroup() throws Exception {
+		Group parentGroup = GroupTestUtil.addGroup();
+
+		Group childGroup = GroupTestUtil.addGroup();
+
+		try {
+			GroupTestUtil.enableLocalStaging(childGroup);
+
+			GroupTestUtil.enableLocalStaging(parentGroup);
+
+			GroupLocalServiceUtil.updateGroup(
+				childGroup.getGroupId(), parentGroup.getGroupId(),
+				childGroup.getNameMap(), childGroup.getDescriptionMap(),
+				childGroup.getType(), childGroup.isManualMembership(),
+				childGroup.getMembershipRestriction(),
+				childGroup.getFriendlyURL(), childGroup.isInheritContent(),
+				childGroup.isActive(), null);
+
+			childGroup = GroupLocalServiceUtil.updateGroup(
+				childGroup.getGroupId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
+				childGroup.getNameMap(), childGroup.getDescriptionMap(),
+				childGroup.getType(), childGroup.isManualMembership(),
+				childGroup.getMembershipRestriction(),
+				childGroup.getFriendlyURL(), childGroup.isInheritContent(),
+				childGroup.isActive(), null);
+
+			Group childGroupStagingGroup = childGroup.getStagingGroup();
+
+			Assert.assertEquals(
+				GroupConstants.DEFAULT_PARENT_GROUP_ID,
+				childGroupStagingGroup.getParentGroupId());
+		}
+		finally {
+			GroupLocalServiceUtil.deleteGroup(childGroup);
+
+			GroupLocalServiceUtil.deleteGroup(parentGroup);
+		}
+	}
+
+	@Test
 	public void testScopes() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
@@ -806,6 +945,54 @@ public class GroupServiceTest {
 		Assert.assertEquals(
 			LocaleUtil.SPAIN,
 			PortalUtil.getSiteDefaultLocale(group.getGroupId()));
+	}
+
+	@Test
+	public void testUpdateGroupParentFromStagedParentToStagedParentInStagedGroup()
+		throws Exception {
+
+		Group parentGroup1 = GroupTestUtil.addGroup();
+
+		Group parentGroup2 = GroupTestUtil.addGroup();
+
+		Group childGroup = GroupTestUtil.addGroup();
+
+		try {
+			GroupTestUtil.enableLocalStaging(childGroup);
+
+			GroupTestUtil.enableLocalStaging(parentGroup1);
+
+			GroupTestUtil.enableLocalStaging(parentGroup2);
+
+			GroupLocalServiceUtil.updateGroup(
+				childGroup.getGroupId(), parentGroup1.getGroupId(),
+				childGroup.getNameMap(), childGroup.getDescriptionMap(),
+				childGroup.getType(), childGroup.isManualMembership(),
+				childGroup.getMembershipRestriction(),
+				childGroup.getFriendlyURL(), childGroup.isInheritContent(),
+				childGroup.isActive(), null);
+
+			childGroup = GroupLocalServiceUtil.updateGroup(
+				childGroup.getGroupId(), parentGroup2.getGroupId(),
+				childGroup.getNameMap(), childGroup.getDescriptionMap(),
+				childGroup.getType(), childGroup.isManualMembership(),
+				childGroup.getMembershipRestriction(),
+				childGroup.getFriendlyURL(), childGroup.isInheritContent(),
+				childGroup.isActive(), null);
+
+			Group childGroupStagingGroup = childGroup.getStagingGroup();
+
+			Assert.assertEquals(
+				parentGroup2.getGroupId(),
+				childGroupStagingGroup.getParentGroupId());
+		}
+		finally {
+			GroupLocalServiceUtil.deleteGroup(childGroup);
+
+			GroupLocalServiceUtil.deleteGroup(parentGroup1);
+
+			GroupLocalServiceUtil.deleteGroup(parentGroup2);
+		}
 	}
 
 	@Test

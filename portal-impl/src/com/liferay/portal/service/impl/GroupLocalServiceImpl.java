@@ -3217,6 +3217,16 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		groupPersistence.update(group);
 
+		if (group.hasStagingGroup() && !group.isStagedRemotely()) {
+			Group stagingGroup = group.getStagingGroup();
+
+			stagingGroup.setParentGroupId(group.getParentGroupId());
+
+			stagingGroup.setTreePath(stagingGroup.buildTreePath());
+
+			groupPersistence.update(stagingGroup);
+		}
+
 		// Asset
 
 		if ((serviceContext == null) || !group.isSite()) {

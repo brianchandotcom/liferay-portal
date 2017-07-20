@@ -594,19 +594,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			long userId, Group liveGroup, ServiceContext serviceContext)
 		throws PortalException {
 
-		long parentGroupId = GroupConstants.DEFAULT_PARENT_GROUP_ID;
-
-		if (liveGroup.getParentGroupId() !=
-				GroupConstants.DEFAULT_PARENT_GROUP_ID) {
-
-			Group parentGroup = liveGroup.getParentGroup();
-
-			if (parentGroup.hasStagingGroup()) {
-				parentGroup = parentGroup.getStagingGroup();
-			}
-
-			parentGroupId = parentGroup.getGroupId();
-		}
+		long parentGroupId = liveGroup.getParentGroupId();
 
 		Group stagingGroup = groupLocalService.addGroup(
 			userId, parentGroupId, liveGroup.getClassName(),

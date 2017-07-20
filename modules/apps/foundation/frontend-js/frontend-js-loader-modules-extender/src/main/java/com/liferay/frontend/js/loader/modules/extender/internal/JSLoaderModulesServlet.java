@@ -174,14 +174,16 @@ public class JSLoaderModulesServlet extends HttpServlet {
 				delimiter = ",\n";
 			}
 
-			String versionedConfiguration =
-				jsLoaderModule.getVersionedConfiguration();
+			if (_details.applyVersioning()) {
+				String versionedConfiguration =
+					jsLoaderModule.getVersionedConfiguration();
 
-			if (versionedConfiguration.length() > 0) {
-				printWriter.write(delimiter);
-				printWriter.write(versionedConfiguration);
+				if (versionedConfiguration.length() > 0) {
+					printWriter.write(delimiter);
+					printWriter.write(versionedConfiguration);
 
-				delimiter = ",\n";
+					delimiter = ",\n";
+				}
 			}
 		}
 

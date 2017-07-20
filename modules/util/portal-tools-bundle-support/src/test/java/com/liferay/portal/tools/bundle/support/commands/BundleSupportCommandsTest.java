@@ -140,20 +140,18 @@ public class BundleSupportCommandsTest {
 	}
 
 	@Test
-	public void testCreateTokenFolderDoesntexist() throws Exception {
-		File nonExistingFolder = new File(
-			temporaryFolder.getRoot(), "non-existing-folder");
-
-		File tokenFile = new File(nonExistingFolder, "token");
-
-		_testCreateToken(_CONTEXT_PATH_TOKEN, false, tokenFile);
-	}
-
-	@Test
 	public void testCreateTokenForce() throws Exception {
 		File tokenFile = temporaryFolder.newFile();
 
 		_testCreateToken(_CONTEXT_PATH_TOKEN, true, tokenFile);
+	}
+
+	@Test
+	public void testCreateTokenInNonexistentDirectory() throws Exception {
+		File tokenFile = new File(
+			temporaryFolder.getRoot(), "nonexistent/directory/token");
+
+		_testCreateToken(_CONTEXT_PATH_TOKEN, false, tokenFile);
 	}
 
 	@Test

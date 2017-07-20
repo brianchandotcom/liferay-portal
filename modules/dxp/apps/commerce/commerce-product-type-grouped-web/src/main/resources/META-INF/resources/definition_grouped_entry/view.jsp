@@ -117,7 +117,7 @@ entries.add(cpDefinition);
 		</div>
 	</div>
 
-	<script>
+	<aui:script>
 		$(document).ready(
 			function() {
 				$(".thumb").click(
@@ -125,5 +125,5 @@ entries.add(cpDefinition);
 						$("#full-image").attr("src", $(this).attr("data-url"));
 					});
 			});
-	</script>
+	</aui:script>
 </liferay-ddm:template-renderer>

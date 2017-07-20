@@ -49,16 +49,16 @@ cpDefinitions.add(cpDefinition);
 					<div class="col-lg-2 col-md-3 col-xs-2">
 
 						<%
-							for (CPAttachmentFileEntry cpAttachmentFileEntry : virtualCPTypeDisplayContext.getImages()) {
-								String url = virtualCPTypeDisplayContext.getImageURL(cpAttachmentFileEntry.getFileEntry(), themeDisplay);
+						for (CPAttachmentFileEntry cpAttachmentFileEntry : virtualCPTypeDisplayContext.getImages()) {
+							String url = virtualCPTypeDisplayContext.getImageURL(cpAttachmentFileEntry.getFileEntry(), themeDisplay);
 						%>
 
-						<div class="card thumb" data-url="<%= url %>">
-							<img class="center-block img-responsive" src="<%= url %>">
-						</div>
+							<div class="card thumb" data-url="<%= url %>">
+								<img class="center-block img-responsive" src="<%= url %>">
+							</div>
 
 						<%
-							}
+						}
 						%>
 
 					</div>
@@ -66,7 +66,7 @@ cpDefinitions.add(cpDefinition);
 					<div class="col-lg-10 col-md-9 col-xs-10 full-image">
 
 						<%
-							CPAttachmentFileEntry cpAttachmentFileEntry = virtualCPTypeDisplayContext.getDefaultImage();
+						CPAttachmentFileEntry cpAttachmentFileEntry = virtualCPTypeDisplayContext.getDefaultImage();
 						%>
 
 						<c:if test="<%= cpAttachmentFileEntry != null %>">
@@ -105,7 +105,7 @@ cpDefinitions.add(cpDefinition);
 			function() {
 				$(".thumb").click(
 					function() {
-						$("#full-image").attr("src",$(this).attr("data-url"));
+						$("#full-image").attr("src", $(this).attr("data-url"));
 					});
 			});
 	</script>

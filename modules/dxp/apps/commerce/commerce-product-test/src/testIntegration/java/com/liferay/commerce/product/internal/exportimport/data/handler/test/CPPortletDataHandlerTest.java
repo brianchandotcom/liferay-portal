@@ -69,16 +69,14 @@ public class CPPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 				groupId, cpDefinition.getCPDefinitionId(),
 				cpOption.getCPOptionId());
 
+		int count =
+			CPInstanceStagedModelDataHandlerTest.
+				CP_DEFINITION_OPTION_VALUE_RELS_COUNT;
+
 		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
-			new ArrayList<>(
-				CPInstanceStagedModelDataHandlerTest.
-					CP_DEFINITION_OPTION_VALUE_RELS_COUNT);
+			new ArrayList<>(count);
 
-		for (int i = 0;
-			 i <
-				CPInstanceStagedModelDataHandlerTest.
-					CP_DEFINITION_OPTION_VALUE_RELS_COUNT; i++) {
-
+		for (int i = 0; i < count; i++) {
 			CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
 				CPTestUtil.addCPDefinitionOptionValueRel(
 					groupId,

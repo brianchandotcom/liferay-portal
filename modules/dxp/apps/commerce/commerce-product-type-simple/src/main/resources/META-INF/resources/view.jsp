@@ -42,10 +42,10 @@ cpDefinitions.add(cpDefinition);
 				<div class="row">
 					<div class="col-lg-2 col-md-3 col-xs-2">
 
-					<%
-					for (CPAttachmentFileEntry cpAttachmentFileEntry : cpTypeDisplayContext.getImages()) {
-						String url = cpTypeDisplayContext.getImageURL(cpAttachmentFileEntry.getFileEntry(), themeDisplay);
-					%>
+						<%
+						for (CPAttachmentFileEntry cpAttachmentFileEntry : cpTypeDisplayContext.getImages()) {
+							String url = cpTypeDisplayContext.getImageURL(cpAttachmentFileEntry.getFileEntry(), themeDisplay);
+						%>
 
 							<div class="card thumb" data-url="<%= url %>">
 								<img class="center-block img-responsive" src="<%= url %>">

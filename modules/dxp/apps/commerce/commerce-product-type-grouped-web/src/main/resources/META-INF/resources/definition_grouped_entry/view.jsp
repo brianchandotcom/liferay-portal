@@ -44,16 +44,16 @@ entries.add(cpDefinition);
 					<div class="col-lg-2 col-md-3 col-xs-2">
 
 						<%
-							for (CPAttachmentFileEntry cpAttachmentFileEntry : groupedCPTypeDisplayContext.getImages()) {
-								String url = groupedCPTypeDisplayContext.getImageURL(cpAttachmentFileEntry.getFileEntry(), themeDisplay);
+						for (CPAttachmentFileEntry cpAttachmentFileEntry : groupedCPTypeDisplayContext.getImages()) {
+							String url = groupedCPTypeDisplayContext.getImageURL(cpAttachmentFileEntry.getFileEntry(), themeDisplay);
 						%>
 
-						<div class="card thumb" data-url="<%= url %>">
-							<img class="center-block img-responsive" src="<%= url %>">
-						</div>
+							<div class="card thumb" data-url="<%= url %>">
+								<img class="center-block img-responsive" src="<%= url %>">
+							</div>
 
 						<%
-							}
+						}
 						%>
 
 					</div>
@@ -61,7 +61,7 @@ entries.add(cpDefinition);
 					<div class="col-lg-10 col-md-9 col-xs-10 full-image">
 
 						<%
-							CPAttachmentFileEntry cpAttachmentFileEntry = groupedCPTypeDisplayContext.getDefaultImage();
+						CPAttachmentFileEntry cpAttachmentFileEntry = groupedCPTypeDisplayContext.getDefaultImage();
 						%>
 
 						<c:if test="<%= cpAttachmentFileEntry != null %>">
@@ -89,28 +89,28 @@ entries.add(cpDefinition);
 			<div class="col-lg-12">
 
 				<%
-					for (CPDefinitionGroupedEntry cpDefinitionGroupedEntry : groupedCPTypeDisplayContext.getCPDefinitionGroupedEntry()) {
-						CPDefinition curCPDefinition = cpDefinitionGroupedEntry.getCPDefinition();
+				for (CPDefinitionGroupedEntry cpDefinitionGroupedEntry : groupedCPTypeDisplayContext.getCPDefinitionGroupedEntry()) {
+					CPDefinition curCPDefinition = cpDefinitionGroupedEntry.getCPDefinition();
 				%>
 
-				<div class="row">
-					<div class="col-md-4">
-						<img class="img-responsive" src="<%= curCPDefinition.getDefaultImageThumbnailSrc(themeDisplay) %>">
-					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<img class="img-responsive" src="<%= curCPDefinition.getDefaultImageThumbnailSrc(themeDisplay) %>">
+						</div>
 
-					<div class="col-md-8">
-						<h5>
-							<%= curCPDefinition.getTitle(languageId) %>
-						</h5>
+						<div class="col-md-8">
+							<h5>
+								<%= curCPDefinition.getTitle(languageId) %>
+							</h5>
 
-						<h6>
-							<liferay-ui:message arguments="<%= cpDefinitionGroupedEntry.getQuantity() %>" key="quantity-x" />
-						</h6>
+							<h6>
+								<liferay-ui:message arguments="<%= cpDefinitionGroupedEntry.getQuantity() %>" key="quantity-x" />
+							</h6>
+						</div>
 					</div>
-				</div>
 
 				<%
-					}
+				}
 				%>
 
 			</div>
@@ -122,7 +122,7 @@ entries.add(cpDefinition);
 			function() {
 				$(".thumb").click(
 					function() {
-						$("#full-image").attr("src",$(this).attr("data-url"));
+						$("#full-image").attr("src", $(this).attr("data-url"));
 					});
 			});
 	</script>

@@ -37,7 +37,9 @@ CPContentConfigurationDisplayContext cpContentConfigurationDisplayContext = (CPC
 					for (CPType cpType : cpContentConfigurationDisplayContext.getCPTypes()) {
 					%>
 
-						<li><a href="#<%= cpType.getName() %>"><%= cpType.getLabel(locale) %></a></li>
+						<li>
+							<a href="#<%= cpType.getName() %>"><%= cpType.getLabel(locale) %></a>
+						</li>
 
 					<%
 					}
@@ -49,7 +51,7 @@ CPContentConfigurationDisplayContext cpContentConfigurationDisplayContext = (CPC
 
 					<%
 					for (CPType cpType : cpContentConfigurationDisplayContext.getCPTypes()) {
-					Class<?> cpTypeClass = cpType.getClass();
+						Class<?> cpTypeClass = cpType.getClass();
 					%>
 
 						<div id="<%= cpType.getName() %>">
@@ -85,9 +87,9 @@ CPContentConfigurationDisplayContext cpContentConfigurationDisplayContext = (CPC
 </aui:form>
 
 <aui:script use="aui-tabview">
-		new A.TabView(
-			{
-				srcNode: '#<portlet:namespace/>configuration-tabs'
-			}
-		).render();
+	new A.TabView(
+		{
+			srcNode: '#<portlet:namespace/>configuration-tabs'
+		}
+	).render();
 </aui:script>

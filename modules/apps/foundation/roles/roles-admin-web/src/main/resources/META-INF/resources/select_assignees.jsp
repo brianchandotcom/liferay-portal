@@ -139,12 +139,7 @@ request.setAttribute("edit_role_assignments.jsp-portletURL", portletURL);
 		function(event) {
 			var nodes = event.elements.currentPageSelectedElements.getDOMNodes();
 
-			var <portlet:namespace />assigneeIds = _.map(
-				nodes,
-				function(node) {
-					return node.value;
-				}
-			);
+			var <portlet:namespace />assigneeIds = AUI._.map(nodes, 'value');
 
 			var result = {};
 

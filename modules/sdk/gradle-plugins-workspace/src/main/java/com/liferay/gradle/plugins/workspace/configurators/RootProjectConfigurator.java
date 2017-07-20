@@ -333,6 +333,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 						String token = FileUtil.read(
 							createTokenTask.getTokenFile());
 
+						token = token.trim();
+
 						download.header(
 							HttpHeaders.AUTHORIZATION, "Bearer " + token);
 					}

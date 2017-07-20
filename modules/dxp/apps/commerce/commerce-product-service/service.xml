@@ -196,7 +196,7 @@
 			<finder-column name="type" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="CPDefinitionOptionRel" remote-service="true"  uuid="true">
+	<entity local-service="true" name="CPDefinitionOptionRel" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -252,7 +252,7 @@
 
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
-	<entity local-service="true" name="CPDefinitionOptionValueRel" remote-service="true"  uuid="true">
+	<entity local-service="true" name="CPDefinitionOptionValueRel" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -272,7 +272,7 @@
 
 		<!-- Other fields -->
 
-		<column name="CPDefinitionOptionRelId"  type="long" />
+		<column name="CPDefinitionOptionRelId" type="long" />
 		<column localized="true" name="title" type="String" />
 		<column name="priority" type="double" />
 		<column name="key" type="String" />
@@ -303,7 +303,7 @@
 
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
-	<entity local-service="true" name="CPDisplayLayout" remote-service="true"  uuid="true">
+	<entity local-service="true" name="CPDisplayLayout" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -334,7 +334,7 @@
 			<finder-column name="classPK" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="CPFriendlyURLEntry" remote-service="true"  uuid="true">
+	<entity local-service="true" name="CPFriendlyURLEntry" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -492,7 +492,7 @@
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 		<reference entity="TrashEntry" package-path="com.liferay.portlet.trash" />
 	</entity>
-	<entity local-service="true" name="CPOption" remote-service="true"  uuid="true">
+	<entity local-service="true" name="CPOption" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -586,7 +586,7 @@
 			<finder-column name="key" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="CPOptionValue" remote-service="true"  uuid="true">
+	<entity local-service="true" name="CPOptionValue" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 

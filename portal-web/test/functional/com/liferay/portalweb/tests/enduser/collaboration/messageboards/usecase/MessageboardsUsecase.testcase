@@ -1103,10 +1103,11 @@
 		</execute>
 	</command>
 
-	<command name="ViewHTMLNoXSS" priority="5">
+	<command name="ViewHTMLNoXSS" priority="4">
 		<description message="This is a use case for LPS-65365." />
 
 		<property name="custom.properties" value="message.boards.message.formats.default=html" />
+
 		<execute macro="Page#add">
 			<var name="pageName" value="Message Boards Page" />
 		</execute>

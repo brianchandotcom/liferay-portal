@@ -16,15 +16,15 @@ package com.liferay.commerce.product.content.web.configuration.definition;
 
 import com.liferay.commerce.product.content.web.configuration.CPContentPortletInstanceConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Marco Leo
  */
 @Component
-public class
-CPContentPortletInstanceConfigurationBeanDeclaration
-		implements ConfigurationBeanDeclaration {
+public class CPContentPortletInstanceConfigurationBeanDeclaration
+	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {

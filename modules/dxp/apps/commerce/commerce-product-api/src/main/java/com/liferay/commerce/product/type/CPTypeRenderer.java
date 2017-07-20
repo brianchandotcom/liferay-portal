@@ -16,8 +16,6 @@ package com.liferay.commerce.product.type;
 
 import com.liferay.commerce.product.model.CPDefinition;
 
-import java.io.IOException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 

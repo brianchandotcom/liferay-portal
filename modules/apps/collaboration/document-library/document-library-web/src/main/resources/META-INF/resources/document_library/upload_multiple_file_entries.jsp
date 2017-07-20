@@ -152,7 +152,7 @@ if (portletTitleBasedNavigation) {
 
 													selectedItems.removeClass('selectable').removeClass('selected').addClass('upload-error');
 
-													selectedItems.append('<span class="error-message"><%= UnicodeLanguageUtil.get(request, "an-unexpected-error-occurred-while-deleting-the-file") %></span>');
+													selectedItems.append('<span class="card-bottom error-message"><%= UnicodeLanguageUtil.get(request, "an-unexpected-error-occurred-while-deleting-the-file") %></span>');
 
 													selectedItems.all('input').remove(true);
 
@@ -160,6 +160,8 @@ if (portletTitleBasedNavigation) {
 												},
 												success: function(event, id, obj) {
 													var jsonArray = this.get('responseData');
+
+													var itemFailed = false;
 
 													for (var i = 0; i < jsonArray.length; i++) {
 														var item = jsonArray[i];
@@ -187,16 +189,18 @@ if (portletTitleBasedNavigation) {
 															}
 
 															if (originalFileName === item.fileName) {
-																childHTML = '<span class="success-message"><%= UnicodeLanguageUtil.get(request, "successfully-saved") %></span>';
+																childHTML = '<span class="card-bottom success-message"><%= UnicodeLanguageUtil.get(request, "successfully-saved") %></span>';
 															}
 															else {
-																childHTML = '<span class="success-message"><%= UnicodeLanguageUtil.get(request, "successfully-saved") %> (' + item.fileName + ')</span>';
+																childHTML = '<span class="card-bottom success-message"><%= UnicodeLanguageUtil.get(request, "successfully-saved") %> (' + item.fileName + ')</span>';
 															}
 														}
 														else {
 															cssClass = 'upload-error';
 
-															childHTML = '<span class="error-message">' + item.errorMessage + '</span>';
+															childHTML = '<span class="card-bottom error-message">' + item.errorMessage + '</span>';
+
+															itemFailed = true;
 														}
 
 														li.addClass(cssClass);
@@ -218,6 +222,10 @@ if (portletTitleBasedNavigation) {
 													Liferay.fire('filesSaved');
 
 													commonFileMetadataContainer.unplug(A.LoadingMask);
+
+													if (!itemFailed) {
+														location.href = '<%= HtmlUtil.escape(redirect) %>';
+													}
 												}
 											},
 											dataType: 'JSON',

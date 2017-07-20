@@ -133,6 +133,11 @@
 
 		.error-message, .success-message {
 			margin-left: 1em;
+
+			&.card-bottom {
+				bottom: 18px;
+				position: relative;
+			}
 		}
 
 		.delete-button {

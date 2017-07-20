@@ -303,7 +303,7 @@ AUI.add(
 						}
 						else {
 							var maxFileSize = instance.formatStorage(instance.get('maxFileSize'));
-							var maxUploadRequestSize = Liferay.PropsValues.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE;
+							var maxUploadRequestSize = instance.formatStorage(Liferay.PropsValues.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
 
 							instance._invalidFileSizeText = Lang.sub(strings.invalidFileSizeText, [maxFileSize]);
 							instance._invalidUploadRequestSize = Lang.sub(strings.invalidUploadRequestSizeText, [maxUploadRequestSize]);

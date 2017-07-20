@@ -1249,7 +1249,9 @@ public class MainServlet extends ActionServlet {
 			HttpServletResponse response)
 		throws IOException, ServletException {
 
-		if (userId > 0) {
+		if ((userId > 0) ||
+			(ParamUtil.getInteger(request, "p_p_lifecycle") == 2)) {
+
 			sendError(
 				HttpServletResponse.SC_UNAUTHORIZED, t, request, response);
 

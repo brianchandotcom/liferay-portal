@@ -123,7 +123,7 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 	}
 </aui:script>
 
-<aui:script use="aui-io-request,aui-loading-mask-deprecated,aui-parse-content,aui-toggler,autocomplete-base,autocomplete-filters,liferay-notice">
+<aui:script use="aui-io-request,aui-loading-mask-deprecated,aui-parse-content,aui-toggler,autocomplete-base,autocomplete-filters,liferay-notification">
 	var AParseContent = A.Plugin.ParseContent;
 
 	var notification;
@@ -253,24 +253,6 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 		);
 	}
 
-	function getNotification() {
-		if (!notification) {
-			notification = new Liferay.Notice(
-				{
-					closeText: false,
-					content: '<liferay-ui:message key="sorry,-we-were-not-able-to-access-the-server" /><button class="close" type="button">&times;</button>',
-					noticeClass: 'hide',
-					timeout: 10000,
-					toggleText: false,
-					type: 'warning',
-					useAnimation: true
-				}
-			);
-		}
-
-		return notification;
-	}
-
 	var originalSelectedValues = [];
 
 	function processNavigationLinks() {
@@ -283,47 +265,60 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 			function(event) {
 				event.preventDefault();
 
-				permissionContentContainerNode.plug(A.LoadingMask);
-
-				permissionContentContainerNode.loadingmask.show();
-
-				permissionContentContainerNode.unplug(AParseContent);
-
 				var href = event.currentTarget.attr('data-resource-href');
 
 				href = Liferay.Util.addParams('p_p_isolated=true', href);
 
-				A.io.request(
+				AUI.$.ajax(
 					href,
 					{
-						on: {
-							failure: function() {
-								permissionContentContainerNode.loadingmask.hide();
+						beforeSend: function() {
+							permissionContentContainerNode.plug(A.LoadingMask);
 
-								getNotification().show();
-							},
-							success: function(event, id, obj) {
-								if (notification) {
-									notification.hide();
-								}
+							permissionContentContainerNode.loadingmask.show();
 
-								permissionContentContainerNode.unplug(A.LoadingMask);
+							permissionContentContainerNode.unplug(AParseContent);
+						},
+						complete: function() {
+							permissionContentContainerNode.loadingmask.hide();
 
-								permissionContentContainerNode.plug(AParseContent);
+							permissionContentContainerNode.unplug(A.LoadingMask);
+						},
+						error: function(obj) {
+							if (obj.status === 401) {
+								window.location.reload();
 
-								var responseData = this.get('responseData');
-
-								permissionContentContainerNode.empty();
-
-								permissionContentContainerNode.setContent(responseData);
-
-								var checkedNodes = permissionContentContainerNode.all(':checked');
-
-								originalSelectedValues = checkedNodes.val();
+								return;
 							}
+
+							new Liferay.Notification(
+								{
+									closeable: true,
+									delay: {
+										hide: 0,
+										show: 0
+									},
+									duration: 500,
+									message: '<liferay-ui:message key="sorry,-we-were-not-able-to-access-the-server" />',
+									render: true,
+									title: '<liferay-ui:message key="warning" />',
+									type: 'warning'
+								}
+							);
+						},
+						success: function(responseData) {
+							permissionContentContainerNode.plug(AParseContent);
+
+							permissionContentContainerNode.empty();
+
+							permissionContentContainerNode.setContent(responseData);
+
+							var checkedNodes = permissionContentContainerNode.all(':checked');
+
+							originalSelectedValues = checkedNodes.val();
 						}
 					}
-				);
+				)
 			},
 			'.permission-navigation-link'
 		);

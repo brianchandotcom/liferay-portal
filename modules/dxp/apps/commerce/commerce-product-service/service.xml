@@ -303,6 +303,62 @@
 
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
+	<entity local-service="true" name="CPDefinitionSpecificationOptionValue" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="CPDefinitionSpecificationOptionValueId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="CPDefinitionId" type="long" />
+		<column name="CPSpecificationOptionId" type="long" />
+		<column name="CPOptionCategoryId" type="long" />
+		<column localized="true" name="value" type="String" />
+		<column name="priority" type="double" />
+		<column name="lastPublishDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="priority" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="CPDefinitionId" return-type="Collection">
+			<finder-column name="CPDefinitionId" />
+		</finder>
+		<finder name="CPSpecificationOptionId" return-type="Collection">
+			<finder-column name="CPSpecificationOptionId" />
+		</finder>
+		<finder name="CPOptionCategoryId" return-type="Collection">
+			<finder-column name="CPOptionCategoryId" />
+		</finder>
+		<finder name="C_C" return-type="CPDefinitionSpecificationOptionValueId" unique="true">
+			<finder-column name="CPDefinitionId" />
+			<finder-column name="CPSpecificationOptionId" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
+	</entity>
 	<entity local-service="true" name="CPDisplayLayout" remote-service="true" uuid="true">
 
 		<!-- PK fields -->

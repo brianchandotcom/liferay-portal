@@ -16,14 +16,51 @@ package com.liferay.commerce.product.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.product.constants.CPOptionCategoryConstants;
+import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPOptionCategory;
+import com.liferay.commerce.product.model.CPSpecificationOption;
+import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
+import com.liferay.commerce.product.service.CPOptionCategoryLocalServiceUtil;
+import com.liferay.commerce.product.service.CPSpecificationOptionLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
- * @author Marco Leo
+ * @author Andrea Di Giorgi
  */
 @ProviderType
 public class CPDefinitionSpecificationOptionValueImpl
 	extends CPDefinitionSpecificationOptionValueBaseImpl {
 
 	public CPDefinitionSpecificationOptionValueImpl() {
+	}
+
+	@Override
+	public CPDefinition getCPDefinition() throws PortalException {
+		return CPDefinitionLocalServiceUtil.getCPDefinition(
+			getCPDefinitionId());
+	}
+
+	@Override
+	public CPOptionCategory getCPOptionCategory() throws PortalException {
+		long cpOptionCategoryId = getCPOptionCategoryId();
+
+		if (cpOptionCategoryId !=
+				CPOptionCategoryConstants.DEFAULT_CP_OPTION_CATEGORY_ID) {
+
+			return CPOptionCategoryLocalServiceUtil.getCPOptionCategory(
+				cpOptionCategoryId);
+		}
+
+		return null;
+	}
+
+	@Override
+	public CPSpecificationOption getCPSpecificationOption()
+		throws PortalException {
+
+		return CPSpecificationOptionLocalServiceUtil.getCPSpecificationOption(
+			getCPSpecificationOptionId());
 	}
 
 }

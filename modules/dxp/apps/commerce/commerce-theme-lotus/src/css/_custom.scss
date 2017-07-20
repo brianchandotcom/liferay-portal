@@ -24,8 +24,8 @@ body {
 
 .commerce-navigation {
 	display: inline-block;
-	vertical-align: middle;
 	margin-left: 100px;
+	vertical-align: middle;
 
 	.portlet {
 		margin-bottom: 0px;
@@ -35,16 +35,16 @@ body {
 	.cp-asset-category-navigation {
 		ul > li > a {
 			display: inline-block;
-			padding: 40px 30px;
 			font-size: 14px;
 			line-height: 18px;
+			padding: 40px 30px;
 			text-transform: uppercase;
 
 			span {
-				color: #3F3F3F;
-				padding-bottom: 7px;
 				border-bottom: 4px solid #FFF;
+				color: #3F3F3F;
 				font-family: Montserrat_Regular;
+				padding-bottom: 7px;
 			}
 
 			&:hover {
@@ -52,20 +52,20 @@ body {
 
 				span {
 					border-bottom: 4px solid #9A8468;
-					text-decoration: none;
 					font-family: Montserrat_Regular;
+					text-decoration: none;
 				}
 			}
 		}
 
 		.dropdown-menu {
-			width: 100%;
-			min-width: 100%;
-			max-width: 100%;
 			border: 0;
 			box-shadow: none;
 			margin: 0;
+			max-width: 100%;
+			min-width: 100%;
 			padding: 0px 0 30px 0px;
+			width: 100%;
 
 			.container-fluid-1280 {
 				position: relative;
@@ -89,8 +89,8 @@ body {
 
 			.child-menu-level-1 {
 				display: inline-block;
-				vertical-align: top;
 				margin-left: 60px;
+				vertical-align: top;
 
 				&:first-child {
 					margin-left: 230px;
@@ -98,26 +98,26 @@ body {
 
 				h5 {
 					color: #3F3F3F;
+					font-family: Montserrat_Regular;
 					font-size: 14px;
 					line-height: 18px;
 					text-transform: uppercase;
-					font-family: Montserrat_Regular;
 				}
 
 				ul {
-					padding: 0;
-					margin: 0;
 					list-style: none;
+					margin: 0;
+					padding: 0;
 
 					li > a {
+						border-bottom: 1px solid #FFF;
+						color: #3F3F3F;
 						display: inline-block;
-						padding: 10px 0px;
+						font-family: Montserrat_Light;
 						font-size: 14px;
 						line-height: 18px;
-						font-family: Montserrat_Light;
-						color: #3F3F3F;
+						padding: 10px 0px;
 						text-transform: capitalize;
-						border-bottom: 1px solid #FFF;
 
 						&:hover {
 							border-bottom: 1px solid #9A8468;
@@ -146,10 +146,10 @@ body {
 				float: none;
 
 				a, a:hover, a:focus {
-					padding: 0;
 					color: #9A8468;
 					font-size: 14px;
 					font-weight: 300;
+					padding: 0;
 				}
 			}
 		}
@@ -162,8 +162,8 @@ body {
 	}
 
 	.social-icons {
-		padding-top: 16px;
 		padding-bottom: 33px;
+		padding-top: 16px;
 
 		img {
 			height: 20.81px;
@@ -209,40 +209,40 @@ body {
 }
 
 .focus-product-highlighter-long {
-	height: 1px;
-	width: 420px;
 	background-color: #9A8468;
-	margin-top: 35px;
+	height: 1px;
 	margin-left: 120px;
+	margin-top: 35px;
+	width: 420px;
 }
 
 .focus-product-highlighter-short {
-	height: 1px;
-	width: 348px;
 	background-color: #9A8468;
-	margin-top: 22px;
+	height: 1px;
 	margin-left: 120px;
+	margin-top: 22px;
+	width: 348px;
 }
 
 .section-title-background {
-	height: 90px;
 	background-color: #6B6157;
+	height: 90px;
 
 	.section-title-highlighter {
+		background-color: #FFFFFF;
 		height: 1px;
 		margin: 43px auto;
-		background-color: #FFFFFF;
 		width: 320px;
 	}
 
 	.section-title {
-		opacity: 0.9;
 		color: #FFFFFF;
-		font-size: 27px;
 		font-family: 'Montserrat_Light';
+		font-size: 27px;
 		font-weight: 200;
-		text-align: center;
+		opacity: 0.9;
 		padding: 23px 0;
+		text-align: center;
 
 		p {
 			margin: 0 0 5px;
@@ -359,10 +359,10 @@ body {
 	text-align: center;
 
 	h1 {
-		text-transform: uppercase;
 		font-family: 'Montserrat_SemiBold';
 		font-size: 26px;
 		margin: 60px 0 25px 0;
+		text-transform: uppercase;
 	}
 
 	p {

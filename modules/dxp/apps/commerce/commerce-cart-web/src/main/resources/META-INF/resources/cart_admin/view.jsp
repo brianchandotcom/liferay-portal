@@ -19,43 +19,43 @@
 <%
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all-carts");
 
-int type = ParamUtil.getInteger(request, "type", CCartConstants.C_CART_TYPE_CART);
+int type = ParamUtil.getInteger(request, "type", CommerceCartConstants.COMMERCE_CART_TYPE_CART);
 
-CCartDisplayContext cCartDisplayContext = (CCartDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CommerceCartDisplayContext commerceCartDisplayContext = (CommerceCartDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-SearchContainer<CCart> cCartSearchContainer = cCartDisplayContext.getSearchContainer();
+SearchContainer<CommerceCart> commerceCartSearchContainer = commerceCartDisplayContext.getSearchContainer();
 
-String displayStyle = cCartDisplayContext.getDisplayStyle();
+String displayStyle = commerceCartDisplayContext.getDisplayStyle();
 
-PortletURL portletURL = cCartDisplayContext.getPortletURL();
+PortletURL portletURL = commerceCartDisplayContext.getPortletURL();
 
 portletURL.setParameter("toolbarItem", toolbarItem);
-portletURL.setParameter("searchContainerId", "cCarts");
+portletURL.setParameter("searchContainerId", "commerceCarts");
 
 request.setAttribute("view.jsp-portletURL", portletURL);
 %>
 
-<%@ include file="/navbar.jspf" %>
+<%@ include file="/cart_admin/navbar.jspf" %>
 
-<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="searchContainerId" value="cCarts" />
+<liferay-util:include page="/cart_admin/toolbar.jsp" servletContext="<%= application %>">
+	<liferay-util:param name="searchContainerId" value="commerceCarts" />
 	<liferay-util:param name="type" value="<%= String.valueOf(type) %>" />
 </liferay-util:include>
 
-<div id="<portlet:namespace />CartsContainer">
+<div id="<portlet:namespace />cartsContainer">
 	<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-		<c:if test="<%= cCartDisplayContext.isShowInfoPanel() %>">
+		<c:if test="<%= commerceCartDisplayContext.isShowInfoPanel() %>">
 			<liferay-portlet:resourceURL
 				copyCurrentRenderParameters="<%= false %>"
-				id="cCartInfoPanel"
+				id="commerceCartInfoPanel"
 				var="sidebarPanelURL"
 			/>
 
 			<liferay-frontend:sidebar-panel
 				resourceURL="<%= sidebarPanelURL %>"
-				searchContainerId="cCarts"
+				searchContainerId="commerceCarts"
 			>
-				<liferay-util:include page="/cart_info_panel.jsp" servletContext="<%= application %>" />
+				<liferay-util:include page="/cart_admin/cart_info_panel.jsp" servletContext="<%= application %>" />
 			</liferay-frontend:sidebar-panel>
 		</c:if>
 
@@ -63,19 +63,19 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
 				<aui:input name="<%= Constants.CMD %>" type="hidden" />
 				<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
-				<aui:input name="deleteCCartIds" type="hidden" />
+				<aui:input name="deleteCommerceCartIds" type="hidden" />
 
 				<div class="carts-container" id="<portlet:namespace />entriesContainer">
 					<liferay-ui:search-container
-						id="cCarts"
+						id="commerceCarts"
 						iteratorURL="<%= portletURL %>"
-						searchContainer="<%= cCartSearchContainer %>"
+						searchContainer="<%= commerceCartSearchContainer %>"
 					>
 						<liferay-ui:search-container-row
-							className="com.liferay.commerce.cart.model.CCart"
+							className="com.liferay.commerce.cart.model.CommerceCart"
 							cssClass="entry-display-style"
-							keyProperty="CCartId"
-							modelVar="cCart"
+							keyProperty="commerceCartId"
+							modelVar="commerceCart"
 						>
 
 							<%
@@ -83,14 +83,15 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 							rowURL.setParameter("mvcRenderCommandName", "viewCartItems");
 							rowURL.setParameter("redirect", currentURL);
-							rowURL.setParameter("cCartId", String.valueOf(cCart.getCCartId()));
+							rowURL.setParameter("commerceCartId", String.valueOf(commerceCart.getCommerceCartId()));
+							rowURL.setParameter("cartToolbarItem", toolbarItem);
 							%>
 
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"
 								href="<%= rowURL %>"
-								name="title"
-								property="title"
+								name="name"
+								property="name"
 							/>
 
 							<liferay-ui:search-container-column-text
@@ -112,7 +113,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 							/>
 						</liferay-ui:search-container-row>
 
-						<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" searchContainer="<%= cCartSearchContainer %>" />
+						<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" searchContainer="<%= commerceCartSearchContainer %>" />
 					</liferay-ui:search-container>
 				</div>
 			</aui:form>

@@ -100,7 +100,7 @@ public class CPContentPortlet extends MVCPortlet {
 				cpDefinition, httpServletRequest, httpServletResponse);
 		}
 		catch (Exception e) {
-			_log.error(e);
+			_log.error(e, e);
 		}
 	}
 

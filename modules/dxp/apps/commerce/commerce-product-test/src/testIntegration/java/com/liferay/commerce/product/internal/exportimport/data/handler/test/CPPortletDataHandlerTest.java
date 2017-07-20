@@ -20,6 +20,7 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPOption;
+import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -56,7 +57,11 @@ public class CPPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 
 		CPOption cpOption = CPTestUtil.addCPOption(groupId);
 
-		CPTestUtil.addCPOptionCategory(groupId);
+		CPOptionCategory cpOptionCategory = CPTestUtil.addCPOptionCategory(
+			groupId);
+
+		CPTestUtil.addCPSpecificationOption(
+			groupId, cpOptionCategory.getCPOptionCategoryId());
 
 		CPTestUtil.addCPOptionValue(groupId, cpOption.getCPOptionId());
 

@@ -17,11 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CCartDisplayContext cCartDisplayContext = (CCartDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CommerceCartDisplayContext commerceCartDisplayContext = (CommerceCartDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-String searchContainerId = ParamUtil.getString(request, "searchContainerId", "cCarts");
+String searchContainerId = ParamUtil.getString(request, "searchContainerId", "commerceCarts");
 
-int type = ParamUtil.getInteger(request, "type", CCartConstants.C_CART_TYPE_CART);
+int type = ParamUtil.getInteger(request, "type", CommerceCartConstants.COMMERCE_CART_TYPE_CART);
 %>
 
 <liferay-frontend:management-bar
@@ -29,7 +29,7 @@ int type = ParamUtil.getInteger(request, "type", CCartConstants.C_CART_TYPE_CART
 	searchContainerId="<%= searchContainerId %>"
 >
 	<liferay-frontend:management-bar-buttons>
-		<c:if test="<%= cCartDisplayContext.isShowInfoPanel() %>">
+		<c:if test="<%= commerceCartDisplayContext.isShowInfoPanel() %>">
 			<liferay-frontend:management-bar-sidenav-toggler-button
 				icon="info-circle"
 				label="info"
@@ -38,47 +38,47 @@ int type = ParamUtil.getInteger(request, "type", CCartConstants.C_CART_TYPE_CART
 
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= cCartDisplayContext.getPortletURL() %>"
-			selectedDisplayStyle="<%= cCartDisplayContext.getDisplayStyle() %>"
+			portletURL="<%= commerceCartDisplayContext.getPortletURL() %>"
+			selectedDisplayStyle="<%= commerceCartDisplayContext.getDisplayStyle() %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= cCartDisplayContext.getPortletURL() %>"
+			portletURL="<%= commerceCartDisplayContext.getPortletURL() %>"
 		/>
 
 		<liferay-frontend:management-bar-sort
-			orderByCol="<%= cCartDisplayContext.getOrderByCol() %>"
-			orderByType="<%= cCartDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"title"} %>'
-			portletURL="<%= cCartDisplayContext.getPortletURL() %>"
+			orderByCol="<%= commerceCartDisplayContext.getOrderByCol() %>"
+			orderByType="<%= commerceCartDisplayContext.getOrderByType() %>"
+			orderColumns='<%= new String[] {"name"} %>'
+			portletURL="<%= commerceCartDisplayContext.getPortletURL() %>"
 		/>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<c:if test="<%= cCartDisplayContext.isShowInfoPanel() %>">
+		<c:if test="<%= commerceCartDisplayContext.isShowInfoPanel() %>">
 			<liferay-frontend:management-bar-sidenav-toggler-button
 				icon="info-circle"
 				label="info"
 			/>
 		</c:if>
 
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCCarts();" %>' icon="trash" label="delete" />
+		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceCarts();" %>' icon="trash" label="delete" />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
 <aui:script>
-	function <portlet:namespace />deleteCCarts() {
+	function <portlet:namespace />deleteCommerceCarts() {
 
 		<%
 		String deleteMessage = StringPool.BLANK;
 
-		if (type == CCartConstants.C_CART_TYPE_CART) {
+		if (type == CommerceCartConstants.COMMERCE_CART_TYPE_CART) {
 			deleteMessage = "are-you-sure-you-want-to-delete-the-selected-carts";
 		}
-		else if (type == CCartConstants.C_CART_TYPE_WISH_LIST) {
+		else if (type == CommerceCartConstants.COMMERCE_CART_TYPE_WISH_LIST) {
 			deleteMessage = "are-you-sure-you-want-to-delete-the-selected-wish-lists";
 		}
 		%>
@@ -88,9 +88,9 @@ int type = ParamUtil.getInteger(request, "type", CCartConstants.C_CART_TYPE_CART
 
 			form.attr('method', 'post');
 			form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
-			form.fm('deleteCCartIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+			form.fm('deleteCommerceCartIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-			submitForm(form, '<portlet:actionURL name="editCarts" />');
+			submitForm(form, '<portlet:actionURL name="editCommerceCarts" />');
 		}
 	}
 </aui:script>

@@ -26,9 +26,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CCartRequestHelper extends BaseRequestHelper {
+public class CommerceCartRequestHelper extends BaseRequestHelper {
 
-	public CCartRequestHelper(HttpServletRequest httpServletRequest) {
+	public CommerceCartRequestHelper(HttpServletRequest httpServletRequest) {
 		super(httpServletRequest);
 
 		_renderRequest = (RenderRequest)httpServletRequest.getAttribute(

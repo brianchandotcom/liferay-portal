@@ -17,7 +17,7 @@ package com.liferay.commerce.cart.internal.application.list;
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.commerce.application.list.constants.CommercePanelCategoryKeys;
-import com.liferay.commerce.cart.constants.CCartPortletKeys;
+import com.liferay.commerce.cart.constants.CommerceCartPortletKeys;
 import com.liferay.portal.kernel.model.Portlet;
 
 import org.osgi.service.component.annotations.Component;
@@ -34,16 +34,16 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = PanelApp.class
 )
-public class CCartPanelApp extends BasePanelApp {
+public class CommerceCartPanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {
-		return CCartPortletKeys.COMMERCE_CART_ADMIN;
+		return CommerceCartPortletKeys.COMMERCE_CART_ADMIN;
 	}
 
 	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + CCartPortletKeys.COMMERCE_CART_ADMIN + ")",
+		target = "(javax.portlet.name=" + CommerceCartPortletKeys.COMMERCE_CART_ADMIN + ")",
 		unbind = "-"
 	)
 	public void setPortlet(Portlet portlet) {

@@ -12,10 +12,19 @@
  * details.
  */
 
-package com.liferay.commerce.cart.internal.constants;
+package com.liferay.commerce.cart.constants;
 
 /**
- * @author Andrea Di Giorgi
+ * @author Alessio Antonio Rendina
  */
-public class CommerceCartConstants {
+public class CommerceCartWebKeys {
+
+	public static final String COMMERCE_CART = "COMMERCE_CART_CONTENT";
+
+	public static final String COMMERCE_CART_ITEM = "COMMERCE_CART_ITEM";
+
+	public static final String COMMERCE_CART_ITEMS = "COMMERCE_CART_ITEMS";
+
+	public static final String COMMERCE_CARTS = "COMMERCE_CARTS";
+
 }

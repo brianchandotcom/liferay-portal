@@ -17,24 +17,28 @@
 <%@ include file="/init.jsp" %>
 
 <%
-List<CCart> cCarts = (List<CCart>)request.getAttribute(CCartWebKeys.C_CARTS);
+String languageId = LanguageUtil.getLanguageId(locale);
 
-if (ListUtil.isEmpty(cCarts)) {
-	cCarts = Collections.emptyList();
+List<CommerceCartItem> commerceCartItems = (List<CommerceCartItem>)request.getAttribute(CommerceCartWebKeys.COMMERCE_CART_ITEMS);
+
+if (ListUtil.isEmpty(commerceCartItems)) {
+	commerceCartItems = Collections.emptyList();
 }
 %>
 
 <c:choose>
-	<c:when test="<%= cCarts.size() == 1 %>">
+	<c:when test="<%= commerceCartItems.size() == 1 %>">
 
 		<%
-		CCart cCart = cCarts.get(0);
+		CommerceCartItem commerceCartItem = commerceCartItems.get(0);
 
-		request.setAttribute("info_panel.jsp-entry", cCart);
+		request.setAttribute("info_panel.jsp-entry", commerceCartItem);
+
+		CPDefinition cpDefinition = commerceCartItem.getCPDefinition();
 		%>
 
 		<div class="sidebar-header">
-			<h4><%= HtmlUtil.escape(cCart.getTitle()) %></h4>
+			<h4><%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %></h4>
 		</div>
 
 		<aui:nav-bar markupView="lexicon">
@@ -47,7 +51,7 @@ if (ListUtil.isEmpty(cCarts)) {
 			<h5><liferay-ui:message key="id" /></h5>
 
 			<p>
-				<%= HtmlUtil.escape(String.valueOf(cCart.getCCartId())) %>
+				<%= HtmlUtil.escape(String.valueOf(commerceCartItem.getCommerceCartItemId())) %>
 			</p>
 		</div>
 	</c:when>
@@ -59,7 +63,7 @@ if (ListUtil.isEmpty(cCarts)) {
 		</aui:nav-bar>
 
 		<div class="sidebar-header">
-			<h4><liferay-ui:message arguments="<%= cCarts.size() %>" key="x-items-are-selected" /></h4>
+			<h4><liferay-ui:message arguments="<%= commerceCartItems.size() %>" key="x-items-are-selected" /></h4>
 		</div>
 	</c:otherwise>
 </c:choose>

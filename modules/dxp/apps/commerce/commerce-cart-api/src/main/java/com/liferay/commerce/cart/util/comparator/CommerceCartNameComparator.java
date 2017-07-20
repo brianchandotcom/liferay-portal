@@ -14,33 +14,34 @@
 
 package com.liferay.commerce.cart.util.comparator;
 
-import com.liferay.commerce.cart.model.CCart;
+import com.liferay.commerce.cart.model.CommerceCart;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Alessio Antonio Rendina
  */
-public class CCartTitleComparator extends OrderByComparator<CCart> {
+public class CommerceCartNameComparator
+	extends OrderByComparator<CommerceCart> {
 
-	public static final String ORDER_BY_ASC = "CCart.title ASC";
+	public static final String ORDER_BY_ASC = "CommerceCart.name ASC";
 
-	public static final String ORDER_BY_DESC = "CCart.title DESC";
+	public static final String ORDER_BY_DESC = "CommerceCart.name DESC";
 
-	public static final String[] ORDER_BY_FIELDS = {"title"};
+	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public CCartTitleComparator() {
+	public CommerceCartNameComparator() {
 		this(false);
 	}
 
-	public CCartTitleComparator(boolean ascending) {
+	public CommerceCartNameComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
 	@Override
-	public int compare(CCart cCart1, CCart cCart2) {
-		String title1 = StringUtil.toLowerCase(cCart1.getTitle());
-		String title2 = StringUtil.toLowerCase(cCart2.getTitle());
+	public int compare(CommerceCart cCart1, CommerceCart cCart2) {
+		String title1 = StringUtil.toLowerCase(cCart1.getName());
+		String title2 = StringUtil.toLowerCase(cCart2.getName());
 
 		int value = title1.compareTo(title2);
 

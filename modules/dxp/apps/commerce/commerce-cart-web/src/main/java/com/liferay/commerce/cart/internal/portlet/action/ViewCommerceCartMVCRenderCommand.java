@@ -14,9 +14,9 @@
 
 package com.liferay.commerce.cart.internal.portlet.action;
 
-import com.liferay.commerce.cart.constants.CCartPortletKeys;
-import com.liferay.commerce.cart.display.context.CCartItemDisplayContext;
-import com.liferay.commerce.cart.service.CCartItemLocalService;
+import com.liferay.commerce.cart.constants.CommerceCartPortletKeys;
+import com.liferay.commerce.cart.display.context.CommerceCartItemDisplayContext;
+import com.liferay.commerce.cart.service.CommerceCartItemLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -39,12 +39,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CCartPortletKeys.COMMERCE_CART_ADMIN,
+		"javax.portlet.name=" + CommerceCartPortletKeys.COMMERCE_CART_ADMIN,
 		"mvc.command.name=viewCartItems"
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewCCartMVCRenderCommand implements MVCRenderCommand {
+public class ViewCommerceCartMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -55,12 +55,14 @@ public class ViewCCartMVCRenderCommand implements MVCRenderCommand {
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(renderRequest);
 
-			CCartItemDisplayContext cCartItemDisplayContext =
-				new CCartItemDisplayContext(
-					_actionHelper, httpServletRequest, _cCartItemLocalService);
+			CommerceCartItemDisplayContext commerceCartItemDisplayContext =
+				new CommerceCartItemDisplayContext(
+					_actionHelper, httpServletRequest,
+					_commerceCartItemLocalService);
 
 			renderRequest.setAttribute(
-				WebKeys.PORTLET_DISPLAY_CONTEXT, cCartItemDisplayContext);
+				WebKeys.PORTLET_DISPLAY_CONTEXT,
+				commerceCartItemDisplayContext);
 		}
 		catch (PortalException pe) {
 			SessionErrors.add(renderRequest, pe.getClass());
@@ -73,7 +75,7 @@ public class ViewCCartMVCRenderCommand implements MVCRenderCommand {
 	private ActionHelper _actionHelper;
 
 	@Reference
-	private CCartItemLocalService _cCartItemLocalService;
+	private CommerceCartItemLocalService _commerceCartItemLocalService;
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;

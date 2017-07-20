@@ -17,9 +17,12 @@ package com.liferay.commerce.cart.constants;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CCartPortletKeys {
+public class CommerceCartConstants {
 
-	public static final String COMMERCE_CART_ADMIN =
-		"com_liferay_commerce_cart_web_internal_portlet_CCartAdminPortlet";
+	public static final String COMMERCE_CART_DEFAULT_TITLE = "default";
+
+	public static final int COMMERCE_CART_TYPE_CART = 0;
+
+	public static final int COMMERCE_CART_TYPE_WISH_LIST = 1;
 
 }

@@ -14,9 +14,9 @@
 
 package com.liferay.commerce.cart.internal.portlet.action;
 
-import com.liferay.commerce.cart.constants.CCartPortletKeys;
-import com.liferay.commerce.cart.constants.CCartWebKeys;
-import com.liferay.commerce.cart.model.CCartItem;
+import com.liferay.commerce.cart.constants.CommerceCartPortletKeys;
+import com.liferay.commerce.cart.constants.CommerceCartWebKeys;
+import com.liferay.commerce.cart.model.CommerceCart;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 
@@ -34,12 +34,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CCartPortletKeys.COMMERCE_CART_ADMIN,
-		"mvc.command.name=cCartItemInfoPanel"
+		"javax.portlet.name=" + CommerceCartPortletKeys.COMMERCE_CART_ADMIN,
+		"mvc.command.name=commerceCartInfoPanel"
 	},
 	service = MVCResourceCommand.class
 )
-public class CCartItemInfoPanelMVCResourceCommand
+public class CommerceCartInfoPanelMVCResourceCommand
 	extends BaseMVCResourceCommand {
 
 	@Override
@@ -47,12 +47,15 @@ public class CCartItemInfoPanelMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		List<CCartItem> cCartItems = _actionHelper.getCCartItems(
+		List<CommerceCart> commerceCarts = _actionHelper.getCommerceCarts(
 			resourceRequest);
 
-		resourceRequest.setAttribute(CCartWebKeys.C_CART_ITEMS, cCartItems);
+		resourceRequest.setAttribute(
+			CommerceCartWebKeys.COMMERCE_CARTS, commerceCarts);
 
-		include(resourceRequest, resourceResponse, "/cart_item_info_panel.jsp");
+		include(
+			resourceRequest, resourceResponse,
+			"/cart_admin/cart_info_panel.jsp");
 	}
 
 	@Reference

@@ -14,10 +14,10 @@
 
 package com.liferay.commerce.cart.internal.portlet;
 
-import com.liferay.commerce.cart.constants.CCartPortletKeys;
-import com.liferay.commerce.cart.display.context.CCartDisplayContext;
+import com.liferay.commerce.cart.constants.CommerceCartPortletKeys;
+import com.liferay.commerce.cart.display.context.CommerceCartDisplayContext;
 import com.liferay.commerce.cart.internal.portlet.action.ActionHelper;
-import com.liferay.commerce.cart.service.CCartLocalService;
+import com.liferay.commerce.cart.service.CommerceCartLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -54,14 +54,14 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.scopeable=true", "javax.portlet.display-name=Cart",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.view-template=/cart_admin/view.jsp",
-		"javax.portlet.name=" + CCartPortletKeys.COMMERCE_CART_ADMIN,
+		"javax.portlet.name=" + CommerceCartPortletKeys.COMMERCE_CART_ADMIN,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},
-	service = {CCartAdminPortlet.class, Portlet.class}
+	service = {CommerceCartAdminPortlet.class, Portlet.class}
 )
-public class CCartAdminPortlet extends MVCPortlet {
+public class CommerceCartAdminPortlet extends MVCPortlet {
 
 	@Override
 	public void render(
@@ -72,11 +72,13 @@ public class CCartAdminPortlet extends MVCPortlet {
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(renderRequest);
 
-			CCartDisplayContext cCartDisplayContext = new CCartDisplayContext(
-				_actionHelper, httpServletRequest, _cCartLocalService);
+			CommerceCartDisplayContext commerceCartDisplayContext =
+				new CommerceCartDisplayContext(
+					_actionHelper, httpServletRequest,
+					_commerceCartLocalService);
 
 			renderRequest.setAttribute(
-				WebKeys.PORTLET_DISPLAY_CONTEXT, cCartDisplayContext);
+				WebKeys.PORTLET_DISPLAY_CONTEXT, commerceCartDisplayContext);
 		}
 		catch (PortalException pe) {
 			SessionErrors.add(renderRequest, pe.getClass());
@@ -89,7 +91,7 @@ public class CCartAdminPortlet extends MVCPortlet {
 	private ActionHelper _actionHelper;
 
 	@Reference
-	private CCartLocalService _cCartLocalService;
+	private CommerceCartLocalService _commerceCartLocalService;
 
 	@Reference
 	private Portal _portal;

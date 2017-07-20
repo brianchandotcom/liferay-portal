@@ -14,9 +14,10 @@
 
 package com.liferay.commerce.cart.display.context;
 
-import com.liferay.commerce.cart.display.context.util.CCartRequestHelper;
+import com.liferay.commerce.cart.constants.CommerceCartConstants;
+import com.liferay.commerce.cart.display.context.util.CommerceCartRequestHelper;
 import com.liferay.commerce.cart.internal.portlet.action.ActionHelper;
-import com.liferay.commerce.cart.model.CCart;
+import com.liferay.commerce.cart.model.CommerceCart;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -36,9 +37,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Alessio Antonio Rendina
  */
-public abstract class BaseCCartDisplayContext<T> {
+public abstract class BaseCommerceCartDisplayContext<T> {
 
-	public BaseCCartDisplayContext(
+	public BaseCommerceCartDisplayContext(
 		ActionHelper actionHelper, HttpServletRequest httpServletRequest,
 		String portalPreferenceNamespace) {
 
@@ -48,10 +49,13 @@ public abstract class BaseCCartDisplayContext<T> {
 		portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			this.httpServletRequest);
 
-		cCartRequestHelper = new CCartRequestHelper(httpServletRequest);
+		commerceCartRequestHelper = new CommerceCartRequestHelper(
+			httpServletRequest);
 
-		liferayPortletRequest = cCartRequestHelper.getLiferayPortletRequest();
-		liferayPortletResponse = cCartRequestHelper.getLiferayPortletResponse();
+		liferayPortletRequest =
+			commerceCartRequestHelper.getLiferayPortletRequest();
+		liferayPortletResponse =
+			commerceCartRequestHelper.getLiferayPortletResponse();
 
 		_portalPreferenceNamespace = portalPreferenceNamespace;
 
@@ -59,28 +63,31 @@ public abstract class BaseCCartDisplayContext<T> {
 		_defaultOrderByType = "asc";
 	}
 
-	public CCart getCCart() throws PortalException {
-		if (_cCart != null) {
-			return _cCart;
+	public CommerceCart getCommerceCart() throws PortalException {
+		if (_commerceCart != null) {
+			return _commerceCart;
 		}
 
-		_cCart = actionHelper.getCCart(cCartRequestHelper.getRenderRequest());
+		_commerceCart = actionHelper.getCommerceCart(
+			commerceCartRequestHelper.getRenderRequest());
 
-		return _cCart;
+		return _commerceCart;
 	}
 
-	public long getCCartId() throws PortalException {
-		CCart cCart = getCCart();
+	public long getCommerceCartId() throws PortalException {
+		CommerceCart commerceCart = getCommerceCart();
 
-		if (cCart == null) {
+		if (commerceCart == null) {
 			return 0;
 		}
 
-		return cCart.getCCartId();
+		return commerceCart.getCommerceCartId();
 	}
 
-	public int getCCartType() {
-		return ParamUtil.getInteger(httpServletRequest, "type", 0);
+	public int getCommerceCartType() {
+		return ParamUtil.getInteger(
+			httpServletRequest, "type",
+			CommerceCartConstants.COMMERCE_CART_TYPE_CART);
 	}
 
 	public String getDisplayStyle() {
@@ -160,10 +167,11 @@ public abstract class BaseCCartDisplayContext<T> {
 			portletURL.setParameter("redirect", redirect);
 		}
 
-		CCart cCart = getCCart();
+		CommerceCart commerceCart = getCommerceCart();
 
-		if (cCart != null) {
-			portletURL.setParameter("cCartId", String.valueOf(getCCartId()));
+		if (commerceCart != null) {
+			portletURL.setParameter(
+				"commerceCartId", String.valueOf(getCommerceCartId()));
 		}
 
 		String delta = ParamUtil.getString(httpServletRequest, "delta");
@@ -268,14 +276,14 @@ public abstract class BaseCCartDisplayContext<T> {
 	}
 
 	protected final ActionHelper actionHelper;
-	protected final CCartRequestHelper cCartRequestHelper;
+	protected final CommerceCartRequestHelper commerceCartRequestHelper;
 	protected final HttpServletRequest httpServletRequest;
 	protected final LiferayPortletRequest liferayPortletRequest;
 	protected final LiferayPortletResponse liferayPortletResponse;
 	protected final PortalPreferences portalPreferences;
 	protected SearchContainer<T> searchContainer;
 
-	private CCart _cCart;
+	private CommerceCart _commerceCart;
 	private String _defaultOrderByCol;
 	private String _defaultOrderByType;
 	private String _displayStyle;

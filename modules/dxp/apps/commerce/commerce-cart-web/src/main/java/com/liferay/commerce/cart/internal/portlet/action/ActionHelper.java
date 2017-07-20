@@ -14,11 +14,12 @@
 
 package com.liferay.commerce.cart.internal.portlet.action;
 
-import com.liferay.commerce.cart.constants.CCartWebKeys;
-import com.liferay.commerce.cart.model.CCart;
-import com.liferay.commerce.cart.model.CCartItem;
-import com.liferay.commerce.cart.service.CCartItemLocalService;
-import com.liferay.commerce.cart.service.CCartLocalService;
+import com.liferay.commerce.cart.constants.CommerceCartWebKeys;
+import com.liferay.commerce.cart.model.CommerceCart;
+import com.liferay.commerce.cart.model.CommerceCartItem;
+import com.liferay.commerce.cart.service.CommerceCartItemLocalService;
+import com.liferay.commerce.cart.service.CommerceCartLocalService;
+import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -37,64 +38,74 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = ActionHelper.class)
 public class ActionHelper {
 
-	public CCart getCCart(RenderRequest renderRequest) throws PortalException {
-		CCart cCart = (CCart)renderRequest.getAttribute(CCartWebKeys.C_CART);
-
-		if (cCart != null) {
-			return cCart;
-		}
-
-		long cCartId = ParamUtil.getLong(renderRequest, "cCartId");
-
-		if (cCartId > 0) {
-			cCart = _cCartLocalService.fetchCCart(cCartId);
-		}
-
-		if (cCart != null) {
-			renderRequest.setAttribute(CCartWebKeys.C_CART, cCart);
-		}
-
-		return cCart;
-	}
-
-	public List<CCartItem> getCCartItems(ResourceRequest resourceRequest)
+	public CommerceCart getCommerceCart(RenderRequest renderRequest)
 		throws PortalException {
 
-		List<CCartItem> cCartItems = new ArrayList<>();
+		CommerceCart commerceCart = (CommerceCart)renderRequest.getAttribute(
+			CommerceCartWebKeys.COMMERCE_CART);
 
-		long[] cCartItemIds = ParamUtil.getLongValues(
-			resourceRequest, "rowIds");
-
-		for (long cCartItemId : cCartItemIds) {
-			CCartItem cCartItem = _cCartItemLocalService.getCCartItem(
-				cCartItemId);
-
-			cCartItems.add(cCartItem);
+		if (commerceCart != null) {
+			return commerceCart;
 		}
 
-		return cCartItems;
+		long commerceCartId = ParamUtil.getLong(
+			renderRequest, "commerceCartId");
+
+		if (commerceCartId > 0) {
+			commerceCart = _commerceCartLocalService.fetchCommerceCart(
+				commerceCartId);
+		}
+
+		if (commerceCart != null) {
+			renderRequest.setAttribute(
+				CommerceCartWebKeys.COMMERCE_CART, commerceCart);
+		}
+
+		return commerceCart;
 	}
 
-	public List<CCart> getCCarts(ResourceRequest resourceRequest)
+	public List<CommerceCartItem> getCommerceCartItems(
+			ResourceRequest resourceRequest)
 		throws PortalException {
 
-		List<CCart> cCarts = new ArrayList<>();
+		List<CommerceCartItem> commerceCartItems = new ArrayList<>();
 
-		long[] cCartIds = ParamUtil.getLongValues(resourceRequest, "rowIds");
+		long[] commerceCartItemIds = ParamUtil.getLongValues(
+			resourceRequest, RowChecker.ROW_IDS);
 
-		for (long cCartId : cCartIds) {
-			CCart cCart = _cCartLocalService.getCCart(cCartId);
+		for (long commerceCartItemId : commerceCartItemIds) {
+			CommerceCartItem commerceCartItem =
+				_commerceCartItemLocalService.getCommerceCartItem(
+					commerceCartItemId);
 
-			cCarts.add(cCart);
+			commerceCartItems.add(commerceCartItem);
 		}
 
-		return cCarts;
+		return commerceCartItems;
+	}
+
+	public List<CommerceCart> getCommerceCarts(ResourceRequest resourceRequest)
+		throws PortalException {
+
+		List<CommerceCart> commerceCarts = new ArrayList<>();
+
+		long[] commerceCartIds = ParamUtil.getLongValues(
+			resourceRequest, RowChecker.ROW_IDS);
+
+		for (long commerceCartId : commerceCartIds) {
+			CommerceCart commerceCart =
+				_commerceCartLocalService.getCommerceCart(commerceCartId);
+
+			commerceCarts.add(commerceCart);
+		}
+
+		return commerceCarts;
 	}
 
 	@Reference
-	private CCartItemLocalService _cCartItemLocalService;
+	private CommerceCartItemLocalService _commerceCartItemLocalService;
 
 	@Reference
-	private CCartLocalService _cCartLocalService;
+	private CommerceCartLocalService _commerceCartLocalService;
 
 }

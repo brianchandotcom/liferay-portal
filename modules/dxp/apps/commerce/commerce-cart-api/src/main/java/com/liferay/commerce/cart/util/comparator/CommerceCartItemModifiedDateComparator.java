@@ -14,15 +14,15 @@
 
 package com.liferay.commerce.cart.util.comparator;
 
-import com.liferay.commerce.cart.model.CCartItem;
+import com.liferay.commerce.cart.model.CommerceCartItem;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
  * @author Alessio Antonio Rendina
  */
-public class CCartItemModifiedDateComparator
-	extends OrderByComparator<CCartItem> {
+public class CommerceCartItemModifiedDateComparator
+	extends OrderByComparator<CommerceCartItem> {
 
 	public static final String ORDER_BY_ASC = "modifiedDate ASC";
 
@@ -30,18 +30,22 @@ public class CCartItemModifiedDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"modifiedDate"};
 
-	public CCartItemModifiedDateComparator() {
+	public CommerceCartItemModifiedDateComparator() {
 		this(false);
 	}
 
-	public CCartItemModifiedDateComparator(boolean ascending) {
+	public CommerceCartItemModifiedDateComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
 	@Override
-	public int compare(CCartItem cCartItem1, CCartItem cCartItem2) {
+	public int compare(
+		CommerceCartItem commerceCartItem1,
+		CommerceCartItem commerceCartItem2) {
+
 		int value = DateUtil.compareTo(
-			cCartItem1.getModifiedDate(), cCartItem2.getModifiedDate());
+			commerceCartItem1.getModifiedDate(),
+			commerceCartItem2.getModifiedDate());
 
 		if (_ascending) {
 			return value;

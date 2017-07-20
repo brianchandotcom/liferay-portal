@@ -5,7 +5,7 @@
 	<model-resource>
 		<model-name>com.liferay.commerce.cart</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_commerce_cart_web_internal_portlet_CCartAdminPortlet</portlet-name>
+			<portlet-name>com_liferay_commerce_cart_web_internal_portlet_CommerceCartAdminPortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<weight>1</weight>
@@ -23,9 +23,9 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
-		<model-name>com.liferay.commerce.cart.model.CCart</model-name>
+		<model-name>com.liferay.commerce.cart.model.CommerceCart</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_commerce_cart_web_internal_portlet_CCartAdminPortlet</portlet-name>
+			<portlet-name>com_liferay_commerce_cart_web_internal_portlet_CommerceCartAdminPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>
@@ -50,9 +50,9 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
-	<model-name>com.liferay.commerce.cart.model.CCartItem</model-name>
+	<model-name>com.liferay.commerce.cart.model.CommerceCartItem</model-name>
 	<portlet-ref>
-		<portlet-name>com_liferay_commerce_cart_web_internal_portlet_CCartAdminPortlet</portlet-name>
+		<portlet-name>com_liferay_commerce_cart_web_internal_portlet_CommerceCartAdminPortlet</portlet-name>
 	</portlet-ref>
 	<weight>2</weight>
 	<permissions>

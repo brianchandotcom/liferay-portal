@@ -14,10 +14,11 @@
 
 package com.liferay.commerce.cart.display.context;
 
+import com.liferay.commerce.cart.constants.CommerceCartConstants;
 import com.liferay.commerce.cart.internal.portlet.action.ActionHelper;
-import com.liferay.commerce.cart.internal.util.CCartPortletUtil;
-import com.liferay.commerce.cart.model.CCartItem;
-import com.liferay.commerce.cart.service.CCartItemLocalService;
+import com.liferay.commerce.cart.internal.util.CommerceCartPortletUtil;
+import com.liferay.commerce.cart.model.CommerceCart;
+import com.liferay.commerce.cart.service.CommerceCartLocalService;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -32,37 +33,39 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CCartItemDisplayContext
-	extends BaseCCartDisplayContext<CCartItem> {
+public class CommerceCartDisplayContext
+	extends BaseCommerceCartDisplayContext<CommerceCart> {
 
-	public CCartItemDisplayContext(
+	public CommerceCartDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
-			CCartItemLocalService cCartItemLocalService)
+			CommerceCartLocalService commerceCartLocalService)
 		throws PortalException {
 
 		super(
-			actionHelper, httpServletRequest, CCartItem.class.getSimpleName());
+			actionHelper, httpServletRequest,
+			CommerceCart.class.getSimpleName());
 
-		_cCartItemLocalService = cCartItemLocalService;
+		setDefaultOrderByCol("name");
+
+		_commerceCartLocalService = commerceCartLocalService;
 	}
 
 	@Override
 	public PortletURL getPortletURL() throws PortalException {
 		PortletURL portletURL = super.getPortletURL();
 
-		portletURL.setParameter("mvcRenderCommandName", "viewCartItems");
-		portletURL.setParameter("cCartId", String.valueOf(getCCartId()));
-
 		String toolbarItem = ParamUtil.getString(
-			httpServletRequest, "toolbarItem", "view-all-cart-items");
+			httpServletRequest, "toolbarItem", "view-all-carts");
 
 		portletURL.setParameter("toolbarItem", toolbarItem);
+
+		portletURL.setParameter("type", String.valueOf(getCommerceCartType()));
 
 		return portletURL;
 	}
 
 	@Override
-	public SearchContainer<CCartItem> getSearchContainer()
+	public SearchContainer<CommerceCart> getSearchContainer()
 		throws PortalException {
 
 		if (searchContainer != null) {
@@ -72,10 +75,19 @@ public class CCartItemDisplayContext
 		searchContainer = new SearchContainer<>(
 			liferayPortletRequest, getPortletURL(), null, null);
 
-		searchContainer.setEmptyResultsMessage("no-cart-items-were-found");
+		if (getCommerceCartType() ==
+				CommerceCartConstants.COMMERCE_CART_TYPE_CART) {
 
-		OrderByComparator<CCartItem> orderByComparator =
-			CCartPortletUtil.getCCartItemOrderByComparator(
+			searchContainer.setEmptyResultsMessage("no-carts-were-found");
+		}
+		else if (getCommerceCartType() ==
+					CommerceCartConstants.COMMERCE_CART_TYPE_WISH_LIST) {
+
+			searchContainer.setEmptyResultsMessage("no-wish-lists-were-found");
+		}
+
+		OrderByComparator<CommerceCart> orderByComparator =
+			CommerceCartPortletUtil.getCommerceCartOrderByComparator(
 				getOrderByCol(), getOrderByType());
 
 		searchContainer.setOrderByCol(getOrderByCol());
@@ -83,19 +95,20 @@ public class CCartItemDisplayContext
 		searchContainer.setOrderByType(getOrderByType());
 		searchContainer.setRowChecker(getRowChecker());
 
-		int total = _cCartItemLocalService.getCCartItemsCount(getCCartId());
+		int total = _commerceCartLocalService.getCommerceCartsCount(
+			getCommerceCartType());
 
 		searchContainer.setTotal(total);
 
-		List<CCartItem> results = _cCartItemLocalService.getCCartItems(
-			getCCartId(), searchContainer.getStart(), searchContainer.getEnd(),
-			orderByComparator);
+		List<CommerceCart> results = _commerceCartLocalService.getCommerceCarts(
+			getCommerceCartType(), searchContainer.getStart(),
+			searchContainer.getEnd(), orderByComparator);
 
 		searchContainer.setResults(results);
 
 		return searchContainer;
 	}
 
-	private final CCartItemLocalService _cCartItemLocalService;
+	private final CommerceCartLocalService _commerceCartLocalService;
 
 }

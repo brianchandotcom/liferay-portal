@@ -18,7 +18,9 @@ import com.liferay.poshi.runner.util.Dom4JUtil;
 
 import java.io.IOException;
 
+import org.dom4j.CDATA;
 import org.dom4j.Element;
+import org.dom4j.Node;
 
 /**
  * @author Kenji Heigel
@@ -44,6 +46,14 @@ public class VarElement extends PoshiElement {
 	}
 
 	public String getVarValue() {
+		if (valueAttributeName == null) {
+			for (Node node : Dom4JUtil.toNodeList(content())) {
+				if (node instanceof CDATA) {
+					return node.getText();
+				}
+			}
+		}
+
 		return attributeValue(valueAttributeName);
 	}
 
@@ -59,6 +69,12 @@ public class VarElement extends PoshiElement {
 			value = value.replace("Util.", "Util#");
 
 			addAttribute("method", value);
+
+			return;
+		}
+
+		if (value.contains("\n")) {
+			addCDATA(value);
 
 			return;
 		}
@@ -118,6 +134,14 @@ public class VarElement extends PoshiElement {
 			valueAttributeName = "value";
 
 			return;
+		}
+
+		for (Node node : Dom4JUtil.toNodeList(element.content())) {
+			if (node instanceof CDATA) {
+				add((CDATA)node.clone());
+
+				return;
+			}
 		}
 
 		try {

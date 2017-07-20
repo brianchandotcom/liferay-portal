@@ -49,8 +49,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo Garcia
  */
 @Component(immediate = true, service = Indexer.class)
-public class BookmarksFolderIndexer 
-	extends BaseIndexer<BookmarksFolder> implements FolderIndexer{
+public class BookmarksFolderIndexer
+	extends BaseIndexer<BookmarksFolder> implements FolderIndexer {
 
 	public static final String CLASS_NAME = BookmarksFolder.class.getName();
 
@@ -66,7 +66,7 @@ public class BookmarksFolderIndexer
 	public String getClassName() {
 		return CLASS_NAME;
 	}
-	
+
 	@Override
 	public String[] getFolderClassNames() {
 		return new String[] {CLASS_NAME};

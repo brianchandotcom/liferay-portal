@@ -193,7 +193,9 @@ public abstract class PoshiElement extends DefaultElement {
 		if (readableSyntax.startsWith("property") ||
 			readableSyntax.startsWith("var")) {
 
-			if (readableSyntax.endsWith(";")) {
+			if (readableSyntax.endsWith("\";") ||
+				readableSyntax.endsWith(");")) {
+
 				return true;
 			}
 

@@ -96,9 +96,10 @@ public class CPAttachmentFileEntryStagedModelDataHandlerTest
 			dependentStagedModelsMap, CPDefinitionOptionRel.class,
 			cpDefinitionOptionRel);
 
-		for (int i = 0; i <
-			CPInstanceStagedModelDataHandlerTest.
-				CP_DEFINITION_OPTION_VALUE_RELS_COUNT; i++) {
+		for (int i = 0;
+			 i <
+				CPInstanceStagedModelDataHandlerTest.
+					CP_DEFINITION_OPTION_VALUE_RELS_COUNT; i++) {
 
 			CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
 				CPTestUtil.addCPDefinitionOptionValueRel(

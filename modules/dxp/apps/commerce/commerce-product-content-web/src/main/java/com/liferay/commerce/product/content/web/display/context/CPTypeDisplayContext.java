@@ -48,20 +48,16 @@ public class CPTypeDisplayContext {
 	public CPTypeDisplayContext(
 			CPAttachmentFileEntryService cpAttachmentFileEntryService,
 			CPContentConfigurationHelper cpContentConfigurationHelper,
-			CPDefinition cpDefinition,
-			CPAttachmentFileEntryLocalService cpAttachmentFileEntryLocalService,
-			HttpServletRequest httpServletRequest, Portal portal,
-			CPInstanceHelper cpInstanceHelper)
+			CPDefinition cpDefinition, CPInstanceHelper cpInstanceHelper,
+			HttpServletRequest httpServletRequest, Portal portal)
 		throws ConfigurationException {
 
 		this.cpAttachmentFileEntryService = cpAttachmentFileEntryService;
 		this.cpContentConfigurationHelper = cpContentConfigurationHelper;
 		this.cpDefinition = cpDefinition;
-		this.cpAttachmentFileEntryLocalService =
-			cpAttachmentFileEntryLocalService;
+		this.cpInstanceHelper = cpInstanceHelper;
 		this.httpServletRequest = httpServletRequest;
 		this.portal = portal;
-		this.cpInstanceHelper = cpInstanceHelper;
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(

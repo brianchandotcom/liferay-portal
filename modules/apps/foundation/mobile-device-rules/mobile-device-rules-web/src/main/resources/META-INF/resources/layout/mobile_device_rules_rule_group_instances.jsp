@@ -34,7 +34,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("mobile_device_rules_he
 	total="<%= ruleGroupInstancesCount %>"
 >
 	<liferay-ui:search-container-results
-		results="<%= MDRRuleGroupInstanceServiceUtil.getRuleGroupInstances(className, classPK, searchContainer.getStart(), searchContainer.getEnd(), new RuleGroupInstancePriorityComparator()) %>"
+		results="<%= MDRRuleGroupInstanceServiceUtil.getRuleGroupInstances(className, classPK, searchContainer.getStart(), searchContainer.getEnd(), RuleGroupInstancePriorityComparator.ASCENDING_INSTANCE) %>"
 	/>
 
 	<liferay-ui:search-container-row

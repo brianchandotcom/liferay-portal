@@ -26,7 +26,7 @@ if (Validator.isNotNull(saveCallback)) {
 String className = ParamUtil.getString(request, "className");
 long classPK = ParamUtil.getLong(request, "classPK");
 
-List<MDRRuleGroupInstance> ruleGroupInstances = MDRRuleGroupInstanceServiceUtil.getRuleGroupInstances(className, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new RuleGroupInstancePriorityComparator());
+List<MDRRuleGroupInstance> ruleGroupInstances = MDRRuleGroupInstanceServiceUtil.getRuleGroupInstances(className, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS, RuleGroupInstancePriorityComparator.ASCENDING_INSTANCE);
 %>
 
 <portlet:actionURL name="/mobile_device_rules/edit_rule_group_instance" var="editRuleGroupInstancesURL">

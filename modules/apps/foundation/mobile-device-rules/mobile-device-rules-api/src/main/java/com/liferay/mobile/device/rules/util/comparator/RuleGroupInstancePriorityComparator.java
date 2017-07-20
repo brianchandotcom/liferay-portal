@@ -23,6 +23,13 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 public class RuleGroupInstancePriorityComparator
 	extends OrderByComparator<MDRRuleGroupInstance> {
 
+	public static final RuleGroupInstancePriorityComparator ASCENDING_INSTANCE =
+		new RuleGroupInstancePriorityComparator(Boolean.TRUE);
+
+	public static final RuleGroupInstancePriorityComparator
+		DESCENDING_INSTANCE = new RuleGroupInstancePriorityComparator(
+			Boolean.FALSE);
+
 	public static final String ORDER_BY_ASC =
 		"MDRRuleGroupInstance.priority ASC";
 
@@ -31,10 +38,28 @@ public class RuleGroupInstancePriorityComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"priority"};
 
-	public RuleGroupInstancePriorityComparator() {
-		this(true);
+	public static RuleGroupInstancePriorityComparator getInstance(
+		boolean ascending) {
+
+		if (ascending) {
+			return ASCENDING_INSTANCE;
+		}
+
+		return DESCENDING_INSTANCE;
 	}
 
+	/**
+	 * @deprecated As of 2.0.0, replaced by {@link #ASCENDING_INSTANCE}
+	 */
+	@Deprecated
+	public RuleGroupInstancePriorityComparator() {
+		this(Boolean.TRUE);
+	}
+
+	/**
+	 * @deprecated As of 2.0.0, replaced by {@link #getInstance(boolean)}
+	 */
+	@Deprecated
 	public RuleGroupInstancePriorityComparator(boolean ascending) {
 		_ascending = ascending;
 	}
@@ -73,6 +98,10 @@ public class RuleGroupInstancePriorityComparator
 	@Override
 	public boolean isAscending() {
 		return _ascending;
+	}
+
+	private RuleGroupInstancePriorityComparator(Boolean ascending) {
+		_ascending = ascending;
 	}
 
 	private final boolean _ascending;

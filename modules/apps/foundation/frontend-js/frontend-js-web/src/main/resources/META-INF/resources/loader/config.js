@@ -26,5 +26,5 @@
 
 	__CONFIG__.exposeGlobal = Liferay.EXPOSE_GLOBAL;
 
-	__CONFIG__.ignoreVersions = Liferay.IGNORE_VERSIONS;
+	__CONFIG__.ignoreModuleVersion = Liferay.IGNORE_MODULE_VERSION;
 }());

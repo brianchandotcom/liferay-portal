@@ -2026,14 +2026,8 @@
 					<isset var="invalidateLength" />
 				</not>
 				<then>
-					<execute macro="Gmail#gotoHtmlMode" />
-
-					<execute macro="Gmail#viewMail">
-						<var name="emailFromUserName" value="Joe Bloggs" />
-						<var name="gmailAssetType" value="Your New Password" />
-						<var name="gmailMessageBody" value="Your new password for http://localhost:8080 is ${newPassword1}" />
-						<var name="gmailMessageTitle" value="http://localhost:8080: Your New Password" />
-					</execute>
+					<execute macro="User#acceptEndUserLicenseAgreement" />
+					<execute macro="User#answerPasswordReminder" />
 				</then>
 			</elseif>
 			<elseif>

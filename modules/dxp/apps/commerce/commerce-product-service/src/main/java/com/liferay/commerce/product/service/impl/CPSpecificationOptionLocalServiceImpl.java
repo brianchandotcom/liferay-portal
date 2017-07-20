@@ -91,6 +91,12 @@ public class CPSpecificationOptionLocalServiceImpl
 
 		cpSpecificationOptionPersistence.remove(cpSpecificationOption);
 
+		// Commerce product definition specification option values
+
+		cpDefinitionSpecificationOptionValueLocalService.
+			deleteCPSpecificationOptionDefinitionValues(
+				cpSpecificationOption.getCPSpecificationOptionId());
+
 		// Resources
 
 		resourceLocalService.deleteResource(

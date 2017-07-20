@@ -231,6 +231,12 @@ public class CPDefinitionLocalServiceImpl
 		cpDefinitionOptionRelLocalService.deleteCPDefinitionOptionRels(
 			cpDefinition.getCPDefinitionId());
 
+		// Commerce product definition specification option values
+
+		cpDefinitionSpecificationOptionValueLocalService.
+			deleteCPDefinitionSpecificationOptionValues(
+				cpDefinition.getCPDefinitionId());
+
 		// Commerce product instances
 
 		cpInstanceLocalService.deleteCPInstances(

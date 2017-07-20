@@ -14,11 +14,134 @@
 
 package com.liferay.commerce.product.service.impl;
 
+import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.service.base.CPDefinitionSpecificationOptionValueLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
- * @author Marco Leo
+ * @author Andrea Di Giorgi
  */
 public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 	extends CPDefinitionSpecificationOptionValueLocalServiceBaseImpl {
+
+	@Override
+	public CPDefinitionSpecificationOptionValue
+			addCPDefinitionSpecificationOptionValue(
+				long cpDefinitionId, long cpSpecificationOptionId,
+				long cpOptionCategoryId, Map<Locale, String> valueMap,
+				double priority, ServiceContext serviceContext)
+		throws PortalException {
+
+		CPDefinition cpDefinition = cpDefinitionPersistence.findByPrimaryKey(
+			cpDefinitionId);
+		User user = userLocalService.getUser(serviceContext.getUserId());
+
+		long cpDefinitionSpecificationOptionValueId =
+			counterLocalService.increment();
+
+		CPDefinitionSpecificationOptionValue
+			cpDefinitionSpecificationOptionValue =
+				cpDefinitionSpecificationOptionValuePersistence.create(
+					cpDefinitionSpecificationOptionValueId);
+
+		cpDefinitionSpecificationOptionValue.setUuid(serviceContext.getUuid());
+		cpDefinitionSpecificationOptionValue.setGroupId(
+			cpDefinition.getGroupId());
+		cpDefinitionSpecificationOptionValue.setCompanyId(user.getCompanyId());
+		cpDefinitionSpecificationOptionValue.setUserId(user.getUserId());
+		cpDefinitionSpecificationOptionValue.setUserName(user.getFullName());
+		cpDefinitionSpecificationOptionValue.setCPDefinitionId(
+			cpDefinition.getCPDefinitionId());
+		cpDefinitionSpecificationOptionValue.setCPSpecificationOptionId(
+			cpSpecificationOptionId);
+		cpDefinitionSpecificationOptionValue.setCPOptionCategoryId(
+			cpOptionCategoryId);
+		cpDefinitionSpecificationOptionValue.setValueMap(valueMap);
+		cpDefinitionSpecificationOptionValue.setPriority(priority);
+		cpDefinitionSpecificationOptionValue.setExpandoBridgeAttributes(
+			serviceContext);
+
+		cpDefinitionSpecificationOptionValuePersistence.update(
+			cpDefinitionSpecificationOptionValue);
+
+		return cpDefinitionSpecificationOptionValue;
+	}
+
+	@Override
+	public void deleteCPDefinitionSpecificationOptionValues(
+		long cpDefinitionId) {
+
+		cpDefinitionSpecificationOptionValuePersistence.removeByCPDefinitionId(
+			cpDefinitionId);
+	}
+
+	@Override
+	public void deleteCPSpecificationOptionDefinitionValues(
+		long cpSpecificationOptionId) {
+
+		cpDefinitionSpecificationOptionValuePersistence.
+			removeByCPSpecificationOptionId(cpSpecificationOptionId);
+	}
+
+	@Override
+	public List<CPDefinitionSpecificationOptionValue>
+		getCPDefinitionSpecificationOptionValues(long cpDefinitionId) {
+
+		return cpDefinitionSpecificationOptionValuePersistence.
+			findByCPDefinitionId(cpDefinitionId);
+	}
+
+	@Override
+	public CPDefinitionSpecificationOptionValue
+			updateCPDefinitionSpecificationOptionValue(
+				long cpDefinitionSpecificationOptionValueId,
+				long cpOptionCategoryId, Map<Locale, String> valueMap,
+				double priority, ServiceContext serviceContext)
+		throws PortalException {
+
+		CPDefinitionSpecificationOptionValue
+			cpDefinitionSpecificationOptionValue =
+				cpDefinitionSpecificationOptionValuePersistence.
+					findByPrimaryKey(cpDefinitionSpecificationOptionValueId);
+
+		cpDefinitionSpecificationOptionValue.setCPOptionCategoryId(
+			cpOptionCategoryId);
+		cpDefinitionSpecificationOptionValue.setValueMap(valueMap);
+		cpDefinitionSpecificationOptionValue.setPriority(priority);
+		cpDefinitionSpecificationOptionValue.setExpandoBridgeAttributes(
+			serviceContext);
+
+		cpDefinitionSpecificationOptionValuePersistence.update(
+			cpDefinitionSpecificationOptionValue);
+
+		return cpDefinitionSpecificationOptionValue;
+	}
+
+	@Override
+	public CPDefinitionSpecificationOptionValue updateCPOptionCategoryId(
+			long cpDefinitionSpecificationOptionValueId,
+			long cpOptionCategoryId)
+		throws PortalException {
+
+		CPDefinitionSpecificationOptionValue
+			cpDefinitionSpecificationOptionValue =
+				cpDefinitionSpecificationOptionValuePersistence.
+					findByPrimaryKey(cpDefinitionSpecificationOptionValueId);
+
+		cpDefinitionSpecificationOptionValue.setCPOptionCategoryId(
+			cpOptionCategoryId);
+
+		cpDefinitionSpecificationOptionValuePersistence.update(
+			cpDefinitionSpecificationOptionValue);
+
+		return cpDefinitionSpecificationOptionValue;
+	}
+
 }

@@ -24,10 +24,6 @@ Map<String, Object> contextObjects = new HashMap<>();
 contextObjects.put("groupedCPTypeDisplayContext", groupedCPTypeDisplayContext);
 
 CPDefinition cpDefinition = groupedCPTypeDisplayContext.getCPDefinition();
-
-List<CPDefinition> entries = new ArrayList<>();
-
-entries.add(cpDefinition);
 %>
 
 <liferay-ddm:template-renderer
@@ -35,7 +31,7 @@ entries.add(cpDefinition);
 	contextObjects="<%= contextObjects %>"
 	displayStyle="<%= groupedCPTypeDisplayContext.getDisplayStyle() %>"
 	displayStyleGroupId="<%= groupedCPTypeDisplayContext.getDisplayStyleGroupId() %>"
-	entries="<%= entries %>"
+	entries="<%= Collections.singletonList(cpDefinition) %>"
 >
 	<div class="container-fluid product-detail">
 		<div class="row">

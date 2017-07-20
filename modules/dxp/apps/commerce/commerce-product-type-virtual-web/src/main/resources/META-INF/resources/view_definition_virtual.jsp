@@ -24,10 +24,6 @@ Map<String, Object> contextObjects = new HashMap<>();
 contextObjects.put("virtualCPTypeDisplayContext", virtualCPTypeDisplayContext);
 
 CPDefinition cpDefinition = virtualCPTypeDisplayContext.getCPDefinition();
-
-List<CPDefinition> cpDefinitions = new ArrayList<>();
-
-cpDefinitions.add(cpDefinition);
 %>
 
 <liferay-ddm:template-renderer
@@ -35,7 +31,7 @@ cpDefinitions.add(cpDefinition);
 	contextObjects="<%= contextObjects %>"
 	displayStyle="<%= virtualCPTypeDisplayContext.getDisplayStyle() %>"
 	displayStyleGroupId="<%= virtualCPTypeDisplayContext.getDisplayStyleGroupId() %>"
-	entries="<%= cpDefinitions %>"
+	entries="<%= Collections.singletonList(cpDefinition) %>"
 >
 
 	<%

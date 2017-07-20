@@ -117,8 +117,19 @@ property to `true` in `gradle.properties`.
 - [LPS-73248]: Use Liferay 7.0.3 GA4 by default.
 - [LPS-73383]: Update the [Liferay Gradle Plugins] dependency to version 3.3.35.
 
+## 1.5.1 - *(Unreleased)*
+
+### Changed
+- [LPS-73746]: Update the [Liferay Portal Tools Bundle Support] dependency to
+version 3.0.2.
+
+### Fixed
+- [LPS-73746]: Trim authentication token in case users add extra lines into
+their token file.
+
 [Gradle Download Task]: https://github.com/michel-kraemer/gradle-download-task/
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
+[Liferay Portal Tools Bundle Support]: https://github.com/liferay/liferay-portal/tree/master/modules/util/portal-tools-bundle-support
 [LPS-66853]: https://issues.liferay.com/browse/LPS-66853
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67352]: https://issues.liferay.com/browse/LPS-67352
@@ -142,3 +153,4 @@ property to `true` in `gradle.properties`.
 [LPS-73056]: https://issues.liferay.com/browse/LPS-73056
 [LPS-73248]: https://issues.liferay.com/browse/LPS-73248
 [LPS-73383]: https://issues.liferay.com/browse/LPS-73383
+[LPS-73746]: https://issues.liferay.com/browse/LPS-73746

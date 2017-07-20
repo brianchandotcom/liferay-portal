@@ -74,7 +74,9 @@ public class LibraryReferenceTest {
 
 		_initEclipse(documentBuilder);
 		_initNetBeans(documentBuilder);
-		_initVersionsJars(documentBuilder);
+		_initVersionsJars(documentBuilder, _VERSIONS_FILE_NAME, _versionsJars);
+		_initVersionsJars(
+			documentBuilder, _VERSIONS_EXT_FILE_NAME, _versionsExtJars);
 	}
 
 	@Test
@@ -91,6 +93,16 @@ public class LibraryReferenceTest {
 	@Test
 	public void testLibDependencyJarsInGitIgnore() {
 		testMissingJarReferences(_gitIgnoreJars, _GIT_IGNORE_FILE_NAME);
+	}
+
+	@Test
+	public void testLibDependencyJarsInVersionsExt() {
+		for (String jar : _libDependencyJars) {
+			Assert.assertTrue(
+				_VERSIONS_EXT_FILE_NAME + " is missing a reference to " +
+					jar,
+				_versionsExtJars.contains(jar));
+		}
 	}
 
 	@Test
@@ -129,6 +141,16 @@ public class LibraryReferenceTest {
 	public void testNetBeansSourceDirsInModules() {
 		testNonexistentModuleSourceDirReferences(
 			_netBeansModuleSourceDirs, _NETBEANS_FILE_NAME);
+	}
+
+	@Test
+	public void testVersionsExtJarsInLib() {
+		for (String jar : _versionsExtJars) {
+			Assert.assertTrue(
+				_VERSIONS_EXT_FILE_NAME + " has a nonexistent reference to " +
+					jar,
+				_libDependencyJars.contains(jar));
+		}
 	}
 
 	@Test
@@ -396,18 +418,18 @@ public class LibraryReferenceTest {
 		}
 	}
 
-	private static void _initVersionsJars(DocumentBuilder documentBuilder)
+	private static void _initVersionsJars(
+			DocumentBuilder documentBuilder, String fileName, Set<String> jars)
 		throws Exception {
 
-		Document document = documentBuilder.parse(
-			new File(_VERSIONS_FILE_NAME));
+		Document document = documentBuilder.parse(new File(fileName));
 
 		NodeList nodelist = document.getElementsByTagName("file-name");
 
 		for (int i = 0; i < nodelist.getLength(); i++) {
 			Node node = nodelist.item(i);
 
-			_versionsJars.add(node.getTextContent());
+			jars.add(node.getTextContent());
 		}
 	}
 
@@ -423,6 +445,9 @@ public class LibraryReferenceTest {
 
 	private static final String _SRC_JAVA_DIR_NAME = "src/main/java";
 
+	private static final String _VERSIONS_EXT_FILE_NAME =
+		_LIB_DIR_NAME + "/versions-ext.xml";
+
 	private static final String _VERSIONS_FILE_NAME =
 		_LIB_DIR_NAME + "/versions.xml";
 
@@ -437,6 +462,7 @@ public class LibraryReferenceTest {
 	private static final Set<String> _netBeansModuleSourceDirs =
 		new HashSet<>();
 	private static Path _portalPath;
+	private static final Set<String> _versionsExtJars = new HashSet<>();
 	private static final Set<String> _versionsJars = new HashSet<>();
 
 }

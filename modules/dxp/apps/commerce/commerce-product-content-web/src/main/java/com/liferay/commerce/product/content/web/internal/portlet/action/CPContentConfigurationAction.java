@@ -17,7 +17,6 @@ package com.liferay.commerce.product.content.web.internal.portlet.action;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.web.configuration.CPContentConfigurationHelper;
 import com.liferay.commerce.product.content.web.internal.display.context.CPContentConfigurationDisplayContext;
-import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -43,8 +42,6 @@ public class CPContentConfigurationAction extends DefaultConfigurationAction {
 
 	@Override
 	public String getJspPath(HttpServletRequest request) {
-		CPRequestHelper cpRequestHelper = new CPRequestHelper(request);
-
 		try {
 			CPContentConfigurationDisplayContext
 				cpContentConfigurationDisplayContext =

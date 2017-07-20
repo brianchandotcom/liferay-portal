@@ -50,14 +50,14 @@ public class GroupedCPTypeRenderer implements CPTypeRenderer {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		GroupedCPTypeDisplayContext cpVirtualCPTypeDisplayContext =
+		GroupedCPTypeDisplayContext groupedCPTypeDisplayContext =
 			new GroupedCPTypeDisplayContext(
 				_cpAttachmentFileEntryService, _cpContentConfigurationHelper,
 				cpDefinition, _cpDefinitionGroupedEntryService,
 				_cpInstanceHelper, httpServletRequest, _portal);
 
 		httpServletRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT, cpVirtualCPTypeDisplayContext);
+			WebKeys.PORTLET_DISPLAY_CONTEXT, groupedCPTypeDisplayContext);
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,

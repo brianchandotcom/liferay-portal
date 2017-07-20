@@ -15,6 +15,7 @@
 package com.liferay.poshi.runner.elements;
 
 import com.liferay.poshi.runner.util.RegexUtil;
+import com.liferay.poshi.runner.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -130,6 +131,19 @@ public class CommandElement extends PoshiElement {
 				if (item.startsWith("\n\n")) {
 					item = item.replaceFirst("\n\n", "\n");
 				}
+			}
+
+			String trimmedItem = item.trim();
+
+			if (!item.contains("return(\n") &&
+				(StringUtil.count(item, "\n") > 1) &&
+				trimmedItem.startsWith("var ")) {
+
+				item = item.replaceFirst("var ", pad + "var ");
+
+				sb.append(item);
+
+				continue;
 			}
 
 			item = item.replaceAll("\n", "\n" + pad);

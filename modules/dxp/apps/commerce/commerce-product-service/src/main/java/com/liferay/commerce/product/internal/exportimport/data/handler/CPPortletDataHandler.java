@@ -24,6 +24,7 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.model.CPOptionValue;
+import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.service.permission.CPPermission;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -87,6 +88,9 @@ public class CPPortletDataHandler extends BasePortletDataHandler {
 				NAMESPACE, "option-categories", true, false, null,
 				CPOptionCategory.class.getName()),
 			new PortletDataHandlerBoolean(
+				NAMESPACE, "specification-options", true, false, null,
+				CPSpecificationOption.class.getName()),
+			new PortletDataHandlerBoolean(
 				NAMESPACE, "option-values", true, false, null,
 				CPOptionValue.class.getName()),
 			new PortletDataHandlerBoolean(
@@ -122,6 +126,8 @@ public class CPPortletDataHandler extends BasePortletDataHandler {
 			portletDataContext);
 		_cpOptionStagedModelRepository.deleteStagedModels(portletDataContext);
 		_cpOptionValueStagedModelRepository.deleteStagedModels(
+			portletDataContext);
+		_cpSpecificationOptionStagedModelRepository.deleteStagedModels(
 			portletDataContext);
 
 		return portletPreferences;
@@ -163,6 +169,14 @@ public class CPPortletDataHandler extends BasePortletDataHandler {
 
 			exportModels(
 				portletDataContext, _cpOptionCategoryStagedModelRepository);
+		}
+
+		if (portletDataContext.getBooleanParameter(
+				NAMESPACE, "specification-options")) {
+
+			exportModels(
+				portletDataContext,
+				_cpSpecificationOptionStagedModelRepository);
 		}
 
 		if (portletDataContext.getBooleanParameter(
@@ -211,6 +225,12 @@ public class CPPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		if (portletDataContext.getBooleanParameter(
+				NAMESPACE, "specification-options")) {
+
+			importModels(portletDataContext, CPSpecificationOption.class);
+		}
+
+		if (portletDataContext.getBooleanParameter(
 				NAMESPACE, "option-values")) {
 
 			importModels(portletDataContext, CPOptionValue.class);
@@ -240,6 +260,8 @@ public class CPPortletDataHandler extends BasePortletDataHandler {
 		performModelsCount(portletDataContext, _cpOptionStagedModelRepository);
 		performModelsCount(
 			portletDataContext, _cpOptionValueStagedModelRepository);
+		performModelsCount(
+			portletDataContext, _cpSpecificationOptionStagedModelRepository);
 	}
 
 	protected void exportModels(
@@ -333,5 +355,11 @@ public class CPPortletDataHandler extends BasePortletDataHandler {
 	)
 	private StagedModelRepository<CPOptionValue>
 		_cpOptionValueStagedModelRepository;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.product.model.CPSpecificationOption)"
+	)
+	private StagedModelRepository<CPSpecificationOption>
+		_cpSpecificationOptionStagedModelRepository;
 
 }

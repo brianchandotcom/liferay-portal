@@ -23,6 +23,7 @@ import com.liferay.commerce.product.model.impl.CPInstanceImpl;
 import com.liferay.commerce.product.model.impl.CPOptionCategoryImpl;
 import com.liferay.commerce.product.model.impl.CPOptionImpl;
 import com.liferay.commerce.product.model.impl.CPOptionValueImpl;
+import com.liferay.commerce.product.model.impl.CPSpecificationOptionImpl;
 import com.liferay.exportimport.kernel.xstream.XStreamAlias;
 import com.liferay.exportimport.kernel.xstream.XStreamConverter;
 import com.liferay.exportimport.kernel.xstream.XStreamType;
@@ -70,7 +71,9 @@ public class CPXStreamConfigurator implements XStreamConfigurator {
 			new XStreamAlias(CPInstanceImpl.class, "CPInstance"),
 			new XStreamAlias(CPOptionCategoryImpl.class, "CPOptionCategory"),
 			new XStreamAlias(CPOptionImpl.class, "CPOption"),
-			new XStreamAlias(CPOptionValueImpl.class, "CPOptionValue")
+			new XStreamAlias(CPOptionValueImpl.class, "CPOptionValue"),
+			new XStreamAlias(
+				CPSpecificationOptionImpl.class, "CPSpecificationOption")
 		};
 	}
 

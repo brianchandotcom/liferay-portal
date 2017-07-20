@@ -19,6 +19,7 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
@@ -41,7 +42,7 @@ page import="com.liferay.commerce.product.type.virtual.exception.NoSuchCPDefinit
 page import="com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting" %><%@
 page import="com.liferay.commerce.product.type.virtual.web.internal.VirtualCPTypeRenderer" %><%@
 page import="com.liferay.commerce.product.type.virtual.web.internal.display.context.CPDefinitionVirtualSettingDisplayContext" %><%@
-page import="com.liferay.commerce.product.type.virtual.web.internal.display.context.CPVirtualCPTypeDisplayContext" %><%@
+page import="com.liferay.commerce.product.type.virtual.web.internal.display.context.VirtualCPTypeDisplayContext" %><%@
 page import="com.liferay.commerce.product.type.virtual.web.internal.servlet.taglib.ui.CPDefinitionVirtualSettingFormNavigatorConstants" %><%@
 page import="com.liferay.journal.model.JournalArticle" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@

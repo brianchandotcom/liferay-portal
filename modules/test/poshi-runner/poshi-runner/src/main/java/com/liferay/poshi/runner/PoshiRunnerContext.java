@@ -1024,12 +1024,6 @@ public class PoshiRunnerContext {
 
 		if (classType.equals("test-case")) {
 			_testCaseClassNames.add(className);
-		}
-
-		if (classType.equals("action") || classType.equals("function") ||
-			classType.equals("macro") || classType.equals("test-case")) {
-
-			_rootElements.put(classType + "#" + className, rootElement);
 
 			if (rootElement.element("set-up") != null) {
 				Element setUpElement = rootElement.element("set-up");
@@ -1048,6 +1042,12 @@ public class PoshiRunnerContext {
 				_commandElements.put(
 					classType + "#" + classCommandName, tearDownElement);
 			}
+		}
+
+		if (classType.equals("action") || classType.equals("function") ||
+			classType.equals("macro") || classType.equals("test-case")) {
+
+			_rootElements.put(classType + "#" + className, rootElement);
 
 			List<Element> commandElements = rootElement.elements("command");
 

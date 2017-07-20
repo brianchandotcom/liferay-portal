@@ -65,6 +65,13 @@ definition {
 			Alert.viewSuccessMessage();
 		}
 
+		var siteName = return(
+			TestCase.getSiteName(
+				siteName = "${siteName}"
+			),
+			siteName
+		);
+
 		Smoke.viewWelcomePage();
 
 		Smoke.runSmoke();

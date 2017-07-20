@@ -61,7 +61,7 @@ public class GroupedCPTypeRenderer implements CPTypeRenderer {
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
-			"/definition_grouped_entry/view.jsp");
+			"/render/view.jsp");
 	}
 
 	@Reference

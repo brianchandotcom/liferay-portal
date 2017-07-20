@@ -62,7 +62,7 @@ public class VirtualCPTypeRenderer implements CPTypeRenderer {
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
-			"/view_definition_virtual.jsp");
+			"/render/view.jsp");
 	}
 
 	@Reference

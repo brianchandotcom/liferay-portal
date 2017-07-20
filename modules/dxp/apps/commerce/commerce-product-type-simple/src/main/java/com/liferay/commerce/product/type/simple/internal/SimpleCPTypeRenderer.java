@@ -59,7 +59,7 @@ public class SimpleCPTypeRenderer implements CPTypeRenderer {
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
-			"/view.jsp");
+			"/render/view.jsp");
 	}
 
 	@Reference

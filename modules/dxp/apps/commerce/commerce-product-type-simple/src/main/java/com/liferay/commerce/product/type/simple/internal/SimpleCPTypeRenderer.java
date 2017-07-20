@@ -14,11 +14,12 @@
 
 package com.liferay.commerce.product.type.simple.internal;
 
+import com.liferay.commerce.product.content.web.configuration.CPContentConfigurationHelper;
+import com.liferay.commerce.product.content.web.display.context.CPTypeDisplayContext;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
 import com.liferay.commerce.product.type.CPTypeRenderer;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
-import com.liferay.commerce.product.type.simple.internal.display.context.CPSimpleCPTypeDisplayContext;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.product.util.JSPRenderer;
 import com.liferay.portal.kernel.util.Portal;
@@ -48,10 +49,10 @@ public class SimpleCPTypeRenderer implements CPTypeRenderer {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		SimpleCPTypeDisplayContext simpleCPTypeDisplayContext =
-			new SimpleCPTypeDisplayContext(
-				cpDefinition, _cpAttachmentFileEntryLocalService,
-				_cpAttachmentFileEntryLocalService, httpServletRequest, portal,
+		CPTypeDisplayContext simpleCPTypeDisplayContext =
+			new CPTypeDisplayContext(
+				_cpContentConfigurationHelper, cpDefinition,
+				_cpAttachmentFileEntryLocalService, httpServletRequest, _portal,
 				_cpInstanceHelper);
 
 		httpServletRequest.setAttribute(
@@ -65,6 +66,9 @@ public class SimpleCPTypeRenderer implements CPTypeRenderer {
 	@Reference
 	private CPAttachmentFileEntryLocalService
 		_cpAttachmentFileEntryLocalService;
+
+	@Reference
+	private CPContentConfigurationHelper _cpContentConfigurationHelper;
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;

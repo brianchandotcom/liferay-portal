@@ -19,7 +19,7 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.type.grouped.web.internal.GroupedCPTypeRenderer;
-import com.liferay.commerce.product.type.grouped.web.internal.display.context.CPGroupedCPTypeDisplayContext;
+import com.liferay.commerce.product.type.grouped.web.internal.display.context.GroupedCPTypeDisplayContext;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandler;
@@ -83,8 +83,7 @@ public class GroupedCPTypeDisplayTemplateHandler
 
 		templateVariableGroup.addVariable(
 			"cp-grouped-cp-type-display-context",
-			CPGroupedCPTypeDisplayContext.class,
-			"cpGroupedCPTypeDisplayContext");
+			GroupedCPTypeDisplayContext.class, "cpGroupedCPTypeDisplayContext");
 		templateVariableGroup.addVariable(
 			"cp-definition", CPDefinition.class, "cpDefinition", "title");
 

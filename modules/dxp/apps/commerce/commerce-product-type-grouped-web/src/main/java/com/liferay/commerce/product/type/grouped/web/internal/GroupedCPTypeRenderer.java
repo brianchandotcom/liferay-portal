@@ -14,20 +14,17 @@
 
 package com.liferay.commerce.product.type.grouped.web.internal;
 
+import com.liferay.commerce.product.content.web.configuration.CPContentConfigurationHelper;
 import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
-import com.liferay.commerce.product.service.CPDefinitionLocalService;
-import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService;
+import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.type.CPTypeRenderer;
 import com.liferay.commerce.product.type.grouped.constants.GroupedCPTypeConstants;
-import com.liferay.commerce.product.type.grouped.service.CPDefinitionGroupedEntryLocalService;
-import com.liferay.commerce.product.type.grouped.web.internal.display.context.CPGroupedCPTypeDisplayContext;
-import com.liferay.commerce.product.type.renderer.BaseCPTypeRenderer;
+import com.liferay.commerce.product.type.grouped.service.CPDefinitionGroupedEntryService;
+import com.liferay.commerce.product.type.grouped.web.internal.display.context.GroupedCPTypeDisplayContext;
 import com.liferay.commerce.product.util.CPInstanceHelper;
+import com.liferay.commerce.product.util.JSPRenderer;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.io.IOException;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -37,61 +34,57 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 @Component(
 	immediate = true,
-	property = {"commerce.product.type.name=" + GroupedCPTypeConstants.NAME},
+	property = "commerce.product.type.name=" + GroupedCPTypeConstants.NAME,
 	service = CPTypeRenderer.class
 )
-public class GroupedCPTypeRenderer extends BaseCPTypeRenderer {
+public class GroupedCPTypeRenderer implements CPTypeRenderer {
 
 	@Override
 	public void render(
 			CPDefinition cpDefinition, HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
-		throws IOException {
+		throws Exception {
 
-		CPGroupedCPTypeDisplayContext cpVirtualCPTypeDisplayContext =
-			new CPGroupedCPTypeDisplayContext(
-				cpDefinition, _cpAttachmentFileEntryLocalService,
-				_cpDefinitionGroupedEntryLocalService,
-				_cpDefinitionLocalService, _cpFriendlyURLEntryLocalService,
-				_portal, _cpInstanceHelper);
+		GroupedCPTypeDisplayContext cpVirtualCPTypeDisplayContext =
+			new GroupedCPTypeDisplayContext(
+				_cpAttachmentFileEntryService, _cpContentConfigurationHelper,
+				cpDefinition, _cpDefinitionGroupedEntryService,
+				_cpInstanceHelper, httpServletRequest, _portal);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, cpVirtualCPTypeDisplayContext);
 
-		renderJSP(httpServletRequest, httpServletResponse, "/view.jsp");
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.product.type.grouped.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
+		_jspRenderer.renderJSP(
+			_servletContext, httpServletRequest, httpServletResponse,
+			"/definition_grouped_entry/view.jsp");
 	}
 
 	@Reference
-	private CPAttachmentFileEntryLocalService
-		_cpAttachmentFileEntryLocalService;
+	private CPAttachmentFileEntryService _cpAttachmentFileEntryService;
 
 	@Reference
-	private CPDefinitionGroupedEntryLocalService
-		_cpDefinitionGroupedEntryLocalService;
+	private CPContentConfigurationHelper _cpContentConfigurationHelper;
 
 	@Reference
-	private CPDefinitionLocalService _cpDefinitionLocalService;
-
-	@Reference
-	private CPFriendlyURLEntryLocalService _cpFriendlyURLEntryLocalService;
+	private CPDefinitionGroupedEntryService _cpDefinitionGroupedEntryService;
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;
 
 	@Reference
+	private JSPRenderer _jspRenderer;
+
+	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.commerce.product.type.grouped.web)"
+	)
+	private ServletContext _servletContext;
 
 }

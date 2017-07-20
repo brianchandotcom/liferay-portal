@@ -19,7 +19,7 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.type.virtual.web.internal.VirtualCPTypeRenderer;
-import com.liferay.commerce.product.type.virtual.web.internal.display.context.CPVirtualCPTypeDisplayContext;
+import com.liferay.commerce.product.type.virtual.web.internal.display.context.VirtualCPTypeDisplayContext;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandler;
@@ -83,8 +83,7 @@ public class VirtualCPTypeDisplayTemplateHandler
 
 		templateVariableGroup.addVariable(
 			"cp-virtual-cp-type-display-context",
-			CPVirtualCPTypeDisplayContext.class,
-			"cpVirtualCPTypeDisplayContext");
+			VirtualCPTypeDisplayContext.class, "cpVirtualCPTypeDisplayContext");
 		templateVariableGroup.addVariable(
 			"cp-definition", CPDefinition.class, "cpDefinition", "title");
 

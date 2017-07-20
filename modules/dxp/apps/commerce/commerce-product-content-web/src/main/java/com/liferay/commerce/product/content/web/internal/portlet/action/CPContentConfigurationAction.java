@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.content.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.content.web.configuration.CPContentConfigurationHelper;
 import com.liferay.commerce.product.content.web.internal.display.context.CPContentConfigurationDisplayContext;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
@@ -48,7 +49,8 @@ public class CPContentConfigurationAction extends DefaultConfigurationAction {
 			CPContentConfigurationDisplayContext
 				cpContentConfigurationDisplayContext =
 					new CPContentConfigurationDisplayContext(
-						_cpTypeServicesTracker, request);
+						_cpContentConfigurationHelper, _cpTypeServicesTracker,
+						request);
 
 			request.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -72,6 +74,9 @@ public class CPContentConfigurationAction extends DefaultConfigurationAction {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPContentConfigurationAction.class);
+
+	@Reference
+	private CPContentConfigurationHelper _cpContentConfigurationHelper;
 
 	@Reference
 	private CPTypeServicesTracker _cpTypeServicesTracker;

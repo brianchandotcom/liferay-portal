@@ -14,19 +14,18 @@
 
 package com.liferay.commerce.product.type.virtual.web.internal;
 
+import com.liferay.commerce.product.content.web.configuration.CPContentConfigurationHelper;
 import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
+import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.type.CPTypeRenderer;
-import com.liferay.commerce.product.type.renderer.BaseCPTypeRenderer;
 import com.liferay.commerce.product.type.virtual.constants.VirtualCPTypeConstants;
 import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingLocalService;
-import com.liferay.commerce.product.type.virtual.web.internal.display.context.CPVirtualCPTypeDisplayContext;
+import com.liferay.commerce.product.type.virtual.web.internal.display.context.VirtualCPTypeDisplayContext;
 import com.liferay.commerce.product.util.CPInstanceHelper;
-import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.commerce.product.util.JSPRenderer;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.io.IOException;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -36,45 +35,41 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 @Component(
 	immediate = true,
-	property = {"commerce.product.type.name=" + VirtualCPTypeConstants.NAME},
+	property = "commerce.product.type.name=" + VirtualCPTypeConstants.NAME,
 	service = CPTypeRenderer.class
 )
-public class VirtualCPTypeRenderer extends BaseCPTypeRenderer {
+public class VirtualCPTypeRenderer implements CPTypeRenderer {
 
 	@Override
 	public void render(
 			CPDefinition cpDefinition, HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
-		throws IOException {
+		throws Exception {
 
-		CPVirtualCPTypeDisplayContext cpVirtualCPTypeDisplayContext =
-			new CPVirtualCPTypeDisplayContext(
-				cpDefinition, _cpAttachmentFileEntryLocalService,
-				_cpDefinitionVirtualSettingLocalService, _dlAppLocalService,
-				_portal, _cpInstanceHelper);
+		VirtualCPTypeDisplayContext virtualCPTypeDisplayContext =
+			new VirtualCPTypeDisplayContext(
+				_cpAttachmentFileEntryService, _cpContentConfigurationHelper,
+				cpDefinition, _cpDefinitionVirtualSettingLocalService,
+				_dlAppService, _cpInstanceHelper, httpServletRequest, _portal);
 
 		httpServletRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT, cpVirtualCPTypeDisplayContext);
+			WebKeys.PORTLET_DISPLAY_CONTEXT, virtualCPTypeDisplayContext);
 
-		renderJSP(httpServletRequest, httpServletResponse, "/view.jsp");
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.product.type.virtual.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
+		_jspRenderer.renderJSP(
+			_servletContext, httpServletRequest, httpServletResponse,
+			"/view_definition_virtual.jsp");
 	}
 
 	@Reference
-	private CPAttachmentFileEntryLocalService
-		_cpAttachmentFileEntryLocalService;
+	private CPAttachmentFileEntryService _cpAttachmentFileEntryService;
+
+	@Reference
+	private CPContentConfigurationHelper _cpContentConfigurationHelper;
 
 	@Reference
 	private CPDefinitionVirtualSettingLocalService
@@ -84,9 +79,17 @@ public class VirtualCPTypeRenderer extends BaseCPTypeRenderer {
 	private CPInstanceHelper _cpInstanceHelper;
 
 	@Reference
-	private DLAppLocalService _dlAppLocalService;
+	private DLAppService _dlAppService;
+
+	@Reference
+	private JSPRenderer _jspRenderer;
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.commerce.product.type.virtual.web)"
+	)
+	private ServletContext _servletContext;
 
 }

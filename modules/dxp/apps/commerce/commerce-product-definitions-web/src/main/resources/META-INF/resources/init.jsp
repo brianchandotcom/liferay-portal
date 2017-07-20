@@ -29,6 +29,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.asset.kernel.model.AssetRenderer" %><%@
+page import="com.liferay.commerce.cart.constants.CommerceCartConstants" %><%@
 page import="com.liferay.commerce.product.constants.CPConstants" %><%@
 page import="com.liferay.commerce.product.constants.CPPortletKeys" %><%@
 page import="com.liferay.commerce.product.constants.CPWebKeys" %><%@

@@ -28,6 +28,13 @@ create index IX_695AE8C7 on CPDefinitionOptionValueRel (groupId);
 create index IX_CD95E77 on CPDefinitionOptionValueRel (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_34516B9 on CPDefinitionOptionValueRel (uuid_[$COLUMN_LENGTH:75$], groupId);
 
+create unique index IX_BCDDC9C8 on CPDefinitionSpecificationOptionValue (CPDefinitionId, CPSpecificationOptionId);
+create index IX_5B2C0E on CPDefinitionSpecificationOptionValue (CPOptionCategoryId);
+create index IX_A48E6A77 on CPDefinitionSpecificationOptionValue (CPSpecificationOptionId);
+create index IX_BF07474B on CPDefinitionSpecificationOptionValue (groupId);
+create index IX_46151473 on CPDefinitionSpecificationOptionValue (uuid_[$COLUMN_LENGTH:75$], companyId);
+create unique index IX_72AE1BB5 on CPDefinitionSpecificationOptionValue (uuid_[$COLUMN_LENGTH:75$], groupId);
+
 create unique index IX_290BF7BA on CPDisplayLayout (classNameId, classPK);
 create index IX_EEFA81D9 on CPDisplayLayout (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_68BBAA9B on CPDisplayLayout (uuid_[$COLUMN_LENGTH:75$], groupId);

@@ -26,6 +26,7 @@ import com.liferay.commerce.product.service.persistence.CPDefinitionLocalization
 import com.liferay.commerce.product.service.persistence.CPDefinitionOptionRelPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionOptionValueRelPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionPersistence;
+import com.liferay.commerce.product.service.persistence.CPDefinitionSpecificationOptionValuePersistence;
 import com.liferay.commerce.product.service.persistence.CPDisplayLayoutPersistence;
 import com.liferay.commerce.product.service.persistence.CPFriendlyURLEntryPersistence;
 import com.liferay.commerce.product.service.persistence.CPInstanceFinder;
@@ -698,6 +699,44 @@ public abstract class CPOptionCategoryLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the cp definition specification option value local service.
+	 *
+	 * @return the cp definition specification option value local service
+	 */
+	public com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService getCPDefinitionSpecificationOptionValueLocalService() {
+		return cpDefinitionSpecificationOptionValueLocalService;
+	}
+
+	/**
+	 * Sets the cp definition specification option value local service.
+	 *
+	 * @param cpDefinitionSpecificationOptionValueLocalService the cp definition specification option value local service
+	 */
+	public void setCPDefinitionSpecificationOptionValueLocalService(
+		com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService cpDefinitionSpecificationOptionValueLocalService) {
+		this.cpDefinitionSpecificationOptionValueLocalService = cpDefinitionSpecificationOptionValueLocalService;
+	}
+
+	/**
+	 * Returns the cp definition specification option value persistence.
+	 *
+	 * @return the cp definition specification option value persistence
+	 */
+	public CPDefinitionSpecificationOptionValuePersistence getCPDefinitionSpecificationOptionValuePersistence() {
+		return cpDefinitionSpecificationOptionValuePersistence;
+	}
+
+	/**
+	 * Sets the cp definition specification option value persistence.
+	 *
+	 * @param cpDefinitionSpecificationOptionValuePersistence the cp definition specification option value persistence
+	 */
+	public void setCPDefinitionSpecificationOptionValuePersistence(
+		CPDefinitionSpecificationOptionValuePersistence cpDefinitionSpecificationOptionValuePersistence) {
+		this.cpDefinitionSpecificationOptionValuePersistence = cpDefinitionSpecificationOptionValuePersistence;
+	}
+
+	/**
 	 * Returns the cp display layout local service.
 	 *
 	 * @return the cp display layout local service
@@ -1171,6 +1210,10 @@ public abstract class CPOptionCategoryLocalServiceBaseImpl
 	protected com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService cpDefinitionOptionValueRelLocalService;
 	@BeanReference(type = CPDefinitionOptionValueRelPersistence.class)
 	protected CPDefinitionOptionValueRelPersistence cpDefinitionOptionValueRelPersistence;
+	@BeanReference(type = com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService.class)
+	protected com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService cpDefinitionSpecificationOptionValueLocalService;
+	@BeanReference(type = CPDefinitionSpecificationOptionValuePersistence.class)
+	protected CPDefinitionSpecificationOptionValuePersistence cpDefinitionSpecificationOptionValuePersistence;
 	@BeanReference(type = com.liferay.commerce.product.service.CPDisplayLayoutLocalService.class)
 	protected com.liferay.commerce.product.service.CPDisplayLayoutLocalService cpDisplayLayoutLocalService;
 	@BeanReference(type = CPDisplayLayoutPersistence.class)

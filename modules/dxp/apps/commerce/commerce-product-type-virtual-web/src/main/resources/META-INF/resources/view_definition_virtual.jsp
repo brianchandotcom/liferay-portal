@@ -31,7 +31,7 @@ cpDefinitions.add(cpDefinition);
 %>
 
 <liferay-ddm:template-renderer
-	className="<%= VirtualCPTypeRenderer.class.getName() %>"
+	className="<%= VirtualCPType.class.getName() %>"
 	contextObjects="<%= contextObjects %>"
 	displayStyle="<%= virtualCPTypeDisplayContext.getDisplayStyle() %>"
 	displayStyleGroupId="<%= virtualCPTypeDisplayContext.getDisplayStyleGroupId() %>"

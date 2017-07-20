@@ -31,7 +31,7 @@ entries.add(cpDefinition);
 %>
 
 <liferay-ddm:template-renderer
-	className="<%= GroupedCPTypeRenderer.class.getName() %>"
+	className="<%= GroupedCPType.class.getName() %>"
 	contextObjects="<%= contextObjects %>"
 	displayStyle="<%= groupedCPTypeDisplayContext.getDisplayStyle() %>"
 	displayStyleGroupId="<%= groupedCPTypeDisplayContext.getDisplayStyleGroupId() %>"

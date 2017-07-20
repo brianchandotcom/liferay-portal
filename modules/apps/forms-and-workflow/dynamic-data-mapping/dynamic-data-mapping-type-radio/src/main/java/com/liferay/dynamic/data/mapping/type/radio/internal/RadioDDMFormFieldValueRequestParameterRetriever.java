@@ -15,8 +15,7 @@
 package com.liferay.dynamic.data.mapping.type.radio.internal;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRequestParameterRetriever;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -34,8 +33,14 @@ public class RadioDDMFormFieldValueRequestParameterRetriever
 		HttpServletRequest httpServletRequest, String ddmFormFieldParameterName,
 		String defaultDDMFormFieldParameterValue) {
 
-		return ParamUtil.getString(
-			httpServletRequest, ddmFormFieldParameterName, StringPool.BLANK);
+		String parameterValue = httpServletRequest.getParameter(
+			ddmFormFieldParameterName);
+
+		if (parameterValue == null) {
+			return defaultDDMFormFieldParameterValue;
+		}
+
+		return GetterUtil.getString(parameterValue);
 	}
 
 }

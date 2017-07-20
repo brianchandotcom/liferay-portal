@@ -20,7 +20,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
 import java.util.List;
@@ -114,16 +113,14 @@ public class RadioDDMFormFieldTemplateContextContributor
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		Object predefinedValue = ddmFormField.getProperty("predefinedValue");
+		LocalizedValue predefinedValue = ddmFormField.getPredefinedValue();
 
-		if (Validator.isNotNull(predefinedValue)) {
-			LocalizedValue localizedValue = (LocalizedValue)predefinedValue;
-
-			return localizedValue.getString(
-				ddmFormFieldRenderingContext.getLocale());
+		if (predefinedValue == null) {
+			return null;
 		}
 
-		return null;
+		return predefinedValue.getString(
+			ddmFormFieldRenderingContext.getLocale());
 	}
 
 	protected String getValue(

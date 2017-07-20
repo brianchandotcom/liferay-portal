@@ -29,13 +29,13 @@ public class CollatorUtilCheck extends BaseFileCheck {
 		if (!fileName.endsWith("CollatorUtil.java") &&
 			!fileName.endsWith("CollatorUtilTest.java")) {
 
-			_checkReplaceCalls(fileName, content);
+			_checkCollatorGetInstance(fileName, content);
 		}
 
 		return content;
 	}
 
-	private void _checkReplaceCalls(String fileName, String content)
+	private void _checkCollatorGetInstance(String fileName, String content)
 		throws Exception {
 
 		int index = content.indexOf("Collator.getInstance(");

@@ -73,6 +73,19 @@ public class CPContentPortlet extends MVCPortlet {
 		CPDefinition cpDefinition = (CPDefinition)renderRequest.getAttribute(
 			CPWebKeys.CP_DEFINITION);
 
+		renderCPDefinition(cpDefinition, renderRequest, renderResponse);
+
+		super.render(renderRequest, renderResponse);
+	}
+
+	protected void renderCPDefinition(
+		CPDefinition cpDefinition, RenderRequest renderRequest,
+		RenderResponse renderResponse) {
+
+		if (cpDefinition == null) {
+			return;
+		}
+
 		CPTypeRenderer cpTypeRenderer =
 			_cpTypeServicesTracker.getCPTypeRenderer(
 				cpDefinition.getProductTypeName());
@@ -86,19 +99,18 @@ public class CPContentPortlet extends MVCPortlet {
 			cpTypeRenderer.render(
 				cpDefinition, httpServletRequest, httpServletResponse);
 		}
-		catch(Exception e){
+		catch (Exception e) {
 			_log.error(e);
 		}
-
-		super.render(renderRequest, renderResponse);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CPContentPortlet.class);
 
 	@Reference
 	private CPTypeServicesTracker _cpTypeServicesTracker;
 
 	@Reference
 	private Portal _portal;
-
-	private final Log _log = LogFactoryUtil.getLog(CPContentPortlet.class);
 
 }

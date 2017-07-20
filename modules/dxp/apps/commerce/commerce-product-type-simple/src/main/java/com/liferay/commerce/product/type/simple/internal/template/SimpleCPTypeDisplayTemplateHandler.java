@@ -96,7 +96,7 @@ public class SimpleCPTypeDisplayTemplateHandler
 
 	@Override
 	protected String getTemplatesConfigPath() {
-		return "com/liferay/commerce/product/type/simple/template" +
+		return "com/liferay/commerce/product/type/simple/internal/template" +
 			"/dependencies/portlet-display-templates.xml";
 	}
 

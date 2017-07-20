@@ -15,11 +15,11 @@
 package com.liferay.commerce.product.type.simple.internal.template;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.content.web.display.context.CPTypeDisplayContext;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
 import com.liferay.commerce.product.type.simple.internal.SimpleCPType;
-import com.liferay.commerce.product.type.simple.internal.display.context.SimpleCPTypeDisplayContext;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandler;
@@ -72,8 +72,8 @@ public class SimpleCPTypeDisplayTemplateHandler
 		templateVariableGroup.empty();
 
 		templateVariableGroup.addVariable(
-			"cp-simple-type-display-context", SimpleCPTypeDisplayContext.class,
-			"simpleCPTypeDisplayContext");
+			"cp-type-display-context", CPTypeDisplayContext.class,
+			"cpTypeDisplayContext");
 
 		String[] restrictedVariables = getRestrictedVariables(language);
 

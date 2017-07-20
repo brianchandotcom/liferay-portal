@@ -17,28 +17,25 @@
 <%@ include file="/init.jsp" %>
 
 <%
-SimpleCPTypeDisplayContext simpleCPTypeDisplayContext = (SimpleCPTypeDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CPTypeDisplayContext cpTypeDisplayContext = (CPTypeDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 Map<String, Object> contextObjects = new HashMap<>();
 
-contextObjects.put("simpleCPTypeDisplayContext", simpleCPTypeDisplayContext);
+contextObjects.put("simpleCPTypeDisplayContext", cpTypeDisplayContext);
 
-SearchContainer searchContainer = simpleCPTypeDisplayContext.getSearchContainer();
+CPDefinition cpDefinition = cpTypeDisplayContext.getCPDefinition();
+
+List<CPDefinition> cpDefinitions = new ArrayList<>(1);
+cpDefinitions.add(cpDefinition);
 %>
 
 <liferay-ddm:template-renderer
 	className="<%= SimpleCPType.class.getName() %>"
 	contextObjects="<%= contextObjects %>"
-	displayStyle="<%= simpleCPTypeDisplayContext.getDisplayStyle() %>"
-	displayStyleGroupId="<%= simpleCPTypeDisplayContext.getDisplayStyleGroupId() %>"
-	entries="<%= searchContainer.getResults() %>"
+	displayStyle="<%= cpTypeDisplayContext.getDisplayStyle() %>"
+	displayStyleGroupId="<%= cpTypeDisplayContext.getDisplayStyleGroupId() %>"
+	entries="<%= cpDefinitions %>"
 >
-
-	<%
-	for (Object object : searchContainer.getResults()) {
-		CPDefinition cpDefinition = (CPDefinition)object;
-	%>
-
 	<div class="container-fluid product-detail">
 		<div class="row">
 			<div class="col-lg-6 col-md-7">
@@ -46,8 +43,8 @@ SearchContainer searchContainer = simpleCPTypeDisplayContext.getSearchContainer(
 					<div class="col-lg-2 col-md-3 col-xs-2">
 
 					<%
-					for (CPAttachmentFileEntry cpAttachmentFileEntry : simpleCPTypeDisplayContext.getImages()) {
-						String url = simpleCPTypeDisplayContext.getImageURL(cpAttachmentFileEntry.getFileEntry(), themeDisplay);
+					for (CPAttachmentFileEntry cpAttachmentFileEntry : cpTypeDisplayContext.getImages()) {
+						String url = cpTypeDisplayContext.getImageURL(cpAttachmentFileEntry.getFileEntry(), themeDisplay);
 					%>
 
 							<div class="card thumb" data-url="<%= url %>">
@@ -63,11 +60,11 @@ SearchContainer searchContainer = simpleCPTypeDisplayContext.getSearchContainer(
 					<div class="col-lg-10 col-md-9 col-xs-10 full-image">
 
 						<%
-						CPAttachmentFileEntry cpAttachmentFileEntry = simpleCPTypeDisplayContext.getDefaultImage();
+						CPAttachmentFileEntry cpAttachmentFileEntry = cpTypeDisplayContext.getDefaultImage();
 						%>
 
 						<c:if test="<%= cpAttachmentFileEntry != null %>">
-							<img class="center-block img-responsive" id="full-image" src="<%= simpleCPTypeDisplayContext.getImageURL(cpAttachmentFileEntry.getFileEntry(), themeDisplay) %>">
+							<img class="center-block img-responsive" id="full-image" src="<%= cpTypeDisplayContext.getImageURL(cpAttachmentFileEntry.getFileEntry(), themeDisplay) %>">
 						</c:if>
 					</div>
 				</div>
@@ -80,25 +77,8 @@ SearchContainer searchContainer = simpleCPTypeDisplayContext.getSearchContainer(
 				<div class="row">
 					<div class="col-md-12">
 						<div class="options">
-							<%= simpleCPTypeDisplayContext.renderOptions(renderRequest, renderResponse) %>
+							<%= cpTypeDisplayContext.renderOptions(renderRequest, renderResponse) %>
 						</div>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="col-md-3">
-						<aui:input cssClass="quantity" label="quantity" name="qt"></aui:input>
-					</div>
-
-					<div class="col-md-9">
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="col-md-12">
-					</div>
-
-					<div class="col-md-9">
 					</div>
 				</div>
 			</div>
@@ -114,10 +94,4 @@ SearchContainer searchContainer = simpleCPTypeDisplayContext.getSearchContainer(
 				});
 			});
 	</script>
-	<%
-	}
-	%>
-
 </liferay-ddm:template-renderer>
-
-<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" />

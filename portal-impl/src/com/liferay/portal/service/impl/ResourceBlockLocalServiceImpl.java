@@ -479,6 +479,9 @@ public class ResourceBlockLocalServiceImpl
 
 						sqlQuery.executeUpdate();
 
+						resourceBlockPermissionLocalService.
+							deleteResourceBlockPermissions(resourceBlockId);
+
 						PermissionCacheUtil.clearResourceBlockCache(
 							resourceBlock.getCompanyId(),
 							resourceBlock.getGroupId(),

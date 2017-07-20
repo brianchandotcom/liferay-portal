@@ -56,25 +56,62 @@ public interface AssetPublisherPortletInstanceConfiguration {
 	)
 	public String[] displayStyles();
 
+	/**
+	 * Localized template for new asset entry added email message body.
+	 *
+	 * @return message body template for asset entry added email.
+	 */
 	@Meta.AD(
 		deflt = "${resource:com/liferay/asset/publisher/web/portlet/email/dependencies/email_asset_entry_added_body.tmpl}",
+		description = "email.asset.entry.added.body.description",
 		required = false
 	)
 	public LocalizedValuesMap emailAssetEntryAddedBody();
 
-	@Meta.AD(deflt = "true", required = false)
+	/**
+	 * Set this to true if you want to enable asset entry added email.
+	 *
+	 * @return <code>true</code> if asset entry added email is enabled.
+	 */
+	@Meta.AD(
+		deflt = "true",
+		description = "email.asset.entry.added.enabled.description",
+		required = false
+	)
 	public boolean emailAssetEntryAddedEnabled();
 
+	/**
+	 * Localized template for new asset entry added email message subject.
+	 *
+	 * @return message subject template for asset entry added email.
+	 */
 	@Meta.AD(
 		deflt = "${resource:com/liferay/asset/publisher/web/portlet/email/dependencies/email_asset_entry_added_subject.tmpl}",
+		description = "email.asset.entry.added.subject.description",
 		required = false
 	)
 	public LocalizedValuesMap emailAssetEntryAddedSubject();
 
-	@Meta.AD(deflt = "", required = false)
+	/**
+	 * Set an email address to use in asset entry added email.
+	 *
+	 * @return default email address to use in asset entry added email.
+	 */
+	@Meta.AD(
+		deflt = "", description = "email.from.address.description",
+		required = false
+	)
 	public String emailFromAddress();
 
-	@Meta.AD(deflt = "", required = false)
+	/**
+	 * Set a sender name to use in asset entry added email.
+	 *
+	 * @return default sender name to use in asset entry added email.
+	 */
+	@Meta.AD(
+		deflt = "", description = "email.from.name.description",
+		required = false
+	)
 	public String emailFromName();
 
 }

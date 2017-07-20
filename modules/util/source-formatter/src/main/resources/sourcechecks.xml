@@ -58,7 +58,6 @@
 			<property name="copyrightFileName" value="copyright.txt" />
 		</check>
 		<check name="ArrayCheck" />
-		<check name="CollatorUtilCheck" />
 		<check name="EmptyCollectionCheck" />
 		<check name="GetterUtilCheck" />
 		<check name="Java2HTMLCheck" />
@@ -67,6 +66,7 @@
 		<check name="JavaAssertEqualsCheck" />
 		<check name="JavaBooleanStatementCheck" />
 		<check name="JavaBooleanUsageCheck" />
+		<check name="JavaCollatorUtilCheck" />
 		<check name="JavaCombineLinesCheck" />
 		<check name="JavaConfigurationAdminCheck" />
 		<check name="JavaConstructorParameterOrder" />

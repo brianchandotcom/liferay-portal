@@ -19,7 +19,7 @@ import com.liferay.portal.tools.ToolsUtil;
 /**
  * @author Preston Crary
  */
-public class CollatorUtilCheck extends BaseFileCheck {
+public class JavaCollatorUtilCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(

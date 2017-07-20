@@ -27,8 +27,6 @@ public class VarElement extends PoshiElement {
 
 	public VarElement(Element element) {
 		this("var", element);
-
-		initValueAttributeName(element);
 	}
 
 	public VarElement(String readableSyntax) {

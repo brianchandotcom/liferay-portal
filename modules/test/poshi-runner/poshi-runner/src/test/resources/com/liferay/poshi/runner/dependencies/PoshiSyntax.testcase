@@ -78,6 +78,12 @@
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
+		<var name="wikiPageContent"><![CDATA[<p id='demo'>PASS</p>
+
+<script type='text/javascript'>
+document.getElementById('demo').innerHTML = 'FAIL';
+</script>]]></var>
+
 		<execute macro="Smoke#viewWelcomePage" />
 
 		<execute macro="Smoke#runSmoke" />

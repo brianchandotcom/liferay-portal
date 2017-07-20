@@ -112,10 +112,12 @@ public class DefinitionElement extends PoshiElement {
 
 		List<String> readableBlocks = new ArrayList<>();
 
-		for (String line : readableSyntax.split("\n")) {
+		for (String line : readableSyntax.split("\n", 0)) {
 			line = line.trim();
 
 			if (line.length() == 0) {
+				sb.append("\n");
+
 				continue;
 			}
 

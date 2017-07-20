@@ -54,6 +54,19 @@ public class CPDefinitionSpecificationOptionValueLocalServiceUtil {
 				   .addCPDefinitionSpecificationOptionValue(cpDefinitionSpecificationOptionValue);
 	}
 
+	public static com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue addCPDefinitionSpecificationOptionValue(
+		long cpDefinitionId, long cpSpecificationOptionId,
+		long cpOptionCategoryId,
+		java.util.Map<java.util.Locale, java.lang.String> valueMap,
+		double priority,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCPDefinitionSpecificationOptionValue(cpDefinitionId,
+			cpSpecificationOptionId, cpOptionCategoryId, valueMap, priority,
+			serviceContext);
+	}
+
 	/**
 	* Creates a new cp definition specification option value with the primary key. Does not add the cp definition specification option value to the database.
 	*
@@ -152,6 +165,25 @@ public class CPDefinitionSpecificationOptionValueLocalServiceUtil {
 		com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue cpDefinitionSpecificationOptionValue) {
 		return getService()
 				   .updateCPDefinitionSpecificationOptionValue(cpDefinitionSpecificationOptionValue);
+	}
+
+	public static com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue updateCPDefinitionSpecificationOptionValue(
+		long cpDefinitionSpecificationOptionValueId, long cpOptionCategoryId,
+		java.util.Map<java.util.Locale, java.lang.String> valueMap,
+		double priority,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCPDefinitionSpecificationOptionValue(cpDefinitionSpecificationOptionValueId,
+			cpOptionCategoryId, valueMap, priority, serviceContext);
+	}
+
+	public static com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue updateCPOptionCategoryId(
+		long cpDefinitionSpecificationOptionValueId, long cpOptionCategoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCPOptionCategoryId(cpDefinitionSpecificationOptionValueId,
+			cpOptionCategoryId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
@@ -270,6 +302,12 @@ public class CPDefinitionSpecificationOptionValueLocalServiceUtil {
 		return getService().getCPDefinitionSpecificationOptionValues(start, end);
 	}
 
+	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue> getCPDefinitionSpecificationOptionValues(
+		long cpDefinitionId) {
+		return getService()
+				   .getCPDefinitionSpecificationOptionValues(cpDefinitionId);
+	}
+
 	/**
 	* Returns all the cp definition specification option values matching the UUID and company.
 	*
@@ -324,6 +362,17 @@ public class CPDefinitionSpecificationOptionValueLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static void deleteCPDefinitionSpecificationOptionValues(
+		long cpDefinitionId) {
+		getService().deleteCPDefinitionSpecificationOptionValues(cpDefinitionId);
+	}
+
+	public static void deleteCPSpecificationOptionDefinitionValues(
+		long cpSpecificationOptionId) {
+		getService()
+			.deleteCPSpecificationOptionDefinitionValues(cpSpecificationOptionId);
 	}
 
 	public static CPDefinitionSpecificationOptionValueLocalService getService() {

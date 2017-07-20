@@ -171,6 +171,12 @@ public class CPDefinitionSpecificationOptionValueWrapper
 	}
 
 	@Override
+	public CPDefinition getCPDefinition()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionSpecificationOptionValue.getCPDefinition();
+	}
+
+	@Override
 	public CPDefinitionSpecificationOptionValue toEscapedModel() {
 		return new CPDefinitionSpecificationOptionValueWrapper(_cpDefinitionSpecificationOptionValue.toEscapedModel());
 	}
@@ -178,6 +184,18 @@ public class CPDefinitionSpecificationOptionValueWrapper
 	@Override
 	public CPDefinitionSpecificationOptionValue toUnescapedModel() {
 		return new CPDefinitionSpecificationOptionValueWrapper(_cpDefinitionSpecificationOptionValue.toUnescapedModel());
+	}
+
+	@Override
+	public CPOptionCategory getCPOptionCategory()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionSpecificationOptionValue.getCPOptionCategory();
+	}
+
+	@Override
+	public CPSpecificationOption getCPSpecificationOption()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionSpecificationOptionValue.getCPSpecificationOption();
 	}
 
 	@Override

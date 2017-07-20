@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -40,6 +41,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the local service interface for CPDefinitionSpecificationOptionValue. Methods of this
@@ -73,6 +76,12 @@ public interface CPDefinitionSpecificationOptionValueLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CPDefinitionSpecificationOptionValue addCPDefinitionSpecificationOptionValue(
 		CPDefinitionSpecificationOptionValue cpDefinitionSpecificationOptionValue);
+
+	public CPDefinitionSpecificationOptionValue addCPDefinitionSpecificationOptionValue(
+		long cpDefinitionId, long cpSpecificationOptionId,
+		long cpOptionCategoryId, Map<Locale, java.lang.String> valueMap,
+		double priority, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Creates a new cp definition specification option value with the primary key. Does not add the cp definition specification option value to the database.
@@ -151,6 +160,15 @@ public interface CPDefinitionSpecificationOptionValueLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CPDefinitionSpecificationOptionValue updateCPDefinitionSpecificationOptionValue(
 		CPDefinitionSpecificationOptionValue cpDefinitionSpecificationOptionValue);
+
+	public CPDefinitionSpecificationOptionValue updateCPDefinitionSpecificationOptionValue(
+		long cpDefinitionSpecificationOptionValueId, long cpOptionCategoryId,
+		Map<Locale, java.lang.String> valueMap, double priority,
+		ServiceContext serviceContext) throws PortalException;
+
+	public CPDefinitionSpecificationOptionValue updateCPOptionCategoryId(
+		long cpDefinitionSpecificationOptionValueId, long cpOptionCategoryId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -245,6 +263,10 @@ public interface CPDefinitionSpecificationOptionValueLocalService
 	public List<CPDefinitionSpecificationOptionValue> getCPDefinitionSpecificationOptionValues(
 		int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDefinitionSpecificationOptionValue> getCPDefinitionSpecificationOptionValues(
+		long cpDefinitionId);
+
 	/**
 	* Returns all the cp definition specification option values matching the UUID and company.
 	*
@@ -288,4 +310,9 @@ public interface CPDefinitionSpecificationOptionValueLocalService
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	public void deleteCPDefinitionSpecificationOptionValues(long cpDefinitionId);
+
+	public void deleteCPSpecificationOptionDefinitionValues(
+		long cpSpecificationOptionId);
 }

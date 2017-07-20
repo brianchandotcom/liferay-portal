@@ -56,4 +56,13 @@ public interface CPDefinitionSpecificationOptionValue
 				return CPDefinitionSpecificationOptionValue.class;
 			}
 		};
+
+	public CPDefinition getCPDefinition()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public CPOptionCategory getCPOptionCategory()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public CPSpecificationOption getCPSpecificationOption()
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

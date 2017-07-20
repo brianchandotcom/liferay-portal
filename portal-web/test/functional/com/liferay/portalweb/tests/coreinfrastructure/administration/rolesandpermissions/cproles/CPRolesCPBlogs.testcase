@@ -71,9 +71,14 @@
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoBlogsEntryCP">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoBlogsEntryPermissionsCP">
 			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="pageName" value="Blogs Page" />
 		</execute>
 
 		<execute macro="Role#removePermissionPG">
@@ -107,9 +112,8 @@
 			<var name="portlet" value="Blogs" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoBlogsEntryCP">
+		<execute macro="BlogsNavigator#gotoBlogsEntryPermissionsCP">
 			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="pageName" value="Blogs Page" />
 		</execute>
 
 		<execute macro="Role#definePermissionPG">

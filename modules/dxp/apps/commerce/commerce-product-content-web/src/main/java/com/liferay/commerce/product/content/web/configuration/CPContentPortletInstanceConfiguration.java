@@ -15,11 +15,12 @@
 package com.liferay.commerce.product.content.web.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
+
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
  * @author Marco Leo
-  */
+*/
 @ExtendedObjectClassDefinition(
 	category = "commerce",
 	scope = ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE
@@ -32,12 +33,12 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface CPContentPortletInstanceConfiguration {
 
 	@Meta.AD(deflt = "", required = false)
-	public String[] displayStyles();
+	public String displayStyle();
 
 	@Meta.AD(deflt = "", required = false)
-	public String[] cpTypes();
+	public String cpType();
 
 	@Meta.AD(deflt = "0", required = false)
-	public long[] displayStyleGroupIds();
+	public String displayStyleGroupId();
 
 }

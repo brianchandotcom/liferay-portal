@@ -19,38 +19,44 @@
 <%
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all-cart-items");
 
-String redirect = ParamUtil.getString(request, "redirect");
-
-String backURL = ParamUtil.getString(request, "backURL", redirect);
+String cartToolbarItem = ParamUtil.getString(request, "cartToolbarItem", "view-all-carts");
 
 String languageId = LanguageUtil.getLanguageId(locale);
 
-CCartItemDisplayContext cCartItemDisplayContext = (CCartItemDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CommerceCartItemDisplayContext commerceCartItemDisplayContext = (CommerceCartItemDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-CCart cCart = cCartItemDisplayContext.getCCart();
+CommerceCart commerceCart = commerceCartItemDisplayContext.getCommerceCart();
 
-SearchContainer<CCartItem> cCartItemSearchContainer = cCartItemDisplayContext.getSearchContainer();
+SearchContainer<CommerceCartItem> commerceCartItemSearchContainer = commerceCartItemDisplayContext.getSearchContainer();
 
-String displayStyle = cCartItemDisplayContext.getDisplayStyle();
+String displayStyle = commerceCartItemDisplayContext.getDisplayStyle();
 
-PortletURL portletURL = cCartItemDisplayContext.getPortletURL();
+PortletURL portletURL = commerceCartItemDisplayContext.getPortletURL();
 
 portletURL.setParameter("toolbarItem", toolbarItem);
-portletURL.setParameter("searchContainerId", "cCartItems");
+portletURL.setParameter("searchContainerId", "commerceCartItems");
 
 request.setAttribute("view.jsp-portletURL", portletURL);
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
+String lifecycle = (String)request.getAttribute(liferayPortletRequest.LIFECYCLE_PHASE);
 
-renderResponse.setTitle(cCart.getTitle());
+PortletURL cartAdminURLObj = PortalUtil.getControlPanelPortletURL(request, CommerceCartPortletKeys.COMMERCE_CART_ADMIN, lifecycle);
+
+cartAdminURLObj.setParameter("toolbarItem", cartToolbarItem);
+
+String cartAdminURL = cartAdminURLObj.toString();
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(cartAdminURL);
+
+renderResponse.setTitle(commerceCart.getName());
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 		<liferay-portlet:renderURL varImpl="viewCartItemsURL">
 			<portlet:param name="mvcRenderCommandName" value="viewCartItems" />
-			<portlet:param name="cCartId" value="<%= String.valueOf(cCart.getCCartId()) %>" />
+			<portlet:param name="commerceCartId" value="<%= String.valueOf(commerceCart.getCommerceCartId()) %>" />
 			<portlet:param name="toolbarItem" value="view-all-cart-items" />
 		</liferay-portlet:renderURL>
 
@@ -70,10 +76,10 @@ renderResponse.setTitle(cCart.getTitle());
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"
-	searchContainerId="cCartItems"
+	searchContainerId="commerceCartItems"
 >
 	<liferay-frontend:management-bar-buttons>
-		<c:if test="<%= cCartItemDisplayContext.isShowInfoPanel() %>">
+		<c:if test="<%= commerceCartItemDisplayContext.isShowInfoPanel() %>">
 			<liferay-frontend:management-bar-sidenav-toggler-button
 				icon="info-circle"
 				label="info"
@@ -82,49 +88,49 @@ renderResponse.setTitle(cCart.getTitle());
 
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= cCartItemDisplayContext.getPortletURL() %>"
-			selectedDisplayStyle="<%= cCartItemDisplayContext.getDisplayStyle() %>"
+			portletURL="<%= commerceCartItemDisplayContext.getPortletURL() %>"
+			selectedDisplayStyle="<%= commerceCartItemDisplayContext.getDisplayStyle() %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= cCartItemDisplayContext.getPortletURL() %>"
+			portletURL="<%= commerceCartItemDisplayContext.getPortletURL() %>"
 		/>
 
 		<liferay-frontend:management-bar-sort
-			orderByCol="<%= cCartItemDisplayContext.getOrderByCol() %>"
-			orderByType="<%= cCartItemDisplayContext.getOrderByType() %>"
+			orderByCol="<%= commerceCartItemDisplayContext.getOrderByCol() %>"
+			orderByType="<%= commerceCartItemDisplayContext.getOrderByType() %>"
 			orderColumns='<%= new String[] {"modified-date"} %>'
-			portletURL="<%= cCartItemDisplayContext.getPortletURL() %>"
+			portletURL="<%= commerceCartItemDisplayContext.getPortletURL() %>"
 		/>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<c:if test="<%= cCartItemDisplayContext.isShowInfoPanel() %>">
+		<c:if test="<%= commerceCartItemDisplayContext.isShowInfoPanel() %>">
 			<liferay-frontend:management-bar-sidenav-toggler-button
 				icon="info-circle"
 				label="info"
 			/>
 		</c:if>
 
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCCartItems();" %>' icon="trash" label="delete" />
+		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceCartItems();" %>' icon="trash" label="delete" />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
 <div id="<portlet:namespace />CartItemsContainer">
 	<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-		<c:if test="<%= cCartItemDisplayContext.isShowInfoPanel() %>">
+		<c:if test="<%= commerceCartItemDisplayContext.isShowInfoPanel() %>">
 			<liferay-portlet:resourceURL
 				copyCurrentRenderParameters="<%= false %>"
-				id="cCartItemInfoPanel"
+				id="commerceCartItemInfoPanel"
 				var="sidebarPanelURL"
 			/>
 
 			<liferay-frontend:sidebar-panel
 				resourceURL="<%= sidebarPanelURL %>"
-				searchContainerId="cCartItems"
+				searchContainerId="commerceCartItems"
 			>
 				<liferay-util:include page="/cart_item_info_panel.jsp" servletContext="<%= application %>" />
 			</liferay-frontend:sidebar-panel>
@@ -134,20 +140,19 @@ renderResponse.setTitle(cCart.getTitle());
 			<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
 				<aui:input name="<%= Constants.CMD %>" type="hidden" />
 				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-				<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
-				<aui:input name="deleteCCartItemIds" type="hidden" />
+				<aui:input name="deleteCommerceCartItemIds" type="hidden" />
 
 				<div class="cart-items-container" id="<portlet:namespace />entriesContainer">
 					<liferay-ui:search-container
-						id="cCartItems"
+						id="commerceCartItems"
 						iteratorURL="<%= portletURL %>"
-						searchContainer="<%= cCartItemSearchContainer %>"
+						searchContainer="<%= commerceCartItemSearchContainer %>"
 					>
 						<liferay-ui:search-container-row
-							className="com.liferay.commerce.cart.model.CCartItem"
+							className="com.liferay.commerce.cart.model.CommerceCartItem"
 							cssClass="entry-display-style"
-							keyProperty="CCartItemId"
-							modelVar="cCartItem"
+							keyProperty="commerceCartItemId"
+							modelVar="commerceCartItem"
 						>
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"
@@ -155,7 +160,7 @@ renderResponse.setTitle(cCart.getTitle());
 							>
 
 								<%
-								CPDefinition cpDefinition = cCartItem.getCPDefinition();
+								CPDefinition cpDefinition = commerceCartItem.getCPDefinition();
 								%>
 
 								<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>
@@ -186,7 +191,7 @@ renderResponse.setTitle(cCart.getTitle());
 							/>
 						</liferay-ui:search-container-row>
 
-						<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" searchContainer="<%= cCartItemSearchContainer %>" />
+						<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" searchContainer="<%= commerceCartItemSearchContainer %>" />
 					</liferay-ui:search-container>
 				</div>
 			</aui:form>
@@ -195,15 +200,15 @@ renderResponse.setTitle(cCart.getTitle());
 </div>
 
 <aui:script>
-	function <portlet:namespace />deleteCCartItems() {
+	function <portlet:namespace />deleteCommerceCartItems() {
 		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-items") %>')) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
 			form.attr('method', 'post');
 			form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
-			form.fm('deleteCCartItemIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+			form.fm('deleteCommerceCartItemIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-			submitForm(form, '<portlet:actionURL name="editCartItems" />');
+			submitForm(form, '<portlet:actionURL name="editCommerceCartItems" />');
 		}
 	}
 </aui:script>

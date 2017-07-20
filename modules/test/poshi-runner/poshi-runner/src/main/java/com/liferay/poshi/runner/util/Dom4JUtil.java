@@ -187,4 +187,18 @@ public class Dom4JUtil {
 		return elementList;
 	}
 
+	public static List<Node> toNodeList(List<?> list) {
+		if (list == null) {
+			return null;
+		}
+
+		List<Node> nodeList = new ArrayList<>(list.size());
+
+		for (Object object : list) {
+			nodeList.add((Node)object);
+		}
+
+		return nodeList;
+	}
+
 }

@@ -1,7 +1,7 @@
 Bundle-Name: Liferay Commerce Product Content Web
 Bundle-SymbolicName: com.liferay.commerce.product.content.web
 Bundle-Version: 1.0.0
-Export-Package:
+Export-Package:\
 	com.liferay.commerce.product.content.web.configuration,\
 	com.liferay.commerce.product.content.web.display.context
 Web-ContextPath: /commerce-product-content-web

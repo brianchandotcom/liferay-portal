@@ -77,7 +77,7 @@ AUI.add(
 
 				var builder = instance.get('builder');
 
-				var settingsForm = new Liferay.DDL.FormBuilderSettingsForm(
+				return new Liferay.DDL.FormBuilderSettingsForm(
 					{
 						context: context,
 						editMode: builder.isEditMode() || instance.isPersisted(),
@@ -87,12 +87,6 @@ AUI.add(
 						templateNamespace: 'ddm.settings_form'
 					}
 				);
-
-				var dataTypeField = settingsForm.getField('dataType');
-
-				dataTypeField.set('value', 'string');
-
-				return settingsForm;
 			},
 
 			generateFieldName: function(key) {

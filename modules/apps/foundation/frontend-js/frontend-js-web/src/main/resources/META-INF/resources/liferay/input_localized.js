@@ -363,7 +363,7 @@ AUI.add(
 										fieldNamePrefix: fieldNamePrefix,
 										fieldNameSuffix: fieldNameSuffix,
 										id: id,
-										name: name,
+										name: A.Lang.String.escapeHTML(name),
 										namespace: namespace,
 										value: languageId
 									}

@@ -262,7 +262,7 @@
 					items: availableLanguageIds,
 					itemsError: errorLanguageIds,
 					lazy: <%= !type.equals("editor") %>,
-					name: '<%= name %>',
+					name: '<%= HtmlUtil.escapeJS(name) %>',
 					namespace: '<portlet:namespace />',
 					toggleSelection: false,
 					translatedLanguages: '<%= StringUtil.merge(languageIds) %>'

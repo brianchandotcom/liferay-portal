@@ -81,8 +81,8 @@ public class TestResult {
 		if (status.equals("FAILED") && caseJSONObject.has("errorDetails") &&
 			caseJSONObject.has("errorStackTrace")) {
 
-			errorDetails = caseJSONObject.getString("errorDetails");
-			errorStackTrace = caseJSONObject.getString("errorStackTrace");
+			errorDetails = caseJSONObject.optString("errorDetails");
+			errorStackTrace = caseJSONObject.optString("errorStackTrace");
 		}
 	}
 

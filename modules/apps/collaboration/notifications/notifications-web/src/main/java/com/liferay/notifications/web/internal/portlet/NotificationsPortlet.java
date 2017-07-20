@@ -126,7 +126,7 @@ public class NotificationsPortlet extends MVCPortlet {
 			actionRequest, "requestProcessed",
 			LanguageUtil.get(
 				resourceBundle,
-				"all-notifications-were-marked-as-read-sucessfully"));
+				"all-notifications-were-marked-as-read-successfully"));
 	}
 
 	public void markAsRead(

@@ -46,6 +46,7 @@ PortletURL productAttachmentsURL = renderResponse.createRenderURL();
 
 productAttachmentsURL.setParameter("mvcRenderCommandName", "viewAttachmentFileEntries");
 productAttachmentsURL.setParameter("cpDefinitionId", String.valueOf(cpDefinition.getCPDefinitionId()));
+productAttachmentsURL.setParameter("toolbarItem", toolbarItem);
 productAttachmentsURL.setParameter("type", String.valueOf(type));
 
 portletDisplay.setShowBackIcon(true);

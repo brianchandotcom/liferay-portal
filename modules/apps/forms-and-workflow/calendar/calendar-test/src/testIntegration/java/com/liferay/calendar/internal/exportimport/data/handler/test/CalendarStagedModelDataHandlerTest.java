@@ -16,17 +16,15 @@ package com.liferay.calendar.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.calendar.model.Calendar;
+import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.CalendarLocalServiceUtil;
 import com.liferay.calendar.test.util.CalendarTestUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.lar.test.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -59,12 +57,8 @@ public class CalendarStagedModelDataHandlerTest
 	public void testImportedCalendarShouldKeepTheName() throws Exception {
 		initExport();
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				stagingGroup, TestPropsValues.getUserId());
-
-		Calendar calendar = CalendarTestUtil.addCalendar(
-			stagingGroup, serviceContext);
+		Calendar calendar = CalendarTestUtil.addCalendarResourceCalendar(
+			stagingGroup);
 
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, calendar);
@@ -81,6 +75,16 @@ public class CalendarStagedModelDataHandlerTest
 
 		Assert.assertEquals(
 			exportedCalendar.getName(), importedCalendar.getName());
+
+		CalendarResource exportedCalendarResource =
+			exportedCalendar.getCalendarResource();
+
+		CalendarResource importedCalendarResource =
+			importedCalendar.getCalendarResource();
+
+		Assert.assertEquals(
+			exportedCalendarResource.getName(),
+			importedCalendarResource.getName());
 	}
 
 	@Test
@@ -106,6 +110,16 @@ public class CalendarStagedModelDataHandlerTest
 
 		Assert.assertNotEquals(
 			exportedCalendar.getName(), importedCalendar.getName());
+
+		CalendarResource exportedCalendarResource =
+			exportedCalendar.getCalendarResource();
+
+		CalendarResource importedCalendarResource =
+			importedCalendar.getCalendarResource();
+
+		Assert.assertNotEquals(
+			exportedCalendarResource.getName(),
+			importedCalendarResource.getName());
 	}
 
 	@Override

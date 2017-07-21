@@ -326,7 +326,8 @@ public class JSLoaderModulesServlet extends HttpServlet {
 			"Liferay.EXPOSE_GLOBAL = " + _details.exposeGlobal() + ";\n");
 
 		printWriter.println(
-			"Liferay.IGNORE_MODULE_VERSION = " + !_details.applyVersioning() + ";\n");
+			"Liferay.IGNORE_MODULE_VERSION = " + !_details.applyVersioning() +
+				";\n");
 
 		printWriter.println("}());");
 

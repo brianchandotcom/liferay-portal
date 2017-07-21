@@ -442,6 +442,9 @@ public interface UserNotificationEventLocalService extends BaseLocalService,
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
 
+	public void archiveUserNotificationEvents(long userId, int deliveryType,
+		boolean actionRequired) throws PortalException;
+
 	public void deleteUserNotificationEvent(java.lang.String uuid,
 		long companyId);
 

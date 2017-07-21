@@ -90,13 +90,6 @@ public class CommerceCartLocalServiceImpl
 	}
 
 	@Override
-	public List<CommerceCart> findCommerceCarts(
-		long groupId, long userId, int type) {
-
-		return commerceCartPersistence.findByG_U_T(groupId, userId, type);
-	}
-
-	@Override
 	public List<CommerceCart> getCommerceCarts(
 		long groupId, int type, int start, int end,
 		OrderByComparator<CommerceCart> orderByComparator) {

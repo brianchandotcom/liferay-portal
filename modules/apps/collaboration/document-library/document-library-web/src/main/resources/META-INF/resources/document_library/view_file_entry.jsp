@@ -243,10 +243,10 @@ if (portletTitleBasedNavigation) {
 							<span class="webdav-url">
 								<c:choose>
 									<c:when test="<%= portletDisplay.isWebDAVEnabled() && fileEntry.isSupportsSocial() %>">
-										<liferay-ui:message key="get-url-or-webdav-url" />
+										<liferay-ui:message arguments='<%= new Object[] {"show-url-file", "javascript:;", "show-webdav-url-file", "javascript:;"} %>' key="get-url-or-webdav-url" translateArguments="<%= false %>" />
 									</c:when>
 									<c:otherwise>
-										<liferay-ui:message key="get-url" />
+										<liferay-ui:message arguments='<%= new Object[] {"show-url-file", "javascript:;"} %>' key="get-url" translateArguments="<%= false %>" />
 									</c:otherwise>
 								</c:choose>
 							</span>

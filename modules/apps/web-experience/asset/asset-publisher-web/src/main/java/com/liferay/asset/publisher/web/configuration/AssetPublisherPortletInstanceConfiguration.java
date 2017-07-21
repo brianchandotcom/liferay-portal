@@ -63,7 +63,7 @@ public interface AssetPublisherPortletInstanceConfiguration {
 	 */
 	@Meta.AD(
 		deflt = "${resource:com/liferay/asset/publisher/web/portlet/email/dependencies/email_asset_entry_added_body.tmpl}",
-		description = "email.asset.entry.added.body.description",
+		description = "email-asset-entry-added-body-description",
 		required = false
 	)
 	public LocalizedValuesMap emailAssetEntryAddedBody();
@@ -75,7 +75,7 @@ public interface AssetPublisherPortletInstanceConfiguration {
 	 */
 	@Meta.AD(
 		deflt = "true",
-		description = "email.asset.entry.added.enabled.description",
+		description = "email-asset-entry-added-enabled-description",
 		required = false
 	)
 	public boolean emailAssetEntryAddedEnabled();
@@ -87,7 +87,7 @@ public interface AssetPublisherPortletInstanceConfiguration {
 	 */
 	@Meta.AD(
 		deflt = "${resource:com/liferay/asset/publisher/web/portlet/email/dependencies/email_asset_entry_added_subject.tmpl}",
-		description = "email.asset.entry.added.subject.description",
+		description = "email-asset-entry-added-subject-description",
 		required = false
 	)
 	public LocalizedValuesMap emailAssetEntryAddedSubject();
@@ -98,7 +98,7 @@ public interface AssetPublisherPortletInstanceConfiguration {
 	 * @return default email address to use in asset entry added email.
 	 */
 	@Meta.AD(
-		deflt = "", description = "email.from.address.description",
+		deflt = "", description = "email-from-address-description",
 		required = false
 	)
 	public String emailFromAddress();
@@ -109,7 +109,7 @@ public interface AssetPublisherPortletInstanceConfiguration {
 	 * @return default sender name to use in asset entry added email.
 	 */
 	@Meta.AD(
-		deflt = "", description = "email.from.name.description",
+		deflt = "", description = "email-from-name-description",
 		required = false
 	)
 	public String emailFromName();

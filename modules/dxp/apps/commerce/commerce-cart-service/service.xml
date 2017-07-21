@@ -30,8 +30,8 @@
 
 		<!-- Order -->
 
-		<order by="desc">
-			<order-column name="name" />
+		<order by="asc">
+			<order-column name="createDate" />
 		</order>
 
 		<!-- Finder methods -->
@@ -79,7 +79,7 @@
 		<!-- Order -->
 
 		<order by="asc">
-			<order-column name="modifiedDate" />
+			<order-column name="createDate" />
 		</order>
 
 		<!-- Finder methods -->

@@ -119,7 +119,8 @@ private String _buildTagsNavigation(long scopeGroupId, String selectedTagName, P
 	}
 
 	portletURL.setParameter("tag", StringPool.BLANK);
-	String fullPortletURLStr = portletURL.toString();
+
+	String originalPortletURL = portletURL.toString();
 
 	for (AssetTag tag : tags) {
 		String tagName = tag.getName();
@@ -145,7 +146,7 @@ private String _buildTagsNavigation(long scopeGroupId, String selectedTagName, P
 
 		if (tagName.equals(selectedTagName)) {
 			sb.append("<a class=\"tag-selected\" href=\"");
-			sb.append(HtmlUtil.escape(fullPortletURLStr));
+			sb.append(HtmlUtil.escape(originalPortletURL));
 		}
 		else {
 			portletURL.setParameter("tag", tagName);

@@ -347,30 +347,37 @@ for SUBREPO_BRANCH in "${SUBREPO_BRANCHES[@]}"; do
 	#
 
 	for i in {1..2}; do
-		TREE_URL="$(curl -s "https://api.github.com/repos/liferay/${SUBREPO}/branches/${BRANCH}" -X GET --header "Authorization: token ${GITHUB_API_TOKEN}" | grep '/git/trees/' | sed 's/"[^"]*$//' | sed 's/.*"//')"
+		BRANCH_JSON="$(curl -s "https://api.github.com/repos/liferay/${SUBREPO}/branches/${BRANCH}" -X GET --header "Authorization: token ${GITHUB_API_TOKEN}")"
 
-		if [[ "${TREE_URL}" ]]; then
+		if [[ "$(echo "${BRANCH_JSON}" | grep '"sha"')" ]]; then
 			break;
 		fi
 	done
 
-	if [[ -z "${TREE_URL}" ]]; then
-		error "Failed to retrieve the tree url for ${BRANCH} via the GitHub API."
+	if [[ -z "$(echo "${BRANCH_JSON}" | grep '"sha"')" ]]; then
+		error "Failed to retrieve the branch information for ${BRANCH} via the GitHub API."
 	fi
 
-	for i in {1..2}; do
-		TREE_CONTENT="$(curl -s "${TREE_URL}" -X GET --header "Authorization: token ${GITHUB_API_TOKEN}" | tr '\n' ' ' | sed 's/ //g' | sed 's/},/\'$'\n/g')"
+	CURRENT_TREE_URL="$(echo "${BRANCH_JSON}" | grep '/git/trees/' | sed 's/"[^"]*$//' | sed 's/.*"//')"
 
-		if [[ "$(echo "${TREE_CONTENT}" | grep "\"${TREE_URL}\"")" ]]; then
+	CURRENT_TREE_SHA="${CURRENT_TREE_URL##*/}"
+
+	CURRENT_BRANCH_SHA="$(echo "${BRANCH_JSON}" | tr '\n' ' ' | sed 's/\[.*\]//' | sed 's/ //g' | sed 's/"tree":{[^}]*}//' | tr ',' '\n' | grep '"sha"' | head -n 1 | sed 's/"[^"]*$//' | sed 's/.*"//')"
+
+	for i in {1..2}; do
+		TREE_CONTENT="$(curl -s "${CURRENT_TREE_URL}" -X GET --header "Authorization: token ${GITHUB_API_TOKEN}" | tr '\n' ' ' | sed 's/ //g' | sed 's/},/\'$'\n/g')"
+
+		if [[ "$(echo "${TREE_CONTENT}" | grep "\"${CURRENT_TREE_URL}\"")" ]]; then
 			break;
 		fi
 	done
 
-	if [[ -z "$(echo "${TREE_CONTENT}" | grep "\"${TREE_URL}\"")" ]]; then
+	if [[ -z "$(echo "${TREE_CONTENT}" | grep "\"${CURRENT_TREE_URL}\"")" ]]; then
 		error "Failed to retrieve the tree content for ${BRANCH} via the GitHub API."
 	fi
 
 	GRADLEW_BAT_REMOTE_SHA="$(echo "${TREE_CONTENT}" | grep '"gradlew.bat"' | sed 's/.*"sha":"//' | sed 's/".*//')"
+	GRADLEW_FILE_MODE="$(echo "${TREE_CONTENT}" | grep '"gradlew"' | sed 's/.*"mode":"//' | sed 's/".*//')"
 	GRADLEW_REMOTE_SHA="$(echo "${TREE_CONTENT}" | grep '"gradlew"' | sed 's/.*"sha":"//' | sed 's/".*//')"
 
 	REMOTE_SHAS="
@@ -390,7 +397,7 @@ gradlew.bat:${GRADLEW_BAT_REMOTE_SHA}
 			if [[ "${OPTION_VERIFY}" ]]; then
 				info "liferay/${SUBREPO}:${BRANCH}:${GRADLE_FILE} content"
 			else
-				COMMIT_MESSAGE="LPS-0 Update ${GRADLE_FILE}"
+				COMMIT_MESSAGE="LPS-0 Update ${GRADLE_FILE} content"
 				CONTENT_VAR="$(get_content_var "${GRADLE_FILE}")"
 
 				DATA="\"branch\":\"${BRANCH}\",\"content\":\"${!CONTENT_VAR}\",\"message\":\"${COMMIT_MESSAGE}\",\"path\": \"${GRADLE_FILE}\""
@@ -412,17 +419,92 @@ gradlew.bat:${GRADLEW_BAT_REMOTE_SHA}
 
 					warn "Failed to update ${GRADLE_FILE} content at liferay/${SUBREPO}:${BRANCH}."
 
+					if [[ "${GRADLE_FILE}" == "gradlew" ]]; then
+						GRADLEW_UPDATE=fail
+					fi
+
 					continue
 				fi
+
+				CURRENT_BRANCH_SHA="$(echo "${OUTPUT}" | tr '\n' ' ' | sed 's/\[.*\]//' | sed 's/ //g' | sed 's/},/\'$'\n/g' | grep '"commit"' | sed 's/.*"sha":"//' | sed 's/".*//')"
+				CURRENT_TREE_SHA="$(echo "${OUTPUT}" | grep '/git/trees/' | sed 's@.*/@@' | sed 's/".*//')"
 			fi
 
 			if [[ "${GRADLE_FILE}" == "gradlew" ]]; then
-				GRADLEW_UPDATE=true
+				GRADLEW_UPDATE=success
 			fi
 
 			let TOTAL_FILES_COUNTER++
 		fi
 	done
+
+	if [[ "${GRADLEW_FILE_MODE}" != "100755" ]] && [[ "${GRADLEW_UPDATE}" != "fail" ]]; then
+		if [[ "${OPTION_VERIFY}" ]]; then
+			info "liferay/${SUBREPO}:${BRANCH}:gradlew file mode"
+		else
+			FILE_SHA="$(echo "${LOCAL_SHAS}" | grep "^gradlew:" | sed 's/.*://')"
+
+			for i in {1..2}; do
+				OUTPUT=$(curl -d "{\"base_tree\": \"${CURRENT_TREE_SHA}\",\"tree\":[{\"mode\":\"100755\",\"path\": \"gradlew\",\"sha\":\"${FILE_SHA}\"}]}" --header "Authorization: token ${GITHUB_API_TOKEN}" -s "https://api.github.com/repos/liferay/${SUBREPO}/git/trees" -X POST)
+
+				if [[ "$(echo ${OUTPUT} | grep '"sha"')" ]]; then
+					break
+				fi
+			done
+
+			if [[ -z "$(echo ${OUTPUT} | grep '"sha"')" ]]; then
+				warn "${OUTPUT}"
+
+				warn "Failed to update gradlew file mode (creating tree via GitHub API) at liferay/${SUBREPO}:${BRANCH}."
+
+				continue
+			fi
+
+			NEW_TREE_SHA="$(echo "${OUTPUT}" | tr '\n' '%' | sed 's/\[.*\]//' | sed 's/ *//g' | sed 's/.*"sha":"//' | sed 's/".*//')"
+
+			if [[ "${NEW_TREE_SHA}" == "${CURRENT_TREE_SHA}" ]]; then
+				continue
+			fi
+
+			for i in {1..2}; do
+				OUTPUT=$(curl -d "{\"message\": \"LPS-0 Update gradlew file mode\",\"tree\": \"${NEW_TREE_SHA}\",\"parents\": [\"${CURRENT_BRANCH_SHA}\"]}" --header "Authorization: token ${GITHUB_API_TOKEN}" -s "https://api.github.com/repos/liferay/${SUBREPO}/git/commits" -X POST)
+
+				if [[ "$(echo ${OUTPUT} | grep '"sha"')" ]]; then
+					break
+				fi
+			done
+
+			if [[ -z "$(echo ${OUTPUT} | grep '"sha"')" ]]; then
+				warn "${OUTPUT}"
+
+				warn "Failed to update gradlew file mode (creating commit via GitHub API) at liferay/${SUBREPO}:${BRANCH}."
+
+				continue
+			fi
+
+			NEW_COMMIT_SHA="$(echo "${OUTPUT}" | grep -v "${CURRENT_BRANCH_SHA}" | grep -v "${NEW_TREE_SHA}" | grep '"sha"' | sed 's/"[^"]*$//' | sed 's/.*"//')"
+
+			for i in {1..2}; do
+				OUTPUT=$(curl -d "{\"sha\": \"${NEW_COMMIT_SHA}\"}" --header "Authorization: token ${GITHUB_API_TOKEN}" -s "https://api.github.com/repos/liferay/${SUBREPO}/git/refs/heads/${BRANCH}" -X PATCH)
+
+				if [[ "$(echo ${OUTPUT} | grep '"ref"')" ]]; then
+					break
+				fi
+			done
+
+			if [[ -z "$(echo ${OUTPUT} | grep '"ref"')" ]]; then
+				warn "${OUTPUT}"
+
+				warn "Failed to update gradlew file mode (updating ref via GitHub API) at liferay/${SUBREPO}:${BRANCH}."
+
+				continue
+			fi
+		fi
+
+		if [[ -z "${GRADLEW_UPDATE}" ]]; then
+			let TOTAL_FILES_COUNTER++
+		fi
+	fi
 done
 
 info

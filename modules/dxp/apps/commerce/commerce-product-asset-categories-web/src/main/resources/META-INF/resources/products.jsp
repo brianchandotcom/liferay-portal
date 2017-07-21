@@ -88,9 +88,8 @@ cpDefinitionSearchContainer.setResults(cpDefinitions);
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-content"
 					name="type"
-				>
-					<%= cpType.getLabel(locale) %>
-				</liferay-ui:search-container-column-text>
+					value="<%= cpType.getLabel(locale) %>"
+				/>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-content"

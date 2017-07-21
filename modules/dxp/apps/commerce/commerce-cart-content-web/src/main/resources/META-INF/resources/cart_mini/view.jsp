@@ -66,9 +66,8 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-content"
 					href="<%= commerceCartContentMiniDisplayContext.getCPDefinitionURL(cpDefinition.getCPDefinitionId(), themeDisplay) %>"
-				>
-					<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>
-				</liferay-ui:search-container-column-text>
+					value="<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>"
+				/>
 			</liferay-ui:search-container-row>
 
 			<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" searchContainer="<%= commerceCartItemSearchContainer %>" />

@@ -154,17 +154,16 @@ renderResponse.setTitle(commerceCart.getName());
 							keyProperty="commerceCartItemId"
 							modelVar="commerceCartItem"
 						>
+
+							<%
+							CPDefinition cpDefinition = commerceCartItem.getCPDefinition();
+							%>
+
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"
 								name="title"
-							>
-
-								<%
-								CPDefinition cpDefinition = commerceCartItem.getCPDefinition();
-								%>
-
-								<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>
-							</liferay-ui:search-container-column-text>
+								value="<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>"
+							/>
 
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"

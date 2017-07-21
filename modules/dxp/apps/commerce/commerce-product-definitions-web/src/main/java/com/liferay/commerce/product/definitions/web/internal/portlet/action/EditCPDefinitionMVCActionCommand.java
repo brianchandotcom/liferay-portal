@@ -17,6 +17,7 @@ package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.exception.CPFriendlyURLEntryException;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
@@ -175,7 +176,8 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 			else if (e instanceof AssetCategoryException ||
-					 e instanceof AssetTagException) {
+					 e instanceof AssetTagException ||
+					 e instanceof CPFriendlyURLEntryException) {
 
 				SessionErrors.add(actionRequest, e.getClass(), e);
 

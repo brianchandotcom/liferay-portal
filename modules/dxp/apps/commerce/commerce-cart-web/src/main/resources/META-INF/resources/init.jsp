@@ -26,6 +26,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.commerce.cart.constants.CommerceCartConstants" %><%@
+page import="com.liferay.commerce.cart.constants.CommerceCartPortletKeys" %><%@
 page import="com.liferay.commerce.cart.constants.CommerceCartWebKeys" %><%@
 page import="com.liferay.commerce.cart.display.context.CommerceCartDisplayContext" %><%@
 page import="com.liferay.commerce.cart.display.context.CommerceCartItemDisplayContext" %><%@
@@ -34,11 +35,14 @@ page import="com.liferay.commerce.cart.model.CommerceCartItem" %><%@
 page import="com.liferay.commerce.product.model.CPDefinition" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %>
-<%@ page import="com.liferay.commerce.cart.constants.CommerceCartPortletKeys" %>
-<%@ page import="com.liferay.portal.kernel.util.PortalUtil" %><%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
-<%@ page import="com.liferay.portal.kernel.util.Constants" %>
-<%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@ page import="com.liferay.portal.kernel.util.WebKeys" %><%@ page import="com.liferay.portal.kernel.util.StringPool" %><%@ page import="com.liferay.portal.kernel.util.ListUtil" %>
+page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
+page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.ListUtil" %><%@
+page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
+page import="com.liferay.portal.kernel.util.StringPool" %><%@
+page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 <%@ page import="java.util.Collections" %><%@
 page import="java.util.List" %>

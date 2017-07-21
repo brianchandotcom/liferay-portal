@@ -97,25 +97,6 @@ public class CommerceCartContentDisplayContext {
 		_defaultOrderByType = "asc";
 	}
 
-	public String getCPDefinitionURL(
-			CPDefinition cpDefinition, ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		long classNameId = _portal.getClassNameId(CPDefinition.class);
-
-		CPFriendlyURLEntry cpFriendlyURLEntry =
-			_cpFriendlyURLEntryLocalService.fetchCPFriendlyURLEntry(
-				cpDefinition.getGroupId(), cpDefinition.getCompanyId(),
-				classNameId, cpDefinition.getCPDefinitionId(),
-				themeDisplay.getLanguageId(), true);
-
-		String cpDefinitionURL =
-			themeDisplay.getPortalURL() + CPConstants.SEPARATOR_PRODUCT_URL +
-				cpFriendlyURLEntry.getUrlTitle();
-
-		return cpDefinitionURL;
-	}
-
 	public CommerceCart getCommerceCart() throws PortalException {
 		RenderRequest renderRequest =
 			commerceCartRequestHelper.getRenderRequest();
@@ -161,6 +142,25 @@ public class CommerceCartContentDisplayContext {
 		return ParamUtil.getInteger(
 			_httpServletRequest, "type",
 			CommerceCartConstants.COMMERCE_CART_TYPE_CART);
+	}
+
+	public String getCPDefinitionURL(
+			CPDefinition cpDefinition, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		long classNameId = _portal.getClassNameId(CPDefinition.class);
+
+		CPFriendlyURLEntry cpFriendlyURLEntry =
+			_cpFriendlyURLEntryLocalService.fetchCPFriendlyURLEntry(
+				cpDefinition.getGroupId(), cpDefinition.getCompanyId(),
+				classNameId, cpDefinition.getCPDefinitionId(),
+				themeDisplay.getLanguageId(), true);
+
+		String cpDefinitionURL =
+			themeDisplay.getPortalURL() + CPConstants.SEPARATOR_PRODUCT_URL +
+				cpFriendlyURLEntry.getUrlTitle();
+
+		return cpDefinitionURL;
 	}
 
 	public String getDisplayStyle() {

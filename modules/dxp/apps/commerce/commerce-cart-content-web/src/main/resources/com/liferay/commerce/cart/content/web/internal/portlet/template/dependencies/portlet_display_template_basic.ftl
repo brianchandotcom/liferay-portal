@@ -1,38 +1,39 @@
 <#assign count = 0 />
 
 <#if entries?has_content>
-    <div class="row">
-        <#list entries as curCommerceCartItem>
-            <#assign
-                cpDefinition = curCommerceCartItem.getCPDefinition()
+	<div class="row">
+		<#list entries as curCommerceCartItem>
+			<#assign
+				cpDefinition = curCommerceCartItem.getCPDefinition()
 
-                image = cpDefinition.getDefaultImageThumbnailSrc(themeDisplay)
+				image = cpDefinition.getDefaultImageThumbnailSrc(themeDisplay)
 
-                productURL = commerceCartContentDisplayContext.getCPDefinitionURL(cpDefinition, themeDisplay)
+				productURL = commerceCartContentDisplayContext.getCPDefinitionURL(cpDefinition, themeDisplay)
 
-                title = cpDefinition.getTitle(locale)
-            />
+				title = cpDefinition.getTitle(locale)
+			/>
 
-            <div class="col-md-6">
-                <div class="row">
-                    <img src="${image}">
-                </div>
-                <div class="row">
-                    <a href="${productURL}">
-                        <strong>${title}</strong>
-                    </a>
-                </div>
-            </div>
+			<div class="col-md-6">
+				<div class="row">
+					<img src="${image}">
+				</div>
 
-            <#assign count = count + 1 />
+				<div class="row">
+					<a href="${productURL}">
+						<strong>${title}</strong>
+					</a>
+				</div>
+			</div>
 
-            <#if count gte 2>
-                </div>
+			<#assign count = count + 1 />
 
-                <div class="row">
+			<#if count gte 2>
+				</div>
 
-                <#assign count = 0 />
-            </#if>
-        </#list>
-    </div>
+				<div class="row">
+
+				<#assign count = 0 />
+			</#if>
+		</#list>
+	</div>
 </#if>

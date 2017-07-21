@@ -15,6 +15,8 @@
 package com.liferay.notifications.web.internal.portlet;
 
 import com.liferay.notifications.web.internal.constants.NotificationsPortletKeys;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.interval.IntervalActionProcessor;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
@@ -88,21 +90,48 @@ public class NotificationsPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		final ThemeDisplay themeDisplay =
+			(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-		List<UserNotificationEvent> userNotificationEvents =
+		int unreadNotificationEventsCount =
 			_userNotificationEventLocalService.
-				getArchivedUserNotificationEvents(
+				getArchivedUserNotificationEventsCount(
 					themeDisplay.getUserId(),
 					UserNotificationDeliveryConstants.TYPE_WEBSITE, false,
 					false);
 
-		for (UserNotificationEvent userNotificationEvent :
-				userNotificationEvents) {
+		final IntervalActionProcessor<Void> intervalActionProcessor =
+			new IntervalActionProcessor<>(unreadNotificationEventsCount);
 
-			updateArchived(userNotificationEvent);
-		}
+		intervalActionProcessor.setPerformIntervalActionMethod(
+			new IntervalActionProcessor.PerformIntervalActionMethod<Void>() {
+
+				@Override
+				public Void performIntervalAction(int start, int end)
+					throws PortalException {
+
+					List<UserNotificationEvent> userNotificationEvents =
+						_userNotificationEventLocalService.
+							getArchivedUserNotificationEvents(
+								themeDisplay.getUserId(),
+								UserNotificationDeliveryConstants.TYPE_WEBSITE,
+								false, false, start, end);
+
+					for (UserNotificationEvent userNotificationEvent :
+							userNotificationEvents) {
+
+						updateArchived(userNotificationEvent);
+					}
+
+					intervalActionProcessor.incrementStart(
+						userNotificationEvents.size());
+
+					return null;
+				}
+
+			});
+
+		intervalActionProcessor.performIntervalActions();
 
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(themeDisplay.getLocale());
@@ -277,7 +306,7 @@ public class NotificationsPortlet extends MVCPortlet {
 	}
 
 	protected void updateArchived(UserNotificationEvent userNotificationEvent)
-		throws Exception {
+		throws PortalException {
 
 		userNotificationEvent.setArchived(true);
 

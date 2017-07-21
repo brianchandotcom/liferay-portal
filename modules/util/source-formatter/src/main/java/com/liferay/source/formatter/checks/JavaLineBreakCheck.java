@@ -738,7 +738,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 		"(\n\t*.* =) ((new \\w*\\[\\] )?\\{)\n(\t*)(.+)\n\t*(\\};?)\n");
 	private final Pattern _classPattern = Pattern.compile(
 		"(\n(\t*)(private|protected|public) ((abstract|static) )*" +
-			"(class|enum|interface) ([\\s\\S]*?) \\{)\n(\\s*)(\\S)");
+			"(class|enum|interface) ([\\s\\S]*?)\\{)\n(\\s*)(\\S)");
 	private final Pattern _incorrectLineBreakInsideChainPattern1 =
 		Pattern.compile("\n(\t*)\\).*?\\((.+)");
 	private final Pattern _incorrectLineBreakInsideChainPattern2 =

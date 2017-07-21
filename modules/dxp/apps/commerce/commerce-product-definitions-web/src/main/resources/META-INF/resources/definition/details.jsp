@@ -28,6 +28,15 @@ String friendlyURLBase = themeDisplay.getPortalURL() + CPConstants.SEPARATOR_PRO
 
 <aui:model-context bean="<%= cpDefinition %>" model="<%= CPDefinition.class %>" />
 
+<liferay-ui:error exception="<%= CPFriendlyURLEntryException.class %>">
+
+	<%
+	CPFriendlyURLEntryException cpfuee = (CPFriendlyURLEntryException)errorException;
+	%>
+
+	<%@ include file="/error_friendly_url_exception.jspf" %>
+</liferay-ui:error>
+
 <aui:fieldset>
 	<aui:input autoFocus="<%= true %>" label="title" localized="<%= true %>" name="titleMapAsXML" type="text" wrapperCssClass="commerce-product-definition-title">
 		<aui:validator name="required" />

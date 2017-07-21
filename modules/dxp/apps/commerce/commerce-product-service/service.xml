@@ -753,7 +753,7 @@
 		<exception>CPDefinitionExpirationDate</exception>
 		<exception>CPDefinitionOptionValueRelKey</exception>
 		<exception>CPDefinitionProductTypeName</exception>
-		<exception>CPFriendlyURLLength</exception>
+		<exception>CPFriendlyURLEntry</exception>
 		<exception>CPInstanceDisplayDate</exception>
 		<exception>CPInstanceExpirationDate</exception>
 		<exception>CPOptionCategoryKey</exception>

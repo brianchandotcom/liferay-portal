@@ -444,7 +444,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 
 		PortletURL currentURL = PortletURLUtil.getCurrent(
 			_portal.getLiferayPortletRequest(portletRequest),
-			_portal.getLiferayPortletResponse(renderResponse));
+			_portal.getLiferayPortletResponse(portletResponse));
 
 		contextObjects.put(
 			PortletDisplayTemplateConstants.CURRENT_URL, currentURL.toString());

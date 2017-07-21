@@ -102,7 +102,6 @@ public class DocumentFixture {
 		mockProperty(
 			PropsKeys.INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_SCORES_THRESHOLD,
 			"50");
-		mockProperty(PropsKeys.INDEX_SEARCH_HIGHLIGHT_ENABLED, "true");
 		mockProperty(PropsKeys.INDEX_SEARCH_HIGHLIGHT_FRAGMENT_SIZE, "80");
 		mockProperty(
 			PropsKeys.INDEX_SEARCH_HIGHLIGHT_REQUIRE_FIELD_MATCH, "true");

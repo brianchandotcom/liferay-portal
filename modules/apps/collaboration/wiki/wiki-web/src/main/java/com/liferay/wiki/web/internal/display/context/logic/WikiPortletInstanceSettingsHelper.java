@@ -146,6 +146,20 @@ public class WikiPortletInstanceSettingsHelper {
 		return _enableComments;
 	}
 
+	public Boolean isEnableHighlighting() {
+		if (_enableHighlighting != null) {
+			return _enableHighlighting;
+		}
+
+		WikiPortletInstanceConfiguration wikiPortletInstanceConfiguration =
+			_wikiRequestHelper.getWikiPortletInstanceConfiguration();
+
+		_enableHighlighting =
+			wikiPortletInstanceConfiguration.enableHighlighting();
+
+		return _enableHighlighting;
+	}
+
 	public Boolean isEnablePageRatings() {
 		if (_enablePageRatings != null) {
 			return _enablePageRatings;
@@ -201,6 +215,7 @@ public class WikiPortletInstanceSettingsHelper {
 	private long _displayStyleGroupId;
 	private Boolean _enableCommentRatings;
 	private Boolean _enableComments;
+	private Boolean _enableHighlighting;
 	private Boolean _enablePageRatings;
 	private Boolean _enableRelatedAssets;
 	private String[] _hiddenNodes;

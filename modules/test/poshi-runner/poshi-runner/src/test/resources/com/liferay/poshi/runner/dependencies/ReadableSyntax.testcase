@@ -4,6 +4,8 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Smoke";
 
+	var userScreenName = "joeblogs";
+
 	setUp {
 		TestCase.setUpPortalInstance();
 

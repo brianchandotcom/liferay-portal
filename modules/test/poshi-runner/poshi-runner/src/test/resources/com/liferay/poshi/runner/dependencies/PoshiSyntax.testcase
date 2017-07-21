@@ -3,6 +3,8 @@
 	<property name="portal.upstream" value="true" />
 	<property name="testray.main.component.name" value="Smoke" />
 
+	<var name="userScreenName" value="joeblogs" />
+
 	<set-up>
 		<execute macro="TestCase#setUpPortalInstance" />
 

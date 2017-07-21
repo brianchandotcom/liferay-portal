@@ -131,14 +131,15 @@ public class PoshiRunnerContext {
 		return _rootElements.get("macro#" + className);
 	}
 
-	public static String getPathLocator(String pathLocatorKey)
-		throws Exception {
+	public static String getPathLocator(String pathLocatorKey) {
+		return getPathLocator(pathLocatorKey, _defaultNamespace);
+	}
 
-		if (!isPathLocator(pathLocatorKey)) {
-			throw new Exception("No such locator key " + pathLocatorKey);
-		}
+	public static String getPathLocator(
+		String pathLocatorKey, String namespace) {
 
-		String pathLocator = _pathLocators.get(pathLocatorKey);
+		String pathLocator = _pathLocators.get(
+			namespace + "." + pathLocatorKey);
 
 		if (pathLocator == null) {
 			String className =
@@ -150,7 +151,8 @@ public class PoshiRunnerContext {
 					pathLocatorKey);
 
 			pathLocator = _pathLocators.get(
-				_pathExtensions.get(className) + "#" + commandName);
+				namespace + "." + _pathExtensions.get(className) + "#" +
+					commandName);
 		}
 
 		return pathLocator;
@@ -214,19 +216,16 @@ public class PoshiRunnerContext {
 	}
 
 	public static boolean isPathLocator(String pathLocatorKey) {
-		String className =
-			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
-				pathLocatorKey);
+		return isPathLocator(pathLocatorKey, _defaultNamespace);
+	}
 
-		if (_pathLocators.containsKey(pathLocatorKey)) {
+	public static boolean isPathLocator(
+		String pathLocatorKey, String namespace) {
+
+		String pathLocator = getPathLocator(pathLocatorKey, namespace);
+
+		if (pathLocator != null) {
 			return true;
-		}
-
-		if (_pathExtensions.containsKey(className)) {
-			return _pathLocators.containsKey(
-				_pathExtensions.get(className) + "#" +
-					PoshiRunnerGetterUtil.getCommandNameFromClassCommandName(
-						pathLocatorKey));
 		}
 
 		return false;
@@ -998,15 +997,10 @@ public class PoshiRunnerContext {
 	}
 
 	private static void _storePathElement(
-			Element rootElement, String className, String extendedClassName)
+			Element rootElement, String className, String namespace)
 		throws Exception {
 
-		if (extendedClassName != null) {
-			_rootElements.put("path#" + extendedClassName, rootElement);
-		}
-		else {
-			_rootElements.put("path#" + className, rootElement);
-		}
+		_rootElements.put("path#" + namespace + "." + className, rootElement);
 
 		Element bodyElement = rootElement.element("body");
 
@@ -1028,10 +1022,11 @@ public class PoshiRunnerContext {
 			String locator = locatorElement.getText();
 
 			if (locatorKey.equals("EXTEND_ACTION_PATH")) {
-				_pathExtensions.put(className, locator);
+				_pathExtensions.put(namespace + "." + className, locator);
 			}
 			else {
-				_pathLocators.put(className + "#" + locatorKey, locator);
+				_pathLocators.put(
+					namespace + "." + className + "#" + locatorKey, locator);
 			}
 		}
 	}
@@ -1155,7 +1150,7 @@ public class PoshiRunnerContext {
 			}
 		}
 		else if (classType.equals("path")) {
-			_storePathElement(rootElement, className, null);
+			_storePathElement(rootElement, className, namespace);
 		}
 	}
 

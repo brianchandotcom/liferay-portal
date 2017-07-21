@@ -44,6 +44,10 @@
 	<classpathentry kind="lib" path="lib/development/hamcrest-library.jar"/>
 	<classpathentry kind="lib" path="lib/development/hsql.jar"/>
 	<classpathentry kind="lib" path="lib/development/j2h.jar"/>
+	<classpathentry kind="lib" path="lib/development/jacocoagent.jar"/>
+	<classpathentry kind="lib" path="lib/development/jacocoant.jar"/>
+	<classpathentry kind="lib" path="lib/development/jacococore.jar"/>
+	<classpathentry kind="lib" path="lib/development/jacocoreport.jar"/>
 	<classpathentry kind="lib" path="lib/development/jalopy.jar"/>
 	<classpathentry kind="lib" path="lib/development/jargs.jar"/>
 	<classpathentry kind="lib" path="lib/development/jarjar.jar"/>

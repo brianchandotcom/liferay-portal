@@ -51,6 +51,7 @@ public class CommerceCartLocalServiceImpl
 		commerceCart.setUserName(user.getFullName());
 		commerceCart.setName(name);
 		commerceCart.setType(type);
+		commerceCart.setExpandoBridgeAttributes(serviceContext);
 
 		commerceCartPersistence.update(commerceCart);
 
@@ -70,6 +71,10 @@ public class CommerceCartLocalServiceImpl
 
 		commerceCartItemLocalService.deleteCommerceCartItems(
 			commerceCart.getCommerceCartId());
+
+		// Expando
+
+		expandoRowLocalService.deleteRows(commerceCart.getCommerceCartId());
 
 		return commerceCart;
 	}

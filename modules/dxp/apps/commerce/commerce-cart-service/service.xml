@@ -48,6 +48,10 @@
 			<finder-column name="name" />
 			<finder-column name="type" />
 		</finder>
+
+		<!-- References -->
+
+		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
 	<entity local-service="true" name="CommerceCartItem" remote-service="true">
 
@@ -86,5 +90,9 @@
 		<finder name="CommerceCartId" return-type="Collection">
 			<finder-column name="CommerceCartId" />
 		</finder>
+
+		<!-- References -->
+
+		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
 </service-builder>

@@ -55,6 +55,7 @@ public class CommerceCartItemLocalServiceImpl
 		commerceCartItem.setCPInstanceId(cpInstanceId);
 		commerceCartItem.setQuantity(quantity);
 		commerceCartItem.setJson(json);
+		commerceCartItem.setExpandoBridgeAttributes(serviceContext);
 
 		commerceCartItemPersistence.update(commerceCartItem);
 
@@ -67,7 +68,14 @@ public class CommerceCartItemLocalServiceImpl
 			CommerceCartItem commerceCartItem)
 		throws PortalException {
 
+		// Commerce cart item
+
 		commerceCartItemPersistence.remove(commerceCartItem);
+
+		// Expando
+
+		expandoRowLocalService.deleteRows(
+			commerceCartItem.getCommerceCartItemId());
 
 		return commerceCartItem;
 	}

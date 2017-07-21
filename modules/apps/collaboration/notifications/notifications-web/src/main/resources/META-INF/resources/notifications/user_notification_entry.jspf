@@ -51,7 +51,7 @@ if (unread) {
 		</liferay-ui:search-container-column-text>
 	</c:when>
 	<c:otherwise>
-		<portlet:actionURL name="markNotificationAsRead" var="markAsReadURL">
+		<portlet:actionURL name="markNotificationAsRead" var="markNotificationAsReadURL">
 			<portlet:param name="userNotificationEventId" value="<%= String.valueOf(userNotificationEvent.getUserNotificationEventId()) %>" />
 			<portlet:param name="redirect" value="<%= userNotificationFeedEntry.getLink() %>" />
 		</portlet:actionURL>
@@ -60,7 +60,7 @@ if (unread) {
 			<c:if test="<%= unread %>">
 				<h4>
 			</c:if>
-				<a href="<%= markAsReadURL.toString() %>">
+				<a href="<%= markNotificationAsReadURL.toString() %>">
 					<%= userNotificationFeedEntry.getBody() %>
 				</a>
 			<c:if test="<%= unread %>">

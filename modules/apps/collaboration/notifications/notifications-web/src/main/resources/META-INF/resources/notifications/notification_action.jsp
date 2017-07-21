@@ -45,11 +45,11 @@ if (subscriptionId > 0) {
 		</c:when>
 		<c:otherwise>
 			<c:if test="<%= !userNotificationEvent.isArchived() %>">
-				<portlet:actionURL name="markNotificationAsRead" var="markAsReadURL">
+				<portlet:actionURL name="markNotificationAsRead" var="markNotificationAsReadURL">
 					<portlet:param name="userNotificationEventId" value="<%= String.valueOf(userNotificationEvent.getUserNotificationEventId()) %>" />
 				</portlet:actionURL>
 
-				<liferay-ui:icon message="mark-as-read" url="<%= markAsReadURL.toString() %>" />
+				<liferay-ui:icon message="mark-as-read" url="<%= markNotificationAsReadURL.toString() %>" />
 			</c:if>
 
 			<c:if test="<%= subscriptionId > 0 %>">

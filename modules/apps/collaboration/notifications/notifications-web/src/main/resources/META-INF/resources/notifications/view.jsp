@@ -89,7 +89,7 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "markAsRead();" %>' icon="times" label="mark-as-read" />
+		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "markNotificationsAsRead();" %>' icon="times" label="mark-as-read" />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
@@ -115,7 +115,7 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 </div>
 
 <aui:script>
-	function <portlet:namespace />markAsRead() {
+	function <portlet:namespace />markNotificationsAsRead() {
 		var form = AUI.$(document.<portlet:namespace />fm);
 
 		form.attr('method', 'post');

@@ -153,39 +153,32 @@ public class UserNotificationEventLocalServiceImpl
 			long userId, int deliveryType, boolean actionRequired)
 		throws PortalException {
 
-		int unreadNotificationEventsCount =
+		int userNotificationEventsCount =
 			getArchivedUserNotificationEventsCount(
 				userId, deliveryType, actionRequired, false);
 
 		final IntervalActionProcessor<Void> intervalActionProcessor =
-			new IntervalActionProcessor<>(unreadNotificationEventsCount);
+			new IntervalActionProcessor<>(userNotificationEventsCount);
 
 		intervalActionProcessor.setPerformIntervalActionMethod(
-			new IntervalActionProcessor.PerformIntervalActionMethod<Void>() {
+			(start, end) -> {
+				List<UserNotificationEvent> userNotificationEvents =
+					getArchivedUserNotificationEvents(
+						userId, deliveryType, actionRequired, false, start,
+						end);
 
-				@Override
-				public Void performIntervalAction(int start, int end)
-					throws PortalException {
+				for (UserNotificationEvent userNotificationEvent :
+						userNotificationEvents) {
 
-					List<UserNotificationEvent> userNotificationEvents =
-						getArchivedUserNotificationEvents(
-							userId, deliveryType, actionRequired, false, start,
-							end);
+					userNotificationEvent.setArchived(true);
 
-					for (UserNotificationEvent userNotificationEvent :
-							userNotificationEvents) {
-
-						userNotificationEvent.setArchived(true);
-
-						updateUserNotificationEvent(userNotificationEvent);
-					}
-
-					intervalActionProcessor.incrementStart(
-						userNotificationEvents.size());
-
-					return null;
+					updateUserNotificationEvent(userNotificationEvent);
 				}
 
+				intervalActionProcessor.incrementStart(
+					userNotificationEvents.size());
+
+				return null;
 			});
 
 		intervalActionProcessor.performIntervalActions();

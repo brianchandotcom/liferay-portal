@@ -36,6 +36,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.liferay.portal.kernel.util.Validator;
 import org.apache.felix.utils.log.Logger;
 
 import org.osgi.service.component.ComponentContext;
@@ -283,7 +284,7 @@ public class JSLoaderModulesServlet extends HttpServlet {
 				String versionedMapsConfiguration =
 					jsLoaderModule.getVersionedMapsConfiguration();
 
-				if (!versionedMapsConfiguration.equals("")) {
+				if (Validator.isNotNull(versionedMapsConfiguration)) {
 					printWriter.write(delimiter);
 					printWriter.write(versionedMapsConfiguration);
 
@@ -294,7 +295,7 @@ public class JSLoaderModulesServlet extends HttpServlet {
 				String unversionedMapsConfiguration =
 					jsLoaderModule.getUnversionedMapsConfiguration();
 
-				if (!unversionedMapsConfiguration.equals("")) {
+				if (Validator.isNotNull(unversionedMapsConfiguration)) {
 					printWriter.write(delimiter);
 					printWriter.write(unversionedMapsConfiguration);
 

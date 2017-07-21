@@ -291,7 +291,7 @@
 	</command>
 
 	<command name="AddWikiFrontPageChildPageFormatHTML" priority="4">
-		<property name="portal.acceptance" value="quarantine" />
+		<property name="portal.acceptance" value="true" />
 
 		<var name="welcomeToLiferay">
 			<![CDATA[
@@ -1101,7 +1101,7 @@ __JSPWiki Bold Text__]]></var>
 	</command>
 
 	<command name="DeleteWikiFrontPage" priority="5">
-		<property name="portal.acceptance" value="quarantine" />
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Wiki Test Page" />
@@ -1212,7 +1212,7 @@ __JSPWiki Bold Text__]]></var>
 	</command>
 
 	<command name="EditWikiFrontPage" priority="5">
-		<property name="portal.acceptance" value="quarantine" />
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Wiki Test Page" />

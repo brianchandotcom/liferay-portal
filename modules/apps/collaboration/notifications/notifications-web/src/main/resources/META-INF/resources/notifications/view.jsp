@@ -89,7 +89,9 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "markNotificationsAsRead();" %>' icon="times" label="mark-as-read" />
+		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "markNotificationsAsRead();" %>' icon="check" label="mark-as-read" />
+		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "markNotificationsAsUnread();" %>' icon="undo" label="mark-as-unread" />
+		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "delete();" %>' icon="times" label="delete" />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
@@ -121,6 +123,22 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 		form.attr('method', 'post');
 
 		submitForm(form, '<portlet:actionURL name="markNotificationsAsRead"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
+	}
+
+	function <portlet:namespace />markNotificationsAsUnread() {
+		var form = AUI.$(document.<portlet:namespace />fm);
+
+		form.attr('method', 'post');
+
+		submitForm(form, '<portlet:actionURL name="markNotificationsAsUnread" />');
+	}
+
+	function <portlet:namespace />delete() {
+		var form = AUI.$(document.<portlet:namespace />fm);
+
+		form.attr('method', 'post');
+
+		submitForm(form, '<portlet:actionURL name="deleteAll" />');
 	}
 </aui:script>
 

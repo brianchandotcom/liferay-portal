@@ -79,6 +79,18 @@ if (cpDefinition != null) {
 				selected='<%= toolbarItem.equals("view-product-definition-options") %>'
 			/>
 
+			<liferay-portlet:renderURL varImpl="viewProductDefinitionSpecificationOptionValuesURL">
+				<portlet:param name="mvcRenderCommandName" value="viewProductDefinitionSpecificationOptionValues" />
+				<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />
+				<portlet:param name="toolbarItem" value="view-product-definition-specification-options" />
+			</liferay-portlet:renderURL>
+
+			<aui:nav-item
+				href="<%= viewProductDefinitionSpecificationOptionValuesURL.toString() %>"
+				label='<%= LanguageUtil.get(request, "specification-options") %>'
+				selected='<%= toolbarItem.equals("view-product-definition-specification-options") %>'
+			/>
+
 			<liferay-portlet:renderURL varImpl="viewProductDefinitionInstancesURL">
 				<portlet:param name="mvcRenderCommandName" value="viewProductInstances" />
 				<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />

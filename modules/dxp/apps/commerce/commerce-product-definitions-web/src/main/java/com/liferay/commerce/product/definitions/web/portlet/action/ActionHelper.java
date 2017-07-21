@@ -20,12 +20,14 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLink;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
+import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.service.CPDefinitionLinkService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
 import com.liferay.commerce.product.service.CPDefinitionService;
+import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
@@ -35,6 +37,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.ResourceRequest;
 
@@ -329,6 +332,67 @@ public class ActionHelper {
 		return cpDefinitions;
 	}
 
+	public CPDefinitionSpecificationOptionValue
+			getCPDefinitionSpecificationOptionValue(
+				PortletRequest portletRequest)
+		throws PortalException {
+
+		CPDefinitionSpecificationOptionValue
+			cpDefinitionSpecificationOptionValue =
+				(CPDefinitionSpecificationOptionValue)
+					portletRequest.getAttribute(
+						CPWebKeys.CP_DEFINITION_SPECIFICATION_OPTION_VALUE);
+
+		if (cpDefinitionSpecificationOptionValue != null) {
+			return cpDefinitionSpecificationOptionValue;
+		}
+
+		long cpDefinitionSpecificationOptionValueId = ParamUtil.getLong(
+			portletRequest, "cpDefinitionSpecificationOptionValueId");
+
+		if (cpDefinitionSpecificationOptionValueId > 0) {
+			cpDefinitionSpecificationOptionValue =
+				_cpDefinitionSpecificationOptionValueService.
+					fetchCPDefinitionSpecificationOptionValue(
+						cpDefinitionSpecificationOptionValueId);
+		}
+
+		if (cpDefinitionSpecificationOptionValue != null) {
+			portletRequest.setAttribute(
+				CPWebKeys.CP_DEFINITION_SPECIFICATION_OPTION_VALUE,
+				cpDefinitionSpecificationOptionValue);
+		}
+
+		return cpDefinitionSpecificationOptionValue;
+	}
+
+	public List<CPDefinitionSpecificationOptionValue>
+			getCPDefinitionSpecificationOptionValues(
+				PortletRequest portletRequest)
+		throws PortalException {
+
+		List<CPDefinitionSpecificationOptionValue>
+			cpDefinitionSpecificationOptionValues = new ArrayList<>();
+
+		long[] cpDefinitionSpecificationOptionValueIds =
+			ParamUtil.getLongValues(portletRequest, "rowIds");
+
+		for (long cpDefinitionSpecificationOptionValueId :
+				cpDefinitionSpecificationOptionValueIds) {
+
+			CPDefinitionSpecificationOptionValue
+				cpDefinitionSpecificationOptionValue =
+					_cpDefinitionSpecificationOptionValueService.
+						getCPDefinitionSpecificationOptionValue(
+							cpDefinitionSpecificationOptionValueId);
+
+			cpDefinitionSpecificationOptionValues.add(
+				cpDefinitionSpecificationOptionValue);
+		}
+
+		return cpDefinitionSpecificationOptionValues;
+	}
+
 	public CPInstance getCPInstance(RenderRequest renderRequest)
 		throws PortalException {
 
@@ -401,6 +465,10 @@ public class ActionHelper {
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;
+
+	@Reference
+	private CPDefinitionSpecificationOptionValueService
+		_cpDefinitionSpecificationOptionValueService;
 
 	@Reference
 	private CPInstanceService _cpInstanceService;

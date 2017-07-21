@@ -35,6 +35,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import java.net.HttpURLConnection;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 
 import javax.net.ssl.HostnameVerifier;
@@ -61,6 +62,14 @@ public class TunnelUtil {
 			objectOutputStream.writeObject(
 				new ObjectValuePair<HttpPrincipal, MethodHandler>(
 					httpPrincipal, methodHandler));
+		}
+		catch (SocketTimeoutException ste) {
+			_log.error(
+				"Tunnel connection timed out in TunnelUtil (timeout length " +
+					"in ms is set with with tunneling.servlet.timeout in " +
+						"portal-ext.properties)");
+
+			throw ste;
 		}
 
 		Object returnObject = null;

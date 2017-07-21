@@ -121,7 +121,6 @@ public class CommerceCartLocalServiceImpl
 		}
 
 		return addCommerceCart(
-			serviceContext.getUserId(),
 			CommerceCartConstants.COMMERCE_CART_DEFAULT_TITLE, type,
 			serviceContext);
 	}

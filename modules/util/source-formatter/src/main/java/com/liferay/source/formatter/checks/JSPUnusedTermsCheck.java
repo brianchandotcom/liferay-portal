@@ -101,7 +101,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 
 			if (_hasUnusedJSPTerm(
 					fileName, regex, "class", checkedFileNames,
-					includeFileNames, _contentsMap)) {
+					includeFileNames, _contentsMap, false)) {
 
 				unneededImports.add(importLine);
 			}
@@ -183,7 +183,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 	private boolean _hasUnusedJSPTerm(
 		String fileName, String regex, String type,
 		Set<String> checkedForIncludesFileNames, Set<String> includeFileNames,
-		Map<String, String> contentsMap) {
+		Map<String, String> contentsMap, boolean print) {
 
 		includeFileNames.add(fileName);
 
@@ -191,7 +191,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 
 		return !_isJSPTermRequired(
 			fileName, regex, type, checkedForUnusedJSPTerm,
-			checkedForIncludesFileNames, includeFileNames, contentsMap);
+			checkedForIncludesFileNames, includeFileNames, contentsMap, print);
 	}
 
 	private boolean _hasUnusedPortletDefineObjectsProperty(
@@ -209,7 +209,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 
 		return _hasUnusedJSPTerm(
 			fileName, sb.toString(), "portletDefineObjectProperty",
-			checkedFileNames, includeFileNames, _contentsMap);
+			checkedFileNames, includeFileNames, _contentsMap, false);
 	}
 
 	private boolean _hasUnusedVariable(
@@ -228,6 +228,16 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 			return false;
 		}
 
+		boolean print = false;
+
+		if (variableName.equals("mailManager") &&
+			fileName.endsWith("password_prompt.jsp")) {
+
+			System.out.println("CONTENTSMAP.SIZE: " + _contentsMap.size());
+
+			print = true;
+		}
+
 		StringBundler sb = new StringBundler(6);
 
 		sb.append("((/)|(\\*)|(\\+(\\+)?)|(-(-)?)|\\(|=)?( )?");
@@ -239,7 +249,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 
 		return _hasUnusedJSPTerm(
 			fileName, sb.toString(), "variable", checkedFileNames,
-			includeFileNames, _contentsMap);
+			includeFileNames, _contentsMap, print);
 	}
 
 	private boolean _isJSPDuplicateImport(
@@ -291,7 +301,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 		String fileName, String regex, String type,
 		Set<String> checkedForUnusedJSPTerm,
 		Set<String> checkedForIncludesFileNames, Set<String> includeFileNames,
-		Map<String, String> contentsMap) {
+		Map<String, String> contentsMap, boolean print) {
 
 		if (checkedForUnusedJSPTerm.contains(fileName)) {
 			return false;
@@ -317,12 +327,35 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 		}
 
 		if (!checkedForIncludesFileNames.contains(fileName)) {
-			includeFileNames.addAll(
-				JSPSourceUtil.getJSPIncludeFileNames(
-					fileName, includeFileNames, contentsMap));
-			includeFileNames.addAll(
-				JSPSourceUtil.getJSPReferenceFileNames(
-					fileName, includeFileNames, contentsMap));
+			if (print) {
+				System.out.println("____________" + fileName + "____________");
+			}
+
+			Set<String> set1 = JSPSourceUtil.getJSPIncludeFileNames(
+				fileName, includeFileNames, contentsMap);
+
+			if (print) {
+				for (String s : set1) {
+					if (!includeFileNames.contains(s)) {
+						System.out.println("INCLUDE: " + s);
+					}
+				}
+			}
+
+			includeFileNames.addAll(set1);
+
+			Set<String> set2 = JSPSourceUtil.getJSPReferenceFileNames(
+				fileName, includeFileNames, contentsMap);
+
+			if (print) {
+				for (String s : set2) {
+					if (!includeFileNames.contains(s)) {
+						System.out.println("REFERENCE: " + s);
+					}
+				}
+			}
+
+			includeFileNames.addAll(set2);
 		}
 
 		checkedForIncludesFileNames.add(fileName);
@@ -334,8 +367,8 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 			if (!checkedForUnusedJSPTerm.contains(includeFileName) &&
 				_isJSPTermRequired(
 					includeFileName, regex, type, checkedForUnusedJSPTerm,
-					checkedForIncludesFileNames, includeFileNames,
-					contentsMap)) {
+					checkedForIncludesFileNames, includeFileNames, contentsMap,
+					print)) {
 
 				return true;
 			}
@@ -433,7 +466,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 
 			if (_hasUnusedJSPTerm(
 					fileName, regex, "taglib", checkedFileNames,
-					includeFileNames, _contentsMap)) {
+					includeFileNames, _contentsMap, false)) {
 
 				return StringUtil.removeSubstring(content, matcher.group());
 			}

@@ -4,8 +4,8 @@
 		<#assign preferences = freeMarkerPortletPreferences.getPreferences("portletSetupPortletDecoratorId", "barebone") />
 
 		<@liferay_portlet["runtime"]
-		defaultPreferences=preferences
-		portletName="com_liferay_login_web_portlet_LoginPortlet"
+			defaultPreferences=preferences
+			portletName="com_liferay_login_web_portlet_LoginPortlet"
 		/>
 	</div>
 

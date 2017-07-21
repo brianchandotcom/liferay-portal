@@ -7,6 +7,7 @@
 				</th>
 			</tr>
 		</thead>
+
 		<tbody>
 			<tr>
 				<td>Product 1</td>

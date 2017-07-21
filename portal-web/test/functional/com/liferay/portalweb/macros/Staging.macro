@@ -1013,9 +1013,9 @@
 
 	<command name="viewHistoryVersionPG">
 		<if>
-			<condition function="IsElementPresent" locator1="Icon#HISTORY_VERTICAL_ELLIPSIS" />
+			<condition function="IsElementPresent" locator1="Icon#STAGING_BAR_VERTICAL_ELLIPSIS" />
 			<then>
-				<execute function="Click" locator1="Icon#HISTORY_VERTICAL_ELLIPSIS" />
+				<execute function="Click" locator1="Icon#STAGING_BAR_VERTICAL_ELLIPSIS" />
 
 				<execute function="Click" locator1="Staging#HISTORY_BUTTON" />
 

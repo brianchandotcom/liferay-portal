@@ -94,12 +94,12 @@ public class PoshiElementFactoryTest {
 
 		Element rootElement = document.getRootElement();
 
-		_removeWhiteSpace(rootElement);
+		_removeWhiteSpaceTextNodes(rootElement);
 
 		return rootElement;
 	}
 
-	private static void _removeWhiteSpace(Element element) {
+	private static void _removeWhiteSpaceTextNodes(Element element) {
 		for (Node node : Dom4JUtil.toNodeList(element.content())) {
 			if (node instanceof Text) {
 				String nodeText = node.getText();
@@ -115,7 +115,7 @@ public class PoshiElementFactoryTest {
 		for (Element childElement :
 				Dom4JUtil.toElementList(element.elements())) {
 
-			_removeWhiteSpace(childElement);
+			_removeWhiteSpaceTextNodes(childElement);
 		}
 	}
 

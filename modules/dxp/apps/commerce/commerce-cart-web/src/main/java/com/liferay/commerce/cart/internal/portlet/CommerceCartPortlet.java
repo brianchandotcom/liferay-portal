@@ -53,15 +53,15 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.render-weight=50",
 		"com.liferay.portlet.scopeable=true", "javax.portlet.display-name=Cart",
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.init-param.view-template=/cart_admin/view.jsp",
-		"javax.portlet.name=" + CommerceCartPortletKeys.COMMERCE_CART_ADMIN,
+		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + CommerceCartPortletKeys.COMMERCE_CART,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},
-	service = {CommerceCartAdminPortlet.class, Portlet.class}
+	service = {CommerceCartPortlet.class, Portlet.class}
 )
-public class CommerceCartAdminPortlet extends MVCPortlet {
+public class CommerceCartPortlet extends MVCPortlet {
 
 	@Override
 	public void render(

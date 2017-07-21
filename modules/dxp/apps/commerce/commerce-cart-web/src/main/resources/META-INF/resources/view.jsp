@@ -35,9 +35,9 @@ portletURL.setParameter("searchContainerId", "commerceCarts");
 request.setAttribute("view.jsp-portletURL", portletURL);
 %>
 
-<%@ include file="/cart_admin/navbar.jspf" %>
+<%@ include file="/navbar.jspf" %>
 
-<liferay-util:include page="/cart_admin/toolbar.jsp" servletContext="<%= application %>">
+<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="searchContainerId" value="commerceCarts" />
 	<liferay-util:param name="type" value="<%= String.valueOf(type) %>" />
 </liferay-util:include>
@@ -55,7 +55,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				resourceURL="<%= sidebarPanelURL %>"
 				searchContainerId="commerceCarts"
 			>
-				<liferay-util:include page="/cart_admin/cart_info_panel.jsp" servletContext="<%= application %>" />
+				<liferay-util:include page="/cart_info_panel.jsp" servletContext="<%= application %>" />
 			</liferay-frontend:sidebar-panel>
 		</c:if>
 

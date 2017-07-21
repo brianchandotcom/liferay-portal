@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CommerceCartPortletKeys.COMMERCE_CART_ADMIN,
+		"javax.portlet.name=" + CommerceCartPortletKeys.COMMERCE_CART,
 		"mvc.command.name=commerceCartInfoPanel"
 	},
 	service = MVCResourceCommand.class
@@ -53,9 +53,7 @@ public class CommerceCartInfoPanelMVCResourceCommand
 		resourceRequest.setAttribute(
 			CommerceCartWebKeys.COMMERCE_CARTS, commerceCarts);
 
-		include(
-			resourceRequest, resourceResponse,
-			"/cart_admin/cart_info_panel.jsp");
+		include(resourceRequest, resourceResponse, "/cart_info_panel.jsp");
 	}
 
 	@Reference

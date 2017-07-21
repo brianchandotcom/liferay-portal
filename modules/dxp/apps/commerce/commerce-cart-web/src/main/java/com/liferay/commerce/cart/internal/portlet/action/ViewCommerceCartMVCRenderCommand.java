@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CommerceCartPortletKeys.COMMERCE_CART_ADMIN,
+		"javax.portlet.name=" + CommerceCartPortletKeys.COMMERCE_CART,
 		"mvc.command.name=viewCartItems"
 	},
 	service = MVCRenderCommand.class
@@ -68,7 +68,7 @@ public class ViewCommerceCartMVCRenderCommand implements MVCRenderCommand {
 			SessionErrors.add(renderRequest, pe.getClass());
 		}
 
-		return "/cart_admin/view_cart_items.jsp";
+		return "/view_cart_items.jsp";
 	}
 
 	@Reference

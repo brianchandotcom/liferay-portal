@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CommerceCartPortletKeys.COMMERCE_CART_ADMIN,
+		"javax.portlet.name=" + CommerceCartPortletKeys.COMMERCE_CART,
 		"mvc.command.name=editCommerceCartItems"
 	},
 	service = MVCActionCommand.class

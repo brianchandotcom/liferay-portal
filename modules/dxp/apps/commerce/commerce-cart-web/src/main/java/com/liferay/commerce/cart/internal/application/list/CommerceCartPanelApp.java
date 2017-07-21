@@ -38,12 +38,12 @@ public class CommerceCartPanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {
-		return CommerceCartPortletKeys.COMMERCE_CART_ADMIN;
+		return CommerceCartPortletKeys.COMMERCE_CART;
 	}
 
 	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + CommerceCartPortletKeys.COMMERCE_CART_ADMIN + ")",
+		target = "(javax.portlet.name=" + CommerceCartPortletKeys.COMMERCE_CART + ")",
 		unbind = "-"
 	)
 	public void setPortlet(Portlet portlet) {

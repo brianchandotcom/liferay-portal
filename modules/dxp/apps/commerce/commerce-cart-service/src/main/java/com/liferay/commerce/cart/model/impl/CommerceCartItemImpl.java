@@ -29,6 +29,7 @@ public class CommerceCartItemImpl extends CommerceCartItemBaseImpl {
 	public CommerceCartItemImpl() {
 	}
 
+	@Override
 	public CPDefinition getCPDefinition() throws PortalException {
 		return CPDefinitionLocalServiceUtil.getCPDefinition(
 			getCPDefinitionId());

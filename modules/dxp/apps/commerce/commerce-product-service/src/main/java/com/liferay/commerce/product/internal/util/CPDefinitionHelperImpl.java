@@ -35,6 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true)
 public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 
+	@Override
 	public String getFriendlyURL(long cpDefinitionId, ThemeDisplay themeDisplay)
 		throws PortalException {
 

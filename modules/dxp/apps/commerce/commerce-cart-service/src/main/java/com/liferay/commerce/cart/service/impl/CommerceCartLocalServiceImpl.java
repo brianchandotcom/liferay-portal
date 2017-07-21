@@ -85,6 +85,7 @@ public class CommerceCartLocalServiceImpl
 		return commerceCartLocalService.deleteCommerceCart(commerceCart);
 	}
 
+	@Override
 	public CommerceCart fetchCommerceCart(long commerceCartId) {
 		return commerceCartPersistence.fetchByPrimaryKey(commerceCartId);
 	}

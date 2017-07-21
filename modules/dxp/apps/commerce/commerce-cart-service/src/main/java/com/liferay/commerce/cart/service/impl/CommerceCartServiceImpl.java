@@ -27,6 +27,7 @@ import java.util.List;
  */
 public class CommerceCartServiceImpl extends CommerceCartServiceBaseImpl {
 
+	@Override
 	public CommerceCart addCommerceCart(
 			String name, int type, ServiceContext serviceContext)
 		throws PortalException {
@@ -35,6 +36,7 @@ public class CommerceCartServiceImpl extends CommerceCartServiceBaseImpl {
 			name, type, serviceContext);
 	}
 
+	@Override
 	public CommerceCart fetchCommerceCart(long commerceCartId) {
 		return commerceCartLocalService.fetchCommerceCart(commerceCartId);
 	}

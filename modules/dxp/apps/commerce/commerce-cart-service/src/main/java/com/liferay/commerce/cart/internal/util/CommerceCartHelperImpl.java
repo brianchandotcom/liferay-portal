@@ -14,12 +14,14 @@
 
 package com.liferay.commerce.cart.internal.util;
 
+import com.liferay.commerce.cart.constants.CommerceCartConstants;
 import com.liferay.commerce.cart.constants.CommerceCartWebKeys;
 import com.liferay.commerce.cart.model.CommerceCart;
 import com.liferay.commerce.cart.service.CommerceCartService;
 import com.liferay.commerce.cart.util.CommerceCartHelper;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -37,6 +39,15 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class CommerceCartHelperImpl implements CommerceCartHelper {
+
+	@Override
+	public CommerceCart getCurrentCart(HttpServletRequest httpServletRequest) {
+		int type = ParamUtil.getInteger(
+			httpServletRequest, "type",
+			CommerceCartConstants.COMMERCE_CART_TYPE_CART);
+
+		return getCurrentCart(httpServletRequest, type);
+	}
 
 	@Override
 	public CommerceCart getCurrentCart(

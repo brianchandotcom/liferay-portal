@@ -27,6 +27,8 @@ import javax.servlet.http.HttpServletResponse;
 @ProviderType
 public interface CommerceCartHelper {
 
+	public CommerceCart getCurrentCart(HttpServletRequest httpServletRequest);
+
 	public CommerceCart getCurrentCart(
 		HttpServletRequest httpServletRequest, int type);
 

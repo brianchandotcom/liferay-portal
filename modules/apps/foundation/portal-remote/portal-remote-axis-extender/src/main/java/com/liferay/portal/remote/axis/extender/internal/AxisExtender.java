@@ -54,10 +54,8 @@ public class AxisExtender {
 
 	@Activate
 	protected void activate(ComponentContext componentContext) {
-		_bundleContext = componentContext.getBundleContext();
-
 		_bundleTracker = new BundleTracker<>(
-			_bundleContext, Bundle.ACTIVE,
+			componentContext.getBundleContext(), Bundle.ACTIVE,
 			new BundleRegistrationInfoBundleTrackerCustomizer());
 
 		_bundleTracker.open();
@@ -70,7 +68,6 @@ public class AxisExtender {
 
 	private static final Log _log = LogFactoryUtil.getLog(AxisExtender.class);
 
-	private BundleContext _bundleContext;
 	private BundleTracker<BundleRegistrationInfo> _bundleTracker;
 
 	private static class BundleRegistrationInfo {
@@ -138,9 +135,11 @@ public class AxisExtender {
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH,
 				"/" + bundle.getSymbolicName());
 
+			BundleContext bundleContext = bundle.getBundleContext();
+
 			ServiceRegistration<ServletContextHelper>
 				bundleServletContextHelperServiceRegistration =
-					_bundleContext.registerService(
+					bundleContext.registerService(
 						ServletContextHelper.class,
 						new ServletContextHelper(bundle) {
 
@@ -171,7 +170,7 @@ public class AxisExtender {
 				"/api/axis/*");
 
 			ServiceRegistration<Filter> authVerifierFilterServiceRegistration =
-				_bundleContext.registerService(
+				bundleContext.registerService(
 					Filter.class, new AuthVerifierFilter(), properties);
 
 			properties = new Hashtable<>();
@@ -188,7 +187,7 @@ public class AxisExtender {
 			properties.put("servlet.init.axis.servicesPath", "/api/axis/");
 			properties.put("servlet.init.httpMethods", "GET,POST,HEAD");
 
-			Bundle bundleContextBundle = _bundleContext.getBundle();
+			Bundle bundleContextBundle = bundleContext.getBundle();
 
 			BundleWiring bundleContextBundleBundleWiring =
 				bundleContextBundle.adapt(BundleWiring.class);
@@ -207,7 +206,7 @@ public class AxisExtender {
 					new AxisServlet(), aggregateClassLoader));
 
 			ServiceRegistration<Servlet> axisServletServiceRegistration =
-				_bundleContext.registerService(
+				bundleContext.registerService(
 					Servlet.class, servlet, properties);
 
 			return new BundleRegistrationInfo(
@@ -220,10 +219,6 @@ public class AxisExtender {
 		public void modifiedBundle(
 			Bundle bundle, BundleEvent bundleEvent,
 			BundleRegistrationInfo bundleRegistrationInfo) {
-
-			removedBundle(bundle, bundleEvent, bundleRegistrationInfo);
-
-			addingBundle(bundle, bundleEvent);
 		}
 
 		@Override

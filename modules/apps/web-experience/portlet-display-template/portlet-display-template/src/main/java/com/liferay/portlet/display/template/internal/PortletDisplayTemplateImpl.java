@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -441,14 +442,12 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 				resourceResponse);
 		}
 
-		if ((renderRequest != null) && (renderResponse != null)) {
-			PortletURL currentURL = PortletURLUtil.getCurrent(
-				portletRequest, renderResponse);
+		PortletURL currentURL = PortletURLUtil.getCurrent(
+			_portal.getLiferayPortletRequest(portletRequest),
+			_portal.getLiferayPortletResponse(renderResponse));
 
-			contextObjects.put(
-				PortletDisplayTemplateConstants.CURRENT_URL,
-				currentURL.toString());
-		}
+		contextObjects.put(
+			PortletDisplayTemplateConstants.CURRENT_URL, currentURL.toString());
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -520,18 +519,6 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 			request, response, ddmTemplate, entries, contextObjects);
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMTemplateLocalService(
-		DDMTemplateLocalService ddmTemplateLocalService) {
-
-		_ddmTemplateLocalService = ddmTemplateLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
 	private Map<String, Object> _mergePortletPreferences(
 		PortletRequest portletRequest, Map<String, Object> contextObjects) {
 
@@ -568,8 +555,14 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletDisplayTemplateImpl.class);
 
+	@Reference
 	private DDMTemplateLocalService _ddmTemplateLocalService;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	private static class TransformerHolder {
 

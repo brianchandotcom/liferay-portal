@@ -71,6 +71,8 @@ public class InitBundleCommand extends BaseCommand implements StreamLogger {
 		else if (_token) {
 			String tokenContent = FileUtil.read(_tokenFile);
 
+			tokenContent = tokenContent.trim();
+
 			path = HttpUtil.downloadFile(uri, tokenContent, cacheDirPath, this);
 		}
 		else {

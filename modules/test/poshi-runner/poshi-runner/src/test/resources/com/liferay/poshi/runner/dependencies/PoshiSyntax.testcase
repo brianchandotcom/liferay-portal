@@ -94,6 +94,8 @@ document.getElementById('demo').innerHTML = 'FAIL';
 
 		<execute function="Click" locator1="Home#PAGE" />
 
+		<execute function="Refresh" />
+
 		<execute function="Type" value1="Welcome" />
 
 		<execute function="AssertElementPresent#assertElementPresent" locator1="Home#PAGE" value1="Welcome" />

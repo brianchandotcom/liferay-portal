@@ -87,6 +87,8 @@ document.getElementById('demo').innerHTML = 'FAIL';
 
 		Click(locator1 = "Home#PAGE");
 
+		Refresh();
+
 		Type(value1 = "Welcome");
 
 		AssertElementPresent.assertElementPresent(locator1 = "Home#PAGE", value1 = "Welcome");

@@ -1,28 +1,24 @@
 #footer {
-	background-color: $background-color-2;
-	color: $content-color-2;
-	padding-top: 16px;
+	background-color: $brand-color-extra-light;
+	color: $brand-color;
+	padding: 55px 0;
 
-	.portlet-body a {
-		color: $brand-color;
+	a {
+		color: $brand-color-dark;
 	}
 
-	#footer-brand img {
-		@include sm {
-			margin-bottom: 28px;
+	h2 {
+		font-size: 16px;
+		text-transform: uppercase;
+	}
+
+	.nav-pills > li.active > {
+		a, a:hover, a:focus {
+			background-color: transparent;
 		}
 	}
 
-	@include sm {
-		padding: 44px 0;
-	}
-
-	.navbar-nav {
-		margin-left: 0;
-		margin-right: 0;
-
-		> li {
-			float: none;
-		}
+	span[class^="icon-"] {
+		padding: 10px;
 	}
 }

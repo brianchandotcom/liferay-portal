@@ -1,7 +1,9 @@
 <#assign
 	portlet_display = portletDisplay
+
 	portlet_back_url = htmlUtil.escapeHREF(portlet_display.getURLBack())
 	portlet_content_css_class = "portlet-content"
+	portlet_decorator_name = portlet_display.getPortletDecoratorId()
 	portlet_display_name = htmlUtil.escape(portlet_display.getPortletDisplayName())
 	portlet_display_root_portlet_id = htmlUtil.escapeAttribute(portlet_display.getRootPortletId())
 	portlet_id = htmlUtil.escapeAttribute(portlet_display.getId())
@@ -43,13 +45,23 @@
 	</#if>
 
 	<div class="${portlet_content_css_class}">
+		<#if stringUtil.equals(portlet_display.getPortletDecoratorId(), "trending")>
+			<div class="user-icon user-icon-porygon user-icon-xl">
+				<svg class="lexicon-icon">
+					<use xlink:href="${themeDisplay.getPathThemeImages()}/lexicon/icons.svg#star" />
+				</svg>
+			</div>
+		</#if>
+
 		<#if portlet_display.isShowBackIcon()>
 			<a class="icon-monospaced portlet-icon-back text-default" href="${portlet_back_url}" title="<@liferay.language key="return-to-full-page" />">
 				<span class="icon-angle-left"></span>
 			</a>
 		</#if>
 
-		<#if portlet_display.getPortletDecoratorId() != "barebone">
+		<#if stringUtil.equals(portlet_decorator_name, "trending")>
+			<div class="text-center"><h2 class="portlet-title-text">${portlet_title}</h2></div>
+		<#elseif !stringUtil.equals(portlet_decorator_name, "barebone")>
 			<h2 class="portlet-title-text">${portlet_title}</h2>
 		</#if>
 

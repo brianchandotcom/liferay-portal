@@ -1,8 +1,10 @@
-$brand-color: #FFF;
+$brand-color: #9A8468;
+$brand-color-dark: #6B6157;
+$brand-color-light: #FAF9F7;
+$brand-color-extra-light: #F5F7F8;
+$brand-dark: #3F3F3F;
 
-$background-color-1: $brand-color;
-$background-color-2: #FAF9FE;
-$background-color-3: #FFF;
+$brand-text-color: $brand-dark;
 
-$content-color-1: #FFF;
-$content-color-2: #9A8468;
+$bg-color-main: $brand-color-extra-light;
+$bg-color-secondary: $brand-color-light;

@@ -1,5 +1,4 @@
 {
-	"author": "Marco Leo <marco.leo@liferay.com> (https://github.com/marco-leo)",
 	"dependencies": {
 		"metal": "^2.2.0",
 		"metal-dom": "^2.4.0",
@@ -17,7 +16,9 @@
 	"liferayTheme": {
 		"baseTheme": "styled",
 		"distName": "commerce-theme-lotus",
-		"hookModules": ["liferay-theme-es2015-hook"],
+		"hookModules": [
+			"liferay-theme-es2015-hook"
+		],
 		"rubySass": false,
 		"version": "7.0"
 	},

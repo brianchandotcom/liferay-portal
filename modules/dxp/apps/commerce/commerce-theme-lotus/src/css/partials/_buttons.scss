@@ -1,31 +1,15 @@
-.btn-xl {
-	font-size: $font-size-base;
-	font-weight: normal;
-	padding: $button-padding;
+.btn {
+	border-radius: 0;
 	text-transform: uppercase;
 }
 
-.btn-theme-default {
-	background-color: $background-color-1;
-	border-color: $background-color-1;
-	color: $background-color-3;
-
-	&:active, &:hover, &:focus {
-		background-color: darken($background-color-1, 10);
-		border-color: darken($background-color-1, 10);
-		color: darken($background-color-3, 10);
-		text-decoration: none;
-	}
+.btn-default {
+	border-color: $brand-color;
+	color: $brand-color;
 }
 
-.btn-theme-primary {
-	background-color: transparent;
-	border-color: $content-color-1;
-
-	&:active, &:hover, &:focus {
-		background-color: darken($background-color-1, 10);
-		border-color: darken($background-color-1, 10);
-		color: $content-color-1;
-		text-decoration: none;
-	}
+.btn-primary {
+	background-color: $brand-color;
+	border-color: $brand-color;
+	color: #FFF;
 }

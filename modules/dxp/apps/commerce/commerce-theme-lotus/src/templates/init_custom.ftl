@@ -1,39 +1,8 @@
-<#assign
-	floatingHeader = getterUtil.getBoolean(themeDisplay.getThemeSetting("floating-header"))
-	fullScreenNavigation = getterUtil.getBoolean(themeDisplay.getThemeSetting("full-screen-navigation"))
-	siteLogoRetina = getterUtil.getBoolean(themeDisplay.getThemeSetting("site-logo-retina"))
-/>
+<#assign demo_mode = getterUtil.getBoolean(themeDisplay.getThemeSetting("demo-mode")) />
 
-<#if floatingHeader>
-	<#assign css_class = css_class + " floating-header" />
-</#if>
-
-<#if fullScreenNavigation>
-	<#assign
-		css_class = css_class + " full-screen-navigation"
-		nav_collapse = ""
-		nav_css_right = ""
-	/>
-
-<#else>
-	<#assign
-		nav_css_right = "navbar-right"
-		nav_collapse = "navbar-collapse"
-	/>
-</#if>
-
-<#if siteLogoRetina>
-	<#assign company_logo_height = company_logo_height/2 />
-	<#assign company_logo_width = company_logo_width/2 />
-</#if>
-
-<#assign footer_content_id = getterUtil.getLong(theme_settings["footer-web-content-id"]!"", 0) />
-
-<#macro commerce_category_navigation_menu
-	default_preferences = ""
->
-	<@liferay_portlet["runtime"]
-		defaultPreferences=default_preferences
-		portletName="com_liferay_commerce_product_asset_category_navigation_web_internal_portlet_CPAssetCategoryNavigationPortlet"
-	/>
+ <#macro commerce_category_navigation_menu default_preferences = "">
+    <@liferay_portlet["runtime"]
+        defaultPreferences=default_preferences
+        portletName="com_liferay_commerce_product_asset_category_navigation_web_internal_portlet_CPAssetCategoryNavigationPortlet"
+    />
 </#macro>

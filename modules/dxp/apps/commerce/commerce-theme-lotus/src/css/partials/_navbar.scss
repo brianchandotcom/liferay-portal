@@ -1,9 +1,85 @@
 #navigation {
-	position: relative;
+	@include sm {
+		margin-left: 105px;
+	}
+
+	.portlet-topper {
+		left: auto;
+		right: auto;
+		z-index: 1035;
+	}
+
+	.portlet {
+		margin: 0;
+		position: static;
+
+		&:hover, &.focus {
+			z-index: 1035;
+		}
+	}
+
+	.dropdown-menu {
+		@include sm {
+			border-width: 0;
+			box-shadow: none;
+			top: 94%;
+		}
+	}
+}
+
+.user-avatar-image {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.user-full-name {
+	display: inline-block;
+
+	@include sm {
+		display: none;
+	}
+}
+
+.navbar-ecommerce {
+	border-bottom: 1px solid $brand-color;
+	min-height: 98px;
+	padding: 17px 16px;
+
+	.navbar-blank {
+		a, .link-list a {
+			color: $brand-text-color;
+			font-size: 14px;
+			font-weight: 200;
+
+			&:focus, &:hover {
+				background-color: transparent;
+				color: $brand-color;
+			}
+		}
+
+		& > li:hover > a:after {
+			background: $brand-color;
+			content: '';
+			height: 3px;
+
+			@include position(absolute, null 15px 12px 15px);
+		}
+
+		.dropdown-header, .dropdown-toggle {
+			color: $brand-text-color;
+			text-transform: uppercase;
+		}
+	}
+
+	.portlet-user-personal-bar {
+		@include sm {
+			padding: 16px;
+		}
+	}
 }
 
 #banner {
-	background-color: $background-color-1;
+	position: relative;
 
 	.portlet-content {
 		padding: 0;
@@ -11,9 +87,10 @@
 
 	.navbar {
 		margin-bottom: 0;
+		position: static;
 
 		.custom-logo {
-			color: $content-color-2;
+			color: $brand-dark;
 			line-height: 28px;
 
 			.site-name {
@@ -22,158 +99,63 @@
 		}
 	}
 
-	.delete-tab {
-		color: $content-color-1;
-	}
-
 	.navbar-nav {
+		@media (max-width: $grid-float-breakpoint-max) {
+			margin: 5.75px 0;
+		}
+
 		> li {
+			position: static;
+
 			> a {
-				color: $content-color-1;
-				text-shadow: 1px 1px 1px #000;
-				text-transform: uppercase;
+				color: $brand-dark;
 			}
 		}
 	}
 
-	a.logo {
-		color: $content-color-2;
-		margin: 10px 0;
-
-		img {
-			height: 50%;
-			max-width: 50%;
-
-			@include sm {
-				height: 100%;
-				max-width: 100%;
-			}
-		}
+	.default-logo img {
+		max-height: 68px;
 	}
 }
 
-.floating-header {
-	#banner {
-		background-color: transparent;
+.position-anchored {
+	@include sm {
+		z-index: 1050;
 
-		@include sm {
-			left: 0;
-			position: absolute;
-			right: 0;
-			z-index: 1;
-		}
+		@include position(absolute, 60px 0 null null);
 	}
 
-	&.open #banner {
-		@include sm {
-			left: 320px;
-		}
-	}
-
-	&.sidenav-transition #banner {
-		@include transition(left 0.5s ease);
-	}
-
-	&.has-control-menu {
-		#banner:hover {
-			z-index: 1035;
-		}
+	@media (max-width: $grid-float-breakpoint-max) {
+		display: block;
+		height: auto;
 	}
 }
 
-.full-screen-navigation {
-	&.main-nav-opened {
-		overflow: hidden;
-
-		#banner .navbar-toggle {
-			z-index: 953;
-		}
+#collapseSearch {
+	.field-wrapper {
+		display: none;
 	}
 
-	#banner {
-		@include sm {
-			.navbar-header {
-				margin-top: 8px;
-			}
+	.input-text-wrapper, .portlet {
+		margin-bottom: 0;
+	}
+}
 
-			.logo {
-				margin-top: 9px;
-			}
-		}
-
-		.navbar-toggle {
-			display: block;
-			position: relative;
-		}
-
-		.lfr-nav-child-toggle, .child-menu {
-			display: none;
-		}
-
-		.navbar {
-			margin-bottom: 0;
-
-			.collapse {
-				background-color: $background-color-1;
-
-				&.in {
-					bottom: 0;
-					left: 0;
-					position: fixed;
-					right: 0;
-					top: 0;
-					z-index: 952;
-				}
-			}
-		}
-
-		.navbar-header, .navbar-left, .navbar-right {
-			float: none;
-		}
-
-		.navbar-nav {
-			float: none;
-			margin-right: 0;
-
-			> li {
-				float: none;
-				text-align: center;
-
-				> a {
-					display: block;
-					font-size: 34px;
-					padding: 30px 15px;
-
-					@include sm {
-						font-size: 54px;
-					}
-				}
-			}
-		}
+.navbar-recursive {
+	.lexicon-icon {
+		@include size(25px, 25px);
 	}
 
-	#navigationCollapse {
-		&.in, &.collapsing {
-			bottom: 0;
-			height: auto;
-			left: 0;
-			overflow: auto;
-			position: fixed;
-			right: 0;
-			top: 0;
-			z-index: 952;
+	.lexicon-icon-search {
+		display: none;
+	}
 
-			#navigation {
-				left: 0;
-				position: absolute;
-				right: 0;
-				top: 50%;
-
-				@include transform(translateY(-50%));
-			}
+	.collapsed {
+		.lexicon-icon-search {
+			display: inline-block;
 		}
 
-		&.collapsing {
+		.lexicon-icon-times {
 			display: none;
 		}
 	}
@@ -181,29 +163,21 @@
 
 .navbar-toggle {
 	.icon-bar {
-		background-color: $content-color-1;
+		background-color: $brand-dark;
 
-		@include transform(rotate(0));
 		@include transition(all 0.2s ease-in-out);
 	}
 
 	&[aria-expanded="true"] {
 		.icon-bar {
-			left: 2px;
 			position: relative;
 
 			&:first-child {
-				top: -2px;
-
-				@include transform(rotate(45deg));
-				@include transform-origin(10% 10%);
+				top: 4;
 			}
 
 			&:last-child {
-				bottom: -2px;
-
-				@include transform(rotate(-45deg));
-				@include transform-origin(10% 90%);
+				bottom: -4px;
 			}
 		}
 	}

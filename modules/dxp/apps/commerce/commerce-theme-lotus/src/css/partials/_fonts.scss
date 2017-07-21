@@ -1,11 +1,3 @@
-@include font-face("Montserrat_Light", "../fonts/Montserrat-Light", normal);
-@include font-face("Montserrat_Regular", "../fonts/Montserrat-Regular", normal);
-@include font-face("Montserrat_SemiBold", "../fonts/Montserrat-SemiBold", normal);
-
-#wrapper {
-	font-family: "Montserrat_Light", Helvetica, Arial, sans-serif;
-}
-
-.portlet-topper {
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
+@include font-face("Montserrat", "../fonts/montserrat-latin-200", lighter, 200);
+@include font-face("Montserrat", "../fonts/montserrat-latin-400", normal);
+@include font-face("Montserrat", "../fonts/montserrat-latin-600", bold, 600);

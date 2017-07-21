@@ -1,0 +1,13 @@
+.card {
+	box-shadow: none;
+	color: $brand-text-color;
+	text-align: center;
+
+	a {
+		color: $brand-text-color;
+	}
+
+	&.active {
+		border: 3px solid $brand-color-dark;
+	}
+}

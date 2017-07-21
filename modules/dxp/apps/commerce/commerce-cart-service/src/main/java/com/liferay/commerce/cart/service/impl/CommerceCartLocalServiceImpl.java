@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.util.List;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Marco Leo
  */
 public class CommerceCartLocalServiceImpl
 	extends CommerceCartLocalServiceBaseImpl {
@@ -79,6 +79,10 @@ public class CommerceCartLocalServiceImpl
 		return commerceCart;
 	}
 
+	public CommerceCart fetchCommerceCart(long commerceCartId){
+		return commerceCartPersistence.fetchByPrimaryKey(commerceCartId);
+	}
+
 	@Override
 	public CommerceCart deleteCommerceCart(long commerceCartId)
 		throws PortalException {
@@ -90,38 +94,21 @@ public class CommerceCartLocalServiceImpl
 	}
 
 	@Override
-	public CommerceCart fetchCommerceCart(long groupId, long userId, int type) {
-		return commerceCartPersistence.fetchByG_U_T(groupId, userId, type);
+	public List<CommerceCart> findCommerceCarts(long groupId, long userId, int type) {
+		return commerceCartPersistence.findByG_U_T(groupId, userId, type);
 	}
 
 	@Override
 	public List<CommerceCart> getCommerceCarts(
-		int type, int start, int end,
+		long groupId, int type, int start, int end,
 		OrderByComparator<CommerceCart> orderByComparator) {
 
-		return commerceCartPersistence.findByType(
-			type, start, end, orderByComparator);
+		return commerceCartPersistence.findByG_T(
+			groupId, type, start, end, orderByComparator);
 	}
 
 	@Override
-	public int getCommerceCartsCount(int type) {
-		return commerceCartPersistence.countByType(type);
-	}
-
-	@Override
-	public CommerceCart getUserCurrentCommerceCart(
-			int type, ServiceContext serviceContext)
-		throws PortalException {
-
-		CommerceCart commerceCart = fetchCommerceCart(
-			serviceContext.getScopeGroupId(), serviceContext.getUserId(), type);
-
-		if (commerceCart != null) {
-			return commerceCart;
-		}
-
-		return addCommerceCart(
-			CommerceCartConstants.COMMERCE_CART_DEFAULT_TITLE, type,
-			serviceContext);
+	public int getCommerceCartsCount(long groupId, int type) {
+		return commerceCartPersistence.countByG_T(groupId, type);
 	}
 }

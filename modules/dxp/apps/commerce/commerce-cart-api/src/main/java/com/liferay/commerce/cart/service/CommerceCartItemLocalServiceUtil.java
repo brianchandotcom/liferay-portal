@@ -66,12 +66,12 @@ public class CommerceCartItemLocalServiceUtil {
 	/**
 	* Creates a new commerce cart item with the primary key. Does not add the commerce cart item to the database.
 	*
-	* @param CommerceCartItemId the primary key for the new commerce cart item
+	* @param commerceCartItemId the primary key for the new commerce cart item
 	* @return the new commerce cart item
 	*/
 	public static com.liferay.commerce.cart.model.CommerceCartItem createCommerceCartItem(
-		long CommerceCartItemId) {
-		return getService().createCommerceCartItem(CommerceCartItemId);
+		long commerceCartItemId) {
+		return getService().createCommerceCartItem(commerceCartItemId);
 	}
 
 	/**
@@ -90,32 +90,32 @@ public class CommerceCartItemLocalServiceUtil {
 	/**
 	* Deletes the commerce cart item with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param CommerceCartItemId the primary key of the commerce cart item
+	* @param commerceCartItemId the primary key of the commerce cart item
 	* @return the commerce cart item that was removed
 	* @throws PortalException if a commerce cart item with the primary key could not be found
 	*/
 	public static com.liferay.commerce.cart.model.CommerceCartItem deleteCommerceCartItem(
-		long CommerceCartItemId)
+		long commerceCartItemId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteCommerceCartItem(CommerceCartItemId);
+		return getService().deleteCommerceCartItem(commerceCartItemId);
 	}
 
 	public static com.liferay.commerce.cart.model.CommerceCartItem fetchCommerceCartItem(
-		long CommerceCartItemId) {
-		return getService().fetchCommerceCartItem(CommerceCartItemId);
+		long commerceCartItemId) {
+		return getService().fetchCommerceCartItem(commerceCartItemId);
 	}
 
 	/**
 	* Returns the commerce cart item with the primary key.
 	*
-	* @param CommerceCartItemId the primary key of the commerce cart item
+	* @param commerceCartItemId the primary key of the commerce cart item
 	* @return the commerce cart item
 	* @throws PortalException if a commerce cart item with the primary key could not be found
 	*/
 	public static com.liferay.commerce.cart.model.CommerceCartItem getCommerceCartItem(
-		long CommerceCartItemId)
+		long commerceCartItemId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCommerceCartItem(CommerceCartItemId);
+		return getService().getCommerceCartItem(commerceCartItemId);
 	}
 
 	/**

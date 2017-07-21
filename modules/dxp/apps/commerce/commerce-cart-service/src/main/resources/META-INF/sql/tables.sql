@@ -1,5 +1,5 @@
 create table CommerceCart (
-	CommerceCartId LONG not null primary key,
+	commerceCartId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -11,14 +11,14 @@ create table CommerceCart (
 );
 
 create table CommerceCartItem (
-	CommerceCartItemId LONG not null primary key,
+	commerceCartItemId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	CommerceCartId LONG,
+	commerceCartId LONG,
 	CPDefinitionId LONG,
 	CPInstanceId LONG,
 	quantity INTEGER,

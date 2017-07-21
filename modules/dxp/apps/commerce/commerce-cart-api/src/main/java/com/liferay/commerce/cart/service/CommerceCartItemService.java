@@ -55,7 +55,8 @@ public interface CommerceCartItemService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceCartItemServiceUtil} to access the commerce cart item remote service. Add custom service methods to {@link com.liferay.commerce.cart.service.impl.CommerceCartItemServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public CommerceCartItem deleteCommerceCartItem(long commerceCartItemId)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceCartItem getCommerceCartItem(long commerceCartItemId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -76,4 +77,7 @@ public interface CommerceCartItemService extends BaseService {
 	public List<CommerceCartItem> getCommerceCartItems(long commerceCartId,
 		int start, int end,
 		OrderByComparator<CommerceCartItem> orderByComparator);
+
+	public void deleteCommerceCartItem(long commerceCartItemId)
+		throws PortalException;
 }

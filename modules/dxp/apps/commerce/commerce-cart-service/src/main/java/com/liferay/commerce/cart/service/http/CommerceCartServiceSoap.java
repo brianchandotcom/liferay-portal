@@ -65,6 +65,35 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class CommerceCartServiceSoap {
+	public static com.liferay.commerce.cart.model.CommerceCartSoap addCommerceCart(
+		java.lang.String name, int type,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.cart.model.CommerceCart returnValue = CommerceCartServiceUtil.addCommerceCart(name,
+					type, serviceContext);
+
+			return com.liferay.commerce.cart.model.CommerceCartSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void deleteCommerceCart(long commerceCartId)
+		throws RemoteException {
+		try {
+			CommerceCartServiceUtil.deleteCommerceCart(commerceCartId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.cart.model.CommerceCartSoap fetchCommerceCart(
 		long commerceCartId) throws RemoteException {
 		try {
@@ -79,13 +108,10 @@ public class CommerceCartServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.cart.model.CommerceCartSoap addCommerceCart(
-		java.lang.String name, int type,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
+	public static com.liferay.commerce.cart.model.CommerceCartSoap getCommerceCart(
+		long commerceCartId) throws RemoteException {
 		try {
-			com.liferay.commerce.cart.model.CommerceCart returnValue = CommerceCartServiceUtil.addCommerceCart(name,
-					type, serviceContext);
+			com.liferay.commerce.cart.model.CommerceCart returnValue = CommerceCartServiceUtil.getCommerceCart(commerceCartId);
 
 			return com.liferay.commerce.cart.model.CommerceCartSoap.toSoapModel(returnValue);
 		}

@@ -53,6 +53,12 @@ public class CommerceCartServiceUtil {
 		return getService().fetchCommerceCart(commerceCartId);
 	}
 
+	public static com.liferay.commerce.cart.model.CommerceCart getCommerceCart(
+		long commerceCartId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCommerceCart(commerceCartId);
+	}
+
 	public static int getCommerceCartsCount(long groupId, int type) {
 		return getService().getCommerceCartsCount(groupId, type);
 	}
@@ -72,6 +78,11 @@ public class CommerceCartServiceUtil {
 		return getService()
 				   .getCommerceCarts(groupId, type, start, end,
 			orderByComparator);
+	}
+
+	public static void deleteCommerceCart(long commerceCartId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteCommerceCart(commerceCartId);
 	}
 
 	public static CommerceCartService getService() {

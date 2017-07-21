@@ -58,7 +58,7 @@ public class CommerceCartWrapper implements CommerceCart,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("CommerceCartId", getCommerceCartId());
+		attributes.put("commerceCartId", getCommerceCartId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -73,10 +73,10 @@ public class CommerceCartWrapper implements CommerceCart,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long CommerceCartId = (Long)attributes.get("CommerceCartId");
+		Long commerceCartId = (Long)attributes.get("commerceCartId");
 
-		if (CommerceCartId != null) {
-			setCommerceCartId(CommerceCartId);
+		if (commerceCartId != null) {
+			setCommerceCartId(commerceCartId);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -316,11 +316,11 @@ public class CommerceCartWrapper implements CommerceCart,
 	/**
 	* Sets the commerce cart ID of this commerce cart.
 	*
-	* @param CommerceCartId the commerce cart ID of this commerce cart
+	* @param commerceCartId the commerce cart ID of this commerce cart
 	*/
 	@Override
-	public void setCommerceCartId(long CommerceCartId) {
-		_commerceCart.setCommerceCartId(CommerceCartId);
+	public void setCommerceCartId(long commerceCartId) {
+		_commerceCart.setCommerceCartId(commerceCartId);
 	}
 
 	/**

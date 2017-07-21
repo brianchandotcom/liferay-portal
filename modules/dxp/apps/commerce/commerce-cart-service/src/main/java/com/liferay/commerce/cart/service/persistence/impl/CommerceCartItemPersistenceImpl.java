@@ -113,64 +113,64 @@ public class CommerceCartItemPersistenceImpl extends BasePersistenceImpl<Commerc
 			new String[] { Long.class.getName() });
 
 	/**
-	 * Returns all the commerce cart items where CommerceCartId = &#63;.
+	 * Returns all the commerce cart items where commerceCartId = &#63;.
 	 *
-	 * @param CommerceCartId the commerce cart ID
+	 * @param commerceCartId the commerce cart ID
 	 * @return the matching commerce cart items
 	 */
 	@Override
-	public List<CommerceCartItem> findByCommerceCartId(long CommerceCartId) {
-		return findByCommerceCartId(CommerceCartId, QueryUtil.ALL_POS,
+	public List<CommerceCartItem> findByCommerceCartId(long commerceCartId) {
+		return findByCommerceCartId(commerceCartId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the commerce cart items where CommerceCartId = &#63;.
+	 * Returns a range of all the commerce cart items where commerceCartId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCartItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param CommerceCartId the commerce cart ID
+	 * @param commerceCartId the commerce cart ID
 	 * @param start the lower bound of the range of commerce cart items
 	 * @param end the upper bound of the range of commerce cart items (not inclusive)
 	 * @return the range of matching commerce cart items
 	 */
 	@Override
-	public List<CommerceCartItem> findByCommerceCartId(long CommerceCartId,
+	public List<CommerceCartItem> findByCommerceCartId(long commerceCartId,
 		int start, int end) {
-		return findByCommerceCartId(CommerceCartId, start, end, null);
+		return findByCommerceCartId(commerceCartId, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the commerce cart items where CommerceCartId = &#63;.
+	 * Returns an ordered range of all the commerce cart items where commerceCartId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCartItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param CommerceCartId the commerce cart ID
+	 * @param commerceCartId the commerce cart ID
 	 * @param start the lower bound of the range of commerce cart items
 	 * @param end the upper bound of the range of commerce cart items (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching commerce cart items
 	 */
 	@Override
-	public List<CommerceCartItem> findByCommerceCartId(long CommerceCartId,
+	public List<CommerceCartItem> findByCommerceCartId(long commerceCartId,
 		int start, int end,
 		OrderByComparator<CommerceCartItem> orderByComparator) {
-		return findByCommerceCartId(CommerceCartId, start, end,
+		return findByCommerceCartId(commerceCartId, start, end,
 			orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the commerce cart items where CommerceCartId = &#63;.
+	 * Returns an ordered range of all the commerce cart items where commerceCartId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCartItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param CommerceCartId the commerce cart ID
+	 * @param commerceCartId the commerce cart ID
 	 * @param start the lower bound of the range of commerce cart items
 	 * @param end the upper bound of the range of commerce cart items (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -178,7 +178,7 @@ public class CommerceCartItemPersistenceImpl extends BasePersistenceImpl<Commerc
 	 * @return the ordered range of matching commerce cart items
 	 */
 	@Override
-	public List<CommerceCartItem> findByCommerceCartId(long CommerceCartId,
+	public List<CommerceCartItem> findByCommerceCartId(long commerceCartId,
 		int start, int end,
 		OrderByComparator<CommerceCartItem> orderByComparator,
 		boolean retrieveFromCache) {
@@ -190,12 +190,12 @@ public class CommerceCartItemPersistenceImpl extends BasePersistenceImpl<Commerc
 				(orderByComparator == null)) {
 			pagination = false;
 			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMMERCECARTID;
-			finderArgs = new Object[] { CommerceCartId };
+			finderArgs = new Object[] { commerceCartId };
 		}
 		else {
 			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_COMMERCECARTID;
 			finderArgs = new Object[] {
-					CommerceCartId,
+					commerceCartId,
 					
 					start, end, orderByComparator
 				};
@@ -209,7 +209,7 @@ public class CommerceCartItemPersistenceImpl extends BasePersistenceImpl<Commerc
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceCartItem commerceCartItem : list) {
-					if ((CommerceCartId != commerceCartItem.getCommerceCartId())) {
+					if ((commerceCartId != commerceCartItem.getCommerceCartId())) {
 						list = null;
 
 						break;
@@ -253,7 +253,7 @@ public class CommerceCartItemPersistenceImpl extends BasePersistenceImpl<Commerc
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(CommerceCartId);
+				qPos.add(commerceCartId);
 
 				if (!pagination) {
 					list = (List<CommerceCartItem>)QueryUtil.list(q,
@@ -286,18 +286,18 @@ public class CommerceCartItemPersistenceImpl extends BasePersistenceImpl<Commerc
 	}
 
 	/**
-	 * Returns the first commerce cart item in the ordered set where CommerceCartId = &#63;.
+	 * Returns the first commerce cart item in the ordered set where commerceCartId = &#63;.
 	 *
-	 * @param CommerceCartId the commerce cart ID
+	 * @param commerceCartId the commerce cart ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching commerce cart item
 	 * @throws NoSuchCartItemException if a matching commerce cart item could not be found
 	 */
 	@Override
-	public CommerceCartItem findByCommerceCartId_First(long CommerceCartId,
+	public CommerceCartItem findByCommerceCartId_First(long commerceCartId,
 		OrderByComparator<CommerceCartItem> orderByComparator)
 		throws NoSuchCartItemException {
-		CommerceCartItem commerceCartItem = fetchByCommerceCartId_First(CommerceCartId,
+		CommerceCartItem commerceCartItem = fetchByCommerceCartId_First(commerceCartId,
 				orderByComparator);
 
 		if (commerceCartItem != null) {
@@ -308,8 +308,8 @@ public class CommerceCartItemPersistenceImpl extends BasePersistenceImpl<Commerc
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("CommerceCartId=");
-		msg.append(CommerceCartId);
+		msg.append("commerceCartId=");
+		msg.append(commerceCartId);
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -317,16 +317,16 @@ public class CommerceCartItemPersistenceImpl extends BasePersistenceImpl<Commerc
 	}
 
 	/**
-	 * Returns the first commerce cart item in the ordered set where CommerceCartId = &#63;.
+	 * Returns the first commerce cart item in the ordered set where commerceCartId = &#63;.
 	 *
-	 * @param CommerceCartId the commerce cart ID
+	 * @param commerceCartId the commerce cart ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching commerce cart item, or <code>null</code> if a matching commerce cart item could not be found
 	 */
 	@Override
-	public CommerceCartItem fetchByCommerceCartId_First(long CommerceCartId,
+	public CommerceCartItem fetchByCommerceCartId_First(long commerceCartId,
 		OrderByComparator<CommerceCartItem> orderByComparator) {
-		List<CommerceCartItem> list = findByCommerceCartId(CommerceCartId, 0,
+		List<CommerceCartItem> list = findByCommerceCartId(commerceCartId, 0,
 				1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -337,18 +337,18 @@ public class CommerceCartItemPersistenceImpl extends BasePersistenceImpl<Commerc
 	}
 
 	/**
-	 * Returns the last commerce cart item in the ordered set where CommerceCartId = &#63;.
+	 * Returns the last commerce cart item in the ordered set where commerceCartId = &#63;.
 	 *
-	 * @param CommerceCartId the commerce cart ID
+	 * @param commerceCartId the commerce cart ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching commerce cart item
 	 * @throws NoSuchCartItemException if a matching commerce cart item could not be found
 	 */
 	@Override
-	public CommerceCartItem findByCommerceCartId_Last(long CommerceCartId,
+	public CommerceCartItem findByCommerceCartId_Last(long commerceCartId,
 		OrderByComparator<CommerceCartItem> orderByComparator)
 		throws NoSuchCartItemException {
-		CommerceCartItem commerceCartItem = fetchByCommerceCartId_Last(CommerceCartId,
+		CommerceCartItem commerceCartItem = fetchByCommerceCartId_Last(commerceCartId,
 				orderByComparator);
 
 		if (commerceCartItem != null) {
@@ -359,8 +359,8 @@ public class CommerceCartItemPersistenceImpl extends BasePersistenceImpl<Commerc
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("CommerceCartId=");
-		msg.append(CommerceCartId);
+		msg.append("commerceCartId=");
+		msg.append(commerceCartId);
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -368,22 +368,22 @@ public class CommerceCartItemPersistenceImpl extends BasePersistenceImpl<Commerc
 	}
 
 	/**
-	 * Returns the last commerce cart item in the ordered set where CommerceCartId = &#63;.
+	 * Returns the last commerce cart item in the ordered set where commerceCartId = &#63;.
 	 *
-	 * @param CommerceCartId the commerce cart ID
+	 * @param commerceCartId the commerce cart ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching commerce cart item, or <code>null</code> if a matching commerce cart item could not be found
 	 */
 	@Override
-	public CommerceCartItem fetchByCommerceCartId_Last(long CommerceCartId,
+	public CommerceCartItem fetchByCommerceCartId_Last(long commerceCartId,
 		OrderByComparator<CommerceCartItem> orderByComparator) {
-		int count = countByCommerceCartId(CommerceCartId);
+		int count = countByCommerceCartId(commerceCartId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CommerceCartItem> list = findByCommerceCartId(CommerceCartId,
+		List<CommerceCartItem> list = findByCommerceCartId(commerceCartId,
 				count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -394,20 +394,20 @@ public class CommerceCartItemPersistenceImpl extends BasePersistenceImpl<Commerc
 	}
 
 	/**
-	 * Returns the commerce cart items before and after the current commerce cart item in the ordered set where CommerceCartId = &#63;.
+	 * Returns the commerce cart items before and after the current commerce cart item in the ordered set where commerceCartId = &#63;.
 	 *
-	 * @param CommerceCartItemId the primary key of the current commerce cart item
-	 * @param CommerceCartId the commerce cart ID
+	 * @param commerceCartItemId the primary key of the current commerce cart item
+	 * @param commerceCartId the commerce cart ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next commerce cart item
 	 * @throws NoSuchCartItemException if a commerce cart item with the primary key could not be found
 	 */
 	@Override
 	public CommerceCartItem[] findByCommerceCartId_PrevAndNext(
-		long CommerceCartItemId, long CommerceCartId,
+		long commerceCartItemId, long commerceCartId,
 		OrderByComparator<CommerceCartItem> orderByComparator)
 		throws NoSuchCartItemException {
-		CommerceCartItem commerceCartItem = findByPrimaryKey(CommerceCartItemId);
+		CommerceCartItem commerceCartItem = findByPrimaryKey(commerceCartItemId);
 
 		Session session = null;
 
@@ -417,12 +417,12 @@ public class CommerceCartItemPersistenceImpl extends BasePersistenceImpl<Commerc
 			CommerceCartItem[] array = new CommerceCartItemImpl[3];
 
 			array[0] = getByCommerceCartId_PrevAndNext(session,
-					commerceCartItem, CommerceCartId, orderByComparator, true);
+					commerceCartItem, commerceCartId, orderByComparator, true);
 
 			array[1] = commerceCartItem;
 
 			array[2] = getByCommerceCartId_PrevAndNext(session,
-					commerceCartItem, CommerceCartId, orderByComparator, false);
+					commerceCartItem, commerceCartId, orderByComparator, false);
 
 			return array;
 		}
@@ -436,7 +436,7 @@ public class CommerceCartItemPersistenceImpl extends BasePersistenceImpl<Commerc
 
 	protected CommerceCartItem getByCommerceCartId_PrevAndNext(
 		Session session, CommerceCartItem commerceCartItem,
-		long CommerceCartId,
+		long commerceCartId,
 		OrderByComparator<CommerceCartItem> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
@@ -521,7 +521,7 @@ public class CommerceCartItemPersistenceImpl extends BasePersistenceImpl<Commerc
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		qPos.add(CommerceCartId);
+		qPos.add(commerceCartId);
 
 		if (orderByComparator != null) {
 			Object[] values = orderByComparator.getOrderByConditionValues(commerceCartItem);
@@ -542,29 +542,29 @@ public class CommerceCartItemPersistenceImpl extends BasePersistenceImpl<Commerc
 	}
 
 	/**
-	 * Removes all the commerce cart items where CommerceCartId = &#63; from the database.
+	 * Removes all the commerce cart items where commerceCartId = &#63; from the database.
 	 *
-	 * @param CommerceCartId the commerce cart ID
+	 * @param commerceCartId the commerce cart ID
 	 */
 	@Override
-	public void removeByCommerceCartId(long CommerceCartId) {
+	public void removeByCommerceCartId(long commerceCartId) {
 		for (CommerceCartItem commerceCartItem : findByCommerceCartId(
-				CommerceCartId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+				commerceCartId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(commerceCartItem);
 		}
 	}
 
 	/**
-	 * Returns the number of commerce cart items where CommerceCartId = &#63;.
+	 * Returns the number of commerce cart items where commerceCartId = &#63;.
 	 *
-	 * @param CommerceCartId the commerce cart ID
+	 * @param commerceCartId the commerce cart ID
 	 * @return the number of matching commerce cart items
 	 */
 	@Override
-	public int countByCommerceCartId(long CommerceCartId) {
+	public int countByCommerceCartId(long commerceCartId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_COMMERCECARTID;
 
-		Object[] finderArgs = new Object[] { CommerceCartId };
+		Object[] finderArgs = new Object[] { commerceCartId };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -586,7 +586,7 @@ public class CommerceCartItemPersistenceImpl extends BasePersistenceImpl<Commerc
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(CommerceCartId);
+				qPos.add(commerceCartId);
 
 				count = (Long)q.uniqueResult();
 
@@ -605,7 +605,7 @@ public class CommerceCartItemPersistenceImpl extends BasePersistenceImpl<Commerc
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_COMMERCECARTID_COMMERCECARTID_2 = "commerceCartItem.CommerceCartId = ?";
+	private static final String _FINDER_COLUMN_COMMERCECARTID_COMMERCECARTID_2 = "commerceCartItem.commerceCartId = ?";
 
 	public CommerceCartItemPersistenceImpl() {
 		setModelClass(CommerceCartItem.class);
@@ -691,15 +691,15 @@ public class CommerceCartItemPersistenceImpl extends BasePersistenceImpl<Commerc
 	/**
 	 * Creates a new commerce cart item with the primary key. Does not add the commerce cart item to the database.
 	 *
-	 * @param CommerceCartItemId the primary key for the new commerce cart item
+	 * @param commerceCartItemId the primary key for the new commerce cart item
 	 * @return the new commerce cart item
 	 */
 	@Override
-	public CommerceCartItem create(long CommerceCartItemId) {
+	public CommerceCartItem create(long commerceCartItemId) {
 		CommerceCartItem commerceCartItem = new CommerceCartItemImpl();
 
 		commerceCartItem.setNew(true);
-		commerceCartItem.setPrimaryKey(CommerceCartItemId);
+		commerceCartItem.setPrimaryKey(commerceCartItemId);
 
 		commerceCartItem.setCompanyId(companyProvider.getCompanyId());
 
@@ -709,14 +709,14 @@ public class CommerceCartItemPersistenceImpl extends BasePersistenceImpl<Commerc
 	/**
 	 * Removes the commerce cart item with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param CommerceCartItemId the primary key of the commerce cart item
+	 * @param commerceCartItemId the primary key of the commerce cart item
 	 * @return the commerce cart item that was removed
 	 * @throws NoSuchCartItemException if a commerce cart item with the primary key could not be found
 	 */
 	@Override
-	public CommerceCartItem remove(long CommerceCartItemId)
+	public CommerceCartItem remove(long commerceCartItemId)
 		throws NoSuchCartItemException {
-		return remove((Serializable)CommerceCartItemId);
+		return remove((Serializable)commerceCartItemId);
 	}
 
 	/**
@@ -949,14 +949,14 @@ public class CommerceCartItemPersistenceImpl extends BasePersistenceImpl<Commerc
 	/**
 	 * Returns the commerce cart item with the primary key or throws a {@link NoSuchCartItemException} if it could not be found.
 	 *
-	 * @param CommerceCartItemId the primary key of the commerce cart item
+	 * @param commerceCartItemId the primary key of the commerce cart item
 	 * @return the commerce cart item
 	 * @throws NoSuchCartItemException if a commerce cart item with the primary key could not be found
 	 */
 	@Override
-	public CommerceCartItem findByPrimaryKey(long CommerceCartItemId)
+	public CommerceCartItem findByPrimaryKey(long commerceCartItemId)
 		throws NoSuchCartItemException {
-		return findByPrimaryKey((Serializable)CommerceCartItemId);
+		return findByPrimaryKey((Serializable)commerceCartItemId);
 	}
 
 	/**
@@ -1010,12 +1010,12 @@ public class CommerceCartItemPersistenceImpl extends BasePersistenceImpl<Commerc
 	/**
 	 * Returns the commerce cart item with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param CommerceCartItemId the primary key of the commerce cart item
+	 * @param commerceCartItemId the primary key of the commerce cart item
 	 * @return the commerce cart item, or <code>null</code> if a commerce cart item with the primary key could not be found
 	 */
 	@Override
-	public CommerceCartItem fetchByPrimaryKey(long CommerceCartItemId) {
-		return fetchByPrimaryKey((Serializable)CommerceCartItemId);
+	public CommerceCartItem fetchByPrimaryKey(long commerceCartItemId) {
+		return fetchByPrimaryKey((Serializable)commerceCartItemId);
 	}
 
 	@Override
@@ -1328,7 +1328,7 @@ public class CommerceCartItemPersistenceImpl extends BasePersistenceImpl<Commerc
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_COMMERCECARTITEM = "SELECT commerceCartItem FROM CommerceCartItem commerceCartItem";
-	private static final String _SQL_SELECT_COMMERCECARTITEM_WHERE_PKS_IN = "SELECT commerceCartItem FROM CommerceCartItem commerceCartItem WHERE CommerceCartItemId IN (";
+	private static final String _SQL_SELECT_COMMERCECARTITEM_WHERE_PKS_IN = "SELECT commerceCartItem FROM CommerceCartItem commerceCartItem WHERE commerceCartItemId IN (";
 	private static final String _SQL_SELECT_COMMERCECARTITEM_WHERE = "SELECT commerceCartItem FROM CommerceCartItem commerceCartItem WHERE ";
 	private static final String _SQL_COUNT_COMMERCECARTITEM = "SELECT COUNT(commerceCartItem) FROM CommerceCartItem commerceCartItem";
 	private static final String _SQL_COUNT_COMMERCECARTITEM_WHERE = "SELECT COUNT(commerceCartItem) FROM CommerceCartItem commerceCartItem WHERE ";

@@ -34,10 +34,10 @@ public class CommerceCartItemServiceWrapper implements CommerceCartItemService,
 	}
 
 	@Override
-	public com.liferay.commerce.cart.model.CommerceCartItem deleteCommerceCartItem(
+	public com.liferay.commerce.cart.model.CommerceCartItem getCommerceCartItem(
 		long commerceCartItemId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceCartItemService.deleteCommerceCartItem(commerceCartItemId);
+		return _commerceCartItemService.getCommerceCartItem(commerceCartItemId);
 	}
 
 	@Override
@@ -68,6 +68,12 @@ public class CommerceCartItemServiceWrapper implements CommerceCartItemService,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.cart.model.CommerceCartItem> orderByComparator) {
 		return _commerceCartItemService.getCommerceCartItems(commerceCartId,
 			start, end, orderByComparator);
+	}
+
+	@Override
+	public void deleteCommerceCartItem(long commerceCartItemId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_commerceCartItemService.deleteCommerceCartItem(commerceCartItemId);
 	}
 
 	@Override

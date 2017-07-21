@@ -25,13 +25,11 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
-import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -79,10 +77,10 @@ public interface CommerceCartLocalService extends BaseLocalService,
 	/**
 	* Creates a new commerce cart with the primary key. Does not add the commerce cart to the database.
 	*
-	* @param CommerceCartId the primary key for the new commerce cart
+	* @param commerceCartId the primary key for the new commerce cart
 	* @return the new commerce cart
 	*/
-	public CommerceCart createCommerceCart(long CommerceCartId);
+	public CommerceCart createCommerceCart(long commerceCartId);
 
 	/**
 	* Deletes the commerce cart from the database. Also notifies the appropriate model listeners.
@@ -92,33 +90,32 @@ public interface CommerceCartLocalService extends BaseLocalService,
 	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
-	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CommerceCart deleteCommerceCart(CommerceCart commerceCart)
 		throws PortalException;
 
 	/**
 	* Deletes the commerce cart with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param CommerceCartId the primary key of the commerce cart
+	* @param commerceCartId the primary key of the commerce cart
 	* @return the commerce cart that was removed
 	* @throws PortalException if a commerce cart with the primary key could not be found
 	*/
 	@Indexable(type = IndexableType.DELETE)
-	public CommerceCart deleteCommerceCart(long CommerceCartId)
+	public CommerceCart deleteCommerceCart(long commerceCartId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceCart fetchCommerceCart(long CommerceCartId);
+	public CommerceCart fetchCommerceCart(long commerceCartId);
 
 	/**
 	* Returns the commerce cart with the primary key.
 	*
-	* @param CommerceCartId the primary key of the commerce cart
+	* @param commerceCartId the primary key of the commerce cart
 	* @return the commerce cart
 	* @throws PortalException if a commerce cart with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceCart getCommerceCart(long CommerceCartId)
+	public CommerceCart getCommerceCart(long commerceCartId)
 		throws PortalException;
 
 	/**
@@ -206,9 +203,6 @@ public interface CommerceCartLocalService extends BaseLocalService,
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
-
-	public List<CommerceCart> findCommerceCarts(long groupId, long userId,
-		int type);
 
 	/**
 	* Returns a range of all the commerce carts.

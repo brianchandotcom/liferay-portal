@@ -93,7 +93,7 @@ public class CommerceCartItemSoap implements Serializable {
 	}
 
 	public long getPrimaryKey() {
-		return _CommerceCartItemId;
+		return _commerceCartItemId;
 	}
 
 	public void setPrimaryKey(long pk) {
@@ -101,11 +101,11 @@ public class CommerceCartItemSoap implements Serializable {
 	}
 
 	public long getCommerceCartItemId() {
-		return _CommerceCartItemId;
+		return _commerceCartItemId;
 	}
 
-	public void setCommerceCartItemId(long CommerceCartItemId) {
-		_CommerceCartItemId = CommerceCartItemId;
+	public void setCommerceCartItemId(long commerceCartItemId) {
+		_commerceCartItemId = commerceCartItemId;
 	}
 
 	public long getGroupId() {
@@ -157,11 +157,11 @@ public class CommerceCartItemSoap implements Serializable {
 	}
 
 	public long getCommerceCartId() {
-		return _CommerceCartId;
+		return _commerceCartId;
 	}
 
-	public void setCommerceCartId(long CommerceCartId) {
-		_CommerceCartId = CommerceCartId;
+	public void setCommerceCartId(long commerceCartId) {
+		_commerceCartId = commerceCartId;
 	}
 
 	public long getCPDefinitionId() {
@@ -196,14 +196,14 @@ public class CommerceCartItemSoap implements Serializable {
 		_json = json;
 	}
 
-	private long _CommerceCartItemId;
+	private long _commerceCartItemId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private long _CommerceCartId;
+	private long _commerceCartId;
 	private long _CPDefinitionId;
 	private long _CPInstanceId;
 	private int _quantity;

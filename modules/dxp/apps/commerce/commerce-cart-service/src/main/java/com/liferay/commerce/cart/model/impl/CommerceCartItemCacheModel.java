@@ -52,7 +52,7 @@ public class CommerceCartItemCacheModel implements CacheModel<CommerceCartItem>,
 
 		CommerceCartItemCacheModel commerceCartItemCacheModel = (CommerceCartItemCacheModel)obj;
 
-		if (CommerceCartItemId == commerceCartItemCacheModel.CommerceCartItemId) {
+		if (commerceCartItemId == commerceCartItemCacheModel.commerceCartItemId) {
 			return true;
 		}
 
@@ -61,15 +61,15 @@ public class CommerceCartItemCacheModel implements CacheModel<CommerceCartItem>,
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, CommerceCartItemId);
+		return HashUtil.hash(0, commerceCartItemId);
 	}
 
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(25);
 
-		sb.append("{CommerceCartItemId=");
-		sb.append(CommerceCartItemId);
+		sb.append("{commerceCartItemId=");
+		sb.append(commerceCartItemId);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", companyId=");
@@ -82,8 +82,8 @@ public class CommerceCartItemCacheModel implements CacheModel<CommerceCartItem>,
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", CommerceCartId=");
-		sb.append(CommerceCartId);
+		sb.append(", commerceCartId=");
+		sb.append(commerceCartId);
 		sb.append(", CPDefinitionId=");
 		sb.append(CPDefinitionId);
 		sb.append(", CPInstanceId=");
@@ -101,7 +101,7 @@ public class CommerceCartItemCacheModel implements CacheModel<CommerceCartItem>,
 	public CommerceCartItem toEntityModel() {
 		CommerceCartItemImpl commerceCartItemImpl = new CommerceCartItemImpl();
 
-		commerceCartItemImpl.setCommerceCartItemId(CommerceCartItemId);
+		commerceCartItemImpl.setCommerceCartItemId(commerceCartItemId);
 		commerceCartItemImpl.setGroupId(groupId);
 		commerceCartItemImpl.setCompanyId(companyId);
 		commerceCartItemImpl.setUserId(userId);
@@ -127,7 +127,7 @@ public class CommerceCartItemCacheModel implements CacheModel<CommerceCartItem>,
 			commerceCartItemImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		commerceCartItemImpl.setCommerceCartId(CommerceCartId);
+		commerceCartItemImpl.setCommerceCartId(commerceCartId);
 		commerceCartItemImpl.setCPDefinitionId(CPDefinitionId);
 		commerceCartItemImpl.setCPInstanceId(CPInstanceId);
 		commerceCartItemImpl.setQuantity(quantity);
@@ -146,7 +146,7 @@ public class CommerceCartItemCacheModel implements CacheModel<CommerceCartItem>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		CommerceCartItemId = objectInput.readLong();
+		commerceCartItemId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
 
@@ -157,7 +157,7 @@ public class CommerceCartItemCacheModel implements CacheModel<CommerceCartItem>,
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 
-		CommerceCartId = objectInput.readLong();
+		commerceCartId = objectInput.readLong();
 
 		CPDefinitionId = objectInput.readLong();
 
@@ -170,7 +170,7 @@ public class CommerceCartItemCacheModel implements CacheModel<CommerceCartItem>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		objectOutput.writeLong(CommerceCartItemId);
+		objectOutput.writeLong(commerceCartItemId);
 
 		objectOutput.writeLong(groupId);
 
@@ -188,7 +188,7 @@ public class CommerceCartItemCacheModel implements CacheModel<CommerceCartItem>,
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
-		objectOutput.writeLong(CommerceCartId);
+		objectOutput.writeLong(commerceCartId);
 
 		objectOutput.writeLong(CPDefinitionId);
 
@@ -204,14 +204,14 @@ public class CommerceCartItemCacheModel implements CacheModel<CommerceCartItem>,
 		}
 	}
 
-	public long CommerceCartItemId;
+	public long commerceCartItemId;
 	public long groupId;
 	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public long CommerceCartId;
+	public long commerceCartId;
 	public long CPDefinitionId;
 	public long CPInstanceId;
 	public int quantity;

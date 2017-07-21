@@ -5,7 +5,7 @@
 	<import class="com.liferay.commerce.cart.model.CommerceCart" />
 	<import class="com.liferay.commerce.cart.model.CommerceCartItem" />
 	<class name="com.liferay.commerce.cart.model.impl.CommerceCartImpl" table="CommerceCart">
-		<id name="CommerceCartId" type="long">
+		<id name="commerceCartId" type="long">
 			<generator class="assigned" />
 		</id>
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -18,7 +18,7 @@
 		<property column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class name="com.liferay.commerce.cart.model.impl.CommerceCartItemImpl" table="CommerceCartItem">
-		<id name="CommerceCartItemId" type="long">
+		<id name="commerceCartItemId" type="long">
 			<generator class="assigned" />
 		</id>
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -27,7 +27,7 @@
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="CommerceCartId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="commerceCartId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="CPDefinitionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="CPInstanceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="quantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />

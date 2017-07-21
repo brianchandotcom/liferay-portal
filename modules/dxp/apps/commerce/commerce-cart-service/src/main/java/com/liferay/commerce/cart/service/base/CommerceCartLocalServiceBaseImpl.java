@@ -93,26 +93,26 @@ public abstract class CommerceCartLocalServiceBaseImpl
 	/**
 	 * Creates a new commerce cart with the primary key. Does not add the commerce cart to the database.
 	 *
-	 * @param CommerceCartId the primary key for the new commerce cart
+	 * @param commerceCartId the primary key for the new commerce cart
 	 * @return the new commerce cart
 	 */
 	@Override
-	public CommerceCart createCommerceCart(long CommerceCartId) {
-		return commerceCartPersistence.create(CommerceCartId);
+	public CommerceCart createCommerceCart(long commerceCartId) {
+		return commerceCartPersistence.create(commerceCartId);
 	}
 
 	/**
 	 * Deletes the commerce cart with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param CommerceCartId the primary key of the commerce cart
+	 * @param commerceCartId the primary key of the commerce cart
 	 * @return the commerce cart that was removed
 	 * @throws PortalException if a commerce cart with the primary key could not be found
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public CommerceCart deleteCommerceCart(long CommerceCartId)
+	public CommerceCart deleteCommerceCart(long commerceCartId)
 		throws PortalException {
-		return commerceCartPersistence.remove(CommerceCartId);
+		return commerceCartPersistence.remove(commerceCartId);
 	}
 
 	/**
@@ -213,21 +213,21 @@ public abstract class CommerceCartLocalServiceBaseImpl
 	}
 
 	@Override
-	public CommerceCart fetchCommerceCart(long CommerceCartId) {
-		return commerceCartPersistence.fetchByPrimaryKey(CommerceCartId);
+	public CommerceCart fetchCommerceCart(long commerceCartId) {
+		return commerceCartPersistence.fetchByPrimaryKey(commerceCartId);
 	}
 
 	/**
 	 * Returns the commerce cart with the primary key.
 	 *
-	 * @param CommerceCartId the primary key of the commerce cart
+	 * @param commerceCartId the primary key of the commerce cart
 	 * @return the commerce cart
 	 * @throws PortalException if a commerce cart with the primary key could not be found
 	 */
 	@Override
-	public CommerceCart getCommerceCart(long CommerceCartId)
+	public CommerceCart getCommerceCart(long commerceCartId)
 		throws PortalException {
-		return commerceCartPersistence.findByPrimaryKey(CommerceCartId);
+		return commerceCartPersistence.findByPrimaryKey(commerceCartId);
 	}
 
 	@Override
@@ -238,7 +238,7 @@ public abstract class CommerceCartLocalServiceBaseImpl
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(CommerceCart.class);
 
-		actionableDynamicQuery.setPrimaryKeyPropertyName("CommerceCartId");
+		actionableDynamicQuery.setPrimaryKeyPropertyName("commerceCartId");
 
 		return actionableDynamicQuery;
 	}
@@ -252,7 +252,7 @@ public abstract class CommerceCartLocalServiceBaseImpl
 		indexableActionableDynamicQuery.setModelClass(CommerceCart.class);
 
 		indexableActionableDynamicQuery.setPrimaryKeyPropertyName(
-			"CommerceCartId");
+			"commerceCartId");
 
 		return indexableActionableDynamicQuery;
 	}
@@ -263,7 +263,7 @@ public abstract class CommerceCartLocalServiceBaseImpl
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(CommerceCart.class);
 
-		actionableDynamicQuery.setPrimaryKeyPropertyName("CommerceCartId");
+		actionableDynamicQuery.setPrimaryKeyPropertyName("commerceCartId");
 	}
 
 	/**

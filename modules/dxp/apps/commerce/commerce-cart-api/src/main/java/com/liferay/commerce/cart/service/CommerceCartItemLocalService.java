@@ -25,13 +25,11 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
-import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -82,10 +80,10 @@ public interface CommerceCartItemLocalService extends BaseLocalService,
 	/**
 	* Creates a new commerce cart item with the primary key. Does not add the commerce cart item to the database.
 	*
-	* @param CommerceCartItemId the primary key for the new commerce cart item
+	* @param commerceCartItemId the primary key for the new commerce cart item
 	* @return the new commerce cart item
 	*/
-	public CommerceCartItem createCommerceCartItem(long CommerceCartItemId);
+	public CommerceCartItem createCommerceCartItem(long commerceCartItemId);
 
 	/**
 	* Deletes the commerce cart item from the database. Also notifies the appropriate model listeners.
@@ -95,33 +93,32 @@ public interface CommerceCartItemLocalService extends BaseLocalService,
 	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
-	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CommerceCartItem deleteCommerceCartItem(
 		CommerceCartItem commerceCartItem) throws PortalException;
 
 	/**
 	* Deletes the commerce cart item with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param CommerceCartItemId the primary key of the commerce cart item
+	* @param commerceCartItemId the primary key of the commerce cart item
 	* @return the commerce cart item that was removed
 	* @throws PortalException if a commerce cart item with the primary key could not be found
 	*/
 	@Indexable(type = IndexableType.DELETE)
-	public CommerceCartItem deleteCommerceCartItem(long CommerceCartItemId)
+	public CommerceCartItem deleteCommerceCartItem(long commerceCartItemId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceCartItem fetchCommerceCartItem(long CommerceCartItemId);
+	public CommerceCartItem fetchCommerceCartItem(long commerceCartItemId);
 
 	/**
 	* Returns the commerce cart item with the primary key.
 	*
-	* @param CommerceCartItemId the primary key of the commerce cart item
+	* @param commerceCartItemId the primary key of the commerce cart item
 	* @return the commerce cart item
 	* @throws PortalException if a commerce cart item with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceCartItem getCommerceCartItem(long CommerceCartItemId)
+	public CommerceCartItem getCommerceCartItem(long commerceCartItemId)
 		throws PortalException;
 
 	/**

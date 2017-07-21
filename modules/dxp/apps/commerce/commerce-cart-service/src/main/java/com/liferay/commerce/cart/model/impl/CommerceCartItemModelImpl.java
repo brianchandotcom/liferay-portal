@@ -71,14 +71,14 @@ public class CommerceCartItemModelImpl extends BaseModelImpl<CommerceCartItem>
 	 */
 	public static final String TABLE_NAME = "CommerceCartItem";
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "CommerceCartItemId", Types.BIGINT },
+			{ "commerceCartItemId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
-			{ "CommerceCartId", Types.BIGINT },
+			{ "commerceCartId", Types.BIGINT },
 			{ "CPDefinitionId", Types.BIGINT },
 			{ "CPInstanceId", Types.BIGINT },
 			{ "quantity", Types.INTEGER },
@@ -87,21 +87,21 @@ public class CommerceCartItemModelImpl extends BaseModelImpl<CommerceCartItem>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("CommerceCartItemId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("commerceCartItemId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("CommerceCartId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("commerceCartId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CPDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CPInstanceId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("quantity", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("json", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceCartItem (CommerceCartItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CommerceCartId LONG,CPDefinitionId LONG,CPInstanceId LONG,quantity INTEGER,json VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceCartItem (commerceCartItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceCartId LONG,CPDefinitionId LONG,CPInstanceId LONG,quantity INTEGER,json VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceCartItem";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceCartItem.createDate ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceCartItem.createDate ASC";
@@ -178,7 +178,7 @@ public class CommerceCartItemModelImpl extends BaseModelImpl<CommerceCartItem>
 
 	@Override
 	public long getPrimaryKey() {
-		return _CommerceCartItemId;
+		return _commerceCartItemId;
 	}
 
 	@Override
@@ -188,7 +188,7 @@ public class CommerceCartItemModelImpl extends BaseModelImpl<CommerceCartItem>
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _CommerceCartItemId;
+		return _commerceCartItemId;
 	}
 
 	@Override
@@ -210,14 +210,14 @@ public class CommerceCartItemModelImpl extends BaseModelImpl<CommerceCartItem>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("CommerceCartItemId", getCommerceCartItemId());
+		attributes.put("commerceCartItemId", getCommerceCartItemId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("CommerceCartId", getCommerceCartId());
+		attributes.put("commerceCartId", getCommerceCartId());
 		attributes.put("CPDefinitionId", getCPDefinitionId());
 		attributes.put("CPInstanceId", getCPInstanceId());
 		attributes.put("quantity", getQuantity());
@@ -231,10 +231,10 @@ public class CommerceCartItemModelImpl extends BaseModelImpl<CommerceCartItem>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long CommerceCartItemId = (Long)attributes.get("CommerceCartItemId");
+		Long commerceCartItemId = (Long)attributes.get("commerceCartItemId");
 
-		if (CommerceCartItemId != null) {
-			setCommerceCartItemId(CommerceCartItemId);
+		if (commerceCartItemId != null) {
+			setCommerceCartItemId(commerceCartItemId);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -273,10 +273,10 @@ public class CommerceCartItemModelImpl extends BaseModelImpl<CommerceCartItem>
 			setModifiedDate(modifiedDate);
 		}
 
-		Long CommerceCartId = (Long)attributes.get("CommerceCartId");
+		Long commerceCartId = (Long)attributes.get("commerceCartId");
 
-		if (CommerceCartId != null) {
-			setCommerceCartId(CommerceCartId);
+		if (commerceCartId != null) {
+			setCommerceCartId(commerceCartId);
 		}
 
 		Long CPDefinitionId = (Long)attributes.get("CPDefinitionId");
@@ -307,12 +307,12 @@ public class CommerceCartItemModelImpl extends BaseModelImpl<CommerceCartItem>
 	@JSON
 	@Override
 	public long getCommerceCartItemId() {
-		return _CommerceCartItemId;
+		return _commerceCartItemId;
 	}
 
 	@Override
-	public void setCommerceCartItemId(long CommerceCartItemId) {
-		_CommerceCartItemId = CommerceCartItemId;
+	public void setCommerceCartItemId(long commerceCartItemId) {
+		_commerceCartItemId = commerceCartItemId;
 	}
 
 	@JSON
@@ -413,20 +413,20 @@ public class CommerceCartItemModelImpl extends BaseModelImpl<CommerceCartItem>
 	@JSON
 	@Override
 	public long getCommerceCartId() {
-		return _CommerceCartId;
+		return _commerceCartId;
 	}
 
 	@Override
-	public void setCommerceCartId(long CommerceCartId) {
+	public void setCommerceCartId(long commerceCartId) {
 		_columnBitmask |= COMMERCECARTID_COLUMN_BITMASK;
 
 		if (!_setOriginalCommerceCartId) {
 			_setOriginalCommerceCartId = true;
 
-			_originalCommerceCartId = _CommerceCartId;
+			_originalCommerceCartId = _commerceCartId;
 		}
 
-		_CommerceCartId = CommerceCartId;
+		_commerceCartId = commerceCartId;
 	}
 
 	public long getOriginalCommerceCartId() {
@@ -588,7 +588,7 @@ public class CommerceCartItemModelImpl extends BaseModelImpl<CommerceCartItem>
 
 		commerceCartItemModelImpl._setModifiedDate = false;
 
-		commerceCartItemModelImpl._originalCommerceCartId = commerceCartItemModelImpl._CommerceCartId;
+		commerceCartItemModelImpl._originalCommerceCartId = commerceCartItemModelImpl._commerceCartId;
 
 		commerceCartItemModelImpl._setOriginalCommerceCartId = false;
 
@@ -599,7 +599,7 @@ public class CommerceCartItemModelImpl extends BaseModelImpl<CommerceCartItem>
 	public CacheModel<CommerceCartItem> toCacheModel() {
 		CommerceCartItemCacheModel commerceCartItemCacheModel = new CommerceCartItemCacheModel();
 
-		commerceCartItemCacheModel.CommerceCartItemId = getCommerceCartItemId();
+		commerceCartItemCacheModel.commerceCartItemId = getCommerceCartItemId();
 
 		commerceCartItemCacheModel.groupId = getGroupId();
 
@@ -633,7 +633,7 @@ public class CommerceCartItemModelImpl extends BaseModelImpl<CommerceCartItem>
 			commerceCartItemCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		commerceCartItemCacheModel.CommerceCartId = getCommerceCartId();
+		commerceCartItemCacheModel.commerceCartId = getCommerceCartId();
 
 		commerceCartItemCacheModel.CPDefinitionId = getCPDefinitionId();
 
@@ -656,7 +656,7 @@ public class CommerceCartItemModelImpl extends BaseModelImpl<CommerceCartItem>
 	public String toString() {
 		StringBundler sb = new StringBundler(25);
 
-		sb.append("{CommerceCartItemId=");
+		sb.append("{commerceCartItemId=");
 		sb.append(getCommerceCartItemId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
@@ -670,7 +670,7 @@ public class CommerceCartItemModelImpl extends BaseModelImpl<CommerceCartItem>
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
-		sb.append(", CommerceCartId=");
+		sb.append(", commerceCartId=");
 		sb.append(getCommerceCartId());
 		sb.append(", CPDefinitionId=");
 		sb.append(getCPDefinitionId());
@@ -694,7 +694,7 @@ public class CommerceCartItemModelImpl extends BaseModelImpl<CommerceCartItem>
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>CommerceCartItemId</column-name><column-value><![CDATA[");
+			"<column><column-name>commerceCartItemId</column-name><column-value><![CDATA[");
 		sb.append(getCommerceCartItemId());
 		sb.append("]]></column-value></column>");
 		sb.append(
@@ -722,7 +722,7 @@ public class CommerceCartItemModelImpl extends BaseModelImpl<CommerceCartItem>
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>CommerceCartId</column-name><column-value><![CDATA[");
+			"<column><column-name>commerceCartId</column-name><column-value><![CDATA[");
 		sb.append(getCommerceCartId());
 		sb.append("]]></column-value></column>");
 		sb.append(
@@ -751,7 +751,7 @@ public class CommerceCartItemModelImpl extends BaseModelImpl<CommerceCartItem>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			CommerceCartItem.class
 		};
-	private long _CommerceCartItemId;
+	private long _commerceCartItemId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;
@@ -759,7 +759,7 @@ public class CommerceCartItemModelImpl extends BaseModelImpl<CommerceCartItem>
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
-	private long _CommerceCartId;
+	private long _commerceCartId;
 	private long _originalCommerceCartId;
 	private boolean _setOriginalCommerceCartId;
 	private long _CPDefinitionId;

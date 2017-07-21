@@ -75,9 +75,9 @@ public interface CommerceCartModel extends BaseModel<CommerceCart>, GroupedModel
 	/**
 	 * Sets the commerce cart ID of this commerce cart.
 	 *
-	 * @param CommerceCartId the commerce cart ID of this commerce cart
+	 * @param commerceCartId the commerce cart ID of this commerce cart
 	 */
-	public void setCommerceCartId(long CommerceCartId);
+	public void setCommerceCartId(long commerceCartId);
 
 	/**
 	 * Returns the group ID of this commerce cart.

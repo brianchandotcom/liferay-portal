@@ -63,6 +63,10 @@ public interface CommerceCartService extends BaseService {
 	public CommerceCart fetchCommerceCart(long commerceCartId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceCart getCommerceCart(long commerceCartId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceCartsCount(long groupId, int type);
 
 	/**
@@ -75,4 +79,7 @@ public interface CommerceCartService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceCart> getCommerceCarts(long groupId, int type,
 		int start, int end, OrderByComparator<CommerceCart> orderByComparator);
+
+	public void deleteCommerceCart(long commerceCartId)
+		throws PortalException;
 }

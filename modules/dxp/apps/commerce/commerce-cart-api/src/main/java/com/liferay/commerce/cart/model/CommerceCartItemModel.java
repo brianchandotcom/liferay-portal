@@ -75,9 +75,9 @@ public interface CommerceCartItemModel extends BaseModel<CommerceCartItem>,
 	/**
 	 * Sets the commerce cart item ID of this commerce cart item.
 	 *
-	 * @param CommerceCartItemId the commerce cart item ID of this commerce cart item
+	 * @param commerceCartItemId the commerce cart item ID of this commerce cart item
 	 */
-	public void setCommerceCartItemId(long CommerceCartItemId);
+	public void setCommerceCartItemId(long commerceCartItemId);
 
 	/**
 	 * Returns the group ID of this commerce cart item.
@@ -202,9 +202,9 @@ public interface CommerceCartItemModel extends BaseModel<CommerceCartItem>,
 	/**
 	 * Sets the commerce cart ID of this commerce cart item.
 	 *
-	 * @param CommerceCartId the commerce cart ID of this commerce cart item
+	 * @param commerceCartId the commerce cart ID of this commerce cart item
 	 */
-	public void setCommerceCartId(long CommerceCartId);
+	public void setCommerceCartId(long commerceCartId);
 
 	/**
 	 * Returns the cp definition ID of this commerce cart item.

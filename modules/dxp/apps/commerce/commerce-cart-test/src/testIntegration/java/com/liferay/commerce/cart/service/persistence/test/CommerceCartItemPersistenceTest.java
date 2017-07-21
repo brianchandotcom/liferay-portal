@@ -207,9 +207,9 @@ public class CommerceCartItemPersistenceTest {
 
 	protected OrderByComparator<CommerceCartItem> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("CommerceCartItem",
-			"CommerceCartItemId", true, "groupId", true, "companyId", true,
+			"commerceCartItemId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "CommerceCartId", true, "CPDefinitionId",
+			"modifiedDate", true, "commerceCartId", true, "CPDefinitionId",
 			true, "CPInstanceId", true, "quantity", true, "json", true);
 	}
 
@@ -341,7 +341,7 @@ public class CommerceCartItemPersistenceTest {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CommerceCartItem.class,
 				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("CommerceCartItemId",
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("commerceCartItemId",
 				newCommerceCartItem.getCommerceCartItemId()));
 
 		List<CommerceCartItem> result = _persistence.findWithDynamicQuery(dynamicQuery);
@@ -358,7 +358,7 @@ public class CommerceCartItemPersistenceTest {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CommerceCartItem.class,
 				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("CommerceCartItemId",
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("commerceCartItemId",
 				RandomTestUtil.nextLong()));
 
 		List<CommerceCartItem> result = _persistence.findWithDynamicQuery(dynamicQuery);
@@ -375,11 +375,11 @@ public class CommerceCartItemPersistenceTest {
 				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"CommerceCartItemId"));
+				"commerceCartItemId"));
 
 		Object newCommerceCartItemId = newCommerceCartItem.getCommerceCartItemId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("CommerceCartItemId",
+		dynamicQuery.add(RestrictionsFactoryUtil.in("commerceCartItemId",
 				new Object[] { newCommerceCartItemId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
@@ -397,9 +397,9 @@ public class CommerceCartItemPersistenceTest {
 				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"CommerceCartItemId"));
+				"commerceCartItemId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("CommerceCartItemId",
+		dynamicQuery.add(RestrictionsFactoryUtil.in("commerceCartItemId",
 				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);

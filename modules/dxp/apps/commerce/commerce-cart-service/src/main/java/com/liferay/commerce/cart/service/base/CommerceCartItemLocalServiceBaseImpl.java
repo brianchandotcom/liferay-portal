@@ -94,26 +94,26 @@ public abstract class CommerceCartItemLocalServiceBaseImpl
 	/**
 	 * Creates a new commerce cart item with the primary key. Does not add the commerce cart item to the database.
 	 *
-	 * @param CommerceCartItemId the primary key for the new commerce cart item
+	 * @param commerceCartItemId the primary key for the new commerce cart item
 	 * @return the new commerce cart item
 	 */
 	@Override
-	public CommerceCartItem createCommerceCartItem(long CommerceCartItemId) {
-		return commerceCartItemPersistence.create(CommerceCartItemId);
+	public CommerceCartItem createCommerceCartItem(long commerceCartItemId) {
+		return commerceCartItemPersistence.create(commerceCartItemId);
 	}
 
 	/**
 	 * Deletes the commerce cart item with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param CommerceCartItemId the primary key of the commerce cart item
+	 * @param commerceCartItemId the primary key of the commerce cart item
 	 * @return the commerce cart item that was removed
 	 * @throws PortalException if a commerce cart item with the primary key could not be found
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public CommerceCartItem deleteCommerceCartItem(long CommerceCartItemId)
+	public CommerceCartItem deleteCommerceCartItem(long commerceCartItemId)
 		throws PortalException {
-		return commerceCartItemPersistence.remove(CommerceCartItemId);
+		return commerceCartItemPersistence.remove(commerceCartItemId);
 	}
 
 	/**
@@ -214,21 +214,21 @@ public abstract class CommerceCartItemLocalServiceBaseImpl
 	}
 
 	@Override
-	public CommerceCartItem fetchCommerceCartItem(long CommerceCartItemId) {
-		return commerceCartItemPersistence.fetchByPrimaryKey(CommerceCartItemId);
+	public CommerceCartItem fetchCommerceCartItem(long commerceCartItemId) {
+		return commerceCartItemPersistence.fetchByPrimaryKey(commerceCartItemId);
 	}
 
 	/**
 	 * Returns the commerce cart item with the primary key.
 	 *
-	 * @param CommerceCartItemId the primary key of the commerce cart item
+	 * @param commerceCartItemId the primary key of the commerce cart item
 	 * @return the commerce cart item
 	 * @throws PortalException if a commerce cart item with the primary key could not be found
 	 */
 	@Override
-	public CommerceCartItem getCommerceCartItem(long CommerceCartItemId)
+	public CommerceCartItem getCommerceCartItem(long commerceCartItemId)
 		throws PortalException {
-		return commerceCartItemPersistence.findByPrimaryKey(CommerceCartItemId);
+		return commerceCartItemPersistence.findByPrimaryKey(commerceCartItemId);
 	}
 
 	@Override
@@ -239,7 +239,7 @@ public abstract class CommerceCartItemLocalServiceBaseImpl
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(CommerceCartItem.class);
 
-		actionableDynamicQuery.setPrimaryKeyPropertyName("CommerceCartItemId");
+		actionableDynamicQuery.setPrimaryKeyPropertyName("commerceCartItemId");
 
 		return actionableDynamicQuery;
 	}
@@ -253,7 +253,7 @@ public abstract class CommerceCartItemLocalServiceBaseImpl
 		indexableActionableDynamicQuery.setModelClass(CommerceCartItem.class);
 
 		indexableActionableDynamicQuery.setPrimaryKeyPropertyName(
-			"CommerceCartItemId");
+			"commerceCartItemId");
 
 		return indexableActionableDynamicQuery;
 	}
@@ -264,7 +264,7 @@ public abstract class CommerceCartItemLocalServiceBaseImpl
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(CommerceCartItem.class);
 
-		actionableDynamicQuery.setPrimaryKeyPropertyName("CommerceCartItemId");
+		actionableDynamicQuery.setPrimaryKeyPropertyName("commerceCartItemId");
 	}
 
 	/**

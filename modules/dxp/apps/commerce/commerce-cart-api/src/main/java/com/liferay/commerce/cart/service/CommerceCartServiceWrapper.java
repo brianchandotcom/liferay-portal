@@ -47,6 +47,13 @@ public class CommerceCartServiceWrapper implements CommerceCartService,
 	}
 
 	@Override
+	public com.liferay.commerce.cart.model.CommerceCart getCommerceCart(
+		long commerceCartId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceCartService.getCommerceCart(commerceCartId);
+	}
+
+	@Override
 	public int getCommerceCartsCount(long groupId, int type) {
 		return _commerceCartService.getCommerceCartsCount(groupId, type);
 	}
@@ -67,6 +74,12 @@ public class CommerceCartServiceWrapper implements CommerceCartService,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.cart.model.CommerceCart> orderByComparator) {
 		return _commerceCartService.getCommerceCarts(groupId, type, start, end,
 			orderByComparator);
+	}
+
+	@Override
+	public void deleteCommerceCart(long commerceCartId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_commerceCartService.deleteCommerceCart(commerceCartId);
 	}
 
 	@Override

@@ -65,6 +65,32 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class CommerceCartItemServiceSoap {
+	public static void deleteCommerceCartItem(long commerceCartItemId)
+		throws RemoteException {
+		try {
+			CommerceCartItemServiceUtil.deleteCommerceCartItem(commerceCartItemId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.cart.model.CommerceCartItemSoap getCommerceCartItem(
+		long commerceCartItemId) throws RemoteException {
+		try {
+			com.liferay.commerce.cart.model.CommerceCartItem returnValue = CommerceCartItemServiceUtil.getCommerceCartItem(commerceCartItemId);
+
+			return com.liferay.commerce.cart.model.CommerceCartItemSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.cart.model.CommerceCartItemSoap[] getCommerceCartItems(
 		long commerceCartId, int start, int end) throws RemoteException {
 		try {
@@ -73,34 +99,6 @@ public class CommerceCartItemServiceSoap {
 					start, end);
 
 			return com.liferay.commerce.cart.model.CommerceCartItemSoap.toSoapModels(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static int getCommerceCartItemsCount(long commerceCartId)
-		throws RemoteException {
-		try {
-			int returnValue = CommerceCartItemServiceUtil.getCommerceCartItemsCount(commerceCartId);
-
-			return returnValue;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.commerce.cart.model.CommerceCartItemSoap deleteCommerceCartItem(
-		long commerceCartItemId) throws RemoteException {
-		try {
-			com.liferay.commerce.cart.model.CommerceCartItem returnValue = CommerceCartItemServiceUtil.deleteCommerceCartItem(commerceCartItemId);
-
-			return com.liferay.commerce.cart.model.CommerceCartItemSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -119,6 +117,20 @@ public class CommerceCartItemServiceSoap {
 					start, end, orderByComparator);
 
 			return com.liferay.commerce.cart.model.CommerceCartItemSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getCommerceCartItemsCount(long commerceCartId)
+		throws RemoteException {
+		try {
+			int returnValue = CommerceCartItemServiceUtil.getCommerceCartItemsCount(commerceCartId);
+
+			return returnValue;
 		}
 		catch (Exception e) {
 			_log.error(e, e);

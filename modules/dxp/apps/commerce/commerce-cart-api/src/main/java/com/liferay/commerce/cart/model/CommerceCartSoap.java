@@ -88,7 +88,7 @@ public class CommerceCartSoap implements Serializable {
 	}
 
 	public long getPrimaryKey() {
-		return _CommerceCartId;
+		return _commerceCartId;
 	}
 
 	public void setPrimaryKey(long pk) {
@@ -96,11 +96,11 @@ public class CommerceCartSoap implements Serializable {
 	}
 
 	public long getCommerceCartId() {
-		return _CommerceCartId;
+		return _commerceCartId;
 	}
 
-	public void setCommerceCartId(long CommerceCartId) {
-		_CommerceCartId = CommerceCartId;
+	public void setCommerceCartId(long commerceCartId) {
+		_commerceCartId = commerceCartId;
 	}
 
 	public long getGroupId() {
@@ -167,7 +167,7 @@ public class CommerceCartSoap implements Serializable {
 		_type = type;
 	}
 
-	private long _CommerceCartId;
+	private long _commerceCartId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;

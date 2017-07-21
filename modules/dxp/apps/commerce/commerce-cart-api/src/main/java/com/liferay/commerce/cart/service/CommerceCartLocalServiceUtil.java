@@ -63,12 +63,12 @@ public class CommerceCartLocalServiceUtil {
 	/**
 	* Creates a new commerce cart with the primary key. Does not add the commerce cart to the database.
 	*
-	* @param CommerceCartId the primary key for the new commerce cart
+	* @param commerceCartId the primary key for the new commerce cart
 	* @return the new commerce cart
 	*/
 	public static com.liferay.commerce.cart.model.CommerceCart createCommerceCart(
-		long CommerceCartId) {
-		return getService().createCommerceCart(CommerceCartId);
+		long commerceCartId) {
+		return getService().createCommerceCart(commerceCartId);
 	}
 
 	/**
@@ -87,32 +87,32 @@ public class CommerceCartLocalServiceUtil {
 	/**
 	* Deletes the commerce cart with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param CommerceCartId the primary key of the commerce cart
+	* @param commerceCartId the primary key of the commerce cart
 	* @return the commerce cart that was removed
 	* @throws PortalException if a commerce cart with the primary key could not be found
 	*/
 	public static com.liferay.commerce.cart.model.CommerceCart deleteCommerceCart(
-		long CommerceCartId)
+		long commerceCartId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteCommerceCart(CommerceCartId);
+		return getService().deleteCommerceCart(commerceCartId);
 	}
 
 	public static com.liferay.commerce.cart.model.CommerceCart fetchCommerceCart(
-		long CommerceCartId) {
-		return getService().fetchCommerceCart(CommerceCartId);
+		long commerceCartId) {
+		return getService().fetchCommerceCart(commerceCartId);
 	}
 
 	/**
 	* Returns the commerce cart with the primary key.
 	*
-	* @param CommerceCartId the primary key of the commerce cart
+	* @param commerceCartId the primary key of the commerce cart
 	* @return the commerce cart
 	* @throws PortalException if a commerce cart with the primary key could not be found
 	*/
 	public static com.liferay.commerce.cart.model.CommerceCart getCommerceCart(
-		long CommerceCartId)
+		long commerceCartId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCommerceCart(CommerceCartId);
+		return getService().getCommerceCart(commerceCartId);
 	}
 
 	/**
@@ -223,11 +223,6 @@ public class CommerceCartLocalServiceUtil {
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
-	}
-
-	public static java.util.List<com.liferay.commerce.cart.model.CommerceCart> findCommerceCarts(
-		long groupId, long userId, int type) {
-		return getService().findCommerceCarts(groupId, userId, type);
 	}
 
 	/**

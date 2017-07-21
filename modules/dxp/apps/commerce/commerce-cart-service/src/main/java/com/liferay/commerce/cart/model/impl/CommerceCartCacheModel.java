@@ -52,7 +52,7 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 
 		CommerceCartCacheModel commerceCartCacheModel = (CommerceCartCacheModel)obj;
 
-		if (CommerceCartId == commerceCartCacheModel.CommerceCartId) {
+		if (commerceCartId == commerceCartCacheModel.commerceCartId) {
 			return true;
 		}
 
@@ -61,15 +61,15 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, CommerceCartId);
+		return HashUtil.hash(0, commerceCartId);
 	}
 
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(19);
 
-		sb.append("{CommerceCartId=");
-		sb.append(CommerceCartId);
+		sb.append("{commerceCartId=");
+		sb.append(commerceCartId);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", companyId=");
@@ -95,7 +95,7 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 	public CommerceCart toEntityModel() {
 		CommerceCartImpl commerceCartImpl = new CommerceCartImpl();
 
-		commerceCartImpl.setCommerceCartId(CommerceCartId);
+		commerceCartImpl.setCommerceCartId(commerceCartId);
 		commerceCartImpl.setGroupId(groupId);
 		commerceCartImpl.setCompanyId(companyId);
 		commerceCartImpl.setUserId(userId);
@@ -137,7 +137,7 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		CommerceCartId = objectInput.readLong();
+		commerceCartId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
 
@@ -155,7 +155,7 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		objectOutput.writeLong(CommerceCartId);
+		objectOutput.writeLong(commerceCartId);
 
 		objectOutput.writeLong(groupId);
 
@@ -183,7 +183,7 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 		objectOutput.writeInt(type);
 	}
 
-	public long CommerceCartId;
+	public long commerceCartId;
 	public long groupId;
 	public long companyId;
 	public long userId;

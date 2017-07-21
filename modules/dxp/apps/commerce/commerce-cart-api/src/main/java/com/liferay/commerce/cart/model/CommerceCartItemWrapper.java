@@ -58,14 +58,14 @@ public class CommerceCartItemWrapper implements CommerceCartItem,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("CommerceCartItemId", getCommerceCartItemId());
+		attributes.put("commerceCartItemId", getCommerceCartItemId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("CommerceCartId", getCommerceCartId());
+		attributes.put("commerceCartId", getCommerceCartId());
 		attributes.put("CPDefinitionId", getCPDefinitionId());
 		attributes.put("CPInstanceId", getCPInstanceId());
 		attributes.put("quantity", getQuantity());
@@ -76,10 +76,10 @@ public class CommerceCartItemWrapper implements CommerceCartItem,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long CommerceCartItemId = (Long)attributes.get("CommerceCartItemId");
+		Long commerceCartItemId = (Long)attributes.get("commerceCartItemId");
 
-		if (CommerceCartItemId != null) {
-			setCommerceCartItemId(CommerceCartItemId);
+		if (commerceCartItemId != null) {
+			setCommerceCartItemId(commerceCartItemId);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -118,10 +118,10 @@ public class CommerceCartItemWrapper implements CommerceCartItem,
 			setModifiedDate(modifiedDate);
 		}
 
-		Long CommerceCartId = (Long)attributes.get("CommerceCartId");
+		Long commerceCartId = (Long)attributes.get("commerceCartId");
 
-		if (CommerceCartId != null) {
-			setCommerceCartId(CommerceCartId);
+		if (commerceCartId != null) {
+			setCommerceCartId(commerceCartId);
 		}
 
 		Long CPDefinitionId = (Long)attributes.get("CPDefinitionId");
@@ -175,7 +175,8 @@ public class CommerceCartItemWrapper implements CommerceCartItem,
 	}
 
 	@Override
-	public com.liferay.commerce.product.model.CPDefinition getCPDefinition() {
+	public com.liferay.commerce.product.model.CPDefinition getCPDefinition()
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceCartItem.getCPDefinition();
 	}
 
@@ -392,21 +393,21 @@ public class CommerceCartItemWrapper implements CommerceCartItem,
 	/**
 	* Sets the commerce cart ID of this commerce cart item.
 	*
-	* @param CommerceCartId the commerce cart ID of this commerce cart item
+	* @param commerceCartId the commerce cart ID of this commerce cart item
 	*/
 	@Override
-	public void setCommerceCartId(long CommerceCartId) {
-		_commerceCartItem.setCommerceCartId(CommerceCartId);
+	public void setCommerceCartId(long commerceCartId) {
+		_commerceCartItem.setCommerceCartId(commerceCartId);
 	}
 
 	/**
 	* Sets the commerce cart item ID of this commerce cart item.
 	*
-	* @param CommerceCartItemId the commerce cart item ID of this commerce cart item
+	* @param commerceCartItemId the commerce cart item ID of this commerce cart item
 	*/
 	@Override
-	public void setCommerceCartItemId(long CommerceCartItemId) {
-		_commerceCartItem.setCommerceCartItemId(CommerceCartItemId);
+	public void setCommerceCartItemId(long commerceCartItemId) {
+		_commerceCartItem.setCommerceCartItemId(commerceCartItemId);
 	}
 
 	/**

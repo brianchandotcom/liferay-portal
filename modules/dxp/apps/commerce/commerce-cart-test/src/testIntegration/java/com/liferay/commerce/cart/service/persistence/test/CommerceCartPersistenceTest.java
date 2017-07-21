@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -174,25 +173,6 @@ public class CommerceCartPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_U_T() throws Exception {
-		_persistence.countByG_U_T(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
-
-		_persistence.countByG_U_T(0L, 0L, 0);
-	}
-
-	@Test
-	public void testCountByG_U_N_T() throws Exception {
-		_persistence.countByG_U_N_T(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), StringPool.BLANK,
-			RandomTestUtil.nextInt());
-
-		_persistence.countByG_U_N_T(0L, 0L, StringPool.NULL, 0);
-
-		_persistence.countByG_U_N_T(0L, 0L, (String)null, 0);
-	}
-
-	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CommerceCart newCommerceCart = addCommerceCart();
 
@@ -216,7 +196,7 @@ public class CommerceCartPersistenceTest {
 
 	protected OrderByComparator<CommerceCart> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("CommerceCart",
-			"CommerceCartId", true, "groupId", true, "companyId", true,
+			"commerceCartId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "name", true, "type", true);
 	}
@@ -349,7 +329,7 @@ public class CommerceCartPersistenceTest {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CommerceCart.class,
 				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("CommerceCartId",
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("commerceCartId",
 				newCommerceCart.getCommerceCartId()));
 
 		List<CommerceCart> result = _persistence.findWithDynamicQuery(dynamicQuery);
@@ -366,7 +346,7 @@ public class CommerceCartPersistenceTest {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CommerceCart.class,
 				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("CommerceCartId",
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("commerceCartId",
 				RandomTestUtil.nextLong()));
 
 		List<CommerceCart> result = _persistence.findWithDynamicQuery(dynamicQuery);
@@ -383,11 +363,11 @@ public class CommerceCartPersistenceTest {
 				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"CommerceCartId"));
+				"commerceCartId"));
 
 		Object newCommerceCartId = newCommerceCart.getCommerceCartId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("CommerceCartId",
+		dynamicQuery.add(RestrictionsFactoryUtil.in("commerceCartId",
 				new Object[] { newCommerceCartId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
@@ -405,9 +385,9 @@ public class CommerceCartPersistenceTest {
 				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"CommerceCartId"));
+				"commerceCartId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("CommerceCartId",
+		dynamicQuery.add(RestrictionsFactoryUtil.in("commerceCartId",
 				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);

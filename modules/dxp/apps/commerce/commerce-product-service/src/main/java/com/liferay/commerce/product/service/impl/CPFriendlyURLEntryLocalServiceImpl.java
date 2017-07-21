@@ -14,9 +14,10 @@
 
 package com.liferay.commerce.product.service.impl;
 
-import com.liferay.commerce.product.exception.CPFriendlyURLLengthException;
+import com.liferay.commerce.product.exception.CPFriendlyURLEntryException;
 import com.liferay.commerce.product.exception.DuplicateCPFriendlyURLEntryException;
 import com.liferay.commerce.product.model.CPFriendlyURLEntry;
+import com.liferay.commerce.product.model.impl.CPFriendlyURLEntryImpl;
 import com.liferay.commerce.product.service.base.CPFriendlyURLEntryLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -295,15 +296,14 @@ public class CPFriendlyURLEntryLocalServiceImpl
 			String languageId, String urlTitle)
 		throws PortalException {
 
-		int maxLength = ModelHintsUtil.getMaxLength(
-			CPFriendlyURLEntry.class.getName(), "urlTitle");
-
-		if (urlTitle.length() > maxLength) {
-			throw new CPFriendlyURLLengthException();
-		}
-
 		String normalizedUrlTitle = FriendlyURLNormalizerUtil.normalize(
 			urlTitle);
+
+		int exceptionType = CPFriendlyURLEntryImpl.validate(normalizedUrlTitle);
+
+		if (exceptionType != -1) {
+			throw new CPFriendlyURLEntryException(exceptionType);
+		}
 
 		if (classPK > 0) {
 			CPFriendlyURLEntry cpFriendlyURLEntry =

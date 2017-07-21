@@ -137,10 +137,6 @@ public interface CommerceCartLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceCart updateCommerceCart(CommerceCart commerceCart);
 
-	public CommerceCart updateCommerceCart(long commerceCartId,
-		long cartUserId, java.lang.String name, int type)
-		throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 

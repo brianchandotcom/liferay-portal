@@ -142,14 +142,6 @@ public class CommerceCartLocalServiceWrapper implements CommerceCartLocalService
 	}
 
 	@Override
-	public com.liferay.commerce.cart.model.CommerceCart updateCommerceCart(
-		long commerceCartId, long cartUserId, java.lang.String name, int type)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceCartLocalService.updateCommerceCart(commerceCartId,
-			cartUserId, name, type);
-	}
-
-	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _commerceCartLocalService.getActionableDynamicQuery();
 	}

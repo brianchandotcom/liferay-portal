@@ -138,13 +138,6 @@ public class CommerceCartLocalServiceUtil {
 		return getService().updateCommerceCart(commerceCart);
 	}
 
-	public static com.liferay.commerce.cart.model.CommerceCart updateCommerceCart(
-		long commerceCartId, long cartUserId, java.lang.String name, int type)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateCommerceCart(commerceCartId, cartUserId, name, type);
-	}
-
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}

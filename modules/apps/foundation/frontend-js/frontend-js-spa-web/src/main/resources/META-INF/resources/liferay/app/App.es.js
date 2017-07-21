@@ -95,7 +95,9 @@ class LiferayApp extends App {
 	}
 
 	onDataLayoutConfigReady_(event) {
-		Liferay.Layout.init(Liferay.Data.layoutConfig)
+		if (Liferay.Layout) {
+			Liferay.Layout.init(Liferay.Data.layoutConfig)
+		}
 	}
 
 	onDocClickDelegate_(event) {

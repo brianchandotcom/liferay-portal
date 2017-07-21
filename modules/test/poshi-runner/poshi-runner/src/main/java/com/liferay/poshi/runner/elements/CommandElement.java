@@ -163,7 +163,7 @@ public class CommandElement extends PoshiElement {
 
 		List<String> readableBlocks = new ArrayList<>();
 
-		for (String line : readableSyntax.split("\n", 0)) {
+		for (String line : readableSyntax.split("\n")) {
 			line = line.trim();
 
 			if (line.length() == 0) {

@@ -14,10 +14,24 @@
 
 package com.liferay.commerce.cart.service.impl;
 
+import com.liferay.commerce.cart.model.CommerceCart;
 import com.liferay.commerce.cart.service.base.CommerceCartServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Marco Leo
  */
 public class CommerceCartServiceImpl extends CommerceCartServiceBaseImpl {
+
+	public CommerceCart fetchCommerceCart(long commerceCartId){
+		return commerceCartLocalService.fetchCommerceCart(commerceCartId);
+	}
+
+	public CommerceCart addCommerceCart(
+		String name, int type, ServiceContext serviceContext) throws PortalException{
+
+		return commerceCartLocalService.addCommerceCart(name,type,serviceContext);
+	}
+
 }

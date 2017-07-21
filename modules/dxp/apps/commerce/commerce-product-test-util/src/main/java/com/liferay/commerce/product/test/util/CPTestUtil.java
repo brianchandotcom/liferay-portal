@@ -20,6 +20,7 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLink;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
+import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPOptionCategory;
@@ -30,6 +31,7 @@ import com.liferay.commerce.product.service.CPDefinitionLinkLocalServiceUtil;
 import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalServiceUtil;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalServiceUtil;
+import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalServiceUtil;
 import com.liferay.commerce.product.service.CPInstanceLocalServiceUtil;
 import com.liferay.commerce.product.service.CPOptionCategoryLocalServiceUtil;
 import com.liferay.commerce.product.service.CPOptionLocalServiceUtil;
@@ -180,6 +182,22 @@ public class CPTestUtil {
 				cpDefinitionOptionRelId, RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomDouble(), RandomTestUtil.randomString(),
 				serviceContext);
+	}
+
+	public static CPDefinitionSpecificationOptionValue
+			addCPDefinitionSpecificationOptionValue(
+				long groupId, long cpDefinitionId, long cpSpecificationOptionId,
+				long cpOptionCategoryId)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		return CPDefinitionSpecificationOptionValueLocalServiceUtil.
+			addCPDefinitionSpecificationOptionValue(
+				cpDefinitionId, cpSpecificationOptionId, cpOptionCategoryId,
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomDouble(), serviceContext);
 	}
 
 	public static CPDefinition addCPDefinitionWithWorkflow(

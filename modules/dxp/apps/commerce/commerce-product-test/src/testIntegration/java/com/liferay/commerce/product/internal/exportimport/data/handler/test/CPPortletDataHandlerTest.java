@@ -21,6 +21,7 @@ import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPOptionCategory;
+import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -60,8 +61,9 @@ public class CPPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 		CPOptionCategory cpOptionCategory = CPTestUtil.addCPOptionCategory(
 			groupId);
 
-		CPTestUtil.addCPSpecificationOption(
-			groupId, cpOptionCategory.getCPOptionCategoryId());
+		CPSpecificationOption cpSpecificationOption =
+			CPTestUtil.addCPSpecificationOption(
+				groupId, cpOptionCategory.getCPOptionCategoryId());
 
 		CPTestUtil.addCPOptionValue(groupId, cpOption.getCPOptionId());
 
@@ -73,6 +75,11 @@ public class CPPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 			CPTestUtil.addCPDefinitionOptionRel(
 				groupId, cpDefinition.getCPDefinitionId(),
 				cpOption.getCPOptionId());
+
+		CPTestUtil.addCPDefinitionSpecificationOptionValue(
+			groupId, cpDefinition.getCPDefinitionId(),
+			cpSpecificationOption.getCPSpecificationOptionId(),
+			cpOptionCategory.getCPOptionCategoryId());
 
 		int count =
 			CPInstanceStagedModelDataHandlerTest.

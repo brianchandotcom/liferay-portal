@@ -120,6 +120,9 @@ if (categoryId > 0) {
 
 <%!
 private void _buildCategoriesNavigation(List<AssetCategory> categories, long categoryId, PortletURL portletURL, ThemeDisplay themeDisplay, StringBundler sb) throws Exception {
+	portletURL.setParameter("categoryId", StringPool.BLANK);
+	String fullPortletURLStr = portletURL.toString();
+
 	for (AssetCategory category : categories) {
 		category = category.toEscapedModel();
 
@@ -130,17 +133,16 @@ private void _buildCategoriesNavigation(List<AssetCategory> categories, long cat
 		sb.append("<li class=\"tree-node\"><span>");
 
 		if (categoryId == category.getCategoryId()) {
-			portletURL.setParameter("categoryId", StringPool.BLANK);
-
 			sb.append("<a class=\"tag-selected\" href=\"");
+			sb.append(HtmlUtil.escape(fullPortletURLStr));
 		}
 		else {
 			portletURL.setParameter("categoryId", String.valueOf(category.getCategoryId()));
 
 			sb.append("<a href=\"");
+			sb.append(HtmlUtil.escape(portletURL.toString()));
 		}
 
-		sb.append(HtmlUtil.escape(portletURL.toString()));
 		sb.append("\">");
 		sb.append(title);
 		sb.append("</a>");

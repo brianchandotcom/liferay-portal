@@ -15,115 +15,54 @@
 package com.liferay.commerce.cart.content.web.internal.display.context;
 
 import com.liferay.commerce.cart.constants.CommerceCartConstants;
-import com.liferay.commerce.cart.constants.CommerceCartWebKeys;
-import com.liferay.commerce.cart.content.web.internal.portlet.configuration.CommerceCartContentMiniPortletInstanceConfiguration;
-import com.liferay.commerce.cart.content.web.internal.util.CommerceCartContentPortletUtil;
-import com.liferay.commerce.cart.display.context.util.CommerceCartRequestHelper;
 import com.liferay.commerce.cart.model.CommerceCart;
 import com.liferay.commerce.cart.model.CommerceCartItem;
-import com.liferay.commerce.cart.service.CommerceCartItemLocalService;
-import com.liferay.commerce.cart.service.CommerceCartLocalService;
-import com.liferay.commerce.product.constants.CPConstants;
-import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.model.CPFriendlyURLEntry;
-import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService;
+import com.liferay.commerce.cart.service.CommerceCartItemService;
+import com.liferay.commerce.cart.util.CommerceCartHelper;
+import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.theme.PortletDisplay;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
 import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
+ * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 public class CommerceCartContentDisplayContext {
 
 	public CommerceCartContentDisplayContext(
-			HttpServletRequest httpServletRequest,
-			CommerceCartItemLocalService commerceCartItemLocalService,
-			CommerceCartLocalService commerceCartLocalService,
-			CPFriendlyURLEntryLocalService cpFriendlyURLEntryLocalService,
-			Portal portal, String portalPreferenceNamespace)
-		throws ConfigurationException {
+		HttpServletRequest httpServletRequest,
+		CommerceCartHelper commerceCartHelper,
+		CommerceCartItemService commerceCartItemService) {
 
-		_httpServletRequest = httpServletRequest;
-		_commerceCartItemLocalService = commerceCartItemLocalService;
-		_commerceCartLocalService = commerceCartLocalService;
-		_cpFriendlyURLEntryLocalService = cpFriendlyURLEntryLocalService;
-		_portal = portal;
+		this.httpServletRequest = httpServletRequest;
+		_commerceCartHelper = commerceCartHelper;
+		_commerceCartItemService = commerceCartItemService;
 
-		portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
-			_httpServletRequest);
-
-		commerceCartRequestHelper = new CommerceCartRequestHelper(
+		CPRequestHelper cpRequestHelper = new CPRequestHelper(
 			httpServletRequest);
 
-		liferayPortletRequest =
-			commerceCartRequestHelper.getLiferayPortletRequest();
-		liferayPortletResponse =
-			commerceCartRequestHelper.getLiferayPortletResponse();
+		liferayPortletRequest = cpRequestHelper.getLiferayPortletRequest();
 
-		_portalPreferenceNamespace = portalPreferenceNamespace;
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		_commerceCartContentMiniPortletInstanceConfiguration =
-			portletDisplay.getPortletInstanceConfiguration(
-				CommerceCartContentMiniPortletInstanceConfiguration.class);
-
-		_defaultOrderByCol = "modified-date";
-		_defaultOrderByType = "asc";
+		liferayPortletResponse = cpRequestHelper.getLiferayPortletResponse();
 	}
 
 	public CommerceCart getCommerceCart() throws PortalException {
-		RenderRequest renderRequest =
-			commerceCartRequestHelper.getRenderRequest();
-
-		_commerceCart = (CommerceCart)renderRequest.getAttribute(
-			CommerceCartWebKeys.COMMERCE_CART);
-
 		if (_commerceCart != null) {
 			return _commerceCart;
 		}
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommerceCart.class.getName(), _httpServletRequest);
-
-		long commerceCartId = ParamUtil.getLong(
-			renderRequest, "commerceCartId");
-
-		if (commerceCartId > 0) {
-			_commerceCart =
-				_commerceCartLocalService.getUserCurrentCommerceCart(
-					getCommerceCartType(), serviceContext);
-		}
-
-		if (_commerceCart != null) {
-			renderRequest.setAttribute(
-				CommerceCartWebKeys.COMMERCE_CART, _commerceCart);
-		}
+		_commerceCart = _commerceCartHelper.getCurrentCart(
+			httpServletRequest, getCommerceCartType());
 
 		return _commerceCart;
 	}
@@ -140,129 +79,24 @@ public class CommerceCartContentDisplayContext {
 
 	public int getCommerceCartType() {
 		return ParamUtil.getInteger(
-			_httpServletRequest, "type",
+			httpServletRequest, "type",
 			CommerceCartConstants.COMMERCE_CART_TYPE_CART);
-	}
-
-	public String getCPDefinitionURL(
-			CPDefinition cpDefinition, ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		long classNameId = _portal.getClassNameId(CPDefinition.class);
-
-		CPFriendlyURLEntry cpFriendlyURLEntry =
-			_cpFriendlyURLEntryLocalService.fetchCPFriendlyURLEntry(
-				cpDefinition.getGroupId(), cpDefinition.getCompanyId(),
-				classNameId, cpDefinition.getCPDefinitionId(),
-				themeDisplay.getLanguageId(), true);
-
-		String cpDefinitionURL =
-			themeDisplay.getPortalURL() + CPConstants.SEPARATOR_PRODUCT_URL +
-				cpFriendlyURLEntry.getUrlTitle();
-
-		return cpDefinitionURL;
-	}
-
-	public String getDisplayStyle() {
-		return
-			_commerceCartContentMiniPortletInstanceConfiguration.displayStyle();
-	}
-
-	public long getDisplayStyleGroupId() {
-		if (_displayStyleGroupId > 0) {
-			return _displayStyleGroupId;
-		}
-
-		_displayStyleGroupId =
-			_commerceCartContentMiniPortletInstanceConfiguration.
-				displayStyleGroupId();
-
-		if (_displayStyleGroupId <= 0) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)_httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			_displayStyleGroupId = themeDisplay.getScopeGroupId();
-		}
-
-		return _displayStyleGroupId;
-	}
-
-	public String getOrderByCol() {
-		if (_orderByCol != null) {
-			return _orderByCol;
-		}
-
-		_orderByCol = ParamUtil.getString(_httpServletRequest, "orderByCol");
-
-		if (Validator.isNull(_orderByCol)) {
-			_orderByCol = portalPreferences.getValue(
-				_portalPreferenceNamespace, "order-by-col", _defaultOrderByCol);
-		}
-		else {
-			boolean saveOrderBy = ParamUtil.getBoolean(
-				_httpServletRequest, "saveOrderBy");
-
-			if (saveOrderBy) {
-				portalPreferences.setValue(
-					_portalPreferenceNamespace, "order-by-col", _orderByCol);
-			}
-		}
-
-		return _orderByCol;
-	}
-
-	public String getOrderByType() {
-		if (_orderByType != null) {
-			return _orderByType;
-		}
-
-		_orderByType = ParamUtil.getString(_httpServletRequest, "orderByType");
-
-		if (Validator.isNull(_orderByType)) {
-			_orderByType = portalPreferences.getValue(
-				_portalPreferenceNamespace, "order-by-type",
-				_defaultOrderByType);
-		}
-		else {
-			boolean saveOrderBy = ParamUtil.getBoolean(
-				_httpServletRequest, "saveOrderBy");
-
-			if (saveOrderBy) {
-				portalPreferences.setValue(
-					_portalPreferenceNamespace, "order-by-type", _orderByType);
-			}
-		}
-
-		return _orderByType;
 	}
 
 	public PortletURL getPortletURL() throws PortalException {
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-		String delta = ParamUtil.getString(_httpServletRequest, "delta");
+		String delta = ParamUtil.getString(httpServletRequest, "delta");
 
 		if (Validator.isNotNull(delta)) {
 			portletURL.setParameter("delta", delta);
 		}
 
 		String deltaEntry = ParamUtil.getString(
-			_httpServletRequest, "deltaEntry");
+			httpServletRequest, "deltaEntry");
 
 		if (Validator.isNotNull(deltaEntry)) {
 			portletURL.setParameter("deltaEntry", deltaEntry);
-		}
-
-		String orderByCol = getOrderByCol();
-
-		if (Validator.isNotNull(orderByCol)) {
-			portletURL.setParameter("orderByCol", orderByCol);
-		}
-
-		String orderByType = getOrderByType();
-
-		if (Validator.isNotNull(orderByType)) {
-			portletURL.setParameter("orderByType", orderByType);
 		}
 
 		return portletURL;
@@ -278,59 +112,30 @@ public class CommerceCartContentDisplayContext {
 		_searchContainer = new SearchContainer<>(
 			liferayPortletRequest, getPortletURL(), null, null);
 
-		_searchContainer.setEmptyResultsMessage("no-cart-items-were-found");
+		_searchContainer.setEmptyResultsMessage("no-items-were-found");
 
-		OrderByComparator<CommerceCartItem> orderByComparator =
-			CommerceCartContentPortletUtil.getCommerceCartItemOrderByComparator(
-				getOrderByCol(), getOrderByType());
-
-		_searchContainer.setOrderByCol(getOrderByCol());
-		_searchContainer.setOrderByComparator(orderByComparator);
-		_searchContainer.setOrderByType(getOrderByType());
-
-		int total = _commerceCartItemLocalService.getCommerceCartItemsCount(
+		int total = _commerceCartItemService.getCommerceCartItemsCount(
 			getCommerceCartId());
 
 		_searchContainer.setTotal(total);
 
 		List<CommerceCartItem> results =
-			_commerceCartItemLocalService.getCommerceCartItems(
+			_commerceCartItemService.getCommerceCartItems(
 				getCommerceCartId(), _searchContainer.getStart(),
-				_searchContainer.getEnd(), orderByComparator);
+				_searchContainer.getEnd());
 
 		_searchContainer.setResults(results);
 
 		return _searchContainer;
 	}
 
-	public void setDefaultOrderByCol(String defaultOrderByCol) {
-		_defaultOrderByCol = defaultOrderByCol;
-	}
-
-	public void setDefaultOrderByType(String defaultOrderByType) {
-		_defaultOrderByType = defaultOrderByType;
-	}
-
-	protected final CommerceCartRequestHelper commerceCartRequestHelper;
+	protected final HttpServletRequest httpServletRequest;
 	protected final LiferayPortletRequest liferayPortletRequest;
 	protected final LiferayPortletResponse liferayPortletResponse;
-	protected final PortalPreferences portalPreferences;
 
 	private CommerceCart _commerceCart;
-	private final CommerceCartContentMiniPortletInstanceConfiguration
-		_commerceCartContentMiniPortletInstanceConfiguration;
-	private final CommerceCartItemLocalService _commerceCartItemLocalService;
-	private final CommerceCartLocalService _commerceCartLocalService;
-	private final CPFriendlyURLEntryLocalService
-		_cpFriendlyURLEntryLocalService;
-	private String _defaultOrderByCol;
-	private String _defaultOrderByType;
-	private long _displayStyleGroupId;
-	private final HttpServletRequest _httpServletRequest;
-	private String _orderByCol;
-	private String _orderByType;
-	private final Portal _portal;
-	private final String _portalPreferenceNamespace;
+	private final CommerceCartHelper _commerceCartHelper;
+	private final CommerceCartItemService _commerceCartItemService;
 	private SearchContainer<CommerceCartItem> _searchContainer;
 
 }

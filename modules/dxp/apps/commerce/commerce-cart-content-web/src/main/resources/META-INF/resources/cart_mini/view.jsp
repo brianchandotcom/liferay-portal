@@ -17,15 +17,15 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceCartContentDisplayContext commerceCartContentDisplayContext = (CommerceCartContentDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+	CommerceCartContentMiniDisplayContext commerceCartContentMiniDisplayContext = (CommerceCartContentMiniDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 Map<String, Object> contextObjects = new HashMap<>();
 
-contextObjects.put("commerceCartContentDisplayContext", commerceCartContentDisplayContext);
+contextObjects.put("commerceCartContentMiniDisplayContext", commerceCartContentMiniDisplayContext);
 
-SearchContainer<CommerceCartItem> commerceCartItemSearchContainer = commerceCartContentDisplayContext.getSearchContainer();
+SearchContainer<CommerceCartItem> commerceCartItemSearchContainer = commerceCartContentMiniDisplayContext.getSearchContainer();
 
-PortletURL portletURL = commerceCartContentDisplayContext.getPortletURL();
+PortletURL portletURL = commerceCartContentMiniDisplayContext.getPortletURL();
 
 portletURL.setParameter("searchContainerId", "commerceCartItems");
 
@@ -35,8 +35,8 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 <liferay-ddm:template-renderer
 	className="<%= CommerceCartContentMiniPortlet.class.getName() %>"
 	contextObjects="<%= contextObjects %>"
-	displayStyle="<%= commerceCartContentDisplayContext.getDisplayStyle() %>"
-	displayStyleGroupId="<%= commerceCartContentDisplayContext.getDisplayStyleGroupId() %>"
+	displayStyle="<%= commerceCartContentMiniDisplayContext.getDisplayStyle() %>"
+	displayStyleGroupId="<%= commerceCartContentMiniDisplayContext.getDisplayStyleGroupId() %>"
 	entries="<%= commerceCartItemSearchContainer.getResults() %>"
 >
 	<div class="commerce-cart-items-container" id="<portlet:namespace />entriesContainer">
@@ -65,7 +65,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-content"
-					href="<%= commerceCartContentDisplayContext.getCPDefinitionURL(cpDefinition, themeDisplay) %>"
+					href="<%= commerceCartContentMiniDisplayContext.getCPDefinitionURL(cpDefinition, themeDisplay) %>"
 				>
 					<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>
 				</liferay-ui:search-container-column-text>

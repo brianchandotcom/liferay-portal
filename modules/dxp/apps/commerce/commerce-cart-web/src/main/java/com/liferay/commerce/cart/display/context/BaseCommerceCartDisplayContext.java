@@ -15,9 +15,9 @@
 package com.liferay.commerce.cart.display.context;
 
 import com.liferay.commerce.cart.constants.CommerceCartConstants;
-import com.liferay.commerce.cart.display.context.util.CommerceCartRequestHelper;
 import com.liferay.commerce.cart.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.cart.model.CommerceCart;
+import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -49,13 +49,10 @@ public abstract class BaseCommerceCartDisplayContext<T> {
 		portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			this.httpServletRequest);
 
-		commerceCartRequestHelper = new CommerceCartRequestHelper(
-			httpServletRequest);
+		cpRequestHelper = new CPRequestHelper(httpServletRequest);
 
-		liferayPortletRequest =
-			commerceCartRequestHelper.getLiferayPortletRequest();
-		liferayPortletResponse =
-			commerceCartRequestHelper.getLiferayPortletResponse();
+		liferayPortletRequest = cpRequestHelper.getLiferayPortletRequest();
+		liferayPortletResponse = cpRequestHelper.getLiferayPortletResponse();
 
 		_portalPreferenceNamespace = portalPreferenceNamespace;
 
@@ -69,7 +66,7 @@ public abstract class BaseCommerceCartDisplayContext<T> {
 		}
 
 		_commerceCart = actionHelper.getCommerceCart(
-			commerceCartRequestHelper.getRenderRequest());
+			cpRequestHelper.getRenderRequest());
 
 		return _commerceCart;
 	}
@@ -97,16 +94,6 @@ public abstract class BaseCommerceCartDisplayContext<T> {
 		}
 
 		return _displayStyle;
-	}
-
-	public String getKeywords() {
-		if (_keywords != null) {
-			return _keywords;
-		}
-
-		_keywords = ParamUtil.getString(httpServletRequest, "keywords");
-
-		return _keywords;
 	}
 
 	public String getOrderByCol() {
@@ -232,10 +219,6 @@ public abstract class BaseCommerceCartDisplayContext<T> {
 		throws PortalException;
 
 	public boolean isSearch() {
-		if (Validator.isNotNull(getKeywords())) {
-			return true;
-		}
-
 		return false;
 	}
 
@@ -276,7 +259,7 @@ public abstract class BaseCommerceCartDisplayContext<T> {
 	}
 
 	protected final ActionHelper actionHelper;
-	protected final CommerceCartRequestHelper commerceCartRequestHelper;
+	protected final CPRequestHelper cpRequestHelper;
 	protected final HttpServletRequest httpServletRequest;
 	protected final LiferayPortletRequest liferayPortletRequest;
 	protected final LiferayPortletResponse liferayPortletResponse;
@@ -287,7 +270,6 @@ public abstract class BaseCommerceCartDisplayContext<T> {
 	private String _defaultOrderByCol;
 	private String _defaultOrderByType;
 	private String _displayStyle;
-	private String _keywords;
 	private String _orderByCol;
 	private String _orderByType;
 	private final String _portalPreferenceNamespace;

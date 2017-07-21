@@ -15,11 +15,9 @@
 package com.liferay.commerce.cart.content.web.internal.portlet.action;
 
 import com.liferay.commerce.cart.constants.CommerceCartPortletKeys;
-import com.liferay.commerce.cart.content.web.internal.display.context.CommerceCartContentDisplayContext;
-import com.liferay.commerce.cart.content.web.internal.portlet.CommerceCartContentMiniPortlet;
-import com.liferay.commerce.cart.service.CommerceCartItemLocalService;
-import com.liferay.commerce.cart.service.CommerceCartLocalService;
-import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService;
+import com.liferay.commerce.cart.content.web.internal.display.context.CommerceCartContentMiniDisplayContext;
+import com.liferay.commerce.cart.service.CommerceCartItemService;
+import com.liferay.commerce.cart.util.CommerceCartHelper;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
@@ -34,6 +32,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 @Component(
@@ -47,13 +46,10 @@ public class CommerceCartContentMiniConfigurationAction
 	@Override
 	public String getJspPath(HttpServletRequest request) {
 		try {
-			CommerceCartContentDisplayContext
+			CommerceCartContentMiniDisplayContext
 				commerceCartContentDisplayContext =
-					new CommerceCartContentDisplayContext(
-						request, _commerceCartItemLocalService,
-						_commerceCartLocalService,
-						_cpFriendlyURLEntryLocalService, _portal,
-						CommerceCartContentMiniPortlet.class.getSimpleName());
+					new CommerceCartContentMiniDisplayContext(
+						request, _commerceCartHelper, _commerceCartItemService);
 
 			request.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -79,13 +75,10 @@ public class CommerceCartContentMiniConfigurationAction
 		CommerceCartContentMiniConfigurationAction.class);
 
 	@Reference
-	private CommerceCartItemLocalService _commerceCartItemLocalService;
+	private CommerceCartHelper _commerceCartHelper;
 
 	@Reference
-	private CommerceCartLocalService _commerceCartLocalService;
-
-	@Reference
-	private CPFriendlyURLEntryLocalService _cpFriendlyURLEntryLocalService;
+	private CommerceCartItemService _commerceCartItemService;
 
 	@Reference
 	private Portal _portal;

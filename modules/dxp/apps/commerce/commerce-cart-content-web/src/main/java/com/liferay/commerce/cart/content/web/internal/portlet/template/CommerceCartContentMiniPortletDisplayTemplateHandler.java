@@ -15,7 +15,7 @@
 package com.liferay.commerce.cart.content.web.internal.portlet.template;
 
 import com.liferay.commerce.cart.constants.CommerceCartPortletKeys;
-import com.liferay.commerce.cart.content.web.internal.display.context.CommerceCartContentDisplayContext;
+import com.liferay.commerce.cart.content.web.internal.display.context.CommerceCartContentMiniDisplayContext;
 import com.liferay.commerce.cart.content.web.internal.portlet.CommerceCartContentMiniPortlet;
 import com.liferay.commerce.cart.model.CommerceCartItem;
 import com.liferay.commerce.cart.service.CommerceCartItemLocalService;
@@ -83,9 +83,9 @@ public class CommerceCartContentMiniPortletDisplayTemplateHandler
 		templateVariableGroup.empty();
 
 		templateVariableGroup.addVariable(
-			"commerce-cart-content-display-context",
-			CommerceCartContentDisplayContext.class,
-			"commerceCartContentDisplayContext");
+			"commerce-cart-content-mini-display-context",
+			CommerceCartContentMiniDisplayContext.class,
+			"commerceCartContenMinitDisplayContext");
 		templateVariableGroup.addCollectionVariable(
 			"commerce-cart-items", List.class,
 			PortletDisplayTemplateConstants.ENTRIES, "commerce-cart-item",

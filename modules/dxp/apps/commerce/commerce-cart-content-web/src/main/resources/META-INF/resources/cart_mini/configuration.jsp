@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceCartContentDisplayContext commerceCartContentDisplayContext = (CommerceCartContentDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CommerceCartContentMiniDisplayContext commerceCartContentMiniDisplayContext = (CommerceCartContentMiniDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
@@ -35,8 +35,8 @@ CommerceCartContentDisplayContext commerceCartContentDisplayContext = (CommerceC
 					<div class="display-template">
 						<liferay-ddm:template-selector
 							className="<%= CommerceCartContentMiniPortlet.class.getName() %>"
-							displayStyle="<%= commerceCartContentDisplayContext.getDisplayStyle() %>"
-							displayStyleGroupId="<%= commerceCartContentDisplayContext.getDisplayStyleGroupId() %>"
+							displayStyle="<%= commerceCartContentMiniDisplayContext.getDisplayStyle() %>"
+							displayStyleGroupId="<%= commerceCartContentMiniDisplayContext.getDisplayStyleGroupId() %>"
 							refreshURL="<%= PortalUtil.getCurrentURL(request) %>"
 							showEmptyOption="<%= true %>"
 						/>

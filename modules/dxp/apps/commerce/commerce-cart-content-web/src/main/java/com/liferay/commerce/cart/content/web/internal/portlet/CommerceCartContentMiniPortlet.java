@@ -14,21 +14,14 @@
 
 package com.liferay.commerce.cart.content.web.internal.portlet;
 
-import com.liferay.commerce.cart.constants.CommerceCartConstants;
 import com.liferay.commerce.cart.constants.CommerceCartPortletKeys;
-import com.liferay.commerce.cart.constants.CommerceCartWebKeys;
-import com.liferay.commerce.cart.content.web.internal.display.context.CommerceCartContentDisplayContext;
-import com.liferay.commerce.cart.model.CommerceCart;
-import com.liferay.commerce.cart.service.CommerceCartItemLocalService;
-import com.liferay.commerce.cart.service.CommerceCartLocalService;
-import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService;
+import com.liferay.commerce.cart.content.web.internal.display.context.CommerceCartContentMiniDisplayContext;
+import com.liferay.commerce.cart.service.CommerceCartItemService;
+import com.liferay.commerce.cart.util.CommerceCartHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -45,6 +38,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 @Component(
@@ -81,27 +75,11 @@ public class CommerceCartContentMiniPortlet extends MVCPortlet {
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(renderRequest);
 
-			int type = ParamUtil.getInteger(
-				httpServletRequest, "type",
-				CommerceCartConstants.COMMERCE_CART_TYPE_CART);
-
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				httpServletRequest);
-
-			CommerceCart commerceCart =
-				_commerceCartLocalService.getUserCurrentCommerceCart(
-					type, serviceContext);
-
-			renderRequest.setAttribute(
-				CommerceCartWebKeys.COMMERCE_CART, commerceCart);
-
-			CommerceCartContentDisplayContext
+			CommerceCartContentMiniDisplayContext
 				commerceCartContentDisplayContext =
-					new CommerceCartContentDisplayContext(
-						httpServletRequest, _commerceCartItemLocalService,
-						_commerceCartLocalService,
-						_cpFriendlyURLEntryLocalService, _portal,
-						CommerceCartContentMiniPortlet.class.getSimpleName());
+					new CommerceCartContentMiniDisplayContext(
+						httpServletRequest, _commerceCartHelper,
+						_commerceCartItemService);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -118,13 +96,10 @@ public class CommerceCartContentMiniPortlet extends MVCPortlet {
 		CommerceCartContentMiniPortlet.class);
 
 	@Reference
-	private CommerceCartItemLocalService _commerceCartItemLocalService;
+	private CommerceCartHelper _commerceCartHelper;
 
 	@Reference
-	private CommerceCartLocalService _commerceCartLocalService;
-
-	@Reference
-	private CPFriendlyURLEntryLocalService _cpFriendlyURLEntryLocalService;
+	private CommerceCartItemService _commerceCartItemService;
 
 	@Reference
 	private Portal _portal;

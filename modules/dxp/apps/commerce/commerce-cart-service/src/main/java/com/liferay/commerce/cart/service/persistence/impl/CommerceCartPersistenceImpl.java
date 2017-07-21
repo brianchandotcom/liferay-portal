@@ -106,7 +106,7 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByType",
 			new String[] { Integer.class.getName() },
 			CommerceCartModelImpl.TYPE_COLUMN_BITMASK |
-			CommerceCartModelImpl.NAME_COLUMN_BITMASK);
+			CommerceCartModelImpl.CREATEDATE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_TYPE = new FinderPath(CommerceCartModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceCartModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByType",
@@ -1536,7 +1536,6 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 		commerceCartImpl.setUserName(commerceCart.getUserName());
 		commerceCartImpl.setCreateDate(commerceCart.getCreateDate());
 		commerceCartImpl.setModifiedDate(commerceCart.getModifiedDate());
-		commerceCartImpl.setCartUserId(commerceCart.getCartUserId());
 		commerceCartImpl.setName(commerceCart.getName());
 		commerceCartImpl.setType(commerceCart.getType());
 

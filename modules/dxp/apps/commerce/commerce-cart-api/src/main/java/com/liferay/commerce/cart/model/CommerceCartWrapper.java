@@ -65,7 +65,6 @@ public class CommerceCartWrapper implements CommerceCart,
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("cartUserId", getCartUserId());
 		attributes.put("name", getName());
 		attributes.put("type", getType());
 
@@ -114,12 +113,6 @@ public class CommerceCartWrapper implements CommerceCart,
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
-		}
-
-		Long cartUserId = (Long)attributes.get("cartUserId");
-
-		if (cartUserId != null) {
-			setCartUserId(cartUserId);
 		}
 
 		String name = (String)attributes.get("name");
@@ -201,16 +194,6 @@ public class CommerceCartWrapper implements CommerceCart,
 	}
 
 	/**
-	* Returns the cart user uuid of this commerce cart.
-	*
-	* @return the cart user uuid of this commerce cart
-	*/
-	@Override
-	public java.lang.String getCartUserUuid() {
-		return _commerceCart.getCartUserUuid();
-	}
-
-	/**
 	* Returns the name of this commerce cart.
 	*
 	* @return the name of this commerce cart
@@ -271,16 +254,6 @@ public class CommerceCartWrapper implements CommerceCart,
 	}
 
 	/**
-	* Returns the cart user ID of this commerce cart.
-	*
-	* @return the cart user ID of this commerce cart
-	*/
-	@Override
-	public long getCartUserId() {
-		return _commerceCart.getCartUserId();
-	}
-
-	/**
 	* Returns the commerce cart ID of this commerce cart.
 	*
 	* @return the commerce cart ID of this commerce cart
@@ -338,26 +311,6 @@ public class CommerceCartWrapper implements CommerceCart,
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_commerceCart.setCachedModel(cachedModel);
-	}
-
-	/**
-	* Sets the cart user ID of this commerce cart.
-	*
-	* @param cartUserId the cart user ID of this commerce cart
-	*/
-	@Override
-	public void setCartUserId(long cartUserId) {
-		_commerceCart.setCartUserId(cartUserId);
-	}
-
-	/**
-	* Sets the cart user uuid of this commerce cart.
-	*
-	* @param cartUserUuid the cart user uuid of this commerce cart
-	*/
-	@Override
-	public void setCartUserUuid(java.lang.String cartUserUuid) {
-		_commerceCart.setCartUserUuid(cartUserUuid);
 	}
 
 	/**

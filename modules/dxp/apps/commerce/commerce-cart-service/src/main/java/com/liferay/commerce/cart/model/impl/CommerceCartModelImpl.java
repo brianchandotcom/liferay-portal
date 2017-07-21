@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -77,7 +78,6 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
-			{ "cartUserId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
 			{ "type_", Types.INTEGER }
 		};
@@ -91,15 +91,14 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("cartUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceCart (CommerceCartId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,cartUserId LONG,name VARCHAR(75) null,type_ INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceCart (CommerceCartId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,type_ INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceCart";
-	public static final String ORDER_BY_JPQL = " ORDER BY commerceCart.name DESC";
-	public static final String ORDER_BY_SQL = " ORDER BY CommerceCart.name DESC";
+	public static final String ORDER_BY_JPQL = " ORDER BY commerceCart.createDate ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY CommerceCart.createDate ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -116,6 +115,7 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 	public static final long NAME_COLUMN_BITMASK = 2L;
 	public static final long TYPE_COLUMN_BITMASK = 4L;
 	public static final long USERID_COLUMN_BITMASK = 8L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -137,7 +137,6 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setCartUserId(soapModel.getCartUserId());
 		model.setName(soapModel.getName());
 		model.setType(soapModel.getType());
 
@@ -211,7 +210,6 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("cartUserId", getCartUserId());
 		attributes.put("name", getName());
 		attributes.put("type", getType());
 
@@ -263,12 +261,6 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
-		}
-
-		Long cartUserId = (Long)attributes.get("cartUserId");
-
-		if (cartUserId != null) {
-			setCartUserId(cartUserId);
 		}
 
 		String name = (String)attributes.get("name");
@@ -392,6 +384,8 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 
 	@Override
 	public void setCreateDate(Date createDate) {
+		_columnBitmask = -1L;
+
 		_createDate = createDate;
 	}
 
@@ -414,33 +408,6 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 
 	@JSON
 	@Override
-	public long getCartUserId() {
-		return _cartUserId;
-	}
-
-	@Override
-	public void setCartUserId(long cartUserId) {
-		_cartUserId = cartUserId;
-	}
-
-	@Override
-	public String getCartUserUuid() {
-		try {
-			User user = UserLocalServiceUtil.getUserById(getCartUserId());
-
-			return user.getUuid();
-		}
-		catch (PortalException pe) {
-			return StringPool.BLANK;
-		}
-	}
-
-	@Override
-	public void setCartUserUuid(String cartUserUuid) {
-	}
-
-	@JSON
-	@Override
 	public String getName() {
 		if (_name == null) {
 			return StringPool.BLANK;
@@ -452,7 +419,7 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 
 	@Override
 	public void setName(String name) {
-		_columnBitmask = -1L;
+		_columnBitmask |= NAME_COLUMN_BITMASK;
 
 		if (_originalName == null) {
 			_originalName = _name;
@@ -526,7 +493,6 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 		commerceCartImpl.setUserName(getUserName());
 		commerceCartImpl.setCreateDate(getCreateDate());
 		commerceCartImpl.setModifiedDate(getModifiedDate());
-		commerceCartImpl.setCartUserId(getCartUserId());
 		commerceCartImpl.setName(getName());
 		commerceCartImpl.setType(getType());
 
@@ -539,9 +505,7 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 	public int compareTo(CommerceCart commerceCart) {
 		int value = 0;
 
-		value = getName().compareTo(commerceCart.getName());
-
-		value = value * -1;
+		value = DateUtil.compareTo(getCreateDate(), commerceCart.getCreateDate());
 
 		if (value != 0) {
 			return value;
@@ -648,8 +612,6 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 			commerceCartCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		commerceCartCacheModel.cartUserId = getCartUserId();
-
 		commerceCartCacheModel.name = getName();
 
 		String name = commerceCartCacheModel.name;
@@ -665,7 +627,7 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{CommerceCartId=");
 		sb.append(getCommerceCartId());
@@ -681,8 +643,6 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
-		sb.append(", cartUserId=");
-		sb.append(getCartUserId());
 		sb.append(", name=");
 		sb.append(getName());
 		sb.append(", type=");
@@ -694,7 +654,7 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.cart.model.CommerceCart");
@@ -729,10 +689,6 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>cartUserId</column-name><column-value><![CDATA[");
-		sb.append(getCartUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
 		sb.append(getName());
 		sb.append("]]></column-value></column>");
@@ -762,7 +718,6 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
-	private long _cartUserId;
 	private String _name;
 	private String _originalName;
 	private int _type;

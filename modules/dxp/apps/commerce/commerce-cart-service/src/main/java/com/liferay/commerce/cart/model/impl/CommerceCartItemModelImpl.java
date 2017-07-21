@@ -103,8 +103,8 @@ public class CommerceCartItemModelImpl extends BaseModelImpl<CommerceCartItem>
 
 	public static final String TABLE_SQL_CREATE = "create table CommerceCartItem (CommerceCartItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CommerceCartId LONG,CPDefinitionId LONG,CPInstanceId LONG,quantity INTEGER,json VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceCartItem";
-	public static final String ORDER_BY_JPQL = " ORDER BY commerceCartItem.modifiedDate ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY CommerceCartItem.modifiedDate ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY commerceCartItem.createDate ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY CommerceCartItem.createDate ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -118,7 +118,7 @@ public class CommerceCartItemModelImpl extends BaseModelImpl<CommerceCartItem>
 				"value.object.column.bitmask.enabled.com.liferay.commerce.cart.model.CommerceCartItem"),
 			true);
 	public static final long COMMERCECARTID_COLUMN_BITMASK = 1L;
-	public static final long MODIFIEDDATE_COLUMN_BITMASK = 2L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 2L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -388,6 +388,8 @@ public class CommerceCartItemModelImpl extends BaseModelImpl<CommerceCartItem>
 
 	@Override
 	public void setCreateDate(Date createDate) {
+		_columnBitmask = -1L;
+
 		_createDate = createDate;
 	}
 
@@ -404,8 +406,6 @@ public class CommerceCartItemModelImpl extends BaseModelImpl<CommerceCartItem>
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
-
-		_columnBitmask = -1L;
 
 		_modifiedDate = modifiedDate;
 	}
@@ -535,8 +535,8 @@ public class CommerceCartItemModelImpl extends BaseModelImpl<CommerceCartItem>
 	public int compareTo(CommerceCartItem commerceCartItem) {
 		int value = 0;
 
-		value = DateUtil.compareTo(getModifiedDate(),
-				commerceCartItem.getModifiedDate());
+		value = DateUtil.compareTo(getCreateDate(),
+				commerceCartItem.getCreateDate());
 
 		if (value != 0) {
 			return value;

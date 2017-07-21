@@ -106,7 +106,7 @@ public class CommerceCartItemPersistenceImpl extends BasePersistenceImpl<Commerc
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCommerceCartId",
 			new String[] { Long.class.getName() },
 			CommerceCartItemModelImpl.COMMERCECARTID_COLUMN_BITMASK |
-			CommerceCartItemModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+			CommerceCartItemModelImpl.CREATEDATE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_COMMERCECARTID = new FinderPath(CommerceCartItemModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceCartItemModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCommerceCartId",

@@ -73,8 +73,8 @@ public interface CommerceCartLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceCart addCommerceCart(CommerceCart commerceCart);
 
-	public CommerceCart addCommerceCart(long cartUserId, java.lang.String name,
-		int type, ServiceContext serviceContext) throws PortalException;
+	public CommerceCart addCommerceCart(java.lang.String name, int type,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new commerce cart with the primary key. Does not add the commerce cart to the database.

@@ -54,11 +54,10 @@ public class CommerceCartLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.cart.model.CommerceCart addCommerceCart(
-		long cartUserId, java.lang.String name, int type,
+		java.lang.String name, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addCommerceCart(cartUserId, name, type, serviceContext);
+		return getService().addCommerceCart(name, type, serviceContext);
 	}
 
 	/**

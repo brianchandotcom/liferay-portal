@@ -47,11 +47,11 @@ public class CommerceCartLocalServiceWrapper implements CommerceCartLocalService
 
 	@Override
 	public com.liferay.commerce.cart.model.CommerceCart addCommerceCart(
-		long cartUserId, java.lang.String name, int type,
+		java.lang.String name, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceCartLocalService.addCommerceCart(cartUserId, name,
-			type, serviceContext);
+		return _commerceCartLocalService.addCommerceCart(name, type,
+			serviceContext);
 	}
 
 	/**

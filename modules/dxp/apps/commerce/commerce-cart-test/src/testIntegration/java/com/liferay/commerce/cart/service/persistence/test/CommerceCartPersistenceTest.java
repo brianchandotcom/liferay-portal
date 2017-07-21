@@ -137,8 +137,6 @@ public class CommerceCartPersistenceTest {
 
 		newCommerceCart.setModifiedDate(RandomTestUtil.nextDate());
 
-		newCommerceCart.setCartUserId(RandomTestUtil.nextLong());
-
 		newCommerceCart.setName(RandomTestUtil.randomString());
 
 		newCommerceCart.setType(RandomTestUtil.nextInt());
@@ -163,8 +161,6 @@ public class CommerceCartPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCommerceCart.getModifiedDate()),
 			Time.getShortTimestamp(newCommerceCart.getModifiedDate()));
-		Assert.assertEquals(existingCommerceCart.getCartUserId(),
-			newCommerceCart.getCartUserId());
 		Assert.assertEquals(existingCommerceCart.getName(),
 			newCommerceCart.getName());
 		Assert.assertEquals(existingCommerceCart.getType(),
@@ -222,7 +218,7 @@ public class CommerceCartPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("CommerceCart",
 			"CommerceCartId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "cartUserId", true, "name", true, "type", true);
+			"modifiedDate", true, "name", true, "type", true);
 	}
 
 	@Test
@@ -464,8 +460,6 @@ public class CommerceCartPersistenceTest {
 		commerceCart.setCreateDate(RandomTestUtil.nextDate());
 
 		commerceCart.setModifiedDate(RandomTestUtil.nextDate());
-
-		commerceCart.setCartUserId(RandomTestUtil.nextLong());
 
 		commerceCart.setName(RandomTestUtil.randomString());
 

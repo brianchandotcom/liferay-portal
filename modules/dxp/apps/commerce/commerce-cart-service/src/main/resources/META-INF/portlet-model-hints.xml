@@ -9,7 +9,6 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="cartUserId" type="long" />
 		<field name="name" type="String" />
 		<field name="type" type="int" />
 	</model>

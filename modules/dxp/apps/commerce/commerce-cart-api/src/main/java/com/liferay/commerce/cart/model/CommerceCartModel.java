@@ -193,34 +193,6 @@ public interface CommerceCartModel extends BaseModel<CommerceCart>, GroupedModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the cart user ID of this commerce cart.
-	 *
-	 * @return the cart user ID of this commerce cart
-	 */
-	public long getCartUserId();
-
-	/**
-	 * Sets the cart user ID of this commerce cart.
-	 *
-	 * @param cartUserId the cart user ID of this commerce cart
-	 */
-	public void setCartUserId(long cartUserId);
-
-	/**
-	 * Returns the cart user uuid of this commerce cart.
-	 *
-	 * @return the cart user uuid of this commerce cart
-	 */
-	public String getCartUserUuid();
-
-	/**
-	 * Sets the cart user uuid of this commerce cart.
-	 *
-	 * @param cartUserUuid the cart user uuid of this commerce cart
-	 */
-	public void setCartUserUuid(String cartUserUuid);
-
-	/**
 	 * Returns the name of this commerce cart.
 	 *
 	 * @return the name of this commerce cart

@@ -6,7 +6,6 @@ create table CommerceCart (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	cartUserId LONG,
 	name VARCHAR(75) null,
 	type_ INTEGER
 );

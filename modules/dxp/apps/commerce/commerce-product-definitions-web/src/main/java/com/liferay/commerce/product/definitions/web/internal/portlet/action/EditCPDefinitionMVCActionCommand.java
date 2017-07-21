@@ -16,15 +16,12 @@ package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.exception.AssetTagException;
-import com.liferay.commerce.cart.constants.CommerceCartConstants;
-import com.liferay.commerce.cart.model.CommerceCart;
 import com.liferay.commerce.cart.service.CommerceCartItemLocalService;
 import com.liferay.commerce.cart.service.CommerceCartLocalService;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -45,20 +42,18 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.trash.kernel.service.TrashEntryService;
 import com.liferay.trash.kernel.util.TrashUtil;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Alessio Antonio Rendina
@@ -79,25 +74,6 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		throws PortletException {
 
 		return super.processAction(actionRequest, actionResponse);
-	}
-
-	protected void addToCommerceCart(ActionRequest actionRequest)
-		throws PortalException {
-
-		long cpDefinitionId = ParamUtil.getLong(
-			actionRequest, "cpDefinitionId");
-
-		int type = ParamUtil.getInteger(actionRequest, "type");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
-
-		CommerceCart commerceCart = _getUserCurrentCommerceCart(
-			type, serviceContext);
-
-		_commerceCartItemLocalService.addCommerceCartItem(
-			commerceCart.getCommerceCartId(), cpDefinitionId, 0, 1, null,
-			serviceContext);
 	}
 
 	protected void deleteCPDefinitions(
@@ -179,11 +155,6 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			}
 			else if (cmd.equals(Constants.RESTORE)) {
 				restoreTrashEntries(actionRequest);
-			}
-			else if (cmd.equals("ADD_TO_CART") ||
-					 cmd.equals("ADD_TO_WISH_LIST")) {
-
-				addToCommerceCart(actionRequest);
 			}
 
 			if ((cpDefinition != null) &&
@@ -348,23 +319,6 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		return cpDefinition;
-	}
-
-	private CommerceCart _getUserCurrentCommerceCart(
-			int type, ServiceContext serviceContext)
-		throws PortalException {
-
-		CommerceCart commerceCart = _commerceCartLocalService.fetchCommerceCart(
-			serviceContext.getScopeGroupId(), serviceContext.getUserId(), type);
-
-		if (commerceCart != null) {
-			return commerceCart;
-		}
-
-		return _commerceCartLocalService.addCommerceCart(
-			serviceContext.getUserId(),
-			CommerceCartConstants.COMMERCE_CART_DEFAULT_TITLE, type,
-			serviceContext);
 	}
 
 	@Reference

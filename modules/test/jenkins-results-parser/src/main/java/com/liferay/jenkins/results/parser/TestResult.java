@@ -70,9 +70,19 @@ public class TestResult {
 
 		int x = className.lastIndexOf(".");
 
-		simpleClassName = className.substring(x + 1);
+		try {
+			simpleClassName = className.substring(x + 1);
 
-		packageName = className.substring(0, x);
+			packageName = className.substring(0, x);
+		}
+		catch (StringIndexOutOfBoundsException sioobe) {
+			packageName = className;
+			simpleClassName = className;
+
+			System.out.println(
+				"Invalid test className: " + className + " in build: " +
+					axisBuild.getBuildURL());
+		}
 
 		testName = caseJSONObject.getString("name");
 

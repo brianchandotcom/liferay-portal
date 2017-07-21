@@ -62,6 +62,8 @@ import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -410,6 +412,13 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 			contextObjects.put(
 				PortletDisplayTemplateConstants.RENDER_REQUEST, renderRequest);
 		}
+		else if (portletRequest instanceof ResourceRequest) {
+			ResourceRequest resourceRequest = (ResourceRequest)portletRequest;
+
+			contextObjects.put(
+				PortletDisplayTemplateConstants.RESOURCE_REQUEST,
+				resourceRequest);
+		}
 
 		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE);
@@ -423,10 +432,18 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 				PortletDisplayTemplateConstants.RENDER_RESPONSE,
 				renderResponse);
 		}
+		else if (portletResponse instanceof ResourceResponse) {
+			ResourceResponse resourceResponse =
+				(ResourceResponse)portletResponse;
+
+			contextObjects.put(
+				PortletDisplayTemplateConstants.RESOURCE_RESPONSE,
+				resourceResponse);
+		}
 
 		if ((renderRequest != null) && (renderResponse != null)) {
 			PortletURL currentURL = PortletURLUtil.getCurrent(
-				renderRequest, renderResponse);
+				portletRequest, renderResponse);
 
 			contextObjects.put(
 				PortletDisplayTemplateConstants.CURRENT_URL,

@@ -20,6 +20,7 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLink;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
+import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPOptionCategory;
@@ -66,6 +67,7 @@ public class CPPortletDataHandler extends BasePortletDataHandler {
 			new StagedModelType(CPDefinitionLink.class),
 			new StagedModelType(CPDefinitionOptionRel.class),
 			new StagedModelType(CPDefinitionOptionValueRel.class),
+			new StagedModelType(CPDefinitionSpecificationOptionValue.class),
 			new StagedModelType(CPInstance.class),
 			new StagedModelType(CPOption.class),
 			new StagedModelType(CPOptionCategory.class),
@@ -119,6 +121,8 @@ public class CPPortletDataHandler extends BasePortletDataHandler {
 			portletDataContext);
 		_cpDefinitionOptionValueRelStagedModelRepository.deleteStagedModels(
 			portletDataContext);
+		_cpDefinitionSpecificationOptionValueStagedModelRepository.
+			deleteStagedModels(portletDataContext);
 		_cpDefinitionStagedModelRepository.deleteStagedModels(
 			portletDataContext);
 		_cpInstanceStagedModelRepository.deleteStagedModels(portletDataContext);
@@ -154,6 +158,9 @@ public class CPPortletDataHandler extends BasePortletDataHandler {
 			exportModels(
 				portletDataContext,
 				_cpDefinitionOptionValueRelStagedModelRepository);
+			exportModels(
+				portletDataContext,
+				_cpDefinitionSpecificationOptionValueStagedModelRepository);
 		}
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "skus")) {
@@ -208,6 +215,8 @@ public class CPPortletDataHandler extends BasePortletDataHandler {
 			importModels(portletDataContext, CPDefinitionLink.class);
 			importModels(portletDataContext, CPDefinitionOptionRel.class);
 			importModels(portletDataContext, CPDefinitionOptionValueRel.class);
+			importModels(
+				portletDataContext, CPDefinitionSpecificationOptionValue.class);
 		}
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "skus")) {
@@ -327,6 +336,12 @@ public class CPPortletDataHandler extends BasePortletDataHandler {
 	)
 	private StagedModelRepository<CPDefinitionOptionValueRel>
 		_cpDefinitionOptionValueRelStagedModelRepository;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue)"
+	)
+	private StagedModelRepository<CPDefinitionSpecificationOptionValue>
+		_cpDefinitionSpecificationOptionValueStagedModelRepository;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.product.model.CPDefinition)"

@@ -17,6 +17,7 @@ package com.liferay.commerce.product.internal.exportimport.data.handler;
 import com.liferay.commerce.product.internal.exportimport.content.processor.CPDefinitionExportImportContentProcessor;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
@@ -72,6 +73,14 @@ public class CPDefinitionStagedModelDataHandler
 
 			StagedModelDataHandlerUtil.exportStagedModel(
 				portletDataContext, cpDefinitionOptionRel);
+		}
+
+		for (CPDefinitionSpecificationOptionValue
+				cpDefinitionSpecificationOptionValue :
+					cpDefinition.getCPDefinitionSpecificationOptionValues()) {
+
+			StagedModelDataHandlerUtil.exportStagedModel(
+				portletDataContext, cpDefinitionSpecificationOptionValue);
 		}
 
 		CPType cpType = _cpTypeServicesTracker.getCPType(

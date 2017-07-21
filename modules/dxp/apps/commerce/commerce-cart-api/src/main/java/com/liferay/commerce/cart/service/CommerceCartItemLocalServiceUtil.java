@@ -252,6 +252,11 @@ public class CommerceCartItemLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.cart.model.CommerceCartItem> getCommerceCartItems(
+		long commerceCartId, int start, int end) {
+		return getService().getCommerceCartItems(commerceCartId, start, end);
+	}
+
+	public static java.util.List<com.liferay.commerce.cart.model.CommerceCartItem> getCommerceCartItems(
 		long commerceCartId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.cart.model.CommerceCartItem> orderByComparator) {
 		return getService()

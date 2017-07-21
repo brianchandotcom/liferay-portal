@@ -96,5 +96,38 @@ public class CommerceCartServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.cart.model.CommerceCartSoap[] getCommerceCarts(
+		long groupId, int type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.cart.model.CommerceCart> orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.cart.model.CommerceCart> returnValue =
+				CommerceCartServiceUtil.getCommerceCarts(groupId, type, start,
+					end, orderByComparator);
+
+			return com.liferay.commerce.cart.model.CommerceCartSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getCommerceCartsCount(long groupId, int type)
+		throws RemoteException {
+		try {
+			int returnValue = CommerceCartServiceUtil.getCommerceCartsCount(groupId,
+					type);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(CommerceCartServiceSoap.class);
 }

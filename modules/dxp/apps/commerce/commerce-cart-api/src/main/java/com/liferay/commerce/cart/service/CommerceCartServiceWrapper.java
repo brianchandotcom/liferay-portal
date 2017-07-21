@@ -46,6 +46,11 @@ public class CommerceCartServiceWrapper implements CommerceCartService,
 		return _commerceCartService.fetchCommerceCart(commerceCartId);
 	}
 
+	@Override
+	public int getCommerceCartsCount(long groupId, int type) {
+		return _commerceCartService.getCommerceCartsCount(groupId, type);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -54,6 +59,14 @@ public class CommerceCartServiceWrapper implements CommerceCartService,
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _commerceCartService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.cart.model.CommerceCart> getCommerceCarts(
+		long groupId, int type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.cart.model.CommerceCart> orderByComparator) {
+		return _commerceCartService.getCommerceCarts(groupId, type, start, end,
+			orderByComparator);
 	}
 
 	@Override

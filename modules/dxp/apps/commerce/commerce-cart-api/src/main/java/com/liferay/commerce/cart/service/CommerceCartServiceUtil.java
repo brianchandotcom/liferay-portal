@@ -53,6 +53,10 @@ public class CommerceCartServiceUtil {
 		return getService().fetchCommerceCart(commerceCartId);
 	}
 
+	public static int getCommerceCartsCount(long groupId, int type) {
+		return getService().getCommerceCartsCount(groupId, type);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -60,6 +64,14 @@ public class CommerceCartServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static java.util.List<com.liferay.commerce.cart.model.CommerceCart> getCommerceCarts(
+		long groupId, int type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.cart.model.CommerceCart> orderByComparator) {
+		return getService()
+				   .getCommerceCarts(groupId, type, start, end,
+			orderByComparator);
 	}
 
 	public static CommerceCartService getService() {

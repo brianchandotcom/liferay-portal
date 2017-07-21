@@ -33,6 +33,18 @@ public class CommerceCartItemServiceWrapper implements CommerceCartItemService,
 		_commerceCartItemService = commerceCartItemService;
 	}
 
+	@Override
+	public com.liferay.commerce.cart.model.CommerceCartItem deleteCommerceCartItem(
+		long commerceCartItemId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceCartItemService.deleteCommerceCartItem(commerceCartItemId);
+	}
+
+	@Override
+	public int getCommerceCartItemsCount(long commerceCartId) {
+		return _commerceCartItemService.getCommerceCartItemsCount(commerceCartId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -41,6 +53,21 @@ public class CommerceCartItemServiceWrapper implements CommerceCartItemService,
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _commerceCartItemService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.cart.model.CommerceCartItem> getCommerceCartItems(
+		long commerceCartId, int start, int end) {
+		return _commerceCartItemService.getCommerceCartItems(commerceCartId,
+			start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.cart.model.CommerceCartItem> getCommerceCartItems(
+		long commerceCartId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.cart.model.CommerceCartItem> orderByComparator) {
+		return _commerceCartItemService.getCommerceCartItems(commerceCartId,
+			start, end, orderByComparator);
 	}
 
 	@Override

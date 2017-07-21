@@ -115,6 +115,63 @@ public class CommerceCartServiceHttp {
 		}
 	}
 
+	public static java.util.List<com.liferay.commerce.cart.model.CommerceCart> getCommerceCarts(
+		HttpPrincipal httpPrincipal, long groupId, int type, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.cart.model.CommerceCart> orderByComparator) {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceCartServiceUtil.class,
+					"getCommerceCarts", _getCommerceCartsParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					type, start, end, orderByComparator);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.commerce.cart.model.CommerceCart>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static int getCommerceCartsCount(HttpPrincipal httpPrincipal,
+		long groupId, int type) {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceCartServiceUtil.class,
+					"getCommerceCartsCount",
+					_getCommerceCartsCountParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					type);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(CommerceCartServiceHttp.class);
 	private static final Class<?>[] _fetchCommerceCartParameterTypes0 = new Class[] {
 			long.class
@@ -122,5 +179,12 @@ public class CommerceCartServiceHttp {
 	private static final Class<?>[] _addCommerceCartParameterTypes1 = new Class[] {
 			java.lang.String.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[] _getCommerceCartsParameterTypes2 = new Class[] {
+			long.class, int.class, int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
+		};
+	private static final Class<?>[] _getCommerceCartsCountParameterTypes3 = new Class[] {
+			long.class, int.class
 		};
 }

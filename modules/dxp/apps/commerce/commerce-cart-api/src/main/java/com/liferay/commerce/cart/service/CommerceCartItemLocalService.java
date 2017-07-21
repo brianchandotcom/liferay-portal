@@ -230,6 +230,10 @@ public interface CommerceCartItemLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceCartItem> getCommerceCartItems(long commerceCartId,
+		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceCartItem> getCommerceCartItems(long commerceCartId,
 		int start, int end,
 		OrderByComparator<CommerceCartItem> orderByComparator);
 

@@ -41,6 +41,15 @@ public class CommerceCartItemServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.cart.service.impl.CommerceCartItemServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.commerce.cart.model.CommerceCartItem deleteCommerceCartItem(
+		long commerceCartItemId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteCommerceCartItem(commerceCartItemId);
+	}
+
+	public static int getCommerceCartItemsCount(long commerceCartId) {
+		return getService().getCommerceCartItemsCount(commerceCartId);
+	}
 
 	/**
 	* Returns the OSGi service identifier.
@@ -49,6 +58,19 @@ public class CommerceCartItemServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static java.util.List<com.liferay.commerce.cart.model.CommerceCartItem> getCommerceCartItems(
+		long commerceCartId, int start, int end) {
+		return getService().getCommerceCartItems(commerceCartId, start, end);
+	}
+
+	public static java.util.List<com.liferay.commerce.cart.model.CommerceCartItem> getCommerceCartItems(
+		long commerceCartId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.cart.model.CommerceCartItem> orderByComparator) {
+		return getService()
+				   .getCommerceCartItems(commerceCartId, start, end,
+			orderByComparator);
 	}
 
 	public static CommerceCartItemService getService() {

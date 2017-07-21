@@ -18,11 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.cart.model.CommerceCartItem;
 
-import com.liferay.exportimport.kernel.lar.PortletDataContext;
-
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -117,17 +114,6 @@ public interface CommerceCartItemLocalService extends BaseLocalService,
 	public CommerceCartItem fetchCommerceCartItem(long CommerceCartItemId);
 
 	/**
-	* Returns the commerce cart item matching the UUID and group.
-	*
-	* @param uuid the commerce cart item's UUID
-	* @param groupId the primary key of the group
-	* @return the matching commerce cart item, or <code>null</code> if a matching commerce cart item could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceCartItem fetchCommerceCartItemByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
-
-	/**
 	* Returns the commerce cart item with the primary key.
 	*
 	* @param CommerceCartItemId the primary key of the commerce cart item
@@ -137,18 +123,6 @@ public interface CommerceCartItemLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceCartItem getCommerceCartItem(long CommerceCartItemId)
 		throws PortalException;
-
-	/**
-	* Returns the commerce cart item matching the UUID and group.
-	*
-	* @param uuid the commerce cart item's UUID
-	* @param groupId the primary key of the group
-	* @return the matching commerce cart item
-	* @throws PortalException if a matching commerce cart item could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceCartItem getCommerceCartItemByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
 	* Updates the commerce cart item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -167,10 +141,6 @@ public interface CommerceCartItemLocalService extends BaseLocalService,
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -261,32 +231,6 @@ public interface CommerceCartItemLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceCartItem> getCommerceCartItems(long commerceCartId,
 		int start, int end,
-		OrderByComparator<CommerceCartItem> orderByComparator);
-
-	/**
-	* Returns all the commerce cart items matching the UUID and company.
-	*
-	* @param uuid the UUID of the commerce cart items
-	* @param companyId the primary key of the company
-	* @return the matching commerce cart items, or an empty list if no matches were found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceCartItem> getCommerceCartItemsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
-
-	/**
-	* Returns a range of commerce cart items matching the UUID and company.
-	*
-	* @param uuid the UUID of the commerce cart items
-	* @param companyId the primary key of the company
-	* @param start the lower bound of the range of commerce cart items
-	* @param end the upper bound of the range of commerce cart items (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the range of matching commerce cart items, or an empty list if no matches were found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceCartItem> getCommerceCartItemsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
 		OrderByComparator<CommerceCartItem> orderByComparator);
 
 	/**

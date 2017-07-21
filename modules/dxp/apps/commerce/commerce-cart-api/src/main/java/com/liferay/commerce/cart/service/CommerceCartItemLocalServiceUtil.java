@@ -106,18 +106,6 @@ public class CommerceCartItemLocalServiceUtil {
 	}
 
 	/**
-	* Returns the commerce cart item matching the UUID and group.
-	*
-	* @param uuid the commerce cart item's UUID
-	* @param groupId the primary key of the group
-	* @return the matching commerce cart item, or <code>null</code> if a matching commerce cart item could not be found
-	*/
-	public static com.liferay.commerce.cart.model.CommerceCartItem fetchCommerceCartItemByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return getService().fetchCommerceCartItemByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
 	* Returns the commerce cart item with the primary key.
 	*
 	* @param CommerceCartItemId the primary key of the commerce cart item
@@ -128,20 +116,6 @@ public class CommerceCartItemLocalServiceUtil {
 		long CommerceCartItemId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCommerceCartItem(CommerceCartItemId);
-	}
-
-	/**
-	* Returns the commerce cart item matching the UUID and group.
-	*
-	* @param uuid the commerce cart item's UUID
-	* @param groupId the primary key of the group
-	* @return the matching commerce cart item
-	* @throws PortalException if a matching commerce cart item could not be found
-	*/
-	public static com.liferay.commerce.cart.model.CommerceCartItem getCommerceCartItemByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCommerceCartItemByUuidAndGroupId(uuid, groupId);
 	}
 
 	/**
@@ -168,11 +142,6 @@ public class CommerceCartItemLocalServiceUtil {
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
@@ -288,37 +257,6 @@ public class CommerceCartItemLocalServiceUtil {
 		return getService()
 				   .getCommerceCartItems(commerceCartId, start, end,
 			orderByComparator);
-	}
-
-	/**
-	* Returns all the commerce cart items matching the UUID and company.
-	*
-	* @param uuid the UUID of the commerce cart items
-	* @param companyId the primary key of the company
-	* @return the matching commerce cart items, or an empty list if no matches were found
-	*/
-	public static java.util.List<com.liferay.commerce.cart.model.CommerceCartItem> getCommerceCartItemsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return getService()
-				   .getCommerceCartItemsByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
-	* Returns a range of commerce cart items matching the UUID and company.
-	*
-	* @param uuid the UUID of the commerce cart items
-	* @param companyId the primary key of the company
-	* @param start the lower bound of the range of commerce cart items
-	* @param end the upper bound of the range of commerce cart items (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the range of matching commerce cart items, or an empty list if no matches were found
-	*/
-	public static java.util.List<com.liferay.commerce.cart.model.CommerceCartItem> getCommerceCartItemsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.cart.model.CommerceCartItem> orderByComparator) {
-		return getService()
-				   .getCommerceCartItemsByUuidAndCompanyId(uuid, companyId,
-			start, end, orderByComparator);
 	}
 
 	/**

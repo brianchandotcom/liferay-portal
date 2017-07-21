@@ -1,5 +1,4 @@
 create table CommerceCart (
-	uuid_ VARCHAR(75) null,
 	CommerceCartId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -13,7 +12,6 @@ create table CommerceCart (
 );
 
 create table CommerceCartItem (
-	uuid_ VARCHAR(75) null,
 	CommerceCartItemId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,

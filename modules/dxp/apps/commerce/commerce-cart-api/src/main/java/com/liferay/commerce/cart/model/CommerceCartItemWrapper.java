@@ -18,8 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
-import com.liferay.exportimport.kernel.lar.StagedModelType;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -60,7 +58,6 @@ public class CommerceCartItemWrapper implements CommerceCartItem,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
 		attributes.put("CommerceCartItemId", getCommerceCartItemId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -79,12 +76,6 @@ public class CommerceCartItemWrapper implements CommerceCartItem,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
-
-		if (uuid != null) {
-			setUuid(uuid);
-		}
-
 		Long CommerceCartItemId = (Long)attributes.get("CommerceCartItemId");
 
 		if (CommerceCartItemId != null) {
@@ -256,16 +247,6 @@ public class CommerceCartItemWrapper implements CommerceCartItem,
 	@Override
 	public java.lang.String getUserUuid() {
 		return _commerceCartItem.getUserUuid();
-	}
-
-	/**
-	* Returns the uuid of this commerce cart item.
-	*
-	* @return the uuid of this commerce cart item
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _commerceCartItem.getUuid();
 	}
 
 	@Override
@@ -554,16 +535,6 @@ public class CommerceCartItemWrapper implements CommerceCartItem,
 		_commerceCartItem.setUserUuid(userUuid);
 	}
 
-	/**
-	* Sets the uuid of this commerce cart item.
-	*
-	* @param uuid the uuid of this commerce cart item
-	*/
-	@Override
-	public void setUuid(java.lang.String uuid) {
-		_commerceCartItem.setUuid(uuid);
-	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -582,11 +553,6 @@ public class CommerceCartItemWrapper implements CommerceCartItem,
 		}
 
 		return false;
-	}
-
-	@Override
-	public StagedModelType getStagedModelType() {
-		return _commerceCartItem.getStagedModelType();
 	}
 
 	@Override

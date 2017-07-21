@@ -66,11 +66,9 @@ public class CommerceCartItemCacheModel implements CacheModel<CommerceCartItem>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(25);
 
-		sb.append("{uuid=");
-		sb.append(uuid);
-		sb.append(", CommerceCartItemId=");
+		sb.append("{CommerceCartItemId=");
 		sb.append(CommerceCartItemId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -102,13 +100,6 @@ public class CommerceCartItemCacheModel implements CacheModel<CommerceCartItem>,
 	@Override
 	public CommerceCartItem toEntityModel() {
 		CommerceCartItemImpl commerceCartItemImpl = new CommerceCartItemImpl();
-
-		if (uuid == null) {
-			commerceCartItemImpl.setUuid(StringPool.BLANK);
-		}
-		else {
-			commerceCartItemImpl.setUuid(uuid);
-		}
 
 		commerceCartItemImpl.setCommerceCartItemId(CommerceCartItemId);
 		commerceCartItemImpl.setGroupId(groupId);
@@ -155,8 +146,6 @@ public class CommerceCartItemCacheModel implements CacheModel<CommerceCartItem>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		uuid = objectInput.readUTF();
-
 		CommerceCartItemId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -181,13 +170,6 @@ public class CommerceCartItemCacheModel implements CacheModel<CommerceCartItem>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(uuid);
-		}
-
 		objectOutput.writeLong(CommerceCartItemId);
 
 		objectOutput.writeLong(groupId);
@@ -222,7 +204,6 @@ public class CommerceCartItemCacheModel implements CacheModel<CommerceCartItem>,
 		}
 	}
 
-	public String uuid;
 	public long CommerceCartItemId;
 	public long groupId;
 	public long companyId;

@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.ShardedModel;
-import com.liferay.portal.kernel.model.StagedAuditedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
@@ -45,7 +44,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface CommerceCartItemModel extends BaseModel<CommerceCartItem>,
-	GroupedModel, ShardedModel, StagedAuditedModel {
+	GroupedModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -65,23 +64,6 @@ public interface CommerceCartItemModel extends BaseModel<CommerceCartItem>,
 	 * @param primaryKey the primary key of this commerce cart item
 	 */
 	public void setPrimaryKey(long primaryKey);
-
-	/**
-	 * Returns the uuid of this commerce cart item.
-	 *
-	 * @return the uuid of this commerce cart item
-	 */
-	@AutoEscape
-	@Override
-	public String getUuid();
-
-	/**
-	 * Sets the uuid of this commerce cart item.
-	 *
-	 * @param uuid the uuid of this commerce cart item
-	 */
-	@Override
-	public void setUuid(String uuid);
 
 	/**
 	 * Returns the commerce cart item ID of this commerce cart item.

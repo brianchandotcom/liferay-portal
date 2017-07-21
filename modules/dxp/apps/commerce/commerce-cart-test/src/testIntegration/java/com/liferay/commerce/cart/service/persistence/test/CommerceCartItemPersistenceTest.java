@@ -28,14 +28,12 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -57,7 +55,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -125,8 +122,6 @@ public class CommerceCartItemPersistenceTest {
 
 		CommerceCartItem newCommerceCartItem = _persistence.create(pk);
 
-		newCommerceCartItem.setUuid(RandomTestUtil.randomString());
-
 		newCommerceCartItem.setGroupId(RandomTestUtil.nextLong());
 
 		newCommerceCartItem.setCompanyId(RandomTestUtil.nextLong());
@@ -153,8 +148,6 @@ public class CommerceCartItemPersistenceTest {
 
 		CommerceCartItem existingCommerceCartItem = _persistence.findByPrimaryKey(newCommerceCartItem.getPrimaryKey());
 
-		Assert.assertEquals(existingCommerceCartItem.getUuid(),
-			newCommerceCartItem.getUuid());
 		Assert.assertEquals(existingCommerceCartItem.getCommerceCartItemId(),
 			newCommerceCartItem.getCommerceCartItemId());
 		Assert.assertEquals(existingCommerceCartItem.getGroupId(),
@@ -181,33 +174,6 @@ public class CommerceCartItemPersistenceTest {
 			newCommerceCartItem.getQuantity());
 		Assert.assertEquals(existingCommerceCartItem.getJson(),
 			newCommerceCartItem.getJson());
-	}
-
-	@Test
-	public void testCountByUuid() throws Exception {
-		_persistence.countByUuid(StringPool.BLANK);
-
-		_persistence.countByUuid(StringPool.NULL);
-
-		_persistence.countByUuid((String)null);
-	}
-
-	@Test
-	public void testCountByUUID_G() throws Exception {
-		_persistence.countByUUID_G(StringPool.BLANK, RandomTestUtil.nextLong());
-
-		_persistence.countByUUID_G(StringPool.NULL, 0L);
-
-		_persistence.countByUUID_G((String)null, 0L);
-	}
-
-	@Test
-	public void testCountByUuid_C() throws Exception {
-		_persistence.countByUuid_C(StringPool.BLANK, RandomTestUtil.nextLong());
-
-		_persistence.countByUuid_C(StringPool.NULL, 0L);
-
-		_persistence.countByUuid_C((String)null, 0L);
 	}
 
 	@Test
@@ -240,9 +206,9 @@ public class CommerceCartItemPersistenceTest {
 	}
 
 	protected OrderByComparator<CommerceCartItem> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("CommerceCartItem", "uuid",
-			true, "CommerceCartItemId", true, "groupId", true, "companyId",
-			true, "userId", true, "userName", true, "createDate", true,
+		return OrderByComparatorFactoryUtil.create("CommerceCartItem",
+			"CommerceCartItemId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "CommerceCartId", true, "CPDefinitionId",
 			true, "CPInstanceId", true, "quantity", true, "json", true);
 	}
@@ -441,28 +407,10 @@ public class CommerceCartItemPersistenceTest {
 		Assert.assertEquals(0, result.size());
 	}
 
-	@Test
-	public void testResetOriginalValues() throws Exception {
-		CommerceCartItem newCommerceCartItem = addCommerceCartItem();
-
-		_persistence.clearCache();
-
-		CommerceCartItem existingCommerceCartItem = _persistence.findByPrimaryKey(newCommerceCartItem.getPrimaryKey());
-
-		Assert.assertTrue(Objects.equals(existingCommerceCartItem.getUuid(),
-				ReflectionTestUtil.invoke(existingCommerceCartItem,
-					"getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(Long.valueOf(existingCommerceCartItem.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(existingCommerceCartItem,
-				"getOriginalGroupId", new Class<?>[0]));
-	}
-
 	protected CommerceCartItem addCommerceCartItem() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		CommerceCartItem commerceCartItem = _persistence.create(pk);
-
-		commerceCartItem.setUuid(RandomTestUtil.randomString());
 
 		commerceCartItem.setGroupId(RandomTestUtil.nextLong());
 

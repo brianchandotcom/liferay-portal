@@ -2,7 +2,6 @@
 
 <model-hints>
 	<model name="com.liferay.commerce.cart.model.CommerceCart">
-		<field name="uuid" type="String" />
 		<field name="CommerceCartId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -15,7 +14,6 @@
 		<field name="type" type="int" />
 	</model>
 	<model name="com.liferay.commerce.cart.model.CommerceCartItem">
-		<field name="uuid" type="String" />
 		<field name="CommerceCartItemId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />

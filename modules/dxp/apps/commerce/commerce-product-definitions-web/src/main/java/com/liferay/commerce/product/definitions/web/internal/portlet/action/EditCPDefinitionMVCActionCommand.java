@@ -16,8 +16,6 @@ package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.exception.AssetTagException;
-import com.liferay.commerce.cart.service.CommerceCartItemLocalService;
-import com.liferay.commerce.cart.service.CommerceCartLocalService;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -322,12 +320,6 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 		return cpDefinition;
 	}
-
-	@Reference
-	private CommerceCartItemLocalService _commerceCartItemLocalService;
-
-	@Reference
-	private CommerceCartLocalService _commerceCartLocalService;
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;

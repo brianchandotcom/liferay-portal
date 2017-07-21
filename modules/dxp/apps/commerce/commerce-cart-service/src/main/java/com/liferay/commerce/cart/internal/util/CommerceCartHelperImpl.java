@@ -45,7 +45,7 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 		long commerceCartId = _getCurrentCommerceCartId(
 			httpServletRequest, type);
 
-		if (commerceCartId == 0) {
+		if (commerceCartId <= 0) {
 			return null;
 		}
 
@@ -71,7 +71,7 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 			return;
 		}
 
-		String commerceCartIdWebKey = _formatCommerceCartIdWebKey(
+		String commerceCartIdWebKey = _getCommerceCartIdWebKey(
 			commerceCart.getType());
 
 		Cookie commerceCartIdCookie = new Cookie(
@@ -90,7 +90,7 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 			httpServletRequest, httpServletResponse, commerceCartIdCookie);
 	}
 
-	private String _formatCommerceCartIdWebKey(int type) {
+	private String _getCommerceCartIdWebKey(int type) {
 		return CommerceCartWebKeys.COMMERCE_CART_ID + StringPool.UNDERLINE +
 			type;
 	}
@@ -98,38 +98,38 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 	private long _getCurrentCommerceCartId(
 		HttpServletRequest httpServletRequest, int type) {
 
-		String commerceCartIdWebKey = _formatCommerceCartIdWebKey(type);
+		String commerceCartIdWebKey = _getCommerceCartIdWebKey(type);
 
-		Long commerceCartIdObj = (Long)httpServletRequest.getAttribute(
+		Long commerceCartId = (Long)httpServletRequest.getAttribute(
 			commerceCartIdWebKey);
 
-		if (commerceCartIdObj != null) {
-			return commerceCartIdObj.longValue();
+		if (commerceCartId != null) {
+			return commerceCartId.longValue();
 		}
 
-		HttpSession session = httpServletRequest.getSession();
+		HttpSession httpSession = httpServletRequest.getSession();
 
-		commerceCartIdObj = (Long)session.getAttribute(commerceCartIdWebKey);
+		commerceCartId = (Long)httpSession.getAttribute(commerceCartIdWebKey);
 
-		if (commerceCartIdObj != null) {
+		if (commerceCartId != null) {
 			httpServletRequest.setAttribute(
-				commerceCartIdWebKey, commerceCartIdObj);
+				commerceCartIdWebKey, commerceCartId);
 
-			return commerceCartIdObj.longValue();
+			return commerceCartId.longValue();
 		}
 
 		String cookieCommerceCartId = CookieKeys.getCookie(
 			httpServletRequest, commerceCartIdWebKey, false);
 
 		if (Validator.isNotNull(cookieCommerceCartId)) {
-			commerceCartIdObj = GetterUtil.getLong(cookieCommerceCartId);
+			commerceCartId = GetterUtil.getLong(cookieCommerceCartId);
 
-			session.setAttribute(commerceCartIdWebKey, commerceCartIdObj);
+			httpSession.setAttribute(commerceCartIdWebKey, commerceCartId);
 
 			httpServletRequest.setAttribute(
-				commerceCartIdWebKey, commerceCartIdObj);
+				commerceCartIdWebKey, commerceCartId);
 
-			return commerceCartIdObj;
+			return commerceCartId;
 		}
 
 		return 0;

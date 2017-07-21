@@ -20,22 +20,11 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
 
 /**
- * The extended model implementation for the CommerceCartItem service. Represents a row in the &quot;CommerceCartItem&quot; database table, with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.commerce.cart.model.CommerceCartItem} interface.
- * </p>
- *
  * @author Alessio Antonio Rendina
  */
 @ProviderType
 public class CommerceCartItemImpl extends CommerceCartItemBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a commerce cart item model instance should use the {@link com.liferay.commerce.cart.model.CommerceCartItem} interface instead.
-	 */
 	public CommerceCartItemImpl() {
 	}
 

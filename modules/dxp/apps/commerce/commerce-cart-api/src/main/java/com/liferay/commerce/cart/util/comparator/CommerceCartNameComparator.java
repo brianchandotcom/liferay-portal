@@ -39,11 +39,11 @@ public class CommerceCartNameComparator
 	}
 
 	@Override
-	public int compare(CommerceCart cCart1, CommerceCart cCart2) {
-		String title1 = StringUtil.toLowerCase(cCart1.getName());
-		String title2 = StringUtil.toLowerCase(cCart2.getName());
+	public int compare(CommerceCart commerceCart1, CommerceCart commerceCart2) {
+		String name1 = StringUtil.toLowerCase(commerceCart1.getName());
+		String name2 = StringUtil.toLowerCase(commerceCart2.getName());
 
-		int value = title1.compareTo(title2);
+		int value = name1.compareTo(name2);
 
 		if (_ascending) {
 			return value;

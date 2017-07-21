@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -57,9 +58,13 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -397,26 +402,52 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 		contextObjects.put(
 			PortletDisplayTemplateConstants.LOCALE, request.getLocale());
 
-		RenderRequest renderRequest = (RenderRequest)request.getAttribute(
+		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 
-		contextObjects.put(
-			PortletDisplayTemplateConstants.RENDER_REQUEST, renderRequest);
+		RenderRequest renderRequest = null;
 
-		RenderResponse renderResponse = (RenderResponse)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_RESPONSE);
-
-		contextObjects.put(
-			PortletDisplayTemplateConstants.RENDER_RESPONSE, renderResponse);
-
-		if ((renderRequest != null) && (renderResponse != null)) {
-			PortletURL currentURL = PortletURLUtil.getCurrent(
-				renderRequest, renderResponse);
+		if (portletRequest instanceof RenderRequest) {
+			renderRequest = (RenderRequest)portletRequest;
 
 			contextObjects.put(
-				PortletDisplayTemplateConstants.CURRENT_URL,
-				currentURL.toString());
+				PortletDisplayTemplateConstants.RENDER_REQUEST, renderRequest);
 		}
+		else if (portletRequest instanceof ResourceRequest) {
+			ResourceRequest resourceRequest = (ResourceRequest)portletRequest;
+
+			contextObjects.put(
+				PortletDisplayTemplateConstants.RESOURCE_REQUEST,
+				resourceRequest);
+		}
+
+		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		RenderResponse renderResponse = null;
+
+		if (portletResponse instanceof RenderResponse) {
+			renderResponse = (RenderResponse)portletResponse;
+
+			contextObjects.put(
+				PortletDisplayTemplateConstants.RENDER_RESPONSE,
+				renderResponse);
+		}
+		else if (portletResponse instanceof ResourceResponse) {
+			ResourceResponse resourceResponse =
+				(ResourceResponse)portletResponse;
+
+			contextObjects.put(
+				PortletDisplayTemplateConstants.RESOURCE_RESPONSE,
+				resourceResponse);
+		}
+
+		PortletURL currentURL = PortletURLUtil.getCurrent(
+			_portal.getLiferayPortletRequest(portletRequest),
+			_portal.getLiferayPortletResponse(portletResponse));
+
+		contextObjects.put(
+			PortletDisplayTemplateConstants.CURRENT_URL, currentURL.toString());
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -453,8 +484,8 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 
 		contextObjects.put(TemplateConstants.WRITER, unsyncStringWriter);
 
-		if (renderRequest != null) {
-			_mergePortletPreferences(renderRequest, contextObjects);
+		if (portletRequest != null) {
+			_mergePortletPreferences(portletRequest, contextObjects);
 		}
 
 		return transformer.transform(
@@ -488,22 +519,10 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 			request, response, ddmTemplate, entries, contextObjects);
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMTemplateLocalService(
-		DDMTemplateLocalService ddmTemplateLocalService) {
-
-		_ddmTemplateLocalService = ddmTemplateLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
 	private Map<String, Object> _mergePortletPreferences(
-		RenderRequest renderRequest, Map<String, Object> contextObjects) {
+		PortletRequest portletRequest, Map<String, Object> contextObjects) {
 
-		PortletPreferences portletPreferences = renderRequest.getPreferences();
+		PortletPreferences portletPreferences = portletRequest.getPreferences();
 
 		Map<String, String[]> map = portletPreferences.getMap();
 
@@ -536,8 +555,14 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletDisplayTemplateImpl.class);
 
+	@Reference
 	private DDMTemplateLocalService _ddmTemplateLocalService;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	private static class TransformerHolder {
 

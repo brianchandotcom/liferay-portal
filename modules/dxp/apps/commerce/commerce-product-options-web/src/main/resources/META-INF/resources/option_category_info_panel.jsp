@@ -19,7 +19,7 @@
 <%
 List<CPOptionCategory> cpOptionCategories = (List<CPOptionCategory>)request.getAttribute(CPWebKeys.CP_OPTION_CATEGORIES);
 
-if (ListUtil.isEmpty(cpOptionCategories)) {
+if (cpOptionCategories == null) {
 	cpOptionCategories = Collections.emptyList();
 }
 %>

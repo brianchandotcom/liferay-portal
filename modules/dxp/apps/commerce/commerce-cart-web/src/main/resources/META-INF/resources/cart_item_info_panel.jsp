@@ -21,7 +21,7 @@ String languageId = LanguageUtil.getLanguageId(locale);
 
 List<CommerceCartItem> commerceCartItems = (List<CommerceCartItem>)request.getAttribute(CommerceCartWebKeys.COMMERCE_CART_ITEMS);
 
-if (ListUtil.isEmpty(commerceCartItems)) {
+if (commerceCartItems == null) {
 	commerceCartItems = Collections.emptyList();
 }
 %>

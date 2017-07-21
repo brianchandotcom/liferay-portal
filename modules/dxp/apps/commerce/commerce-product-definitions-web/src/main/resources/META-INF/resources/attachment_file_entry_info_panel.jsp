@@ -19,7 +19,7 @@
 <%
 List<CPAttachmentFileEntry> cpAttachmentFileEntries = (List<CPAttachmentFileEntry>)request.getAttribute(CPWebKeys.CP_ATTACHMENT_FILE_ENTRIES);
 
-if (ListUtil.isEmpty(cpAttachmentFileEntries)) {
+if (cpAttachmentFileEntries == null) {
 	cpAttachmentFileEntries = Collections.emptyList();
 }
 %>

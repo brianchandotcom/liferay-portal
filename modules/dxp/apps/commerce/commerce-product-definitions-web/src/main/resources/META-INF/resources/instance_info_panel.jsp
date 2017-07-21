@@ -19,7 +19,7 @@
 <%
 List<CPInstance> cpInstances = (List<CPInstance>)request.getAttribute(CPWebKeys.CP_INSTANCES);
 
-if (ListUtil.isEmpty(cpInstances)) {
+if (cpInstances == null) {
 	cpInstances = Collections.emptyList();
 }
 %>

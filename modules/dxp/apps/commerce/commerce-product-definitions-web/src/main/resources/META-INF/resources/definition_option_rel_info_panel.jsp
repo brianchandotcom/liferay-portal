@@ -19,7 +19,7 @@
 <%
 List<CPDefinitionOptionRel> cpDefinitionOptionRels = (List<CPDefinitionOptionRel>)request.getAttribute(CPWebKeys.CP_DEFINITION_OPTION_RELS);
 
-if (ListUtil.isEmpty(cpDefinitionOptionRels)) {
+if (cpDefinitionOptionRels == null) {
 	cpDefinitionOptionRels = Collections.emptyList();
 }
 %>

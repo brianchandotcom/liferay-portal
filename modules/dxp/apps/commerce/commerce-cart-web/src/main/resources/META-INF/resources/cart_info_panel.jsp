@@ -19,7 +19,7 @@
 <%
 List<CommerceCart> commerceCarts = (List<CommerceCart>)request.getAttribute(CommerceCartWebKeys.COMMERCE_CARTS);
 
-if (ListUtil.isEmpty(commerceCarts)) {
+if (commerceCarts == null) {
 	commerceCarts = Collections.emptyList();
 }
 %>

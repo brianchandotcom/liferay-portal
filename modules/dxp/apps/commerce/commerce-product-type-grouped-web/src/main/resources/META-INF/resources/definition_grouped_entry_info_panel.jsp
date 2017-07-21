@@ -19,7 +19,7 @@
 <%
 List<CPDefinitionGroupedEntry> cpDefinitionGroupedEntries = (List<CPDefinitionGroupedEntry>)request.getAttribute(GroupedCPTypeWebKeys.CP_DEFINITION_GROUPED_ENTRIES);
 
-if (ListUtil.isEmpty(cpDefinitionGroupedEntries)) {
+if (cpDefinitionGroupedEntries == null) {
 	cpDefinitionGroupedEntries = Collections.emptyList();
 }
 %>

@@ -19,7 +19,7 @@
 <%
 List<CPDefinitionLink> cpDefinitionLinks = (List<CPDefinitionLink>)request.getAttribute(CPWebKeys.CP_DEFINITION_LINKS);
 
-if (ListUtil.isEmpty(cpDefinitionLinks)) {
+if (cpDefinitionLinks == null) {
 	cpDefinitionLinks = Collections.emptyList();
 }
 %>

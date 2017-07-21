@@ -28,6 +28,7 @@ import java.net.URL;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 
 /**
  * @author David Truong
@@ -65,8 +66,15 @@ public class CreateTokenCommand implements Command {
 		String token = HttpUtil.createToken(
 			_tokenUrl.toURI(), _emailAddress, _password);
 
-		Files.write(
-			_tokenFile.toPath(), token.getBytes(StandardCharsets.UTF_8));
+		Path tokenPath = _tokenFile.toPath();
+
+		Path dirPath = tokenPath.getParent();
+
+		if (dirPath != null) {
+			Files.createDirectories(dirPath);
+		}
+
+		Files.write(tokenPath, token.getBytes(StandardCharsets.UTF_8));
 	}
 
 	public String getEmailAddress() {

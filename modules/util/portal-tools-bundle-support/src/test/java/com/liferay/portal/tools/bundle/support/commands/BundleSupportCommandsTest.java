@@ -147,6 +147,14 @@ public class BundleSupportCommandsTest {
 	}
 
 	@Test
+	public void testCreateTokenInNonexistentDirectory() throws Exception {
+		File tokenFile = new File(
+			temporaryFolder.getRoot(), "nonexistent/directory/token");
+
+		_testCreateToken(_CONTEXT_PATH_TOKEN, false, tokenFile);
+	}
+
+	@Test
 	public void testCreateTokenUnformatted() throws Exception {
 		_testCreateToken(_CONTEXT_PATH_TOKEN_UNFORMATTED);
 	}

@@ -22,12 +22,10 @@ public class CommerceCartWebKeys {
 
 	public static final String COMMERCE_CART = "COMMERCE_CART_CONTENT";
 
-	public static final String COMMERCE_CART_ITEM = "COMMERCE_CART_ITEM";
+	public static final String COMMERCE_CART_ID = "COMMERCE_CART_ID";
 
 	public static final String COMMERCE_CART_ITEMS = "COMMERCE_CART_ITEMS";
 
 	public static final String COMMERCE_CARTS = "COMMERCE_CARTS";
-
-	public static final String COMMERCE_CART_ID = "COMMERCE_CART_ID";
 
 }

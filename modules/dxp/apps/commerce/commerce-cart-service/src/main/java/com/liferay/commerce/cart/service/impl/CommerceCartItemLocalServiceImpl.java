@@ -105,8 +105,8 @@ public class CommerceCartItemLocalServiceImpl
 	public List<CommerceCartItem> getCommerceCartItems(
 		long commerceCartId, int start, int end) {
 
-		return commerceCartItemLocalService.getCommerceCartItems(
-			commerceCartId, start, end, null);
+		return commerceCartItemPersistence.findByCommerceCartId(
+			commerceCartId, start, end);
 	}
 
 	@Override

@@ -36,7 +36,7 @@
 
 <#assign
 	company_id = company.getCompanyId()
-	company_name = company.getName()
+	company_name = htmlUtil.escape(company.getName())
 	company_logo = htmlUtil.escape(theme_display.getCompanyLogo())
 	company_logo_height = theme_display.getCompanyLogoHeight()
 	company_logo_width = theme_display.getCompanyLogoWidth()

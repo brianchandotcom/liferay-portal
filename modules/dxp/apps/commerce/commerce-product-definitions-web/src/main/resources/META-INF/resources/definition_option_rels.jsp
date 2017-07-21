@@ -234,7 +234,6 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 							var selectedItems = event.newVal;
 
 							if (selectedItems) {
-
 								$('#<portlet:namespace />cpOptionIds').val(selectedItems);
 
 								var addCPDefinitionOptionRelFm = $('#<portlet:namespace />addCPDefinitionOptionRelFm');

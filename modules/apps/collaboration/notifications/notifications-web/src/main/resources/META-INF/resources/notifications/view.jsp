@@ -120,7 +120,7 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 
 		form.attr('method', 'post');
 
-		submitForm(form, '<portlet:actionURL name="markAllAsRead"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
+		submitForm(form, '<portlet:actionURL name="markNotificationsAsRead"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
 	}
 </aui:script>
 

@@ -45,7 +45,7 @@ if (subscriptionId > 0) {
 		</c:when>
 		<c:otherwise>
 			<c:if test="<%= !userNotificationEvent.isArchived() %>">
-				<portlet:actionURL name="markAsRead" var="markAsReadURL">
+				<portlet:actionURL name="markNotificationAsRead" var="markAsReadURL">
 					<portlet:param name="userNotificationEventId" value="<%= String.valueOf(userNotificationEvent.getUserNotificationEventId()) %>" />
 				</portlet:actionURL>
 

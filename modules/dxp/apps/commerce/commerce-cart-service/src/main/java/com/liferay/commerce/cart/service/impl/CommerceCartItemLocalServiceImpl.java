@@ -87,8 +87,9 @@ public class CommerceCartItemLocalServiceImpl
 	public void deleteCommerceCartItems(long commerceCartId)
 		throws PortalException {
 
-		List<CommerceCartItem> commerceCartItems = getCommerceCartItems(
-			commerceCartId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		List<CommerceCartItem> commerceCartItems =
+			commerceCartItemPersistence.findByCommerceCartId(
+				commerceCartId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (CommerceCartItem commerceCartItem : commerceCartItems) {
 			deleteCommerceCartItem(commerceCartItem);

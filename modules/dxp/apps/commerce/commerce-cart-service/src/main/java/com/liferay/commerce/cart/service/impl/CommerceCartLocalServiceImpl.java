@@ -34,8 +34,7 @@ public class CommerceCartLocalServiceImpl
 
 	@Override
 	public CommerceCart addCommerceCart(
-			long cartUserId, String name, int type,
-			ServiceContext serviceContext)
+			String name, int type, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
@@ -50,7 +49,6 @@ public class CommerceCartLocalServiceImpl
 		commerceCart.setCompanyId(user.getCompanyId());
 		commerceCart.setUserId(user.getUserId());
 		commerceCart.setUserName(user.getFullName());
-		commerceCart.setCartUserId(cartUserId);
 		commerceCart.setName(name);
 		commerceCart.setType(type);
 

@@ -24,7 +24,6 @@
 
 		<!-- Other fields -->
 
-		<column name="cartUserId" type="long" />
 		<column name="name" type="String" />
 		<column name="type" type="int" />
 

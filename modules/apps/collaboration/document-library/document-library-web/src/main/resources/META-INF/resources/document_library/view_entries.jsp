@@ -442,16 +442,16 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 				<c:otherwise>
 
 					<%
+					if (dlSearchContainer.getRowChecker() == null) {
+						dlSearchContainer.setRowChecker(entriesChecker);
+					}
+
 					Map<String, Object> rowData = new HashMap<String, Object>();
 
 					boolean draggable = false;
 
 					if (DLFolderPermission.contains(permissionChecker, curFolder, ActionKeys.DELETE) || DLFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE)) {
 						draggable = true;
-
-						if (dlSearchContainer.getRowChecker() == null) {
-							dlSearchContainer.setRowChecker(entriesChecker);
-						}
 
 						if (dlSearchContainer.getRowMover() == null) {
 							dlSearchContainer.setRowMover(entriesMover);

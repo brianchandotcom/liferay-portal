@@ -124,22 +124,4 @@ public class CommerceCartLocalServiceImpl
 			CommerceCartConstants.COMMERCE_CART_DEFAULT_TITLE, type,
 			serviceContext);
 	}
-
-	@Override
-	public CommerceCart updateCommerceCart(
-			long commerceCartId, long cartUserId, String name, int type)
-		throws PortalException {
-
-		CommerceCart commerceCart = commerceCartPersistence.findByPrimaryKey(
-			commerceCartId);
-
-		commerceCart.setCartUserId(cartUserId);
-		commerceCart.setName(name);
-		commerceCart.setType(type);
-
-		commerceCartPersistence.update(commerceCart);
-
-		return commerceCart;
-	}
-
 }

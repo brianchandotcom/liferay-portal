@@ -35,6 +35,14 @@ public class CommerceCartItemServiceImpl
 	}
 
 	@Override
+	public CommerceCartItem getCommerceCartItem(long commerceCartItemId)
+		throws PortalException {
+
+		return commerceCartItemLocalService.getCommerceCartItem(
+			commerceCartItemId);
+	}
+
+	@Override
 	public List<CommerceCartItem> getCommerceCartItems(
 		long commerceCartId, int start, int end) {
 

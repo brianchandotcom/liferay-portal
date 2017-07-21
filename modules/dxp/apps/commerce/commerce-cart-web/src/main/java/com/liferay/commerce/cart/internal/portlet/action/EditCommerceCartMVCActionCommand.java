@@ -16,7 +16,7 @@ package com.liferay.commerce.cart.internal.portlet.action;
 
 import com.liferay.commerce.cart.constants.CommerceCartPortletKeys;
 import com.liferay.commerce.cart.exception.NoSuchCartException;
-import com.liferay.commerce.cart.service.CommerceCartLocalService;
+import com.liferay.commerce.cart.service.CommerceCartService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -67,8 +67,7 @@ public class EditCommerceCartMVCActionCommand extends BaseMVCActionCommand {
 					0L);
 
 				for (long commerceCartId : deleteCommerceCartIds) {
-					_commerceCartLocalService.deleteCommerceCart(
-						commerceCartId);
+					_commerceCartService.deleteCommerceCart(commerceCartId);
 				}
 			}
 		}
@@ -85,6 +84,6 @@ public class EditCommerceCartMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
-	private CommerceCartLocalService _commerceCartLocalService;
+	private CommerceCartService _commerceCartService;
 
 }

@@ -17,8 +17,8 @@ package com.liferay.commerce.cart.internal.portlet.action;
 import com.liferay.commerce.cart.constants.CommerceCartWebKeys;
 import com.liferay.commerce.cart.model.CommerceCart;
 import com.liferay.commerce.cart.model.CommerceCartItem;
-import com.liferay.commerce.cart.service.CommerceCartItemLocalService;
-import com.liferay.commerce.cart.service.CommerceCartLocalService;
+import com.liferay.commerce.cart.service.CommerceCartItemService;
+import com.liferay.commerce.cart.service.CommerceCartService;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -52,7 +52,7 @@ public class ActionHelper {
 			renderRequest, "commerceCartId");
 
 		if (commerceCartId > 0) {
-			commerceCart = _commerceCartLocalService.fetchCommerceCart(
+			commerceCart = _commerceCartService.fetchCommerceCart(
 				commerceCartId);
 		}
 
@@ -75,7 +75,7 @@ public class ActionHelper {
 
 		for (long commerceCartItemId : commerceCartItemIds) {
 			CommerceCartItem commerceCartItem =
-				_commerceCartItemLocalService.getCommerceCartItem(
+				_commerceCartItemService.getCommerceCartItem(
 					commerceCartItemId);
 
 			commerceCartItems.add(commerceCartItem);
@@ -93,8 +93,8 @@ public class ActionHelper {
 			resourceRequest, RowChecker.ROW_IDS);
 
 		for (long commerceCartId : commerceCartIds) {
-			CommerceCart commerceCart =
-				_commerceCartLocalService.getCommerceCart(commerceCartId);
+			CommerceCart commerceCart = _commerceCartService.getCommerceCart(
+				commerceCartId);
 
 			commerceCarts.add(commerceCart);
 		}
@@ -103,9 +103,9 @@ public class ActionHelper {
 	}
 
 	@Reference
-	private CommerceCartItemLocalService _commerceCartItemLocalService;
+	private CommerceCartItemService _commerceCartItemService;
 
 	@Reference
-	private CommerceCartLocalService _commerceCartLocalService;
+	private CommerceCartService _commerceCartService;
 
 }

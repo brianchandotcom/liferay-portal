@@ -37,8 +37,20 @@ public class CommerceCartServiceImpl extends CommerceCartServiceBaseImpl {
 	}
 
 	@Override
+	public void deleteCommerceCart(long commerceCartId) throws PortalException {
+		commerceCartLocalService.deleteCommerceCart(commerceCartId);
+	}
+
+	@Override
 	public CommerceCart fetchCommerceCart(long commerceCartId) {
 		return commerceCartLocalService.fetchCommerceCart(commerceCartId);
+	}
+
+	@Override
+	public CommerceCart getCommerceCart(long commerceCartId)
+		throws PortalException {
+
+		return commerceCartLocalService.getCommerceCart(commerceCartId);
 	}
 
 	@Override

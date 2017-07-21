@@ -18,19 +18,20 @@ import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.web.display.context.CPTypeDisplayContext;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionService;
-import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
 import com.liferay.commerce.product.type.simple.internal.SimpleCPType;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import java.util.Locale;
 import java.util.Map;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import java.util.ResourceBundle;
 
 /**
  * @author Marco Leo
@@ -50,7 +51,14 @@ public class SimpleCPTypeDisplayTemplateHandler
 
 	@Override
 	public String getName(Locale locale) {
-		return LanguageUtil.get(locale, SimpleCPTypeConstants.NAME);
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
+		String portletTitle = _portal.getPortletTitle(
+			CPPortletKeys.CP_CONTENT_WEB, resourceBundle);
+
+		return portletTitle.concat(StringPool.SPACE).concat(
+			LanguageUtil.get(locale, "template"));
 	}
 
 	@Override

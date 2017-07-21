@@ -48,6 +48,10 @@ public class PortletDisplayTemplateConstants {
 
 	public static final String REQUEST_HASH = "requestHash";
 
+	public static final String RESOURCE_REQUEST = "resourceRequest";
+
+	public static final String RESOURCE_RESPONSE = "resourceResponse";
+
 	public static final String TAGLIB_LIFERAY = "taglibLiferay";
 
 	public static final String TAGLIB_LIFERAY_HASH = "taglibLiferayHash";

@@ -16,7 +16,7 @@ package com.liferay.commerce.cart.internal.portlet.action;
 
 import com.liferay.commerce.cart.constants.CommerceCartPortletKeys;
 import com.liferay.commerce.cart.display.context.CommerceCartItemDisplayContext;
-import com.liferay.commerce.cart.service.CommerceCartItemLocalService;
+import com.liferay.commerce.cart.service.CommerceCartItemService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -58,7 +58,7 @@ public class ViewCommerceCartMVCRenderCommand implements MVCRenderCommand {
 			CommerceCartItemDisplayContext commerceCartItemDisplayContext =
 				new CommerceCartItemDisplayContext(
 					_actionHelper, httpServletRequest,
-					_commerceCartItemLocalService);
+					_commerceCartItemService);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -75,7 +75,7 @@ public class ViewCommerceCartMVCRenderCommand implements MVCRenderCommand {
 	private ActionHelper _actionHelper;
 
 	@Reference
-	private CommerceCartItemLocalService _commerceCartItemLocalService;
+	private CommerceCartItemService _commerceCartItemService;
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;

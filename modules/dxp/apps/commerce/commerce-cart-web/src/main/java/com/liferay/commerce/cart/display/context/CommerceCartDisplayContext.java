@@ -18,11 +18,13 @@ import com.liferay.commerce.cart.constants.CommerceCartConstants;
 import com.liferay.commerce.cart.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.cart.internal.util.CommerceCartPortletUtil;
 import com.liferay.commerce.cart.model.CommerceCart;
-import com.liferay.commerce.cart.service.CommerceCartLocalService;
+import com.liferay.commerce.cart.service.CommerceCartService;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
@@ -38,7 +40,7 @@ public class CommerceCartDisplayContext
 
 	public CommerceCartDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
-			CommerceCartLocalService commerceCartLocalService)
+			CommerceCartService commerceCartService)
 		throws PortalException {
 
 		super(
@@ -47,7 +49,7 @@ public class CommerceCartDisplayContext
 
 		setDefaultOrderByCol("name");
 
-		_commerceCartLocalService = commerceCartLocalService;
+		_commerceCartService = commerceCartService;
 	}
 
 	@Override
@@ -72,6 +74,10 @@ public class CommerceCartDisplayContext
 			return searchContainer;
 		}
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		searchContainer = new SearchContainer<>(
 			liferayPortletRequest, getPortletURL(), null, null);
 
@@ -95,20 +101,21 @@ public class CommerceCartDisplayContext
 		searchContainer.setOrderByType(getOrderByType());
 		searchContainer.setRowChecker(getRowChecker());
 
-		int total = _commerceCartLocalService.getCommerceCartsCount(
-			getCommerceCartType());
+		int total = _commerceCartService.getCommerceCartsCount(
+			themeDisplay.getScopeGroupId(), getCommerceCartType());
 
 		searchContainer.setTotal(total);
 
-		List<CommerceCart> results = _commerceCartLocalService.getCommerceCarts(
-			getCommerceCartType(), searchContainer.getStart(),
-			searchContainer.getEnd(), orderByComparator);
+		List<CommerceCart> results = _commerceCartService.getCommerceCarts(
+			themeDisplay.getScopeGroupId(), getCommerceCartType(),
+			searchContainer.getStart(), searchContainer.getEnd(),
+			orderByComparator);
 
 		searchContainer.setResults(results);
 
 		return searchContainer;
 	}
 
-	private final CommerceCartLocalService _commerceCartLocalService;
+	private final CommerceCartService _commerceCartService;
 
 }

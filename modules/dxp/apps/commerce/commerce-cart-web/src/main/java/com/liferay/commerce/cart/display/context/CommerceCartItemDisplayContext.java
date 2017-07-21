@@ -17,7 +17,7 @@ package com.liferay.commerce.cart.display.context;
 import com.liferay.commerce.cart.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.cart.internal.util.CommerceCartPortletUtil;
 import com.liferay.commerce.cart.model.CommerceCartItem;
-import com.liferay.commerce.cart.service.CommerceCartItemLocalService;
+import com.liferay.commerce.cart.service.CommerceCartItemService;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -37,14 +37,14 @@ public class CommerceCartItemDisplayContext
 
 	public CommerceCartItemDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
-			CommerceCartItemLocalService commerceCartItemLocalService)
+			CommerceCartItemService commerceCartItemService)
 		throws PortalException {
 
 		super(
 			actionHelper, httpServletRequest,
 			CommerceCartItem.class.getSimpleName());
 
-		_commerceCartItemLocalService = commerceCartItemLocalService;
+		_commerceCartItemService = commerceCartItemService;
 	}
 
 	@Override
@@ -85,13 +85,13 @@ public class CommerceCartItemDisplayContext
 		searchContainer.setOrderByType(getOrderByType());
 		searchContainer.setRowChecker(getRowChecker());
 
-		int total = _commerceCartItemLocalService.getCommerceCartItemsCount(
+		int total = _commerceCartItemService.getCommerceCartItemsCount(
 			getCommerceCartId());
 
 		searchContainer.setTotal(total);
 
 		List<CommerceCartItem> results =
-			_commerceCartItemLocalService.getCommerceCartItems(
+			_commerceCartItemService.getCommerceCartItems(
 				getCommerceCartId(), searchContainer.getStart(),
 				searchContainer.getEnd(), orderByComparator);
 
@@ -100,6 +100,6 @@ public class CommerceCartItemDisplayContext
 		return searchContainer;
 	}
 
-	private final CommerceCartItemLocalService _commerceCartItemLocalService;
+	private final CommerceCartItemService _commerceCartItemService;
 
 }

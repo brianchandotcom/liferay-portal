@@ -17,7 +17,7 @@ package com.liferay.commerce.cart.internal.portlet;
 import com.liferay.commerce.cart.constants.CommerceCartPortletKeys;
 import com.liferay.commerce.cart.display.context.CommerceCartDisplayContext;
 import com.liferay.commerce.cart.internal.portlet.action.ActionHelper;
-import com.liferay.commerce.cart.service.CommerceCartLocalService;
+import com.liferay.commerce.cart.service.CommerceCartService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -74,8 +74,7 @@ public class CommerceCartAdminPortlet extends MVCPortlet {
 
 			CommerceCartDisplayContext commerceCartDisplayContext =
 				new CommerceCartDisplayContext(
-					_actionHelper, httpServletRequest,
-					_commerceCartLocalService);
+					_actionHelper, httpServletRequest, _commerceCartService);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT, commerceCartDisplayContext);
@@ -91,7 +90,7 @@ public class CommerceCartAdminPortlet extends MVCPortlet {
 	private ActionHelper _actionHelper;
 
 	@Reference
-	private CommerceCartLocalService _commerceCartLocalService;
+	private CommerceCartService _commerceCartService;
 
 	@Reference
 	private Portal _portal;

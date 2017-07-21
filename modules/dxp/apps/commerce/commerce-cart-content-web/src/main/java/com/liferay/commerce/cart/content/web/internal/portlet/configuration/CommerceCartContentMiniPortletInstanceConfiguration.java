@@ -28,7 +28,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.commerce.cart.content.web.internal.configuration.CommerceCartContentMiniPortletInstanceConfiguration",
 	localization = "content/Language",
-	name = "commerce.product.cart.web.portlet.instance.configuration.name"
+	name = "commerce.cart.mini.web.portlet.instance.configuration.name"
 )
 public interface CommerceCartContentMiniPortletInstanceConfiguration {
 

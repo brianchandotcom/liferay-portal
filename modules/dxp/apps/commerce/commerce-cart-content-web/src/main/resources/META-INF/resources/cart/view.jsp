@@ -73,9 +73,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-content"
 						name="price"
-					>
-
-					</liferay-ui:search-container-column-text>
+					/>
 
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-content"
@@ -101,9 +99,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-content"
 						name="subtotal"
-					>
-
-					</liferay-ui:search-container-column-text>
+					/>
 				</liferay-ui:search-container-row>
 
 				<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" searchContainer="<%= commerceCartItemSearchContainer %>" />

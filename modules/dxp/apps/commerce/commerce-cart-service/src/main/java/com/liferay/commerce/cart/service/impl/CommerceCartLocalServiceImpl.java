@@ -17,10 +17,8 @@ package com.liferay.commerce.cart.service.impl;
 import com.liferay.commerce.cart.model.CommerceCart;
 import com.liferay.commerce.cart.service.base.CommerceCartLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -58,7 +56,6 @@ public class CommerceCartLocalServiceImpl
 	}
 
 	@Override
-	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CommerceCart deleteCommerceCart(CommerceCart commerceCart)
 		throws PortalException {
 

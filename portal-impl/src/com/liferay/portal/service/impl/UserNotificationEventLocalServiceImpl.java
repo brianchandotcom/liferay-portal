@@ -15,6 +15,7 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.interval.IntervalActionProcessor;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
@@ -145,6 +146,49 @@ public class UserNotificationEventLocalServiceImpl
 		}
 
 		return userNotificationEvents;
+	}
+
+	@Override
+	public void archiveUserNotificationEvents(
+			long userId, int deliveryType, boolean actionRequired)
+		throws PortalException {
+
+		int unreadNotificationEventsCount =
+			getArchivedUserNotificationEventsCount(
+				userId, deliveryType, actionRequired, false);
+
+		final IntervalActionProcessor<Void> intervalActionProcessor =
+			new IntervalActionProcessor<>(unreadNotificationEventsCount);
+
+		intervalActionProcessor.setPerformIntervalActionMethod(
+			new IntervalActionProcessor.PerformIntervalActionMethod<Void>() {
+
+				@Override
+				public Void performIntervalAction(int start, int end)
+					throws PortalException {
+
+					List<UserNotificationEvent> userNotificationEvents =
+						getArchivedUserNotificationEvents(
+							userId, deliveryType, actionRequired, false, start,
+							end);
+
+					for (UserNotificationEvent userNotificationEvent :
+							userNotificationEvents) {
+
+						userNotificationEvent.setArchived(true);
+
+						updateUserNotificationEvent(userNotificationEvent);
+					}
+
+					intervalActionProcessor.incrementStart(
+						userNotificationEvents.size());
+
+					return null;
+				}
+
+			});
+
+		intervalActionProcessor.performIntervalActions();
 	}
 
 	@Override

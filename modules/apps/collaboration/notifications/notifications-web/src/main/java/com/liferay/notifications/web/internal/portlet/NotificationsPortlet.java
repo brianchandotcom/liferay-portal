@@ -16,7 +16,6 @@ package com.liferay.notifications.web.internal.portlet;
 
 import com.liferay.notifications.web.internal.constants.NotificationsPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.interval.IntervalActionProcessor;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
@@ -34,7 +33,6 @@ import com.liferay.subscription.service.SubscriptionLocalService;
 
 import java.io.IOException;
 
-import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
@@ -93,45 +91,12 @@ public class NotificationsPortlet extends MVCPortlet {
 		final ThemeDisplay themeDisplay =
 			(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-		int unreadNotificationEventsCount =
-			_userNotificationEventLocalService.
-				getArchivedUserNotificationEventsCount(
-					themeDisplay.getUserId(),
-					UserNotificationDeliveryConstants.TYPE_WEBSITE, false,
-					false);
+		boolean actionRequired = ParamUtil.getBoolean(
+			actionRequest, "actionRequired");
 
-		final IntervalActionProcessor<Void> intervalActionProcessor =
-			new IntervalActionProcessor<>(unreadNotificationEventsCount);
-
-		intervalActionProcessor.setPerformIntervalActionMethod(
-			new IntervalActionProcessor.PerformIntervalActionMethod<Void>() {
-
-				@Override
-				public Void performIntervalAction(int start, int end)
-					throws PortalException {
-
-					List<UserNotificationEvent> userNotificationEvents =
-						_userNotificationEventLocalService.
-							getArchivedUserNotificationEvents(
-								themeDisplay.getUserId(),
-								UserNotificationDeliveryConstants.TYPE_WEBSITE,
-								false, false, start, end);
-
-					for (UserNotificationEvent userNotificationEvent :
-							userNotificationEvents) {
-
-						updateArchived(userNotificationEvent);
-					}
-
-					intervalActionProcessor.incrementStart(
-						userNotificationEvents.size());
-
-					return null;
-				}
-
-			});
-
-		intervalActionProcessor.performIntervalActions();
+		_userNotificationEventLocalService.archiveUserNotificationEvents(
+			themeDisplay.getUserId(),
+			UserNotificationDeliveryConstants.TYPE_WEBSITE, actionRequired);
 
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(themeDisplay.getLocale());

@@ -34,6 +34,16 @@ public class CommerceCartItemServiceWrapper implements CommerceCartItemService,
 	}
 
 	@Override
+	public com.liferay.commerce.cart.model.CommerceCartItem addCommerceCartItem(
+		long commerceCartId, long cpDefinitionId, long cpInstanceId,
+		int quantity, java.lang.String json,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceCartItemService.addCommerceCartItem(commerceCartId,
+			cpDefinitionId, cpInstanceId, quantity, json, serviceContext);
+	}
+
+	@Override
 	public com.liferay.commerce.cart.model.CommerceCartItem getCommerceCartItem(
 		long commerceCartItemId)
 		throws com.liferay.portal.kernel.exception.PortalException {

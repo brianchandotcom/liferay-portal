@@ -65,6 +65,24 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class CommerceCartItemServiceSoap {
+	public static com.liferay.commerce.cart.model.CommerceCartItemSoap addCommerceCartItem(
+		long commerceCartId, long cpDefinitionId, long cpInstanceId,
+		int quantity, java.lang.String json,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.cart.model.CommerceCartItem returnValue = CommerceCartItemServiceUtil.addCommerceCartItem(commerceCartId,
+					cpDefinitionId, cpInstanceId, quantity, json, serviceContext);
+
+			return com.liferay.commerce.cart.model.CommerceCartItemSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static void deleteCommerceCartItem(long commerceCartItemId)
 		throws RemoteException {
 		try {

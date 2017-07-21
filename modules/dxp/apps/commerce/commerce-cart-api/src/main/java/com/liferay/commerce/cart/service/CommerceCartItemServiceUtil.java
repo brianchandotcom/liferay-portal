@@ -41,6 +41,16 @@ public class CommerceCartItemServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.cart.service.impl.CommerceCartItemServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.commerce.cart.model.CommerceCartItem addCommerceCartItem(
+		long commerceCartId, long cpDefinitionId, long cpInstanceId,
+		int quantity, java.lang.String json,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCommerceCartItem(commerceCartId, cpDefinitionId,
+			cpInstanceId, quantity, json, serviceContext);
+	}
+
 	public static com.liferay.commerce.cart.model.CommerceCartItem getCommerceCartItem(
 		long commerceCartItemId)
 		throws com.liferay.portal.kernel.exception.PortalException {

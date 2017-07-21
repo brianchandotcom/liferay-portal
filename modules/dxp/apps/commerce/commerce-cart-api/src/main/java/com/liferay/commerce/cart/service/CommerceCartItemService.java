@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -55,6 +56,11 @@ public interface CommerceCartItemService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceCartItemServiceUtil} to access the commerce cart item remote service. Add custom service methods to {@link com.liferay.commerce.cart.service.impl.CommerceCartItemServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public CommerceCartItem addCommerceCartItem(long commerceCartId,
+		long cpDefinitionId, long cpInstanceId, int quantity,
+		java.lang.String json, ServiceContext serviceContext)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceCartItem getCommerceCartItem(long commerceCartItemId)
 		throws PortalException;

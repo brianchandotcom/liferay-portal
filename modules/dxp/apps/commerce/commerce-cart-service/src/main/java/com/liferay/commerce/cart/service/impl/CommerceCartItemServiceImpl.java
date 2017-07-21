@@ -28,11 +28,10 @@ public class CommerceCartItemServiceImpl
 	extends CommerceCartItemServiceBaseImpl {
 
 	@Override
-	public CommerceCartItem deleteCommerceCartItem(long commerceCartItemId)
+	public void deleteCommerceCartItem(long commerceCartItemId)
 		throws PortalException {
 
-		return commerceCartItemLocalService.deleteCommerceCartItem(
-			commerceCartItemId);
+		commerceCartItemLocalService.deleteCommerceCartItem(commerceCartItemId);
 	}
 
 	@Override

@@ -49,9 +49,7 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 
 		if (cpFriendlyURLEntry == null) {
 			if (_log.isInfoEnabled()) {
-				_log.info(
-					"No friendly url found for cpDefinitionId : " +
-						cpDefinitionId);
+				_log.info("No friendly URL found for " + cpDefinitionId);
 			}
 
 			return StringPool.BLANK;

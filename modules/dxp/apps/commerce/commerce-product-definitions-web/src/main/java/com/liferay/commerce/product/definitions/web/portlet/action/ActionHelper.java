@@ -38,8 +38,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.RenderRequest;
-import javax.portlet.ResourceRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -51,13 +49,13 @@ import org.osgi.service.component.annotations.Reference;
 public class ActionHelper {
 
 	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
-			ResourceRequest resourceRequest)
+			PortletRequest portletRequest)
 		throws PortalException {
 
 		List<CPAttachmentFileEntry> cpAttachmentFileEntries = new ArrayList<>();
 
 		long[] cpAttachmentFileEntryIds = ParamUtil.getLongValues(
-			resourceRequest, "rowIds");
+			portletRequest, "rowIds");
 
 		for (long cpAttachmentFileEntryId : cpAttachmentFileEntryIds) {
 			CPAttachmentFileEntry cpAttachmentFileEntry =
@@ -73,11 +71,11 @@ public class ActionHelper {
 	}
 
 	public CPAttachmentFileEntry getCPAttachmentFileEntry(
-			RenderRequest renderRequest)
+			PortletRequest portletRequest)
 		throws PortalException {
 
 		CPAttachmentFileEntry cpAttachmentFileEntry =
-			(CPAttachmentFileEntry)renderRequest.getAttribute(
+			(CPAttachmentFileEntry)portletRequest.getAttribute(
 				CPWebKeys.CP_ATTACHMENT_FILE_ENTRY);
 
 		if (cpAttachmentFileEntry != null) {
@@ -85,7 +83,7 @@ public class ActionHelper {
 		}
 
 		long cpAttachmentFileEntryId = ParamUtil.getLong(
-			renderRequest, "cpAttachmentFileEntryId");
+			portletRequest, "cpAttachmentFileEntryId");
 
 		if (cpAttachmentFileEntryId > 0) {
 			cpAttachmentFileEntry =
@@ -94,17 +92,17 @@ public class ActionHelper {
 		}
 
 		if (cpAttachmentFileEntry != null) {
-			renderRequest.setAttribute(
+			portletRequest.setAttribute(
 				CPWebKeys.CP_ATTACHMENT_FILE_ENTRY, cpAttachmentFileEntry);
 		}
 
 		return cpAttachmentFileEntry;
 	}
 
-	public CPDefinition getCPDefinition(RenderRequest renderRequest)
+	public CPDefinition getCPDefinition(PortletRequest portletRequest)
 		throws PortalException {
 
-		CPDefinition cpDefinition = (CPDefinition)renderRequest.getAttribute(
+		CPDefinition cpDefinition = (CPDefinition)portletRequest.getAttribute(
 			CPWebKeys.CP_DEFINITION);
 
 		if (cpDefinition != null) {
@@ -112,18 +110,18 @@ public class ActionHelper {
 		}
 
 		long cpDefinitionId = ParamUtil.getLong(
-			renderRequest, "cpDefinitionId");
+			portletRequest, "cpDefinitionId");
 
 		if (cpDefinitionId <= 0) {
 			CPDefinitionOptionRel cpDefinitionOptionRel =
-				getCPDefinitionOptionRel(renderRequest);
+				getCPDefinitionOptionRel(portletRequest);
 
 			if (cpDefinitionOptionRel != null) {
 				cpDefinitionId = cpDefinitionOptionRel.getCPDefinitionId();
 			}
 
 			CPDefinitionLink cpDefinitionLink = getCPDefinitionLink(
-				renderRequest);
+				portletRequest);
 
 			if (cpDefinitionLink != null) {
 				cpDefinitionId = cpDefinitionLink.getCPDefinitionId1();
@@ -136,17 +134,17 @@ public class ActionHelper {
 		}
 
 		if (cpDefinition != null) {
-			renderRequest.setAttribute(CPWebKeys.CP_DEFINITION, cpDefinition);
+			portletRequest.setAttribute(CPWebKeys.CP_DEFINITION, cpDefinition);
 		}
 
 		return cpDefinition;
 	}
 
-	public CPDefinitionLink getCPDefinitionLink(RenderRequest renderRequest)
+	public CPDefinitionLink getCPDefinitionLink(PortletRequest portletRequest)
 		throws PortalException {
 
 		CPDefinitionLink cpDefinitionLink =
-			(CPDefinitionLink)renderRequest.getAttribute(
+			(CPDefinitionLink)portletRequest.getAttribute(
 				CPWebKeys.CP_DEFINITION_LINK);
 
 		if (cpDefinitionLink != null) {
@@ -154,7 +152,7 @@ public class ActionHelper {
 		}
 
 		long cpDefinitionLinkId = ParamUtil.getLong(
-			renderRequest, "cpDefinitionLinkId");
+			portletRequest, "cpDefinitionLinkId");
 
 		if (cpDefinitionLinkId > 0) {
 			cpDefinitionLink = _cpDefinitionLinkService.fetchCPDefinitionLink(
@@ -162,7 +160,7 @@ public class ActionHelper {
 		}
 
 		if (cpDefinitionLink != null) {
-			renderRequest.setAttribute(
+			portletRequest.setAttribute(
 				CPWebKeys.CP_DEFINITION_LINK, cpDefinitionLink);
 		}
 
@@ -170,13 +168,13 @@ public class ActionHelper {
 	}
 
 	public List<CPDefinitionLink> getCPDefinitionLinks(
-			ResourceRequest resourceRequest)
+			PortletRequest portletRequest)
 		throws PortalException {
 
 		List<CPDefinitionLink> cpDefinitionLinks = new ArrayList<>();
 
 		long[] cpDefinitionLinkIds = ParamUtil.getLongValues(
-			resourceRequest, "rowIds");
+			portletRequest, "rowIds");
 
 		for (long cpDefinitionLinkId : cpDefinitionLinkIds) {
 			CPDefinitionLink cpDefinitionLink =
@@ -190,11 +188,11 @@ public class ActionHelper {
 	}
 
 	public CPDefinitionOptionRel getCPDefinitionOptionRel(
-			RenderRequest renderRequest)
+			PortletRequest portletRequest)
 		throws PortalException {
 
 		CPDefinitionOptionRel cpDefinitionOptionRel =
-			(CPDefinitionOptionRel)renderRequest.getAttribute(
+			(CPDefinitionOptionRel)portletRequest.getAttribute(
 				CPWebKeys.CP_DEFINITION_OPTION_REL);
 
 		if (cpDefinitionOptionRel != null) {
@@ -202,11 +200,11 @@ public class ActionHelper {
 		}
 
 		long cpDefinitionOptionRelId = ParamUtil.getLong(
-			renderRequest, "cpDefinitionOptionRelId");
+			portletRequest, "cpDefinitionOptionRelId");
 
 		if (cpDefinitionOptionRelId <= 0) {
 			CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-				getCPDefinitionOptionValueRel(renderRequest);
+				getCPDefinitionOptionValueRel(portletRequest);
 
 			if (cpDefinitionOptionValueRel != null) {
 				cpDefinitionOptionRelId =
@@ -221,7 +219,7 @@ public class ActionHelper {
 		}
 
 		if (cpDefinitionOptionRel != null) {
-			renderRequest.setAttribute(
+			portletRequest.setAttribute(
 				CPWebKeys.CP_DEFINITION_OPTION_REL, cpDefinitionOptionRel);
 		}
 
@@ -229,13 +227,13 @@ public class ActionHelper {
 	}
 
 	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels(
-			ResourceRequest resourceRequest)
+			PortletRequest portletRequest)
 		throws PortalException {
 
 		List<CPDefinitionOptionRel> cpDefinitionOptionRels = new ArrayList<>();
 
 		long[] cpDefinitionOptionRelIds = ParamUtil.getLongValues(
-			resourceRequest, "rowIds");
+			portletRequest, "rowIds");
 
 		for (long cpDefinitionOptionRelId : cpDefinitionOptionRelIds) {
 			CPDefinitionOptionRel cpDefinitionOptionRel =
@@ -249,11 +247,11 @@ public class ActionHelper {
 	}
 
 	public CPDefinitionOptionValueRel getCPDefinitionOptionValueRel(
-			RenderRequest renderRequest)
+			PortletRequest portletRequest)
 		throws PortalException {
 
 		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-			(CPDefinitionOptionValueRel)renderRequest.getAttribute(
+			(CPDefinitionOptionValueRel)portletRequest.getAttribute(
 				CPWebKeys.CP_DEFINITION_OPTION_VALUE_REL);
 
 		if (cpDefinitionOptionValueRel != null) {
@@ -261,7 +259,7 @@ public class ActionHelper {
 		}
 
 		long cpDefinitionOptionValueRelId = ParamUtil.getLong(
-			renderRequest, "cpDefinitionOptionValueRelId");
+			portletRequest, "cpDefinitionOptionValueRelId");
 
 		if (cpDefinitionOptionValueRelId > 0) {
 			cpDefinitionOptionValueRel =
@@ -271,7 +269,7 @@ public class ActionHelper {
 		}
 
 		if (cpDefinitionOptionValueRel != null) {
-			renderRequest.setAttribute(
+			portletRequest.setAttribute(
 				CPWebKeys.CP_DEFINITION_OPTION_VALUE_REL,
 				cpDefinitionOptionValueRel);
 		}
@@ -292,14 +290,14 @@ public class ActionHelper {
 	}
 
 	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
-			ResourceRequest resourceRequest)
+			PortletRequest portletRequest)
 		throws PortalException {
 
 		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
 			new ArrayList<>();
 
 		long[] cpDefinitionOptionValueRelIds = ParamUtil.getLongValues(
-			resourceRequest, "rowIds");
+			portletRequest, "rowIds");
 
 		for (long cpDefinitionOptionValueRelId :
 				cpDefinitionOptionValueRelIds) {
@@ -314,13 +312,13 @@ public class ActionHelper {
 		return cpDefinitionOptionValueRels;
 	}
 
-	public List<CPDefinition> getCPDefinitions(ResourceRequest resourceRequest)
+	public List<CPDefinition> getCPDefinitions(PortletRequest portletRequest)
 		throws PortalException {
 
 		List<CPDefinition> cpDefinitions = new ArrayList<>();
 
 		long[] cpDefinitionIds = ParamUtil.getLongValues(
-			resourceRequest, "rowIds");
+			portletRequest, "rowIds");
 
 		for (long cpDefinitionId : cpDefinitionIds) {
 			CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
@@ -393,36 +391,36 @@ public class ActionHelper {
 		return cpDefinitionSpecificationOptionValues;
 	}
 
-	public CPInstance getCPInstance(RenderRequest renderRequest)
+	public CPInstance getCPInstance(PortletRequest portletRequest)
 		throws PortalException {
 
-		CPInstance cpInstance = (CPInstance)renderRequest.getAttribute(
+		CPInstance cpInstance = (CPInstance)portletRequest.getAttribute(
 			CPWebKeys.CP_INSTANCE);
 
 		if (cpInstance != null) {
 			return cpInstance;
 		}
 
-		long cpInstanceId = ParamUtil.getLong(renderRequest, "cpInstanceId");
+		long cpInstanceId = ParamUtil.getLong(portletRequest, "cpInstanceId");
 
 		if (cpInstanceId > 0) {
 			cpInstance = _cpInstanceService.getCPInstance(cpInstanceId);
 		}
 
 		if (cpInstance != null) {
-			renderRequest.setAttribute(CPWebKeys.CP_INSTANCE, cpInstance);
+			portletRequest.setAttribute(CPWebKeys.CP_INSTANCE, cpInstance);
 		}
 
 		return cpInstance;
 	}
 
-	public List<CPInstance> getCPInstances(ResourceRequest resourceRequest)
+	public List<CPInstance> getCPInstances(PortletRequest portletRequest)
 		throws PortalException {
 
 		List<CPInstance> cpInstances = new ArrayList<>();
 
 		long[] cpInstanceIds = ParamUtil.getLongValues(
-			resourceRequest, "rowIds");
+			portletRequest, "rowIds");
 
 		for (long cpInstanceId : cpInstanceIds) {
 			CPInstance cpInstance = _cpInstanceService.getCPInstance(

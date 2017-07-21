@@ -15,6 +15,7 @@
 package com.liferay.commerce.cart.constants;
 
 /**
+ * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 public class CommerceCartWebKeys {
@@ -26,5 +27,7 @@ public class CommerceCartWebKeys {
 	public static final String COMMERCE_CART_ITEMS = "COMMERCE_CART_ITEMS";
 
 	public static final String COMMERCE_CARTS = "COMMERCE_CARTS";
+
+	public static final String COMMERCE_CART_ID = "COMMERCE_CART_ID";
 
 }

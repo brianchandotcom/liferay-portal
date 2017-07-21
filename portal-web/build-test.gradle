@@ -9,11 +9,13 @@ buildscript {
 		if (!Boolean.getBoolean("maven.local.ignore")) {
 			mavenLocal()
 
-			File tmpMavenRepositoryDir = file("../.m2-tmp")
+			if (project.hasProperty("tmp.maven.repository.dir")) {
+				File tmpMavenRepositoryDir = file(project.properties["tmp.maven.repository.dir"])
 
-			if (tmpMavenRepositoryDir.exists()) {
-				maven {
-					url tmpMavenRepositoryDir
+				if (tmpMavenRepositoryDir.exists()) {
+					maven {
+						url tmpMavenRepositoryDir
+					}
 				}
 			}
 		}
@@ -54,11 +56,13 @@ repositories {
 	if (!Boolean.getBoolean("maven.local.ignore")) {
 		mavenLocal()
 
-		File tmpMavenRepositoryDir = file("../.m2-tmp")
+		if (project.hasProperty("tmp.maven.repository.dir")) {
+			File tmpMavenRepositoryDir = file(project.properties["tmp.maven.repository.dir"])
 
-		if (tmpMavenRepositoryDir.exists()) {
-			maven {
-				url tmpMavenRepositoryDir
+			if (tmpMavenRepositoryDir.exists()) {
+				maven {
+					url tmpMavenRepositoryDir
+				}
 			}
 		}
 	}

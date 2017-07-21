@@ -19,6 +19,7 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLink;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
+import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.search.CPInstanceIndexer;
 import com.liferay.commerce.product.util.comparator.CPAttachmentFileEntryDisplayDateComparator;
@@ -32,6 +33,7 @@ import com.liferay.commerce.product.util.comparator.CPDefinitionOptionRelPriorit
 import com.liferay.commerce.product.util.comparator.CPDefinitionOptionRelTitleComparator;
 import com.liferay.commerce.product.util.comparator.CPDefinitionOptionValueRelPriorityComparator;
 import com.liferay.commerce.product.util.comparator.CPDefinitionOptionValueRelTitleComparator;
+import com.liferay.commerce.product.util.comparator.CPDefinitionSpecificationOptionValuePriorityComparator;
 import com.liferay.commerce.product.util.comparator.CPDefinitionTitleComparator;
 import com.liferay.commerce.product.util.comparator.CPInstanceCreateDateComparator;
 import com.liferay.commerce.product.util.comparator.CPInstanceDisplayDateComparator;
@@ -273,6 +275,28 @@ public class CPDefinitionsPortletUtil {
 		}
 
 		return sort;
+	}
+
+	public static OrderByComparator<CPDefinitionSpecificationOptionValue>
+		getCPDefinitionSpecificationOptionValueOrderByComparator(
+			String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<CPDefinitionSpecificationOptionValue>
+			orderByComparator = null;
+
+		if (orderByCol.equals("priority")) {
+			orderByComparator =
+				new CPDefinitionSpecificationOptionValuePriorityComparator(
+					orderByAsc);
+		}
+
+		return orderByComparator;
 	}
 
 	public static OrderByComparator<CPInstance> getCPInstanceOrderByComparator(

@@ -8,7 +8,7 @@
 
 		<!-- PK fields -->
 
-		<column name="CommerceCartId" primary="true" type="long" />
+		<column name="commerceCartId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -59,7 +59,7 @@
 
 		<!-- PK fields -->
 
-		<column name="CommerceCartItemId" primary="true" type="long" />
+		<column name="commerceCartItemId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -75,7 +75,7 @@
 
 		<!-- Other fields -->
 
-		<column name="CommerceCartId" type="long" />
+		<column name="commerceCartId" type="long" />
 		<column name="CPDefinitionId" type="long" />
 		<column name="CPInstanceId" type="long" />
 		<column name="quantity" type="int" />
@@ -90,7 +90,7 @@
 		<!-- Finder methods -->
 
 		<finder name="CommerceCartId" return-type="Collection">
-			<finder-column name="CommerceCartId" />
+			<finder-column name="commerceCartId" />
 		</finder>
 
 		<!-- References -->

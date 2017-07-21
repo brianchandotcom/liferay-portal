@@ -595,12 +595,12 @@
 </tr>
 <tr>
 	<td>ROTATE_LEFT</td>
-	<td>//a[contains(@class,'btn-link') and (@data-onclick='data-onclick')][1]</td>
+	<td>//a[contains(@class,'btn-link') and (@data-onclick='rotateLeft')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ROTATE_RIGHT</td>
-	<td>//a[contains(@class,'btn-link') and (@data-onclick='data-onclick')][2]</td>
+	<td>//a[contains(@class,'btn-link') and (@data-onclick='rotateRight')]</td>
 	<td></td>
 </tr>
 <tr>

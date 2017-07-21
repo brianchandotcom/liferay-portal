@@ -330,6 +330,36 @@ mariadb.executable=${mariadb.executable}]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-liferay-classes" >
+		<attribute name="merged.jar" />
+		<attribute name="portal.bundle.dir" />
+
+		<sequential>
+			<var name="merged-classes" value="${project.dir}/jacoco/merged-classes" />
+
+			<delete dir="${merged-classes}" />
+			<mkdir dir="${merged-classes}" />
+
+			<unzip dest="${merged-classes}">
+				<patternset>
+					<include name="**/com/liferay/**" />
+				</patternset>
+				<fileset dir="@{portal.bundle.dir}">
+					 <include name="**/*.jar" />
+					 <include name="**/*.war" />
+				</fileset>
+			</unzip>
+
+			<jar destfile="@{merged.jar}" update="true">
+				<fileset dir="${merged-classes}">
+					<include name="**/*.class" />
+				</fileset>
+			</jar>
+
+			<delete dir="${merged-classes}" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-test-build">
 		<sequential>
 			<trycatch property="exception.message">
@@ -452,6 +482,8 @@ app.server.type=@{app.server.type}]]></echo>
 							git diff --cached --name-only -z | grep -E -v -z '^\.gitignore|bundles/|^modules/\.gitignore' | xargs -0 -n 1000 zip -v liferay-portal-source.zip
 						]]>
 					</execute>
+
+					<prepare-liferay-classes if:true="${test.batch.code.coverage}" merged.jar="${project.dir}/jacoco/merged.jar" portal.bundle.dir="bundles" />
 				</then>
 			</if>
 

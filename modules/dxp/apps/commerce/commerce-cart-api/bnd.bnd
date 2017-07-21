@@ -7,4 +7,5 @@ Export-Package:\
 	com.liferay.commerce.cart.model,\
 	com.liferay.commerce.cart.service,\
 	com.liferay.commerce.cart.service.persistence,\
+	com.liferay.commerce.cart.util,\
 	com.liferay.commerce.cart.util.comparator

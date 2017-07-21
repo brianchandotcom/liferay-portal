@@ -42,6 +42,7 @@
 /classes/Test.class
 /dist
 /intellij
+/jacoco
 /lib/development/activation.jar
 /lib/development/alloy-taglib.jar
 /lib/development/annotations.jar

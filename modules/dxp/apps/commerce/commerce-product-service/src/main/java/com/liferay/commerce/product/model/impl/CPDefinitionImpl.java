@@ -18,8 +18,10 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalServiceUtil;
+import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalServiceUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -73,6 +75,14 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels() {
 		return CPDefinitionOptionRelLocalServiceUtil.getCPDefinitionOptionRels(
 			getCPDefinitionId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	@Override
+	public List<CPDefinitionSpecificationOptionValue>
+		getCPDefinitionSpecificationOptionValues() {
+
+		return CPDefinitionSpecificationOptionValueLocalServiceUtil.
+			getCPDefinitionSpecificationOptionValues(getCPDefinitionId());
 	}
 
 	@Override

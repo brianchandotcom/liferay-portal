@@ -94,12 +94,13 @@ public class CPDefinitionOptionValueRelStagedModelDataHandlerTest
 			Map<String, List<StagedModel>> dependentStagedModelsMap)
 		throws Exception {
 
-		List<StagedModel> cpDefinitionDependentStagedModels =
+		List<StagedModel> cpDefinitionOptionRelDependentStagedModels =
 			dependentStagedModelsMap.get(
 				CPDefinitionOptionRel.class.getSimpleName());
 
 		CPDefinitionOptionRel cpDefinitionOptionRel =
-			(CPDefinitionOptionRel)cpDefinitionDependentStagedModels.get(0);
+			(CPDefinitionOptionRel)
+				cpDefinitionOptionRelDependentStagedModels.get(0);
 
 		return CPTestUtil.addCPDefinitionOptionValueRel(
 			group.getGroupId(),

@@ -879,6 +879,13 @@ public class PoshiRunnerContext {
 					String namespace = StringUtil.trim(
 						FileUtil.read(namespaceURI.toURL()));
 
+					if (_namespaces.contains(namespace)) {
+						throw new RuntimeException(
+							"Duplicate namespace " + namespace);
+					}
+
+					_namespaces.add(namespace);
+
 					for (URL poshiURL : _getPoshiURLs(
 							fileSystem, includes,
 							resourceURLString.substring(x + 1), namespace)) {
@@ -1251,6 +1258,7 @@ public class PoshiRunnerContext {
 		new HashMap<>();
 	private static final Map<String, Integer> _functionLocatorCounts =
 		new HashMap<>();
+	private static final List<String> _namespaces = new ArrayList<>();
 	private static final Map<String, String> _pathExtensions = new HashMap<>();
 	private static final Map<String, String> _pathLocators = new HashMap<>();
 	private static final List<String> _productNames = new ArrayList<>();

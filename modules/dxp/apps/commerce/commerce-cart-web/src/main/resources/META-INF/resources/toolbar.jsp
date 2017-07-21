@@ -90,7 +90,7 @@ int type = ParamUtil.getInteger(request, "type", CommerceCartConstants.COMMERCE_
 			form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
 			form.fm('deleteCommerceCartIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-			submitForm(form, '<portlet:actionURL name="editCommerceCarts" />');
+			submitForm(form, '<portlet:actionURL name="editCommerceCart" />');
 		}
 	}
 </aui:script>

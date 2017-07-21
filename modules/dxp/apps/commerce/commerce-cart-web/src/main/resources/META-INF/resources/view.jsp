@@ -81,7 +81,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 							<%
 							PortletURL rowURL = renderResponse.createRenderURL();
 
-							rowURL.setParameter("mvcRenderCommandName", "viewCartItems");
+							rowURL.setParameter("mvcRenderCommandName", "viewCommerceCartItems");
 							rowURL.setParameter("redirect", currentURL);
 							rowURL.setParameter("commerceCartId", String.valueOf(commerceCart.getCommerceCartId()));
 							rowURL.setParameter("cartToolbarItem", toolbarItem);

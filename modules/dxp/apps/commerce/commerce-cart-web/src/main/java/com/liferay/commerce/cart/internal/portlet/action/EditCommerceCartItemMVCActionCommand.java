@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + CommerceCartPortletKeys.COMMERCE_CART,
-		"mvc.command.name=editCommerceCartItems"
+		"mvc.command.name=editCommerceCartItem"
 	},
 	service = MVCActionCommand.class
 )

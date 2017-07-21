@@ -40,11 +40,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + CommerceCartPortletKeys.COMMERCE_CART,
-		"mvc.command.name=viewCartItems"
+		"mvc.command.name=viewCommerceCartItems"
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewCommerceCartMVCRenderCommand implements MVCRenderCommand {
+public class ViewCommerceCartItemsMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(

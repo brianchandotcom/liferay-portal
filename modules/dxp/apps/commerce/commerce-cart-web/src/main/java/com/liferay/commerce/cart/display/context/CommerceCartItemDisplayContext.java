@@ -51,7 +51,8 @@ public class CommerceCartItemDisplayContext
 	public PortletURL getPortletURL() throws PortalException {
 		PortletURL portletURL = super.getPortletURL();
 
-		portletURL.setParameter("mvcRenderCommandName", "viewCartItems");
+		portletURL.setParameter(
+			"mvcRenderCommandName", "viewCommerceCartItems");
 		portletURL.setParameter(
 			"commerceCartId", String.valueOf(getCommerceCartId()));
 

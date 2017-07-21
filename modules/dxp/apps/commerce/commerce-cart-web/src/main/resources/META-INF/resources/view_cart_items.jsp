@@ -54,14 +54,14 @@ renderResponse.setTitle(commerceCart.getName());
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
-		<liferay-portlet:renderURL varImpl="viewCartItemsURL">
-			<portlet:param name="mvcRenderCommandName" value="viewCartItems" />
+		<liferay-portlet:renderURL varImpl="viewCommerceCartItemsURL">
+			<portlet:param name="mvcRenderCommandName" value="viewCommerceCartItems" />
 			<portlet:param name="commerceCartId" value="<%= String.valueOf(commerceCart.getCommerceCartId()) %>" />
 			<portlet:param name="toolbarItem" value="view-all-cart-items" />
 		</liferay-portlet:renderURL>
 
 		<aui:nav-item
-			href="<%= viewCartItemsURL.toString() %>"
+			href="<%= viewCommerceCartItemsURL.toString() %>"
 			label="cart-items"
 			selected='<%= toolbarItem.equals("view-all-cart-items") %>'
 		/>
@@ -207,7 +207,7 @@ renderResponse.setTitle(commerceCart.getName());
 			form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
 			form.fm('deleteCommerceCartItemIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-			submitForm(form, '<portlet:actionURL name="editCommerceCartItems" />');
+			submitForm(form, '<portlet:actionURL name="editCommerceCartItem" />');
 		}
 	}
 </aui:script>

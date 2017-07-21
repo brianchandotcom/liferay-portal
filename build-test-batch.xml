@@ -2399,32 +2399,70 @@ ${output.content}</echo>
 
 							String project_dir = project.getProperty("project.dir");
 
-							FileReader fileReader = new FileReader(project_dir + "/modifiedList");
-
-							BufferedReader bufferReader = new BufferedReader(fileReader);
-
 							ArrayList modifiedList = new ArrayList();
 
-							String line = bufferReader.readLine();
+							FileReader fileReader = null;
 
-							while (line != null) {
-								modifiedList.add(line);
+							try {
+								fileReader = new FileReader(project_dir + "/modifiedList");
 
-								line = bufferReader.readLine();
+								BufferedReader bufferedReader = null;
+
+								try {
+
+									bufferedReader = new BufferedReader(fileReader);
+
+									String line = bufferedReader.readLine();
+
+									while (line != null) {
+										modifiedList.add(line);
+
+										line = bufferedReader.readLine();
+									}
+								}
+								finally {
+									if (bufferedReader != null) {
+										bufferedReader.close();
+									}
+								}
 							}
-
-							fileReader = new FileReader(project_dir + "/masterList");
-
-							bufferReader = new BufferedReader(fileReader);
+							finally {
+								if (fileReader != null) {
+									fileReader.close();
+								}
+							}
 
 							ArrayList masterList = new ArrayList();
 
-							line = bufferReader.readLine();
+							fileReader = null;
 
-							while (line != null) {
-								masterList.add(line);
+							try {
 
-								line = bufferReader.readLine();
+								fileReader = new FileReader(project_dir + "/masterList");
+
+								BufferedReader bufferedReader = null;
+
+								try {
+									bufferedReader = new BufferedReader(fileReader);
+
+									String line = bufferedReader.readLine();
+
+									while (line != null) {
+										masterList.add(line);
+
+										line = bufferedReader.readLine();
+									}
+								}
+								finally {
+									if (bufferedReader != null) {
+										bufferedReader.close();
+									}
+								}
+							}
+							finally {
+								if (fileReader != null) {
+									fileReader.close();
+								}
 							}
 
 							for (int i = 0; i < modifiedList.size(); i++){

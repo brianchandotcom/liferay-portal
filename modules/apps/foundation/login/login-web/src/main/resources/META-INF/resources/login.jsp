@@ -42,7 +42,12 @@
 
 		String redirect = ParamUtil.getString(request, "redirect");
 
-		String login = LoginUtil.getLogin(request, "login", company);
+		String login = (String)SessionErrors.get(renderRequest, "login");
+
+		if (Validator.isNull(login)) {
+			login = LoginUtil.getLogin(request, "login", company);
+		}
+
 		String password = StringPool.BLANK;
 		boolean rememberMe = ParamUtil.getBoolean(request, "rememberMe");
 

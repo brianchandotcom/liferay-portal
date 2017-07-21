@@ -106,6 +106,14 @@ public class CommerceCartItemLocalServiceImpl
 
 	@Override
 	public List<CommerceCartItem> getCommerceCartItems(
+		long commerceCartId, int start, int end) {
+
+		return commerceCartItemLocalService.getCommerceCartItems(
+			commerceCartId, start, end, null);
+	}
+
+	@Override
+	public List<CommerceCartItem> getCommerceCartItems(
 		long commerceCartId, int start, int end,
 		OrderByComparator<CommerceCartItem> orderByComparator) {
 

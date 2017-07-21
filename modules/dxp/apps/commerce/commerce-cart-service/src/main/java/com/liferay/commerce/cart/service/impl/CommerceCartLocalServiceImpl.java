@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.cart.service.impl;
 
-import com.liferay.commerce.cart.constants.CommerceCartConstants;
 import com.liferay.commerce.cart.model.CommerceCart;
 import com.liferay.commerce.cart.service.base.CommerceCartLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -79,10 +78,6 @@ public class CommerceCartLocalServiceImpl
 		return commerceCart;
 	}
 
-	public CommerceCart fetchCommerceCart(long commerceCartId){
-		return commerceCartPersistence.fetchByPrimaryKey(commerceCartId);
-	}
-
 	@Override
 	public CommerceCart deleteCommerceCart(long commerceCartId)
 		throws PortalException {
@@ -93,8 +88,14 @@ public class CommerceCartLocalServiceImpl
 		return commerceCartLocalService.deleteCommerceCart(commerceCart);
 	}
 
+	public CommerceCart fetchCommerceCart(long commerceCartId) {
+		return commerceCartPersistence.fetchByPrimaryKey(commerceCartId);
+	}
+
 	@Override
-	public List<CommerceCart> findCommerceCarts(long groupId, long userId, int type) {
+	public List<CommerceCart> findCommerceCarts(
+		long groupId, long userId, int type) {
+
 		return commerceCartPersistence.findByG_U_T(groupId, userId, type);
 	}
 
@@ -111,4 +112,5 @@ public class CommerceCartLocalServiceImpl
 	public int getCommerceCartsCount(long groupId, int type) {
 		return commerceCartPersistence.countByG_T(groupId, type);
 	}
+
 }

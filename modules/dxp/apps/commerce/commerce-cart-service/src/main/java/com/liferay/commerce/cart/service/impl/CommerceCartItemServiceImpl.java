@@ -14,11 +14,48 @@
 
 package com.liferay.commerce.cart.service.impl;
 
+import com.liferay.commerce.cart.model.CommerceCartItem;
 import com.liferay.commerce.cart.service.base.CommerceCartItemServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * @author Marco Leo
  */
 public class CommerceCartItemServiceImpl
 	extends CommerceCartItemServiceBaseImpl {
+
+	@Override
+	public CommerceCartItem deleteCommerceCartItem(long commerceCartItemId)
+		throws PortalException {
+
+		return commerceCartItemLocalService.deleteCommerceCartItem(
+			commerceCartItemId);
+	}
+
+	@Override
+	public List<CommerceCartItem> getCommerceCartItems(
+		long commerceCartId, int start, int end) {
+
+		return commerceCartItemLocalService.getCommerceCartItems(
+			commerceCartId, start, end);
+	}
+
+	@Override
+	public List<CommerceCartItem> getCommerceCartItems(
+		long commerceCartId, int start, int end,
+		OrderByComparator<CommerceCartItem> orderByComparator) {
+
+		return commerceCartItemLocalService.getCommerceCartItems(
+			commerceCartId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getCommerceCartItemsCount(long commerceCartId) {
+		return commerceCartItemLocalService.getCommerceCartItemsCount(
+			commerceCartId);
+	}
+
 }

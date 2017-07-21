@@ -20,10 +20,12 @@ import com.liferay.commerce.cart.model.CommerceCartItem;
 import com.liferay.commerce.cart.service.CommerceCartItemService;
 import com.liferay.commerce.cart.util.CommerceCartHelper;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
+import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -42,11 +44,13 @@ public class CommerceCartContentDisplayContext {
 	public CommerceCartContentDisplayContext(
 		HttpServletRequest httpServletRequest,
 		CommerceCartHelper commerceCartHelper,
-		CommerceCartItemService commerceCartItemService) {
+		CommerceCartItemService commerceCartItemService,
+		CPDefinitionHelper cpDefinitionHelper) {
 
 		this.httpServletRequest = httpServletRequest;
 		_commerceCartHelper = commerceCartHelper;
 		_commerceCartItemService = commerceCartItemService;
+		this.cpDefinitionHelper = cpDefinitionHelper;
 
 		CPRequestHelper cpRequestHelper = new CPRequestHelper(
 			httpServletRequest);
@@ -81,6 +85,13 @@ public class CommerceCartContentDisplayContext {
 		return ParamUtil.getInteger(
 			httpServletRequest, "type",
 			CommerceCartConstants.COMMERCE_CART_TYPE_CART);
+	}
+
+	public String getCPDefinitionURL(
+			long cpDefinitionId, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		return cpDefinitionHelper.getFriendlyURL(cpDefinitionId, themeDisplay);
 	}
 
 	public PortletURL getPortletURL() throws PortalException {
@@ -129,6 +140,7 @@ public class CommerceCartContentDisplayContext {
 		return _searchContainer;
 	}
 
+	protected final CPDefinitionHelper cpDefinitionHelper;
 	protected final HttpServletRequest httpServletRequest;
 	protected final LiferayPortletRequest liferayPortletRequest;
 	protected final LiferayPortletResponse liferayPortletResponse;

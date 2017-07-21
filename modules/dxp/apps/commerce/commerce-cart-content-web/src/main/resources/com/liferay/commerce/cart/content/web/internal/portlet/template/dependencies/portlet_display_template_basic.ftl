@@ -8,7 +8,7 @@
 
 				image = cpDefinition.getDefaultImageThumbnailSrc(themeDisplay)
 
-				productURL = commerceCartContentMiniDisplayContext.getCPDefinitionURL(cpDefinition, themeDisplay)
+				productURL = commerceCartContentMiniDisplayContext.getCPDefinitionURL(cpDefinition.getCPDefinitionId(), themeDisplay)
 
 				title = cpDefinition.getTitle(locale)
 			/>

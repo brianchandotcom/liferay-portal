@@ -65,7 +65,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 						cssClass="table-cell-content"
 						name="description"
 					>
-						<a href="<%= commerceCartContentDisplayContext.getCPDefinitionURL(cpDefinition, themeDisplay) %>">
+						<a href="<%= commerceCartContentDisplayContext.getCPDefinitionURL(cpDefinition.getCPDefinitionId(), themeDisplay) %>">
 							<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>
 						</a>
 					</liferay-ui:search-container-column-text>

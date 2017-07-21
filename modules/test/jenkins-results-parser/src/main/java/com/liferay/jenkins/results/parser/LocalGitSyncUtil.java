@@ -715,6 +715,12 @@ public class LocalGitSyncUtil {
 							"Cache branch ", cacheBranchName,
 							" already exists"));
 
+					RemoteConfig localGitRemoteConfig = getRandomRemoteConfig(
+						localGitRemoteConfigs);
+
+					gitWorkingDirectory.fetch(
+						cacheBranchName, cacheBranchName, localGitRemoteConfig);
+
 					if (!gitWorkingDirectory.branchExists(
 							upstreamBranchName, null)) {
 

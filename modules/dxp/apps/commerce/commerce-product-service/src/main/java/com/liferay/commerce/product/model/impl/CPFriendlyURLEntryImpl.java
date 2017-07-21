@@ -35,20 +35,11 @@ import java.util.Locale;
 @ProviderType
 public class CPFriendlyURLEntryImpl extends CPFriendlyURLEntryBaseImpl {
 
-	public CPFriendlyURLEntryImpl() {
-	}
-
-	@Override
-	public Locale getLocale() {
-		return LocaleUtil.fromLanguageId(getLanguageId());
-	}
-
 	public static int validate(String urlTitle) {
 		return validate(urlTitle, true);
 	}
 
 	public static int validate(String urlTitle, boolean checkMaxLength) {
-
 		int maxLength = ModelHintsUtil.getMaxLength(
 			CPFriendlyURLEntry.class.getName(), "urlTitle");
 
@@ -84,6 +75,14 @@ public class CPFriendlyURLEntryImpl extends CPFriendlyURLEntryBaseImpl {
 		}
 
 		return -1;
+	}
+
+	public CPFriendlyURLEntryImpl() {
+	}
+
+	@Override
+	public Locale getLocale() {
+		return LocaleUtil.fromLanguageId(getLanguageId());
 	}
 
 }

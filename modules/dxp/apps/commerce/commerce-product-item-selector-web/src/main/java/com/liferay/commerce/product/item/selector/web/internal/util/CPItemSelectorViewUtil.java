@@ -16,10 +16,12 @@ package com.liferay.commerce.product.item.selector.web.internal.util;
 
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPOption;
+import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.util.comparator.CPDefinitionDisplayDateComparator;
 import com.liferay.commerce.product.util.comparator.CPDefinitionModifiedDateComparator;
 import com.liferay.commerce.product.util.comparator.CPDefinitionTitleComparator;
 import com.liferay.commerce.product.util.comparator.CPOptionTitleComparator;
+import com.liferay.commerce.product.util.comparator.CPSpecificationOptionTitleComparator;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
@@ -117,6 +119,26 @@ public class CPItemSelectorViewUtil {
 		}
 
 		return sort;
+	}
+
+	public static OrderByComparator<CPSpecificationOption>
+		getCPSpecificationOptionOrderByComparator(
+			String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<CPSpecificationOption> orderByComparator = null;
+
+		if (orderByCol.equals("title")) {
+			orderByComparator = new CPSpecificationOptionTitleComparator(
+				orderByAsc);
+		}
+
+		return orderByComparator;
 	}
 
 }

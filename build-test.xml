@@ -1410,6 +1410,7 @@ war.path=${app.server.weblogic.portal.dir}/</echo>
 				<arg value="--build-file=portal-web/build-test.gradle" />
 				<arg value="-Plocal=${test.poshi.runner.local.release}" />
 				<arg value="-PposhiRunnerExtProperties=${test.ext.properties.file}" />
+				<arg value="-Ptmp.maven.repository.dir=../.m2-tmp" />
 			</gradle-execute>
 		</sequential>
 	</macrodef>

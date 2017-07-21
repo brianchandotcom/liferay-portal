@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.cart.display.context;
 
-import com.liferay.commerce.cart.constants.CommerceCartConstants;
 import com.liferay.commerce.cart.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.cart.model.CommerceCart;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
@@ -79,12 +78,6 @@ public abstract class BaseCommerceCartDisplayContext<T> {
 		}
 
 		return commerceCart.getCommerceCartId();
-	}
-
-	public int getCommerceCartType() {
-		return ParamUtil.getInteger(
-			httpServletRequest, "type",
-			CommerceCartConstants.COMMERCE_CART_TYPE_CART);
 	}
 
 	public String getDisplayStyle() {

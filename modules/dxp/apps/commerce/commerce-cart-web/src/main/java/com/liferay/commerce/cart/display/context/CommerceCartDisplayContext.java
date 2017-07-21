@@ -81,14 +81,12 @@ public class CommerceCartDisplayContext
 		searchContainer = new SearchContainer<>(
 			liferayPortletRequest, getPortletURL(), null, null);
 
-		if (getCommerceCartType() ==
-				CommerceCartConstants.COMMERCE_CART_TYPE_CART) {
+		int type = getCommerceCartType();
 
+		if (type == CommerceCartConstants.COMMERCE_CART_TYPE_CART) {
 			searchContainer.setEmptyResultsMessage("no-carts-were-found");
 		}
-		else if (getCommerceCartType() ==
-					CommerceCartConstants.COMMERCE_CART_TYPE_WISH_LIST) {
-
+		else if (type == CommerceCartConstants.COMMERCE_CART_TYPE_WISH_LIST) {
 			searchContainer.setEmptyResultsMessage("no-wish-lists-were-found");
 		}
 
@@ -102,18 +100,23 @@ public class CommerceCartDisplayContext
 		searchContainer.setRowChecker(getRowChecker());
 
 		int total = _commerceCartService.getCommerceCartsCount(
-			themeDisplay.getScopeGroupId(), getCommerceCartType());
+			themeDisplay.getScopeGroupId(), type);
 
 		searchContainer.setTotal(total);
 
 		List<CommerceCart> results = _commerceCartService.getCommerceCarts(
-			themeDisplay.getScopeGroupId(), getCommerceCartType(),
-			searchContainer.getStart(), searchContainer.getEnd(),
-			orderByComparator);
+			themeDisplay.getScopeGroupId(), type, searchContainer.getStart(),
+			searchContainer.getEnd(), orderByComparator);
 
 		searchContainer.setResults(results);
 
 		return searchContainer;
+	}
+
+	protected int getCommerceCartType() {
+		return ParamUtil.getInteger(
+			httpServletRequest, "type",
+			CommerceCartConstants.COMMERCE_CART_TYPE_CART);
 	}
 
 	private final CommerceCartService _commerceCartService;

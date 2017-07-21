@@ -47,7 +47,7 @@ import java.util.List;
  * credentials because this service can only be accessed from within the same
  * VM.
  *
- * @author Alessio Antonio Rendina
+ * @author Marco Leo
  * @see CommerceCartLocalServiceUtil
  * @see com.liferay.commerce.cart.service.base.CommerceCartLocalServiceBaseImpl
  * @see com.liferay.commerce.cart.service.impl.CommerceCartLocalServiceImpl
@@ -110,9 +110,6 @@ public interface CommerceCartLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceCart fetchCommerceCart(long CommerceCartId);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceCart fetchCommerceCart(long groupId, long userId, int type);
-
 	/**
 	* Returns the commerce cart with the primary key.
 	*
@@ -123,10 +120,6 @@ public interface CommerceCartLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceCart getCommerceCart(long CommerceCartId)
 		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceCart getUserCurrentCommerceCart(int type,
-		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Updates the commerce cart in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -166,7 +159,7 @@ public interface CommerceCartLocalService extends BaseLocalService,
 	public int getCommerceCartsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceCartsCount(int type);
+	public int getCommerceCartsCount(long groupId, int type);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -214,6 +207,9 @@ public interface CommerceCartLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	public List<CommerceCart> findCommerceCarts(long groupId, long userId,
+		int type);
+
 	/**
 	* Returns a range of all the commerce carts.
 	*
@@ -229,8 +225,8 @@ public interface CommerceCartLocalService extends BaseLocalService,
 	public List<CommerceCart> getCommerceCarts(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceCart> getCommerceCarts(int type, int start, int end,
-		OrderByComparator<CommerceCart> orderByComparator);
+	public List<CommerceCart> getCommerceCarts(long groupId, int type,
+		int start, int end, OrderByComparator<CommerceCart> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.

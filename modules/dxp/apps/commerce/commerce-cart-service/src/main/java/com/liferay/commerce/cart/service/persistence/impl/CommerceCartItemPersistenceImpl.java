@@ -59,7 +59,7 @@ import java.util.Set;
  * Caching information and settings can be found in <code>portal.properties</code>
  * </p>
  *
- * @author Alessio Antonio Rendina
+ * @author Marco Leo
  * @see CommerceCartItemPersistence
  * @see com.liferay.commerce.cart.service.persistence.CommerceCartItemUtil
  * @generated

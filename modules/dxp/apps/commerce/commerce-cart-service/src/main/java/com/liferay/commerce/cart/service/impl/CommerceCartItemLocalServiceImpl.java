@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.util.List;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Marco Leo
  */
 public class CommerceCartItemLocalServiceImpl
 	extends CommerceCartItemLocalServiceBaseImpl {

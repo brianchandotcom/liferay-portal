@@ -28,7 +28,7 @@ import org.osgi.util.tracker.ServiceTracker;
  * checks based on the propagated JAAS credentials because this service can be
  * accessed remotely.
  *
- * @author Alessio Antonio Rendina
+ * @author Marco Leo
  * @see CommerceCartService
  * @see com.liferay.commerce.cart.service.base.CommerceCartServiceBaseImpl
  * @see com.liferay.commerce.cart.service.impl.CommerceCartServiceImpl
@@ -41,6 +41,17 @@ public class CommerceCartServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.cart.service.impl.CommerceCartServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.commerce.cart.model.CommerceCart addCommerceCart(
+		java.lang.String name, int type,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addCommerceCart(name, type, serviceContext);
+	}
+
+	public static com.liferay.commerce.cart.model.CommerceCart fetchCommerceCart(
+		long commerceCartId) {
+		return getService().fetchCommerceCart(commerceCartId);
+	}
 
 	/**
 	* Returns the OSGi service identifier.

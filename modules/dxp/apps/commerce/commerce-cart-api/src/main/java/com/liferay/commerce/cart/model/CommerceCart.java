@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.Accessor;
 /**
  * The extended model interface for the CommerceCart service. Represents a row in the &quot;CommerceCart&quot; database table, with each column mapped to a property of this class.
  *
- * @author Alessio Antonio Rendina
+ * @author Marco Leo
  * @see CommerceCartModel
  * @see com.liferay.commerce.cart.model.impl.CommerceCartImpl
  * @see com.liferay.commerce.cart.model.impl.CommerceCartModelImpl

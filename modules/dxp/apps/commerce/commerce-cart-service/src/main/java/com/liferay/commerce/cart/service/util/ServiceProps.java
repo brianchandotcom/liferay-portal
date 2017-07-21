@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.configuration.Filter;
 import java.util.Properties;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Marco Leo
  * @generated
  */
 @ProviderType

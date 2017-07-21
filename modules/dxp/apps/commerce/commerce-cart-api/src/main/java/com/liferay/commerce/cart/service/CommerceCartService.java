@@ -16,13 +16,17 @@ package com.liferay.commerce.cart.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.cart.model.CommerceCart;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
 /**
@@ -30,7 +34,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
  * service are expected to have security checks based on the propagated JAAS
  * credentials because this service can be accessed remotely.
  *
- * @author Alessio Antonio Rendina
+ * @author Marco Leo
  * @see CommerceCartServiceUtil
  * @see com.liferay.commerce.cart.service.base.CommerceCartServiceBaseImpl
  * @see com.liferay.commerce.cart.service.impl.CommerceCartServiceImpl
@@ -49,6 +53,11 @@ public interface CommerceCartService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceCartServiceUtil} to access the commerce cart remote service. Add custom service methods to {@link com.liferay.commerce.cart.service.impl.CommerceCartServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public CommerceCart addCommerceCart(java.lang.String name, int type,
+		ServiceContext serviceContext) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceCart fetchCommerceCart(long commerceCartId);
 
 	/**
 	* Returns the OSGi service identifier.

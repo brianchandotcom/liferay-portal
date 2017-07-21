@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -57,7 +56,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -168,10 +166,11 @@ public class CommerceCartPersistenceTest {
 	}
 
 	@Test
-	public void testCountByType() throws Exception {
-		_persistence.countByType(RandomTestUtil.nextInt());
+	public void testCountByG_T() throws Exception {
+		_persistence.countByG_T(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
-		_persistence.countByType(0);
+		_persistence.countByG_T(0L, 0);
 	}
 
 	@Test
@@ -183,13 +182,14 @@ public class CommerceCartPersistenceTest {
 	}
 
 	@Test
-	public void testCountByU_N_T() throws Exception {
-		_persistence.countByU_N_T(RandomTestUtil.nextLong(), StringPool.BLANK,
+	public void testCountByG_U_N_T() throws Exception {
+		_persistence.countByG_U_N_T(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), StringPool.BLANK,
 			RandomTestUtil.nextInt());
 
-		_persistence.countByU_N_T(0L, StringPool.NULL, 0);
+		_persistence.countByG_U_N_T(0L, 0L, StringPool.NULL, 0);
 
-		_persistence.countByU_N_T(0L, (String)null, 0);
+		_persistence.countByG_U_N_T(0L, 0L, (String)null, 0);
 	}
 
 	@Test
@@ -413,35 +413,6 @@ public class CommerceCartPersistenceTest {
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
-	}
-
-	@Test
-	public void testResetOriginalValues() throws Exception {
-		CommerceCart newCommerceCart = addCommerceCart();
-
-		_persistence.clearCache();
-
-		CommerceCart existingCommerceCart = _persistence.findByPrimaryKey(newCommerceCart.getPrimaryKey());
-
-		Assert.assertEquals(Long.valueOf(existingCommerceCart.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(existingCommerceCart,
-				"getOriginalGroupId", new Class<?>[0]));
-		Assert.assertEquals(Long.valueOf(existingCommerceCart.getUserId()),
-			ReflectionTestUtil.<Long>invoke(existingCommerceCart,
-				"getOriginalUserId", new Class<?>[0]));
-		Assert.assertEquals(Integer.valueOf(existingCommerceCart.getType()),
-			ReflectionTestUtil.<Integer>invoke(existingCommerceCart,
-				"getOriginalType", new Class<?>[0]));
-
-		Assert.assertEquals(Long.valueOf(existingCommerceCart.getUserId()),
-			ReflectionTestUtil.<Long>invoke(existingCommerceCart,
-				"getOriginalUserId", new Class<?>[0]));
-		Assert.assertTrue(Objects.equals(existingCommerceCart.getName(),
-				ReflectionTestUtil.invoke(existingCommerceCart,
-					"getOriginalName", new Class<?>[0])));
-		Assert.assertEquals(Integer.valueOf(existingCommerceCart.getType()),
-			ReflectionTestUtil.<Integer>invoke(existingCommerceCart,
-				"getOriginalType", new Class<?>[0]));
 	}
 
 	protected CommerceCart addCommerceCart() throws Exception {

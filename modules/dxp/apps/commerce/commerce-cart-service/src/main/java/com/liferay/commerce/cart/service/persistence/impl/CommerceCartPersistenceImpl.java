@@ -28,9 +28,11 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -41,7 +43,6 @@ import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
@@ -65,7 +66,7 @@ import java.util.Set;
  * Caching information and settings can be found in <code>portal.properties</code>
  * </p>
  *
- * @author Alessio Antonio Rendina
+ * @author Marco Leo
  * @see CommerceCartPersistence
  * @see com.liferay.commerce.cart.service.persistence.CommerceCartUtil
  * @generated
@@ -92,61 +93,67 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(CommerceCartModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceCartModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_TYPE = new FinderPath(CommerceCartModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T = new FinderPath(CommerceCartModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceCartModelImpl.FINDER_CACHE_ENABLED, CommerceCartImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByType",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_T",
 			new String[] {
-				Integer.class.getName(),
+				Long.class.getName(), Integer.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TYPE = new FinderPath(CommerceCartModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T = new FinderPath(CommerceCartModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceCartModelImpl.FINDER_CACHE_ENABLED, CommerceCartImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByType",
-			new String[] { Integer.class.getName() },
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_T",
+			new String[] { Long.class.getName(), Integer.class.getName() },
+			CommerceCartModelImpl.GROUPID_COLUMN_BITMASK |
 			CommerceCartModelImpl.TYPE_COLUMN_BITMASK |
 			CommerceCartModelImpl.CREATEDATE_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_TYPE = new FinderPath(CommerceCartModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_T = new FinderPath(CommerceCartModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceCartModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByType",
-			new String[] { Integer.class.getName() });
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_T",
+			new String[] { Long.class.getName(), Integer.class.getName() });
 
 	/**
-	 * Returns all the commerce carts where type = &#63;.
+	 * Returns all the commerce carts where groupId = &#63; and type = &#63;.
 	 *
+	 * @param groupId the group ID
 	 * @param type the type
 	 * @return the matching commerce carts
 	 */
 	@Override
-	public List<CommerceCart> findByType(int type) {
-		return findByType(type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	public List<CommerceCart> findByG_T(long groupId, int type) {
+		return findByG_T(groupId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
 	}
 
 	/**
-	 * Returns a range of all the commerce carts where type = &#63;.
+	 * Returns a range of all the commerce carts where groupId = &#63; and type = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @param groupId the group ID
 	 * @param type the type
 	 * @param start the lower bound of the range of commerce carts
 	 * @param end the upper bound of the range of commerce carts (not inclusive)
 	 * @return the range of matching commerce carts
 	 */
 	@Override
-	public List<CommerceCart> findByType(int type, int start, int end) {
-		return findByType(type, start, end, null);
+	public List<CommerceCart> findByG_T(long groupId, int type, int start,
+		int end) {
+		return findByG_T(groupId, type, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the commerce carts where type = &#63;.
+	 * Returns an ordered range of all the commerce carts where groupId = &#63; and type = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @param groupId the group ID
 	 * @param type the type
 	 * @param start the lower bound of the range of commerce carts
 	 * @param end the upper bound of the range of commerce carts (not inclusive)
@@ -154,18 +161,19 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 	 * @return the ordered range of matching commerce carts
 	 */
 	@Override
-	public List<CommerceCart> findByType(int type, int start, int end,
-		OrderByComparator<CommerceCart> orderByComparator) {
-		return findByType(type, start, end, orderByComparator, true);
+	public List<CommerceCart> findByG_T(long groupId, int type, int start,
+		int end, OrderByComparator<CommerceCart> orderByComparator) {
+		return findByG_T(groupId, type, start, end, orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the commerce carts where type = &#63;.
+	 * Returns an ordered range of all the commerce carts where groupId = &#63; and type = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @param groupId the group ID
 	 * @param type the type
 	 * @param start the lower bound of the range of commerce carts
 	 * @param end the upper bound of the range of commerce carts (not inclusive)
@@ -174,8 +182,8 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 	 * @return the ordered range of matching commerce carts
 	 */
 	@Override
-	public List<CommerceCart> findByType(int type, int start, int end,
-		OrderByComparator<CommerceCart> orderByComparator,
+	public List<CommerceCart> findByG_T(long groupId, int type, int start,
+		int end, OrderByComparator<CommerceCart> orderByComparator,
 		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -184,12 +192,16 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TYPE;
-			finderArgs = new Object[] { type };
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T;
+			finderArgs = new Object[] { groupId, type };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_TYPE;
-			finderArgs = new Object[] { type, start, end, orderByComparator };
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T;
+			finderArgs = new Object[] {
+					groupId, type,
+					
+					start, end, orderByComparator
+				};
 		}
 
 		List<CommerceCart> list = null;
@@ -200,7 +212,8 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceCart commerceCart : list) {
-					if ((type != commerceCart.getType())) {
+					if ((groupId != commerceCart.getGroupId()) ||
+							(type != commerceCart.getType())) {
 						list = null;
 
 						break;
@@ -213,16 +226,18 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(3 +
+				query = new StringBundler(4 +
 						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
-				query = new StringBundler(3);
+				query = new StringBundler(4);
 			}
 
 			query.append(_SQL_SELECT_COMMERCECART_WHERE);
 
-			query.append(_FINDER_COLUMN_TYPE_TYPE_2);
+			query.append(_FINDER_COLUMN_G_T_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_T_TYPE_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -243,6 +258,8 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 				Query q = session.createQuery(sql);
 
 				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
 
 				qPos.add(type);
 
@@ -277,28 +294,33 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 	}
 
 	/**
-	 * Returns the first commerce cart in the ordered set where type = &#63;.
+	 * Returns the first commerce cart in the ordered set where groupId = &#63; and type = &#63;.
 	 *
+	 * @param groupId the group ID
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching commerce cart
 	 * @throws NoSuchCartException if a matching commerce cart could not be found
 	 */
 	@Override
-	public CommerceCart findByType_First(int type,
+	public CommerceCart findByG_T_First(long groupId, int type,
 		OrderByComparator<CommerceCart> orderByComparator)
 		throws NoSuchCartException {
-		CommerceCart commerceCart = fetchByType_First(type, orderByComparator);
+		CommerceCart commerceCart = fetchByG_T_First(groupId, type,
+				orderByComparator);
 
 		if (commerceCart != null) {
 			return commerceCart;
 		}
 
-		StringBundler msg = new StringBundler(4);
+		StringBundler msg = new StringBundler(6);
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("type=");
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", type=");
 		msg.append(type);
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
@@ -307,71 +329,17 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 	}
 
 	/**
-	 * Returns the first commerce cart in the ordered set where type = &#63;.
+	 * Returns the first commerce cart in the ordered set where groupId = &#63; and type = &#63;.
 	 *
+	 * @param groupId the group ID
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching commerce cart, or <code>null</code> if a matching commerce cart could not be found
 	 */
 	@Override
-	public CommerceCart fetchByType_First(int type,
+	public CommerceCart fetchByG_T_First(long groupId, int type,
 		OrderByComparator<CommerceCart> orderByComparator) {
-		List<CommerceCart> list = findByType(type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce cart in the ordered set where type = &#63;.
-	 *
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce cart
-	 * @throws NoSuchCartException if a matching commerce cart could not be found
-	 */
-	@Override
-	public CommerceCart findByType_Last(int type,
-		OrderByComparator<CommerceCart> orderByComparator)
-		throws NoSuchCartException {
-		CommerceCart commerceCart = fetchByType_Last(type, orderByComparator);
-
-		if (commerceCart != null) {
-			return commerceCart;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("type=");
-		msg.append(type);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchCartException(msg.toString());
-	}
-
-	/**
-	 * Returns the last commerce cart in the ordered set where type = &#63;.
-	 *
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce cart, or <code>null</code> if a matching commerce cart could not be found
-	 */
-	@Override
-	public CommerceCart fetchByType_Last(int type,
-		OrderByComparator<CommerceCart> orderByComparator) {
-		int count = countByType(type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceCart> list = findByType(type, count - 1, count,
+		List<CommerceCart> list = findByG_T(groupId, type, 0, 1,
 				orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -382,16 +350,80 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 	}
 
 	/**
-	 * Returns the commerce carts before and after the current commerce cart in the ordered set where type = &#63;.
+	 * Returns the last commerce cart in the ordered set where groupId = &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce cart
+	 * @throws NoSuchCartException if a matching commerce cart could not be found
+	 */
+	@Override
+	public CommerceCart findByG_T_Last(long groupId, int type,
+		OrderByComparator<CommerceCart> orderByComparator)
+		throws NoSuchCartException {
+		CommerceCart commerceCart = fetchByG_T_Last(groupId, type,
+				orderByComparator);
+
+		if (commerceCart != null) {
+			return commerceCart;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", type=");
+		msg.append(type);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCartException(msg.toString());
+	}
+
+	/**
+	 * Returns the last commerce cart in the ordered set where groupId = &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce cart, or <code>null</code> if a matching commerce cart could not be found
+	 */
+	@Override
+	public CommerceCart fetchByG_T_Last(long groupId, int type,
+		OrderByComparator<CommerceCart> orderByComparator) {
+		int count = countByG_T(groupId, type);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CommerceCart> list = findByG_T(groupId, type, count - 1, count,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the commerce carts before and after the current commerce cart in the ordered set where groupId = &#63; and type = &#63;.
 	 *
 	 * @param CommerceCartId the primary key of the current commerce cart
+	 * @param groupId the group ID
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next commerce cart
 	 * @throws NoSuchCartException if a commerce cart with the primary key could not be found
 	 */
 	@Override
-	public CommerceCart[] findByType_PrevAndNext(long CommerceCartId, int type,
+	public CommerceCart[] findByG_T_PrevAndNext(long CommerceCartId,
+		long groupId, int type,
 		OrderByComparator<CommerceCart> orderByComparator)
 		throws NoSuchCartException {
 		CommerceCart commerceCart = findByPrimaryKey(CommerceCartId);
@@ -403,13 +435,13 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 
 			CommerceCart[] array = new CommerceCartImpl[3];
 
-			array[0] = getByType_PrevAndNext(session, commerceCart, type,
-					orderByComparator, true);
+			array[0] = getByG_T_PrevAndNext(session, commerceCart, groupId,
+					type, orderByComparator, true);
 
 			array[1] = commerceCart;
 
-			array[2] = getByType_PrevAndNext(session, commerceCart, type,
-					orderByComparator, false);
+			array[2] = getByG_T_PrevAndNext(session, commerceCart, groupId,
+					type, orderByComparator, false);
 
 			return array;
 		}
@@ -421,23 +453,25 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 		}
 	}
 
-	protected CommerceCart getByType_PrevAndNext(Session session,
-		CommerceCart commerceCart, int type,
+	protected CommerceCart getByG_T_PrevAndNext(Session session,
+		CommerceCart commerceCart, long groupId, int type,
 		OrderByComparator<CommerceCart> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(4 +
+			query = new StringBundler(5 +
 					(orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(3);
+			query = new StringBundler(4);
 		}
 
 		query.append(_SQL_SELECT_COMMERCECART_WHERE);
 
-		query.append(_FINDER_COLUMN_TYPE_TYPE_2);
+		query.append(_FINDER_COLUMN_G_T_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_T_TYPE_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -507,6 +541,8 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
+		qPos.add(groupId);
+
 		qPos.add(type);
 
 		if (orderByComparator != null) {
@@ -528,38 +564,366 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 	}
 
 	/**
-	 * Removes all the commerce carts where type = &#63; from the database.
+	 * Returns all the commerce carts that the user has permission to view where groupId = &#63; and type = &#63;.
 	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @return the matching commerce carts that the user has permission to view
+	 */
+	@Override
+	public List<CommerceCart> filterFindByG_T(long groupId, int type) {
+		return filterFindByG_T(groupId, type, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the commerce carts that the user has permission to view where groupId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce carts
+	 * @param end the upper bound of the range of commerce carts (not inclusive)
+	 * @return the range of matching commerce carts that the user has permission to view
+	 */
+	@Override
+	public List<CommerceCart> filterFindByG_T(long groupId, int type,
+		int start, int end) {
+		return filterFindByG_T(groupId, type, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce carts that the user has permissions to view where groupId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce carts
+	 * @param end the upper bound of the range of commerce carts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce carts that the user has permission to view
+	 */
+	@Override
+	public List<CommerceCart> filterFindByG_T(long groupId, int type,
+		int start, int end, OrderByComparator<CommerceCart> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_T(groupId, type, start, end, orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_COMMERCECART_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_COMMERCECART_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_T_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_T_TYPE_2_SQL);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_COMMERCECART_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(CommerceCartModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(CommerceCartModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				CommerceCart.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, CommerceCartImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, CommerceCartImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(type);
+
+			return (List<CommerceCart>)QueryUtil.list(q, getDialect(), start,
+				end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the commerce carts before and after the current commerce cart in the ordered set of commerce carts that the user has permission to view where groupId = &#63; and type = &#63;.
+	 *
+	 * @param CommerceCartId the primary key of the current commerce cart
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce cart
+	 * @throws NoSuchCartException if a commerce cart with the primary key could not be found
+	 */
+	@Override
+	public CommerceCart[] filterFindByG_T_PrevAndNext(long CommerceCartId,
+		long groupId, int type,
+		OrderByComparator<CommerceCart> orderByComparator)
+		throws NoSuchCartException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_T_PrevAndNext(CommerceCartId, groupId, type,
+				orderByComparator);
+		}
+
+		CommerceCart commerceCart = findByPrimaryKey(CommerceCartId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CommerceCart[] array = new CommerceCartImpl[3];
+
+			array[0] = filterGetByG_T_PrevAndNext(session, commerceCart,
+					groupId, type, orderByComparator, true);
+
+			array[1] = commerceCart;
+
+			array[2] = filterGetByG_T_PrevAndNext(session, commerceCart,
+					groupId, type, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CommerceCart filterGetByG_T_PrevAndNext(Session session,
+		CommerceCart commerceCart, long groupId, int type,
+		OrderByComparator<CommerceCart> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_COMMERCECART_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_COMMERCECART_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_T_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_T_TYPE_2_SQL);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_COMMERCECART_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(CommerceCartModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(CommerceCartModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				CommerceCart.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, CommerceCartImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, CommerceCartImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(type);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(commerceCart);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<CommerceCart> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the commerce carts where groupId = &#63; and type = &#63; from the database.
+	 *
+	 * @param groupId the group ID
 	 * @param type the type
 	 */
 	@Override
-	public void removeByType(int type) {
-		for (CommerceCart commerceCart : findByType(type, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null)) {
+	public void removeByG_T(long groupId, int type) {
+		for (CommerceCart commerceCart : findByG_T(groupId, type,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(commerceCart);
 		}
 	}
 
 	/**
-	 * Returns the number of commerce carts where type = &#63;.
+	 * Returns the number of commerce carts where groupId = &#63; and type = &#63;.
 	 *
+	 * @param groupId the group ID
 	 * @param type the type
 	 * @return the number of matching commerce carts
 	 */
 	@Override
-	public int countByType(int type) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_TYPE;
+	public int countByG_T(long groupId, int type) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_T;
 
-		Object[] finderArgs = new Object[] { type };
+		Object[] finderArgs = new Object[] { groupId, type };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(2);
+			StringBundler query = new StringBundler(3);
 
 			query.append(_SQL_COUNT_COMMERCECART_WHERE);
 
-			query.append(_FINDER_COLUMN_TYPE_TYPE_2);
+			query.append(_FINDER_COLUMN_G_T_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_T_TYPE_2);
 
 			String sql = query.toString();
 
@@ -571,6 +935,8 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 				Query q = session.createQuery(sql);
 
 				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
 
 				qPos.add(type);
 
@@ -591,17 +957,83 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_TYPE_TYPE_2 = "commerceCart.type = ?";
-	public static final FinderPath FINDER_PATH_FETCH_BY_G_U_T = new FinderPath(CommerceCartModelImpl.ENTITY_CACHE_ENABLED,
+	/**
+	 * Returns the number of commerce carts that the user has permission to view where groupId = &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @return the number of matching commerce carts that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_T(long groupId, int type) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_T(groupId, type);
+		}
+
+		StringBundler query = new StringBundler(3);
+
+		query.append(_FILTER_SQL_COUNT_COMMERCECART_WHERE);
+
+		query.append(_FINDER_COLUMN_G_T_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_T_TYPE_2_SQL);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				CommerceCart.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(type);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private static final String _FINDER_COLUMN_G_T_GROUPID_2 = "commerceCart.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_T_TYPE_2 = "commerceCart.type = ?";
+	private static final String _FINDER_COLUMN_G_T_TYPE_2_SQL = "commerceCart.type_ = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_U_T = new FinderPath(CommerceCartModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceCartModelImpl.FINDER_CACHE_ENABLED, CommerceCartImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_U_T",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U_T",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_T = new FinderPath(CommerceCartModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceCartModelImpl.FINDER_CACHE_ENABLED, CommerceCartImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_U_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
 			},
 			CommerceCartModelImpl.GROUPID_COLUMN_BITMASK |
 			CommerceCartModelImpl.USERID_COLUMN_BITMASK |
-			CommerceCartModelImpl.TYPE_COLUMN_BITMASK);
+			CommerceCartModelImpl.TYPE_COLUMN_BITMASK |
+			CommerceCartModelImpl.CREATEDATE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_U_T = new FinderPath(CommerceCartModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceCartModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_U_T",
@@ -611,91 +1043,129 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 			});
 
 	/**
-	 * Returns the commerce cart where groupId = &#63; and userId = &#63; and type = &#63; or throws a {@link NoSuchCartException} if it could not be found.
+	 * Returns all the commerce carts where groupId = &#63; and userId = &#63; and type = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param type the type
-	 * @return the matching commerce cart
-	 * @throws NoSuchCartException if a matching commerce cart could not be found
+	 * @return the matching commerce carts
 	 */
 	@Override
-	public CommerceCart findByG_U_T(long groupId, long userId, int type)
-		throws NoSuchCartException {
-		CommerceCart commerceCart = fetchByG_U_T(groupId, userId, type);
+	public List<CommerceCart> findByG_U_T(long groupId, long userId, int type) {
+		return findByG_U_T(groupId, userId, type, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
 
-		if (commerceCart == null) {
-			StringBundler msg = new StringBundler(8);
+	/**
+	 * Returns a range of all the commerce carts where groupId = &#63; and userId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce carts
+	 * @param end the upper bound of the range of commerce carts (not inclusive)
+	 * @return the range of matching commerce carts
+	 */
+	@Override
+	public List<CommerceCart> findByG_U_T(long groupId, long userId, int type,
+		int start, int end) {
+		return findByG_U_T(groupId, userId, type, start, end, null);
+	}
 
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+	/**
+	 * Returns an ordered range of all the commerce carts where groupId = &#63; and userId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce carts
+	 * @param end the upper bound of the range of commerce carts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce carts
+	 */
+	@Override
+	public List<CommerceCart> findByG_U_T(long groupId, long userId, int type,
+		int start, int end, OrderByComparator<CommerceCart> orderByComparator) {
+		return findByG_U_T(groupId, userId, type, start, end,
+			orderByComparator, true);
+	}
 
-			msg.append("groupId=");
-			msg.append(groupId);
+	/**
+	 * Returns an ordered range of all the commerce carts where groupId = &#63; and userId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce carts
+	 * @param end the upper bound of the range of commerce carts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching commerce carts
+	 */
+	@Override
+	public List<CommerceCart> findByG_U_T(long groupId, long userId, int type,
+		int start, int end, OrderByComparator<CommerceCart> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-			msg.append(", userId=");
-			msg.append(userId);
-
-			msg.append(", type=");
-			msg.append(type);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(msg.toString());
-			}
-
-			throw new NoSuchCartException(msg.toString());
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_T;
+			finderArgs = new Object[] { groupId, userId, type };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_U_T;
+			finderArgs = new Object[] {
+					groupId, userId, type,
+					
+					start, end, orderByComparator
+				};
 		}
 
-		return commerceCart;
-	}
-
-	/**
-	 * Returns the commerce cart where groupId = &#63; and userId = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param type the type
-	 * @return the matching commerce cart, or <code>null</code> if a matching commerce cart could not be found
-	 */
-	@Override
-	public CommerceCart fetchByG_U_T(long groupId, long userId, int type) {
-		return fetchByG_U_T(groupId, userId, type, true);
-	}
-
-	/**
-	 * Returns the commerce cart where groupId = &#63; and userId = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param type the type
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching commerce cart, or <code>null</code> if a matching commerce cart could not be found
-	 */
-	@Override
-	public CommerceCart fetchByG_U_T(long groupId, long userId, int type,
-		boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] { groupId, userId, type };
-
-		Object result = null;
+		List<CommerceCart> list = null;
 
 		if (retrieveFromCache) {
-			result = finderCache.getResult(FINDER_PATH_FETCH_BY_G_U_T,
+			list = (List<CommerceCart>)finderCache.getResult(finderPath,
 					finderArgs, this);
-		}
 
-		if (result instanceof CommerceCart) {
-			CommerceCart commerceCart = (CommerceCart)result;
+			if ((list != null) && !list.isEmpty()) {
+				for (CommerceCart commerceCart : list) {
+					if ((groupId != commerceCart.getGroupId()) ||
+							(userId != commerceCart.getUserId()) ||
+							(type != commerceCart.getType())) {
+						list = null;
 
-			if ((groupId != commerceCart.getGroupId()) ||
-					(userId != commerceCart.getUserId()) ||
-					(type != commerceCart.getType())) {
-				result = null;
+						break;
+					}
+				}
 			}
 		}
 
-		if (result == null) {
-			StringBundler query = new StringBundler(5);
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(5 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(5);
+			}
 
 			query.append(_SQL_SELECT_COMMERCECART_WHERE);
 
@@ -704,6 +1174,15 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 			query.append(_FINDER_COLUMN_G_U_T_USERID_2);
 
 			query.append(_FINDER_COLUMN_G_U_T_TYPE_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(CommerceCartModelImpl.ORDER_BY_JPQL);
+			}
 
 			String sql = query.toString();
 
@@ -722,40 +1201,25 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 
 				qPos.add(type);
 
-				List<CommerceCart> list = q.list();
+				if (!pagination) {
+					list = (List<CommerceCart>)QueryUtil.list(q, getDialect(),
+							start, end, false);
 
-				if (list.isEmpty()) {
-					finderCache.putResult(FINDER_PATH_FETCH_BY_G_U_T,
-						finderArgs, list);
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
 				}
 				else {
-					if (list.size() > 1) {
-						Collections.sort(list, Collections.reverseOrder());
-
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"CommerceCartPersistenceImpl.fetchByG_U_T(long, long, int, boolean) with parameters (" +
-								StringUtil.merge(finderArgs) +
-								") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-						}
-					}
-
-					CommerceCart commerceCart = list.get(0);
-
-					result = commerceCart;
-
-					cacheResult(commerceCart);
-
-					if ((commerceCart.getGroupId() != groupId) ||
-							(commerceCart.getUserId() != userId) ||
-							(commerceCart.getType() != type)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_U_T,
-							finderArgs, commerceCart);
-					}
+					list = (List<CommerceCart>)QueryUtil.list(q, getDialect(),
+							start, end);
 				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_FETCH_BY_G_U_T, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -764,28 +1228,646 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 			}
 		}
 
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (CommerceCart)result;
-		}
+		return list;
 	}
 
 	/**
-	 * Removes the commerce cart where groupId = &#63; and userId = &#63; and type = &#63; from the database.
+	 * Returns the first commerce cart in the ordered set where groupId = &#63; and userId = &#63; and type = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param type the type
-	 * @return the commerce cart that was removed
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce cart
+	 * @throws NoSuchCartException if a matching commerce cart could not be found
 	 */
 	@Override
-	public CommerceCart removeByG_U_T(long groupId, long userId, int type)
+	public CommerceCart findByG_U_T_First(long groupId, long userId, int type,
+		OrderByComparator<CommerceCart> orderByComparator)
 		throws NoSuchCartException {
-		CommerceCart commerceCart = findByG_U_T(groupId, userId, type);
+		CommerceCart commerceCart = fetchByG_U_T_First(groupId, userId, type,
+				orderByComparator);
 
-		return remove(commerceCart);
+		if (commerceCart != null) {
+			return commerceCart;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", userId=");
+		msg.append(userId);
+
+		msg.append(", type=");
+		msg.append(type);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCartException(msg.toString());
+	}
+
+	/**
+	 * Returns the first commerce cart in the ordered set where groupId = &#63; and userId = &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce cart, or <code>null</code> if a matching commerce cart could not be found
+	 */
+	@Override
+	public CommerceCart fetchByG_U_T_First(long groupId, long userId, int type,
+		OrderByComparator<CommerceCart> orderByComparator) {
+		List<CommerceCart> list = findByG_U_T(groupId, userId, type, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last commerce cart in the ordered set where groupId = &#63; and userId = &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce cart
+	 * @throws NoSuchCartException if a matching commerce cart could not be found
+	 */
+	@Override
+	public CommerceCart findByG_U_T_Last(long groupId, long userId, int type,
+		OrderByComparator<CommerceCart> orderByComparator)
+		throws NoSuchCartException {
+		CommerceCart commerceCart = fetchByG_U_T_Last(groupId, userId, type,
+				orderByComparator);
+
+		if (commerceCart != null) {
+			return commerceCart;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", userId=");
+		msg.append(userId);
+
+		msg.append(", type=");
+		msg.append(type);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCartException(msg.toString());
+	}
+
+	/**
+	 * Returns the last commerce cart in the ordered set where groupId = &#63; and userId = &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce cart, or <code>null</code> if a matching commerce cart could not be found
+	 */
+	@Override
+	public CommerceCart fetchByG_U_T_Last(long groupId, long userId, int type,
+		OrderByComparator<CommerceCart> orderByComparator) {
+		int count = countByG_U_T(groupId, userId, type);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CommerceCart> list = findByG_U_T(groupId, userId, type, count - 1,
+				count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the commerce carts before and after the current commerce cart in the ordered set where groupId = &#63; and userId = &#63; and type = &#63;.
+	 *
+	 * @param CommerceCartId the primary key of the current commerce cart
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce cart
+	 * @throws NoSuchCartException if a commerce cart with the primary key could not be found
+	 */
+	@Override
+	public CommerceCart[] findByG_U_T_PrevAndNext(long CommerceCartId,
+		long groupId, long userId, int type,
+		OrderByComparator<CommerceCart> orderByComparator)
+		throws NoSuchCartException {
+		CommerceCart commerceCart = findByPrimaryKey(CommerceCartId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CommerceCart[] array = new CommerceCartImpl[3];
+
+			array[0] = getByG_U_T_PrevAndNext(session, commerceCart, groupId,
+					userId, type, orderByComparator, true);
+
+			array[1] = commerceCart;
+
+			array[2] = getByG_U_T_PrevAndNext(session, commerceCart, groupId,
+					userId, type, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CommerceCart getByG_U_T_PrevAndNext(Session session,
+		CommerceCart commerceCart, long groupId, long userId, int type,
+		OrderByComparator<CommerceCart> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		query.append(_SQL_SELECT_COMMERCECART_WHERE);
+
+		query.append(_FINDER_COLUMN_G_U_T_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_U_T_USERID_2);
+
+		query.append(_FINDER_COLUMN_G_U_T_TYPE_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(CommerceCartModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(userId);
+
+		qPos.add(type);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(commerceCart);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<CommerceCart> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the commerce carts that the user has permission to view where groupId = &#63; and userId = &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param type the type
+	 * @return the matching commerce carts that the user has permission to view
+	 */
+	@Override
+	public List<CommerceCart> filterFindByG_U_T(long groupId, long userId,
+		int type) {
+		return filterFindByG_U_T(groupId, userId, type, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the commerce carts that the user has permission to view where groupId = &#63; and userId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce carts
+	 * @param end the upper bound of the range of commerce carts (not inclusive)
+	 * @return the range of matching commerce carts that the user has permission to view
+	 */
+	@Override
+	public List<CommerceCart> filterFindByG_U_T(long groupId, long userId,
+		int type, int start, int end) {
+		return filterFindByG_U_T(groupId, userId, type, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce carts that the user has permissions to view where groupId = &#63; and userId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce carts
+	 * @param end the upper bound of the range of commerce carts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce carts that the user has permission to view
+	 */
+	@Override
+	public List<CommerceCart> filterFindByG_U_T(long groupId, long userId,
+		int type, int start, int end,
+		OrderByComparator<CommerceCart> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_U_T(groupId, userId, type, start, end,
+				orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_COMMERCECART_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_COMMERCECART_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_U_T_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_U_T_USERID_2);
+
+		query.append(_FINDER_COLUMN_G_U_T_TYPE_2_SQL);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_COMMERCECART_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(CommerceCartModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(CommerceCartModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				CommerceCart.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, CommerceCartImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, CommerceCartImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(userId);
+
+			qPos.add(type);
+
+			return (List<CommerceCart>)QueryUtil.list(q, getDialect(), start,
+				end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the commerce carts before and after the current commerce cart in the ordered set of commerce carts that the user has permission to view where groupId = &#63; and userId = &#63; and type = &#63;.
+	 *
+	 * @param CommerceCartId the primary key of the current commerce cart
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce cart
+	 * @throws NoSuchCartException if a commerce cart with the primary key could not be found
+	 */
+	@Override
+	public CommerceCart[] filterFindByG_U_T_PrevAndNext(long CommerceCartId,
+		long groupId, long userId, int type,
+		OrderByComparator<CommerceCart> orderByComparator)
+		throws NoSuchCartException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_U_T_PrevAndNext(CommerceCartId, groupId, userId,
+				type, orderByComparator);
+		}
+
+		CommerceCart commerceCart = findByPrimaryKey(CommerceCartId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CommerceCart[] array = new CommerceCartImpl[3];
+
+			array[0] = filterGetByG_U_T_PrevAndNext(session, commerceCart,
+					groupId, userId, type, orderByComparator, true);
+
+			array[1] = commerceCart;
+
+			array[2] = filterGetByG_U_T_PrevAndNext(session, commerceCart,
+					groupId, userId, type, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CommerceCart filterGetByG_U_T_PrevAndNext(Session session,
+		CommerceCart commerceCart, long groupId, long userId, int type,
+		OrderByComparator<CommerceCart> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(7 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_COMMERCECART_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_COMMERCECART_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_U_T_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_U_T_USERID_2);
+
+		query.append(_FINDER_COLUMN_G_U_T_TYPE_2_SQL);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_COMMERCECART_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(CommerceCartModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(CommerceCartModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				CommerceCart.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, CommerceCartImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, CommerceCartImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(userId);
+
+		qPos.add(type);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(commerceCart);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<CommerceCart> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the commerce carts where groupId = &#63; and userId = &#63; and type = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param type the type
+	 */
+	@Override
+	public void removeByG_U_T(long groupId, long userId, int type) {
+		for (CommerceCart commerceCart : findByG_U_T(groupId, userId, type,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(commerceCart);
+		}
 	}
 
 	/**
@@ -849,133 +1931,262 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 		return count.intValue();
 	}
 
+	/**
+	 * Returns the number of commerce carts that the user has permission to view where groupId = &#63; and userId = &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param type the type
+	 * @return the number of matching commerce carts that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_U_T(long groupId, long userId, int type) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_U_T(groupId, userId, type);
+		}
+
+		StringBundler query = new StringBundler(4);
+
+		query.append(_FILTER_SQL_COUNT_COMMERCECART_WHERE);
+
+		query.append(_FINDER_COLUMN_G_U_T_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_U_T_USERID_2);
+
+		query.append(_FINDER_COLUMN_G_U_T_TYPE_2_SQL);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				CommerceCart.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(userId);
+
+			qPos.add(type);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
 	private static final String _FINDER_COLUMN_G_U_T_GROUPID_2 = "commerceCart.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_U_T_USERID_2 = "commerceCart.userId = ? AND ";
 	private static final String _FINDER_COLUMN_G_U_T_TYPE_2 = "commerceCart.type = ?";
-	public static final FinderPath FINDER_PATH_FETCH_BY_U_N_T = new FinderPath(CommerceCartModelImpl.ENTITY_CACHE_ENABLED,
+	private static final String _FINDER_COLUMN_G_U_T_TYPE_2_SQL = "commerceCart.type_ = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_U_N_T = new FinderPath(CommerceCartModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceCartModelImpl.FINDER_CACHE_ENABLED, CommerceCartImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByU_N_T",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U_N_T",
 			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName()
+				Long.class.getName(), Long.class.getName(),
+				String.class.getName(), Integer.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_N_T =
+		new FinderPath(CommerceCartModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceCartModelImpl.FINDER_CACHE_ENABLED, CommerceCartImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_U_N_T",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				String.class.getName(), Integer.class.getName()
 			},
+			CommerceCartModelImpl.GROUPID_COLUMN_BITMASK |
 			CommerceCartModelImpl.USERID_COLUMN_BITMASK |
 			CommerceCartModelImpl.NAME_COLUMN_BITMASK |
-			CommerceCartModelImpl.TYPE_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_U_N_T = new FinderPath(CommerceCartModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceCartModelImpl.TYPE_COLUMN_BITMASK |
+			CommerceCartModelImpl.CREATEDATE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_U_N_T = new FinderPath(CommerceCartModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceCartModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_N_T",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_U_N_T",
 			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName()
+				Long.class.getName(), Long.class.getName(),
+				String.class.getName(), Integer.class.getName()
 			});
 
 	/**
-	 * Returns the commerce cart where userId = &#63; and name = &#63; and type = &#63; or throws a {@link NoSuchCartException} if it could not be found.
+	 * Returns all the commerce carts where groupId = &#63; and userId = &#63; and name = &#63; and type = &#63;.
 	 *
+	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param name the name
 	 * @param type the type
-	 * @return the matching commerce cart
-	 * @throws NoSuchCartException if a matching commerce cart could not be found
+	 * @return the matching commerce carts
 	 */
 	@Override
-	public CommerceCart findByU_N_T(long userId, String name, int type)
-		throws NoSuchCartException {
-		CommerceCart commerceCart = fetchByU_N_T(userId, name, type);
+	public List<CommerceCart> findByG_U_N_T(long groupId, long userId,
+		String name, int type) {
+		return findByG_U_N_T(groupId, userId, name, type, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
 
-		if (commerceCart == null) {
-			StringBundler msg = new StringBundler(8);
+	/**
+	 * Returns a range of all the commerce carts where groupId = &#63; and userId = &#63; and name = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param name the name
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce carts
+	 * @param end the upper bound of the range of commerce carts (not inclusive)
+	 * @return the range of matching commerce carts
+	 */
+	@Override
+	public List<CommerceCart> findByG_U_N_T(long groupId, long userId,
+		String name, int type, int start, int end) {
+		return findByG_U_N_T(groupId, userId, name, type, start, end, null);
+	}
 
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+	/**
+	 * Returns an ordered range of all the commerce carts where groupId = &#63; and userId = &#63; and name = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param name the name
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce carts
+	 * @param end the upper bound of the range of commerce carts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce carts
+	 */
+	@Override
+	public List<CommerceCart> findByG_U_N_T(long groupId, long userId,
+		String name, int type, int start, int end,
+		OrderByComparator<CommerceCart> orderByComparator) {
+		return findByG_U_N_T(groupId, userId, name, type, start, end,
+			orderByComparator, true);
+	}
 
-			msg.append("userId=");
-			msg.append(userId);
+	/**
+	 * Returns an ordered range of all the commerce carts where groupId = &#63; and userId = &#63; and name = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param name the name
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce carts
+	 * @param end the upper bound of the range of commerce carts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching commerce carts
+	 */
+	@Override
+	public List<CommerceCart> findByG_U_N_T(long groupId, long userId,
+		String name, int type, int start, int end,
+		OrderByComparator<CommerceCart> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-			msg.append(", name=");
-			msg.append(name);
-
-			msg.append(", type=");
-			msg.append(type);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(msg.toString());
-			}
-
-			throw new NoSuchCartException(msg.toString());
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_N_T;
+			finderArgs = new Object[] { groupId, userId, name, type };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_U_N_T;
+			finderArgs = new Object[] {
+					groupId, userId, name, type,
+					
+					start, end, orderByComparator
+				};
 		}
 
-		return commerceCart;
-	}
-
-	/**
-	 * Returns the commerce cart where userId = &#63; and name = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param userId the user ID
-	 * @param name the name
-	 * @param type the type
-	 * @return the matching commerce cart, or <code>null</code> if a matching commerce cart could not be found
-	 */
-	@Override
-	public CommerceCart fetchByU_N_T(long userId, String name, int type) {
-		return fetchByU_N_T(userId, name, type, true);
-	}
-
-	/**
-	 * Returns the commerce cart where userId = &#63; and name = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param userId the user ID
-	 * @param name the name
-	 * @param type the type
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching commerce cart, or <code>null</code> if a matching commerce cart could not be found
-	 */
-	@Override
-	public CommerceCart fetchByU_N_T(long userId, String name, int type,
-		boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] { userId, name, type };
-
-		Object result = null;
+		List<CommerceCart> list = null;
 
 		if (retrieveFromCache) {
-			result = finderCache.getResult(FINDER_PATH_FETCH_BY_U_N_T,
+			list = (List<CommerceCart>)finderCache.getResult(finderPath,
 					finderArgs, this);
-		}
 
-		if (result instanceof CommerceCart) {
-			CommerceCart commerceCart = (CommerceCart)result;
+			if ((list != null) && !list.isEmpty()) {
+				for (CommerceCart commerceCart : list) {
+					if ((groupId != commerceCart.getGroupId()) ||
+							(userId != commerceCart.getUserId()) ||
+							!Objects.equals(name, commerceCart.getName()) ||
+							(type != commerceCart.getType())) {
+						list = null;
 
-			if ((userId != commerceCart.getUserId()) ||
-					!Objects.equals(name, commerceCart.getName()) ||
-					(type != commerceCart.getType())) {
-				result = null;
+						break;
+					}
+				}
 			}
 		}
 
-		if (result == null) {
-			StringBundler query = new StringBundler(5);
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(6 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(6);
+			}
 
 			query.append(_SQL_SELECT_COMMERCECART_WHERE);
 
-			query.append(_FINDER_COLUMN_U_N_T_USERID_2);
+			query.append(_FINDER_COLUMN_G_U_N_T_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_U_N_T_USERID_2);
 
 			boolean bindName = false;
 
 			if (name == null) {
-				query.append(_FINDER_COLUMN_U_N_T_NAME_1);
+				query.append(_FINDER_COLUMN_G_U_N_T_NAME_1);
 			}
 			else if (name.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_U_N_T_NAME_3);
+				query.append(_FINDER_COLUMN_G_U_N_T_NAME_3);
 			}
 			else {
 				bindName = true;
 
-				query.append(_FINDER_COLUMN_U_N_T_NAME_2);
+				query.append(_FINDER_COLUMN_G_U_N_T_NAME_2);
 			}
 
-			query.append(_FINDER_COLUMN_U_N_T_TYPE_2);
+			query.append(_FINDER_COLUMN_G_U_N_T_TYPE_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(CommerceCartModelImpl.ORDER_BY_JPQL);
+			}
 
 			String sql = query.toString();
 
@@ -987,6 +2198,8 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 				Query q = session.createQuery(sql);
 
 				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
 
 				qPos.add(userId);
 
@@ -996,30 +2209,25 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 
 				qPos.add(type);
 
-				List<CommerceCart> list = q.list();
+				if (!pagination) {
+					list = (List<CommerceCart>)QueryUtil.list(q, getDialect(),
+							start, end, false);
 
-				if (list.isEmpty()) {
-					finderCache.putResult(FINDER_PATH_FETCH_BY_U_N_T,
-						finderArgs, list);
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
 				}
 				else {
-					CommerceCart commerceCart = list.get(0);
-
-					result = commerceCart;
-
-					cacheResult(commerceCart);
-
-					if ((commerceCart.getUserId() != userId) ||
-							(commerceCart.getName() == null) ||
-							!commerceCart.getName().equals(name) ||
-							(commerceCart.getType() != type)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_U_N_T,
-							finderArgs, commerceCart);
-					}
+					list = (List<CommerceCart>)QueryUtil.list(q, getDialect(),
+							start, end);
 				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_FETCH_BY_U_N_T, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1028,68 +2236,761 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 			}
 		}
 
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (CommerceCart)result;
-		}
+		return list;
 	}
 
 	/**
-	 * Removes the commerce cart where userId = &#63; and name = &#63; and type = &#63; from the database.
+	 * Returns the first commerce cart in the ordered set where groupId = &#63; and userId = &#63; and name = &#63; and type = &#63;.
 	 *
+	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param name the name
 	 * @param type the type
-	 * @return the commerce cart that was removed
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce cart
+	 * @throws NoSuchCartException if a matching commerce cart could not be found
 	 */
 	@Override
-	public CommerceCart removeByU_N_T(long userId, String name, int type)
+	public CommerceCart findByG_U_N_T_First(long groupId, long userId,
+		String name, int type, OrderByComparator<CommerceCart> orderByComparator)
 		throws NoSuchCartException {
-		CommerceCart commerceCart = findByU_N_T(userId, name, type);
+		CommerceCart commerceCart = fetchByG_U_N_T_First(groupId, userId, name,
+				type, orderByComparator);
 
-		return remove(commerceCart);
+		if (commerceCart != null) {
+			return commerceCart;
+		}
+
+		StringBundler msg = new StringBundler(10);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", userId=");
+		msg.append(userId);
+
+		msg.append(", name=");
+		msg.append(name);
+
+		msg.append(", type=");
+		msg.append(type);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCartException(msg.toString());
 	}
 
 	/**
-	 * Returns the number of commerce carts where userId = &#63; and name = &#63; and type = &#63;.
+	 * Returns the first commerce cart in the ordered set where groupId = &#63; and userId = &#63; and name = &#63; and type = &#63;.
 	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param name the name
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce cart, or <code>null</code> if a matching commerce cart could not be found
+	 */
+	@Override
+	public CommerceCart fetchByG_U_N_T_First(long groupId, long userId,
+		String name, int type, OrderByComparator<CommerceCart> orderByComparator) {
+		List<CommerceCart> list = findByG_U_N_T(groupId, userId, name, type, 0,
+				1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last commerce cart in the ordered set where groupId = &#63; and userId = &#63; and name = &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param name the name
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce cart
+	 * @throws NoSuchCartException if a matching commerce cart could not be found
+	 */
+	@Override
+	public CommerceCart findByG_U_N_T_Last(long groupId, long userId,
+		String name, int type, OrderByComparator<CommerceCart> orderByComparator)
+		throws NoSuchCartException {
+		CommerceCart commerceCart = fetchByG_U_N_T_Last(groupId, userId, name,
+				type, orderByComparator);
+
+		if (commerceCart != null) {
+			return commerceCart;
+		}
+
+		StringBundler msg = new StringBundler(10);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", userId=");
+		msg.append(userId);
+
+		msg.append(", name=");
+		msg.append(name);
+
+		msg.append(", type=");
+		msg.append(type);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCartException(msg.toString());
+	}
+
+	/**
+	 * Returns the last commerce cart in the ordered set where groupId = &#63; and userId = &#63; and name = &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param name the name
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce cart, or <code>null</code> if a matching commerce cart could not be found
+	 */
+	@Override
+	public CommerceCart fetchByG_U_N_T_Last(long groupId, long userId,
+		String name, int type, OrderByComparator<CommerceCart> orderByComparator) {
+		int count = countByG_U_N_T(groupId, userId, name, type);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CommerceCart> list = findByG_U_N_T(groupId, userId, name, type,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the commerce carts before and after the current commerce cart in the ordered set where groupId = &#63; and userId = &#63; and name = &#63; and type = &#63;.
+	 *
+	 * @param CommerceCartId the primary key of the current commerce cart
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param name the name
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce cart
+	 * @throws NoSuchCartException if a commerce cart with the primary key could not be found
+	 */
+	@Override
+	public CommerceCart[] findByG_U_N_T_PrevAndNext(long CommerceCartId,
+		long groupId, long userId, String name, int type,
+		OrderByComparator<CommerceCart> orderByComparator)
+		throws NoSuchCartException {
+		CommerceCart commerceCart = findByPrimaryKey(CommerceCartId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CommerceCart[] array = new CommerceCartImpl[3];
+
+			array[0] = getByG_U_N_T_PrevAndNext(session, commerceCart, groupId,
+					userId, name, type, orderByComparator, true);
+
+			array[1] = commerceCart;
+
+			array[2] = getByG_U_N_T_PrevAndNext(session, commerceCart, groupId,
+					userId, name, type, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CommerceCart getByG_U_N_T_PrevAndNext(Session session,
+		CommerceCart commerceCart, long groupId, long userId, String name,
+		int type, OrderByComparator<CommerceCart> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(7 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		query.append(_SQL_SELECT_COMMERCECART_WHERE);
+
+		query.append(_FINDER_COLUMN_G_U_N_T_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_U_N_T_USERID_2);
+
+		boolean bindName = false;
+
+		if (name == null) {
+			query.append(_FINDER_COLUMN_G_U_N_T_NAME_1);
+		}
+		else if (name.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_U_N_T_NAME_3);
+		}
+		else {
+			bindName = true;
+
+			query.append(_FINDER_COLUMN_G_U_N_T_NAME_2);
+		}
+
+		query.append(_FINDER_COLUMN_G_U_N_T_TYPE_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(CommerceCartModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(userId);
+
+		if (bindName) {
+			qPos.add(name);
+		}
+
+		qPos.add(type);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(commerceCart);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<CommerceCart> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the commerce carts that the user has permission to view where groupId = &#63; and userId = &#63; and name = &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param name the name
+	 * @param type the type
+	 * @return the matching commerce carts that the user has permission to view
+	 */
+	@Override
+	public List<CommerceCart> filterFindByG_U_N_T(long groupId, long userId,
+		String name, int type) {
+		return filterFindByG_U_N_T(groupId, userId, name, type,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the commerce carts that the user has permission to view where groupId = &#63; and userId = &#63; and name = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param name the name
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce carts
+	 * @param end the upper bound of the range of commerce carts (not inclusive)
+	 * @return the range of matching commerce carts that the user has permission to view
+	 */
+	@Override
+	public List<CommerceCart> filterFindByG_U_N_T(long groupId, long userId,
+		String name, int type, int start, int end) {
+		return filterFindByG_U_N_T(groupId, userId, name, type, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce carts that the user has permissions to view where groupId = &#63; and userId = &#63; and name = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param name the name
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce carts
+	 * @param end the upper bound of the range of commerce carts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce carts that the user has permission to view
+	 */
+	@Override
+	public List<CommerceCart> filterFindByG_U_N_T(long groupId, long userId,
+		String name, int type, int start, int end,
+		OrderByComparator<CommerceCart> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_U_N_T(groupId, userId, name, type, start, end,
+				orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(7);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_COMMERCECART_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_COMMERCECART_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_U_N_T_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_U_N_T_USERID_2);
+
+		boolean bindName = false;
+
+		if (name == null) {
+			query.append(_FINDER_COLUMN_G_U_N_T_NAME_1);
+		}
+		else if (name.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_U_N_T_NAME_3);
+		}
+		else {
+			bindName = true;
+
+			query.append(_FINDER_COLUMN_G_U_N_T_NAME_2);
+		}
+
+		query.append(_FINDER_COLUMN_G_U_N_T_TYPE_2_SQL);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_COMMERCECART_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(CommerceCartModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(CommerceCartModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				CommerceCart.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, CommerceCartImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, CommerceCartImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(userId);
+
+			if (bindName) {
+				qPos.add(name);
+			}
+
+			qPos.add(type);
+
+			return (List<CommerceCart>)QueryUtil.list(q, getDialect(), start,
+				end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the commerce carts before and after the current commerce cart in the ordered set of commerce carts that the user has permission to view where groupId = &#63; and userId = &#63; and name = &#63; and type = &#63;.
+	 *
+	 * @param CommerceCartId the primary key of the current commerce cart
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param name the name
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce cart
+	 * @throws NoSuchCartException if a commerce cart with the primary key could not be found
+	 */
+	@Override
+	public CommerceCart[] filterFindByG_U_N_T_PrevAndNext(long CommerceCartId,
+		long groupId, long userId, String name, int type,
+		OrderByComparator<CommerceCart> orderByComparator)
+		throws NoSuchCartException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_U_N_T_PrevAndNext(CommerceCartId, groupId, userId,
+				name, type, orderByComparator);
+		}
+
+		CommerceCart commerceCart = findByPrimaryKey(CommerceCartId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CommerceCart[] array = new CommerceCartImpl[3];
+
+			array[0] = filterGetByG_U_N_T_PrevAndNext(session, commerceCart,
+					groupId, userId, name, type, orderByComparator, true);
+
+			array[1] = commerceCart;
+
+			array[2] = filterGetByG_U_N_T_PrevAndNext(session, commerceCart,
+					groupId, userId, name, type, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CommerceCart filterGetByG_U_N_T_PrevAndNext(Session session,
+		CommerceCart commerceCart, long groupId, long userId, String name,
+		int type, OrderByComparator<CommerceCart> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(8 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(7);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_COMMERCECART_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_COMMERCECART_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_U_N_T_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_U_N_T_USERID_2);
+
+		boolean bindName = false;
+
+		if (name == null) {
+			query.append(_FINDER_COLUMN_G_U_N_T_NAME_1);
+		}
+		else if (name.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_U_N_T_NAME_3);
+		}
+		else {
+			bindName = true;
+
+			query.append(_FINDER_COLUMN_G_U_N_T_NAME_2);
+		}
+
+		query.append(_FINDER_COLUMN_G_U_N_T_TYPE_2_SQL);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_COMMERCECART_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(CommerceCartModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(CommerceCartModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				CommerceCart.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, CommerceCartImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, CommerceCartImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(userId);
+
+		if (bindName) {
+			qPos.add(name);
+		}
+
+		qPos.add(type);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(commerceCart);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<CommerceCart> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the commerce carts where groupId = &#63; and userId = &#63; and name = &#63; and type = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param name the name
+	 * @param type the type
+	 */
+	@Override
+	public void removeByG_U_N_T(long groupId, long userId, String name, int type) {
+		for (CommerceCart commerceCart : findByG_U_N_T(groupId, userId, name,
+				type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(commerceCart);
+		}
+	}
+
+	/**
+	 * Returns the number of commerce carts where groupId = &#63; and userId = &#63; and name = &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param name the name
 	 * @param type the type
 	 * @return the number of matching commerce carts
 	 */
 	@Override
-	public int countByU_N_T(long userId, String name, int type) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_U_N_T;
+	public int countByG_U_N_T(long groupId, long userId, String name, int type) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_U_N_T;
 
-		Object[] finderArgs = new Object[] { userId, name, type };
+		Object[] finderArgs = new Object[] { groupId, userId, name, type };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(4);
+			StringBundler query = new StringBundler(5);
 
 			query.append(_SQL_COUNT_COMMERCECART_WHERE);
 
-			query.append(_FINDER_COLUMN_U_N_T_USERID_2);
+			query.append(_FINDER_COLUMN_G_U_N_T_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_U_N_T_USERID_2);
 
 			boolean bindName = false;
 
 			if (name == null) {
-				query.append(_FINDER_COLUMN_U_N_T_NAME_1);
+				query.append(_FINDER_COLUMN_G_U_N_T_NAME_1);
 			}
 			else if (name.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_U_N_T_NAME_3);
+				query.append(_FINDER_COLUMN_G_U_N_T_NAME_3);
 			}
 			else {
 				bindName = true;
 
-				query.append(_FINDER_COLUMN_U_N_T_NAME_2);
+				query.append(_FINDER_COLUMN_G_U_N_T_NAME_2);
 			}
 
-			query.append(_FINDER_COLUMN_U_N_T_TYPE_2);
+			query.append(_FINDER_COLUMN_G_U_N_T_TYPE_2);
 
 			String sql = query.toString();
 
@@ -1101,6 +3002,8 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 				Query q = session.createQuery(sql);
 
 				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
 
 				qPos.add(userId);
 
@@ -1127,11 +3030,91 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_U_N_T_USERID_2 = "commerceCart.userId = ? AND ";
-	private static final String _FINDER_COLUMN_U_N_T_NAME_1 = "commerceCart.name IS NULL AND ";
-	private static final String _FINDER_COLUMN_U_N_T_NAME_2 = "commerceCart.name = ? AND ";
-	private static final String _FINDER_COLUMN_U_N_T_NAME_3 = "(commerceCart.name IS NULL OR commerceCart.name = '') AND ";
-	private static final String _FINDER_COLUMN_U_N_T_TYPE_2 = "commerceCart.type = ?";
+	/**
+	 * Returns the number of commerce carts that the user has permission to view where groupId = &#63; and userId = &#63; and name = &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param name the name
+	 * @param type the type
+	 * @return the number of matching commerce carts that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_U_N_T(long groupId, long userId, String name,
+		int type) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_U_N_T(groupId, userId, name, type);
+		}
+
+		StringBundler query = new StringBundler(5);
+
+		query.append(_FILTER_SQL_COUNT_COMMERCECART_WHERE);
+
+		query.append(_FINDER_COLUMN_G_U_N_T_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_U_N_T_USERID_2);
+
+		boolean bindName = false;
+
+		if (name == null) {
+			query.append(_FINDER_COLUMN_G_U_N_T_NAME_1);
+		}
+		else if (name.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_U_N_T_NAME_3);
+		}
+		else {
+			bindName = true;
+
+			query.append(_FINDER_COLUMN_G_U_N_T_NAME_2);
+		}
+
+		query.append(_FINDER_COLUMN_G_U_N_T_TYPE_2_SQL);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				CommerceCart.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(userId);
+
+			if (bindName) {
+				qPos.add(name);
+			}
+
+			qPos.add(type);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private static final String _FINDER_COLUMN_G_U_N_T_GROUPID_2 = "commerceCart.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_U_N_T_USERID_2 = "commerceCart.userId = ? AND ";
+	private static final String _FINDER_COLUMN_G_U_N_T_NAME_1 = "commerceCart.name IS NULL AND ";
+	private static final String _FINDER_COLUMN_G_U_N_T_NAME_2 = "commerceCart.name = ? AND ";
+	private static final String _FINDER_COLUMN_G_U_N_T_NAME_3 = "(commerceCart.name IS NULL OR commerceCart.name = '') AND ";
+	private static final String _FINDER_COLUMN_G_U_N_T_TYPE_2 = "commerceCart.type = ?";
+	private static final String _FINDER_COLUMN_G_U_N_T_TYPE_2_SQL = "commerceCart.type_ = ?";
 
 	public CommerceCartPersistenceImpl() {
 		setModelClass(CommerceCart.class);
@@ -1162,18 +3145,6 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 	public void cacheResult(CommerceCart commerceCart) {
 		entityCache.putResult(CommerceCartModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceCartImpl.class, commerceCart.getPrimaryKey(), commerceCart);
-
-		finderCache.putResult(FINDER_PATH_FETCH_BY_G_U_T,
-			new Object[] {
-				commerceCart.getGroupId(), commerceCart.getUserId(),
-				commerceCart.getType()
-			}, commerceCart);
-
-		finderCache.putResult(FINDER_PATH_FETCH_BY_U_N_T,
-			new Object[] {
-				commerceCart.getUserId(), commerceCart.getName(),
-				commerceCart.getType()
-			}, commerceCart);
 
 		commerceCart.resetOriginalValues();
 	}
@@ -1227,8 +3198,6 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		clearUniqueFindersCache((CommerceCartModelImpl)commerceCart, true);
 	}
 
 	@Override
@@ -1239,81 +3208,6 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 		for (CommerceCart commerceCart : commerceCarts) {
 			entityCache.removeResult(CommerceCartModelImpl.ENTITY_CACHE_ENABLED,
 				CommerceCartImpl.class, commerceCart.getPrimaryKey());
-
-			clearUniqueFindersCache((CommerceCartModelImpl)commerceCart, true);
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CommerceCartModelImpl commerceCartModelImpl) {
-		Object[] args = new Object[] {
-				commerceCartModelImpl.getGroupId(),
-				commerceCartModelImpl.getUserId(),
-				commerceCartModelImpl.getType()
-			};
-
-		finderCache.putResult(FINDER_PATH_COUNT_BY_G_U_T, args,
-			Long.valueOf(1), false);
-		finderCache.putResult(FINDER_PATH_FETCH_BY_G_U_T, args,
-			commerceCartModelImpl, false);
-
-		args = new Object[] {
-				commerceCartModelImpl.getUserId(),
-				commerceCartModelImpl.getName(), commerceCartModelImpl.getType()
-			};
-
-		finderCache.putResult(FINDER_PATH_COUNT_BY_U_N_T, args,
-			Long.valueOf(1), false);
-		finderCache.putResult(FINDER_PATH_FETCH_BY_U_N_T, args,
-			commerceCartModelImpl, false);
-	}
-
-	protected void clearUniqueFindersCache(
-		CommerceCartModelImpl commerceCartModelImpl, boolean clearCurrent) {
-		if (clearCurrent) {
-			Object[] args = new Object[] {
-					commerceCartModelImpl.getGroupId(),
-					commerceCartModelImpl.getUserId(),
-					commerceCartModelImpl.getType()
-				};
-
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_U_T, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_U_T, args);
-		}
-
-		if ((commerceCartModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_G_U_T.getColumnBitmask()) != 0) {
-			Object[] args = new Object[] {
-					commerceCartModelImpl.getOriginalGroupId(),
-					commerceCartModelImpl.getOriginalUserId(),
-					commerceCartModelImpl.getOriginalType()
-				};
-
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_U_T, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_U_T, args);
-		}
-
-		if (clearCurrent) {
-			Object[] args = new Object[] {
-					commerceCartModelImpl.getUserId(),
-					commerceCartModelImpl.getName(),
-					commerceCartModelImpl.getType()
-				};
-
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_U_N_T, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_U_N_T, args);
-		}
-
-		if ((commerceCartModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_U_N_T.getColumnBitmask()) != 0) {
-			Object[] args = new Object[] {
-					commerceCartModelImpl.getOriginalUserId(),
-					commerceCartModelImpl.getOriginalName(),
-					commerceCartModelImpl.getOriginalType()
-				};
-
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_U_N_T, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_U_N_T, args);
 		}
 	}
 
@@ -1477,10 +3371,34 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 		}
 		else
 		 if (isNew) {
-			Object[] args = new Object[] { commerceCartModelImpl.getType() };
+			Object[] args = new Object[] {
+					commerceCartModelImpl.getGroupId(),
+					commerceCartModelImpl.getType()
+				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_TYPE, args);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TYPE,
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_T, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T,
+				args);
+
+			args = new Object[] {
+					commerceCartModelImpl.getGroupId(),
+					commerceCartModelImpl.getUserId(),
+					commerceCartModelImpl.getType()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_U_T, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_T,
+				args);
+
+			args = new Object[] {
+					commerceCartModelImpl.getGroupId(),
+					commerceCartModelImpl.getUserId(),
+					commerceCartModelImpl.getName(),
+					commerceCartModelImpl.getType()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_U_N_T, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_N_T,
 				args);
 
 			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
@@ -1490,19 +3408,71 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 
 		else {
 			if ((commerceCartModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TYPE.getColumnBitmask()) != 0) {
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
+						commerceCartModelImpl.getOriginalGroupId(),
 						commerceCartModelImpl.getOriginalType()
 					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_TYPE, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TYPE,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_T, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T,
 					args);
 
-				args = new Object[] { commerceCartModelImpl.getType() };
+				args = new Object[] {
+						commerceCartModelImpl.getGroupId(),
+						commerceCartModelImpl.getType()
+					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_TYPE, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TYPE,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_T, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T,
+					args);
+			}
+
+			if ((commerceCartModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_T.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						commerceCartModelImpl.getOriginalGroupId(),
+						commerceCartModelImpl.getOriginalUserId(),
+						commerceCartModelImpl.getOriginalType()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_U_T, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_T,
+					args);
+
+				args = new Object[] {
+						commerceCartModelImpl.getGroupId(),
+						commerceCartModelImpl.getUserId(),
+						commerceCartModelImpl.getType()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_U_T, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_T,
+					args);
+			}
+
+			if ((commerceCartModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_N_T.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						commerceCartModelImpl.getOriginalGroupId(),
+						commerceCartModelImpl.getOriginalUserId(),
+						commerceCartModelImpl.getOriginalName(),
+						commerceCartModelImpl.getOriginalType()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_U_N_T, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_N_T,
+					args);
+
+				args = new Object[] {
+						commerceCartModelImpl.getGroupId(),
+						commerceCartModelImpl.getUserId(),
+						commerceCartModelImpl.getName(),
+						commerceCartModelImpl.getType()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_U_N_T, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_N_T,
 					args);
 			}
 		}
@@ -1510,9 +3480,6 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 		entityCache.putResult(CommerceCartModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceCartImpl.class, commerceCart.getPrimaryKey(), commerceCart,
 			false);
-
-		clearUniqueFindersCache(commerceCartModelImpl, false);
-		cacheUniqueFindersCache(commerceCartModelImpl);
 
 		commerceCart.resetOriginalValues();
 
@@ -1957,7 +3924,17 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 	private static final String _SQL_SELECT_COMMERCECART_WHERE = "SELECT commerceCart FROM CommerceCart commerceCart WHERE ";
 	private static final String _SQL_COUNT_COMMERCECART = "SELECT COUNT(commerceCart) FROM CommerceCart commerceCart";
 	private static final String _SQL_COUNT_COMMERCECART_WHERE = "SELECT COUNT(commerceCart) FROM CommerceCart commerceCart WHERE ";
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "commerceCart.CommerceCartId";
+	private static final String _FILTER_SQL_SELECT_COMMERCECART_WHERE = "SELECT DISTINCT {commerceCart.*} FROM CommerceCart commerceCart WHERE ";
+	private static final String _FILTER_SQL_SELECT_COMMERCECART_NO_INLINE_DISTINCT_WHERE_1 =
+		"SELECT {CommerceCart.*} FROM (SELECT DISTINCT commerceCart.CommerceCartId FROM CommerceCart commerceCart WHERE ";
+	private static final String _FILTER_SQL_SELECT_COMMERCECART_NO_INLINE_DISTINCT_WHERE_2 =
+		") TEMP_TABLE INNER JOIN CommerceCart ON TEMP_TABLE.CommerceCartId = CommerceCart.CommerceCartId";
+	private static final String _FILTER_SQL_COUNT_COMMERCECART_WHERE = "SELECT COUNT(DISTINCT commerceCart.CommerceCartId) AS COUNT_VALUE FROM CommerceCart commerceCart WHERE ";
+	private static final String _FILTER_ENTITY_ALIAS = "commerceCart";
+	private static final String _FILTER_ENTITY_TABLE = "CommerceCart";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "commerceCart.";
+	private static final String _ORDER_BY_ENTITY_TABLE = "CommerceCart.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No CommerceCart exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No CommerceCart exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(CommerceCartPersistenceImpl.class);

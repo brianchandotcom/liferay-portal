@@ -16,9 +16,16 @@ package com.liferay.commerce.cart.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.cart.service.CommerceCartServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.commerce.cart.service.CommerceCartServiceUtil} service utility. The
+ * {@link CommerceCartServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -50,12 +57,44 @@ import aQute.bnd.annotation.ProviderType;
  * The SOAP utility is only generated for remote services.
  * </p>
  *
- * @author Alessio Antonio Rendina
+ * @author Marco Leo
  * @see CommerceCartServiceHttp
  * @see com.liferay.commerce.cart.model.CommerceCartSoap
- * @see com.liferay.commerce.cart.service.CommerceCartServiceUtil
+ * @see CommerceCartServiceUtil
  * @generated
  */
 @ProviderType
 public class CommerceCartServiceSoap {
+	public static com.liferay.commerce.cart.model.CommerceCartSoap fetchCommerceCart(
+		long commerceCartId) throws RemoteException {
+		try {
+			com.liferay.commerce.cart.model.CommerceCart returnValue = CommerceCartServiceUtil.fetchCommerceCart(commerceCartId);
+
+			return com.liferay.commerce.cart.model.CommerceCartSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.cart.model.CommerceCartSoap addCommerceCart(
+		java.lang.String name, int type,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.cart.model.CommerceCart returnValue = CommerceCartServiceUtil.addCommerceCart(name,
+					type, serviceContext);
+
+			return com.liferay.commerce.cart.model.CommerceCartSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(CommerceCartServiceSoap.class);
 }

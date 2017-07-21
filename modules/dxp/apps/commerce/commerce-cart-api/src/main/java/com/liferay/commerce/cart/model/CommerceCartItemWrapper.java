@@ -33,7 +33,7 @@ import java.util.Objects;
  * This class is a wrapper for {@link CommerceCartItem}.
  * </p>
  *
- * @author Alessio Antonio Rendina
+ * @author Marco Leo
  * @see CommerceCartItem
  * @generated
  */

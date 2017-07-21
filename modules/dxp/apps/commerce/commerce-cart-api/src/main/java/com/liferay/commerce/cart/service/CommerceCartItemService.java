@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
  * service are expected to have security checks based on the propagated JAAS
  * credentials because this service can be accessed remotely.
  *
- * @author Alessio Antonio Rendina
+ * @author Marco Leo
  * @see CommerceCartItemServiceUtil
  * @see com.liferay.commerce.cart.service.base.CommerceCartItemServiceBaseImpl
  * @see com.liferay.commerce.cart.service.impl.CommerceCartItemServiceImpl

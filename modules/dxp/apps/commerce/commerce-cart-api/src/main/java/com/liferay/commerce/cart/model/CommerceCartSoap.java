@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.cart.service.http.CommerceCartServiceSoap}.
  *
- * @author Alessio Antonio Rendina
+ * @author Marco Leo
  * @see com.liferay.commerce.cart.service.http.CommerceCartServiceSoap
  * @generated
  */

@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link CommerceCartLocalService}.
  *
- * @author Alessio Antonio Rendina
+ * @author Marco Leo
  * @see CommerceCartLocalService
  * @generated
  */
@@ -100,12 +100,6 @@ public class CommerceCartLocalServiceWrapper implements CommerceCartLocalService
 		return _commerceCartLocalService.fetchCommerceCart(CommerceCartId);
 	}
 
-	@Override
-	public com.liferay.commerce.cart.model.CommerceCart fetchCommerceCart(
-		long groupId, long userId, int type) {
-		return _commerceCartLocalService.fetchCommerceCart(groupId, userId, type);
-	}
-
 	/**
 	* Returns the commerce cart with the primary key.
 	*
@@ -118,15 +112,6 @@ public class CommerceCartLocalServiceWrapper implements CommerceCartLocalService
 		long CommerceCartId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceCartLocalService.getCommerceCart(CommerceCartId);
-	}
-
-	@Override
-	public com.liferay.commerce.cart.model.CommerceCart getUserCurrentCommerceCart(
-		int type,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceCartLocalService.getUserCurrentCommerceCart(type,
-			serviceContext);
 	}
 
 	/**
@@ -184,8 +169,8 @@ public class CommerceCartLocalServiceWrapper implements CommerceCartLocalService
 	}
 
 	@Override
-	public int getCommerceCartsCount(int type) {
-		return _commerceCartLocalService.getCommerceCartsCount(type);
+	public int getCommerceCartsCount(long groupId, int type) {
+		return _commerceCartLocalService.getCommerceCartsCount(groupId, type);
 	}
 
 	/**
@@ -251,6 +236,12 @@ public class CommerceCartLocalServiceWrapper implements CommerceCartLocalService
 			orderByComparator);
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.cart.model.CommerceCart> findCommerceCarts(
+		long groupId, long userId, int type) {
+		return _commerceCartLocalService.findCommerceCarts(groupId, userId, type);
+	}
+
 	/**
 	* Returns a range of all the commerce carts.
 	*
@@ -270,10 +261,10 @@ public class CommerceCartLocalServiceWrapper implements CommerceCartLocalService
 
 	@Override
 	public java.util.List<com.liferay.commerce.cart.model.CommerceCart> getCommerceCarts(
-		int type, int start, int end,
+		long groupId, int type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.cart.model.CommerceCart> orderByComparator) {
-		return _commerceCartLocalService.getCommerceCarts(type, start, end,
-			orderByComparator);
+		return _commerceCartLocalService.getCommerceCarts(groupId, type, start,
+			end, orderByComparator);
 	}
 
 	/**

@@ -33,7 +33,7 @@ import java.util.Date;
 /**
  * The cache model class for representing CommerceCart in entity cache.
  *
- * @author Alessio Antonio Rendina
+ * @author Marco Leo
  * @see CommerceCart
  * @generated
  */

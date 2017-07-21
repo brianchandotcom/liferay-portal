@@ -17,7 +17,7 @@ package com.liferay.commerce.cart.service.impl;
 import com.liferay.commerce.cart.service.base.CommerceCartItemServiceBaseImpl;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Marco Leo
  */
 public class CommerceCartItemServiceImpl
 	extends CommerceCartItemServiceBaseImpl {

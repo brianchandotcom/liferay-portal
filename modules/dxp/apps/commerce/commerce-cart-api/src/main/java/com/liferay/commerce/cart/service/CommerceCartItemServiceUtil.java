@@ -28,7 +28,7 @@ import org.osgi.util.tracker.ServiceTracker;
  * checks based on the propagated JAAS credentials because this service can be
  * accessed remotely.
  *
- * @author Alessio Antonio Rendina
+ * @author Marco Leo
  * @see CommerceCartItemService
  * @see com.liferay.commerce.cart.service.base.CommerceCartItemServiceBaseImpl
  * @see com.liferay.commerce.cart.service.impl.CommerceCartItemServiceImpl

@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link CommerceCartItemService}.
  *
- * @author Alessio Antonio Rendina
+ * @author Marco Leo
  * @see CommerceCartItemService
  * @generated
  */

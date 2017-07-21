@@ -50,7 +50,7 @@ import aQute.bnd.annotation.ProviderType;
  * The SOAP utility is only generated for remote services.
  * </p>
  *
- * @author Alessio Antonio Rendina
+ * @author Marco Leo
  * @see CommerceCartItemServiceHttp
  * @see com.liferay.commerce.cart.model.CommerceCartItemSoap
  * @see com.liferay.commerce.cart.service.CommerceCartItemServiceUtil

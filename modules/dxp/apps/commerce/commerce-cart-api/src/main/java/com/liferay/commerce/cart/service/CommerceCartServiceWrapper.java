@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link CommerceCartService}.
  *
- * @author Alessio Antonio Rendina
+ * @author Marco Leo
  * @see CommerceCartService
  * @generated
  */
@@ -30,6 +30,20 @@ public class CommerceCartServiceWrapper implements CommerceCartService,
 	ServiceWrapper<CommerceCartService> {
 	public CommerceCartServiceWrapper(CommerceCartService commerceCartService) {
 		_commerceCartService = commerceCartService;
+	}
+
+	@Override
+	public com.liferay.commerce.cart.model.CommerceCart addCommerceCart(
+		java.lang.String name, int type,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceCartService.addCommerceCart(name, type, serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.cart.model.CommerceCart fetchCommerceCart(
+		long commerceCartId) {
+		return _commerceCartService.fetchCommerceCart(commerceCartId);
 	}
 
 	/**

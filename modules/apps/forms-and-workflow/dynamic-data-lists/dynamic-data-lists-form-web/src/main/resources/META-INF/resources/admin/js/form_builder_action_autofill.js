@@ -67,9 +67,11 @@ AUI.add(
 					getValue: function() {
 						var instance = this;
 
+						var selectedDataProviderInstance = instance._dataProvidersList.getValue();
+
 						return {
 							action: 'auto-fill',
-							ddmDataProviderInstanceUUID: instance._getUUId(instance._dataProvidersList.getValue()[0]),
+							ddmDataProviderInstanceUUID: instance._getUUId(selectedDataProviderInstance[0]),
 							inputs: instance._getInputValue(),
 							outputs: instance._getOutputValue(),
 							requiredInputs: instance._getRequiredInputs()

@@ -133,12 +133,7 @@ public class CommandElement extends PoshiElement {
 				}
 			}
 
-			String trimmedItem = item.trim();
-
-			if (!item.contains("return(\n") &&
-				(StringUtil.count(item, "\n") > 1) &&
-				trimmedItem.startsWith("var ")) {
-
+			if (isCDATAVar(item)) {
 				item = item.replaceFirst("var ", pad + "var ");
 
 				sb.append(item);
@@ -210,6 +205,19 @@ public class CommandElement extends PoshiElement {
 
 	protected String getReadableCommandTitle() {
 		return "test" + attributeValue("name");
+	}
+
+	protected boolean isCDATAVar(String readableSyntax) {
+		String trimmedReadableSyntax = readableSyntax.trim();
+
+		if (!readableSyntax.contains("return(\n") &&
+			(StringUtil.count(readableSyntax, "\n") > 1) &&
+			trimmedReadableSyntax.startsWith("var ")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

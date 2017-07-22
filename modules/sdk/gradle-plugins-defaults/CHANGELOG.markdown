@@ -1748,12 +1748,12 @@ and `writeArtifactPublishCommands` tasks.
 ### Changed
 - [LPS-72705]: Update the [Liferay Gradle Plugins] dependency to version 3.4.8.
 
-## 4.0.7 - 2017-07-19
+## 4.0.8 - 2017-07-19
 
 ### Changed
-- [LPS-72705]: Update the [Liferay Gradle Plugins] dependency to version 3.4.9.
+- [LPS-73600]: Update the [Liferay Gradle Plugins] dependency to version 3.4.9.
 
-## 4.0.7 - 2017-07-19
+## 4.0.9 - 2017-07-20
 
 ### Changed
 - [LPS-73600]: Update the [Liferay Gradle Plugins] dependency to version 3.4.10.

@@ -186,7 +186,7 @@
 		<check name="JSPSubnameCheck" />
 		<check name="JSPTagAttributesCheck" />
 		<check name="JSPTaglibVariableCheck" />
-		<check name="JSPUnusedTermsCheck" />
+		<!--<check name="JSPUnusedTermsCheck" />-->
 		<check name="JSPWhitespaceCheck" />
 		<check name="JSPXSSVulnerabilitiesCheck" />
 		<check name="MethodCallsOrderCheck" />

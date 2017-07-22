@@ -76,17 +76,13 @@ public class EditCommerceCartItemMVCResourceCommand
 			int type = ParamUtil.getInteger(
 				resourceRequest, "type",
 				CommerceCartConstants.COMMERCE_CART_TYPE_CART);
-
 			long cpDefinitionId = ParamUtil.getLong(
 				resourceRequest, "cpDefinitionId");
-
 			long cpInstanceId = ParamUtil.getLong(
 				resourceRequest, "cpInstanceId");
-
 			int quantity = ParamUtil.getInteger(
 				resourceRequest, "quantity",
 				CommerceCartConstants.COMMERCE_CART_TYPE_CART);
-
 			String ddmFormValues = ParamUtil.getString(
 				resourceRequest, "ddmFormValues");
 
@@ -116,10 +112,9 @@ public class EditCommerceCartItemMVCResourceCommand
 
 			JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-			jsonObject.put("success", true);
-
 			jsonObject.put(
 				"commerceCartItemId", commerceCartItem.getCommerceCartItemId());
+			jsonObject.put("success", true);
 
 			HttpServletResponse httpServletResponse =
 				_portal.getHttpServletResponse(resourceResponse);

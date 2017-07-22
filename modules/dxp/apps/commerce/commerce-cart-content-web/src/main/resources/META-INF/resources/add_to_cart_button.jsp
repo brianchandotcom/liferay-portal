@@ -19,7 +19,6 @@
 <aui:button name="add-to-cart" value="add-to-cart" />
 
 <aui:script use="aui-io-request,aui-parse-content">
-
 	A.one('#<portlet:namespace />add-to-cart').on(
 		'click',
 		function(event) {

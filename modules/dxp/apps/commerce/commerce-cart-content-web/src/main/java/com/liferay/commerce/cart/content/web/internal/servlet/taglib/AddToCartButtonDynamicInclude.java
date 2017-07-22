@@ -18,16 +18,23 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import javax.servlet.ServletContext;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class AddToCartButtonDynamicInclude extends BaseJSPDynamicInclude{
+public class AddToCartButtonDynamicInclude extends BaseJSPDynamicInclude {
+
+	@Override
+	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
+		dynamicIncludeRegistry.register(
+			"com.liferay.commerce.product.content.web#/add_to_cart#");
+	}
 
 	@Override
 	protected String getJspPath() {
@@ -37,13 +44,6 @@ public class AddToCartButtonDynamicInclude extends BaseJSPDynamicInclude{
 	@Override
 	protected Log getLog() {
 		return _log;
-	}
-
-	@Override
-	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
-
-		dynamicIncludeRegistry.register(
-				"com.liferay.commerce.product.content.web#/add_to_cart#");
 	}
 
 	@Override

@@ -14,6 +14,7 @@
 		queryString="type=0"
 	/>
 </#macro>
+
 <#macro commerce_wish_list_mini default_preferences = "">
 	<@liferay_portlet["runtime"]
 		defaultPreferences=default_preferences

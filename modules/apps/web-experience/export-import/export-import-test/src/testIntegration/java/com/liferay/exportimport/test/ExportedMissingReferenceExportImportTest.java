@@ -154,8 +154,6 @@ public class ExportedMissingReferenceExportImportTest
 	public void tearDown() throws Exception {
 		_dummyFolderStagedModelRepository.deleteStagedModels(null);
 		_dummyStagedModelRepository.deleteStagedModels(null);
-
-		//super.tearDown();
 	}
 
 	@Test

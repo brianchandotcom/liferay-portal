@@ -35,8 +35,8 @@ public class CommerceCartItemServiceImpl
 		throws PortalException {
 
 		return commerceCartItemLocalService.addCommerceCartItem(
-			commerceCartId, cpDefinitionId, cpInstanceId, cpInstanceId,
-			cpInstanceId, quantity, json, serviceContext);
+			commerceCartId, cpDefinitionId, cpInstanceId, quantity, json,
+			serviceContext);
 	}
 
 	@Override

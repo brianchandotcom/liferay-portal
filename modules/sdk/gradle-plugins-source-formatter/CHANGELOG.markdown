@@ -814,7 +814,8 @@ another task with the same name is being executed in a parent project.
 ## 2.0.38 - 2017-07-19
 
 ### Changed
-- [LPS-72705]: Update the [Liferay Source Formatter] dependency to version 1.0.427.
+- [LPS-72705]: Update the [Liferay Source Formatter] dependency to version
+1.0.427.
 
 ## 2.0.39 - 2017-07-20
 

@@ -18,9 +18,12 @@ import com.liferay.portal.cache.PortalCacheBootstrapLoader;
 import com.liferay.portal.cache.PortalCacheBootstrapLoaderFactory;
 import com.liferay.portal.cache.ehcache.multiple.configuration.EhcacheMultipleConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 
 import java.util.Properties;
@@ -31,7 +34,9 @@ import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Tina Tian
@@ -54,9 +59,20 @@ public class EhcachePortalCacheBootstrapLoaderFactory
 				(BootstrapCacheLoaderFactory<?>)InstanceFactory.newInstance(
 					getClassLoader(), factoryClassName);
 
+			boolean bootstrapAsynchronously = GetterUtil.getBoolean(
+				properties.getProperty(
+					PortalCacheBootstrapLoader.BOOTSTRAP_ASYNCHRONOUSLY),
+				PortalCacheBootstrapLoader.DEFAULT_BOOTSTRAP_ASYNCHRONOUSLY);
+
+			Properties newProperties = (Properties)properties.clone();
+
+			newProperties.put(
+				PortalCacheBootstrapLoader.BOOTSTRAP_ASYNCHRONOUSLY, "false");
+
 			return new EhcachePortalCacheBootstrapLoaderAdapter(
 				bootstrapCacheLoaderFactory.createBootstrapCacheLoader(
-					properties));
+					newProperties),
+				bootstrapAsynchronously, _threadPoolExecutor);
 		}
 		catch (Exception e) {
 			throw new SystemException(
@@ -72,6 +88,16 @@ public class EhcachePortalCacheBootstrapLoaderFactory
 		_ehcacheMultipleConfiguration = ConfigurableUtil.createConfigurable(
 			EhcacheMultipleConfiguration.class,
 			componentContext.getProperties());
+
+		_threadPoolExecutor = _portalExecutorManager.getPortalExecutor(
+			EhcachePortalCacheBootstrapLoaderFactory.class.getName());
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		if (_threadPoolExecutor != null) {
+			_threadPoolExecutor.shutdown();
+		}
 	}
 
 	protected ClassLoader getClassLoader() {
@@ -84,5 +110,10 @@ public class EhcachePortalCacheBootstrapLoaderFactory
 		EhcachePortalCacheBootstrapLoaderFactory.class);
 
 	private volatile EhcacheMultipleConfiguration _ehcacheMultipleConfiguration;
+
+	@Reference
+	private PortalExecutorManager _portalExecutorManager;
+
+	private ThreadPoolExecutor _threadPoolExecutor;
 
 }

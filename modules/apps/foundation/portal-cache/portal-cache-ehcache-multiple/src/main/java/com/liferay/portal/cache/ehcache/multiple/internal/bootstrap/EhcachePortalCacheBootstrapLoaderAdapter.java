@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerProvider;
 import com.liferay.portal.kernel.cache.SkipReplicationThreadLocal;
+import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -32,14 +33,18 @@ public class EhcachePortalCacheBootstrapLoaderAdapter
 	implements PortalCacheBootstrapLoader {
 
 	public EhcachePortalCacheBootstrapLoaderAdapter(
-		BootstrapCacheLoader bootstrapCacheLoader) {
+		BootstrapCacheLoader bootstrapCacheLoader,
+		boolean bootstrapAsynchronously,
+		ThreadPoolExecutor threadPoolExecutor) {
 
 		_bootstrapCacheLoader = bootstrapCacheLoader;
+		_bootstrapAsynchronously = bootstrapAsynchronously;
+		_threadPoolExecutor = threadPoolExecutor;
 	}
 
 	@Override
 	public boolean isAsynchronous() {
-		return _bootstrapCacheLoader.isAsynchronous();
+		return _bootstrapAsynchronously;
 	}
 
 	@Override
@@ -58,9 +63,27 @@ public class EhcachePortalCacheBootstrapLoaderAdapter
 			return;
 		}
 
-		PortalCache<?, ?> portalCache = portalCacheManager.getPortalCache(
+		final PortalCache<?, ?> portalCache = portalCacheManager.getPortalCache(
 			portalCacheName);
 
+		if (!_bootstrapAsynchronously) {
+			_loadPortalCache(portalCache);
+
+			return;
+		}
+
+		_threadPoolExecutor.submit(
+			new Runnable() {
+
+				@Override
+				public void run() {
+					_loadPortalCache(portalCache);
+				}
+
+			});
+	}
+
+	private void _loadPortalCache(PortalCache<?, ?> portalCache) {
 		boolean enabled = SkipReplicationThreadLocal.isEnabled();
 
 		SkipReplicationThreadLocal.setEnabled(true);
@@ -77,6 +100,8 @@ public class EhcachePortalCacheBootstrapLoaderAdapter
 	private static final Log _log = LogFactoryUtil.getLog(
 		EhcachePortalCacheBootstrapLoaderAdapter.class);
 
+	private final boolean _bootstrapAsynchronously;
 	private final BootstrapCacheLoader _bootstrapCacheLoader;
+	private final ThreadPoolExecutor _threadPoolExecutor;
 
 }

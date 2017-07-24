@@ -67,4 +67,9 @@ public class CommerceCartServiceImpl extends CommerceCartServiceBaseImpl {
 		return commerceCartLocalService.getCommerceCartsCount(groupId, type);
 	}
 
+	@Override
+	public CommerceCart fetchCommerceCart(long groupId, long userId, int type, String name){
+		return commerceCartLocalService.fetchCommerceCart(groupId, userId, type, name);
+	}
+
 }

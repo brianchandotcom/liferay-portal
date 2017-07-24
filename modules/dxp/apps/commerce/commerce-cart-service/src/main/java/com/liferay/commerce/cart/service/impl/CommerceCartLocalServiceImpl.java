@@ -91,6 +91,11 @@ public class CommerceCartLocalServiceImpl
 	}
 
 	@Override
+	public CommerceCart fetchCommerceCart(long groupId, long userId, int type, String name){
+		return commerceCartPersistence.fetchByG_U_T_N(groupId, userId, type, name);
+	}
+
+	@Override
 	public List<CommerceCart> getCommerceCarts(
 		long groupId, int type, int start, int end,
 		OrderByComparator<CommerceCart> orderByComparator) {

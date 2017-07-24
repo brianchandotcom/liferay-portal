@@ -126,6 +126,18 @@ public class SetUpTestableTomcatTask
 	}
 
 	@Input
+	@Optional
+	public String getJaCoCoAgentConfiguration() {
+		return GradleUtil.toString(_jaCoCoAgentConfiguration);
+	}
+
+	@Input
+	@Optional
+	public File getJaCoCoAgentJar() {
+		return GradleUtil.toFile(getProject(), _jaCoCoAgentJar);
+	}
+
+	@Input
 	@Override
 	public int getJmxRemotePort() {
 		return GradleUtil.toInteger(_jmxRemotePort);
@@ -190,11 +202,11 @@ public class SetUpTestableTomcatTask
 		_dir = dir;
 	}
 
-	public void setJaCoCoAgentConfiguration(String jaCoCoAgentConfiguration) {
+	public void setJaCoCoAgentConfiguration(Object jaCoCoAgentConfiguration) {
 		_jaCoCoAgentConfiguration = jaCoCoAgentConfiguration;
 	}
 
-	public void setJaCoCoAgentJar(String jaCoCoAgentJar) {
+	public void setJaCoCoAgentJar(Object jaCoCoAgentJar) {
 		_jaCoCoAgentJar = jaCoCoAgentJar;
 	}
 
@@ -310,7 +322,7 @@ public class SetUpTestableTomcatTask
 		File targetJaCoCoAgentJar = new File(getDir(), "bin/jacocoagent.jar");
 
 		if ((_jaCoCoAgentJar != null) && !targetJaCoCoAgentJar.exists()) {
-			File sourceJaCoCoAgentJar = new File(_jaCoCoAgentJar);
+			File sourceJaCoCoAgentJar = getJaCoCoAgentJar();
 
 			Files.copy(
 				sourceJaCoCoAgentJar.toPath(), targetJaCoCoAgentJar.toPath());
@@ -566,8 +578,8 @@ public class SetUpTestableTomcatTask
 	private Object _aspectJConfiguration;
 	private boolean _debugLogging;
 	private Object _dir;
-	private String _jaCoCoAgentConfiguration;
-	private String _jaCoCoAgentJar;
+	private Object _jaCoCoAgentConfiguration;
+	private Object _jaCoCoAgentJar;
 	private boolean _jmxRemoteAuthenticate;
 	private Object _jmxRemotePort;
 	private boolean _jmxRemoteSsl;

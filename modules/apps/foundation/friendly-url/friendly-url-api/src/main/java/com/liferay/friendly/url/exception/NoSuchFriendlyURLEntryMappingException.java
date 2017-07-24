@@ -21,7 +21,8 @@ import com.liferay.portal.kernel.exception.NoSuchModelException;
  * @author Brian Wing Shun Chan
  */
 @ProviderType
-public class NoSuchFriendlyURLEntryMappingException extends NoSuchModelException {
+public class NoSuchFriendlyURLEntryMappingException
+	extends NoSuchModelException {
 
 	public NoSuchFriendlyURLEntryMappingException() {
 	}

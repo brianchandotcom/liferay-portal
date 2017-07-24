@@ -563,6 +563,7 @@ public class SetUpTestableTomcatTask
 
 	private void _setUpSetEnv() throws IOException {
 		_setUpJaCoCo();
+
 		_setUpAspectJ();
 		_setUpJmx();
 		_setUpJpda();

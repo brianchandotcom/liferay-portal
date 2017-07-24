@@ -131,10 +131,10 @@ public class UpgradeCalendarResource extends UpgradeProcess {
 					company.getCompanyId());
 				long companyAdminUserId = getCompanyAdminUserId(company);
 
-				upgradeCalendarResourceUserId(
+				updateCalendarUserIds(
 					classNameId, defaultUserId, companyAdminUserId);
 
-				updateCalendarUserIds(
+				upgradeCalendarResourceUserId(
 					classNameId, defaultUserId, companyAdminUserId);
 			}
 		}

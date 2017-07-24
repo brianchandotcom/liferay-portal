@@ -15,7 +15,9 @@
 package com.liferay.calendar.upgrade.v1_0_5.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarResource;
+import com.liferay.calendar.service.CalendarLocalServiceUtil;
 import com.liferay.calendar.service.CalendarResourceLocalServiceUtil;
 import com.liferay.calendar.test.util.CalendarUpgradeTestUtil;
 import com.liferay.calendar.util.CalendarResourceUtil;
@@ -78,6 +80,23 @@ public class UpgradeCalendarResourceTest {
 		assertUserIsAdministrator(userId);
 	}
 
+	@Test
+	public void testUpgradeCalendarUserId() throws Exception {
+		CalendarResource calendarResource = getDefaultUserCalendarResource();
+
+		Calendar calendar = calendarResource.getDefaultCalendar();
+
+		long userId = calendar.getUserId();
+
+		assertUserIsDefault(userId);
+
+		_upgradeCalendarResource.upgrade();
+
+		userId = getCalendarUserId(calendar);
+
+		assertUserIsAdministrator(userId);
+	}
+
 	protected void assertUserIsAdministrator(long userId)
 		throws PortalException {
 
@@ -117,6 +136,21 @@ public class UpgradeCalendarResourceTest {
 		}
 	}
 
+	protected long getCalendarUserId(Calendar calendar) throws SQLException {
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
+			PreparedStatement ps = con.prepareStatement(
+				"select userId from Calendar where calendarId = ?");
+
+			ps.setLong(1, calendar.getCalendarId());
+
+			ResultSet rs = ps.executeQuery();
+
+			rs.next();
+
+			return rs.getLong(1);
+		}
+	}
+
 	protected CalendarResource getDefaultUserCalendarResource()
 		throws PortalException {
 
@@ -126,10 +160,15 @@ public class UpgradeCalendarResourceTest {
 			CalendarResourceUtil.getGroupCalendarResource(
 				_group.getGroupId(), serviceContext);
 
+		Calendar calendar = calendarResource.getDefaultCalendar();
+
 		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(
 			_group.getCompanyId());
 
+		calendar.setUserId(defaultUserId);
 		calendarResource.setUserId(defaultUserId);
+
+		CalendarLocalServiceUtil.updateCalendar(calendar);
 
 		return CalendarResourceLocalServiceUtil.updateCalendarResource(
 			calendarResource);

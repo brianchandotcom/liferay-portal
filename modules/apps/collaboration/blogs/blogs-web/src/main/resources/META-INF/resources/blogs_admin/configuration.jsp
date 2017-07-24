@@ -97,11 +97,11 @@ BlogsGroupServiceOverriddenConfiguration blogsGroupServiceOverriddenConfiguratio
 				<div class="container-fluid-1280">
 					<aui:fieldset-group markupView="lexicon">
 						<liferay-frontend:email-notification-settings
-							emailBody="<%= blogsGroupServiceSettings.getEmailEntryAddedBodyXml() %>"
+							emailBodyLocalizedValuesMap="<%= blogsGroupServiceSettings.getEmailEntryAddedBody() %>"
 							emailDefinitionTerms="<%= emailDefinitionTerms %>"
 							emailEnabled="<%= blogsGroupServiceSettings.isEmailEntryAddedEnabled() %>"
 							emailParam="emailEntryAdded"
-							emailSubject="<%= blogsGroupServiceSettings.getEmailEntryAddedSubjectXml() %>"
+							emailSubjectLocalizedValuesMap="<%= blogsGroupServiceSettings.getEmailEntryAddedSubject() %>"
 						/>
 					</aui:fieldset-group>
 				</div>
@@ -111,11 +111,11 @@ BlogsGroupServiceOverriddenConfiguration blogsGroupServiceOverriddenConfiguratio
 				<div class="container-fluid-1280">
 					<aui:fieldset-group markupView="lexicon">
 						<liferay-frontend:email-notification-settings
-							emailBody="<%= blogsGroupServiceSettings.getEmailEntryUpdatedBodyXml() %>"
+							emailBodyLocalizedValuesMap="<%= blogsGroupServiceSettings.getEmailEntryUpdatedBody() %>"
 							emailDefinitionTerms="<%= emailDefinitionTerms %>"
 							emailEnabled="<%= blogsGroupServiceSettings.isEmailEntryUpdatedEnabled() %>"
 							emailParam="emailEntryUpdated"
-							emailSubject="<%= blogsGroupServiceSettings.getEmailEntryUpdatedSubjectXml() %>"
+							emailSubjectLocalizedValuesMap="<%= blogsGroupServiceSettings.getEmailEntryUpdatedSubject() %>"
 						/>
 					</aui:fieldset-group>
 				</div>

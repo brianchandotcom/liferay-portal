@@ -226,11 +226,11 @@ catch (NoSuchFolderException nsfe) {
 				<div class="container-fluid-1280">
 					<aui:fieldset-group markupView="lexicon">
 						<liferay-frontend:email-notification-settings
-							emailBody="<%= bookmarksGroupServiceOverriddenConfiguration.emailEntryAddedBodyXml() %>"
+							emailBodyLocalizedValuesMap="<%= bookmarksGroupServiceOverriddenConfiguration.emailEntryAddedBody() %>"
 							emailDefinitionTerms="<%= emailDefinitionTerms %>"
 							emailEnabled="<%= bookmarksGroupServiceOverriddenConfiguration.emailEntryAddedEnabled() %>"
 							emailParam="emailEntryAdded"
-							emailSubject="<%= bookmarksGroupServiceOverriddenConfiguration.emailEntryAddedSubjectXml() %>"
+							emailSubjectLocalizedValuesMap="<%= bookmarksGroupServiceOverriddenConfiguration.emailEntryAddedSubject() %>"
 						/>
 					</aui:fieldset-group>
 				</div>
@@ -240,11 +240,11 @@ catch (NoSuchFolderException nsfe) {
 				<div class="container-fluid-1280">
 					<aui:fieldset-group markupView="lexicon">
 						<liferay-frontend:email-notification-settings
-							emailBody="<%= bookmarksGroupServiceOverriddenConfiguration.emailEntryUpdatedBodyXml() %>"
+							emailBodyLocalizedValuesMap="<%= bookmarksGroupServiceOverriddenConfiguration.emailEntryUpdatedBody() %>"
 							emailDefinitionTerms="<%= emailDefinitionTerms %>"
 							emailEnabled="<%= bookmarksGroupServiceOverriddenConfiguration.emailEntryUpdatedEnabled() %>"
 							emailParam="emailEntryUpdated"
-							emailSubject="<%= bookmarksGroupServiceOverriddenConfiguration.emailEntryUpdatedSubjectXml() %>"
+							emailSubjectLocalizedValuesMap="<%= bookmarksGroupServiceOverriddenConfiguration.emailEntryUpdatedSubject() %>"
 						/>
 					</aui:fieldset-group>
 				</div>

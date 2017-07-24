@@ -556,6 +556,8 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 			(MergePropertiesTask)GradleUtil.getTask(
 				project, LangMergerPlugin.MERGE_LANG_TASK_NAME);
 
+		mergePropertiesTask.setDestinationDir("src/WEB-INF/src/content");
+
 		Copy saveMergeLangDestinationDirTask =
 			_addTaskSaveMergeLangDestinationDir(mergePropertiesTask);
 

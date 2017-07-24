@@ -551,7 +551,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 		while (matcher.find()) {
 			String s = matcher.group(2);
 
-			if (!s.equals(");")) {
+			if (!s.matches("\\)+;?")) {
 				addMessage(
 					fileName,
 					"There should be a line break after '" + matcher.group(1) +

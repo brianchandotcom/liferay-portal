@@ -2,6 +2,7 @@ apply plugin: "com.liferay.lang.merger"
 
 mergeLang {
 	sourceDirs = [
-		"../../frontend-theme-lang/frontend-theme-lang/src/main/resources/content"
+		"../../frontend-theme-lang/frontend-theme-lang/src/main/resources/content",
+		destinationDir
 	]
 }

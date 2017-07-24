@@ -4,12 +4,9 @@
 }
 
 .btn-default {
-	border-color: $brand-color;
-	color: $brand-color;
+	@include button-variant($brand-color, transparent, $brand-color);
 }
 
 .btn-primary {
-	background-color: $brand-color;
-	border-color: $brand-color;
-	color: #FFF;
+	@include button-variant(#FFF, $brand-color, $brand-color);
 }

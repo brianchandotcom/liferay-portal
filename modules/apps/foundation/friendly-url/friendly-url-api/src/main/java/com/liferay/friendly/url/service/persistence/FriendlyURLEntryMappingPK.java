@@ -27,15 +27,15 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public class FriendlyURLMappingPK implements Comparable<FriendlyURLMappingPK>,
+public class FriendlyURLEntryMappingPK implements Comparable<FriendlyURLEntryMappingPK>,
 	Serializable {
 	public long classNameId;
 	public long classPK;
 
-	public FriendlyURLMappingPK() {
+	public FriendlyURLEntryMappingPK() {
 	}
 
-	public FriendlyURLMappingPK(long classNameId, long classPK) {
+	public FriendlyURLEntryMappingPK(long classNameId, long classPK) {
 		this.classNameId = classNameId;
 		this.classPK = classPK;
 	}
@@ -57,7 +57,7 @@ public class FriendlyURLMappingPK implements Comparable<FriendlyURLMappingPK>,
 	}
 
 	@Override
-	public int compareTo(FriendlyURLMappingPK pk) {
+	public int compareTo(FriendlyURLEntryMappingPK pk) {
 		if (pk == null) {
 			return -1;
 		}
@@ -101,11 +101,11 @@ public class FriendlyURLMappingPK implements Comparable<FriendlyURLMappingPK>,
 			return true;
 		}
 
-		if (!(obj instanceof FriendlyURLMappingPK)) {
+		if (!(obj instanceof FriendlyURLEntryMappingPK)) {
 			return false;
 		}
 
-		FriendlyURLMappingPK pk = (FriendlyURLMappingPK)obj;
+		FriendlyURLEntryMappingPK pk = (FriendlyURLEntryMappingPK)obj;
 
 		if ((classNameId == pk.classNameId) && (classPK == pk.classPK)) {
 			return true;

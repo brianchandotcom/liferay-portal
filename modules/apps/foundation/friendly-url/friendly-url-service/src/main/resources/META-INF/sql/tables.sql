@@ -22,9 +22,9 @@ create table FriendlyURLEntryLocalization (
 	classPK LONG
 );
 
-create table FriendlyURLMapping (
+create table FriendlyURLEntryMapping (
 	classNameId LONG not null,
 	classPK LONG not null,
-	friendlyURLId LONG,
+	friendlyURLEntryId LONG,
 	primary key (classNameId, classPK)
 );

@@ -16,7 +16,7 @@ package com.liferay.friendly.url.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.friendly.url.service.persistence.FriendlyURLMappingPK;
+import com.liferay.friendly.url.service.persistence.FriendlyURLEntryMappingPK;
 
 import java.io.Serializable;
 
@@ -30,20 +30,21 @@ import java.util.List;
  * @generated
  */
 @ProviderType
-public class FriendlyURLMappingSoap implements Serializable {
-	public static FriendlyURLMappingSoap toSoapModel(FriendlyURLMapping model) {
-		FriendlyURLMappingSoap soapModel = new FriendlyURLMappingSoap();
+public class FriendlyURLEntryMappingSoap implements Serializable {
+	public static FriendlyURLEntryMappingSoap toSoapModel(
+		FriendlyURLEntryMapping model) {
+		FriendlyURLEntryMappingSoap soapModel = new FriendlyURLEntryMappingSoap();
 
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
-		soapModel.setFriendlyURLId(model.getFriendlyURLId());
+		soapModel.setFriendlyURLEntryId(model.getFriendlyURLEntryId());
 
 		return soapModel;
 	}
 
-	public static FriendlyURLMappingSoap[] toSoapModels(
-		FriendlyURLMapping[] models) {
-		FriendlyURLMappingSoap[] soapModels = new FriendlyURLMappingSoap[models.length];
+	public static FriendlyURLEntryMappingSoap[] toSoapModels(
+		FriendlyURLEntryMapping[] models) {
+		FriendlyURLEntryMappingSoap[] soapModels = new FriendlyURLEntryMappingSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -52,15 +53,15 @@ public class FriendlyURLMappingSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static FriendlyURLMappingSoap[][] toSoapModels(
-		FriendlyURLMapping[][] models) {
-		FriendlyURLMappingSoap[][] soapModels = null;
+	public static FriendlyURLEntryMappingSoap[][] toSoapModels(
+		FriendlyURLEntryMapping[][] models) {
+		FriendlyURLEntryMappingSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new FriendlyURLMappingSoap[models.length][models[0].length];
+			soapModels = new FriendlyURLEntryMappingSoap[models.length][models[0].length];
 		}
 		else {
-			soapModels = new FriendlyURLMappingSoap[0][0];
+			soapModels = new FriendlyURLEntryMappingSoap[0][0];
 		}
 
 		for (int i = 0; i < models.length; i++) {
@@ -70,25 +71,25 @@ public class FriendlyURLMappingSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static FriendlyURLMappingSoap[] toSoapModels(
-		List<FriendlyURLMapping> models) {
-		List<FriendlyURLMappingSoap> soapModels = new ArrayList<FriendlyURLMappingSoap>(models.size());
+	public static FriendlyURLEntryMappingSoap[] toSoapModels(
+		List<FriendlyURLEntryMapping> models) {
+		List<FriendlyURLEntryMappingSoap> soapModels = new ArrayList<FriendlyURLEntryMappingSoap>(models.size());
 
-		for (FriendlyURLMapping model : models) {
+		for (FriendlyURLEntryMapping model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new FriendlyURLMappingSoap[soapModels.size()]);
+		return soapModels.toArray(new FriendlyURLEntryMappingSoap[soapModels.size()]);
 	}
 
-	public FriendlyURLMappingSoap() {
+	public FriendlyURLEntryMappingSoap() {
 	}
 
-	public FriendlyURLMappingPK getPrimaryKey() {
-		return new FriendlyURLMappingPK(_classNameId, _classPK);
+	public FriendlyURLEntryMappingPK getPrimaryKey() {
+		return new FriendlyURLEntryMappingPK(_classNameId, _classPK);
 	}
 
-	public void setPrimaryKey(FriendlyURLMappingPK pk) {
+	public void setPrimaryKey(FriendlyURLEntryMappingPK pk) {
 		setClassNameId(pk.classNameId);
 		setClassPK(pk.classPK);
 	}
@@ -109,15 +110,15 @@ public class FriendlyURLMappingSoap implements Serializable {
 		_classPK = classPK;
 	}
 
-	public long getFriendlyURLId() {
-		return _friendlyURLId;
+	public long getFriendlyURLEntryId() {
+		return _friendlyURLEntryId;
 	}
 
-	public void setFriendlyURLId(long friendlyURLId) {
-		_friendlyURLId = friendlyURLId;
+	public void setFriendlyURLEntryId(long friendlyURLEntryId) {
+		_friendlyURLEntryId = friendlyURLEntryId;
 	}
 
 	private long _classNameId;
 	private long _classPK;
-	private long _friendlyURLId;
+	private long _friendlyURLEntryId;
 }

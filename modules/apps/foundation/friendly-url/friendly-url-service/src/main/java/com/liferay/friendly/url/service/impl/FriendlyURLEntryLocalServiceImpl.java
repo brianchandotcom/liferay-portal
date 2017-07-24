@@ -18,9 +18,9 @@ import com.liferay.friendly.url.exception.DuplicateFriendlyURLEntryException;
 import com.liferay.friendly.url.exception.FriendlyURLLengthException;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
-import com.liferay.friendly.url.model.FriendlyURLMapping;
+import com.liferay.friendly.url.model.FriendlyURLEntryMapping;
 import com.liferay.friendly.url.service.base.FriendlyURLEntryLocalServiceBaseImpl;
-import com.liferay.friendly.url.service.persistence.FriendlyURLMappingPK;
+import com.liferay.friendly.url.service.persistence.FriendlyURLEntryMappingPK;
 import com.liferay.friendly.url.util.comparator.FriendlyURLEntryCreateDateComparator;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -67,16 +67,16 @@ public class FriendlyURLEntryLocalServiceImpl
 
 		validate(groupId, classNameId, classPK, urlTitleMap);
 
-		FriendlyURLMappingPK friendlyURLMappingPK = new FriendlyURLMappingPK(
-			classNameId, classPK);
+		FriendlyURLEntryMappingPK friendlyURLEntryMappingPK =
+			new FriendlyURLEntryMappingPK(classNameId, classPK);
 
-		FriendlyURLMapping friendlyURLMapping =
-			friendlyURLMappingPersistence.fetchByPrimaryKey(
-				friendlyURLMappingPK);
+		FriendlyURLEntryMapping friendlyURLEntryMapping =
+			friendlyURLEntryMappingPersistence.fetchByPrimaryKey(
+				friendlyURLEntryMappingPK);
 
-		if (friendlyURLMapping == null) {
-			friendlyURLMapping = friendlyURLMappingPersistence.create(
-				friendlyURLMappingPK);
+		if (friendlyURLEntryMapping == null) {
+			friendlyURLEntryMapping = friendlyURLEntryMappingPersistence.create(
+				friendlyURLEntryMappingPK);
 		}
 		else {
 			for (String urlTitle : urlTitleMap.values()) {
@@ -97,10 +97,11 @@ public class FriendlyURLEntryLocalServiceImpl
 				}
 
 				if (oldFriendlyURLEntry != null) {
-					friendlyURLMapping.setFriendlyURLId(
+					friendlyURLEntryMapping.setFriendlyURLEntryId(
 						oldFriendlyURLEntry.getFriendlyURLEntryId());
 
-					friendlyURLMappingPersistence.update(friendlyURLMapping);
+					friendlyURLEntryMappingPersistence.update(
+						friendlyURLEntryMapping);
 
 					updateFriendlyURLEntryLocalizations(
 						oldFriendlyURLEntry.getFriendlyURLEntryId(),
@@ -133,9 +134,9 @@ public class FriendlyURLEntryLocalServiceImpl
 		friendlyURLEntry.setClassPK(classPK);
 		friendlyURLEntry.setDefaultLanguageId(defaultLanguageId);
 
-		friendlyURLMapping.setFriendlyURLId(friendlyURLEntryId);
+		friendlyURLEntryMapping.setFriendlyURLEntryId(friendlyURLEntryId);
 
-		friendlyURLMappingPersistence.update(friendlyURLMapping);
+		friendlyURLEntryMappingPersistence.update(friendlyURLEntryMapping);
 
 		updateFriendlyURLEntryLocalizations(
 			friendlyURLEntryId, group.getCompanyId(), groupId, classNameId,
@@ -208,21 +209,22 @@ public class FriendlyURLEntryLocalServiceImpl
 				groupId, classNameId, classPK,
 				new FriendlyURLEntryCreateDateComparator());
 
-		FriendlyURLMappingPK friendlyURLMappingPK = new FriendlyURLMappingPK(
-			classNameId, classPK);
+		FriendlyURLEntryMappingPK friendlyURLEntryMappingPK =
+			new FriendlyURLEntryMappingPK(classNameId, classPK);
 
 		if (friendlyURLEntry == null) {
-			friendlyURLMappingPersistence.remove(friendlyURLMappingPK);
+			friendlyURLEntryMappingPersistence.remove(
+				friendlyURLEntryMappingPK);
 		}
 		else {
-			FriendlyURLMapping friendlyURLMapping =
-				friendlyURLMappingPersistence.findByPrimaryKey(
-					friendlyURLMappingPK);
+			FriendlyURLEntryMapping friendlyURLEntryMapping =
+				friendlyURLEntryMappingPersistence.findByPrimaryKey(
+					friendlyURLEntryMappingPK);
 
-			friendlyURLMapping.setFriendlyURLId(
+			friendlyURLEntryMapping.setFriendlyURLEntryId(
 				friendlyURLEntry.getFriendlyURLEntryId());
 
-			friendlyURLMappingPersistence.update(friendlyURLMapping);
+			friendlyURLEntryMappingPersistence.update(friendlyURLEntryMapping);
 		}
 	}
 
@@ -311,12 +313,12 @@ public class FriendlyURLEntryLocalServiceImpl
 			long groupId, long classNameId, long classPK)
 		throws PortalException {
 
-		FriendlyURLMapping friendlyURLMapping =
-			friendlyURLMappingPersistence.findByPrimaryKey(
-				new FriendlyURLMappingPK(classNameId, classPK));
+		FriendlyURLEntryMapping friendlyURLEntryMapping =
+			friendlyURLEntryMappingPersistence.findByPrimaryKey(
+				new FriendlyURLEntryMappingPK(classNameId, classPK));
 
 		return friendlyURLEntryPersistence.findByPrimaryKey(
-			friendlyURLMapping.getFriendlyURLId());
+			friendlyURLEntryMapping.getFriendlyURLEntryId());
 	}
 
 	@Override
@@ -358,22 +360,24 @@ public class FriendlyURLEntryLocalServiceImpl
 
 	@Override
 	public void setMainFriendlyURLEntry(FriendlyURLEntry friendlyURLEntry) {
-		FriendlyURLMappingPK friendlyURLMappingPK = new FriendlyURLMappingPK(
-			friendlyURLEntry.getClassNameId(), friendlyURLEntry.getClassPK());
+		FriendlyURLEntryMappingPK friendlyURLEntryMappingPK =
+			new FriendlyURLEntryMappingPK(
+				friendlyURLEntry.getClassNameId(),
+				friendlyURLEntry.getClassPK());
 
-		FriendlyURLMapping friendlyURLMapping =
-			friendlyURLMappingPersistence.fetchByPrimaryKey(
-				friendlyURLMappingPK);
+		FriendlyURLEntryMapping friendlyURLEntryMapping =
+			friendlyURLEntryMappingPersistence.fetchByPrimaryKey(
+				friendlyURLEntryMappingPK);
 
-		if (friendlyURLMapping == null) {
-			friendlyURLMapping = friendlyURLMappingPersistence.create(
-				friendlyURLMappingPK);
+		if (friendlyURLEntryMapping == null) {
+			friendlyURLEntryMapping = friendlyURLEntryMappingPersistence.create(
+				friendlyURLEntryMappingPK);
 		}
 
-		friendlyURLMapping.setFriendlyURLId(
+		friendlyURLEntryMapping.setFriendlyURLEntryId(
 			friendlyURLEntry.getFriendlyURLEntryId());
 
-		friendlyURLMappingPersistence.update(friendlyURLMapping);
+		friendlyURLEntryMappingPersistence.update(friendlyURLEntryMapping);
 	}
 
 	@Override

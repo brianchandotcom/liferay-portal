@@ -79,11 +79,11 @@ import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateLinkModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateModelImpl;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalizationModel;
+import com.liferay.friendly.url.model.FriendlyURLEntryMappingModel;
 import com.liferay.friendly.url.model.FriendlyURLEntryModel;
-import com.liferay.friendly.url.model.FriendlyURLMappingModel;
 import com.liferay.friendly.url.model.impl.FriendlyURLEntryLocalizationModelImpl;
+import com.liferay.friendly.url.model.impl.FriendlyURLEntryMappingModelImpl;
 import com.liferay.friendly.url.model.impl.FriendlyURLEntryModelImpl;
-import com.liferay.friendly.url.model.impl.FriendlyURLMappingModelImpl;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
@@ -1867,6 +1867,20 @@ public class DataFactory {
 		return friendlyURLEntryLocalizationModel;
 	}
 
+	public FriendlyURLEntryMappingModel newFriendlyURLEntryMapping(
+		FriendlyURLEntryModel friendlyURLEntryModel) {
+
+		FriendlyURLEntryMappingModel friendlyURLEntryMappingModel =
+			new FriendlyURLEntryMappingModelImpl();
+
+		friendlyURLEntryMappingModel.setClassNameId(
+			friendlyURLEntryModel.getClassNameId());
+		friendlyURLEntryMappingModel.setClassPK(
+			friendlyURLEntryModel.getClassPK());
+
+		return friendlyURLEntryMappingModel;
+	}
+
 	public FriendlyURLEntryModel newFriendlyURLEntryModel(
 		BlogsEntryModel blogsEntryModel) {
 
@@ -1883,19 +1897,6 @@ public class DataFactory {
 		friendlyURLEntryModel.setClassPK(blogsEntryModel.getEntryId());
 
 		return friendlyURLEntryModel;
-	}
-
-	public FriendlyURLMappingModel newFriendlyURLMapping(
-		FriendlyURLEntryModel friendlyURLEntryModel) {
-
-		FriendlyURLMappingModel friendlyURLMappingModel =
-			new FriendlyURLMappingModelImpl();
-
-		friendlyURLMappingModel.setClassNameId(
-			friendlyURLEntryModel.getClassNameId());
-		friendlyURLMappingModel.setClassPK(friendlyURLEntryModel.getClassPK());
-
-		return friendlyURLMappingModel;
 	}
 
 	public GroupModel newGroupModel(UserModel userModel) throws Exception {

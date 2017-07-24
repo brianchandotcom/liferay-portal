@@ -15,6 +15,7 @@
 package com.liferay.poshi.runner.elements;
 
 import com.liferay.poshi.runner.util.RegexUtil;
+import com.liferay.poshi.runner.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,9 +101,54 @@ public class CommandElement extends PoshiElement {
 			sb.append(poshiElementAttribute.toReadableSyntax());
 		}
 
-		String readableSyntax = super.toReadableSyntax();
+		List<String> readableBlocks = new ArrayList<>();
 
-		sb.append(createReadableBlock(readableSyntax));
+		for (PoshiElement poshiElement : toPoshiElements(elements())) {
+			readableBlocks.add(poshiElement.toReadableSyntax());
+		}
+
+		sb.append(createReadableBlock(readableBlocks));
+
+		return sb.toString();
+	}
+
+	protected String createReadableBlock(List<String> items) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("\n");
+
+		String pad = getPad();
+
+		sb.append(pad);
+
+		sb.append(getBlockName());
+		sb.append(" {");
+
+		for (int i = 0; i < items.size(); i++) {
+			String item = items.get(i);
+
+			if (i == 0) {
+				if (item.startsWith("\n\n")) {
+					item = item.replaceFirst("\n\n", "\n");
+				}
+			}
+
+			if (isCDATAVar(item)) {
+				item = item.replaceFirst("var ", pad + "var ");
+
+				sb.append(item);
+
+				continue;
+			}
+
+			item = item.replaceAll("\n", "\n" + pad);
+
+			sb.append(item.replaceAll("\n\t\n", "\n\n"));
+		}
+
+		sb.append("\n");
+		sb.append(pad);
+		sb.append("}");
 
 		return sb.toString();
 	}
@@ -119,6 +165,12 @@ public class CommandElement extends PoshiElement {
 
 		for (String line : readableSyntax.split("\n")) {
 			line = line.trim();
+
+			if (line.length() == 0) {
+				sb.append("\n");
+
+				continue;
+			}
 
 			if (line.startsWith("setUp") || line.startsWith("tearDown")) {
 				continue;
@@ -153,6 +205,19 @@ public class CommandElement extends PoshiElement {
 
 	protected String getReadableCommandTitle() {
 		return "test" + attributeValue("name");
+	}
+
+	protected boolean isCDATAVar(String readableSyntax) {
+		String trimmedReadableSyntax = readableSyntax.trim();
+
+		if (!readableSyntax.contains("return(\n") &&
+			(StringUtil.count(readableSyntax, "\n") > 1) &&
+			trimmedReadableSyntax.startsWith("var ")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

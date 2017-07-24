@@ -1,93 +1,99 @@
 <definition component-name="portal-acceptance">
-    <property name="portal.release" value="true" />
-    <property name="portal.upstream" value="true" />
-    <property name="testray.main.component.name" value="Smoke" />
+	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
+	<property name="testray.main.component.name" value="Smoke" />
 
-    <set-up>
-        <execute macro="TestCase#setUpPortalInstance" />
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
 
-        <execute macro="SignIn#signIn" />
-    </set-up>
+		<execute macro="SignIn#signIn" />
+	</set-up>
 
-    <tear-down>
-        <execute macro="PortalInstances#tearDownCP">
-            <var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-        </execute>
-    </tear-down>
+	<tear-down>
+		<execute macro="PortalInstances#tearDownCP">
+			<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+		</execute>
+	</tear-down>
 
-    <command name="AddUser" priority="5">
-        <var name="userEmailAddress" value="userea@liferay.com" />
-        <var name="userFirstName" value="userfn" />
-        <var name="userLastName" value="userln" />
+	<command name="AddUser" priority="5">
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userLastName" value="userln" />
 
-        <execute macro="ProductMenu#gotoControlPanelUsers">
-            <var name="portlet" value="Users and Organizations" />
-        </execute>
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
 
-        <for list="${breadcrumbListVisible}" param="breadcrumbName">
-            <var name="key_breadcrumbName" value="${breadcrumbName}" />
+		<for list="${breadcrumbListVisible}" param="breadcrumbName">
+			<var name="key_breadcrumbName" value="${breadcrumbName}" />
 
-            <var method="StringUtil#upperCase('${breadcrumbName}')" name="breadcrumbNameUppercase" />
+			<var method="StringUtil#upperCase('${breadcrumbName}')" name="breadcrumbNameUppercase" />
 
-            <execute function="AssertTextEquals" locator1="Breadcrumb#BREADCRUMB_ENTRY" value1="${breadcrumbNameUppercase}" />
-        </for>
+			<execute function="AssertTextEquals" locator1="Breadcrumb#BREADCRUMB_ENTRY" value1="${breadcrumbNameUppercase}" />
+		</for>
 
-        <execute macro="User#addCP">
-            <var name="userEmailAddress" value="${userEmailAddress}" />
-            <var name="userFirstName" value="${userFirstName}" />
-            <var name="userLastName" value="${userLastName}" />
-            <var name="userScreenName" value="${userScreenName}" />
-            <var name="userScreenName" value="" />
-        </execute>
-    </command>
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+			<var name="userScreenName" value="" />
+		</execute>
+	</command>
 
-    <command name="Smoke" priority="5">
-        <description message="Ensure that the super admin can add pages, add portlets, navigate to the product menu, use the WYSIWYG editor, and view alert messages." />
+	<command name="Smoke" priority="5">
+		<description message="Ensure that the super admin can add pages, add portlets, navigate to the product menu, use the WYSIWYG editor, and view alert messages." />
 
-        <property name="portal.smoke" value="true" />
-        <property name="test.assert.warning.exceptions" value="true" />
+		<property name="portal.smoke" value="true" />
+		<property name="test.assert.warning.exceptions" value="true" />
 
-        <if>
-            <isset var="duplicate" />
-            <then>
-                <execute macro="Alert#viewErrorMessage">
-                    <var name="errorMessage" value="A configuration with this ID already exists. Please enter a unique ID." />
-                </execute>
-            </then>
-            <else>
-                <execute macro="Alert#viewSuccessMessage" />
-            </else>
-        </if>
+		<if>
+			<isset var="duplicate" />
+			<then>
+				<execute macro="Alert#viewErrorMessage">
+					<var name="errorMessage" value="A configuration with this ID already exists. Please enter a unique ID." />
+				</execute>
+			</then>
+			<else>
+				<execute macro="Alert#viewSuccessMessage" />
+			</else>
+		</if>
 
-        <if>
-            <equals arg1="${check}" arg2="true" />
-            <then>
-                <execute macro="Alert#viewSuccessMessage" />
-            </then>
-        </if>
+		<if>
+			<equals arg1="${check}" arg2="true" />
+			<then>
+				<execute macro="Alert#viewSuccessMessage" />
+			</then>
+		</if>
 
-        <if>
-            <condition function="IsElementPresent" locator1="Blogs#ADD_BLOGS_ENTRY" />
-            <then>
-                <execute macro="Alert#viewSuccessMessage" />
-            </then>
-        </if>
+		<if>
+			<condition function="IsElementPresent" locator1="Blogs#ADD_BLOGS_ENTRY" />
+			<then>
+				<execute macro="Alert#viewSuccessMessage" />
+			</then>
+		</if>
 
-        <execute macro="TestCase#getSiteName">
-            <return from="siteName" name="siteName" />
-            <var name="siteName" value="${siteName}" />
-        </execute>
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
 
-        <execute macro="Smoke#viewWelcomePage" />
+		<var name="wikiPageContent"><![CDATA[<p id='demo'>PASS</p>
 
-        <execute macro="Smoke#runSmoke" />
+<script type='text/javascript'>
+document.getElementById('demo').innerHTML = 'FAIL';
+</script>]]></var>
 
-        <execute function="AssertElementPresent" locator1="Home#PAGE" value1="Welcome" />
+		<execute macro="Smoke#viewWelcomePage" />
 
-        <execute function="Click" locator1="Home#PAGE" />
+		<execute macro="Smoke#runSmoke" />
 
-        <execute function="Type" value1="Welcome" />
+		<execute function="AssertElementPresent" locator1="Home#PAGE" value1="Welcome" />
 
-        <execute function="AssertElementPresent#assertElementPresent" locator1="Home#PAGE" value1="Welcome" />
-    </command>
+		<execute function="Click" locator1="Home#PAGE" />
+
+		<execute function="Type" value1="Welcome" />
+
+		<execute function="AssertElementPresent#assertElementPresent" locator1="Home#PAGE" value1="Welcome" />
+	</command>
 </definition>

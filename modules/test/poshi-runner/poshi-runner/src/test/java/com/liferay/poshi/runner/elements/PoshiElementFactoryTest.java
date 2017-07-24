@@ -19,6 +19,8 @@ import com.liferay.poshi.runner.util.FileUtil;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
+import org.dom4j.Node;
+import org.dom4j.Text;
 import org.dom4j.util.NodeComparator;
 
 import org.junit.Test;
@@ -88,21 +90,33 @@ public class PoshiElementFactoryTest {
 	private static Element _getBaselineElement() throws Exception {
 		String fileContent = FileUtil.read(_POSHI_TEST_FILE_PATH);
 
-		fileContent = _removeWhitespace(fileContent);
-
 		Document document = Dom4JUtil.parse(fileContent);
 
-		return document.getRootElement();
+		Element rootElement = document.getRootElement();
+
+		_removeWhiteSpaceTextNodes(rootElement);
+
+		return rootElement;
 	}
 
-	private static String _removeWhitespace(String s) {
-		StringBuilder sb = new StringBuilder();
+	private static void _removeWhiteSpaceTextNodes(Element element) {
+		for (Node node : Dom4JUtil.toNodeList(element.content())) {
+			if (node instanceof Text) {
+				String nodeText = node.getText();
 
-		for (String line : s.split("\n")) {
-			sb.append(line.trim());
+				nodeText = nodeText.trim();
+
+				if (nodeText.length() == 0) {
+					node.detach();
+				}
+			}
 		}
 
-		return sb.toString();
+		for (Element childElement :
+				Dom4JUtil.toElementList(element.elements())) {
+
+			_removeWhiteSpaceTextNodes(childElement);
+		}
 	}
 
 	private static final String _POSHI_TEST_FILE_PATH =

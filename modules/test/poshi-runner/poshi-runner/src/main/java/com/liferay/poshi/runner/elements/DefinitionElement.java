@@ -116,6 +116,8 @@ public class DefinitionElement extends PoshiElement {
 			line = line.trim();
 
 			if (line.length() == 0) {
+				sb.append("\n");
+
 				continue;
 			}
 

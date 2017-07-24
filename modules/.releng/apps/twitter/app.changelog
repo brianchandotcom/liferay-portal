@@ -4,9 +4,9 @@
 
 app.artifacts-3.0.0=\
 	com.liferay.twitter.api-1.0.1.jar,\
-	com.liferay.twitter.service-1.0.9.jar,\
-	com.liferay.twitter.web-1.0.1.jar
+	com.liferay.twitter.service-1.0.11.jar,\
+	com.liferay.twitter.web-1.0.4.jar
 
-app.change.log-3.0.0=LPS-66891 LPS-68937
+app.change.log-3.0.0=LPS-68937 LPS-73178
 
-app.git.id-3.0.0=42109588a3dd747ffb53fcdc0b484e86fc20a253
+app.git.id-3.0.0=cd94d89d3356dcb3755743309eb16cc3b3f0dd0e

@@ -20,6 +20,7 @@ import com.liferay.friendly.url.model.FriendlyURLEntryMapping;
 import com.liferay.friendly.url.service.persistence.FriendlyURLEntryMappingPK;
 
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
@@ -37,7 +38,7 @@ import java.io.ObjectOutput;
  */
 @ProviderType
 public class FriendlyURLEntryMappingCacheModel implements CacheModel<FriendlyURLEntryMapping>,
-	Externalizable {
+	Externalizable, MVCCModel {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -51,7 +52,8 @@ public class FriendlyURLEntryMappingCacheModel implements CacheModel<FriendlyURL
 		FriendlyURLEntryMappingCacheModel friendlyURLEntryMappingCacheModel = (FriendlyURLEntryMappingCacheModel)obj;
 
 		if (friendlyURLEntryMappingPK.equals(
-					friendlyURLEntryMappingCacheModel.friendlyURLEntryMappingPK)) {
+					friendlyURLEntryMappingCacheModel.friendlyURLEntryMappingPK) &&
+				(mvccVersion == friendlyURLEntryMappingCacheModel.mvccVersion)) {
 			return true;
 		}
 
@@ -60,14 +62,28 @@ public class FriendlyURLEntryMappingCacheModel implements CacheModel<FriendlyURL
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, friendlyURLEntryMappingPK);
+		int hashCode = HashUtil.hash(0, friendlyURLEntryMappingPK);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
-		sb.append("{classNameId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", classNameId=");
 		sb.append(classNameId);
 		sb.append(", classPK=");
 		sb.append(classPK);
@@ -82,6 +98,7 @@ public class FriendlyURLEntryMappingCacheModel implements CacheModel<FriendlyURL
 	public FriendlyURLEntryMapping toEntityModel() {
 		FriendlyURLEntryMappingImpl friendlyURLEntryMappingImpl = new FriendlyURLEntryMappingImpl();
 
+		friendlyURLEntryMappingImpl.setMvccVersion(mvccVersion);
 		friendlyURLEntryMappingImpl.setClassNameId(classNameId);
 		friendlyURLEntryMappingImpl.setClassPK(classPK);
 		friendlyURLEntryMappingImpl.setFriendlyURLEntryId(friendlyURLEntryId);
@@ -93,6 +110,8 @@ public class FriendlyURLEntryMappingCacheModel implements CacheModel<FriendlyURL
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		classNameId = objectInput.readLong();
 
 		classPK = objectInput.readLong();
@@ -106,6 +125,8 @@ public class FriendlyURLEntryMappingCacheModel implements CacheModel<FriendlyURL
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(classNameId);
 
 		objectOutput.writeLong(classPK);
@@ -113,6 +134,7 @@ public class FriendlyURLEntryMappingCacheModel implements CacheModel<FriendlyURL
 		objectOutput.writeLong(friendlyURLEntryId);
 	}
 
+	public long mvccVersion;
 	public long classNameId;
 	public long classPK;
 	public long friendlyURLEntryId;

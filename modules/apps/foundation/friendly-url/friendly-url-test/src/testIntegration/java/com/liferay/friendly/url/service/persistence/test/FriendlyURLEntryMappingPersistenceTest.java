@@ -118,6 +118,8 @@ public class FriendlyURLEntryMappingPersistenceTest {
 
 		FriendlyURLEntryMapping newFriendlyURLEntryMapping = _persistence.create(pk);
 
+		newFriendlyURLEntryMapping.setMvccVersion(RandomTestUtil.nextLong());
+
 		newFriendlyURLEntryMapping.setFriendlyURLEntryId(RandomTestUtil.nextLong());
 
 		_friendlyURLEntryMappings.add(_persistence.update(
@@ -125,6 +127,8 @@ public class FriendlyURLEntryMappingPersistenceTest {
 
 		FriendlyURLEntryMapping existingFriendlyURLEntryMapping = _persistence.findByPrimaryKey(newFriendlyURLEntryMapping.getPrimaryKey());
 
+		Assert.assertEquals(existingFriendlyURLEntryMapping.getMvccVersion(),
+			newFriendlyURLEntryMapping.getMvccVersion());
 		Assert.assertEquals(existingFriendlyURLEntryMapping.getClassNameId(),
 			newFriendlyURLEntryMapping.getClassNameId());
 		Assert.assertEquals(existingFriendlyURLEntryMapping.getClassPK(),
@@ -345,6 +349,8 @@ public class FriendlyURLEntryMappingPersistenceTest {
 				RandomTestUtil.nextLong());
 
 		FriendlyURLEntryMapping friendlyURLEntryMapping = _persistence.create(pk);
+
+		friendlyURLEntryMapping.setMvccVersion(RandomTestUtil.nextLong());
 
 		friendlyURLEntryMapping.setFriendlyURLEntryId(RandomTestUtil.nextLong());
 

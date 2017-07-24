@@ -58,6 +58,7 @@ public class FriendlyURLEntryMappingWrapper implements FriendlyURLEntryMapping,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("friendlyURLEntryId", getFriendlyURLEntryId());
@@ -67,6 +68,12 @@ public class FriendlyURLEntryMappingWrapper implements FriendlyURLEntryMapping,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long classNameId = (Long)attributes.get("classNameId");
 
 		if (classNameId != null) {
@@ -201,6 +208,16 @@ public class FriendlyURLEntryMappingWrapper implements FriendlyURLEntryMapping,
 		return _friendlyURLEntryMapping.getFriendlyURLEntryId();
 	}
 
+	/**
+	* Returns the mvcc version of this friendly url entry mapping.
+	*
+	* @return the mvcc version of this friendly url entry mapping
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _friendlyURLEntryMapping.getMvccVersion();
+	}
+
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_friendlyURLEntryMapping.setCachedModel(cachedModel);
@@ -255,6 +272,16 @@ public class FriendlyURLEntryMappingWrapper implements FriendlyURLEntryMapping,
 	@Override
 	public void setFriendlyURLEntryId(long friendlyURLEntryId) {
 		_friendlyURLEntryMapping.setFriendlyURLEntryId(friendlyURLEntryId);
+	}
+
+	/**
+	* Sets the mvcc version of this friendly url entry mapping.
+	*
+	* @param mvccVersion the mvcc version of this friendly url entry mapping
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_friendlyURLEntryMapping.setMvccVersion(mvccVersion);
 	}
 
 	@Override

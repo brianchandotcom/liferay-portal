@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -46,7 +47,7 @@ import java.util.Map;
  */
 @ProviderType
 public interface FriendlyURLEntryModel extends AttachedModel,
-	BaseModel<FriendlyURLEntry>, ShardedModel, StagedModel {
+	BaseModel<FriendlyURLEntry>, MVCCModel, ShardedModel, StagedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -66,6 +67,22 @@ public interface FriendlyURLEntryModel extends AttachedModel,
 	 * @param primaryKey the primary key of this friendly url entry
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this friendly url entry.
+	 *
+	 * @return the mvcc version of this friendly url entry
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this friendly url entry.
+	 *
+	 * @param mvccVersion the mvcc version of this friendly url entry
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this friendly url entry.

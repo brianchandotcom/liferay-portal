@@ -33,6 +33,7 @@ public class FriendlyURLEntrySoap implements Serializable {
 	public static FriendlyURLEntrySoap toSoapModel(FriendlyURLEntry model) {
 		FriendlyURLEntrySoap soapModel = new FriendlyURLEntrySoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setFriendlyURLEntryId(model.getFriendlyURLEntryId());
 		soapModel.setGroupId(model.getGroupId());
@@ -94,6 +95,14 @@ public class FriendlyURLEntrySoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setFriendlyURLEntryId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -168,6 +177,7 @@ public class FriendlyURLEntrySoap implements Serializable {
 		_defaultLanguageId = defaultLanguageId;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _friendlyURLEntryId;
 	private long _groupId;

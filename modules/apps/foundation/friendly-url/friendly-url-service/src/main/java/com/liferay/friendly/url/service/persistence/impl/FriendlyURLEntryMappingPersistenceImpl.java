@@ -327,6 +327,7 @@ public class FriendlyURLEntryMappingPersistenceImpl extends BasePersistenceImpl<
 		friendlyURLEntryMappingImpl.setNew(friendlyURLEntryMapping.isNew());
 		friendlyURLEntryMappingImpl.setPrimaryKey(friendlyURLEntryMapping.getPrimaryKey());
 
+		friendlyURLEntryMappingImpl.setMvccVersion(friendlyURLEntryMapping.getMvccVersion());
 		friendlyURLEntryMappingImpl.setClassNameId(friendlyURLEntryMapping.getClassNameId());
 		friendlyURLEntryMappingImpl.setClassPK(friendlyURLEntryMapping.getClassPK());
 		friendlyURLEntryMappingImpl.setFriendlyURLEntryId(friendlyURLEntryMapping.getFriendlyURLEntryId());

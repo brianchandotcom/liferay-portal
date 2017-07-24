@@ -1767,6 +1767,12 @@
 			<finder-column name="plid" />
 			<finder-column name="portletId" />
 		</finder>
+		<finder name="C_O_O_LikeP" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="ownerId" />
+			<finder-column name="ownerType" />
+			<finder-column comparator="LIKE" name="portletId" />
+		</finder>
 		<finder name="O_O_P_P" return-type="PortletPreferences" unique="true">
 			<finder-column name="ownerId" />
 			<finder-column name="ownerType" />

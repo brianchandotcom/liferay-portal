@@ -1385,6 +1385,221 @@ public class PortletPreferencesUtil {
 	}
 
 	/**
+	* Returns all the portlet preferenceses where companyId = &#63; and ownerId = &#63; and ownerType = &#63; and portletId LIKE &#63;.
+	*
+	* @param companyId the company ID
+	* @param ownerId the owner ID
+	* @param ownerType the owner type
+	* @param portletId the portlet ID
+	* @return the matching portlet preferenceses
+	*/
+	public static List<PortletPreferences> findByC_O_O_LikeP(long companyId,
+		long ownerId, int ownerType, java.lang.String portletId) {
+		return getPersistence()
+				   .findByC_O_O_LikeP(companyId, ownerId, ownerType, portletId);
+	}
+
+	/**
+	* Returns a range of all the portlet preferenceses where companyId = &#63; and ownerId = &#63; and ownerType = &#63; and portletId LIKE &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PortletPreferencesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param ownerId the owner ID
+	* @param ownerType the owner type
+	* @param portletId the portlet ID
+	* @param start the lower bound of the range of portlet preferenceses
+	* @param end the upper bound of the range of portlet preferenceses (not inclusive)
+	* @return the range of matching portlet preferenceses
+	*/
+	public static List<PortletPreferences> findByC_O_O_LikeP(long companyId,
+		long ownerId, int ownerType, java.lang.String portletId, int start,
+		int end) {
+		return getPersistence()
+				   .findByC_O_O_LikeP(companyId, ownerId, ownerType, portletId,
+			start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the portlet preferenceses where companyId = &#63; and ownerId = &#63; and ownerType = &#63; and portletId LIKE &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PortletPreferencesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param ownerId the owner ID
+	* @param ownerType the owner type
+	* @param portletId the portlet ID
+	* @param start the lower bound of the range of portlet preferenceses
+	* @param end the upper bound of the range of portlet preferenceses (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching portlet preferenceses
+	*/
+	public static List<PortletPreferences> findByC_O_O_LikeP(long companyId,
+		long ownerId, int ownerType, java.lang.String portletId, int start,
+		int end, OrderByComparator<PortletPreferences> orderByComparator) {
+		return getPersistence()
+				   .findByC_O_O_LikeP(companyId, ownerId, ownerType, portletId,
+			start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the portlet preferenceses where companyId = &#63; and ownerId = &#63; and ownerType = &#63; and portletId LIKE &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PortletPreferencesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param ownerId the owner ID
+	* @param ownerType the owner type
+	* @param portletId the portlet ID
+	* @param start the lower bound of the range of portlet preferenceses
+	* @param end the upper bound of the range of portlet preferenceses (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching portlet preferenceses
+	*/
+	public static List<PortletPreferences> findByC_O_O_LikeP(long companyId,
+		long ownerId, int ownerType, java.lang.String portletId, int start,
+		int end, OrderByComparator<PortletPreferences> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByC_O_O_LikeP(companyId, ownerId, ownerType, portletId,
+			start, end, orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first portlet preferences in the ordered set where companyId = &#63; and ownerId = &#63; and ownerType = &#63; and portletId LIKE &#63;.
+	*
+	* @param companyId the company ID
+	* @param ownerId the owner ID
+	* @param ownerType the owner type
+	* @param portletId the portlet ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching portlet preferences
+	* @throws NoSuchPortletPreferencesException if a matching portlet preferences could not be found
+	*/
+	public static PortletPreferences findByC_O_O_LikeP_First(long companyId,
+		long ownerId, int ownerType, java.lang.String portletId,
+		OrderByComparator<PortletPreferences> orderByComparator)
+		throws com.liferay.portal.kernel.exception.NoSuchPortletPreferencesException {
+		return getPersistence()
+				   .findByC_O_O_LikeP_First(companyId, ownerId, ownerType,
+			portletId, orderByComparator);
+	}
+
+	/**
+	* Returns the first portlet preferences in the ordered set where companyId = &#63; and ownerId = &#63; and ownerType = &#63; and portletId LIKE &#63;.
+	*
+	* @param companyId the company ID
+	* @param ownerId the owner ID
+	* @param ownerType the owner type
+	* @param portletId the portlet ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
+	*/
+	public static PortletPreferences fetchByC_O_O_LikeP_First(long companyId,
+		long ownerId, int ownerType, java.lang.String portletId,
+		OrderByComparator<PortletPreferences> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_O_O_LikeP_First(companyId, ownerId, ownerType,
+			portletId, orderByComparator);
+	}
+
+	/**
+	* Returns the last portlet preferences in the ordered set where companyId = &#63; and ownerId = &#63; and ownerType = &#63; and portletId LIKE &#63;.
+	*
+	* @param companyId the company ID
+	* @param ownerId the owner ID
+	* @param ownerType the owner type
+	* @param portletId the portlet ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching portlet preferences
+	* @throws NoSuchPortletPreferencesException if a matching portlet preferences could not be found
+	*/
+	public static PortletPreferences findByC_O_O_LikeP_Last(long companyId,
+		long ownerId, int ownerType, java.lang.String portletId,
+		OrderByComparator<PortletPreferences> orderByComparator)
+		throws com.liferay.portal.kernel.exception.NoSuchPortletPreferencesException {
+		return getPersistence()
+				   .findByC_O_O_LikeP_Last(companyId, ownerId, ownerType,
+			portletId, orderByComparator);
+	}
+
+	/**
+	* Returns the last portlet preferences in the ordered set where companyId = &#63; and ownerId = &#63; and ownerType = &#63; and portletId LIKE &#63;.
+	*
+	* @param companyId the company ID
+	* @param ownerId the owner ID
+	* @param ownerType the owner type
+	* @param portletId the portlet ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
+	*/
+	public static PortletPreferences fetchByC_O_O_LikeP_Last(long companyId,
+		long ownerId, int ownerType, java.lang.String portletId,
+		OrderByComparator<PortletPreferences> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_O_O_LikeP_Last(companyId, ownerId, ownerType,
+			portletId, orderByComparator);
+	}
+
+	/**
+	* Returns the portlet preferenceses before and after the current portlet preferences in the ordered set where companyId = &#63; and ownerId = &#63; and ownerType = &#63; and portletId LIKE &#63;.
+	*
+	* @param portletPreferencesId the primary key of the current portlet preferences
+	* @param companyId the company ID
+	* @param ownerId the owner ID
+	* @param ownerType the owner type
+	* @param portletId the portlet ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next portlet preferences
+	* @throws NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
+	*/
+	public static PortletPreferences[] findByC_O_O_LikeP_PrevAndNext(
+		long portletPreferencesId, long companyId, long ownerId, int ownerType,
+		java.lang.String portletId,
+		OrderByComparator<PortletPreferences> orderByComparator)
+		throws com.liferay.portal.kernel.exception.NoSuchPortletPreferencesException {
+		return getPersistence()
+				   .findByC_O_O_LikeP_PrevAndNext(portletPreferencesId,
+			companyId, ownerId, ownerType, portletId, orderByComparator);
+	}
+
+	/**
+	* Removes all the portlet preferenceses where companyId = &#63; and ownerId = &#63; and ownerType = &#63; and portletId LIKE &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param ownerId the owner ID
+	* @param ownerType the owner type
+	* @param portletId the portlet ID
+	*/
+	public static void removeByC_O_O_LikeP(long companyId, long ownerId,
+		int ownerType, java.lang.String portletId) {
+		getPersistence()
+			.removeByC_O_O_LikeP(companyId, ownerId, ownerType, portletId);
+	}
+
+	/**
+	* Returns the number of portlet preferenceses where companyId = &#63; and ownerId = &#63; and ownerType = &#63; and portletId LIKE &#63;.
+	*
+	* @param companyId the company ID
+	* @param ownerId the owner ID
+	* @param ownerType the owner type
+	* @param portletId the portlet ID
+	* @return the number of matching portlet preferenceses
+	*/
+	public static int countByC_O_O_LikeP(long companyId, long ownerId,
+		int ownerType, java.lang.String portletId) {
+		return getPersistence()
+				   .countByC_O_O_LikeP(companyId, ownerId, ownerType, portletId);
+	}
+
+	/**
 	* Returns the portlet preferences where ownerId = &#63; and ownerType = &#63; and plid = &#63; and portletId = &#63; or throws a {@link NoSuchPortletPreferencesException} if it could not be found.
 	*
 	* @param ownerId the owner ID

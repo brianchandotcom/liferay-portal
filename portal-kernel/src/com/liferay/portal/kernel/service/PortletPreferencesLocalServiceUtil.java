@@ -275,6 +275,14 @@ public class PortletPreferencesLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.PortletPreferences> getPortletPreferences(
+		long companyId, long ownerId, int ownerType, java.lang.String portletId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getPortletPreferences(companyId, ownerId, ownerType,
+			portletId);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.PortletPreferences> getPortletPreferences(
 		long ownerId, int ownerType, long plid) {
 		return getService().getPortletPreferences(ownerId, ownerType, plid);
 	}

@@ -216,6 +216,17 @@ public class PortletPreferencesPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_O_O_LikeP() throws Exception {
+		_persistence.countByC_O_O_LikeP(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt(),
+			StringPool.BLANK);
+
+		_persistence.countByC_O_O_LikeP(0L, 0L, 0, StringPool.NULL);
+
+		_persistence.countByC_O_O_LikeP(0L, 0L, 0, (String)null);
+	}
+
+	@Test
 	public void testCountByO_O_P_P() throws Exception {
 		_persistence.countByO_O_P_P(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextInt(), RandomTestUtil.nextLong(),

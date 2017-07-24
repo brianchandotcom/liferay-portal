@@ -243,6 +243,11 @@ public interface PortletPreferencesLocalService extends BaseLocalService,
 		boolean privateLayout);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<PortletPreferences> getPortletPreferences(long companyId,
+		long ownerId, int ownerType, java.lang.String portletId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<PortletPreferences> getPortletPreferences(long ownerId,
 		int ownerType, long plid);
 

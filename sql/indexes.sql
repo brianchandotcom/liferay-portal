@@ -335,6 +335,7 @@ create index IX_96BDD537 on PortletItem (groupId, classNameId);
 create index IX_D699243F on PortletItem (groupId, name[$COLUMN_LENGTH:75$], portletId[$COLUMN_LENGTH:200$], classNameId);
 create index IX_E922D6C0 on PortletItem (groupId, portletId[$COLUMN_LENGTH:200$], classNameId);
 
+create index IX_60C49142 on PortletPreferences (companyId, ownerId, ownerType, portletId[$COLUMN_LENGTH:200$]);
 create unique index IX_C7057FF7 on PortletPreferences (ownerId, ownerType, plid, portletId[$COLUMN_LENGTH:200$]);
 create index IX_C9A3FCE2 on PortletPreferences (ownerId, ownerType, portletId[$COLUMN_LENGTH:200$]);
 create index IX_D5EDA3A1 on PortletPreferences (ownerType, plid, portletId[$COLUMN_LENGTH:200$]);

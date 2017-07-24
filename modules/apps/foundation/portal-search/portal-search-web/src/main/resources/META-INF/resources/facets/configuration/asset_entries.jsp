@@ -44,7 +44,7 @@ List<KeyValuePair> availableAssetTypes = new ArrayList<KeyValuePair>();
 for (AssetRendererFactory<?> assetRendererFactory : assetEntriesSearchFacet.getAssetRendererFactories(company.getCompanyId())) {
 	String className = assetRendererFactory.getClassName();
 
-	if (!ArrayUtil.contains(assetTypes, className)) {
+	if (assetRendererFactory.isSearchable() && !ArrayUtil.contains(assetTypes, className)) {
 		availableAssetTypes.add(new KeyValuePair(className, ResourceActionsUtil.getModelResource(locale, className)));
 	}
 }

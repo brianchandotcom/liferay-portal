@@ -77,4 +77,13 @@ public class CommerceCartItemServiceImpl
 			commerceCartId);
 	}
 
+	@Override
+	public CommerceCartItem updateCommerceCartItem(
+			long commerceCartItemId, int quantity, String json)
+		throws PortalException {
+
+		return commerceCartItemLocalService.updateCommerceCartItem(
+			commerceCartItemId, quantity, json);
+	}
+
 }

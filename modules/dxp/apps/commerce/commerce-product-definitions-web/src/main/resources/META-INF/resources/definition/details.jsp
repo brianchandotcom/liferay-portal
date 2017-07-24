@@ -42,6 +42,25 @@ String friendlyURLBase = themeDisplay.getPortalURL() + CPConstants.SEPARATOR_PRO
 			</span>
 
 			<liferay-ui:input-localized cssClass="form-control" defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>" name="urlTitleMapAsXML" xml="<%= HttpUtil.decodeURL(cpDefinitionsDisplayContext.getUrlTitleMapAsXML()) %>" />
+
+			<c:if test="<%= cpDefinition != null %>">
+
+				<%
+				Map<Locale, String> urlTitleMap = cpDefinition.getUrlTitleMap();
+
+				String productURL = friendlyURLBase + urlTitleMap.get(themeDisplay.getSiteDefaultLocale());
+				%>
+
+				<span class="input-group-addon" id="<portlet:namespace />urlIcon">
+					<liferay-ui:icon
+						iconCssClass="icon-new-window"
+						label="<%= false %>"
+						message="go-to-page"
+						target="_blank"
+						url="<%= productURL %>"
+					/>
+				</span>
+			</c:if>
 		</div>
 	</div>
 

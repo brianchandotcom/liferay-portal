@@ -20,7 +20,6 @@ import com.liferay.commerce.cart.model.CommerceCart;
 import com.liferay.commerce.cart.service.CommerceCartService;
 import com.liferay.commerce.cart.util.CommerceCartHelper;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -45,7 +44,8 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 
 	@Override
 	public CommerceCart getCurrentCart(HttpServletRequest httpServletRequest)
-		throws PortalException{
+		throws PortalException {
+
 		int type = ParamUtil.getInteger(
 			httpServletRequest, "type",
 			CommerceCartConstants.COMMERCE_CART_TYPE_CART);
@@ -56,7 +56,7 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 	@Override
 	public CommerceCart getCurrentCart(
 			HttpServletRequest httpServletRequest, int type)
-		throws PortalException{
+		throws PortalException {
 
 		long commerceCartId = _getCurrentCommerceCartId(
 			httpServletRequest, type);
@@ -86,8 +86,7 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 
 		httpSession.setAttribute(commerceCartIdWebKey, commerceCartId);
 
-		httpServletRequest.setAttribute(
-			commerceCartIdWebKey, commerceCartId);
+		httpServletRequest.setAttribute(commerceCartIdWebKey, commerceCartId);
 
 		Cookie commerceCartIdCookie = new Cookie(
 			commerceCartIdWebKey, String.valueOf(commerceCartId));
@@ -112,7 +111,7 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 
 	private long _getCurrentCommerceCartId(
 			HttpServletRequest httpServletRequest, int type)
-		throws PortalException{
+		throws PortalException {
 
 		String commerceCartIdWebKey = _getCommerceCartIdWebKey(type);
 
@@ -150,11 +149,11 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 
 		User user = _portal.getUser(httpServletRequest);
 
-		if(user == null){
+		if (user == null) {
 			return 0;
 		}
 
-		if(user.isDefaultUser()){
+		if (user.isDefaultUser()) {
 			return 0;
 		}
 
@@ -164,8 +163,7 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 			groupId, user.getUserId(), type,
 			CommerceCartConstants.COMMERCE_CART_DEFAULT_TITLE);
 
-		if(commerceCart != null){
-
+		if (commerceCart != null) {
 			httpSession.setAttribute(commerceCartIdWebKey, commerceCartId);
 
 			httpServletRequest.setAttribute(

@@ -16,17 +16,13 @@ package com.liferay.commerce.cart.service.impl;
 
 import com.liferay.commerce.cart.model.CommerceCartItem;
 import com.liferay.commerce.cart.service.base.CommerceCartItemLocalServiceBaseImpl;
-import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
@@ -154,7 +150,7 @@ public class CommerceCartItemLocalServiceImpl
 
 		_cpDefinitionLocalService.getCPDefinition(cpDefinitionId);
 
-		if(cpInstanceId > 0){
+		if (cpInstanceId > 0) {
 			_cpInstanceLocalService.getCPInstance(cpInstanceId);
 		}
 	}
@@ -164,4 +160,5 @@ public class CommerceCartItemLocalServiceImpl
 
 	@ServiceReference(type = CPInstanceLocalService.class)
 	private CPInstanceLocalService _cpInstanceLocalService;
+
 }

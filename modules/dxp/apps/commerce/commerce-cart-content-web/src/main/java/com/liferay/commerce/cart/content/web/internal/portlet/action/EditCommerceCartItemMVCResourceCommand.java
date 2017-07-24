@@ -104,7 +104,9 @@ public class EditCommerceCartItemMVCResourceCommand
 					CommerceCartConstants.COMMERCE_CART_DEFAULT_TITLE, type,
 					serviceContext);
 
-				_commerceCartHelper.updateCurrentCart(httpServletRequest,httpServletResponse,commerceCart.getCommerceCartId());
+				_commerceCartHelper.updateCurrentCart(
+					httpServletRequest, httpServletResponse,
+					commerceCart.getCommerceCartId());
 			}
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(

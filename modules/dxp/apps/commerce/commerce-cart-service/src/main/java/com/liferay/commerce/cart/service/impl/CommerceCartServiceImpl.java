@@ -47,6 +47,14 @@ public class CommerceCartServiceImpl extends CommerceCartServiceBaseImpl {
 	}
 
 	@Override
+	public CommerceCart fetchCommerceCart(
+		long groupId, long userId, int type, String name) {
+
+		return commerceCartLocalService.fetchCommerceCart(
+			groupId, userId, type, name);
+	}
+
+	@Override
 	public CommerceCart getCommerceCart(long commerceCartId)
 		throws PortalException {
 
@@ -65,11 +73,6 @@ public class CommerceCartServiceImpl extends CommerceCartServiceBaseImpl {
 	@Override
 	public int getCommerceCartsCount(long groupId, int type) {
 		return commerceCartLocalService.getCommerceCartsCount(groupId, type);
-	}
-
-	@Override
-	public CommerceCart fetchCommerceCart(long groupId, long userId, int type, String name){
-		return commerceCartLocalService.fetchCommerceCart(groupId, userId, type, name);
 	}
 
 }

@@ -73,6 +73,9 @@ public class EditCommerceCartItemMVCResourceCommand
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(resourceRequest);
 
+			HttpServletResponse httpServletResponse =
+				_portal.getHttpServletResponse(resourceResponse);
+
 			int type = ParamUtil.getInteger(
 				resourceRequest, "type",
 				CommerceCartConstants.COMMERCE_CART_TYPE_CART);
@@ -100,6 +103,8 @@ public class EditCommerceCartItemMVCResourceCommand
 				commerceCart = _commerceCartService.addCommerceCart(
 					CommerceCartConstants.COMMERCE_CART_DEFAULT_TITLE, type,
 					serviceContext);
+
+				_commerceCartHelper.updateCurrentCart(httpServletRequest,httpServletResponse,commerceCart.getCommerceCartId());
 			}
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -115,9 +120,6 @@ public class EditCommerceCartItemMVCResourceCommand
 			jsonObject.put(
 				"commerceCartItemId", commerceCartItem.getCommerceCartItemId());
 			jsonObject.put("success", true);
-
-			HttpServletResponse httpServletResponse =
-				_portal.getHttpServletResponse(resourceResponse);
 
 			httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
 

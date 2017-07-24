@@ -315,9 +315,9 @@ public class AssetVocabularyStagedModelDataHandler
 
 		if (titleMap == null) {
 			titleMap = new HashMap<>();
-		}
 
-		titleMap.put(_portal.getSiteDefaultLocale(groupId), name);
+			titleMap.put(_portal.getSiteDefaultLocale(groupId), name);
+		}
 
 		return titleMap;
 	}

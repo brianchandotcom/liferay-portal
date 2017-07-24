@@ -12,6 +12,18 @@
 			<setting configurable="true" key="show-maximize-minimize-application-links" type="checkbox" value="false" />
 			<setting configurable="false" key="show-site-name-default" value="false" />
 		</settings>
+		<layout-templates>
+			<custom>
+				<layout-template id="commerce_1_2_columns_width_limited" name="Commerce 1-2 columns (20/80) width limited">
+					<template-path>/layoutttpl/custom/commerce_1_2_columns_width_limited.tpl</template-path>
+					<thumbnail-path>/layoutttpl/custom/commerce_1_2_columns_width_limited.png</thumbnail-path>
+				</layout-template>
+				<layout-template id="commerce_1_column_width_limited" name="Commerce 1 column (100%) width limited">
+					<template-path>/layoutttpl/custom/commerce_1_column_width_limited.tpl</template-path>
+					<thumbnail-path>/layoutttpl/custom/commerce_1_column_width_limited.png</thumbnail-path>
+				</layout-template>
+			</custom>
+		</layout-templates>
 		<portlet-decorator id="barebone" name="Barebone">
 			<default-portlet-decorator>true</default-portlet-decorator>
 			<portlet-decorator-css-class>portlet-barebone</portlet-decorator-css-class>

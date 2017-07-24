@@ -712,7 +712,7 @@ information.
 					<file file="@{exec.file}" />
 				</executiondata>
 
-				<structure name="Liferay Jacoco Report">
+				<structure name="Liferay JaCoCo Report">
 					<classfiles>
 						<class.files />
 					</classfiles>
@@ -1538,7 +1538,7 @@ rerun your task.
 				</then>
 			</elseif>
 			<else>
-				<fail message="Missing jacoco session file ${jacoco.dump.file}, please run tests with code coverage before generating reports." />
+				<fail message="Missing JaCoCo session file ${jacoco.dump.file}, please run tests with code coverage before generating reports." />
 			</else>
 		</if>
 

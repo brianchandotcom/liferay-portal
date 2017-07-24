@@ -33,7 +33,7 @@ CPDefinition cpDefinition = cpTypeDisplayContext.getCPDefinition();
 	displayStyleGroupId="<%= cpTypeDisplayContext.getDisplayStyleGroupId() %>"
 	entries="<%= Collections.singletonList(cpDefinition) %>"
 >
-	<div class="container-fluid product-detail">
+	<div class="container-fluid product-detail" data-cp-definition-id="<%= cpDefinition.getCPDefinitionId()%>">
 		<div class="row">
 			<div class="col-lg-6 col-md-7">
 				<div class="row">

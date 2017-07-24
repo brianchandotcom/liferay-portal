@@ -24,7 +24,14 @@
 		function(event) {
 			var currentTarget = event.currentTarget;
 
-			var data = {};
+			var productDetail = currentTarget.ancestor(".product-detail");
+
+			var cpDefinitionId = productDetail.attr("data-cp-definition-id");
+
+			var data = {
+				'_<%= CommerceCartPortletKeys.COMMERCE_CART_CONTENT %>_cpDefinitionId' : cpDefinitionId ,
+				'_<%= CommerceCartPortletKeys.COMMERCE_CART_CONTENT %>_quantity' : 1
+			};
 
 			A.io.request(
 				'<liferay-portlet:resourceURL id="editCommerceCartItem" portletName="<%= CommerceCartPortletKeys.COMMERCE_CART_CONTENT %>" ></liferay-portlet:resourceURL>',

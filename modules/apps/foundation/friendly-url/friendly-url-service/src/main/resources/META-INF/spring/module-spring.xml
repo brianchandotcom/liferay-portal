@@ -4,5 +4,5 @@
 	<bean class="com.liferay.friendly.url.service.impl.FriendlyURLEntryLocalServiceImpl" id="com.liferay.friendly.url.service.FriendlyURLEntryLocalService" />
 	<bean class="com.liferay.friendly.url.service.persistence.impl.FriendlyURLEntryPersistenceImpl" id="com.liferay.friendly.url.service.persistence.FriendlyURLEntryPersistence" parent="basePersistence" />
 	<bean class="com.liferay.friendly.url.service.persistence.impl.FriendlyURLEntryLocalizationPersistenceImpl" id="com.liferay.friendly.url.service.persistence.FriendlyURLEntryLocalizationPersistence" parent="basePersistence" />
-	<bean class="com.liferay.friendly.url.service.persistence.impl.FriendlyURLMappingPersistenceImpl" id="com.liferay.friendly.url.service.persistence.FriendlyURLMappingPersistence" parent="basePersistence" />
+	<bean class="com.liferay.friendly.url.service.persistence.impl.FriendlyURLEntryMappingPersistenceImpl" id="com.liferay.friendly.url.service.persistence.FriendlyURLEntryMappingPersistence" parent="basePersistence" />
 </beans>

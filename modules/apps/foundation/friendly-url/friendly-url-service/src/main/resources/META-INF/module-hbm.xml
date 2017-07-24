@@ -4,7 +4,7 @@
 <hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.liferay.friendly.url.model.FriendlyURLEntry" />
 	<import class="com.liferay.friendly.url.model.FriendlyURLEntryLocalization" />
-	<import class="com.liferay.friendly.url.model.FriendlyURLMapping" />
+	<import class="com.liferay.friendly.url.model.FriendlyURLEntryMapping" />
 	<class name="com.liferay.friendly.url.model.impl.FriendlyURLEntryImpl" table="FriendlyURLEntry">
 		<id name="friendlyURLEntryId" type="long">
 			<generator class="assigned" />
@@ -31,11 +31,11 @@
 		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
-	<class name="com.liferay.friendly.url.model.impl.FriendlyURLMappingImpl" table="FriendlyURLMapping">
-		<composite-id class="com.liferay.friendly.url.service.persistence.FriendlyURLMappingPK" name="primaryKey">
+	<class name="com.liferay.friendly.url.model.impl.FriendlyURLEntryMappingImpl" table="FriendlyURLEntryMapping">
+		<composite-id class="com.liferay.friendly.url.service.persistence.FriendlyURLEntryMappingPK" name="primaryKey">
 			<key-property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 			<key-property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		</composite-id>
-		<property name="friendlyURLId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="friendlyURLEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 </hibernate-mapping>

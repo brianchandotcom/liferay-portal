@@ -26,8 +26,8 @@ import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.friendly.url.service.persistence.FriendlyURLEntryLocalizationPersistence;
+import com.liferay.friendly.url.service.persistence.FriendlyURLEntryMappingPersistence;
 import com.liferay.friendly.url.service.persistence.FriendlyURLEntryPersistence;
-import com.liferay.friendly.url.service.persistence.FriendlyURLMappingPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -627,22 +627,22 @@ public abstract class FriendlyURLEntryLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the friendly url mapping persistence.
+	 * Returns the friendly url entry mapping persistence.
 	 *
-	 * @return the friendly url mapping persistence
+	 * @return the friendly url entry mapping persistence
 	 */
-	public FriendlyURLMappingPersistence getFriendlyURLMappingPersistence() {
-		return friendlyURLMappingPersistence;
+	public FriendlyURLEntryMappingPersistence getFriendlyURLEntryMappingPersistence() {
+		return friendlyURLEntryMappingPersistence;
 	}
 
 	/**
-	 * Sets the friendly url mapping persistence.
+	 * Sets the friendly url entry mapping persistence.
 	 *
-	 * @param friendlyURLMappingPersistence the friendly url mapping persistence
+	 * @param friendlyURLEntryMappingPersistence the friendly url entry mapping persistence
 	 */
-	public void setFriendlyURLMappingPersistence(
-		FriendlyURLMappingPersistence friendlyURLMappingPersistence) {
-		this.friendlyURLMappingPersistence = friendlyURLMappingPersistence;
+	public void setFriendlyURLEntryMappingPersistence(
+		FriendlyURLEntryMappingPersistence friendlyURLEntryMappingPersistence) {
+		this.friendlyURLEntryMappingPersistence = friendlyURLEntryMappingPersistence;
 	}
 
 	/**
@@ -816,8 +816,8 @@ public abstract class FriendlyURLEntryLocalServiceBaseImpl
 	protected FriendlyURLEntryPersistence friendlyURLEntryPersistence;
 	@BeanReference(type = FriendlyURLEntryLocalizationPersistence.class)
 	protected FriendlyURLEntryLocalizationPersistence friendlyURLEntryLocalizationPersistence;
-	@BeanReference(type = FriendlyURLMappingPersistence.class)
-	protected FriendlyURLMappingPersistence friendlyURLMappingPersistence;
+	@BeanReference(type = FriendlyURLEntryMappingPersistence.class)
+	protected FriendlyURLEntryMappingPersistence friendlyURLEntryMappingPersistence;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)

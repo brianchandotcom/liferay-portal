@@ -49,7 +49,7 @@
 			<finder-column name="classPK" />
 		</finder>
 	</entity>
-	<entity local-service="false" name="FriendlyURLMapping" remote-service="false" uuid="false">
+	<entity local-service="false" name="FriendlyURLEntryMapping" remote-service="false" uuid="false">
 
 		<!-- PK fields -->
 
@@ -58,7 +58,7 @@
 
 		<!-- Other fields -->
 
-		<column name="friendlyURLId" type="long" />
+		<column name="friendlyURLEntryId" type="long" />
 	</entity>
 	<exceptions>
 		<exception>DuplicateFriendlyURLEntry</exception>

@@ -16,11 +16,18 @@ package com.liferay.commerce.cart.service.impl;
 
 import com.liferay.commerce.cart.model.CommerceCartItem;
 import com.liferay.commerce.cart.service.base.CommerceCartItemLocalServiceBaseImpl;
+import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
 
@@ -35,6 +42,8 @@ public class CommerceCartItemLocalServiceImpl
 			long commerceCartId, long cpDefinitionId, long cpInstanceId,
 			int quantity, String json, ServiceContext serviceContext)
 		throws PortalException {
+
+		validate(cpDefinitionId, cpInstanceId);
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
@@ -140,4 +149,19 @@ public class CommerceCartItemLocalServiceImpl
 		return commerceCartItem;
 	}
 
+	public void validate(long cpDefinitionId, long cpInstanceId)
+		throws PortalException {
+
+		_cpDefinitionLocalService.getCPDefinition(cpDefinitionId);
+
+		if(cpInstanceId > 0){
+			_cpInstanceLocalService.getCPInstance(cpInstanceId);
+		}
+	}
+
+	@ServiceReference(type = CPDefinitionLocalService.class)
+	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@ServiceReference(type = CPInstanceLocalService.class)
+	private CPInstanceLocalService _cpInstanceLocalService;
 }

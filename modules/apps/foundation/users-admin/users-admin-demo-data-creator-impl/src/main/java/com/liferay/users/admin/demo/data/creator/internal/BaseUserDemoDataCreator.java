@@ -198,7 +198,7 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 		boolean autoScreenName = Validator.isNull(screenName);
 		long facebookId = 0;
 		String openId = StringPool.BLANK;
-		Locale locale = LocaleUtil.SPAIN;
+		Locale locale = LocaleUtil.getDefault();
 		String middleName = StringPool.BLANK;
 		long prefixId = 0;
 		long suffixId = 0;

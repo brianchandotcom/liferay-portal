@@ -18,7 +18,7 @@
 				<execute function="AssertTextEquals" locator1="NavBar#ASSET_TITLE" value1="Data Definitions" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="Structures" />
+				<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="Data Definitions" />
 			</else>
 		</if>
 

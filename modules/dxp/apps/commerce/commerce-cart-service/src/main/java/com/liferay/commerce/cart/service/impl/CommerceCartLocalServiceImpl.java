@@ -95,7 +95,7 @@ public class CommerceCartLocalServiceImpl
 		long groupId, long userId, int type, String name) {
 
 		return commerceCartPersistence.fetchByG_U_N_T(
-			groupId, userId, type, name);
+			groupId, userId, name, type);
 	}
 
 	@Override

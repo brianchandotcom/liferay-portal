@@ -20,9 +20,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.roles.admin.demo.data.creator.RoleDemoDataCreator;
 import com.liferay.site.demo.data.creator.SiteDemoDataCreator;
+import com.liferay.users.admin.demo.data.creator.BasicUserDemoDataCreator;
 import com.liferay.users.admin.demo.data.creator.CompanyAdminUserDemoDataCreator;
 import com.liferay.users.admin.demo.data.creator.SiteAdminUserDemoDataCreator;
 import com.liferay.users.admin.demo.data.creator.SiteMemberUserDemoDataCreator;
@@ -41,6 +44,15 @@ public class UsersDemo extends BasePortalInstanceLifecycleListener {
 	public void portalInstanceRegistered(Company company) throws Exception {
 		_companyAdminUserDemoDataCreator.create(
 			company.getCompanyId(), "bruno@liferay.com");
+
+		User defaultUser = _basicUserDemoDataCreator.create(
+			company.getCompanyId(), "userea@liferay.com");
+
+		defaultUser.setFirstName("userfn");
+		defaultUser.setLastName("userln");
+		defaultUser.setScreenName("usersn");
+
+		_userLocalService.updateUser(defaultUser);
 
 		Group acmeCorpGroup = _siteDemoDataCreator.create(
 			company.getCompanyId(), "Acme’s Corporation");
@@ -89,6 +101,9 @@ public class UsersDemo extends BasePortalInstanceLifecycleListener {
 	}
 
 	@Reference
+	private BasicUserDemoDataCreator _basicUserDemoDataCreator;
+
+	@Reference
 	private CompanyAdminUserDemoDataCreator _companyAdminUserDemoDataCreator;
 
 	@Reference
@@ -102,5 +117,8 @@ public class UsersDemo extends BasePortalInstanceLifecycleListener {
 
 	@Reference(target = "(role.type=site)")
 	private RoleDemoDataCreator _siteRoleDemoDataCreator;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

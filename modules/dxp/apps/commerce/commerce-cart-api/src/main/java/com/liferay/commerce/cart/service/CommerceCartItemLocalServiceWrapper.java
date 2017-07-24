@@ -313,6 +313,12 @@ public class CommerceCartItemLocalServiceWrapper
 	}
 
 	@Override
+	public void validate(long cpDefinitionId, long cpInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_commerceCartItemLocalService.validate(cpDefinitionId, cpInstanceId);
+	}
+
+	@Override
 	public CommerceCartItemLocalService getWrappedService() {
 		return _commerceCartItemLocalService;
 	}

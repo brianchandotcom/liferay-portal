@@ -185,66 +185,66 @@ public interface CommerceCartPersistence extends BasePersistence<CommerceCart> {
 	public int countByG_T(long groupId, int type);
 
 	/**
-	* Returns the commerce cart where groupId = &#63; and userId = &#63; and type = &#63; and name = &#63; or throws a {@link NoSuchCartException} if it could not be found.
+	* Returns the commerce cart where groupId = &#63; and userId = &#63; and name = &#63; and type = &#63; or throws a {@link NoSuchCartException} if it could not be found.
 	*
 	* @param groupId the group ID
 	* @param userId the user ID
-	* @param type the type
 	* @param name the name
+	* @param type the type
 	* @return the matching commerce cart
 	* @throws NoSuchCartException if a matching commerce cart could not be found
 	*/
-	public CommerceCart findByG_U_T_N(long groupId, long userId, int type,
-		java.lang.String name) throws NoSuchCartException;
+	public CommerceCart findByG_U_N_T(long groupId, long userId,
+		java.lang.String name, int type) throws NoSuchCartException;
 
 	/**
-	* Returns the commerce cart where groupId = &#63; and userId = &#63; and type = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the commerce cart where groupId = &#63; and userId = &#63; and name = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param groupId the group ID
 	* @param userId the user ID
-	* @param type the type
 	* @param name the name
+	* @param type the type
 	* @return the matching commerce cart, or <code>null</code> if a matching commerce cart could not be found
 	*/
-	public CommerceCart fetchByG_U_T_N(long groupId, long userId, int type,
-		java.lang.String name);
+	public CommerceCart fetchByG_U_N_T(long groupId, long userId,
+		java.lang.String name, int type);
 
 	/**
-	* Returns the commerce cart where groupId = &#63; and userId = &#63; and type = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the commerce cart where groupId = &#63; and userId = &#63; and name = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param groupId the group ID
 	* @param userId the user ID
-	* @param type the type
 	* @param name the name
+	* @param type the type
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching commerce cart, or <code>null</code> if a matching commerce cart could not be found
 	*/
-	public CommerceCart fetchByG_U_T_N(long groupId, long userId, int type,
-		java.lang.String name, boolean retrieveFromCache);
+	public CommerceCart fetchByG_U_N_T(long groupId, long userId,
+		java.lang.String name, int type, boolean retrieveFromCache);
 
 	/**
-	* Removes the commerce cart where groupId = &#63; and userId = &#63; and type = &#63; and name = &#63; from the database.
+	* Removes the commerce cart where groupId = &#63; and userId = &#63; and name = &#63; and type = &#63; from the database.
 	*
 	* @param groupId the group ID
 	* @param userId the user ID
-	* @param type the type
 	* @param name the name
+	* @param type the type
 	* @return the commerce cart that was removed
 	*/
-	public CommerceCart removeByG_U_T_N(long groupId, long userId, int type,
-		java.lang.String name) throws NoSuchCartException;
+	public CommerceCart removeByG_U_N_T(long groupId, long userId,
+		java.lang.String name, int type) throws NoSuchCartException;
 
 	/**
-	* Returns the number of commerce carts where groupId = &#63; and userId = &#63; and type = &#63; and name = &#63;.
+	* Returns the number of commerce carts where groupId = &#63; and userId = &#63; and name = &#63; and type = &#63;.
 	*
 	* @param groupId the group ID
 	* @param userId the user ID
-	* @param type the type
 	* @param name the name
+	* @param type the type
 	* @return the number of matching commerce carts
 	*/
-	public int countByG_U_T_N(long groupId, long userId, int type,
-		java.lang.String name);
+	public int countByG_U_N_T(long groupId, long userId, java.lang.String name,
+		int type);
 
 	/**
 	* Caches the commerce cart in the entity cache if it is enabled.

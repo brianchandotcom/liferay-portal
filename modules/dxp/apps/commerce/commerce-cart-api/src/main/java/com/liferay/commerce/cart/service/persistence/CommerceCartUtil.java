@@ -281,79 +281,79 @@ public class CommerceCartUtil {
 	}
 
 	/**
-	* Returns the commerce cart where groupId = &#63; and userId = &#63; and type = &#63; and name = &#63; or throws a {@link NoSuchCartException} if it could not be found.
+	* Returns the commerce cart where groupId = &#63; and userId = &#63; and name = &#63; and type = &#63; or throws a {@link NoSuchCartException} if it could not be found.
 	*
 	* @param groupId the group ID
 	* @param userId the user ID
-	* @param type the type
 	* @param name the name
+	* @param type the type
 	* @return the matching commerce cart
 	* @throws NoSuchCartException if a matching commerce cart could not be found
 	*/
-	public static CommerceCart findByG_U_T_N(long groupId, long userId,
-		int type, java.lang.String name)
+	public static CommerceCart findByG_U_N_T(long groupId, long userId,
+		java.lang.String name, int type)
 		throws com.liferay.commerce.cart.exception.NoSuchCartException {
-		return getPersistence().findByG_U_T_N(groupId, userId, type, name);
+		return getPersistence().findByG_U_N_T(groupId, userId, name, type);
 	}
 
 	/**
-	* Returns the commerce cart where groupId = &#63; and userId = &#63; and type = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the commerce cart where groupId = &#63; and userId = &#63; and name = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param groupId the group ID
 	* @param userId the user ID
-	* @param type the type
 	* @param name the name
+	* @param type the type
 	* @return the matching commerce cart, or <code>null</code> if a matching commerce cart could not be found
 	*/
-	public static CommerceCart fetchByG_U_T_N(long groupId, long userId,
-		int type, java.lang.String name) {
-		return getPersistence().fetchByG_U_T_N(groupId, userId, type, name);
+	public static CommerceCart fetchByG_U_N_T(long groupId, long userId,
+		java.lang.String name, int type) {
+		return getPersistence().fetchByG_U_N_T(groupId, userId, name, type);
 	}
 
 	/**
-	* Returns the commerce cart where groupId = &#63; and userId = &#63; and type = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the commerce cart where groupId = &#63; and userId = &#63; and name = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param groupId the group ID
 	* @param userId the user ID
-	* @param type the type
 	* @param name the name
+	* @param type the type
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching commerce cart, or <code>null</code> if a matching commerce cart could not be found
 	*/
-	public static CommerceCart fetchByG_U_T_N(long groupId, long userId,
-		int type, java.lang.String name, boolean retrieveFromCache) {
+	public static CommerceCart fetchByG_U_N_T(long groupId, long userId,
+		java.lang.String name, int type, boolean retrieveFromCache) {
 		return getPersistence()
-				   .fetchByG_U_T_N(groupId, userId, type, name,
+				   .fetchByG_U_N_T(groupId, userId, name, type,
 			retrieveFromCache);
 	}
 
 	/**
-	* Removes the commerce cart where groupId = &#63; and userId = &#63; and type = &#63; and name = &#63; from the database.
+	* Removes the commerce cart where groupId = &#63; and userId = &#63; and name = &#63; and type = &#63; from the database.
 	*
 	* @param groupId the group ID
 	* @param userId the user ID
-	* @param type the type
 	* @param name the name
+	* @param type the type
 	* @return the commerce cart that was removed
 	*/
-	public static CommerceCart removeByG_U_T_N(long groupId, long userId,
-		int type, java.lang.String name)
+	public static CommerceCart removeByG_U_N_T(long groupId, long userId,
+		java.lang.String name, int type)
 		throws com.liferay.commerce.cart.exception.NoSuchCartException {
-		return getPersistence().removeByG_U_T_N(groupId, userId, type, name);
+		return getPersistence().removeByG_U_N_T(groupId, userId, name, type);
 	}
 
 	/**
-	* Returns the number of commerce carts where groupId = &#63; and userId = &#63; and type = &#63; and name = &#63;.
+	* Returns the number of commerce carts where groupId = &#63; and userId = &#63; and name = &#63; and type = &#63;.
 	*
 	* @param groupId the group ID
 	* @param userId the user ID
-	* @param type the type
 	* @param name the name
+	* @param type the type
 	* @return the number of matching commerce carts
 	*/
-	public static int countByG_U_T_N(long groupId, long userId, int type,
-		java.lang.String name) {
-		return getPersistence().countByG_U_T_N(groupId, userId, type, name);
+	public static int countByG_U_N_T(long groupId, long userId,
+		java.lang.String name, int type) {
+		return getPersistence().countByG_U_N_T(groupId, userId, name, type);
 	}
 
 	/**

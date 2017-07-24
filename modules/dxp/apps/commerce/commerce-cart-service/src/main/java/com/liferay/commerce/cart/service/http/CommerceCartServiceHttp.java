@@ -143,12 +143,40 @@ public class CommerceCartServiceHttp {
 		}
 	}
 
+	public static com.liferay.commerce.cart.model.CommerceCart fetchCommerceCart(
+		HttpPrincipal httpPrincipal, long groupId, long userId, int type,
+		java.lang.String name) {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceCartServiceUtil.class,
+					"fetchCommerceCart", _fetchCommerceCartParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					userId, type, name);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.cart.model.CommerceCart)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.commerce.cart.model.CommerceCart getCommerceCart(
 		HttpPrincipal httpPrincipal, long commerceCartId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceCartServiceUtil.class,
-					"getCommerceCart", _getCommerceCartParameterTypes3);
+					"getCommerceCart", _getCommerceCartParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceCartId);
@@ -181,7 +209,7 @@ public class CommerceCartServiceHttp {
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.cart.model.CommerceCart> orderByComparator) {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceCartServiceUtil.class,
-					"getCommerceCarts", _getCommerceCartsParameterTypes4);
+					"getCommerceCarts", _getCommerceCartsParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					type, start, end, orderByComparator);
@@ -209,7 +237,7 @@ public class CommerceCartServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceCartServiceUtil.class,
 					"getCommerceCartsCount",
-					_getCommerceCartsCountParameterTypes5);
+					_getCommerceCartsCountParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					type);
@@ -232,34 +260,6 @@ public class CommerceCartServiceHttp {
 		}
 	}
 
-	public static com.liferay.commerce.cart.model.CommerceCart fetchCommerceCart(
-		HttpPrincipal httpPrincipal, long groupId, long userId, int type,
-		java.lang.String name) {
-		try {
-			MethodKey methodKey = new MethodKey(CommerceCartServiceUtil.class,
-					"fetchCommerceCart", _fetchCommerceCartParameterTypes6);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					userId, type, name);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (com.liferay.commerce.cart.model.CommerceCart)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(CommerceCartServiceHttp.class);
 	private static final Class<?>[] _addCommerceCartParameterTypes0 = new Class[] {
 			java.lang.String.class, int.class,
@@ -271,17 +271,17 @@ public class CommerceCartServiceHttp {
 	private static final Class<?>[] _fetchCommerceCartParameterTypes2 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getCommerceCartParameterTypes3 = new Class[] {
+	private static final Class<?>[] _fetchCommerceCartParameterTypes3 = new Class[] {
+			long.class, long.class, int.class, java.lang.String.class
+		};
+	private static final Class<?>[] _getCommerceCartParameterTypes4 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getCommerceCartsParameterTypes4 = new Class[] {
+	private static final Class<?>[] _getCommerceCartsParameterTypes5 = new Class[] {
 			long.class, int.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getCommerceCartsCountParameterTypes5 = new Class[] {
+	private static final Class<?>[] _getCommerceCartsCountParameterTypes6 = new Class[] {
 			long.class, int.class
-		};
-	private static final Class<?>[] _fetchCommerceCartParameterTypes6 = new Class[] {
-			long.class, long.class, int.class, java.lang.String.class
 		};
 }

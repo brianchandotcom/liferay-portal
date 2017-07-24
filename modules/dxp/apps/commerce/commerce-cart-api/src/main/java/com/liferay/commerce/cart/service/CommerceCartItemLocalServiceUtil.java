@@ -293,6 +293,11 @@ public class CommerceCartItemLocalServiceUtil {
 		getService().deleteCommerceCartItems(commerceCartId);
 	}
 
+	public static void validate(long cpDefinitionId, long cpInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().validate(cpDefinitionId, cpInstanceId);
+	}
+
 	public static CommerceCartItemLocalService getService() {
 		return _serviceTracker.getService();
 	}

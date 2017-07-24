@@ -176,14 +176,14 @@ public class CommerceCartPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_U_T_N() throws Exception {
-		_persistence.countByG_U_T_N(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt(),
-			StringPool.BLANK);
+	public void testCountByG_U_N_T() throws Exception {
+		_persistence.countByG_U_N_T(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), StringPool.BLANK,
+			RandomTestUtil.nextInt());
 
-		_persistence.countByG_U_T_N(0L, 0L, 0, StringPool.NULL);
+		_persistence.countByG_U_N_T(0L, 0L, StringPool.NULL, 0);
 
-		_persistence.countByG_U_T_N(0L, 0L, 0, (String)null);
+		_persistence.countByG_U_N_T(0L, 0L, (String)null, 0);
 	}
 
 	@Test
@@ -423,12 +423,12 @@ public class CommerceCartPersistenceTest {
 		Assert.assertEquals(Long.valueOf(existingCommerceCart.getUserId()),
 			ReflectionTestUtil.<Long>invoke(existingCommerceCart,
 				"getOriginalUserId", new Class<?>[0]));
-		Assert.assertEquals(Integer.valueOf(existingCommerceCart.getType()),
-			ReflectionTestUtil.<Integer>invoke(existingCommerceCart,
-				"getOriginalType", new Class<?>[0]));
 		Assert.assertTrue(Objects.equals(existingCommerceCart.getName(),
 				ReflectionTestUtil.invoke(existingCommerceCart,
 					"getOriginalName", new Class<?>[0])));
+		Assert.assertEquals(Integer.valueOf(existingCommerceCart.getType()),
+			ReflectionTestUtil.<Integer>invoke(existingCommerceCart,
+				"getOriginalType", new Class<?>[0]));
 	}
 
 	protected CommerceCart addCommerceCart() throws Exception {

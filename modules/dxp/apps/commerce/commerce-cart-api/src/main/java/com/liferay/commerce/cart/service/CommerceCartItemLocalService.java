@@ -254,4 +254,7 @@ public interface CommerceCartItemLocalService extends BaseLocalService,
 
 	public void deleteCommerceCartItems(long commerceCartId)
 		throws PortalException;
+
+	public void validate(long cpDefinitionId, long cpInstanceId)
+		throws PortalException;
 }

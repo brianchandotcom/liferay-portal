@@ -89,8 +89,8 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "markNotificationsAsRead();" %>' icon="check" label="mark-as-read" />
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "markNotificationsAsUnread();" %>' icon="undo" label="mark-as-unread" />
+		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "markNotificationsAsRead();" %>' icon="envelope-open" label="mark-as-read" />
+		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "markNotificationsAsUnread();" %>' icon="envelope-closed" label="mark-as-unread" />
 		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "delete();" %>' icon="times" label="delete" />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>

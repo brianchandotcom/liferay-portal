@@ -18,6 +18,9 @@ import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
+
 import java.text.Collator;
 import java.text.ParseException;
 import java.text.RuleBasedCollator;
@@ -41,6 +44,20 @@ public class CollatorUtil {
 
 			if (Validator.isNull(rules)) {
 				rules = StringPool.BLANK;
+			}
+			else if (rules.startsWith("file:")) {
+				try {
+					try (InputStream is = new FileInputStream(
+							rules.substring(5))) {
+
+						rules = StringUtil.read(is);
+					}
+				}
+				catch (Exception e) {
+					_log.error(e, e);
+
+					rules = StringPool.BLANK;
+				}
 			}
 
 			_rules.put(locale, rules);

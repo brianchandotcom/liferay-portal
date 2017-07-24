@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.roles.admin.demo.data.creator.RoleDemoDataCreator;
 import com.liferay.site.demo.data.creator.SiteDemoDataCreator;
+import com.liferay.users.admin.demo.data.creator.BasicUserDemoDataCreator;
 import com.liferay.users.admin.demo.data.creator.CompanyAdminUserDemoDataCreator;
 import com.liferay.users.admin.demo.data.creator.SiteAdminUserDemoDataCreator;
 import com.liferay.users.admin.demo.data.creator.SiteMemberUserDemoDataCreator;
@@ -39,6 +40,10 @@ public class UsersDemo extends BasePortalInstanceLifecycleListener {
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
+		_basicUserDemoDataCreator.create(
+			company.getCompanyId(), "usersn", "userea@liferay.com", "userfn",
+			"userln");
+
 		_companyAdminUserDemoDataCreator.create(
 			company.getCompanyId(), "bruno@liferay.com");
 
@@ -80,6 +85,7 @@ public class UsersDemo extends BasePortalInstanceLifecycleListener {
 
 	@Deactivate
 	protected void deactivate() throws PortalException {
+		_basicUserDemoDataCreator.delete();
 		_companyAdminUserDemoDataCreator.delete();
 		_siteAdminUserDemoDataCreator.delete();
 		_siteMemberUserDemoDataCreator.delete();
@@ -87,6 +93,9 @@ public class UsersDemo extends BasePortalInstanceLifecycleListener {
 		_siteDemoDataCreator.delete();
 		_siteRoleDemoDataCreator.delete();
 	}
+
+	@Reference
+	private BasicUserDemoDataCreator _basicUserDemoDataCreator;
 
 	@Reference
 	private CompanyAdminUserDemoDataCreator _companyAdminUserDemoDataCreator;

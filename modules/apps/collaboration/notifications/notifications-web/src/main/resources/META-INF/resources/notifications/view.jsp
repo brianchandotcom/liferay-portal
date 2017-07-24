@@ -62,7 +62,7 @@ int userNotificationEventsCount = UserNotificationEventLocalServiceUtil.getDeliv
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "markAsRead();" %>' icon="times" label="mark-as-read" />
+		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "markNotificationsAsRead();" %>' icon="times" label="mark-as-read" />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
@@ -95,12 +95,12 @@ int userNotificationEventsCount = UserNotificationEventLocalServiceUtil.getDeliv
 </div>
 
 <aui:script>
-	function <portlet:namespace />markAsRead() {
+	function <portlet:namespace />markNotificationsAsRead() {
 		var form = AUI.$(document.<portlet:namespace />fm);
 
 		form.attr('method', 'post');
 
-		submitForm(form, '<portlet:actionURL name="markAllAsRead" />');
+		submitForm(form, '<portlet:actionURL name="markNotificationsAsRead" />');
 	}
 </aui:script>
 

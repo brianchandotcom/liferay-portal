@@ -91,11 +91,11 @@ public class RMIMultiVMEhcachePortalCacheManagerConfigurator
 
 		_peerListenerFactoryClass = props.get(
 			PropsKeys.EHCACHE_RMI_PEER_LISTENER_FACTORY_CLASS);
-		_peerListenerFactoryPropertiesString = props.get(
+		_peerListenerFactoryPropertiesString = getPortalPropertiesString(
 			PropsKeys.EHCACHE_RMI_PEER_LISTENER_FACTORY_PROPERTIES);
 		_peerProviderFactoryClass = props.get(
 			PropsKeys.EHCACHE_RMI_PEER_PROVIDER_FACTORY_CLASS);
-		_peerProviderFactoryPropertiesString = props.get(
+		_peerProviderFactoryPropertiesString = getPortalPropertiesString(
 			PropsKeys.EHCACHE_RMI_PEER_PROVIDER_FACTORY_PROPERTIES);
 	}
 

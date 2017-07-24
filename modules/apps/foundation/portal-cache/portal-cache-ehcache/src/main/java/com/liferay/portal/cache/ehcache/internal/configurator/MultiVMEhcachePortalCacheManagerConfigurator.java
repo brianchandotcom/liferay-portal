@@ -19,6 +19,7 @@ import com.liferay.portal.cache.configuration.PortalCacheConfiguration;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -51,14 +52,37 @@ public class MultiVMEhcachePortalCacheManagerConfigurator
 			true);
 		clusterEnabled = GetterUtil.getBoolean(
 			props.get(PropsKeys.CLUSTER_LINK_ENABLED));
-		_defaultBootstrapLoaderPropertiesString = props.get(
+		_defaultBootstrapLoaderPropertiesString = getPortalPropertiesString(
 			PropsKeys.EHCACHE_BOOTSTRAP_CACHE_LOADER_PROPERTIES_DEFAULT);
-		_defaultReplicatorPropertiesString = props.get(
+		_defaultReplicatorPropertiesString = getPortalPropertiesString(
 			PropsKeys.EHCACHE_CLUSTER_LINK_REPLICATOR_PROPERTIES_DEFAULT);
 		_replicatorProperties = props.getProperties(
 			PropsKeys.EHCACHE_CLUSTER_LINK_REPLICATOR_PROPERTIES +
 				StringPool.PERIOD,
 			true);
+	}
+
+	protected String getPortalPropertiesString(String portalPropertyKey) {
+		String[] array = props.getArray(portalPropertyKey);
+
+		if (array.length == 0) {
+			return null;
+		}
+
+		if (array.length == 1) {
+			return array[0];
+		}
+
+		StringBundler sb = new StringBundler(array.length * 2);
+
+		for (int i = 0; i < array.length; i++) {
+			sb.append(array[i]);
+			sb.append(StringPool.COMMA);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		return sb.toString();
 	}
 
 	@Override

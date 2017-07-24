@@ -45,7 +45,7 @@ public class UsersDemo extends BasePortalInstanceLifecycleListener {
 			"userln");
 
 		_companyAdminUserDemoDataCreator.create(
-			company.getCompanyId(), "bruno@liferay.com");
+			company.getCompanyId(), "bruno.admin@liferay.com");
 
 		Group acmeCorpGroup = _siteDemoDataCreator.create(
 			company.getCompanyId(), "Acme’s Corporation");

@@ -285,8 +285,6 @@ trustStorePath=${solr.dir}/server/etc/solr-ssl.keystore.jks</echo>
 			</then>
 		</if>
 
-		<antcall target="start-solr-core" />
-
 		<get-testcase-property property.name="solr.logging.info.level" />
 
 		<if>
@@ -295,6 +293,8 @@ trustStorePath=${solr.dir}/server/etc/solr-ssl.keystore.jks</echo>
 				<configure-solr-logging />
 			</then>
 		</if>
+
+		<antcall target="start-solr-core" />
 
 		<create-solr-core />
 

@@ -29,12 +29,14 @@ import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.portlet.bridge.soy.internal.SoyPortletHelper;
+import com.liferay.portal.template.soy.utils.SoyContext;
 import com.liferay.portal.template.soy.utils.SoyTemplateResourcesProvider;
 
 import java.io.IOException;
 import java.io.Writer;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -183,21 +185,29 @@ public class SoyPortlet extends MVCPortlet {
 	protected void propagateRequestParameters(PortletRequest portletRequest)
 		throws PortletException {
 
-		Map<String, String[]> parametersMap = portletRequest.getParameterMap();
+		Map<String, Object> soyContextParametersMap = new HashMap<>();
 
-		Template template = getTemplate(portletRequest);
+		Map<String, String[]> parametersMap = portletRequest.getParameterMap();
 
 		for (Map.Entry<String, String[]> entry : parametersMap.entrySet()) {
 			String parameterName = entry.getKey();
 			String[] parameterValues = entry.getValue();
 
 			if (parameterValues.length == 1) {
-				template.put(parameterName, parameterValues[0]);
+				soyContextParametersMap.put(parameterName, parameterValues[0]);
 			}
 			else if (parameterValues.length > 1) {
-				template.put(parameterName, parameterValues);
+				soyContextParametersMap.put(parameterName, parameterValues);
 			}
 		}
+
+		SoyContext soyContext = new SoyContext();
+
+		soyContext.putInjectedData("requestParams", soyContextParametersMap);
+
+		Template template = getTemplate(portletRequest);
+
+		template.putAll(soyContext);
 	}
 
 	protected boolean propagateRequestParameters;

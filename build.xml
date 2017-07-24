@@ -105,6 +105,8 @@ message.
 
 			<ant dir="sql" inheritAll="false" target="clean" />
 
+			<delete dir="jacoco" />
+
 			<sequential>
 				<delete dir="${sdk.dir}" />
 

@@ -42,6 +42,7 @@
 /classes/Test.class
 /dist
 /intellij
+/jacoco
 /lib/development/activation.jar
 /lib/development/alloy-taglib.jar
 /lib/development/annotations.jar
@@ -63,6 +64,10 @@
 /lib/development/hamcrest-library.jar
 /lib/development/hsql.jar
 /lib/development/j2h.jar
+/lib/development/jacocoagent.jar
+/lib/development/jacocoant.jar
+/lib/development/jacococore.jar
+/lib/development/jacocoreport.jar
 /lib/development/jalopy.jar
 /lib/development/jargs.jar
 /lib/development/jarjar.jar

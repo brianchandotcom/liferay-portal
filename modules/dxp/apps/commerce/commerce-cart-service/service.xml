@@ -39,11 +39,11 @@
 			<finder-column name="groupId" />
 			<finder-column name="type" />
 		</finder>
-		<finder name="G_U_T_N" return-type="CommerceCart" unique="true">
+		<finder name="G_U_N_T" return-type="CommerceCart" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="userId" />
-			<finder-column name="type" />
 			<finder-column name="name" />
+			<finder-column name="type" />
 		</finder>
 
 		<!-- References -->

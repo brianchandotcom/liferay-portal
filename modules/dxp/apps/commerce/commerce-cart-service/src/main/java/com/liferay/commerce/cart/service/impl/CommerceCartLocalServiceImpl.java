@@ -94,7 +94,7 @@ public class CommerceCartLocalServiceImpl
 	public CommerceCart fetchCommerceCart(
 		long groupId, long userId, int type, String name) {
 
-		return commerceCartPersistence.fetchByG_U_T_N(
+		return commerceCartPersistence.fetchByG_U_N_T(
 			groupId, userId, type, name);
 	}
 

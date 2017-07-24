@@ -1771,7 +1771,13 @@ and `writeArtifactPublishCommands` tasks.
 ## 4.0.12 - 2017-07-24
 
 ### Changed
+- [LPS-73353]: Add the JaCoCo Java Agent only to the `test` task if the system
+or project property `junit.code.coverage` is set to `true`.
 - [LPS-73353]: Update the [Liferay Gradle Plugins] dependency to version 3.4.13.
+
+### Removed
+- [LPS-73353]: The `jacoco.code.coverage` system property is no longer
+available.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public

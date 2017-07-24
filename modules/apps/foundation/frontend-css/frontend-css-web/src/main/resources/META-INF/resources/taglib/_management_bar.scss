@@ -10,6 +10,10 @@
 .management-bar-container {
 	position: relative;
 
+	.dropdown-backdrop {
+		position: relative;
+	}
+
 	.management-bar {
 		padding: 0;
 

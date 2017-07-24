@@ -131,6 +131,10 @@ public class PoshiRunnerContext {
 		return _rootElements.get("macro#" + className);
 	}
 
+	public static String getNamespace(String filePath) {
+		return _filePathToNamespace.get(filePath);
+	}
+
 	public static String getPathLocator(String pathLocatorKey) {
 		return getPathLocator(pathLocatorKey, _defaultNamespace);
 	}

@@ -1,4 +1,5 @@
 create table FriendlyURLEntry (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	friendlyURLEntryId LONG not null primary key,
 	groupId LONG,
@@ -23,6 +24,7 @@ create table FriendlyURLEntryLocalization (
 );
 
 create table FriendlyURLEntryMapping (
+	mvccVersion LONG default 0 not null,
 	classNameId LONG not null,
 	classPK LONG not null,
 	friendlyURLEntryId LONG,

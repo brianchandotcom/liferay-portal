@@ -60,6 +60,7 @@ public class FriendlyURLEntryMappingModelImpl extends BaseModelImpl<FriendlyURLE
 	 */
 	public static final String TABLE_NAME = "FriendlyURLEntryMapping";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "mvccVersion", Types.BIGINT },
 			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
 			{ "friendlyURLEntryId", Types.BIGINT }
@@ -67,12 +68,13 @@ public class FriendlyURLEntryMappingModelImpl extends BaseModelImpl<FriendlyURLE
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("friendlyURLEntryId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table FriendlyURLEntryMapping (classNameId LONG not null,classPK LONG not null,friendlyURLEntryId LONG,primary key (classNameId, classPK))";
+	public static final String TABLE_SQL_CREATE = "create table FriendlyURLEntryMapping (mvccVersion LONG default 0 not null,classNameId LONG not null,classPK LONG not null,friendlyURLEntryId LONG,primary key (classNameId, classPK))";
 	public static final String TABLE_SQL_DROP = "drop table FriendlyURLEntryMapping";
 	public static final String ORDER_BY_JPQL = " ORDER BY friendlyURLEntryMapping.id.classNameId ASC, friendlyURLEntryMapping.id.classPK ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY FriendlyURLEntryMapping.classNameId ASC, FriendlyURLEntryMapping.classPK ASC";
@@ -127,6 +129,7 @@ public class FriendlyURLEntryMappingModelImpl extends BaseModelImpl<FriendlyURLE
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("friendlyURLEntryId", getFriendlyURLEntryId());
@@ -139,6 +142,12 @@ public class FriendlyURLEntryMappingModelImpl extends BaseModelImpl<FriendlyURLE
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long classNameId = (Long)attributes.get("classNameId");
 
 		if (classNameId != null) {
@@ -156,6 +165,16 @@ public class FriendlyURLEntryMappingModelImpl extends BaseModelImpl<FriendlyURLE
 		if (friendlyURLEntryId != null) {
 			setFriendlyURLEntryId(friendlyURLEntryId);
 		}
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -222,6 +241,7 @@ public class FriendlyURLEntryMappingModelImpl extends BaseModelImpl<FriendlyURLE
 	public Object clone() {
 		FriendlyURLEntryMappingImpl friendlyURLEntryMappingImpl = new FriendlyURLEntryMappingImpl();
 
+		friendlyURLEntryMappingImpl.setMvccVersion(getMvccVersion());
 		friendlyURLEntryMappingImpl.setClassNameId(getClassNameId());
 		friendlyURLEntryMappingImpl.setClassPK(getClassPK());
 		friendlyURLEntryMappingImpl.setFriendlyURLEntryId(getFriendlyURLEntryId());
@@ -285,6 +305,8 @@ public class FriendlyURLEntryMappingModelImpl extends BaseModelImpl<FriendlyURLE
 
 		friendlyURLEntryMappingCacheModel.friendlyURLEntryMappingPK = getPrimaryKey();
 
+		friendlyURLEntryMappingCacheModel.mvccVersion = getMvccVersion();
+
 		friendlyURLEntryMappingCacheModel.classNameId = getClassNameId();
 
 		friendlyURLEntryMappingCacheModel.classPK = getClassPK();
@@ -296,9 +318,11 @@ public class FriendlyURLEntryMappingModelImpl extends BaseModelImpl<FriendlyURLE
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
-		sb.append("{classNameId=");
+		sb.append("{mvccVersion=");
+		sb.append(getMvccVersion());
+		sb.append(", classNameId=");
 		sb.append(getClassNameId());
 		sb.append(", classPK=");
 		sb.append(getClassPK());
@@ -311,12 +335,16 @@ public class FriendlyURLEntryMappingModelImpl extends BaseModelImpl<FriendlyURLE
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(16);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.friendly.url.model.FriendlyURLEntryMapping");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
+		sb.append(getMvccVersion());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
 		sb.append(getClassNameId());
@@ -339,6 +367,7 @@ public class FriendlyURLEntryMappingModelImpl extends BaseModelImpl<FriendlyURLE
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			FriendlyURLEntryMapping.class
 		};
+	private long _mvccVersion;
 	private long _classNameId;
 	private long _classPK;
 	private long _friendlyURLEntryId;

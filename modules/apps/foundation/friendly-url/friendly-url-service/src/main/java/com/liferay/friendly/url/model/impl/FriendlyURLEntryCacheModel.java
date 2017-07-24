@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -39,7 +40,7 @@ import java.util.Date;
  */
 @ProviderType
 public class FriendlyURLEntryCacheModel implements CacheModel<FriendlyURLEntry>,
-	Externalizable {
+	Externalizable, MVCCModel {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -52,7 +53,8 @@ public class FriendlyURLEntryCacheModel implements CacheModel<FriendlyURLEntry>,
 
 		FriendlyURLEntryCacheModel friendlyURLEntryCacheModel = (FriendlyURLEntryCacheModel)obj;
 
-		if (friendlyURLEntryId == friendlyURLEntryCacheModel.friendlyURLEntryId) {
+		if ((friendlyURLEntryId == friendlyURLEntryCacheModel.friendlyURLEntryId) &&
+				(mvccVersion == friendlyURLEntryCacheModel.mvccVersion)) {
 			return true;
 		}
 
@@ -61,14 +63,28 @@ public class FriendlyURLEntryCacheModel implements CacheModel<FriendlyURLEntry>,
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, friendlyURLEntryId);
+		int hashCode = HashUtil.hash(0, friendlyURLEntryId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", friendlyURLEntryId=");
 		sb.append(friendlyURLEntryId);
@@ -94,6 +110,8 @@ public class FriendlyURLEntryCacheModel implements CacheModel<FriendlyURLEntry>,
 	@Override
 	public FriendlyURLEntry toEntityModel() {
 		FriendlyURLEntryImpl friendlyURLEntryImpl = new FriendlyURLEntryImpl();
+
+		friendlyURLEntryImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			friendlyURLEntryImpl.setUuid(StringPool.BLANK);
@@ -137,6 +155,7 @@ public class FriendlyURLEntryCacheModel implements CacheModel<FriendlyURLEntry>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		friendlyURLEntryId = objectInput.readLong();
@@ -156,6 +175,8 @@ public class FriendlyURLEntryCacheModel implements CacheModel<FriendlyURLEntry>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -183,6 +204,7 @@ public class FriendlyURLEntryCacheModel implements CacheModel<FriendlyURLEntry>,
 		}
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public long friendlyURLEntryId;
 	public long groupId;

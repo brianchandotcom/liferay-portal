@@ -23,6 +23,7 @@ import com.liferay.friendly.url.service.persistence.FriendlyURLEntryMappingPK;
 import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
@@ -42,7 +43,7 @@ import java.io.Serializable;
  */
 @ProviderType
 public interface FriendlyURLEntryMappingModel extends AttachedModel,
-	BaseModel<FriendlyURLEntryMapping> {
+	BaseModel<FriendlyURLEntryMapping>, MVCCModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -62,6 +63,22 @@ public interface FriendlyURLEntryMappingModel extends AttachedModel,
 	 * @param primaryKey the primary key of this friendly url entry mapping
 	 */
 	public void setPrimaryKey(FriendlyURLEntryMappingPK primaryKey);
+
+	/**
+	 * Returns the mvcc version of this friendly url entry mapping.
+	 *
+	 * @return the mvcc version of this friendly url entry mapping
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this friendly url entry mapping.
+	 *
+	 * @param mvccVersion the mvcc version of this friendly url entry mapping
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the fully qualified class name of this friendly url entry mapping.

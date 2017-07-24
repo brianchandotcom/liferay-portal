@@ -2506,6 +2506,7 @@ public class FriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<Friendl
 		friendlyURLEntryImpl.setNew(friendlyURLEntry.isNew());
 		friendlyURLEntryImpl.setPrimaryKey(friendlyURLEntry.getPrimaryKey());
 
+		friendlyURLEntryImpl.setMvccVersion(friendlyURLEntry.getMvccVersion());
 		friendlyURLEntryImpl.setUuid(friendlyURLEntry.getUuid());
 		friendlyURLEntryImpl.setFriendlyURLEntryId(friendlyURLEntry.getFriendlyURLEntryId());
 		friendlyURLEntryImpl.setGroupId(friendlyURLEntry.getGroupId());

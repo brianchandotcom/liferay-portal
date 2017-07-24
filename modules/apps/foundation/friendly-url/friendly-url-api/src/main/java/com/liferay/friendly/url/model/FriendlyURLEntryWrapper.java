@@ -60,6 +60,7 @@ public class FriendlyURLEntryWrapper implements FriendlyURLEntry,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("friendlyURLEntryId", getFriendlyURLEntryId());
 		attributes.put("groupId", getGroupId());
@@ -75,6 +76,12 @@ public class FriendlyURLEntryWrapper implements FriendlyURLEntry,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -243,6 +250,16 @@ public class FriendlyURLEntryWrapper implements FriendlyURLEntry,
 	@Override
 	public Date getModifiedDate() {
 		return _friendlyURLEntry.getModifiedDate();
+	}
+
+	/**
+	* Returns the mvcc version of this friendly url entry.
+	*
+	* @return the mvcc version of this friendly url entry
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _friendlyURLEntry.getMvccVersion();
 	}
 
 	/**
@@ -426,6 +443,16 @@ public class FriendlyURLEntryWrapper implements FriendlyURLEntry,
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_friendlyURLEntry.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	* Sets the mvcc version of this friendly url entry.
+	*
+	* @param mvccVersion the mvcc version of this friendly url entry
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_friendlyURLEntry.setMvccVersion(mvccVersion);
 	}
 
 	@Override

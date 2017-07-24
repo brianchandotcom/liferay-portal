@@ -67,6 +67,11 @@ public class MarkAsReadPortletConfigurationIcon
 		portletURL.setParameter(
 			ActionRequest.ACTION_NAME, "markAllNotificationsAsRead");
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+
 		return portletURL.toString();
 	}
 

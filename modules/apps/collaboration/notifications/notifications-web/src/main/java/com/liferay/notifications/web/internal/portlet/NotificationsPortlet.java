@@ -106,6 +106,8 @@ public class NotificationsPortlet extends MVCPortlet {
 			LanguageUtil.get(
 				resourceBundle,
 				"all-notifications-were-marked-as-read-successfully"));
+
+		_setRedirect(actionRequest, actionResponse);
 	}
 
 	public void markNotificationAsRead(

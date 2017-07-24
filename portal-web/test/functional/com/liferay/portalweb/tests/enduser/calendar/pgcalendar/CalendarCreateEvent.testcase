@@ -91,6 +91,7 @@
 
 	<command name="AddAllDay" priority="5">
 		<property name="portal.acceptance" value="true" />
+		<property name="test.name.skip.portal.instance" value="CalendarCreateEvent#AddAllDay" />
 
 		<execute macro="CalendarNavigator#gotoAddEvent" />
 
@@ -645,6 +646,7 @@
 
 	<command name="AddRepeatingMonthly2Times" priority="5">
 		<property name="portal.acceptance" value="true" />
+		<property name="test.name.skip.portal.instance" value="CalendarCreateEvent#AddRepeatingMonthly2Times" />
 
 		<execute macro="CalendarNavigator#gotoAddEvent" />
 

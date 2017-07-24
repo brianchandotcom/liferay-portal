@@ -102,6 +102,11 @@ public class CommerceCartLocalServiceUtil {
 		return getService().fetchCommerceCart(commerceCartId);
 	}
 
+	public static com.liferay.commerce.cart.model.CommerceCart fetchCommerceCart(
+		long groupId, long userId, int type, java.lang.String name) {
+		return getService().fetchCommerceCart(groupId, userId, type, name);
+	}
+
 	/**
 	* Returns the commerce cart with the primary key.
 	*

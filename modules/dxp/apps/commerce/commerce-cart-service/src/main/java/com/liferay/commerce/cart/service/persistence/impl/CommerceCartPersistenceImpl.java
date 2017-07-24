@@ -54,6 +54,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -632,6 +633,308 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 
 	private static final String _FINDER_COLUMN_G_T_GROUPID_2 = "commerceCart.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_T_TYPE_2 = "commerceCart.type = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_G_U_T_N = new FinderPath(CommerceCartModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceCartModelImpl.FINDER_CACHE_ENABLED, CommerceCartImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByG_U_T_N",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(), String.class.getName()
+			},
+			CommerceCartModelImpl.GROUPID_COLUMN_BITMASK |
+			CommerceCartModelImpl.USERID_COLUMN_BITMASK |
+			CommerceCartModelImpl.TYPE_COLUMN_BITMASK |
+			CommerceCartModelImpl.NAME_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_U_T_N = new FinderPath(CommerceCartModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceCartModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_U_T_N",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(), String.class.getName()
+			});
+
+	/**
+	 * Returns the commerce cart where groupId = &#63; and userId = &#63; and type = &#63; and name = &#63; or throws a {@link NoSuchCartException} if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param type the type
+	 * @param name the name
+	 * @return the matching commerce cart
+	 * @throws NoSuchCartException if a matching commerce cart could not be found
+	 */
+	@Override
+	public CommerceCart findByG_U_T_N(long groupId, long userId, int type,
+		String name) throws NoSuchCartException {
+		CommerceCart commerceCart = fetchByG_U_T_N(groupId, userId, type, name);
+
+		if (commerceCart == null) {
+			StringBundler msg = new StringBundler(10);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("groupId=");
+			msg.append(groupId);
+
+			msg.append(", userId=");
+			msg.append(userId);
+
+			msg.append(", type=");
+			msg.append(type);
+
+			msg.append(", name=");
+			msg.append(name);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchCartException(msg.toString());
+		}
+
+		return commerceCart;
+	}
+
+	/**
+	 * Returns the commerce cart where groupId = &#63; and userId = &#63; and type = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param type the type
+	 * @param name the name
+	 * @return the matching commerce cart, or <code>null</code> if a matching commerce cart could not be found
+	 */
+	@Override
+	public CommerceCart fetchByG_U_T_N(long groupId, long userId, int type,
+		String name) {
+		return fetchByG_U_T_N(groupId, userId, type, name, true);
+	}
+
+	/**
+	 * Returns the commerce cart where groupId = &#63; and userId = &#63; and type = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param type the type
+	 * @param name the name
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching commerce cart, or <code>null</code> if a matching commerce cart could not be found
+	 */
+	@Override
+	public CommerceCart fetchByG_U_T_N(long groupId, long userId, int type,
+		String name, boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { groupId, userId, type, name };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_G_U_T_N,
+					finderArgs, this);
+		}
+
+		if (result instanceof CommerceCart) {
+			CommerceCart commerceCart = (CommerceCart)result;
+
+			if ((groupId != commerceCart.getGroupId()) ||
+					(userId != commerceCart.getUserId()) ||
+					(type != commerceCart.getType()) ||
+					!Objects.equals(name, commerceCart.getName())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(6);
+
+			query.append(_SQL_SELECT_COMMERCECART_WHERE);
+
+			query.append(_FINDER_COLUMN_G_U_T_N_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_U_T_N_USERID_2);
+
+			query.append(_FINDER_COLUMN_G_U_T_N_TYPE_2);
+
+			boolean bindName = false;
+
+			if (name == null) {
+				query.append(_FINDER_COLUMN_G_U_T_N_NAME_1);
+			}
+			else if (name.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_U_T_N_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				query.append(_FINDER_COLUMN_G_U_T_N_NAME_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(userId);
+
+				qPos.add(type);
+
+				if (bindName) {
+					qPos.add(name);
+				}
+
+				List<CommerceCart> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(FINDER_PATH_FETCH_BY_G_U_T_N,
+						finderArgs, list);
+				}
+				else {
+					CommerceCart commerceCart = list.get(0);
+
+					result = commerceCart;
+
+					cacheResult(commerceCart);
+
+					if ((commerceCart.getGroupId() != groupId) ||
+							(commerceCart.getUserId() != userId) ||
+							(commerceCart.getType() != type) ||
+							(commerceCart.getName() == null) ||
+							!commerceCart.getName().equals(name)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_G_U_T_N,
+							finderArgs, commerceCart);
+					}
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_G_U_T_N,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (CommerceCart)result;
+		}
+	}
+
+	/**
+	 * Removes the commerce cart where groupId = &#63; and userId = &#63; and type = &#63; and name = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param type the type
+	 * @param name the name
+	 * @return the commerce cart that was removed
+	 */
+	@Override
+	public CommerceCart removeByG_U_T_N(long groupId, long userId, int type,
+		String name) throws NoSuchCartException {
+		CommerceCart commerceCart = findByG_U_T_N(groupId, userId, type, name);
+
+		return remove(commerceCart);
+	}
+
+	/**
+	 * Returns the number of commerce carts where groupId = &#63; and userId = &#63; and type = &#63; and name = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param type the type
+	 * @param name the name
+	 * @return the number of matching commerce carts
+	 */
+	@Override
+	public int countByG_U_T_N(long groupId, long userId, int type, String name) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_U_T_N;
+
+		Object[] finderArgs = new Object[] { groupId, userId, type, name };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(5);
+
+			query.append(_SQL_COUNT_COMMERCECART_WHERE);
+
+			query.append(_FINDER_COLUMN_G_U_T_N_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_U_T_N_USERID_2);
+
+			query.append(_FINDER_COLUMN_G_U_T_N_TYPE_2);
+
+			boolean bindName = false;
+
+			if (name == null) {
+				query.append(_FINDER_COLUMN_G_U_T_N_NAME_1);
+			}
+			else if (name.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_U_T_N_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				query.append(_FINDER_COLUMN_G_U_T_N_NAME_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(userId);
+
+				qPos.add(type);
+
+				if (bindName) {
+					qPos.add(name);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_U_T_N_GROUPID_2 = "commerceCart.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_U_T_N_USERID_2 = "commerceCart.userId = ? AND ";
+	private static final String _FINDER_COLUMN_G_U_T_N_TYPE_2 = "commerceCart.type = ? AND ";
+	private static final String _FINDER_COLUMN_G_U_T_N_NAME_1 = "commerceCart.name IS NULL";
+	private static final String _FINDER_COLUMN_G_U_T_N_NAME_2 = "commerceCart.name = ?";
+	private static final String _FINDER_COLUMN_G_U_T_N_NAME_3 = "(commerceCart.name IS NULL OR commerceCart.name = '')";
 
 	public CommerceCartPersistenceImpl() {
 		setModelClass(CommerceCart.class);
@@ -662,6 +965,12 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 	public void cacheResult(CommerceCart commerceCart) {
 		entityCache.putResult(CommerceCartModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceCartImpl.class, commerceCart.getPrimaryKey(), commerceCart);
+
+		finderCache.putResult(FINDER_PATH_FETCH_BY_G_U_T_N,
+			new Object[] {
+				commerceCart.getGroupId(), commerceCart.getUserId(),
+				commerceCart.getType(), commerceCart.getName()
+			}, commerceCart);
 
 		commerceCart.resetOriginalValues();
 	}
@@ -715,6 +1024,8 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache((CommerceCartModelImpl)commerceCart, true);
 	}
 
 	@Override
@@ -725,6 +1036,50 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 		for (CommerceCart commerceCart : commerceCarts) {
 			entityCache.removeResult(CommerceCartModelImpl.ENTITY_CACHE_ENABLED,
 				CommerceCartImpl.class, commerceCart.getPrimaryKey());
+
+			clearUniqueFindersCache((CommerceCartModelImpl)commerceCart, true);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(
+		CommerceCartModelImpl commerceCartModelImpl) {
+		Object[] args = new Object[] {
+				commerceCartModelImpl.getGroupId(),
+				commerceCartModelImpl.getUserId(),
+				commerceCartModelImpl.getType(), commerceCartModelImpl.getName()
+			};
+
+		finderCache.putResult(FINDER_PATH_COUNT_BY_G_U_T_N, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_G_U_T_N, args,
+			commerceCartModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		CommerceCartModelImpl commerceCartModelImpl, boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					commerceCartModelImpl.getGroupId(),
+					commerceCartModelImpl.getUserId(),
+					commerceCartModelImpl.getType(),
+					commerceCartModelImpl.getName()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_U_T_N, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_U_T_N, args);
+		}
+
+		if ((commerceCartModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_G_U_T_N.getColumnBitmask()) != 0) {
+			Object[] args = new Object[] {
+					commerceCartModelImpl.getOriginalGroupId(),
+					commerceCartModelImpl.getOriginalUserId(),
+					commerceCartModelImpl.getOriginalType(),
+					commerceCartModelImpl.getOriginalName()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_U_T_N, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_U_T_N, args);
 		}
 	}
 
@@ -928,6 +1283,9 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 		entityCache.putResult(CommerceCartModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceCartImpl.class, commerceCart.getPrimaryKey(), commerceCart,
 			false);
+
+		clearUniqueFindersCache(commerceCartModelImpl, false);
+		cacheUniqueFindersCache(commerceCartModelImpl);
 
 		commerceCart.resetOriginalValues();
 

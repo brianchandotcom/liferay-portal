@@ -112,8 +112,10 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 				"value.object.column.bitmask.enabled.com.liferay.commerce.cart.model.CommerceCart"),
 			true);
 	public static final long GROUPID_COLUMN_BITMASK = 1L;
-	public static final long TYPE_COLUMN_BITMASK = 2L;
-	public static final long CREATEDATE_COLUMN_BITMASK = 4L;
+	public static final long NAME_COLUMN_BITMASK = 2L;
+	public static final long TYPE_COLUMN_BITMASK = 4L;
+	public static final long USERID_COLUMN_BITMASK = 8L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -327,6 +329,14 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 
 	@Override
 	public void setUserId(long userId) {
+		_columnBitmask |= USERID_COLUMN_BITMASK;
+
+		if (!_setOriginalUserId) {
+			_setOriginalUserId = true;
+
+			_originalUserId = _userId;
+		}
+
 		_userId = userId;
 	}
 
@@ -344,6 +354,10 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 
 	@Override
 	public void setUserUuid(String userUuid) {
+	}
+
+	public long getOriginalUserId() {
+		return _originalUserId;
 	}
 
 	@JSON
@@ -405,7 +419,17 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 
 	@Override
 	public void setName(String name) {
+		_columnBitmask |= NAME_COLUMN_BITMASK;
+
+		if (_originalName == null) {
+			_originalName = _name;
+		}
+
 		_name = name;
+	}
+
+	public String getOriginalName() {
+		return GetterUtil.getString(_originalName);
 	}
 
 	@JSON
@@ -535,7 +559,13 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 
 		commerceCartModelImpl._setOriginalGroupId = false;
 
+		commerceCartModelImpl._originalUserId = commerceCartModelImpl._userId;
+
+		commerceCartModelImpl._setOriginalUserId = false;
+
 		commerceCartModelImpl._setModifiedDate = false;
+
+		commerceCartModelImpl._originalName = commerceCartModelImpl._name;
 
 		commerceCartModelImpl._originalType = commerceCartModelImpl._type;
 
@@ -682,11 +712,14 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 	private boolean _setOriginalGroupId;
 	private long _companyId;
 	private long _userId;
+	private long _originalUserId;
+	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private String _name;
+	private String _originalName;
 	private int _type;
 	private int _originalType;
 	private boolean _setOriginalType;

@@ -53,6 +53,11 @@ public class CommerceCartServiceUtil {
 		return getService().fetchCommerceCart(commerceCartId);
 	}
 
+	public static com.liferay.commerce.cart.model.CommerceCart fetchCommerceCart(
+		long groupId, long userId, int type, java.lang.String name) {
+		return getService().fetchCommerceCart(groupId, userId, type, name);
+	}
+
 	public static com.liferay.commerce.cart.model.CommerceCart getCommerceCart(
 		long commerceCartId)
 		throws com.liferay.portal.kernel.exception.PortalException {

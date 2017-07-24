@@ -100,6 +100,13 @@ public class CommerceCartLocalServiceWrapper implements CommerceCartLocalService
 		return _commerceCartLocalService.fetchCommerceCart(commerceCartId);
 	}
 
+	@Override
+	public com.liferay.commerce.cart.model.CommerceCart fetchCommerceCart(
+		long groupId, long userId, int type, java.lang.String name) {
+		return _commerceCartLocalService.fetchCommerceCart(groupId, userId,
+			type, name);
+	}
+
 	/**
 	* Returns the commerce cart with the primary key.
 	*

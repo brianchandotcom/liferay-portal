@@ -107,6 +107,10 @@ public interface CommerceCartLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceCart fetchCommerceCart(long commerceCartId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceCart fetchCommerceCart(long groupId, long userId, int type,
+		java.lang.String name);
+
 	/**
 	* Returns the commerce cart with the primary key.
 	*

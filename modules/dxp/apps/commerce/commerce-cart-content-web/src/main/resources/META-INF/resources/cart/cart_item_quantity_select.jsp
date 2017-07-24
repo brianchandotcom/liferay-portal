@@ -15,3 +15,19 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+
+<%
+ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+
+CommerceCartItem commerceCartItem = (CommerceCartItem)row.getObject();
+%>
+
+<portlet:actionURL name="editCommerceCartItem" var="editCommerceCartItemURL">
+	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+	<portlet:param name="commerceCartItemId" value="<%= String.valueOf(commerceCartItem.getCommerceCartItemId()) %>" />
+</portlet:actionURL>
+
+<aui:input bean="<%= commerceCartItem %>" label="<%= StringPool.BLANK %>" name="quantity" />
+
+<aui:button href="<%= editCommerceCartItemURL %>" name="refreshQuantity" type="submit" value="refresh" />

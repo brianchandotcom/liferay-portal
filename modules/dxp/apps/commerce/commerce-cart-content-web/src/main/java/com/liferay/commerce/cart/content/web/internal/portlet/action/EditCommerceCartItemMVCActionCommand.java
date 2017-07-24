@@ -16,6 +16,7 @@ package com.liferay.commerce.cart.content.web.internal.portlet.action;
 
 import com.liferay.commerce.cart.constants.CommerceCartPortletKeys;
 import com.liferay.commerce.cart.exception.NoSuchCartItemException;
+import com.liferay.commerce.cart.model.CommerceCartItem;
 import com.liferay.commerce.cart.service.CommerceCartItemService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -51,13 +52,24 @@ public class EditCommerceCartItemMVCActionCommand extends BaseMVCActionCommand {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
+		long commerceCartItemId = ParamUtil.getLong(
+			actionRequest, "commerceCartItemId");
+
 		try {
 			if (cmd.equals(Constants.DELETE)) {
-				long commerceCartItemId = ParamUtil.getLong(
-					actionRequest, "commerceCartItemId");
-
 				_commerceCartItemService.deleteCommerceCartItem(
 					commerceCartItemId);
+			}
+			else if (cmd.equals(Constants.UPDATE)) {
+				int quantity = ParamUtil.getInteger(actionRequest, "quantity");
+
+				CommerceCartItem commerceCartItem =
+					_commerceCartItemService.getCommerceCartItem(
+						commerceCartItemId);
+
+				_commerceCartItemService.updateCommerceCartItem(
+					commerceCartItem.getCommerceCartItemId(), quantity,
+					commerceCartItem.getJson());
 			}
 		}
 		catch (Exception e) {

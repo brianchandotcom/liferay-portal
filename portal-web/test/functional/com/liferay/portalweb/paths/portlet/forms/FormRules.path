@@ -45,11 +45,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>RULE_BUILDER_SELECT_RULE_CONDITION</td>
-	<td>//ul[@class='dropdown-menu']//li[contains(.,'${key_condition}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>RULE_BUILDER_CONDITION_FIELD</td>
 	<td>//li[contains(@class,'rule-condition-container')][${key_conditionRowNumber}]//div[contains(@id,'condition-first') and contains(@class,'select-field-trigger')]</td>
 	<td></td>

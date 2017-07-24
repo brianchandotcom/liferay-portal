@@ -154,17 +154,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--TASKS_UPDATE_MENULIST-->
-<tr>
-	<td>TASKS_UPDATE_MENULIST_RESUBMIT</td>
-	<td>//ul[contains(@class,'dropdown-menu')]//li/a[contains(.,'Resubmit')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ACTIVITIES-->
 <tr>
 	<td>ACTIVITIES_PANEL_COLLAPSED</td>

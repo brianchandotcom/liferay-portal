@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>ACTIONS_DROPDOWN_PERMISSIONS</td>
-	<td>//ul[contains(@class,'dropdown-menu')]//span[contains(.,'Permissions')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CHOICE_FIELD</td>
 	<td>//input[contains(@id,'choiceDescription${key_choiceField}')]</td>
 	<td></td>

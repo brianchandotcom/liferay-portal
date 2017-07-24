@@ -17,6 +17,7 @@ package com.liferay.commerce.cart.util;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.cart.model.CommerceCart;
+import com.liferay.portal.kernel.exception.PortalException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,12 +28,14 @@ import javax.servlet.http.HttpServletResponse;
 @ProviderType
 public interface CommerceCartHelper {
 
-	public CommerceCart getCurrentCart(HttpServletRequest httpServletRequest);
+	public CommerceCart getCurrentCart(HttpServletRequest httpServletRequest)
+		throws PortalException;
 
 	public CommerceCart getCurrentCart(
-		HttpServletRequest httpServletRequest, int type);
+			HttpServletRequest httpServletRequest, int type)
+		throws PortalException;
 
-	public void updateCookie(
+	public void updateCurrentCart(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, long commerceCartId);
 

@@ -160,7 +160,7 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 			function(key) {
 				var field = A.one('[name="<portlet:namespace />' + key + '"]');
 
-				if ((field.attr('type') === 'checkbox') || (field.attr('type') === 'radio')) {
+				if (field && ((field.attr('type') === 'checkbox') || (field.attr('type') === 'radio'))) {
 					field = A.one('[name="<portlet:namespace />' + key + '"]:checked');
 
 					fieldsMap[key] = '';
@@ -182,6 +182,18 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 
 		var field = A.one('[name="<portlet:namespace />' + key + '"]');
 
+		if (field && (field.attr('type') === 'radio')) {
+			var uncheckedOptions = A.all('[name="<portlet:namespace />' + key + '"]:not(:checked)');
+
+			uncheckedOptions.each(
+				function(option) {
+					option.removeAttribute('aria-invalid');
+				}
+			);
+
+			field = A.one('[name="<portlet:namespace />' + key + '"]:checked');
+		}
+
 		var currentFieldValue = fieldsMap[key];
 
 		var optionalFieldError = A.one('#<portlet:namespace />fieldOptionalError' + key);
@@ -199,7 +211,9 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 				optionalFieldError.replace(optionalFieldError);
 			}
 
-			field.attr('aria-invalid', true);
+			if (field) {
+				field.attr('aria-invalid', true);
+			}
 		}
 		else if (!fieldValidationFunctions[key](currentFieldValue, fieldsMap)) {
 			A.all('.alert-success').hide();
@@ -213,7 +227,9 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 				validationError.replace(validationError);
 			}
 
-			field.attr('aria-invalid', true);
+			if (field) {
+				field.attr('aria-invalid', true);
+			}
 		}
 		else {
 			if (optionalFieldError) {
@@ -224,7 +240,9 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 				validationError.hide();
 			}
 
-			field.attr('aria-invalid', false);
+			if (field) {
+				field.attr('aria-invalid', false);
+			}
 
 			return true;
 		}
@@ -275,17 +293,23 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 
 	keys.forEach(
 		function(key) {
-			var field = A.one('[name="<portlet:namespace />' + key + '"]');
+			var fields = A.all('[name="<portlet:namespace />' + key + '"]');
 
-			field.on(
-				'blur',
-				function(event) {
-					if (!validateField(key)) {
-						event.halt();
-						event.stopImmediatePropagation();
+			var addOnBlurFieldValidation = function(field) {
+				field.on(
+					'blur',
+					function(event) {
+						if (!validateField(key)) {
+							event.halt();
+							event.stopImmediatePropagation();
+						}
 					}
-				});
-		});
+				);
+			};
+
+			fields.each(addOnBlurFieldValidation);
+		}
+	);
 
 	var form = A.one('#<portlet:namespace />fm');
 

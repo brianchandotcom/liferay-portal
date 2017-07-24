@@ -8,6 +8,7 @@
 			<condition function="IsElementPresent" locator1="MenuItem#ANY_MENU_ITEM">
 				<var name="key_menuItem" value="Folder" />
 			</condition>
+
 			<then>
 				<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Folder">
 					<var name="key_menuItem" value="Folder" />

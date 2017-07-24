@@ -197,7 +197,9 @@
 
 		<execute function="Click" locator1="FormRules#RULE_BUILDER_RULE_CONDITION_DROPDOWN" />
 
-		<execute function="AssertClick" locator1="FormRules#RULE_BUILDER_SELECT_RULE_CONDITION" value1="${condition}" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${condition}">
+			<var name="key_menuItem" value="${condition}" />
+		</execute>
 	</command>
 
 	<command name="viewActionSummary">

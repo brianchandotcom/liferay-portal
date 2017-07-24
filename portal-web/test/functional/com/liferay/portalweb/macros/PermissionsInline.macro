@@ -170,7 +170,9 @@
 
 		<execute function="Click" locator1="Polls#POLLS_TABLE_ACTION" />
 
-		<execute function="AssertClick" locator1="Polls#ACTIONS_DROPDOWN_PERMISSIONS" value1="Permissions" />
+		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
+			<var name="key_menuItem" value="Permissions" />
+		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 	</command>

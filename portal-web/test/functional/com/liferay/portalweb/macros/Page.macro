@@ -711,7 +711,9 @@
 
 		<var name="key_sitePagesVariationName" value="${sitePagesVariationName}" />
 
-		<execute function="Click" locator1="SitePages#STAGING_SITE_PAGES_VARIATION_MENULIST_VARIATION_NAME" value1="${sitePagesVariationName}" />
+		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="${sitePagesVariationName}">
+			<var name="key_menuItem" value="${sitePagesVariationName}" />
+		</execute>
 	</command>
 
 	<command name="tearDownPG" summary="Delete all pages except the Welcome Page">

@@ -160,7 +160,9 @@
 
 		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#FIELD_SET_MENULIST_CHOOSE" value1="Choose" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Choose">
+			<var name="key_menuItem" value="Choose" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#SELECTED_FIELD_SET" value1="${kfFieldSetName}" />
 	</command>
@@ -206,7 +208,9 @@
 
 		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#WORKFLOW_MENULIST_CHOOSE" value1="Choose" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Choose">
+			<var name="key_menuItem" value="Choose" />
+		</execute>
 
 		<execute macro="KaleoFormsAdmin#viewSelectedWorkflow">
 			<var name="edit" value="${edit}" />
@@ -218,7 +222,10 @@
 		<var name="key_rowEntry" value="${workflowDefinitionTitle}" />
 
 		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-		<execute function="AssertClickNoError" locator1="KaleoFormsAdminEditProcess#WORKFLOW_MENULIST_DEACTIVATE" value1="Deactivate" />
+		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Deactivate">
+			<var name="key_menuItem" value="Deactivate" />
+		</execute>
+
 		<execute function="Confirm" value1="Are you sure you want to deactivate this?" />
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
@@ -261,7 +268,10 @@
 
 		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClickNoError" locator1="KaleoFormsAdminEditProcessForm#FORM_MENULIST_DELETE" value1="Delete" />
+		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
+			<var name="key_menuItem" value="Delete" />
+		</execute>
+
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
 		<execute macro="Alert#viewSuccessMessage" />
@@ -280,7 +290,10 @@
 			</else>
 		</if>
 
-		<execute function="AssertClickNoError" locator1="KaleoFormsAdmin#PROCESS_MENULIST_DELETE" value1="Delete" />
+		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
+			<var name="key_menuItem" value="Delete" />
+		</execute>
+
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
 		<if>
@@ -314,7 +327,10 @@
 		<var name="key_rowEntry" value="${workflowDefinitionTitle}" />
 
 		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-		<execute function="AssertClickNoError" locator1="KaleoFormsAdminEditProcess#WORKFLOW_UNPUBLISHED_MENULIST_DELETE" value1="Delete" />
+		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
+			<var name="key_menuItem" value="Delete" />
+		</execute>
+
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
@@ -329,7 +345,9 @@
 		<var name="key_rowEntry" value="${kfFieldSetName}" />
 
 		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#FIELD_SET_MENULIST_EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
 
 		<var name="key_iframeTitle" value="Field Set" />
 
@@ -345,7 +363,10 @@
 
 		<var name="key_paginationNumber" value="${paginationNumber}" />
 
-		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#FIELD_SET_PAGINATION_MENULIST_NUMBER" value1="${paginationNumber}" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${paginationNumber} Entries">
+			<var name="key_menuItem" value="${paginationNumber} Entries" />
+		</execute>
+
 		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#FIELD_SET_PAGINATION_SELECTOR_BUTTON" value1="${paginationNumber} Entries" />
 	</command>
 
@@ -358,7 +379,9 @@
 
 		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcessForm#FORM_MENULIST_EDIT" value1="Edit Form" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit Form">
+			<var name="key_menuItem" value="Edit Form" />
+		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
@@ -375,7 +398,9 @@
 		<var name="key_rowEntry" value="${kfProcessName}" />
 
 		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-		<execute function="AssertClick" locator1="KaleoFormsAdmin#PROCESS_MENULIST_EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
 	</command>
 
 	<command name="editProcessDetails">
@@ -421,7 +446,9 @@
 
 		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#WORKFLOW_MENULIST_EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
@@ -439,7 +466,9 @@
 
 		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#WORKFLOW_UNPUBLISHED_MENULIST_EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
 	</command>
 
 	<command name="exportRecords">
@@ -714,7 +743,9 @@
 
 		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcessForm#FORM_MENULIST_EDIT" value1="Edit Form" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit Form">
+			<var name="key_menuItem" value="Edit Form" />
+		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
@@ -868,7 +899,9 @@
 		<var name="key_rowEntry" value="${kfProcessName}" />
 
 		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-		<execute function="AssertClick" locator1="KaleoFormsAdmin#PROCESS_MENULIST_VIEW" value1="View" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="View">
+			<var name="key_menuItem" value="View" />
+		</execute>
 	</command>
 
 	<command name="viewProcessRecordDetails">

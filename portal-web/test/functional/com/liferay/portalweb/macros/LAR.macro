@@ -500,7 +500,9 @@
 			<var name="key_rowEntry" value="${larFileName}" />
 		</execute>
 
-		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_ACTIONS_MENULIST_CLEAR" />
+		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM">
+			<var name="key_menuItem" value="Clear" />
+		</execute>
 	</command>
 
 	<command name="downloadLar">
@@ -699,7 +701,9 @@
 		<var name="key_rowEntry" value="${larFileName}" />
 
 		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_ACTIONS_MENULIST_RELAUNCH" />
+		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM">
+			<var name="key_menuItem" value="Relaunch" />
+		</execute>
 	</command>
 
 	<command name="saveExportTemplateCP">

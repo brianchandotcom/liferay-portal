@@ -73,7 +73,9 @@
 			<then>
 				<execute function="Click" locator1="Configuration#SCOPE_SELECT" />
 
-				<execute function="Click" locator1="APConfiguration#SOURCE_CURRENT_SCOPE_NAME" />
+				<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM">
+					<var name="key_menuItem" value="Current Site" />
+				</execute>
 			</then>
 		</if>
 

@@ -45,6 +45,10 @@ public class ChainingCheck extends AbstractCheck {
 		_allowedMethodNames = StringUtil.split(allowedMethodNames);
 	}
 
+	public void setAllowedVariableTypeNames(String allowedVariableTypeNames) {
+		_allowedVariableTypeNames = StringUtil.split(allowedVariableTypeNames);
+	}
+
 	@Override
 	public void visitToken(DetailAST detailAST) {
 		List<DetailAST> methodCallASTList = DetailASTUtil.getAllChildTokens(
@@ -243,18 +247,17 @@ public class ChainingCheck extends AbstractCheck {
 
 		String classOrVariableName = nameAST.getText();
 
-		if (classOrVariableName.matches(".*[Bb]uilder") ||
-			classOrVariableName.equals("Mockito") ||
-			classOrVariableName.equals("RestAssured")) {
-
-			return true;
+		for (String allowedClassName : _allowedClassNames) {
+			if (classOrVariableName.matches(allowedClassName)) {
+				return true;
+			}
 		}
 
 		String variableType = _getVariableType(detailAST, classOrVariableName);
 
 		if (variableType != null) {
-			for (String allowedClassName : _allowedClassNames) {
-				if (variableType.matches(allowedClassName)) {
+			for (String allowedVariableTypeName : _allowedVariableTypeNames) {
+				if (variableType.matches(allowedVariableTypeName)) {
 					return true;
 				}
 			}
@@ -299,5 +302,6 @@ public class ChainingCheck extends AbstractCheck {
 
 	private String[] _allowedClassNames = new String[0];
 	private String[] _allowedMethodNames = new String[0];
+	private String[] _allowedVariableTypeNames = new String[0];
 
 }

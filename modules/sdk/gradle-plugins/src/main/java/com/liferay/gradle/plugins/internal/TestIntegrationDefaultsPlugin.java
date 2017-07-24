@@ -97,7 +97,7 @@ public class TestIntegrationDefaultsPlugin
 		setUpTestableTomcatTask.setJaCoCoAgentConfiguration(
 			GradleUtil.getProperty(
 				project, "jacoco.agent.configuration", (String)null));
-		setUpTestableTomcatTask.setJaCoCoAgentJar(
+		setUpTestableTomcatTask.setJaCoCoAgentFile(
 			GradleUtil.getProperty(project, "jacoco.agent.jar", (String)null));
 
 		setUpTestableTomcatTask.setZipUrl(

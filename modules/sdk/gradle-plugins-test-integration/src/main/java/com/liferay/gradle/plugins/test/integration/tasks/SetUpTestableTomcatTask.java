@@ -133,8 +133,8 @@ public class SetUpTestableTomcatTask
 
 	@Input
 	@Optional
-	public File getJaCoCoAgentJar() {
-		return GradleUtil.toFile(getProject(), _jaCoCoAgentJar);
+	public File getJaCoCoAgentFile() {
+		return GradleUtil.toFile(getProject(), _jaCoCoAgentFile);
 	}
 
 	@Input
@@ -206,8 +206,8 @@ public class SetUpTestableTomcatTask
 		_jaCoCoAgentConfiguration = jaCoCoAgentConfiguration;
 	}
 
-	public void setJaCoCoAgentJar(Object jaCoCoAgentJar) {
-		_jaCoCoAgentJar = jaCoCoAgentJar;
+	public void setJaCoCoAgentFile(Object jaCoCoAgentFile) {
+		_jaCoCoAgentFile = jaCoCoAgentFile;
 	}
 
 	public void setJmxRemoteAuthenticate(boolean jmxRemoteAuthenticate) {
@@ -319,17 +319,16 @@ public class SetUpTestableTomcatTask
 	}
 
 	private void _setUpJaCoCo() throws IOException {
-		File targetJaCoCoAgentJar = new File(getDir(), "bin/jacocoagent.jar");
+		File jaCoCoAgentFile = getJaCoCoAgentFile();
+		File targetJaCoCoAgentFile = new File(getDir(), "bin/jacocoagent.jar");
 
-		if ((_jaCoCoAgentJar != null) && !targetJaCoCoAgentJar.exists()) {
-			File sourceJaCoCoAgentJar = getJaCoCoAgentJar();
-
+		if ((jaCoCoAgentFile != null) && !targetJaCoCoAgentFile.exists()) {
 			Files.copy(
-				sourceJaCoCoAgentJar.toPath(), targetJaCoCoAgentJar.toPath());
+				jaCoCoAgentFile.toPath(), targetJaCoCoAgentFile.toPath());
 		}
 
 		String jaCoCoJvmArg =
-			"-javaagent:" + targetJaCoCoAgentJar.getAbsolutePath();
+			"-javaagent:" + targetJaCoCoAgentFile.getAbsolutePath();
 
 		if (_jaCoCoAgentConfiguration != null) {
 			jaCoCoJvmArg += _jaCoCoAgentConfiguration;
@@ -579,7 +578,7 @@ public class SetUpTestableTomcatTask
 	private boolean _debugLogging;
 	private Object _dir;
 	private Object _jaCoCoAgentConfiguration;
-	private Object _jaCoCoAgentJar;
+	private Object _jaCoCoAgentFile;
 	private boolean _jmxRemoteAuthenticate;
 	private Object _jmxRemotePort;
 	private boolean _jmxRemoteSsl;

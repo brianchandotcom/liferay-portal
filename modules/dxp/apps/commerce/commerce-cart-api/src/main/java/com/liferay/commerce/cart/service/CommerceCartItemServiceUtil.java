@@ -57,6 +57,13 @@ public class CommerceCartItemServiceUtil {
 		return getService().getCommerceCartItem(commerceCartItemId);
 	}
 
+	public static com.liferay.commerce.cart.model.CommerceCartItem updateCommerceCartItem(
+		long commerceCartItemId, int quantity, java.lang.String json)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCommerceCartItem(commerceCartItemId, quantity, json);
+	}
+
 	public static int getCommerceCartItemsCount(long commerceCartId) {
 		return getService().getCommerceCartItemsCount(commerceCartId);
 	}

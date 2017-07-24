@@ -157,5 +157,21 @@ public class CommerceCartItemServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.cart.model.CommerceCartItemSoap updateCommerceCartItem(
+		long commerceCartItemId, int quantity, java.lang.String json)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.cart.model.CommerceCartItem returnValue = CommerceCartItemServiceUtil.updateCommerceCartItem(commerceCartItemId,
+					quantity, json);
+
+			return com.liferay.commerce.cart.model.CommerceCartItemSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(CommerceCartItemServiceSoap.class);
 }

@@ -51,6 +51,14 @@ public class CommerceCartItemServiceWrapper implements CommerceCartItemService,
 	}
 
 	@Override
+	public com.liferay.commerce.cart.model.CommerceCartItem updateCommerceCartItem(
+		long commerceCartItemId, int quantity, java.lang.String json)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceCartItemService.updateCommerceCartItem(commerceCartItemId,
+			quantity, json);
+	}
+
+	@Override
 	public int getCommerceCartItemsCount(long commerceCartId) {
 		return _commerceCartItemService.getCommerceCartItemsCount(commerceCartId);
 	}

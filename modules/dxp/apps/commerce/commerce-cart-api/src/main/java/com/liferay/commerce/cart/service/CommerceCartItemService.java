@@ -65,6 +65,9 @@ public interface CommerceCartItemService extends BaseService {
 	public CommerceCartItem getCommerceCartItem(long commerceCartItemId)
 		throws PortalException;
 
+	public CommerceCartItem updateCommerceCartItem(long commerceCartItemId,
+		int quantity, java.lang.String json) throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceCartItemsCount(long commerceCartId);
 

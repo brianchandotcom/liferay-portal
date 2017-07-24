@@ -234,6 +234,40 @@ public class CommerceCartItemServiceHttp {
 		}
 	}
 
+	public static com.liferay.commerce.cart.model.CommerceCartItem updateCommerceCartItem(
+		HttpPrincipal httpPrincipal, long commerceCartItemId, int quantity,
+		java.lang.String json)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceCartItemServiceUtil.class,
+					"updateCommerceCartItem",
+					_updateCommerceCartItemParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					commerceCartItemId, quantity, json);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.cart.model.CommerceCartItem)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(CommerceCartItemServiceHttp.class);
 	private static final Class<?>[] _addCommerceCartItemParameterTypes0 = new Class[] {
 			long.class, long.class, long.class, int.class,
@@ -255,5 +289,8 @@ public class CommerceCartItemServiceHttp {
 		};
 	private static final Class<?>[] _getCommerceCartItemsCountParameterTypes5 = new Class[] {
 			long.class
+		};
+	private static final Class<?>[] _updateCommerceCartItemParameterTypes6 = new Class[] {
+			long.class, int.class, java.lang.String.class
 		};
 }

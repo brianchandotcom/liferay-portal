@@ -27,9 +27,17 @@ file during the execution of a `SetUpTestableTomcatTask` instance.
 `SetUpTestableTomcatTask` instance.
 
 ### Removed
-- [LPS-73525]: Remove the `SetUpTestableTomcatTask`'s `catalinaOptsReplacements` property.
+- [LPS-73525]: Remove the `SetUpTestableTomcatTask`'s `catalinaOptsReplacements`
+property.
+
+## 2.1.0 - 2017-07-24
+
+### Added
+- [LPS-73353]: Add the ability to configure the JaCoCo Java Agent in the
+`setenv.sh` file during the execution of a `SetUpTestableTomcatTask` instance.
 
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
 [LPS-69492]: https://issues.liferay.com/browse/LPS-69492
 [LPS-72365]: https://issues.liferay.com/browse/LPS-72365
+[LPS-73353]: https://issues.liferay.com/browse/LPS-73353
 [LPS-73525]: https://issues.liferay.com/browse/LPS-73525

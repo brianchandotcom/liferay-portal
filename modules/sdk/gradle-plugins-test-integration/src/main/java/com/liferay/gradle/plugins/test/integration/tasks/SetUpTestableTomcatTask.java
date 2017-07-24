@@ -126,6 +126,18 @@ public class SetUpTestableTomcatTask
 	}
 
 	@Input
+	@Optional
+	public String getJaCoCoAgentConfiguration() {
+		return GradleUtil.toString(_jaCoCoAgentConfiguration);
+	}
+
+	@Input
+	@Optional
+	public File getJaCoCoAgentFile() {
+		return GradleUtil.toFile(getProject(), _jaCoCoAgentFile);
+	}
+
+	@Input
 	@Override
 	public int getJmxRemotePort() {
 		return GradleUtil.toInteger(_jmxRemotePort);
@@ -188,6 +200,14 @@ public class SetUpTestableTomcatTask
 
 	public void setDir(Object dir) {
 		_dir = dir;
+	}
+
+	public void setJaCoCoAgentConfiguration(Object jaCoCoAgentConfiguration) {
+		_jaCoCoAgentConfiguration = jaCoCoAgentConfiguration;
+	}
+
+	public void setJaCoCoAgentFile(Object jaCoCoAgentFile) {
+		_jaCoCoAgentFile = jaCoCoAgentFile;
 	}
 
 	public void setJmxRemoteAuthenticate(boolean jmxRemoteAuthenticate) {
@@ -294,6 +314,40 @@ public class SetUpTestableTomcatTask
 				}
 
 				printWriter.println("\"");
+			}
+		}
+	}
+
+	private void _setUpJaCoCo() throws IOException {
+		File jaCoCoAgentFile = getJaCoCoAgentFile();
+		File targetJaCoCoAgentFile = new File(getDir(), "bin/jacocoagent.jar");
+
+		if ((jaCoCoAgentFile != null) && !targetJaCoCoAgentFile.exists()) {
+			Files.copy(
+				jaCoCoAgentFile.toPath(), targetJaCoCoAgentFile.toPath());
+		}
+
+		String jaCoCoJvmArg =
+			"-javaagent:" + targetJaCoCoAgentFile.getAbsolutePath();
+
+		if (_jaCoCoAgentConfiguration != null) {
+			jaCoCoJvmArg += _jaCoCoAgentConfiguration;
+		}
+
+		if (!_contains("bin/setenv.sh", jaCoCoJvmArg)) {
+			try (PrintWriter printWriter = _getAppendPrintWriter(
+					"bin/setenv.sh")) {
+
+				printWriter.println();
+
+				printWriter.println("if [ \"$1\" = \"jacoco\" ] ; then");
+				printWriter.print("    JACOCO_OPTS=\"");
+				printWriter.print(jaCoCoJvmArg);
+				printWriter.println("\"");
+				printWriter.println(
+					"    CATALINA_OPTS=\"${CATALINA_OPTS} ${JACOCO_OPTS}\"");
+				printWriter.println("    shift");
+				printWriter.println("fi");
 			}
 		}
 	}
@@ -508,6 +562,8 @@ public class SetUpTestableTomcatTask
 	}
 
 	private void _setUpSetEnv() throws IOException {
+		_setUpJaCoCo();
+
 		_setUpAspectJ();
 		_setUpJmx();
 		_setUpJpda();
@@ -522,6 +578,8 @@ public class SetUpTestableTomcatTask
 	private Object _aspectJConfiguration;
 	private boolean _debugLogging;
 	private Object _dir;
+	private Object _jaCoCoAgentConfiguration;
+	private Object _jaCoCoAgentFile;
 	private boolean _jmxRemoteAuthenticate;
 	private Object _jmxRemotePort;
 	private boolean _jmxRemoteSsl;

@@ -14,11 +14,7 @@
 
 package com.liferay.gradle.plugins.defaults.internal;
 
-import com.liferay.gradle.plugins.defaults.internal.util.FileUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
-import com.liferay.gradle.util.Validator;
-
-import java.io.File;
 
 import java.util.List;
 
@@ -26,9 +22,7 @@ import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
-import org.gradle.api.artifacts.Configuration;
-import org.gradle.api.artifacts.DependencySet;
-import org.gradle.api.tasks.TaskContainer;
+import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.testing.Test;
 
 /**
@@ -39,66 +33,10 @@ public class JaCoCoPlugin implements Plugin<Project> {
 
 	public static final Plugin<Project> INSTANCE = new JaCoCoPlugin();
 
-	public static final String JACOCO_AGENT_CONFIGURATION_NAME = "jaCoCoAgent";
-
 	@Override
 	public void apply(Project project) {
-		Configuration jaCoCoAgentConfiguration = _addConfigurationJaCoCoAgent(
-			project);
-
-		_configureTasksTest(project, jaCoCoAgentConfiguration);
-	}
-
-	private JaCoCoPlugin() {
-	}
-
-	private Configuration _addConfigurationJaCoCoAgent(final Project project) {
-		Configuration configuration = GradleUtil.addConfiguration(
-			project, JACOCO_AGENT_CONFIGURATION_NAME);
-
-		configuration.defaultDependencies(
-			new Action<DependencySet>() {
-
-				@Override
-				public void execute(DependencySet dependencySet) {
-					_addDependenciesJaCoCoAgent(project);
-				}
-
-			});
-
-		configuration.setDescription(
-			"Configures JaCoCo Agent to apply to the test tasks.");
-		configuration.setTransitive(false);
-		configuration.setVisible(false);
-
-		return configuration;
-	}
-
-	private void _addDependenciesJaCoCoAgent(Project project) {
-		GradleUtil.addDependency(
-			project, JACOCO_AGENT_CONFIGURATION_NAME, "org.jacoco",
-			"org.jacoco.agent", "0.7.9", "runtime", true);
-	}
-
-	private void _configureTasksTest(
-		Project project, final Configuration jaCoCoAgentConfiguration) {
-
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			Test.class,
-			new Action<Test>() {
-
-				@Override
-				public void execute(Test test) {
-					_configureTaskTest(test, jaCoCoAgentConfiguration);
-				}
-
-			});
-	}
-
-	private void _configureTaskTest(
-		Test test, final Configuration jaCoCoAgentConfiguration) {
+		Test test = (Test)GradleUtil.getTask(
+			project, JavaPlugin.TEST_TASK_NAME);
 
 		test.doFirst(
 			new Action<Task>() {
@@ -109,24 +47,14 @@ public class JaCoCoPlugin implements Plugin<Project> {
 
 					Project project = test.getProject();
 
-					String jaCoCoAgentFileName = FileUtil.getAbsolutePath(
-						jaCoCoAgentConfiguration.getSingleFile());
-
-					String jaCoCoDumpFileName = System.getProperty(
-						"jacoco.dump.file");
-
-					if (Validator.isNull(jaCoCoDumpFileName)) {
-						File jaCoCoDumpFile = new File(
-							project.getBuildDir(),
-							"jacoco/" + test.getName() + ".exec");
-
-						jaCoCoDumpFileName = FileUtil.getAbsolutePath(
-							jaCoCoDumpFile);
-					}
+					String jaCoCoAgentJar = GradleUtil.getProperty(
+						project, "jacoco.agent.jar", (String)null);
+					String jaCoCoAgentConfiguration = GradleUtil.getProperty(
+						project, "jacoco.agent.configuration", (String)null);
 
 					String jaCoCoJvmArg =
-						"-javaagent:" + jaCoCoAgentFileName + "=destfile=" +
-							jaCoCoDumpFileName + ",output=file,append=true";
+						"-javaagent:" + jaCoCoAgentJar +
+							jaCoCoAgentConfiguration;
 
 					List<String> allJVMArgs = test.getAllJvmArgs();
 
@@ -150,7 +78,10 @@ public class JaCoCoPlugin implements Plugin<Project> {
 
 			});
 
-		test.systemProperty("jacoco.code.coverage", "true");
+		test.systemProperty("junit.code.coverage", "true");
+	}
+
+	private JaCoCoPlugin() {
 	}
 
 }

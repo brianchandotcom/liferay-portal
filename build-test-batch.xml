@@ -280,6 +280,25 @@ mariadb.executable=${mariadb.executable}]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-test-batch-app-server-start-executable-arg-line">
+		<sequential>
+			<propertycopy from="app.server.${app.server.type}.start.executable.arg.line" name="start.executable.arg.line" />
+
+			<if>
+				<and>
+					<equals arg1="${app.server.type}" arg2="tomcat" />
+					<equals arg1="${test.batch.code.coverage}" arg2="true" />
+				</and>
+				<then>
+					<property name="test.batch.app.server.start.executable.arg.line" value="jacoco ${start.executable.arg.line}" />
+				</then>
+				<else>
+					<property name="test.batch.app.server.start.executable.arg.line" value="${start.executable.arg.line}" />
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="merge-test-results">
 		<sequential>
 			<antcall target="merge-test-results" />
@@ -308,6 +327,36 @@ mariadb.executable=${mariadb.executable}]]></echo>
 					<copy file="test-results/TESTS-TestSuites.xml" tofile="${env.WORKSPACE}/test-results/TESTS-TestSuites.xml" />
 				</then>
 			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-liferay-classes" >
+		<attribute name="merged.jar" />
+		<attribute name="portal.bundle.dir" />
+
+		<sequential>
+			<var name="merged-classes" value="${project.dir}/jacoco/merged-classes" />
+
+			<delete dir="${merged-classes}" />
+			<mkdir dir="${merged-classes}" />
+
+			<unzip dest="${merged-classes}">
+				<patternset>
+					<include name="**/com/liferay/**" />
+				</patternset>
+				<fileset dir="@{portal.bundle.dir}">
+					 <include name="**/*.jar" />
+					 <include name="**/*.war" />
+				</fileset>
+			</unzip>
+
+			<jar destfile="@{merged.jar}" update="true">
+				<fileset dir="${merged-classes}">
+					<include name="**/*.class" />
+				</fileset>
+			</jar>
+
+			<delete dir="${merged-classes}" />
 		</sequential>
 	</macrodef>
 
@@ -433,6 +482,8 @@ app.server.type=@{app.server.type}]]></echo>
 							git diff --cached --name-only -z | grep -E -v -z '^\.gitignore|bundles/|^modules/\.gitignore' | xargs -0 -n 1000 zip -v liferay-portal-source.zip
 						]]>
 					</execute>
+
+					<prepare-liferay-classes if:true="${test.batch.code.coverage}" merged.jar="${project.dir}/jacoco/merged.jar" portal.bundle.dir="bundles" />
 				</then>
 			</if>
 
@@ -637,7 +688,10 @@ app.server.type=@{app.server.type}]]></echo>
 
 							<trycatch>
 								<try>
+									<get-test-batch-app-server-start-executable-arg-line />
+
 									<ant antfile="build-test-${app.server.type}.xml" inheritAll="false" target="run-selenium-${app.server.type}">
+										<property name="app.server.start.executable.arg.line" value="${test.batch.app.server.start.executable.arg.line}" />
 										<property name="database.type" value="@{database.type}" />
 										<property name="liferay.portal.bundle" value="@{test.portal.bundle.version}" />
 										<property name="test.build.plugins.war.zip.url" value="@{test.plugins.war.zip.url}" />
@@ -836,6 +890,7 @@ app.server.type=@{app.server.type}]]></echo>
 
 							<ant dir="portal-impl" inheritAll="false" target="test-class-group">
 								<property name="database.type" value="@{database.type}" />
+								<property name="junit.code.coverage" value="${test.batch.code.coverage}" />
 								<property name="test.class.group.index" value="${axis.variable}" />
 								<property name="test.type" value="integration" />
 							</ant>
@@ -1309,7 +1364,10 @@ app.server.type=@{app.server.type}]]></echo>
 
 							<print-test-class-group test.class.group.index="${axis.variable}" />
 
+							<get-test-batch-app-server-start-executable-arg-line />
+
 							<gradle-execute dir="modules" task="testIntegration">
+								<arg value="-Dapp.server.start.executable.arg.line=${test.batch.app.server.start.executable.arg.line}" />
 								<arg value="-Ddatabase.type=@{database.type}" />
 								<arg value="-Dbuild.exclude.ant.plugin=true" />
 								<arg value="-Dtest.class.group.index=${axis.variable}" />
@@ -2215,6 +2273,7 @@ app.server.type=@{app.server.type}]]></echo>
 			<test-action>
 				<gradle-execute dir="modules" task="test">
 					<arg value="-Dbuild.exclude.ant.plugin=true" />
+					<arg value="-Djunit.code.coverage=${test.batch.code.coverage}" />
 					<arg value="-Dtest.class.group.index=${axis.variable}" />
 				</gradle-execute>
 			</test-action>
@@ -3106,15 +3165,18 @@ ${output.content}</echo>
 		<run-batch-test>
 			<test-action>
 				<ant dir="portal-kernel" inheritAll="false" target="test-class-group">
+					<property name="junit.code.coverage" value="${test.batch.code.coverage}" />
 					<property name="test.class.group.index" value="${axis.variable}" />
 				</ant>
 
 				<ant dir="portal-impl" inheritAll="false" target="test-class-group">
+					<property name="junit.code.coverage" value="${test.batch.code.coverage}" />
 					<property name="test.class.group.index" value="${axis.variable}" />
 					<property name="test.type" value="unit" />
 				</ant>
 
 				<ant dir="util-java" inheritAll="false" target="test-class-group">
+					<property name="junit.code.coverage" value="${test.batch.code.coverage}" />
 					<property name="test.class.group.index" value="${axis.variable}" />
 				</ant>
 			</test-action>

@@ -16,6 +16,7 @@ package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.counter.kernel.model.Counter;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.sql.PreparedStatement;
@@ -44,7 +45,7 @@ public class UpgradeSocial extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (getSocialActivitySetsCount() > 0) {
+		if (getCounterIncrement() > 0) {
 			return;
 		}
 
@@ -56,7 +57,33 @@ public class UpgradeSocial extends UpgradeProcess {
 
 		updateSocialActivities(delta);
 
-		increment(Counter.class.getName(), getSocialActivitySetsCount());
+		increment(Counter.class.getName(), getCounterIncrement());
+	}
+
+	protected int getCounterIncrement() throws Exception {
+		try (Statement s = connection.createStatement()) {
+			String query = "select max(activitySetId) from SocialActivitySet";
+
+			String counterQuery =
+				"select currentId from counter where name = '" +
+					Counter.class.getName() + CharPool.APOSTROPHE;
+
+			int counter = 0;
+
+			try (ResultSet rs = s.executeQuery(counterQuery)) {
+				if (rs.next()) {
+					counter = rs.getInt("currentId");
+				}
+			}
+
+			try (ResultSet rs = s.executeQuery(query)) {
+				if (rs.next()) {
+					return rs.getInt(1) - counter;
+				}
+
+				return 0;
+			}
+		}
 	}
 
 	protected long getDelta(long increment) throws Exception {
@@ -68,20 +95,6 @@ public class UpgradeSocial extends UpgradeProcess {
 					long minActivityId = rs.getLong(1);
 
 					return increment - minActivityId;
-				}
-
-				return 0;
-			}
-		}
-	}
-
-	protected int getSocialActivitySetsCount() throws Exception {
-		try (Statement s = connection.createStatement()) {
-			String query = "select count(activitySetId) from SocialActivitySet";
-
-			try (ResultSet rs = s.executeQuery(query)) {
-				if (rs.next()) {
-					return rs.getInt(1);
 				}
 
 				return 0;

@@ -4,7 +4,7 @@
 }
 
 .btn-default {
-	@include button-variant($brand-color, transparent, $brand-color);
+	@include button-variant($brand-color, #FFF, $brand-color);
 }
 
 .btn-primary {

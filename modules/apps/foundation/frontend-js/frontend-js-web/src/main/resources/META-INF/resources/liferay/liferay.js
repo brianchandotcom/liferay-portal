@@ -20,7 +20,7 @@ Liferay = window.Liferay || {};
 
 	$.ajaxPrefilter(
 		function(options) {
-			if ( options.crossDomain ) {
+			if (options.crossDomain) {
 				options.contents.script = false;
 			}
 

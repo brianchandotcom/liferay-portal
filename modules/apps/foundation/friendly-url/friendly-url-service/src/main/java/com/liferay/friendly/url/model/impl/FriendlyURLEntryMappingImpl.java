@@ -26,12 +26,15 @@ import aQute.bnd.annotation.ProviderType;
  * @author Brian Wing Shun Chan
  */
 @ProviderType
-public class FriendlyURLEntryMappingImpl extends FriendlyURLEntryMappingBaseImpl {
-	/*
+public class FriendlyURLEntryMappingImpl
+	extends FriendlyURLEntryMappingBaseImpl {
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a friendly url entry mapping model instance should use the {@link com.liferay.friendly.url.model.FriendlyURLEntryMapping} interface instead.
 	 */
 	public FriendlyURLEntryMappingImpl() {
 	}
+
 }

@@ -2272,22 +2272,52 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
+		<execute macro="JSONRole#addRegularRole">
+			<var name="roleTitle" value="Web Content Administrator Role"/>
+			<var name="roleKey" value="Web Content Administrator Role"/>
 		</execute>
 
-		<execute macro="Role#add">
-			<var name="roleTitle" value="Web Content Administrator Role" />
+		<for list="ADD_STRUCTURE,ADD_FOLDER,ADD_FEED,ADD_ARTICLE,VIEW,UPDATE,SUBSCRIBE,PERMISSIONS,ADD_TEMPLATE"
+			param="resourceActionIndex">
+			<execute macro="Permissions#definePermissionViaJSONAPI">
+				<var name="resourceAction" value="${resourceActionIndex}"/>
+				<var name="resourceName" value="com.liferay.journal"/>
+				<var name="roleTitle" value="Web Content Administrator Role"/>
+			</execute>
+		</for>
+
+		<for list="ADD_DISCUSSION,VIEW,UPDATE_DISCUSSION,UPDATE,SUBSCRIBE,PERMISSIONS,EXPIRE,DELETE_DISCUSSION,DELETE"
+			param="resourceActionIndex">
+			<execute macro="Permissions#definePermissionViaJSONAPI">
+				<var name="resourceAction" value="${resourceActionIndex}"/>
+				<var name="resourceName" value="com.liferay.journal.model.JournalArticle"/>
+				<var name="roleTitle" value="Web Content Administrator Role"/>
+			</execute>
+		</for>
+
+		<for list="VIEW,UPDATE,SUBSCRIBE,PERMISSIONS,DELETE,ADD_SUBFOLDER,ADD_ARTICLE,ACCESS"
+			param="resourceActionIndex">
+			<execute macro="Permissions#definePermissionViaJSONAPI">
+				<var name="resourceAction" value="${resourceActionIndex}"/>
+				<var name="resourceName" value="com.liferay.journal.model.JournalFolder"/>
+				<var name="roleTitle" value="Web Content Administrator Role"/>
+			</execute>
+		</for>
+
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="VIEW_SITE_ADMINISTRATION"/>
+			<var name="resourceName" value="com.liferay.portal.kernel.model.Group"/>
+			<var name="roleTitle" value="Web Content Administrator Role"/>
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionsCP">
-			<var name="permissionDefinitionKeys" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX,SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_VIEW_CHECKBOX,SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ACTION_CHECKBOX,SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_FOLDER_ACTION_CHECKBOX,SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ARTICLE_ACTION_CHECKBOX" />
-			<var name="roleTitle" value="Web Content Administrator Role" />
-		</execute>
+		<for list="VIEW,ACCESS_IN_CONTROL_PANEL"
+			param="resourceActionIndex">
+			<execute macro="Permissions#definePermissionViaJSONAPI">
+				<var name="resourceAction" value="${resourceActionIndex}"/>
+				<var name="resourceName" value="com_liferay_journal_web_portlet_JournalPortlet"/>
+				<var name="roleTitle" value="Web Content Administrator Role"/>
+			</execute>
+		</for>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />

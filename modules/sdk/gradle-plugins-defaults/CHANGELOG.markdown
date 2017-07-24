@@ -1748,15 +1748,26 @@ and `writeArtifactPublishCommands` tasks.
 ### Changed
 - [LPS-72705]: Update the [Liferay Gradle Plugins] dependency to version 3.4.8.
 
-## 4.0.7 - 2017-07-19
+## 4.0.8 - 2017-07-19
 
 ### Changed
-- [LPS-72705]: Update the [Liferay Gradle Plugins] dependency to version 3.4.9.
+- [LPS-73600]: Update the [Liferay Gradle Plugins] dependency to version 3.4.9.
 
-## 4.0.7 - 2017-07-19
+## 4.0.9 - 2017-07-20
 
 ### Changed
 - [LPS-73600]: Update the [Liferay Gradle Plugins] dependency to version 3.4.10.
+
+## 4.0.10 - 2017-07-21
+
+### Changed
+- [LPS-72705]: Update the [Liferay Gradle Plugins] dependency to version 3.4.11.
+
+## 4.1.0 - 2017-07-24
+
+### Added
+- [LPS-73854]: Allow to apply [Liferay Gradle Plugins Lang Merger] to a theme
+project.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -1764,6 +1775,7 @@ and `writeArtifactPublishCommands` tasks.
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder
 [Liferay Gradle Plugins Baseline]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-baseline
 [Liferay Gradle Plugins Dependency Checker]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-dependency-checker
+[Liferay Gradle Plugins Lang Merger]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-lang-merger
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
 [Liferay Source Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/util/source-formatter
 [LPS-52675]: https://issues.liferay.com/browse/LPS-52675
@@ -1945,6 +1957,7 @@ and `writeArtifactPublishCommands` tasks.
 [LPS-73607]: https://issues.liferay.com/browse/LPS-73607
 [LPS-73642]: https://issues.liferay.com/browse/LPS-73642
 [LPS-73652]: https://issues.liferay.com/browse/LPS-73652
+[LPS-73854]: https://issues.liferay.com/browse/LPS-73854
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

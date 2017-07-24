@@ -43,7 +43,7 @@ public class UsersDemo extends BasePortalInstanceLifecycleListener {
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
 		_companyAdminUserDemoDataCreator.create(
-			company.getCompanyId(), "bruno@liferay.com");
+			company.getCompanyId(), "bruno.admin@liferay.com");
 
 		User defaultUser = _basicUserDemoDataCreator.create(
 			company.getCompanyId(), "userea@liferay.com");

@@ -1791,6 +1791,11 @@ a theme project.
 - [LPS-73807]: Update the [Find Security Bugs] dependency to version
 1.6.0.LIFERAY-PATCHED-5.
 
+## 4.1.2 - 2017-07-25
+
+### Changed
+- [LPS-73818]: Update the [Liferay Gradle Plugins] dependency to version 3.4.14.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
@@ -1981,6 +1986,7 @@ a theme project.
 [LPS-73642]: https://issues.liferay.com/browse/LPS-73642
 [LPS-73652]: https://issues.liferay.com/browse/LPS-73652
 [LPS-73807]: https://issues.liferay.com/browse/LPS-73807
+[LPS-73818]: https://issues.liferay.com/browse/LPS-73818
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

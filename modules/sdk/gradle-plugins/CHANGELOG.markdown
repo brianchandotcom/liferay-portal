@@ -1996,6 +1996,13 @@ to version 2.0.41.
 - [LPS-73353]: Update the [Liferay Gradle Plugins Test Integration] dependency
 to version 2.1.0.
 
+## 3.4.14 - 2017-07-25
+
+### Added
+- [LPS-73818]: Automatically configure the `cleanServiceBuilder` task to read
+the `portal.properties` file contained in `portal-impl.jar`, if no other portal
+properties can be found.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -2172,4 +2179,5 @@ to version 2.1.0.
 [LPS-73584]: https://issues.liferay.com/browse/LPS-73584
 [LPS-73600]: https://issues.liferay.com/browse/LPS-73600
 [LPS-73642]: https://issues.liferay.com/browse/LPS-73642
+[LPS-73818]: https://issues.liferay.com/browse/LPS-73818
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

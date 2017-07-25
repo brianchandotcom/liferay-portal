@@ -476,11 +476,9 @@ public class ModulesStructureTest {
 					BasicFileAttributes basicFileAttributes) {
 
 					if (Files.exists(pluginDirPath.resolve("build.xml")) &&
-						(Files.exists(pluginDirPath.resolve("ivy.xml")) ||
-						 Files.exists(
-							 pluginDirPath.resolve(
-								 "docroot/WEB-INF/service.xml"))) &&
-						Files.isDirectory(pluginDirPath.resolve("docroot"))) {
+						Files.exists(
+							pluginDirPath.resolve(
+								"docroot/WEB-INF/service.xml"))) {
 
 						String pluginDirName = String.valueOf(
 							dirPath.relativize(pluginDirPath));
@@ -505,7 +503,7 @@ public class ModulesStructureTest {
 			return gitIgnore;
 		}
 
-		StringBundler sb = new StringBundler(pluginDirNames.size() * 4 + 2);
+		StringBundler sb = new StringBundler(pluginDirNames.size() * 6 + 2);
 
 		if (Validator.isNotNull(gitIgnore)) {
 			sb.append(gitIgnore);
@@ -524,7 +522,9 @@ public class ModulesStructureTest {
 
 			sb.append("!/");
 			sb.append(pluginDirName);
-			sb.append("/docroot/WEB-INF/lib");
+			sb.append("/docroot/WEB-INF/lib/");
+			sb.append(pluginDirName);
+			sb.append("-service.jar");
 		}
 
 		return sb.toString();
@@ -653,6 +653,10 @@ public class ModulesStructureTest {
 	}
 
 	private void _testAntPluginIgnoreFiles(Path dirPath) throws IOException {
+		if (_isInPrivateModulesDir(dirPath)) {
+			return;
+		}
+
 		_testEquals(
 			dirPath.resolve("docroot/WEB-INF/lib/.gitignore"),
 			_getAntPluginLibGitIgnore(dirPath));
@@ -903,7 +907,7 @@ public class ModulesStructureTest {
 	private void _testGitRepoIgnoreFiles(Path dirPath, String gitIgnoreTemplate)
 		throws IOException {
 
-		if (_isInGitRepoReadOnly(dirPath)) {
+		if (_isInGitRepoReadOnly(dirPath) || _isInPrivateModulesDir(dirPath)) {
 			return;
 		}
 

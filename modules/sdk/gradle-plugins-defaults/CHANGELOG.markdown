@@ -1785,6 +1785,13 @@ available.
 - [LPS-72854]: Allow to apply [Liferay Gradle Plugins Lang Merger] to a theme
 project.
 
+## 4.2.0 - 2017-07-25
+
+### Added
+- [LPS-73655]: Add new task type called `CopyIvyDependenciesTask` which allows
+to download dependencies declared in an `ivy.xml` file via Gradle.
+- [LPS-73655]: Download Ivy dependencies of Ant plugins via Gradle.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
@@ -1974,6 +1981,7 @@ project.
 [LPS-73607]: https://issues.liferay.com/browse/LPS-73607
 [LPS-73642]: https://issues.liferay.com/browse/LPS-73642
 [LPS-73652]: https://issues.liferay.com/browse/LPS-73652
+[LPS-73655]: https://issues.liferay.com/browse/LPS-73655
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

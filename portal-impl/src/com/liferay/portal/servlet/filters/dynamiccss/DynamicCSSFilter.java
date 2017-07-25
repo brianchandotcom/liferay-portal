@@ -88,19 +88,19 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 
 		String requestPath = getRequestPath(request);
 
-		if (requestPath.endsWith(_CSS_EXTENSION) &&
-			PortalUtil.isRightToLeft(request)) {
-
-			int pos = requestPath.lastIndexOf(StringPool.PERIOD);
-
-			requestPath =
-				requestPath.substring(0, pos) + "_rtl" +
-					requestPath.substring(pos);
-		}
-
 		URL resourceURL = _servletContext.getResource(requestPath);
 
 		String originalRequestPath = request.getRequestURI();
+
+		if (originalRequestPath.endsWith(_CSS_EXTENSION) &&
+			PortalUtil.isRightToLeft(request)) {
+
+			int pos = originalRequestPath.lastIndexOf(StringPool.PERIOD);
+
+			originalRequestPath =
+				originalRequestPath.substring(0, pos) + "_rtl" +
+					originalRequestPath.substring(pos);
+		}
 
 		if (resourceURL == null) {
 			ServletContext resourceServletContext =

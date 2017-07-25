@@ -2000,6 +2000,14 @@ public class VerifyProperties extends VerifyProcess {
 				"configuration.jsp"
 		},
 		new String[] {
+			"ehcache.cluster.link.replicator.properties",
+			"ehcache.replicator.properties"
+		},
+		new String[] {
+			"ehcache.cluster.link.replicator.properties.default",
+			"ehcache.replicator.properties.default"
+		},
+		new String[] {
 			"field.editable.com.liferay.portal.kernel.model.User.emailAddress",
 			"field.editable.user.types"
 		},

@@ -1717,9 +1717,7 @@ app.server.type=@{app.server.type}]]></echo>
 			<test-action>
 				<ant dir="portal-web" target="compile-tomcat" />
 
-				<gradle-execute dir="modules" task="compileJSP">
-					<arg value="-Dbuild.exclude.ant.plugin=true" />
-				</gradle-execute>
+				<gradle-execute dir="modules" task="compileJSP" />
 			</test-action>
 
 			<test-set-up>

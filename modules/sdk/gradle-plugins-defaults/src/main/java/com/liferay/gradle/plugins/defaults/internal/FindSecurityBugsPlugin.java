@@ -277,6 +277,9 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 		javaExec.systemProperty(
 			"findsecbugs.injection.customconfigfile.XssJspDetector",
 			"liferay-config/liferay-XssJspDetector.txt|XSS_JSP_PRINT");
+		javaExec.systemProperty(
+			"findsecbugs.injection.customconfigfile.XssServletDetector",
+			"liferay-config/liferay-XssServletDetector.txt|XSS_SERVLET");
 
 		javaExec.systemProperty("findsecbugs.taint.outputsummaries", "true");
 

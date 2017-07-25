@@ -155,8 +155,9 @@
 			<var name="portlet" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContentFolder#addNoSubfolderCP">
+		<execute macro="WebContentFolder#checkSubfolderPermissions">
 			<var name="folderName" value="WC Folder Name 1" />
+			<var name="subfolder" value="false" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">

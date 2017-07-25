@@ -89,9 +89,9 @@ List<AssetEntryAction> assetEntryActions = assetPublisherDisplayContext.getAsset
 
 					<liferay-ui:icon
 						data="<%= data %>"
-						message="<%= assetEntryAction.getMenuTitle(locale) %>"
+						message="<%= assetEntryAction.getMessage(locale) %>"
 						method="get"
-						url="<%= assetEntryAction.getPortletURL(request, assetRenderer) %>"
+						url="<%= assetEntryAction.getDialogURL(request, assetRenderer) %>"
 						useDialog="<%= true %>"
 					/>
 

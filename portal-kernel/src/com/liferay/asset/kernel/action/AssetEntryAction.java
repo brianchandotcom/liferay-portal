@@ -32,11 +32,11 @@ public interface AssetEntryAction<T> {
 
 	public String getDialogTitle(Locale locale);
 
-	public String getMenuTitle(Locale locale);
-
-	public String getPortletURL(
+	public String getDialogURL(
 			HttpServletRequest request, AssetRenderer<T> assetRenderer)
 		throws PortalException;
+
+	public String getMessage(Locale locale);
 
 	public boolean hasPermission(
 			PermissionChecker permissionChecker, AssetRenderer<T> assetRenderer)

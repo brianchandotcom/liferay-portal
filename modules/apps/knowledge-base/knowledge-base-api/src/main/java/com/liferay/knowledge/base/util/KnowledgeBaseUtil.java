@@ -51,8 +51,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @author Peter Shin
  * @author Brian Wing Shun Chan
+ * @author Peter Shin
+ * @author Jim Hinkey
+ * @author David Zhang
  */
 public class KnowledgeBaseUtil {
 
@@ -147,8 +149,7 @@ public class KnowledgeBaseUtil {
 			title = String.valueOf(id);
 		}
 		else {
-			title = FriendlyURLNormalizerUtil.normalize(
-				title, _normalizationFriendlyUrlPattern);
+			title = FriendlyURLNormalizerUtil.normalizeWithEncoding(title);
 		}
 
 		return ModelHintsUtil.trimString(
@@ -249,8 +250,6 @@ public class KnowledgeBaseUtil {
 	private static final int _SQL_DATA_MAX_PARAMETERS = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.SQL_DATA_MAX_PARAMETERS));
 
-	private static final Pattern _normalizationFriendlyUrlPattern =
-		Pattern.compile("[^a-z0-9_-]");
 	private static final Pattern _validFriendlyUrlPattern = Pattern.compile(
 		"/[a-z0-9_-]+");
 

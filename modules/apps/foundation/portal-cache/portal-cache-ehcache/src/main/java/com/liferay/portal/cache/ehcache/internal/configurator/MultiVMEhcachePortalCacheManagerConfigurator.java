@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Dante Wang
  */
 @Component(
-	immediate = true,
+	enabled = false, immediate = true,
 	service = MultiVMEhcachePortalCacheManagerConfigurator.class
 )
 public class MultiVMEhcachePortalCacheManagerConfigurator

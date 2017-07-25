@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Tina Tian
  */
 @Component(
-	immediate = true,
+	enabled = false, immediate = true,
 	service = MultiVMEhcachePortalCacheManagerConfigurator.class
 )
 public class RMIMultiVMEhcachePortalCacheManagerConfigurator
@@ -84,6 +84,10 @@ public class RMIMultiVMEhcachePortalCacheManagerConfigurator
 	@Override
 	protected void activate() {
 		super.activate();
+
+		if (!clusterEnabled) {
+			return;
+		}
 
 		_peerListenerFactoryClass = props.get(
 			PropsKeys.EHCACHE_RMI_PEER_LISTENER_FACTORY_CLASS);

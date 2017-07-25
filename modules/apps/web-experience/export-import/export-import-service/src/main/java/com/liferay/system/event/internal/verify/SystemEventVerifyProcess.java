@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.systemevent.internal.verify;
+package com.liferay.system.event.internal.verify;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;

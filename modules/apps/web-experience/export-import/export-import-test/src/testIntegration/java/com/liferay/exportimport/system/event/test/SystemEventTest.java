@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.exportimport.systemevent.test;
+package com.liferay.exportimport.system.event.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationFactory;

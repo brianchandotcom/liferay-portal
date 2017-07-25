@@ -1,7 +1,9 @@
 Bundle-Name: Liferay Portal Template Soy
 Bundle-SymbolicName: com.liferay.portal.template.soy
 Bundle-Version: 3.0.0
-Export-Package: com.liferay.portal.template.soy.utils
+Export-Package:\
+	com.liferay.portal.template.soy.constants,\
+	com.liferay.portal.template.soy.utils
 Import-Package:\
 	!com.google.inject.internal.asm.util,\
 	\

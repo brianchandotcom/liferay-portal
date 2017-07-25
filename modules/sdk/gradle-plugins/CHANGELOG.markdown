@@ -1976,6 +1976,14 @@ to version 2.0.40.
 
 ## 3.4.12 - 2017-07-24
 
+### Changed
+- [LPS-72705]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.0.41.
+- [LPS-72705]: Update the [Liferay Source Formatter] dependency to version
+1.0.430.
+
+## 3.4.13 - 2017-07-24
+
 ### Added
 - [LPS-73353]: Add the ability to configure the `setUpTestableTomcat` task's
 `jaCoCoAgentConfiguration` property by setting the project property

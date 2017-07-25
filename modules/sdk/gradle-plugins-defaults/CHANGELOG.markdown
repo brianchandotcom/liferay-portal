@@ -1766,7 +1766,24 @@ and `writeArtifactPublishCommands` tasks.
 ## 4.0.11 - 2017-07-24
 
 ### Changed
-- [LPS-73353]: Update the [Liferay Gradle Plugins] dependency to version 3.4.12.
+- [LPS-72705]: Update the [Liferay Gradle Plugins] dependency to version 3.4.12.
+
+## 4.0.12 - 2017-07-24
+
+### Changed
+- [LPS-73353]: Add the JaCoCo Java Agent only to the `test` task if the system
+or project property `junit.code.coverage` is set to `true`.
+- [LPS-73353]: Update the [Liferay Gradle Plugins] dependency to version 3.4.13.
+
+### Removed
+- [LPS-73353]: The `jacoco.code.coverage` system property is no longer
+available.
+
+## 4.1.0 - 2017-07-24
+
+### Added
+- [LPS-72854]: Allow to apply [Liferay Gradle Plugins Lang Merger] to a theme
+project.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -1932,6 +1949,7 @@ and `writeArtifactPublishCommands` tasks.
 [LPS-72750]: https://issues.liferay.com/browse/LPS-72750
 [LPS-72830]: https://issues.liferay.com/browse/LPS-72830
 [LPS-72851]: https://issues.liferay.com/browse/LPS-72851
+[LPS-72854]: https://issues.liferay.com/browse/LPS-72854
 [LPS-72868]: https://issues.liferay.com/browse/LPS-72868
 [LPS-72914]: https://issues.liferay.com/browse/LPS-72914
 [LPS-72989]: https://issues.liferay.com/browse/LPS-72989

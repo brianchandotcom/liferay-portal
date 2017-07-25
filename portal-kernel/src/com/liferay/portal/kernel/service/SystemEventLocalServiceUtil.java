@@ -40,6 +40,11 @@ public class SystemEventLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.SystemEventLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static boolean validateGroup(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().validateGroup(groupId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
@@ -283,6 +288,11 @@ public class SystemEventLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static void checkSystemEvents()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().checkSystemEvents();
 	}
 
 	public static void deleteSystemEvents(long groupId) {

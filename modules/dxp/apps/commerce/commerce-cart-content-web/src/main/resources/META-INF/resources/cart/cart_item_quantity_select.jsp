@@ -17,17 +17,54 @@
 <%@ include file="/init.jsp" %>
 
 <%
+int type = ParamUtil.getInteger(request, "type", CommerceCartConstants.COMMERCE_CART_TYPE_CART);
+
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 CommerceCartItem commerceCartItem = (CommerceCartItem)row.getObject();
+
+String quantityColumnContainer = "commerce-cart-item-quantity-column-container" + row.getRowId();
 %>
 
-<portlet:actionURL name="editCommerceCartItem" var="editCommerceCartItemURL">
-	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-	<portlet:param name="commerceCartItemId" value="<%= String.valueOf(commerceCartItem.getCommerceCartItemId()) %>" />
-</portlet:actionURL>
+<portlet:actionURL name="editCommerceCartItem" var="editCommerceCartItemURL" />
 
-<aui:input bean="<%= commerceCartItem %>" label="<%= StringPool.BLANK %>" name="quantity" />
+<div id="<portlet:namespace /><%= quantityColumnContainer %>">
+	<aui:form action="<%= editCommerceCartItemURL %>" method="post" name="editCommerceCartItemQuantityFm">
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<aui:input name="commerceCartItemId" type="hidden" value="<%= commerceCartItem.getCommerceCartItemId() %>" />
+		<aui:input name="type" type="hidden" value="<%= type %>" />
 
-<aui:button href="<%= editCommerceCartItemURL %>" name="refreshQuantity" type="submit" value="refresh" />
+		<aui:input bean="<%= commerceCartItem %>" cssClass="commerce-cart-item-quantity-input" data-quantityColumnContainer="<%= quantityColumnContainer %>" label="<%= StringPool.BLANK %>" name="quantity" onChange="javascript:;" />
+
+		<aui:button cssClass="commerce-cart-item-quantity-button hide" name="refreshButton" onClick="javascript:;" value="refresh" />
+	</aui:form>
+</div>
+
+<aui:script>
+	var quantityInput = $('#<portlet:namespace /><%= quantityColumnContainer %> .commerce-cart-item-quantity-input');
+
+	quantityInput.on(
+		'change',
+		function(event) {
+			var curTarget = event.currentTarget;
+
+			var quantityColumnContainer = curTarget.getAttribute('data-quantityColumnContainer');
+
+			var refreshButton = $('#<portlet:namespace />' + quantityColumnContainer + ' .commerce-cart-item-quantity-button');
+
+			refreshButton.removeClass('hide');
+		}
+	);
+
+	$('#<portlet:namespace /><%= quantityColumnContainer %> .commerce-cart-item-quantity-button').on(
+		'click',
+		function(event) {
+			event.preventDefault();
+
+			var editCommerceCartItemQuantityFm = $('#<portlet:namespace /><%= quantityColumnContainer %> #<portlet:namespace />editCommerceCartItemQuantityFm');
+
+			submitForm(editCommerceCartItemQuantityFm);
+		}
+	);
+</aui:script>

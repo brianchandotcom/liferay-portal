@@ -103,15 +103,15 @@ gradle.beforeProject {
 		pluginManager.withPlugin("com.liferay.ant.plugin") {
 			task buildLang(dependsOn: "build-lang")
 
+			if (FileUtil.exists(project, "docroot/WEB-INF/service.xml")) {
+				task buildService(dependsOn: "build-service")
+				task buildWSDD(dependsOn: "build-wsdd")
+			}
+
 			// See "compile-jsp" target in tools/sdk/build-common-plugin.xml
 
 			if (ant.properties["app.server.type"] == "tomcat") {
 				task compileJSP(dependsOn: "compile-jsp")
-			}
-
-			if (FileUtil.exists(project, "docroot/WEB-INF/service.xml")) {
-				task buildService(dependsOn: "build-service")
-				task buildWSDD(dependsOn: "build-wsdd")
 			}
 		}
 

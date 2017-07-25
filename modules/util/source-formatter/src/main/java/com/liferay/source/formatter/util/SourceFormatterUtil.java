@@ -314,7 +314,8 @@ public class SourceFormatterUtil {
 	}
 
 	private static List<String> _scanForFiles(
-			String baseDir, final List<PathMatcher> excludeDirPathMatchers,
+			final String baseDir,
+			final List<PathMatcher> excludeDirPathMatchers,
 			final List<PathMatcher> excludeFilePathMatchers,
 			final List<PathMatcher> includeFilePathMatchers,
 			final boolean includeSubrepositories)
@@ -337,18 +338,25 @@ public class SourceFormatterUtil {
 					}
 
 					if (!includeSubrepositories) {
-						Path gitRepoPath = dirPath.resolve(".gitrepo");
+						String baseDirPath = SourceUtil.getAbsolutePath(
+							baseDir);
+						String currentDirPath = SourceUtil.getAbsolutePath(
+							dirPath);
 
-						if (Files.exists(gitRepoPath)) {
-							try {
-								String content = FileUtil.read(
-									gitRepoPath.toFile());
+						if (!baseDirPath.equals(currentDirPath)) {
+							Path gitRepoPath = dirPath.resolve(".gitrepo");
 
-								if (content.contains("mode = pull")) {
-									return FileVisitResult.SKIP_SUBTREE;
+							if (Files.exists(gitRepoPath)) {
+								try {
+									String content = FileUtil.read(
+										gitRepoPath.toFile());
+
+									if (content.contains("mode = pull")) {
+										return FileVisitResult.SKIP_SUBTREE;
+									}
 								}
-							}
-							catch (Exception e) {
+								catch (Exception e) {
+								}
 							}
 						}
 					}

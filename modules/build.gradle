@@ -103,7 +103,7 @@ gradle.beforeProject {
 		pluginManager.withPlugin("com.liferay.ant.plugin") {
 			task buildLang(dependsOn: "build-lang")
 
-			// See compile-jsp in build-common-plugin.xml
+			// See "compile-jsp" target in tools/sdk/build-common-plugin.xml
 
 			if (ant.properties["app.server.type"] == "tomcat") {
 				task compileJSP(dependsOn: "compile-jsp")

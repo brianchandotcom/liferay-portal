@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {"javax.portlet.name=" + NotificationsPortletKeys.NOTIFICATIONS},
 	service = PortletConfigurationIcon.class
 )
-public class MarkAsReadPortletConfigurationIcon
+public class MarkAllNotificationsAsReadPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	@Override

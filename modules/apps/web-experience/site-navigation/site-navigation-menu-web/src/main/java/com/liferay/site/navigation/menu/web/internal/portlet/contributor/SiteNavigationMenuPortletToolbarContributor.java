@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -106,6 +107,11 @@ public class SiteNavigationMenuPortletToolbarContributor
 
 		portletURL.setParameter(
 			"privateLayout", String.valueOf(layout.isPrivateLayout()));
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		portletURL.setParameter(
+			"portletResource", portletDisplay.getPortletName());
 
 		urlMenuItem.setURL(portletURL.toString());
 

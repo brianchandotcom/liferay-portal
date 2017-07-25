@@ -49,7 +49,7 @@ public class MultiVMEhcachePortalCacheManagerConfigurator
 			PropsKeys.EHCACHE_BOOTSTRAP_CACHE_LOADER_PROPERTIES +
 				StringPool.PERIOD,
 			true);
-		_clusterEnabled = GetterUtil.getBoolean(
+		clusterEnabled = GetterUtil.getBoolean(
 			props.get(PropsKeys.CLUSTER_LINK_ENABLED));
 		_defaultBootstrapLoaderPropertiesString = props.get(
 			PropsKeys.EHCACHE_BOOTSTRAP_CACHE_LOADER_PROPERTIES_DEFAULT);
@@ -65,7 +65,7 @@ public class MultiVMEhcachePortalCacheManagerConfigurator
 	protected boolean isRequireSerialization(
 		CacheConfiguration cacheConfiguration) {
 
-		if (_clusterEnabled) {
+		if (clusterEnabled) {
 			return true;
 		}
 
@@ -80,7 +80,7 @@ public class MultiVMEhcachePortalCacheManagerConfigurator
 			super.parseCacheListenerConfigurations(
 				cacheConfiguration, usingDefault);
 
-		if (!_clusterEnabled) {
+		if (!clusterEnabled) {
 			return portalCacheConfiguration;
 		}
 
@@ -125,9 +125,10 @@ public class MultiVMEhcachePortalCacheManagerConfigurator
 		this.props = props;
 	}
 
+	protected boolean clusterEnabled;
+
 	private boolean _bootstrapLoaderEnabled;
 	private Properties _bootstrapLoaderProperties;
-	private boolean _clusterEnabled;
 	private String _defaultBootstrapLoaderPropertiesString;
 	private String _defaultReplicatorPropertiesString;
 	private Properties _replicatorProperties;

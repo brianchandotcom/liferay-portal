@@ -841,6 +841,14 @@ public interface PropsKeys {
 
 	public static final String EHCACHE_PORTAL_CACHE_MANAGER_JMX_ENABLED = "ehcache.portal.cache.manager.jmx.enabled";
 
+	public static final String EHCACHE_RMI_PEER_LISTENER_FACTORY_CLASS = "ehcache.rmi.peer.listener.factory.class";
+
+	public static final String EHCACHE_RMI_PEER_LISTENER_FACTORY_PROPERTIES = "ehcache.rmi.peer.listener.factory.properties";
+
+	public static final String EHCACHE_RMI_PEER_PROVIDER_FACTORY_CLASS = "ehcache.rmi.peer.provider.factory.class";
+
+	public static final String EHCACHE_RMI_PEER_PROVIDER_FACTORY_PROPERTIES = "ehcache.rmi.peer.provider.factory.properties";
+
 	public static final String EHCACHE_SINGLE_VM_CONFIG_LOCATION = "ehcache.single.vm.config.location";
 
 	public static final String EHCACHE_SOCKET_SO_TIMEOUT = "ehcache.socket.so.timeout";

@@ -2491,38 +2491,11 @@ ${output.content}</echo>
 								}
 							}
 
-							ArrayList licensingWatchList = new ArrayList();
+							String licensing_watch_list = project.getProperty("licensing.watch.list");
 
-							fileReader = null;
+							String[] licensing_watch_filenames = licensing_watch_list.split(",");
 
-							try {
-
-								fileReader = new FileReader(project_dir + "/licensingWatchList");
-
-								BufferedReader bufferedReader = null;
-
-								try {
-									bufferedReader = new BufferedReader(fileReader);
-
-									String line = bufferedReader.readLine();
-
-									while (line != null) {
-										licensingWatchList.add(line);
-
-										line = bufferedReader.readLine();
-									}
-								}
-								finally {
-									if (bufferedReader != null) {
-										bufferedReader.close();
-									}
-								}
-							}
-							finally {
-								if (fileReader != null) {
-									fileReader.close();
-								}
-							}
+							ArrayList licensingWatchList = new ArrayList(Arrays.asList(licensing_watch_filenames));
 
 							for (int i = 0; i < modifiedList.size(); i++){
 								if (licensingWatchList.contains( modifiedList.get(i) ) ){

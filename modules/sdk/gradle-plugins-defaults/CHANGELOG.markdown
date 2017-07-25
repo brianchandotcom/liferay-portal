@@ -1796,6 +1796,13 @@ a theme project.
 ### Changed
 - [LPS-72347]: Update the [Liferay Gradle Plugins] dependency to version 3.4.14.
 
+## 4.2.0 - 2017-07-26
+
+### Added
+- [LPS-73655]: Add new task type called `CopyIvyDependenciesTask` which allows
+to download dependencies declared in an `ivy.xml` file via Gradle.
+- [LPS-73655]: Download Ivy dependencies of Ant plugins via Gradle.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
@@ -1987,6 +1994,7 @@ a theme project.
 [LPS-73607]: https://issues.liferay.com/browse/LPS-73607
 [LPS-73642]: https://issues.liferay.com/browse/LPS-73642
 [LPS-73652]: https://issues.liferay.com/browse/LPS-73652
+[LPS-73655]: https://issues.liferay.com/browse/LPS-73655
 [LPS-73807]: https://issues.liferay.com/browse/LPS-73807
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841

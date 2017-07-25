@@ -1782,8 +1782,8 @@ available.
 ## 4.1.0 - 2017-07-24
 
 ### Added
-- [LPS-72854]: Allow to apply [Liferay Gradle Plugins Lang Merger] to a theme
-project.
+- [LPS-72854]: Allow the [Liferay Gradle Plugins Lang Merger] to be applied to
+a theme project.
 
 ## 4.1.1 - 2017-07-25
 

@@ -22,7 +22,6 @@ import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -35,6 +34,7 @@ import java.lang.reflect.Method;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -51,17 +51,27 @@ import org.mockito.stubbing.Answer;
  */
 public class SoyTestHelper {
 
-	public Template getTemplate(List<String> fileNames) {
-		List<TemplateResource> templateResources = getTemplateResources(
-			fileNames);
-
-		return _soyManager.getTemplate(templateResources, false);
+	public SoyManager getSoyManager() {
+		return _soyManager;
 	}
 
-	public Template getTemplate(String fileName) {
+	public SoyTemplate getSoyTemplate(
+		List<TemplateResource> templateResources) {
+
+		return (SoyTemplate)_soyManager.getTemplate(templateResources, false);
+	}
+
+	public SoyTemplate getSoyTemplate(String fileName) {
 		TemplateResource templateResource = getTemplateResource(fileName);
 
-		return _soyManager.getTemplate(templateResource, false);
+		return (SoyTemplate)_soyManager.getTemplate(templateResource, false);
+	}
+
+	public SoyTemplate getSoyTemplate(String... fileNames) {
+		List<TemplateResource> templateResources = getTemplateResources(
+			Arrays.asList(fileNames));
+
+		return getSoyTemplate(templateResources);
 	}
 
 	public void setUp() throws Exception {
@@ -180,8 +190,6 @@ public class SoyTestHelper {
 					SoyTofuCacheBag value = (SoyTofuCacheBag)args[1];
 
 					cache.put(key, value);
-
-					System.out.println("Putted");
 
 					return null;
 				}

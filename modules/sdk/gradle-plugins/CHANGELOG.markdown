@@ -2010,6 +2010,11 @@ version 1.0.160.
 
 ## 3.4.15 - 2017-07-26
 
+### Added
+- [LPS-73818]: Automatically configure the `cleanServiceBuilder` task to read
+the `portal.properties` file contained in `portal-impl.jar`, if no other portal
+properties can be found.
+
 ### Changed
 - [LPS-72705]: Update the [Liferay Gradle Plugins Source Formatter] dependency
 to version 2.0.42.
@@ -2194,4 +2199,5 @@ to version 2.0.42.
 [LPS-73584]: https://issues.liferay.com/browse/LPS-73584
 [LPS-73600]: https://issues.liferay.com/browse/LPS-73600
 [LPS-73642]: https://issues.liferay.com/browse/LPS-73642
+[LPS-73818]: https://issues.liferay.com/browse/LPS-73818
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

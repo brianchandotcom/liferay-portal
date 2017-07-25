@@ -6,12 +6,12 @@
 	</div>
 
 	<div class="portlet-layout row">
-		<div class="col-md-3 col-sm-4 portlet-column portlet-column-first" id="column-2">
-			$processor.processColumn("column-1", "portlet-column-content portlet-column-content-second")
+		<div class="col-md-3 col-sm-4 portlet-column portlet-column-second" id="column-2">
+			$processor.processColumn("column-2", "portlet-column-content portlet-column-content-second")
 		</div>
 
 		<div class="col-md-9 col-sm-8 portlet-column portlet-column-last" id="column-3">
-			$processor.processColumn("column-2", "portlet-column-content portlet-column-content-last")
+			$processor.processColumn("column-3", "portlet-column-content portlet-column-content-last")
 		</div>
 	</div>
 </div>

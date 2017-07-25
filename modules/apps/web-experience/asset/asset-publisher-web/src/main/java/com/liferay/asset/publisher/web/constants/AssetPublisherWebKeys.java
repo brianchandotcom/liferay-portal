@@ -22,6 +22,9 @@ package com.liferay.asset.publisher.web.constants;
  */
 public class AssetPublisherWebKeys {
 
+	public static final String ASSET_PUBLISHER_CONFIGURATION_ACTION_REGISTRY =
+		"ASSET_PUBLISHER_CONFIGURATION_ACTION_REGISTRY";
+
 	public static final String ASSET_PUBLISHER_CUSTOMIZER =
 		"ASSET_PUBLISHER_CUSTOMIZER";
 

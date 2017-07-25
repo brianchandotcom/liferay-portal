@@ -78,7 +78,7 @@
 			<var name="dmDocumentTitle" value="Test XML Title" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoDMDocumentCP">
+		<execute macro="DMNavigator#gotoDocumentPermissionsCP">
 			<var name="dmDocumentTitle" value="Test XML Title" />
 		</execute>
 
@@ -103,7 +103,7 @@
 			<var name="dmDocumentTitle" value="Test XSL Title" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoDMDocumentCP">
+		<execute macro="DMNavigator#gotoDocumentPermissionsCP">
 			<var name="dmDocumentTitle" value="Test XSL Title" />
 		</execute>
 
@@ -208,7 +208,7 @@
 			<var name="dmDocumentTitle" value="Test Corrupt XML Title" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoDMDocumentCP">
+		<execute macro="DMNavigator#gotoDocumentPermissionsCP">
 			<var name="dmDocumentTitle" value="Test Corrupt XML Title" />
 		</execute>
 
@@ -233,7 +233,7 @@
 			<var name="dmDocumentTitle" value="Test XSL Title" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoDMDocumentCP">
+		<execute macro="DMNavigator#gotoDocumentPermissionsCP">
 			<var name="dmDocumentTitle" value="Test XSL Title" />
 		</execute>
 
@@ -326,7 +326,7 @@
 			<var name="dmDocumentTitle" value="Test XML Title" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoDMDocumentCP">
+		<execute macro="DMNavigator#gotoDocumentPermissionsCP">
 			<var name="dmDocumentTitle" value="Test XML Title" />
 		</execute>
 
@@ -351,7 +351,7 @@
 			<var name="dmDocumentTitle" value="Test Corrupt XSL Title" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoDMDocumentCP">
+		<execute macro="DMNavigator#gotoDocumentPermissionsCP">
 			<var name="dmDocumentTitle" value="Test Corrupt XSL Title" />
 		</execute>
 
@@ -443,7 +443,7 @@
 			<var name="dmDocumentTitle" value="Test XML Title" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoDMDocumentCP">
+		<execute macro="DMNavigator#gotoDocumentPermissionsCP">
 			<var name="dmDocumentTitle" value="Test XML Title" />
 		</execute>
 
@@ -468,7 +468,7 @@
 			<var name="dmDocumentTitle" value="Test XSL Title" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoDMDocumentCP">
+		<execute macro="DMNavigator#gotoDocumentPermissionsCP">
 			<var name="dmDocumentTitle" value="Test XSL Title" />
 		</execute>
 

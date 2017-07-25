@@ -643,7 +643,7 @@
 			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoDMDocumentCP">
+		<execute macro="DMNavigator#gotoDocumentPermissionsCP">
 			<var name="dmDocumentTitle" value="Test Document" />
 		</execute>
 
@@ -1236,7 +1236,7 @@
 			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoDMDocumentCP">
+		<execute macro="DMNavigator#gotoDocumentPermissionsCP">
 			<var name="dmDocumentTitle" value="Test Document" />
 		</execute>
 

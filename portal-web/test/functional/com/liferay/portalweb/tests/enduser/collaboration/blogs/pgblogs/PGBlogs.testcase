@@ -1624,7 +1624,7 @@
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoBlogsEntryPG" />
+		<execute macro="BlogsNavigator#gotoBlogsEntryPermissionsPG" />
 
 		<execute macro="Role#removePermissionPG">
 			<var name="entryTitle" value="Blogs Entry Title" />

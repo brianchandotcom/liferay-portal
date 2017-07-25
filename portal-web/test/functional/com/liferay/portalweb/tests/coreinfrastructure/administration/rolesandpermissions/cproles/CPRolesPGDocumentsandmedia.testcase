@@ -338,9 +338,12 @@
 
 		<execute macro="DMDocument#enableActionsMenuOnPortlet" />
 
-		<execute macro="PermissionsInline#gotoDMFolderPG">
-			<var name="dmFolderName" value="DM Folder Name" />
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoFolderPermissions">
+			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
 		<execute macro="Role#definePermissionPG">
@@ -374,9 +377,12 @@
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoDMFolderPG">
-			<var name="dmFolderName" value="DM Folder Name" />
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoFolderPermissions">
+			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
 		<execute macro="Role#removePermissionPG">
@@ -442,9 +448,12 @@
 
 		<execute macro="DMDocument#enableActionsMenuOnPortlet" />
 
-		<execute macro="PermissionsInline#gotoDMFolderPG">
-			<var name="dmFolderName" value="DM Folder Name" />
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoFolderPermissions">
+			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
 		<execute macro="Role#removePermissionPG">
@@ -466,9 +475,12 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoDMFolderPG">
-			<var name="dmFolderName" value="DM Folder Name" />
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoFolderPermissions">
+			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
 		<execute macro="Role#definePermissionPG">

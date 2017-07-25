@@ -1841,7 +1841,7 @@
 			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoDMDocumentCP">
+		<execute macro="DMNavigator#gotoDocumentPermissionsCP">
 			<var name="dmDocumentTitle" value="DM Folder Name" />
 		</execute>
 
@@ -1860,7 +1860,7 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoDMDocumentCP">
+		<execute macro="DMNavigator#gotoDocumentPermissionsCP">
 			<var name="dmDocumentTitle" value="DM SubFolder Name" />
 		</execute>
 
@@ -1902,7 +1902,7 @@
 			<var name="dmFolderName" value="DM SubFolder Name" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoDMDocumentCP">
+		<execute macro="DMNavigator#gotoDocumentPermissionsCP">
 			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
 

@@ -30,6 +30,32 @@ public class MathUtilTest {
 	}
 
 	@Test
+	public void testFactorialPositiveInteger() {
+		int expected = 1 * 2 * 3 * 4;
+
+		Assert.assertEquals(expected, MathUtil.factorial(4));
+	}
+
+	@Test
+	public void testFactorialZero() {
+		int expected = 1;
+
+		Assert.assertEquals(expected, MathUtil.factorial(0));
+	}
+
+	@Test
+	public void testIsEven() {
+		Assert.assertFalse(MathUtil.isEven(3));
+		Assert.assertTrue(MathUtil.isEven(4));
+	}
+
+	@Test
+	public void testIsOdd() {
+		Assert.assertFalse(MathUtil.isOdd(4));
+		Assert.assertTrue(MathUtil.isOdd(3));
+	}
+
+	@Test
 	public void testProductWithDoubleValues() {
 		double expected = 1.1 * 2.2 * 3.3 * 5.5 * 8.8;
 

@@ -36,11 +36,11 @@ import org.dom4j.io.SAXReader;
 public class SourceUtil {
 
 	public static String getAbsolutePath(File file) {
-		return _getAbsolutePath(file.toPath());
+		return getAbsolutePath(file.toPath());
 	}
 
 	public static String getAbsolutePath(String fileName) {
-		return _getAbsolutePath(Paths.get(fileName));
+		return getAbsolutePath(Paths.get(fileName));
 	}
 
 	public static String getIndent(String s) {
@@ -132,7 +132,7 @@ public class SourceUtil {
 		return level;
 	}
 
-	private static String _getAbsolutePath(Path filePath) {
+	public static String getAbsolutePath(Path filePath) {
 		filePath = filePath.toAbsolutePath();
 
 		filePath = filePath.normalize();

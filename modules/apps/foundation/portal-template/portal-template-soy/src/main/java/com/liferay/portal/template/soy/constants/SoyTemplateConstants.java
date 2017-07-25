@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.template.soy.utils;
+package com.liferay.portal.template.soy.constants;
 
 /**
  * @author Bruno Basto

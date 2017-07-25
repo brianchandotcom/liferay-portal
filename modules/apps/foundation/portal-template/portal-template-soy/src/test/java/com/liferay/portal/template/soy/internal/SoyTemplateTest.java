@@ -18,7 +18,7 @@ import com.google.template.soy.data.SoyMapData;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.template.TemplateContextHelper;
-import com.liferay.portal.template.soy.utils.SoyTemplateConstants;
+import com.liferay.portal.template.soy.constants.SoyTemplateConstants;
 
 import java.util.HashMap;
 import java.util.Map;

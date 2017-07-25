@@ -14,6 +14,8 @@
 
 package com.liferay.portal.template.soy.utils;
 
+import com.liferay.portal.template.soy.constants.SoyTemplateConstants;
+
 import java.util.HashMap;
 import java.util.Map;
 

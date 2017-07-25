@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ColorSchemeFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -62,6 +61,10 @@ public class ThemeModificationActionHandler implements ActionHandler {
 		Theme theme = _themeLocalService.fetchTheme(companyId, themeId);
 
 		if (theme == null) {
+			theme = _themeLocalService.getTheme(companyId, themeId);
+		}
+
+		if (theme == null) {
 			return;
 		}
 
@@ -74,7 +77,8 @@ public class ThemeModificationActionHandler implements ActionHandler {
 			companyId, themeId, colorSchemeId);
 
 		if (colorScheme == null) {
-			colorScheme = ColorSchemeFactoryUtil.getColorScheme();
+			colorScheme = _themeLocalService.getColorScheme(
+				companyId, themeId, colorSchemeId);
 		}
 
 		request.setAttribute(WebKeys.COLOR_SCHEME, colorScheme);

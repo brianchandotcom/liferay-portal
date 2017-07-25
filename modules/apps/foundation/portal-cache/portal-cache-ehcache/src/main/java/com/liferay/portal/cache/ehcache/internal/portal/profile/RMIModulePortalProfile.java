@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.cache.single.internal.portal.profile;
+package com.liferay.portal.cache.ehcache.internal.portal.profile;
 
-import com.liferay.portal.cache.single.internal.bootstrap.SinglePortalCacheBootstrapLoaderFactory;
-import com.liferay.portal.cache.single.internal.distribution.SinglePortalCacheReplicatorFactory;
+import com.liferay.portal.cache.ehcache.internal.configurator.RMIMultiVMEhcachePortalCacheManagerConfigurator;
 import com.liferay.portal.profile.BaseDSModulePortalProfile;
 import com.liferay.portal.profile.PortalProfile;
 
@@ -26,18 +25,17 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Shuyang Zhou
+ * @author Tina Tian
  */
 @Component(immediate = true, service = PortalProfile.class)
-public class ModulePortalProfile extends BaseDSModulePortalProfile {
+public class RMIModulePortalProfile extends BaseDSModulePortalProfile {
 
 	@Activate
 	public void activate(ComponentContext componentContext) {
 		init(
 			componentContext,
 			Collections.singleton(PortalProfile.PORTAL_PROFILE_NAME_CE),
-			SinglePortalCacheBootstrapLoaderFactory.class.getName(),
-			SinglePortalCacheReplicatorFactory.class.getName());
+			RMIMultiVMEhcachePortalCacheManagerConfigurator.class.getName());
 	}
 
 }

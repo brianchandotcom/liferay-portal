@@ -12,32 +12,24 @@
  * details.
  */
 
-package com.liferay.portal.cache.single.internal.distribution;
+package com.liferay.portal.cache.ehcache.multiple.internal.bootstrap;
 
-import com.liferay.portal.cache.PortalCacheReplicator;
-import com.liferay.portal.cache.PortalCacheReplicatorFactory;
-
-import java.io.Serializable;
+import com.liferay.portal.cache.PortalCacheBootstrapLoader;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Properties;
-
-import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Tina Tian
  */
-@Component(
-	enabled = false, immediate = true,
-	service = PortalCacheReplicatorFactory.class
-)
-public class SinglePortalCacheReplicatorFactory
-	implements PortalCacheReplicatorFactory {
+public class RMIBootstrapCacheLoaderFactory
+	extends net.sf.ehcache.distribution.RMIBootstrapCacheLoaderFactory {
 
-	@Override
-	public <K extends Serializable, V extends Serializable>
-		PortalCacheReplicator<K, V> create(Properties properties) {
-
-		return null;
+	protected boolean extractBootstrapAsynchronously(Properties properties) {
+		return GetterUtil.getBoolean(
+			properties.getProperty(
+				PortalCacheBootstrapLoader.BOOTSTRAP_ASYNCHRONOUSLY),
+			PortalCacheBootstrapLoader.DEFAULT_BOOTSTRAP_ASYNCHRONOUSLY);
 	}
 
 }

@@ -19,6 +19,11 @@ package com.liferay.portal.cache;
  */
 public interface PortalCacheBootstrapLoader {
 
+	public static final String BOOTSTRAP_ASYNCHRONOUSLY =
+		"bootstrapAsynchronously";
+
+	public static final boolean DEFAULT_BOOTSTRAP_ASYNCHRONOUSLY = true;
+
 	public boolean isAsynchronous();
 
 	public void loadPortalCache(

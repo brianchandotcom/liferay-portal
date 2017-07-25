@@ -19,6 +19,7 @@ import com.liferay.portal.cache.configuration.PortalCacheConfiguration;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -35,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Dante Wang
  */
 @Component(
-	immediate = true,
+	enabled = false, immediate = true,
 	service = MultiVMEhcachePortalCacheManagerConfigurator.class
 )
 public class MultiVMEhcachePortalCacheManagerConfigurator
@@ -49,23 +50,46 @@ public class MultiVMEhcachePortalCacheManagerConfigurator
 			PropsKeys.EHCACHE_BOOTSTRAP_CACHE_LOADER_PROPERTIES +
 				StringPool.PERIOD,
 			true);
-		_clusterEnabled = GetterUtil.getBoolean(
+		clusterEnabled = GetterUtil.getBoolean(
 			props.get(PropsKeys.CLUSTER_LINK_ENABLED));
-		_defaultBootstrapLoaderPropertiesString = props.get(
+		_defaultBootstrapLoaderPropertiesString = getPortalPropertiesString(
 			PropsKeys.EHCACHE_BOOTSTRAP_CACHE_LOADER_PROPERTIES_DEFAULT);
-		_defaultReplicatorPropertiesString = props.get(
-			PropsKeys.EHCACHE_CLUSTER_LINK_REPLICATOR_PROPERTIES_DEFAULT);
+		_defaultReplicatorPropertiesString = getPortalPropertiesString(
+			PropsKeys.EHCACHE_REPLICATOR_PROPERTIES_DEFAULT);
 		_replicatorProperties = props.getProperties(
-			PropsKeys.EHCACHE_CLUSTER_LINK_REPLICATOR_PROPERTIES +
+			PropsKeys.EHCACHE_REPLICATOR_PROPERTIES +
 				StringPool.PERIOD,
 			true);
+	}
+
+	protected String getPortalPropertiesString(String portalPropertyKey) {
+		String[] array = props.getArray(portalPropertyKey);
+
+		if (array.length == 0) {
+			return null;
+		}
+
+		if (array.length == 1) {
+			return array[0];
+		}
+
+		StringBundler sb = new StringBundler(array.length * 2);
+
+		for (int i = 0; i < array.length; i++) {
+			sb.append(array[i]);
+			sb.append(StringPool.COMMA);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		return sb.toString();
 	}
 
 	@Override
 	protected boolean isRequireSerialization(
 		CacheConfiguration cacheConfiguration) {
 
-		if (_clusterEnabled) {
+		if (clusterEnabled) {
 			return true;
 		}
 
@@ -80,7 +104,7 @@ public class MultiVMEhcachePortalCacheManagerConfigurator
 			super.parseCacheListenerConfigurations(
 				cacheConfiguration, usingDefault);
 
-		if (!_clusterEnabled) {
+		if (!clusterEnabled) {
 			return portalCacheConfiguration;
 		}
 
@@ -125,9 +149,10 @@ public class MultiVMEhcachePortalCacheManagerConfigurator
 		this.props = props;
 	}
 
+	protected boolean clusterEnabled;
+
 	private boolean _bootstrapLoaderEnabled;
 	private Properties _bootstrapLoaderProperties;
-	private boolean _clusterEnabled;
 	private String _defaultBootstrapLoaderPropertiesString;
 	private String _defaultReplicatorPropertiesString;
 	private Properties _replicatorProperties;

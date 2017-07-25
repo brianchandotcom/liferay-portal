@@ -130,11 +130,11 @@ when compiling a Java project.
 
 ### Added
 - [LPS-73472]: Recreate symbolic links in the `.bin` directories of
-`node_modules` if the `nodeModulesCacheDir` property of `NpmInstallTask` is set.
+`node_modules` if the `NpmInstallTask`'s `nodeModulesCacheDir` property is set.
 
 ### Removed
 - [LPS-73472]: Remove all deprecated methods.
-- [LPS-73472]: The property `nodeModulesCacheRemoveBinDirs` of `NpmInstallTask`
+- [LPS-73472]: The `NpmInstallTask`'s `nodeModulesCacheRemoveBinDirs` property
 is no longer available.
 
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906

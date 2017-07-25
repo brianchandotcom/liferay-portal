@@ -39,4 +39,14 @@ public class BasicUserDemoDataCreatorImpl
 		return createUser(companyId, emailAddress);
 	}
 
+	@Override
+	public User create(
+			long companyId, String screenName, String emailAddress,
+			String firstName, String lastName)
+		throws PortalException {
+
+		return createUser(
+			companyId, screenName, emailAddress, firstName, lastName);
+	}
+
 }

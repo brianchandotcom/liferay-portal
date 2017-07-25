@@ -370,16 +370,11 @@ do
 		fi
 	done
 
-	if [[ -z $(echo "${GRADLE_WRAPPER_JSON}" | grep '\"sha\"') ]] && [[ -z $(echo "${GRADLE_WRAPPER_JSON}" | grep -i '\"notfound\"') ]]
+	if [[ $(echo "${GRADLE_WRAPPER_JSON}" | grep '\"sha\"') ]]
 	then
-		warn "Skipping liferay/${SUBREPO}:${BRANCH}."
-		warn ".. Failed to get contents of the gradle/wrapper directory via the GitHub API."
-
-		continue
+		GRADLE_WRAPPER_JAR_REMOTE_SHA="$(echo "${GRADLE_WRAPPER_JSON}" | grep '"gradle-wrapper.jar"' | sed 's/",/&\'$'\n/g' | grep '"sha"' | sed 's/"[^"]*$//' | sed 's/.*"//')"
+		GRADLE_WRAPPER_PROPERTIES_REMOTE_SHA="$(echo "${GRADLE_WRAPPER_JSON}" | grep '"gradle-wrapper.properties"' | sed 's/",/&\'$'\n/g' | grep '"sha"' | sed 's/"[^"]*$//' | sed 's/.*"//')"
 	fi
-
-	GRADLE_WRAPPER_JAR_REMOTE_SHA="$(echo "${GRADLE_WRAPPER_JSON}" | grep '"gradle-wrapper.jar"' | sed 's/",/&\'$'\n/g' | grep '"sha"' | sed 's/"[^"]*$//' | sed 's/.*"//')"
-	GRADLE_WRAPPER_PROPERTIES_REMOTE_SHA="$(echo "${GRADLE_WRAPPER_JSON}" | grep '"gradle-wrapper.properties"' | sed 's/",/&\'$'\n/g' | grep '"sha"' | sed 's/"[^"]*$//' | sed 's/.*"//')"
 
 	#
 	# Retrieve the SHAs for gradlew and gradlew.bat. Also check the file mode

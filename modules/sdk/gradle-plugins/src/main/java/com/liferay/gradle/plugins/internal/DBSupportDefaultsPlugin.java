@@ -20,16 +20,21 @@ import com.liferay.gradle.plugins.db.support.tasks.BaseDBSupportTask;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.internal.util.FileUtil;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
+import com.liferay.gradle.util.Validator;
 
 import java.io.File;
+import java.io.IOException;
 
+import java.util.Properties;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
+import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.TaskContainer;
 
 /**
@@ -99,6 +104,66 @@ public class DBSupportDefaultsPlugin
 	private void _configureTaskBaseDBSupport(
 		BaseDBSupportTask baseDBSupportTask,
 		final LiferayExtension liferayExtension) {
+
+		baseDBSupportTask.doFirst(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					BaseDBSupportTask baseDBSupportTask =
+						(BaseDBSupportTask)task;
+
+					Logger logger = baseDBSupportTask.getLogger();
+
+					File propertiesFile = baseDBSupportTask.getPropertiesFile();
+					String url = baseDBSupportTask.getUrl();
+
+					if ((propertiesFile != null) || Validator.isNotNull(url)) {
+						return;
+					}
+
+					File jarFile = new File(
+						liferayExtension.getAppServerPortalDir(),
+						"WEB-INF/lib/portal-impl.jar");
+
+					if (!jarFile.exists()) {
+						return;
+					}
+
+					Properties properties = null;
+
+					try {
+						properties = FileUtil.readPropertiesFromZipFile(
+							jarFile, "portal.properties");
+					}
+					catch (IOException ioe) {
+						if (logger.isWarnEnabled()) {
+							logger.warn(
+								"Unable to read portal.properties file from {}",
+								jarFile);
+						}
+					}
+
+					if (properties == null) {
+						return;
+					}
+
+					url = properties.getProperty("jdbc.default.url");
+
+					url = url.replace(
+						"${liferay.home}",
+						FileUtil.getAbsolutePath(
+							liferayExtension.getLiferayHome()));
+
+					baseDBSupportTask.setUrl(url);
+
+					baseDBSupportTask.setUserName(
+						properties.getProperty("jdbc.default.username"));
+					baseDBSupportTask.setPassword(
+						properties.getProperty("jdbc.default.password"));
+				}
+
+			});
 
 		baseDBSupportTask.setPropertiesFile(
 			new Callable<File>() {

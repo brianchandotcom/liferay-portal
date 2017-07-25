@@ -249,6 +249,13 @@ public class KBArticlePersistenceTest {
 	}
 
 	@Test
+	public void testCountByResourcePrimKey() throws Exception {
+		_persistence.countByResourcePrimKey(RandomTestUtil.nextLong());
+
+		_persistence.countByResourcePrimKey(0L);
+	}
+
+	@Test
 	public void testCountByUuid() throws Exception {
 		_persistence.countByUuid(StringPool.BLANK);
 
@@ -273,13 +280,6 @@ public class KBArticlePersistenceTest {
 		_persistence.countByUuid_C(StringPool.NULL, 0L);
 
 		_persistence.countByUuid_C((String)null, 0L);
-	}
-
-	@Test
-	public void testCountByResourcePrimKey() throws Exception {
-		_persistence.countByResourcePrimKey(RandomTestUtil.nextLong());
-
-		_persistence.countByResourcePrimKey(0L);
 	}
 
 	@Test

@@ -601,6 +601,13 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 			return ${entity.varName}Persistence.findByPrimaryKey(primaryKeyObj);
 		}
 
+		<#if entity.isResourcedModel()>
+			@Override
+			public List<? extends PersistedModel> getPersistedModel(long resourcePrimKey) throws PortalException {
+				return ${entity.varName}Persistence.findByResourcePrimKey(resourcePrimKey);
+			}
+		</#if>
+
 		<#if entity.hasUuid() && entity.hasColumn("companyId")>
 			<#if entity.hasColumn("groupId") && !stringUtil.equals(entity.name, "Group")>
 				/**

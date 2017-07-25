@@ -112,6 +112,173 @@ public class KBArticleUtil {
 	}
 
 	/**
+	* Returns all the kb articles where resourcePrimKey = &#63;.
+	*
+	* @param resourcePrimKey the resource prim key
+	* @return the matching kb articles
+	*/
+	public static List<KBArticle> findByResourcePrimKey(long resourcePrimKey) {
+		return getPersistence().findByResourcePrimKey(resourcePrimKey);
+	}
+
+	/**
+	* Returns a range of all the kb articles where resourcePrimKey = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param resourcePrimKey the resource prim key
+	* @param start the lower bound of the range of kb articles
+	* @param end the upper bound of the range of kb articles (not inclusive)
+	* @return the range of matching kb articles
+	*/
+	public static List<KBArticle> findByResourcePrimKey(long resourcePrimKey,
+		int start, int end) {
+		return getPersistence()
+				   .findByResourcePrimKey(resourcePrimKey, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the kb articles where resourcePrimKey = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param resourcePrimKey the resource prim key
+	* @param start the lower bound of the range of kb articles
+	* @param end the upper bound of the range of kb articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching kb articles
+	*/
+	public static List<KBArticle> findByResourcePrimKey(long resourcePrimKey,
+		int start, int end, OrderByComparator<KBArticle> orderByComparator) {
+		return getPersistence()
+				   .findByResourcePrimKey(resourcePrimKey, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the kb articles where resourcePrimKey = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param resourcePrimKey the resource prim key
+	* @param start the lower bound of the range of kb articles
+	* @param end the upper bound of the range of kb articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching kb articles
+	*/
+	public static List<KBArticle> findByResourcePrimKey(long resourcePrimKey,
+		int start, int end, OrderByComparator<KBArticle> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByResourcePrimKey(resourcePrimKey, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first kb article in the ordered set where resourcePrimKey = &#63;.
+	*
+	* @param resourcePrimKey the resource prim key
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching kb article
+	* @throws NoSuchArticleException if a matching kb article could not be found
+	*/
+	public static KBArticle findByResourcePrimKey_First(long resourcePrimKey,
+		OrderByComparator<KBArticle> orderByComparator)
+		throws com.liferay.knowledge.base.exception.NoSuchArticleException {
+		return getPersistence()
+				   .findByResourcePrimKey_First(resourcePrimKey,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first kb article in the ordered set where resourcePrimKey = &#63;.
+	*
+	* @param resourcePrimKey the resource prim key
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching kb article, or <code>null</code> if a matching kb article could not be found
+	*/
+	public static KBArticle fetchByResourcePrimKey_First(long resourcePrimKey,
+		OrderByComparator<KBArticle> orderByComparator) {
+		return getPersistence()
+				   .fetchByResourcePrimKey_First(resourcePrimKey,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last kb article in the ordered set where resourcePrimKey = &#63;.
+	*
+	* @param resourcePrimKey the resource prim key
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching kb article
+	* @throws NoSuchArticleException if a matching kb article could not be found
+	*/
+	public static KBArticle findByResourcePrimKey_Last(long resourcePrimKey,
+		OrderByComparator<KBArticle> orderByComparator)
+		throws com.liferay.knowledge.base.exception.NoSuchArticleException {
+		return getPersistence()
+				   .findByResourcePrimKey_Last(resourcePrimKey,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last kb article in the ordered set where resourcePrimKey = &#63;.
+	*
+	* @param resourcePrimKey the resource prim key
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
+	*/
+	public static KBArticle fetchByResourcePrimKey_Last(long resourcePrimKey,
+		OrderByComparator<KBArticle> orderByComparator) {
+		return getPersistence()
+				   .fetchByResourcePrimKey_Last(resourcePrimKey,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the kb articles before and after the current kb article in the ordered set where resourcePrimKey = &#63;.
+	*
+	* @param kbArticleId the primary key of the current kb article
+	* @param resourcePrimKey the resource prim key
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next kb article
+	* @throws NoSuchArticleException if a kb article with the primary key could not be found
+	*/
+	public static KBArticle[] findByResourcePrimKey_PrevAndNext(
+		long kbArticleId, long resourcePrimKey,
+		OrderByComparator<KBArticle> orderByComparator)
+		throws com.liferay.knowledge.base.exception.NoSuchArticleException {
+		return getPersistence()
+				   .findByResourcePrimKey_PrevAndNext(kbArticleId,
+			resourcePrimKey, orderByComparator);
+	}
+
+	/**
+	* Removes all the kb articles where resourcePrimKey = &#63; from the database.
+	*
+	* @param resourcePrimKey the resource prim key
+	*/
+	public static void removeByResourcePrimKey(long resourcePrimKey) {
+		getPersistence().removeByResourcePrimKey(resourcePrimKey);
+	}
+
+	/**
+	* Returns the number of kb articles where resourcePrimKey = &#63;.
+	*
+	* @param resourcePrimKey the resource prim key
+	* @return the number of matching kb articles
+	*/
+	public static int countByResourcePrimKey(long resourcePrimKey) {
+		return getPersistence().countByResourcePrimKey(resourcePrimKey);
+	}
+
+	/**
 	* Returns all the kb articles where uuid = &#63;.
 	*
 	* @param uuid the uuid
@@ -498,173 +665,6 @@ public class KBArticleUtil {
 	*/
 	public static int countByUuid_C(java.lang.String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
-	}
-
-	/**
-	* Returns all the kb articles where resourcePrimKey = &#63;.
-	*
-	* @param resourcePrimKey the resource prim key
-	* @return the matching kb articles
-	*/
-	public static List<KBArticle> findByResourcePrimKey(long resourcePrimKey) {
-		return getPersistence().findByResourcePrimKey(resourcePrimKey);
-	}
-
-	/**
-	* Returns a range of all the kb articles where resourcePrimKey = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param resourcePrimKey the resource prim key
-	* @param start the lower bound of the range of kb articles
-	* @param end the upper bound of the range of kb articles (not inclusive)
-	* @return the range of matching kb articles
-	*/
-	public static List<KBArticle> findByResourcePrimKey(long resourcePrimKey,
-		int start, int end) {
-		return getPersistence()
-				   .findByResourcePrimKey(resourcePrimKey, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the kb articles where resourcePrimKey = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param resourcePrimKey the resource prim key
-	* @param start the lower bound of the range of kb articles
-	* @param end the upper bound of the range of kb articles (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching kb articles
-	*/
-	public static List<KBArticle> findByResourcePrimKey(long resourcePrimKey,
-		int start, int end, OrderByComparator<KBArticle> orderByComparator) {
-		return getPersistence()
-				   .findByResourcePrimKey(resourcePrimKey, start, end,
-			orderByComparator);
-	}
-
-	/**
-	* Returns an ordered range of all the kb articles where resourcePrimKey = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param resourcePrimKey the resource prim key
-	* @param start the lower bound of the range of kb articles
-	* @param end the upper bound of the range of kb articles (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching kb articles
-	*/
-	public static List<KBArticle> findByResourcePrimKey(long resourcePrimKey,
-		int start, int end, OrderByComparator<KBArticle> orderByComparator,
-		boolean retrieveFromCache) {
-		return getPersistence()
-				   .findByResourcePrimKey(resourcePrimKey, start, end,
-			orderByComparator, retrieveFromCache);
-	}
-
-	/**
-	* Returns the first kb article in the ordered set where resourcePrimKey = &#63;.
-	*
-	* @param resourcePrimKey the resource prim key
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching kb article
-	* @throws NoSuchArticleException if a matching kb article could not be found
-	*/
-	public static KBArticle findByResourcePrimKey_First(long resourcePrimKey,
-		OrderByComparator<KBArticle> orderByComparator)
-		throws com.liferay.knowledge.base.exception.NoSuchArticleException {
-		return getPersistence()
-				   .findByResourcePrimKey_First(resourcePrimKey,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the first kb article in the ordered set where resourcePrimKey = &#63;.
-	*
-	* @param resourcePrimKey the resource prim key
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching kb article, or <code>null</code> if a matching kb article could not be found
-	*/
-	public static KBArticle fetchByResourcePrimKey_First(long resourcePrimKey,
-		OrderByComparator<KBArticle> orderByComparator) {
-		return getPersistence()
-				   .fetchByResourcePrimKey_First(resourcePrimKey,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the last kb article in the ordered set where resourcePrimKey = &#63;.
-	*
-	* @param resourcePrimKey the resource prim key
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching kb article
-	* @throws NoSuchArticleException if a matching kb article could not be found
-	*/
-	public static KBArticle findByResourcePrimKey_Last(long resourcePrimKey,
-		OrderByComparator<KBArticle> orderByComparator)
-		throws com.liferay.knowledge.base.exception.NoSuchArticleException {
-		return getPersistence()
-				   .findByResourcePrimKey_Last(resourcePrimKey,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the last kb article in the ordered set where resourcePrimKey = &#63;.
-	*
-	* @param resourcePrimKey the resource prim key
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	*/
-	public static KBArticle fetchByResourcePrimKey_Last(long resourcePrimKey,
-		OrderByComparator<KBArticle> orderByComparator) {
-		return getPersistence()
-				   .fetchByResourcePrimKey_Last(resourcePrimKey,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the kb articles before and after the current kb article in the ordered set where resourcePrimKey = &#63;.
-	*
-	* @param kbArticleId the primary key of the current kb article
-	* @param resourcePrimKey the resource prim key
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next kb article
-	* @throws NoSuchArticleException if a kb article with the primary key could not be found
-	*/
-	public static KBArticle[] findByResourcePrimKey_PrevAndNext(
-		long kbArticleId, long resourcePrimKey,
-		OrderByComparator<KBArticle> orderByComparator)
-		throws com.liferay.knowledge.base.exception.NoSuchArticleException {
-		return getPersistence()
-				   .findByResourcePrimKey_PrevAndNext(kbArticleId,
-			resourcePrimKey, orderByComparator);
-	}
-
-	/**
-	* Removes all the kb articles where resourcePrimKey = &#63; from the database.
-	*
-	* @param resourcePrimKey the resource prim key
-	*/
-	public static void removeByResourcePrimKey(long resourcePrimKey) {
-		getPersistence().removeByResourcePrimKey(resourcePrimKey);
-	}
-
-	/**
-	* Returns the number of kb articles where resourcePrimKey = &#63;.
-	*
-	* @param resourcePrimKey the resource prim key
-	* @return the number of matching kb articles
-	*/
-	public static int countByResourcePrimKey(long resourcePrimKey) {
-		return getPersistence().countByResourcePrimKey(resourcePrimKey);
 	}
 
 	/**

@@ -725,6 +725,12 @@ public class WikiPageLocalServiceUtil {
 		return getService().getPages(userId, nodeId, status, start, end);
 	}
 
+	public static java.util.List<?extends com.liferay.portal.kernel.model.PersistedModel> getPersistedModel(
+		long resourcePrimKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(resourcePrimKey);
+	}
+
 	public static java.util.List<com.liferay.wiki.model.WikiPage> getRecentChanges(
 		long groupId, long nodeId, int start, int end) {
 		return getService().getRecentChanges(groupId, nodeId, start, end);

@@ -605,6 +605,13 @@ public class KBArticleLocalServiceWrapper implements KBArticleLocalService,
 	}
 
 	@Override
+	public java.util.List<?extends com.liferay.portal.kernel.model.PersistedModel> getPersistedModel(
+		long resourcePrimKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbArticleLocalService.getPersistedModel(resourcePrimKey);
+	}
+
+	@Override
 	public java.util.List<com.liferay.knowledge.base.model.KBArticle> getSectionsKBArticles(
 		long groupId, java.lang.String[] sections, int status, int start,
 		int end,

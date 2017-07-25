@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.service.Base${sessionTypeName}Service;
 import com.liferay.portal.kernel.service.Invokable${sessionTypeName}Service;
 import com.liferay.portal.kernel.service.PermissionedModelLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.PersistedResourcedModelLocalService;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -87,6 +88,9 @@ public interface ${entity.name}${sessionTypeName}Service
 	<#if stringUtil.equals(sessionTypeName, "Local") && entity.hasColumns()>
 		<#if entity.isPermissionedModel()>
 			, PermissionedModelLocalService
+		<#elseif entity.isResourcedModel()>
+			, PersistedModelLocalService
+			, PersistedResourcedModelLocalService
 		<#else>
 			, PersistedModelLocalService
 		</#if>

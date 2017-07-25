@@ -22,10 +22,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil;
+import com.liferay.portal.kernel.service.PersistedResourcedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.ratings.kernel.model.RatingsEntry;
@@ -121,7 +124,25 @@ public class RatingsEntryStagedModelDataHandler
 				PersistedModelLocalServiceRegistryUtil.
 					getPersistedModelLocalService(entry.getClassName());
 
-			persistedModelLocalService.getPersistedModel(newClassPK);
+			if (persistedModelLocalService instanceof
+					PersistedResourcedModelLocalService) {
+
+				PersistedResourcedModelLocalService
+					persistedResourcedModelLocalService =
+						(PersistedResourcedModelLocalService)
+							persistedModelLocalService;
+
+				List<? extends PersistedModel> persistedModels =
+					persistedResourcedModelLocalService.getPersistedModel(
+						newClassPK);
+
+				if (ListUtil.isEmpty(persistedModels)) {
+					return;
+				}
+			}
+			else {
+				persistedModelLocalService.getPersistedModel(newClassPK);
+			}
 		}
 		catch (PortalException pe) {
 			if (_log.isWarnEnabled()) {

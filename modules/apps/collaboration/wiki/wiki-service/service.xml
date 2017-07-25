@@ -119,9 +119,6 @@
 
 		<!-- Finder methods -->
 
-		<finder name="ResourcePrimKey" return-type="Collection">
-			<finder-column name="resourcePrimKey" />
-		</finder>
 		<finder name="NodeId" return-type="Collection">
 			<finder-column name="nodeId" />
 		</finder>

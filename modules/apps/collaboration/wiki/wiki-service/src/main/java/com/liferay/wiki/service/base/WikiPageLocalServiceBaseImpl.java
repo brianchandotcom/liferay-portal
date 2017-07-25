@@ -423,6 +423,12 @@ public abstract class WikiPageLocalServiceBaseImpl extends BaseLocalServiceImpl
 		return wikiPagePersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
+	@Override
+	public List<?extends PersistedModel> getPersistedModel(long resourcePrimKey)
+		throws PortalException {
+		return wikiPagePersistence.findByResourcePrimKey(resourcePrimKey);
+	}
+
 	/**
 	 * Returns all the wiki pages matching the UUID and company.
 	 *

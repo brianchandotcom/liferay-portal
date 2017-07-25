@@ -430,6 +430,12 @@ public abstract class KBArticleLocalServiceBaseImpl extends BaseLocalServiceImpl
 		return kbArticlePersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
+	@Override
+	public List<?extends PersistedModel> getPersistedModel(long resourcePrimKey)
+		throws PortalException {
+		return kbArticlePersistence.findByResourcePrimKey(resourcePrimKey);
+	}
+
 	/**
 	 * Returns all the kb articles matching the UUID and company.
 	 *

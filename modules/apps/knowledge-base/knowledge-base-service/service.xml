@@ -56,9 +56,6 @@
 
 		<!-- Finder methods -->
 
-		<finder name="ResourcePrimKey" return-type="Collection">
-			<finder-column name="resourcePrimKey" />
-		</finder>
 		<finder name="R_G" return-type="Collection">
 			<finder-column name="resourcePrimKey" />
 			<finder-column name="groupId" />

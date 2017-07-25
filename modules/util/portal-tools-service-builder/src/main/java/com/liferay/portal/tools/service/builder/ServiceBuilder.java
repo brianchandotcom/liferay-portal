@@ -5142,6 +5142,7 @@ public class ServiceBuilder {
 		List<EntityColumn> columnList = new ArrayList<>();
 
 		boolean permissionedModel = false;
+		boolean resourcedModel = false;
 
 		List<Element> columnElements = entityElement.elements("column");
 
@@ -5204,6 +5205,10 @@ public class ServiceBuilder {
 			String collectionEntity = columnElement.attributeValue("entity");
 
 			String mappingTable = columnElement.attributeValue("mapping-table");
+
+			if (columnName.equals("resourcePrimKey") && !primary) {
+				resourcedModel = true;
+			}
 
 			if (Validator.isNotNull(mappingTable)) {
 				if (_badTableNames.contains(mappingTable)) {
@@ -5407,6 +5412,20 @@ public class ServiceBuilder {
 				"finder-column");
 
 			finderColumnElement.addAttribute("name", "resourceBlockId");
+
+			finderElements.add(0, finderElement);
+		}
+
+		if (resourcedModel) {
+			Element finderElement = DocumentHelper.createElement("finder");
+
+			finderElement.addAttribute("name", "ResourcePrimKey");
+			finderElement.addAttribute("return-type", "Collection");
+
+			Element finderColumnElement = finderElement.addElement(
+				"finder-column");
+
+			finderColumnElement.addAttribute("name", "resourcePrimKey");
 
 			finderElements.add(0, finderElement);
 		}

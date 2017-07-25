@@ -559,6 +559,12 @@ public class KBArticleLocalServiceUtil {
 		return getService().getKBFolderKBArticles(groupId, kbFolderId);
 	}
 
+	public static java.util.List<?extends com.liferay.portal.kernel.model.PersistedModel> getPersistedModel(
+		long resourcePrimKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(resourcePrimKey);
+	}
+
 	public static java.util.List<com.liferay.knowledge.base.model.KBArticle> getSectionsKBArticles(
 		long groupId, java.lang.String[] sections, int status, int start,
 		int end,

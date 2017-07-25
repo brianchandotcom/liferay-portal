@@ -799,6 +799,13 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	}
 
 	@Override
+	public java.util.List<?extends com.liferay.portal.kernel.model.PersistedModel> getPersistedModel(
+		long resourcePrimKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPageLocalService.getPersistedModel(resourcePrimKey);
+	}
+
+	@Override
 	public java.util.List<com.liferay.wiki.model.WikiPage> getRecentChanges(
 		long groupId, long nodeId, int start, int end) {
 		return _wikiPageLocalService.getRecentChanges(groupId, nodeId, start,

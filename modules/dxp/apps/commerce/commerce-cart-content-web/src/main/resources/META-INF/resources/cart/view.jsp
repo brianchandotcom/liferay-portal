@@ -30,70 +30,65 @@ portletURL.setParameter("searchContainerId", "commerceCartItems");
 request.setAttribute("view.jsp-portletURL", portletURL);
 %>
 
-<div id="<portlet:namespace />cartItemsContainer">
-	<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" />
-		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
-		<aui:input name="type" type="hidden" value="<%= type %>" />
-
-		<div class="commerce-cart-items-container" id="<portlet:namespace />entriesContainer">
-			<liferay-ui:search-container
-				id="commerceCartItems"
-				iteratorURL="<%= portletURL %>"
-				searchContainer="<%= commerceCartItemSearchContainer %>"
+<div class="container-fluid-1280" id="<portlet:namespace />cartItemsContainer">
+	<div class="commerce-cart-items-container" id="<portlet:namespace />entriesContainer">
+		<liferay-ui:search-container
+			id="commerceCartItems"
+			iteratorURL="<%= portletURL %>"
+			searchContainer="<%= commerceCartItemSearchContainer %>"
+		>
+			<liferay-ui:search-container-row
+				className="com.liferay.commerce.cart.model.CommerceCartItem"
+				cssClass="entry-display-style"
+				keyProperty="CommerceCartItemId"
+				modelVar="commerceCartItem"
 			>
-				<liferay-ui:search-container-row
-					className="com.liferay.commerce.cart.model.CommerceCartItem"
-					cssClass="entry-display-style"
-					keyProperty="CommerceCartItemId"
-					modelVar="commerceCartItem"
+
+				<%
+				CPDefinition cpDefinition = commerceCartItem.getCPDefinition();
+
+				String thumbnailSrc = cpDefinition.getDefaultImageThumbnailSrc(themeDisplay);
+				%>
+
+				<liferay-ui:search-container-column-image
+					cssClass="table-cell-content"
+					name="product"
+					src="<%= thumbnailSrc %>"
+				/>
+
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-content"
+					name="description"
 				>
+					<a href="<%= commerceCartContentDisplayContext.getCPDefinitionURL(cpDefinition.getCPDefinitionId(), themeDisplay) %>">
+						<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>
+					</a>
+				</liferay-ui:search-container-column-text>
 
-					<%
-					CPDefinition cpDefinition = commerceCartItem.getCPDefinition();
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-content"
+				>
+					<portlet:actionURL name="editCommerceCartItem" var="deleteURL">
+						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="commerceCartItemId" value="<%= String.valueOf(commerceCartItem.getCommerceCartItemId()) %>" />
+						<portlet:param name="type" value="<%= String.valueOf(type) %>" />
+					</portlet:actionURL>
 
-					String thumbnailSrc = cpDefinition.getDefaultImageThumbnailSrc(themeDisplay);
-					%>
-
-					<liferay-ui:search-container-column-image
-						cssClass="table-cell-content"
-						name="product"
-						src="<%= thumbnailSrc %>"
+					<liferay-ui:icon-delete
+						label="<%= true %>"
+						url="<%= deleteURL %>"
 					/>
+				</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
-						name="description"
-					>
-						<a href="<%= commerceCartContentDisplayContext.getCPDefinitionURL(cpDefinition.getCPDefinitionId(), themeDisplay) %>">
-							<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>
-						</a>
-					</liferay-ui:search-container-column-text>
+				<liferay-ui:search-container-column-jsp
+					cssClass="table-cell-content"
+					name="quantity"
+					path="/cart/cart_item_quantity_select.jsp"
+				/>
+			</liferay-ui:search-container-row>
 
-					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
-					>
-						<portlet:actionURL name="editCommerceCartItem" var="deleteURL">
-							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-							<portlet:param name="redirect" value="<%= currentURL %>" />
-							<portlet:param name="commerceCartItemId" value="<%= String.valueOf(commerceCartItem.getCommerceCartItemId()) %>" />
-						</portlet:actionURL>
-
-						<liferay-ui:icon-delete
-							label="<%= true %>"
-							url="<%= deleteURL %>"
-						/>
-					</liferay-ui:search-container-column-text>
-
-					<liferay-ui:search-container-column-jsp
-						cssClass="table-cell-content"
-						name="quantity"
-						path="/cart/cart_item_quantity_select.jsp"
-					/>
-				</liferay-ui:search-container-row>
-
-				<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" searchContainer="<%= commerceCartItemSearchContainer %>" />
-			</liferay-ui:search-container>
-		</div>
-	</aui:form>
+			<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" searchContainer="<%= commerceCartItemSearchContainer %>" />
+		</liferay-ui:search-container>
+	</div>
 </div>

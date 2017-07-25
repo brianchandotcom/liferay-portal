@@ -51,8 +51,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @author Peter Shin
  * @author Brian Wing Shun Chan
+ * @author Peter Shin
+ * @author Jim Hinkey
+ * @author David Zhang
  */
 public class KnowledgeBaseUtil {
 

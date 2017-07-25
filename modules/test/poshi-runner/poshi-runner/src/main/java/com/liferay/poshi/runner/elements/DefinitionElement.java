@@ -73,6 +73,12 @@ public class DefinitionElement extends PoshiElement {
 
 		content.append("\n");
 
+		for (PoshiElement poshiElement : toPoshiElements(elements("var"))) {
+			content.append(poshiElement.toReadableSyntax());
+		}
+
+		content.append("\n");
+
 		for (PoshiElement poshiElement : toPoshiElements(elements("set-up"))) {
 			content.append(poshiElement.toReadableSyntax());
 		}

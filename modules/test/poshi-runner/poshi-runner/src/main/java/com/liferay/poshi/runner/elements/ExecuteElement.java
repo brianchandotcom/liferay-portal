@@ -80,6 +80,10 @@ public class ExecuteElement extends PoshiElement {
 
 		executeCommandName = executeCommandName.replace(".", "#");
 
+		if (!executeCommandName.contains("#") && (content.length() == 0)) {
+			executeType = "function";
+		}
+
 		addAttribute(executeType, executeCommandName);
 
 		if (content.length() == 0) {

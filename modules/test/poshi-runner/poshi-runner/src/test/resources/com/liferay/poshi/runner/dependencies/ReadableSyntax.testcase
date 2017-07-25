@@ -4,6 +4,8 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Smoke";
 
+	var userScreenName = "joeblogs";
+
 	setUp {
 		TestCase.setUpPortalInstance();
 
@@ -84,6 +86,8 @@ document.getElementById('demo').innerHTML = 'FAIL';
 		AssertElementPresent(locator1 = "Home#PAGE", value1 = "Welcome");
 
 		Click(locator1 = "Home#PAGE");
+
+		Refresh();
 
 		Type(value1 = "Welcome");
 

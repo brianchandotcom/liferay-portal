@@ -3,6 +3,8 @@
 	<property name="portal.upstream" value="true" />
 	<property name="testray.main.component.name" value="Smoke" />
 
+	<var name="userScreenName" value="joeblogs" />
+
 	<set-up>
 		<execute macro="TestCase#setUpPortalInstance" />
 
@@ -91,6 +93,8 @@ document.getElementById('demo').innerHTML = 'FAIL';
 		<execute function="AssertElementPresent" locator1="Home#PAGE" value1="Welcome" />
 
 		<execute function="Click" locator1="Home#PAGE" />
+
+		<execute function="Refresh" />
 
 		<execute function="Type" value1="Welcome" />
 

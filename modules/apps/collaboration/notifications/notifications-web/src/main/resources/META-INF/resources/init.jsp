@@ -24,23 +24,24 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.notifications.web.internal.util.comparator.PortletIdComparator" %><%@
+<%@ page import="com.liferay.notifications.web.internal.util.NotificationsUtil" %><%@
+page import="com.liferay.notifications.web.internal.util.comparator.PortletIdComparator" %><%@
 page import="com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker" %><%@
+page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.json.JSONObject" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Portlet" %><%@
 page import="com.liferay.portal.kernel.model.UserNotificationDelivery" %><%@
-page import="com.liferay.portal.kernel.model.UserNotificationDeliveryConstants" %><%@
 page import="com.liferay.portal.kernel.model.UserNotificationEvent" %><%@
 page import="com.liferay.portal.kernel.notifications.UserNotificationDefinition" %><%@
 page import="com.liferay.portal.kernel.notifications.UserNotificationDeliveryType" %><%@
 page import="com.liferay.portal.kernel.notifications.UserNotificationFeedEntry" %><%@
 page import="com.liferay.portal.kernel.notifications.UserNotificationManagerUtil" %><%@
+page import="com.liferay.portal.kernel.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portal.kernel.service.PortletLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.ServiceContextFactory" %><%@
 page import="com.liferay.portal.kernel.service.UserNotificationDeliveryLocalServiceUtil" %><%@
-page import="com.liferay.portal.kernel.service.UserNotificationEventLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
@@ -58,6 +59,8 @@ page import="com.liferay.taglib.search.ResultRow" %>
 page import="java.util.List" %><%@
 page import="java.util.Map" %><%@
 page import="java.util.TreeMap" %>
+
+<%@ page import="javax.portlet.PortletURL" %>
 
 <liferay-frontend:defineObjects />
 

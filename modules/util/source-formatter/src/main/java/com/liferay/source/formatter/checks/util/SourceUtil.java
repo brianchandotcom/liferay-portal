@@ -39,6 +39,15 @@ public class SourceUtil {
 		return getAbsolutePath(file.toPath());
 	}
 
+	public static String getAbsolutePath(Path filePath) {
+		filePath = filePath.toAbsolutePath();
+
+		filePath = filePath.normalize();
+
+		return StringUtil.replace(
+			filePath.toString(), CharPool.BACK_SLASH, CharPool.SLASH);
+	}
+
 	public static String getAbsolutePath(String fileName) {
 		return getAbsolutePath(Paths.get(fileName));
 	}
@@ -130,15 +139,6 @@ public class SourceUtil {
 		}
 
 		return level;
-	}
-
-	public static String getAbsolutePath(Path filePath) {
-		filePath = filePath.toAbsolutePath();
-
-		filePath = filePath.normalize();
-
-		return StringUtil.replace(
-			filePath.toString(), CharPool.BACK_SLASH, CharPool.SLASH);
 	}
 
 }

@@ -27,13 +27,13 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -106,12 +106,16 @@ public class DDMFormValuesHelperImpl implements DDMFormValuesHelper {
 		ddmFormFieldValue.setName(
 			jsonObject.getString(FIELD_CP_DEFINITION_OPTION_REL_ID));
 
-		String ddmFormFieldValueValue =
-			FIELD_VALUE_PREFIX +
-				jsonObject.getString(FIELD_CP_DEFINITION_OPTION_VALUE_REL_ID);
+		String cpDefinitionOptionValueRelId =
+			jsonObject.getString(FIELD_CP_DEFINITION_OPTION_VALUE_REL_ID);
 
-		ddmFormFieldValue.setValue(
-			new UnlocalizedValue(ddmFormFieldValueValue));
+		if (Validator.isNotNull(cpDefinitionOptionValueRelId)) {
+			String ddmFormFieldValueValue =
+				FIELD_VALUE_PREFIX + cpDefinitionOptionValueRelId;
+
+			ddmFormFieldValue.setValue(
+				new UnlocalizedValue(ddmFormFieldValueValue));
+		}
 
 		return ddmFormFieldValue;
 	}

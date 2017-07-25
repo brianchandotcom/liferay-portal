@@ -27,7 +27,7 @@ Role role = (Role)objArray[1];
 String confirmation = "are-you-sure-you-want-to-remove-this-permission";
 
 if (ResourceBlockLocalServiceUtil.isSupported(permission.getName())) {
-	confirmation = "removing-this-permission-will-remove-all-permissions-of-this-type-from-the-entity.-are-your-sure-you-want-to-remove-this-permission";
+	confirmation = LanguageUtil.format(request, "are-you-sure-you-want-to-remove-this-permission-this-will-remove-all-permissions-of-this-type-from-x", ResourceActionsUtil.getModelResource(request, permission.getName()));
 }
 %>
 

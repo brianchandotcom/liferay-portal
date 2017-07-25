@@ -320,7 +320,11 @@ public class LayoutAdminPortlet extends MVCPortlet {
 				layout.getLayoutSet(), themeDisplay);
 		}
 
-		MultiSessionMessages.add(actionRequest, "layoutAdded", layout);
+		String portletResource = ParamUtil.getString(
+			uploadPortletRequest, "portletResource");
+
+		MultiSessionMessages.add(
+			actionRequest, portletResource + "layoutAdded", layout);
 
 		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}

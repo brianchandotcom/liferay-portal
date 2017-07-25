@@ -562,9 +562,7 @@ public class ModulesStructureTest {
 						_addGradlePluginNames(
 							pluginNames, "com.liferay.gradle.plugins.",
 							buildGradlePath, "com.liferay.",
-							new String[] {
-								"lang.merger", "maven.plugin.builder"
-							});
+							new String[] {"maven.plugin.builder"});
 
 						return FileVisitResult.SKIP_SUBTREE;
 					}

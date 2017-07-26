@@ -19,10 +19,15 @@ import com.liferay.gradle.util.ArrayUtil;
 import groovy.lang.Closure;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 import org.gradle.api.AntBuilder;
 import org.gradle.api.Project;
@@ -59,6 +64,26 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 		}
 
 		return relativePath;
+	}
+
+	public static Properties readPropertiesFromZipFile(File file, String name)
+		throws IOException {
+
+		try (ZipFile zipFile = new ZipFile(file)) {
+			ZipEntry zipEntry = zipFile.getEntry(name);
+
+			if (zipEntry == null) {
+				return null;
+			}
+
+			Properties properties = new Properties();
+
+			try (InputStream inputStream = zipFile.getInputStream(zipEntry)) {
+				properties.load(inputStream);
+			}
+
+			return properties;
+		}
 	}
 
 	public static void touchFile(File file, long time) {

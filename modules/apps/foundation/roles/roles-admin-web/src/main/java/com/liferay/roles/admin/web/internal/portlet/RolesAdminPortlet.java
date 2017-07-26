@@ -29,7 +29,9 @@ import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocalCloseable;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.ResourceTypePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -38,9 +40,11 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.security.permission.comparator.ActionComparator;
 import com.liferay.portal.kernel.service.GroupService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceBlockLocalService;
 import com.liferay.portal.kernel.service.ResourceBlockService;
 import com.liferay.portal.kernel.service.ResourcePermissionService;
+import com.liferay.portal.kernel.service.ResourceTypePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -632,6 +636,20 @@ public class RolesAdminPortlet extends MVCPortlet {
 		long companyId = role.getCompanyId();
 		long roleId = role.getRoleId();
 
+		ResourceAction resourceAction =
+			_resourceActionLocalService.getResourceAction(
+				selResource, actionId);
+
+		ResourceTypePermission resourceTypePermission =
+			_resourceTypePermissionLocalService.fetchResourceTypePermission(
+				companyId, 0, selResource, roleId);
+
+		if (((resourceTypePermission != null) &&
+			 resourceTypePermission.hasAction(resourceAction)) == selected) {
+
+			return;
+		}
+
 		if (selected) {
 			if (scope == ResourceConstants.SCOPE_GROUP) {
 				_resourceBlockService.removeAllGroupScopePermissions(
@@ -723,9 +741,17 @@ public class RolesAdminPortlet extends MVCPortlet {
 	@Reference
 	private Portal _portal;
 
+	@Reference
+	private ResourceActionLocalService _resourceActionLocalService;
+
 	private ResourceBlockLocalService _resourceBlockLocalService;
 	private ResourceBlockService _resourceBlockService;
 	private ResourcePermissionService _resourcePermissionService;
+
+	@Reference
+	private ResourceTypePermissionLocalService
+		_resourceTypePermissionLocalService;
+
 	private RoleLocalService _roleLocalService;
 	private RoleService _roleService;
 	private UserService _userService;

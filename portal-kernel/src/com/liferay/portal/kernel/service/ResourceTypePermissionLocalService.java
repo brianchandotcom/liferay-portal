@@ -138,6 +138,10 @@ public interface ResourceTypePermissionLocalService extends BaseLocalService,
 		long resourceTypePermissionId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ResourceTypePermission fetchResourceTypePermission(long companyId,
+		long groupId, java.lang.String name, long roleId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ResourceTypePermission fetchResourceTypePermission(
 		long resourceTypePermissionId);
 

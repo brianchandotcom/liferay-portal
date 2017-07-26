@@ -199,7 +199,7 @@ public class NotificationsPortlet extends MVCPortlet {
 			String actionName = ParamUtil.getString(
 				actionRequest, ActionRequest.ACTION_NAME);
 
-			if (actionName.equals("deleteAll")) {
+			if (actionName.equals("deleteAllNotifications")) {
 				deleteAllNotifications(actionRequest, actionResponse);
 			}
 			else if (actionName.equals("deleteUserNotificationEvent")) {

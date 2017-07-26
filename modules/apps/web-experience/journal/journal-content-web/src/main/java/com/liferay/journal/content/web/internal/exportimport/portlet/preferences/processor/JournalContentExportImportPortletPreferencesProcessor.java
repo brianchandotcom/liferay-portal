@@ -31,7 +31,9 @@ import com.liferay.exportimport.portlet.preferences.processor.capability.Referen
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.journal.service.JournalArticleResourceLocalService;
 import com.liferay.journal.service.JournalContentSearchLocalService;
 import com.liferay.journal.service.permission.JournalPermission;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -147,12 +149,19 @@ public class JournalContentExportImportPortletPreferencesProcessor
 
 		JournalArticle article = null;
 
-		article = _journalArticleLocalService.fetchLatestArticle(
-			articleGroupId, articleId, WorkflowConstants.STATUS_APPROVED);
+		JournalArticleResource journalArticleResource =
+			_journalArticleResourceLocalService.fetchArticleResource(
+				articleGroupId, articleId);
 
-		if (article == null) {
+		if (journalArticleResource != null) {
+			int[] statuses = new int[] {
+				WorkflowConstants.STATUS_APPROVED,
+				WorkflowConstants.STATUS_EXPIRED,
+				WorkflowConstants.STATUS_SCHEDULED
+			};
+
 			article = _journalArticleLocalService.fetchLatestArticle(
-				articleGroupId, articleId, WorkflowConstants.STATUS_EXPIRED);
+				journalArticleResource.getResourcePrimKey(), statuses);
 		}
 
 		if (article == null) {
@@ -345,73 +354,39 @@ public class JournalContentExportImportPortletPreferencesProcessor
 		return portletPreferences;
 	}
 
-	@Reference(unbind = "-")
-	protected void setAssetEntryLocalService(
-		AssetEntryLocalService assetEntryLocalService) {
-
-		_assetEntryLocalService = assetEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMTemplateLocalService(
-		DDMTemplateLocalService ddmTemplateLocalService) {
-
-		_ddmTemplateLocalService = ddmTemplateLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalArticleLocalService(
-		JournalArticleLocalService journalArticleLocalService) {
-
-		_journalArticleLocalService = journalArticleLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalContentSearchLocalService(
-		JournalContentSearchLocalService journalContentSearchLocalService) {
-
-		_journalContentSearchLocalService = journalContentSearchLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutLocalService(
-		LayoutLocalService layoutLocalService) {
-
-		_layoutLocalService = layoutLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setReferencedStagedModelImporterCapability(
-		ReferencedStagedModelImporterCapability
-			referencedStagedModelImporterCapability) {
-
-		_referencedStagedModelImporterCapability =
-			referencedStagedModelImporterCapability;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalContentExportImportPortletPreferencesProcessor.class);
 
+	@Reference(unbind = "-")
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference(unbind = "-")
 	private DDMTemplateLocalService _ddmTemplateLocalService;
+
+	@Reference(unbind = "-")
 	private GroupLocalService _groupLocalService;
+
+	@Reference(unbind = "-")
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference
+	private JournalArticleResourceLocalService
+		_journalArticleResourceLocalService;
 
 	@Reference
 	private JournalContentMetadataImporterCapability
 		_journalContentMetadataImporterCapability;
 
+	@Reference(unbind = "-")
 	private JournalContentSearchLocalService _journalContentSearchLocalService;
+
+	@Reference(unbind = "-")
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;
 
+	@Reference(unbind = "-")
 	private ReferencedStagedModelImporterCapability
 		_referencedStagedModelImporterCapability;
 

@@ -60,6 +60,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
@@ -391,7 +392,7 @@ public class JournalArticleAssetRenderer
 		String hitLayoutURL = getHitLayoutURL(
 			layout.isPrivateLayout(), noSuchEntryRedirect, themeDisplay);
 
-		if (hitLayoutURL.equals(noSuchEntryRedirect)) {
+		if (Objects.equals(hitLayoutURL, noSuchEntryRedirect)) {
 			hitLayoutURL = getHitLayoutURL(
 				!layout.isPrivateLayout(), noSuchEntryRedirect, themeDisplay);
 		}

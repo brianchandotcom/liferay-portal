@@ -19,6 +19,9 @@ package com.liferay.journal.item.selector.web.internal;
  */
 public class JournalItemSelectorWebKeys {
 
+	public static final String DL_MIME_TYPE_DISPLAY_CONTEXT =
+		"DL_MIME_TYPE_DISPLAY_CONTEXT";
+
 	public static final String JOURNAL_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT =
 		"JOURNAL_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT";
 

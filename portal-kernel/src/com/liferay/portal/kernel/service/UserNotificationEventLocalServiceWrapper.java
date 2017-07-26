@@ -635,6 +635,14 @@ public class UserNotificationEventLocalServiceWrapper
 	}
 
 	@Override
+	public void archiveUserNotificationEvents(long userId, int deliveryType,
+		boolean actionRequired)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_userNotificationEventLocalService.archiveUserNotificationEvents(userId,
+			deliveryType, actionRequired);
+	}
+
+	@Override
 	public void deleteUserNotificationEvent(java.lang.String uuid,
 		long companyId) {
 		_userNotificationEventLocalService.deleteUserNotificationEvent(uuid,

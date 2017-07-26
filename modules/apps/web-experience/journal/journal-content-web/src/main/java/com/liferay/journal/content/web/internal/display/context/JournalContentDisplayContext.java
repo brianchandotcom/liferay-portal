@@ -63,6 +63,8 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -872,16 +874,22 @@ public class JournalContentDisplayContext {
 			return _showEditArticleIcon;
 		}
 
-		JournalArticle latestArticle = getLatestArticle();
-
 		_showEditArticleIcon = false;
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Group group = themeDisplay.getScopeGroup();
+
+		if (group.hasStagingGroup() && _STAGING_LIVE_GROUP_LOCKING_ENABLED) {
+			return _showEditArticleIcon;
+		}
+
+		JournalArticle latestArticle = getLatestArticle();
 
 		if (latestArticle == null) {
 			return _showEditArticleIcon;
 		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		_showEditArticleIcon = JournalArticlePermission.contains(
 			themeDisplay.getPermissionChecker(), latestArticle,
@@ -1013,6 +1021,10 @@ public class JournalContentDisplayContext {
 
 		return ddmTemplate;
 	}
+
+	private static final boolean _STAGING_LIVE_GROUP_LOCKING_ENABLED =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.STAGING_LIVE_GROUP_LOCKING_ENABLED));
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalContentDisplayContext.class);

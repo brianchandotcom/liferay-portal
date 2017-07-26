@@ -23,12 +23,27 @@ import com.liferay.journal.model.JournalArticle;
 public class ArticleModifiedDateComparator
 	extends StagedModelModifiedDateComparator<JournalArticle> {
 
+	public static final String ORDER_BY_ASC = "JournalArticle.modifiedDate ASC";
+
+	public static final String ORDER_BY_DESC =
+		"JournalArticle.modifiedDate DESC";
+
 	public ArticleModifiedDateComparator() {
 		this(false);
 	}
 
 	public ArticleModifiedDateComparator(boolean ascending) {
 		super(ascending);
+	}
+
+	@Override
+	public String getOrderBy() {
+		if (isAscending()) {
+			return ORDER_BY_ASC;
+		}
+		else {
+			return ORDER_BY_DESC;
+		}
 	}
 
 }

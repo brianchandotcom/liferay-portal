@@ -1,0 +1,449 @@
+<definition component-name="portal-commerce">
+	<property name="portal.upstream" value="true" />
+	<property name="test.run.environment" value="EE" />
+	<property name="testray.main.component.name" value="Commerce" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<if>
+			<condition function="IsElementNotPresent" locator1="CommerceNavigation#EMPTY_SEARCH_CONTAINER" />
+			<then>
+				<execute macro="CommerceCatalog#moveCatalogEntriesToRecycleBin" />
+			</then>
+		</if>
+
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<if>
+			<condition function="IsElementNotPresent" locator1="CommerceNavigation#EMPTY_SEARCH_CONTAINER" />
+			<then>
+				<execute macro="CommerceOptions#deleteOptionsEntries" />
+			</then>
+		</if>
+
+		<execute macro="User#logoutPG" />
+	</tear-down>
+
+	<command name="AssignCheckboxOptionToGroupedCatalogEntry" priority="5">
+		<property name="portal.acceptance" value="true" />
+
+		<execute test-case="CPCommerceOptions#AddSKUContributorCheckboxOptionsEntry" />
+
+		<execute test-case="CPCommerceCatalog#AddGroupedCatalogEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Grouped Product 1 Title" />
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryTab">
+			<var name="menuTab" value="Options" />
+		</execute>
+
+		<execute function="Click" locator1="Button#PLUS" />\
+
+		<execute macro="CommerceItemSelector#selectEntry">
+			<var name="entryTitle" value="Checkbox Option 1 Title" />
+		</execute>
+	</command>
+
+	<command name="AssignCheckboxOptionToSimpleCatalogEntry" priority="5">
+		<property name="portal.acceptance" value="true" />
+
+		<execute test-case="CPCommerceOptions#AddSKUContributorCheckboxOptionsEntry" />
+
+		<execute test-case="CPCommerceCatalog#AddSimpleCatalogEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Simple Product 1 Title" />
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryTab">
+			<var name="menuTab" value="Options" />
+		</execute>
+
+		<execute function="Click" locator1="Button#PLUS" />\
+
+		<execute macro="CommerceItemSelector#selectEntry">
+			<var name="entryTitle" value="Checkbox Option 1 Title" />
+		</execute>
+	</command>
+
+	<command name="AssignCheckboxOptionToVirtualCatalogEntry" priority="5">
+		<property name="portal.acceptance" value="true" />
+
+		<execute test-case="CPCommerceOptions#AddSKUContributorCheckboxOptionsEntry" />
+
+		<execute test-case="CPCommerceCatalog#AddVirtualCatalogEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Virtual Product 1 Title" />
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryTab">
+			<var name="menuTab" value="Options" />
+		</execute>
+
+		<execute function="Click" locator1="Button#PLUS" />\
+
+		<execute macro="CommerceItemSelector#selectEntry">
+			<var name="entryTitle" value="Checkbox Option 1 Title" />
+		</execute>
+	</command>
+
+	<command name="AssignDateOptionToGroupedCatalogEntry" priority="5">
+		<property name="portal.acceptance" value="true" />
+
+		<execute test-case="CPCommerceOptions#AddSKUContributorDateOptionsEntry" />
+
+		<execute test-case="CPCommerceCatalog#AddGroupedCatalogEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Grouped Product 1 Title" />
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryTab">
+			<var name="menuTab" value="Options" />
+		</execute>
+
+		<execute function="Click" locator1="Button#PLUS" />\
+
+		<execute macro="CommerceItemSelector#selectEntry">
+			<var name="entryTitle" value="Date Option 1 Title" />
+		</execute>
+	</command>
+
+	<command name="AssignDateOptionToSimpleCatalogEntry" priority="5">
+		<property name="portal.acceptance" value="true" />
+
+		<execute test-case="CPCommerceOptions#AddSKUContributorDateOptionsEntry" />
+
+		<execute test-case="CPCommerceCatalog#AddSimpleCatalogEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Simple Product 1 Title" />
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryTab">
+			<var name="menuTab" value="Options" />
+		</execute>
+
+		<execute function="Click" locator1="Button#PLUS" />\
+
+		<execute macro="CommerceItemSelector#selectEntry">
+			<var name="entryTitle" value="Date Option 1 Title" />
+		</execute>
+	</command>
+
+	<command name="AssignDateOptionToVirtualCatalogEntry" priority="5">
+		<property name="portal.acceptance" value="true" />
+
+		<execute test-case="CPCommerceOptions#AddSKUContributorDateOptionsEntry" />
+
+		<execute test-case="CPCommerceCatalog#AddVirtualCatalogEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Virtual Product 1 Title" />
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryTab">
+			<var name="menuTab" value="Options" />
+		</execute>
+
+		<execute function="Click" locator1="Button#PLUS" />\
+
+		<execute macro="CommerceItemSelector#selectEntry">
+			<var name="entryTitle" value="Date Option 1 Title" />
+		</execute>
+	</command>
+
+	<command name="AssignParagraphOptionToGroupedCatalogEntry" priority="5">
+		<property name="portal.acceptance" value="true" />
+
+		<execute test-case="CPCommerceOptions#AddSKUContributorParagraphOptionsEntry" />
+
+		<execute test-case="CPCommerceCatalog#AddGroupedCatalogEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Grouped Product 1 Title" />
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryTab">
+			<var name="menuTab" value="Options" />
+		</execute>
+
+		<execute function="Click" locator1="Button#PLUS" />\
+
+		<execute macro="CommerceItemSelector#selectEntry">
+			<var name="entryTitle" value="Paragraph Option 1 Title" />
+		</execute>
+	</command>
+
+	<command name="AssignParagraphOptionToSimpleCatalogEntry" priority="5">
+		<property name="portal.acceptance" value="true" />
+
+		<execute test-case="CPCommerceOptions#AddSKUContributorParagraphOptionsEntry" />
+
+		<execute test-case="CPCommerceCatalog#AddSimpleCatalogEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Simple Product 1 Title" />
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryTab">
+			<var name="menuTab" value="Options" />
+		</execute>
+
+		<execute function="Click" locator1="Button#PLUS" />\
+
+		<execute macro="CommerceItemSelector#selectEntry">
+			<var name="entryTitle" value="Paragraph Option 1 Title" />
+		</execute>
+	</command>
+
+	<command name="AssignParagraphOptionToVirtualCatalogEntry" priority="5">
+		<property name="portal.acceptance" value="true" />
+
+		<execute test-case="CPCommerceOptions#AddSKUContributorParagraphOptionsEntry" />
+
+		<execute test-case="CPCommerceCatalog#AddVirtualCatalogEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Virtual Product 1 Title" />
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryTab">
+			<var name="menuTab" value="Options" />
+		</execute>
+
+		<execute function="Click" locator1="Button#PLUS" />\
+
+		<execute macro="CommerceItemSelector#selectEntry">
+			<var name="entryTitle" value="Paragraph Option 1 Title" />
+		</execute>
+	</command>
+
+	<command name="AssignRadioOptionToGroupedCatalogEntry" priority="5">
+		<property name="portal.acceptance" value="true" />
+
+		<execute test-case="CPCommerceOptions#AddSKUContributorRadioOptionsEntry" />
+
+		<execute test-case="CPCommerceCatalog#AddGroupedCatalogEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Grouped Product 1 Title" />
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryTab">
+			<var name="menuTab" value="Options" />
+		</execute>
+
+		<execute function="Click" locator1="Button#PLUS" />\
+
+		<execute macro="CommerceItemSelector#selectEntry">
+			<var name="entryTitle" value="Radio Option 1 Title" />
+		</execute>
+	</command>
+
+	<command name="AssignRadioOptionToSimpleCatalogEntry" priority="5">
+		<property name="portal.acceptance" value="true" />
+
+		<execute test-case="CPCommerceOptions#AddSKUContributorRadioOptionsEntry" />
+
+		<execute test-case="CPCommerceCatalog#AddSimpleCatalogEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Simple Product 1 Title" />
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryTab">
+			<var name="menuTab" value="Options" />
+		</execute>
+
+		<execute function="Click" locator1="Button#PLUS" />\
+
+		<execute macro="CommerceItemSelector#selectEntry">
+			<var name="entryTitle" value="Radio Option 1 Title" />
+		</execute>
+	</command>
+
+	<command name="AssignRadioOptionToVirtualCatalogEntry" priority="5">
+		<property name="portal.acceptance" value="true" />
+
+		<execute test-case="CPCommerceOptions#AddSKUContributorRadioOptionsEntry" />
+
+		<execute test-case="CPCommerceCatalog#AddVirtualCatalogEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Virtual Product 1 Title" />
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryTab">
+			<var name="menuTab" value="Options" />
+		</execute>
+
+		<execute function="Click" locator1="Button#PLUS" />\
+
+		<execute macro="CommerceItemSelector#selectEntry">
+			<var name="entryTitle" value="Radio Option 1 Title" />
+		</execute>
+	</command>
+
+	<command name="AssignSelectOptionToGroupedCatalogEntry" priority="5">
+		<property name="portal.acceptance" value="true" />
+
+		<execute test-case="CPCommerceOptions#AddSKUContributorSelectOptionsEntry" />
+
+		<execute test-case="CPCommerceCatalog#AddGroupedCatalogEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Grouped Product 1 Title" />
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryTab">
+			<var name="menuTab" value="Options" />
+		</execute>
+
+		<execute function="Click" locator1="Button#PLUS" />\
+
+		<execute macro="CommerceItemSelector#selectEntry">
+			<var name="entryTitle" value="Select Option 1 Title" />
+		</execute>
+	</command>
+
+	<command name="AssignSelectOptionToSimpleCatalogEntry" priority="5">
+		<property name="portal.acceptance" value="true" />
+
+		<execute test-case="CPCommerceOptions#AddSKUContributorSelectOptionsEntry" />
+
+		<execute test-case="CPCommerceCatalog#AddSimpleCatalogEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Simple Product 1 Title" />
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryTab">
+			<var name="menuTab" value="Options" />
+		</execute>
+
+		<execute function="Click" locator1="Button#PLUS" />\
+
+		<execute macro="CommerceItemSelector#selectEntry">
+			<var name="entryTitle" value="Select Option 1 Title" />
+		</execute>
+	</command>
+
+	<command name="AssignSelectOptionToVirtualCatalogEntry" priority="5">
+		<property name="portal.acceptance" value="true" />
+
+		<execute test-case="CPCommerceOptions#AddSKUContributorSelectOptionsEntry" />
+
+		<execute test-case="CPCommerceCatalog#AddVirtualCatalogEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Virtual Product 1 Title" />
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryTab">
+			<var name="menuTab" value="Options" />
+		</execute>
+
+		<execute function="Click" locator1="Button#PLUS" />\
+
+		<execute macro="CommerceItemSelector#selectEntry">
+			<var name="entryTitle" value="Select Option 1 Title" />
+		</execute>
+	</command>
+
+	<command name="AssignTextOptionToGroupedCatalogEntry" priority="5">
+		<property name="portal.acceptance" value="true" />
+
+		<execute test-case="CPCommerceOptions#AddSKUContributorTextOptionsEntry" />
+
+		<execute test-case="CPCommerceCatalog#AddGroupedCatalogEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Grouped Product 1 Title" />
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryTab">
+			<var name="menuTab" value="Options" />
+		</execute>
+
+		<execute function="Click" locator1="Button#PLUS" />\
+
+		<execute macro="CommerceItemSelector#selectEntry">
+			<var name="entryTitle" value="Text Option 1 Title" />
+		</execute>
+	</command>
+
+	<command name="AssignTextOptionToSimpleCatalogEntry" priority="5">
+		<property name="portal.acceptance" value="true" />
+
+		<execute test-case="CPCommerceOptions#AddSKUContributorTextOptionsEntry" />
+
+		<execute test-case="CPCommerceCatalog#AddSimpleCatalogEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Simple Product 1 Title" />
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryTab">
+			<var name="menuTab" value="Options" />
+		</execute>
+
+		<execute function="Click" locator1="Button#PLUS" />\
+
+		<execute macro="CommerceItemSelector#selectEntry">
+			<var name="entryTitle" value="Text Option 1 Title" />
+		</execute>
+	</command>
+
+	<command name="AssignTextOptionToVirtualCatalogEntry" priority="5">
+		<property name="portal.acceptance" value="true" />
+
+		<execute test-case="CPCommerceOptions#AddSKUContributorTextOptionsEntry" />
+
+		<execute test-case="CPCommerceCatalog#AddVirtualCatalogEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Virtual Product 1 Title" />
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryTab">
+			<var name="menuTab" value="Options" />
+		</execute>
+
+		<execute function="Click" locator1="Button#PLUS" />\
+
+		<execute macro="CommerceItemSelector#selectEntry">
+			<var name="entryTitle" value="Text Option 1 Title" />
+		</execute>
+	</command>
+</definition>

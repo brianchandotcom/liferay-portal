@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.commerce.currency.model.CommerceCurrency">
+		<field name="uuid" type="String" />
+		<field name="commerceCurrencyId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field localized="true" name="code" type="String" />
+		<field localized="true" name="name" type="String" />
+		<field name="rate" type="double" />
+		<field name="roundingType" type="String" />
+		<field name="primary" type="boolean" />
+		<field name="priority" type="double" />
+		<field name="active" type="boolean" />
+		<field name="lastPublishDate" type="Date" />
+	</model>
+</model-hints>

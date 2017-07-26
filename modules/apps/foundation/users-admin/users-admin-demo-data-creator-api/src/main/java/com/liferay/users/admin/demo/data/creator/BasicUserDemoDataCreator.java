@@ -30,4 +30,9 @@ public interface BasicUserDemoDataCreator extends UserDemoDataCreator {
 	public User create(long companyId, String emailAddress)
 		throws PortalException;
 
+	public User create(
+			long companyId, String screenName, String emailAddress,
+			String firstName, String lastName)
+		throws PortalException;
+
 }

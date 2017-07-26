@@ -464,7 +464,7 @@ message.
 	<target name="deploy-additional-jars">
 		<copy todir="${app.server.lib.global.dir}">
 			<fileset dir="lib/development" includes="hsql.jar,mariadb.jar,mysql.jar,postgresql.jar" />
-			<fileset dir="lib/global" />
+			<fileset dir="lib/global" excludes="dependencies.properties" />
 		</copy>
 
 		<if>
@@ -488,7 +488,7 @@ message.
 			</then>
 			<else>
 				<copy todir="${app.server.lib.portal.dir}">
-					<fileset dir="lib/portal" />
+					<fileset dir="lib/portal" excludes="dependencies.properties" />
 				</copy>
 			</else>
 		</if>

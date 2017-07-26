@@ -1,13 +1,13 @@
 <#assign
-	fullScreenNavigation = getterUtil.getBoolean(themeDisplay.getThemeSetting("full-screen-navigation"))
-	socialMediaFacebook = getterUtil.getBoolean(themeDisplay.getThemeSetting("social-media-facebook"))
-	socialMediaTwitter = getterUtil.getBoolean(themeDisplay.getThemeSetting("social-media-twitter"))
-	socialMediaFacebookUrl = themeDisplay.getThemeSetting("social-media-facebook-url")
-	socialMediaTwitterUrl = themeDisplay.getThemeSetting("social-media-twitter-url")
-	siteLogoRetina = getterUtil.getBoolean(themeDisplay.getThemeSetting("site-logo-retina"))
+	facebook_icon = getterUtil.getBoolean(themeDisplay.getThemeSetting("facebook-icon"))
+	facebook_icon_link_url = themeDisplay.getThemeSetting("facebook-icon-link-url")
+	show_main_navigation_in_full_screen = getterUtil.getBoolean(themeDisplay.getThemeSetting("show-main-navigation-in-full-screen"))
+	twitter_icon = getterUtil.getBoolean(themeDisplay.getThemeSetting("twitter-icon"))
+	twitter_icon_link_url = themeDisplay.getThemeSetting("twitter-icon-link-url")
+	use_a_retina_logo = getterUtil.getBoolean(themeDisplay.getThemeSetting("use-a-retina-logo"))
 />
 
-<#if fullScreenNavigation>
+<#if show_main_navigation_in_full_screen>
 	<#assign
 		css_class = css_class + " full-screen-navigation"
 		nav_collapse = ""
@@ -21,7 +21,7 @@
 	/>
 </#if>
 
-<#if siteLogoRetina>
+<#if use_a_retina_logo>
 	<#assign company_logo_height = company_logo_height/2 />
 	<#assign company_logo_width = company_logo_width/2 />
 </#if>

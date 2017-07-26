@@ -11,7 +11,7 @@
 		</div>
 	</nav>
 
-	<#if show_header_search>
+	<#if show_header_main_search>
 		<div class="navbar-form navbar-right" role="search">
 			<div id="search">
 				<@liferay.search default_preferences=freeMarkerPortletPreferences.getPreferences("portletSetupPortletDecoratorId", "barebone") />

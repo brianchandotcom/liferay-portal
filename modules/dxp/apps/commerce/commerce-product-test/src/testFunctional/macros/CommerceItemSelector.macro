@@ -1,4 +1,30 @@
 <definition>
+	<command name="selectAlleEntries">
+		<execute function="SelectFrame" locator1="ItemSelector#ITEM_SELECTOR_IFRAME" />
+
+		<execute function="Click" locator1="CommerceNavigation#SELECT_ALL_CHECKBOX" />
+
+		<execute function="SelectFrame" locator1="ItemSelector#ITEM_SELECTOR_MODAL_FOOTER" />
+
+		<execute function="AssertClick" locator1="ItemSelector#ADD_BUTTON" value1="Add" />
+
+		<execute function="SelectFrameTop" value1="relative=top" />
+	</command>
+
+	<command name="selectEntry">
+		<execute function="SelectFrame" locator1="ItemSelector#ITEM_SELECTOR_IFRAME" />
+
+		<execute function="Click" locator1="CommerceNavigation#SINGLE_ENTRY_CHECKBOX">
+			<var name="key_entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="ItemSelector#ITEM_SELECTOR_MODAL_FOOTER" />
+
+		<execute function="AssertClick" locator1="ItemSelector#ADD_BUTTON" value1="Add" />
+
+		<execute function="SelectFrameTop" value1="relative=top" />
+	</command>
+
 	<command name="uploadSingleFile">
 		<var name="key_uploadFileName" value="${uploadFileName}" />
 

@@ -1,0 +1,63 @@
+<definition component-name="portal-commerce">
+	<property name="portal.upstream" value="true" />
+	<property name="test.run.environment" value="EE" />
+	<property name="testray.main.component.name" value="Commerce" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<if>
+			<condition function="IsElementNotPresent" locator1="CommerceNavigation#EMPTY_SEARCH_CONTAINER" />
+			<then>
+				<execute macro="CommerceCatalog#moveCatalogEntriesToRecycleBin" />
+			</then>
+		</if>
+
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<if>
+			<condition function="IsElementNotPresent" locator1="CommerceNavigation#EMPTY_SEARCH_CONTAINER" />
+			<then>
+				<execute macro="CommerceOptions#deleteOptionsEntries" />
+			</then>
+		</if>
+
+		<execute macro="User#logoutPG" />
+	</tear-down>
+
+	<command name="AssertCatalogEntriesSearchResultsNotInTrashBin" priority="5">
+		<property name="portal.acceptance" value="true" />
+
+		<execute macro="CommerceCatalog#addEntry">
+			<var name="baseSku" value="Product_1_SKU" />
+			<var name="plusMenu" value="Simple" />
+			<var name="productFullDescription" value="Product_1_Full_Description" />
+			<var name="productShortDescription" value="Product_1_Short_Description" />
+			<var name="productTitle" value="Product_1_Title" />
+		</execute>
+
+		<execute macro="CommerceEntry#publishEntry" />
+
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<execute macro="CommerceCatalog#moveCatalogEntryToRecycleBinViaCheckbox" >
+			<var name="productTitle" value="Product_1_Title" />
+		</execute>
+
+		<execute macro="CommerceNavigator#searchEntry">
+			<var name="entryTitle" value="Product_1_Title" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="CommerceNavigation#ENTRY_TITLE" />
+	</command>
+</definition>

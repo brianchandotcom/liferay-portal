@@ -14,6 +14,7 @@
 
 package com.liferay.journal.item.selector.web.internal;
 
+import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
 import com.liferay.item.selector.ItemSelectorView;
@@ -41,6 +42,9 @@ import javax.servlet.ServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Eduardo Garcia
@@ -88,6 +92,10 @@ public class JournalItemSelectorView
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
+		request.setAttribute(
+			JournalItemSelectorWebKeys.DL_MIME_TYPE_DISPLAY_CONTEXT,
+			_dlMimeTypeDisplayContext);
+
 		JournalItemSelectorViewDisplayContext
 			journalItemSelectorViewDisplayContext =
 				new JournalItemSelectorViewDisplayContext(
@@ -108,6 +116,17 @@ public class JournalItemSelectorView
 		requestDispatcher.include(request, response);
 	}
 
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	public void setDLMimeTypeDisplayContext(
+		DLMimeTypeDisplayContext dlMimeTypeDisplayContext) {
+
+		_dlMimeTypeDisplayContext = dlMimeTypeDisplayContext;
+	}
+
 	@Reference(unbind = "-")
 	public void setItemSelectorReturnTypeResolverHandler(
 		ItemSelectorReturnTypeResolverHandler
@@ -125,6 +144,12 @@ public class JournalItemSelectorView
 		_servletContext = servletContext;
 	}
 
+	public void unsetDLMimeTypeDisplayContext(
+		DLMimeTypeDisplayContext dlMimeTypeDisplayContext) {
+
+		_dlMimeTypeDisplayContext = null;
+	}
+
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
 			ListUtil.fromArray(
@@ -133,6 +158,7 @@ public class JournalItemSelectorView
 					new URLItemSelectorReturnType()
 				}));
 
+	private DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
 	private ItemSelectorReturnTypeResolverHandler
 		_itemSelectorReturnTypeResolverHandler;
 	private ServletContext _servletContext;

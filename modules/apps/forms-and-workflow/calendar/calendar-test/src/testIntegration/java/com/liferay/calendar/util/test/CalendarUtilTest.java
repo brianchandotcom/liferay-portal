@@ -19,6 +19,7 @@ import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.recurrence.Recurrence;
 import com.liferay.calendar.recurrence.RecurrenceSerializer;
+import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
 import com.liferay.calendar.test.util.CalendarBookingTestUtil;
 import com.liferay.calendar.test.util.CalendarTestUtil;
 import com.liferay.calendar.test.util.RecurrenceTestUtil;
@@ -90,19 +91,11 @@ public class CalendarUtilTest {
 	}
 
 	@Test
-	public void testToCalendarBookingJSONObjectSendLastInstanceRecurrence()
+	public void testToCalendarBookingJSONObjectSendLastInstanceRecurrenceWithAllFollowingInstanceFromChildRecurringInstance()
 		throws Exception {
 
-		ServiceContext serviceContext = createServiceContext();
-
-		CalendarBooking calendarBooking =
-			CalendarBookingTestUtil.addDailyRecurringCalendarBooking(
-				_user, serviceContext);
-
 		CalendarBooking calendarBookingInstance =
-			CalendarBookingTestUtil.updateCalendarBookingInstance(
-				calendarBooking, 2, RandomTestUtil.randomLocaleStringMap(),
-				serviceContext);
+			getCalendarBookingChildAllFollowingInstnace();
 
 		JSONObject jsonObject = CalendarUtil.toCalendarBookingJSONObject(
 			createThemeDisplay(), calendarBookingInstance,
@@ -112,11 +105,67 @@ public class CalendarUtilTest {
 			jsonObject.getString("recurrence"),
 			calendarBookingInstance.getTimeZone());
 
-		Assert.assertNotNull(recurrence);
+		assertRepeatsForever(recurrence);
+	}
 
-		Assert.assertNull(recurrence.getUntilJCalendar());
+	@Test
+	public void testToCalendarBookingJSONObjectSendLastInstanceRecurrenceWithAllFollowingInstanceFromParentRecurringInstance()
+		throws Exception {
 
-		Assert.assertEquals(0, recurrence.getCount());
+		CalendarBooking calendarBookingInstance =
+			getCalendarBookingChildAllFollowingInstnace();
+
+		CalendarBooking calendarBooking =
+			CalendarBookingLocalServiceUtil.fetchCalendarBooking(
+				calendarBookingInstance.getRecurringCalendarBookingId());
+
+		JSONObject jsonObject = CalendarUtil.toCalendarBookingJSONObject(
+			createThemeDisplay(), calendarBooking,
+			calendarBooking.getTimeZone());
+
+		Recurrence recurrence = RecurrenceSerializer.deserialize(
+			jsonObject.getString("recurrence"), calendarBooking.getTimeZone());
+
+		assertRepeatsForever(recurrence);
+	}
+
+	@Test
+	public void testToCalendarBookingJSONObjectSendLastInstanceRecurrenceWithSingleInstanceFromChildRecurringInstance()
+		throws Exception {
+
+		CalendarBooking calendarBookingInstance =
+			getCalendarBookingChildSingleInstance();
+
+		JSONObject jsonObject = CalendarUtil.toCalendarBookingJSONObject(
+			createThemeDisplay(), calendarBookingInstance,
+			calendarBookingInstance.getTimeZone());
+
+		Recurrence recurrence = RecurrenceSerializer.deserialize(
+			jsonObject.getString("recurrence"),
+			calendarBookingInstance.getTimeZone());
+
+		assertRepeatsForever(recurrence);
+	}
+
+	@Test
+	public void testToCalendarBookingJSONObjectSendLastInstanceRecurrenceWithSingleInstanceFromParentRecurringInstance()
+		throws Exception {
+
+		CalendarBooking calendarBookingInstance =
+			getCalendarBookingChildSingleInstance();
+
+		CalendarBooking calendarBooking =
+			CalendarBookingLocalServiceUtil.fetchCalendarBooking(
+				calendarBookingInstance.getRecurringCalendarBookingId());
+
+		JSONObject jsonObject = CalendarUtil.toCalendarBookingJSONObject(
+			createThemeDisplay(), calendarBooking,
+			calendarBooking.getTimeZone());
+
+		Recurrence recurrence = RecurrenceSerializer.deserialize(
+			jsonObject.getString("recurrence"), calendarBooking.getTimeZone());
+
+		assertRepeatsForever(recurrence);
 	}
 
 	@Test
@@ -172,6 +221,14 @@ public class CalendarUtilTest {
 			excpectedCalendarBookingIds, actualCalendarBookingIds);
 	}
 
+	protected void assertRepeatsForever(Recurrence recurrence) {
+		Assert.assertNotNull(recurrence);
+
+		Assert.assertNull(recurrence.getUntilJCalendar());
+
+		Assert.assertEquals(0, recurrence.getCount());
+	}
+
 	protected ServiceContext createServiceContext() {
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -200,6 +257,41 @@ public class CalendarUtilTest {
 		themeDisplay.setUser(_user);
 
 		return themeDisplay;
+	}
+
+	protected CalendarBooking getCalendarBookingChildAllFollowingInstnace()
+		throws PortalException {
+
+		ServiceContext serviceContext = createServiceContext();
+
+		CalendarBooking calendarBooking =
+			CalendarBookingTestUtil.addDailyRecurringCalendarBooking(
+				_user, serviceContext);
+
+		CalendarBooking calendarBookingInstance =
+			CalendarBookingTestUtil.
+				updateCalendarBookingInstanceAndAllFollowing(
+					calendarBooking, 2, RandomTestUtil.randomLocaleStringMap(),
+					serviceContext);
+
+		return calendarBookingInstance;
+	}
+
+	protected CalendarBooking getCalendarBookingChildSingleInstance()
+		throws PortalException {
+
+		ServiceContext serviceContext = createServiceContext();
+
+		CalendarBooking calendarBooking =
+			CalendarBookingTestUtil.addDailyRecurringCalendarBooking(
+				_user, serviceContext);
+
+		CalendarBooking calendarBookingInstance =
+			CalendarBookingTestUtil.updateCalendarBookingInstance(
+				calendarBooking, 2, RandomTestUtil.randomLocaleStringMap(),
+				serviceContext);
+
+		return calendarBookingInstance;
 	}
 
 	protected Set<Long> getCalendarBookingIds(JSONArray jsonArray) {

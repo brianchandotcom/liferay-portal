@@ -173,6 +173,17 @@
 					(JournalArticle.groupId = tempJournalArticle.groupId) AND
 					(JournalArticle.articleId = tempJournalArticle.articleId) AND
 					(JournalArticle.version < tempJournalArticle.version)
+			LEFT JOIN
+				(SELECT
+					JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK
+				FROM
+					JournalArticleLocalization
+				GROUP BY
+					JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK
+				) tempJournalArticleLocalization
+				ON
+					(JournalArticle.companyId = tempJournalArticleLocalization.companyId) AND
+					(JournalArticle.id_ = tempJournalArticleLocalization.articlePK)
 			WHERE
 				(JournalArticle.groupId = ?) AND
 				([$STATUS$]) AND
@@ -193,6 +204,17 @@
 				(JournalArticle.groupId = tempJournalArticle.groupId) AND
 				(JournalArticle.articleId = tempJournalArticle.articleId) AND
 				(JournalArticle.version < tempJournalArticle.version)
+			LEFT JOIN
+				(SELECT
+					JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK
+				FROM
+					JournalArticleLocalization
+				GROUP BY
+					JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK
+				) tempJournalArticleLocalization
+				ON
+					(JournalArticle.companyId = tempJournalArticleLocalization.companyId) AND
+					(JournalArticle.id_ = tempJournalArticleLocalization.articlePK)
 			WHERE
 				(JournalArticle.groupId = ?) AND
 				(JournalArticle.classNameId = ?) AND
@@ -214,6 +236,17 @@
 				(JournalArticle.groupId = tempJournalArticle.groupId) AND
 				(JournalArticle.articleId = tempJournalArticle.articleId) AND
 				(JournalArticle.version < tempJournalArticle.version)
+			LEFT JOIN
+				(SELECT
+					JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK
+				FROM
+					JournalArticleLocalization
+				GROUP BY
+					JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK
+				) tempJournalArticleLocalization
+				ON
+					(JournalArticle.companyId = tempJournalArticleLocalization.companyId) AND
+					(JournalArticle.id_ = tempJournalArticleLocalization.articlePK)
 			WHERE
 				(JournalArticle.groupId = ?) AND
 				(JournalArticle.classNameId = ?) AND

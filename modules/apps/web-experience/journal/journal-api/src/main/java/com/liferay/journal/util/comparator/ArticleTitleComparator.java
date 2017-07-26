@@ -25,9 +25,11 @@ import com.liferay.portal.kernel.util.StringUtil;
 @Deprecated
 public class ArticleTitleComparator extends OrderByComparator<JournalArticle> {
 
-	public static final String ORDER_BY_ASC = "title ASC";
+	public static final String ORDER_BY_ASC =
+		"JournalArticleLocalization.title ASC";
 
-	public static final String ORDER_BY_DESC = "title DESC";
+	public static final String ORDER_BY_DESC =
+		"JournalArticleLocalization.title DESC";
 
 	public static final String[] ORDER_BY_FIELDS = {"title"};
 

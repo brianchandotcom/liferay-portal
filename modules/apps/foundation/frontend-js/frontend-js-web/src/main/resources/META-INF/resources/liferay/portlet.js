@@ -297,7 +297,7 @@
 					instance.refreshLayout(portletBound);
 
 					if (window.location.hash) {
-						window.location.hash = 'p_' + portletId;
+						window.location.hash = 'p_p_id_' + portletId + '_';
 					}
 
 					portletBoundary = portletBound;

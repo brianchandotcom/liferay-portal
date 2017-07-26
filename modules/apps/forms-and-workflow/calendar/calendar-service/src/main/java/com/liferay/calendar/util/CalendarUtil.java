@@ -293,10 +293,10 @@ public class CalendarUtil {
 		java.util.Calendar startTimeJCalendar = JCalendarUtil.getJCalendar(
 			calendarBooking.getStartTime(), timeZone);
 
-		if (Validator.isNotNull(calendarBooking.getRecurrence())) {
+		if (Validator.isNotNull(recurrence)) {
 			Recurrence recurrenceObj = RecurrenceUtil.inTimeZone(
-				calendarBooking.getRecurrenceObj(), startTimeJCalendar,
-				timeZone);
+				lastInstanceCalendarBooking.getRecurrenceObj(),
+				startTimeJCalendar, timeZone);
 
 			recurrence = RecurrenceSerializer.serialize(recurrenceObj);
 		}

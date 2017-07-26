@@ -432,8 +432,12 @@ public class CalendarBookingTestUtil {
 			calendarBooking.getUserId(), calendarBooking.getCalendarBookingId(),
 			instanceIndex, calendarBooking.getCalendarId(), titleMap,
 			calendarBooking.getDescriptionMap(), calendarBooking.getLocation(),
-			startTime, endTime, false, null, true, 0, null, 0, null,
-			serviceContext);
+			startTime, endTime, calendarBooking.isAllDay(),
+			calendarBooking.getRecurrence(), true,
+			calendarBooking.getFirstReminder(),
+			calendarBooking.getFirstReminderType(),
+			calendarBooking.getSecondReminder(),
+			calendarBooking.getSecondReminderType(), serviceContext);
 	}
 
 	public static CalendarBooking updateCalendarBookingInstanceAndAllFollowing(
@@ -447,8 +451,12 @@ public class CalendarBookingTestUtil {
 			user.getUserId(), calendarBooking.getCalendarBookingId(),
 			instanceIndex, calendarBooking.getCalendarId(), titleMap,
 			descriptionMap, calendarBooking.getLocation(), instanceStartTime,
-			instanceEndTime, false, null, true, 0, null, 0, null,
-			serviceContext);
+			instanceEndTime, calendarBooking.isAllDay(),
+			calendarBooking.getRecurrence(), true,
+			calendarBooking.getFirstReminder(),
+			calendarBooking.getFirstReminderType(),
+			calendarBooking.getSecondReminder(),
+			calendarBooking.getSecondReminderType(), serviceContext);
 	}
 
 	public static CalendarBooking

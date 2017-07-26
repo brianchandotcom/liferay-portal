@@ -24,9 +24,11 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 public class ArticleDisplayDateComparator
 	extends OrderByComparator<JournalArticle> {
 
-	public static final String ORDER_BY_ASC = "displayDate ASC, version ASC";
+	public static final String ORDER_BY_ASC =
+		"JournalArticle.displayDate ASC, JournalArticle.version ASC";
 
-	public static final String ORDER_BY_DESC = "displayDate DESC, version DESC";
+	public static final String ORDER_BY_DESC =
+		"JournalArticle.displayDate DESC, JournalArticle.version DESC";
 
 	public static final String[] ORDER_BY_FIELDS = {"displayDate", "version"};
 

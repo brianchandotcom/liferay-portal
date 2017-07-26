@@ -23,12 +23,12 @@ public class EmailAddressVerifiableModel implements VerifiableUUIDModel {
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "groupId";
+		return "emailAddressId";
 	}
 
 	@Override
 	public String getTableName() {
-		return "Group_";
+		return "EmailAddress";
 	}
 
 }

@@ -66,14 +66,14 @@ public class ViewCPDefinitionGroupedEntriesMVCRenderCommand
 				_portal.getHttpServletResponse(renderResponse);
 
 			CPDefinitionGroupedEntriesDisplayContext
-				cpDefinitionVirtualSettingDisplayContext =
+				cpDefinitionGroupedEntriesDisplayContext =
 					new CPDefinitionGroupedEntriesDisplayContext(
 						_actionHelper, httpServletRequest,
 						_cpDefinitionGroupedEntryService, _itemSelector);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				cpDefinitionVirtualSettingDisplayContext);
+				cpDefinitionGroupedEntriesDisplayContext);
 
 			renderRequest.setAttribute(
 				"cpDefinitionServletContext", _cpDefinitionServletContext);

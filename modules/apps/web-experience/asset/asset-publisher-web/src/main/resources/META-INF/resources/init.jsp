@@ -31,6 +31,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil" %><%@
+page import="com.liferay.asset.kernel.action.AssetEntryAction" %><%@
 page import="com.liferay.asset.kernel.exception.DuplicateQueryRuleException" %><%@
 page import="com.liferay.asset.kernel.model.AssetCategory" %><%@
 page import="com.liferay.asset.kernel.model.AssetEntry" %><%@

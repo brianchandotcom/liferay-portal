@@ -1791,12 +1791,18 @@ a theme project.
 - [LPS-73807]: Update the [Find Security Bugs] dependency to version
 1.6.0.LIFERAY-PATCHED-5.
 
+## 4.1.2 - 2017-07-25
+
+### Changed
+- [LPS-72347]: Update the [Liferay Gradle Plugins] dependency to version 3.4.14.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder
 [Liferay Gradle Plugins Baseline]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-baseline
 [Liferay Gradle Plugins Dependency Checker]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-dependency-checker
+[Liferay Gradle Plugins Lang Merger]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-lang-merger
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
 [Liferay Source Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/util/source-formatter
 [LPS-52675]: https://issues.liferay.com/browse/LPS-52675
@@ -1944,6 +1950,7 @@ a theme project.
 [LPS-72152]: https://issues.liferay.com/browse/LPS-72152
 [LPS-72252]: https://issues.liferay.com/browse/LPS-72252
 [LPS-72340]: https://issues.liferay.com/browse/LPS-72340
+[LPS-72347]: https://issues.liferay.com/browse/LPS-72347
 [LPS-72456]: https://issues.liferay.com/browse/LPS-72456
 [LPS-72465]: https://issues.liferay.com/browse/LPS-72465
 [LPS-72514]: https://issues.liferay.com/browse/LPS-72514

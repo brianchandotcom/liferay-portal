@@ -1808,6 +1808,12 @@ a theme project.
 to download dependencies declared in an `ivy.xml` file via Gradle.
 - [LPS-73655]: Download Ivy dependencies of Ant plugins via Gradle.
 
+## 4.1.5 - 2017-07-26
+
+### Added
+- [LPS-73655]: Add support in `CopyIvyDependenciesTask` for Ivy [`<exclude>`](http://ant.apache.org/ivy/history/latest-milestone/ivyfile/exclude.html)
+elements.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins

@@ -385,6 +385,7 @@
 						requires: [
 							'aui-image-cropper',
 							'aui-io-request',
+							'liferay-alert',
 							'liferay-crop-region',
 							'liferay-portlet-base',
 							'liferay-storage-formatter'

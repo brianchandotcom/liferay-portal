@@ -110,9 +110,7 @@ AUI.add(
 
 						if (Lang.isObject(responseText)) {
 							if (responseText.errorMessage) {
-								var messageNode = instance._getMessageNode(responseText.errorMessage, 'alert alert-danger');
-
-								instance._formNode.prepend(messageNode);
+								instance._showError(responseText.errorMessage);
 							}
 
 							if (responseText.tempImageFileName) {
@@ -288,6 +286,21 @@ AUI.add(
 						if (instance._imageCrop) {
 							instance._imageCrop.setStyle('backgroundSize', width + 'px ' + height + 'px');
 						}
+					},
+
+					_showError: function(message) {
+						new Liferay.Alert(
+							{
+								closeable: true,
+								delay: {
+									hide: 3000,
+									show: 0
+								},
+								duration: 500,
+								message: message,
+								type: 'danger'
+							}
+						).render();
 					}
 				}
 			}
@@ -297,6 +310,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-image-cropper', 'aui-io-request', 'liferay-crop-region', 'liferay-portlet-base', 'liferay-storage-formatter']
+		requires: ['aui-image-cropper', 'aui-io-request', 'liferay-alert', 'liferay-crop-region', 'liferay-portlet-base', 'liferay-storage-formatter']
 	}
 );

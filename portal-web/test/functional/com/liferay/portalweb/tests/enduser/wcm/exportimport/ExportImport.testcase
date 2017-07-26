@@ -737,11 +737,11 @@
 			<var name="exportTemplateName" value="Export Template Name" />
 		</execute>
 
-		<var method="selenium#getText('//ul/li/div/h5')" name="valueName" />
+		<var method="selenium#getAttribute('//ul/li/div/h5//a@href')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
-		<var method="RegexUtil#replace('${valueName}', '([a-zA-z0-9_.-]*)[(0-9KB)]*', '1')" name="larFileName" />
+		<var method="RegexUtil#replace('${valueName}', 'http://localhost:8080/documents/portlet_file_entry/[0-9]*/([a-zA-z0-9_.-]*)[(0-9KB)]*', '1')" name="larFileName" />
 
 		<echo message="file name ${larFileName}" />
 

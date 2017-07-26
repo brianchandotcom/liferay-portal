@@ -1801,12 +1801,18 @@ a theme project.
 ### Changed
 - [LPS-73818]: Update the [Liferay Gradle Plugins] dependency to version 3.4.15.
 
-## 4.2.0 - 2017-07-26
+## 4.1.4 - 2017-07-26
 
 ### Added
 - [LPS-73655]: Add new task type called `CopyIvyDependenciesTask` which allows
 to download dependencies declared in an `ivy.xml` file via Gradle.
 - [LPS-73655]: Download Ivy dependencies of Ant plugins via Gradle.
+
+## 4.1.5 - 2017-07-26
+
+### Added
+- [LPS-73655]: Add support in `CopyIvyDependenciesTask` for Ivy [`<exclude>`](http://ant.apache.org/ivy/history/latest-milestone/ivyfile/exclude.html)
+elements.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public

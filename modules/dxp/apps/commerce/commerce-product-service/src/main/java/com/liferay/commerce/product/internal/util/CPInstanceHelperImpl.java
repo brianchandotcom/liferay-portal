@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -90,6 +91,9 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 			if (!cpDefinitionOptionValueRels.isEmpty()) {
 				DDMFormFieldOptions ddmFormFieldOptions =
 					new DDMFormFieldOptions();
+
+				ddmFormFieldOptions.addOptionLabel(
+					"_cpDefinitionOptionValueRelId_", locale, StringPool.BLANK);
 
 				for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
 						cpDefinitionOptionValueRels) {

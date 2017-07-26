@@ -87,6 +87,12 @@
 		<finder name="CommerceCartId" return-type="Collection">
 			<finder-column name="commerceCartId" />
 		</finder>
+		<finder name="CPDefinitionId" return-type="Collection">
+			<finder-column name="CPDefinitionId" />
+		</finder>
+		<finder name="CPInstanceId" return-type="Collection">
+			<finder-column name="CPInstanceId" />
+		</finder>
 
 		<!-- References -->
 

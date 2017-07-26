@@ -2303,6 +2303,10 @@ public interface PropsKeys {
 
 	public static final String STAGING_REMOTE_TRANSFER_BUFFER_SIZE = "staging.remote.transfer.buffer.size";
 
+	public static final String STAGING_SYSTEM_EVENT_CHECK_INTERVAL = "staging.system.event.check.interval";
+
+	public static final String STAGING_SYSTEM_EVENT_MAX_AGE = "staging.system.event.max.age";
+
 	public static final String STRIP_CSS_SASS_ENABLED = "strip.css.sass.enabled";
 
 	public static final String STRIP_IGNORE_PATHS = "strip.ignore.paths";

@@ -913,6 +913,17 @@ information.
 		<element implicit="true" name="attach-files" optional="true" />
 
 		<sequential>
+			<fail message="Please run this target from a release branch instead.">
+				<condition>
+					<not>
+						<or>
+							<available file="${project.dir}/modules/.releng" type="dir" />
+							<istrue value="@{snapshot}" />
+						</or>
+					</not>
+				</condition>
+			</fail>
+
 			<condition else="${sonatype.release.password}" property="remote.repository.password" value="${sonatype.snapshot.password}">
 				<istrue value="@{snapshot}" />
 			</condition>

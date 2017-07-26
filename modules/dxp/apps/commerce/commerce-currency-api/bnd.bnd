@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Commerce Currency API
+Bundle-SymbolicName: com.liferay.commerce.currency.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.commerce.currency.constants,\
+	com.liferay.commerce.currency.exception,\
+	com.liferay.commerce.currency.model,\
+	com.liferay.commerce.currency.service,\
+	com.liferay.commerce.currency.service.persistence

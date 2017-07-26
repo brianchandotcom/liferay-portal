@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Commerce Currency Web
+Bundle-SymbolicName: com.liferay.commerce.currency.web
+Bundle-Version: 1.0.0
+Web-ContextPath: /commerce-currency-web

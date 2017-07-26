@@ -45,6 +45,15 @@
 		<execute macro="Smoke#runSmoke" />
 	</command>
 
+	<command name="SmokeWithProxyDisabled" priority="5">
+		<property name="portal.smoke" value="false" />
+		<property name="test.dummy.socket.proxy" value="false" />
+
+		<execute macro="Smoke#viewWelcomePage" />
+
+		<execute macro="Smoke#runSmoke" />
+	</command>
+
 	<command name="SmokeWithSPADisabled" priority="5">
 		<property name="custom.properties" value="javascript.single.page.application.enabled=false" />
 

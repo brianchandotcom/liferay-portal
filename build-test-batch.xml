@@ -375,6 +375,13 @@ mariadb.executable=${mariadb.executable}]]></echo>
 					<fail message="Unable to prepare test build." />
 				</catch>
 			</trycatch>
+
+			<if>
+				<equals arg1="${app.server.type}" arg2="tomcat" />
+				<then>
+					<setup-test-batch-testable-tomcat />
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 
@@ -392,6 +399,13 @@ mariadb.executable=${mariadb.executable}]]></echo>
 					<fail message="Unable to prepare test build." />
 				</catch>
 			</trycatch>
+
+			<if>
+				<equals arg1="${app.server.type}" arg2="tomcat" />
+				<then>
+					<setup-test-batch-testable-tomcat />
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 
@@ -428,8 +442,6 @@ app.server.type=@{app.server.type}]]></echo>
 				<equals arg1="@{app.server.type}" arg2="tomcat" />
 				<then>
 					<setup-testable-tomcat />
-
-					<setup-test-batch-testable-tomcat />
 				</then>
 			</if>
 
@@ -511,6 +523,13 @@ app.server.type=@{app.server.type}]]></echo>
 					<fail message="Unable to prepare test build." />
 				</catch>
 			</trycatch>
+
+			<if>
+				<equals arg1="${app.server.type}" arg2="tomcat" />
+				<then>
+					<setup-test-batch-testable-tomcat />
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 
@@ -534,6 +553,13 @@ app.server.type=@{app.server.type}]]></echo>
 
 			<antcall if:set="env.JENKINS_HOME" target="clean-up-db2-processes" inheritAll="false" />
 			<antcall if:set="env.JENKINS_HOME" target="clean-up-java-processes" inheritAll="false" />
+
+			<if>
+				<equals arg1="${app.server.type}" arg2="tomcat" />
+				<then>
+					<setup-test-batch-testable-tomcat />
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 
@@ -1451,8 +1477,17 @@ app.server.type=@{app.server.type}]]></echo>
 		<attribute default="true" name="setup.proxy" />
 
 		<sequential>
+			<get-testcase-property property.name="test.dummy.socket.proxy" />
+
 			<if>
-				<equals arg1="@{setup.proxy}" arg2="true" />
+				<and>
+					<not>
+						<equals arg1="@{setup.proxy}" arg2="false" />
+					</not>
+					<not>
+						<equals arg1="${test.dummy.socket.proxy}" arg2="false" />
+					</not>
+				</and>
 				<then>
 					<setup-testable-tomcat-dummy-socket-proxy />
 				</then>

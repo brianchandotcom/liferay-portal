@@ -20,6 +20,10 @@ Liferay = window.Liferay || {};
 
 	$.ajaxPrefilter(
 		function(options) {
+			if (options.crossDomain) {
+				options.contents.script = false;
+			}
+
 			if (options.url) {
 				options.url = Liferay.Util.getURLWithSessionId(options.url);
 			}

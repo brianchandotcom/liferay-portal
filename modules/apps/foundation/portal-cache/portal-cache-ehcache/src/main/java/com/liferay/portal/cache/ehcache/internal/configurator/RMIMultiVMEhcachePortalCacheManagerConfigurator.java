@@ -15,11 +15,8 @@
 package com.liferay.portal.cache.ehcache.internal.configurator;
 
 import com.liferay.portal.cache.configuration.PortalCacheManagerConfiguration;
-import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
-
-import java.net.URL;
 
 import net.sf.ehcache.config.Configuration;
 import net.sf.ehcache.config.FactoryConfiguration;
@@ -39,21 +36,16 @@ public class RMIMultiVMEhcachePortalCacheManagerConfigurator
 
 	@Override
 	@SuppressWarnings("rawtypes")
-	public ObjectValuePair
-		<Configuration, PortalCacheManagerConfiguration>
-			getConfigurationObjectValuePair(
-				String portalCacheManagerName, URL configurationURL,
-				boolean usingDefault) {
-
-		ObjectValuePair<Configuration, PortalCacheManagerConfiguration>
-			objectValuePair = super.getConfigurationObjectValuePair(
-				portalCacheManagerName, configurationURL, usingDefault);
+	protected void manageConfiguration(
+		Configuration configuration,
+		PortalCacheManagerConfiguration portalCacheManagerConfiguration) {
 
 		if (!clusterEnabled) {
-			return objectValuePair;
+			return;
 		}
 
-		Configuration configuration = objectValuePair.getKey();
+		super.manageConfiguration(
+			configuration, portalCacheManagerConfiguration);
 
 		FactoryConfiguration peerProviderFactoryConfiguration =
 			new FactoryConfiguration();
@@ -76,8 +68,6 @@ public class RMIMultiVMEhcachePortalCacheManagerConfigurator
 
 		configuration.addCacheManagerPeerListenerFactory(
 			peerListenerFacotryConfiguration);
-
-		return objectValuePair;
 	}
 
 	@Activate

@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.net.URL;
-
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -51,23 +49,13 @@ public class MultiVMEhcachePortalCacheManagerConfigurator
 	extends BaseEhcachePortalCacheManagerConfigurator {
 
 	@Override
-	@SuppressWarnings("rawtypes")
-	public ObjectValuePair
-		<Configuration, PortalCacheManagerConfiguration>
-			getConfigurationObjectValuePair(
-				String portalCacheManagerName, URL configurationURL,
-				boolean usingDefault) {
-
-		ObjectValuePair<Configuration, PortalCacheManagerConfiguration>
-			objectValuePair = super.getConfigurationObjectValuePair(
-				portalCacheManagerName, configurationURL, usingDefault);
+	protected void manageConfiguration(
+		Configuration configuration,
+		PortalCacheManagerConfiguration portalCacheManagerConfiguration) {
 
 		if (!clusterEnabled) {
-			return objectValuePair;
+			return;
 		}
-
-		PortalCacheManagerConfiguration portalCacheManagerConfiguration =
-			objectValuePair.getValue();
 
 		PortalCacheConfiguration defaultPortalCacheConfiguration =
 			portalCacheManagerConfiguration.
@@ -124,8 +112,6 @@ public class MultiVMEhcachePortalCacheManagerConfigurator
 				portalCacheListenerPropertiesSet.add(propertiesPair.getValue());
 			}
 		}
-
-		return objectValuePair;
 	}
 
 	@Activate

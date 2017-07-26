@@ -1,0 +1,93 @@
+<definition component-name="portal-commerce">
+	<property name="portal.upstream" value="true" />
+	<property name="test.run.environment" value="EE" />
+	<property name="testray.main.component.name" value="Commerce" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<if>
+			<condition function="IsElementNotPresent" locator1="CommerceNavigation#EMPTY_SEARCH_CONTAINER" />
+			<then>
+				<execute macro="CommerceCatalog#moveCatalogEntriesToRecycleBin" />
+			</then>
+		</if>
+
+		<execute macro="User#logoutPG" />
+	</tear-down>
+
+	<command ignore="true" name="UploadImageToGroupedProduct" priority="5">
+		<property name="portal.acceptance" value="true" />
+
+		<execute test-case="CPCommerceCatalog#AddGroupedCatalogEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Grouped Product 1 Title" />
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<execute macro="CommerceEntry#uploadCatalogEntrySingleImage">
+			<var name="uploadFileName" value="Document_2.jpg" />
+		</execute>
+
+		<execute macro="CommerceEntry#publishEntry" />
+
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+
+		<execute function="AssertElementPresent" locator1="CommerceNavigation#ENTRY_TITLE" value1="${key_entryTitle}">
+			<var name="key_entryTitle" value="Document_2.jpg" />
+		</execute>
+	</command>
+
+	<command name="UploadImageToSimpleProduct" priority="5">
+		<property name="portal.acceptance" value="true" />
+
+		<execute test-case="CPCommerceCatalog#AddSimpleCatalogEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Simple Product 1 Title" />
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<execute macro="CommerceEntry#uploadCatalogEntrySingleImage">
+			<var name="uploadFileName" value="Document_2.jpg" />
+		</execute>
+
+		<execute macro="CommerceEntry#publishEntry" />
+
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+
+		<execute function="AssertElementPresent" locator1="CommerceNavigation#ENTRY_TITLE" value1="${key_entryTitle}">
+			<var name="key_entryTitle" value="Document_2.jpg" />
+		</execute>
+	</command>
+
+	<command name="UploadImageToVitualProduct" priority="5">
+		<property name="portal.acceptance" value="true" />
+
+		<execute test-case="CPCommerceCatalog#AddVirtualCatalogEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Virtual Product 1 Title" />
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<execute macro="CommerceEntry#uploadCatalogEntrySingleImage">
+			<var name="uploadFileName" value="Document_2.jpg" />
+		</execute>
+
+		<execute macro="CommerceEntry#publishEntry" />
+
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+
+		<execute function="AssertElementPresent" locator1="CommerceNavigation#ENTRY_TITLE" value1="${key_entryTitle}">
+			<var name="key_entryTitle" value="Document_2.jpg" />
+		</execute>
+	</command>
+</definition>

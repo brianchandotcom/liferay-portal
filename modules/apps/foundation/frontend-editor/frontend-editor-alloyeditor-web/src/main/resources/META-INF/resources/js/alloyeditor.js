@@ -343,6 +343,10 @@ AUI.add(
 							instance._initializeData();
 						}
 
+						// LPS-73775
+
+						instance.getNativeEditor().editable().$.addEventListener('compositionend', A.bind('_onChange', instance));
+
 						// LPS-71967
 
 						if (UA.edge && parseInt(UA.edge) >= 14) {

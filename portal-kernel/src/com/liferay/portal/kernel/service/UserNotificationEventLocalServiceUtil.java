@@ -594,6 +594,13 @@ public class UserNotificationEventLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static void archiveUserNotificationEvents(long userId,
+		int deliveryType, boolean actionRequired)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.archiveUserNotificationEvents(userId, deliveryType, actionRequired);
+	}
+
 	public static void deleteUserNotificationEvent(java.lang.String uuid,
 		long companyId) {
 		getService().deleteUserNotificationEvent(uuid, companyId);

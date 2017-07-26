@@ -17,6 +17,7 @@ package com.liferay.notifications.web.internal.portlet;
 import com.liferay.notifications.web.internal.constants.NotificationsPortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Release;
+import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.UserNotificationDeliveryLocalService;
@@ -66,6 +67,26 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class NotificationsPortlet extends MVCPortlet {
 
+	public void deleteAllNotifications(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long[] userNotificationEventIds = ParamUtil.getLongValues(
+			actionRequest, "rowIds");
+
+		for (long userNotificationEventId : userNotificationEventIds) {
+			try {
+				_userNotificationEventLocalService.deleteUserNotificationEvent(
+					userNotificationEventId);
+			}
+			catch (Exception e) {
+				throw new PortletException(e);
+			}
+		}
+
+		_sendRedirect(actionRequest, actionResponse);
+	}
+
 	public void deleteUserNotificationEvent(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -80,9 +101,61 @@ public class NotificationsPortlet extends MVCPortlet {
 		catch (Exception e) {
 			throw new PortletException(e);
 		}
+
+		_sendRedirect(actionRequest, actionResponse);
 	}
 
-	public void markAllAsRead(
+	public void markAllNotificationsAsRead(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		boolean actionRequired = ParamUtil.getBoolean(
+			actionRequest, "actionRequired");
+
+		_userNotificationEventLocalService.archiveUserNotificationEvents(
+			themeDisplay.getUserId(),
+			UserNotificationDeliveryConstants.TYPE_WEBSITE, actionRequired);
+
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(themeDisplay.getLocale());
+
+		SessionMessages.add(
+			actionRequest, "requestProcessed",
+			LanguageUtil.get(
+				resourceBundle,
+				"all-notifications-were-marked-as-read-successfully"));
+
+		_sendRedirect(actionRequest, actionResponse);
+	}
+
+	public void markNotificationAsRead(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long userNotificationEventId = ParamUtil.getLong(
+			actionRequest, "userNotificationEventId");
+
+		updateArchived(userNotificationEventId, true);
+
+		_sendRedirect(actionRequest, actionResponse);
+	}
+
+	public void markNotificationAsUnread(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long userNotificationEventId = ParamUtil.getLong(
+			actionRequest, "userNotificationEventId");
+
+		updateArchived(userNotificationEventId, false);
+
+		_sendRedirect(actionRequest, actionResponse);
+	}
+
+	public void markNotificationsAsRead(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -90,22 +163,24 @@ public class NotificationsPortlet extends MVCPortlet {
 			actionRequest, "rowIds");
 
 		for (long userNotificationEventId : userNotificationEventIds) {
-			updateArchived(userNotificationEventId);
+			updateArchived(userNotificationEventId, true);
 		}
 
-		_setRedirect(actionRequest, actionResponse);
+		_sendRedirect(actionRequest, actionResponse);
 	}
 
-	public void markAsRead(
+	public void markNotificationsAsUnread(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long userNotificationEventId = ParamUtil.getLong(
-			actionRequest, "userNotificationEventId");
+		long[] userNotificationEventIds = ParamUtil.getLongValues(
+			actionRequest, "rowIds");
 
-		updateArchived(userNotificationEventId);
+		for (long userNotificationEventId : userNotificationEventIds) {
+			updateArchived(userNotificationEventId, false);
+		}
 
-		_setRedirect(actionRequest, actionResponse);
+		_sendRedirect(actionRequest, actionResponse);
 	}
 
 	@Override
@@ -124,14 +199,23 @@ public class NotificationsPortlet extends MVCPortlet {
 			String actionName = ParamUtil.getString(
 				actionRequest, ActionRequest.ACTION_NAME);
 
-			if (actionName.equals("deleteUserNotificationEvent")) {
+			if (actionName.equals("deleteAllNotifications")) {
+				deleteAllNotifications(actionRequest, actionResponse);
+			}
+			else if (actionName.equals("deleteUserNotificationEvent")) {
 				deleteUserNotificationEvent(actionRequest, actionResponse);
 			}
-			else if (actionName.equals("markAllAsRead")) {
-				markAllAsRead(actionRequest, actionResponse);
+			else if (actionName.equals("markNotificationsAsRead")) {
+				markNotificationsAsRead(actionRequest, actionResponse);
 			}
-			else if (actionName.equals("markAsRead")) {
-				markAsRead(actionRequest, actionResponse);
+			else if (actionName.equals("markNotificationAsRead")) {
+				markNotificationAsRead(actionRequest, actionResponse);
+			}
+			else if (actionName.equals("markNotificationsAsUnread")) {
+				markNotificationsAsUnread(actionRequest, actionResponse);
+			}
+			else if (actionName.equals("markNotificationAsUnread")) {
+				markNotificationAsUnread(actionRequest, actionResponse);
 			}
 			else if (actionName.equals("unsubscribe")) {
 				unsubscribe(actionRequest, actionResponse);
@@ -165,7 +249,7 @@ public class NotificationsPortlet extends MVCPortlet {
 
 		if (userNotificationEvent != null) {
 			if (!userNotificationEvent.isArchived()) {
-				updateArchived(userNotificationEventId);
+				updateArchived(userNotificationEventId, true);
 			}
 		}
 	}
@@ -197,7 +281,7 @@ public class NotificationsPortlet extends MVCPortlet {
 			LanguageUtil.get(
 				resourceBundle, "your-configuration-was-saved-sucessfully"));
 
-		_setRedirect(actionRequest, actionResponse);
+		_sendRedirect(actionRequest, actionResponse);
 	}
 
 	@Reference(
@@ -230,7 +314,8 @@ public class NotificationsPortlet extends MVCPortlet {
 		_userNotificationEventLocalService = userNotificationEventLocalService;
 	}
 
-	protected void updateArchived(long userNotificationEventId)
+	protected void updateArchived(
+			long userNotificationEventId, boolean archived)
 		throws Exception {
 
 		UserNotificationEvent userNotificationEvent =
@@ -241,13 +326,13 @@ public class NotificationsPortlet extends MVCPortlet {
 			return;
 		}
 
-		userNotificationEvent.setArchived(true);
+		userNotificationEvent.setArchived(archived);
 
 		_userNotificationEventLocalService.updateUserNotificationEvent(
 			userNotificationEvent);
 	}
 
-	private void _setRedirect(
+	private void _sendRedirect(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException {
 

@@ -33,11 +33,6 @@ CPDefinition cpDefinition = virtualCPTypeDisplayContext.getCPDefinition();
 	displayStyleGroupId="<%= virtualCPTypeDisplayContext.getDisplayStyleGroupId() %>"
 	entries="<%= Collections.singletonList(cpDefinition) %>"
 >
-
-	<%
-	CPDefinitionVirtualSetting cpDefinitionVirtualSetting = virtualCPTypeDisplayContext.getCPDefinitionVirtualSetting();
-	%>
-
 	<div class="container-fluid product-detail">
 		<div class="row">
 			<div class="col-lg-6 col-md-7">
@@ -74,7 +69,9 @@ CPDefinition cpDefinition = virtualCPTypeDisplayContext.getCPDefinition();
 
 			<div class="col-lg-6 col-md-5">
 				<h1><%= cpDefinition.getTitle(languageId) %></h1>
+
 				<h4>Code: <%= cpDefinition.getBaseSKU() %></h4>
+
 				<div class="row-fluid">
 					<div class="col-md-12">
 						<c:if test="<%= virtualCPTypeDisplayContext.hasSampleURL() %>">
@@ -90,6 +87,12 @@ CPDefinition cpDefinition = virtualCPTypeDisplayContext.getCPDefinition();
 						<div class="options">
 							<%= virtualCPTypeDisplayContext.renderOptions(renderRequest, renderResponse) %>
 						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-12">
+						<liferay-util:dynamic-include key="com.liferay.commerce.product.content.web#/add_to_cart#" />
 					</div>
 				</div>
 			</div>

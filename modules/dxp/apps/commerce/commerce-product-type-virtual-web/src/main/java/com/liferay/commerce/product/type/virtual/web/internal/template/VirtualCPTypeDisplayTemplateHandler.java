@@ -27,12 +27,13 @@ import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -81,8 +82,8 @@ public class VirtualCPTypeDisplayTemplateHandler
 		templateVariableGroup.empty();
 
 		templateVariableGroup.addVariable(
-			"cp-virtual-cp-type-display-context",
-			VirtualCPTypeDisplayContext.class, "cpVirtualCPTypeDisplayContext");
+			"virtual-cp-type-display-context",
+			VirtualCPTypeDisplayContext.class, "virtualCPTypeDisplayContext");
 		templateVariableGroup.addVariable(
 			"cp-definition", CPDefinition.class, "cpDefinition", "title");
 

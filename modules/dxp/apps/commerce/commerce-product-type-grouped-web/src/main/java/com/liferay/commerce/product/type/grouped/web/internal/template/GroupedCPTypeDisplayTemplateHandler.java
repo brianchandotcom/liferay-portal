@@ -15,7 +15,6 @@
 package com.liferay.commerce.product.type.grouped.web.internal.template;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.type.grouped.web.internal.GroupedCPType;
@@ -27,12 +26,13 @@ import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -81,10 +81,8 @@ public class GroupedCPTypeDisplayTemplateHandler
 		templateVariableGroup.empty();
 
 		templateVariableGroup.addVariable(
-			"cp-grouped-cp-type-display-context",
-			GroupedCPTypeDisplayContext.class, "cpGroupedCPTypeDisplayContext");
-		templateVariableGroup.addVariable(
-			"cp-definition", CPDefinition.class, "cpDefinition", "title");
+			"grouped-cp-type-display-context",
+			GroupedCPTypeDisplayContext.class, "groupedCPTypeDisplayContext");
 
 		String[] restrictedVariables = getRestrictedVariables(language);
 

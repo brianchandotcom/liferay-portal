@@ -26,12 +26,13 @@ import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -80,8 +81,8 @@ public class SimpleCPTypeDisplayTemplateHandler
 		templateVariableGroup.empty();
 
 		templateVariableGroup.addVariable(
-			"cp-type-display-context", CPTypeDisplayContext.class,
-			"cpTypeDisplayContext");
+			"simple-cp-type-display-context", CPTypeDisplayContext.class,
+			"simpleCPTypeDisplayContext");
 
 		String[] restrictedVariables = getRestrictedVariables(language);
 

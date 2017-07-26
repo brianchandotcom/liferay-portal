@@ -86,7 +86,7 @@ CPDefinition cpDefinition = groupedCPTypeDisplayContext.getCPDefinition();
 
 				<%
 				for (CPDefinitionGroupedEntry cpDefinitionGroupedEntry : groupedCPTypeDisplayContext.getCPDefinitionGroupedEntry()) {
-					CPDefinition curCPDefinition = cpDefinitionGroupedEntry.getCPDefinition();
+					CPDefinition curCPDefinition = cpDefinitionGroupedEntry.getEntryCPDefinition();
 				%>
 
 					<div class="row">

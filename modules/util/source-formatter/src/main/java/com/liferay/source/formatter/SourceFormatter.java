@@ -194,20 +194,16 @@ public class SourceFormatter {
 	public void format() throws Exception {
 		if (_isPortalSource()) {
 			_populatePortalImplProperties();
-
-			_addDefaultExcludes();
-
-			_populateAllFileNames();
-
-			_populateModulesProperties();
 		}
 		else {
 			_populateProperties();
-
-			_addDefaultExcludes();
-
-			_populateAllFileNames();
 		}
+
+		_addDefaultExcludes();
+
+		_populateAllFileNames();
+
+		_populateModulesProperties();
 
 		List<SourceProcessor> sourceProcessors = new ArrayList<>();
 

@@ -1928,6 +1928,10 @@ projects. By default, the language directory is set to
 `src/WEB-INF/src/content`.
 
 ### Changed
+- [LPS-73408]: Update the [Liferay Gradle Plugins Service Builder] dependency
+to version 1.0.43.
+- [LPS-73408]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.159.
 - [LPS-73472]: Update the [Liferay Gradle Plugins Gulp] dependency to version
 2.0.17.
 - [LPS-73472]: Update the [Liferay Gradle Plugins JS Module Config Generator]
@@ -2173,6 +2177,7 @@ version 1.0.160.
 [LPS-73261]: https://issues.liferay.com/browse/LPS-73261
 [LPS-73353]: https://issues.liferay.com/browse/LPS-73353
 [LPS-73383]: https://issues.liferay.com/browse/LPS-73383
+[LPS-73408]: https://issues.liferay.com/browse/LPS-73408
 [LPS-73470]: https://issues.liferay.com/browse/LPS-73470
 [LPS-73472]: https://issues.liferay.com/browse/LPS-73472
 [LPS-73489]: https://issues.liferay.com/browse/LPS-73489

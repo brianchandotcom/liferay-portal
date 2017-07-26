@@ -2,7 +2,9 @@
 	<command name="gotoManageFieldSets">
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#MANAGE_FIELD_SETS" value1="Manage Field Sets" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Manage Field Sets">
+			<var name="key_menuItem" value="Manage Field Sets" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="Field Sets" />
 	</command>
@@ -17,6 +19,8 @@
 		<var name="key_kfFieldSetName" value="${kfFieldSetName}" />
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="KaleoFormsAdminSelectStructure#KALEO_FORMS_STRUCTURE_ELLIPSIS" />
-		<execute function="AssertClick" locator1="MenuItem#MANAGE_FORMS" value1="Manage Forms" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Manage Forms">
+			<var name="key_menuItem" value="Manage Forms" />
+		</execute>
 	</command>
 </definition>

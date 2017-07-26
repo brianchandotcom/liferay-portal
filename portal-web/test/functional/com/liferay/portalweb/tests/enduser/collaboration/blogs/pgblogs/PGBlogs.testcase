@@ -198,7 +198,9 @@
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#NOT_PUBLISHED" value1="Not Published (1)" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Not Published (1)">
+			<var name="key_menuItem" value="Not Published (1)" />
+		</execute>
 
 		<execute macro="BlogsEntry#viewPG">
 			<var name="entryContent" value="Blogs Entry Content" />

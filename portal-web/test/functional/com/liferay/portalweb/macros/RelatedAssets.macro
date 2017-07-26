@@ -8,7 +8,9 @@
 
 		<var method="StringUtil#upperCase('${assetTypeLocator}')" name="assetTypeLocator" />
 
-		<execute function="AssertClick" locator1="MenuItem#${assetTypeLocator}" value1="${assetType}" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${assetType}">
+			<var name="key_menuItem" value="${assetType}" />
+		</execute>
 	</command>
 
 	<command name="gotoBookmarksSelectionPG">
@@ -16,7 +18,9 @@
 			<var name="portletName" value="Bookmarks" />
 		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#BOOKMARK" value1="Bookmark" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Bookmark">
+			<var name="key_menuItem" value="Bookmark" />
+		</execute>
 
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Related Assets" />

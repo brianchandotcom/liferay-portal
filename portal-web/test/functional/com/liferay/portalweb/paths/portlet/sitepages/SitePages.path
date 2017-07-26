@@ -290,11 +290,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>STAGING_SITE_PAGES_VARIATION_MENULIST_VARIATION_NAME</td>
-	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'${key_sitePagesVariationName}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

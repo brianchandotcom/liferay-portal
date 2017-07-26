@@ -83,7 +83,9 @@
 
 		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#WORKFLOW_MENULIST_CHOOSE" value1="Choose" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Choose">
+			<var name="key_menuItem" value="Choose" />
+		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
 

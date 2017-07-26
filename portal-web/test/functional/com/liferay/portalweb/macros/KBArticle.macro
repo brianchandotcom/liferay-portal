@@ -47,7 +47,9 @@
 			</else>
 		</if>
 
-		<execute function="AssertClick" locator1="MenuItem#ADD_CHILD_ARTICLE" value1="Add Child Article" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Add Child Article">
+			<var name="key_menuItem" value="Add Child Article" />
+		</execute>
 
 		<execute macro="AlloyEditor#addTitleAndContent">
 			<var name="content" value="${kbChildArticleContent}" />
@@ -267,7 +269,9 @@
 	<command name="addCPWithBooleanCustomField">
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="AssertClick" locator1="MenuItem#BASIC_ARTICLE" value1="Basic Article" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Basic Article">
+			<var name="key_menuItem" value="Basic Article" />
+		</execute>
 
 		<execute macro="AlloyEditor#addTitleAndContent">
 			<var name="content" value="${kbArticleContent}" />
@@ -286,7 +290,9 @@
 	<command name="addCPWithInvalidAttachmentSize">
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="AssertClick" locator1="MenuItem#BASIC_ARTICLE" value1="Basic Article" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Basic Article">
+			<var name="key_menuItem" value="Basic Article" />
+		</execute>
 
 		<execute macro="AlloyEditor#addTitleAndContent">
 			<var name="content" value="${kbArticleContent}" />
@@ -305,7 +311,9 @@
 	<command name="addCPWithInvalidTitle">
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="AssertClick" locator1="MenuItem#BASIC_ARTICLE" value1="Basic Article" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Basic Article">
+			<var name="key_menuItem" value="Basic Article" />
+		</execute>
 
 		<execute macro="AlloyEditor#addTitleAndContent">
 			<var name="content" value="${kbArticleContent}" />
@@ -362,7 +370,9 @@
 	<command name="configureEmailCP">
 		<execute function="Click" locator1="Portlet#OPTIONS_ICON" />
 
-		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Configuration">
+			<var name="key_menuItem" value="Configuration" />
+		</execute>
 
 		<execute function="SelectFrame" locator1="KnowledgeBaseConfiguration#IFRAME" />
 
@@ -659,7 +669,9 @@
 
 				<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
-				<execute function="AssertClick" locator1="MenuItem#DELETE" value1="Delete" />
+				<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
+					<var name="key_menuItem" value="Delete" />
+				</execute>
 			</else>
 		</if>
 
@@ -703,7 +715,9 @@
 
 		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="A new version is created automatically if this content is modified." />
 
@@ -760,7 +774,9 @@
 
 		<execute function="AssertClick" locator1="KnowledgeBase#MENUBAR_ACTIONS" value1="Actions" />
 
-		<execute function="AssertClick" locator1="MenuItem#SAVE" value1="Save" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Save">
+			<var name="key_menuItem" value="Save" />
+		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />
 
@@ -801,7 +817,9 @@
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 		<var name="key_localizedText" value="Editor de texto enriquecido" />
 
-		<execute function="AssertClick" locator1="MenuItem#EDIT_LOCALIZED" value1="Editar" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Editar">
+			<var name="key_menuItem" value="Editar" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#HEADER_TITLE" value1="${kbArticleTitle}" />
 
@@ -851,7 +869,9 @@
 
 		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#VIEW" value1="View" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="View">
+			<var name="key_menuItem" value="View" />
+		</execute>
 	</command>
 
 	<command name="gotoKBArticleViaKBDisplayHierarchyNavigationPG">
@@ -971,7 +991,9 @@
 			</else>
 		</if>
 
-		<execute function="AssertClick" locator1="MenuItem#MOVE" value1="Move" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Move">
+			<var name="key_menuItem" value="Move" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="${kbArticleTitle}" />
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#MOVE_CURRENT_PARENT_TITLE_LABEL" value1="Current Parent" />
@@ -1189,7 +1211,9 @@
 
 		<execute function="Click" locator1="KnowledgeBase#MENUBAR_ACTIONS" />
 
-		<execute function="AssertClick" locator1="MenuItem#SAVE" value1="Save" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Save">
+			<var name="key_menuItem" value="Save" />
+		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
@@ -1201,13 +1225,17 @@
 
 		<var name="key_scopeSelection" value="${kbPageScope}" />
 
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="MenuItem#SCOPE_SELECTION" value1="${kbPageScope}" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="MenuItem#ANY_MENU_ITEM" value1="${kbPageScope}">
+			<var name="key_menuItem" value="${kbPageScope}" />
+		</execute>
 	</command>
 
 	<command name="subscribeCP">
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#SUBSCRIBE" value1="Subscribe" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Subscribe">
+			<var name="key_menuItem" value="Subscribe" />
+		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
@@ -1310,7 +1338,9 @@
 
 		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
 
 		<execute function="AssertClick" locator1="KnowledgeBaseArticle#ATTACHMENTS_HEADER_COLLAPSED" value1="Attachments" />
 
@@ -1491,7 +1521,9 @@
 
 		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="A new version is created automatically if this content is modified." />
 		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#TITLE" value1="${kbArticleTitle}" />
@@ -1700,7 +1732,9 @@
 			</else>
 		</if>
 
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
 
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Configuration" />

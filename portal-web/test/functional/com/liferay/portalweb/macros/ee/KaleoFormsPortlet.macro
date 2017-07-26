@@ -10,7 +10,10 @@
 		<execute function="AssertTextEquals" locator1="KaleoForms#ASSIGNED_TO_ME_TABLE_NAME_1" value1="${kfProcessName}" />
 		<execute function="AssertElementPresent" locator1="KaleoForms#ASSIGNED_TO_ME_TABLE_SUBMISSION_DATE_1" />
 		<execute function="Click" locator1="KaleoForms#ASSIGNED_TO_ME_TABLE_ACTIONS_1" />
-		<execute function="AssertClick" locator1="KaleoForms#ASSIGNED_TO_ME_MENULIST_APPROVE" value1="Approve" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Approve">
+			<var name="key_menuItem" value="Approve" />
+		</execute>
+
 		<execute function="AssertTextEquals" locator1="KaleoForms#DIALOG_BOX_TITLE" value1="Approve" />
 
 		<if>
@@ -37,7 +40,10 @@
 		<execute function="AssertElementPresent" locator1="KaleoForms#ASSIGNED_TO_MY_ROLES_TABLE_SUBMISSION_DATE" />
 		<execute function="AssertElementPresent" locator1="KaleoForms#ASSIGNED_TO_MY_ROLES_TABLE_ACTIONS" />
 		<execute function="Click" locator1="KaleoForms#ASSIGNED_TO_MY_ROLES_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="KaleoForms#ASSIGNED_TO_MY_ROLES_MENULIST_ASSIGN_TO_ME" value1="Assign to Me" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Assign to Me">
+			<var name="key_menuItem" value="Assign to Me" />
+		</execute>
+
 		<execute function="AssertTextEquals" locator1="KaleoForms#DIALOG_BOX_TITLE" value1="Assign to Me" />
 
 		<if>
@@ -64,7 +70,10 @@
 		<execute function="AssertElementPresent" locator1="KaleoForms#ASSIGNED_TO_MY_ROLES_TABLE_SUBMISSION_DATE" />
 		<execute function="AssertElementPresent" locator1="KaleoForms#ASSIGNED_TO_MY_ROLES_TABLE_ACTIONS" />
 		<execute function="Click" locator1="KaleoForms#ASSIGNED_TO_MY_ROLES_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="KaleoForms#ASSIGNED_TO_MY_ROLES_MENULIST_ASSIGN_TO" value1="Assign to..." />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Assign to...">
+			<var name="key_menuItem" value="Assign to..." />
+		</execute>
+
 		<execute function="AssertTextEquals" locator1="KaleoForms#DIALOG_BOX_TITLE" value1="Assign to..." />
 		<execute function="Select" locator1="KaleoForms#DIALOG_BOX_ASSIGN_TO_SELECT" value1="${userFullName}" />
 
@@ -87,7 +96,9 @@
 		<execute function="AssertTextEquals" locator1="KaleoForms#ASSIGNED_TO_ME_TABLE_NAME_2" value1="${kfProcessName}" />
 		<execute function="AssertElementPresent" locator1="KaleoForms#ASSIGNED_TO_ME_TABLE_SUBMISSION_DATE_2" />
 		<execute function="Click" locator1="KaleoForms#ASSIGNED_TO_ME_TABLE_ACTIONS_2" />
-		<execute function="AssertClick" locator1="KaleoForms#ASSIGNED_TO_ME_MENULIST_COMPLETE_FORM" value1="Complete Form" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Complete Form">
+			<var name="key_menuItem" value="Complete Form" />
+		</execute>
 	</command>
 
 	<command name="completeFormForTaskViaRecordView">
@@ -101,7 +112,9 @@
 		<execute function="AssertTextEquals" locator1="KaleoForms#ASSIGNED_TO_ME_TABLE_NAME_1" value1="${kfProcessName}" />
 		<execute function="AssertElementPresent" locator1="KaleoForms#ASSIGNED_TO_ME_TABLE_SUBMISSION_DATE_1" />
 		<execute function="Click" locator1="KaleoForms#ASSIGNED_TO_ME_TABLE_ACTIONS_1" />
-		<execute function="AssertClick" locator1="KaleoForms#ASSIGNED_TO_ME_MENULIST_COMPLETE_FORM" value1="Complete Form" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Complete Form">
+			<var name="key_menuItem" value="Complete Form" />
+		</execute>
 	</command>
 
 	<command name="populateFieldBoolean">
@@ -135,7 +148,9 @@
 
 		<execute function="SelectFrame" locator1="DocumentsAndMediaSelectDocument#SELECT_DOCUMENT_IFRAME" />
 		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
-		<execute function="AssertClick" locator1="MenuItem#BASIC_DOCUMENT" value1="Basic Document" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Basic Document">
+			<var name="key_menuItem" value="Basic Document" />
+		</execute>
 
 		<execute function="UploadCommonFile" locator1="DocumentsAndMediaEditDocument#FILE_FIELD" value1="${document}" />
 
@@ -212,7 +227,10 @@
 		<execute function="AssertTextEquals" locator1="KaleoForms#ASSIGNED_TO_ME_TABLE_NAME_1" value1="${kfProcessName}" />
 		<execute function="AssertElementPresent" locator1="KaleoForms#ASSIGNED_TO_ME_TABLE_SUBMISSION_DATE_1" />
 		<execute function="Click" locator1="KaleoForms#ASSIGNED_TO_ME_TABLE_ACTIONS_1" />
-		<execute function="AssertClick" locator1="KaleoForms#ASSIGNED_TO_ME_MENULIST_REJECT" value1="Reject" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Reject">
+			<var name="key_menuItem" value="Reject" />
+		</execute>
+
 		<execute function="AssertTextEquals" locator1="KaleoForms#DIALOG_BOX_TITLE" value1="Reject" />
 
 		<if>
@@ -234,7 +252,10 @@
 		<execute function="AssertTextEquals" locator1="KaleoForms#ASSIGNED_TO_ME_TABLE_NAME_1" value1="${kfProcessName}" />
 		<execute function="AssertElementPresent" locator1="KaleoForms#ASSIGNED_TO_ME_TABLE_SUBMISSION_DATE_1" />
 		<execute function="Click" locator1="KaleoForms#ASSIGNED_TO_ME_TABLE_ACTIONS_1" />
-		<execute function="AssertClick" locator1="KaleoForms#ASSIGNED_TO_ME_MENULIST_RESUBMIT" value1="Resubmit" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Resubmit">
+			<var name="key_menuItem" value="Resubmit" />
+		</execute>
+
 		<execute function="AssertTextEquals" locator1="KaleoForms#DIALOG_BOX_TITLE" value1="Resubmit" />
 
 		<if>
@@ -251,7 +272,9 @@
 
 	<command name="resubmitPendingProcessViaMyPendingRequests">
 		<execute function="AssertClick" locator1="KaleoFormsViewProcessRecord#TASKS_TABLE_UPDATE_ACTIONS" value1="Actions" />
-		<execute function="AssertClick" locator1="KaleoFormsViewProcessRecord#TASKS_UPDATE_MENULIST_RESUBMIT" value1="Resubmit" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Resubmit">
+			<var name="key_menuItem" value="Resubmit" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="KaleoForms#DIALOG_BOX_TITLE" value1="Resubmit" />
 
@@ -276,7 +299,9 @@
 
 		<var name="key_kfProcessName" value="${kfProcessName}" />
 
-		<execute function="AssertClick" locator1="KaleoForms#SUBMIT_NEW_MENULIST_PROCESS" value1="${kfProcessName}" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${kfProcessName}">
+			<var name="key_menuItem" value="${kfProcessName}" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="DDLEditRecord#HEADER_TITLE" value1="New ${kfProcessName}" />
 	</command>
@@ -297,7 +322,10 @@
 			</elseif>
 		</if>
 
-		<execute function="AssertClick" locator1="KaleoForms#ASSIGNED_TO_MY_ROLES_MENULIST_UPDATE_DUE_DATE" value1="Update Due Date" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Update Due Date">
+			<var name="key_menuItem" value="Update Due Date" />
+		</execute>
+
 		<execute function="AssertTextEquals" locator1="KaleoForms#DIALOG_BOX_TITLE" value1="Update Due Date" />
 		<execute function="Type" locator1="KaleoForms#DIALOG_BOX_UPDATE_DUE_DATE_DATE" value1="${kfProcessDueDateDate}" />
 		<execute function="Type" locator1="KaleoForms#DIALOG_BOX_UPDATE_DUE_DATE_TIME" value1="${kfProcessDueDateTime}" />
@@ -537,7 +565,9 @@
 
 		<execute function="Click" locator1="KaleoForms#MY_PENDING_REQUESTS_TABLE_ACTIONS" />
 
-		<execute function="AssertClick" locator1="MenuItem#WITHDRAW_SUBMISSION" value1="Withdraw Submission" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Withdraw Submission">
+			<var name="key_menuItem" value="Withdraw Submission" />
+		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />
 

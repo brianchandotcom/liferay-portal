@@ -70,32 +70,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--DEFINITION_MENULIST-->
-<tr>
-	<td>DEFINITION_MENULIST_ADD_NEW_FILE</td>
-	<td>//ul[contains(@class,'dropdown-menu lfr-menu-list')]/li/a[contains(.,'Add New File')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DEFINITION_MENULIST_EDIT</td>
-	<td>//ul[contains(@class,'dropdown-menu lfr-menu-list')]/li/a[contains(.,'Edit')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DEFINITION_MENULIST_DEACTIVATE</td>
-	<td>//div[contains(@id,'workflowDefinitionsSearchContainer')]//tr[not (contains(.,'Single Approver'))]//a[@role='menuitem' and contains(.,'Deactivate')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DEFINITION_MENULIST_ACTIVATE</td>
-	<td>//ul[contains(@class,'dropdown-menu lfr-menu-list')]/li/a[contains(.,'Activate')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DEFINITION_MENULIST_DELETE</td>
-	<td>//ul[contains(@class,'dropdown-menu lfr-menu-list')]/li/a[contains(.,'Delete')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

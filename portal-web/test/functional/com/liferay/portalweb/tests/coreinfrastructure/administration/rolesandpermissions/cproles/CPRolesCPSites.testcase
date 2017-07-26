@@ -374,7 +374,9 @@
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Sites#SITE_TABLE_ACTIONS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ADD_CHILD_SITE" value1="Add Child Site" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Add Child Site">
+			<var name="key_menuItem" value="Add Child Site" />
+		</execute>
 
 		<execute macro="PortletEntry#inputName">
 			<var name="name" value="Child SiteName2" />
@@ -394,8 +396,13 @@
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Sites#SITE_TABLE_ACTIONS" />
 
-		<execute function="AssertElementNotPresent" locator1="MenuItem#ADD_CHILD_SITE" value1="Add Child Site" />
-		<execute function="AssertElementNotPresent" locator1="MenuItem#DELETE" value1="Delete" />
+		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="Add Child Site">
+			<var name="key_menuItem" value="Add Child Site" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
+			<var name="key_menuItem" value="Delete" />
+		</execute>
 
 		<var name="key_site" value="Child SiteName2" />
 
@@ -455,8 +462,13 @@
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Sites#SITE_TABLE_ACTIONS" />
 
-		<execute function="AssertElementNotPresent" locator1="MenuItem#ADD_CHILD_SITE" value1="Add Child Site" />
-		<execute function="AssertElementNotPresent" locator1="MenuItem#DELETE" value1="Delete" />
+		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="Add Child Site">
+			<var name="key_menuItem" value="Add Child Site" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
+			<var name="key_menuItem" value="Delete" />
+		</execute>
 
 		<var name="key_site" value="Child SiteName2" />
 

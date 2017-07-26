@@ -35,11 +35,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_NEW_MENULIST</td>
-	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'${key_assetType}')]/span</td>
-	<td></td>
-</tr>
-<tr>
 	<td>POPOVER_CONTENT_TITLE</td>
 	<td>//div[contains(@class,'popover-content')]/div/div/div[contains(.,'${key_assetTitle}')]</td>
 	<td></td>

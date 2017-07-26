@@ -436,7 +436,9 @@
 	<command name="addExportTemplateCP">
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#EXPORT_TEMPLATES" value1="Export Templates" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Export Templates">
+			<var name="key_menuItem" value="Export Templates" />
+		</execute>
 
 		<execute function="Click" locator1="ExportImport#PLUS" />
 
@@ -498,7 +500,9 @@
 			<var name="key_rowEntry" value="${larFileName}" />
 		</execute>
 
-		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_ACTIONS_MENULIST_CLEAR" />
+		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM">
+			<var name="key_menuItem" value="Clear" />
+		</execute>
 	</command>
 
 	<command name="downloadLar">
@@ -622,7 +626,9 @@
 	<command name="gotoExportTemplateCP">
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#EXPORT_TEMPLATES" value1="Export Templates" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Export Templates">
+			<var name="key_menuItem" value="Export Templates" />
+		</execute>
 	</command>
 
 	<command name="importPortlet">
@@ -695,7 +701,9 @@
 		<var name="key_rowEntry" value="${larFileName}" />
 
 		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_ACTIONS_MENULIST_RELAUNCH" />
+		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM">
+			<var name="key_menuItem" value="Relaunch" />
+		</execute>
 	</command>
 
 	<command name="saveExportTemplateCP">

@@ -133,34 +133,6 @@
 	<td></td>
 	<td></td>
 </tr>
-
-<!--FIELD_SET_MENULIST-->
-<tr>
-	<td>FIELD_SET_MENULIST_EDIT</td>
-	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIELD_SET_MENULIST_CHOOSE</td>
-	<td>//a[@role='menuitem' and contains(.,'Choose')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--FIELD_SET_PAGINATION_MENULIST-->
-<tr>
-	<td>FIELD_SET_PAGINATION_MENULIST_NUMBER</td>
-	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'${key_paginationNumber}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--WORKFLOW-->
 <tr>
 	<td>SELECTED_WORKFLOW</td>
@@ -175,11 +147,6 @@
 <tr>
 	<td>ADD_WORKFLOW_BUTTON</td>
 	<td>//button[contains(.,'Add Workflow')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>WORKFLOW_MENULIST_DEACTIVATE</td>
-	<td>//a[@role='menuitem' and contains(.,'Deactivate')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -219,22 +186,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--WORKFLOW_MENULIST-->
-<tr>
-	<td>WORKFLOW_MENULIST_EDIT</td>
-	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>WORKFLOW_MENULIST_CHOOSE</td>
-	<td>//a[@role='menuitem' and contains(.,'Choose')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--WORKFLOW_UNPUBLISHED_TABLE-->
 <tr>
 	<td>WORKFLOW_UNPUBLISHED_TABLE_TITLE</td>
@@ -244,22 +195,6 @@
 <tr>
 	<td>WORKFLOW_UNPUBLISHED_TABLE_ACTIONS</td>
 	<td>//div[contains(@id,'kaleoformsportlet_kaleoDraftDefinitionsSearchContainer')]//tr[contains(.,'${key_workflowDefinitionTitle}')]/td[3]//div/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--WORKFLOW_UNPUBLISHED_MENULIST-->
-<tr>
-	<td>WORKFLOW_UNPUBLISHED_MENULIST_EDIT</td>
-	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>WORKFLOW_UNPUBLISHED_MENULIST_DELETE</td>
-	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -273,7 +273,9 @@
 	<command name="saveAndPublish">
 		<execute function="Click" locator1="Form#SAVE_BUTTON_DROPDOWN" />
 
-		<execute function="AssertClick" locator1="Form#SAVE_BUTTON_DROPDOWN_SAVE_AND_PUBLISH_LIVE_PAGE" value1="Save and Publish Live Page" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Save and Publish Live Page">
+			<var name="key_menuItem" value="Save and Publish Live Page" />
+		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>

@@ -19,7 +19,9 @@
 
 		<execute function="AssertTextEquals" locator1="KnowledgeBaseSuggestions#CONTENT" value1="${kbSuggestionBody}" />
 
-		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
+		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
+			<var name="key_menuItem" value="Delete" />
+		</execute>
 
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
@@ -58,7 +60,9 @@
 
 		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#MOVE_TO_IN_PROGRESS" value1="Move to In Progress" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Move to In Progress">
+			<var name="key_menuItem" value="Move to In Progress" />
+		</execute>
 
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>
@@ -71,7 +75,9 @@
 
 		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#MOVE_TO_NEW" value1="Move to New" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Move to New">
+			<var name="key_menuItem" value="Move to New" />
+		</execute>
 
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>
@@ -84,7 +90,9 @@
 
 		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#RESOLVE" value1="Resolve" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Resolve">
+			<var name="key_menuItem" value="Resolve" />
+		</execute>
 
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>

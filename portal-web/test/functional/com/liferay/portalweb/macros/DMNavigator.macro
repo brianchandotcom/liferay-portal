@@ -6,7 +6,9 @@
 
 		<var name="key_dmDocumentTypeName" value="${dmDocumentTypeName}" />
 
-		<execute function="AssertClick" locator1="MenuItem#DOCUMENT_TYPE" value1="${dmDocumentTypeName}" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${dmDocumentTypeName}">
+			<var name="key_menuItem" value="${dmDocumentTypeName}" />
+		</execute>
 	</command>
 
 	<command name="gotoAddRepositoryCP">
@@ -14,7 +16,9 @@
 
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="AssertClick" locator1="MenuItem#REPOSITORY" value1="Repository" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Repository">
+			<var name="key_menuItem" value="Repository" />
+		</execute>
 	</command>
 
 	<command name="gotoAddRepositoryPG">
@@ -22,7 +26,9 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#REPOSITORY" value1="Repository" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Repository">
+			<var name="key_menuItem" value="Repository" />
+		</execute>
 	</command>
 
 	<command name="gotoCheckedOutDocument">
@@ -56,7 +62,9 @@
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Permissions" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
+			<var name="key_menuItem" value="Permissions" />
+		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 	</command>
@@ -70,13 +78,17 @@
 	<command name="gotoDocumentType">
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#DOCUMENT_TYPES" value1="Document Types" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Document Types">
+			<var name="key_menuItem" value="Document Types" />
+		</execute>
 	</command>
 
 	<command name="gotoDocumentVersion">
 		<execute macro="DMNavigator#gotoDocumentDetails" />
 
-		<execute function="AssertClick" locator1="MenuItem#VERSIONS" value1="Versions" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Versions">
+			<var name="key_menuItem" value="Versions" />
+		</execute>
 	</command>
 
 	<command name="gotoEditDocument">
@@ -84,7 +96,9 @@
 
 		<execute function="Click" locator1="DocumentsAndMedia#ICON_DOCUMENT_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
 	</command>
 
 	<command name="gotoFolder">
@@ -100,7 +114,9 @@
 
 		<execute function="Click" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
+			<var name="key_menuItem" value="Permissions" />
+		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 	</command>
@@ -112,9 +128,13 @@
 	<command name="gotoMetadataSets">
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertElementPresent" locator1="MenuItem#METADATA_SETS" value1="Metadata Sets" />
+		<execute function="AssertElementPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="Metadata Sets">
+			<var name="key_menuItem" value="Metadata Sets" />
+		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#METADATA_SETS" value1="Metadata Sets" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Metadata Sets">
+			<var name="key_menuItem" value="Metadata Sets" />
+		</execute>
 	</command>
 
 	<command name="gotoRelatedAssetPG">

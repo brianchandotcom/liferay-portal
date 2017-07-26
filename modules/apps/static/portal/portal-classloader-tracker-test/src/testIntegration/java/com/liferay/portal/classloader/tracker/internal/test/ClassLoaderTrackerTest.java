@@ -14,22 +14,28 @@
 
 package com.liferay.portal.classloader.tracker.internal.test;
 
-import aQute.bnd.osgi.Builder;
-import aQute.bnd.osgi.Jar;
-
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.Arrays;
 import java.util.Map;
+import java.util.jar.Attributes;
+import java.util.jar.JarFile;
+import java.util.jar.JarOutputStream;
+import java.util.jar.Manifest;
+import java.util.zip.ZipEntry;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -39,6 +45,7 @@ import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkEvent;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.wiring.BundleWiring;
@@ -102,7 +109,15 @@ public class ClassLoaderTrackerTest {
 
 			// Test 3, start bundle
 
-			bundle.start();
+			bundle.start(Bundle.START_ACTIVATION_POLICY);
+
+			Assert.assertEquals(Bundle.STARTING, bundle.getState());
+
+			// Test 4, load class cause lazy activation
+
+			Assert.assertNotSame(
+				ClassLoaderTrackerTest.class,
+				bundle.loadClass(ClassLoaderTrackerTest.class.getName()));
 
 			Assert.assertEquals(Bundle.ACTIVE, bundle.getState());
 
@@ -111,7 +126,7 @@ public class ClassLoaderTrackerTest {
 			Assert.assertSame(
 				bundleWiring.getClassLoader(), classLoaders.get(contextName));
 
-			// Test 4, refresh bundle
+			// Test 5, refresh bundle
 
 			DefaultNoticeableFuture<FrameworkEvent> defaultNoticeableFuture =
 				new DefaultNoticeableFuture<>();
@@ -142,7 +157,7 @@ public class ClassLoaderTrackerTest {
 				bundleWiring.getClassLoader(),
 				newBundleWiring.getClassLoader());
 
-			// Test 5, stop bundle
+			// Test 6, stop bundle
 
 			bundle.stop();
 
@@ -150,7 +165,7 @@ public class ClassLoaderTrackerTest {
 
 			Assert.assertNull(classLoaders.get(contextName));
 
-			// Test 6, uninstall bundle
+			// Test 7, uninstall bundle
 
 			bundle.uninstall();
 
@@ -171,20 +186,68 @@ public class ClassLoaderTrackerTest {
 			String bundleSymbolicName, String bundleVersion)
 		throws Exception {
 
-		try (Builder builder = new Builder()) {
-			builder.setBundleSymbolicName(bundleSymbolicName);
-			builder.setBundleVersion(bundleVersion);
+		try (UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+				new UnsyncByteArrayOutputStream()) {
 
-			try (Jar jar = builder.build()) {
-				UnsyncByteArrayOutputStream outputStream =
-					new UnsyncByteArrayOutputStream();
+			try (JarOutputStream jarOutputStream = new JarOutputStream(
+					unsyncByteArrayOutputStream)) {
 
-				jar.write(outputStream);
+				_writeManifest(
+					bundleSymbolicName, bundleVersion, jarOutputStream);
 
-				return new UnsyncByteArrayInputStream(
-					outputStream.unsafeGetByteArray(), 0, outputStream.size());
+				_writeClasses(jarOutputStream, ClassLoaderTrackerTest.class);
 			}
+
+			return new UnsyncByteArrayInputStream(
+				unsyncByteArrayOutputStream.unsafeGetByteArray(), 0,
+				unsyncByteArrayOutputStream.size());
 		}
+	}
+
+	private void _writeClasses(
+			JarOutputStream jarOutputStream, Class<?>... classes)
+		throws IOException {
+
+		for (Class<?> clazz : classes) {
+			String className = clazz.getName();
+
+			String path = StringUtil.replace(
+				className, CharPool.PERIOD, CharPool.SLASH);
+
+			String resourcePath = path.concat(".class");
+
+			jarOutputStream.putNextEntry(new ZipEntry(resourcePath));
+
+			ClassLoader classLoader = clazz.getClassLoader();
+
+			StreamUtil.transfer(
+				classLoader.getResourceAsStream(resourcePath), jarOutputStream,
+				false);
+
+			jarOutputStream.closeEntry();
+		}
+	}
+
+	private void _writeManifest(
+			String bundleSymbolicName, String bundleVersion,
+			JarOutputStream jarOutputStream)
+		throws IOException {
+
+		Manifest manifest = new Manifest();
+
+		Attributes attributes = manifest.getMainAttributes();
+
+		attributes.putValue(Constants.BUNDLE_ACTIVATIONPOLICY, "lazy");
+		attributes.putValue(Constants.BUNDLE_MANIFESTVERSION, "2");
+		attributes.putValue(Constants.BUNDLE_SYMBOLICNAME, bundleSymbolicName);
+		attributes.putValue(Constants.BUNDLE_VERSION, bundleVersion);
+		attributes.putValue("Manifest-Version", "2");
+
+		jarOutputStream.putNextEntry(new ZipEntry(JarFile.MANIFEST_NAME));
+
+		manifest.write(jarOutputStream);
+
+		jarOutputStream.closeEntry();
 	}
 
 }

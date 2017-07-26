@@ -16,17 +16,25 @@ package com.liferay.portal.cache.ehcache.internal.configurator;
 
 import com.liferay.portal.cache.PortalCacheReplicator;
 import com.liferay.portal.cache.configuration.PortalCacheConfiguration;
+import com.liferay.portal.cache.configuration.PortalCacheManagerConfiguration;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.net.URL;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
 import net.sf.ehcache.config.CacheConfiguration;
+import net.sf.ehcache.config.Configuration;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -41,6 +49,84 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class MultiVMEhcachePortalCacheManagerConfigurator
 	extends BaseEhcachePortalCacheManagerConfigurator {
+
+	@Override
+	@SuppressWarnings("rawtypes")
+	public ObjectValuePair
+		<Configuration, PortalCacheManagerConfiguration>
+			getConfigurationObjectValuePair(
+				String portalCacheManagerName, URL configurationURL,
+				boolean usingDefault) {
+
+		ObjectValuePair<Configuration, PortalCacheManagerConfiguration>
+			objectValuePair = super.getConfigurationObjectValuePair(
+				portalCacheManagerName, configurationURL, usingDefault);
+
+		if (!clusterEnabled) {
+			return objectValuePair;
+		}
+
+		PortalCacheManagerConfiguration portalCacheManagerConfiguration =
+			objectValuePair.getValue();
+
+		PortalCacheConfiguration defaultPortalCacheConfiguration =
+			portalCacheManagerConfiguration.
+				getDefaultPortalCacheConfiguration();
+
+		Map<String, ObjectValuePair<Properties, Properties>>
+			mergedPropertiesMap = _getMergedPropertiesMap();
+
+		for (Map.Entry<String, ObjectValuePair<Properties, Properties>> entry :
+				mergedPropertiesMap.entrySet()) {
+
+			String portalCacheName = entry.getKey();
+
+			PortalCacheConfiguration portalCacheConfiguration =
+				portalCacheManagerConfiguration.getPortalCacheConfiguration(
+					portalCacheName);
+
+			if (portalCacheConfiguration == null) {
+				portalCacheConfiguration =
+					defaultPortalCacheConfiguration.newPortalCacheConfiguration(
+						portalCacheName);
+
+				portalCacheManagerConfiguration.putPortalCacheConfiguration(
+					portalCacheName, portalCacheConfiguration);
+			}
+
+			ObjectValuePair<Properties, Properties> propertiesPair =
+				entry.getValue();
+
+			if (_bootstrapLoaderEnabled && (propertiesPair.getKey() != null)) {
+				portalCacheConfiguration.
+					setPortalCacheBootstrapLoaderProperties(
+						propertiesPair.getKey());
+			}
+
+			if (propertiesPair.getValue() != null) {
+				Set<Properties> portalCacheListenerPropertiesSet =
+					portalCacheConfiguration.
+						getPortalCacheListenerPropertiesSet();
+
+				Iterator<Properties> itr =
+					portalCacheListenerPropertiesSet.iterator();
+
+				while (itr.hasNext()) {
+					Properties properties = itr.next();
+
+					if ((Boolean)properties.get(
+							PortalCacheReplicator.REPLICATOR)) {
+
+						itr.remove();
+					}
+				}
+
+				portalCacheListenerPropertiesSet.add(propertiesPair.getValue());
+			}
+		}
+
+		return objectValuePair;
+	}
 
 	@Activate
 	protected void activate() {
@@ -112,7 +198,7 @@ public class MultiVMEhcachePortalCacheManagerConfigurator
 
 		if (_bootstrapLoaderEnabled) {
 			String bootstrapLoaderPropertiesString =
-				_bootstrapLoaderProperties.getProperty(cacheName);
+				(String)_bootstrapLoaderProperties.remove(cacheName);
 
 			if (Validator.isNull(bootstrapLoaderPropertiesString)) {
 				bootstrapLoaderPropertiesString =
@@ -124,8 +210,8 @@ public class MultiVMEhcachePortalCacheManagerConfigurator
 					bootstrapLoaderPropertiesString, StringPool.COMMA));
 		}
 
-		String replicatorPropertiesString = _replicatorProperties.getProperty(
-			cacheName);
+		String replicatorPropertiesString =
+			(String)_replicatorProperties.remove(cacheName);
 
 		if (Validator.isNull(replicatorPropertiesString)) {
 			replicatorPropertiesString = _defaultReplicatorPropertiesString;
@@ -150,6 +236,49 @@ public class MultiVMEhcachePortalCacheManagerConfigurator
 	}
 
 	protected boolean clusterEnabled;
+
+	private Map<String, ObjectValuePair<Properties, Properties>>
+		_getMergedPropertiesMap() {
+
+		Map<String, ObjectValuePair<Properties, Properties>>
+			mergedPropertiesMap = new HashMap<>();
+
+		for (String portalCacheName :
+				_bootstrapLoaderProperties.stringPropertyNames()) {
+
+			mergedPropertiesMap.put(
+				portalCacheName,
+				new ObjectValuePair(
+					parseProperties(
+						_bootstrapLoaderProperties.getProperty(portalCacheName),
+						StringPool.COMMA),
+					null));
+		}
+
+		for (String portalCacheName :
+				_replicatorProperties.stringPropertyNames()) {
+
+			Properties replicatorProperties = parseProperties(
+				_replicatorProperties.getProperty(portalCacheName),
+				StringPool.COMMA);
+
+			replicatorProperties.put(PortalCacheReplicator.REPLICATOR, true);
+
+			ObjectValuePair<Properties, Properties> objectValuePair =
+				mergedPropertiesMap.get(portalCacheName);
+
+			if (objectValuePair == null) {
+				mergedPropertiesMap.put(
+					portalCacheName,
+					new ObjectValuePair(null, replicatorProperties));
+			}
+			else {
+				objectValuePair.setValue(replicatorProperties);
+			}
+		}
+
+		return mergedPropertiesMap;
+	}
 
 	private boolean _bootstrapLoaderEnabled;
 	private Properties _bootstrapLoaderProperties;

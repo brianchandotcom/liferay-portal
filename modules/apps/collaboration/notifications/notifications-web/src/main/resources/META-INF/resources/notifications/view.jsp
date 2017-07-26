@@ -130,7 +130,7 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 
 		form.attr('method', 'post');
 
-		submitForm(form, '<portlet:actionURL name="markNotificationsAsUnread" />');
+		submitForm(form, '<portlet:actionURL name="markNotificationsAsUnread"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
 	}
 
 	function <portlet:namespace />delete() {
@@ -138,7 +138,7 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 
 		form.attr('method', 'post');
 
-		submitForm(form, '<portlet:actionURL name="deleteAll" />');
+		submitForm(form, '<portlet:actionURL name="deleteAll"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
 	}
 </aui:script>
 

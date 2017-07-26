@@ -83,6 +83,8 @@ public class NotificationsPortlet extends MVCPortlet {
 				throw new PortletException(e);
 			}
 		}
+
+		_sendRedirect(actionRequest, actionResponse);
 	}
 
 	public void deleteUserNotificationEvent(
@@ -99,6 +101,8 @@ public class NotificationsPortlet extends MVCPortlet {
 		catch (Exception e) {
 			throw new PortletException(e);
 		}
+
+		_sendRedirect(actionRequest, actionResponse);
 	}
 
 	public void markAllNotificationsAsRead(
@@ -175,6 +179,8 @@ public class NotificationsPortlet extends MVCPortlet {
 		for (long userNotificationEventId : userNotificationEventIds) {
 			updateArchived(userNotificationEventId, false);
 		}
+
+		_sendRedirect(actionRequest, actionResponse);
 	}
 
 	@Override

@@ -39,6 +39,7 @@ if (subscriptionId > 0) {
 		<c:choose>
 			<c:when test="<%= !userNotificationEvent.isArchived() %>">
 				<portlet:actionURL name="markNotificationAsRead" var="markNotificationAsReadURL">
+					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="userNotificationEventId" value="<%= String.valueOf(userNotificationEvent.getUserNotificationEventId()) %>" />
 				</portlet:actionURL>
 
@@ -46,6 +47,7 @@ if (subscriptionId > 0) {
 			</c:when>
 			<c:otherwise>
 				<portlet:actionURL name="markNotificationAsUnread" var="markNotificationAsUnreadURL">
+					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="userNotificationEventId" value="<%= String.valueOf(userNotificationEvent.getUserNotificationEventId()) %>" />
 				</portlet:actionURL>
 
@@ -64,6 +66,7 @@ if (subscriptionId > 0) {
 	</c:if>
 
 	<portlet:actionURL name="deleteUserNotificationEvent" var="deleteURL">
+		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="userNotificationEventId" value="<%= String.valueOf(userNotificationEvent.getUserNotificationEventId()) %>" />
 	</portlet:actionURL>
 

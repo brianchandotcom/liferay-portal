@@ -34,6 +34,7 @@ import com.liferay.gradle.plugins.defaults.internal.util.GitUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradlePluginsDefaultsUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.IncrementVersionClosure;
+import com.liferay.gradle.plugins.defaults.internal.util.XMLUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.copy.RenameDependencyAction;
 import com.liferay.gradle.plugins.defaults.tasks.CheckOSGiBundleStateTask;
 import com.liferay.gradle.plugins.defaults.tasks.InstallCacheTask;
@@ -111,7 +112,6 @@ import java.util.regex.Pattern;
 
 import javax.xml.bind.DatatypeConverter;
 import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 
 import nebula.plugin.extraconfigurations.OptionalBasePlugin;
 import nebula.plugin.extraconfigurations.ProvidedBasePlugin;
@@ -3523,11 +3523,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		urlConnection.setRequestProperty("Authorization", authorization);
 
 		try (InputStream inputStream = urlConnection.getInputStream()) {
-			DocumentBuilderFactory documentBuilderFactory =
-				DocumentBuilderFactory.newInstance();
-
-			DocumentBuilder documentBuilder =
-				documentBuilderFactory.newDocumentBuilder();
+			DocumentBuilder documentBuilder = XMLUtil.getDocumentBuilder();
 
 			Document document = documentBuilder.parse(inputStream);
 
@@ -3656,15 +3652,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			return false;
 		}
 
-		DocumentBuilderFactory documentBuilderFactory =
-			DocumentBuilderFactory.newInstance();
-
-		documentBuilderFactory.setFeature(
-			"http://apache.org/xml/features/nonvalidating/load-external-dtd",
-			false);
-
-		DocumentBuilder documentBuilder =
-			documentBuilderFactory.newDocumentBuilder();
+		DocumentBuilder documentBuilder = XMLUtil.getDocumentBuilder();
 
 		Document document = documentBuilder.parse(serviceXmlFile);
 

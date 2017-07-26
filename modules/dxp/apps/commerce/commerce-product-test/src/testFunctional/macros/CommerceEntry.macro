@@ -77,6 +77,12 @@
 		</execute>
 	</command>
 
+	<command name="gotoEntryTab">
+		<execute macro="CommerceEntry#gotoEntryMenu">
+			<var name="menuTab" value="${menuTab}" />
+		</execute>
+	</command>
+
 	<command name="publishEntry">
 		<execute macro="Button#clickPublish" />
 
@@ -113,7 +119,7 @@
 
 	<command name="uploadCatalogEntrySingleImage">
 		<execute macro="CommerceEntry#gotoEntryMenu">
-			<var name="menuTab" value="${menuTab}" />
+			<var name="menuTab" value="Images" />
 		</execute>
 
 		<execute function="Click" locator1="Button#PLUS" />

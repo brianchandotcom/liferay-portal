@@ -18,7 +18,7 @@
 			</li>
 		</#if>
 
-		<#if show_whishlist_icon>
+		<#if show_wishlist_icon>
 			<li class="hidden-xs">
 				<a class="btn btn-xs collapsed" role="button" data-toggle="collapse" href="#collapseWishlist" aria-expanded="false" aria-controls="collapseWishlist">
 					<svg class="lexicon-icon">
@@ -59,7 +59,7 @@
 		</div>
 	</#if>
 
-	<#if show_whishlist_icon>
+	<#if show_wishlist_icon>
 		<div class="collapse position-anchored" id="collapseWishlist">
 			<div class="well small">
 				<#include "${full_templates_path}/wishlist.ftl" />

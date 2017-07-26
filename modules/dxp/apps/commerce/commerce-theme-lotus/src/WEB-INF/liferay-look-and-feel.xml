@@ -13,7 +13,7 @@
 			<setting configurable="true" key="show-main-search-icon" type="checkbox" value="true" />
 			<setting configurable="false" key="show-maximize-minimize-application-links" type="checkbox" value="false" />
 			<setting configurable="false" key="show-site-name-default" value="false" />
-			<setting configurable="true" key="show-whishlist-icon" type="checkbox" value="true" />
+			<setting configurable="true" key="show-wishlist-icon" type="checkbox" value="true" />
 		</settings>
 		<layout-templates>
 			<custom>

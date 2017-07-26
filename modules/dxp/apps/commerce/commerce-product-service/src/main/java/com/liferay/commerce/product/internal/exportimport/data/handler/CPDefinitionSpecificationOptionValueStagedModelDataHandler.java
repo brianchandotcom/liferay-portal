@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.product.internal.exportimport.data.handler;
 
-import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.model.CPSpecificationOption;
@@ -110,12 +110,12 @@ public class CPDefinitionSpecificationOptionValueStagedModelDataHandler
 				cpDefinitionSpecificationOptionValue)
 		throws Exception {
 
-		Map<Long, Long> cpDefinitionOptionRelIds =
+		Map<Long, Long> cpDefinitionIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				CPDefinitionOptionRel.class);
+				CPDefinition.class);
 
 		long cpDefinitionId = MapUtil.getLong(
-			cpDefinitionOptionRelIds,
+			cpDefinitionIds,
 			cpDefinitionSpecificationOptionValue.getCPDefinitionId(),
 			cpDefinitionSpecificationOptionValue.getCPDefinitionId());
 

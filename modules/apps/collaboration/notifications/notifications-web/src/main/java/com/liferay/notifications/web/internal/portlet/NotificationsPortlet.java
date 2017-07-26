@@ -15,7 +15,6 @@
 package com.liferay.notifications.web.internal.portlet;
 
 import com.liferay.notifications.web.internal.constants.NotificationsPortletKeys;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
@@ -268,12 +267,6 @@ public class NotificationsPortlet extends MVCPortlet {
 		if (userNotificationEvent == null) {
 			return;
 		}
-
-		updateArchived(userNotificationEvent);
-	}
-
-	protected void updateArchived(UserNotificationEvent userNotificationEvent)
-		throws PortalException {
 
 		userNotificationEvent.setArchived(true);
 

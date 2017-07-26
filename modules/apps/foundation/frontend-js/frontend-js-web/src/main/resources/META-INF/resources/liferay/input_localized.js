@@ -276,7 +276,7 @@ AUI.add(
 
 						inputLanguage.val(value);
 
-						if (instance._fillDefaultLanguage) {
+						if (instance._fillDefaultLanguage && selectedLanguageId === defaultInputLanguage) {
 							defaultInputLanguage.val(value);
 						}
 

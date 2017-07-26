@@ -107,6 +107,30 @@ public class CommerceCartItemLocalServiceImpl
 	}
 
 	@Override
+	public void deleteCommerceCartItemsByCPDefinitionId(long cpDefinitionId)
+		throws PortalException {
+
+		List<CommerceCartItem> commerceCartItems =
+			commerceCartItemPersistence.findByCPDefinitionId(cpDefinitionId);
+
+		for (CommerceCartItem commerceCartItem : commerceCartItems) {
+			deleteCommerceCartItem(commerceCartItem);
+		}
+	}
+
+	@Override
+	public void deleteCommerceCartItemsByCPInstanceId(long cpInstanceId)
+		throws PortalException {
+
+		List<CommerceCartItem> commerceCartItems =
+			commerceCartItemPersistence.findByCPInstanceId(cpInstanceId);
+
+		for (CommerceCartItem commerceCartItem : commerceCartItems) {
+			deleteCommerceCartItem(commerceCartItem);
+		}
+	}
+
+	@Override
 	public List<CommerceCartItem> getCommerceCartItems(
 		long commerceCartId, int start, int end) {
 

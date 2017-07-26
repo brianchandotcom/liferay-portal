@@ -16,12 +16,10 @@ package com.liferay.petra.json.web.service.client.internal;
 
 import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
-import com.liferay.petra.json.web.service.client.internal.jcifs.JCIFSNTLMSchemeFactory;
 
 import java.io.IOException;
 import java.io.InterruptedIOException;
 
-import java.net.ProxySelector;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
@@ -55,14 +53,14 @@ import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.StatusLine;
 import org.apache.http.auth.AuthScheme;
-import org.apache.http.auth.AuthSchemeProvider;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.ChallengeState;
+import org.apache.http.auth.NTCredentials;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.AuthCache;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.HttpRequestRetryHandler;
-import org.apache.http.client.config.AuthSchemes;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
@@ -72,7 +70,6 @@ import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.protocol.ClientContext;
 import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.client.utils.URLEncodedUtils;
-import org.apache.http.config.Lookup;
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
 import org.apache.http.conn.ConnectTimeoutException;
@@ -91,7 +88,6 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.client.ProxyAuthenticationStrategy;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
-import org.apache.http.impl.conn.SystemDefaultRoutePlanner;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
@@ -168,10 +164,30 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 			}
 
 			if (!isNull(_proxyLogin)) {
-				credentialsProvider.setCredentials(
-					new AuthScope(_proxyHostName, _proxyHostPort),
-					new UsernamePasswordCredentials(
-						_proxyLogin, _proxyPassword));
+				if (!isNull(_proxyAuthType) &&
+					_proxyAuthType.equalsIgnoreCase("ntlm")) {
+
+					credentialsProvider.setCredentials(
+						new AuthScope(_proxyHostName, _proxyHostPort),
+						new NTCredentials(
+							_proxyLogin, _proxyPassword, _proxyWorkstation,
+							_proxyDomain));
+				}
+				else {
+					credentialsProvider.setCredentials(
+						new AuthScope(_proxyHostName, _proxyHostPort),
+						new UsernamePasswordCredentials(
+							_proxyLogin, _proxyPassword));
+				}
+
+				HttpHost proxy = new HttpHost(
+					_proxyHostName, _proxyHostPort, _protocol);
+
+				RequestConfig.Builder builder = RequestConfig.custom();
+
+				builder.setProxy(proxy);
+
+				httpClientBuilder.setDefaultRequestConfig(builder.build());
 			}
 
 			httpClientBuilder.setDefaultCredentialsProvider(
@@ -181,32 +197,6 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 		}
 
 		try {
-			if (_proxySelector != null) {
-				httpClientBuilder.setRoutePlanner(
-					new SystemDefaultRoutePlanner(_proxySelector));
-			}
-			else {
-				setProxyHost(httpClientBuilder);
-			}
-
-			if (!isNull(_proxyAuthType) &&
-				_proxyAuthType.equalsIgnoreCase("ntlm")) {
-
-				RegistryBuilder registerBuilder =
-					RegistryBuilder.<AuthSchemeProvider>create();
-
-				registerBuilder = registerBuilder.register(
-					AuthSchemes.NTLM,
-					new JCIFSNTLMSchemeFactory(
-						_proxyDomain, _proxyWorkstation));
-
-				Lookup<AuthSchemeProvider> authSchemeRegistry =
-					registerBuilder.build();
-
-				httpClientBuilder.setDefaultAuthSchemeRegistry(
-					authSchemeRegistry);
-			}
-
 			_closeableHttpClient = httpClientBuilder.build();
 
 			_idleConnectionMonitorThread = new IdleConnectionMonitorThread(
@@ -544,10 +534,6 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 		_proxyPassword = proxyPassword;
 	}
 
-	public void setProxySelector(ProxySelector proxySelector) {
-		_proxySelector = proxySelector;
-	}
-
 	public void setProxyWorkstation(String proxyWorkstation) {
 		_proxyWorkstation = proxyWorkstation;
 	}
@@ -820,7 +806,6 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 	private int _proxyHostPort;
 	private String _proxyLogin;
 	private String _proxyPassword;
-	private ProxySelector _proxySelector;
 	private String _proxyWorkstation;
 
 	private class HttpRequestRetryHandlerImpl

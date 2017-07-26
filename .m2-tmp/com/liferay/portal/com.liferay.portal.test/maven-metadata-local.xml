@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.liferay.portal</groupId>
+  <artifactId>com.liferay.portal.test</artifactId>
+  <version>3.0.0</version>
+  <versioning>
+    <versions>
+      <version>3.0.0</version>
+    </versions>
+    <lastUpdated>20170725153131</lastUpdated>
+  </versioning>
+</metadata>

@@ -4,6 +4,7 @@
 			$processor.processColumn("column-1", "portlet-column-content portlet-column-content-first")
 		</div>
 	</div>
+
 	<div class="portlet-layout row">
 		<div class="col-md-3 col-sm-4 portlet-column portlet-column-first" id="column-2">
 			$processor.processColumn("column-1", "portlet-column-content portlet-column-content-second")

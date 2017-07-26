@@ -45,10 +45,12 @@ public class UpgradeGroup extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		updateParentGroup();
-
-		updateTreePath();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected void rebuildTree(
 			long companyId, PreparedStatement preparedStatement)
 		throws PortalException {
@@ -121,53 +123,79 @@ public class UpgradeGroup extends UpgradeProcess {
 
 	protected void updateParentGroup() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			StringBundler sb = new StringBundler(6);
+			StringBundler sb = new StringBundler(7);
 
 			sb.append("select stagingGroup_.groupId, ");
-			sb.append("stagingGroup_.liveGroupId from Group_ stagingGroup_ ");
+			sb.append("liveGroup_.parentGroupId from Group_ stagingGroup_ ");
 			sb.append("inner join Group_ liveGroup_ on ");
 			sb.append("(liveGroup_.groupId = stagingGroup_.liveGroupId) ");
-			sb.append("where (stagingGroup_.remoteStagingGroupCount = 0) ");
-			sb.append("and (stagingGroup_.groupId != 0)");
+			sb.append("where (stagingGroup_.remoteStagingGroupCount = 0) and ");
+			sb.append("(liveGroup_.parentGroupId != ");
+			sb.append("stagingGroup_.parentGroupId)");
 
 			try (PreparedStatement ps1 = connection.prepareStatement(
 					sb.toString());
-
 				PreparedStatement ps2 = connection.prepareStatement(
-					"select parentGroupId from Group_ where groupId = ?");
-
+					"select treePath from Group_ where groupId = ?");
 				PreparedStatement ps3 =
 					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 						connection,
-						"update Group_ set parentGroupId = ? where groupId = " +
-							"?")) {
+						"update Group_ set parentGroupId = ?, treePath = ?" +
+							"where groupId = ?");
+				ResultSet rs1 = ps1.executeQuery()) {
 
-				try (ResultSet rs1 = ps1.executeQuery()) {
-					while (rs1.next()) {
-						long groupId = rs1.getLong(1);
-						long liveGroupId = rs1.getLong(2);
+				while (rs1.next()) {
+					long groupId = rs1.getLong(1);
+					long parentGroupId = rs1.getLong(2);
 
-						ps2.setLong(1, liveGroupId);
+					ps2.setLong(1, parentGroupId);
 
-						try (ResultSet rs2 = ps2.executeQuery()) {
-							while (rs2.next()) {
-								long parentGroupId = rs2.getLong(1);
+					try (ResultSet rs2 = ps2.executeQuery()) {
+						String treePath = null;
 
-								ps3.setLong(1, parentGroupId);
+						if (rs2.next()) {
+							treePath = rs2.getString("treePath");
 
-								ps3.setLong(2, groupId);
+							treePath = treePath.concat(String.valueOf(groupId));
 
-								ps3.addBatch();
+							treePath = treePath.concat(StringPool.SLASH);
+						}
+						else {
+							if (_log.isWarnEnabled()) {
+								_log.warn(
+									"Group " + parentGroupId +
+										" could not be found");
 							}
 
-							ps3.executeBatch();
+							StringBundler treePathSB = new StringBundler(5);
+
+							treePathSB.append(StringPool.SLASH);
+							treePathSB.append(parentGroupId);
+							treePathSB.append(StringPool.SLASH);
+							treePathSB.append(groupId);
+							treePathSB.append(StringPool.SLASH);
+
+							treePath = treePathSB.toString();
 						}
+
+						ps3.setLong(1, parentGroupId);
+						ps3.setString(2, treePath);
+
+						ps3.setLong(3, groupId);
+
+						ps3.addBatch();
 					}
 				}
+
+				ps3.executeBatch();
 			}
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected void updateTreePath() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			long[] companyIds = PortalInstances.getCompanyIdsBySQL();

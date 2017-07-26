@@ -148,19 +148,15 @@ public class RepositoryStagedModelDataHandler
 			boolean hidden = GetterUtil.getBoolean(
 				repositoryElement.attributeValue("hidden"));
 
+			Repository existingRepository = fetchStagedModelByUuidAndGroupId(
+				repository.getUuid(), portletDataContext.getScopeGroupId());
+
+			if (existingRepository == null) {
+				existingRepository = _repositoryLocalService.fetchRepository(
+					portletDataContext.getScopeGroupId(), repository.getName());
+			}
+
 			if (portletDataContext.isDataStrategyMirror()) {
-				Repository existingRepository =
-					fetchStagedModelByUuidAndGroupId(
-						repository.getUuid(),
-						portletDataContext.getScopeGroupId());
-
-				if (existingRepository == null) {
-					existingRepository =
-						_repositoryLocalService.fetchRepository(
-							portletDataContext.getScopeGroupId(),
-							repository.getName());
-				}
-
 				if (existingRepository == null) {
 					serviceContext.setUuid(repository.getUuid());
 
@@ -181,7 +177,7 @@ public class RepositoryStagedModelDataHandler
 					importedRepository = existingRepository;
 				}
 			}
-			else {
+			else if (existingRepository == null) {
 				importedRepository = _repositoryLocalService.addRepository(
 					userId, portletDataContext.getScopeGroupId(),
 					repository.getClassNameId(),
@@ -190,6 +186,9 @@ public class RepositoryStagedModelDataHandler
 					repository.getPortletId(),
 					repository.getTypeSettingsProperties(), hidden,
 					serviceContext);
+			}
+			else {
+				importedRepository = existingRepository;
 			}
 		}
 		catch (Exception e) {

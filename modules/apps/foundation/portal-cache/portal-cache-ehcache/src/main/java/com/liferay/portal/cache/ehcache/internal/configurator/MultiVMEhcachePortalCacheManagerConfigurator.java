@@ -48,6 +48,60 @@ import org.osgi.service.component.annotations.Reference;
 public class MultiVMEhcachePortalCacheManagerConfigurator
 	extends BaseEhcachePortalCacheManagerConfigurator {
 
+	@Activate
+	protected void activate() {
+		_bootstrapLoaderEnabled = GetterUtil.getBoolean(
+			props.get(PropsKeys.EHCACHE_BOOTSTRAP_CACHE_LOADER_ENABLED));
+		_bootstrapLoaderProperties = props.getProperties(
+			PropsKeys.EHCACHE_BOOTSTRAP_CACHE_LOADER_PROPERTIES +
+				StringPool.PERIOD,
+			true);
+		clusterEnabled = GetterUtil.getBoolean(
+			props.get(PropsKeys.CLUSTER_LINK_ENABLED));
+		_defaultBootstrapLoaderPropertiesString = getPortalPropertiesString(
+			PropsKeys.EHCACHE_DEFAULT_BOOTSTRAP_CACHE_LOADER_PROPERTIES);
+		_defaultReplicatorPropertiesString = getPortalPropertiesString(
+			PropsKeys.EHCACHE_DEFAULT_REPLICATOR_PROPERTIES);
+		_replicatorProperties = props.getProperties(
+			PropsKeys.EHCACHE_REPLICATOR_PROPERTIES +
+				StringPool.PERIOD,
+			true);
+	}
+
+	protected String getPortalPropertiesString(String portalPropertyKey) {
+		String[] array = props.getArray(portalPropertyKey);
+
+		if (array.length == 0) {
+			return null;
+		}
+
+		if (array.length == 1) {
+			return array[0];
+		}
+
+		StringBundler sb = new StringBundler(array.length * 2);
+
+		for (int i = 0; i < array.length; i++) {
+			sb.append(array[i]);
+			sb.append(StringPool.COMMA);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		return sb.toString();
+	}
+
+	@Override
+	protected boolean isRequireSerialization(
+		CacheConfiguration cacheConfiguration) {
+
+		if (clusterEnabled) {
+			return true;
+		}
+
+		return super.isRequireSerialization(cacheConfiguration);
+	}
+
 	@Override
 	protected void manageConfiguration(
 		Configuration configuration,
@@ -112,60 +166,6 @@ public class MultiVMEhcachePortalCacheManagerConfigurator
 				portalCacheListenerPropertiesSet.add(propertiesPair.getValue());
 			}
 		}
-	}
-
-	@Activate
-	protected void activate() {
-		_bootstrapLoaderEnabled = GetterUtil.getBoolean(
-			props.get(PropsKeys.EHCACHE_BOOTSTRAP_CACHE_LOADER_ENABLED));
-		_bootstrapLoaderProperties = props.getProperties(
-			PropsKeys.EHCACHE_BOOTSTRAP_CACHE_LOADER_PROPERTIES +
-				StringPool.PERIOD,
-			true);
-		clusterEnabled = GetterUtil.getBoolean(
-			props.get(PropsKeys.CLUSTER_LINK_ENABLED));
-		_defaultBootstrapLoaderPropertiesString = getPortalPropertiesString(
-			PropsKeys.EHCACHE_DEFAULT_BOOTSTRAP_CACHE_LOADER_PROPERTIES);
-		_defaultReplicatorPropertiesString = getPortalPropertiesString(
-			PropsKeys.EHCACHE_DEFAULT_REPLICATOR_PROPERTIES);
-		_replicatorProperties = props.getProperties(
-			PropsKeys.EHCACHE_REPLICATOR_PROPERTIES +
-				StringPool.PERIOD,
-			true);
-	}
-
-	protected String getPortalPropertiesString(String portalPropertyKey) {
-		String[] array = props.getArray(portalPropertyKey);
-
-		if (array.length == 0) {
-			return null;
-		}
-
-		if (array.length == 1) {
-			return array[0];
-		}
-
-		StringBundler sb = new StringBundler(array.length * 2);
-
-		for (int i = 0; i < array.length; i++) {
-			sb.append(array[i]);
-			sb.append(StringPool.COMMA);
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		return sb.toString();
-	}
-
-	@Override
-	protected boolean isRequireSerialization(
-		CacheConfiguration cacheConfiguration) {
-
-		if (clusterEnabled) {
-			return true;
-		}
-
-		return super.isRequireSerialization(cacheConfiguration);
 	}
 
 	@Override

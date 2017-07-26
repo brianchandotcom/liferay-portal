@@ -34,6 +34,25 @@ import org.osgi.service.component.annotations.Component;
 public class RMIMultiVMEhcachePortalCacheManagerConfigurator
 	extends MultiVMEhcachePortalCacheManagerConfigurator {
 
+	@Activate
+	@Override
+	protected void activate() {
+		super.activate();
+
+		if (!clusterEnabled) {
+			return;
+		}
+
+		_peerListenerFactoryClass = props.get(
+			PropsKeys.EHCACHE_RMI_PEER_LISTENER_FACTORY_CLASS);
+		_peerListenerFactoryPropertiesString = getPortalPropertiesString(
+			PropsKeys.EHCACHE_RMI_PEER_LISTENER_FACTORY_PROPERTIES);
+		_peerProviderFactoryClass = props.get(
+			PropsKeys.EHCACHE_RMI_PEER_PROVIDER_FACTORY_CLASS);
+		_peerProviderFactoryPropertiesString = getPortalPropertiesString(
+			PropsKeys.EHCACHE_RMI_PEER_PROVIDER_FACTORY_PROPERTIES);
+	}
+
 	@Override
 	@SuppressWarnings("rawtypes")
 	protected void manageConfiguration(
@@ -68,25 +87,6 @@ public class RMIMultiVMEhcachePortalCacheManagerConfigurator
 
 		configuration.addCacheManagerPeerListenerFactory(
 			peerListenerFacotryConfiguration);
-	}
-
-	@Activate
-	@Override
-	protected void activate() {
-		super.activate();
-
-		if (!clusterEnabled) {
-			return;
-		}
-
-		_peerListenerFactoryClass = props.get(
-			PropsKeys.EHCACHE_RMI_PEER_LISTENER_FACTORY_CLASS);
-		_peerListenerFactoryPropertiesString = getPortalPropertiesString(
-			PropsKeys.EHCACHE_RMI_PEER_LISTENER_FACTORY_PROPERTIES);
-		_peerProviderFactoryClass = props.get(
-			PropsKeys.EHCACHE_RMI_PEER_PROVIDER_FACTORY_CLASS);
-		_peerProviderFactoryPropertiesString = getPortalPropertiesString(
-			PropsKeys.EHCACHE_RMI_PEER_PROVIDER_FACTORY_PROPERTIES);
 	}
 
 	private String _peerListenerFactoryClass;

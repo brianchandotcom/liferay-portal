@@ -45,7 +45,7 @@ public class UpgradeSocial extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (getCounterIncrement() > 0) {
+		if (getSocialActivitySetsCount() > 0) {
 			return;
 		}
 
@@ -95,6 +95,20 @@ public class UpgradeSocial extends UpgradeProcess {
 					long minActivityId = rs.getLong(1);
 
 					return increment - minActivityId;
+				}
+
+				return 0;
+			}
+		}
+	}
+
+	protected int getSocialActivitySetsCount() throws Exception {
+		try (Statement s = connection.createStatement()) {
+			String query = "select count(activitySetId) from SocialActivitySet";
+
+			try (ResultSet rs = s.executeQuery(query)) {
+				if (rs.next()) {
+					return rs.getInt(1);
 				}
 
 				return 0;

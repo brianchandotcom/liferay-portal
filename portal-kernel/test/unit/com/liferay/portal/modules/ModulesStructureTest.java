@@ -731,7 +731,7 @@ public class ModulesStructureTest {
 		Path gradlePropertiesPath = dirPath.resolve("gradle.properties");
 		Path settingsGradlePath = dirPath.resolve("settings.gradle");
 
-		if (!_isInGitRepoReadOnly(dirPath) && !privateRepo) {
+		if (!_isInGitRepoReadOnly(dirPath)) {
 			String buildGradle = ModulesStructureTestUtil.read(buildGradlePath);
 
 			Assert.assertEquals(

@@ -106,8 +106,8 @@ public class DDMFormValuesHelperImpl implements DDMFormValuesHelper {
 		ddmFormFieldValue.setName(
 			jsonObject.getString(FIELD_CP_DEFINITION_OPTION_REL_ID));
 
-		String cpDefinitionOptionValueRelId =
-			jsonObject.getString(FIELD_CP_DEFINITION_OPTION_VALUE_REL_ID);
+		String cpDefinitionOptionValueRelId = jsonObject.getString(
+			FIELD_CP_DEFINITION_OPTION_VALUE_REL_ID);
 
 		if (Validator.isNotNull(cpDefinitionOptionValueRelId)) {
 			String ddmFormFieldValueValue =

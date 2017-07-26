@@ -313,6 +313,18 @@ public class CommerceCartItemLocalServiceWrapper
 	}
 
 	@Override
+	public void deleteCommerceCartItemsByCPDefinitionId(long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_commerceCartItemLocalService.deleteCommerceCartItemsByCPDefinitionId(cpDefinitionId);
+	}
+
+	@Override
+	public void deleteCommerceCartItemsByCPInstanceId(long cpInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_commerceCartItemLocalService.deleteCommerceCartItemsByCPInstanceId(cpInstanceId);
+	}
+
+	@Override
 	public void validate(long cpDefinitionId, long cpInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_commerceCartItemLocalService.validate(cpDefinitionId, cpInstanceId);

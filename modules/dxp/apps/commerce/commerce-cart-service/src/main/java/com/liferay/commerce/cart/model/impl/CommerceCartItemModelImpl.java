@@ -117,8 +117,10 @@ public class CommerceCartItemModelImpl extends BaseModelImpl<CommerceCartItem>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.commerce.cart.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.commerce.cart.model.CommerceCartItem"),
 			true);
-	public static final long COMMERCECARTID_COLUMN_BITMASK = 1L;
-	public static final long CREATEDATE_COLUMN_BITMASK = 2L;
+	public static final long CPDEFINITIONID_COLUMN_BITMASK = 1L;
+	public static final long CPINSTANCEID_COLUMN_BITMASK = 2L;
+	public static final long COMMERCECARTID_COLUMN_BITMASK = 4L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -441,7 +443,19 @@ public class CommerceCartItemModelImpl extends BaseModelImpl<CommerceCartItem>
 
 	@Override
 	public void setCPDefinitionId(long CPDefinitionId) {
+		_columnBitmask |= CPDEFINITIONID_COLUMN_BITMASK;
+
+		if (!_setOriginalCPDefinitionId) {
+			_setOriginalCPDefinitionId = true;
+
+			_originalCPDefinitionId = _CPDefinitionId;
+		}
+
 		_CPDefinitionId = CPDefinitionId;
+	}
+
+	public long getOriginalCPDefinitionId() {
+		return _originalCPDefinitionId;
 	}
 
 	@JSON
@@ -452,7 +466,19 @@ public class CommerceCartItemModelImpl extends BaseModelImpl<CommerceCartItem>
 
 	@Override
 	public void setCPInstanceId(long CPInstanceId) {
+		_columnBitmask |= CPINSTANCEID_COLUMN_BITMASK;
+
+		if (!_setOriginalCPInstanceId) {
+			_setOriginalCPInstanceId = true;
+
+			_originalCPInstanceId = _CPInstanceId;
+		}
+
 		_CPInstanceId = CPInstanceId;
+	}
+
+	public long getOriginalCPInstanceId() {
+		return _originalCPInstanceId;
 	}
 
 	@JSON
@@ -591,6 +617,14 @@ public class CommerceCartItemModelImpl extends BaseModelImpl<CommerceCartItem>
 		commerceCartItemModelImpl._originalCommerceCartId = commerceCartItemModelImpl._commerceCartId;
 
 		commerceCartItemModelImpl._setOriginalCommerceCartId = false;
+
+		commerceCartItemModelImpl._originalCPDefinitionId = commerceCartItemModelImpl._CPDefinitionId;
+
+		commerceCartItemModelImpl._setOriginalCPDefinitionId = false;
+
+		commerceCartItemModelImpl._originalCPInstanceId = commerceCartItemModelImpl._CPInstanceId;
+
+		commerceCartItemModelImpl._setOriginalCPInstanceId = false;
 
 		commerceCartItemModelImpl._columnBitmask = 0;
 	}
@@ -763,7 +797,11 @@ public class CommerceCartItemModelImpl extends BaseModelImpl<CommerceCartItem>
 	private long _originalCommerceCartId;
 	private boolean _setOriginalCommerceCartId;
 	private long _CPDefinitionId;
+	private long _originalCPDefinitionId;
+	private boolean _setOriginalCPDefinitionId;
 	private long _CPInstanceId;
+	private long _originalCPInstanceId;
+	private boolean _setOriginalCPInstanceId;
 	private int _quantity;
 	private String _json;
 	private long _columnBitmask;

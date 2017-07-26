@@ -327,14 +327,13 @@ public class AssetPublisherPortlet extends MVCPortlet {
 						AssetPublisherPortletInstanceConfiguration.class);
 
 			renderRequest.setAttribute(
-				AssetPublisherWebKeys.
-					ASSET_PUBLISHER_PORTLET_INSTANCE_CONFIGURATION,
-				assetPublisherPortletInstanceConfiguration);
+				AssetPublisherWebKeys.ASSET_PUBLISHER_ENTRY_ACTION_REGISTRY,
+				assetEntryActionRegistry);
 
 			renderRequest.setAttribute(
 				AssetPublisherWebKeys.
-					ASSET_PUBLISHER_CONFIGURATION_ACTION_REGISTRY,
-				assetEntryActionRegistry);
+					ASSET_PUBLISHER_PORTLET_INSTANCE_CONFIGURATION,
+				assetPublisherPortletInstanceConfiguration);
 
 			renderRequest.setAttribute(
 				WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);

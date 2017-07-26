@@ -107,6 +107,12 @@ gradle.beforeProject {
 				task buildService(dependsOn: "build-service")
 				task buildWSDD(dependsOn: "build-wsdd")
 			}
+
+			// See "compile-jsp" target in tools/sdk/build-common-plugin.xml
+
+			if (ant.properties["app.server.type"] == "tomcat") {
+				task compileJSP(dependsOn: "compile-jsp")
+			}
 		}
 
 		pluginManager.withPlugin("com.liferay.osgi.plugin") {

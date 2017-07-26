@@ -16,7 +16,6 @@ package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.counter.kernel.model.Counter;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.sql.PreparedStatement;
@@ -61,14 +60,14 @@ public class UpgradeSocial extends UpgradeProcess {
 	}
 
 	protected int getCounterIncrement() throws Exception {
-		try (Statement s = connection.createStatement()) {
-			String counterQuery =
-				"select currentId from counter where name = '" +
-					Counter.class.getName() + CharPool.APOSTROPHE;
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select currentId from counter where name = ?")) {
+
+			ps.setString(1, Counter.class.getName());
 
 			int counter = 0;
 
-			try (ResultSet rs = s.executeQuery(counterQuery)) {
+			try (ResultSet rs = ps.executeQuery()) {
 				if (rs.next()) {
 					counter = rs.getInt("currentId");
 				}
@@ -76,7 +75,7 @@ public class UpgradeSocial extends UpgradeProcess {
 
 			String query = "select max(activitySetId) from SocialActivitySet";
 
-			try (ResultSet rs = s.executeQuery(query)) {
+			try (ResultSet rs = ps.executeQuery(query)) {
 				if (rs.next()) {
 					return rs.getInt(1) - counter;
 				}

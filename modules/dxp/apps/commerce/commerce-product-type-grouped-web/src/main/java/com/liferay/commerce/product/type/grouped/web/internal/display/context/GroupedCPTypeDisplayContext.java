@@ -24,10 +24,14 @@ import com.liferay.commerce.product.type.grouped.util.comparator.CPDefinitionGro
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -59,6 +63,21 @@ public class GroupedCPTypeDisplayContext extends CPTypeDisplayContext {
 			cpDefinition.getCPDefinitionId(), QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS,
 			new CPDefinitionGroupedEntryPriorityComparator());
+	}
+
+	public String getLabel(Locale locale, String key) {
+		return getLabel(locale, key, null);
+	}
+
+	public String getLabel(Locale locale, String key, Object argument) {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
+		if (argument == null) {
+			return LanguageUtil.get(resourceBundle, key);
+		}
+
+		return LanguageUtil.format(resourceBundle, key, argument, true);
 	}
 
 	private final CPDefinitionGroupedEntryService

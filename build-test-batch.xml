@@ -2491,14 +2491,12 @@ ${output.content}</echo>
 								}
 							}
 
-							String licensing_watch_list = project.getProperty("licensing.watch.list");
+							String licensingWatchList = project.getProperty("licensing.watch.list");
 
-							String[] licensing_watch_filenames = licensing_watch_list.split(",");
-
-							ArrayList licensingWatchList = new ArrayList(Arrays.asList(licensing_watch_filenames));
+							ArrayList licensingWatchFileNames = new ArrayList(Arrays.asList(licensingWatchList.split(",")));
 
 							for (int i = 0; i < modifiedList.size(); i++){
-								if (licensingWatchList.contains( modifiedList.get(i) ) ){
+								if (licensingWatchFileNames.contains(modifiedList.get(i) ) ){
 									project.setProperty("fileMatchFound", "true");
 
 									return;

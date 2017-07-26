@@ -331,7 +331,11 @@
 
 		<var name="key_dmFolderName" value="DM Folder Name" />
 
-		<execute function="AssertElementNotPresent" locator1="DocumentsAndMedia#ICON_FOLDER_CHECKBOX" />
+		<execute function="Check" locator1="DocumentsAndMedia#ICON_FOLDER_CHECKBOX" />
+
+		<execute macro="PermissionsInline#viewButtonInactive">
+			<var name="buttonName" value="RECYCLE_BIN" />
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
@@ -407,7 +411,11 @@
 
 		<var name="key_dmFolderName" value="DM Folder Name" />
 
-		<execute function="AssertElementNotPresent" locator1="DocumentsAndMedia#ICON_FOLDER_CHECKBOX" />
+		<execute function="Check" locator1="DocumentsAndMedia#ICON_FOLDER_CHECKBOX" />
+
+		<execute macro="PermissionsInline#viewButtonInactive">
+			<var name="buttonName" value="RECYCLE_BIN" />
+		</execute>
 	</command>
 
 	<command name="ViewDMFolderGuestInline" priority="4">

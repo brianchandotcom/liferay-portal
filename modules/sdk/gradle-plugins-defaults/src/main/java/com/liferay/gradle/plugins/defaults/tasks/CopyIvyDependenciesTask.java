@@ -38,8 +38,8 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.UncheckedIOException;
 import org.gradle.api.artifacts.Configuration;
-import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.DependencySet;
+import org.gradle.api.artifacts.ModuleDependency;
 import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.tasks.Copy;
@@ -158,10 +158,33 @@ public class CopyIvyDependenciesTask extends Copy {
 			dependencyNotation = _dependencyTransformClosure.call(
 				dependencyNotation);
 
-			Dependency dependency = dependencyHandler.create(
-				dependencyNotation);
+			ModuleDependency moduleDependency =
+				(ModuleDependency)dependencyHandler.create(dependencyNotation);
 
-			dependencySet.add(dependency);
+			NodeList excludeNodeList = dependencyElement.getElementsByTagName(
+				"exclude");
+
+			for (int j = 0; j < excludeNodeList.getLength(); j++) {
+				Element excludeElement = (Element)excludeNodeList.item(j);
+
+				Map<String, String> args = new HashMap<>();
+
+				String group = excludeElement.getAttribute("org");
+
+				if (Validator.isNotNull(group)) {
+					args.put("group", group);
+				}
+
+				String module = excludeElement.getAttribute("module");
+
+				if (Validator.isNotNull(module)) {
+					args.put("module", module);
+				}
+
+				moduleDependency.exclude(args);
+			}
+
+			dependencySet.add(moduleDependency);
 		}
 	}
 

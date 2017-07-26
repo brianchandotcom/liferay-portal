@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String portletId = portletDisplay.getRootPortletId();
+String portletId = portletDisplay.getId();
 
 boolean autoCreate = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:autoCreate"));
 String contents = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:contents"));

@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
+
+<service-builder auto-namespace-tables="false" package-path="com.liferay.commerce.currency">
+	<author>Andrea Di Giorgi</author>
+	<namespace>Commerce</namespace>
+	<entity local-service="true" name="CommerceCurrency" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceCurrencyId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column localized="true" name="code" type="String" />
+		<column localized="true" name="name" type="String" />
+		<column name="rate" type="double" />
+		<column name="roundingType" type="String" />
+		<column name="primary" type="boolean" />
+		<column name="priority" type="double" />
+		<column name="active" type="boolean" />
+		<column name="lastPublishDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="priority" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="G_P" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="primary" />
+		</finder>
+		<finder name="G_A" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="active" />
+		</finder>
+		<finder name="G_P_A" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="primary" />
+			<finder-column name="active" />
+		</finder>
+	</entity>
+	<exceptions>
+		<exception>CommerceCurrencyCode</exception>
+		<exception>CommerceCurrencyName</exception>
+	</exceptions>
+</service-builder>

@@ -62,8 +62,6 @@ public class UpgradeSocial extends UpgradeProcess {
 
 	protected int getCounterIncrement() throws Exception {
 		try (Statement s = connection.createStatement()) {
-			String query = "select max(activitySetId) from SocialActivitySet";
-
 			String counterQuery =
 				"select currentId from counter where name = '" +
 					Counter.class.getName() + CharPool.APOSTROPHE;
@@ -75,6 +73,8 @@ public class UpgradeSocial extends UpgradeProcess {
 					counter = rs.getInt("currentId");
 				}
 			}
+
+			String query = "select max(activitySetId) from SocialActivitySet";
 
 			try (ResultSet rs = s.executeQuery(query)) {
 				if (rs.next()) {

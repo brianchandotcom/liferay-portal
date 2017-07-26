@@ -53,9 +53,9 @@ public class MultiVMEhcachePortalCacheManagerConfigurator
 		clusterEnabled = GetterUtil.getBoolean(
 			props.get(PropsKeys.CLUSTER_LINK_ENABLED));
 		_defaultBootstrapLoaderPropertiesString = getPortalPropertiesString(
-			PropsKeys.EHCACHE_BOOTSTRAP_CACHE_LOADER_PROPERTIES_DEFAULT);
+			PropsKeys.EHCACHE_DEFAULT_BOOTSTRAP_CACHE_LOADER_PROPERTIES);
 		_defaultReplicatorPropertiesString = getPortalPropertiesString(
-			PropsKeys.EHCACHE_REPLICATOR_PROPERTIES_DEFAULT);
+			PropsKeys.EHCACHE_DEFAULT_REPLICATOR_PROPERTIES);
 		_replicatorProperties = props.getProperties(
 			PropsKeys.EHCACHE_REPLICATOR_PROPERTIES +
 				StringPool.PERIOD,

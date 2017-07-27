@@ -56,7 +56,33 @@ public class UpgradeSocial extends UpgradeProcess {
 
 		updateSocialActivities(delta);
 
-		increment(Counter.class.getName(), getSocialActivitySetsCount());
+		increment(Counter.class.getName(), getCounterIncrement());
+	}
+
+	protected int getCounterIncrement() throws Exception {
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select currentId from counter where name = ?")) {
+
+			ps.setString(1, Counter.class.getName());
+
+			int counter = 0;
+
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					counter = rs.getInt("currentId");
+				}
+			}
+
+			String query = "select max(activitySetId) from SocialActivitySet";
+
+			try (ResultSet rs = ps.executeQuery(query)) {
+				if (rs.next()) {
+					return rs.getInt(1) - counter;
+				}
+
+				return 0;
+			}
+		}
 	}
 
 	protected long getDelta(long increment) throws Exception {

@@ -35,9 +35,6 @@ public interface JournalWebConfiguration {
 	)
 	public boolean changeableDefaultLanguage();
 
-	@Meta.AD(deflt = "15", required = false)
-	public int checkInterval();
-
 	@Meta.AD(deflt = "descriptive", required = false)
 	public String defaultDisplayView();
 

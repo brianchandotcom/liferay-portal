@@ -38,11 +38,8 @@
 				{
 					data: data,
 					on: {
-						failure: function() {
-							alert("failure");
-						},
 						success: function(event, id, obj) {
-							alert("success");
+							Liferay.fire('commerce:productAddedToCart');
 						}
 					}
 				}

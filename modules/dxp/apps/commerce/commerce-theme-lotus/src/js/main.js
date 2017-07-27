@@ -1,7 +1,6 @@
 (function() {
 	AUI().ready(
 		function(A) {
-
 			Liferay.after(
 				'commerce:productAddedToCart',
 				function(event) {

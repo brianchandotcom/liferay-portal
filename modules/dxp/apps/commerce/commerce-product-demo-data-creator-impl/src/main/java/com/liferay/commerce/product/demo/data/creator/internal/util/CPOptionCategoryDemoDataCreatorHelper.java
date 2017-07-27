@@ -79,7 +79,6 @@ public class CPOptionCategoryDemoDataCreatorHelper
 		String description = cpOptionCategoryJSONObject.getString(
 			"description");
 		int priority = cpOptionCategoryJSONObject.getInt("priority");
-
 		Map<Locale, String> titleMap = Collections.singletonMap(
 			Locale.US, title);
 		Map<Locale, String> descriptionMap = Collections.singletonMap(

@@ -117,15 +117,15 @@ public class CPSpecificationOptionDemoDataCreatorHelper
 		}
 
 		String categoryKey = jsonObject.getString("categoryKey");
-		String title = jsonObject.getString("title");
-		String description = jsonObject.getString("description");
-		boolean facetable = jsonObject.getBoolean("facetable");
 
 		Map<String, CPOptionCategory> cpOptionCategories =
 			_cpOptionCategoryDemoDataCreatorHelper.getCPOptionCategories();
 
 		CPOptionCategory cpOptionCategory = cpOptionCategories.get(categoryKey);
 
+		String title = jsonObject.getString("title");
+		String description = jsonObject.getString("description");
+		boolean facetable = jsonObject.getBoolean("facetable");
 		Map<Locale, String> titleMap = Collections.singletonMap(locale, title);
 		Map<Locale, String> descriptionMap = Collections.singletonMap(
 			locale, description);

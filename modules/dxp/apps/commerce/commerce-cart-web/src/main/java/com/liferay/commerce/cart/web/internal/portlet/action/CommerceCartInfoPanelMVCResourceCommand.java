@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.commerce.cart.internal.portlet.action;
+package com.liferay.commerce.cart.web.internal.portlet.action;
 
 import com.liferay.commerce.cart.constants.CommerceCartPortletKeys;
 import com.liferay.commerce.cart.constants.CommerceCartWebKeys;
-import com.liferay.commerce.cart.model.CommerceCartItem;
+import com.liferay.commerce.cart.model.CommerceCart;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 
@@ -35,11 +35,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + CommerceCartPortletKeys.COMMERCE_CART,
-		"mvc.command.name=commerceCartItemInfoPanel"
+		"mvc.command.name=commerceCartInfoPanel"
 	},
 	service = MVCResourceCommand.class
 )
-public class CommerceCartItemInfoPanelMVCResourceCommand
+public class CommerceCartInfoPanelMVCResourceCommand
 	extends BaseMVCResourceCommand {
 
 	@Override
@@ -47,13 +47,13 @@ public class CommerceCartItemInfoPanelMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		List<CommerceCartItem> commerceCartItems =
-			_actionHelper.getCommerceCartItems(resourceRequest);
+		List<CommerceCart> commerceCarts = _actionHelper.getCommerceCarts(
+			resourceRequest);
 
 		resourceRequest.setAttribute(
-			CommerceCartWebKeys.COMMERCE_CART_ITEMS, commerceCartItems);
+			CommerceCartWebKeys.COMMERCE_CARTS, commerceCarts);
 
-		include(resourceRequest, resourceResponse, "/cart_item_info_panel.jsp");
+		include(resourceRequest, resourceResponse, "/cart_info_panel.jsp");
 	}
 
 	@Reference

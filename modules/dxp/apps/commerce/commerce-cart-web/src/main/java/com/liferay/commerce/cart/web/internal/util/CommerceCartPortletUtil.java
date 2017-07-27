@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.cart.internal.util;
+package com.liferay.commerce.cart.web.internal.util;
 
 import com.liferay.commerce.cart.model.CommerceCart;
 import com.liferay.commerce.cart.model.CommerceCartItem;

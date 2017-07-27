@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.cart.internal.application.list;
+package com.liferay.commerce.cart.web.internal.application.list;
 
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;

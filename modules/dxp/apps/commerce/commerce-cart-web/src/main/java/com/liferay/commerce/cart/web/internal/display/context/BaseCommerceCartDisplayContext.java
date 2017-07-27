@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.commerce.cart.internal.display.context;
+package com.liferay.commerce.cart.web.internal.display.context;
 
-import com.liferay.commerce.cart.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.cart.model.CommerceCart;
+import com.liferay.commerce.cart.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;

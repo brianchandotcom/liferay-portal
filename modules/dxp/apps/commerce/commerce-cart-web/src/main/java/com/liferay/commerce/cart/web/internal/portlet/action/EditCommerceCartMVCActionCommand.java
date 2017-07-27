@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.commerce.cart.internal.portlet.action;
+package com.liferay.commerce.cart.web.internal.portlet.action;
 
 import com.liferay.commerce.cart.constants.CommerceCartPortletKeys;
-import com.liferay.commerce.cart.exception.NoSuchCartItemException;
-import com.liferay.commerce.cart.service.CommerceCartItemService;
+import com.liferay.commerce.cart.exception.NoSuchCartException;
+import com.liferay.commerce.cart.service.CommerceCartService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -39,11 +39,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + CommerceCartPortletKeys.COMMERCE_CART,
-		"mvc.command.name=editCommerceCartItem"
+		"mvc.command.name=editCommerceCart"
 	},
 	service = MVCActionCommand.class
 )
-public class EditCommerceCartItemMVCActionCommand extends BaseMVCActionCommand {
+public class EditCommerceCartMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	public boolean processAction(
@@ -62,19 +62,17 @@ public class EditCommerceCartItemMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			if (cmd.equals(Constants.DELETE)) {
-				long[] deleteCommerceCartItemIds = StringUtil.split(
-					ParamUtil.getString(
-						actionRequest, "deleteCommerceCartItemIds"),
+				long[] deleteCommerceCartIds = StringUtil.split(
+					ParamUtil.getString(actionRequest, "deleteCommerceCartIds"),
 					0L);
 
-				for (long commerceCartItemId : deleteCommerceCartItemIds) {
-					_commerceCartItemService.deleteCommerceCartItem(
-						commerceCartItemId);
+				for (long commerceCartId : deleteCommerceCartIds) {
+					_commerceCartService.deleteCommerceCart(commerceCartId);
 				}
 			}
 		}
 		catch (Exception e) {
-			if (e instanceof NoSuchCartItemException ||
+			if (e instanceof NoSuchCartException ||
 				e instanceof PrincipalException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
@@ -86,6 +84,6 @@ public class EditCommerceCartItemMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
-	private CommerceCartItemService _commerceCartItemService;
+	private CommerceCartService _commerceCartService;
 
 }

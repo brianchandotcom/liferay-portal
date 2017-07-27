@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.commerce.cart.internal.portlet;
+package com.liferay.commerce.cart.web.internal.portlet;
 
 import com.liferay.commerce.cart.constants.CommerceCartPortletKeys;
-import com.liferay.commerce.cart.internal.display.context.CommerceCartDisplayContext;
-import com.liferay.commerce.cart.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.cart.service.CommerceCartService;
+import com.liferay.commerce.cart.web.internal.display.context.CommerceCartDisplayContext;
+import com.liferay.commerce.cart.web.internal.portlet.action.ActionHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;

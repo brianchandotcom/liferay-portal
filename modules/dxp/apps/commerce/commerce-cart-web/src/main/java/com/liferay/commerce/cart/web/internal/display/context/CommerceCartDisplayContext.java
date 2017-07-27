@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.commerce.cart.internal.display.context;
+package com.liferay.commerce.cart.web.internal.display.context;
 
 import com.liferay.commerce.cart.constants.CommerceCartConstants;
-import com.liferay.commerce.cart.internal.portlet.action.ActionHelper;
-import com.liferay.commerce.cart.internal.util.CommerceCartPortletUtil;
 import com.liferay.commerce.cart.model.CommerceCart;
 import com.liferay.commerce.cart.service.CommerceCartService;
+import com.liferay.commerce.cart.web.internal.portlet.action.ActionHelper;
+import com.liferay.commerce.cart.web.internal.util.CommerceCartPortletUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;

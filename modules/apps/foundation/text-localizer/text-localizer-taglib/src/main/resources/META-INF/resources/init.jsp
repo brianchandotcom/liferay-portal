@@ -14,14 +14,7 @@
  */
 --%>
 
-<%
-ListType addressListType = address.getType();
+<%@ page import="com.liferay.portal.kernel.util.StringPool" %><%@
+page import="com.liferay.portal.kernel.util.StringUtil" %>
 
-String mailingName = LanguageUtil.get(request, addressListType.getName());
-%>
-
-<em class="mailing-name"><%= mailingName %></em><br />
-
-<liferay-text-localizer:address-display address="<%= address %>" />
-
-<c:if test="<%= address.isMailing() %>">(<liferay-ui:message key="mailing" />)</c:if>
+<liferay-theme:defineObjects />

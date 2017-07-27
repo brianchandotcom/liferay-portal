@@ -1814,6 +1814,17 @@ to download dependencies declared in an `ivy.xml` file via Gradle.
 - [LPS-73655]: Add support in `CopyIvyDependenciesTask` for Ivy [`<exclude>`](http://ant.apache.org/ivy/history/latest-milestone/ivyfile/exclude.html)
 elements.
 
+## 4.1.6 - 2017-07-27
+
+### Changed
+- [LPS-72705]: Update the [Liferay Gradle Plugins] dependency to version 3.4.16.
+
+## 4.1.7 - 2017-07-27
+
+### Changed
+- [LPS-63943]: Show `mergeArtifactsPublishCommands` messages at log level
+`QUIET` instead of `LIFECYCLE`.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins

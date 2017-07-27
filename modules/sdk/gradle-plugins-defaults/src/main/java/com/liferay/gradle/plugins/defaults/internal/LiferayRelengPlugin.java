@@ -250,15 +250,15 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 								file);
 						}
 
-						if (logger.isLifecycleEnabled()) {
-							logger.lifecycle(
+						if (logger.isQuietEnabled()) {
+							logger.quiet(
 								"Artifacts publish commands written in {}.",
 								file);
 						}
 					}
 					else {
-						if (logger.isLifecycleEnabled()) {
-							logger.lifecycle(
+						if (logger.isQuietEnabled()) {
+							logger.quiet(
 								"No artifacts publish commands are available.");
 						}
 					}

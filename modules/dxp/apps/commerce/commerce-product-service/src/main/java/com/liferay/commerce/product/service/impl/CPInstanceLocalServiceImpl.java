@@ -77,7 +77,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPInstance addCPInstance(
-			long cpDefinitionId, String sku, String ddmContent,
+			long cpDefinitionId, String sku, String gtin,
+			String manufacturerPartNumber, String ddmContent,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
@@ -117,6 +118,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		cpInstance.setUserName(user.getFullName());
 		cpInstance.setCPDefinitionId(cpDefinitionId);
 		cpInstance.setSku(sku);
+		cpInstance.setGtin(gtin);
+		cpInstance.setManufacturerPartNumber(manufacturerPartNumber);
 		cpInstance.setDDMContent(ddmContent);
 		cpInstance.setDisplayDate(displayDate);
 		cpInstance.setExpirationDate(expirationDate);
@@ -366,7 +369,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPInstance updateCPInstance(
-			long cpInstanceId, String sku, int displayDateMonth,
+			long cpInstanceId, String sku, String gtin,
+			String manufacturerPartNumber, int displayDateMonth,
 			int displayDateDay, int displayDateYear, int displayDateHour,
 			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
@@ -397,6 +401,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		}
 
 		cpInstance.setSku(sku);
+		cpInstance.setGtin(gtin);
+		cpInstance.setManufacturerPartNumber(manufacturerPartNumber);
 		cpInstance.setDisplayDate(displayDate);
 		cpInstance.setExpirationDate(expirationDate);
 

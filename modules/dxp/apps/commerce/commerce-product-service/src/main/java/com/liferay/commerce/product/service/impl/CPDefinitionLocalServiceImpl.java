@@ -92,7 +92,8 @@ public class CPDefinitionLocalServiceImpl
 			String baseSKU, Map<Locale, String> titleMap,
 			Map<Locale, String> shortDescriptionMap,
 			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
-			String layoutUuid, String productTypeName, int minCartQuantity,
+			String layoutUuid, String productTypeName,String gtin,
+			String manufacturerPartNumber, int minCartQuantity,
 			int maxCartQuantity, String allowedCartQuantity,
 			int multipleCartQuantity, String ddmStructureKey,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
@@ -139,6 +140,8 @@ public class CPDefinitionLocalServiceImpl
 		cpDefinition.setUserName(user.getFullName());
 		cpDefinition.setBaseSKU(baseSKU);
 		cpDefinition.setProductTypeName(productTypeName);
+		cpDefinition.setGtin(gtin);
+		cpDefinition.setManufacturerPartNumber(manufacturerPartNumber);
 		cpDefinition.setMinCartQuantity(minCartQuantity);
 		cpDefinition.setMaxCartQuantity(maxCartQuantity);
 		cpDefinition.setAllowedCartQuantity(allowedCartQuantity);
@@ -678,9 +681,10 @@ public class CPDefinitionLocalServiceImpl
 			long cpDefinitionId, String baseSKU, Map<Locale, String> titleMap,
 			Map<Locale, String> shortDescriptionMap,
 			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
-			String layoutUuid, int minCartQuantity, int maxCartQuantity,
-			String allowedCartQuantity, int multipleCartQuantity,
-			String ddmStructureKey, int displayDateMonth, int displayDateDay,
+			String layoutUuid, String gtin, String manufacturerPartNumber,
+			int minCartQuantity, int maxCartQuantity,String allowedCartQuantity,
+			int multipleCartQuantity, String ddmStructureKey, int displayDateMonth,
+			int displayDateDay,
 			int displayDateYear, int displayDateHour, int displayDateMinute,
 			int expirationDateMonth, int expirationDateDay,
 			int expirationDateYear, int expirationDateHour,
@@ -714,6 +718,8 @@ public class CPDefinitionLocalServiceImpl
 		validate(groupId, ddmStructureKey, cpDefinition.getProductTypeName());
 
 		cpDefinition.setBaseSKU(baseSKU);
+		cpDefinition.setGtin(gtin);
+		cpDefinition.setManufacturerPartNumber(manufacturerPartNumber);
 		cpDefinition.setMinCartQuantity(minCartQuantity);
 		cpDefinition.setMaxCartQuantity(maxCartQuantity);
 		cpDefinition.setAllowedCartQuantity(allowedCartQuantity);

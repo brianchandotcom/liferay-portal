@@ -39,7 +39,8 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 
 	@Override
 	public CPInstance addCPInstance(
-			long cpDefinitionId, String sku, String ddmContent,
+			long cpDefinitionId, String sku, String gtin,
+			String manufacturerPartNumber, String ddmContent,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
@@ -52,11 +53,11 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			CPActionKeys.ADD_COMMERCE_PRODUCT_INSTANCE);
 
 		return cpInstanceLocalService.addCPInstance(
-			cpDefinitionId, sku, ddmContent, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
+			cpDefinitionId, sku, gtin, manufacturerPartNumber, ddmContent,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
 	}
 
 	@Override
@@ -155,7 +156,8 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 
 	@Override
 	public CPInstance updateCPInstance(
-			long cpInstanceId, String sku, int displayDateMonth,
+			long cpInstanceId, String sku, String gtin,
+			String manufacturerPartNumber, int displayDateMonth,
 			int displayDateDay, int displayDateYear, int displayDateHour,
 			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
@@ -168,8 +170,8 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			CPActionKeys.UPDATE_COMMERCE_PRODUCT_INSTANCE);
 
 		return cpInstanceLocalService.updateCPInstance(
-			cpInstanceId, sku, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
+			cpInstanceId, sku, gtin, manufacturerPartNumber, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
 			serviceContext);

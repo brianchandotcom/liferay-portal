@@ -47,7 +47,8 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			String baseSKU, Map<Locale, String> titleMap,
 			Map<Locale, String> shortDescriptionMap,
 			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
-			String layoutUuid, String productTypeName, int minCartQuantity,
+			String layoutUuid, String productTypeName, String gtin,
+			String manufacturerPartNumber, int minCartQuantity,
 			int maxCartQuantity, String allowedCartQuantity,
 			int multipleCartQuantity, String ddmStructureKey,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
@@ -63,8 +64,8 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 
 		return cpDefinitionLocalService.addCPDefinition(
 			baseSKU, titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
-			layoutUuid, productTypeName, minCartQuantity, maxCartQuantity,
-			allowedCartQuantity, multipleCartQuantity, ddmStructureKey,
+			layoutUuid, productTypeName,gtin, manufacturerPartNumber, minCartQuantity,
+			maxCartQuantity, allowedCartQuantity, multipleCartQuantity, ddmStructureKey,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
@@ -235,7 +236,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			long cpDefinitionId, String baseSKU, Map<Locale, String> titleMap,
 			Map<Locale, String> shortDescriptionMap,
 			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
-			String layoutUuid, int minCartQuantity, int maxCartQuantity,
+			String layoutUuid, String gtin, String manufacturerPartNumber, int minCartQuantity, int maxCartQuantity,
 			String allowedCartQuantity, int multipleCartQuantity,
 			String ddmStructureKey, int displayDateMonth, int displayDateDay,
 			int displayDateYear, int displayDateHour, int displayDateMinute,
@@ -250,7 +251,8 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 
 		return cpDefinitionLocalService.updateCPDefinition(
 			cpDefinitionId, baseSKU, titleMap, shortDescriptionMap,
-			descriptionMap, urlTitleMap, layoutUuid, minCartQuantity,
+			descriptionMap, urlTitleMap, layoutUuid, gtin,
+			manufacturerPartNumber minCartQuantity,
 			maxCartQuantity, allowedCartQuantity, multipleCartQuantity,
 			ddmStructureKey, displayDateMonth, displayDateDay, displayDateYear,
 			displayDateHour, displayDateMinute, expirationDateMonth,

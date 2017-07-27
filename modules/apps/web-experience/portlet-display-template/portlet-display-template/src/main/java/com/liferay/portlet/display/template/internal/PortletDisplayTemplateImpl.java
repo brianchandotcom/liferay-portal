@@ -381,19 +381,23 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 	}
 
 	/**
-	 * Returns the contents of the current ddmTemplate
+	 * Returns the DDM template's content.
 	 *
-	 * @param request Normally the HttpServletRequest corresponding to a portlet render. If it is not,
-	 *                (such as an HttpServletRequest corresponding to a portlet action or resource request,
-	 *                or for a regular servlet), the "renderRequest" variable will not be accessible to the template.
-	 * @param response Normally the HttpServletResponse corresponding to a portlet render. If it is not,
-	 *                (such as an HttpServletResponse corresponding to a portlet action or resource response,
-	 *                or for a regular servlet), the "renderResponse" variable will not be accessible to the template.
-	 * @param ddmTemplate The template to be rendered.
-	 * @param entries The entries in the template.
-	 * @param contextObjects Stores the parameters used to get the template content.
-	 * @return
-	 * @throws Exception
+	 * @param  request the request corresponding to a portlet render. In some
+	 *         cases, such as an {@link HttpServletRequest} corresponding to a
+	 *         portlet action or resource request, or for a regular servlet, the
+	 *         <code>renderRequest</code> is not accessible to the template.
+	 * @param  response the response corresponding to a portlet render. In some
+	 *         cases, such as an {@link HttpServletResponse} corresponding to a
+	 *         portlet action or resource response, or for a regular servlet,
+	 *         the <code>renderResponse</code> is not accessible to the
+	 *         template.
+	 * @param  ddmTemplate the template to be rendered
+	 * @param  entries the template's entries
+	 * @param  contextObjects the stored parameters used to get the template's
+	 *         content
+	 * @return the DDM template's content
+	 * @throws Exception if an exception occurred
 	 */
 	@Override
 	public String renderDDMTemplate(

@@ -181,8 +181,7 @@ AUI.add(
 
 						var endDate = instance._endDate;
 
-						endDate.setDate(endDateObj.getDate());
-						endDate.setMonth(endDateObj.getMonth());
+						endDate.setMonth(endDateObj.getMonth(), endDateObj.getDate());
 						endDate.setYear(endDateObj.getFullYear());
 					},
 
@@ -224,8 +223,7 @@ AUI.add(
 
 						var startDate = instance._startDate;
 
-						startDate.setDate(startDateObj.getDate());
-						startDate.setMonth(startDateObj.getMonth());
+						startDate.setMonth(startDateObj.getMonth(), startDateObj.getDate());
 						startDate.setYear(startDateObj.getFullYear());
 					},
 

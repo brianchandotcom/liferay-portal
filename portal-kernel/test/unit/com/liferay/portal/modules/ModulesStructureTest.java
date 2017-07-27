@@ -626,6 +626,20 @@ public class ModulesStructureTest {
 		return projectPathPrefix;
 	}
 
+	private boolean _isEmptyGitRepo(Path dirPath) {
+		File dir = dirPath.toFile();
+
+		String[] fileNames = dir.list();
+
+		if ((fileNames.length == 1) &&
+			_GIT_REPO_FILE_NAME.equals(fileNames[0])) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private boolean _isInGitRepoReadOnly(Path dirPath) throws IOException {
 		Path gitRepoPath = _getGitRepoPath(dirPath);
 
@@ -724,6 +738,10 @@ public class ModulesStructureTest {
 			Path dirPath, String buildGradleTemplate,
 			String settingsGradleTemplate)
 		throws IOException {
+
+		if (_isEmptyGitRepo(dirPath)) {
+			return;
+		}
 
 		boolean privateRepo = _isInPrivateModulesDir(dirPath);
 
@@ -906,6 +924,10 @@ public class ModulesStructureTest {
 
 	private void _testGitRepoIgnoreFiles(Path dirPath, String gitIgnoreTemplate)
 		throws IOException {
+
+		if (_isEmptyGitRepo(dirPath)) {
+			return;
+		}
 
 		if (_isInGitRepoReadOnly(dirPath) || _isInPrivateModulesDir(dirPath)) {
 			return;

@@ -14,23 +14,10 @@
  */
 --%>
 
+<%@ include file="/init.jsp" %>
+
 <%
-ListType addressListType = address.getType();
-
-String mailingName = LanguageUtil.get(request, addressListType.getName());
-
-String street1 = address.getStreet1();
-String street2 = address.getStreet2();
-String street3 = address.getStreet3();
-
-String zipCode = address.getZip();
-String city = address.getCity();
-
-Region region = address.getRegion();
-
-String regionName = region.getName();
-
-Country country = address.getCountry();
-
-String countryName = country.getName(locale);
+String formattedAddress = (String)request.getAttribute("liferay-text-localizer:address-display:formattedAddress");
 %>
+
+<%= StringUtil.replace(formattedAddress, StringPool.NEW_LINE, "<br />") %>

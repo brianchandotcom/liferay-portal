@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,16 +11,16 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%
-ListType addressListType = address.getType();
+package com.liferay.text.localizer.address;
 
-String mailingName = LanguageUtil.get(request, addressListType.getName());
-%>
+import com.liferay.portal.kernel.model.Address;
 
-<em class="mailing-name"><%= mailingName %></em><br />
+/**
+ * @author Pei-Jung Lan
+ */
+public interface AddressTextLocalizer {
 
-<liferay-text-localizer:address-display address="<%= address %>" />
+	public String format(Address address);
 
-<c:if test="<%= address.isMailing() %>">(<liferay-ui:message key="mailing" />)</c:if>
+}

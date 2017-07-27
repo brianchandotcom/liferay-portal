@@ -170,62 +170,13 @@ if (addresses.isEmpty()) {
 
 			<%
 			for (Address address : addresses) {
-				String street1 = address.getStreet1();
-				String street2 = address.getStreet2();
-				String street3 = address.getStreet3();
-
-				String zipCode = address.getZip();
-				String city = address.getCity();
-
-				Country country = address.getCountry();
-
-				String countryName = StringPool.BLANK;
-
-				if (country != null) {
-					countryName = country.getName(locale);
-				}
-
-				Region region = address.getRegion();
-
-				String regionName = StringPool.BLANK;
-
-				if (region != null) {
-					regionName = region.getName();
-				}
-
 				String mailingName = LanguageUtil.get(request, address.getType().getName());
 			%>
 
 				<li class="<%= address.isPrimary() ? "primary" : "" %>">
-					<span class="property-type"><%= mailingName %></span>
+					<span class="property-type"><%= mailingName %></span><br />
 
-					<c:if test="<%= Validator.isNotNull(street1) %>">
-						<%= HtmlUtil.escape(street1) %>,
-					</c:if>
-
-					<c:if test="<%= Validator.isNotNull(street2) %>">
-						<%= HtmlUtil.escape(street2) %>,
-					</c:if>
-
-					<c:if test="<%= Validator.isNotNull(street3) %>">
-						<%= HtmlUtil.escape(street3) %>,
-					</c:if>
-
-					<c:if test="<%= Validator.isNotNull(city) %>">
-						<%= HtmlUtil.escape(city) %>,
-					</c:if>
-
-					<c:if test="<%= Validator.isNotNull(zipCode) %>">
-						<%= HtmlUtil.escape(zipCode) %>,
-					</c:if>
-
-					<c:if test="<%= Validator.isNotNull(regionName) %>">
-						<%= regionName %>,
-					</c:if>
-
-					<c:if test="<%= Validator.isNotNull(countryName) %>">
-						<%= countryName %>
-					</c:if>
+					<liferay-text-localizer:address-display address="<%= address %>" />
 
 					<c:if test="<%= address.isMailing() %>">(<liferay-ui:message key="mailing" />)</c:if>
 				</li>

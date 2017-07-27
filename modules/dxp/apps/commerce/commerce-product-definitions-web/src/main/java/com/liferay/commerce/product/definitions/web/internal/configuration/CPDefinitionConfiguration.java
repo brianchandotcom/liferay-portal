@@ -27,7 +27,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.commerce.product.definitions.web.internal.configuration.CPDefinitionConfiguration",
 	localization = "content/Language",
-	name = "commerce.definition.configuration.name"
+	name = "commerce.product.definitions.configuration.name"
 )
 public interface CPDefinitionConfiguration {
 

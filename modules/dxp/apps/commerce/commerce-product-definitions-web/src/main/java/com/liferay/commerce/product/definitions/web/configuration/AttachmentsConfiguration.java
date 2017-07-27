@@ -27,7 +27,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.commerce.product.definitions.web.configuration.AttachmentsConfiguration",
 	localization = "content/Language",
-	name = "commerce.product.attachments.configuration.name"
+	name = "commerce.attachments.configuration.name"
 )
 public interface AttachmentsConfiguration {
 

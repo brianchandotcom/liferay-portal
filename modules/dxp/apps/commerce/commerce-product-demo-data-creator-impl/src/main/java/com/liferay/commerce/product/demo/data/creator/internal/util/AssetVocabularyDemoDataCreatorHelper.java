@@ -46,8 +46,12 @@ public class AssetVocabularyDemoDataCreatorHelper
 
 		ServiceContext serviceContext = getServiceContext(userId, groupId);
 
+		// Layout
+
 		String layoutUuid = _layoutDemoDataCreatorHelper.getLayoutUuid(
 			userId, groupId, "Categories");
+
+		// Asset vocabularies
 
 		JSONArray assetVocabulariesJSONArray = getAssetVocabulariesJSONArray();
 

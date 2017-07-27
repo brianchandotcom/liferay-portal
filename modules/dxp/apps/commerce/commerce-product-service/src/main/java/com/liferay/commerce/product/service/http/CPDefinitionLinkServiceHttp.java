@@ -154,14 +154,14 @@ public class CPDefinitionLinkServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionLink> getCPDefinitionLinks(
-		HttpPrincipal httpPrincipal, long cpDefinitionId1)
+		HttpPrincipal httpPrincipal, long cpDefinitionId1, int type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPDefinitionLinkServiceUtil.class,
 					"getCPDefinitionLinks", _getCPDefinitionLinksParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpDefinitionId1);
+					cpDefinitionId1, type);
 
 			Object returnObj = null;
 
@@ -186,7 +186,8 @@ public class CPDefinitionLinkServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionLink> getCPDefinitionLinks(
-		HttpPrincipal httpPrincipal, long cpDefinitionId1, int start, int end,
+		HttpPrincipal httpPrincipal, long cpDefinitionId1, int type, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinitionLink> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -194,7 +195,7 @@ public class CPDefinitionLinkServiceHttp {
 					"getCPDefinitionLinks", _getCPDefinitionLinksParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpDefinitionId1, start, end, orderByComparator);
+					cpDefinitionId1, type, start, end, orderByComparator);
 
 			Object returnObj = null;
 
@@ -219,7 +220,7 @@ public class CPDefinitionLinkServiceHttp {
 	}
 
 	public static int getCPDefinitionLinksCount(HttpPrincipal httpPrincipal,
-		long cpDefinitionId1)
+		long cpDefinitionId1, int type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPDefinitionLinkServiceUtil.class,
@@ -227,7 +228,7 @@ public class CPDefinitionLinkServiceHttp {
 					_getCPDefinitionLinksCountParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpDefinitionId1);
+					cpDefinitionId1, type);
 
 			Object returnObj = null;
 
@@ -325,14 +326,14 @@ public class CPDefinitionLinkServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _getCPDefinitionLinksParameterTypes3 = new Class[] {
-			long.class
+			long.class, int.class
 		};
 	private static final Class<?>[] _getCPDefinitionLinksParameterTypes4 = new Class[] {
-			long.class, int.class, int.class,
+			long.class, int.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getCPDefinitionLinksCountParameterTypes5 = new Class[] {
-			long.class
+			long.class, int.class
 		};
 	private static final Class<?>[] _updateCPDefinitionLinkParameterTypes6 = new Class[] {
 			long.class, double.class

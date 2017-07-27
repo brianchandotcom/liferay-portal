@@ -222,6 +222,22 @@ public class CPDefinitionLinkPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC1_T() throws Exception {
+		_persistence.countByC1_T(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByC1_T(0L, 0);
+	}
+
+	@Test
+	public void testCountByC2_T() throws Exception {
+		_persistence.countByC2_T(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByC2_T(0L, 0);
+	}
+
+	@Test
 	public void testCountByC1_C2_T() throws Exception {
 		_persistence.countByC1_C2_T(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());

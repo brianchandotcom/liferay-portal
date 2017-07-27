@@ -199,9 +199,9 @@ public class CPDefinitionLinkLocalServiceUtil {
 		return getService().getCPDefinitionLinksCount();
 	}
 
-	public static int getCPDefinitionLinksCount(long cpDefinitionId1)
+	public static int getCPDefinitionLinksCount(long cpDefinitionId1, int type)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCPDefinitionLinksCount(cpDefinitionId1);
+		return getService().getCPDefinitionLinksCount(cpDefinitionId1, type);
 	}
 
 	/**
@@ -280,17 +280,17 @@ public class CPDefinitionLinkLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionLink> getCPDefinitionLinks(
-		long cpDefinitionId1)
+		long cpDefinitionId1, int type)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCPDefinitionLinks(cpDefinitionId1);
+		return getService().getCPDefinitionLinks(cpDefinitionId1, type);
 	}
 
 	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionLink> getCPDefinitionLinks(
-		long cpDefinitionId1, int start, int end,
+		long cpDefinitionId1, int type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinitionLink> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .getCPDefinitionLinks(cpDefinitionId1, start, end,
+				   .getCPDefinitionLinks(cpDefinitionId1, type, start, end,
 			orderByComparator);
 	}
 

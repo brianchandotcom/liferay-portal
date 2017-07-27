@@ -191,7 +191,7 @@ public interface CPDefinitionLinkLocalService extends BaseLocalService,
 	public int getCPDefinitionLinksCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPDefinitionLinksCount(long cpDefinitionId1)
+	public int getCPDefinitionLinksCount(long cpDefinitionId1, int type)
 		throws PortalException;
 
 	/**
@@ -255,12 +255,12 @@ public interface CPDefinitionLinkLocalService extends BaseLocalService,
 	public List<CPDefinitionLink> getCPDefinitionLinks(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPDefinitionLink> getCPDefinitionLinks(long cpDefinitionId1)
-		throws PortalException;
+	public List<CPDefinitionLink> getCPDefinitionLinks(long cpDefinitionId1,
+		int type) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinitionLink> getCPDefinitionLinks(long cpDefinitionId1,
-		int start, int end,
+		int type, int start, int end,
 		OrderByComparator<CPDefinitionLink> orderByComparator)
 		throws PortalException;
 

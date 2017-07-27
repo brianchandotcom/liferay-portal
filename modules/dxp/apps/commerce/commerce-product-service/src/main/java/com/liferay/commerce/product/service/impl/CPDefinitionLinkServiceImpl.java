@@ -69,19 +69,20 @@ public class CPDefinitionLinkServiceImpl
 	}
 
 	@Override
-	public List<CPDefinitionLink> getCPDefinitionLinks(long cpDefinitionId1)
+	public List<CPDefinitionLink> getCPDefinitionLinks(
+			long cpDefinitionId1, int type)
 		throws PortalException {
 
 		CPDefinitionPermission.check(
 			getPermissionChecker(), cpDefinitionId1, ActionKeys.VIEW);
 
 		return cpDefinitionLinkLocalService.getCPDefinitionLinks(
-			cpDefinitionId1);
+			cpDefinitionId1, type);
 	}
 
 	@Override
 	public List<CPDefinitionLink> getCPDefinitionLinks(
-			long cpDefinitionId1, int start, int end,
+			long cpDefinitionId1, int type, int start, int end,
 			OrderByComparator<CPDefinitionLink> orderByComparator)
 		throws PortalException {
 
@@ -89,18 +90,18 @@ public class CPDefinitionLinkServiceImpl
 			getPermissionChecker(), cpDefinitionId1, ActionKeys.VIEW);
 
 		return cpDefinitionLinkLocalService.getCPDefinitionLinks(
-			cpDefinitionId1, start, end, orderByComparator);
+			cpDefinitionId1, type, start, end, orderByComparator);
 	}
 
 	@Override
-	public int getCPDefinitionLinksCount(long cpDefinitionId1)
+	public int getCPDefinitionLinksCount(long cpDefinitionId1, int type)
 		throws PortalException {
 
 		CPDefinitionPermission.check(
 			getPermissionChecker(), cpDefinitionId1, ActionKeys.VIEW);
 
 		return cpDefinitionLinkLocalService.getCPDefinitionLinksCount(
-			cpDefinitionId1);
+			cpDefinitionId1, type);
 	}
 
 	@Override

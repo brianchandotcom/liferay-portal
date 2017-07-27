@@ -72,29 +72,28 @@ public class CPDefinitionLinkLocalServiceImpl
 	}
 
 	@Override
-	public List<CPDefinitionLink> getCPDefinitionLinks(long cpDefinitionId1)
+	public List<CPDefinitionLink> getCPDefinitionLinks(
+			long cpDefinitionId1, int type)
 		throws PortalException {
 
-		return cpDefinitionLinkPersistence.findByCPDefinitionId1(
-			cpDefinitionId1);
+		return cpDefinitionLinkPersistence.findByC1_T(cpDefinitionId1, type);
 	}
 
 	@Override
 	public List<CPDefinitionLink> getCPDefinitionLinks(
-			long cpDefinitionId1, int start, int end,
+			long cpDefinitionId1, int type, int start, int end,
 			OrderByComparator<CPDefinitionLink> orderByComparator)
 		throws PortalException {
 
-		return cpDefinitionLinkPersistence.findByCPDefinitionId1(
-			cpDefinitionId1, start, end, orderByComparator);
+		return cpDefinitionLinkPersistence.findByC1_T(
+			cpDefinitionId1, type, start, end, orderByComparator);
 	}
 
 	@Override
-	public int getCPDefinitionLinksCount(long cpDefinitionId1)
+	public int getCPDefinitionLinksCount(long cpDefinitionId1, int type)
 		throws PortalException {
 
-		return cpDefinitionLinkPersistence.countByCPDefinitionId1(
-			cpDefinitionId1);
+		return cpDefinitionLinkPersistence.countByC1_T(cpDefinitionId1, type);
 	}
 
 	@Override
@@ -125,7 +124,7 @@ public class CPDefinitionLinkLocalServiceImpl
 		}
 
 		List<CPDefinitionLink> cpDefinitionLinks = getCPDefinitionLinks(
-			cpDefinitionId1);
+			cpDefinitionId1, type);
 
 		for (CPDefinitionLink cpDefinitionLink : cpDefinitionLinks) {
 			if ((cpDefinitionLink.getCPDefinitionId1() == cpDefinitionId1) &&

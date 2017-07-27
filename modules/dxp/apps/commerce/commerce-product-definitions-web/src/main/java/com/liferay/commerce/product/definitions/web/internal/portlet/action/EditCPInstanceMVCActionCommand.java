@@ -27,16 +27,14 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-
-import java.util.Calendar;
-import java.util.Locale;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * @author Alessio Antonio Rendina
@@ -132,6 +130,9 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "cpDefinitionId");
 
 		String sku = ParamUtil.getString(actionRequest, "sku");
+		String gtin = ParamUtil.getString(actionRequest, "gtin");
+		String manufacturerPartNumber = ParamUtil.getString(
+			actionRequest, "manufacturerPartNumber");
 
 		int displayDateMonth = ParamUtil.getInteger(
 			actionRequest, "displayDateMonth");
@@ -175,11 +176,11 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 		if (cpInstanceId > 0) {
 			_cpInstanceService.updateCPInstance(
-				cpInstanceId, sku, displayDateMonth, displayDateDay,
-				displayDateYear, displayDateHour, displayDateMinute,
-				expirationDateMonth, expirationDateDay, expirationDateYear,
-				expirationDateHour, expirationDateMinute, neverExpire,
-				serviceContext);
+				cpInstanceId, sku, gtin, manufacturerPartNumber,
+				displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, expirationDateMonth,
+				expirationDateDay, expirationDateYear, expirationDateHour,
+				expirationDateMinute, neverExpire, serviceContext);
 		}
 		else {
 			String ddmFormValues = ParamUtil.getString(
@@ -189,11 +190,11 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 				cpDefinitionId, locale, ddmFormValues);
 
 			_cpInstanceService.addCPInstance(
-				cpDefinitionId, sku, ddmContent, displayDateMonth,
-				displayDateDay, displayDateYear, displayDateHour,
-				displayDateMinute, expirationDateMonth, expirationDateDay,
-				expirationDateYear, expirationDateHour, expirationDateMinute,
-				neverExpire, serviceContext);
+				cpDefinitionId, sku, gtin, manufacturerPartNumber, ddmContent,
+				displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, expirationDateMonth,
+				expirationDateDay, expirationDateYear, expirationDateHour,
+				expirationDateMinute, neverExpire, serviceContext);
 		}
 	}
 

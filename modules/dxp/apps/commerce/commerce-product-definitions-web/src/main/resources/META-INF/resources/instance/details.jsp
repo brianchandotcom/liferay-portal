@@ -30,4 +30,8 @@ CPDefinition cpDefinition = cpInstanceDisplayContext.getCPDefinition();
 
 <aui:fieldset>
 	<aui:input name="sku" prefix="<%= cpDefinition.getBaseSKU() %>" />
+
+	<aui:input helpMessage="gtin-help" label="global-trade-item-number" name="gtin" />
+
+	<aui:input helpMessage="manufacturer-part-number-help" name="manufacturerPartNumber" />
 </aui:fieldset>

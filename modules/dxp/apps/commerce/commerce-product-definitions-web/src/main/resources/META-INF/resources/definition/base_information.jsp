@@ -56,7 +56,11 @@ if (Validator.isNotNull(layoutUuid)) {
 		</h5>
 	</aui:field-wrapper>
 
-	<aui:input label="SKU" name="baseSKU" />
+	<aui:input label="sku" name="baseSKU" />
+
+	<aui:input helpMessage="gtin-help" label="global-trade-item-number" name="gtin" />
+
+	<aui:input helpMessage="manufacturer-part-number-help" name="manufacturerPartNumber" />
 
 	<aui:input id="pagesContainerInput" ignoreRequestValue="<%= true %>" name="layoutUuid" type="hidden" value="<%= layoutUuid %>" />
 

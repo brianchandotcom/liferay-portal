@@ -237,6 +237,9 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		String productTypeName = ParamUtil.getString(
 			actionRequest, "productTypeName");
 		String baseSKU = ParamUtil.getString(actionRequest, "baseSKU");
+		String gtin = ParamUtil.getString(actionRequest, "gtin");
+		String manufacturerPartNumber = ParamUtil.getString(
+			actionRequest, "manufacturerPartNumber");
 		String layoutUuid = ParamUtil.getString(actionRequest, "layoutUuid");
 		int minCartQuantity = ParamUtil.getInteger(
 			actionRequest, "minCartQuantity");
@@ -295,7 +298,8 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 			cpDefinition = _cpDefinitionService.addCPDefinition(
 				baseSKU, titleMap, shortDescriptionMap, descriptionMap,
-				urlTitleMap, layoutUuid, productTypeName, minCartQuantity,
+				urlTitleMap, layoutUuid, productTypeName,gtin,
+				manufacturerPartNumber, minCartQuantity,
 				maxCartQuantity, allowedCartQuantity, multipleCartQuantity,
 				null, displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
@@ -308,7 +312,8 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 			cpDefinition = _cpDefinitionService.updateCPDefinition(
 				cpDefinitionId, baseSKU, titleMap, shortDescriptionMap,
-				descriptionMap, urlTitleMap, layoutUuid, minCartQuantity,
+				descriptionMap, urlTitleMap, layoutUuid, gtin,
+				manufacturerPartNumber, minCartQuantity,
 				maxCartQuantity, allowedCartQuantity, multipleCartQuantity,
 				null, displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,

@@ -27,13 +27,12 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Andrea Di Giorgi
@@ -117,6 +116,7 @@ public class CPInstanceStagedModelRepository
 
 		return _cpInstanceLocalService.addCPInstance(
 			cpInstance.getCPDefinitionId(), cpInstance.getSku(),
+			cpInstance.getGtin(), cpInstance.getManufacturerPartNumber(),
 			cpInstance.getDDMContent(), displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
@@ -246,11 +246,12 @@ public class CPInstanceStagedModelRepository
 			cpInstance);
 
 		return _cpInstanceLocalService.updateCPInstance(
-			cpInstance.getCPInstanceId(), cpInstance.getSku(), displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
+			cpInstance.getCPInstanceId(), cpInstance.getSku(),
+			cpInstance.getGtin(), cpInstance.getManufacturerPartNumber(),
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
 	}
 
 	@Reference

@@ -279,11 +279,12 @@ public class CPTestUtil {
 		}
 
 		return CPInstanceLocalServiceUtil.addCPInstance(
-			cpDefinitionId, RandomTestUtil.randomString(), ddmContent,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute, false,
-			serviceContext);
+			cpDefinitionId, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			ddmContent, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, false, serviceContext);
 	}
 
 	public static CPOption addCPOption(long groupId) throws Exception {
@@ -421,7 +422,8 @@ public class CPTestUtil {
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(), PortalUUIDUtil.generate(),
-			productTypeName, RandomTestUtil.randomInt(),
+			productTypeName, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomInt(),
 			RandomTestUtil.randomInt(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomInt(), null, displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute,

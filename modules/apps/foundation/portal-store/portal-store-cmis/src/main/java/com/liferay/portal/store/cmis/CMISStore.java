@@ -73,9 +73,9 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 
 /**
- * @author Alexander Chow
- * @author Edward Han
- * @author Manuel de la Peña
+ * @author     Alexander Chow
+ * @author     Edward Han
+ * @author     Manuel de la Peña
  * @deprecated As of 2.0.0, with no direct replacement
  */
 @Component(

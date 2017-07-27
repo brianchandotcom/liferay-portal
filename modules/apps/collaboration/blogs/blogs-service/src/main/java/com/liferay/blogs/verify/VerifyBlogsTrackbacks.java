@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  * to do this.
  * </p>
  *
- * @author Alexander Chow
+ * @author     Alexander Chow
  * @deprecated As of 1.1.0, replaced by {@link
  *             com.liferay.blogs.internal.verify.VerifyBlogsTrackbacks}
  */

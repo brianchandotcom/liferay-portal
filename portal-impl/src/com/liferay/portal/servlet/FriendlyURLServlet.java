@@ -67,10 +67,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Jorge Ferrer
- * @author Shuyang Zhou
- * @author Marco Leo
+ * @author     Brian Wing Shun Chan
+ * @author     Jorge Ferrer
+ * @author     Shuyang Zhou
+ * @author     Marco Leo
  * @deprecated As of 7.0.0, with no direct replacement
  */
 @Deprecated

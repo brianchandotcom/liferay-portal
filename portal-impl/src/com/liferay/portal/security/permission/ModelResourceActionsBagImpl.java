@@ -22,7 +22,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * @author László Csontos
+ * @author     László Csontos
  * @deprecated As of 7.0.0, with no direct replacement
  */
 @Deprecated

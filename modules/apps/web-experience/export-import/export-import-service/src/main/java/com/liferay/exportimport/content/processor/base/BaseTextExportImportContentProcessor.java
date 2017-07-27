@@ -72,8 +72,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @author Gergely Mathe
- *
+ * @author     Gergely Mathe
  * @deprecated As of 4.0.0
  */
 @Deprecated

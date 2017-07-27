@@ -444,7 +444,6 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	 *
 	 * @param  ddmStorageId the storage ID associated with the record
 	 * @return the DDM form values
-	 * @throws StorageException
 	 */
 	@Override
 	public DDMFormValues getDDMFormValues(long ddmStorageId)

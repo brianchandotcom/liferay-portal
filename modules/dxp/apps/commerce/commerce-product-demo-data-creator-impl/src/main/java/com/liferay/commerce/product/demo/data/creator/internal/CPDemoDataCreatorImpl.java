@@ -18,7 +18,9 @@ import com.liferay.commerce.product.demo.data.creator.CPDemoDataCreator;
 import com.liferay.commerce.product.demo.data.creator.internal.util.AssetCategoryDemoDataCreatorHelper;
 import com.liferay.commerce.product.demo.data.creator.internal.util.AssetVocabularyDemoDataCreatorHelper;
 import com.liferay.commerce.product.demo.data.creator.internal.util.CPDefinitionDemoDataCreatorHelper;
+import com.liferay.commerce.product.demo.data.creator.internal.util.CPOptionCategoryDemoDataCreatorHelper;
 import com.liferay.commerce.product.demo.data.creator.internal.util.CPOptionDemoDataCreatorHelper;
+import com.liferay.commerce.product.demo.data.creator.internal.util.CPSpecificationOptionDemoDataCreatorHelper;
 import com.liferay.commerce.product.demo.data.creator.internal.util.LayoutDemoDataCreatorHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -48,7 +50,10 @@ public class CPDemoDataCreatorImpl implements CPDemoDataCreator {
 		_layoutDemoDataCreatorHelper.deleteLayouts(userId, groupId);
 
 		_cpDefinitionDemoDataCreatorHelper.deleteCPDefinitions();
+		_cpOptionCategoryDemoDataCreatorHelper.deleteCPOptionCategories();
 		_cpOptionDemoDataCreatorHelper.deleteCPOptions();
+		_cpSpecificationOptionDemoDataCreatorHelper.
+			deleteCPSpecificationOptions();
 	}
 
 	@Override
@@ -70,7 +75,15 @@ public class CPDemoDataCreatorImpl implements CPDemoDataCreator {
 		_cpDefinitionDemoDataCreatorHelper;
 
 	@Reference
+	private CPOptionCategoryDemoDataCreatorHelper
+		_cpOptionCategoryDemoDataCreatorHelper;
+
+	@Reference
 	private CPOptionDemoDataCreatorHelper _cpOptionDemoDataCreatorHelper;
+
+	@Reference
+	private CPSpecificationOptionDemoDataCreatorHelper
+		_cpSpecificationOptionDemoDataCreatorHelper;
 
 	@Reference
 	private LayoutDemoDataCreatorHelper _layoutDemoDataCreatorHelper;

@@ -68,8 +68,12 @@ public class CPDefinitionDemoDataCreatorHelper
 			String productTypeName = productJSONObject.getString(
 				"productTypeName");
 
+			// Layout
+
 			String layoutUuid = _layoutDemoDataCreatorHelper.getLayoutUuid(
 				userId, groupId, "Products");
+
+			// Asset Categories
 
 			JSONArray productJSONArray = productJSONObject.getJSONArray(
 				"categories");
@@ -78,9 +82,21 @@ public class CPDefinitionDemoDataCreatorHelper
 				_assetCategoryDemoDataCreatorHelper.getProductAssetCategoryIds(
 					productJSONArray);
 
+			// Commerce product definition
+
 			CPDefinition cpDefinition = createCPDefinition(
 				userId, groupId, baseSKU, title, description, urlTitle,
 				layoutUuid, productTypeName, assetCategoryIds);
+
+			// Commerce product option categories
+
+			JSONArray cpOptionCategories = productJSONObject.getJSONArray(
+				"optionCategories");
+
+			_cpOptionCategoryDemoDataCreatorHelper.addCPOptionCategories(
+				userId, groupId, cpOptionCategories);
+
+			// Commerce product options
 
 			JSONArray cpOptionsJSONArray = productJSONObject.getJSONArray(
 				"options");
@@ -88,6 +104,18 @@ public class CPDefinitionDemoDataCreatorHelper
 			_cpOptionDemoDataCreatorHelper.addCPOptions(
 				Locale.US, userId, groupId, cpDefinition.getCPDefinitionId(),
 				cpOptionsJSONArray);
+
+			// Commerce product specification options
+
+			JSONArray cpSpecificationOptions = productJSONObject.getJSONArray(
+				"specificationOptions");
+
+			_cpSpecificationOptionDemoDataCreatorHelper.
+				addCPSpecificationOptions(
+					Locale.US, userId, groupId,
+					cpDefinition.getCPDefinitionId(), cpSpecificationOptions);
+
+			// Commerce product attachment file entries
 
 			JSONArray cpAttachmentFileEntriesJSONArray =
 				productJSONObject.getJSONArray("images");
@@ -98,6 +126,9 @@ public class CPDefinitionDemoDataCreatorHelper
 					cpAttachmentFileEntriesJSONArray);
 
 			if (buildSkus) {
+
+				// Commerce product instances
+
 				_cpInstanceLocalService.buildCPInstances(
 					cpDefinition.getCPDefinitionId(), serviceContext);
 			}
@@ -283,7 +314,15 @@ public class CPDefinitionDemoDataCreatorHelper
 	private CPInstanceLocalService _cpInstanceLocalService;
 
 	@Reference
+	private CPOptionCategoryDemoDataCreatorHelper
+		_cpOptionCategoryDemoDataCreatorHelper;
+
+	@Reference
 	private CPOptionDemoDataCreatorHelper _cpOptionDemoDataCreatorHelper;
+
+	@Reference
+	private CPSpecificationOptionDemoDataCreatorHelper
+		_cpSpecificationOptionDemoDataCreatorHelper;
 
 	@Reference
 	private LayoutDemoDataCreatorHelper _layoutDemoDataCreatorHelper;

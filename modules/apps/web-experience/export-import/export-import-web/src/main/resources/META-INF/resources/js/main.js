@@ -19,6 +19,8 @@ AUI.add(
 
 		var STR_EMPTY = '';
 
+		var STR_HIDE = 'hide';
+
 		var defaultConfig = {
 			setter: '_setNode'
 		};
@@ -58,6 +60,8 @@ AUI.add(
 
 						instance._exportLAR = config.exportLAR;
 						instance._layoutsExportTreeOutput = instance.byId(config.pageTreeId + 'Output');
+
+						instance._nodeInputStates = [];
 
 						instance._initLabels();
 
@@ -433,6 +437,8 @@ AUI.add(
 
 															instance._setContentLabels(portletId);
 
+															instance._storeNodeInputStates(contentNode);
+
 															contentDialog.hide();
 														}
 													},
@@ -443,6 +449,8 @@ AUI.add(
 													on: {
 														click: function(event) {
 															event.domEvent.preventDefault();
+
+															instance._restoreNodeInputStates(contentNode);
 
 															contentDialog.hide();
 														}
@@ -456,6 +464,8 @@ AUI.add(
 								}
 							);
 
+							instance._storeNodeInputStates(contentNode);
+
 							contentNode.setData('contentDialog', contentDialog);
 						}
 
@@ -467,9 +477,9 @@ AUI.add(
 
 						var contentOptionsDialog = instance._contentOptionsDialog;
 
-						if (!contentOptionsDialog) {
-							var contentOptionsNode = instance.byId('contentOptions');
+						var contentOptionsNode = instance.byId('contentOptions');
 
+						if (!contentOptionsDialog) {
 							contentOptionsNode.show();
 
 							contentOptionsDialog = Liferay.Util.Window.getWindow(
@@ -490,6 +500,8 @@ AUI.add(
 
 															instance._setContentOptionsLabels();
 
+															instance._storeNodeInputStates(contentOptionsNode);
+
 															contentOptionsDialog.hide();
 														}
 													},
@@ -500,6 +512,8 @@ AUI.add(
 													on: {
 														click: function(event) {
 															event.domEvent.preventDefault();
+
+															instance._restoreNodeInputStates(contentOptionsNode);
 
 															contentOptionsDialog.hide();
 														}
@@ -512,6 +526,8 @@ AUI.add(
 									title: Liferay.Language.get('comments-and-ratings')
 								}
 							);
+
+							instance._storeNodeInputStates(contentOptionsNode);
 
 							instance._contentOptionsDialog = contentOptionsDialog;
 						}
@@ -896,6 +912,59 @@ AUI.add(
 						}
 					},
 
+					_restoreNodeCheckedState: function(node, state) {
+						var val = state.value;
+
+						if (val !== undefined) {
+							node.set('checked', val);
+						}
+					},
+
+					_restoreNodeHiddenState: function(node, state) {
+						var hiddenList = node.ancestorsByClassName(STR_HIDE);
+
+						hiddenList.each(
+							function(hiddenNode) {
+								hiddenNode.removeClass(STR_HIDE);
+							}
+						);
+
+						hiddenList = state.hiddenList;
+
+						if (hiddenList !== null) {
+							hiddenList.each(
+								function(node) {
+									node.addClass(STR_HIDE);
+								}
+							);
+						}
+					},
+
+					_restoreNodeInputStates: function(node) {
+						var instance = this;
+
+						var inputNodes = [];
+
+						var inputStates = instance._nodeInputStates;
+
+						if (node && node.getElementsByTagName) {
+							inputNodes = node.getElementsByTagName('input');
+						}
+
+						inputNodes.each(
+							function(node) {
+								var id = node.get('id');
+
+								var state = inputStates[id];
+
+								if (state !== undefined) {
+									instance._restoreNodeCheckedState(node, state);
+									instance._restoreNodeHiddenState(node, state);
+								}
+							}
+						);
+					},
+
 					_scheduleRenderProcess: function() {
 						var instance = this;
 
@@ -1038,6 +1107,35 @@ AUI.add(
 						}
 
 						return val;
+					},
+
+					_storeNodeInputStates: function(node) {
+						var instance = this;
+
+						var inputNodes = [];
+
+						var inputStates = instance._nodeInputStates;
+
+						if (node && node.getElementsByTagName) {
+							inputNodes = node.getElementsByTagName('input');
+						}
+
+						inputNodes.each(function(node) {
+							var hiddenList = node.ancestorsByClassName(STR_HIDE);
+
+							var id = node.get('id');
+
+							var val = node.get('checked');
+
+							if (hiddenList.size() === 0) {
+								hiddenList = null;
+							}
+
+							inputStates[id] = {
+								'value': val,
+								'hiddenList': hiddenList
+							};
+						});
 					},
 
 					_updateDateRange: function(event) {

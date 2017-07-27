@@ -232,7 +232,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			}
 
 			addCPInstance(
-				cpDefinitionId, sku.toString(), jsonArray.toString(),
+				cpDefinitionId, sku.toString(), cpDefinition.getGtin(),
+				cpDefinition.getManufacturerPartNumber(), jsonArray.toString(),
 				cpDefinition.getDisplayDate(), cpDefinition.getExpirationDate(),
 				neverExpire, serviceContext);
 		}
@@ -477,7 +478,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	}
 
 	protected CPInstance addCPInstance(
-			long cpDefinitionId, String sku, String ddmContent,
+			long cpDefinitionId, String sku, String gtin,
+			String manufacturerPartNumber, String ddmContent,
 			Date displayDate, Date expirationDate, boolean neverExpire,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -512,11 +514,11 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		}
 
 		return cpInstanceLocalService.addCPInstance(
-			cpDefinitionId, sku, ddmContent, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
+			cpDefinitionId, sku, gtin, manufacturerPartNumber, ddmContent,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
 	}
 
 	protected SearchContext buildSearchContext(

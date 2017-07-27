@@ -18,7 +18,6 @@ import com.liferay.commerce.product.item.selector.web.internal.CPDefinitionItemS
 import com.liferay.commerce.product.item.selector.web.internal.search.CPDefinitionItemSelectorChecker;
 import com.liferay.commerce.product.item.selector.web.internal.util.CPItemSelectorViewUtil;
 import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.model.CPDefinitionLink;
 import com.liferay.commerce.product.service.CPDefinitionLinkService;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.type.CPType;
@@ -35,11 +34,9 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.util.List;
-
 import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author Alessio Antonio Rendina
@@ -70,13 +67,6 @@ public class CPDefinitionItemSelectorViewDisplayContext
 
 	public long getCPDefinitionId() {
 		return ParamUtil.getLong(httpServletRequest, "cpDefinitionId");
-	}
-
-	public List<CPDefinitionLink> getCPDefinitionLinks()
-		throws PortalException {
-
-		return _cpDefinitionLinkService.getCPDefinitionLinks(
-			getCPDefinitionId());
 	}
 
 	public CPType getCPType(String name) {

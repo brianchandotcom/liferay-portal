@@ -79,19 +79,26 @@
 
 	<command name="gotoConfigurationPG">
 		<if>
-			<isset var ="portletOption" /> 
-				<then>
-					<var name="portletOption" value="${portletOption}" />
-				</then>
-				<else>
-					<var name="portletOption" value="Permissions" />
-				</else>
+			<isset var="portletOption" />
+			<then>
+				<var name="optionName" value="${portletOption}" />
+			</then>
+			<else>
+				<var name="optionName" value="Permissions" />
+			</else>
 		</if>
+
 		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletOption" value="${portletOption}" />
+			<var name="portletOption" value="${optionName}" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+	</command>
+
+	<command name="gotoDefinePermissionsWithinIFrame" >
+		<var name="key_roleName" value="${roleName}" />
+
+		<execute function="Click" locator1="AssetPermissions#SELECT_ROLE_ANY" />
 	</command>
 
 	<command name="gotoDocumentsAndMediaHomeFolderPG">

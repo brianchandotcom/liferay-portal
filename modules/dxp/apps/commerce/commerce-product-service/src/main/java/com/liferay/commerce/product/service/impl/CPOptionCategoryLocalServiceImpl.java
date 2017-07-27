@@ -156,6 +156,11 @@ public class CPOptionCategoryLocalServiceImpl
 	}
 
 	@Override
+	public CPOptionCategory fetchCPOptionCategory(long groupId, String key) {
+		return cpOptionCategoryPersistence.fetchByG_K(groupId, key);
+	}
+
+	@Override
 	public List<CPOptionCategory> getCPOptionCategories(
 		long groupId, int start, int end) {
 

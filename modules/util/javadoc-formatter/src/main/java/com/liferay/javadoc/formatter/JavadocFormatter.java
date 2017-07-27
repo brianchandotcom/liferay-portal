@@ -1068,58 +1068,9 @@ public class JavadocFormatter {
 	}
 
 	private String _getClassName(String fileName) {
-		int pos = fileName.indexOf("src/main/java/");
+		int pos = fileName.lastIndexOf(StringPool.SLASH);
 
-		if (pos == -1) {
-			pos = fileName.indexOf("src/test/java/");
-		}
-
-		if (pos == -1) {
-			pos = fileName.indexOf("src/testIntegration/java/");
-		}
-
-		if (pos != -1) {
-			pos = fileName.indexOf("java/", pos);
-		}
-
-		if (pos == -1) {
-			pos = fileName.indexOf("src/");
-		}
-
-		if (pos == -1) {
-			pos = fileName.indexOf("test/integration/");
-
-			if (pos != -1) {
-				pos = fileName.indexOf("integration/", pos);
-			}
-		}
-
-		if (pos == -1) {
-			pos = fileName.indexOf("test/unit/");
-
-			if (pos != -1) {
-				pos = fileName.indexOf("unit/", pos);
-			}
-		}
-
-		if (pos == -1) {
-			pos = fileName.indexOf("test/");
-		}
-
-		if (pos == -1) {
-			pos = fileName.indexOf("service/");
-		}
-
-		if (pos == -1) {
-			throw new RuntimeException(fileName);
-		}
-
-		pos = fileName.indexOf("/", pos);
-
-		String srcFile = fileName.substring(pos + 1, fileName.length());
-
-		return StringUtil.replace(
-			srcFile.substring(0, srcFile.length() - 5), '/', '.');
+		return fileName.substring(pos + 1, fileName.length() - 5);
 	}
 
 	private String _getFieldKey(Element fieldElement) {
@@ -1163,8 +1114,6 @@ public class JavadocFormatter {
 	}
 
 	private JavaClass _getJavaClass(String fileName, Reader reader) {
-		String className = _getClassName(fileName);
-
 		if (reader != null) {
 			_javaProjectBuilder = new JavaProjectBuilder();
 
@@ -1172,7 +1121,7 @@ public class JavadocFormatter {
 		}
 
 		return _javaProjectBuilder.getClassByName(
-			_packagePath + StringPool.PERIOD + className);
+			_packagePath + StringPool.PERIOD + _getClassName(fileName));
 	}
 
 	private String _getJavaClassComment(

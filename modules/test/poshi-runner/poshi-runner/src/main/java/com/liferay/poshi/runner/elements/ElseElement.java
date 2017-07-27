@@ -14,8 +14,6 @@
 
 package com.liferay.poshi.runner.elements;
 
-import java.util.List;
-
 import org.dom4j.Element;
 
 /**
@@ -41,12 +39,6 @@ public class ElseElement extends ThenElement {
 		String readableSyntax = super.toReadableSyntax();
 
 		return createReadableBlock(readableSyntax);
-	}
-
-	protected List<String> getReadableBlocks(String readableSyntax) {
-		String content = getBracedContent(readableSyntax);
-
-		return super.getReadableBlocks(content);
 	}
 
 }

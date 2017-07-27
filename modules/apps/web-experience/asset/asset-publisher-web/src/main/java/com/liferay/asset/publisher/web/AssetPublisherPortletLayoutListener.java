@@ -35,7 +35,7 @@ import com.liferay.portlet.asset.util.AssetUtil;
  * email subscriptions can be removed when the Asset Publisher is removed from
  * the page.
  *
- * @author Zsolt Berentey
+ * @author     Zsolt Berentey
  * @deprecated As of 2.0.0, with not direct replacement
  */
 @Deprecated

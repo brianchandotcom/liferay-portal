@@ -129,8 +129,9 @@ public class BlogsEntryAttachmentFileEntryUtil {
 	}
 
 	/**
-	 * @deprecated As of 1.1.0, replaced by
-	 * {@link BlogsEntryAttachmentContentUpdater#updateContent(String, List)}
+	 * @deprecated As of 1.1.0, replaced by {@link
+	 *             BlogsEntryAttachmentContentUpdater#updateContent(String,
+	 *             List)}
 	 */
 	@Deprecated
 	public static String updateContent(

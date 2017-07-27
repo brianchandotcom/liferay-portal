@@ -27,8 +27,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 /**
- * @author Daniel Kocsis
- *
+ * @author     Daniel Kocsis
  * @deprecated As of 4.0.0
  */
 @Deprecated

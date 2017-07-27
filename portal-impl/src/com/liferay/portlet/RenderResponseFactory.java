@@ -32,8 +32,8 @@ public class RenderResponseFactory {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #create(RenderRequestImpl, HttpServletResponse)}
+	 * @deprecated As of 7.0.0, replaced by {@link #create(RenderRequestImpl,
+	 *             HttpServletResponse)}
 	 */
 	@Deprecated
 	public static RenderResponseImpl create(
@@ -45,8 +45,8 @@ public class RenderResponseFactory {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #create(RenderRequestImpl, HttpServletResponse)}
+	 * @deprecated As of 7.0.0, replaced by {@link #create(RenderRequestImpl,
+	 *             HttpServletResponse)}
 	 */
 	@Deprecated
 	public static RenderResponseImpl create(

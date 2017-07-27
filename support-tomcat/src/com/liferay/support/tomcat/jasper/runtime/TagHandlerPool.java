@@ -32,7 +32,7 @@ import org.apache.jasper.Constants;
  * </p>
  *
  * @author Shuyang Zhou
- * @see com.liferay.portal.osgi.web.servlet.jsp.compiler.internal.JspTagHandlerPool
+ * @see    com.liferay.portal.osgi.web.servlet.jsp.compiler.internal.JspTagHandlerPool
  */
 public class TagHandlerPool extends org.apache.jasper.runtime.TagHandlerPool {
 

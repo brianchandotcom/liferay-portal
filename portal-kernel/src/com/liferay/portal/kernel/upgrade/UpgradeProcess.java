@@ -570,7 +570,8 @@ public abstract class UpgradeProcess
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             DBInspector#normalizeName(java.lang.String, DatabaseMetaData)}
+	 *             DBInspector#normalizeName(java.lang.String,
+	 *             DatabaseMetaData)}
 	 */
 	@Deprecated
 	protected String normalizeName(

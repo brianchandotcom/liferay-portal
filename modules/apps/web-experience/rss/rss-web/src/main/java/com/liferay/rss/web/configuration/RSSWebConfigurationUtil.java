@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 
 /**
- * @author Eudaldo Alonso
+ * @author     Eudaldo Alonso
  * @deprecated As of 2.2.0, with no direct replacement
  */
 @Deprecated

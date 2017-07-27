@@ -19,7 +19,7 @@ import com.liferay.taglib.TagSupport;
 import javax.servlet.jsp.JspException;
 
 /**
- * @author     Brian Wing Shun Chan
+ * @author Brian Wing Shun Chan
  */
 public class ParamTag extends TagSupport {
 

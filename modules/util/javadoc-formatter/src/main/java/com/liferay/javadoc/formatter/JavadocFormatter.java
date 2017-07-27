@@ -210,8 +210,6 @@ public class JavadocFormatter {
 				System.out.println(sb.toString());
 			}
 
-			_populateJavadocBuilder(fileNames);
-
 			for (String fileName : fileNames) {
 				fileName = StringUtil.replace(fileName, '\\', '/');
 
@@ -1751,23 +1749,6 @@ public class JavadocFormatter {
 		}
 
 		return false;
-	}
-
-	private void _populateJavadocBuilder(String[] fileNames) {
-		_javaProjectBuilder = new JavaProjectBuilder();
-
-		for (String fileName : fileNames) {
-			fileName = StringUtil.replace(
-				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
-
-			File file = new File(_inputDirName, fileName);
-
-			try {
-				_javaProjectBuilder.addSource(file);
-			}
-			catch (Exception e) {
-			}
-		}
 	}
 
 	private String _read(File file) throws IOException {

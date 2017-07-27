@@ -427,6 +427,14 @@ public class PoshiRunnerContext {
 		for (URL url : urls) {
 			String filePath = url.getFile();
 
+			if (OSDetector.isWindows()) {
+				if (filePath.startsWith("/")) {
+					filePath = filePath.substring(1);
+				}
+
+				filePath = filePath.replace("/", "\\");
+			}
+
 			_filePaths.put(
 				PoshiRunnerGetterUtil.getFileNameFromFilePath(filePath),
 				filePath);
@@ -1045,10 +1053,6 @@ public class PoshiRunnerContext {
 			if (locatorKey.equals("EXTEND_ACTION_PATH")) {
 				for (URL resource : _resourceURLs) {
 					String expectedExtendedPath = "/" + locator + ".path";
-
-					if (OSDetector.isWindows()) {
-						expectedExtendedPath = "\\" + locator + ".path";
-					}
 
 					String extendFilePath = resource.getFile();
 

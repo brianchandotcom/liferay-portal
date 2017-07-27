@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -70,6 +71,10 @@ public class LayoutsTreeTag extends IncludeTag {
 
 	public void setIncomplete(boolean incomplete) {
 		_incomplete = incomplete;
+	}
+
+	public void setLayoutSetBranch(LayoutSetBranch layoutSetBranch) {
+		_layoutSetBranch = layoutSetBranch;
 	}
 
 	public void setLinkTemplate(String linkTemplate) {
@@ -131,6 +136,7 @@ public class LayoutsTreeTag extends IncludeTag {
 		_expandFirstNode = true;
 		_groupId = 0;
 		_incomplete = true;
+		_layoutSetBranch = null;
 		_linkTemplate = null;
 		_portletURL = null;
 		_portletURLs = null;
@@ -251,6 +257,8 @@ public class LayoutsTreeTag extends IncludeTag {
 			"liferay-layout:layouts-tree:incomplete",
 			String.valueOf(_incomplete));
 		request.setAttribute(
+			"liferay-layout:layouts-tree:layoutSetBranch", _layoutSetBranch);
+		request.setAttribute(
 			"liferay-layout:layouts-tree:linkTemplate",
 			String.valueOf(_linkTemplate));
 		request.setAttribute(
@@ -302,6 +310,7 @@ public class LayoutsTreeTag extends IncludeTag {
 	private boolean _expandFirstNode = true;
 	private long _groupId;
 	private boolean _incomplete = true;
+	private LayoutSetBranch _layoutSetBranch;
 	private String _linkTemplate;
 	private PortletURL _portletURL;
 	private Map<String, PortletURL> _portletURLs;

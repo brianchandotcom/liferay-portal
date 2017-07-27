@@ -300,6 +300,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 	<liferay-layout:layouts-tree
 		expandFirstNode="<%= true %>"
 		groupId="<%= layoutsTreeDisplayContext.getSelGroupId() %>"
+		layoutSetBranch="<%= layoutsTreeDisplayContext.getLayoutSetBranch() %>"
 		linkTemplate="<%= linkTemplate %>"
 		portletURLs="<%= layoutsTreeDisplayContext.getPortletURLs() %>"
 		privateLayout="<%= layoutsTreeDisplayContext.isPrivateLayout() %>"

@@ -58,6 +58,13 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>The primary key of the page that is currently selected.</description>
+			<name>layoutSetBranch</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>com.liferay.portal.kernel.model.LayoutSetBranch</type>
+		</attribute>
+		<attribute>
 			<description>The HTML template to use to generate the HTML of each page in the tree.</description>
 			<name>linkTemplate</name>
 			<required>false</required>

@@ -19,6 +19,7 @@
 <%
 boolean showIconLabel = ((Boolean)request.getAttribute("view.jsp-showIconLabel")).booleanValue();
 
+AssetEntry assetEntry = (AssetEntry)request.getAttribute("view.jsp-assetEntry");
 AssetRenderer<?> assetRenderer = (AssetRenderer<?>)request.getAttribute("view.jsp-assetRenderer");
 
 boolean showEditURL = ParamUtil.getBoolean(request, "showEditURL", true);
@@ -43,32 +44,62 @@ if (showEditURL && assetRenderer.hasEditPermission(permissionChecker)) {
 
 	editPortletURL = assetRenderer.getURLEdit(liferayPortletRequest, liferayPortletResponse, LiferayWindowState.POP_UP, redirectURL);
 }
+
+List<AssetEntryAction> assetEntryActions = assetPublisherDisplayContext.getAssetEntryActions(assetEntry.getClassName());
 %>
 
-<c:if test="<%= editPortletURL != null %>">
+<c:if test="<%= (editPortletURL != null) || ListUtil.isNotEmpty(assetEntryActions) %>">
 	<div class="pull-right">
+		<liferay-ui:icon-menu cssClass="visible-interaction" direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+			<c:if test="<%= editPortletURL != null %>">
 
-		<%
-		editPortletURL.setParameter("hideDefaultSuccessMessage", Boolean.TRUE.toString());
-		editPortletURL.setParameter("showHeader", Boolean.FALSE.toString());
+				<%
+				editPortletURL.setParameter("hideDefaultSuccessMessage", Boolean.TRUE.toString());
+				editPortletURL.setParameter("showHeader", Boolean.FALSE.toString());
 
-		Map<String, Object> data = new HashMap<String, Object>();
+				Map<String, Object> data = new HashMap<String, Object>();
 
-		data.put("destroyOnHide", true);
-		data.put("id", HtmlUtil.escape(portletDisplay.getNamespace()) + "editAsset");
-		data.put("title", LanguageUtil.format(request, "edit-x", HtmlUtil.escape(assetRenderer.getTitle(locale)), false));
-		%>
+				data.put("destroyOnHide", true);
+				data.put("id", HtmlUtil.escape(portletDisplay.getNamespace()) + "editAsset");
+				data.put("title", LanguageUtil.format(request, "edit-x", HtmlUtil.escape(assetRenderer.getTitle(locale)), false));
+				%>
 
-		<liferay-ui:icon
-			cssClass="asset-actions icon-monospaced visible-interaction"
-			data="<%= data %>"
-			icon="pencil"
-			label="<%= false %>"
-			markupView="lexicon"
-			message='<%= showIconLabel ? LanguageUtil.format(request, "edit-x-x", new Object[] {"hide-accessible", HtmlUtil.escape(assetRenderer.getTitle(locale))}, false) : LanguageUtil.format(request, "edit-x", HtmlUtil.escape(assetRenderer.getTitle(locale)), false) %>'
-			method="get"
-			url="<%= editPortletURL.toString() %>"
-			useDialog="<%= true %>"
-		/>
+				<liferay-ui:icon
+					data="<%= data %>"
+					message='<%= showIconLabel ? LanguageUtil.format(request, "edit-x-x", new Object[] {"hide-accessible", HtmlUtil.escape(assetRenderer.getTitle(locale))}, false) : LanguageUtil.format(request, "edit-x", HtmlUtil.escape(assetRenderer.getTitle(locale)), false) %>'
+					method="get"
+					url="<%= editPortletURL.toString() %>"
+					useDialog="<%= true %>"
+				/>
+			</c:if>
+
+			<c:if test="<%= ListUtil.isNotEmpty(assetEntryActions) %>">
+
+				<%
+				for (AssetEntryAction assetEntryAction : assetEntryActions) {
+					if (!assetEntryAction.hasPermission(permissionChecker, assetRenderer)) {
+						continue;
+					}
+
+					Map<String, Object> data = new HashMap<String, Object>();
+
+					data.put("destroyOnHide", true);
+					data.put("title", assetEntryAction.getDialogTitle(locale));
+				%>
+
+					<liferay-ui:icon
+						data="<%= data %>"
+						message="<%= assetEntryAction.getMessage(locale) %>"
+						method="get"
+						url="<%= assetEntryAction.getDialogURL(request, assetRenderer) %>"
+						useDialog="<%= true %>"
+					/>
+
+				<%
+				}
+				%>
+
+			</c:if>
+		</liferay-ui:icon-menu>
 	</div>
 </c:if>

@@ -34,7 +34,7 @@ import java.util.Collections;
 import java.util.Map;
 
 /**
- * @author Adolfo Pérez
+ * @author     Adolfo Pérez
  * @deprecated As of 7.0.0, replaced by {@link
  *             com.liferay.document.library.internal.capabilities.MinimalWorkflowCapability}
  */

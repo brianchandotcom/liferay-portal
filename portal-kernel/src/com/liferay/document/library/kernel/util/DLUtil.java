@@ -337,8 +337,8 @@ public class DLUtil {
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             com.liferay.document.library.web.internal.util.
-	 *             DLSubscriptionUtil#isSubscribedToFileEntryType(
-	 *             long, long, long, long)}
+	 *             DLSubscriptionUtil#isSubscribedToFileEntryType(long, long,
+	 *             long, long)}
 	 */
 	@Deprecated
 	public static boolean isSubscribedToFileEntryType(
@@ -351,8 +351,8 @@ public class DLUtil {
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             com.liferay.document.library.web.internal.util.
-	 *             DLSubscriptionUtil#isSubscribedToFolder(
-	 *             long, long, long, long)}
+	 *             DLSubscriptionUtil#isSubscribedToFolder(long, long, long,
+	 *             long)}
 	 */
 	@Deprecated
 	public static boolean isSubscribedToFolder(
@@ -366,8 +366,8 @@ public class DLUtil {
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             com.liferay.document.library.web.internal.util.
-	 *             DLSubscriptionUtil#isSubscribedToFolder(
-	 *             long, long, long, long, boolean)}
+	 *             DLSubscriptionUtil#isSubscribedToFolder(long, long, long,
+	 *             long, boolean)}
 	 */
 	@Deprecated
 	public static boolean isSubscribedToFolder(

@@ -43,7 +43,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 /**
- * @author Pavel Savinov
+ * @author     Pavel Savinov
  * @deprecated As of 7.0.0, moved to {@link
  *             com.liferay.asset.tags.internal.search.AssetTagIndexer}
  */

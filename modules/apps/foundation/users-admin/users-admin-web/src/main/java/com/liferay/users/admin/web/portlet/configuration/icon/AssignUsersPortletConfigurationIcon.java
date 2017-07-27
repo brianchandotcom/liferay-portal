@@ -33,7 +33,7 @@ import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 /**
- * @author Pei-Jung Lan
+ * @author     Pei-Jung Lan
  * @deprecated As of 2.1.0, with no direct replacement
  */
 @Deprecated

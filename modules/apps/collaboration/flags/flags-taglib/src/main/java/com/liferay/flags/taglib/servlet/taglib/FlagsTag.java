@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
 /**
- * @author Julio Camarero
+ * @author     Julio Camarero
  * @deprecated As of 2.0.0, with no direct replacement
  */
 @Deprecated

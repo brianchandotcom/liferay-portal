@@ -170,7 +170,9 @@ public interface WebKeys {
 	public static final String FORWARD_URL = "FORWARD_URL";
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link com.liferay.taglib.util.FriendlyURLUtil.getFriendlyURL(HttpServletRequest, javax.servlet.jsp.PageContext)}
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.taglib.util.FriendlyURLUtil.getFriendlyURL(
+	 *             HttpServletRequest, javax.servlet.jsp.PageContext)}
 	 */
 	@Deprecated
 	public static final String FRIENDLY_URL = "FRIENDLY_URL";

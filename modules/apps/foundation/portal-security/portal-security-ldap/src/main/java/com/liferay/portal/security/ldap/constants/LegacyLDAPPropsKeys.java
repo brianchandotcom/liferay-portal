@@ -170,15 +170,15 @@ public class LegacyLDAPPropsKeys {
 	public static final String LDAP_USERS_DN = "ldap.users.dn";
 
 	/**
-	* @deprecated As of 2.1.17, replaced by {@link LDAP_KEYS_NONPOSTFIXED}
-	*/
+	 * @deprecated As of 2.1.17, replaced by {@link LDAP_KEYS_NONPOSTFIXED}
+	 */
 	@Deprecated
 	public static final String[] NONPOSTFIXED_LDAP_KEYS =
 		LDAP_KEYS_NONPOSTFIXED;
 
 	/**
-	* @deprecated As of 2.1.17, replaced by {@link LDAP_KEYS_POSTFIXED}
-	*/
+	 * @deprecated As of 2.1.17, replaced by {@link LDAP_KEYS_POSTFIXED}
+	 */
 	@Deprecated
 	public static final String[] POSTFIXED_LDAP_KEYS = LDAP_KEYS_POSTFIXED;
 

@@ -1083,8 +1083,8 @@ public interface Portal {
 		String portletName);
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getSiteAdminURL(
-	 *             ThemeDisplay, String, Map)}
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getSiteAdminURL(ThemeDisplay, String, Map)}
 	 */
 	@Deprecated
 	public String getSiteAdminURL(
@@ -1093,8 +1093,8 @@ public interface Portal {
 		throws PortalException;
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getSiteAdminURL(
-	 *             ThemeDisplay, String, Map)}
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getSiteAdminURL(ThemeDisplay, String, Map)}
 	 */
 	@Deprecated
 	public String getSiteAdminURL(

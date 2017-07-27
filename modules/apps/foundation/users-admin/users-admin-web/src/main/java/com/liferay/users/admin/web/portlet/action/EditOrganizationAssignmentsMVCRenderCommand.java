@@ -15,7 +15,7 @@
 package com.liferay.users.admin.web.portlet.action;
 
 /**
- * @author Pei-Jung Lan
+ * @author     Pei-Jung Lan
  * @deprecated As of 2.1.0, with no direct replacement
  */
 @Deprecated

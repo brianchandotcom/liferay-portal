@@ -36,8 +36,8 @@ import javax.servlet.http.HttpSession;
 public class PublicRenderParametersPool {
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #get(HttpServletRequest, long)}
+	 * @deprecated As of 7.0.0, replaced by {@link #get(HttpServletRequest,
+	 *             long)}
 	 */
 	@Deprecated
 	public static Map<String, String[]> get(

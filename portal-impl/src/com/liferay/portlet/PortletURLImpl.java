@@ -299,8 +299,8 @@ public class PortletURLImpl
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #visitReservedParameters(
-	 *             BiConsumer)}
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #visitReservedParameters(BiConsumer)}
 	 */
 	@Deprecated
 	@Override

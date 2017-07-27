@@ -15,14 +15,16 @@
 package com.liferay.ant.sync.dir;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.tools.ant.BuildException;
@@ -81,57 +83,96 @@ public class SyncDirTask extends Task {
 	}
 
 	private int _syncDirectory() throws IOException {
-		final Path rootDirPath = _dir.toPath();
-		final Path toRootDirPath = _toDir.toPath();
+		AtomicInteger atomicInteger = new AtomicInteger();
 
-		Files.createDirectories(toRootDirPath);
+		List<SyncFileCallable> copyTasks = _syncDirectory(
+			_dir, _toDir, new ArrayList<SyncFileCallable>(), atomicInteger);
 
-		final AtomicInteger atomicInteger = new AtomicInteger();
+		ExecutorService executorService = Executors.newFixedThreadPool(10);
 
-		Files.walkFileTree(
-			rootDirPath,
-			new SimpleFileVisitor<Path>() {
+		for (SyncFileCallable copyTask : copyTasks) {
+			executorService.submit(copyTask);
+		}
 
-				@Override
-				public FileVisitResult preVisitDirectory(
-						Path dirPath, BasicFileAttributes basicFileAttributes)
-					throws IOException {
+		executorService.shutdown();
 
-					Path relativePath = rootDirPath.relativize(dirPath);
-
-					Path toDirPath = toRootDirPath.resolve(relativePath);
-
-					if (Files.notExists(toDirPath)) {
-						Files.createDirectory(toDirPath);
-					}
-
-					return FileVisitResult.CONTINUE;
-				}
-
-				@Override
-				public FileVisitResult visitFile(
-						Path path, BasicFileAttributes basicFileAttributes)
-					throws IOException {
-
-					Path relativePath = rootDirPath.relativize(path);
-
-					Path toPath = toRootDirPath.resolve(relativePath);
-
-					if (Files.notExists(toPath)) {
-						Files.copy(path, toPath);
-
-						atomicInteger.incrementAndGet();
-					}
-
-					return FileVisitResult.CONTINUE;
-				}
-
-			});
+		try {
+			executorService.awaitTermination(
+				Long.MAX_VALUE, TimeUnit.MILLISECONDS);
+		}
+		catch (InterruptedException ie) {
+			ie.printStackTrace();
+		}
 
 		return atomicInteger.intValue();
 	}
 
+	private List<SyncFileCallable> _syncDirectory(
+		File dir, File toDir, List<SyncFileCallable> copyTasks,
+		AtomicInteger atomicInteger) {
+
+		toDir.mkdirs();
+
+		for (File fromFile : dir.listFiles()) {
+			String name = fromFile.getName();
+
+			File toFile = new File(toDir, name);
+
+			if (fromFile.isDirectory()) {
+				_syncDirectory(fromFile, toFile, copyTasks, atomicInteger);
+			}
+			else if (!toFile.exists()) {
+				SyncFileCallable copyTask = new SyncFileCallable(
+					fromFile, toFile, atomicInteger);
+
+				copyTasks.add(copyTask);
+			}
+		}
+
+		return copyTasks;
+	}
+
 	private File _dir;
 	private File _toDir;
+
+	private static class SyncFileCallable implements Callable<Boolean> {
+
+		public SyncFileCallable(
+			File file, File toFile, AtomicInteger atomicInteger) {
+
+			_file = file;
+			_toFile = toFile;
+			_atomicInteger = atomicInteger;
+		}
+
+		public Boolean call() throws IOException {
+			FileInputStream inputStream = new FileInputStream(_file);
+			FileOutputStream outputStream = new FileOutputStream(_toFile);
+
+			try {
+				byte[] buffer = new byte[8192];
+
+				int count;
+
+				while ((count = inputStream.read(buffer)) > 0) {
+					outputStream.write(buffer, 0, count);
+				}
+			}
+			finally {
+				_atomicInteger.incrementAndGet();
+
+				inputStream.close();
+
+				outputStream.close();
+			}
+
+			return Boolean.TRUE;
+		}
+
+		private final AtomicInteger _atomicInteger;
+		private final File _file;
+		private final File _toFile;
+
+	}
 
 }

@@ -13,6 +13,14 @@
 			"Puzzle-bag-pink.jpg",
 			"Puzzle-bag-gold.jpg"
 		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
+		],
 		"options": [
 			{
 				"ddmFormFieldTypeName": "select",
@@ -44,6 +52,56 @@
 		"productTypeName": "simple",
 		"relatedProducts": ["Amazona Bag"],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 1,
+				"title": "Material",
+				"value": "Classic Calf"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-measures",
+				"priority": 2,
+				"title": "Measures",
+				"value": "25x17x14 cm"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-handle-drop",
+				"priority": 3,
+				"title": "Handle drop",
+				"value": "6 cm"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-strap-length",
+				"priority": 4,
+				"title": "Strap length",
+				"value": "4060,0 cm"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 5,
+				"title": "Line",
+				"value": "Puzzle"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 6,
+				"title": "Made in",
+				"value": "Spain"
+			}
+		],
 		"title": "Puzzle Small Bag",
 		"urlTitle": "puzzle-small-bag"
 	},
@@ -62,7 +120,14 @@
 			"Hammock-red.jpg",
 			"Hammock-blue.jpg"
 		],
-		"key": "Hammock Bag",
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
+		],
 		"options": [
 			{
 				"ddmFormFieldTypeName": "select",
@@ -99,6 +164,56 @@
 		"productTypeName": "simple",
 		"relatedProducts": ["Amazona Bag"],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 1,
+				"title": "Material",
+				"value": "Classic Calf"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-measures",
+				"priority": 2,
+				"title": "Measures",
+				"value": "35x32x30 cm"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-handle-drop",
+				"priority": 3,
+				"title": "Handle drop",
+				"value": "10 cm"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-strap-length",
+				"priority": 4,
+				"title": "Strap length",
+				"value": "5055,0 cm"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 5,
+				"title": "Line",
+				"value": "Hammock"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 6,
+				"title": "Made in",
+				"value": "Spain"
+			}
+		],
 		"title": "Hammock Bag",
 		"urlTitle": "hammock-bag"
 	},
@@ -118,6 +233,14 @@
 			"Elephant-mini-pink.jpg",
 			"Elephant-mini-red.jpg",
 			"Elephant-mini-blue.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -165,6 +288,48 @@
 		"productTypeName": "simple",
 		"relatedProducts": ["Amazona Bag"],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 1,
+				"title": "Material",
+				"value": "Calf"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-measures",
+				"priority": 2,
+				"title": "Measures",
+				"value": "20x15x15 cm"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-strap-length",
+				"priority": 3,
+				"title": "Strap length",
+				"value": "6266,0 cm"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 4,
+				"title": "Line",
+				"value": "Animales"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 5,
+				"title": "Made in",
+				"value": "Spain"
+			}
+		],
 		"title": "Elephant Mini Bag",
 		"urlTitle": "elephant-mini-bag"
 	},
@@ -184,7 +349,14 @@
 			"Fortune-hobo-red.jpg",
 			"Fortune-hobo-indigo.jpg"
 		],
-		"key": "Fortune Hobo Bag",
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
+		],
 		"options": [
 			{
 				"ddmFormFieldTypeName": "select",
@@ -226,6 +398,48 @@
 		"productTypeName": "simple",
 		"relatedProducts": ["Amazona Bag"],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 1,
+				"title": "Material",
+				"value": "Classic Calf"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-measures",
+				"priority": 2,
+				"title": "Measures",
+				"value": "30x20x15 cm"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-strap-length",
+				"priority": 3,
+				"title": "Strap length",
+				"value": "4666,0 cm"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 4,
+				"title": "Line",
+				"value": "Hobo"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 5,
+				"title": "Made in",
+				"value": "Spain"
+			}
+		],
 		"title": "Fortune Hobo Bag",
 		"urlTitle": "fortune-hobo-bag"
 	},
@@ -246,6 +460,14 @@
 			"Puzzle-stone.jpg",
 			"Puzzle-blue.jpg",
 			"Puzzle-fuchsia.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -298,6 +520,56 @@
 		"productTypeName": "simple",
 		"relatedProducts": ["Amazona Bag"],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 1,
+				"title": "Material",
+				"value": "Suede/Classic Calf"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-measures",
+				"priority": 2,
+				"title": "Measures",
+				"value": "29x19.5x14 cm"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-handle-drop",
+				"priority": 3,
+				"title": "Handle drop",
+				"value": "15 cm"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-strap-length",
+				"priority": 4,
+				"title": "Strap length",
+				"value": "4666,0 cm"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 5,
+				"title": "Line",
+				"value": "Puzzle"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 6,
+				"title": "Made in",
+				"value": "Spain"
+			}
+		],
 		"title": "Puzzle Bag",
 		"urlTitle": "puzzle-bag"
 	},
@@ -315,6 +587,14 @@
 			"Amazona-tan.jpg",
 			"Amazona-mink.jpg",
 			"Amazona-marine.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -352,6 +632,64 @@
 		"productTypeName": "simple",
 		"relatedProducts": ["Puzzle Bag"],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 1,
+				"title": "Material",
+				"value": "Suede/Classic Calf"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-metallic-color",
+				"priority": 2,
+				"title": "Metallic color",
+				"value": "Polished Palladium"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-measures",
+				"priority": 3,
+				"title": "Measures",
+				"value": "36.5x23x16 cm"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-handle-drop",
+				"priority": 4,
+				"title": "Handle drop",
+				"value": "9 cm"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-strap-length",
+				"priority": 5,
+				"title": "Strap length",
+				"value": "5567,0 cm"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 6,
+				"title": "Line",
+				"value": "Amazona"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 7,
+				"title": "Made in",
+				"value": "Spain"
+			}
+		],
 		"title": "Amazona Bag",
 		"urlTitle": "amazona-bag"
 	},
@@ -369,7 +707,14 @@
 			"Medium-pouch-tan.jpg",
 			"Medium-pouch-blue.jpg"
 		],
-		"key": "Medium T Pouch",
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
+		],
 		"options": [
 			{
 				"ddmFormFieldTypeName": "select",
@@ -401,6 +746,48 @@
 		"productTypeName": "simple",
 		"relatedProducts": ["Amazona Bag"],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 1,
+				"title": "Material",
+				"value": "Engraved Calf"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-metallic-color",
+				"priority": 2,
+				"title": "Metallic color",
+				"value": "Polished Palladium"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-measures",
+				"priority": 3,
+				"title": "Measures",
+				"value": "25x16x6 cm"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 4,
+				"title": "Line",
+				"value": "Medium T Pouch"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 5,
+				"title": "Made in",
+				"value": "Spain"
+			}
+		],
 		"title": "Medium T Pouch",
 		"urlTitle": "medium-t-pouch"
 	},
@@ -419,6 +806,14 @@
 			"Avenue-red.jpg",
 			"Avenue-stone.jpg",
 			"Avenue-fuchsia.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -461,6 +856,48 @@
 		"productTypeName": "simple",
 		"relatedProducts": ["Amazona Bag"],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 1,
+				"title": "Material",
+				"value": "Goatskin"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-measures",
+				"priority": 2,
+				"title": "Measures",
+				"value": "29x16x13 cm"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-handle-drop",
+				"priority": 3,
+				"title": "Handle drop",
+				"value": "47 cm"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 4,
+				"title": "Line",
+				"value": "Avenue"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 5,
+				"title": "Made in",
+				"value": "Spain"
+			}
+		],
 		"title": "Avenue Bag",
 		"urlTitle": "avenue-bag"
 	},
@@ -479,7 +916,14 @@
 			"Flamenco-marine.jpg",
 			"Flamenco-pink.jpg"
 		],
-		"key": "Flamenco Knot bag",
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
+		],
 		"options": [
 			{
 				"ddmFormFieldTypeName": "select",
@@ -516,6 +960,56 @@
 		"productTypeName": "simple",
 		"relatedProducts": ["Amazona Bag"],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 1,
+				"title": "Material",
+				"value": "Classic Calf"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-metallic-color",
+				"priority": 2,
+				"title": "Metallic color",
+				"value": "Polished Palladium"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-measures",
+				"priority": 3,
+				"title": "Measures",
+				"value": "32x28.5x15 cm"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-strap-length",
+				"priority": 4,
+				"title": "Strap length",
+				"value": "5022,0 cm"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 5,
+				"title": "Line",
+				"value": "Flamenco"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 6,
+				"title": "Made in",
+				"value": "Spain"
+			}
+		],
 		"title": "Flamenco Knot Bag",
 		"urlTitle": "flamenco-knot-bag"
 	},
@@ -535,6 +1029,14 @@
 			"Pouch-orange.jpg",
 			"Pouch-blue.jpg",
 			"Pouch-fuchsia.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -582,6 +1084,48 @@
 		"productTypeName": "simple",
 		"relatedProducts": ["Amazona Bag"],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 1,
+				"title": "Material",
+				"value": "Engraved Calf"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-metallic-color",
+				"priority": 2,
+				"title": "Metallic color",
+				"value": "Polished Palladium"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-measures",
+				"priority": 3,
+				"title": "Measures",
+				"value": "30.5x20.5x6.5 cm"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 4,
+				"title": "Line",
+				"value": "T Pouch"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 5,
+				"title": "Made in",
+				"value": "Spain"
+			}
+		],
 		"title": "T Pouch",
 		"urlTitle": "t-pouch"
 	},
@@ -602,6 +1146,14 @@
 			"Hammock-small-tan.jpg",
 			"Hammock-small-orange.jpg",
 			"Hammock-small-blue.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -654,6 +1206,56 @@
 		"productTypeName": "simple",
 		"relatedProducts": ["Amazona Bag"],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 1,
+				"title": "Material",
+				"value": "Classic Calf"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-measures",
+				"priority": 2,
+				"title": "Measures",
+				"value": "29x26x27 cm"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-handle-drop",
+				"priority": 3,
+				"title": "Handle drop",
+				"value": "7 cm"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-strap-length",
+				"priority": 4,
+				"title": "Strap length",
+				"value": "5765,0 cm"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 5,
+				"title": "Line",
+				"value": "Hammock"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 6,
+				"title": "Made in",
+				"value": "Spain"
+			}
+		],
 		"title": "Hammock Small Bag",
 		"urlTitle": "hammock-small-bag"
 	},
@@ -671,7 +1273,14 @@
 			"Joyce-small-blue.jpg",
 			"Joyce-small-orange.jpg"
 		],
-		"key": "Joyce Small Bag",
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
+		],
 		"options": [
 			{
 				"ddmFormFieldTypeName": "select",
@@ -703,6 +1312,48 @@
 		"productTypeName": "simple",
 		"relatedProducts": ["Amazona Bag"],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 1,
+				"title": "Material",
+				"value": "Classic Calf"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-measures",
+				"priority": 2,
+				"title": "Measures",
+				"value": "20x16x10 cm"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-strap-length",
+				"priority": 3,
+				"title": "Strap length",
+				"value": "6265,0 cm"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 4,
+				"title": "Line",
+				"value": "Joyce"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 5,
+				"title": "Made in",
+				"value": "Spain"
+			}
+		],
 		"title": "Joyce Small Bag",
 		"urlTitle": "joyce-small-bag"
 	},
@@ -722,6 +1373,14 @@
 			"Barcelona-orange.jpg",
 			"Barcelona-pink.jpg",
 			"Barcelona-mink.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -769,6 +1428,56 @@
 		"productTypeName": "simple",
 		"relatedProducts": ["Amazona Bag"],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 1,
+				"title": "Material",
+				"value": "Boxcalf"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-metallic-color",
+				"priority": 2,
+				"title": "Metallic color",
+				"value": "Polished 1N Gold"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-measures",
+				"priority": 3,
+				"title": "Measures",
+				"value": "24.5x15x8 cm"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-strap-length",
+				"priority": 4,
+				"title": "Strap length",
+				"value": "5026,0 cm"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 5,
+				"title": "Line",
+				"value": "Barcelona"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 6,
+				"title": "Made in",
+				"value": "Spain"
+			}
+		],
 		"title": "Barcelona Bag",
 		"urlTitle": "barcelona-bag"
 	},
@@ -786,6 +1495,14 @@
 			"Goya-red.jpg",
 			"Goya-tan.jpg",
 			"Goya-indigo.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -823,6 +1540,64 @@
 		"productTypeName": "simple",
 		"relatedProducts": ["Amazona Bag"],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 1,
+				"title": "Material",
+				"value": "Classic Calf"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-metallic-color",
+				"priority": 2,
+				"title": "Metallic color",
+				"value": "Polished Palladium"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-measures",
+				"priority": 3,
+				"title": "Measures",
+				"value": "37x40x21 cm"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-handle-drop",
+				"priority": 4,
+				"title": "Handle drop",
+				"value": "17 cm"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-strap-length",
+				"priority": 5,
+				"title": "Strap length",
+				"value": "2740,0 cm"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 6,
+				"title": "Line",
+				"value": "Goya"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 7,
+				"title": "Made in",
+				"value": "Italy"
+			}
+		],
 		"title": "Goya Backpack",
 		"urlTitle": "goya-backpack"
 	},
@@ -840,6 +1615,14 @@
 			"Mini-yellow.jpg",
 			"Mini-red.jpg",
 			"Mini-green.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -877,6 +1660,56 @@
 		"productTypeName": "simple",
 		"relatedProducts": ["Amazona Bag"],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 1,
+				"title": "Material",
+				"value": "Grained Calf"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-metallic-color",
+				"priority": 2,
+				"title": "Metallic color",
+				"value": "Polished 1N Gold"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-measures",
+				"priority": 3,
+				"title": "Measures",
+				"value": "25x15.7x7.5 cm"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-strap-length",
+				"priority": 4,
+				"title": "Strap length",
+				"value": "5949,0 cm"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 5,
+				"title": "Line",
+				"value": "T Mini Bag"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 6,
+				"title": "Made in",
+				"value": "Spain"
+			}
+		],
 		"title": "T Mini Bag",
 		"urlTitle": "t-mini-bag"
 	},
@@ -891,6 +1724,14 @@
 		"description": "Asymmetric draped skirt in black polyester.",
 		"images": [
 			"Asym-skirt-black.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -941,6 +1782,40 @@
 			"Knit Skirt Stripes Blue/White"
 		],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-color",
+				"priority": 1,
+				"title": "Color",
+				"value": "Black"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 2,
+				"title": "Material",
+				"value": "Polyester"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 3,
+				"title": "Line",
+				"value": "Rtw Precol"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 4,
+				"title": "Made in",
+				"value": "Italy"
+			}
+		],
 		"title": "Asym Draped Button Skirt Black",
 		"urlTitle": "asym-draped-button-skirt-black"
 	},
@@ -955,6 +1830,14 @@
 		"description": "Handkerchief hem skirt in pleated Anagram print polyester.",
 		"images": [
 			"Anagram-silk-pleated-skirt-orange-multicolour.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -1010,6 +1893,40 @@
 			"Asym Draped Button Skirt Black"
 		],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-color",
+				"priority": 1,
+				"title": "Color",
+				"value": "Orange/Multicolour"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 2,
+				"title": "Material",
+				"value": "Polyester"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 3,
+				"title": "Line",
+				"value": "Rtw Precol"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 4,
+				"title": "Made in",
+				"value": "France"
+			}
+		],
 		"title": "Anagram Silk Pleated Skirt Orange/Multicolour",
 		"urlTitle": "anagram-silk-pleated-skirt-orange-multicolour"
 	},
@@ -1024,6 +1941,14 @@
 		"description": "Mini skirt in navy technical cotton wool & cashmere w/ contrasting white stripes.",
 		"images": [
 			"Knit-skirt-stripes-blue-white.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -1069,6 +1994,40 @@
 			"Asym Draped Button Skirt Black"
 		],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-color",
+				"priority": 1,
+				"title": "Color",
+				"value": "Blue/White"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 2,
+				"title": "Material",
+				"value": "Cashmere"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 3,
+				"title": "Line",
+				"value": "Rtw Precol"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 4,
+				"title": "Made in",
+				"value": "Italy"
+			}
+		],
 		"title": "Knit Skirt Stripes Blue/White",
 		"urlTitle": "knit-skirt-stripes-blue-white"
 	},
@@ -1084,6 +2043,14 @@
 		"images": [
 			"Long-sleeve-draped-dress-light-blue.jpg",
 			"Long-sleeve-draped-dress-black.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -1154,6 +2121,32 @@
 			"Shirtdress Baby Blue/White"
 		],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 1,
+				"title": "Material",
+				"value": "Cupro/Viscose/Virgin Wool"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 2,
+				"title": "Line",
+				"value": "Rtw Precol"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 3,
+				"title": "Made in",
+				"value": "Italy"
+			}
+		],
 		"title": "Long Sleeve Draped Dress",
 		"urlTitle": "long-sleeve-draped-dress"
 	},
@@ -1168,6 +2161,14 @@
 		"description": "",
 		"images": [
 			"Shirtdress-baby-blue-white.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -1212,6 +2213,40 @@
 			"Long Sleeve Draped Dress"
 		],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-color",
+				"priority": 1,
+				"title": "Color",
+				"value": "Blue/White"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 2,
+				"title": "Material",
+				"value": "Cotton"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 3,
+				"title": "Line",
+				"value": "Rtw Precol"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 4,
+				"title": "Made in",
+				"value": "France"
+			}
+		],
 		"title": "Shirtdress Baby Blue/White",
 		"urlTitle": "shirtdress-baby-blue-white"
 	},
@@ -1226,6 +2261,14 @@
 		"description": "",
 		"images": [
 			"Fisherman-jeans-blue.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -1275,6 +2318,40 @@
 			"Fisherman Stonewashed Indigo"
 		],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-color",
+				"priority": 1,
+				"title": "Color",
+				"value": "Blue"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 2,
+				"title": "Material",
+				"value": "Cotton"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 3,
+				"title": "Line",
+				"value": "Rtw Precol"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 4,
+				"title": "Made in",
+				"value": "Italy"
+			}
+		],
 		"title": "Fisherman Jeans Blue",
 		"urlTitle": "fisherman-jeans-blue"
 	},
@@ -1289,6 +2366,14 @@
 		"description": "",
 		"images": [
 			"Fisherman-stonewashed-indigo.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -1343,6 +2428,40 @@
 			"Fisherman Jeans Blue"
 		],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-color",
+				"priority": 1,
+				"title": "Color",
+				"value": "Indigo"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 2,
+				"title": "Material",
+				"value": "Cotton"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 3,
+				"title": "Line",
+				"value": "Rtw Precol"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 4,
+				"title": "Made in",
+				"value": "Italy"
+			}
+		],
 		"title": "Fisherman Stonewashed Indigo",
 		"urlTitle": "fisherman-stonewashed-indigo"
 	},
@@ -1357,6 +2476,14 @@
 		"description": "Loewe T-shirt in white cotton w/ lollipop print.",
 		"images": [
 			"T-shirt-lollipops-white.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -1403,6 +2530,40 @@
 			"T-Shirt Fire Of Youth Poster"
 		],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-color",
+				"priority": 1,
+				"title": "Color",
+				"value": "White"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 2,
+				"title": "Material",
+				"value": "Cotton/Elastan"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 3,
+				"title": "Line",
+				"value": "Rtw Precol"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 4,
+				"title": "Made in",
+				"value": "Portugal"
+			}
+		],
 		"title": "T-Shirt Lollipops White",
 		"urlTitle": "t-shirt-lollipops-white"
 	},
@@ -1418,6 +2579,14 @@
 		"images": [
 			"T-shirt-fire-of-youth-white.jpg"
 		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
+		],
 		"options": [
 			{
 				"ddmFormFieldTypeName": "select",
@@ -1463,6 +2632,40 @@
 			"T-Shirt Fire Of Youth Poster"
 		],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-color",
+				"priority": 1,
+				"title": "Color",
+				"value": "White"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 2,
+				"title": "Material",
+				"value": "Cotton"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 3,
+				"title": "Line",
+				"value": "Men S Presentation"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 4,
+				"title": "Made in",
+				"value": "Portugal"
+			}
+		],
 		"title": "T-Shirt Fire Of Youth White",
 		"urlTitle": "t-shirt-fire-of-youth-white"
 	},
@@ -1478,6 +2681,14 @@
 		"images": [
 			"T-shirt-loewe-dog-washed-black.jpg"
 		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
+		],
 		"options": [
 			{
 				"ddmFormFieldTypeName": "select",
@@ -1524,6 +2735,40 @@
 			"T-Shirt Fire Of Youth Poster"
 		],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-color",
+				"priority": 1,
+				"title": "Color",
+				"value": "Washed Black"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 2,
+				"title": "Material",
+				"value": "Cotton"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 3,
+				"title": "Line",
+				"value": "Men S Presentation"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 4,
+				"title": "Made in",
+				"value": "Portugal"
+			}
+		],
 		"title": "T-Shirt Loewe Dog Washed Black",
 		"urlTitle": "t-shirt-loewe-dog-washed-black"
 	},
@@ -1538,6 +2783,14 @@
 		"description": "T-shirt in cotton w/ Loewe tartan patch.",
 		"images": [
 			"T-shirt-loewe-tartan-patch-black-red.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -1584,6 +2837,40 @@
 			"T-Shirt Fire Of Youth Poster"
 		],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-color",
+				"priority": 1,
+				"title": "Color",
+				"value": "Black/Red"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 2,
+				"title": "Material",
+				"value": "Cotton/Wool/Polyamide"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 3,
+				"title": "Line",
+				"value": "Men S Presentation"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 4,
+				"title": "Made in",
+				"value": "Portugal"
+			}
+		],
 		"title": "T-Shirt Loewe Tartan Patch Black/Red",
 		"urlTitle": "t-shirt-loewe-tartan-patch-black-red"
 	},
@@ -1599,6 +2886,14 @@
 		"images": [
 			"T-shirt-fire-of-youth-poster-white.jpg",
 			"T-shirt-fire-of-youth-poster-black.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -1666,6 +2961,32 @@
 			"T-Shirt Fire Of Youth White"
 		],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 1,
+				"title": "Material",
+				"value": "Cotton"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 2,
+				"title": "Line",
+				"value": "Men S Presentation"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 3,
+				"title": "Made in",
+				"value": "Portugal"
+			}
+		],
 		"title": "T-Shirt Fire Of Youth Poster",
 		"urlTitle": "t-shirt-fire-of-youth-poster"
 	},
@@ -1680,6 +3001,14 @@
 		"description": "Oversize asymetric plastron shirt in white cotton poplin with broken collar & trompe l'oeil slit pockets.",
 		"images": [
 			"Asymetric-shirt-white.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -1735,6 +3064,40 @@
 			"Anagram Silk Asym Shirt Multicolour"
 		],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-color",
+				"priority": 1,
+				"title": "Color",
+				"value": "White"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 2,
+				"title": "Material",
+				"value": "Cotton"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 3,
+				"title": "Line",
+				"value": "Rtw Precol"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 4,
+				"title": "Made in",
+				"value": "Italy"
+			}
+		],
 		"title": "Asymetric Shirt White",
 		"urlTitle": "asymetric-shirt-white"
 	},
@@ -1749,6 +3112,14 @@
 		"description": "Asymmetric oversize shirt in printed Anagram silk.",
 		"images": [
 			"Anagram-silk-asym-shirt-multicolour.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -1804,6 +3175,40 @@
 			"Asymetric Shirt White"
 		],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-color",
+				"priority": 1,
+				"title": "Color",
+				"value": "Multicolour"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 2,
+				"title": "Material",
+				"value": "Silk"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 3,
+				"title": "Line",
+				"value": "Rtw Precol"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 4,
+				"title": "Made in",
+				"value": "Italy"
+			}
+		],
 		"title": "Anagram Silk Asym Shirt Multicolour",
 		"urlTitle": "anagram-silk-asym-shirt-multicolour"
 	},
@@ -1818,6 +3223,14 @@
 		"description": "Asymmetric oversize shirt in blue cotton popeline w/ contrasting white bib.",
 		"images": [
 			"Asymetric-shirt-contrast-bib-baby-blue-white.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -1873,6 +3286,40 @@
 			"Anagram Silk Asym Shirt Multicolour"
 		],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-color",
+				"priority": 1,
+				"title": "Color",
+				"value": "Blue/White"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 2,
+				"title": "Material",
+				"value": "Cotton"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 3,
+				"title": "Line",
+				"value": "Rtw Precol"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 4,
+				"title": "Made in",
+				"value": "Italy"
+			}
+		],
 		"title": "Asymetric Shirt Contrast Bib Baby Blue/White",
 		"urlTitle": "asymetric-shirt-contrast-bib-baby-blue-white"
 	},
@@ -1887,6 +3334,14 @@
 		"description": "Cardigan in navy wool with Loewe jaquard grosgrain detail in slit pockets & inside collar.",
 		"images": [
 			"Loewe-detail-cardigan-petroleum.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -1927,6 +3382,40 @@
 			"Anagram Silk Cardigan Blue"
 		],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-color",
+				"priority": 1,
+				"title": "Color",
+				"value": "Petroleum"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 2,
+				"title": "Material",
+				"value": "Wool"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 3,
+				"title": "Line",
+				"value": "Rtw Precol"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 4,
+				"title": "Made in",
+				"value": "Italy"
+			}
+		],
 		"title": "Loewe Detail Cardigan Petroleum",
 		"urlTitle": "loewe-detail-cardigan-petroleum"
 	},
@@ -1941,6 +3430,14 @@
 		"description": "Cardigan in navy wool w/ front panels in Anagram print silk.",
 		"images": [
 			"Anagram-silk-cardigan-blue.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -1986,6 +3483,40 @@
 			"Loewe Detail Cardigan Petroleum"
 		],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-color",
+				"priority": 1,
+				"title": "Color",
+				"value": "Blue"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 2,
+				"title": "Material",
+				"value": "Wool/Silk"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 3,
+				"title": "Line",
+				"value": "Rtw Precol"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 4,
+				"title": "Made in",
+				"value": "Italy"
+			}
+		],
 		"title": "Anagram Silk Cardigan Blue",
 		"urlTitle": "anagram-silk-cardigan-blue"
 	},
@@ -2000,6 +3531,14 @@
 		"description": "Short cardigan in black wool w/ lollipop lurex jacquard motif.",
 		"images": [
 			"Cardigan-lollipops-black-multicolor.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -2045,6 +3584,40 @@
 			"Anagram Silk Cardigan Blue"
 		],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-color",
+				"priority": 1,
+				"title": "Color",
+				"value": "Black/Multicolor"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 2,
+				"title": "Material",
+				"value": "Wool"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 3,
+				"title": "Line",
+				"value": "Rtw Precol"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 4,
+				"title": "Made in",
+				"value": "Italy"
+			}
+		],
 		"title": "Cardigan Lollipops Black/Multicolor",
 		"urlTitle": "cardigan-lollipops-black-multicolor"
 	},
@@ -2060,6 +3633,14 @@
 		"images": [
 			"Double-face-coat-camel.jpg",
 			"Double-face-coat-grey.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -2126,6 +3707,40 @@
 			"Satin Jacket Black"
 		],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-color",
+				"priority": 1,
+				"title": "Color",
+				"value": "Black/Multicolor"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 2,
+				"title": "Material",
+				"value": "Virgin Wool"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 3,
+				"title": "Line",
+				"value": "Rtw Precol"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 4,
+				"title": "Made in",
+				"value": "Italy"
+			}
+		],
 		"title": "Double Face Coat",
 		"urlTitle": "double-face-coat"
 	},
@@ -2140,6 +3755,14 @@
 		"description": "Collarless jacket in black technical satin with inside button closure.",
 		"images": [
 			"Satin-jacket-black.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -2195,6 +3818,40 @@
 			"Double Face Coat"
 		],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-color",
+				"priority": 1,
+				"title": "Color",
+				"value": "Black"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 2,
+				"title": "Material",
+				"value": "Triacetate/Polyester"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 3,
+				"title": "Line",
+				"value": "Rtw Precol"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 4,
+				"title": "Made in",
+				"value": "Italy"
+			}
+		],
 		"title": "Satin Jacket Black",
 		"urlTitle": "satin-jacket-black"
 	},
@@ -2209,6 +3866,14 @@
 		"description": "Oversize trenchcoat in crinkle technical wool & silk.",
 		"images": [
 			"Oversize-trenchcoat-blue.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -2244,6 +3909,40 @@
 			"Satin Jacket Black"
 		],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-color",
+				"priority": 1,
+				"title": "Color",
+				"value": "Blue"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 2,
+				"title": "Material",
+				"value": "Polyamide/Wool/Silk"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 3,
+				"title": "Line",
+				"value": "Rtw Precol"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 4,
+				"title": "Made in",
+				"value": "Italy"
+			}
+		],
 		"title": "Oversize Trenchcoat Blue",
 		"urlTitle": "oversize-trenchcoat-blue"
 	},
@@ -2258,6 +3957,14 @@
 		"description": "Culotte trousers in crepe polyester & technical satin w/ pleated side vents.",
 		"images": [
 			"Culotte-trousers-black.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -2313,6 +4020,40 @@
 			"Cargo Trousers Black"
 		],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-color",
+				"priority": 1,
+				"title": "Color",
+				"value": "Black"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 2,
+				"title": "Material",
+				"value": "Linen"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 3,
+				"title": "Line",
+				"value": "Ws Fashion Show"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 4,
+				"title": "Made in",
+				"value": "Italy"
+			}
+		],
 		"title": "Culotte Trousers Black",
 		"urlTitle": "culotte-trousers-black"
 	},
@@ -2327,6 +4068,14 @@
 		"description": "Cropped cargo trousers in black technical satin w/ white contrast stitching.",
 		"images": [
 			"Cargo-trousers-black.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -2377,6 +4126,40 @@
 			"Culotte Trousers Black"
 		],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-color",
+				"priority": 1,
+				"title": "Color",
+				"value": "Black"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 2,
+				"title": "Material",
+				"value": "Nappa"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 3,
+				"title": "Line",
+				"value": "Men S Presentation"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 4,
+				"title": "Made in",
+				"value": "Spain"
+			}
+		],
 		"title": "Cargo Trousers Black",
 		"urlTitle": "cargo-trousers-black"
 	},
@@ -2391,6 +4174,14 @@
 		"description": "Leggings in stretch napa lambskin leather.",
 		"images": [
 			"Leggings-black.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -2441,6 +4232,40 @@
 			"Cargo Trousers Black"
 		],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-color",
+				"priority": 1,
+				"title": "Color",
+				"value": "Black"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 2,
+				"title": "Material",
+				"value": "Nappa"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 3,
+				"title": "Line",
+				"value": "Rtw Precol"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 4,
+				"title": "Made in",
+				"value": "Spain"
+			}
+		],
 		"title": "Leggings Black",
 		"urlTitle": "leggings-black"
 	},
@@ -2458,6 +4283,14 @@
 			"Espadrille-nappa-green.jpg",
 			"Espadrille-nappa-orange.jpg",
 			"Espadrille-nappa-pink.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -2544,6 +4377,32 @@
 			"Zip Boot Square Black"
 		],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 1,
+				"title": "Material",
+				"value": "Nappa"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 2,
+				"title": "Line",
+				"value": "Others"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 3,
+				"title": "Made in",
+				"value": "Spain"
+			}
+		],
 		"title": "Espadrille Nappa",
 		"urlTitle": "espadrille-nappa"
 	},
@@ -2558,6 +4417,14 @@
 		"description": "85mm heel zip boot in calfskin leather.",
 		"images": [
 			"Zip-boot-square-black.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -2613,6 +4480,40 @@
 			"Espadrille Nappa"
 		],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-color",
+				"priority": 1,
+				"title": "Color",
+				"value": "Black"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 2,
+				"title": "Material",
+				"value": "Calf"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 3,
+				"title": "Line",
+				"value": "Others"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 4,
+				"title": "Made in",
+				"value": "Italy"
+			}
+		],
 		"title": "Zip Boot Square Black",
 		"urlTitle": "zip-boot-square-black"
 	},
@@ -2627,6 +4528,14 @@
 		"description": "90mm anklestrap sandal w/ Swarovski rhinestones.",
 		"images": [
 			"Anklestrap-knot-rhinestones-black-silver.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -2682,6 +4591,40 @@
 			"Zip Boot Square Black"
 		],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-color",
+				"priority": 1,
+				"title": "Color",
+				"value": "Black/Silver"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 2,
+				"title": "Material",
+				"value": "Satin/Calf"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 3,
+				"title": "Line",
+				"value": "Others"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 4,
+				"title": "Made in",
+				"value": "Italy"
+			}
+		],
 		"title": "Anklestrap Knot Rhinestones Black/Silver",
 		"urlTitle": "anklestrap-knot-rhinestones-black-silver"
 	},
@@ -2699,6 +4642,14 @@
 			"Small-zip-wallet-sand.jpg",
 			"Small-zip-wallet-orange.jpg",
 			"Small-zip-wallet-blue.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -2739,6 +4690,32 @@
 			"Continental Wallet"
 		],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 1,
+				"title": "Material",
+				"value": "Engraved Calf"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 2,
+				"title": "Line",
+				"value": "Repeat"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 3,
+				"title": "Made in",
+				"value": "Spain"
+			}
+		],
 		"title": "Small Zip Wallet",
 		"urlTitle": "small-zip-wallet"
 	},
@@ -2756,6 +4733,14 @@
 			"Continental-wallet-black.jpg",
 			"Continental-wallet-red.jpg",
 			"Continental-wallet-blue.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -2796,6 +4781,48 @@
 			"Small Zip Wallet"
 		],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 1,
+				"title": "Material",
+				"value": "Nappa"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-metallic-color",
+				"priority": 2,
+				"title": "Metallic color",
+				"value": "Polished 1N Gold"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-measures",
+				"priority": 3,
+				"title": "Measures",
+				"value": "19x10.5x3.5 cm"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 4,
+				"title": "Line",
+				"value": "Nappa"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 5,
+				"title": "Made in",
+				"value": "Spain"
+			}
+		],
 		"title": "Continental Wallet",
 		"urlTitle": "continental-wallet"
 	},
@@ -2812,6 +4839,14 @@
 			"Zip-around-wallet-blue.jpg",
 			"Zip-around-wallet-black.jpg",
 			"Zip-around-wallet-orange.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -2847,6 +4882,48 @@
 			"Continental Wallet"
 		],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 1,
+				"title": "Material",
+				"value": "Engraved Calf"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-metallic-color",
+				"priority": 2,
+				"title": "Metallic color",
+				"value": "Polished Palladium"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-measures",
+				"priority": 3,
+				"title": "Measures",
+				"value": "19x10x3 cm"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 4,
+				"title": "Line",
+				"value": "Repeat"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 5,
+				"title": "Made in",
+				"value": "Spain"
+			}
+		],
 		"title": "Zip Around Wallet",
 		"urlTitle": "zip-around-wallet"
 	},
@@ -2862,6 +4939,14 @@
 		"images": [
 			"Lollipop-earrings-blue.jpg",
 			"Lollipop-earrings-red.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -2892,6 +4977,40 @@
 			"Wire Bracelet"
 		],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 1,
+				"title": "Material",
+				"value": "Brass/Resin"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-measures",
+				"priority": 2,
+				"title": "Measures",
+				"value": "9x2.5x2 cm"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 3,
+				"title": "Line",
+				"value": "Others"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 4,
+				"title": "Made in",
+				"value": "Spain"
+			}
+		],
 		"title": "Lollipop Earrings",
 		"urlTitle": "lollipop-earrings"
 	},
@@ -2906,6 +5025,14 @@
 		"description": "Simple and elegant but with a slight modern touch which makes it really wearable. wire bracelet has been meticulously handcrafted from a combination of gold and palladium-pleated brass in a contemporary circular shape.",
 		"images": [
 			"Wire-bracelet-gold-palladium.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -2931,6 +5058,32 @@
 			"Lollipop Earrings"
 		],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 1,
+				"title": "Material",
+				"value": "Brass"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 2,
+				"title": "Line",
+				"value": "Others"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 3,
+				"title": "Made in",
+				"value": "Spain"
+			}
+		],
 		"title": "Wire Bracelet",
 		"urlTitle": "wire-bracelet"
 	},
@@ -2946,6 +5099,14 @@
 		"images": [
 			"L-chain-necklace-gold.jpg",
 			"L-chain-necklace-palladium.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -2976,6 +5137,32 @@
 			"Wire Bracelet"
 		],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 1,
+				"title": "Material",
+				"value": "Brass"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 2,
+				"title": "Line",
+				"value": "Others"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 3,
+				"title": "Made in",
+				"value": "Spain"
+			}
+		],
 		"title": "L Chain Necklace",
 		"urlTitle": "l-chain-necklace"
 	},
@@ -2990,6 +5177,14 @@
 		"description": "Oversize orbit round-frame gold-plated metal sunglasses with mirror lenses. With a perfect mix of boldness and technicity, this frame significantly manage to capture the essence of the Fashion Show. Somewhere in between classic and retro-futurism.",
 		"images": [
 			"Alejandra-sunglasses-gold.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -3015,6 +5210,32 @@
 			"Vedra Sunglasses"
 		],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 1,
+				"title": "Material",
+				"value": "Acetate"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 2,
+				"title": "Line",
+				"value": "Others"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 3,
+				"title": "Made in",
+				"value": "Italy"
+			}
+		],
 		"title": "Alejandra Sunglasses",
 		"urlTitle": "alejandra-sunglasses"
 	},
@@ -3029,6 +5250,14 @@
 		"description": "Oversized, retro-inspired sunglasses balance a bold attitude with a refined silhouette, contrasted borders and smoky lenses.",
 		"images": [
 			"Vedra-sunglasses-black.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -3054,6 +5283,32 @@
 			"Alejandra Sunglasses"
 		],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 1,
+				"title": "Material",
+				"value": "Acetate"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 2,
+				"title": "Line",
+				"value": "Others"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 3,
+				"title": "Made in",
+				"value": "Italy"
+			}
+		],
 		"title": "Vedra Sunglasses",
 		"urlTitle": "vedra-sunglasses"
 	},
@@ -3071,6 +5326,14 @@
 			"Filipa-sunglasses-havana.jpg",
 			"Filipa-sunglasses-blue.jpg",
 			"Filipa-sunglasses-pearl.jpg"
+		],
+		"optionCategories": [
+			{
+				"description": "",
+				"key": "details",
+				"priority": 1,
+				"title": "Details"
+			}
 		],
 		"options": [
 			{
@@ -3111,6 +5374,40 @@
 			"Vedra Sunglasses"
 		],
 		"shortDescription": "",
+		"specificationOptions": [
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-material",
+				"priority": 1,
+				"title": "Material",
+				"value": "Acetate"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-measures",
+				"priority": 2,
+				"title": "Measures",
+				"value": "14.5x6.2x13.5 cm"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": true,
+				"key": "details-line",
+				"priority": 3,
+				"title": "Line",
+				"value": "Men S Presentation"
+			},
+			{
+				"categoryKey": "details",
+				"facetable": false,
+				"key": "details-made-in",
+				"priority": 4,
+				"title": "Made in",
+				"value": "Italy"
+			}
+		],
 		"title": "Filipa Sunglasses",
 		"urlTitle": "filipa-sunglasses"
 	}

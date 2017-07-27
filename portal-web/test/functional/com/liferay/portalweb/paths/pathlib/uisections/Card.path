@@ -39,11 +39,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SPECIFIC_LARGE_TEXT_LINK</td>
-	<td>//div[contains(@class,'vertical-card') and contains(.,'${key_cardText}')]//span[contains(@class,'lfr-card-title-text')]//span</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SPECIFIC_TEXT</td>
 	<td>//div[contains(@class,'vertical-card') and contains(.,'${key_cardText}')]//span[contains(@class,'lfr-card-subtitle-text')]</td>
 	<td></td>

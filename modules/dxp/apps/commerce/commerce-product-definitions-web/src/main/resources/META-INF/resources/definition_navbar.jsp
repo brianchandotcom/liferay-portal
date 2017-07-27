@@ -116,16 +116,43 @@ if (cpDefinition != null) {
 				selected='<%= toolbarItem.equals("view-product-definition-attachments") %>'
 			/>
 
-			<liferay-portlet:renderURL varImpl="viewProductDefinitionLinksURL">
+			<liferay-portlet:renderURL varImpl="viewProductDefinitionRelatedProductsURL">
 				<portlet:param name="mvcRenderCommandName" value="viewCPDefinitionLinks" />
 				<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />
-				<portlet:param name="toolbarItem" value="view-product-definition-links" />
+				<portlet:param name="toolbarItem" value="view-product-definition-related-products" />
+				<portlet:param name="type" value="<%= String.valueOf(CPConstants.DEFINITION_LINK_TYPE_RELATED) %>" />
 			</liferay-portlet:renderURL>
 
 			<aui:nav-item
-				href="<%= viewProductDefinitionLinksURL.toString() %>"
+				href="<%= viewProductDefinitionRelatedProductsURL.toString() %>"
 				label='<%= LanguageUtil.get(request, "related-products") %>'
-				selected='<%= toolbarItem.equals("view-product-definition-links") %>'
+				selected='<%= toolbarItem.equals("view-product-definition-related-products") %>'
+			/>
+
+			<liferay-portlet:renderURL varImpl="viewProductDefinitionUpSellProductsURL">
+				<portlet:param name="mvcRenderCommandName" value="viewCPDefinitionLinks" />
+				<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />
+				<portlet:param name="toolbarItem" value="view-product-definition-up-sell-products" />
+				<portlet:param name="type" value="<%= String.valueOf(CPConstants.DEFINITION_LINK_TYPE_UP_SELL) %>" />
+			</liferay-portlet:renderURL>
+
+			<aui:nav-item
+				href="<%= viewProductDefinitionUpSellProductsURL.toString() %>"
+				label='<%= LanguageUtil.get(request, "up-sell-products") %>'
+				selected='<%= toolbarItem.equals("view-product-definition-up-sell-products") %>'
+			/>
+
+			<liferay-portlet:renderURL varImpl="viewProductDefinitionCrossSellProductsURL">
+				<portlet:param name="mvcRenderCommandName" value="viewCPDefinitionLinks" />
+				<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />
+				<portlet:param name="toolbarItem" value="view-product-definition-cross-sell-products" />
+				<portlet:param name="type" value="<%= String.valueOf(CPConstants.DEFINITION_LINK_TYPE_CROSS_SELL) %>" />
+			</liferay-portlet:renderURL>
+
+			<aui:nav-item
+				href="<%= viewProductDefinitionCrossSellProductsURL.toString() %>"
+				label='<%= LanguageUtil.get(request, "cross-sell-products") %>'
+				selected='<%= toolbarItem.equals("view-product-definition-cross-sell-products") %>'
 			/>
 		</c:if>
 	</aui:nav>

@@ -45,13 +45,14 @@ public class PropertiesLanguageKeysCheck extends BaseFileCheck {
 				}
 
 				String key = array[0];
-				String value = array[1];
 
 				if (ArrayUtil.contains(_LEGACY_LANGUAGE_KEYS, key)) {
 					continue;
 				}
 
-				if (value.matches(_REGEX_HTML_ANCHOR_TAG)) {
+				String value = array[1];
+
+				if (value.matches("(?s).*<a\\b[^>]*>.*?</a>.*")) {
 					addMessage(
 						fileName, "Remove HTML markup for '" + key + "'",
 						"language_keys.markdown",
@@ -78,8 +79,5 @@ public class PropertiesLanguageKeysCheck extends BaseFileCheck {
 		"you-can-also-forcibly-disable-remote-staging",
 		"you-have-to-be-signed-in-to-register-for-this-meetup"
 	};
-
-	private static final String _REGEX_HTML_ANCHOR_TAG =
-		"(?s).*<a\\b[^>]*>.*?</a>.*";
 
 }

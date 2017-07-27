@@ -303,11 +303,11 @@
 
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
-	<entity local-service="true" name="CPDefinitionSpecificationOptionValue" remote-service="true" uuid="true">
+	<entity local-service="true" name="CPDefinitionSpecificationOptionValue" remote-service="true" table="CPDSpecificationOptionValue" uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="CPDefinitionSpecificationOptionValueId" primary="true" type="long" />
+		<column db-name="CPDSpecificationOptionValueId" name="CPDefinitionSpecificationOptionValueId" primary="true" type="long" />
 
 		<!-- Group instance -->
 

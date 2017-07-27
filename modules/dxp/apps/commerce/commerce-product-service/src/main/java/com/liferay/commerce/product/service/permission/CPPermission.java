@@ -46,11 +46,11 @@ public class CPPermission extends BaseResourcePermissionChecker {
 	}
 
 	public static boolean contains(
-		PermissionChecker permissionChecker, long classPK, String actionId) {
+		PermissionChecker permissionChecker, long groupId, String actionId) {
 
 		return contains(
 			permissionChecker, RESOURCE_NAME, CPPortletKeys.CP_DEFINITIONS,
-			classPK, actionId);
+			groupId, actionId);
 	}
 
 	@Override

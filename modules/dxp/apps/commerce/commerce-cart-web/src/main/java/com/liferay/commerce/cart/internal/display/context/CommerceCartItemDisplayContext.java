@@ -12,19 +12,16 @@
  * details.
  */
 
-package com.liferay.commerce.cart.display.context;
+package com.liferay.commerce.cart.internal.display.context;
 
-import com.liferay.commerce.cart.constants.CommerceCartConstants;
 import com.liferay.commerce.cart.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.cart.internal.util.CommerceCartPortletUtil;
-import com.liferay.commerce.cart.model.CommerceCart;
-import com.liferay.commerce.cart.service.CommerceCartService;
+import com.liferay.commerce.cart.model.CommerceCartItem;
+import com.liferay.commerce.cart.service.CommerceCartItemService;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
@@ -35,63 +32,53 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommerceCartDisplayContext
-	extends BaseCommerceCartDisplayContext<CommerceCart> {
+public class CommerceCartItemDisplayContext
+	extends BaseCommerceCartDisplayContext<CommerceCartItem> {
 
-	public CommerceCartDisplayContext(
+	public CommerceCartItemDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
-			CommerceCartService commerceCartService)
+			CommerceCartItemService commerceCartItemService)
 		throws PortalException {
 
 		super(
 			actionHelper, httpServletRequest,
-			CommerceCart.class.getSimpleName());
+			CommerceCartItem.class.getSimpleName());
 
-		setDefaultOrderByCol("name");
-
-		_commerceCartService = commerceCartService;
+		_commerceCartItemService = commerceCartItemService;
 	}
 
 	@Override
 	public PortletURL getPortletURL() throws PortalException {
 		PortletURL portletURL = super.getPortletURL();
 
+		portletURL.setParameter(
+			"mvcRenderCommandName", "viewCommerceCartItems");
+		portletURL.setParameter(
+			"commerceCartId", String.valueOf(getCommerceCartId()));
+
 		String toolbarItem = ParamUtil.getString(
-			httpServletRequest, "toolbarItem", "view-all-carts");
+			httpServletRequest, "toolbarItem", "view-all-cart-items");
 
 		portletURL.setParameter("toolbarItem", toolbarItem);
-
-		portletURL.setParameter("type", String.valueOf(getCommerceCartType()));
 
 		return portletURL;
 	}
 
 	@Override
-	public SearchContainer<CommerceCart> getSearchContainer()
+	public SearchContainer<CommerceCartItem> getSearchContainer()
 		throws PortalException {
 
 		if (searchContainer != null) {
 			return searchContainer;
 		}
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		searchContainer = new SearchContainer<>(
 			liferayPortletRequest, getPortletURL(), null, null);
 
-		int type = getCommerceCartType();
+		searchContainer.setEmptyResultsMessage("no-cart-items-were-found");
 
-		if (type == CommerceCartConstants.COMMERCE_CART_TYPE_CART) {
-			searchContainer.setEmptyResultsMessage("no-carts-were-found");
-		}
-		else if (type == CommerceCartConstants.COMMERCE_CART_TYPE_WISH_LIST) {
-			searchContainer.setEmptyResultsMessage("no-wish-lists-were-found");
-		}
-
-		OrderByComparator<CommerceCart> orderByComparator =
-			CommerceCartPortletUtil.getCommerceCartOrderByComparator(
+		OrderByComparator<CommerceCartItem> orderByComparator =
+			CommerceCartPortletUtil.getCommerceCartItemOrderByComparator(
 				getOrderByCol(), getOrderByType());
 
 		searchContainer.setOrderByCol(getOrderByCol());
@@ -99,26 +86,21 @@ public class CommerceCartDisplayContext
 		searchContainer.setOrderByType(getOrderByType());
 		searchContainer.setRowChecker(getRowChecker());
 
-		int total = _commerceCartService.getCommerceCartsCount(
-			themeDisplay.getScopeGroupId(), type);
+		int total = _commerceCartItemService.getCommerceCartItemsCount(
+			getCommerceCartId());
 
 		searchContainer.setTotal(total);
 
-		List<CommerceCart> results = _commerceCartService.getCommerceCarts(
-			themeDisplay.getScopeGroupId(), type, searchContainer.getStart(),
-			searchContainer.getEnd(), orderByComparator);
+		List<CommerceCartItem> results =
+			_commerceCartItemService.getCommerceCartItems(
+				getCommerceCartId(), searchContainer.getStart(),
+				searchContainer.getEnd(), orderByComparator);
 
 		searchContainer.setResults(results);
 
 		return searchContainer;
 	}
 
-	protected int getCommerceCartType() {
-		return ParamUtil.getInteger(
-			httpServletRequest, "type",
-			CommerceCartConstants.COMMERCE_CART_TYPE_CART);
-	}
-
-	private final CommerceCartService _commerceCartService;
+	private final CommerceCartItemService _commerceCartItemService;
 
 }

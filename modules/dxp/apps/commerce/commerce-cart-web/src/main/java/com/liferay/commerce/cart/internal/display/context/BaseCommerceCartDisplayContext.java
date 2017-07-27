@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.cart.display.context;
+package com.liferay.commerce.cart.internal.display.context;
 
 import com.liferay.commerce.cart.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.cart.model.CommerceCart;

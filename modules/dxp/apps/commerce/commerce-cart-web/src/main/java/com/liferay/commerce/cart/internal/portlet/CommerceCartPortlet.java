@@ -15,7 +15,7 @@
 package com.liferay.commerce.cart.internal.portlet;
 
 import com.liferay.commerce.cart.constants.CommerceCartPortletKeys;
-import com.liferay.commerce.cart.display.context.CommerceCartDisplayContext;
+import com.liferay.commerce.cart.internal.display.context.CommerceCartDisplayContext;
 import com.liferay.commerce.cart.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.cart.service.CommerceCartService;
 import com.liferay.portal.kernel.exception.PortalException;

@@ -35,11 +35,13 @@ import org.osgi.service.component.annotations.Component;
 public class UserInitialsGeneratorImpl implements UserInitialsGenerator {
 
 	@Override
-	public String getInitials(User user) {
-		String[] fields = _getNameIntialsFields(user.getLocale());
+	public String getInitials(
+		Locale locale, String firstName, String middleName, String lastName) {
+
+		String[] fields = _getNameIntialsFields(locale);
 
 		Map<String, String> nameInitialsMap = _getNameIntialsMap(
-			user.getFirstName(), user.getMiddleName(), user.getLastName());
+			firstName, middleName, lastName);
 
 		String initials = StringPool.BLANK;
 
@@ -52,6 +54,13 @@ public class UserInitialsGeneratorImpl implements UserInitialsGenerator {
 		}
 
 		return StringUtil.toUpperCase(initials);
+	}
+
+	@Override
+	public String getInitials(User user) {
+		return getInitials(
+			user.getLocale(), user.getFirstName(), user.getMiddleName(),
+			user.getLastName());
 	}
 
 	private String[] _getNameIntialsFields(Locale locale) {

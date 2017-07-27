@@ -2665,7 +2665,7 @@
 		</execute>
 	</command>
 
-	<command name="EditCatalogEntry" priority="5">
+	<command ignore="true" name="EditCatalogEntry" priority="5">
 		<execute macro="CommerceCatalog#addEntry">
 			<var name="baseSku" value="Product 1 SKU" />
 			<var name="plusMenu" value="Simple" />

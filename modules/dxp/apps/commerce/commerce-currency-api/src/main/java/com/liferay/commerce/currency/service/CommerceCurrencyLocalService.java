@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -40,6 +41,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the local service interface for CommerceCurrency. Methods of this
@@ -73,6 +76,13 @@ public interface CommerceCurrencyLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceCurrency addCommerceCurrency(
 		CommerceCurrency commerceCurrency);
+
+	public CommerceCurrency addCommerceCurrency(
+		Map<Locale, java.lang.String> codeMap,
+		Map<Locale, java.lang.String> nameMap, double rate,
+		java.lang.String roundingType, boolean primary, double priority,
+		boolean active, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Creates a new commerce currency with the primary key. Does not add the commerce currency to the database.
@@ -117,6 +127,9 @@ public interface CommerceCurrencyLocalService extends BaseLocalService,
 	public CommerceCurrency fetchCommerceCurrencyByUuidAndGroupId(
 		java.lang.String uuid, long groupId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceCurrency fetchPrimaryCommerceCurrency(long groupId);
+
 	/**
 	* Returns the commerce currency with the primary key.
 	*
@@ -150,6 +163,13 @@ public interface CommerceCurrencyLocalService extends BaseLocalService,
 	public CommerceCurrency updateCommerceCurrency(
 		CommerceCurrency commerceCurrency);
 
+	public CommerceCurrency updateCommerceCurrency(long commerceCurrencyId,
+		Map<Locale, java.lang.String> codeMap,
+		Map<Locale, java.lang.String> nameMap, double rate,
+		java.lang.String roundingType, boolean primary, double priority,
+		boolean active, ServiceContext serviceContext)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -181,6 +201,12 @@ public interface CommerceCurrencyLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceCurrenciesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceCurrenciesCount(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceCurrenciesCount(long groupId, boolean active);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -242,6 +268,16 @@ public interface CommerceCurrencyLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceCurrency> getCommerceCurrencies(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceCurrency> getCommerceCurrencies(long groupId,
+		boolean active, int start, int end,
+		OrderByComparator<CommerceCurrency> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceCurrency> getCommerceCurrencies(long groupId,
+		int start, int end,
+		OrderByComparator<CommerceCurrency> orderByComparator);
+
 	/**
 	* Returns all the commerce currencies matching the UUID and company.
 	*
@@ -285,4 +321,6 @@ public interface CommerceCurrencyLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	public void deleteCommerceCurrencies(long groupId);
 }

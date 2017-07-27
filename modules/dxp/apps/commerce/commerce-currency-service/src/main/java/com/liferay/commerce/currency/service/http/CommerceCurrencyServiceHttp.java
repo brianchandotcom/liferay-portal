@@ -16,12 +16,21 @@ package com.liferay.commerce.currency.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.currency.service.CommerceCurrencyServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.service.http.TunnelUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
+
 /**
  * Provides the HTTP utility for the
- * {@link com.liferay.commerce.currency.service.CommerceCurrencyServiceUtil} service utility. The
+ * {@link CommerceCurrencyServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
- * {@link com.liferay.portal.kernel.security.auth.HttpPrincipal} parameter.
+ * {@link HttpPrincipal} parameter.
  *
  * <p>
  * The benefits of using the HTTP utility is that it is fast and allows for
@@ -40,10 +49,322 @@ import aQute.bnd.annotation.ProviderType;
  *
  * @author Andrea Di Giorgi
  * @see CommerceCurrencyServiceSoap
- * @see com.liferay.portal.kernel.security.auth.HttpPrincipal
- * @see com.liferay.commerce.currency.service.CommerceCurrencyServiceUtil
+ * @see HttpPrincipal
+ * @see CommerceCurrencyServiceUtil
  * @generated
  */
 @ProviderType
 public class CommerceCurrencyServiceHttp {
+	public static com.liferay.commerce.currency.model.CommerceCurrency addCommerceCurrency(
+		HttpPrincipal httpPrincipal,
+		java.util.Map<java.util.Locale, java.lang.String> codeMap,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap, double rate,
+		java.lang.String roundingType, boolean primary, double priority,
+		boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceCurrencyServiceUtil.class,
+					"addCommerceCurrency", _addCommerceCurrencyParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, codeMap,
+					nameMap, rate, roundingType, primary, priority, active,
+					serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.currency.model.CommerceCurrency)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static void deleteCommerceCurrency(HttpPrincipal httpPrincipal,
+		long commerceCurrencyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceCurrencyServiceUtil.class,
+					"deleteCommerceCurrency",
+					_deleteCommerceCurrencyParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					commerceCurrencyId);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.commerce.currency.model.CommerceCurrency fetchPrimaryCommerceCurrency(
+		HttpPrincipal httpPrincipal, long groupId) {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceCurrencyServiceUtil.class,
+					"fetchPrimaryCommerceCurrency",
+					_fetchPrimaryCommerceCurrencyParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.currency.model.CommerceCurrency)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static java.util.List<com.liferay.commerce.currency.model.CommerceCurrency> getCommerceCurrencies(
+		HttpPrincipal httpPrincipal, long groupId, boolean active, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.currency.model.CommerceCurrency> orderByComparator) {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceCurrencyServiceUtil.class,
+					"getCommerceCurrencies",
+					_getCommerceCurrenciesParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					active, start, end, orderByComparator);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.commerce.currency.model.CommerceCurrency>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static java.util.List<com.liferay.commerce.currency.model.CommerceCurrency> getCommerceCurrencies(
+		HttpPrincipal httpPrincipal, long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.currency.model.CommerceCurrency> orderByComparator) {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceCurrencyServiceUtil.class,
+					"getCommerceCurrencies",
+					_getCommerceCurrenciesParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					start, end, orderByComparator);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.commerce.currency.model.CommerceCurrency>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static int getCommerceCurrenciesCount(HttpPrincipal httpPrincipal,
+		long groupId) {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceCurrencyServiceUtil.class,
+					"getCommerceCurrenciesCount",
+					_getCommerceCurrenciesCountParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static int getCommerceCurrenciesCount(HttpPrincipal httpPrincipal,
+		long groupId, boolean active) {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceCurrencyServiceUtil.class,
+					"getCommerceCurrenciesCount",
+					_getCommerceCurrenciesCountParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					active);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.commerce.currency.model.CommerceCurrency getCommerceCurrency(
+		HttpPrincipal httpPrincipal, long commerceCurrencyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceCurrencyServiceUtil.class,
+					"getCommerceCurrency", _getCommerceCurrencyParameterTypes7);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					commerceCurrencyId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.currency.model.CommerceCurrency)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.commerce.currency.model.CommerceCurrency updateCommerceCurrency(
+		HttpPrincipal httpPrincipal, long commerceCurrencyId,
+		java.util.Map<java.util.Locale, java.lang.String> codeMap,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap, double rate,
+		java.lang.String roundingType, boolean primary, double priority,
+		boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceCurrencyServiceUtil.class,
+					"updateCommerceCurrency",
+					_updateCommerceCurrencyParameterTypes8);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					commerceCurrencyId, codeMap, nameMap, rate, roundingType,
+					primary, priority, active, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.currency.model.CommerceCurrency)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(CommerceCurrencyServiceHttp.class);
+	private static final Class<?>[] _addCommerceCurrencyParameterTypes0 = new Class[] {
+			java.util.Map.class, java.util.Map.class, double.class,
+			java.lang.String.class, boolean.class, double.class, boolean.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[] _deleteCommerceCurrencyParameterTypes1 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _fetchPrimaryCommerceCurrencyParameterTypes2 =
+		new Class[] { long.class };
+	private static final Class<?>[] _getCommerceCurrenciesParameterTypes3 = new Class[] {
+			long.class, boolean.class, int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
+		};
+	private static final Class<?>[] _getCommerceCurrenciesParameterTypes4 = new Class[] {
+			long.class, int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
+		};
+	private static final Class<?>[] _getCommerceCurrenciesCountParameterTypes5 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _getCommerceCurrenciesCountParameterTypes6 = new Class[] {
+			long.class, boolean.class
+		};
+	private static final Class<?>[] _getCommerceCurrencyParameterTypes7 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _updateCommerceCurrencyParameterTypes8 = new Class[] {
+			long.class, java.util.Map.class, java.util.Map.class, double.class,
+			java.lang.String.class, boolean.class, double.class, boolean.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
 }

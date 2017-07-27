@@ -16,9 +16,20 @@ package com.liferay.commerce.currency.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.currency.service.CommerceCurrencyServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
+
+import java.rmi.RemoteException;
+
+import java.util.Locale;
+import java.util.Map;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.commerce.currency.service.CommerceCurrencyServiceUtil} service utility. The
+ * {@link CommerceCurrencyServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +64,171 @@ import aQute.bnd.annotation.ProviderType;
  * @author Andrea Di Giorgi
  * @see CommerceCurrencyServiceHttp
  * @see com.liferay.commerce.currency.model.CommerceCurrencySoap
- * @see com.liferay.commerce.currency.service.CommerceCurrencyServiceUtil
+ * @see CommerceCurrencyServiceUtil
  * @generated
  */
 @ProviderType
 public class CommerceCurrencyServiceSoap {
+	public static com.liferay.commerce.currency.model.CommerceCurrencySoap addCommerceCurrency(
+		java.lang.String[] codeMapLanguageIds,
+		java.lang.String[] codeMapValues,
+		java.lang.String[] nameMapLanguageIds,
+		java.lang.String[] nameMapValues, double rate,
+		java.lang.String roundingType, boolean primary, double priority,
+		boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> codeMap = LocalizationUtil.getLocalizationMap(codeMapLanguageIds,
+					codeMapValues);
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
+
+			com.liferay.commerce.currency.model.CommerceCurrency returnValue = CommerceCurrencyServiceUtil.addCommerceCurrency(codeMap,
+					nameMap, rate, roundingType, primary, priority, active,
+					serviceContext);
+
+			return com.liferay.commerce.currency.model.CommerceCurrencySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void deleteCommerceCurrency(long commerceCurrencyId)
+		throws RemoteException {
+		try {
+			CommerceCurrencyServiceUtil.deleteCommerceCurrency(commerceCurrencyId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.currency.model.CommerceCurrencySoap fetchPrimaryCommerceCurrency(
+		long groupId) throws RemoteException {
+		try {
+			com.liferay.commerce.currency.model.CommerceCurrency returnValue = CommerceCurrencyServiceUtil.fetchPrimaryCommerceCurrency(groupId);
+
+			return com.liferay.commerce.currency.model.CommerceCurrencySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.currency.model.CommerceCurrencySoap[] getCommerceCurrencies(
+		long groupId, boolean active, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.currency.model.CommerceCurrency> orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.currency.model.CommerceCurrency> returnValue =
+				CommerceCurrencyServiceUtil.getCommerceCurrencies(groupId,
+					active, start, end, orderByComparator);
+
+			return com.liferay.commerce.currency.model.CommerceCurrencySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.currency.model.CommerceCurrencySoap[] getCommerceCurrencies(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.currency.model.CommerceCurrency> orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.currency.model.CommerceCurrency> returnValue =
+				CommerceCurrencyServiceUtil.getCommerceCurrencies(groupId,
+					start, end, orderByComparator);
+
+			return com.liferay.commerce.currency.model.CommerceCurrencySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getCommerceCurrenciesCount(long groupId)
+		throws RemoteException {
+		try {
+			int returnValue = CommerceCurrencyServiceUtil.getCommerceCurrenciesCount(groupId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getCommerceCurrenciesCount(long groupId, boolean active)
+		throws RemoteException {
+		try {
+			int returnValue = CommerceCurrencyServiceUtil.getCommerceCurrenciesCount(groupId,
+					active);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.currency.model.CommerceCurrencySoap getCommerceCurrency(
+		long commerceCurrencyId) throws RemoteException {
+		try {
+			com.liferay.commerce.currency.model.CommerceCurrency returnValue = CommerceCurrencyServiceUtil.getCommerceCurrency(commerceCurrencyId);
+
+			return com.liferay.commerce.currency.model.CommerceCurrencySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.currency.model.CommerceCurrencySoap updateCommerceCurrency(
+		long commerceCurrencyId, java.lang.String[] codeMapLanguageIds,
+		java.lang.String[] codeMapValues,
+		java.lang.String[] nameMapLanguageIds,
+		java.lang.String[] nameMapValues, double rate,
+		java.lang.String roundingType, boolean primary, double priority,
+		boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> codeMap = LocalizationUtil.getLocalizationMap(codeMapLanguageIds,
+					codeMapValues);
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
+
+			com.liferay.commerce.currency.model.CommerceCurrency returnValue = CommerceCurrencyServiceUtil.updateCommerceCurrency(commerceCurrencyId,
+					codeMap, nameMap, rate, roundingType, primary, priority,
+					active, serviceContext);
+
+			return com.liferay.commerce.currency.model.CommerceCurrencySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(CommerceCurrencyServiceSoap.class);
 }

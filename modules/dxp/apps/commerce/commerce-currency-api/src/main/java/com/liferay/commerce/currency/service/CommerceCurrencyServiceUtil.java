@@ -41,6 +41,50 @@ public class CommerceCurrencyServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.currency.service.impl.CommerceCurrencyServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.commerce.currency.model.CommerceCurrency addCommerceCurrency(
+		java.util.Map<java.util.Locale, java.lang.String> codeMap,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap, double rate,
+		java.lang.String roundingType, boolean primary, double priority,
+		boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCommerceCurrency(codeMap, nameMap, rate, roundingType,
+			primary, priority, active, serviceContext);
+	}
+
+	public static com.liferay.commerce.currency.model.CommerceCurrency fetchPrimaryCommerceCurrency(
+		long groupId) {
+		return getService().fetchPrimaryCommerceCurrency(groupId);
+	}
+
+	public static com.liferay.commerce.currency.model.CommerceCurrency getCommerceCurrency(
+		long commerceCurrencyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCommerceCurrency(commerceCurrencyId);
+	}
+
+	public static com.liferay.commerce.currency.model.CommerceCurrency updateCommerceCurrency(
+		long commerceCurrencyId,
+		java.util.Map<java.util.Locale, java.lang.String> codeMap,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap, double rate,
+		java.lang.String roundingType, boolean primary, double priority,
+		boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCommerceCurrency(commerceCurrencyId, codeMap,
+			nameMap, rate, roundingType, primary, priority, active,
+			serviceContext);
+	}
+
+	public static int getCommerceCurrenciesCount(long groupId) {
+		return getService().getCommerceCurrenciesCount(groupId);
+	}
+
+	public static int getCommerceCurrenciesCount(long groupId, boolean active) {
+		return getService().getCommerceCurrenciesCount(groupId, active);
+	}
 
 	/**
 	* Returns the OSGi service identifier.
@@ -49,6 +93,26 @@ public class CommerceCurrencyServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static java.util.List<com.liferay.commerce.currency.model.CommerceCurrency> getCommerceCurrencies(
+		long groupId, boolean active, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.currency.model.CommerceCurrency> orderByComparator) {
+		return getService()
+				   .getCommerceCurrencies(groupId, active, start, end,
+			orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.commerce.currency.model.CommerceCurrency> getCommerceCurrencies(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.currency.model.CommerceCurrency> orderByComparator) {
+		return getService()
+				   .getCommerceCurrencies(groupId, start, end, orderByComparator);
+	}
+
+	public static void deleteCommerceCurrency(long commerceCurrencyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteCommerceCurrency(commerceCurrencyId);
 	}
 
 	public static CommerceCurrencyService getService() {

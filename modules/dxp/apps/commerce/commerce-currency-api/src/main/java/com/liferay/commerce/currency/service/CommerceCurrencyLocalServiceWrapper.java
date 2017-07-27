@@ -46,6 +46,19 @@ public class CommerceCurrencyLocalServiceWrapper
 		return _commerceCurrencyLocalService.addCommerceCurrency(commerceCurrency);
 	}
 
+	@Override
+	public com.liferay.commerce.currency.model.CommerceCurrency addCommerceCurrency(
+		java.util.Map<java.util.Locale, java.lang.String> codeMap,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap, double rate,
+		java.lang.String roundingType, boolean primary, double priority,
+		boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceCurrencyLocalService.addCommerceCurrency(codeMap,
+			nameMap, rate, roundingType, primary, priority, active,
+			serviceContext);
+	}
+
 	/**
 	* Creates a new commerce currency with the primary key. Does not add the commerce currency to the database.
 	*
@@ -104,6 +117,12 @@ public class CommerceCurrencyLocalServiceWrapper
 			groupId);
 	}
 
+	@Override
+	public com.liferay.commerce.currency.model.CommerceCurrency fetchPrimaryCommerceCurrency(
+		long groupId) {
+		return _commerceCurrencyLocalService.fetchPrimaryCommerceCurrency(groupId);
+	}
+
 	/**
 	* Returns the commerce currency with the primary key.
 	*
@@ -144,6 +163,20 @@ public class CommerceCurrencyLocalServiceWrapper
 	public com.liferay.commerce.currency.model.CommerceCurrency updateCommerceCurrency(
 		com.liferay.commerce.currency.model.CommerceCurrency commerceCurrency) {
 		return _commerceCurrencyLocalService.updateCommerceCurrency(commerceCurrency);
+	}
+
+	@Override
+	public com.liferay.commerce.currency.model.CommerceCurrency updateCommerceCurrency(
+		long commerceCurrencyId,
+		java.util.Map<java.util.Locale, java.lang.String> codeMap,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap, double rate,
+		java.lang.String roundingType, boolean primary, double priority,
+		boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceCurrencyLocalService.updateCommerceCurrency(commerceCurrencyId,
+			codeMap, nameMap, rate, roundingType, primary, priority, active,
+			serviceContext);
 	}
 
 	@Override
@@ -192,6 +225,17 @@ public class CommerceCurrencyLocalServiceWrapper
 	@Override
 	public int getCommerceCurrenciesCount() {
 		return _commerceCurrencyLocalService.getCommerceCurrenciesCount();
+	}
+
+	@Override
+	public int getCommerceCurrenciesCount(long groupId) {
+		return _commerceCurrencyLocalService.getCommerceCurrenciesCount(groupId);
+	}
+
+	@Override
+	public int getCommerceCurrenciesCount(long groupId, boolean active) {
+		return _commerceCurrencyLocalService.getCommerceCurrenciesCount(groupId,
+			active);
 	}
 
 	/**
@@ -275,6 +319,22 @@ public class CommerceCurrencyLocalServiceWrapper
 		return _commerceCurrencyLocalService.getCommerceCurrencies(start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.currency.model.CommerceCurrency> getCommerceCurrencies(
+		long groupId, boolean active, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.currency.model.CommerceCurrency> orderByComparator) {
+		return _commerceCurrencyLocalService.getCommerceCurrencies(groupId,
+			active, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.currency.model.CommerceCurrency> getCommerceCurrencies(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.currency.model.CommerceCurrency> orderByComparator) {
+		return _commerceCurrencyLocalService.getCommerceCurrencies(groupId,
+			start, end, orderByComparator);
+	}
+
 	/**
 	* Returns all the commerce currencies matching the UUID and company.
 	*
@@ -332,6 +392,11 @@ public class CommerceCurrencyLocalServiceWrapper
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _commerceCurrencyLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
+	}
+
+	@Override
+	public void deleteCommerceCurrencies(long groupId) {
+		_commerceCurrencyLocalService.deleteCommerceCurrencies(groupId);
 	}
 
 	@Override

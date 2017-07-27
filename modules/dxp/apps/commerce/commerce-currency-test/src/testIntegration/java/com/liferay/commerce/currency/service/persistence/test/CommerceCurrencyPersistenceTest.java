@@ -248,6 +248,15 @@ public class CommerceCurrencyPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_P_A() throws Exception {
+		_persistence.countByG_P_A(RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_P_A(0L, RandomTestUtil.randomBoolean(),
+			RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CommerceCurrency newCommerceCurrency = addCommerceCurrency();
 

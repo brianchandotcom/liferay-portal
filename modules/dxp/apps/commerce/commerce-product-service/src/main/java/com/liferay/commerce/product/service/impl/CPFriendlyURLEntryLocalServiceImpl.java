@@ -301,7 +301,7 @@ public class CPFriendlyURLEntryLocalServiceImpl
 
 		int exceptionType = CPFriendlyURLEntryImpl.validate(normalizedUrlTitle);
 
-		if (exceptionType != -1) {
+		if (exceptionType > 0) {
 			throw new CPFriendlyURLEntryException(exceptionType);
 		}
 

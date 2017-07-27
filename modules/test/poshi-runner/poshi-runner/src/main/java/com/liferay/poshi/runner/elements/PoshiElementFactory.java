@@ -134,6 +134,10 @@ public class PoshiElementFactory {
 					return new DefinitionElement(readableSyntax);
 				}
 
+				if (line.startsWith("{")) {
+					return new ThenElement(readableSyntax);
+				}
+
 				if (line.startsWith("else {")) {
 					return new ElseElement(readableSyntax);
 				}

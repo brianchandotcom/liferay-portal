@@ -18,11 +18,16 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.model.User;
 
+import java.util.Locale;
+
 /**
  * @author Pei-Jung Lan
  */
 @ProviderType
 public interface UserInitialsGenerator {
+
+	public String getInitials(
+		Locale locale, String firstName, String middleName, String lastName);
 
 	public String getInitials(User user);
 

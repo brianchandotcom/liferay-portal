@@ -43,16 +43,11 @@ public class SyncDirTask extends Task {
 
 		long start = System.currentTimeMillis();
 
-		try {
-			int count = _syncDirectory();
+		int count = _syncDirectory();
 
-			log(
-				count + " files synchronized in " +
-					(System.currentTimeMillis() - start) + "ms");
-		}
-		catch (IOException ioe) {
-			throw new BuildException(ioe);
-		}
+		log(
+			count + " files synchronized in " +
+				(System.currentTimeMillis() - start) + "ms");
 	}
 
 	public void setDir(File dir) {
@@ -82,7 +77,7 @@ public class SyncDirTask extends Task {
 		}
 	}
 
-	private int _syncDirectory() throws IOException {
+	private int _syncDirectory() {
 		AtomicInteger atomicInteger = new AtomicInteger();
 
 		List<SyncFileCallable> copyTasks = _syncDirectory(

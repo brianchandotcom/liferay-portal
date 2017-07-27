@@ -20,6 +20,29 @@
 		<execute function="AssertClick" locator1="NavBar#${assigneeTypeUppercase}" value1="${assigneeType}" />
 	</command>
 
+	<command name="gotoPermissionSectionViaDropdown">
+		<var name="key_permissionName" value="${step2}" />
+		<if>
+			<condition function="IsNotVisible" locator1="RolesPermissionsNavigation#DROPDOWN_ANY" />
+
+			<then>
+				<var name="key_permissionName" value="${step1}" />
+				<execute function="Click" locator1="RolesPermissionsNavigation#DROPDOWN_ANY" />
+			</then>
+		</if>
+
+		<if>
+			<condition function="IsNotVisible" locator1="RolesPermissionsNavigation#${permissionName}" />
+
+			<then>
+				<var name="key_permissionName" value="${step2}" />
+				<execute function="Click" locator1="RolesPermissionsNavigation#DROPDOWN_ANY" />
+			</then>
+		</if>
+
+		<execute function="Click" locator1="RolesPermissionsNavigation#${permissionName}" />
+	</command>
+
 	<command name="gotoRoleType">
 		<if>
 			<isset var="roleType" />

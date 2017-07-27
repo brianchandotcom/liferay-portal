@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String toolbarItem = ParamUtil.getString(request, "toolbarItem");
+
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 CPDefinitionLink cpDefinitionLink = null;
@@ -34,6 +36,8 @@ else {
 		<portlet:param name="mvcRenderCommandName" value="editCPDefinitionLink" />
 		<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionLink.getCPDefinitionId1()) %>" />
 		<portlet:param name="cpDefinitionLinkId" value="<%= String.valueOf(cpDefinitionLink.getCPDefinitionLinkId()) %>" />
+		<portlet:param name="toolbarItem" value="<%= toolbarItem %>" />
+		<portlet:param name="type" value="<%= String.valueOf(cpDefinitionLink.getType()) %>" />
 	</portlet:renderURL>
 
 	<liferay-ui:icon
@@ -46,6 +50,8 @@ else {
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionLink.getCPDefinitionId1()) %>" />
 		<portlet:param name="cpDefinitionLinkId" value="<%= String.valueOf(cpDefinitionLink.getCPDefinitionLinkId()) %>" />
+		<portlet:param name="toolbarItem" value="<%= toolbarItem %>" />
+		<portlet:param name="type" value="<%= String.valueOf(cpDefinitionLink.getType()) %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon-delete

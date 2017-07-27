@@ -25,9 +25,20 @@ long cpDefinitionId = cpDefinitionLinkDisplayContext.getCPDefinitionId();
 
 SearchContainer<CPDefinitionLink> cpDefinitionLinkSearchContainer = cpDefinitionLinkDisplayContext.getSearchContainer();
 
+int type = cpDefinitionLinkDisplayContext.getType();
+
+String addMenuTitle = "add-related-product";
+
+if (type == CPConstants.DEFINITION_LINK_TYPE_UP_SELL) {
+    addMenuTitle = "add-up-sell-product";
+}
+else if (type == CPConstants.DEFINITION_LINK_TYPE_CROSS_SELL) {
+	addMenuTitle = "add-cross-sell-product";
+}
+
 PortletURL portletURL = cpDefinitionLinkDisplayContext.getPortletURL();
 
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-product-definition-links");
+String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-product-definition-related-products");
 
 portletURL.setParameter("toolbarItem", toolbarItem);
 
@@ -112,6 +123,8 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 				<aui:input name="<%= Constants.CMD %>" type="hidden" />
 				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 				<aui:input name="deleteCPDefinitionLinkIds" type="hidden" />
+				<aui:input name="toolbarItem" type="hidden" value="<%= toolbarItem %>" />
+				<aui:input name="type" type="hidden" value="<%= type %>" />
 
 				<div class="product-definition-links-container" id="<portlet:namespace />entriesContainer">
 					<liferay-ui:search-container
@@ -131,6 +144,7 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 
 							rowURL.setParameter("mvcRenderCommandName", "editCPDefinitionLink");
 							rowURL.setParameter("cpDefinitionLinkId", String.valueOf(cpDefinitionLink.getCPDefinitionLinkId()));
+							rowURL.setParameter("toolbarItem", toolbarItem);
 
 							CPDefinition cpDefinition2 = cpDefinitionLink.getCPDefinition2();
 							%>
@@ -173,10 +187,12 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
 	<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinitionId %>" />
 	<aui:input name="cpDefinitionIds" type="hidden" value="" />
+	<aui:input name="toolbarItem" type="hidden" value="<%= toolbarItem %>" />
+	<aui:input name="type" type="hidden" value="<%= type %>" />
 </aui:form>
 
 <liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item id="addCommerceProductDefinition" title='<%= LanguageUtil.get(request, "add-related-product") %>' url="javascript:;" />
+	<liferay-frontend:add-menu-item id="addCommerceProductDefinition" title='<%= LanguageUtil.get(request, addMenuTitle) %>' url="javascript:;" />
 </liferay-frontend:add-menu>
 
 <aui:script>
@@ -215,7 +231,7 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 							}
 						}
 					},
-					title: '<liferay-ui:message arguments="<%= cpDefinition.getTitle(languageId) %>" key="add-new-related-product-to-x" />',
+					title: '<liferay-ui:message arguments="<%= cpDefinition.getTitle(languageId) %>" key="add-new-product-to-x" />',
 					url: '<%= cpDefinitionLinkDisplayContext.getItemSelectorUrl() %>'
 				}
 			);

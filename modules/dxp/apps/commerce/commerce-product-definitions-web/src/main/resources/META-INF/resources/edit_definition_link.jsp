@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String toolbarItem = ParamUtil.getString(request, "toolbarItem");
+
 CPDefinitionLinkDisplayContext cpDefinitionLinkDisplayContext = (CPDefinitionLinkDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CPDefinition cpDefinition = cpDefinitionLinkDisplayContext.getCPDefinition();
@@ -35,6 +37,8 @@ PortletURL relatedProductsURL = renderResponse.createRenderURL();
 
 relatedProductsURL.setParameter("mvcRenderCommandName", "viewCPDefinitionLinks");
 relatedProductsURL.setParameter("cpDefinitionId", String.valueOf(cpDefinition.getCPDefinitionId()));
+relatedProductsURL.setParameter("toolbarItem", toolbarItem);
+relatedProductsURL.setParameter("type", String.valueOf(cpDefinitionLink.getType()));
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(relatedProductsURL.toString());

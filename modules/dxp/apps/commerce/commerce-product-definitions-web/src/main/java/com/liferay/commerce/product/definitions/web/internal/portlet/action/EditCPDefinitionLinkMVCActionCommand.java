@@ -32,13 +32,12 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletURL;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -53,7 +52,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditCPDefinitionLinkMVCActionCommand extends BaseMVCActionCommand {
 
-	protected void addCPDefinitionLinks(ActionRequest actionRequest)
+	protected void addCPDefinitionLinks(ActionRequest actionRequest, int type)
 		throws Exception {
 
 		long[] cpDefinitionIds2 = null;
@@ -75,7 +74,7 @@ public class EditCPDefinitionLinkMVCActionCommand extends BaseMVCActionCommand {
 			CPDefinitionLink.class.getName(), actionRequest);
 
 		_cpDefinitionLinkService.updateCPDefinitionLinks(
-			cpDefinitionId, cpDefinitionIds2, 0, serviceContext);
+			cpDefinitionId, cpDefinitionIds2, type, serviceContext);
 	}
 
 	protected void deleteCPDefinitionLinks(ActionRequest actionRequest)
@@ -111,12 +110,14 @@ public class EditCPDefinitionLinkMVCActionCommand extends BaseMVCActionCommand {
 		long cpDefinitionId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionId");
 
+		int type = ParamUtil.getInteger(actionRequest, "type");
+
 		String redirect = getSaveAndContinueRedirect(
-			actionRequest, cpDefinitionId);
+			actionRequest, cpDefinitionId, type);
 
 		try {
 			if (cmd.equals(Constants.ADD)) {
-				addCPDefinitionLinks(actionRequest);
+				addCPDefinitionLinks(actionRequest, type);
 
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
@@ -144,7 +145,7 @@ public class EditCPDefinitionLinkMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected String getSaveAndContinueRedirect(
-			ActionRequest actionRequest, long cpDefinitionId)
+			ActionRequest actionRequest, long cpDefinitionId, int type)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -158,6 +159,11 @@ public class EditCPDefinitionLinkMVCActionCommand extends BaseMVCActionCommand {
 			"mvcRenderCommandName", "viewCPDefinitionLinks");
 		portletURL.setParameter(
 			"cpDefinitionId", String.valueOf(cpDefinitionId));
+		portletURL.setParameter("type", String.valueOf(type));
+
+		String toolbarItem = ParamUtil.getString(actionRequest, "toolbarItem");
+
+		portletURL.setParameter("toolbarItem", toolbarItem);
 
 		return portletURL.toString();
 	}

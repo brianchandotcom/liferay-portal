@@ -69,6 +69,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
@@ -1326,6 +1327,9 @@ public class CalendarPortlet extends MVCPortlet {
 
 		Hits hits = search(themeDisplay, keywords);
 
+		long layoutSetPrototypeClassNameId = _portal.getClassNameId(
+			LayoutSetPrototype.class);
+
 		for (Document document : hits.getDocs()) {
 			long calendarId = GetterUtil.getLong(
 				document.get(Field.ENTRY_CLASS_PK));
@@ -1337,6 +1341,10 @@ public class CalendarPortlet extends MVCPortlet {
 			if (calendarResource.isActive()) {
 				Group group = _groupLocalService.getGroup(
 					calendar.getGroupId());
+
+				if (group.getClassNameId() == layoutSetPrototypeClassNameId) {
+					continue;
+				}
 
 				if (group.hasStagingGroup()) {
 					Group stagingGroup = group.getStagingGroup();
@@ -1365,9 +1373,9 @@ public class CalendarPortlet extends MVCPortlet {
 			themeDisplay.getCompanyId(), name, null, params, true, 0,
 			SearchContainer.DEFAULT_DELTA);
 
-		for (Group group : groups) {
-			long groupClassNameId = _portal.getClassNameId(Group.class);
+		long groupClassNameId = _portal.getClassNameId(Group.class);
 
+		for (Group group : groups) {
 			addCalendar(
 				resourceRequest, calendarsSet, groupClassNameId,
 				group.getGroupId());

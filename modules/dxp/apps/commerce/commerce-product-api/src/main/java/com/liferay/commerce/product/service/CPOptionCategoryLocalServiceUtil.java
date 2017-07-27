@@ -106,6 +106,11 @@ public class CPOptionCategoryLocalServiceUtil {
 		return getService().fetchCPOptionCategory(CPOptionCategoryId);
 	}
 
+	public static com.liferay.commerce.product.model.CPOptionCategory fetchCPOptionCategory(
+		long groupId, java.lang.String key) {
+		return getService().fetchCPOptionCategory(groupId, key);
+	}
+
 	/**
 	* Returns the cp option category matching the UUID and group.
 	*

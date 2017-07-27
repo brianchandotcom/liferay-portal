@@ -103,6 +103,12 @@ public class CPOptionCategoryLocalServiceWrapper
 		return _cpOptionCategoryLocalService.fetchCPOptionCategory(CPOptionCategoryId);
 	}
 
+	@Override
+	public com.liferay.commerce.product.model.CPOptionCategory fetchCPOptionCategory(
+		long groupId, java.lang.String key) {
+		return _cpOptionCategoryLocalService.fetchCPOptionCategory(groupId, key);
+	}
+
 	/**
 	* Returns the cp option category matching the UUID and group.
 	*

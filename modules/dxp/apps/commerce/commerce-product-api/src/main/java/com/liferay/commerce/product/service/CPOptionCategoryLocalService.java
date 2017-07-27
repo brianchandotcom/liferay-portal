@@ -119,6 +119,10 @@ public interface CPOptionCategoryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPOptionCategory fetchCPOptionCategory(long CPOptionCategoryId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPOptionCategory fetchCPOptionCategory(long groupId,
+		java.lang.String key);
+
 	/**
 	* Returns the cp option category matching the UUID and group.
 	*

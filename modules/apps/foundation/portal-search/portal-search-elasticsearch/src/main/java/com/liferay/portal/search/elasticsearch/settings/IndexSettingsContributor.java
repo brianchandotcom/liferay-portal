@@ -27,8 +27,8 @@ public interface IndexSettingsContributor
 		String indexName, TypeMappingsHelper typeMappingsHelper);
 
 	/**
-	 * @deprecated As of 2.0.0, replaced by
-	 *      {@link #contribute(String, TypeMappingsHelper)}
+	 * @deprecated As of 2.0.0, replaced by {@link #contribute(String,
+	 *             TypeMappingsHelper)}
 	 */
 	@Deprecated
 	public void contribute(TypeMappingsHelper typeMappingsHelper);

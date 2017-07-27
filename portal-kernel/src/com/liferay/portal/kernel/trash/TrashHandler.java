@@ -403,12 +403,12 @@ public interface TrashHandler {
 	 * result set.
 	 * </p>
 	 *
-	 * @param  classPK the primary key of a container model
-	 * @param  start the lower bound of the range of results
-	 * @param  end the upper bound of the range of results (not inclusive)
-	 * @return the range of trash renderers of model entities (excluding
-	 *         container models) that are children of the parent container model
-	 *         identified by the primary key
+	 * @param      classPK the primary key of a container model
+	 * @param      start the lower bound of the range of results
+	 * @param      end the upper bound of the range of results (not inclusive)
+	 * @return     the range of trash renderers of model entities (excluding
+	 *             container models) that are children of the parent container
+	 *             model identified by the primary key
 	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
@@ -464,10 +464,10 @@ public interface TrashHandler {
 	 * result set.
 	 * </p>
 	 *
-	 * @param  classPK the primary key of a container model
-	 * @param  start the lower bound of the range of results
-	 * @param  end the upper bound of the range of results (not inclusive)
-	 * @return the range of matching trash renderers of model entities
+	 * @param      classPK the primary key of a container model
+	 * @param      start the lower bound of the range of results
+	 * @param      end the upper bound of the range of results (not inclusive)
+	 * @return     the range of matching trash renderers of model entities
 	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
@@ -500,7 +500,8 @@ public interface TrashHandler {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #getTrashModelTrashedModels(long, int, int, OrderByComparator)}
+	 *             #getTrashModelTrashedModels(long, int, int,
+	 *             OrderByComparator)}
 	 */
 	@Deprecated
 	public default List<TrashRenderer> getTrashModelTrashRenderers(

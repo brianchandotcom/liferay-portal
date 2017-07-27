@@ -41,8 +41,8 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 /**
- * @author Julio Camarero
- * @author Zsolt Berentey
+ * @author     Julio Camarero
+ * @author     Zsolt Berentey
  * @deprecated As of 7.0.0, replaced by {@link
  *             com.liferay.trash.internal.search.TrashIndexer}
  */

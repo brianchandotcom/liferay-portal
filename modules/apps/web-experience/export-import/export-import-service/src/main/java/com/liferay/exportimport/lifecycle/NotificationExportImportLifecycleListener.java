@@ -37,8 +37,7 @@ import java.util.Map;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Akos Thurzo
- *
+ * @author     Akos Thurzo
  * @deprecated As of 4.0.0
  */
 @Deprecated

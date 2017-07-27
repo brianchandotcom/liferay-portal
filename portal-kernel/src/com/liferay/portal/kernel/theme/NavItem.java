@@ -59,13 +59,13 @@ public class NavItem implements Serializable {
 	 * layouts are honored when accessing them via {@link #getChildren()}.
 	 * </p>
 	 *
-	 * @param  request the currently served {@link HttpServletRequest}
-	 * @param  layouts the layouts from which to create the navigation items
-	 * @return a single level of navigation items from the layouts, or
-	 *         <code>null</code> if the collection of layouts was
-	 *         <code>null</code>.
-	 * @deprecated As of 7.0.0, replaced by {@link #fromLayouts(
-	 *             HttpServletRequest, ThemeDisplay, Map)}
+	 * @param      request the currently served {@link HttpServletRequest}
+	 * @param      layouts the layouts from which to create the navigation items
+	 * @return     a single level of navigation items from the layouts, or
+	 *             <code>null</code> if the collection of layouts was
+	 *             <code>null</code>.
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #fromLayouts(HttpServletRequest, ThemeDisplay, Map)}
 	 */
 	@Deprecated
 	public static List<NavItem> fromLayouts(

@@ -88,8 +88,8 @@ public interface Http {
 	public String encodeURL(String url);
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by
-	 *     {@link URLCodec#encodeURL(String, boolean)}
+	 * @deprecated As of 7.0.0, replaced by {@link URLCodec#encodeURL(String,
+	 *             boolean)}
 	 */
 	@Deprecated
 	public String encodeURL(String url, boolean escapeSpaces);

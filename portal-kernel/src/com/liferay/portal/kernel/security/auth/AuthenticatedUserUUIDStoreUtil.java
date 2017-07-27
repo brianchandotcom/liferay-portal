@@ -17,8 +17,8 @@ package com.liferay.portal.kernel.security.auth;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 /**
- * @author Michael C. Han
- * @author Raymond Augé
+ * @author     Michael C. Han
+ * @author     Raymond Augé
  * @deprecated As of 7.0.0, with no direct replacement
  */
 @Deprecated

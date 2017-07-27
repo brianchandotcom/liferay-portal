@@ -288,7 +288,7 @@ public class CPDefinitionSpecificationOptionValuePersistenceTest {
 	}
 
 	protected OrderByComparator<CPDefinitionSpecificationOptionValue> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("CPDefinitionSpecificationOptionValue",
+		return OrderByComparatorFactoryUtil.create("CPDSpecificationOptionValue",
 			"uuid", true, "CPDefinitionSpecificationOptionValueId", true,
 			"groupId", true, "companyId", true, "userId", true, "userName",
 			true, "createDate", true, "modifiedDate", true, "CPDefinitionId",

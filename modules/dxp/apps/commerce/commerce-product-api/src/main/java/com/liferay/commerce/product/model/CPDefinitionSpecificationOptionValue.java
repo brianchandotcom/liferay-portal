@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.Accessor;
 
 /**
- * The extended model interface for the CPDefinitionSpecificationOptionValue service. Represents a row in the &quot;CPDefinitionSpecificationOptionValue&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the CPDefinitionSpecificationOptionValue service. Represents a row in the &quot;CPDSpecificationOptionValue&quot; database table, with each column mapped to a property of this class.
  *
  * @author Marco Leo
  * @see CPDefinitionSpecificationOptionValueModel

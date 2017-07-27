@@ -3,6 +3,13 @@ create index IX_A0B4C71A on CPAttachmentFileEntry (displayDate, status);
 create index IX_C2C5D600 on CPAttachmentFileEntry (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_BFCBDC82 on CPAttachmentFileEntry (uuid_[$COLUMN_LENGTH:75$], groupId);
 
+create unique index IX_173E8E91 on CPDSpecificationOptionValue (CPDefinitionId, CPSpecificationOptionId);
+create index IX_4F4EDBA5 on CPDSpecificationOptionValue (CPOptionCategoryId);
+create index IX_573BE140 on CPDSpecificationOptionValue (CPSpecificationOptionId);
+create index IX_8DA57014 on CPDSpecificationOptionValue (groupId);
+create index IX_508DBDCA on CPDSpecificationOptionValue (uuid_[$COLUMN_LENGTH:75$], companyId);
+create unique index IX_551F2ECC on CPDSpecificationOptionValue (uuid_[$COLUMN_LENGTH:75$], groupId);
+
 create index IX_217AF702 on CPDefinition (companyId);
 create index IX_A465D100 on CPDefinition (displayDate, status);
 create index IX_419350EA on CPDefinition (groupId, status);
@@ -27,13 +34,6 @@ create index IX_44C2E505 on CPDefinitionOptionValueRel (companyId);
 create index IX_695AE8C7 on CPDefinitionOptionValueRel (groupId);
 create index IX_CD95E77 on CPDefinitionOptionValueRel (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_34516B9 on CPDefinitionOptionValueRel (uuid_[$COLUMN_LENGTH:75$], groupId);
-
-create unique index IX_BCDDC9C8 on CPDefinitionSpecificationOptionValue (CPDefinitionId, CPSpecificationOptionId);
-create index IX_5B2C0E on CPDefinitionSpecificationOptionValue (CPOptionCategoryId);
-create index IX_A48E6A77 on CPDefinitionSpecificationOptionValue (CPSpecificationOptionId);
-create index IX_BF07474B on CPDefinitionSpecificationOptionValue (groupId);
-create index IX_46151473 on CPDefinitionSpecificationOptionValue (uuid_[$COLUMN_LENGTH:75$], companyId);
-create unique index IX_72AE1BB5 on CPDefinitionSpecificationOptionValue (uuid_[$COLUMN_LENGTH:75$], groupId);
 
 create unique index IX_290BF7BA on CPDisplayLayout (classNameId, classPK);
 create index IX_EEFA81D9 on CPDisplayLayout (uuid_[$COLUMN_LENGTH:75$], companyId);

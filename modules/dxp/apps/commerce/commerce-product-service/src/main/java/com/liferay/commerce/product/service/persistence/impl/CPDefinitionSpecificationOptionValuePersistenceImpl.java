@@ -3891,6 +3891,8 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 			Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 			dbColumnNames.put("uuid", "uuid_");
+			dbColumnNames.put("CPDefinitionSpecificationOptionValueId",
+				"CPDSpecificationOptionValueId");
 
 			field.set(this, dbColumnNames);
 		}
@@ -4903,7 +4905,7 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 	private static final String _SQL_SELECT_CPDEFINITIONSPECIFICATIONOPTIONVALUE =
 		"SELECT cpDefinitionSpecificationOptionValue FROM CPDefinitionSpecificationOptionValue cpDefinitionSpecificationOptionValue";
 	private static final String _SQL_SELECT_CPDEFINITIONSPECIFICATIONOPTIONVALUE_WHERE_PKS_IN =
-		"SELECT cpDefinitionSpecificationOptionValue FROM CPDefinitionSpecificationOptionValue cpDefinitionSpecificationOptionValue WHERE CPDefinitionSpecificationOptionValueId IN (";
+		"SELECT cpDefinitionSpecificationOptionValue FROM CPDefinitionSpecificationOptionValue cpDefinitionSpecificationOptionValue WHERE CPDSpecificationOptionValueId IN (";
 	private static final String _SQL_SELECT_CPDEFINITIONSPECIFICATIONOPTIONVALUE_WHERE =
 		"SELECT cpDefinitionSpecificationOptionValue FROM CPDefinitionSpecificationOptionValue cpDefinitionSpecificationOptionValue WHERE ";
 	private static final String _SQL_COUNT_CPDEFINITIONSPECIFICATIONOPTIONVALUE = "SELECT COUNT(cpDefinitionSpecificationOptionValue) FROM CPDefinitionSpecificationOptionValue cpDefinitionSpecificationOptionValue";
@@ -4914,6 +4916,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No CPDefinitionSpecificationOptionValue exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(CPDefinitionSpecificationOptionValuePersistenceImpl.class);
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"uuid"
+				"uuid", "CPDefinitionSpecificationOptionValueId"
 			});
 }

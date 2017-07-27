@@ -23,6 +23,23 @@ create table CPAttachmentFileEntry (
 	statusDate DATE null
 );
 
+create table CPDSpecificationOptionValue (
+	uuid_ VARCHAR(75) null,
+	CPDSpecificationOptionValueId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	CPDefinitionId LONG,
+	CPSpecificationOptionId LONG,
+	CPOptionCategoryId LONG,
+	value STRING null,
+	priority DOUBLE,
+	lastPublishDate DATE null
+);
+
 create table CPDefinition (
 	uuid_ VARCHAR(75) null,
 	CPDefinitionId LONG not null primary key,
@@ -105,23 +122,6 @@ create table CPDefinitionOptionValueRel (
 	title STRING null,
 	priority DOUBLE,
 	key_ VARCHAR(75) null
-);
-
-create table CPDefinitionSpecificationOptionValue (
-	uuid_ VARCHAR(75) null,
-	CPDefinitionSpecificationOptionValueId LONG not null primary key,
-	groupId LONG,
-	companyId LONG,
-	userId LONG,
-	userName VARCHAR(75) null,
-	createDate DATE null,
-	modifiedDate DATE null,
-	CPDefinitionId LONG,
-	CPSpecificationOptionId LONG,
-	CPOptionCategoryId LONG,
-	value STRING null,
-	priority DOUBLE,
-	lastPublishDate DATE null
 );
 
 create table CPDisplayLayout (

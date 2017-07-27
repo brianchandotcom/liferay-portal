@@ -194,6 +194,14 @@
 		<finder name="CPDefinitionId2" return-type="Collection">
 			<finder-column name="CPDefinitionId2" />
 		</finder>
+		<finder name="C1_T" return-type="Collection">
+			<finder-column name="CPDefinitionId1" />
+			<finder-column name="type" />
+		</finder>
+		<finder name="C2_T" return-type="Collection">
+			<finder-column name="CPDefinitionId2" />
+			<finder-column name="type" />
+		</finder>
 		<finder name="C1_C2_T" return-type="CPDefinitionLink" unique="true">
 			<finder-column name="CPDefinitionId1" />
 			<finder-column name="CPDefinitionId2" />

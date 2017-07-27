@@ -380,6 +380,25 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 			request, response, ddmTemplate, entries, contextObjects);
 	}
 
+	/**
+	 * Returns the DDM template's content.
+	 *
+	 * @param  request the request corresponding to a portlet render. In some
+	 *         cases, such as an {@link HttpServletRequest} corresponding to a
+	 *         portlet action or resource request, or for a regular servlet, the
+	 *         <code>renderRequest</code> is not accessible to the template.
+	 * @param  response the response corresponding to a portlet render. In some
+	 *         cases, such as an {@link HttpServletResponse} corresponding to a
+	 *         portlet action or resource response, or for a regular servlet,
+	 *         the <code>renderResponse</code> is not accessible to the
+	 *         template.
+	 * @param  ddmTemplate the template to be rendered
+	 * @param  entries the template's entries
+	 * @param  contextObjects the stored parameters used to get the template's
+	 *         content
+	 * @return the DDM template's content
+	 * @throws Exception if an exception occurred
+	 */
 	@Override
 	public String renderDDMTemplate(
 			HttpServletRequest request, HttpServletResponse response,

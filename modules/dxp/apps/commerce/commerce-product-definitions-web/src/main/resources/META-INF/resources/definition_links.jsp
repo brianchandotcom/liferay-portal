@@ -30,7 +30,7 @@ int type = cpDefinitionLinkDisplayContext.getType();
 String addMenuTitle = "add-related-product";
 
 if (type == CPConstants.DEFINITION_LINK_TYPE_UP_SELL) {
-    addMenuTitle = "add-up-sell-product";
+	addMenuTitle = "add-up-sell-product";
 }
 else if (type == CPConstants.DEFINITION_LINK_TYPE_CROSS_SELL) {
 	addMenuTitle = "add-cross-sell-product";
@@ -192,7 +192,7 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 </aui:form>
 
 <liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item id="addCommerceProductDefinition" title='<%= LanguageUtil.get(request, addMenuTitle) %>' url="javascript:;" />
+	<liferay-frontend:add-menu-item id="addCommerceProductDefinition" title="<%= LanguageUtil.get(request, addMenuTitle) %>" url="javascript:;" />
 </liferay-frontend:add-menu>
 
 <aui:script>

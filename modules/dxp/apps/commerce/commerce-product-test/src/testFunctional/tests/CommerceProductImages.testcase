@@ -41,7 +41,7 @@
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 
 		<execute function="AssertElementPresent" locator1="CommerceNavigation#ENTRY_TITLE" value1="${key_entryTitle}">
-			<var name="key_entryTitle" value="Document_2.jpg" />
+			<var name="key_entryTitle" value="Document_2" />
 		</execute>
 	</command>
 
@@ -64,7 +64,7 @@
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 
 		<execute function="AssertElementPresent" locator1="CommerceNavigation#ENTRY_TITLE" value1="${key_entryTitle}">
-			<var name="key_entryTitle" value="Document_2.jpg" />
+			<var name="key_entryTitle" value="Document_2" />
 		</execute>
 	</command>
 
@@ -87,7 +87,7 @@
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 
 		<execute function="AssertElementPresent" locator1="CommerceNavigation#ENTRY_TITLE" value1="${key_entryTitle}">
-			<var name="key_entryTitle" value="Document_2.jpg" />
+			<var name="key_entryTitle" value="Document_2" />
 		</execute>
 	</command>
 </definition>

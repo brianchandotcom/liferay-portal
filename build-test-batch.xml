@@ -2799,7 +2799,7 @@ information. Make sure to commit in all build services results.
 	<target name="slim-profile-test-jdk8">
 		<run-batch-test>
 			<test-action>
-				<ant dir="." inheritAll="false" target="all" >
+				<ant dir="." target="all" >
 					<property name="build.profile" value="slim" />
 				</ant>
 			</test-action>

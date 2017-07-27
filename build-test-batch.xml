@@ -2796,11 +2796,11 @@ information. Make sure to commit in all build services results.
 		</run-batch-test>
 	</target>
 
-	<target name="slim-profile-test">
+	<target name="slim-profile-test-jdk8">
 		<run-batch-test>
 			<test-action>
-				<ant dir="." target="all" >
-					<property name="build.profile" value="slim"/>
+				<ant dir="." inheritAll="false" target="all" >
+					<property name="build.profile" value="slim" />
 				</ant>
 			</test-action>
 		</run-batch-test>

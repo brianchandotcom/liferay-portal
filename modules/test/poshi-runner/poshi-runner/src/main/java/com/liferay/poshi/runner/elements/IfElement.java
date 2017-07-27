@@ -73,15 +73,7 @@ public class IfElement extends PoshiElement {
 				continue;
 			}
 
-			if (readableBlock.startsWith("else {")) {
-				addElementFromReadableSyntax(readableBlock);
-
-				continue;
-			}
-
-			PoshiElement thenElement = new ThenElement(readableBlock);
-
-			add(thenElement);
+			addElementFromReadableSyntax(readableBlock);
 		}
 	}
 
@@ -112,19 +104,24 @@ public class IfElement extends PoshiElement {
 		List<String> readableBlocks = new ArrayList<>();
 
 		for (String line : readableSyntax.split("\n")) {
-			if (line.startsWith(getName() + " (")) {
+			String readableBlock = sb.toString();
+
+			readableBlock = readableBlock.trim();
+
+			if ((line.startsWith(getName() + " (") && line.endsWith("{")) &&
+				(readableBlock.length() == 0)) {
+
 				readableBlocks.add(line);
+
+				sb.append("{\n");
 
 				continue;
 			}
 
-			if (line.startsWith("else {")) {
-				sb.setLength(0);
-			}
-
 			sb.append(line);
+			sb.append("\n");
 
-			String readableBlock = sb.toString();
+			readableBlock = sb.toString();
 
 			readableBlock = readableBlock.trim();
 
@@ -132,10 +129,6 @@ public class IfElement extends PoshiElement {
 				readableBlocks.add(readableBlock);
 
 				sb.setLength(0);
-			}
-
-			if (readableBlock.startsWith("else {")) {
-				sb.append("\n");
 			}
 		}
 

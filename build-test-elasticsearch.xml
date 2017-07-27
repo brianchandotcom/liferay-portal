@@ -564,7 +564,7 @@ username=&quot;liferay&quot;</echo>
 		<if>
 			<equals arg1="${elasticsearch.single.shard.enabled}" arg2="true" />
 			<then>
-				<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">index.number_of_shards: 1</echo>
+				<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">index.number_of_shards: 1${line.separator}</echo>
 			</then>
 		</if>
 
@@ -600,7 +600,7 @@ username=&quot;liferay&quot;</echo>
 				<then>
 					<exec dir="${elasticsearch.dir}/bin" executable="cmd" spawn="true">
 						<arg value="/c" />
-						<arg value="ES_HEAP_SIZE=512m elasticsearch -d -p pid-elasticsearch" />
+						<arg value="elasticsearch -d -p pid-elasticsearch" />
 					</exec>
 				</then>
 			</elseif>

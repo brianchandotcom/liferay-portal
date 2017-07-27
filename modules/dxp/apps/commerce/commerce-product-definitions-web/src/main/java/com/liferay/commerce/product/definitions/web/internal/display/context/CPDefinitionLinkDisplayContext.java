@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.definitions.web.internal.display.context;
 
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsSearchContainerDisplayContext;
 import com.liferay.commerce.product.definitions.web.internal.util.CPDefinitionsPortletUtil;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
@@ -30,15 +31,15 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import javax.portlet.PortletURL;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import javax.portlet.PortletURL;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Alessio Antonio Rendina
@@ -106,10 +107,10 @@ public class CPDefinitionLinkDisplayContext
 				"cpDefinitionId", String.valueOf(cpDefinitionId));
 
 			String checkedCPDefinitionIds = StringUtil.merge(
-				getCheckedCPDefinitionIds(cpDefinitionId));
+				getCheckedCPDefinitionIds(cpDefinitionId, getType()));
 
 			String disabledCPDefinitionIds = StringUtil.merge(
-				getDisabledCPDefinitionIds(cpDefinitionId));
+				getDisabledCPDefinitionIds(cpDefinitionId, getType()));
 
 			itemSelectorURL.setParameter(
 				"checkedCPDefinitionIds", checkedCPDefinitionIds);
@@ -126,6 +127,7 @@ public class CPDefinitionLinkDisplayContext
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "viewCPDefinitionLinks");
+		portletURL.setParameter("type", String.valueOf(getType()));
 
 		return portletURL;
 	}
@@ -141,8 +143,7 @@ public class CPDefinitionLinkDisplayContext
 		searchContainer = new SearchContainer<>(
 			liferayPortletRequest, getPortletURL(), null, null);
 
-		searchContainer.setEmptyResultsMessage(
-			"no-related-products-were-found");
+		searchContainer.setEmptyResultsMessage(getEmptyResultMessage());
 
 		OrderByComparator<CPDefinitionLink> orderByComparator =
 			CPDefinitionsPortletUtil.getCPDefinitionLinkOrderByComparator(
@@ -154,13 +155,13 @@ public class CPDefinitionLinkDisplayContext
 		searchContainer.setRowChecker(getRowChecker());
 
 		int total = _cpDefinitionLinkService.getCPDefinitionLinksCount(
-			getCPDefinitionId());
+			getCPDefinitionId(), getType());
 
 		searchContainer.setTotal(total);
 
 		List<CPDefinitionLink> results =
 			_cpDefinitionLinkService.getCPDefinitionLinks(
-				getCPDefinitionId(), searchContainer.getStart(),
+				getCPDefinitionId(), getType(), searchContainer.getStart(),
 				searchContainer.getEnd(), orderByComparator);
 
 		searchContainer.setResults(results);
@@ -168,13 +169,19 @@ public class CPDefinitionLinkDisplayContext
 		return searchContainer;
 	}
 
-	protected long[] getCheckedCPDefinitionIds(long cpDefinitionId)
+	public int getType() {
+		return ParamUtil.getInteger(
+			httpServletRequest, "type",
+			CPConstants.DEFINITION_LINK_TYPE_RELATED);
+	}
+
+	protected long[] getCheckedCPDefinitionIds(long cpDefinitionId, int type)
 		throws PortalException {
 
 		List<Long> cpDefinitionIdsList = new ArrayList<>();
 
 		List<CPDefinitionLink> cpDefinitionLinks = getCPDefinitionLinks(
-			cpDefinitionId);
+			cpDefinitionId, type);
 
 		for (CPDefinitionLink cpDefinitionLink : cpDefinitionLinks) {
 			cpDefinitionIdsList.add(cpDefinitionLink.getCPDefinitionId2());
@@ -187,19 +194,21 @@ public class CPDefinitionLinkDisplayContext
 		return new long[0];
 	}
 
-	protected List<CPDefinitionLink> getCPDefinitionLinks(long cpDefinitionId)
+	protected List<CPDefinitionLink> getCPDefinitionLinks(
+			long cpDefinitionId, int type)
 		throws PortalException {
 
-		return _cpDefinitionLinkService.getCPDefinitionLinks(cpDefinitionId);
+		return _cpDefinitionLinkService.getCPDefinitionLinks(
+			cpDefinitionId, type);
 	}
 
-	protected long[] getDisabledCPDefinitionIds(long cpDefinitionId)
+	protected long[] getDisabledCPDefinitionIds(long cpDefinitionId, int type)
 		throws PortalException {
 
 		List<Long> cpDefinitionIdsList = new ArrayList<>();
 
 		List<CPDefinitionLink> cpDefinitionLinks = getCPDefinitionLinks(
-			cpDefinitionId);
+			cpDefinitionId, type);
 
 		for (CPDefinitionLink cpDefinitionLink : cpDefinitionLinks) {
 			cpDefinitionIdsList.add(cpDefinitionLink.getCPDefinitionId1());
@@ -210,6 +219,20 @@ public class CPDefinitionLinkDisplayContext
 		}
 
 		return new long[0];
+	}
+
+	protected String getEmptyResultMessage() {
+		if (getType() == CPConstants.DEFINITION_LINK_TYPE_RELATED) {
+			return "no-related-products-were-found";
+		}
+		else if (getType() == CPConstants.DEFINITION_LINK_TYPE_UP_SELL) {
+			return "no-up-sell-products-were-found";
+		}
+		else if (getType() == CPConstants.DEFINITION_LINK_TYPE_CROSS_SELL) {
+			return "no-cross-sell-products-were-found";
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private CPDefinitionLink _cpDefinitionLink;

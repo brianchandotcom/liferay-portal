@@ -10,12 +10,20 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field localized="true" name="code" type="String" />
-		<field localized="true" name="name" type="String" />
-		<field name="rate" type="double" />
+		<field localized="true" name="code" type="String">
+			<validator name="required" />
+		</field>
+		<field localized="true" name="name" type="String">
+			<validator name="required" />
+		</field>
+		<field name="rate" type="double">
+			<validator name="number" />
+		</field>
 		<field name="roundingType" type="String" />
 		<field name="primary" type="boolean" />
-		<field name="priority" type="double" />
+		<field name="priority" type="double">
+			<validator name="number" />
+		</field>
 		<field name="active" type="boolean" />
 		<field name="lastPublishDate" type="Date" />
 	</model>

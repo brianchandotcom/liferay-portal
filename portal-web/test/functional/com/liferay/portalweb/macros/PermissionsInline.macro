@@ -78,9 +78,17 @@
 	</command>
 
 	<command name="gotoConfigurationPG">
+		<if>
+			<isset var ="portletOption" /> 
+				<then>
+					<var name="portletOption" value="${portletOption}" />
+				</then>
+				<else>
+					<var name="portletOption" value="Permissions" />
+				</else>
+		</if>
 		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="${portletName}" />
-			<var name="portletOption" value="Permissions" />
+			<var name="portletOption" value="${portletOption}" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />

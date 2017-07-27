@@ -1256,11 +1256,11 @@
 
 		<var name="key_fieldFieldLabel" value="Effective Date" />
 
-		<execute function="AssertElementPresent" locator1="Icon#ASTERISKTOFIELD" />
+		<execute function="AssertElementPresent" locator1="Icon#ASTERISK_DATE_FIELD" />
 
 		<var name="key_fieldFieldLabel" value="Expiration Date" />
 
-		<execute function="AssertElementPresent" locator1="Icon#ASTERISKTOFIELD" />
+		<execute function="AssertElementPresent" locator1="Icon#ASTERISK_DATE_FIELD" />
 	</command>
 
 	<command name="ViewDocumentWithGlobalScope" priority="5">

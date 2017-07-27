@@ -34,7 +34,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ASTERISKTOFIELD</td>
+	<td>ASTERISK_DATE_FIELD</td>
 	<td>//label[contains(.,'${key_fieldFieldLabel}')]//span[contains(@class,'icon-asterisk')]</td>
 	<td></td>
 </tr>

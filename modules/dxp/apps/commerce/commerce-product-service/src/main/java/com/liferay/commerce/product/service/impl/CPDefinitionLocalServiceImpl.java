@@ -92,6 +92,9 @@ public class CPDefinitionLocalServiceImpl
 			String baseSKU, Map<Locale, String> titleMap,
 			Map<Locale, String> shortDescriptionMap,
 			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
+			Map<Locale, String> metaTitleMap,
+			Map<Locale, String> metaKeywordsMap,
+			Map<Locale, String> metaDescriptionMap,
 			String layoutUuid, String productTypeName,String gtin,
 			String manufacturerPartNumber, int minCartQuantity,
 			int maxCartQuantity, String allowedCartQuantity,
@@ -168,7 +171,7 @@ public class CPDefinitionLocalServiceImpl
 
 		_addCPDefinitionLocalizedFields(
 			user.getCompanyId(), cpDefinitionId, titleMap, shortDescriptionMap,
-			descriptionMap);
+			descriptionMap, metaTitleMap, metaKeywordsMap, metaDescriptionMap);
 
 		// Commerce product friendly URL
 
@@ -681,6 +684,9 @@ public class CPDefinitionLocalServiceImpl
 			long cpDefinitionId, String baseSKU, Map<Locale, String> titleMap,
 			Map<Locale, String> shortDescriptionMap,
 			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
+			Map<Locale, String> metaTitleMap,
+			Map<Locale, String> metaKeywordsMap,
+			Map<Locale, String> metaDescriptionMap,
 			String layoutUuid, String gtin, String manufacturerPartNumber,
 			int minCartQuantity, int maxCartQuantity,String allowedCartQuantity,
 			int multipleCartQuantity, String ddmStructureKey, int displayDateMonth,
@@ -749,7 +755,8 @@ public class CPDefinitionLocalServiceImpl
 
 		_updateCPDefinitionLocalizedFields(
 			cpDefinition.getCompanyId(), cpDefinition.getCPDefinitionId(),
-			titleMap, shortDescriptionMap, descriptionMap);
+			titleMap, shortDescriptionMap, descriptionMap, metaTitleMap,
+			metaKeywordsMap, metaDescriptionMap);
 
 		// Commerce product friendly URL entries
 
@@ -1038,7 +1045,10 @@ public class CPDefinitionLocalServiceImpl
 	private List<CPDefinitionLocalization> _addCPDefinitionLocalizedFields(
 			long companyId, long cpDefinitionId, Map<Locale, String> titleMap,
 			Map<Locale, String> shortDescriptionMap,
-			Map<Locale, String> descriptionMap)
+			Map<Locale, String> descriptionMap,
+			Map<Locale, String> metaTitleMap,
+			Map<Locale, String> metaKeywordsMap,
+			Map<Locale, String> metaDescriptionMap)
 		throws PortalException {
 
 		Set<Locale> localeSet = new HashSet<>();
@@ -1053,6 +1063,18 @@ public class CPDefinitionLocalServiceImpl
 			localeSet.addAll(descriptionMap.keySet());
 		}
 
+		if (metaTitleMap != null) {
+			localeSet.addAll(metaTitleMap.keySet());
+		}
+
+		if (metaKeywordsMap != null) {
+			localeSet.addAll(metaKeywordsMap.keySet());
+		}
+
+		if (metaDescriptionMap != null) {
+			localeSet.addAll(metaDescriptionMap.keySet());
+		}
+
 		List<CPDefinitionLocalization> cpDefinitionLocalizations =
 			new ArrayList<>();
 
@@ -1060,6 +1082,9 @@ public class CPDefinitionLocalServiceImpl
 			String title = titleMap.get(locale);
 			String shortDescription = null;
 			String description = null;
+			String metaTitle = null;
+			String metaKeywords = null;
+			String metaDescription = null;
 
 			if (shortDescriptionMap != null) {
 				shortDescription = shortDescriptionMap.get(locale);
@@ -1069,8 +1094,22 @@ public class CPDefinitionLocalServiceImpl
 				description = descriptionMap.get(locale);
 			}
 
+			if (metaTitleMap != null) {
+				metaTitle = metaTitleMap.get(locale);
+			}
+
+			if (metaKeywordsMap != null) {
+				metaKeywords = metaKeywordsMap.get(locale);
+			}
+
+			if (metaDescriptionMap != null) {
+				metaDescription = metaDescriptionMap.get(locale);
+			}
+
 			if (Validator.isNull(title) && Validator.isNull(shortDescription) &&
-				Validator.isNull(description)) {
+				Validator.isNull(description) && Validator.isNull(metaTitle) &&
+				Validator.isNull(metaKeywords) &&
+				Validator.isNull(metaDescription)) {
 
 				continue;
 			}
@@ -1078,7 +1117,8 @@ public class CPDefinitionLocalServiceImpl
 			CPDefinitionLocalization cpDefinitionLocalization =
 				_addCPDefinitionLocalizedFields(
 					companyId, cpDefinitionId, title, shortDescription,
-					description, LocaleUtil.toLanguageId(locale));
+					description, metaTitle, metaKeywords, metaDescription,
+					LocaleUtil.toLanguageId(locale));
 
 			cpDefinitionLocalizations.add(cpDefinitionLocalization);
 		}
@@ -1088,7 +1128,8 @@ public class CPDefinitionLocalServiceImpl
 
 	private CPDefinitionLocalization _addCPDefinitionLocalizedFields(
 			long companyId, long cpDefinitionId, String title,
-			String shortDescription, String description, String languageId)
+			String shortDescription, String description, String metaTitle,
+			String metaKeywords, String metaDescription, String languageId)
 		throws PortalException {
 
 		CPDefinitionLocalization cpDefinitionLocalization =
@@ -1107,12 +1148,18 @@ public class CPDefinitionLocalServiceImpl
 			cpDefinitionLocalization.setTitle(title);
 			cpDefinitionLocalization.setShortDescription(shortDescription);
 			cpDefinitionLocalization.setDescription(description);
+			cpDefinitionLocalization.setMetaTitle(metaTitle);
+			cpDefinitionLocalization.setMetaKeywords(metaKeywords);
+			cpDefinitionLocalization.setMetaDescription(metaDescription);
 			cpDefinitionLocalization.setLanguageId(languageId);
 		}
 		else {
 			cpDefinitionLocalization.setTitle(title);
 			cpDefinitionLocalization.setShortDescription(shortDescription);
 			cpDefinitionLocalization.setDescription(description);
+			cpDefinitionLocalization.setMetaTitle(metaTitle);
+			cpDefinitionLocalization.setMetaKeywords(metaKeywords);
+			cpDefinitionLocalization.setMetaDescription(metaDescription);
 		}
 
 		return cpDefinitionLocalizationPersistence.update(
@@ -1153,7 +1200,10 @@ public class CPDefinitionLocalServiceImpl
 	private List<CPDefinitionLocalization> _updateCPDefinitionLocalizedFields(
 			long companyId, long cpDefinitionId, Map<Locale, String> titleMap,
 			Map<Locale, String> shortDescriptionMap,
-			Map<Locale, String> descriptionMap)
+			Map<Locale, String> descriptionMap,
+			Map<Locale, String> metaTitleMap,
+			Map<Locale, String> metaKeywordsMap,
+			Map<Locale, String> metaDescriptionMap)
 		throws PortalException {
 
 		List<CPDefinitionLocalization> oldCPDefinitionLocalizations =
@@ -1164,7 +1214,8 @@ public class CPDefinitionLocalServiceImpl
 		List<CPDefinitionLocalization> newCPDefinitionLocalizations =
 			_addCPDefinitionLocalizedFields(
 				companyId, cpDefinitionId, titleMap, shortDescriptionMap,
-				descriptionMap);
+				descriptionMap, metaTitleMap, metaKeywordsMap,
+				metaDescriptionMap);
 
 		oldCPDefinitionLocalizations.removeAll(newCPDefinitionLocalizations);
 

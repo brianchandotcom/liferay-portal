@@ -47,6 +47,9 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			String baseSKU, Map<Locale, String> titleMap,
 			Map<Locale, String> shortDescriptionMap,
 			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
+			Map<Locale, String> metaTitleMap,
+			Map<Locale, String> metaKeywordsMap,
+			Map<Locale, String> metaDescriptionMap,
 			String layoutUuid, String productTypeName, String gtin,
 			String manufacturerPartNumber, int minCartQuantity,
 			int maxCartQuantity, String allowedCartQuantity,
@@ -64,6 +67,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 
 		return cpDefinitionLocalService.addCPDefinition(
 			baseSKU, titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
+			metaTitleMap, metaKeywordsMap, metaDescriptionMap,
 			layoutUuid, productTypeName,gtin, manufacturerPartNumber, minCartQuantity,
 			maxCartQuantity, allowedCartQuantity, multipleCartQuantity, ddmStructureKey,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
@@ -236,6 +240,9 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			long cpDefinitionId, String baseSKU, Map<Locale, String> titleMap,
 			Map<Locale, String> shortDescriptionMap,
 			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
+			Map<Locale, String> metaTitleMap,
+			Map<Locale, String> metaKeywordsMap,
+			Map<Locale, String> metaDescriptionMap,
 			String layoutUuid, String gtin, String manufacturerPartNumber, int minCartQuantity, int maxCartQuantity,
 			String allowedCartQuantity, int multipleCartQuantity,
 			String ddmStructureKey, int displayDateMonth, int displayDateDay,
@@ -251,8 +258,8 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 
 		return cpDefinitionLocalService.updateCPDefinition(
 			cpDefinitionId, baseSKU, titleMap, shortDescriptionMap,
-			descriptionMap, urlTitleMap, layoutUuid, gtin,
-			manufacturerPartNumber minCartQuantity,
+			descriptionMap, urlTitleMap,metaTitleMap, metaKeywordsMap, metaDescriptionMap,
+			layoutUuid, gtin, manufacturerPartNumber minCartQuantity,
 			maxCartQuantity, allowedCartQuantity, multipleCartQuantity,
 			ddmStructureKey, displayDateMonth, displayDateDay, displayDateYear,
 			displayDateHour, displayDateMinute, expirationDateMonth,

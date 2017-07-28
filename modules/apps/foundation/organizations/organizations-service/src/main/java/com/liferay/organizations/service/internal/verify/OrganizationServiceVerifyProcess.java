@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
-import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.util.PortalInstances;
@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -89,7 +90,7 @@ public class OrganizationServiceVerifyProcess extends VerifyProcess {
 			long[] companyIds = PortalInstances.getCompanyIdsBySQL();
 
 			for (long companyId : companyIds) {
-				OrganizationLocalServiceUtil.rebuildTree(companyId);
+				_organizationLocalService.rebuildTree(companyId);
 			}
 		}
 	}
@@ -103,7 +104,7 @@ public class OrganizationServiceVerifyProcess extends VerifyProcess {
 			sb.append(
 				"AssetEntry, Organization_ where AssetEntry.classNameId = ");
 
-			long classNameId = ClassNameLocalServiceUtil.getClassNameId(
+			long classNameId = _classNameLocalService.getClassNameId(
 				Organization.class.getName());
 
 			sb.append(classNameId);
@@ -143,7 +144,7 @@ public class OrganizationServiceVerifyProcess extends VerifyProcess {
 	protected void updateOrganizationAssets() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			List<Organization> organizations =
-				OrganizationLocalServiceUtil.getNoAssetOrganizations();
+				_organizationLocalService.getNoAssetOrganizations();
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
@@ -153,7 +154,7 @@ public class OrganizationServiceVerifyProcess extends VerifyProcess {
 
 			for (Organization organization : organizations) {
 				try {
-					OrganizationLocalServiceUtil.updateAsset(
+					_organizationLocalService.updateAsset(
 						organization.getUserId(), organization, null, null);
 				}
 				catch (Exception e) {
@@ -174,5 +175,11 @@ public class OrganizationServiceVerifyProcess extends VerifyProcess {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		OrganizationServiceVerifyProcess.class);
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private OrganizationLocalService _organizationLocalService;
 
 }

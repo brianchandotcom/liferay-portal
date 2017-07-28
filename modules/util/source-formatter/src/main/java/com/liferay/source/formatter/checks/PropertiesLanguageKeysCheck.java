@@ -16,12 +16,18 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.util.ArrayUtil;
+
+import java.util.List;
 
 /**
  * @author Peter Shin
  */
 public class PropertiesLanguageKeysCheck extends BaseFileCheck {
+
+	@Override
+	public void init() {
+		_legacyLanguageKeys = getPropertyList("legacy.language.keys");
+	}
 
 	@Override
 	protected String doProcess(
@@ -46,7 +52,7 @@ public class PropertiesLanguageKeysCheck extends BaseFileCheck {
 
 				String key = array[0];
 
-				if (ArrayUtil.contains(_LEGACY_LANGUAGE_KEYS, key)) {
+				if (_legacyLanguageKeys.contains(key)) {
 					continue;
 				}
 
@@ -64,20 +70,6 @@ public class PropertiesLanguageKeysCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private static final String[] _LEGACY_LANGUAGE_KEYS = {
-		"application-adapter-help", "by-x-x",
-		"check-your-email-or-configure-email-accounts",
-		"click-here-to-save-it-now", "get-url", "get-url-or-webdav-url",
-		"set-up-the-communication-among-the-portlets-that-use-public-render-parameters",
-		"the-page-will-be-refreshed-when-you-close-this-dialog.alternatively-you-can-hide-this-dialog-x",
-		"this-organization-is-already-assigned-to-password-policy-x",
-		"this-user-is-already-assigned-to-password-policy-x",
-		"x-added-a-comment", "xuggler-help", "uploaded-by-x-x",
-		"use-my-account-to-change-regular-account-settings", "webdav-help",
-		"webdav-windows-help",
-		"you-are-about-to-report-a-violation-of-our-x-terms-of-use.-all-reports-are-strictly-confidential",
-		"you-can-also-forcibly-disable-remote-staging",
-		"you-have-to-be-signed-in-to-register-for-this-meetup"
-	};
+	private List<String> _legacyLanguageKeys;
 
 }

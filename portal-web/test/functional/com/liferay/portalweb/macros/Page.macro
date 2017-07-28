@@ -372,9 +372,17 @@
 			<var name="page" value="${page}" />
 		</execute>
 
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Logo" />
-		</execute>
+		<if>
+			<condition function="IsElementNotPresent" locator1="SitePagesEditPage#PAGE_TYPE_SELECT" />
+			<then>
+				<execute macro="Panel#expandPanel">
+					<var name="panelHeading" value="Logo" />
+				</execute>
+			</then>
+			<else>
+				<execute function="AssertClick" locator1="SitePages#DETAILS_NAVIGATION_ADVANCED" value1="Advanced" />
+			</else>
+		</if>
 
 		<execute function="AssertClick" locator1="Button#CHANGE_LOGO" value1="Change" />
 
@@ -434,6 +442,28 @@
 		<execute function="ClickNoError" locator1="ControlMenu#EDIT_LIVE_DELETE" />
 
 		<execute function="Confirm#waitForConfirmation" value1="Are you sure you want to delete the selected page?" />
+	</command>
+
+	<command name="deleteLogoPG">
+		<execute macro="SitePageNavigator#gotoEditPage">
+			<var name="page" value="${page}" />
+		</execute>
+
+		<if>
+			<condition function="IsElementNotPresent" locator1="SitePagesEditPage#PAGE_TYPE_SELECT" />
+			<then>
+				<execute macro="Panel#expandPanel">
+					<var name="panelHeading" value="Logo" />
+				</execute>
+			</then>
+			<else>
+				<execute function="AssertClick" locator1="SitePages#DETAILS_NAVIGATION_ADVANCED" value1="Advanced" />
+			</else>
+		</if>
+
+		<execute function="AssertClick" locator1="Button#DELETE" value1="Delete" />
+
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="deletePG">
@@ -899,6 +929,18 @@
 		<execute function="AssertTextEquals" locator1="Home#STATUS_MESSAGE" value1="This ${resource} is inactive. Please contact the administrator.">
 			<var name="key_resource" value="${resource}" />
 		</execute>
+	</command>
+
+	<command name="viewLayoutLogoPG">
+		<if>
+			<equals arg1="${assertLayoutLogoPresent}" arg2="true" />
+			<then>
+				<execute function="AssertElementPresent" locator1="Home#LAYOUT_LOGO" />
+			</then>
+			<else>
+				<execute function="AssertElementNotPresent" locator1="Home#LAYOUT_LOGO" />
+			</else>
+		</if>
 	</command>
 
 	<command name="viewLoadMoreResultsPages">

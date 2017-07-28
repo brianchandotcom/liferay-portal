@@ -89,6 +89,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LAYOUT_LOGO</td>
+	<td>//img[contains(@class,'layout-logo')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SITE_NAME</td>
 	<td>//div[@id='heading']/span[@class='site-name']</td>
 	<td></td>

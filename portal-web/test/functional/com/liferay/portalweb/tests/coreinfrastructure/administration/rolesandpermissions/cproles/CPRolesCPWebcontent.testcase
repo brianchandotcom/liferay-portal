@@ -51,11 +51,25 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="Permissions#definePermissionCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Access in Site Administration" />
-			<var name="roleTitle" value="Roles Siterole Name" />
-			<var name="roleType" value="Site" />
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="VIEW"/>
+			<var name="resourceName" value="com.liferay.journal"/>
+			<var name="roleTitle" value="Roles Siterole Name"/>
+			<var name="roleType" value="site" />
+		</execute>
+
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="VIEW_SITE_ADMINISTRATION"/>
+			<var name="resourceName" value="com.liferay.portal.kernel.model.Group"/>
+			<var name="roleTitle" value="Roles Siterole Name"/>
+			<var name="roleType" value="site" />
+		</execute>
+
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL"/>
+			<var name="resourceName" value="com_liferay_journal_web_portlet_JournalPortlet"/>
+			<var name="roleTitle" value="Roles Siterole Name"/>
+			<var name="roleType" value="site" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">

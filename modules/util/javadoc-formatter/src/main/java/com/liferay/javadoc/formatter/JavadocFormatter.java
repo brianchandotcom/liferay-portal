@@ -1561,8 +1561,6 @@ public class JavadocFormatter {
 			_getJavaModelLineNumber(javaClass, javadocLessContent),
 			javaClassComment);
 
-		Map<String, Element> nestedClassElementsMap = new HashMap<>();
-
 		Map<String, Element> methodElementsMap = new HashMap<>();
 
 		List<Element> methodElements = rootElement.elements("method");

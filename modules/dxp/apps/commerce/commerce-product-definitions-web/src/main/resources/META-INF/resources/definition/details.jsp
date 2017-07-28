@@ -42,37 +42,6 @@ String friendlyURLBase = themeDisplay.getPortalURL() + CPConstants.SEPARATOR_PRO
 		<aui:validator name="required" />
 	</aui:input>
 
-	<div class="commerce-product-definition-url-title form-group">
-		<label for="<portlet:namespace />friendlyURL"><liferay-ui:message key="friendly-url" /> <liferay-ui:icon-help message='<%= LanguageUtil.format(request, "for-example-x", "<em>/news</em>", false) %>' /></label>
-
-		<div class="input-group lfr-friendly-url-input-group">
-			<span class="input-group-addon" id="<portlet:namespace />urlBase">
-				<span class="input-group-constrain"><liferay-ui:message key="<%= StringUtil.shorten(friendlyURLBase.toString(), 40) %>" /></span>
-			</span>
-
-			<liferay-ui:input-localized cssClass="form-control" defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>" name="urlTitleMapAsXML" xml="<%= HttpUtil.decodeURL(cpDefinitionsDisplayContext.getUrlTitleMapAsXML()) %>" />
-
-			<c:if test="<%= cpDefinition != null %>">
-
-				<%
-				Map<Locale, String> urlTitleMap = cpDefinition.getUrlTitleMap();
-
-				String productURL = friendlyURLBase + urlTitleMap.get(themeDisplay.getSiteDefaultLocale());
-				%>
-
-				<span class="input-group-addon" id="<portlet:namespace />urlIcon">
-					<liferay-ui:icon
-						iconCssClass="icon-new-window"
-						label="<%= false %>"
-						message="go-to-page"
-						target="_blank"
-						url="<%= productURL %>"
-					/>
-				</span>
-			</c:if>
-		</div>
-	</div>
-
 	<aui:input label="short-description" localized="<%= true %>" name="shortDescriptionMapAsXML" type="textarea" wrapperCssClass="commerce-product-definition-description" />
 
 	<%
@@ -95,21 +64,18 @@ String friendlyURLBase = themeDisplay.getPortalURL() + CPConstants.SEPARATOR_PRO
 		var descriptionInputLocalized = Liferay.component('<portlet:namespace />descriptionMapAsXML');
 		var shortDescriptionInputLocalized = Liferay.component('<portlet:namespace />shortDescriptionMapAsXML');
 		var titleInputLocalized = Liferay.component('<portlet:namespace />titleMapAsXML');
-		var urlTitleInputLocalized = Liferay.component('<portlet:namespace />urlTitleMapAsXML');
 
 		var locale = event.locale;
 
 		descriptionInputLocalized.removeInputLanguage(locale);
 		shortDescriptionInputLocalized.removeInputLanguage(locale);
 		titleInputLocalized.removeInputLanguage(locale);
-		urlTitleInputLocalized.removeInputLanguage(locale);
 	}
 
 	function afterEditingLocaleChange(event) {
 		var descriptionInputLocalized = Liferay.component('<portlet:namespace />descriptionMapAsXML');
 		var shortDescriptionInputLocalized = Liferay.component('<portlet:namespace />shortDescriptionMapAsXML');
 		var titleInputLocalized = Liferay.component('<portlet:namespace />titleMapAsXML');
-		var urlTitleInputLocalized = Liferay.component('<portlet:namespace />urlTitleMapAsXML');
 
 		var editingLocale = event.newVal;
 		var items = descriptionInputLocalized.get('items');
@@ -123,9 +89,6 @@ String friendlyURLBase = themeDisplay.getPortalURL() + CPConstants.SEPARATOR_PRO
 
 		titleInputLocalized.set('selected', selectedIndex);
 		titleInputLocalized.selectFlag(editingLocale);
-
-		urlTitleInputLocalized.set('selected', selectedIndex);
-		urlTitleInputLocalized.selectFlag(editingLocale);
 	}
 
 	var translationManager = Liferay.component('<portlet:namespace />translationManager');
@@ -133,21 +96,3 @@ String friendlyURLBase = themeDisplay.getPortalURL() + CPConstants.SEPARATOR_PRO
 	translationManager.on('deleteAvailableLocale', afterDeletingAvailableLocale)
 	translationManager.on('editingLocaleChange', afterEditingLocaleChange)
 </aui:script>
-
-<c:if test="<%= cpDefinition == null %>">
-	<aui:script sandbox="<%= true %>">
-		var form = $(document.<portlet:namespace />fm);
-
-		var titleInput = form.fm('titleMapAsXML');
-		var urlInput = form.fm('urlTitleMapAsXML');
-
-		var onTitleInput = _.debounce(
-			function(event) {
-				urlInput.val(titleInput.val());
-			},
-			200
-		);
-
-		titleInput.on('input', onTitleInput);
-	</aui:script>
-</c:if>

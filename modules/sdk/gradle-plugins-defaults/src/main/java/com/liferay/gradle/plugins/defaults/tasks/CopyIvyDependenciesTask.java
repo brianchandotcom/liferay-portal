@@ -88,7 +88,7 @@ public class CopyIvyDependenciesTask extends Copy {
 		return _configuration;
 	}
 
-	public Closure<Map<String, String>> getDependencyTransformClosure() {
+	public Closure<Map<String, Object>> getDependencyTransformClosure() {
 		return _dependencyTransformClosure;
 	}
 
@@ -98,7 +98,7 @@ public class CopyIvyDependenciesTask extends Copy {
 	}
 
 	public void setDependencyTransformClosure(
-		Closure<Map<String, String>> dependencyVersionClosure) {
+		Closure<Map<String, Object>> dependencyVersionClosure) {
 
 		_dependencyTransformClosure = dependencyVersionClosure;
 	}
@@ -146,7 +146,7 @@ public class CopyIvyDependenciesTask extends Copy {
 				continue;
 			}
 
-			Map<String, String> dependencyNotation = new HashMap<>();
+			Map<String, Object> dependencyNotation = new HashMap<>();
 
 			dependencyNotation.put(
 				"group", dependencyElement.getAttribute("org"));
@@ -154,6 +154,13 @@ public class CopyIvyDependenciesTask extends Copy {
 				"name", dependencyElement.getAttribute("name"));
 			dependencyNotation.put(
 				"version", dependencyElement.getAttribute("rev"));
+
+			String transitive = dependencyElement.getAttribute("transitive");
+
+			if (Validator.isNotNull(transitive)) {
+				dependencyNotation.put(
+					"transitive", Boolean.parseBoolean(transitive));
+			}
 
 			dependencyNotation = _dependencyTransformClosure.call(
 				dependencyNotation);
@@ -217,7 +224,7 @@ public class CopyIvyDependenciesTask extends Copy {
 	}
 
 	private final Configuration _configuration;
-	private Closure<Map<String, String>> _dependencyTransformClosure =
+	private Closure<Map<String, Object>> _dependencyTransformClosure =
 		Closure.IDENTITY;
 	private Object _inputFile;
 

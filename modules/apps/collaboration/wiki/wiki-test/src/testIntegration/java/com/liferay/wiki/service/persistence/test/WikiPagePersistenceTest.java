@@ -228,13 +228,6 @@ public class WikiPagePersistenceTest {
 	}
 
 	@Test
-	public void testCountByResourcePrimKey() throws Exception {
-		_persistence.countByResourcePrimKey(RandomTestUtil.nextLong());
-
-		_persistence.countByResourcePrimKey(0L);
-	}
-
-	@Test
 	public void testCountByUuid() throws Exception {
 		_persistence.countByUuid(StringPool.BLANK);
 

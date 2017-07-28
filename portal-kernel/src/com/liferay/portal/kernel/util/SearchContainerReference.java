@@ -22,7 +22,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Shinn Lok
+ * @author     Shinn Lok
  * @deprecated As of 7.0.0, with no direct replacement
  */
 @Deprecated

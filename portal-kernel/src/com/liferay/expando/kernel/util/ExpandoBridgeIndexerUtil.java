@@ -30,8 +30,8 @@ public class ExpandoBridgeIndexerUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #encodeFieldName(
-	 *             String, int)}
+	 * @deprecated As of 7.0.0, replaced by {@link #encodeFieldName(String,
+	 *             int)}
 	 */
 	@Deprecated
 	public static String encodeFieldName(String columnName) {

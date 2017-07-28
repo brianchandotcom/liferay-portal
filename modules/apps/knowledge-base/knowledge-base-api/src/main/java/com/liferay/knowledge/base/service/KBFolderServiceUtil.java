@@ -98,9 +98,8 @@ public class KBFolderServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 1.1.0, replaced by {@link
-	#updateKBFolder(long, long, long, String, String,
-	ServiceContext)}
+	* @deprecated As of 1.1.0, replaced by {@link #updateKBFolder(long, long,
+	long, String, String, ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.knowledge.base.model.KBFolder updateKBFolder(

@@ -188,7 +188,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 								'<portlet:namespace />AdaptRemaining<%= uuid %>',
 								new adaptiveMediaWebAdaptive_mediaJsAdaptiveMediaProgressEs.default(
 									{
-										adaptedImages: <%= adaptedImages %>,
+										adaptedImages: <%= Math.min(adaptedImages, totalImages) %>,
 										disabled: <%= !configurationEntry.isEnabled() %>,
 										namespace: '<portlet:namespace />',
 										percentageUrl: '<%= adaptedImagesPercentageURL.toString() %>',

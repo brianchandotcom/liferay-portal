@@ -16,7 +16,7 @@ package com.liferay.portal.search.web.internal.search.bar.constants;
 
 /**
  * @author André de Oliveira
-*/
+ */
 public class SearchBarWebKeys {
 
 	public static final String DISPLAY_CONTEXT =

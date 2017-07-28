@@ -73,9 +73,9 @@ import org.osgi.service.component.annotations.Reference;
 import org.springframework.context.ApplicationContext;
 
 /**
- * @author Raymond Augé
- * @author Douglas Wong
- * @author Alexander Chow
+ * @author     Raymond Augé
+ * @author     Douglas Wong
+ * @author     Alexander Chow
  * @deprecated As of 1.1.0, replaced by {@link
  *             com.liferay.document.library.internal.verify.DLServiceVerifyProcess}
  */

@@ -23,7 +23,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentSkipListMap;
 
 /**
- * @author Akos Thurzo
+ * @author     Akos Thurzo
  * @deprecated As of 7.0.0, with no direct replacement
  */
 @Deprecated

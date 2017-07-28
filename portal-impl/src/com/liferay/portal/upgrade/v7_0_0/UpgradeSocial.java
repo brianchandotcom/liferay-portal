@@ -61,7 +61,7 @@ public class UpgradeSocial extends UpgradeProcess {
 
 	protected int getCounterIncrement() throws Exception {
 		try (PreparedStatement ps = connection.prepareStatement(
-				"select currentId from counter where name = ?")) {
+				"select currentId from Counter where name = ?")) {
 
 			ps.setString(1, Counter.class.getName());
 

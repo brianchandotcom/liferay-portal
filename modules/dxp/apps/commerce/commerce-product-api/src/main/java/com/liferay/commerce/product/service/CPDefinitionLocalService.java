@@ -394,6 +394,18 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 		long cpDefinitionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<Locale, java.lang.String> getCPDefinitionMetaDescriptionMap(
+		long cpDefinitionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<Locale, java.lang.String> getCPDefinitionMetaKeywordsMap(
+		long cpDefinitionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<Locale, java.lang.String> getCPDefinitionMetaTitleMap(
+		long cpDefinitionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Map<Locale, java.lang.String> getCPDefinitionShortDescriptionMap(
 		long cpDefinitionId);
 

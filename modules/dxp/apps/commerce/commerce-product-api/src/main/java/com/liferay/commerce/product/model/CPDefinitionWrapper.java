@@ -772,6 +772,21 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	@Override
+	public Map<java.util.Locale, java.lang.String> getMetaDescriptionMap() {
+		return _cpDefinition.getMetaDescriptionMap();
+	}
+
+	@Override
+	public Map<java.util.Locale, java.lang.String> getMetaKeywordsMap() {
+		return _cpDefinition.getMetaKeywordsMap();
+	}
+
+	@Override
+	public Map<java.util.Locale, java.lang.String> getMetaTitleMap() {
+		return _cpDefinition.getMetaTitleMap();
+	}
+
+	@Override
 	public Map<java.util.Locale, java.lang.String> getShortDescriptionMap() {
 		return _cpDefinition.getShortDescriptionMap();
 	}

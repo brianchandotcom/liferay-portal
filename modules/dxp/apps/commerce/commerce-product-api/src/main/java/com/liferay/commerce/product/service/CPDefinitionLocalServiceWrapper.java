@@ -495,6 +495,24 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 	}
 
 	@Override
+	public java.util.Map<java.util.Locale, java.lang.String> getCPDefinitionMetaDescriptionMap(
+		long cpDefinitionId) {
+		return _cpDefinitionLocalService.getCPDefinitionMetaDescriptionMap(cpDefinitionId);
+	}
+
+	@Override
+	public java.util.Map<java.util.Locale, java.lang.String> getCPDefinitionMetaKeywordsMap(
+		long cpDefinitionId) {
+		return _cpDefinitionLocalService.getCPDefinitionMetaKeywordsMap(cpDefinitionId);
+	}
+
+	@Override
+	public java.util.Map<java.util.Locale, java.lang.String> getCPDefinitionMetaTitleMap(
+		long cpDefinitionId) {
+		return _cpDefinitionLocalService.getCPDefinitionMetaTitleMap(cpDefinitionId);
+	}
+
+	@Override
 	public java.util.Map<java.util.Locale, java.lang.String> getCPDefinitionShortDescriptionMap(
 		long cpDefinitionId) {
 		return _cpDefinitionLocalService.getCPDefinitionShortDescriptionMap(cpDefinitionId);

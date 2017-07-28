@@ -201,7 +201,11 @@ AUI.add(
 												}
 											);
 
-											instance._setContentLabels(id.replace(instance.ns('PORTLET_DATA') + '_', ''));
+											var portletId = id.replace(instance.ns('PORTLET_DATA') + '_', '');
+											instance._setContentLabels(portletId);
+
+											var contentNode = instance.byId('content_' + portletId);
+											instance._storeNodeInputStates(contentNode);
 										}
 									}
 								);

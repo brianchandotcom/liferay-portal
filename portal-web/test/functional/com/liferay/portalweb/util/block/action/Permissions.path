@@ -142,6 +142,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT_PERMISSIONS_ADD_DOCUMENT_CHECKBOX</td>
+	<td>//tr[contains(.,'${key_roleTitle}')]//input[contains(@id,'ACTION_ADD_DOCUMENT')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT_PERMISSIONS_ADD_DISCUSSION_CHECKBOX</td>
 	<td>//input[contains(@id,'${key_roleTitle}_ACTION_ADD_DISCUSSION')]</td>
 	<td></td>
@@ -154,6 +159,16 @@
 <tr>
 	<td>CONTENT_PERMISSIONS_ADD_PAGE_CHECKBOX</td>
 	<td>//input[contains(@id,'${key_roleTitle}_ACTION_ADD_LAYOUT')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_PERMISSIONS_ADD_SUBFOLDER_CHECKBOX</td>
+	<td>//tr[contains(.,'${key_roleTitle}')]//input[contains(@id,'ACTION_ADD_SUBFOLDER')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_PERMISSIONS_ADD_SHORTCUT_CHECKBOX</td>
+	<td>//tr[contains(.,'${key_roleTitle}')]//input[contains(@id,'ACTION_ADD_SHORTCUT')]</td>
 	<td></td>
 </tr>
 <tr>

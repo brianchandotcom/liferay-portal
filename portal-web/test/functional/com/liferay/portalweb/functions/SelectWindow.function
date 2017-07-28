@@ -23,9 +23,29 @@
 		<execute selenium="assertLiferayErrors" />
 	</command>
 
+	<command name="selectWindowNoSPARefresh">
+		<execute argument1="5000" selenium="pause" />
+
+		<execute selenium="selectWindow" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+	</command>
+
 	<command name="selectWindowTop">
 		<execute function="WaitForSPARefresh" />
 
+		<execute argument1="5000" selenium="pause" />
+
+		<execute argument1="null" selenium="selectWindow" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+	</command>
+
+	<command name="selectWindowTopNoSPARefresh">
 		<execute argument1="5000" selenium="pause" />
 
 		<execute argument1="null" selenium="selectWindow" />

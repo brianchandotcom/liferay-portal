@@ -18,17 +18,16 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
+import org.osgi.service.component.annotations.Component;
 
 import java.util.Locale;
-
-import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = "form.navigator.entry.order:Integer=20",
+	property = "form.navigator.entry.order:Integer=10",
 	service = FormNavigatorEntry.class
 )
 public class CPDefinitionDetailsScheduleFormNavigatorEntry

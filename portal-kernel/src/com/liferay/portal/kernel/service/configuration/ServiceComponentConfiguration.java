@@ -14,11 +14,14 @@
 
 package com.liferay.portal.kernel.service.configuration;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.InputStream;
 
 /**
  * @author Miguel Pastor
  */
+@ProviderType
 public interface ServiceComponentConfiguration {
 
 	public InputStream getHibernateInputStream();
@@ -26,6 +29,8 @@ public interface ServiceComponentConfiguration {
 	public InputStream getModelHintsExtInputStream();
 
 	public InputStream getModelHintsInputStream();
+
+	public String getServletContextName();
 
 	public InputStream getSQLIndexesInputStream();
 

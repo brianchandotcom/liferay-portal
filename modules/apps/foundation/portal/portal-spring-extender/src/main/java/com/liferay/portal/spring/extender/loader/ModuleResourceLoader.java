@@ -51,6 +51,11 @@ public class ModuleResourceLoader implements ServiceComponentConfiguration {
 	}
 
 	@Override
+	public String getServletContextName() {
+		return _bundle.getSymbolicName();
+	}
+
+	@Override
 	public InputStream getSQLIndexesInputStream() {
 		return new ByteArrayInputStream(new byte[0]);
 	}

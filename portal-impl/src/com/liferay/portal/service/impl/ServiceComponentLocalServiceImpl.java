@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeTableListener;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
@@ -379,10 +380,17 @@ public class ServiceComponentLocalServiceImpl
 			db.runSQLTemplateString(indexesSQL, true, false);
 		}
 		else if (buildAutoUpgrade) {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Upgrading " + buildNamespace +
-						" database to build number " + buildNumber);
+			if (_log.isWarnEnabled()) {
+				StringBundler sb = new StringBundler(6);
+
+				sb.append("Auto upgrading ");
+				sb.append(buildNamespace);
+				sb.append(" database to build number ");
+				sb.append(buildNumber);
+				sb.append(" this is not supported for production, write a ");
+				sb.append("UpgradeStep to ensure data is upgraded correctly");
+
+				_log.warn(sb.toString());
 			}
 
 			if (!tablesSQL.equals(previousServiceComponent.getTablesSQL())) {

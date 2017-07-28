@@ -78,7 +78,9 @@ public class CPDefinitionServiceSoap {
 		java.lang.String[] descriptionMapValues,
 		java.lang.String[] urlTitleMapLanguageIds,
 		java.lang.String[] urlTitleMapValues, java.lang.String layoutUuid,
-		java.lang.String productTypeName, java.lang.String ddmStructureKey,
+		java.lang.String productTypeName, int minCartQuantity,
+		int maxCartQuantity, java.lang.String allowedCartQuantity,
+		int multipleCartQuantity, java.lang.String ddmStructureKey,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
 		int expirationDateDay, int expirationDateYear, int expirationDateHour,
@@ -97,11 +99,13 @@ public class CPDefinitionServiceSoap {
 
 			com.liferay.commerce.product.model.CPDefinition returnValue = CPDefinitionServiceUtil.addCPDefinition(baseSKU,
 					titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
-					layoutUuid, productTypeName, ddmStructureKey,
-					displayDateMonth, displayDateDay, displayDateYear,
-					displayDateHour, displayDateMinute, expirationDateMonth,
-					expirationDateDay, expirationDateYear, expirationDateHour,
-					expirationDateMinute, neverExpire, serviceContext);
+					layoutUuid, productTypeName, minCartQuantity,
+					maxCartQuantity, allowedCartQuantity, multipleCartQuantity,
+					ddmStructureKey, displayDateMonth, displayDateDay,
+					displayDateYear, displayDateHour, displayDateMinute,
+					expirationDateMonth, expirationDateDay, expirationDateYear,
+					expirationDateHour, expirationDateMinute, neverExpire,
+					serviceContext);
 
 			return com.liferay.commerce.product.model.CPDefinitionSoap.toSoapModel(returnValue);
 		}
@@ -312,6 +316,8 @@ public class CPDefinitionServiceSoap {
 		java.lang.String[] descriptionMapValues,
 		java.lang.String[] urlTitleMapLanguageIds,
 		java.lang.String[] urlTitleMapValues, java.lang.String layoutUuid,
+		int minCartQuantity, int maxCartQuantity,
+		java.lang.String allowedCartQuantity, int multipleCartQuantity,
 		java.lang.String ddmStructureKey, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
@@ -331,10 +337,11 @@ public class CPDefinitionServiceSoap {
 
 			com.liferay.commerce.product.model.CPDefinition returnValue = CPDefinitionServiceUtil.updateCPDefinition(cpDefinitionId,
 					baseSKU, titleMap, shortDescriptionMap, descriptionMap,
-					urlTitleMap, layoutUuid, ddmStructureKey, displayDateMonth,
-					displayDateDay, displayDateYear, displayDateHour,
-					displayDateMinute, expirationDateMonth, expirationDateDay,
-					expirationDateYear, expirationDateHour,
+					urlTitleMap, layoutUuid, minCartQuantity, maxCartQuantity,
+					allowedCartQuantity, multipleCartQuantity, ddmStructureKey,
+					displayDateMonth, displayDateDay, displayDateYear,
+					displayDateHour, displayDateMinute, expirationDateMonth,
+					expirationDateDay, expirationDateYear, expirationDateHour,
 					expirationDateMinute, neverExpire, serviceContext);
 
 			return com.liferay.commerce.product.model.CPDefinitionSoap.toSoapModel(returnValue);

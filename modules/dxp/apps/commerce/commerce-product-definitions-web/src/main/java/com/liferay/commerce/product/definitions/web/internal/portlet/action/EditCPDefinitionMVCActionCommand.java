@@ -234,6 +234,12 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, "descriptionMapAsXML");
 		Map<Locale, String> urlTitleMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "urlTitleMapAsXML");
+		Map<Locale, String> metaTitleMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "metaTitleMapAsXML");
+		Map<Locale, String> metaKeywordsMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "metaKeywordsMapAsXML");
+		Map<Locale, String> metaDescriptionMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "metaDescriptionMapAsXML");
 		String productTypeName = ParamUtil.getString(
 			actionRequest, "productTypeName");
 		String baseSKU = ParamUtil.getString(actionRequest, "baseSKU");
@@ -298,7 +304,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 			cpDefinition = _cpDefinitionService.addCPDefinition(
 				baseSKU, titleMap, shortDescriptionMap, descriptionMap,
-				urlTitleMap, layoutUuid, productTypeName,gtin,
+				urlTitleMap, metaTitleMap, metaKeywordsMap, metaDescriptionMap, layoutUuid, productTypeName,gtin,
 				manufacturerPartNumber, minCartQuantity,
 				maxCartQuantity, allowedCartQuantity, multipleCartQuantity,
 				null, displayDateMonth, displayDateDay, displayDateYear,
@@ -312,7 +318,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 			cpDefinition = _cpDefinitionService.updateCPDefinition(
 				cpDefinitionId, baseSKU, titleMap, shortDescriptionMap,
-				descriptionMap, urlTitleMap, layoutUuid, gtin,
+				descriptionMap, urlTitleMap, metaTitleMap, metaKeywordsMap, metaDescriptionMap, layoutUuid, gtin,
 				manufacturerPartNumber, minCartQuantity,
 				maxCartQuantity, allowedCartQuantity, multipleCartQuantity,
 				null, displayDateMonth, displayDateDay, displayDateYear,

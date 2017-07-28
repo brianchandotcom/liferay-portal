@@ -87,9 +87,8 @@ public interface KBFolderService extends BaseService {
 		java.lang.String urlTitle) throws PortalException;
 
 	/**
-	* @deprecated As of 1.1.0, replaced by {@link
-	#updateKBFolder(long, long, long, String, String,
-	ServiceContext)}
+	* @deprecated As of 1.1.0, replaced by {@link #updateKBFolder(long, long,
+	long, String, String, ServiceContext)}
 	*/
 	@java.lang.Deprecated
 	public KBFolder updateKBFolder(long parentResourceClassNameId,

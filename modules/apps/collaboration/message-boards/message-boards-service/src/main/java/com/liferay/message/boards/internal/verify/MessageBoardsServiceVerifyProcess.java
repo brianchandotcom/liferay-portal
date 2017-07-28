@@ -28,10 +28,17 @@ import com.liferay.portal.verify.VerifyProcess;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Zsolt Berentey
  */
+@Component(
+	immediate = true,
+	property = {"verify.process.name=com.liferay.message.boards.service"},
+	service = {VerifyProcess.class}
+)
 public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 
 	@Override

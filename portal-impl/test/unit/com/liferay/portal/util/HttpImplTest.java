@@ -330,6 +330,38 @@ public class HttpImplTest extends PowerMockito {
 			_httpImpl.removeProtocol("http://www.google.com/://localhost"));
 	}
 
+	@Test
+	public void testShortenURL() {
+		Assert.assertEquals(
+			"www.google.com", _httpImpl.shortenURL("www.google.com", 0));
+		Assert.assertEquals(
+			"www.google.com&first=foo&second=bar",
+			_httpImpl.shortenURL("www.google.com&first=foo&second=bar", 0));
+		Assert.assertEquals(
+			"www.google.com?first=foo&second=bar",
+			_httpImpl.shortenURL("www.google.com?first=foo&second=bar", 0));
+		Assert.assertEquals(
+			"www.google.com",
+			_httpImpl.shortenURL("www.google.com?redirect=www.yahoo.com", 0));
+		Assert.assertEquals(
+			"www.google.com?parameter=foo",
+			_httpImpl.shortenURL(
+				"www.google.com?redirect=www.yahoo.com&parameter=foo", 0));
+		Assert.assertEquals(
+			"www.google.com?redirect=www.yahoo.com%3Fparameter%3Dbar&" +
+				"parameter=foo",
+			_httpImpl.shortenURL(
+				"www.google.com?redirect=www.yahoo.com%3Fredirect%3D" +
+					"www.bing.com%26parameter%3Dbar&parameter=foo",
+				1));
+		Assert.assertEquals(
+			"www.google.com?parameter=foo",
+			_httpImpl.shortenURL(
+				"www.google.com?redirect=www.yahoo.com%3Fredirect%3D" +
+					"www.bing.com%26parameter%3Dbar&parameter=foo",
+				0));
+	}
+
 	protected void testDecodeURLWithInvalidURLEncoding(String url) {
 		_testDecodeURL(url, "Invalid URL encoding " + url);
 	}

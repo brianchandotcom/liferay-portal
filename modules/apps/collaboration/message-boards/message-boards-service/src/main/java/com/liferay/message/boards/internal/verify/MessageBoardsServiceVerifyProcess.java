@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.verify;
+package com.liferay.message.boards.internal.verify;
 
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.message.boards.kernel.model.MBMessage;
@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.verify.VerifyProcess;
 
 import java.util.List;
 
@@ -31,7 +32,7 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  * @author Zsolt Berentey
  */
-public class VerifyMessageBoards extends VerifyProcess {
+public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
@@ -180,6 +181,6 @@ public class VerifyMessageBoards extends VerifyProcess {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		VerifyMessageBoards.class);
+		MessageBoardsServiceVerifyProcess.class);
 
 }

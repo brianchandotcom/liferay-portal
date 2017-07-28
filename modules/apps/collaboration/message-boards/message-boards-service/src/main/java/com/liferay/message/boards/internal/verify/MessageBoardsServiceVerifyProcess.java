@@ -14,11 +14,11 @@
 
 package com.liferay.message.boards.internal.verify;
 
-import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBThread;
-import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
-import com.liferay.message.boards.kernel.service.MBThreadLocalServiceUtil;
+import com.liferay.message.boards.kernel.service.MBMessageLocalService;
+import com.liferay.message.boards.kernel.service.MBThreadLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
@@ -29,6 +29,7 @@ import com.liferay.portal.verify.VerifyProcess;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -52,7 +53,7 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 	protected void verifyAssetsForMessages() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			List<MBMessage> messages =
-				MBMessageLocalServiceUtil.getNoAssetMessages();
+				_mbMessageLocalService.getNoAssetMessages();
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
@@ -62,7 +63,7 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 
 			for (MBMessage message : messages) {
 				try {
-					MBMessageLocalServiceUtil.updateAsset(
+					_mbMessageLocalService.updateAsset(
 						message.getUserId(), message, null, null, null);
 
 					if (message.getStatus() == WorkflowConstants.STATUS_DRAFT) {
@@ -75,7 +76,7 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 							visible = true;
 						}
 
-						AssetEntryLocalServiceUtil.updateEntry(
+						_assetEntryLocalService.updateEntry(
 							message.getWorkflowClassName(),
 							message.getMessageId(), null, null, true, visible);
 					}
@@ -97,8 +98,7 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 
 	protected void verifyAssetsForThreads() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			List<MBThread> threads =
-				MBThreadLocalServiceUtil.getNoAssetThreads();
+			List<MBThread> threads = _mbThreadLocalService.getNoAssetThreads();
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
@@ -107,7 +107,7 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 
 			for (MBThread thread : threads) {
 				try {
-					AssetEntryLocalServiceUtil.updateEntry(
+					_assetEntryLocalService.updateEntry(
 						thread.getRootMessageUserId(), thread.getGroupId(),
 						thread.getStatusDate(), thread.getLastPostDate(),
 						MBThread.class.getName(), thread.getThreadId(), null, 0,
@@ -189,5 +189,14 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MessageBoardsServiceVerifyProcess.class);
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private MBMessageLocalService _mbMessageLocalService;
+
+	@Reference
+	private MBThreadLocalService _mbThreadLocalService;
 
 }

@@ -447,7 +447,6 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 	*
 	* @param ddmStorageId the storage ID associated with the record
 	* @return the DDM form values
-	* @throws StorageException
 	*/
 	@Override
 	public com.liferay.dynamic.data.mapping.storage.DDMFormValues getDDMFormValues(

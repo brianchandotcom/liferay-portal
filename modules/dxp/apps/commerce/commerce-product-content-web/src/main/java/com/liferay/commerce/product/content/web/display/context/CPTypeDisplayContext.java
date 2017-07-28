@@ -74,6 +74,10 @@ public class CPTypeDisplayContext {
 		return cpDefinition;
 	}
 
+	public long getCPDefinitionId() {
+		return cpDefinition.getCPDefinitionId();
+	}
+
 	public CPAttachmentFileEntry getDefaultImage() throws PortalException {
 		long classNameId = portal.getClassNameId(CPDefinition.class);
 

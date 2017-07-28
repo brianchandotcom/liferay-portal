@@ -224,7 +224,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();
 
-		ddmFormRenderingContext.setContainerId(_DDM_CONTAINER_ID);
+		ddmFormRenderingContext.setContainerId(String.valueOf(cpDefinitionId));
 		ddmFormRenderingContext.setHttpServletRequest(httpServletRequest);
 		ddmFormRenderingContext.setHttpServletResponse(httpServletResponse);
 		ddmFormRenderingContext.setLocale(locale);
@@ -252,8 +252,6 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 		return _ddmFormValuesHelper.serialize(ddmFormValues);
 	}
-
-	private static final String _DDM_CONTAINER_ID = "cpDefinitionOptionsRender";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPInstanceHelperImpl.class);

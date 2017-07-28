@@ -291,9 +291,7 @@
 		</execute>
 	</command>
 
-	<command name="EditSimpleCatalogEntry" priority="5">
-		<property name="portal.acceptance" value="true" />
-
+	<command ignore="true" name="EditSimpleCatalogEntry" priority="5">
 		<execute test-case="CPCommerceCatalog#AddSimpleCatalogEntry" />
 
 		<execute macro="CommerceNavigator#gotoEntry">

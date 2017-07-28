@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTableListener;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
@@ -236,11 +235,10 @@ public class ServiceComponentLocalServiceImpl
 	@Override
 	public void verifyDB() {
 		for (Object service : _upgradeStepServiceTracker.getServices()) {
-			ObjectValuePair<String, UpgradeStep> upgradeStepObjectValuePair =
-				(ObjectValuePair<String, UpgradeStep>)service;
+			UpgradeStepHolder upgradeStepHolder = (UpgradeStepHolder)service;
 
-			String servletContextName = upgradeStepObjectValuePair.getKey();
-			UpgradeStep upgradeStep = upgradeStepObjectValuePair.getValue();
+			String servletContextName = upgradeStepHolder._servletContextName;
+			UpgradeStep upgradeStep = upgradeStepHolder._upgradeStep;
 
 			Release release = releaseLocalService.fetchRelease(
 				servletContextName);
@@ -577,9 +575,8 @@ public class ServiceComponentLocalServiceImpl
 
 	private static final PACL _pacl = new NoPACL();
 
-	private final ServiceTracker
-		<UpgradeStep, ObjectValuePair<String, UpgradeStep>>
-			_upgradeStepServiceTracker;
+	private final ServiceTracker<UpgradeStep, UpgradeStepHolder>
+		_upgradeStepServiceTracker;
 
 	private static class NoPACL implements PACL {
 
@@ -594,12 +591,25 @@ public class ServiceComponentLocalServiceImpl
 
 	}
 
+	private static class UpgradeStepHolder {
+
+		private UpgradeStepHolder(
+			String servletContextName, UpgradeStep upgradeStep) {
+
+			_servletContextName = servletContextName;
+			_upgradeStep = upgradeStep;
+		}
+
+		private final String _servletContextName;
+		private final UpgradeStep _upgradeStep;
+
+	}
+
 	private static class UpgradeStepServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer
-			<UpgradeStep, ObjectValuePair<String, UpgradeStep>> {
+		implements ServiceTrackerCustomizer<UpgradeStep, UpgradeStepHolder> {
 
 		@Override
-		public ObjectValuePair<String, UpgradeStep> addingService(
+		public UpgradeStepHolder addingService(
 			ServiceReference<UpgradeStep> serviceReference) {
 
 			Registry registry = RegistryUtil.getRegistry();
@@ -609,13 +619,13 @@ public class ServiceComponentLocalServiceImpl
 			String servletContextName = (String)serviceReference.getProperty(
 				"upgrade.bundle.symbolic.name");
 
-			return new ObjectValuePair<>(servletContextName, upgradeStep);
+			return new UpgradeStepHolder(servletContextName, upgradeStep);
 		}
 
 		@Override
 		public void modifiedService(
 			ServiceReference<UpgradeStep> serviceReference,
-			ObjectValuePair<String, UpgradeStep> service) {
+			UpgradeStepHolder upgradeStepHolder) {
 
 			addingService(serviceReference);
 		}
@@ -623,7 +633,7 @@ public class ServiceComponentLocalServiceImpl
 		@Override
 		public void removedService(
 			ServiceReference<UpgradeStep> serviceReference,
-			ObjectValuePair<String, UpgradeStep> service) {
+			UpgradeStepHolder upgradeStepHolder) {
 		}
 
 	}

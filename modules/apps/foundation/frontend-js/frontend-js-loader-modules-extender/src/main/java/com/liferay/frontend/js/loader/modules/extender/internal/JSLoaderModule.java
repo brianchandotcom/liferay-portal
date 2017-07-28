@@ -251,7 +251,6 @@ public class JSLoaderModule {
 					generateMapsConfiguration(
 						_versionedConfiguration,
 						StringUtil.split(exportJSSubmodules)));
-
 			}
 		}
 		catch (IOException ioe) {

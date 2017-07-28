@@ -16,6 +16,8 @@ package com.liferay.portal.spring.extender.internal.context;
 
 import com.liferay.osgi.felix.util.AbstractExtender;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBContext;
 import com.liferay.portal.kernel.dao.db.DBManager;
@@ -388,7 +390,8 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 
 			_dependencyManager.add(_component);
 
-			_upgradeStepServiceRegistrations = _processInitialUpgrade();
+			_upgradeStepServiceRegistrations = _processInitialUpgrade(
+				classLoader);
 		}
 
 		private void _generateReleaseInfo() {
@@ -406,7 +409,7 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 		}
 
 		private List<ServiceRegistration<UpgradeStep>>
-			_processInitialUpgrade() {
+			_processInitialUpgrade(ClassLoader classLoader) {
 
 			Dictionary<String, String> headers = _bundle.getHeaders();
 
@@ -415,6 +418,25 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 				headers.get("Bundle-Version"));
 
 			Dictionary<String, Object> properties = new Hashtable<>();
+
+			try {
+				Configuration configuration =
+					ConfigurationFactoryUtil.getConfiguration(
+						classLoader, "service");
+
+				String buildNumber = configuration.get("build.number");
+
+				if (buildNumber != null) {
+					properties.put("build.number", buildNumber);
+				}
+			}
+			catch (Exception e) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unable to read service.properties for bundle " +
+							_bundle.getSymbolicName());
+				}
+			}
 
 			properties.put("upgrade.initial.database.creation", "true");
 

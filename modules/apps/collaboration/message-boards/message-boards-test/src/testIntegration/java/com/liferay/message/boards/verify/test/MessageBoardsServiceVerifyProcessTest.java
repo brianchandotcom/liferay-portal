@@ -12,10 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.verify;
+package com.liferay.message.boards.verify.test;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.verify.VerifyMessageBoards;
+import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.test.BaseVerifyProcessTestCase;
 
 import org.junit.ClassRule;
@@ -24,7 +26,8 @@ import org.junit.Rule;
 /**
  * @author Manuel de la Peña
  */
-public class VerifyMessageBoardsTest extends BaseVerifyProcessTestCase {
+public class MessageBoardsServiceVerifyProcessTest
+	extends BaseVerifyProcessTestCase {
 
 	@ClassRule
 	@Rule

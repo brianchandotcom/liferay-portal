@@ -40,20 +40,18 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.kernel.service.TrashEntryService;
 import com.liferay.trash.kernel.util.TrashUtil;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Alessio Antonio Rendina
@@ -238,6 +236,14 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "productTypeName");
 		String baseSKU = ParamUtil.getString(actionRequest, "baseSKU");
 		String layoutUuid = ParamUtil.getString(actionRequest, "layoutUuid");
+		int minCartQuantity = ParamUtil.getInteger(
+			actionRequest, "minCartQuantity");
+		int maxCartQuantity = ParamUtil.getInteger(
+			actionRequest, "maxCartQuantity");
+		String allowedCartQuantity = ParamUtil.getString(
+			actionRequest, "allowedCartQuantity");
+		int multipleCartQuantity = ParamUtil.getInteger(
+			actionRequest, "multipleCartQuantity");
 
 		int displayDateMonth = ParamUtil.getInteger(
 			actionRequest, "displayDateMonth");
@@ -287,8 +293,9 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 			cpDefinition = _cpDefinitionService.addCPDefinition(
 				baseSKU, titleMap, shortDescriptionMap, descriptionMap,
-				urlTitleMap, layoutUuid, productTypeName, null,
-				displayDateMonth, displayDateDay, displayDateYear,
+				urlTitleMap, layoutUuid, productTypeName, minCartQuantity,
+				maxCartQuantity, allowedCartQuantity, multipleCartQuantity,
+				null, displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
 				expirationDateMinute, neverExpire, serviceContext);
@@ -299,11 +306,12 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 			cpDefinition = _cpDefinitionService.updateCPDefinition(
 				cpDefinitionId, baseSKU, titleMap, shortDescriptionMap,
-				descriptionMap, urlTitleMap, layoutUuid, null, displayDateMonth,
-				displayDateDay, displayDateYear, displayDateHour,
-				displayDateMinute, expirationDateMonth, expirationDateDay,
-				expirationDateYear, expirationDateHour, expirationDateMinute,
-				neverExpire, serviceContext);
+				descriptionMap, urlTitleMap, layoutUuid, minCartQuantity,
+				maxCartQuantity, allowedCartQuantity, multipleCartQuantity,
+				null, displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, expirationDateMonth,
+				expirationDateDay, expirationDateYear, expirationDateHour,
+				expirationDateMinute, neverExpire, serviceContext);
 		}
 
 		return cpDefinition;

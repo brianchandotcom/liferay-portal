@@ -60,22 +60,23 @@ public class UpgradeSocial extends UpgradeProcess {
 	}
 
 	protected int getCounterIncrement() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (PreparedStatement ps1 = connection.prepareStatement(
 				"select currentId from Counter where name = ?")) {
 
-			ps.setString(1, Counter.class.getName());
+			ps1.setString(1, Counter.class.getName());
 
 			int counter = 0;
 
-			try (ResultSet rs = ps.executeQuery()) {
+			try (ResultSet rs = ps1.executeQuery()) {
 				if (rs.next()) {
 					counter = rs.getInt("currentId");
 				}
 			}
 
-			String query = "select max(activitySetId) from SocialActivitySet";
+			PreparedStatement ps2 = connection.prepareStatement(
+				"select max(activitySetId) from SocialActivitySet");
 
-			try (ResultSet rs = ps.executeQuery(query)) {
+			try (ResultSet rs = ps2.executeQuery()) {
 				if (rs.next()) {
 					return rs.getInt(1) - counter;
 				}

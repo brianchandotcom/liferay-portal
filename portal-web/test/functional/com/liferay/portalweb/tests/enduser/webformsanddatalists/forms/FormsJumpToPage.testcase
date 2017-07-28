@@ -246,7 +246,7 @@
 		<execute function="AssertTextEquals" locator1="FormRules#RULE_BUILDER_CONDITION_FIELD" value1="Edit Label" />
 	</command>
 
-	<command ignore="true" name="ViewRuleAfterOptionValueEdit" priority="3">
+	<command name="ViewRuleAfterOptionValueEdit" priority="3">
 		<description message="This is a use case for LPS-68227." />
 
 		<execute macro="FormsAdminNavigator#gotoEditField">

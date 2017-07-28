@@ -104,87 +104,44 @@ public class JSLoaderModule {
 		return _versionedConfiguration;
 	}
 
+	public String getVersionedMapsConfiguration() {
+		return _versionedMapsConfiguration;
+	}
+
 	protected String generateConfiguration(
 		JSONObject jsonObject, BundleWiring bundleWiring,
 		boolean versionedModuleName) {
 
-		if (!_applyVersioning) {
-			if (versionedModuleName) {
-				return "";
-			}
-
+		if (versionedModuleName) {
 			return jsonObject.toString();
 		}
+		else {
+			JSONObject jsonObject2 = new JSONObject();
 
-		List<BundleWire> bundleWires = bundleWiring.getRequiredWires(
-			Details.OSGI_WEBRESOURCE);
+			JSONArray namesJSONArray = jsonObject.names();
 
-		JSONArray namesJSONArray = jsonObject.names();
+			for (int i = 0; i < namesJSONArray.length(); i++) {
+				String name = (String)namesJSONArray.get(i);
 
-		if (namesJSONArray == null) {
-			return jsonObject.toString();
-		}
+				int x = name.indexOf('/');
 
-		for (int i = 0; i < namesJSONArray.length(); i++) {
-			String name = (String)namesJSONArray.get(i);
-
-			int x = name.indexOf('/');
-
-			if (x == -1) {
-				continue;
-			}
-
-			String moduleName = name.substring(0, x);
-
-			if (!moduleName.equals(getName())) {
-				continue;
-			}
-
-			String modulePath = name.substring(x);
-
-			moduleName = getName() + "@" + getVersion() + modulePath;
-
-			JSONObject nameJSONObject = jsonObject.getJSONObject(name);
-
-			JSONArray dependenciesJSONArray = nameJSONObject.getJSONArray(
-				"dependencies");
-
-			for (int j = 0; j < dependenciesJSONArray.length(); j++) {
-				String dependency = dependenciesJSONArray.getString(j);
-
-				int y = dependency.indexOf('/');
-
-				if (y == -1) {
+				if (x == -1) {
 					continue;
 				}
 
-				String dependencyName = dependency.substring(0, y);
-				String dependencyPath = dependency.substring(y);
+				JSONObject nameJSONObject = jsonObject.getJSONObject(name);
 
-				if (dependencyName.equals(getName())) {
-					dependencyName =
-						getName() + "@" + getVersion() + dependencyPath;
+				String packageName = name.substring(0, x);
 
-					dependenciesJSONArray.put(j, dependencyName);
-				}
-				else {
-					normalizeDependencies(
-						dependencyName, dependencyPath, dependenciesJSONArray,
-						j, bundleWires);
-				}
+				String[] packageNameParts = packageName.split("@");
+
+				String moduleName = packageNameParts[0] + name.substring(x);
+
+				jsonObject2.put(moduleName, nameJSONObject);
 			}
 
-			if (versionedModuleName) {
-				jsonObject.remove(name);
-
-				jsonObject.put(moduleName, nameJSONObject);
-			}
-			else {
-				jsonObject.put(name, nameJSONObject);
-			}
+			return jsonObject2.toString();
 		}
-
-		return jsonObject.toString();
 	}
 
 	protected String generateMapsConfiguration(
@@ -289,6 +246,12 @@ public class JSLoaderModule {
 					generateMapsConfiguration(
 						_unversionedConfiguration,
 						StringUtil.split(exportJSSubmodules)));
+
+				_versionedMapsConfiguration = normalize(
+					generateMapsConfiguration(
+						_versionedConfiguration,
+						StringUtil.split(exportJSSubmodules)));
+
 			}
 		}
 		catch (IOException ioe) {
@@ -304,5 +267,6 @@ public class JSLoaderModule {
 	private String _unversionedMapsConfiguration = "";
 	private final String _version;
 	private String _versionedConfiguration = "";
+	private String _versionedMapsConfiguration = "";
 
 }

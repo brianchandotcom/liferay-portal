@@ -25,4 +25,6 @@
 	__CONFIG__.namespace = 'Liferay';
 
 	__CONFIG__.exposeGlobal = Liferay.EXPOSE_GLOBAL;
+
+	__CONFIG__.ignoreModuleVersion = Liferay.IGNORE_MODULE_VERSION;
 }());

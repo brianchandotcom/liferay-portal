@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.IOException;
 
@@ -270,6 +271,10 @@ public class AdaptiveMediaImageRequestHandler
 				fileVersionPropertiesTupleOptional.get();
 
 			FileVersion fileVersion = fileVersionMapTuple.first;
+
+			if (fileVersion.getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
+				return Optional.empty();
+			}
 
 			Map<String, String> properties = fileVersionMapTuple.second;
 

@@ -391,9 +391,7 @@ public class NpmAnalyzerPlugin implements AnalyzerPlugin {
 				npmName = npmName.substring(1);
 			}
 
-			analyzer.setProperty(
-				WEB_CONTEXT_PATH,
-				'/' + npmName + "-" + analyzer.getBundleVersion());
+			analyzer.setProperty(WEB_CONTEXT_PATH, '/' + npmName);
 		}
 
 		attrs.put(_OSGI_WEBRESOURCE, npmName);

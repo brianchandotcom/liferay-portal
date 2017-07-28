@@ -67,7 +67,9 @@ public class AdaptedImagesPercentageMVCResourceCommand
 			_adaptiveMediaImageEntryLocalService.
 				getExpectedAdaptiveMediaImageEntriesCount(companyId);
 
-		jsonObject.put("adaptedImages", String.valueOf(entriesCount));
+		jsonObject.put(
+			"adaptedImages",
+			String.valueOf(Math.min(entriesCount, expectedEntriesCount)));
 
 		jsonObject.put("totalImages", String.valueOf(expectedEntriesCount));
 

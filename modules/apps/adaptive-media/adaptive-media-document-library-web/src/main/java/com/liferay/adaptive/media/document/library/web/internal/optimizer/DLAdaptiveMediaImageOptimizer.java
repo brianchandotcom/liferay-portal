@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageSende
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -37,6 +38,7 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
+import com.liferay.trash.kernel.service.TrashEntryLocalService;
 
 import java.util.Collection;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -99,8 +101,24 @@ public class DLAdaptiveMediaImageOptimizer
 
 				@Override
 				public void addCriteria(DynamicQuery dynamicQuery) {
+					DynamicQuery trashEntryDynamicQuery =
+						_trashEntryLocalService.dynamicQuery();
+
+					trashEntryDynamicQuery.setProjection(
+						ProjectionFactoryUtil.property("classPK"));
+
 					Property companyIdProperty = PropertyFactoryUtil.forName(
 						"companyId");
+
+					trashEntryDynamicQuery.add(companyIdProperty.eq(companyId));
+
+					Property classNameIdProperty = PropertyFactoryUtil.forName(
+						"classNameId");
+
+					trashEntryDynamicQuery.add(
+						classNameIdProperty.eq(
+							_classNameLocalService.getClassNameId(
+								DLFileEntry.class)));
 
 					dynamicQuery.add(companyIdProperty.eq(companyId));
 
@@ -119,6 +137,12 @@ public class DLAdaptiveMediaImageOptimizer
 						mimeTypeProperty.in(
 							AdaptiveMediaImageConstants.
 								getSupportedMimeTypes()));
+
+					Property fileEntryIdProperty = PropertyFactoryUtil.forName(
+						"fileEntryId");
+
+					dynamicQuery.add(
+						fileEntryIdProperty.notIn(trashEntryDynamicQuery));
 				}
 
 			});
@@ -199,5 +223,8 @@ public class DLAdaptiveMediaImageOptimizer
 
 	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Reference
+	private TrashEntryLocalService _trashEntryLocalService;
 
 }

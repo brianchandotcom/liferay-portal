@@ -8,3 +8,4 @@ Provide-Capability:\
 Require-Capability:\
 	soy;\
 		filter:="(type=metal)"
+Web-ContextPath: /frontend-image-editor-capability-brightness

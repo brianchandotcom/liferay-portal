@@ -83,7 +83,14 @@ if (ListUtil.isNotEmpty(selectedConfigurationEntries)) {
 							<liferay-ui:message key="adapted-images" />
 						</dt>
 						<dd class="h6 sidebar-caption">
-							<%= AdaptiveMediaImageEntryLocalServiceUtil.getAdaptiveMediaImageEntriesCount(themeDisplay.getCompanyId(), configurationEntry.getUUID()) + "/" + AdaptiveMediaImageEntryLocalServiceUtil.getExpectedAdaptiveMediaImageEntriesCount(themeDisplay.getCompanyId()) %>
+
+							<%
+							int adaptedImages = AdaptiveMediaImageEntryLocalServiceUtil.getAdaptiveMediaImageEntriesCount(themeDisplay.getCompanyId(), configurationEntry.getUUID());
+
+							int totalImages = AdaptiveMediaImageEntryLocalServiceUtil.getExpectedAdaptiveMediaImageEntriesCount(themeDisplay.getCompanyId());
+							%>
+
+							<%= Math.min(adaptedImages, totalImages) + "/" + totalImages %>
 						</dd>
 
 						<%

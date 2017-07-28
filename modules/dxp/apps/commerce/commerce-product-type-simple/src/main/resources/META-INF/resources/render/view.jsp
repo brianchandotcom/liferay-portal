@@ -75,6 +75,22 @@ CPDefinition cpDefinition = cpTypeDisplayContext.getCPDefinition();
 					<div class="col-md-12">
 						<div class="options">
 							<%= cpTypeDisplayContext.renderOptions(renderRequest, renderResponse) %>
+
+							<aui:script>
+								Liferay.on(
+									'<%= cpTypeDisplayContext.getCPDefinitionId() %>DDMForm:render',
+									function(event) {
+										var form = event.form;
+
+										form.after(
+											"*:valueChange",
+											function(valueChangeEvent) {
+												console.log("test", valueChangeEvent);
+											}
+										);
+									}
+								);
+							</aui:script>
 						</div>
 					</div>
 				</div>

@@ -1821,6 +1821,10 @@ elements.
 
 ## 5.0.0 - 2017-07-31
 
+### Added
+- [LPS-73655]: Add support in `CopyIvyDependenciesTask` for the `transitive`
+attribute in Ivy `<dependency>` elements.
+
 ### Changed
 - [LPS-63943]: Show `mergeArtifactsPublishCommands` messages at log level
 `QUIET` instead of `LIFECYCLE`.

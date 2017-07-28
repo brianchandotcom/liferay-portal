@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTableListener;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -238,6 +239,7 @@ public class ServiceComponentLocalServiceImpl
 			UpgradeStepHolder upgradeStepHolder = (UpgradeStepHolder)service;
 
 			String servletContextName = upgradeStepHolder._servletContextName;
+			int buildNumber = upgradeStepHolder._buildNumber;
 			UpgradeStep upgradeStep = upgradeStepHolder._upgradeStep;
 
 			Release release = releaseLocalService.fetchRelease(
@@ -267,6 +269,12 @@ public class ServiceComponentLocalServiceImpl
 
 				releaseLocalService.updateRelease(
 					servletContextName, "0.0.1", "0.0.0");
+
+				release = releaseLocalService.fetchRelease(servletContextName);
+
+				release.setBuildNumber(buildNumber);
+
+				releaseLocalService.updateRelease(release);
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -594,12 +602,15 @@ public class ServiceComponentLocalServiceImpl
 	private static class UpgradeStepHolder {
 
 		private UpgradeStepHolder(
-			String servletContextName, UpgradeStep upgradeStep) {
+			String servletContextName, int buildNumber,
+			UpgradeStep upgradeStep) {
 
 			_servletContextName = servletContextName;
+			_buildNumber = buildNumber;
 			_upgradeStep = upgradeStep;
 		}
 
+		private int _buildNumber;
 		private final String _servletContextName;
 		private final UpgradeStep _upgradeStep;
 
@@ -612,14 +623,17 @@ public class ServiceComponentLocalServiceImpl
 		public UpgradeStepHolder addingService(
 			ServiceReference<UpgradeStep> serviceReference) {
 
+			String servletContextName = (String)serviceReference.getProperty(
+				"upgrade.bundle.symbolic.name");
+			int buildNumber = GetterUtil.getInteger(
+				serviceReference.getProperty("build.number"));
+
 			Registry registry = RegistryUtil.getRegistry();
 
 			UpgradeStep upgradeStep = registry.getService(serviceReference);
 
-			String servletContextName = (String)serviceReference.getProperty(
-				"upgrade.bundle.symbolic.name");
-
-			return new UpgradeStepHolder(servletContextName, upgradeStep);
+			return new UpgradeStepHolder(
+				servletContextName, buildNumber, upgradeStep);
 		}
 
 		@Override

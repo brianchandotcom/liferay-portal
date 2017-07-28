@@ -40,19 +40,20 @@ public class UpgradeStepRegistratorTrackerTest {
 		Assert.assertEquals(upgradeInfos.toString(), 4, upgradeInfos.size());
 		Assert.assertEquals(
 			Arrays.asList(
-				new UpgradeInfo("0.0.0", "1.0.0-step-3", testUpgradeStep),
+				new UpgradeInfo("0.0.0", "1.0.0-step-3", 0, testUpgradeStep),
 				new UpgradeInfo(
-					"1.0.0-step-3", "1.0.0-step-2", testUpgradeStep),
+					"1.0.0-step-3", "1.0.0-step-2", 0, testUpgradeStep),
 				new UpgradeInfo(
-					"1.0.0-step-2", "1.0.0-step-1", testUpgradeStep),
-				new UpgradeInfo("1.0.0-step-1", "1.0.0", testUpgradeStep)),
+					"1.0.0-step-2", "1.0.0-step-1", 0, testUpgradeStep),
+				new UpgradeInfo("1.0.0-step-1", "1.0.0", 0, testUpgradeStep)),
 			upgradeInfos);
 	}
 
 	@Test
 	public void testCreateUpgradeInfosWithNoSteps() {
 		List<UpgradeInfo> upgradeInfos =
-			UpgradeStepRegistratorTracker.createUpgradeInfos("0.0.0", "1.0.0");
+			UpgradeStepRegistratorTracker.createUpgradeInfos(
+				"0.0.0", "1.0.0", 0);
 
 		Assert.assertTrue(upgradeInfos.isEmpty());
 	}
@@ -67,7 +68,7 @@ public class UpgradeStepRegistratorTrackerTest {
 
 		Assert.assertEquals(upgradeInfos.toString(), 1, upgradeInfos.size());
 		Assert.assertEquals(
-			new UpgradeInfo("0.0.0", "1.0.0", testUpgradeStep),
+			new UpgradeInfo("0.0.0", "1.0.0", 0, testUpgradeStep),
 			upgradeInfos.get(0));
 	}
 

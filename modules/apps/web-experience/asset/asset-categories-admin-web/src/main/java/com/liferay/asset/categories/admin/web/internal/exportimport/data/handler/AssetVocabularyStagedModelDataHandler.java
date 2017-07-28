@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -312,11 +311,13 @@ public class AssetVocabularyStagedModelDataHandler
 
 		Map<Locale, String> titleMap = vocabulary.getTitleMap();
 
-		if (titleMap == null) {
-			titleMap = new HashMap<>();
-		}
+		Locale locale = _portal.getSiteDefaultLocale(groupId);
 
-		titleMap.put(_portal.getSiteDefaultLocale(groupId), name);
+		if (titleMap.isEmpty() || !vocabulary.getName().equals(name) ||
+			!titleMap.containsKey(locale)) {
+
+			titleMap.put(locale, name);
+		}
 
 		return titleMap;
 	}

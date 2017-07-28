@@ -1227,6 +1227,15 @@ public class HttpImpl implements Http {
 
 		StringBundler sb = new StringBundler();
 
+		String[] parts = StringUtil.split(url, CharPool.QUESTION);
+
+		if (parts.length == 2) {
+			sb.append(parts[0]);
+			sb.append(CharPool.QUESTION);
+
+			url = parts[1];
+		}
+
 		String[] params = StringUtil.split(url, CharPool.AMPERSAND);
 
 		for (int i = 0; i < params.length; i++) {

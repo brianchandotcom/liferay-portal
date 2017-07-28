@@ -33,10 +33,17 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Daniel Kocsis
  */
+@Component(
+	immediate = true,
+	property = {"verify.process.name=com.liferay.organizations.service"},
+	service = {VerifyProcess.class}
+)
 public class OrganizationServiceVerifyProcess extends VerifyProcess {
 
 	@Override

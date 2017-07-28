@@ -2751,7 +2751,9 @@
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#RESTORE" value1="Restore" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Restore">
+			<var name="key_menuItem" value="Restore" />
+		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />
 
@@ -2787,7 +2789,9 @@
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#RESTORE" value1="Restore" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Restore">
+			<var name="key_menuItem" value="Restore" />
+		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />
 
@@ -2823,7 +2827,9 @@
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#RESTORE" value1="Restore" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Restore">
+			<var name="key_menuItem" value="Restore" />
+		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />
 

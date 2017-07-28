@@ -113,6 +113,14 @@ SUBREPO_SEARCH_PARAMETERS=(
 	"master:../..:modules/apps"
 )
 
+for SUBREPO_SEARCH_PARAMETER in "${SUBREPO_SEARCH_PARAMETERS[@]}"
+do
+	BRANCH_NAME="${SUBREPO_SEARCH_PARAMETER%%:*}"
+	REPO_PATH="$(echo "${SUBREPO_SEARCH_PARAMETER}" | sed 's/:[^:]*$//' | sed 's/.*://')"
+
+	git -C "${REPO_PATH}" fetch -fq upstream "${BRANCH_NAME}:refs/remotes/upstream/${BRANCH_NAME}"
+done
+
 if [[ "${SUBREPO_NAME}" ]]
 then
 	GITREPO_BRANCHES=()
@@ -123,7 +131,7 @@ then
 		REPO_PATH="$(echo "${SUBREPO_SEARCH_PARAMETER}" | sed 's/:[^:]*$//' | sed 's/.*://')"
 		SUBREPOS_PATH="${SUBREPO_SEARCH_PARAMETER##*:}"
 
-		GITREPO_SEARCH="$(git -C "${REPO_PATH}" grep "/${SUBREPO_NAME}.git" "${BRANCH_NAME}" -- '*.gitrepo' | grep ":${SUBREPOS_PATH}/" | tr '\t' ' ' | sed 's@: .*/@:@' | sed 's/\.git$//')"
+		GITREPO_SEARCH="$(git -C "${REPO_PATH}" grep "/${SUBREPO_NAME}.git" "refs/remotes/upstream/${BRANCH_NAME}" -- '*.gitrepo' | grep ":${SUBREPOS_PATH}/" | tr '\t' ' ' | sed 's@: .*/@:@' | sed 's/\.git$//' | sed 's@refs/remotes/upstream/@@')"
 
 		if [[ -z "${GITREPO_SEARCH}" ]]
 		then
@@ -146,7 +154,7 @@ else
 		REPO_PATH="$(echo "${SUBREPO_SEARCH_PARAMETER}" | sed 's/:[^:]*$//' | sed 's/.*://')"
 		SUBREPOS_PATH="${SUBREPO_SEARCH_PARAMETER##*:}"
 
-		SUBREPO_SEARCH=($(git -C "${REPO_PATH}" grep -l 'mode.*=.*pull' "${BRANCH_NAME}" -- '*.gitrepo' | grep ":${SUBREPOS_PATH}/" | sed 's/.*://' | xargs git -C "${REPO_PATH}" grep 'git@github.com' "${BRANCH_NAME}" -- | tr '\t' ' ' | sed 's@: .*/@:@' | sed 's/\.git$//'))
+		SUBREPO_SEARCH=($(git -C "${REPO_PATH}" grep -l 'mode.*=.*pull' "refs/remotes/upstream/${BRANCH_NAME}" -- '*.gitrepo' | grep ":${SUBREPOS_PATH}/" | sed 's/.*://' | xargs git -C "${REPO_PATH}" grep 'git@github.com' "refs/remotes/upstream/${BRANCH_NAME}" -- | tr '\t' ' ' | sed 's@: .*/@:@' | sed 's/\.git$//' | sed 's@refs/remotes/upstream/@@'))
 
 		ALL_SUBREPOS=("${ALL_SUBREPOS[@]}" "${SUBREPO_SEARCH[@]}")
 	done
@@ -221,11 +229,13 @@ do
 
 	if [[ -z $(git -C "${SUBREPO_PATH}" show "${SUBREPO_COMMIT}" 2>/dev/null) ]]
 	then
-		git -C "${SUBREPO_PATH}" fetch -q "git@github.com:liferay/${SUBREPO_NAME}" "${SUBREPO_COMMIT}"
+		git -C "${SUBREPO_PATH}" fetch -q "git@github.com:liferay/${SUBREPO_NAME}.git" "${SUBREPO_COMMIT}"
 
 		if [[ -z $(git -C "${SUBREPO_PATH}" show "${SUBREPO_COMMIT}" 2>/dev/null) ]]
 		then
-			warn "Skipping ${SUBREPO_NAME}:${SUBREPO_BRANCH}, failed to fetch sha subrepo sha ${SUBREPO_COMMIT}."
+			warn "Skipping ${SUBREPO_NAME}:${SUBREPO_BRANCH}, failed to fetch sha subrepo sha ${SUBREPO_COMMIT}"
+
+			continue
 		fi
 	fi
 

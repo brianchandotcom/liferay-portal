@@ -19,7 +19,7 @@ import com.liferay.adaptive.media.exception.AdaptiveMediaRuntimeException;
 import com.liferay.adaptive.media.image.configuration.AdaptiveMediaImageConfigurationEntry;
 import com.liferay.adaptive.media.image.configuration.AdaptiveMediaImageConfigurationHelper;
 import com.liferay.adaptive.media.image.internal.util.Tuple;
-import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -55,7 +55,7 @@ public class PathInterpreter {
 
 			long fileEntryId = Long.valueOf(matcher.group(1));
 
-			FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
+			FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
 
 			long fileVersionId = _getFileVersionId(matcher);
 
@@ -103,8 +103,8 @@ public class PathInterpreter {
 	}
 
 	@Reference(unbind = "-")
-	public void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
-		_dlAppLocalService = dlAppLocalService;
+	public void setDLAppService(DLAppService dlAppService) {
+		_dlAppService = dlAppService;
 	}
 
 	private String _getConfigurationEntryUUID(Matcher matcher) {
@@ -118,7 +118,7 @@ public class PathInterpreter {
 			return fileEntry.getFileVersion();
 		}
 
-		return _dlAppLocalService.getFileVersion(fileVersionId);
+		return _dlAppService.getFileVersion(fileVersionId);
 	}
 
 	private long _getFileVersionId(Matcher matcher) {
@@ -133,6 +133,6 @@ public class PathInterpreter {
 		"/image/(\\d+)(?:/(\\d+))?/([^/]+)/(?:[^/]+)");
 
 	private AdaptiveMediaImageConfigurationHelper _configurationHelper;
-	private DLAppLocalService _dlAppLocalService;
+	private DLAppService _dlAppService;
 
 }

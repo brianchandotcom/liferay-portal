@@ -89,4 +89,12 @@
 
 		<execute function="Check" locator1="CommerceEntry#${checkboxLocator2}_CHECKBOX" value1="${cpOption2}" />
 	</command>
+
+	<command name="viewOptionsEntry">
+		<execute function="AssertTextEquals" locator1="CommerceEntry#TITLE_FIELD" value1="${optionTitle}" />
+
+		<execute function="AssertTextEquals" locator1="CommerceEntry#DESCRIPTION_FIELD" value1="${optionDescription}" />
+
+		<execute function="AssertTextEquals" locator1="CommerceEntry#KEY_FIELD" value1="${optionKey}" />
+	</command>
 </definition>

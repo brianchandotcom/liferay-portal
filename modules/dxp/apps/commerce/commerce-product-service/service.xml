@@ -96,6 +96,10 @@
 		<column name="baseSKU" type="String" />
 		<column name="productTypeName" type="String" />
 		<column name="availableIndividually" type="boolean" />
+		<column name="minCartQuantity" type="int" />
+		<column name="maxCartQuantity" type="int" />
+		<column name="allowedCartQuantity" type="String" />
+		<column name="multipleCartQuantity" type="int" />
 		<column name="DDMStructureKey" type="String" />
 		<column name="displayDate" type="Date" />
 		<column name="expirationDate" type="Date" />

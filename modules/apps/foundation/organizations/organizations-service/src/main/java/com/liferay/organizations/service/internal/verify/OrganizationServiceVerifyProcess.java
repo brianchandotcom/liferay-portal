@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.verify;
+package com.liferay.organizations.service.internal.verify;
 
 import com.liferay.portal.kernel.concurrent.ThrowableAwareRunnable;
 import com.liferay.portal.kernel.concurrent.ThrowableAwareRunnablesExecutorUtil;
@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.util.PortalInstances;
+import com.liferay.portal.verify.VerifyProcess;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -36,7 +37,7 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  * @author Daniel Kocsis
  */
-public class VerifyOrganization extends VerifyProcess {
+public class OrganizationServiceVerifyProcess extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
@@ -165,6 +166,6 @@ public class VerifyOrganization extends VerifyProcess {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		VerifyOrganization.class);
+		OrganizationServiceVerifyProcess.class);
 
 }

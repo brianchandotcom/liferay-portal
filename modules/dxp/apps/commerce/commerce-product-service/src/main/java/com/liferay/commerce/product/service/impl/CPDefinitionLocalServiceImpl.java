@@ -92,7 +92,9 @@ public class CPDefinitionLocalServiceImpl
 			String baseSKU, Map<Locale, String> titleMap,
 			Map<Locale, String> shortDescriptionMap,
 			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
-			String layoutUuid, String productTypeName, String ddmStructureKey,
+			String layoutUuid, String productTypeName, int minCartQuantity,
+			int maxCartQuantity, String allowedCartQuantity,
+			int multipleCartQuantity, String ddmStructureKey,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
@@ -137,6 +139,10 @@ public class CPDefinitionLocalServiceImpl
 		cpDefinition.setUserName(user.getFullName());
 		cpDefinition.setBaseSKU(baseSKU);
 		cpDefinition.setProductTypeName(productTypeName);
+		cpDefinition.setMinCartQuantity(minCartQuantity);
+		cpDefinition.setMaxCartQuantity(maxCartQuantity);
+		cpDefinition.setAllowedCartQuantity(allowedCartQuantity);
+		cpDefinition.setMultipleCartQuantity(multipleCartQuantity);
 		cpDefinition.setDDMStructureKey(ddmStructureKey);
 		cpDefinition.setDefaultLanguageId(LocaleUtil.toLanguageId(locale));
 		cpDefinition.setDisplayDate(displayDate);
@@ -672,12 +678,14 @@ public class CPDefinitionLocalServiceImpl
 			long cpDefinitionId, String baseSKU, Map<Locale, String> titleMap,
 			Map<Locale, String> shortDescriptionMap,
 			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
-			String layoutUuid, String ddmStructureKey, int displayDateMonth,
-			int displayDateDay, int displayDateYear, int displayDateHour,
-			int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, ServiceContext serviceContext)
+			String layoutUuid, int minCartQuantity, int maxCartQuantity,
+			String allowedCartQuantity, int multipleCartQuantity,
+			String ddmStructureKey, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product definition
@@ -706,6 +714,10 @@ public class CPDefinitionLocalServiceImpl
 		validate(groupId, ddmStructureKey, cpDefinition.getProductTypeName());
 
 		cpDefinition.setBaseSKU(baseSKU);
+		cpDefinition.setMinCartQuantity(minCartQuantity);
+		cpDefinition.setMaxCartQuantity(maxCartQuantity);
+		cpDefinition.setAllowedCartQuantity(allowedCartQuantity);
+		cpDefinition.setMultipleCartQuantity(multipleCartQuantity);
 		cpDefinition.setDDMStructureKey(ddmStructureKey);
 		cpDefinition.setDisplayDate(displayDate);
 		cpDefinition.setExpirationDate(expirationDate);

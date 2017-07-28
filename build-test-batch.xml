@@ -2796,7 +2796,7 @@ information. Make sure to commit in all build services results.
 		</run-batch-test>
 	</target>
 
-	<target name="slim-profile-test-jdk8">
+	<target name="slim-profile-jdk8">
 		<run-batch-test>
 			<test-action>
 				<ant dir="." target="all" >

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.ServiceComponent;
 import com.liferay.portal.kernel.service.configuration.ServiceComponentConfiguration;
+import com.liferay.portal.kernel.service.configuration.servlet.ServletServiceContextComponentConfiguration;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
@@ -205,9 +206,35 @@ public class ServiceComponentLocalServiceImpl
 
 			serviceComponentPersistence.update(serviceComponent);
 
-			serviceComponentLocalService.upgradeDB(
-				classLoader, buildNamespace, buildNumber, buildAutoUpgrade,
-				previousServiceComponent, tablesSQL, sequencesSQL, indexesSQL);
+			Release release = releaseLocalService.fetchRelease(
+				serviceComponentConfiguration.getServletContextName());
+
+			int previousBuildNumber = 0;
+
+			if (release == null) {
+				release = releaseLocalService.addRelease(
+					serviceComponentConfiguration.getServletContextName(),
+					(int)buildNumber);
+			}
+			else {
+				previousBuildNumber = release.getBuildNumber();
+
+				release.setBuildNumber((int)buildNumber);
+
+				releaseLocalService.updateRelease(release);
+			}
+
+			if (((serviceComponentConfiguration instanceof
+					ServletServiceContextComponentConfiguration) &&
+				 (previousServiceComponent == null)) ||
+				((previousBuildNumber < buildNumber) &&
+				 (previousServiceComponent != null))) {
+
+				serviceComponentLocalService.upgradeDB(
+					classLoader, buildNamespace, buildNumber, buildAutoUpgrade,
+					previousServiceComponent, tablesSQL, sequencesSQL,
+					indexesSQL);
+			}
 
 			removeOldServiceComponents(buildNamespace);
 

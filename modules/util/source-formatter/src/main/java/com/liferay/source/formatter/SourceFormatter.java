@@ -422,18 +422,13 @@ public class SourceFormatter {
 					continue;
 				}
 
-				if (key.contains("excludes")) {
-					String existingValue = _properties.getProperty(key);
+				String existingValue = _properties.getProperty(key);
 
-					if (Validator.isNotNull(existingValue)) {
-						value = existingValue + StringPool.COMMA + value;
-					}
+				if (Validator.isNotNull(existingValue)) {
+					value = existingValue + StringPool.COMMA + value;
+				}
 
-					_properties.put(key, value);
-				}
-				else if (!_properties.containsKey(key)) {
-					_properties.put(key, value);
-				}
+				_properties.put(key, value);
 			}
 		}
 	}

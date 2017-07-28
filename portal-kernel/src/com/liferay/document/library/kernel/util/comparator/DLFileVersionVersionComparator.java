@@ -24,10 +24,34 @@ import java.util.Comparator;
 public class DLFileVersionVersionComparator
 	implements Comparator<DLFileVersion> {
 
+	public static final DLFileVersionVersionComparator INSTANCE_ASCENDING =
+		new DLFileVersionVersionComparator(Boolean.TRUE);
+
+	public static final DLFileVersionVersionComparator INSTANCE_DESCENDING =
+		new DLFileVersionVersionComparator(Boolean.FALSE);
+
+	public static DLFileVersionVersionComparator getInstance(
+		boolean ascending) {
+
+		if (ascending) {
+			return INSTANCE_ASCENDING;
+		}
+
+		return INSTANCE_DESCENDING;
+	}
+
+	/**
+	 * @deprecated As of 2.0.0, replaced by {@link #INSTANCE_DESCENDING}
+	 */
+	@Deprecated
 	public DLFileVersionVersionComparator() {
 		this(false);
 	}
 
+	/**
+	 * @deprecated As of 2.0.0, replaced by {@link #getInstance(boolean)}
+	 */
+	@Deprecated
 	public DLFileVersionVersionComparator(boolean ascending) {
 		_versionNumberComparator = new VersionNumberComparator(ascending);
 	}
@@ -42,6 +66,10 @@ public class DLFileVersionVersionComparator
 
 	public boolean isAscending() {
 		return _versionNumberComparator.isAscending();
+	}
+
+	private DLFileVersionVersionComparator(Boolean ascending) {
+		_versionNumberComparator = new VersionNumberComparator(ascending);
 	}
 
 	private final VersionNumberComparator _versionNumberComparator;

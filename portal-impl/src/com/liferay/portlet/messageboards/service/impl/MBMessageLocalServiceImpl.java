@@ -952,7 +952,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		return getDiscussionMessageDisplay(
 			userId, groupId, className, classPK, status,
-			new MessageThreadComparator());
+			MessageThreadComparator.INSTANCE_ASCENDING);
 	}
 
 	@Override
@@ -1182,7 +1182,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		throws PortalException {
 
 		return getMessageDisplay(
-			userId, message, status, new MessageThreadComparator());
+			userId, message, status,
+			MessageThreadComparator.INSTANCE_ASCENDING);
 	}
 
 	@Override
@@ -1244,7 +1245,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		return getMessageDisplay(
 			userId, message, status, threadView, includePrevAndNext,
-			new MessageThreadComparator());
+			MessageThreadComparator.INSTANCE_ASCENDING);
 	}
 
 	/**
@@ -1298,7 +1299,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	@Override
 	public List<MBMessage> getThreadMessages(long threadId, int status) {
 		return getThreadMessages(
-			threadId, status, new MessageThreadComparator());
+			threadId, status, MessageThreadComparator.INSTANCE_ASCENDING);
 	}
 
 	@Override

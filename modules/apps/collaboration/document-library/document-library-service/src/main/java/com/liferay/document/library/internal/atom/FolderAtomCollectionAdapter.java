@@ -152,7 +152,7 @@ public class FolderAtomCollectionAdapter
 
 		return _dlAppService.getFolders(
 			repositoryId, parentFolderId, atomPager.getStart(),
-			atomPager.getEnd() + 1, new FolderNameComparator());
+			atomPager.getEnd() + 1, FolderNameComparator.INSTANCE_DESCENDING);
 	}
 
 	@Override

@@ -50,7 +50,8 @@ public class DLFileVersionLocalServiceImpl
 
 		dlFileVersions = ListUtil.copy(dlFileVersions);
 
-		Collections.sort(dlFileVersions, new DLFileVersionVersionComparator());
+		Collections.sort(
+			dlFileVersions, DLFileVersionVersionComparator.INSTANCE_DESCENDING);
 
 		DLFileVersion dlFileVersion = dlFileVersions.get(0);
 
@@ -101,7 +102,8 @@ public class DLFileVersionLocalServiceImpl
 
 		dlFileVersions = ListUtil.copy(dlFileVersions);
 
-		Collections.sort(dlFileVersions, new DLFileVersionVersionComparator());
+		Collections.sort(
+			dlFileVersions, DLFileVersionVersionComparator.INSTANCE_DESCENDING);
 
 		return dlFileVersions;
 	}

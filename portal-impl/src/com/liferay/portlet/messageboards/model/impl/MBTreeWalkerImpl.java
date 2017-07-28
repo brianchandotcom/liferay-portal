@@ -96,7 +96,7 @@ public class MBTreeWalkerImpl implements MBTreeWalker {
 
 		this(
 			message.getThreadId(), status, messageLocalService,
-			new MessageThreadComparator());
+			MessageThreadComparator.INSTANCE_ASCENDING);
 	}
 
 	@Override

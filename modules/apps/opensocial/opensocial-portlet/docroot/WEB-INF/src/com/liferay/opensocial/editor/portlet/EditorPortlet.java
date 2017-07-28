@@ -315,7 +315,8 @@ public class EditorPortlet extends AdminPortlet {
 		List<Folder> folders = DLAppServiceUtil.getFolders(
 			repositoryId, folderId);
 
-		folders = ListUtil.sort(folders, new FolderNameComparator(true));
+		folders = ListUtil.sort(
+			folders, FolderNameComparator.INSTANCE_ASCENDING);
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 

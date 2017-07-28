@@ -27,10 +27,32 @@ import java.util.Comparator;
 public class MessageThreadComparator
 	implements Comparator<MBMessage>, Serializable {
 
+	public static final MessageThreadComparator INSTANCE_ASCENDING =
+		new MessageThreadComparator(Boolean.TRUE);
+
+	public static final MessageThreadComparator INSTANCE_DESCENDING =
+		new MessageThreadComparator(Boolean.FALSE);
+
+	public static MessageThreadComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return INSTANCE_ASCENDING;
+		}
+
+		return INSTANCE_DESCENDING;
+	}
+
+	/**
+	 * @deprecated As of 2.0.0, replaced by {@link #INSTANCE_ASCENDING}
+	 */
+	@Deprecated
 	public MessageThreadComparator() {
 		this(true);
 	}
 
+	/**
+	 * @deprecated As of 2.0.0, replaced by {@link #getInstance(boolean)}
+	 */
+	@Deprecated
 	public MessageThreadComparator(boolean ascending) {
 		_ascending = ascending;
 	}
@@ -60,6 +82,10 @@ public class MessageThreadComparator
 		else {
 			return -value;
 		}
+	}
+
+	private MessageThreadComparator(Boolean ascending) {
+		_ascending = ascending;
 	}
 
 	private final boolean _ascending;

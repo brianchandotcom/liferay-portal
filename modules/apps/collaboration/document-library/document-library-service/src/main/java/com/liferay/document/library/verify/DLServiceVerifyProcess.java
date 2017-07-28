@@ -458,7 +458,8 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 
 		dlFileVersions = ListUtil.copy(dlFileVersions);
 
-		Collections.sort(dlFileVersions, new DLFileVersionVersionComparator());
+		Collections.sort(
+			dlFileVersions, DLFileVersionVersionComparator.INSTANCE_DESCENDING);
 
 		DLFileVersion dlFileVersion = dlFileVersions.get(0);
 

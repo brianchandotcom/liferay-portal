@@ -192,7 +192,7 @@ public class MBCommentManagerImpl implements CommentManager {
 			_mbMessageLocalService.getDiscussionMessageDisplay(
 				userId, mbMessage.getGroupId(), mbMessage.getClassName(),
 				mbMessage.getClassPK(), WorkflowConstants.STATUS_ANY,
-				new MessageThreadComparator());
+				MessageThreadComparator.INSTANCE_ASCENDING);
 
 		return getDiscussionComment(userId, messageDisplay);
 	}
@@ -214,7 +214,8 @@ public class MBCommentManagerImpl implements CommentManager {
 		MBMessageDisplay messageDisplay =
 			_mbMessageLocalService.getDiscussionMessageDisplay(
 				userId, groupId, className, classPK,
-				WorkflowConstants.STATUS_ANY, new MessageThreadComparator());
+				WorkflowConstants.STATUS_ANY,
+				MessageThreadComparator.INSTANCE_ASCENDING);
 
 		DiscussionComment rootDiscussionComment = getDiscussionComment(
 			userId, messageDisplay);

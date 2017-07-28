@@ -66,7 +66,7 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -90,6 +90,14 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		sb.append(productTypeName);
 		sb.append(", availableIndividually=");
 		sb.append(availableIndividually);
+		sb.append(", minCartQuantity=");
+		sb.append(minCartQuantity);
+		sb.append(", maxCartQuantity=");
+		sb.append(maxCartQuantity);
+		sb.append(", allowedCartQuantity=");
+		sb.append(allowedCartQuantity);
+		sb.append(", multipleCartQuantity=");
+		sb.append(multipleCartQuantity);
 		sb.append(", DDMStructureKey=");
 		sb.append(DDMStructureKey);
 		sb.append(", displayDate=");
@@ -165,6 +173,17 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		}
 
 		cpDefinitionImpl.setAvailableIndividually(availableIndividually);
+		cpDefinitionImpl.setMinCartQuantity(minCartQuantity);
+		cpDefinitionImpl.setMaxCartQuantity(maxCartQuantity);
+
+		if (allowedCartQuantity == null) {
+			cpDefinitionImpl.setAllowedCartQuantity(StringPool.BLANK);
+		}
+		else {
+			cpDefinitionImpl.setAllowedCartQuantity(allowedCartQuantity);
+		}
+
+		cpDefinitionImpl.setMultipleCartQuantity(multipleCartQuantity);
 
 		if (DDMStructureKey == null) {
 			cpDefinitionImpl.setDDMStructureKey(StringPool.BLANK);
@@ -241,6 +260,13 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		productTypeName = objectInput.readUTF();
 
 		availableIndividually = objectInput.readBoolean();
+
+		minCartQuantity = objectInput.readInt();
+
+		maxCartQuantity = objectInput.readInt();
+		allowedCartQuantity = objectInput.readUTF();
+
+		multipleCartQuantity = objectInput.readInt();
 		DDMStructureKey = objectInput.readUTF();
 		displayDate = objectInput.readLong();
 		expirationDate = objectInput.readLong();
@@ -298,6 +324,19 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 
 		objectOutput.writeBoolean(availableIndividually);
 
+		objectOutput.writeInt(minCartQuantity);
+
+		objectOutput.writeInt(maxCartQuantity);
+
+		if (allowedCartQuantity == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(allowedCartQuantity);
+		}
+
+		objectOutput.writeInt(multipleCartQuantity);
+
 		if (DDMStructureKey == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -341,6 +380,10 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 	public String baseSKU;
 	public String productTypeName;
 	public boolean availableIndividually;
+	public int minCartQuantity;
+	public int maxCartQuantity;
+	public String allowedCartQuantity;
+	public int multipleCartQuantity;
 	public String DDMStructureKey;
 	public long displayDate;
 	public long expirationDate;

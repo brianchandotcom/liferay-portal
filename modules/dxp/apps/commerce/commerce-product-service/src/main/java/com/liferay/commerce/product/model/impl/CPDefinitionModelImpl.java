@@ -94,6 +94,10 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 			{ "baseSKU", Types.VARCHAR },
 			{ "productTypeName", Types.VARCHAR },
 			{ "availableIndividually", Types.BOOLEAN },
+			{ "minCartQuantity", Types.INTEGER },
+			{ "maxCartQuantity", Types.INTEGER },
+			{ "allowedCartQuantity", Types.VARCHAR },
+			{ "multipleCartQuantity", Types.INTEGER },
 			{ "DDMStructureKey", Types.VARCHAR },
 			{ "displayDate", Types.TIMESTAMP },
 			{ "expirationDate", Types.TIMESTAMP },
@@ -118,6 +122,10 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		TABLE_COLUMNS_MAP.put("baseSKU", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("productTypeName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("availableIndividually", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("minCartQuantity", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("maxCartQuantity", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("allowedCartQuantity", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("multipleCartQuantity", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("DDMStructureKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("displayDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
@@ -129,7 +137,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		TABLE_COLUMNS_MAP.put("defaultLanguageId", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPDefinition (uuid_ VARCHAR(75) null,CPDefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,baseSKU VARCHAR(75) null,productTypeName VARCHAR(75) null,availableIndividually BOOLEAN,DDMStructureKey VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,defaultLanguageId VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table CPDefinition (uuid_ VARCHAR(75) null,CPDefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,baseSKU VARCHAR(75) null,productTypeName VARCHAR(75) null,availableIndividually BOOLEAN,minCartQuantity INTEGER,maxCartQuantity INTEGER,allowedCartQuantity VARCHAR(75) null,multipleCartQuantity INTEGER,DDMStructureKey VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,defaultLanguageId VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table CPDefinition";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpDefinition.displayDate DESC, cpDefinition.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPDefinition.displayDate DESC, CPDefinition.createDate DESC";
@@ -176,6 +184,10 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		model.setBaseSKU(soapModel.getBaseSKU());
 		model.setProductTypeName(soapModel.getProductTypeName());
 		model.setAvailableIndividually(soapModel.getAvailableIndividually());
+		model.setMinCartQuantity(soapModel.getMinCartQuantity());
+		model.setMaxCartQuantity(soapModel.getMaxCartQuantity());
+		model.setAllowedCartQuantity(soapModel.getAllowedCartQuantity());
+		model.setMultipleCartQuantity(soapModel.getMultipleCartQuantity());
 		model.setDDMStructureKey(soapModel.getDDMStructureKey());
 		model.setDisplayDate(soapModel.getDisplayDate());
 		model.setExpirationDate(soapModel.getExpirationDate());
@@ -260,6 +272,10 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		attributes.put("baseSKU", getBaseSKU());
 		attributes.put("productTypeName", getProductTypeName());
 		attributes.put("availableIndividually", getAvailableIndividually());
+		attributes.put("minCartQuantity", getMinCartQuantity());
+		attributes.put("maxCartQuantity", getMaxCartQuantity());
+		attributes.put("allowedCartQuantity", getAllowedCartQuantity());
+		attributes.put("multipleCartQuantity", getMultipleCartQuantity());
 		attributes.put("DDMStructureKey", getDDMStructureKey());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
@@ -343,6 +359,32 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 
 		if (availableIndividually != null) {
 			setAvailableIndividually(availableIndividually);
+		}
+
+		Integer minCartQuantity = (Integer)attributes.get("minCartQuantity");
+
+		if (minCartQuantity != null) {
+			setMinCartQuantity(minCartQuantity);
+		}
+
+		Integer maxCartQuantity = (Integer)attributes.get("maxCartQuantity");
+
+		if (maxCartQuantity != null) {
+			setMaxCartQuantity(maxCartQuantity);
+		}
+
+		String allowedCartQuantity = (String)attributes.get(
+				"allowedCartQuantity");
+
+		if (allowedCartQuantity != null) {
+			setAllowedCartQuantity(allowedCartQuantity);
+		}
+
+		Integer multipleCartQuantity = (Integer)attributes.get(
+				"multipleCartQuantity");
+
+		if (multipleCartQuantity != null) {
+			setMultipleCartQuantity(multipleCartQuantity);
 		}
 
 		String DDMStructureKey = (String)attributes.get("DDMStructureKey");
@@ -785,6 +827,55 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 
 	@JSON
 	@Override
+	public int getMinCartQuantity() {
+		return _minCartQuantity;
+	}
+
+	@Override
+	public void setMinCartQuantity(int minCartQuantity) {
+		_minCartQuantity = minCartQuantity;
+	}
+
+	@JSON
+	@Override
+	public int getMaxCartQuantity() {
+		return _maxCartQuantity;
+	}
+
+	@Override
+	public void setMaxCartQuantity(int maxCartQuantity) {
+		_maxCartQuantity = maxCartQuantity;
+	}
+
+	@JSON
+	@Override
+	public String getAllowedCartQuantity() {
+		if (_allowedCartQuantity == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _allowedCartQuantity;
+		}
+	}
+
+	@Override
+	public void setAllowedCartQuantity(String allowedCartQuantity) {
+		_allowedCartQuantity = allowedCartQuantity;
+	}
+
+	@JSON
+	@Override
+	public int getMultipleCartQuantity() {
+		return _multipleCartQuantity;
+	}
+
+	@Override
+	public void setMultipleCartQuantity(int multipleCartQuantity) {
+		_multipleCartQuantity = multipleCartQuantity;
+	}
+
+	@JSON
+	@Override
 	public String getDDMStructureKey() {
 		if (_DDMStructureKey == null) {
 			return StringPool.BLANK;
@@ -1194,6 +1285,10 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		cpDefinitionImpl.setBaseSKU(getBaseSKU());
 		cpDefinitionImpl.setProductTypeName(getProductTypeName());
 		cpDefinitionImpl.setAvailableIndividually(getAvailableIndividually());
+		cpDefinitionImpl.setMinCartQuantity(getMinCartQuantity());
+		cpDefinitionImpl.setMaxCartQuantity(getMaxCartQuantity());
+		cpDefinitionImpl.setAllowedCartQuantity(getAllowedCartQuantity());
+		cpDefinitionImpl.setMultipleCartQuantity(getMultipleCartQuantity());
 		cpDefinitionImpl.setDDMStructureKey(getDDMStructureKey());
 		cpDefinitionImpl.setDisplayDate(getDisplayDate());
 		cpDefinitionImpl.setExpirationDate(getExpirationDate());
@@ -1359,6 +1454,21 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 
 		cpDefinitionCacheModel.availableIndividually = getAvailableIndividually();
 
+		cpDefinitionCacheModel.minCartQuantity = getMinCartQuantity();
+
+		cpDefinitionCacheModel.maxCartQuantity = getMaxCartQuantity();
+
+		cpDefinitionCacheModel.allowedCartQuantity = getAllowedCartQuantity();
+
+		String allowedCartQuantity = cpDefinitionCacheModel.allowedCartQuantity;
+
+		if ((allowedCartQuantity != null) &&
+				(allowedCartQuantity.length() == 0)) {
+			cpDefinitionCacheModel.allowedCartQuantity = null;
+		}
+
+		cpDefinitionCacheModel.multipleCartQuantity = getMultipleCartQuantity();
+
 		cpDefinitionCacheModel.DDMStructureKey = getDDMStructureKey();
 
 		String DDMStructureKey = cpDefinitionCacheModel.DDMStructureKey;
@@ -1428,7 +1538,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1452,6 +1562,14 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		sb.append(getProductTypeName());
 		sb.append(", availableIndividually=");
 		sb.append(getAvailableIndividually());
+		sb.append(", minCartQuantity=");
+		sb.append(getMinCartQuantity());
+		sb.append(", maxCartQuantity=");
+		sb.append(getMaxCartQuantity());
+		sb.append(", allowedCartQuantity=");
+		sb.append(getAllowedCartQuantity());
+		sb.append(", multipleCartQuantity=");
+		sb.append(getMultipleCartQuantity());
 		sb.append(", DDMStructureKey=");
 		sb.append(getDDMStructureKey());
 		sb.append(", displayDate=");
@@ -1477,7 +1595,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(64);
+		StringBundler sb = new StringBundler(76);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.product.model.CPDefinition");
@@ -1526,6 +1644,22 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		sb.append(
 			"<column><column-name>availableIndividually</column-name><column-value><![CDATA[");
 		sb.append(getAvailableIndividually());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>minCartQuantity</column-name><column-value><![CDATA[");
+		sb.append(getMinCartQuantity());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>maxCartQuantity</column-name><column-value><![CDATA[");
+		sb.append(getMaxCartQuantity());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>allowedCartQuantity</column-name><column-value><![CDATA[");
+		sb.append(getAllowedCartQuantity());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>multipleCartQuantity</column-name><column-value><![CDATA[");
+		sb.append(getMultipleCartQuantity());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>DDMStructureKey</column-name><column-value><![CDATA[");
@@ -1590,6 +1724,10 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 	private String _baseSKU;
 	private String _productTypeName;
 	private boolean _availableIndividually;
+	private int _minCartQuantity;
+	private int _maxCartQuantity;
+	private String _allowedCartQuantity;
+	private int _multipleCartQuantity;
 	private String _DDMStructureKey;
 	private Date _displayDate;
 	private Date _originalDisplayDate;

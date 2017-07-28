@@ -5718,6 +5718,10 @@ public class CPDefinitionPersistenceImpl extends BasePersistenceImpl<CPDefinitio
 		cpDefinitionImpl.setBaseSKU(cpDefinition.getBaseSKU());
 		cpDefinitionImpl.setProductTypeName(cpDefinition.getProductTypeName());
 		cpDefinitionImpl.setAvailableIndividually(cpDefinition.isAvailableIndividually());
+		cpDefinitionImpl.setMinCartQuantity(cpDefinition.getMinCartQuantity());
+		cpDefinitionImpl.setMaxCartQuantity(cpDefinition.getMaxCartQuantity());
+		cpDefinitionImpl.setAllowedCartQuantity(cpDefinition.getAllowedCartQuantity());
+		cpDefinitionImpl.setMultipleCartQuantity(cpDefinition.getMultipleCartQuantity());
 		cpDefinitionImpl.setDDMStructureKey(cpDefinition.getDDMStructureKey());
 		cpDefinitionImpl.setDisplayDate(cpDefinition.getDisplayDate());
 		cpDefinitionImpl.setExpirationDate(cpDefinition.getExpirationDate());

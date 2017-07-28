@@ -265,6 +265,63 @@ public interface CPDefinitionModel extends BaseModel<CPDefinition>, ShardedModel
 	public void setAvailableIndividually(boolean availableIndividually);
 
 	/**
+	 * Returns the min cart quantity of this cp definition.
+	 *
+	 * @return the min cart quantity of this cp definition
+	 */
+	public int getMinCartQuantity();
+
+	/**
+	 * Sets the min cart quantity of this cp definition.
+	 *
+	 * @param minCartQuantity the min cart quantity of this cp definition
+	 */
+	public void setMinCartQuantity(int minCartQuantity);
+
+	/**
+	 * Returns the max cart quantity of this cp definition.
+	 *
+	 * @return the max cart quantity of this cp definition
+	 */
+	public int getMaxCartQuantity();
+
+	/**
+	 * Sets the max cart quantity of this cp definition.
+	 *
+	 * @param maxCartQuantity the max cart quantity of this cp definition
+	 */
+	public void setMaxCartQuantity(int maxCartQuantity);
+
+	/**
+	 * Returns the allowed cart quantity of this cp definition.
+	 *
+	 * @return the allowed cart quantity of this cp definition
+	 */
+	@AutoEscape
+	public String getAllowedCartQuantity();
+
+	/**
+	 * Sets the allowed cart quantity of this cp definition.
+	 *
+	 * @param allowedCartQuantity the allowed cart quantity of this cp definition
+	 */
+	public void setAllowedCartQuantity(String allowedCartQuantity);
+
+	/**
+	 * Returns the multiple cart quantity of this cp definition.
+	 *
+	 * @return the multiple cart quantity of this cp definition
+	 */
+	public int getMultipleCartQuantity();
+
+	/**
+	 * Sets the multiple cart quantity of this cp definition.
+	 *
+	 * @param multipleCartQuantity the multiple cart quantity of this cp definition
+	 */
+	public void setMultipleCartQuantity(int multipleCartQuantity);
+
+	/**
 	 * Returns the ddm structure key of this cp definition.
 	 *
 	 * @return the ddm structure key of this cp definition

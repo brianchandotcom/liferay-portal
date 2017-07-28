@@ -56,6 +56,10 @@
 		<property name="baseSKU" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="productTypeName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="availableIndividually" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="minCartQuantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="maxCartQuantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="allowedCartQuantity" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="multipleCartQuantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="DDMStructureKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="displayDate" type="org.hibernate.type.TimestampType" />
 		<property name="expirationDate" type="org.hibernate.type.TimestampType" />

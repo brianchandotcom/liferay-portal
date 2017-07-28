@@ -145,6 +145,14 @@ public class CPDefinitionPersistenceTest {
 
 		newCPDefinition.setAvailableIndividually(RandomTestUtil.randomBoolean());
 
+		newCPDefinition.setMinCartQuantity(RandomTestUtil.nextInt());
+
+		newCPDefinition.setMaxCartQuantity(RandomTestUtil.nextInt());
+
+		newCPDefinition.setAllowedCartQuantity(RandomTestUtil.randomString());
+
+		newCPDefinition.setMultipleCartQuantity(RandomTestUtil.nextInt());
+
 		newCPDefinition.setDDMStructureKey(RandomTestUtil.randomString());
 
 		newCPDefinition.setDisplayDate(RandomTestUtil.nextDate());
@@ -191,6 +199,14 @@ public class CPDefinitionPersistenceTest {
 			newCPDefinition.getProductTypeName());
 		Assert.assertEquals(existingCPDefinition.getAvailableIndividually(),
 			newCPDefinition.getAvailableIndividually());
+		Assert.assertEquals(existingCPDefinition.getMinCartQuantity(),
+			newCPDefinition.getMinCartQuantity());
+		Assert.assertEquals(existingCPDefinition.getMaxCartQuantity(),
+			newCPDefinition.getMaxCartQuantity());
+		Assert.assertEquals(existingCPDefinition.getAllowedCartQuantity(),
+			newCPDefinition.getAllowedCartQuantity());
+		Assert.assertEquals(existingCPDefinition.getMultipleCartQuantity(),
+			newCPDefinition.getMultipleCartQuantity());
 		Assert.assertEquals(existingCPDefinition.getDDMStructureKey(),
 			newCPDefinition.getDDMStructureKey());
 		Assert.assertEquals(Time.getShortTimestamp(
@@ -313,7 +329,9 @@ public class CPDefinitionPersistenceTest {
 			true, "CPDefinitionId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "baseSKU", true, "productTypeName", true,
-			"availableIndividually", true, "DDMStructureKey", true,
+			"availableIndividually", true, "minCartQuantity", true,
+			"maxCartQuantity", true, "allowedCartQuantity", true,
+			"multipleCartQuantity", true, "DDMStructureKey", true,
 			"displayDate", true, "expirationDate", true, "lastPublishDate",
 			true, "status", true, "statusByUserId", true, "statusByUserName",
 			true, "statusDate", true, "defaultLanguageId", true);
@@ -553,6 +571,14 @@ public class CPDefinitionPersistenceTest {
 		cpDefinition.setProductTypeName(RandomTestUtil.randomString());
 
 		cpDefinition.setAvailableIndividually(RandomTestUtil.randomBoolean());
+
+		cpDefinition.setMinCartQuantity(RandomTestUtil.nextInt());
+
+		cpDefinition.setMaxCartQuantity(RandomTestUtil.nextInt());
+
+		cpDefinition.setAllowedCartQuantity(RandomTestUtil.randomString());
+
+		cpDefinition.setMultipleCartQuantity(RandomTestUtil.nextInt());
 
 		cpDefinition.setDDMStructureKey(RandomTestUtil.randomString());
 

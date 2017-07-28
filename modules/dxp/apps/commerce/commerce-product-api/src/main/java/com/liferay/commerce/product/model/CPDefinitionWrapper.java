@@ -71,6 +71,10 @@ public class CPDefinitionWrapper implements CPDefinition,
 		attributes.put("baseSKU", getBaseSKU());
 		attributes.put("productTypeName", getProductTypeName());
 		attributes.put("availableIndividually", getAvailableIndividually());
+		attributes.put("minCartQuantity", getMinCartQuantity());
+		attributes.put("maxCartQuantity", getMaxCartQuantity());
+		attributes.put("allowedCartQuantity", getAllowedCartQuantity());
+		attributes.put("multipleCartQuantity", getMultipleCartQuantity());
 		attributes.put("DDMStructureKey", getDDMStructureKey());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
@@ -151,6 +155,32 @@ public class CPDefinitionWrapper implements CPDefinition,
 
 		if (availableIndividually != null) {
 			setAvailableIndividually(availableIndividually);
+		}
+
+		Integer minCartQuantity = (Integer)attributes.get("minCartQuantity");
+
+		if (minCartQuantity != null) {
+			setMinCartQuantity(minCartQuantity);
+		}
+
+		Integer maxCartQuantity = (Integer)attributes.get("maxCartQuantity");
+
+		if (maxCartQuantity != null) {
+			setMaxCartQuantity(maxCartQuantity);
+		}
+
+		String allowedCartQuantity = (String)attributes.get(
+				"allowedCartQuantity");
+
+		if (allowedCartQuantity != null) {
+			setAllowedCartQuantity(allowedCartQuantity);
+		}
+
+		Integer multipleCartQuantity = (Integer)attributes.get(
+				"multipleCartQuantity");
+
+		if (multipleCartQuantity != null) {
+			setMultipleCartQuantity(multipleCartQuantity);
 		}
 
 		String DDMStructureKey = (String)attributes.get("DDMStructureKey");
@@ -402,6 +432,36 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	/**
+	* Returns the max cart quantity of this cp definition.
+	*
+	* @return the max cart quantity of this cp definition
+	*/
+	@Override
+	public int getMaxCartQuantity() {
+		return _cpDefinition.getMaxCartQuantity();
+	}
+
+	/**
+	* Returns the min cart quantity of this cp definition.
+	*
+	* @return the min cart quantity of this cp definition
+	*/
+	@Override
+	public int getMinCartQuantity() {
+		return _cpDefinition.getMinCartQuantity();
+	}
+
+	/**
+	* Returns the multiple cart quantity of this cp definition.
+	*
+	* @return the multiple cart quantity of this cp definition
+	*/
+	@Override
+	public int getMultipleCartQuantity() {
+		return _cpDefinition.getMultipleCartQuantity();
+	}
+
+	/**
 	* Returns the status of this cp definition.
 	*
 	* @return the status of this cp definition
@@ -424,6 +484,16 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public java.lang.Object clone() {
 		return new CPDefinitionWrapper((CPDefinition)_cpDefinition.clone());
+	}
+
+	/**
+	* Returns the allowed cart quantity of this cp definition.
+	*
+	* @return the allowed cart quantity of this cp definition
+	*/
+	@Override
+	public java.lang.String getAllowedCartQuantity() {
+		return _cpDefinition.getAllowedCartQuantity();
 	}
 
 	/**
@@ -792,6 +862,16 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	/**
+	* Sets the allowed cart quantity of this cp definition.
+	*
+	* @param allowedCartQuantity the allowed cart quantity of this cp definition
+	*/
+	@Override
+	public void setAllowedCartQuantity(java.lang.String allowedCartQuantity) {
+		_cpDefinition.setAllowedCartQuantity(allowedCartQuantity);
+	}
+
+	/**
 	* Sets whether this cp definition is available individually.
 	*
 	* @param availableIndividually the available individually of this cp definition
@@ -934,6 +1014,26 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	/**
+	* Sets the max cart quantity of this cp definition.
+	*
+	* @param maxCartQuantity the max cart quantity of this cp definition
+	*/
+	@Override
+	public void setMaxCartQuantity(int maxCartQuantity) {
+		_cpDefinition.setMaxCartQuantity(maxCartQuantity);
+	}
+
+	/**
+	* Sets the min cart quantity of this cp definition.
+	*
+	* @param minCartQuantity the min cart quantity of this cp definition
+	*/
+	@Override
+	public void setMinCartQuantity(int minCartQuantity) {
+		_cpDefinition.setMinCartQuantity(minCartQuantity);
+	}
+
+	/**
 	* Sets the modified date of this cp definition.
 	*
 	* @param modifiedDate the modified date of this cp definition
@@ -941,6 +1041,16 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_cpDefinition.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	* Sets the multiple cart quantity of this cp definition.
+	*
+	* @param multipleCartQuantity the multiple cart quantity of this cp definition
+	*/
+	@Override
+	public void setMultipleCartQuantity(int multipleCartQuantity) {
+		_cpDefinition.setMultipleCartQuantity(multipleCartQuantity);
 	}
 
 	@Override

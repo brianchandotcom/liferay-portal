@@ -45,6 +45,10 @@ public class CPDefinitionSoap implements Serializable {
 		soapModel.setBaseSKU(model.getBaseSKU());
 		soapModel.setProductTypeName(model.getProductTypeName());
 		soapModel.setAvailableIndividually(model.getAvailableIndividually());
+		soapModel.setMinCartQuantity(model.getMinCartQuantity());
+		soapModel.setMaxCartQuantity(model.getMaxCartQuantity());
+		soapModel.setAllowedCartQuantity(model.getAllowedCartQuantity());
+		soapModel.setMultipleCartQuantity(model.getMultipleCartQuantity());
 		soapModel.setDDMStructureKey(model.getDDMStructureKey());
 		soapModel.setDisplayDate(model.getDisplayDate());
 		soapModel.setExpirationDate(model.getExpirationDate());
@@ -198,6 +202,38 @@ public class CPDefinitionSoap implements Serializable {
 		_availableIndividually = availableIndividually;
 	}
 
+	public int getMinCartQuantity() {
+		return _minCartQuantity;
+	}
+
+	public void setMinCartQuantity(int minCartQuantity) {
+		_minCartQuantity = minCartQuantity;
+	}
+
+	public int getMaxCartQuantity() {
+		return _maxCartQuantity;
+	}
+
+	public void setMaxCartQuantity(int maxCartQuantity) {
+		_maxCartQuantity = maxCartQuantity;
+	}
+
+	public String getAllowedCartQuantity() {
+		return _allowedCartQuantity;
+	}
+
+	public void setAllowedCartQuantity(String allowedCartQuantity) {
+		_allowedCartQuantity = allowedCartQuantity;
+	}
+
+	public int getMultipleCartQuantity() {
+		return _multipleCartQuantity;
+	}
+
+	public void setMultipleCartQuantity(int multipleCartQuantity) {
+		_multipleCartQuantity = multipleCartQuantity;
+	}
+
 	public String getDDMStructureKey() {
 		return _DDMStructureKey;
 	}
@@ -281,6 +317,10 @@ public class CPDefinitionSoap implements Serializable {
 	private String _baseSKU;
 	private String _productTypeName;
 	private boolean _availableIndividually;
+	private int _minCartQuantity;
+	private int _maxCartQuantity;
+	private String _allowedCartQuantity;
+	private int _multipleCartQuantity;
 	private String _DDMStructureKey;
 	private Date _displayDate;
 	private Date _expirationDate;

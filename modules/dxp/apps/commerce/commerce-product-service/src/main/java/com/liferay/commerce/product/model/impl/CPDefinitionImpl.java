@@ -119,6 +119,45 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 	}
 
 	@Override
+	public Map<Locale, String> getMetaDescriptionMap() {
+		if (_metaDescriptionMap != null) {
+			return _metaDescriptionMap;
+		}
+
+		_metaDescriptionMap =
+			CPDefinitionLocalServiceUtil.getCPDefinitionMetaDescriptionMap(
+				getCPDefinitionId());
+
+		return _metaDescriptionMap;
+	}
+
+	@Override
+	public Map<Locale, String> getMetaKeywordsMap() {
+		if (_metaKeywordsMap != null) {
+			return _metaKeywordsMap;
+		}
+
+		_metaKeywordsMap =
+			CPDefinitionLocalServiceUtil.getCPDefinitionMetaKeywordsMap(
+				getCPDefinitionId());
+
+		return _metaKeywordsMap;
+	}
+
+	@Override
+	public Map<Locale, String> getMetaTitleMap() {
+		if (_metaTitleMap != null) {
+			return _metaTitleMap;
+		}
+
+		_metaTitleMap =
+			CPDefinitionLocalServiceUtil.getCPDefinitionMetaTitleMap(
+				getCPDefinitionId());
+
+		return _metaTitleMap;
+	}
+
+	@Override
 	public String getLayoutUuid() {
 		if (Validator.isNotNull(_layoutUuid)) {
 			return _layoutUuid;
@@ -203,6 +242,9 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 
 	private Map<Locale, String> _descriptionMap;
 	private String _layoutUuid;
+	private Map<Locale, String> _metaDescriptionMap;
+	private Map<Locale, String> _metaKeywordsMap;
+	private Map<Locale, String> _metaTitleMap;
 	private Map<Locale, String> _shortDescriptionMap;
 	private Map<Locale, String> _titleMap;
 	private Map<Locale, String> _urlTitleMap;

@@ -494,6 +494,23 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
+	<command name="removeMultiplePermissions">
+		<execute macro="DMFolder#viewFolderPermissionsPG">
+			<var name="dmFolder" value="${dmFolder}" />
+			<var name="key_roleTitle" value="${roleTitle}" />
+		</execute>
+
+		<var name="key_roleTitle" value="${roleTitle}" />
+
+		<for list="${permissionNameList}" param="permissionName">
+			<execute function="Uncheck" locator1="Permissions#CONTENT_PERMISSIONS_${permissionName}_CHECKBOX" />
+		</for>
+
+		<execute macro="Button#clickSave" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
 	<command name="subscribePG">
 		<execute function="Click" locator1="Icon#INFO" />
 
@@ -619,7 +636,7 @@
 	<command name="viewFolderViewPermissionsPG">
 		<execute macro="DMFolder#viewFolderPermissionsPG">
 			<var name="dmFolder" value="${dmFolder}" />
-			<var name="key_roleTitle" ="${roleTitle}" />
+			<var name="key_roleTitle" value="${roleTitle}" />
 		</execute>
 
 		<if>

@@ -6,4 +6,5 @@ Export-Package:\
 	com.liferay.commerce.currency.exception,\
 	com.liferay.commerce.currency.model,\
 	com.liferay.commerce.currency.service,\
-	com.liferay.commerce.currency.service.persistence
+	com.liferay.commerce.currency.service.persistence,\
+	com.liferay.commerce.currency.util.comparator

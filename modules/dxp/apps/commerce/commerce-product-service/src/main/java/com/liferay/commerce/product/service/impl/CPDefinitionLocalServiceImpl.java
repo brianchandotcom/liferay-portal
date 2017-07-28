@@ -378,6 +378,75 @@ public class CPDefinitionLocalServiceImpl
 	}
 
 	@Override
+	public Map<Locale, String> getCPDefinitionMetaDescriptionMap(
+		long cpDefinitionId) {
+
+		Map<Locale, String> cpDefinitionLocalizationMetaDescriptionMap =
+			new HashMap<>();
+
+		List<CPDefinitionLocalization> cpDefinitionLocalizationList =
+			cpDefinitionLocalizationPersistence.findByCPDefinitionId(
+				cpDefinitionId);
+
+		for (CPDefinitionLocalization cpDefinitionLocalization :
+				cpDefinitionLocalizationList) {
+
+			cpDefinitionLocalizationMetaDescriptionMap.put(
+				LocaleUtil.fromLanguageId(
+					cpDefinitionLocalization.getLanguageId()),
+				cpDefinitionLocalization.getMetaDescription());
+		}
+
+		return cpDefinitionLocalizationMetaDescriptionMap;
+	}
+
+	@Override
+	public Map<Locale, String> getCPDefinitionMetaKeywordsMap(
+		long cpDefinitionId) {
+
+		Map<Locale, String> cpDefinitionLocalizationMetaKeywordsMap =
+			new HashMap<>();
+
+		List<CPDefinitionLocalization> cpDefinitionLocalizationList =
+			cpDefinitionLocalizationPersistence.findByCPDefinitionId(
+				cpDefinitionId);
+
+		for (CPDefinitionLocalization cpDefinitionLocalization :
+				cpDefinitionLocalizationList) {
+
+			cpDefinitionLocalizationMetaKeywordsMap.put(
+				LocaleUtil.fromLanguageId(
+					cpDefinitionLocalization.getLanguageId()),
+				cpDefinitionLocalization.getMetaKeywords());
+		}
+
+		return cpDefinitionLocalizationMetaKeywordsMap;
+	}
+
+	@Override
+	public Map<Locale, String> getCPDefinitionMetaTitleMap(
+		long cpDefinitionId) {
+
+		Map<Locale, String> cpDefinitionLocalizationMetaTitleMap =
+			new HashMap<>();
+
+		List<CPDefinitionLocalization> cpDefinitionLocalizationList =
+			cpDefinitionLocalizationPersistence.findByCPDefinitionId(
+				cpDefinitionId);
+
+		for (CPDefinitionLocalization cpDefinitionLocalization :
+				cpDefinitionLocalizationList) {
+
+			cpDefinitionLocalizationMetaTitleMap.put(
+				LocaleUtil.fromLanguageId(
+					cpDefinitionLocalization.getLanguageId()),
+				cpDefinitionLocalization.getMetaTitle());
+		}
+
+		return cpDefinitionLocalizationMetaTitleMap;
+	}
+
+	@Override
 	public List<CPDefinition> getCPDefinitionsByCategoryId(
 		long categoryId, int start, int end) {
 
@@ -455,69 +524,6 @@ public class CPDefinitionLocalServiceImpl
 		}
 
 		return cpDefinitionLocalizationTitleMap;
-	}
-
-	@Override
-	public Map<Locale, String> getCPDefinitionMetaTitleMap(long cpDefinitionId) {
-		Map<Locale, String> cpDefinitionLocalizationMetaTitleMap =
-			new HashMap<>();
-
-		List<CPDefinitionLocalization> cpDefinitionLocalizationList =
-			cpDefinitionLocalizationPersistence.findByCPDefinitionId(
-				cpDefinitionId);
-
-		for (CPDefinitionLocalization cpDefinitionLocalization :
-				cpDefinitionLocalizationList) {
-
-			cpDefinitionLocalizationMetaTitleMap.put(
-				LocaleUtil.fromLanguageId(
-					cpDefinitionLocalization.getLanguageId()),
-				cpDefinitionLocalization.getMetaTitle());
-		}
-
-		return cpDefinitionLocalizationMetaTitleMap;
-	}
-
-	@Override
-	public Map<Locale, String> getCPDefinitionMetaDescriptionMap(long cpDefinitionId) {
-		Map<Locale, String> cpDefinitionLocalizationMetaDescriptionMap =
-			new HashMap<>();
-
-		List<CPDefinitionLocalization> cpDefinitionLocalizationList =
-			cpDefinitionLocalizationPersistence.findByCPDefinitionId(
-				cpDefinitionId);
-
-		for (CPDefinitionLocalization cpDefinitionLocalization :
-				cpDefinitionLocalizationList) {
-
-			cpDefinitionLocalizationMetaDescriptionMap.put(
-				LocaleUtil.fromLanguageId(
-					cpDefinitionLocalization.getLanguageId()),
-				cpDefinitionLocalization.getMetaDescription());
-		}
-
-		return cpDefinitionLocalizationMetaDescriptionMap;
-	}
-
-	@Override
-	public Map<Locale, String> getCPDefinitionMetaKeywordsMap(long cpDefinitionId) {
-		Map<Locale, String> cpDefinitionLocalizationMetaKeywordsMap =
-			new HashMap<>();
-
-		List<CPDefinitionLocalization> cpDefinitionLocalizationList =
-			cpDefinitionLocalizationPersistence.findByCPDefinitionId(
-				cpDefinitionId);
-
-		for (CPDefinitionLocalization cpDefinitionLocalization :
-				cpDefinitionLocalizationList) {
-
-			cpDefinitionLocalizationMetaKeywordsMap.put(
-				LocaleUtil.fromLanguageId(
-					cpDefinitionLocalization.getLanguageId()),
-				cpDefinitionLocalization.getMetaKeywords());
-		}
-
-		return cpDefinitionLocalizationMetaKeywordsMap;
 	}
 
 	@Override

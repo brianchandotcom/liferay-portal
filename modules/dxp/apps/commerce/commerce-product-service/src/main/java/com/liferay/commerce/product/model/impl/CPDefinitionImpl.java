@@ -119,6 +119,18 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 	}
 
 	@Override
+	public String getLayoutUuid() {
+		if (Validator.isNotNull(_layoutUuid)) {
+			return _layoutUuid;
+		}
+
+		_layoutUuid = CPDefinitionLocalServiceUtil.getLayoutUuid(
+			getCPDefinitionId());
+
+		return _layoutUuid;
+	}
+
+	@Override
 	public Map<Locale, String> getMetaDescriptionMap() {
 		if (_metaDescriptionMap != null) {
 			return _metaDescriptionMap;
@@ -155,18 +167,6 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 				getCPDefinitionId());
 
 		return _metaTitleMap;
-	}
-
-	@Override
-	public String getLayoutUuid() {
-		if (Validator.isNotNull(_layoutUuid)) {
-			return _layoutUuid;
-		}
-
-		_layoutUuid = CPDefinitionLocalServiceUtil.getLayoutUuid(
-			getCPDefinitionId());
-
-		return _layoutUuid;
 	}
 
 	@Override

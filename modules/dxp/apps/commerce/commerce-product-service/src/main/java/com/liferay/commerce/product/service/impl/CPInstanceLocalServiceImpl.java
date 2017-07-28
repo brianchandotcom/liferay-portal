@@ -479,8 +479,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 	protected CPInstance addCPInstance(
 			long cpDefinitionId, String sku, String gtin,
-			String manufacturerPartNumber, String ddmContent,
-			Date displayDate, Date expirationDate, boolean neverExpire,
+			String manufacturerPartNumber, String ddmContent, Date displayDate,
+			Date expirationDate, boolean neverExpire,
 			ServiceContext serviceContext)
 		throws PortalException {
 

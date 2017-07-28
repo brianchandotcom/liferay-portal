@@ -33,9 +33,9 @@ String friendlyURLBase = themeDisplay.getPortalURL() + CPConstants.SEPARATOR_PRO
 		<label for="<portlet:namespace />friendlyURL"><liferay-ui:message key="friendly-url" /> <liferay-ui:icon-help message='<%= LanguageUtil.format(request, "for-example-x", "<em>/news</em>", false) %>' /></label>
 
 		<div class="input-group lfr-friendly-url-input-group">
-				<span class="input-group-addon" id="<portlet:namespace />urlBase">
-					<span class="input-group-constrain"><liferay-ui:message key="<%= StringUtil.shorten(friendlyURLBase.toString(), 40) %>" /></span>
-				</span>
+			<span class="input-group-addon" id="<portlet:namespace />urlBase">
+				<span class="input-group-constrain"><liferay-ui:message key="<%= StringUtil.shorten(friendlyURLBase.toString(), 40) %>" /></span>
+			</span>
 
 			<liferay-ui:input-localized cssClass="form-control" defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>" name="urlTitleMapAsXML" xml="<%= HttpUtil.decodeURL(cpDefinitionsDisplayContext.getUrlTitleMapAsXML()) %>" />
 

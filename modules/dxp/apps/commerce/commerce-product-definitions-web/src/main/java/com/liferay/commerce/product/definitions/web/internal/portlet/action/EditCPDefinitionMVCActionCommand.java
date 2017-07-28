@@ -236,10 +236,12 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "urlTitleMapAsXML");
 		Map<Locale, String> metaTitleMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "metaTitleMapAsXML");
-		Map<Locale, String> metaKeywordsMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, "metaKeywordsMapAsXML");
-		Map<Locale, String> metaDescriptionMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, "metaDescriptionMapAsXML");
+		Map<Locale, String> metaKeywordsMap =
+			LocalizationUtil.getLocalizationMap(
+				actionRequest, "metaKeywordsMapAsXML");
+		Map<Locale, String> metaDescriptionMap =
+			LocalizationUtil.getLocalizationMap(
+				actionRequest, "metaDescriptionMapAsXML");
 		String productTypeName = ParamUtil.getString(
 			actionRequest, "productTypeName");
 		String baseSKU = ParamUtil.getString(actionRequest, "baseSKU");

@@ -45,9 +45,11 @@
 	</command>
 
 	<command name="markAllAsRead">
-		<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL_NOTIFICATIONS" />
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 
-		<execute function="Click" locator1="Notifications#MARK_AS_READ" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Mark All Notifications as Read">
+			<var name="key_menuItem" value="Mark All Notifications as Read" />
+		</execute>
 	</command>
 
 	<command name="navigateToContent">

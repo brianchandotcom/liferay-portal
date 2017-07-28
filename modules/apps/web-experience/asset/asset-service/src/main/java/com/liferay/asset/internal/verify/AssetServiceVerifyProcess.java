@@ -74,6 +74,32 @@ public class AssetServiceVerifyProcess extends VerifyProcess {
 	@Override
 	protected void doVerify() throws Exception {
 		deleteOrphanedAssetEntries();
+		verifyAssetLayouts();
+	}
+
+	protected void verifyAssetLayouts() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			verifyUuid("AssetEntry");
+		}
+	}
+
+	protected void verifyUuid(String tableName) throws Exception {
+		StringBundler sb = new StringBundler(12);
+
+		sb.append("update ");
+		sb.append(tableName);
+		sb.append(" set layoutUuid = (select distinct ");
+		sb.append("sourcePrototypeLayoutUuid from Layout where Layout.uuid_ ");
+		sb.append("= ");
+		sb.append(tableName);
+		sb.append(".layoutUuid) where exists (select 1 from Layout where ");
+		sb.append("Layout.uuid_ = ");
+		sb.append(tableName);
+		sb.append(".layoutUuid and Layout.uuid_ != ");
+		sb.append("Layout.sourcePrototypeLayoutUuid and ");
+		sb.append("Layout.sourcePrototypeLayoutUuid != '')");
+
+		runSQL(sb.toString());
 	}
 
 	@Reference

@@ -76,7 +76,7 @@ name = namespace + name;
 	geolocation: <%= geolocation %>
 
 	<c:if test="<%= Validator.isNotNull(latitude) && Validator.isNotNull(longitude) %>">
-		,position: {
+		, position: {
 			location: {
 				lat: <%= latitude %>,
 				lng: <%= longitude %>
@@ -107,5 +107,4 @@ name = namespace + name;
 	else {
 		Liferay.once('gmapsReady', createMap);
 	}
-
 </aui:script>

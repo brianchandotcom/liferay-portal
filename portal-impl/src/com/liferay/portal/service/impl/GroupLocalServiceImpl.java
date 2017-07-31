@@ -3558,7 +3558,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				_log.error(
 					"Unable to delete data for portlet " +
 						portletDataHandler.getPortletId() + " in group " +
-							group.getGroupId());
+							group.getGroupId(),
+					e);
 
 				if (portletDataHandler.isRollbackOnException()) {
 					throw e;

@@ -3255,7 +3255,7 @@
 			<var name="kfProcessName" value="Kaleo Forms Process" />
 		</execute>
 
-		<execute macro="DDLDataDefinition#viewParentStuctureHeader">
+		<execute macro="DDLDataDefinition#viewParentStructureHeader">
 			<var name="assetTitle" value="Field Sets" />
 		</execute>
 	</command>

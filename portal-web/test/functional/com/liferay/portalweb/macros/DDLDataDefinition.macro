@@ -332,7 +332,7 @@
 		<execute function="AssertTextEquals" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME" value1="${ddlDataDefinitionName}" />
 	</command>
 
-	<command name="viewParentStuctureHeader">
+	<command name="viewParentStructureHeader">
 		<execute function="Click" locator1="DDMEditStructure#DETAILS_TOGGLE" />
 
 		<execute function="AssertClick" locator1="DDMEditStructure#DETAILS_PARENT_SELECT_BUTTON" value1="Select" />

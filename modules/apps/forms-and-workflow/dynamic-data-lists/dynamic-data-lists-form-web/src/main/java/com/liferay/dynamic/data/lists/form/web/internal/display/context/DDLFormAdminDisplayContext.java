@@ -218,8 +218,8 @@ public class DDLFormAdminDisplayContext {
 	}
 
 	public DDMStructure getDDMStructure() throws PortalException {
-		if (_ddmStucture != null) {
-			return _ddmStucture;
+		if (_ddmStructure != null) {
+			return _ddmStructure;
 		}
 
 		DDLRecordSet recordSet = getRecordSet();
@@ -228,10 +228,10 @@ public class DDLFormAdminDisplayContext {
 			return null;
 		}
 
-		_ddmStucture = _ddmStructureLocalService.getStructure(
+		_ddmStructure = _ddmStructureLocalService.getStructure(
 			recordSet.getDDMStructureId());
 
-		return _ddmStucture;
+		return _ddmStructure;
 	}
 
 	public String getDefaultLanguageId() {
@@ -1036,8 +1036,8 @@ public class DDLFormAdminDisplayContext {
 	private final DDMFormTemplateContextFactory _ddmFormTemplateContextFactory;
 	private final DDMFormValuesFactory _ddmFormValuesFactory;
 	private final DDMFormValuesMerger _ddmFormValuesMerger;
+	private DDMStructure _ddmStructure;
 	private final DDMStructureLocalService _ddmStructureLocalService;
-	private DDMStructure _ddmStucture;
 	private String _displayStyle;
 	private final JSONFactory _jsonFactory;
 	private DDLRecordSet _recordSet;

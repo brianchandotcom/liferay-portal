@@ -16,8 +16,13 @@ package com.liferay.commerce.admin.web.util;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import java.io.IOException;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.RenderRequest;
@@ -29,7 +34,25 @@ import javax.portlet.RenderResponse;
 @ProviderType
 public interface CommerceAdminModule {
 
+	public void deleteData(PortletDataContext portletDataContext)
+		throws Exception;
+
+	public void exportData(
+			String namespace, PortletDataContext portletDataContext)
+		throws Exception;
+
+	public List<StagedModelType> getDeletionSystemEventStagedModelTypes();
+
+	public List<PortletDataHandlerControl> getExportControls(String namespace);
+
 	public String getLabel(Locale locale);
+
+	public void importData(
+			String namespace, PortletDataContext portletDataContext)
+		throws Exception;
+
+	public void prepareManifestSummary(PortletDataContext portletDataContext)
+		throws Exception;
 
 	public void render(
 			RenderRequest renderRequest, RenderResponse renderResponse)

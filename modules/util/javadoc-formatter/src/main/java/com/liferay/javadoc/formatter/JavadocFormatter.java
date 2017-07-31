@@ -1819,7 +1819,8 @@ public class JavadocFormatter {
 		Element rootElement = document.getRootElement();
 
 		Map<Integer, String> commentsMap = _addComments(
-			new TreeMap<>(), rootElement, javaClass, javadocLessContent, lines);
+			new TreeMap<Integer, String>(), rootElement, javaClass,
+			javadocLessContent, lines);
 
 		StringBundler sb = new StringBundler(javadocLessContent.length());
 
@@ -1906,7 +1907,7 @@ public class JavadocFormatter {
 
 	private String _removeJavadocFromJava(JavaClass javaClass, String content) {
 		Set<Integer> lineNumbers = _getJavaTermLineNumbers(
-			new HashSet<>(), javaClass, content);
+			new HashSet<Integer>(), javaClass, content);
 
 		String[] lines = StringUtil.splitLines(content);
 

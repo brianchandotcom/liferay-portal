@@ -72,6 +72,8 @@ public abstract class BaseEhcachePortalCacheManagerConfigurator {
 
 		clearListenerConfigrations(configuration);
 
+		manageConfiguration(configuration, portalCacheManagerConfiguration);
+
 		return new ObjectValuePair<>(
 			configuration, portalCacheManagerConfiguration);
 	}
@@ -146,6 +148,11 @@ public abstract class BaseEhcachePortalCacheManagerConfigurator {
 		}
 
 		return false;
+	}
+
+	protected void manageConfiguration(
+		Configuration configuration,
+		PortalCacheManagerConfiguration portalCacheManagerConfiguration) {
 	}
 
 	protected Set<Properties> parseCacheEventListenerConfigurations(

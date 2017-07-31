@@ -831,6 +831,10 @@ public interface PropsKeys {
 
 	public static final String EHCACHE_BOOTSTRAP_CACHE_LOADER_PROPERTIES = "ehcache.bootstrap.cache.loader.properties";
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #EHCACHE_DEFAULT_BOOTSTRAP_CACHE_LOADER_PROPERTIES}
+	 */
+	@Deprecated
 	public static final String EHCACHE_BOOTSTRAP_CACHE_LOADER_PROPERTIES_DEFAULT = "ehcache.bootstrap.cache.loader.properties.default";
 
 	/**
@@ -845,12 +849,20 @@ public interface PropsKeys {
 	@Deprecated
 	public static final String EHCACHE_CLUSTER_LINK_REPLICATOR_PROPERTIES_DEFAULT = "ehcache.cluster.link.replicator.properties.default";
 
+	public static final String EHCACHE_DEFAULT_BOOTSTRAP_CACHE_LOADER_PROPERTIES = "ehcache.default.bootstrap.cache.loader.properties";
+
+	public static final String EHCACHE_DEFAULT_REPLICATOR_PROPERTIES = "ehcache.default.replicator.properties";
+
 	public static final String EHCACHE_MULTI_VM_CONFIG_LOCATION = "ehcache.multi.vm.config.location";
 
 	public static final String EHCACHE_PORTAL_CACHE_MANAGER_JMX_ENABLED = "ehcache.portal.cache.manager.jmx.enabled";
 
 	public static final String EHCACHE_REPLICATOR_PROPERTIES = "ehcache.replicator.properties";
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #EHCACHE_DEFAULT_REPLICATOR_PROPERTIES}
+	 */
+	@Deprecated
 	public static final String EHCACHE_REPLICATOR_PROPERTIES_DEFAULT = "ehcache.replicator.properties.default";
 
 	public static final String EHCACHE_RMI_PEER_LISTENER_FACTORY_CLASS = "ehcache.rmi.peer.listener.factory.class";

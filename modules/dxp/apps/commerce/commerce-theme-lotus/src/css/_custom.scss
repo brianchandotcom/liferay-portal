@@ -22,6 +22,7 @@
 .main-wrapper {
 	@import "partials/buttons";
 	@import "partials/forms";
+	@import "partials/table";
 
 	a, .btn, input, .form-control {
 		@include form-control-focus($brand-color);

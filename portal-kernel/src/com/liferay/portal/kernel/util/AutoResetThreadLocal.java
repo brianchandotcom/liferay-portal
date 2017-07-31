@@ -30,8 +30,8 @@ public class AutoResetThreadLocal<T> extends InitialThreadLocal<T> {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #AutoResetThreadLocal(
-	 *             String, Supplier)}
+	 * @deprecated As of 7.0.0, replaced by {@link #AutoResetThreadLocal(String,
+	 *             Supplier)}
 	 */
 	@Deprecated
 	@SuppressWarnings("deprecation")

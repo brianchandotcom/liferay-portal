@@ -32,8 +32,8 @@ public class ThreadLocalCache<T> {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *			   #ThreadLocalCache(Object, Lifecycle)}
+	 * @deprecated As of 7.0.0, replaced by {@link #ThreadLocalCache(Object,
+	 *             Lifecycle)}
 	 */
 	@Deprecated
 	public ThreadLocalCache(Serializable name, Lifecycle lifecycle) {

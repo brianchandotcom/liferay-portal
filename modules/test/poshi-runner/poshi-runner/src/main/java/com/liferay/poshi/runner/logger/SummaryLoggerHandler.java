@@ -15,6 +15,8 @@
 package com.liferay.poshi.runner.logger;
 
 import com.liferay.poshi.runner.PoshiRunnerContext;
+import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
+import com.liferay.poshi.runner.PoshiRunnerStackTraceUtil;
 import com.liferay.poshi.runner.PoshiRunnerVariablesUtil;
 import com.liferay.poshi.runner.exception.PoshiRunnerLoggerException;
 import com.liferay.poshi.runner.util.HtmlUtil;
@@ -519,21 +521,43 @@ public final class SummaryLoggerHandler {
 		}
 
 		if (summary == null) {
+			String classCommandName = null;
+			String classType = null;
+
 			if (element.attributeValue("function") != null) {
-				summary = PoshiRunnerContext.getFunctionCommandSummary(
-					element.attributeValue("function"));
+				classCommandName = element.attributeValue("function");
+				classType = "function";
 			}
 			else if (element.attributeValue("function-summary") != null) {
-				summary = PoshiRunnerContext.getFunctionCommandSummary(
-					element.attributeValue("function-summary"));
+				classCommandName = element.attributeValue("function-summary");
+				classType = "function-summary";
 			}
 			else if (element.attributeValue("macro") != null) {
-				summary = PoshiRunnerContext.getMacroCommandSummary(
-					element.attributeValue("macro"));
+				classCommandName = element.attributeValue("macro");
+				classType = "macro";
 			}
 			else if (element.attributeValue("macro-summary") != null) {
+				classCommandName = element.attributeValue("macro-summary");
+				classType = "macro-summary";
+			}
+			else {
+				return null;
+			}
+
+			String simpleClassCommandName =
+				PoshiRunnerGetterUtil.getSimpleClassCommandName(
+					classCommandName);
+
+			String namespace = PoshiRunnerStackTraceUtil.getCurrentNamespace(
+				classCommandName);
+
+			if (classType.startsWith("function")) {
+				summary = PoshiRunnerContext.getFunctionCommandSummary(
+					simpleClassCommandName, namespace);
+			}
+			else if (classType.startsWith("macro")) {
 				summary = PoshiRunnerContext.getMacroCommandSummary(
-					element.attributeValue("macro-summary"));
+					simpleClassCommandName, namespace);
 			}
 		}
 

@@ -49,7 +49,6 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
@@ -67,14 +66,6 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
-
-	@Override
-	public boolean processAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortletException {
-
-		return super.processAction(actionRequest, actionResponse);
-	}
 
 	protected void deleteCPDefinitions(
 			ActionRequest actionRequest, boolean moveToTrash)

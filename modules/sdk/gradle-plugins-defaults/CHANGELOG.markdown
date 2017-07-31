@@ -1819,7 +1819,7 @@ elements.
 ### Changed
 - [LPS-72705]: Update the [Liferay Gradle Plugins] dependency to version 3.4.16.
 
-## 4.1.7 - 2017-07-27
+## 5.0.0 - 2017-07-31
 
 ### Changed
 - [LPS-63943]: Show `mergeArtifactsPublishCommands` messages at log level

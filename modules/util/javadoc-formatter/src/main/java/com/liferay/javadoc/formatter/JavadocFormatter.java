@@ -36,6 +36,8 @@ import com.thoughtworks.qdox.model.DocletTag;
 import com.thoughtworks.qdox.model.JavaAnnotatedElement;
 import com.thoughtworks.qdox.model.JavaAnnotation;
 import com.thoughtworks.qdox.model.JavaClass;
+import com.thoughtworks.qdox.model.JavaConstructor;
+import com.thoughtworks.qdox.model.JavaExecutable;
 import com.thoughtworks.qdox.model.JavaField;
 import com.thoughtworks.qdox.model.JavaMember;
 import com.thoughtworks.qdox.model.JavaMethod;
@@ -335,6 +337,12 @@ public class JavadocFormatter {
 
 		_addClassDocletElements(classElement, javaClass, nestedClass);
 
+		List<JavaConstructor> javaConstructors = javaClass.getConstructors();
+
+		for (JavaConstructor javaConstructor : javaConstructors) {
+			_addConstructorElement(classElement, javaConstructor);
+		}
+
 		List<JavaMethod> javaMethods = javaClass.getMethods();
 
 		for (JavaMethod javaMethod : javaMethods) {
@@ -372,12 +380,43 @@ public class JavadocFormatter {
 		commentsMap.put(
 			_getJavaModelLineNumber(javaClass, content), javaClassComment);
 
+		Map<String, Element> constructorElementsMap = new HashMap<>();
+
+		List<Element> constructorElements = classElement.elements(
+			"constructor");
+
+		for (Element constructorElement : constructorElements) {
+			String constructorKey = _getExecutableKey(constructorElement);
+
+			constructorElementsMap.put(constructorKey, constructorElement);
+		}
+
+		List<JavaConstructor> javaConstructors = javaClass.getConstructors();
+
+		for (JavaConstructor javaConstructor : javaConstructors) {
+			lineNumber = _getJavaModelLineNumber(javaConstructor, content);
+
+			if (commentsMap.containsKey(lineNumber)) {
+				continue;
+			}
+
+			indent = _getIndent(lines, lineNumber);
+
+			String javaConstructorComment = _getJavaExecutableComment(
+				constructorElementsMap, javaConstructor, indent);
+
+			javaConstructorComment = _addDeprecatedTag(
+				javaConstructorComment, javaConstructor, indent);
+
+			commentsMap.put(lineNumber, javaConstructorComment);
+		}
+
 		Map<String, Element> methodElementsMap = new HashMap<>();
 
 		List<Element> methodElements = classElement.elements("method");
 
 		for (Element methodElement : methodElements) {
-			String methodKey = _getMethodKey(methodElement);
+			String methodKey = _getExecutableKey(methodElement);
 
 			methodElementsMap.put(methodKey, methodElement);
 		}
@@ -393,7 +432,7 @@ public class JavadocFormatter {
 
 			indent = _getIndent(lines, lineNumber);
 
-			String javaMethodComment = _getJavaMethodComment(
+			String javaMethodComment = _getJavaExecutableComment(
 				methodElementsMap, javaMethod, indent);
 
 			javaMethodComment = _addDeprecatedTag(
@@ -722,6 +761,34 @@ public class JavadocFormatter {
 		_addDocletElements(fieldElement, javaField, "deprecated");
 	}
 
+	private void _addConstructorElement(
+			Element parentElement, JavaConstructor javaConstructor)
+		throws Exception {
+
+		Element constructorElement = parentElement.addElement("constructor");
+
+		Dom4jDocUtil.add(constructorElement, "name", javaConstructor.getName());
+
+		String comment = _getCDATA(javaConstructor);
+
+		if (Validator.isNotNull(comment)) {
+			Element commentElement = constructorElement.addElement("comment");
+
+			commentElement.addCDATA(_getCDATA(javaConstructor));
+		}
+
+		_addDocletElements(constructorElement, javaConstructor, "version");
+		_addParamElements(
+			constructorElement, javaConstructor,
+			javaConstructor.getTagsByName("param"));
+		_addThrowsElements(
+			constructorElement, javaConstructor,
+			javaConstructor.getTagsByName("throws"));
+		_addDocletElements(constructorElement, javaConstructor, "see");
+		_addDocletElements(constructorElement, javaConstructor, "since");
+		_addDocletElements(constructorElement, javaConstructor, "deprecated");
+	}
+
 	private void _addMethodElement(Element parentElement, JavaMethod javaMethod)
 		throws Exception {
 
@@ -738,16 +805,18 @@ public class JavadocFormatter {
 		}
 
 		_addDocletElements(methodElement, javaMethod, "version");
-		_addParamElements(methodElement, javaMethod);
+		_addParamElements(
+			methodElement, javaMethod, javaMethod.getTagsByName("param"));
 		_addReturnElement(methodElement, javaMethod);
-		_addThrowsElements(methodElement, javaMethod);
+		_addThrowsElements(
+			methodElement, javaMethod, javaMethod.getTagsByName("throws"));
 		_addDocletElements(methodElement, javaMethod, "see");
 		_addDocletElements(methodElement, javaMethod, "since");
 		_addDocletElements(methodElement, javaMethod, "deprecated");
 	}
 
 	private void _addParamElement(
-			Element methodElement, JavaParameter javaParameter,
+			Element executableElement, JavaParameter javaParameter,
 			List<DocletTag> paramDocletTags)
 		throws Exception {
 
@@ -765,7 +834,7 @@ public class JavadocFormatter {
 			}
 		}
 
-		Element paramElement = methodElement.addElement("param");
+		Element paramElement = executableElement.addElement("param");
 
 		Dom4jDocUtil.add(paramElement, "name", name);
 		Dom4jDocUtil.add(paramElement, "type", _getTypeValue(javaParameter));
@@ -786,15 +855,15 @@ public class JavadocFormatter {
 		commentElement.addCDATA(value);
 	}
 
-	private void _addParamElements(Element methodElement, JavaMethod javaMethod)
+	private void _addParamElements(
+			Element executableElement, JavaExecutable javaExecutable,
+			List<DocletTag> paramDocletTags)
 		throws Exception {
 
-		List<JavaParameter> javaParameters = javaMethod.getParameters();
-
-		List<DocletTag> paramDocletTags = javaMethod.getTagsByName("param");
+		List<JavaParameter> javaParameters = javaExecutable.getParameters();
 
 		for (JavaParameter javaParameter : javaParameters) {
-			_addParamElement(methodElement, javaParameter, paramDocletTags);
+			_addParamElement(executableElement, javaParameter, paramDocletTags);
 		}
 	}
 
@@ -838,7 +907,7 @@ public class JavadocFormatter {
 	}
 
 	private void _addThrowsElement(
-			Element methodElement, JavaClass exceptionJavaClass,
+			Element executableElement, JavaClass exceptionJavaClass,
 			List<DocletTag> throwsDocletTags)
 		throws Exception {
 
@@ -859,7 +928,7 @@ public class JavadocFormatter {
 			}
 		}
 
-		Element throwsElement = methodElement.addElement("throws");
+		Element throwsElement = executableElement.addElement("throws");
 
 		Dom4jDocUtil.add(throwsElement, "name", name);
 		Dom4jDocUtil.add(throwsElement, "type", exceptionJavaClass.getValue());
@@ -881,16 +950,15 @@ public class JavadocFormatter {
 	}
 
 	private void _addThrowsElements(
-			Element methodElement, JavaMethod javaMethod)
+			Element executableElement, JavaExecutable javaExecutable,
+			List<DocletTag> throwsDocletTags)
 		throws Exception {
 
-		List<JavaClass> exceptionJavaClasses = javaMethod.getExceptions();
-
-		List<DocletTag> throwsDocletTags = javaMethod.getTagsByName("throws");
+		List<JavaClass> exceptionJavaClasses = javaExecutable.getExceptions();
 
 		for (JavaClass exceptionJavaClass : exceptionJavaClasses) {
 			_addThrowsElement(
-				methodElement, exceptionJavaClass, throwsDocletTags);
+				executableElement, exceptionJavaClass, throwsDocletTags);
 		}
 	}
 
@@ -1514,16 +1582,16 @@ public class JavadocFormatter {
 		return sb.toString();
 	}
 
-	private String _getJavaMethodComment(
-			Map<String, Element> methodElementsMap, JavaMethod javaMethod,
-			String indent)
+	private String _getJavaExecutableComment(
+			Map<String, Element> executableElementsMap,
+			JavaExecutable javaExecutable, String indent)
 		throws Exception {
 
-		String methodKey = _getMethodKey(javaMethod);
+		String executableKey = _getExecutableKey(javaExecutable);
 
-		Element methodElement = methodElementsMap.get(methodKey);
+		Element executableElement = executableElementsMap.get(executableKey);
 
-		if (methodElement == null) {
+		if (executableElement == null) {
 			return null;
 		}
 
@@ -1532,7 +1600,7 @@ public class JavadocFormatter {
 		sb.append(indent);
 		sb.append("/**\n");
 
-		String comment = methodElement.elementText("comment");
+		String comment = executableElement.elementText("comment");
 
 		if (Validator.isNotNull(comment)) {
 			comment = ToolsUtil.stripFullyQualifiedClassNames(
@@ -1541,13 +1609,24 @@ public class JavadocFormatter {
 			sb.append(_wrapText(comment, indent + " * "));
 		}
 
-		String docletTags = _addDocletTags(
-			methodElement,
-			new String[] {
+		String[] tags = null;
+
+		if (javaExecutable instanceof JavaMethod) {
+			tags = new String[] {
 				"version", "param", "return", "throws", "see", "since",
 				"deprecated"
-			},
-			indent + " * ", _hasPublicModifier(javaMethod));
+			};
+		}
+		else {
+			tags = new String[] {
+				"version", "param", "throws", "see", "since", "deprecated"
+			};
+		}
+
+		String docletTags = _addDocletTags(
+			executableElement, tags, indent + " * ",
+			_hasPublicModifier(javaExecutable));
+
 
 		if (Validator.isNotNull(docletTags)) {
 			if (_initializeMissingJavadocs || Validator.isNotNull(comment)) {
@@ -1567,7 +1646,7 @@ public class JavadocFormatter {
 			return null;
 		}
 
-		if (!_hasPublicModifier(javaMethod) && Validator.isNull(comment) &&
+		if (!_hasPublicModifier(javaExecutable) && Validator.isNull(comment) &&
 			Validator.isNull(docletTags)) {
 
 			return null;
@@ -1639,6 +1718,12 @@ public class JavadocFormatter {
 
 		lineNumbers.add(_getJavaModelLineNumber(javaClass, content));
 
+		List<JavaConstructor> javaConstructors = javaClass.getConstructors();
+
+		for (JavaConstructor javaConstructor : javaConstructors) {
+			lineNumbers.add(_getJavaModelLineNumber(javaConstructor, content));
+		}
+
 		List<JavaMethod> javaMethods = javaClass.getMethods();
 
 		for (JavaMethod javaMethod : javaMethods) {
@@ -1661,13 +1746,13 @@ public class JavadocFormatter {
 		return lineNumbers;
 	}
 
-	private String _getMethodKey(Element methodElement) {
+	private String _getExecutableKey(Element executableElement) {
 		StringBundler sb = new StringBundler();
 
-		sb.append(methodElement.elementText("name"));
+		sb.append(executableElement.elementText("name"));
 		sb.append(StringPool.OPEN_PARENTHESIS);
 
-		List<Element> paramElements = methodElement.elements("param");
+		List<Element> paramElements = executableElement.elements("param");
 
 		for (Element paramElement : paramElements) {
 			sb.append(paramElement.elementText("name"));
@@ -1681,13 +1766,13 @@ public class JavadocFormatter {
 		return sb.toString();
 	}
 
-	private String _getMethodKey(JavaMethod javaMethod) {
+	private String _getExecutableKey(JavaExecutable javaExecutable) {
 		StringBundler sb = new StringBundler();
 
-		sb.append(javaMethod.getName());
+		sb.append(javaExecutable.getName());
 		sb.append(StringPool.OPEN_PARENTHESIS);
 
-		List<JavaParameter> javaParameters = javaMethod.getParameters();
+		List<JavaParameter> javaParameters = javaExecutable.getParameters();
 
 		for (JavaParameter javaParameter : javaParameters) {
 			sb.append(javaParameter.getName());

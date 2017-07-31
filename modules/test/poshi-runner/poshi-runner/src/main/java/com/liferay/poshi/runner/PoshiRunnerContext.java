@@ -105,10 +105,6 @@ public class PoshiRunnerContext {
 		return _filePaths.get(namespace + "." + fileName);
 	}
 
-	public static Element getFunctionCommandElement(String classCommandName) {
-		return getFunctionCommandElement(classCommandName, _defaultNamespace);
-	}
-
 	public static Element getFunctionCommandElement(
 		String classCommandName, String namespace) {
 
@@ -139,18 +135,10 @@ public class PoshiRunnerContext {
 		return 0;
 	}
 
-	public static Element getFunctionRootElement(String className) {
-		return getFunctionRootElement(className, _defaultNamespace);
-	}
-
 	public static Element getFunctionRootElement(
 		String className, String namespace) {
 
 		return _rootElements.get("function#" + namespace + "." + className);
-	}
-
-	public static Element getMacroCommandElement(String classCommandName) {
-		return getMacroCommandElement(classCommandName, _defaultNamespace);
 	}
 
 	public static Element getMacroCommandElement(
@@ -224,10 +212,6 @@ public class PoshiRunnerContext {
 		}
 
 		return pathLocator;
-	}
-
-	public static Element getPathRootElement(String className) {
-		return getPathRootElement(className, _defaultNamespace);
 	}
 
 	public static Element getPathRootElement(

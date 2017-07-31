@@ -204,7 +204,7 @@ public class ToolDependencies {
 
 		/**
 		 * @deprecated As of 7.0.0, replaced by {@link #getPortalCache(String,
-		 * boolean)}
+		 *             boolean)}
 		 */
 		@Deprecated
 		@Override
@@ -268,8 +268,8 @@ public class ToolDependencies {
 		}
 
 		/**
-		 * @deprecated As of 7.0.0, replaced by {@link #removePortalCache(
-		 * String)}
+		 * @deprecated As of 7.0.0, replaced by {@link
+		 *             #removePortalCache(String)}
 		 */
 		@Deprecated
 		@Override
@@ -435,7 +435,7 @@ public class ToolDependencies {
 
 		/**
 		 * @deprecated As of 7.0.0, replaced by {@link #getPortalCache(String,
-		 * boolean)}
+		 *             boolean)}
 		 */
 		@Deprecated
 		@Override
@@ -487,8 +487,8 @@ public class ToolDependencies {
 		}
 
 		/**
-		 * @deprecated As of 7.0.0, replaced by {@link #removePortalCache(
-		 * String)}
+		 * @deprecated As of 7.0.0, replaced by {@link
+		 *             #removePortalCache(String)}
 		 */
 		@Deprecated
 		@Override

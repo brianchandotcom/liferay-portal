@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.portal.model.BuildAutoUpgradeTestEntity">
+		<field name="id_" type="long" />
+		<field name="data_" type="String" />
+		<field name="data2" type="String" />
+	</model>
+</model-hints>

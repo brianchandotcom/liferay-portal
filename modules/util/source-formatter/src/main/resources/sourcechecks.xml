@@ -37,7 +37,9 @@
 		<check name="CSSWhitespaceCheck" />
 	</source-processor>
 	<source-processor name="DockerfileSourceProcessor">
-		<check name="WhitespaceCheck" />
+		<check name="WhitespaceCheck">
+			<property name="allowLeadingSpaces" value="true" />
+		</check>
 	</source-processor>
 	<source-processor name="FTLSourceProcessor">
 		<check name="FTLEmptyLinesCheck" />

@@ -128,6 +128,11 @@ version 3.0.2.
 - [LPS-73746]: Trim authentication token in case users add extra lines into
 their token file.
 
+## 1.6.0 - 2017-07-31
+
+### Changed
+- [LPS-73855]: Update the [Liferay Gradle Plugins] dependency to version 3.4.17.
+
 [Gradle Download Task]: https://github.com/michel-kraemer/gradle-download-task/
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Portal Tools Bundle Support]: https://github.com/liferay/liferay-portal/tree/master/modules/util/portal-tools-bundle-support
@@ -156,3 +161,4 @@ their token file.
 [LPS-73248]: https://issues.liferay.com/browse/LPS-73248
 [LPS-73383]: https://issues.liferay.com/browse/LPS-73383
 [LPS-73746]: https://issues.liferay.com/browse/LPS-73746
+[LPS-73855]: https://issues.liferay.com/browse/LPS-73855

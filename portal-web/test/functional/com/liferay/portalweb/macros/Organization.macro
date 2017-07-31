@@ -403,8 +403,8 @@
 
 		<execute macro="Alert#viewSuccessMessage" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Current">
-			<var name="key_menuItem" value="Current" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Current" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsAssignUsers#USER_TABLE_USER_NAME" value1="${userFirstName} ${userLastName}" />

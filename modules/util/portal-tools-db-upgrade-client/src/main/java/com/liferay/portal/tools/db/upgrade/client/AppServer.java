@@ -27,22 +27,8 @@ import java.util.List;
 public class AppServer {
 
 	public static AppServer getJBossEAPAppServer() {
-		StringBuilder sb = new StringBuilder();
-
-		String extraLibDirPrefix = "/modules/system/layers/base/";
-
-		sb.append(extraLibDirPrefix);
-
-		sb.append("javax/mail,");
-		sb.append(extraLibDirPrefix);
-		sb.append("javax/persistence,");
-		sb.append(extraLibDirPrefix);
-		sb.append("javax/servlet,");
-		sb.append(extraLibDirPrefix);
-		sb.append("javax/transaction");
-
 		return new AppServer(
-			"../../jboss-eap-6.4.0", sb.toString(),
+			"../../jboss-eap-6.4.0", _getJBossAndWildflyExtraLibDirs(),
 			"/modules/com/liferay/portal/main",
 			"/standalone/deployments/ROOT.war", "jboss");
 	}
@@ -60,8 +46,8 @@ public class AppServer {
 
 	public static AppServer getTCServerAppServer() {
 		return new AppServer(
-			"../../tc-server-2.9.11", "", "/liferay/lib",
-			"/liferay/webapps/ROOT", "tomcat");
+			"../../tc-server-2.9.11", "/tomcat-7.0.64.B.RELEASE/lib",
+			"/liferay/lib", "/liferay/webapps/ROOT", "tomcat");
 	}
 
 	public static AppServer getTomcatAppServer() {
@@ -71,35 +57,21 @@ public class AppServer {
 
 	public static AppServer getWebLogicAppServer() {
 		return new AppServer(
-			"../../weblogic-12.1.3", "", "/domains/liferay/lib",
+			"../../weblogic-12.1.3", "/bin", "/domains/liferay/lib",
 			"/domains/liferay/autodeploy/ROOT", "weblogic");
 	}
 
 	public static AppServer getWebSphereAppServer() {
 		return new AppServer(
-			"../../websphere-8.5.5.0", "", "/lib/ext",
+			"../../websphere-8.5.5.0", "", "/lib",
 			"/profiles/liferay/installedApps/liferay-cell/liferay-portal.ear" +
 				"/liferay-portal.war",
 			"websphere");
 	}
 
 	public static AppServer getWildFlyAppServer() {
-		StringBuilder sb = new StringBuilder();
-
-		String extraLibDirPrefix = "/modules/system/layers/base/";
-
-		sb.append(extraLibDirPrefix);
-
-		sb.append("javax/mail,");
-		sb.append(extraLibDirPrefix);
-		sb.append("javax/persistence,");
-		sb.append(extraLibDirPrefix);
-		sb.append("javax/servlet,");
-		sb.append(extraLibDirPrefix);
-		sb.append("javax/transaction");
-
 		return new AppServer(
-			"../../wildfly-10.0.0", sb.toString(),
+			"../../wildfly-10.0.0", _getJBossAndWildflyExtraLibDirs(),
 			"/modules/com/liferay/portal/main",
 			"/standalone/deployments/ROOT.war", "wildfly");
 	}
@@ -164,8 +136,26 @@ public class AppServer {
 		_portalDir = new File(_dir, portalDirName);
 	}
 
+	private static String _getJBossAndWildflyExtraLibDirs() {
+		StringBuilder sb = new StringBuilder();
+
+		String extraLibDirPrefix = "/modules/system/layers/base/";
+
+		sb.append(extraLibDirPrefix);
+
+		sb.append("javax/mail,");
+		sb.append(extraLibDirPrefix);
+		sb.append("javax/persistence,");
+		sb.append(extraLibDirPrefix);
+		sb.append("javax/servlet,");
+		sb.append(extraLibDirPrefix);
+		sb.append("javax/transaction");
+
+		return sb.toString();
+	}
+
 	private void _setExtraLibDirNames(String extraLibDirNames) {
-		if (extraLibDirNames != null) {
+		if ((extraLibDirNames != null) && !extraLibDirNames.isEmpty()) {
 			for (String extraLibDirName : extraLibDirNames.split(",")) {
 				_extraLibDirs.add(new File(_dir, extraLibDirName));
 			}

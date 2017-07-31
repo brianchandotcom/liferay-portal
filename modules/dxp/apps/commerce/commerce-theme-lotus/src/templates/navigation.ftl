@@ -21,7 +21,7 @@
 		<#if show_wishlist_icon>
 			<li class="hidden-xs">
 				<a class="btn btn-xs collapsed" role="button" data-toggle="collapse" href="#collapseWishlist" aria-expanded="false" aria-controls="collapseWishlist">
-					<#if wishListItemsCount != 0 >
+					<#if wishListItemsCount != 0>
 						<svg class="lexicon-icon">
 							<use xlink:href="${images_folder}/theme-icons.svg#icon-whislist-full" />
 						</svg>
@@ -39,7 +39,7 @@
 		<#if show_cart_icon>
 			<li class="hidden-xs">
 				<a class="btn collapsed" role="button" data-toggle="collapse" href="#collapseCart" aria-expanded="false" aria-controls="collapseCart">
-					<#if cartItemsCount != 0 >
+					<#if cartItemsCount != 0>
 						<svg class="lexicon-icon">
 							<use xlink:href="${images_folder}/theme-icons.svg#icon-bag-full" />
 						</svg>
@@ -75,7 +75,7 @@
 		</div>
 	</#if>
 
-	<#if show_wishlist_icon && wishListItemsCount != 0 >
+	<#if show_wishlist_icon && (wishListItemsCount != 0)>
 		<div class="collapse position-anchored" id="collapseWishlist">
 			<div class="well small">
 				<#include "${full_templates_path}/wishlist.ftl" />
@@ -83,7 +83,7 @@
 		</div>
 	</#if>
 
-	<#if show_cart_icon && cartItemsCount != 0 >
+	<#if show_cart_icon && (cartItemsCount != 0)>
 		<div class="collapse position-anchored" id="collapseCart">
 			<div class="well small">
 				<#include "${full_templates_path}/cart.ftl" />

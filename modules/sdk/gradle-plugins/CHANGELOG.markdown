@@ -2038,6 +2038,10 @@ to version 2.0.44.
 1.0.433.
 - [LPS-73124]: Update the [Liferay Portal Tools DB Support] dependency to
 version 1.0.5.
+- [LPS-73855]: Update the [Liferay Gradle Plugins Javadoc Formatter] dependency
+to version 1.0.14.
+- [LPS-73855]: Update the [Liferay Javadoc Formatter] dependency to version
+1.0.21.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
@@ -2218,4 +2222,5 @@ version 1.0.5.
 [LPS-73600]: https://issues.liferay.com/browse/LPS-73600
 [LPS-73642]: https://issues.liferay.com/browse/LPS-73642
 [LPS-73818]: https://issues.liferay.com/browse/LPS-73818
+[LPS-73855]: https://issues.liferay.com/browse/LPS-73855
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

@@ -1824,6 +1824,7 @@ elements.
 ### Changed
 - [LPS-63943]: Show `mergeArtifactsPublishCommands` messages at log level
 `QUIET` instead of `LIFECYCLE`.
+- [LPS-73855]: Update the [Liferay Gradle Plugins] dependency to version 3.4.17.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -2019,6 +2020,7 @@ elements.
 [LPS-73655]: https://issues.liferay.com/browse/LPS-73655
 [LPS-73807]: https://issues.liferay.com/browse/LPS-73807
 [LPS-73818]: https://issues.liferay.com/browse/LPS-73818
+[LPS-73855]: https://issues.liferay.com/browse/LPS-73855
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

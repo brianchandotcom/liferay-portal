@@ -2036,6 +2036,8 @@ to version 2.0.43.
 to version 2.0.44.
 - [LPS-72705]: Update the [Liferay Source Formatter] dependency to version
 1.0.433.
+- [LPS-73124]: Update the [Liferay Portal Tools DB Support] dependency to
+version 1.0.5.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs

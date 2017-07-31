@@ -400,7 +400,7 @@ public class PoshiRunnerGetterUtil {
 				}
 				else if (parameterValue.contains("#")) {
 					parameterValue = PoshiRunnerContext.getPathLocator(
-						parameterValue);
+						parameterValue, namespace);
 				}
 
 				if (parameterValue.contains("\'")) {

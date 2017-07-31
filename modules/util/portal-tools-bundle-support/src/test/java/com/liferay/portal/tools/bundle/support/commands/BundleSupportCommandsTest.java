@@ -144,7 +144,7 @@ public class BundleSupportCommandsTest {
 	public void testCreateTokenForce() throws Exception {
 		File tokenFile = temporaryFolder.newFile();
 
-		_testCreateToken(_CONTEXT_PATH_TOKEN, true, tokenFile);
+		_testCreateToken(_CONTEXT_PATH_TOKEN, true, null, tokenFile);
 	}
 
 	@Test
@@ -152,7 +152,7 @@ public class BundleSupportCommandsTest {
 		File tokenFile = new File(
 			temporaryFolder.getRoot(), "nonexistent/directory/token");
 
-		_testCreateToken(_CONTEXT_PATH_TOKEN, false, tokenFile);
+		_testCreateToken(_CONTEXT_PATH_TOKEN, false, null, tokenFile);
 	}
 
 	@Test
@@ -622,20 +622,7 @@ public class BundleSupportCommandsTest {
 	private void _testCreateToken(String contextPath) throws Exception {
 		File tokenFile = new File(temporaryFolder.getRoot(), "token");
 
-		_testCreateToken(contextPath, false, tokenFile);
-	}
-
-	private void _testCreateToken(
-			String contextPath, boolean force, File tokenFile)
-		throws Exception {
-
-		URL tokenUrl = _getHttpServerUrl(contextPath);
-
-		createToken(
-			_HTTP_SERVER_USER_NAME, force, _HTTP_SERVER_PASSWORD, null,
-			tokenFile, tokenUrl);
-
-		Assert.assertEquals("hello-world", FileUtil.read(tokenFile));
+		_testCreateToken(contextPath, false, null, tokenFile);
 	}
 
 	private void _testCreateToken(
@@ -643,10 +630,16 @@ public class BundleSupportCommandsTest {
 			File tokenFile)
 		throws Exception {
 
+		String password = null;
+
+		if (passwordFile == null) {
+			password = _HTTP_SERVER_PASSWORD;
+		}
+
 		URL tokenUrl = _getHttpServerUrl(contextPath);
 
 		createToken(
-			_HTTP_SERVER_USER_NAME, force, null, passwordFile, tokenFile,
+			_HTTP_SERVER_USER_NAME, force, password, passwordFile, tokenFile,
 			tokenUrl);
 
 		Assert.assertEquals("hello-world", FileUtil.read(tokenFile));

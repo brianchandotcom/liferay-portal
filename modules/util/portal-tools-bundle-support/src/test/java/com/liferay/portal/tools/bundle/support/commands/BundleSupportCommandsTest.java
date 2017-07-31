@@ -40,6 +40,7 @@ import java.net.ServerSocket;
 import java.net.URI;
 import java.net.URL;
 
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.PosixFilePermission;
@@ -159,7 +160,9 @@ public class BundleSupportCommandsTest {
 		File passwordFile = temporaryFolder.newFile();
 		File tokenFile = temporaryFolder.newFile();
 
-		Files.write(passwordFile.toPath(), _HTTP_SERVER_PASSWORD.getBytes());
+		Files.write(
+			passwordFile.toPath(),
+			_HTTP_SERVER_PASSWORD.getBytes(StandardCharsets.UTF_8));
 
 		_testCreateToken(_CONTEXT_PATH_TOKEN, true, passwordFile, tokenFile);
 	}

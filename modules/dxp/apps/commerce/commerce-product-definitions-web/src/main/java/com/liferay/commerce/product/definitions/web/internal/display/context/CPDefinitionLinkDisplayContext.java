@@ -224,13 +224,15 @@ public class CPDefinitionLinkDisplayContext
 	}
 
 	protected String getEmptyResultMessage() {
-		if (getType() == CPConstants.DEFINITION_LINK_TYPE_RELATED) {
+		int type = getType();
+
+		if (type == CPConstants.DEFINITION_LINK_TYPE_RELATED) {
 			return "no-related-products-were-found";
 		}
-		else if (getType() == CPConstants.DEFINITION_LINK_TYPE_UP_SELL) {
+		else if (type == CPConstants.DEFINITION_LINK_TYPE_UP_SELL) {
 			return "no-up-sell-products-were-found";
 		}
-		else if (getType() == CPConstants.DEFINITION_LINK_TYPE_CROSS_SELL) {
+		else if (type == CPConstants.DEFINITION_LINK_TYPE_CROSS_SELL) {
 			return "no-cross-sell-products-were-found";
 		}
 

@@ -299,6 +299,164 @@ public class JavadocFormatter {
 		commentElement.addCDATA(comment);
 	}
 
+	private void _addClassDocletElements(
+			Element parentElement, JavaClass javaClass, boolean nestedClass)
+		throws Exception {
+
+		Dom4jDocUtil.add(parentElement, "name", javaClass.getName());
+		Dom4jDocUtil.add(
+			parentElement, "type", javaClass.getFullyQualifiedName());
+
+		_addClassCommentElement(parentElement, javaClass);
+
+		if (!nestedClass) {
+			_addDocletElements(parentElement, javaClass, "author");
+		}
+
+		_addDocletElements(parentElement, javaClass, "version");
+		_addDocletElements(parentElement, javaClass, "see");
+		_addDocletElements(parentElement, javaClass, "since");
+		_addDocletElements(parentElement, javaClass, "serial");
+		_addDocletElements(parentElement, javaClass, "deprecated");
+	}
+
+	private void _addClassElement(
+			Element parentElement, JavaClass javaClass, boolean nestedClass)
+		throws Exception {
+
+		Element classElement = null;
+
+		if (nestedClass) {
+			classElement = parentElement.addElement("class");
+		}
+		else {
+			classElement = parentElement;
+		}
+
+		_addClassDocletElements(classElement, javaClass, nestedClass);
+
+		List<JavaMethod> javaMethods = javaClass.getMethods();
+
+		for (JavaMethod javaMethod : javaMethods) {
+			_addMethodElement(classElement, javaMethod);
+		}
+
+		List<JavaField> javaFields = javaClass.getFields();
+
+		for (JavaField javaField : javaFields) {
+			_addFieldElement(classElement, javaField);
+		}
+
+		List<JavaClass> nestedJavaClasses = javaClass.getNestedClasses();
+
+		for (JavaClass nestedJavaClass : nestedJavaClasses) {
+			_addClassElement(classElement, nestedJavaClass, true);
+		}
+	}
+
+	private Map<Integer, String> _addComments(
+			Map<Integer, String> commentsMap, Element classElement,
+			JavaClass javaClass, String content, String[] lines)
+		throws Exception {
+
+		int lineNumber = _getJavaModelLineNumber(javaClass, content);
+
+		String indent = _getIndent(lines, lineNumber);
+
+		String javaClassComment = _getJavaClassComment(
+			classElement, javaClass, indent);
+
+		javaClassComment = _addDeprecatedTag(
+			javaClassComment, javaClass, indent);
+
+		commentsMap.put(
+			_getJavaModelLineNumber(javaClass, content), javaClassComment);
+
+		Map<String, Element> methodElementsMap = new HashMap<>();
+
+		List<Element> methodElements = classElement.elements("method");
+
+		for (Element methodElement : methodElements) {
+			String methodKey = _getMethodKey(methodElement);
+
+			methodElementsMap.put(methodKey, methodElement);
+		}
+
+		List<JavaMethod> javaMethods = javaClass.getMethods();
+
+		for (JavaMethod javaMethod : javaMethods) {
+			lineNumber = _getJavaModelLineNumber(javaMethod, content);
+
+			if (commentsMap.containsKey(lineNumber)) {
+				continue;
+			}
+
+			indent = _getIndent(lines, lineNumber);
+
+			String javaMethodComment = _getJavaMethodComment(
+				methodElementsMap, javaMethod, indent);
+
+			javaMethodComment = _addDeprecatedTag(
+				javaMethodComment, javaMethod, indent);
+
+			commentsMap.put(lineNumber, javaMethodComment);
+		}
+
+		Map<String, Element> fieldElementsMap = new HashMap<>();
+
+		List<Element> fieldElements = classElement.elements("field");
+
+		for (Element fieldElement : fieldElements) {
+			String fieldKey = _getFieldKey(fieldElement);
+
+			fieldElementsMap.put(fieldKey, fieldElement);
+		}
+
+		List<JavaField> javaFields = javaClass.getFields();
+
+		for (JavaField javaField : javaFields) {
+			lineNumber = _getJavaModelLineNumber(javaField, content);
+
+			if (commentsMap.containsKey(lineNumber)) {
+				continue;
+			}
+
+			indent = _getIndent(lines, lineNumber);
+
+			String javaFieldComment = _getJavaFieldComment(
+				fieldElementsMap, javaField, indent);
+
+			javaFieldComment = _addDeprecatedTag(
+				javaFieldComment, javaField, indent);
+
+			commentsMap.put(lineNumber, javaFieldComment);
+		}
+
+		Map<String, Element> nestedClassElementsMap = new HashMap<>();
+
+		List<Element> nestedClassElements = classElement.elements("class");
+
+		for (Element nestedClassElement : nestedClassElements) {
+			String nestedClassKey = _getClassKey(nestedClassElement);
+
+			nestedClassElementsMap.put(nestedClassKey, nestedClassElement);
+		}
+
+		List<JavaClass> nestedClasses = javaClass.getNestedClasses();
+
+		for (JavaClass nestedClass : nestedClasses) {
+			String nestedClassKey = _getClassKey(nestedClass);
+
+			Element nestedClassElement = nestedClassElementsMap.get(
+				nestedClassKey);
+
+			commentsMap = _addComments(
+				commentsMap, nestedClassElement, nestedClass, content, lines);
+		}
+
+		return commentsMap;
+	}
+
 	private String _addDeprecatedTag(
 			String comment, JavaAnnotatedElement javaAnnotatedElement,
 			String indent)
@@ -543,10 +701,10 @@ public class JavadocFormatter {
 		return sb.toString();
 	}
 
-	private void _addFieldElement(Element rootElement, JavaField javaField)
+	private void _addFieldElement(Element parentElement, JavaField javaField)
 		throws Exception {
 
-		Element fieldElement = rootElement.addElement("field");
+		Element fieldElement = parentElement.addElement("field");
 
 		Dom4jDocUtil.add(fieldElement, "name", javaField.getName());
 
@@ -564,10 +722,10 @@ public class JavadocFormatter {
 		_addDocletElements(fieldElement, javaField, "deprecated");
 	}
 
-	private void _addMethodElement(Element rootElement, JavaMethod javaMethod)
+	private void _addMethodElement(Element parentElement, JavaMethod javaMethod)
 		throws Exception {
 
-		Element methodElement = rootElement.addElement("method");
+		Element methodElement = parentElement.addElement("method");
 
 		Dom4jDocUtil.add(methodElement, "name", javaMethod.getName());
 
@@ -1067,6 +1225,14 @@ public class JavadocFormatter {
 		return cdata.trim();
 	}
 
+	private String _getClassKey(Element classElement) {
+		return classElement.elementText("name");
+	}
+
+	private String _getClassKey(JavaClass javaClass) {
+		return javaClass.getName();
+	}
+
 	private String _getClassName(String fileName) {
 		int pos = fileName.lastIndexOf(StringPool.SLASH);
 
@@ -1125,13 +1291,12 @@ public class JavadocFormatter {
 	}
 
 	private String _getJavaClassComment(
-			Element rootElement, JavaClass javaClass)
+			Element rootElement, JavaClass javaClass, String indent)
 		throws Exception {
 
 		StringBundler sb = new StringBundler();
 
-		String indent = StringPool.BLANK;
-
+		sb.append(indent);
 		sb.append("/**\n");
 
 		String comment = rootElement.elementText("comment");
@@ -1158,7 +1323,20 @@ public class JavadocFormatter {
 			sb.append(docletTags);
 		}
 
+		sb.append(indent);
 		sb.append(" */\n");
+
+		if (!_initializeMissingJavadocs && Validator.isNull(comment) &&
+			Validator.isNull(docletTags)) {
+
+			return null;
+		}
+
+		if (!_hasPublicModifier(javaClass) && Validator.isNull(comment) &&
+			Validator.isNull(docletTags)) {
+
+			return null;
+		}
 
 		return sb.toString();
 	}
@@ -1168,29 +1346,7 @@ public class JavadocFormatter {
 
 		Document document = DocumentHelper.createDocument(rootElement);
 
-		Dom4jDocUtil.add(rootElement, "name", javaClass.getName());
-		Dom4jDocUtil.add(
-			rootElement, "type", javaClass.getFullyQualifiedName());
-
-		_addClassCommentElement(rootElement, javaClass);
-		_addDocletElements(rootElement, javaClass, "author");
-		_addDocletElements(rootElement, javaClass, "version");
-		_addDocletElements(rootElement, javaClass, "see");
-		_addDocletElements(rootElement, javaClass, "since");
-		_addDocletElements(rootElement, javaClass, "serial");
-		_addDocletElements(rootElement, javaClass, "deprecated");
-
-		List<JavaMethod> javaMethods = javaClass.getMethods();
-
-		for (JavaMethod javaMethod : javaMethods) {
-			_addMethodElement(rootElement, javaMethod);
-		}
-
-		List<JavaField> javaFields = javaClass.getFields();
-
-		for (JavaField javaField : javaFields) {
-			_addFieldElement(rootElement, javaField);
-		}
+		_addClassElement(rootElement, javaClass, false);
 
 		return document;
 	}
@@ -1426,13 +1582,15 @@ public class JavadocFormatter {
 		if (javaModel instanceof JavaClass) {
 			JavaClass javaClass = (JavaClass)javaModel;
 
-			for (int i = 0; i < lines.length; i++) {
-				String line = StringUtil.trim(lines[i]);
+			List<String> modifiers = javaClass.getModifiers();
 
-				for (String modifier : javaClass.getModifiers()) {
-					if (line.startsWith(modifier + StringPool.SPACE)) {
-						return _getAdjustedLineNumber(i + 1, javaModel);
-					}
+			String modifier = modifiers.get(0);
+
+			for (int i = javaClass.getLineNumber(); i < lines.length; i++) {
+				String line = StringUtil.trim(lines[i - 1]);
+
+				if (line.startsWith(modifier + StringPool.SPACE)) {
+					return _getAdjustedLineNumber(i, javaModel);
 				}
 			}
 		}
@@ -1442,12 +1600,12 @@ public class JavadocFormatter {
 
 			if (javaField.isEnumConstant()) {
 				for (int i = javaModel.getLineNumber(); i < lines.length; i++) {
-					String line = lines[i];
+					String line = lines[i - 1];
 
 					if (line.matches(
 							".*\\W" + javaField.getName() + "(\\W.*)?")) {
 
-						return _getAdjustedLineNumber(i + 1, javaModel);
+						return _getAdjustedLineNumber(i, javaModel);
 					}
 				}
 			}
@@ -1457,24 +1615,50 @@ public class JavadocFormatter {
 
 		JavaMember javaMember = (JavaMember)javaModel;
 
-		for (int i = javaModel.getLineNumber() - 1; i > 0; i--) {
-			String line = StringUtil.trim(lines[i]);
+		List<String> modifiers = javaMember.getModifiers();
 
-			List<String> modifiers = javaMember.getModifiers();
+		if (modifiers.isEmpty()) {
+			return _getAdjustedLineNumber(javaModel.getLineNumber(), javaModel);
+		}
 
-			if (modifiers.isEmpty()) {
-				return _getAdjustedLineNumber(
-					javaModel.getLineNumber(), javaModel);
-			}
+		String modifier = modifiers.get(0);
 
-			for (String modifier : modifiers) {
-				if (line.startsWith(modifier + StringPool.SPACE)) {
-					return _getAdjustedLineNumber(i + 1, javaModel);
-				}
+		for (int i = javaModel.getLineNumber(); i > 0; i--) {
+			String line = StringUtil.trim(lines[i - 1]);
+
+			if (line.startsWith(modifier + StringPool.SPACE)) {
+				return _getAdjustedLineNumber(i, javaModel);
 			}
 		}
 
 		return -1;
+	}
+
+	private Set<Integer> _getJavaTermLineNumbers(
+		Set<Integer> lineNumbers, JavaClass javaClass, String content) {
+
+		lineNumbers.add(_getJavaModelLineNumber(javaClass, content));
+
+		List<JavaMethod> javaMethods = javaClass.getMethods();
+
+		for (JavaMethod javaMethod : javaMethods) {
+			lineNumbers.add(_getJavaModelLineNumber(javaMethod, content));
+		}
+
+		List<JavaField> javaFields = javaClass.getFields();
+
+		for (JavaField javaField : javaFields) {
+			lineNumbers.add(_getJavaModelLineNumber(javaField, content));
+		}
+
+		List<JavaClass> nestedClasses = javaClass.getNestedClasses();
+
+		for (JavaClass nestedClass : nestedClasses) {
+			lineNumbers = _getJavaTermLineNumbers(
+				lineNumbers, nestedClass, content);
+		}
+
+		return lineNumbers;
 	}
 
 	private String _getMethodKey(Element methodElement) {
@@ -1550,78 +1734,8 @@ public class JavadocFormatter {
 
 		Element rootElement = document.getRootElement();
 
-		Map<Integer, String> commentsMap = new TreeMap<>();
-
-		String javaClassComment = _getJavaClassComment(rootElement, javaClass);
-
-		javaClassComment = _addDeprecatedTag(
-			javaClassComment, javaClass, StringPool.BLANK);
-
-		commentsMap.put(
-			_getJavaModelLineNumber(javaClass, javadocLessContent),
-			javaClassComment);
-
-		Map<String, Element> methodElementsMap = new HashMap<>();
-
-		List<Element> methodElements = rootElement.elements("method");
-
-		for (Element methodElement : methodElements) {
-			String methodKey = _getMethodKey(methodElement);
-
-			methodElementsMap.put(methodKey, methodElement);
-		}
-
-		List<JavaMethod> javaMethods = javaClass.getMethods();
-
-		for (JavaMethod javaMethod : javaMethods) {
-			int lineNumber = _getJavaModelLineNumber(
-				javaMethod, javadocLessContent);
-
-			if (commentsMap.containsKey(lineNumber)) {
-				continue;
-			}
-
-			String indent = _getIndent(lines, lineNumber);
-
-			String javaMethodComment = _getJavaMethodComment(
-				methodElementsMap, javaMethod, indent);
-
-			javaMethodComment = _addDeprecatedTag(
-				javaMethodComment, javaMethod, indent);
-
-			commentsMap.put(lineNumber, javaMethodComment);
-		}
-
-		Map<String, Element> fieldElementsMap = new HashMap<>();
-
-		List<Element> fieldElements = rootElement.elements("field");
-
-		for (Element fieldElement : fieldElements) {
-			String fieldKey = _getFieldKey(fieldElement);
-
-			fieldElementsMap.put(fieldKey, fieldElement);
-		}
-
-		List<JavaField> javaFields = javaClass.getFields();
-
-		for (JavaField javaField : javaFields) {
-			int lineNumber = _getJavaModelLineNumber(
-				javaField, javadocLessContent);
-
-			if (commentsMap.containsKey(lineNumber)) {
-				continue;
-			}
-
-			String indent = _getIndent(lines, lineNumber);
-
-			String javaFieldComment = _getJavaFieldComment(
-				fieldElementsMap, javaField, indent);
-
-			javaFieldComment = _addDeprecatedTag(
-				javaFieldComment, javaField, indent);
-
-			commentsMap.put(lineNumber, javaFieldComment);
-		}
+		Map<Integer, String> commentsMap = _addComments(
+			new TreeMap<>(), rootElement, javaClass, javadocLessContent, lines);
 
 		StringBundler sb = new StringBundler(javadocLessContent.length());
 
@@ -1707,21 +1821,8 @@ public class JavadocFormatter {
 	}
 
 	private String _removeJavadocFromJava(JavaClass javaClass, String content) {
-		Set<Integer> lineNumbers = new HashSet<>();
-
-		lineNumbers.add(_getJavaModelLineNumber(javaClass, content));
-
-		List<JavaMethod> javaMethods = javaClass.getMethods();
-
-		for (JavaMethod javaMethod : javaMethods) {
-			lineNumbers.add(_getJavaModelLineNumber(javaMethod, content));
-		}
-
-		List<JavaField> javaFields = javaClass.getFields();
-
-		for (JavaField javaField : javaFields) {
-			lineNumbers.add(_getJavaModelLineNumber(javaField, content));
-		}
+		Set<Integer> lineNumbers = _getJavaTermLineNumbers(
+			new HashSet<>(), javaClass, content);
 
 		String[] lines = StringUtil.splitLines(content);
 

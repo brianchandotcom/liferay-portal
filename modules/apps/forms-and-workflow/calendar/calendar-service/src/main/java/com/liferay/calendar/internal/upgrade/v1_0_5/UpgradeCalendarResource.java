@@ -21,16 +21,23 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import java.util.List;
 
 /**
  * @author Adam Brandizzi
@@ -60,7 +67,43 @@ public class UpgradeCalendarResource extends UpgradeProcess {
 
 		long[] userIds = UserLocalServiceUtil.getRoleUserIds(role.getRoleId());
 
-		return userIds[0];
+		if (!ArrayUtil.isEmpty(userIds)) {
+			return userIds[0];
+		}
+
+		List<Group> groups = GroupLocalServiceUtil.getRoleGroups(
+			role.getRoleId());
+
+		for (Group group : groups) {
+			if (group.isOrganization()) {
+				userIds = OrganizationLocalServiceUtil.getUserPrimaryKeys(
+					group.getClassPK());
+
+				if (!ArrayUtil.isEmpty(userIds)) {
+					return userIds[0];
+				}
+			}
+			else if (group.isRegularSite()) {
+				userIds = GroupLocalServiceUtil.getUserPrimaryKeys(
+					group.getGroupId());
+
+				if (!ArrayUtil.isEmpty(userIds)) {
+					return userIds[0];
+				}
+			}
+			else if (group.isUserGroup()) {
+				userIds = UserGroupLocalServiceUtil.getUserPrimaryKeys(
+					group.getClassPK());
+
+				if (!ArrayUtil.isEmpty(userIds)) {
+					return userIds[0];
+				}
+			}
+		}
+
+		throw new UpgradeException(
+			"Unable to find an administrator user in company " +
+				company.getCompanyId());
 	}
 
 	protected void updateCalendarUserId(long calendarId, long userId)

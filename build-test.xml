@@ -477,6 +477,46 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-fixpack-version">
+		<attribute name="patch.file.zip.url" />
+
+		<sequential>
+			<var name="fixpack.version" unset="true" />
+
+			<if>
+				<matches pattern="https?://" string="@{patch.file.zip.url}" />
+				<then>
+					<local name="patch.file.zip.url" />
+					<local name="patch.requirements" />
+
+					<property name="patch.file.zip.url" value="@{patch.file.zip.url}" />
+					<get-patch-requirements patch.file.zip.url="@{patch.file.zip.url}" />
+
+					<beanshell>
+						<![CDATA[
+							import java.util.regex.Matcher;
+							import java.util.regex.Pattern;
+
+							String patchFileZipURL = project.getProperty("patch.file.zip.url");
+							String patchRequirements = project.getProperty("patch.requirements");
+
+							Pattern pattern = Pattern.compile("https?://.*/liferay-fix-pack-de-(\\d+)-\\d{4}[^/]*.zip");
+
+							Matcher matcher = pattern.matcher(patchFileZipURL);
+
+							if (matcher.find()) {
+								project.setProperty("fixpack.version", matcher.group(1));
+							}
+							else if ((patchRequirements != null) && patchRequirements.startsWith("de-")) {
+								project.setProperty("fixpack.version", patchRequirements.substring(3));
+							}
+						]]>
+					</beanshell>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-ip-address">
 		<sequential>
 			<if>
@@ -5065,11 +5105,40 @@ go]]></replacevalue>
 							replace="\1"
 						/>
 
+						<local name="sync.connector.override" />
+
+						<property name="sync.connector.override" value="false" />
+
+						<if>
+							<matches pattern="https?://" string="${test.build.fix.pack.zip.url}" />
+							<then>
+								<get-fixpack-version patch.file.zip.url="${test.build.fix.pack.zip.url}" />
+
+								<beanshell>
+									<![CDATA[
+										String appFileName = project.getProperty("app.file.name");
+										String fixpackVersion = project.getProperty("fixpack.version");
+
+										if (appFileName.equals("Liferay Sync Connector.lpkg") && (fixpackVersion != null)) {
+											int fixpackVersionInteger = Integer.valueOf(fixpackVersion);
+
+											if (fixpackVersionInteger >= 19) {
+												project.setProperty("sync.connector.override", "true");
+											}
+										}
+									]]>
+								</beanshell>
+							</then>
+						</if>
+
 						<if>
 							<and>
 								<available file="${project.dir}/plugins/marketplace/${app.file.name}" />
 								<not>
 									<contains string="${test.latest.marketplace.apps.exclude}" substring="${app.file.name}" />
+								</not>
+								<not>
+									<equals arg1="${sync.connector.override}" arg2="false" />
 								</not>
 							</and>
 							<then>
@@ -8292,31 +8361,18 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 			<then>
 				<local name="enable.ext.environment" />
 
-				<get-patch-requirements patch.file.zip.url="${test.build.fix.pack.zip.url}" />
+				<get-fixpack-version patch.file.zip.url="${test.build.fix.pack.zip.url}" />
 
 				<beanshell>
 					<![CDATA[
-						import java.util.regex.Matcher;
-						import java.util.regex.Pattern;
+						String fixpackVersion = project.getProperty("fixpack.version");
 
-						int fixpackVersion = -1;
+						if (fixpackVersion != null) {
+							Integer fixpackVersionInteger = Integer.valueOf(fixpackVersion);
 
-						String fixPackZipURL = project.getProperty("test.build.fix.pack.zip.url");
-						String patchRequirements = project.getProperty("patch.requirements");
-
-						Pattern pattern = Pattern.compile("https?://.*/liferay-fix-pack-de-(\\d+)-\\d{4}[^/]*.zip");
-
-						Matcher matcher = pattern.matcher(fixPackZipURL);
-
-						if (matcher.find()) {
-							fixpackVersion = Integer.valueOf(matcher.group(1));
-						}
-						else if ((patchRequirements != null) && patchRequirements.startsWith("de-")) {
-							fixpackVersion = Integer.valueOf(patchRequirements.substring(3));
-						}
-
-						if (fixpackVersion >= 16) {
-							project.setProperty("enable.ext.environment", "true");
+							if (fixpackVersionInteger >= 16) {
+								project.setProperty("enable.ext.environment", "true");
+							}
 						}
 					]]>
 				</beanshell>

@@ -28,6 +28,7 @@ class LiferayApp extends App {
 		this.on('beforeNavigate', this.onBeforeNavigate);
 		this.on('endNavigate', this.onEndNavigate);
 		this.on('startNavigate', this.onStartNavigate);
+		this.on('navigationError', this.onNavigationError);
 
 		Liferay.on('beforeScreenFlip', Utils.resetAllPortlets);
 		Liferay.on('io:complete', this.onLiferayIOComplete, this);
@@ -41,6 +42,12 @@ class LiferayApp extends App {
 		this.addSurfaces(new LiferaySurface(body.id));
 
 		dom.append(body, '<div class="lfr-spa-loading-bar"></div>');
+	}
+
+	onNavigationError(evt) {
+		if (evt.error.requestPrematureTermination) {
+			window.location.href = evt.path;
+		}
 	}
 
 	getCacheExpirationTime() {

@@ -41,6 +41,7 @@ public class CreateTokenMojo extends AbstractMojo {
 			createTokenCommand.setEmailAddress(emailAddress);
 			createTokenCommand.setForce(force);
 			createTokenCommand.setPassword(password);
+			createTokenCommand.setPasswordFile(passwordFile);
 			createTokenCommand.setTokenFile(tokenFile);
 			createTokenCommand.setTokenUrl(tokenUrl);
 
@@ -60,6 +61,9 @@ public class CreateTokenMojo extends AbstractMojo {
 
 	@Parameter
 	protected String password;
+
+	@Parameter
+	protected File passwordFile;
 
 	@Parameter(
 		defaultValue = "${user.home}/" + BundleSupportConstants.DEFAULT_TOKEN_FILE_NAME

@@ -62,7 +62,18 @@ public class BundleSupportMavenTest extends BundleSupportCommandsTest {
 
 		_execute(
 			"clean", null, null, null, null, null, fileName, false,
-			liferayHomeDir, null, null, 0, null, null, null, null);
+			liferayHomeDir, null, null, null, 0, null, null, null, null);
+	}
+
+	@Override
+	protected void createToken(
+			String emailAddress, boolean force, File passwordFile,
+			File tokenFile, URL tokenUrl)
+		throws Exception {
+
+		_execute(
+			"create-token", null, null, null, emailAddress, null, null, force,
+			null, null, null, passwordFile, 0, tokenFile, tokenUrl, null, null);
 	}
 
 	@Override
@@ -73,7 +84,7 @@ public class BundleSupportMavenTest extends BundleSupportCommandsTest {
 
 		_execute(
 			"create-token", null, null, null, emailAddress, null, null, force,
-			null, null, password, 0, tokenFile, tokenUrl, null, null);
+			null, null, password, null, 0, tokenFile, tokenUrl, null, null);
 	}
 
 	@Override
@@ -82,7 +93,7 @@ public class BundleSupportMavenTest extends BundleSupportCommandsTest {
 
 		_execute(
 			"deploy", null, null, file, null, null, null, false, liferayHomeDir,
-			outputFileName, null, 0, null, null, null, null);
+			outputFileName, null, null, 0, null, null, null, null);
 	}
 
 	@Override
@@ -94,8 +105,8 @@ public class BundleSupportMavenTest extends BundleSupportCommandsTest {
 
 		_execute(
 			"init", cacheDir, configsDir, null, null, environment, null, false,
-			liferayHomeDir, null, password, stripComponents, null, null, url,
-			userName);
+			liferayHomeDir, null, password, null, stripComponents, null, null,
+			url, userName);
 	}
 
 	private static String _replace(String s, String key, File file) {
@@ -120,8 +131,8 @@ public class BundleSupportMavenTest extends BundleSupportCommandsTest {
 			String goalName, File cacheDir, File configsDir, File deployFile,
 			String emailAddress, String environment, String fileName,
 			boolean force, File liferayHomeDir, String outputFileName,
-			String password, int stripComponents, File tokenFile, URL tokenUrl,
-			URL url, String userName)
+			String password, File passwordFile, int stripComponents,
+			File tokenFile, URL tokenUrl, URL url, String userName)
 		throws Exception {
 
 		File projectDir = temporaryFolder.newFolder("maven");
@@ -148,6 +159,8 @@ public class BundleSupportMavenTest extends BundleSupportCommandsTest {
 		pomXml = _replace(
 			pomXml, "[$BUNDLE_SUPPORT_OUTPUT_FILE_NAME$]", outputFileName);
 		pomXml = _replace(pomXml, "[$BUNDLE_SUPPORT_PASSWORD$]", password);
+		pomXml = _replace(
+			pomXml, "[$BUNDLE_SUPPORT_PASSWORD_FILE$]", passwordFile);
 		pomXml = _replace(
 			pomXml, "[$BUNDLE_SUPPORT_STRIP_COMPONENTS$]", stripComponents);
 		pomXml = _replace(pomXml, "[$BUNDLE_SUPPORT_TOKEN_FILE$]", tokenFile);

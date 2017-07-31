@@ -134,6 +134,16 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 		return false;
 	}
 
+	public static File toFile(Project project, Object object) {
+		object = toObject(object);
+
+		if (object == null) {
+			return null;
+		}
+
+		return project.file(object);
+	}
+
 	public static URL toURL(Object url) {
 		url = toObject(url);
 

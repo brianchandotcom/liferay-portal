@@ -94,8 +94,10 @@ public class UserIndexer extends BaseIndexer<User> {
 			long entryClassPK, String actionId)
 		throws Exception {
 
+		User user = userLocalService.getUser(entryClassPK);
+
 		return userPermission.contains(
-			permissionChecker, entryClassPK, actionId);
+			permissionChecker, user.getUserId(), actionId);
 	}
 
 	@Override

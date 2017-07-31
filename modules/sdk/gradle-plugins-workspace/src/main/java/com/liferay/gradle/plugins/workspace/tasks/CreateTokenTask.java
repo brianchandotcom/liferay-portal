@@ -40,6 +40,7 @@ import org.gradle.api.tasks.TaskAction;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Gregory Amerson
  */
 public class CreateTokenTask extends DefaultTask {
 
@@ -72,6 +73,7 @@ public class CreateTokenTask extends DefaultTask {
 		createTokenCommand.setEmailAddress(getEmailAddress());
 		createTokenCommand.setForce(isForce());
 		createTokenCommand.setPassword(getPassword());
+		createTokenCommand.setPasswordFile(getPasswordFile());
 		createTokenCommand.setTokenFile(getTokenFile());
 		createTokenCommand.setTokenUrl(getTokenUrl());
 
@@ -88,6 +90,12 @@ public class CreateTokenTask extends DefaultTask {
 	@Optional
 	public String getPassword() {
 		return GradleUtil.toString(_password);
+	}
+
+	@Input
+	@Optional
+	public File getPasswordFile() {
+		return GradleUtil.toFile(getProject(), _passwordFile);
 	}
 
 	@Input
@@ -114,6 +122,11 @@ public class CreateTokenTask extends DefaultTask {
 
 	public void setPassword(Object password) {
 		_password = password;
+	}
+
+	@Input
+	public void setPasswordFile(Object passwordFile) {
+		_passwordFile = passwordFile;
 	}
 
 	@Input
@@ -184,6 +197,7 @@ public class CreateTokenTask extends DefaultTask {
 	private Object _emailAddress;
 	private Object _force;
 	private Object _password;
+	private Object _passwordFile;
 	private Object _tokenFile = BundleSupportConstants.DEFAULT_TOKEN_FILE;
 	private Object _tokenUrl = BundleSupportConstants.DEFAULT_TOKEN_URL;
 

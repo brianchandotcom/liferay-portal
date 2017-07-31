@@ -321,6 +321,12 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		return _searchEngineId;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by
+	 *             {@link com.liferay.portal.search.sort.SortFieldBuilder
+	 *             #getSortField}
+	 */
+	@Deprecated
 	@Override
 	public String getSortField(String orderByCol) {
 		String sortField = doGetSortField(orderByCol);
@@ -332,6 +338,12 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		return sortField;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by
+	 *             {@link com.liferay.portal.search.sort.SortFieldBuilder
+	 *             #getSortField}
+	 */
+	@Deprecated
 	@Override
 	public String getSortField(String orderByCol, int sortType) {
 		if ((sortType == Sort.DOUBLE_TYPE) || (sortType == Sort.FLOAT_TYPE) ||
@@ -1404,6 +1416,13 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	protected abstract void doDelete(T object) throws Exception;
 
 	protected abstract Document doGetDocument(T object) throws Exception;
+
+	/**
+	 * @deprecated As of 7.1.0, replaced by
+	 *             {@link com.liferay.portal.search.contributor.sort.
+	 *             SortFieldTranslator}
+	 */
+	@Deprecated
 
 	protected String doGetSortField(String orderByCol) {
 		return orderByCol;

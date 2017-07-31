@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean class="com.liferay.commerce.address.service.impl.CommerceCountryLocalServiceImpl" id="com.liferay.commerce.address.service.CommerceCountryLocalService" />
+	<bean class="com.liferay.commerce.address.service.impl.CommerceCountryServiceImpl" id="com.liferay.commerce.address.service.CommerceCountryService" />
+	<bean class="com.liferay.commerce.address.service.persistence.impl.CommerceCountryPersistenceImpl" id="com.liferay.commerce.address.service.persistence.CommerceCountryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.address.service.impl.CommerceRegionLocalServiceImpl" id="com.liferay.commerce.address.service.CommerceRegionLocalService" />
+	<bean class="com.liferay.commerce.address.service.impl.CommerceRegionServiceImpl" id="com.liferay.commerce.address.service.CommerceRegionService" />
+	<bean class="com.liferay.commerce.address.service.persistence.impl.CommerceRegionPersistenceImpl" id="com.liferay.commerce.address.service.persistence.CommerceRegionPersistence" parent="basePersistence" />
+</beans>

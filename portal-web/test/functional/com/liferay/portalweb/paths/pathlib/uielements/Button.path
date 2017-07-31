@@ -294,6 +294,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COPY_FROM_LIVE</td>
+	<td>//button[contains(.,'Copy from Live')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DEACTIVATE</td>
 	<td>//*[@data-qa-id='deactivateButton'] | //button[contains(.,'Deactivate')]</td>
 	<td></td>

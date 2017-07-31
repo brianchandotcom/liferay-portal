@@ -755,6 +755,117 @@
 		<execute function="AssertElementPresent#assertElementPresent" locator1="DocumentsAndMediaDocument#VIDEO_GENERATION_THUMBNAIL_RESOLUTION" />
 	</command>
 
+	<command name="ImportAudioAndLimitPermissionsToSubfolder">
+		<property name="testray.component.names" value="Training" />
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Moon Rocks 101" />
+		</execute>
+
+		<execute function="Refresh" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoConfigurationPG">
+			<var name="portletOption" value="Home Folder Permissions" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoDefinePermissionsWithinIFrame">
+			<var name="roleName" value="User" />
+		</execute>
+
+		<execute macro="RoleNavigator#gotoPermissionSectionViaDropdown">
+			<var name="permissionName" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA" />
+			<var name="step1" value="Site Administration" />
+			<var name="step2" value="Content" />
+		</execute>
+
+		<execute macro="Role#addPermissions">
+			<var name="permissionDefinitionKeys" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX,SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL_PERMISSIONS_VIEW_CHECKBOX,SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_FOLDER_CHECKBOX,SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_VIEW_CHECKBOX,SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_FOLDER_ADD_SUBFOLDER_CHECKBOX,SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_FOLDER_VIEW_CHECKBOX,SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_UPDATE_CHECKBOX" />
+		</execute>
+
+		<execute macro="IFrame#closeFrame" />
+
+		<execute function="Refresh" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMFolder#addCP">
+			<var name="dmFolderName" value="Unit 1 - Moon Rock Chemistry" />
+		</execute>
+
+		<execute macro="DMFolder#gotoCP">
+			<var name="dmFolderName" value="Unit 1 - Moon Rock Chemistry" />
+		</execute>
+
+		<execute macro="DMFolder#addSubfolderCP">
+			<var name="dmSubFolderName" value="The Properties of Moon Rocks" />
+		</execute>
+
+		<execute macro="DMFolder#gotoCP">
+			<var name="dmFolderName" value="The Properties of Moon Rocks" />
+		</execute>
+
+		<execute macro="DMFolder#addSubfolderCP">
+			<var name="dmSubFolderName" value="Audio Lectures" />
+		</execute>
+
+		<execute macro="DMFolder#gotoCP">
+			<var name="dmFolderName" value="Audio Lectures" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Dr. Winters Introductory Audio Lecture.ogg" />
+			<var name="dmDocumentTitle" value="Dr. Winters Introductory Audio Lecture.ogg" />
+		</execute>
+
+		<execute function="Refresh" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMFolder#gotoCP">
+			<var name="dmFolderName" value="Unit 1 - Moon Rock Chemistry" />
+		</execute>
+
+		<execute macro="DMFolder#gotoCP">
+			<var name="dmFolderName" value="The Properties of Moon Rocks" />
+		</execute>
+
+		<execute macro="DMFolder#removeMultiplePermissions">
+			<var name="dmFolder" value="Audio Lectures" />
+			<var name="permissionNameList" value="ADD_DOCUMENT,ADD_SHORTCUT,ADD_SUBFOLDER" />
+			<var name="roleTitle" value="Site Member" />
+		</execute>
+
+		<execute macro="IFrame#closeFrame" />
+
+		<execute function="Refresh" />
+
+		<execute macro="ProductMenu#gotoSiteViaMySites">
+			<var name="siteName" value="Moon Rocks 101" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="LAR#importPortlet">
+			<var name="larFileName" value="moon-rocks-101-materials-structure.lar" />
+			<var name="uploadFrom" value="dependencies" />
+		</execute>
+	</command>
+
 	<command name="ImportDocumentWithDBStore" priority="3">
 		<property name="custom.properties" value="dl.store.impl=com.liferay.portal.store.db.DBStore" />
 

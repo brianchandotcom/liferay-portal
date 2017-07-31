@@ -35,6 +35,7 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.TaskAction;
 
@@ -92,7 +93,7 @@ public class CreateTokenTask extends DefaultTask {
 		return GradleUtil.toString(_password);
 	}
 
-	@Input
+	@InputFile
 	@Optional
 	public File getPasswordFile() {
 		return GradleUtil.toFile(getProject(), _passwordFile);

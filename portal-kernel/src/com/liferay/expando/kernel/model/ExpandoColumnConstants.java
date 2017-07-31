@@ -152,7 +152,7 @@ public class ExpandoColumnConstants {
 	public static final String STRING_LOCALIZED_LABEL =
 		"custom.field.java.lang.String.localized";
 
-	public static final int[] TYPES = new int[] {
+	public static final int[] TYPES = {
 		BOOLEAN, BOOLEAN_ARRAY, DATE, DATE_ARRAY, DOUBLE, DOUBLE_ARRAY, FLOAT,
 		FLOAT_ARRAY, GEOLOCATION, INTEGER, INTEGER_ARRAY, LONG, LONG_ARRAY,
 		NUMBER, NUMBER_ARRAY, SHORT, SHORT_ARRAY, STRING, STRING_ARRAY,

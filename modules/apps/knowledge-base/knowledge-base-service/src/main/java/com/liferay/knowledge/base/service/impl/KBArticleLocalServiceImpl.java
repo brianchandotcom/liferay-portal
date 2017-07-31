@@ -721,7 +721,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		List<KBArticle> kbArticles = new ArrayList<>();
 
-		Long[][] params = new Long[][] {ArrayUtil.toArray(resourcePrimKeys)};
+		Long[][] params = {ArrayUtil.toArray(resourcePrimKeys)};
 
 		while ((params = KnowledgeBaseUtil.getParams(params[0])) != null) {
 			List<KBArticle> curKBArticles = null;

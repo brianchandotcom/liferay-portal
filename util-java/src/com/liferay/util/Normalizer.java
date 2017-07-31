@@ -45,10 +45,9 @@ public class Normalizer {
 		return false;
 	}
 
-	private static final char[] _NORMALIZED_TEXT = new char[] {'l', '\'', '\"'};
+	private static final char[] _NORMALIZED_TEXT = {'l', '\'', '\"'};
 
-	private static final char[] _UNICODE_TEXT =
-		new char[] {'\u0142', '\u02B9', '\u02BA'};
+	private static final char[] _UNICODE_TEXT = {'\u0142', '\u02B9', '\u02BA'};
 
 	private static final Transliterator _transliterator =
 		Transliterator.getInstance(

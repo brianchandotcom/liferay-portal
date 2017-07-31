@@ -1151,7 +1151,7 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 		servletDefinition.setServlet(_getServletInstance(servletClassName));
 	}
 
-	private static final String[] _LEAVES = new String[] {
+	private static final String[] _LEAVES = {
 		"async-supported", "dispatcher", "error-code", "exception-type",
 		"filter-class", "filter-name", "http-method", "http-method-exception",
 		"jsp-file", "listener-class", "location", "name", "param-name",

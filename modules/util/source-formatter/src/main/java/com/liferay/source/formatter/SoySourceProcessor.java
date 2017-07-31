@@ -31,6 +31,6 @@ public class SoySourceProcessor extends BaseSourceProcessor {
 		return _INCLUDES;
 	}
 
-	private static final String[] _INCLUDES = new String[] {"**/*.soy"};
+	private static final String[] _INCLUDES = {"**/*.soy"};
 
 }

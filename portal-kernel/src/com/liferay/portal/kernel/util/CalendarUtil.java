@@ -30,7 +30,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class CalendarUtil {
 
-	public static final String[] DAYS_ABBREVIATION = new String[] {
+	public static final String[] DAYS_ABBREVIATION = {
 		"sunday-abbreviation", "monday-abbreviation", "tuesday-abbreviation",
 		"wednesday-abbreviation", "thursday-abbreviation",
 		"friday-abbreviation", "saturday-abbreviation"
@@ -38,7 +38,7 @@ public class CalendarUtil {
 
 	public static final String ICAL_EXTENSION = "ics";
 
-	public static final int[] MONTH_IDS = new int[] {
+	public static final int[] MONTH_IDS = {
 		Calendar.JANUARY, Calendar.FEBRUARY, Calendar.MARCH, Calendar.APRIL,
 		Calendar.MAY, Calendar.JUNE, Calendar.JULY, Calendar.AUGUST,
 		Calendar.SEPTEMBER, Calendar.OCTOBER, Calendar.NOVEMBER,

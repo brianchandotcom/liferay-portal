@@ -127,7 +127,7 @@ public class WordsImpl implements Words {
 			try {
 				spellDictionaryHashMap = new SpellDictionaryHashMap();
 
-				String[] dics = new String[] {
+				String[] dics = {
 					"center.dic", "centre.dic", "color.dic", "colour.dic",
 					"eng_com.dic", "english.0", "english.1", "ise.dic",
 					"ize.dic", "labeled.dic", "labelled.dic", "yse.dic",

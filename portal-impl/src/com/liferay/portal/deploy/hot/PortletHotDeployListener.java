@@ -161,7 +161,7 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 			_log.debug("Invoking deploy for " + servletContextName);
 		}
 
-		String[] xmls = new String[] {
+		String[] xmls = {
 			HttpUtil.URLtoString(
 				servletContext.getResource(
 					"/WEB-INF/" + Portal.PORTLET_XML_FILE_NAME_STANDARD)),

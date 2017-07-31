@@ -109,7 +109,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 	}
 
 	private Map<String, String> _getContentsMap() throws Exception {
-		String[] excludes = new String[] {"**/null.jsp", "**/tools/**"};
+		String[] excludes = {"**/null.jsp", "**/tools/**"};
 
 		if (getExcludes() != null) {
 			excludes = ArrayUtil.append(excludes, getExcludes());
@@ -494,14 +494,13 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private static final String[] _PORTLET_DEFINE_OBJECTS_PROPERTIES =
-		new String[] {
-			"actionRequest", "actionResponse", "eventRequest", "eventResponse",
-			"liferayPortletRequest", "liferayPortletResponse", "portletConfig",
-			"portletName", "portletPreferences", "portletPreferencesValues",
-			"portletSession", "portletSessionScope", "renderResponse",
-			"renderRequest", "resourceRequest", "resourceResponse"
-		};
+	private static final String[] _PORTLET_DEFINE_OBJECTS_PROPERTIES = {
+		"actionRequest", "actionResponse", "eventRequest", "eventResponse",
+		"liferayPortletRequest", "liferayPortletResponse", "portletConfig",
+		"portletName", "portletPreferences", "portletPreferencesValues",
+		"portletSession", "portletSessionScope", "renderResponse",
+		"renderRequest", "resourceRequest", "resourceResponse"
+	};
 
 	private static final String _UNUSED_VARIABLES_EXCLUDES =
 		"jsp.unused.variables.excludes";

@@ -57,7 +57,7 @@ public class DefaultMentionsUserFinder implements MentionsUserFinder {
 
 		User user = _userLocalService.getUser(userId);
 
-		int[] types = new int[] {SocialRelationConstants.TYPE_BI_FRIEND};
+		int[] types = {SocialRelationConstants.TYPE_BI_FRIEND};
 
 		if (socialInteractionsConfiguration.
 				isSocialInteractionsFriendsEnabled() &&

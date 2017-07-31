@@ -32,7 +32,6 @@ public class MarkdownSourceProcessor extends BaseSourceProcessor {
 		return _INCLUDES;
 	}
 
-	private static final String[] _INCLUDES =
-		new String[] {"**/*.markdown", "**/*.md"};
+	private static final String[] _INCLUDES = {"**/*.markdown", "**/*.md"};
 
 }

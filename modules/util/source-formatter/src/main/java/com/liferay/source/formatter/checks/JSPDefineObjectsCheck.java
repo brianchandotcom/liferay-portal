@@ -130,68 +130,62 @@ public class JSPDefineObjectsCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private static final String[][] _LIFERAY_FRONTEND_DEFINE_OBJECTS =
-		new String[][] {
-			new String[] {"String", "currentURL", "currentURLObj.toString()"},
-			new String[] {
-				"PortletURL", "currentURLObj",
-				"PortletURLUtil.getCurrent(liferayPortletRequest, " +
-					"liferayPortletResponse)"
-			},
-			new String[] {
-				"ResourceBundle", "resourceBundle",
-				"ResourceBundleUtil.getBundle(\"content.Language\", locale, " +
-					"getClass()"
-			},
-			new String[] {
-				"WindowState", "windowState",
-				"liferayPortletRequest.getWindowState()"
-			}
-		};
+	private static final String[][] _LIFERAY_FRONTEND_DEFINE_OBJECTS = {
+		new String[] {"String", "currentURL", "currentURLObj.toString()"},
+		new String[] {
+			"PortletURL", "currentURLObj",
+			"PortletURLUtil.getCurrent(liferayPortletRequest, " +
+				"liferayPortletResponse)"
+		},
+		new String[] {
+			"ResourceBundle", "resourceBundle",
+			"ResourceBundleUtil.getBundle(\"content.Language\", locale, " +
+				"getClass()"
+		},
+		new String[] {
+			"WindowState", "windowState",
+			"liferayPortletRequest.getWindowState()"
+		}
+	};
 
-	private static final String[][] _LIFERAY_THEME_DEFINE_OBJECTS =
-		new String[][] {
-			new String[] {"Account", "account", "themeDisplay.getAccount()"},
-			new String[] {
-				"ColorScheme", "colorScheme", "themeDisplay.getColorScheme()"
-			},
-			new String[] {"Company", "company", "themeDisplay.getCompany()"},
-			new String[] {"Contact", "contact", "themeDisplay.getContact()"},
-			new String[] {"Layout", "layout", "themeDisplay.getLayout()"},
-			new String[] {
-				"List<Layout>", "layouts", "themeDisplay.getLayouts()"
-			},
-			new String[] {
-				"LayoutTypePortlet", "layoutTypePortlet",
-				"themeDisplay.getLayoutTypePortlet()"
-			},
-			new String[] {"Locale", "locale", "themeDisplay.getLocale()"},
-			new String[] {
-				"PermissionChecker", "permissionChecker",
-				"themeDisplay.getPermissionChecker()"
-			},
-			new String[] {"long", "plid", "themeDisplay.getPlid()"},
-			new String[] {
-				"PortletDisplay", "portletDisplay",
-				"themeDisplay.getPortletDisplay()"
-			},
-			new String[] {"User", "realUser", "themeDisplay.getRealUser()"},
-			new String[] {
-				"long", "scopeGroupId", "themeDisplay.getScopeGroupId()"
-			},
-			new String[] {"Theme", "theme", "themeDisplay.getTheme()"},
-			new String[] {
-				"ThemeDisplay", "themeDisplay",
-				"(ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY)"
-			},
-			new String[] {"TimeZone", "timeZone", "themeDisplay.getTimeZone()"},
-			new String[] {"User", "user", "themeDisplay.getUser()"},
-			new String[] {
-				"long", "portletGroupId", "themeDisplay.getScopeGroupId()"
-			}
-		};
+	private static final String[][] _LIFERAY_THEME_DEFINE_OBJECTS = {
+		new String[] {"Account", "account", "themeDisplay.getAccount()"},
+		new String[] {
+			"ColorScheme", "colorScheme", "themeDisplay.getColorScheme()"
+		},
+		new String[] {"Company", "company", "themeDisplay.getCompany()"},
+		new String[] {"Contact", "contact", "themeDisplay.getContact()"},
+		new String[] {"Layout", "layout", "themeDisplay.getLayout()"},
+		new String[] {"List<Layout>", "layouts", "themeDisplay.getLayouts()"},
+		new String[] {
+			"LayoutTypePortlet", "layoutTypePortlet",
+			"themeDisplay.getLayoutTypePortlet()"
+		},
+		new String[] {"Locale", "locale", "themeDisplay.getLocale()"},
+		new String[] {
+			"PermissionChecker", "permissionChecker",
+			"themeDisplay.getPermissionChecker()"
+		},
+		new String[] {"long", "plid", "themeDisplay.getPlid()"},
+		new String[] {
+			"PortletDisplay", "portletDisplay",
+			"themeDisplay.getPortletDisplay()"
+		},
+		new String[] {"User", "realUser", "themeDisplay.getRealUser()"},
+		new String[] {"long", "scopeGroupId", "themeDisplay.getScopeGroupId()"},
+		new String[] {"Theme", "theme", "themeDisplay.getTheme()"},
+		new String[] {
+			"ThemeDisplay", "themeDisplay",
+			"(ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY)"
+		},
+		new String[] {"TimeZone", "timeZone", "themeDisplay.getTimeZone()"},
+		new String[] {"User", "user", "themeDisplay.getUser()"},
+		new String[] {
+			"long", "portletGroupId", "themeDisplay.getScopeGroupId()"
+		}
+	};
 
-	private static final String[][] _PORTLET_DEFINE_OBJECTS = new String[][] {
+	private static final String[][] _PORTLET_DEFINE_OBJECTS = {
 		new String[] {
 			"PortletConfig", "portletConfig",
 			"(PortletConfig)request.getAttribute(JavaConstants." +

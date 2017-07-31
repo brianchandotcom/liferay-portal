@@ -30,7 +30,7 @@ public class UpgradeKernelPackage
 		return _RESOURCE_NAMES;
 	}
 
-	private static final String[][] _CLASS_NAMES = new String[][] {
+	private static final String[][] _CLASS_NAMES = {
 		{
 			"com.liferay.portlet.shopping.model.ShoppingCart",
 			"com.liferay.shopping.model.ShoppingCart"
@@ -69,7 +69,7 @@ public class UpgradeKernelPackage
 		}
 	};
 
-	private static final String[][] _RESOURCE_NAMES = new String[][] {
+	private static final String[][] _RESOURCE_NAMES = {
 		{"com.liferay.portlet.shopping", "com.liferay.shopping"}
 	};
 

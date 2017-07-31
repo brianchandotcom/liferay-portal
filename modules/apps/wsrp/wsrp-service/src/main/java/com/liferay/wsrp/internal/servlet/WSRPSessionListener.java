@@ -84,7 +84,7 @@ public class WSRPSessionListener implements HttpSessionListener {
 		releaseSessions.setRegistrationContext(
 			serviceHolder.getRegistrationContext());
 
-		String[] sessionIDs = new String[] {sessionContext.getSessionID()};
+		String[] sessionIDs = {sessionContext.getSessionID()};
 
 		releaseSessions.setSessionIDs(sessionIDs);
 

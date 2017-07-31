@@ -128,7 +128,7 @@ public class RoleLocalServiceTest {
 		GroupLocalServiceUtil.addUserGroupGroup(
 			_userGroup.getUserGroupId(), _group);
 
-		long[] roleIds = new long[] {_role.getRoleId()};
+		long[] roleIds = {_role.getRoleId()};
 
 		UserGroupGroupRoleLocalServiceUtil.addUserGroupGroupRoles(
 			_userGroup.getGroupId(), _group.getGroupId(), roleIds);
@@ -312,7 +312,7 @@ public class RoleLocalServiceTest {
 
 		Assert.assertNotNull(role);
 
-		long[] excludedRoleIds = new long[] {role.getRoleId()};
+		long[] excludedRoleIds = {role.getRoleId()};
 
 		List<Role> roles = RoleLocalServiceUtil.getTeamRoles(
 			organization.getGroupId(), excludedRoleIds);

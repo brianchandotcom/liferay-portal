@@ -62,7 +62,7 @@ public class PortletPreferencesFactoryImplTest {
 	@Test
 	public void testGetLayoutPortletSetup() throws Exception {
 		String name = RandomTestUtil.randomString(20);
-		String[] values = new String[] {RandomTestUtil.randomString(20)};
+		String[] values = {RandomTestUtil.randomString(20)};
 
 		String portletPreferencesXML =
 			PortletPreferencesTestUtil.getPortletPreferencesXML(name, values);
@@ -89,7 +89,7 @@ public class PortletPreferencesFactoryImplTest {
 			_PORTLET_ID, userId, null);
 
 		String name = RandomTestUtil.randomString(20);
-		String[] values = new String[] {RandomTestUtil.randomString(20)};
+		String[] values = {RandomTestUtil.randomString(20)};
 
 		String portletPreferencesXML =
 			PortletPreferencesTestUtil.getPortletPreferencesXML(name, values);

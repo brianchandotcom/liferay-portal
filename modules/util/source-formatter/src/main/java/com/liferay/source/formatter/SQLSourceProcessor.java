@@ -32,6 +32,6 @@ public class SQLSourceProcessor extends BaseSourceProcessor {
 		return _INCLUDES;
 	}
 
-	private static final String[] _INCLUDES = new String[] {"**/*.sql"};
+	private static final String[] _INCLUDES = {"**/*.sql"};
 
 }

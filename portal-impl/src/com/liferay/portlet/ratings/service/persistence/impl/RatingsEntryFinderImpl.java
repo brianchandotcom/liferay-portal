@@ -66,7 +66,7 @@ public class RatingsEntryFinderImpl
 	public List<RatingsEntry> findByU_C_C(
 		long userId, long classNameId, List<Long> classPKs) {
 
-		Object[] finderArgs = new Object[] {
+		Object[] finderArgs = {
 			userId, classNameId,
 			StringUtil.merge(classPKs.toArray(new Long[classPKs.size()]))
 		};

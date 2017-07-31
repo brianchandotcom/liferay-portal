@@ -74,7 +74,7 @@ public class PortletURLImplTest {
 
 		Map<String, String[]> renderParameters = new HashMap<>();
 
-		String[] values = new String[] {"value1", "value2"};
+		String[] values = {"value1", "value2"};
 
 		renderParameters.put("name", values);
 

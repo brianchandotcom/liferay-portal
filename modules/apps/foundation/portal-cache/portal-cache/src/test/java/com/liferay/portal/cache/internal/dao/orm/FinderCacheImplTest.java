@@ -129,8 +129,8 @@ public class FinderCacheImplTest {
 		new HashCodeHexStringCacheKeyGenerator();
 	private static final ClassLoader _classLoader =
 		FinderCacheImplTest.class.getClassLoader();
-	private static final String[] _key1 = new String[] {"home"};
-	private static final String[] _key2 = new String[] {"j1me"};
+	private static final String[] _key1 = {"home"};
+	private static final String[] _key2 = {"j1me"};
 	private static MultiVMPool _notSerializedMultiVMPool;
 	private static Props _props;
 	private static MultiVMPool _serializedMultiVMPool;

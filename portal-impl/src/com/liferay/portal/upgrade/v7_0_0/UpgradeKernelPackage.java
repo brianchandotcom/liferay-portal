@@ -240,7 +240,7 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 		return columnName;
 	}
 
-	private static final String[][] _CLASS_NAMES = new String[][] {
+	private static final String[][] _CLASS_NAMES = {
 		{
 			"com.liferay.counter.model.Counter",
 			"com.liferay.counter.kernel.model.Counter"
@@ -308,7 +308,7 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 		}
 	};
 
-	private static final String[][] _RESOURCE_NAMES = new String[][] {
+	private static final String[][] _RESOURCE_NAMES = {
 		{"com.liferay.portlet.asset", "com.liferay.asset"},
 		{"com.liferay.portlet.blogs", "com.liferay.blogs"},
 		{

@@ -302,9 +302,8 @@ public class CalendarBookingLocalServiceTest {
 			CalendarBookingTestUtil.addChildCalendarBooking(
 				invintingCalendar, resourceCalendar);
 
-		long[] childCalendarIds = new long[] {
-			invitedCalendar.getCalendarId(), resourceCalendar.getCalendarId()
-		};
+		long[] childCalendarIds =
+			{invitedCalendar.getCalendarId(), resourceCalendar.getCalendarId()};
 
 		CalendarBookingTestUtil.addMasterCalendarBooking(
 			_user, invintingCalendar, childCalendarIds,

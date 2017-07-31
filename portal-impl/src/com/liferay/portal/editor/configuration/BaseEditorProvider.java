@@ -164,7 +164,7 @@ public abstract class BaseEditorProvider<T> {
 		 * it, 0 means don't have it.
 		 */
 		private static final int[] _priorities =
-			new int[] {0b111, 0b110, 0b100, 0b010, 0b101, 0b011, 0b001, 0b000};
+			{0b111, 0b110, 0b100, 0b010, 0b101, 0b011, 0b001, 0b000};
 
 		private final Set<String> _editorConfigKeys;
 		private final T _editorContributor;

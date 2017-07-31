@@ -798,7 +798,7 @@ public class ArrayUtilTest {
 
 	@Test
 	public void testReverseBooleanArray() throws Exception {
-		boolean[] array = new boolean[] {true, true, false};
+		boolean[] array = {true, true, false};
 
 		ArrayUtil.reverse(array);
 
@@ -809,7 +809,7 @@ public class ArrayUtilTest {
 
 	@Test
 	public void testReverseCharArray() throws Exception {
-		char[] array = new char[] {'a', 'b', 'c'};
+		char[] array = {'a', 'b', 'c'};
 
 		ArrayUtil.reverse(array);
 
@@ -818,7 +818,7 @@ public class ArrayUtilTest {
 
 	@Test
 	public void testReverseDoubleArray() throws Exception {
-		double[] array = new double[] {111.0, 222.0, 333.0};
+		double[] array = {111.0, 222.0, 333.0};
 
 		ArrayUtil.reverse(array);
 
@@ -827,7 +827,7 @@ public class ArrayUtilTest {
 
 	@Test
 	public void testReverseIntArray() throws Exception {
-		int[] array = new int[] {111, 222, 333};
+		int[] array = {111, 222, 333};
 
 		ArrayUtil.reverse(array);
 
@@ -836,7 +836,7 @@ public class ArrayUtilTest {
 
 	@Test
 	public void testReverseLongArray() throws Exception {
-		long[] array = new long[] {111, 222, 333};
+		long[] array = {111, 222, 333};
 
 		ArrayUtil.reverse(array);
 
@@ -845,7 +845,7 @@ public class ArrayUtilTest {
 
 	@Test
 	public void testReverseShortArray() throws Exception {
-		short[] array = new short[] {111, 222, 333};
+		short[] array = {111, 222, 333};
 
 		ArrayUtil.reverse(array);
 
@@ -854,7 +854,7 @@ public class ArrayUtilTest {
 
 	@Test
 	public void testReverseStringArray() throws Exception {
-		String[] array = new String[] {"aaa", "bbb", "ccc"};
+		String[] array = {"aaa", "bbb", "ccc"};
 
 		ArrayUtil.reverse(array);
 

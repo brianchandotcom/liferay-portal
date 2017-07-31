@@ -157,9 +157,8 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	protected Map<String, String> getCompatClassNamesMap() throws Exception {
 		Map<String, String> compatClassNamesMap = new HashMap<>();
 
-		String[] includes = new String[] {
-			"**/portal-compat-shared/src/com/liferay/compat/**/*.java"
-		};
+		String[] includes =
+			{"**/portal-compat-shared/src/com/liferay/compat/**/*.java"};
 
 		String baseDirName = _baseDirName;
 

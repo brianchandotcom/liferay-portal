@@ -168,7 +168,7 @@ public class TikaSafeRandomizerBumperTest {
 
 	// http://www.phreedom.org/research/tinype
 
-	private static final byte[] _EXE_BYTE_ARRAY = new byte[] {
+	private static final byte[] _EXE_BYTE_ARRAY = {
 		77, 90, 0, 0, 80, 69, 0, 0, 76, 1, 1, 0, 106, 42, 88, -61, 0, 0, 0, 0,
 		0, 0, 0, 0, 4, 0, 3, 1, 11, 1, 8, 0, 4, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0,
 		12, 0, 0, 0, 4, 0, 0, 0, 12, 0, 0, 0, 0, 0, 64, 0, 4, 0, 0, 0, 4, 0, 0,

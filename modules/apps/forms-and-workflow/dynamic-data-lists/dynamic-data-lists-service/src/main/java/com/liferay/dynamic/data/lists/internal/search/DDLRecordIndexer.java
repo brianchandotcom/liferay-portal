@@ -412,7 +412,7 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 	@Reference
 	protected StorageEngine storageEngine;
 
-	private static final int[] _REINDEX_SCOPES = new int[] {
+	private static final int[] _REINDEX_SCOPES = {
 		DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS,
 		DDLRecordSetConstants.SCOPE_FORMS,
 		DDLRecordSetConstants.SCOPE_KALEO_FORMS

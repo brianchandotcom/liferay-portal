@@ -31,6 +31,6 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 		return _INCLUDES;
 	}
 
-	private static final String[] _INCLUDES = new String[] {"**/*.bnd"};
+	private static final String[] _INCLUDES = {"**/*.bnd"};
 
 }

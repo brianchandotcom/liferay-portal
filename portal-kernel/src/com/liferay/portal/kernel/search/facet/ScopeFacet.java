@@ -199,8 +199,7 @@ public class ScopeFacet extends MultiValueFacet {
 		return addScopeGroup(groupId);
 	}
 
-	private static final long[] _GROUP_IDS_FROM_SEARCH_CONTEXT_DEFAULT =
-		new long[] {0};
+	private static final long[] _GROUP_IDS_FROM_SEARCH_CONTEXT_DEFAULT = {0};
 
 	private static final Log _log = LogFactoryUtil.getLog(ScopeFacet.class);
 

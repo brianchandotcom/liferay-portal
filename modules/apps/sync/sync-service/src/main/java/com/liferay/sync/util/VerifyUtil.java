@@ -110,7 +110,7 @@ public class VerifyUtil {
 					Property statusProperty = PropertyFactoryUtil.forName(
 						"status");
 
-					int[] workflowConstants = new int[] {
+					int[] workflowConstants = {
 						WorkflowConstants.STATUS_APPROVED,
 						WorkflowConstants.STATUS_IN_TRASH
 					};

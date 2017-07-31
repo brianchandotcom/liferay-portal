@@ -50,7 +50,7 @@ public class DDLRecordLocalServiceImplTest {
 
 	@Test
 	public void testToFieldWithBooleanArray() throws Exception {
-		boolean[] fieldValues = new boolean[] {
+		boolean[] fieldValues = {
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomBoolean()
 		};
@@ -96,7 +96,7 @@ public class DDLRecordLocalServiceImplTest {
 
 	@Test
 	public void testToFieldWithIntegerArray() throws Exception {
-		int[] fieldValues = new int[] {
+		int[] fieldValues = {
 			RandomTestUtil.randomInt(), RandomTestUtil.randomInt(),
 			RandomTestUtil.randomInt()
 		};

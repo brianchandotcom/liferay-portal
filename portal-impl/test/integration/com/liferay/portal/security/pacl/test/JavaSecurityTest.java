@@ -63,9 +63,8 @@ public class JavaSecurityTest {
 
 			permissions.add(new AllPermission());
 
-			ProtectionDomain[] protectionDomains = new ProtectionDomain[] {
-				new ProtectionDomain(null, permissions)
-			};
+			ProtectionDomain[] protectionDomains =
+				{new ProtectionDomain(null, permissions)};
 
 			AccessControlContext accessControlContext =
 				new AccessControlContext(protectionDomains);
@@ -96,9 +95,8 @@ public class JavaSecurityTest {
 
 			permissions.add(new AllPermission());
 
-			ProtectionDomain[] protectionDomains = new ProtectionDomain[] {
-				new ProtectionDomain(null, permissions)
-			};
+			ProtectionDomain[] protectionDomains =
+				{new ProtectionDomain(null, permissions)};
 
 			AccessControlContext accessControlContext =
 				new AccessControlContext(protectionDomains);
@@ -113,9 +111,7 @@ public class JavaSecurityTest {
 						permissions.add(new AllPermission());
 
 						ProtectionDomain[] protectionDomains =
-							new ProtectionDomain[] {
-								new ProtectionDomain(null, permissions)
-							};
+							{new ProtectionDomain(null, permissions)};
 
 						AccessControlContext accessControlContext =
 							new AccessControlContext(protectionDomains);
@@ -152,9 +148,8 @@ public class JavaSecurityTest {
 
 			permissions.add(new AllPermission());
 
-			ProtectionDomain[] protectionDomains = new ProtectionDomain[] {
-				new ProtectionDomain(null, permissions)
-			};
+			ProtectionDomain[] protectionDomains =
+				{new ProtectionDomain(null, permissions)};
 
 			AccessControlContext accessControlContext =
 				new AccessControlContext(protectionDomains);

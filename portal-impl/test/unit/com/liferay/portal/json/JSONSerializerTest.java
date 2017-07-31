@@ -87,7 +87,7 @@ public class JSONSerializerTest extends PowerMockito {
 	public void testSerializeServiceContext() {
 		ServiceContext serviceContext = new ServiceContext();
 
-		String[] groupPermissions = new String[] {"VIEW"};
+		String[] groupPermissions = {"VIEW"};
 
 		serviceContext.setAttribute("groupPermissions", groupPermissions);
 		serviceContext.setGroupPermissions(groupPermissions);
@@ -104,7 +104,7 @@ public class JSONSerializerTest extends PowerMockito {
 	public void testSerializeTwice() {
 		ServiceContext serviceContext = new ServiceContext();
 
-		String[] groupPermissions = new String[] {"VIEW"};
+		String[] groupPermissions = {"VIEW"};
 
 		serviceContext.setAttribute("groupPermissions", groupPermissions);
 		serviceContext.setGroupPermissions(groupPermissions);

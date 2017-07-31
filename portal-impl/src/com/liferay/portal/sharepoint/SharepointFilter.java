@@ -143,7 +143,7 @@ public class SharepointFilter extends SecureFilter {
 		response.setHeader("Connection", "close");
 	}
 
-	private static final String[] _PREFIXES = new String[] {
+	private static final String[] _PREFIXES = {
 		"/_vti_inf.html", "/_vti_bin", "/sharepoint", "/history", "/resources"
 	};
 

@@ -44,7 +44,7 @@ import javax.servlet.jsp.PageContext;
 public class RepositoryEntryBrowserTag extends IncludeTag {
 
 	public static final String[] DISPLAY_STYLES =
-		new String[] {"icon", "descriptive", "list"};
+		{"icon", "descriptive", "list"};
 
 	/**
 	 * @deprecated As of 1.1.0, with no direct replacement

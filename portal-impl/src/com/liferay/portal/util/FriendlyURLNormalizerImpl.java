@@ -256,7 +256,7 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 	private static final char[] _REPLACE_CHARS;
 
 	static {
-		char[] replaceChars = new char[] {
+		char[] replaceChars = {
 			'-', ' ', ',', '\\', '\'', '\"', '(', ')', '[', ']', '{', '}', '?',
 			'#', '@', '+', '~', ';', '$', '!', '=', ':', '&', '\u00a3',
 			'\u2013', '\u2014', '\u2018', '\u2019', '\u201c', '\u201d'

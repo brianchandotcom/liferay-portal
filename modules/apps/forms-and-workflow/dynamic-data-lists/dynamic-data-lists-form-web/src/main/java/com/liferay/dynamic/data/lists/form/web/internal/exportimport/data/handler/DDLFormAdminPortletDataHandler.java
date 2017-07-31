@@ -72,12 +72,11 @@ public class DDLFormAdminPortletDataHandler extends BasePortletDataHandler {
 			new StagedModelType(DDLRecord.class),
 			new StagedModelType(DDLRecordSet.class));
 
-		PortletDataHandlerControl[] formsPortletDataHandlerControlChildren =
-			new PortletDataHandlerControl[] {
-				new PortletDataHandlerBoolean(
-					NAMESPACE, "ddm-data-provider", true, false, null,
-					DDMDataProviderInstance.class.getName())
-			};
+		PortletDataHandlerControl[] formsPortletDataHandlerControlChildren = {
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "ddm-data-provider", true, false, null,
+				DDMDataProviderInstance.class.getName())
+		};
 
 		setExportControls(
 			new PortletDataHandlerBoolean(

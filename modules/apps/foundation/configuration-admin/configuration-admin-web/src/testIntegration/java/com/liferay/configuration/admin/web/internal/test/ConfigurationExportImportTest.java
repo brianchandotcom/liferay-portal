@@ -108,7 +108,7 @@ public class ConfigurationExportImportTest {
 	@Test
 	public void testExportImportStringArray() throws Exception {
 		String arrayKey = "arrayKey";
-		String[] arrayValues = new String[] {"value1", "value2", "value3"};
+		String[] arrayValues = {"value1", "value2", "value3"};
 
 		_dictionary.put(arrayKey, arrayValues);
 

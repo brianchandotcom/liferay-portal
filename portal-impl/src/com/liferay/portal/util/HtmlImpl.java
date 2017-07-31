@@ -922,12 +922,11 @@ public class HtmlImpl implements Html {
 		'e', 'f'
 	};
 
-	private static final String[] _MS_WORD_HTML = new String[] {
-		"&reg;", StringPool.APOSTROPHE, StringPool.QUOTE, StringPool.QUOTE
-	};
+	private static final String[] _MS_WORD_HTML =
+		{"&reg;", StringPool.APOSTROPHE, StringPool.QUOTE, StringPool.QUOTE};
 
 	private static final String[] _MS_WORD_UNICODE =
-		new String[] {"\u00ae", "\u2019", "\u201c", "\u201d"};
+		{"\u00ae", "\u2019", "\u201c", "\u201d"};
 
 	private static final char[] _TAG_SCRIPT = {'s', 'c', 'r', 'i', 'p', 't'};
 

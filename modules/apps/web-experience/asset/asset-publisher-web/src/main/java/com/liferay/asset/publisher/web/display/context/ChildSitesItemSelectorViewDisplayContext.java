@@ -134,7 +134,7 @@ public class ChildSitesItemSelectorViewDisplayContext
 		return _groupParams;
 	}
 
-	private static final long[] _CLASS_NAME_IDS = new long[] {
+	private static final long[] _CLASS_NAME_IDS = {
 		PortalUtil.getClassNameId(Group.class),
 		PortalUtil.getClassNameId(Organization.class)
 	};

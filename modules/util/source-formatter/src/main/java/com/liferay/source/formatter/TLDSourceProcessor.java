@@ -23,7 +23,7 @@ public class TLDSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<String> doGetFileNames() throws Exception {
-		String[] excludes = new String[] {"**/WEB-INF/tld/**", "**/test_*.tld"};
+		String[] excludes = {"**/WEB-INF/tld/**", "**/test_*.tld"};
 
 		return getFileNames(excludes, getIncludes());
 	}
@@ -33,6 +33,6 @@ public class TLDSourceProcessor extends BaseSourceProcessor {
 		return _INCLUDES;
 	}
 
-	private static final String[] _INCLUDES = new String[] {"**/*.tld"};
+	private static final String[] _INCLUDES = {"**/*.tld"};
 
 }

@@ -44,7 +44,7 @@ public class ElasticsearchClusterTest {
 
 	@Test
 	public void testReplicaIndexNamesIncludeSystemCompanyId() {
-		long[] companyIds = new long[] {42, 142857};
+		long[] companyIds = {42, 142857};
 
 		setUpCompanyLocalService(getCompanies(companyIds));
 

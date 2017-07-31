@@ -31,7 +31,7 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 		return _RESOURCE_NAMES;
 	}
 
-	private static final String[][] _CLASS_NAMES = new String[][] {
+	private static final String[][] _CLASS_NAMES = {
 		{
 			"com.liferay.portal.kernel.model.Subscription",
 			"com.liferay.subscription.model.Subscription"

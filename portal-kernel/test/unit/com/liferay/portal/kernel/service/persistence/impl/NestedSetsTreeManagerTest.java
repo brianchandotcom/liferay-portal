@@ -372,14 +372,13 @@ public class NestedSetsTreeManagerTest {
 
 	private final NestedSetsTreeManager<SimpleNestedSetsTreeNode>
 		_nestedSetsTreeManager = new MemoryNestedSetsTreeManager();
-	private final SimpleNestedSetsTreeNode[] _simpleNestedSetsTreeNodes =
-		new SimpleNestedSetsTreeNode[] {
-			new SimpleNestedSetsTreeNode(0), new SimpleNestedSetsTreeNode(1),
-			new SimpleNestedSetsTreeNode(2), new SimpleNestedSetsTreeNode(3),
-			new SimpleNestedSetsTreeNode(4), new SimpleNestedSetsTreeNode(5),
-			new SimpleNestedSetsTreeNode(6), new SimpleNestedSetsTreeNode(7),
-			new SimpleNestedSetsTreeNode(8)
-		};
+	private final SimpleNestedSetsTreeNode[] _simpleNestedSetsTreeNodes = {
+		new SimpleNestedSetsTreeNode(0), new SimpleNestedSetsTreeNode(1),
+		new SimpleNestedSetsTreeNode(2), new SimpleNestedSetsTreeNode(3),
+		new SimpleNestedSetsTreeNode(4), new SimpleNestedSetsTreeNode(5),
+		new SimpleNestedSetsTreeNode(6), new SimpleNestedSetsTreeNode(7),
+		new SimpleNestedSetsTreeNode(8)
+	};
 
 	private static class SimpleNestedSetsTreeNode
 		implements Cloneable, Comparable<SimpleNestedSetsTreeNode>,

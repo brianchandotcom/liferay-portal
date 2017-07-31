@@ -67,7 +67,7 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 		portletPreferences.setValue("searchConfiguration", searchConfiguration);
 	}
 
-	private static final String[][] _CLASS_NAMES = new String[][] {
+	private static final String[][] _CLASS_NAMES = {
 		{
 			"com.liferay.portlet.bookmarks.model.BookmarksEntry",
 			"com.liferay.bookmarks.model.BookmarksEntry"

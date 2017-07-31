@@ -84,6 +84,10 @@ public class PoshiRunnerContext {
 		_seleniumParameterCounts.clear();
 	}
 
+	public static String getDefaultNamespace() {
+		return _defaultNamespace;
+	}
+
 	public static String getFilePathFromClassKey(String classKey) {
 		String fileName = PoshiRunnerGetterUtil.getFileNameFromClassKey(
 			classKey);
@@ -92,47 +96,104 @@ public class PoshiRunnerContext {
 	}
 
 	public static String getFilePathFromFileName(String fileName) {
-		return _filePaths.get(fileName);
+		return getFilePathFromFileName(fileName, _defaultNamespace);
+	}
+
+	public static String getFilePathFromFileName(
+		String fileName, String namespace) {
+
+		return _filePaths.get(namespace + "." + fileName);
 	}
 
 	public static Element getFunctionCommandElement(String classCommandName) {
-		return _commandElements.get("function#" + classCommandName);
+		return getFunctionCommandElement(classCommandName, _defaultNamespace);
 	}
 
-	public static String getFunctionCommandSummary(String classCommandName) {
-		return _commandSummaries.get("function#" + classCommandName);
+	public static Element getFunctionCommandElement(
+		String classCommandName, String namespace) {
+
+		return _commandElements.get(
+			"function#" + namespace + "." + classCommandName);
+	}
+
+	public static String getFunctionCommandSummary(
+		String classCommandName, String namespace) {
+
+		return _commandSummaries.get(
+			"function#" + namespace + "." + classCommandName);
 	}
 
 	public static int getFunctionLocatorCount(String className) {
-		if (_functionLocatorCounts.get(className) == null) {
-			return 0;
+		return getFunctionLocatorCount(className, _defaultNamespace);
+	}
+
+	public static int getFunctionLocatorCount(
+		String className, String namespace) {
+
+		String functionLocatorCountKey = namespace + "." + className;
+
+		if (_functionLocatorCounts.containsKey(functionLocatorCountKey)) {
+			return _functionLocatorCounts.get(functionLocatorCountKey);
 		}
 
-		return _functionLocatorCounts.get(className);
+		return 0;
 	}
 
 	public static Element getFunctionRootElement(String className) {
-		return _rootElements.get("function#" + className);
+		return getFunctionRootElement(className, _defaultNamespace);
+	}
+
+	public static Element getFunctionRootElement(
+		String className, String namespace) {
+
+		return _rootElements.get("function#" + namespace + "." + className);
 	}
 
 	public static Element getMacroCommandElement(String classCommandName) {
-		return _commandElements.get("macro#" + classCommandName);
+		return getMacroCommandElement(classCommandName, _defaultNamespace);
+	}
+
+	public static Element getMacroCommandElement(
+		String classCommandName, String namespace) {
+
+		return _commandElements.get(
+			"macro#" + namespace + "." + classCommandName);
 	}
 
 	public static List<String> getMacroCommandReturns(String classCommandName) {
-		return _commandReturns.get("macro#" + classCommandName);
+		return getMacroCommandReturns(classCommandName, _defaultNamespace);
+	}
+
+	public static List<String> getMacroCommandReturns(
+		String classCommandName, String namespace) {
+
+		return _commandReturns.get(
+			"macro#" + namespace + "." + classCommandName);
 	}
 
 	public static String getMacroCommandSummary(String classCommandName) {
-		return _commandSummaries.get("macro#" + classCommandName);
+		return getMacroCommandSummary(classCommandName, _defaultNamespace);
 	}
 
-	public static Element getMacroRootElement(String className) {
-		return _rootElements.get("macro#" + className);
+	public static String getMacroCommandSummary(
+		String classCommandName, String namespace) {
+
+		return _commandSummaries.get(
+			"macro#" + namespace + "." + classCommandName);
+	}
+
+	public static Element getMacroRootElement(
+		String className, String namespace) {
+
+		return _rootElements.get("macro#" + namespace + "." + className);
 	}
 
 	public static String getNamespace(String filePath) {
-		return _filePathToNamespace.get(filePath);
+		if (_filePathToNamespace.containsKey(filePath)) {
+			return _filePathToNamespace.get(filePath);
+		}
+
+		return _defaultNamespace;
 	}
 
 	public static String getPathLocator(String pathLocatorKey) {
@@ -145,25 +206,34 @@ public class PoshiRunnerContext {
 		String pathLocator = _pathLocators.get(
 			namespace + "." + pathLocatorKey);
 
-		if (pathLocator == null) {
-			String className =
-				PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
-					pathLocatorKey);
+		String className =
+			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
+				pathLocatorKey);
+
+		if ((pathLocator == null) &&
+			_pathExtensions.containsKey(namespace + "." + className)) {
 
 			String commandName =
 				PoshiRunnerGetterUtil.getCommandNameFromClassCommandName(
 					pathLocatorKey);
 
 			pathLocator = _pathLocators.get(
-				namespace + "." + _pathExtensions.get(className) + "#" +
-					commandName);
+				namespace + "." +
+					_pathExtensions.get(namespace + "." + className) + "#" +
+						commandName);
 		}
 
 		return pathLocator;
 	}
 
 	public static Element getPathRootElement(String className) {
-		return _rootElements.get("path#" + className);
+		return getPathRootElement(className, _defaultNamespace);
+	}
+
+	public static Element getPathRootElement(
+		String className, String namespace) {
+
+		return _rootElements.get("path#" + namespace + "." + className);
 	}
 
 	public static List<URL> getResourceURLs() {
@@ -183,16 +253,14 @@ public class PoshiRunnerContext {
 	}
 
 	public static Element getTestCaseCommandElement(String classCommandName) {
-		return _commandElements.get("test-case#" + classCommandName);
+		return getTestCaseCommandElement(classCommandName, _defaultNamespace);
 	}
 
 	public static Element getTestCaseCommandElement(
-		String className, String commandName) {
+		String classCommandName, String namespace) {
 
-		String classCommandName = PoshiRunnerGetterUtil.getClassCommandName(
-			className, commandName);
-
-		return getTestCaseCommandElement(classCommandName);
+		return _commandElements.get(
+			"test-case#" + namespace + "." + classCommandName);
 	}
 
 	public static String getTestCaseCommandName() {
@@ -212,11 +280,27 @@ public class PoshiRunnerContext {
 	}
 
 	public static Element getTestCaseRootElement(String className) {
-		return _rootElements.get("test-case#" + className);
+		return getTestCaseRootElement(className, _defaultNamespace);
 	}
 
-	public static boolean isCommandElement(String commandElementKey) {
-		return _commandElements.containsKey(commandElementKey);
+	public static Element getTestCaseRootElement(
+		String className, String namespace) {
+
+		return _rootElements.get("test-case#" + namespace + "." + className);
+	}
+
+	public static boolean isCommandElement(
+		String classType, String commandElementKey) {
+
+		return isCommandElement(
+			classType, commandElementKey, _defaultNamespace);
+	}
+
+	public static boolean isCommandElement(
+		String classType, String commandElementKey, String namespace) {
+
+		return _commandElements.containsKey(
+			classType + "#" + namespace + "." + commandElementKey);
 	}
 
 	public static boolean isPathLocator(String pathLocatorKey) {
@@ -235,8 +319,17 @@ public class PoshiRunnerContext {
 		return false;
 	}
 
-	public static boolean isRootElement(String rootElementKey) {
-		return _rootElements.containsKey(rootElementKey);
+	public static boolean isRootElement(
+		String classType, String rootElementKey) {
+
+		return isRootElement(classType, rootElementKey, _defaultNamespace);
+	}
+
+	public static boolean isRootElement(
+		String classType, String rootElementKey, String namespace) {
+
+		return _rootElements.containsKey(
+			classType + "#" + namespace + "." + rootElementKey);
 	}
 
 	public static boolean isTestToggle(String toggleName) {
@@ -703,8 +796,7 @@ public class PoshiRunnerContext {
 
 	private static void _initComponentCommandNamesMap() {
 		for (String testCaseClassName : _testCaseClassNames) {
-			Element rootElement = getTestCaseRootElement(
-				_defaultNamespace + "." + testCaseClassName);
+			Element rootElement = getTestCaseRootElement(testCaseClassName);
 
 			if (Objects.equals(rootElement.attributeValue("ignore"), "true")) {
 				continue;
@@ -738,8 +830,8 @@ public class PoshiRunnerContext {
 						testCaseClassName + "#" + extendsCommandName);
 
 					_commandElements.put(
-						"test-case#" + testCaseClassName + "#" +
-							extendsCommandName,
+						"test-case#" + _defaultNamespace + "." +
+							testCaseClassName + "#" + extendsCommandName,
 						extendsCommandElement);
 				}
 			}
@@ -1084,11 +1176,12 @@ public class PoshiRunnerContext {
 			List<Element> commandElements = rootElement.elements("command");
 
 			for (Element commandElement : commandElements) {
-				String commandKey =
-					namespace + "." + className + "#" +
-						commandElement.attributeValue("name");
+				String commandName = commandElement.attributeValue("name");
 
-				if (isCommandElement(commandKey)) {
+				String commandKey =
+					namespace + "." + className + "#" + commandName;
+
+				if (isCommandElement(classType, commandName, namespace)) {
 					System.out.println(
 						"Duplicate command name\n" + filePath + ":" +
 							commandElement.attributeValue("line-number"));
@@ -1097,8 +1190,7 @@ public class PoshiRunnerContext {
 				_commandElements.put(
 					classType + "#" + commandKey, commandElement);
 
-				String classCommandName =
-					className + "#" + commandElement.attributeValue("name");
+				String classCommandName = className + "#" + commandName;
 
 				_commandSummaries.put(
 					classType + "#" + commandKey,
@@ -1114,7 +1206,8 @@ public class PoshiRunnerContext {
 					Properties properties = _getClassCommandNameProperties(
 						rootElement, commandElement);
 
-					_classCommandNamePropertiesMap.put(commandKey, properties);
+					_classCommandNamePropertiesMap.put(
+						classCommandName, properties);
 
 					if (Validator.isNotNull(
 							commandElement.attributeValue("description"))) {
@@ -1131,7 +1224,7 @@ public class PoshiRunnerContext {
 					className + "#" + rootElement.attributeValue("default");
 
 				Element defaultCommandElement = getFunctionCommandElement(
-					namespace + "." + defaultClassCommandName);
+					defaultClassCommandName, namespace);
 
 				_commandElements.put(
 					classType + "#" + namespace + "." + className,

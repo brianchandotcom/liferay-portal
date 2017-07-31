@@ -20,6 +20,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 
 /**
+ * Instances of this interface will provide information of the current request.
+ *
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
@@ -27,8 +29,18 @@ import javax.ws.rs.core.MultivaluedMap;
 @ProviderType
 public interface RequestInfo {
 
+	/**
+	 * Returns the HTTP headers of the current request.
+	 *
+	 * @return HTTP headers.
+	 */
 	public MultivaluedMap<String, Object> getHttpHeaders();
 
+	/**
+	 * Returns the Media Type of the current request.
+	 *
+	 * @return the media type.
+	 */
 	public MediaType getMediaType();
 
 }

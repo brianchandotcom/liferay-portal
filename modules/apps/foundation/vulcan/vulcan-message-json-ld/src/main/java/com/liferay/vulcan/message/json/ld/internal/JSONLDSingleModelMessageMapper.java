@@ -20,14 +20,19 @@ import com.liferay.vulcan.message.json.JSONObjectBuilder;
 import com.liferay.vulcan.message.json.SingleModelMessageMapper;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
+ * Adds Vulcan the ability to represent single models in JSON-LD + Hydra format.
+ *
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
+ * @see    <a href="https://json-ld.org/">JSON-LD</a>
+ * @see    <a href="https://www.hydra-cg.com/">Hydra</a>
  */
 @Component(
 	immediate = true,
@@ -48,7 +53,7 @@ public class JSONLDSingleModelMessageMapper<T>
 		FunctionalList<String> embeddedPathElements, String fieldName,
 		Object value) {
 
-		Stream<String> tailStream = embeddedPathElements.tail();
+		Stream<String> tailStream = embeddedPathElements.tailStream();
 
 		jsonObjectBuilder.nestedField(
 			embeddedPathElements.head(), tailStream.toArray(String[]::new)
@@ -65,7 +70,7 @@ public class JSONLDSingleModelMessageMapper<T>
 		FunctionalList<String> embeddedPathElements, String fieldName,
 		String url) {
 
-		Stream<String> tailStream = embeddedPathElements.tail();
+		Stream<String> tailStream = embeddedPathElements.tailStream();
 
 		jsonObjectBuilder.nestedField(
 			embeddedPathElements.head(), tailStream.toArray(String[]::new)
@@ -81,7 +86,7 @@ public class JSONLDSingleModelMessageMapper<T>
 		JSONObjectBuilder jsonObjectBuilder,
 		FunctionalList<String> embeddedPathElements, List<String> types) {
 
-		Stream<String> tailStream = embeddedPathElements.tail();
+		Stream<String> tailStream = embeddedPathElements.tailStream();
 
 		jsonObjectBuilder.nestedField(
 			embeddedPathElements.head(), tailStream.toArray(String[]::new)
@@ -98,7 +103,7 @@ public class JSONLDSingleModelMessageMapper<T>
 		JSONObjectBuilder jsonObjectBuilder,
 		FunctionalList<String> embeddedPathElements, String url) {
 
-		Stream<String> tailStream = embeddedPathElements.tail();
+		Stream<String> tailStream = embeddedPathElements.tailStream();
 
 		jsonObjectBuilder.nestedField(
 			embeddedPathElements.head(), tailStream.toArray(String[]::new)
@@ -136,29 +141,34 @@ public class JSONLDSingleModelMessageMapper<T>
 		JSONObjectBuilder jsonObjectBuilder,
 		FunctionalList<String> embeddedPathElements, String url) {
 
-		Stream<String> tailStream = embeddedPathElements.tail();
+		String head = embeddedPathElements.head();
+
+		Stream<String> tailStream = embeddedPathElements.tailStream();
 
 		String[] tail = tailStream.toArray(String[]::new);
 
 		jsonObjectBuilder.nestedField(
-			embeddedPathElements.head(), tail
+			head, tail
 		).value(
 			url
 		);
 
-		Stream<String> middleStream = embeddedPathElements.middle();
+		Stream<String> middleStream = embeddedPathElements.middleStream();
 
 		String[] middle = middleStream.toArray(String[]::new);
 
+		Optional<String> optional = embeddedPathElements.lastOptional();
+
 		jsonObjectBuilder.ifElseCondition(
-			tail.length == 0, builder -> builder.field("@context"),
+			optional.isPresent(),
 			builder -> builder.nestedField(
-				embeddedPathElements.head(), middle
-			).field(
-				"@context"
-			)
-		).nestedField(
-			embeddedPathElements.last(), "@type"
+				head, middle
+			).nestedField(
+				"@context", optional.get()
+			),
+			builder -> builder.nestedField("@context", head)
+		).field(
+			"@type"
 		).value(
 			"@id"
 		);

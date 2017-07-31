@@ -15,11 +15,18 @@
 package com.liferay.vulcan.error;
 
 /**
+ * Represents the errors that can occur while using Vulcan. Each error is a
+ * nested error subclass.
+ *
  * @author Alejandro Hernández
  * @author Jorge Ferrer
  */
 public class VulcanDeveloperError extends Error {
 
+	/**
+	 * Represents the error the developer should throw when a message mapper is
+	 * missing.
+	 */
 	public static class MustHaveMessageMapper extends VulcanDeveloperError {
 
 		public MustHaveMessageMapper(String mediaType, Class<?> modelClass) {
@@ -30,6 +37,10 @@ public class VulcanDeveloperError extends Error {
 
 	}
 
+	/**
+	 * Represents the error the developer should throw when a provider is
+	 * missing.
+	 */
 	public static class MustHaveProvider extends VulcanDeveloperError {
 
 		public MustHaveProvider(Class<?> modelClass) {
@@ -40,6 +51,10 @@ public class VulcanDeveloperError extends Error {
 
 	}
 
+	/**
+	 * Represents the error the developer should throw when a generic container
+	 * has an invalid generic type.
+	 */
 	public static class MustHaveValidGenericType extends VulcanDeveloperError {
 
 		public MustHaveValidGenericType(Class clazz) {
@@ -49,6 +64,10 @@ public class VulcanDeveloperError extends Error {
 
 	}
 
+	/**
+	 * Represents the error the developer should throw when an URI cannot be
+	 * resolved.
+	 */
 	public static class UnresolvableURI extends VulcanDeveloperError {
 
 		public UnresolvableURI(Class<?> modelClass) {

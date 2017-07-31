@@ -29,6 +29,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.osgi.service.component.annotations.Component;
 
 /**
+ * Allows resources to provide {@link Embedded} as a parameter in {@link
+ * com.liferay.vulcan.representor.RoutesBuilder} methods.
+ *
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer

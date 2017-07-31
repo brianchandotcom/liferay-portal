@@ -27,6 +27,9 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * Allows resources to provide {@link Company} as a parameter in {@link
+ * com.liferay.vulcan.representor.RoutesBuilder} methods.
+ *
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer

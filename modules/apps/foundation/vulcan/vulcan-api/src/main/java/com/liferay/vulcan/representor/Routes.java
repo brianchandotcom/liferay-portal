@@ -20,13 +20,50 @@ import java.util.Optional;
 import java.util.function.Function;
 
 /**
+ * Instances of this interface will hold information about the routes supported
+ * for a certain {@link Resource}.
+ *
+ * <p>
+ * All of the methods in this interface returns functions to get the different
+ * endpoints of the {@link Resource}.
+ * </p>
+ *
+ * <p>
+ * Instances of this interface should always be created by using a {@link
+ * RoutesBuilder}.
+ * </p>
+ *
  * @author Alejandro Hernández
+ * @see    RoutesBuilder
  */
 public interface Routes<T> {
 
+	/**
+	 * Returns the function used to create the single model of a {@link
+	 * Resource}.
+	 *
+	 * <p>
+	 * This function will have as its only parameter another function which must
+	 * be able to provide instances of classes that have a {@link
+	 * com.liferay.vulcan.provider.Provider}.
+	 * </p>
+	 *
+	 * @return the function used to create the single model.
+	 */
 	public Function<Function<Class<?>, Optional<?>>, Function<String, T>>
 		getModelFunction();
 
+	/**
+	 * Returns the function used to create the page of a {@link Resource}.
+	 *
+	 * <p>
+	 * This function will have as its only parameter another function which must
+	 * be able to provide instances of classes that have a {@link
+	 * com.liferay.vulcan.provider.Provider}.
+	 * </p>
+	 *
+	 * @return the function used to create the page.
+	 */
 	public Function<Function<Class<?>, Optional<?>>, PageItems<T>>
 		getPageItemsFunction();
 

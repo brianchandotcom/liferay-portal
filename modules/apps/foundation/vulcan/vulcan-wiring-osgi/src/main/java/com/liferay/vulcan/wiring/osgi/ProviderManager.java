@@ -35,6 +35,9 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
+ * Provides methods to provide instances of classes with a valid {@link
+ * Provider}.
+ *
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
@@ -48,6 +51,15 @@ public class ProviderManager {
 		_bundleContext = bundle.getBundleContext();
 	}
 
+	/**
+	 * Returns an instance of type T if a valid {@link Provider} can be found.
+	 * Returns <code>Optional#empty()</code> otherwise.
+	 *
+	 * @param  clazz the type class to be provided.
+	 * @param  httpServletRequest the current request.
+	 * @return the instance of T, if a valid {@link Provider} is present;
+	 *         <code>Optional#empty()</code> otherwise.
+	 */
 	public <T> Optional<T> provide(
 		Class<T> clazz, HttpServletRequest httpServletRequest) {
 

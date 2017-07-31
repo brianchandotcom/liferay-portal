@@ -86,7 +86,7 @@ public class LiferayRootEndpoint implements RootEndpoint {
 			routesModelFunction = routes.getModelFunction();
 
 		Function<String, T> modelFunction = routesModelFunction.apply(
-			this::provide);
+			this::_provide);
 
 		T model = modelFunction.apply(id);
 
@@ -105,9 +105,9 @@ public class LiferayRootEndpoint implements RootEndpoint {
 		Function<Function<Class<?>, Optional<?>>, PageItems<T>>
 			pageItemsFunction = routes.getPageItemsFunction();
 
-		PageItems<T> pageItems = pageItemsFunction.apply(this::provide);
+		PageItems<T> pageItems = pageItemsFunction.apply(this::_provide);
 
-		Optional<Pagination> optional = provide(Pagination.class);
+		Optional<Pagination> optional = _provide(Pagination.class);
 
 		Pagination pagination = optional.orElseThrow(
 			() -> new MustHaveProvider(Pagination.class));
@@ -126,7 +126,7 @@ public class LiferayRootEndpoint implements RootEndpoint {
 		return this;
 	}
 
-	public <U> Optional<U> provide(Class<U> clazz) {
+	private <U> Optional<U> _provide(Class<U> clazz) {
 		return _providerManager.provide(clazz, _httpServletRequest);
 	}
 

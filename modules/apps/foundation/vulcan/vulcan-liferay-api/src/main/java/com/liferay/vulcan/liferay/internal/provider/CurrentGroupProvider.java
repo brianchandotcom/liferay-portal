@@ -28,7 +28,13 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * Allows resources to provide the current {@link
+ * com.liferay.portal.kernel.model.Group} as a parameter in {@link
+ * com.liferay.vulcan.representor.RoutesBuilder} methods.
+ *
  * @author Alejandro Hernández
+ * @author Carlos Sierra Andrés
+ * @author Jorge Ferrer
  */
 @Component(immediate = true)
 public class CurrentGroupProvider implements Provider<CurrentGroup> {

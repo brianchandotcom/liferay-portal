@@ -17,16 +17,64 @@ package com.liferay.vulcan.representor;
 import com.liferay.vulcan.representor.builder.RepresentorBuilder;
 
 /**
+ * Maps your domain models to resources that Vulcan can understand.
+ *
+ * <p>
+ * Resources behave like an independent API so you must add the path for the API
+ * via the {@link #getPath()} method.
+ * </p>
+ *
+ * <p>
+ * Representors created by the {@link #buildRepresentor} method hold all the
+ * information needed to write your domain models' hypermedia representations.
+ * </p>
+ *
+ * <p>
+ * Finally you can add the different supported routes for the resource via the
+ * {@link #routes(RoutesBuilder)} method.
+ * </p>
+ *
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
+ * @see    RepresentorBuilder
+ * @see    RoutesBuilder
  */
 public interface Resource<T> {
 
+	/**
+	 * Creates a representor for a certain domain model from the provided {@link
+	 * RepresentorBuilder}.
+	 *
+	 * <p>
+	 * Note that this builder doesn't construct a <code>Representor</code>
+	 * object (such objects don't actually exist). You need to call the builder
+	 * methods providing as much information as possible.
+	 * </p>
+	 *
+	 * @param representorBuilder the builder used to create the representor.
+	 * @see   RepresentorBuilder
+	 */
 	public void buildRepresentor(RepresentorBuilder<T> representorBuilder);
 
+	/**
+	 * Returns the path for this resource.
+	 *
+	 * @return the path for this resource.
+	 */
 	public String getPath();
 
+	/**
+	 * Creates the {@link Routes} supported by the Resource.
+	 *
+	 * <p>
+	 * To create the instance of {@link Routes} use the provided {@link
+	 * RoutesBuilder}.
+	 * </p>
+	 *
+	 * @param routesBuilder the builder used to create the routes.
+	 * @see   RoutesBuilder
+	 */
 	public Routes<T> routes(RoutesBuilder<T> routesBuilder);
 
 }

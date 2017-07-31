@@ -22,12 +22,22 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 /**
+ * Provides methods for skipping problems related to the Java generic system.
+ *
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
  */
 public class GenericUtil {
 
+	/**
+	 * Given a type denoted by <code>T&lt;S&gt;</code> returns S class or throws
+	 * a {@link VulcanDeveloperError.MustHaveValidGenericType}.
+	 *
+	 * @param  t instance of type T.
+	 * @param  clazz class of type T.
+	 * @return class of type S.
+	 */
 	public static <T, S> Class<S> getGenericClass(T t, Class<T> clazz) {
 		Type genericType = ReflectionUtil.getGenericInterface(t, clazz);
 

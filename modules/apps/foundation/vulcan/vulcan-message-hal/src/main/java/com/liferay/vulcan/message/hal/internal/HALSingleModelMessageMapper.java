@@ -19,14 +19,19 @@ import com.liferay.vulcan.message.json.JSONObjectBuilder;
 import com.liferay.vulcan.message.json.SingleModelMessageMapper;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Carlos Sierra Andrés
+ * Adds Vulcan the ability to represent single models in HAL format.
+ *
  * @author Alejandro Hernández
+ * @author Carlos Sierra Andrés
+ * @author Jorge Ferrer
+ * @see    <a href="http://stateless.co/hal_specification.html">HAL</a>
  */
 @Component(
 	immediate = true,
@@ -47,22 +52,26 @@ public class HALSingleModelMessageMapper<T>
 		FunctionalList<String> embeddedPathElements, String fieldName,
 		Object value) {
 
-		Stream<String> tailStream = embeddedPathElements.tail();
+		Optional<String> optional = embeddedPathElements.lastOptional();
 
-		String[] tail = tailStream.toArray(String[]::new);
+		String head = embeddedPathElements.head();
 
-		Stream<String> middleStream = embeddedPathElements.middle();
+		Stream<String> middleStream = embeddedPathElements.middleStream();
 
 		String[] middle = middleStream.toArray(String[]::new);
 
 		jsonObjectBuilder.field(
 			"_embedded"
-		).ifCondition(
-			tail.length == 0,
+		).ifElseCondition(
+			optional.isPresent(),
 			fieldStep -> fieldStep.nestedSuffixedField(
-				"_embedded", embeddedPathElements.head(), middle)
-		).nestedField(
-			embeddedPathElements.last(), fieldName
+				"_embedded", head, middle
+			).field(
+				optional.get()
+			),
+			fieldStep -> fieldStep.field(head)
+		).field(
+			fieldName
 		).value(
 			value
 		);
@@ -74,22 +83,26 @@ public class HALSingleModelMessageMapper<T>
 		FunctionalList<String> embeddedPathElements, String fieldName,
 		String url) {
 
-		Stream<String> tailStream = embeddedPathElements.tail();
+		Optional<String> optional = embeddedPathElements.lastOptional();
 
-		String[] tail = tailStream.toArray(String[]::new);
+		String head = embeddedPathElements.head();
 
-		Stream<String> middleStream = embeddedPathElements.middle();
+		Stream<String> middleStream = embeddedPathElements.middleStream();
 
 		String[] middle = middleStream.toArray(String[]::new);
 
 		jsonObjectBuilder.field(
 			"_embedded"
-		).ifCondition(
-			tail.length == 0,
+		).ifElseCondition(
+			optional.isPresent(),
 			fieldStep -> fieldStep.nestedSuffixedField(
-				"_embedded", embeddedPathElements.head(), middle)
+				"_embedded", head, middle
+			).field(
+				optional.get()
+			),
+			fieldStep -> fieldStep.field(head)
 		).nestedField(
-			embeddedPathElements.last(), "_links", fieldName, "href"
+			"_links", fieldName, "href"
 		).value(
 			url
 		);
@@ -131,19 +144,19 @@ public class HALSingleModelMessageMapper<T>
 		JSONObjectBuilder jsonObjectBuilder,
 		FunctionalList<String> embeddedPathElements, String url) {
 
-		Stream<String> tailStream = embeddedPathElements.tail();
+		Optional<String> optional = embeddedPathElements.lastOptional();
 
-		String[] tail = tailStream.toArray(String[]::new);
+		String head = embeddedPathElements.head();
 
-		if (tail.length == 0) {
+		if (!optional.isPresent()) {
 			jsonObjectBuilder.nestedField(
-				"_links", embeddedPathElements.head(), "href"
+				"_links", head, "href"
 			).value(
 				url
 			);
 		}
 		else {
-			Stream<String> middleStream = embeddedPathElements.middle();
+			Stream<String> middleStream = embeddedPathElements.middleStream();
 
 			List<String> middleList = middleStream.collect(Collectors.toList());
 
@@ -154,9 +167,9 @@ public class HALSingleModelMessageMapper<T>
 			jsonObjectBuilder.field(
 				"_embedded"
 			).nestedSuffixedField(
-				"_embedded", embeddedPathElements.head(), middle
+				"_embedded", head, middle
 			).nestedField(
-				prelast, "_links", embeddedPathElements.last(), "href"
+				prelast, "_links", optional.get(), "href"
 			).value(
 				url
 			);

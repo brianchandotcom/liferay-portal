@@ -26,9 +26,12 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * Adds Vulcan the ability to represent collection pages in HAL format.
+ *
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
+ * @see    <a href="http://stateless.co/hal_specification.html">HAL</a>
  */
 @Component(immediate = true)
 public class HALPageMessageMapper<T> implements PageMessageMapper<T> {

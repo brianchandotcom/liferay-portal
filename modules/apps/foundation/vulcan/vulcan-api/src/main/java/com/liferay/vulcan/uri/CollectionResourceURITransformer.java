@@ -15,15 +15,38 @@
 package com.liferay.vulcan.uri;
 
 /**
+ * Writers may use an instance of this interface to customize the URIs of a
+ * resource that follows the collection pattern.
+ *
+ * <p>
+ * For example, an instance of this interface can be used to add a prefix before
+ * every URI.
+ * </p>
+ *
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
  */
 public interface CollectionResourceURITransformer {
 
+	/**
+	 * Returns the transformed URI of a collection item endpoint.
+	 *
+	 * @param  uri the collection item URI.
+	 * @param  modelClass the model class.
+	 * @param  model the model instance.
+	 * @return the transformed URI.
+	 */
 	public <T> String transformCollectionItemSingleResourceURI(
 		String uri, Class<T> modelClass, T model);
 
+	/**
+	 * Returns the transformed URI of a page endpoint.
+	 *
+	 * @param  uri the page URI.
+	 * @param  modelClass the model class.
+	 * @return the transformed URI.
+	 */
 	public <T> String transformPageURI(String uri, Class<T> modelClass);
 
 }

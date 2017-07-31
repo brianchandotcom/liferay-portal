@@ -18,6 +18,8 @@ import java.util.Optional;
 import java.util.function.Function;
 
 /**
+ * Represents the relation between two models.
+ *
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
@@ -33,14 +35,30 @@ public class RelatedModel<T, S> {
 		_modelFunction = modelFunction;
 	}
 
+	/**
+	 * Returns the key of the relation.
+	 *
+	 * @return key of the relation.
+	 */
 	public String getKey() {
 		return _key;
 	}
 
+	/**
+	 * Returns the class of the related model.
+	 *
+	 * @return class of the related model.
+	 */
 	public Class<S> getModelClass() {
 		return _modelClass;
 	}
 
+	/**
+	 * Returns the function that can be used to retrieve the related model. It
+	 * needs a valid instance of the actual model.
+	 *
+	 * @return function to calculate the related model.
+	 */
 	public Function<T, Optional<S>> getModelFunction() {
 		return _modelFunction;
 	}

@@ -17,12 +17,22 @@ package com.liferay.vulcan.response.control;
 import java.util.function.Predicate;
 
 /**
+ * Defines the embedded context selected by clients. An instance of this
+ * interface will be handed to {@link javax.ws.rs.ext.MessageBodyWriter}s so
+ * they can decide which resources should be embedded.
+ *
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
  */
 public interface Embedded {
 
+	/**
+	 * Returns the predicate that can be used to test if a relation must be
+	 * embedded.
+	 *
+	 * @return the predicate to test if a relation should be embedded.
+	 */
 	public Predicate<String> getEmbeddedPredicate();
 
 }

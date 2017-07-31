@@ -22,17 +22,35 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 
 /**
+ * Declares the endpoint from which all of your APIs originate.
+ *
+ * <p>
+ * There should only be one RootEndpoint in the application.
+ * </p>
+ *
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
  */
 public interface RootEndpoint {
 
+	/**
+	 * Returns the {@link SingleModel} for a given path.
+	 *
+	 * @param  path the path from the URL.
+	 * @return the single model at the path.
+	 */
 	@GET
 	@Path("/p/{path}/{id}")
 	public <T> SingleModel<T> getCollectionItemSingleModel(
 		@PathParam("path") String path, @PathParam("id") String id);
 
+	/**
+	 * Returns the collection {@link Page} for a given path.
+	 *
+	 * @param  path the path from the URL.
+	 * @return the collection page at the path.
+	 */
 	@GET
 	@Path("/p/{path}")
 	public <T> Page<T> getCollectionPage(@PathParam("path") String path);

@@ -18,12 +18,23 @@ import java.util.List;
 import java.util.function.Predicate;
 
 /**
+ * Defines the fields context selected by clients. An instance of this interface
+ * will be handed to {@link javax.ws.rs.ext.MessageBodyWriter}s so they can
+ * decide which fields of resources to write.
+ *
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
  */
 public interface Fields {
 
+	/**
+	 * Returns the predicate for a list of types to test if a certain field
+	 * should be added to the representation.
+	 *
+	 * @param  types list of types of the resource.
+	 * @return the predicate to test if a field should be added.
+	 */
 	public Predicate<String> getFieldsPredicate(List<String> types);
 
 }

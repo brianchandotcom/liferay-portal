@@ -23,6 +23,8 @@ import java.util.stream.Stream;
 import org.osgi.service.component.annotations.Component;
 
 /**
+ * Adds Vulcan the ability to represent single models in plain JSON.
+ *
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
@@ -47,7 +49,7 @@ public class PlainJSONSingleModelMessageMapper<T>
 		FunctionalList<String> embeddedPathElements, String fieldName,
 		Object value) {
 
-		Stream<String> tailStream = embeddedPathElements.tail();
+		Stream<String> tailStream = embeddedPathElements.tailStream();
 
 		jsonObjectBuilder.nestedField(
 			embeddedPathElements.head(), tailStream.toArray(String[]::new)
@@ -62,7 +64,7 @@ public class PlainJSONSingleModelMessageMapper<T>
 		FunctionalList<String> embeddedPathElements, String fieldName,
 		String url) {
 
-		Stream<String> tailStream = embeddedPathElements.tail();
+		Stream<String> tailStream = embeddedPathElements.tailStream();
 
 		jsonObjectBuilder.nestedField(
 			embeddedPathElements.head(), tailStream.toArray(String[]::new)
@@ -78,7 +80,7 @@ public class PlainJSONSingleModelMessageMapper<T>
 		JSONObjectBuilder jsonObjectBuilder,
 		FunctionalList<String> embeddedPathElements, String url) {
 
-		Stream<String> tailStream = embeddedPathElements.tail();
+		Stream<String> tailStream = embeddedPathElements.tailStream();
 
 		jsonObjectBuilder.nestedField(
 			embeddedPathElements.head(), tailStream.toArray(String[]::new)
@@ -116,7 +118,7 @@ public class PlainJSONSingleModelMessageMapper<T>
 		JSONObjectBuilder jsonObjectBuilder,
 		FunctionalList<String> embeddedPathElements, String url) {
 
-		Stream<String> tailStream = embeddedPathElements.tail();
+		Stream<String> tailStream = embeddedPathElements.tailStream();
 
 		jsonObjectBuilder.nestedField(
 			embeddedPathElements.head(), tailStream.toArray(String[]::new)

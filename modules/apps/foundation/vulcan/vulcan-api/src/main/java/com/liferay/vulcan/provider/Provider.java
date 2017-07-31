@@ -17,10 +17,22 @@ package com.liferay.vulcan.provider;
 import javax.servlet.http.HttpServletRequest;
 
 /**
+ * Instances of this interface will be used to provide instances of different
+ * classes that are dependent on the current request.
+ *
+ * The class of the provider can then be provided as a parameter in {@link
+ * com.liferay.vulcan.representor.RoutesBuilder} methods.
+ *
  * @author Alejandro Hernández
  */
 public interface Provider<T> {
 
+	/**
+	 * Creates an instance of the provided class for the current request.
+	 *
+	 * @param  httpServletRequest current request.
+	 * @return the instance of the provided class.
+	 */
 	public T createContext(HttpServletRequest httpServletRequest);
 
 }

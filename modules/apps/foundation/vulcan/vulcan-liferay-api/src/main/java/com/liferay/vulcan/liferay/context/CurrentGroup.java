@@ -17,10 +17,24 @@ package com.liferay.vulcan.liferay.context;
 import com.liferay.portal.kernel.model.Group;
 
 /**
+ * Provides the current {@link Group}.
+ *
+ * <p>
+ * To use this class, add it as a parameter in {@link
+ * com.liferay.vulcan.representor.RoutesBuilder} methods.
+ * </p>
+ *
  * @author Alejandro Hernández
+ * @author Carlos Sierra Andrés
+ * @author Jorge Ferrer
  */
 public interface CurrentGroup {
 
+	/**
+	 * Returns the current {@link Group}.
+	 *
+	 * @return current group.
+	 */
 	public Group getGroup();
 
 }

@@ -58,6 +58,9 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * Gives Vulcan the ability to write collection pages. For that end it uses the
+ * right {@link PageMessageMapper} in accordance with the media type.
+ *
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer

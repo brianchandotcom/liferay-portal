@@ -17,10 +17,24 @@ package com.liferay.vulcan.liferay.context;
 import com.liferay.portal.kernel.model.User;
 
 /**
+ * Provides the current {@link User}.
+ *
+ * <p>
+ * To use this class, add it as a parameter in {@link
+ * com.liferay.vulcan.representor.RoutesBuilder} methods.
+ * </p>
+ *
  * @author Alejandro Hernández
+ * @author Carlos Sierra Andrés
+ * @author Jorge Ferrer
  */
 public interface CurrentUser {
 
+	/**
+	 * Returns the current {@link User}.
+	 *
+	 * @return current group.
+	 */
 	public User getUser();
 
 }

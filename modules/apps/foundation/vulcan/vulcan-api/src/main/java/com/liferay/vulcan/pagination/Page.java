@@ -19,6 +19,9 @@ import aQute.bnd.annotation.ProviderType;
 import java.util.Collection;
 
 /**
+ * Represents a page in a collection. Writers can use instances of this
+ * interface to create hypermedia representations.
+ *
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
@@ -26,20 +29,64 @@ import java.util.Collection;
 @ProviderType
 public interface Page<T> {
 
+	/**
+	 * Returns the items of the page.
+	 *
+	 * @return the items of the page.
+	 */
 	public Collection<T> getItems();
 
+	/**
+	 * Returns the number of items the user has selected on the page.
+	 *
+	 * @return the number of items the user has selected on the page.
+	 */
 	public int getItemsPerPage();
 
+	/**
+	 * Returns the number of the last page of the collection.
+	 *
+	 * @return the number of the last page of the collection.
+	 */
 	public int getLastPageNumber();
 
+	/**
+	 * Returns the model class of the page.
+	 *
+	 * @return the model class of the page.
+	 */
 	public Class<T> getModelClass();
 
+	/**
+	 * Returns the page number in the collection.
+	 *
+	 * @return the page number in the collection.
+	 */
 	public int getPageNumber();
 
+	/**
+	 * Returns the total number of elements in the collection.
+	 *
+	 * @return the total number of elements in the collection.
+	 */
 	public int getTotalCount();
 
+	/**
+	 * Returns <code>true</code> if another page follows this page in the
+	 * collection.
+	 *
+	 * @return <code>true</code> if another page follows this page in the
+	 *         collection; <code>false</code> otherwise.
+	 */
 	public boolean hasNext();
 
+	/**
+	 * Returns <code>true</code> if another page precedes this page in the
+	 * collection.
+	 *
+	 * @return <code>true</code> if another page precedes this page in the
+	 *         collection; <code>false</code> otherwise.
+	 */
 	public boolean hasPrevious();
 
 }

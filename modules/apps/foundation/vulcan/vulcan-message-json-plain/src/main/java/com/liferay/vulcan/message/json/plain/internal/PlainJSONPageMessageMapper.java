@@ -23,7 +23,11 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * Adds Vulcan the ability to represent collection pages in plain JSON.
+ *
  * @author Alejandro Hernández
+ * @author Carlos Sierra Andrés
+ * @author Jorge Ferrer
  */
 @Component(immediate = true)
 public class PlainJSONPageMessageMapper<T> implements PageMessageMapper<T> {

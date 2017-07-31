@@ -27,9 +27,14 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * Adds Vulcan the ability to represent collection pages in JSON-LD + Hydra
+ * format.
+ *
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
+ * @see    <a href="https://json-ld.org/">JSON-LD</a>
+ * @see    <a href="https://www.hydra-cg.com/">Hydra</a>
  */
 @Component(immediate = true)
 public class JSONLDPageMessageMapper<T> implements PageMessageMapper<T> {
@@ -75,7 +80,7 @@ public class JSONLDPageMessageMapper<T> implements PageMessageMapper<T> {
 		FunctionalList<String> embeddedPathElements, String fieldName,
 		Object fieldData) {
 
-		Stream<String> tailStream = embeddedPathElements.tail();
+		Stream<String> tailStream = embeddedPathElements.tailStream();
 
 		itemJSONObjectBuilder.nestedField(
 			embeddedPathElements.head(), tailStream.toArray(String[]::new)
@@ -223,28 +228,30 @@ public class JSONLDPageMessageMapper<T> implements PageMessageMapper<T> {
 		JSONObjectBuilder jsonObjectBuilder, Page<T> page, Class<T> modelClass,
 		RequestInfo requestInfo) {
 
-		jsonObjectBuilder.field(
-			"@type"
+		jsonObjectBuilder.nestedField(
+			"@context", "Collection"
 		).value(
-			"Collection"
-		);
-
-		jsonObjectBuilder.field(
-			"@context"
-		).arrayValue(
-		).add(
 			"http://www.w3.org/ns/hydra/pagination.jsonld"
 		);
 
-		jsonObjectBuilder.field(
-			"@context"
+		jsonObjectBuilder.nestedField(
+			"@context", "@vocab"
+		).value(
+			"http://schema.org"
+		);
+
+		jsonObjectBuilder.nestedField(
+			"view", "@type"
 		).arrayValue(
 		).add(
-			nestedJsonObjectBuilder -> nestedJsonObjectBuilder.field(
-				"@vocab"
-			).value(
-				"http://schema.org"
-			)
+			"PartialCollectionView"
+		);
+
+		jsonObjectBuilder.field(
+			"@type"
+		).arrayValue(
+		).add(
+			"Collection"
 		);
 	}
 

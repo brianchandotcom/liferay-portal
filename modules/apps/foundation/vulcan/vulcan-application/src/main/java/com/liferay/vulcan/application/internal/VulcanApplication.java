@@ -35,6 +35,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * The VulcanApplication is the center piece of a Vulcan API. Developers only
+ * need to provide a valid {@link RootEndpoint}, and at least, one
+ * {@link MessageBodyWriter}.
+ *
  * @author Alejandro Hernández
  * @author Carlos Sierra
  * @author Jorge Ferrer
@@ -66,6 +70,7 @@ public class VulcanApplication extends Application {
 		_messageBodyWriters.add(messageBodyWriter);
 	}
 
+	@SuppressWarnings("unused")
 	public <T> void unsetServiceReference(
 		ServiceReference<MessageBodyWriter<T>> serviceReference,
 		MessageBodyWriter<T> messageBodyWriter) {

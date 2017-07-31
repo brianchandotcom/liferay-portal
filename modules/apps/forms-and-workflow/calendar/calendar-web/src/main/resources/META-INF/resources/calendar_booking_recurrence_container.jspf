@@ -338,7 +338,7 @@ if (recurrence != null) {
 		);
 
 		var destroyRecurrenceDialog = function(event) {
-			if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
+			if (event.portletId === '<%= portletDisplay.getId() %>') {
 				window.<portlet:namespace />recurrenceDialog.destroy();
 
 				delete window['<portlet:namespace />recurrenceDialog'];

@@ -224,7 +224,7 @@ private void _createSetUpPortalToolTasks() {
 			configuration.exclude group: "com.liferay.portal"
 
 			dependencyTransformClosure = {
-				Map<String, String> dependencyNotation ->
+				Map<String, Object> dependencyNotation ->
 
 				String version = PortalTools.getVersion(project, dependencyNotation["name"])
 

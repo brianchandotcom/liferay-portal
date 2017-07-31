@@ -27,6 +27,7 @@ class LiferayApp extends App {
 
 		this.on('beforeNavigate', this.onBeforeNavigate);
 		this.on('endNavigate', this.onEndNavigate);
+		this.on('navigationError', this.onNavigationError);
 		this.on('startNavigate', this.onStartNavigate);
 
 		Liferay.on('beforeScreenFlip', Utils.resetAllPortlets);
@@ -131,36 +132,7 @@ class LiferayApp extends App {
 			this._hideTimeoutAlert();
 		}
 
-		if (event.error) {
-			if (event.error.invalidStatus || event.error.requestError || event.error.timeout) {
-				let message = Liferay.Language.get('there-was-an-unexpected-error.-please-refresh-the-current-page');
-
-				if (Liferay.SPA.debugEnabled) {
-					console.error(event.error);
-
-					if (event.error.invalidStatus) {
-						message = Liferay.Language.get('the-spa-navigation-request-received-an-invalid-http-status-code');
-					}
-					if (event.error.requestError) {
-						message = Liferay.Language.get('there-was-an-unexpected-error-in-the-spa-request');
-					}
-					if (event.error.timeout) {
-						message = Liferay.Language.get('the-spa-request-timed-out');
-					}
-				}
-
-				Liferay.Data.layoutConfig = this.dataLayoutConfig_;
-
-				this._createNotification(
-					{
-						message: message,
-						title: Liferay.Language.get('error'),
-						type: 'danger'
-					}
-				);
-			}
-		}
-		else {
+		if (!event.error) {
 			this.dataLayoutConfigReadyHandle_ = Liferay.once('dataLayoutConfigReady', this.onDataLayoutConfigReady_);
 		}
 
@@ -171,6 +143,39 @@ class LiferayApp extends App {
 
 	onLiferayIOComplete() {
 		this.clearScreensCache();
+	}
+
+	onNavigationError(event) {
+		if (event.error.requestPrematureTermination) {
+			window.location.href = event.path;
+		}
+		else if (event.error.invalidStatus || event.error.requestError || event.error.timeout) {
+			let message = Liferay.Language.get('there-was-an-unexpected-error.-please-refresh-the-current-page');
+
+			if (Liferay.SPA.debugEnabled) {
+				console.error(event.error);
+
+				if (event.error.invalidStatus) {
+					message = Liferay.Language.get('the-spa-navigation-request-received-an-invalid-http-status-code');
+				}
+				if (event.error.requestError) {
+					message = Liferay.Language.get('there-was-an-unexpected-error-in-the-spa-request');
+				}
+				if (event.error.timeout) {
+					message = Liferay.Language.get('the-spa-request-timed-out');
+				}
+			}
+
+			Liferay.Data.layoutConfig = this.dataLayoutConfig_;
+
+			this._createNotification(
+				{
+					message: message,
+					title: Liferay.Language.get('error'),
+					type: 'danger'
+				}
+			);
+		}
 	}
 
 	onStartNavigate(event) {

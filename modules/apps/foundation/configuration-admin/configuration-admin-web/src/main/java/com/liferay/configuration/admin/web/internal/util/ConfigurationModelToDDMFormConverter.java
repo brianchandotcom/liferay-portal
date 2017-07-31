@@ -201,6 +201,9 @@ public class ConfigurationModelToDDMFormConverter {
 
 			return DDMFormFieldType.RADIO;
 		}
+		else if (type == AttributeDefinition.PASSWORD) {
+			return DDMFormFieldType.PASSWORD;
+		}
 
 		if (ArrayUtil.isNotEmpty(attributeDefinition.getOptionLabels()) ||
 			ArrayUtil.isNotEmpty(attributeDefinition.getOptionValues())) {

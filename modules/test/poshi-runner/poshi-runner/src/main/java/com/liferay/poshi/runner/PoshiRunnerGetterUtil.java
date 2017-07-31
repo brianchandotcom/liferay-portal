@@ -247,6 +247,18 @@ public class PoshiRunnerGetterUtil {
 		return returnObject;
 	}
 
+	public static String getNamespaceFromClassCommandName(
+		String classCommandName) {
+
+		int x = classCommandName.indexOf(".");
+
+		if (x != -1) {
+			return classCommandName.substring(0, x);
+		}
+
+		return null;
+	}
+
 	public static String getProjectDirName() {
 		return getCanonicalPath(PropsValues.PROJECT_DIR);
 	}

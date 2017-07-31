@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSET_ELLIPSIS_ICON</td>
+	<td>//div[@class='asset-abstract '][//a[normalize-space(./text())='${key_assetTitle}']]//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

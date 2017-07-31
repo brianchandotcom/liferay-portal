@@ -360,7 +360,18 @@ public class PoshiRunnerGetterUtil {
 		return rootElement;
 	}
 
-	public static Object getVarMethodValue(String classCommandName)
+	public static String getSimpleClassCommandName(String classCommandName) {
+		int x = classCommandName.indexOf(".");
+
+		if (x != -1) {
+			return classCommandName.substring(x + 1);
+		}
+
+		return classCommandName;
+	}
+
+	public static Object getVarMethodValue(
+			String classCommandName, String namespace)
 		throws Exception {
 
 		int x = classCommandName.indexOf("(");

@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
+
+<service-builder auto-namespace-tables="false" package-path="com.liferay.commerce.address">
+	<author>Alessio Antonio Rendina</author>
+	<namespace>Commerce</namespace>
+	<entity local-service="true" name="CommerceCountry" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceCountryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="name" type="String" />
+		<column name="allowsBilling" type="boolean" />
+		<column name="allowsShipping" type="boolean" />
+		<column name="twoLettersISOCode" type="String" />
+		<column name="threeLettersISOCode" type="String" />
+		<column name="numericISOCode" type="int" />
+		<column name="priority" type="int" />
+		<column name="published" type="boolean" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="name" />
+			<order-column name="priority" />
+		</order>
+	</entity>
+	<entity local-service="true" name="CommerceRegion" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceRegionId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="commerceCountryId" type="long" />
+		<column name="name" type="String" />
+		<column name="abbreviation" type="String" />
+		<column name="priority" type="int" />
+		<column name="published" type="boolean" />
+
+		<!-- Order -->
+
+			<order by="asc">
+				<order-column name="name" />
+				<order-column name="priority" />
+			</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CommerceCountryId" return-type="Collection">
+			<finder-column name="commerceCountryId" />
+		</finder>
+	</entity>
+</service-builder>

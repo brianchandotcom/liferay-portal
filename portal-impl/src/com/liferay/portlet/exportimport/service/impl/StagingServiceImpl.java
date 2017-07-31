@@ -19,12 +19,16 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleManagerUtil;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.exportimport.service.base.StagingServiceBaseImpl;
 
 import java.io.Serializable;
@@ -41,20 +45,45 @@ public class StagingServiceImpl extends StagingServiceBaseImpl {
 	public void cleanUpStagingRequest(long stagingRequestId)
 		throws PortalException {
 
-		checkPermission(stagingRequestId);
+		try {
+			checkPermission(stagingRequestId);
 
-		stagingLocalService.cleanUpStagingRequest(stagingRequestId);
+			stagingLocalService.cleanUpStagingRequest(stagingRequestId);
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Error calling StagingServiceImpl.cleanUpStagingRequest(" +
+						stagingRequestId + ")",
+					pe);
+			}
+
+			throw pe;
+		}
 	}
 
 	@Override
 	public long createStagingRequest(long groupId, String checksum)
 		throws PortalException {
 
-		GroupPermissionUtil.check(
-			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
+		try {
+			GroupPermissionUtil.check(
+				getPermissionChecker(), groupId,
+				ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
-		return stagingLocalService.createStagingRequest(
-			getUserId(), groupId, checksum);
+			return stagingLocalService.createStagingRequest(
+				getUserId(), groupId, checksum);
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Error calling StagingServiceImpl.createStagingRequest(" +
+						groupId + "," + checksum + ")",
+					pe);
+			}
+
+			throw pe;
+		}
 	}
 
 	@Override
@@ -62,10 +91,23 @@ public class StagingServiceImpl extends StagingServiceBaseImpl {
 			String uuid, long groupId, boolean privateLayout)
 		throws PortalException {
 
-		GroupPermissionUtil.check(
-			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
+		try {
+			GroupPermissionUtil.check(
+				getPermissionChecker(), groupId,
+				ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
-		return layoutLocalService.hasLayout(uuid, groupId, privateLayout);
+			return layoutLocalService.hasLayout(uuid, groupId, privateLayout);
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Error calling StagingServiceImpl.hasRemoteLayout(" + uuid +
+						"," + groupId + "," + privateLayout + ")",
+					pe);
+			}
+
+			throw pe;
+		}
 	}
 
 	@Override
@@ -74,30 +116,54 @@ public class StagingServiceImpl extends StagingServiceBaseImpl {
 			List<Serializable> arguments)
 		throws PortalException {
 
-		Serializable serializable = arguments.get(0);
+		try {
+			Serializable serializable = arguments.get(0);
 
-		long groupId = GroupConstants.DEFAULT_LIVE_GROUP_ID;
+			long groupId = GroupConstants.DEFAULT_LIVE_GROUP_ID;
 
-		if (serializable instanceof PortletDataContext) {
-			PortletDataContext portletDataContext =
-				(PortletDataContext)serializable;
+			if (serializable instanceof PortletDataContext) {
+				PortletDataContext portletDataContext =
+					(PortletDataContext)serializable;
 
-			groupId = portletDataContext.getGroupId();
+				groupId = portletDataContext.getGroupId();
+			}
+			else if (serializable instanceof ExportImportConfiguration) {
+				ExportImportConfiguration exportImportConfiguration =
+					(ExportImportConfiguration)serializable;
+
+				groupId = MapUtil.getLong(
+					exportImportConfiguration.getSettingsMap(),
+					"targetGroupId");
+			}
+
+			GroupPermissionUtil.check(
+				getPermissionChecker(), groupId,
+				ActionKeys.EXPORT_IMPORT_LAYOUTS);
+
+			ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
+				code, processFlag, processId,
+				arguments.toArray(new Serializable[arguments.size()]));
 		}
-		else if (serializable instanceof ExportImportConfiguration) {
-			ExportImportConfiguration exportImportConfiguration =
-				(ExportImportConfiguration)serializable;
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				StringBundler sb = new StringBundler(10);
 
-			groupId = MapUtil.getLong(
-				exportImportConfiguration.getSettingsMap(), "targetGroupId");
+				sb.append("Error calling StagingServiceImpl.");
+				sb.append("propagateExportImportLifecycleEvent(");
+				sb.append(code);
+				sb.append(StringPool.COMMA);
+				sb.append(processFlag);
+				sb.append(StringPool.COMMA);
+				sb.append(processId);
+				sb.append(StringPool.COMMA);
+				sb.append(arguments);
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+
+				_log.debug(sb.toString(), pe);
+			}
+
+			throw pe;
 		}
-
-		GroupPermissionUtil.check(
-			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
-
-		ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
-			code, processFlag, processId,
-			arguments.toArray(new Serializable[arguments.size()]));
 	}
 
 	/**
@@ -122,10 +188,23 @@ public class StagingServiceImpl extends StagingServiceBaseImpl {
 			ExportImportConfiguration exportImportConfiguration)
 		throws PortalException {
 
-		checkPermission(stagingRequestId);
+		try {
+			checkPermission(stagingRequestId);
 
-		return stagingLocalService.publishStagingRequest(
-			getUserId(), stagingRequestId, exportImportConfiguration);
+			return stagingLocalService.publishStagingRequest(
+				getUserId(), stagingRequestId, exportImportConfiguration);
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Error calling StagingServiceImpl.publishStagingRequest(" +
+						stagingRequestId + "," + exportImportConfiguration +
+							")",
+					pe);
+			}
+
+			throw pe;
+		}
 	}
 
 	@Override
@@ -133,10 +212,23 @@ public class StagingServiceImpl extends StagingServiceBaseImpl {
 			long stagingRequestId, String fileName, byte[] bytes)
 		throws PortalException {
 
-		checkPermission(stagingRequestId);
+		try {
+			checkPermission(stagingRequestId);
 
-		stagingLocalService.updateStagingRequest(
-			getUserId(), stagingRequestId, fileName, bytes);
+			stagingLocalService.updateStagingRequest(
+				getUserId(), stagingRequestId, fileName, bytes);
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Error calling StagingServiceImpl.updateStagingRequest(" +
+						stagingRequestId + "," + fileName + "," + bytes.length +
+							"bytes)",
+					pe);
+			}
+
+			throw pe;
+		}
 	}
 
 	/**
@@ -166,5 +258,8 @@ public class StagingServiceImpl extends StagingServiceBaseImpl {
 			getPermissionChecker(), folder.getGroupId(),
 			ActionKeys.EXPORT_IMPORT_LAYOUTS);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		StagingServiceImpl.class);
 
 }

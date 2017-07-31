@@ -67,24 +67,14 @@ public class BundleSupportMavenTest extends BundleSupportCommandsTest {
 
 	@Override
 	protected void createToken(
-			String emailAddress, boolean force, File passwordFile,
-			File tokenFile, URL tokenUrl)
+			String emailAddress, boolean force, String password,
+			File passwordFile, File tokenFile, URL tokenUrl)
 		throws Exception {
 
 		_execute(
 			"create-token", null, null, null, emailAddress, null, null, force,
-			null, null, null, passwordFile, 0, tokenFile, tokenUrl, null, null);
-	}
-
-	@Override
-	protected void createToken(
-			String emailAddress, boolean force, String password, File tokenFile,
-			URL tokenUrl)
-		throws Exception {
-
-		_execute(
-			"create-token", null, null, null, emailAddress, null, null, force,
-			null, null, password, null, 0, tokenFile, tokenUrl, null, null);
+			null, null, password, passwordFile, 0, tokenFile, tokenUrl, null,
+			null);
 	}
 
 	@Override

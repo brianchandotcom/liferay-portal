@@ -150,9 +150,9 @@ import java.util.Set;
  *
  * <p>
  * The <code>className</code> field helps create the group's association with
- * other entities (e.g. Organization, User, Company, UserGroup, etc.). The
- * value of <code>className</code> is the full name of the entity's class and
- * the primary key of the associated entity instance. A site has
+ * other entities (e.g. Organization, User, Company, UserGroup, etc.). The value
+ * of <code>className</code> is the full name of the entity's class and the
+ * primary key of the associated entity instance. A site has
  * <code>className="Group"</code> and has no associated entity.
  * </p>
  *
@@ -174,17 +174,20 @@ import java.util.Set;
  * Company has one Group (this is the global scope, but never has pages)
  * </li>
  * <li>
- * User has one Group (pages are optional based on the behavior configuration for
+ * User has one Group (pages are optional based on the behavior configuration
+ * for
  * personal pages)
  * </li>
  * <li>
- * Layout Template (<code>LayoutPrototype</code>) has 1 Group which uses only one
+ * Layout Template (<code>LayoutPrototype</code>) has 1 Group which uses only
+ * one
  * of its two LayoutSets to store a single page which can later be used to
  * derive a single page in any Site
  * </li>
  * <li>
  * Site Template (<code>LayoutSetPrototype</code>) has 1 Group which uses only
- * one of its two LayoutSets to store many pages which can later be used to derive
+ * one of its two LayoutSets to store many pages which can later be used to
+ * derive
  * entire Sites or pulled into an existing Site
  * </li>
  * <li>

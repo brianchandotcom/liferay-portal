@@ -341,8 +341,8 @@ public class SecureFilter extends BasePortalFilter {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #setCredentials(
-	 *             HttpServletRequest, HttpSession, User, String)}
+	 *             #setCredentials(HttpServletRequest, HttpSession, User,
+	 *             String)}
 	 */
 	@Deprecated
 	protected HttpServletRequest setCredentials(

@@ -92,8 +92,8 @@ public class HttpUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by
-	 *     {@link URLCodec#encodeURL(String, boolean)}
+	 * @deprecated As of 7.0.0, replaced by {@link URLCodec#encodeURL(String,
+	 *             boolean)}
 	 */
 	@Deprecated
 	public static String encodeURL(String url, boolean escapeSpaces) {

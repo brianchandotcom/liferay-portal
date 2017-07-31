@@ -407,8 +407,8 @@ public class AssetUtil {
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             #getAssetPublisherAddItemHolders(LiferayPortletRequest,
-	 *             LiferayPortletResponse, long, long[],
-	 *             long[], long[], String[], String)}
+	 *             LiferayPortletResponse, long, long[], long[], long[],
+	 *             String[], String)}
 	 */
 	@Deprecated
 	public static Map<String, PortletURL> getAddPortletURLs(

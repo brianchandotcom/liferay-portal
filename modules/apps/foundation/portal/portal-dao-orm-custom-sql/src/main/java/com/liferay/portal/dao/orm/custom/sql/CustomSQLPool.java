@@ -23,7 +23,7 @@ import java.util.Map;
 import org.osgi.framework.BundleContext;
 
 /**
- * @author Peter Fellwock
+ * @author     Peter Fellwock
  * @deprecated As of 1.0.0, with no direct replacement
  */
 @Deprecated

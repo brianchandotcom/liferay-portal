@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.trash;
 /**
  * Contains constant versions of action IDs related to trash.
  *
- * @author Zsolt Berentey
+ * @author     Zsolt Berentey
  * @deprecated As of 7.0.0, replaced by {@link
  *             com.liferay.trash.constants.TrashActionKeys}
  */

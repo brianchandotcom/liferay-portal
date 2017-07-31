@@ -437,7 +437,6 @@ public class DDLRecordLocalServiceUtil {
 	*
 	* @param ddmStorageId the storage ID associated with the record
 	* @return the DDM form values
-	* @throws StorageException
 	*/
 	public static com.liferay.dynamic.data.mapping.storage.DDMFormValues getDDMFormValues(
 		long ddmStorageId)

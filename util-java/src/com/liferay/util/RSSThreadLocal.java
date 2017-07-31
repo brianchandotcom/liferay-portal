@@ -17,8 +17,8 @@ package com.liferay.util;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 
 /**
- * @author Shuyang Zhou
- * @see    com.liferay.rss.util.RSSThreadLocal
+ * @author     Shuyang Zhou
+ * @see        com.liferay.rss.util.RSSThreadLocal
  * @deprecated As of 7.0.0, with no direct replacement
  */
 @Deprecated

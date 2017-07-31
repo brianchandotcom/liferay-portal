@@ -30,8 +30,7 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import java.util.List;
 
 /**
- * @author Daniel Kocsis
- *
+ * @author     Daniel Kocsis
  * @deprecated As of 4.0.0
  */
 @Deprecated

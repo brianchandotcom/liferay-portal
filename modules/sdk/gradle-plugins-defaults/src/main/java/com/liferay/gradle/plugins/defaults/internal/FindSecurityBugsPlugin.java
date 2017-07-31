@@ -421,7 +421,8 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 		"fsb-include.xml";
 
 	/**
-	 * Copied from <code>com.liferay.gradle.plugins.internal.JspCDefaultsPlugin</code>.
+	 * Copied from
+	 * <code>com.liferay.gradle.plugins.internal.JspCDefaultsPlugin</code>.
 	 */
 	private static final String _UNZIP_JAR_TASK_NAME = "unzipJar";
 

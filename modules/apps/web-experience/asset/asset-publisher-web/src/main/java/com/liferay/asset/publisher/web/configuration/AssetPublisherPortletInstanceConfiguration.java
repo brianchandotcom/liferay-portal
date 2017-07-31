@@ -69,7 +69,8 @@ public interface AssetPublisherPortletInstanceConfiguration {
 	public LocalizedValuesMap emailAssetEntryAddedBody();
 
 	/**
-	 * Set this to true if you want to enable asset entry added email.
+	 * Set this to <code>true</code> if you want to enable asset entry added
+	 * email.
 	 *
 	 * @return <code>true</code> if asset entry added email is enabled.
 	 */

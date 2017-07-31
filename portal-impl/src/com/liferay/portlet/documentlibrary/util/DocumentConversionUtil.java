@@ -19,10 +19,10 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * @author Bruno Farache
- * @author Alexander Chow
+ * @author     Bruno Farache
+ * @author     Alexander Chow
  * @deprecated As of 7.0.0, moved to {@link
- * 			   com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil}
+ *             com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil}
  */
 @Deprecated
 public class DocumentConversionUtil {

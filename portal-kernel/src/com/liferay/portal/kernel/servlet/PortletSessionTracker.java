@@ -28,8 +28,8 @@ import javax.servlet.http.HttpSession;
  * See https://issues.liferay.com/browse/LEP-1466.
  * </p>
  *
- * @author Rudy Hilado
- * @author Shuyang Zhou
+ * @author     Rudy Hilado
+ * @author     Shuyang Zhou
  * @deprecated As of 7.0.0, with no direct replacement
  */
 @Deprecated

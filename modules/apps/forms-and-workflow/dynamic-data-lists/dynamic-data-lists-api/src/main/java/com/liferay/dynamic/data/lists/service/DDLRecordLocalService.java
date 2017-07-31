@@ -395,7 +395,6 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	*
 	* @param ddmStorageId the storage ID associated with the record
 	* @return the DDM form values
-	* @throws StorageException
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMFormValues getDDMFormValues(long ddmStorageId)

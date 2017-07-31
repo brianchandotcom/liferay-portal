@@ -174,8 +174,8 @@ public class EventsProcessorUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #process(String, String[], LifecycleEvent)}
+	 * @deprecated As of 7.0.0, replaced by {@link #process(String, String[],
+	 *             LifecycleEvent)}
 	 */
 	@Deprecated
 	protected void _process(
@@ -198,8 +198,8 @@ public class EventsProcessorUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #registerEvent(String, Object)}
+	 * @deprecated As of 7.0.0, replaced by {@link #registerEvent(String,
+	 *             Object)}
 	 */
 	@Deprecated
 	protected void _registerEvent(String key, Object event) {
@@ -207,8 +207,8 @@ public class EventsProcessorUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #unregisterEvent(String, Object)}
+	 * @deprecated As of 7.0.0, replaced by {@link #unregisterEvent(String,
+	 *             Object)}
 	 */
 	@Deprecated
 	protected void _unregisterEvent(String key, Object event) {

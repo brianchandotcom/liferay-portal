@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Commerce Address API
+Bundle-SymbolicName: com.liferay.commerce.address.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.commerce.address.constants,\
+	com.liferay.commerce.address.exception,\
+	com.liferay.commerce.address.model,\
+	com.liferay.commerce.address.service,\
+	com.liferay.commerce.address.service.persistence

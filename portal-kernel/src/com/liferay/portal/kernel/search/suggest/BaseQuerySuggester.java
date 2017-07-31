@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.search.suggest;
 
-import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
@@ -35,7 +34,7 @@ public abstract class BaseQuerySuggester implements QuerySuggester {
 		Map<String, List<String>> suggestions = spellCheckKeywords(
 			searchContext, 1);
 
-		String localizedFieldName = DocumentImpl.getLocalizedName(
+		String localizedFieldName = Field.getLocalizedName(
 			searchContext.getLanguageId(), Field.SPELL_CHECK_WORD);
 
 		List<String> keywords = TokenizerUtil.tokenize(

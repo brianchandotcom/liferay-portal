@@ -332,7 +332,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		String sortField = doGetSortField(orderByCol);
 
 		if (_document.isDocumentSortableTextField(sortField)) {
-			return DocumentImpl.getSortableFieldName(sortField);
+			return Field.getSortableFieldName(sortField);
 		}
 
 		return sortField;
@@ -349,7 +349,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		if ((sortType == Sort.DOUBLE_TYPE) || (sortType == Sort.FLOAT_TYPE) ||
 			(sortType == Sort.INT_TYPE) || (sortType == Sort.LONG_TYPE)) {
 
-			return DocumentImpl.getSortableFieldName(orderByCol);
+			return Field.getSortableFieldName(orderByCol);
 		}
 
 		return getSortField(orderByCol);
@@ -1142,7 +1142,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 
 		queries.put(field, query);
 
-		String localizedFieldName = DocumentImpl.getLocalizedName(
+		String localizedFieldName = Field.getLocalizedName(
 			searchContext.getLocale(), field);
 
 		Query localizedQuery = addSearchTerm(
@@ -1644,7 +1644,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		if (expandoColumn.getType() ==
 				ExpandoColumnConstants.STRING_LOCALIZED) {
 
-			fieldName = DocumentImpl.getLocalizedName(
+			fieldName = Field.getLocalizedName(
 				searchContext.getLocale(), fieldName);
 		}
 
@@ -1715,14 +1715,13 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 
 		String localizedAssetCategoryTitlesName =
 			prefix +
-				DocumentImpl.getLocalizedName(
-					locale, Field.ASSET_CATEGORY_TITLES);
+				Field.getLocalizedName(locale, Field.ASSET_CATEGORY_TITLES);
 		String localizedContentName =
-			prefix + DocumentImpl.getLocalizedName(locale, Field.CONTENT);
+			prefix + Field.getLocalizedName(locale, Field.CONTENT);
 		String localizedDescriptionName =
-			prefix + DocumentImpl.getLocalizedName(locale, Field.DESCRIPTION);
+			prefix + Field.getLocalizedName(locale, Field.DESCRIPTION);
 		String localizedTitleName =
-			prefix + DocumentImpl.getLocalizedName(locale, Field.TITLE);
+			prefix + Field.getLocalizedName(locale, Field.TITLE);
 
 		if ((document.getField(localizedAssetCategoryTitlesName) != null) ||
 			(document.getField(localizedContentName) != null) ||

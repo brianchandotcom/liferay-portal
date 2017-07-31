@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins.workspace.tasks;
 
+import com.liferay.gradle.plugins.workspace.internal.util.FileUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 import com.liferay.portal.tools.bundle.support.commands.CreateTokenCommand;
@@ -74,7 +75,6 @@ public class CreateTokenTask extends DefaultTask {
 		createTokenCommand.setEmailAddress(getEmailAddress());
 		createTokenCommand.setForce(isForce());
 		createTokenCommand.setPassword(getPassword());
-		createTokenCommand.setPasswordFile(getPasswordFile());
 		createTokenCommand.setTokenFile(getTokenFile());
 		createTokenCommand.setTokenUrl(getTokenUrl());
 
@@ -170,9 +170,10 @@ public class CreateTokenTask extends DefaultTask {
 	private void _setCredentials() {
 		String emailAddress = getEmailAddress();
 		String password = getPassword();
+		File passwordFile = getPasswordFile();
 
 		if (Validator.isNotNull(emailAddress) &&
-			Validator.isNotNull(password)) {
+			(Validator.isNotNull(password) || (passwordFile != null))) {
 
 			return;
 		}
@@ -188,8 +189,14 @@ public class CreateTokenTask extends DefaultTask {
 
 		setEmailAddress(emailAddress);
 
-		while (Validator.isNull(password)) {
-			password = _readInput(antBuilder, "Password:", "password", true);
+		if (passwordFile != null) {
+			password = FileUtil.read(passwordFile);
+		}
+		else {
+			while (Validator.isNull(password)) {
+				password = _readInput(
+					antBuilder, "Password:", "password", true);
+			}
 		}
 
 		setPassword(password);

@@ -159,19 +159,6 @@ public class TrashIndexer extends BaseIndexer<TrashEntry> {
 	}
 
 	@Override
-	protected String doGetSortField(String orderByCol) {
-		if (orderByCol.equals("removed-date")) {
-			return Field.REMOVED_DATE;
-		}
-		else if (orderByCol.equals("removed-by")) {
-			return Field.REMOVED_BY_USER_NAME;
-		}
-		else {
-			return orderByCol;
-		}
-	}
-
-	@Override
 	protected Summary doGetSummary(
 		Document document, Locale locale, String snippet,
 		PortletRequest portletRequest, PortletResponse portletResponse) {

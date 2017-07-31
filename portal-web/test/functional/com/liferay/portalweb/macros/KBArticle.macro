@@ -813,12 +813,11 @@
 	</command>
 
 	<command name="editPGViaLocalizedKBDisplay">
-		<var name="key_editLocalized" value="Editar" />
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 		<var name="key_localizedText" value="Editor de texto enriquecido" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Editar">
-			<var name="key_menuItem" value="Editar" />
+		<execute function="AssertClick" locator1="KnowledgeBase#KB_TOOLS" value1="${key_editLocalized}">
+			<var name="key_kbTool" value="${key_editLocalized}" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#HEADER_TITLE" value1="${kbArticleTitle}" />

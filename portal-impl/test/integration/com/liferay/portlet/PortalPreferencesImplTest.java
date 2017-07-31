@@ -514,9 +514,9 @@ public class PortalPreferencesImplTest {
 
 	private static final String _VALUE_2 = "value2";
 
-	private static final String[] _VALUES_1 = new String[] {"values1"};
+	private static final String[] _VALUES_1 = {"values1"};
 
-	private static final String[] _VALUES_2 = new String[] {"values2"};
+	private static final String[] _VALUES_2 = {"values2"};
 
 	private static PortalPreferencesLocalService
 		_originalPortalPreferencesLocalService;

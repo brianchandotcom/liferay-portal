@@ -74,8 +74,8 @@ public class SubrepositoryTaskNoReport extends SubrepositoryTask {
 	protected static final Pattern consoleResultPattern = Pattern.compile(
 		"Subrepository task (FAILED|SUCCESSFUL)(.*)");
 
-	protected static final FailureMessageGenerator[] failureMessageGenerators =
-		new FailureMessageGenerator[] {
+	protected static final FailureMessageGenerator[]
+		failureMessageGenerators = {
 			new SubrepositorySourceFormatFailureMessageGenerator(),
 
 			new GenericFailureMessageGenerator()

@@ -120,7 +120,7 @@ public class UpgradeModules extends UpgradeProcess {
 					oldServletContextName + "'");
 	}
 
-	private static final String[] _BUNDLE_SYMBOLIC_NAMES = new String[] {
+	private static final String[] _BUNDLE_SYMBOLIC_NAMES = {
 		"com.liferay.amazon.rankings.web", "com.liferay.asset.browser.web",
 		"com.liferay.asset.categories.navigation.web",
 		"com.liferay.asset.publisher.web",

@@ -194,9 +194,8 @@ public class ReplicasClusterListenerTest {
 		);
 	}
 
-	private static final String[] _INDICES = new String[] {
-		RandomTestUtil.randomString(), RandomTestUtil.randomString()
-	};
+	private static final String[] _INDICES =
+		{RandomTestUtil.randomString(), RandomTestUtil.randomString()};
 
 	private static final int _REPLICAS = RandomTestUtil.randomInt() - 1;
 

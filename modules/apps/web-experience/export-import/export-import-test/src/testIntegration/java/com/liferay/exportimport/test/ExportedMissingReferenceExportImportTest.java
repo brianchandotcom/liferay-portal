@@ -162,7 +162,7 @@ public class ExportedMissingReferenceExportImportTest
 			DummyFolderPortletKeys.DUMMY_FOLDER_WITH_MISSING_REFERENCE,
 			DummyFolderWithMissingDummyPortletDataHandler.class);
 
-		long[] layoutIds = new long[] {layout.getLayoutId()};
+		long[] layoutIds = {layout.getLayoutId()};
 
 		exportImportLayouts(layoutIds, getImportParameterMap());
 
@@ -179,7 +179,7 @@ public class ExportedMissingReferenceExportImportTest
 			DummyFolderPortletKeys.DUMMY_FOLDER_WITH_MISSING_REFERENCE,
 			DummyFolderWithMissingLayoutPortletDataHandler.class);
 
-		long[] layoutIds = new long[] {layout.getLayoutId()};
+		long[] layoutIds = {layout.getLayoutId()};
 
 		exportImportLayouts(layoutIds, getImportParameterMap());
 

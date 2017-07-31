@@ -527,7 +527,7 @@ public class DocumentImplTest {
 		{"fifthuser", "thirduser", "firstuser"};
 
 	private static final String[] _SCREEN_NAMES_ODD_MIXED =
-		new String[] {"firstuser", "fifthuser", "thirduser"};
+		{"firstuser", "fifthuser", "thirduser"};
 
 	private final Map<String, Double[]> _doubleArrays = new HashMap<>();
 	private final Map<String, Double> _doubles = new HashMap<>();

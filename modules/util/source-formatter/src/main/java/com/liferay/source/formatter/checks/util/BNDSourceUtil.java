@@ -87,7 +87,7 @@ public class BNDSourceUtil {
 		return definitionKeysMap;
 	}
 
-	private static final String[] _APP_BND_DEFINITION_KEYS = new String[] {
+	private static final String[] _APP_BND_DEFINITION_KEYS = {
 		"Liferay-Releng-App-Description", "Liferay-Releng-App-Title",
 		"Liferay-Releng-Bundle", "Liferay-Releng-Category",
 		"Liferay-Releng-Demo-Url", "Liferay-Releng-Deprecated",
@@ -97,7 +97,7 @@ public class BNDSourceUtil {
 		"Liferay-Releng-Supported"
 	};
 
-	private static final String[] _BND_BND_DEFINITION_KEYS = new String[] {
+	private static final String[] _BND_BND_DEFINITION_KEYS = {
 		"-jsp", "-metatype-inherit", "-sass", "Can-Redefine-Classes",
 		"Can-Retransform-Classes", "Eclipse-PlatformFilter",
 		"Implementation-Version", "JPM-Command", "Liferay-Configuration-Path",
@@ -110,7 +110,7 @@ public class BNDSourceUtil {
 		"Main-Class", "Premain-Class", "Web-ContextPath"
 	};
 
-	private static final String[] _COMMON_BND_DEFINITION_KEYS = new String[] {
+	private static final String[] _COMMON_BND_DEFINITION_KEYS = {
 		"Git-Descriptor", "Git-SHA", "Javac-Compiler", "Javac-Debug",
 		"Javac-Deprecation", "Javac-Encoding", "Liferay-Portal-Build-Date",
 		"Liferay-Portal-Build-Number", "Liferay-Portal-Build-Time",

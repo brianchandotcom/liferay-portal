@@ -877,7 +877,7 @@ public class PluginsEnvironmentBuilder {
 
 	private static final String _BRANCH = "master";
 
-	private static final String[] _SOURCE_DIR_NAMES = new String[] {
+	private static final String[] _SOURCE_DIR_NAMES = {
 		"docroot/WEB-INF/ext-impl/src", "docroot/WEB-INF/ext-kernel/src",
 		"docroot/WEB-INF/ext-util-bridges/src",
 		"docroot/WEB-INF/ext-util-java/src",

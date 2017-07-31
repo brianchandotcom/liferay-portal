@@ -186,7 +186,7 @@ public class GroupServicePermissionTest {
 			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
 			ActionKeys.MANAGE_SUBGROUPS);
 
-		long[] roleIds = new long[] {role.getRoleId()};
+		long[] roleIds = {role.getRoleId()};
 
 		UserGroupRoleLocalServiceUtil.addUserGroupRoles(
 			_user.getUserId(), group.getGroupId(), roleIds);
@@ -196,7 +196,7 @@ public class GroupServicePermissionTest {
 		Role role = RoleLocalServiceUtil.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.SITE_ADMINISTRATOR);
 
-		long[] roleIds = new long[] {role.getRoleId()};
+		long[] roleIds = {role.getRoleId()};
 
 		UserGroupRoleLocalServiceUtil.addUserGroupRoles(
 			_user.getUserId(), group.getGroupId(), roleIds);

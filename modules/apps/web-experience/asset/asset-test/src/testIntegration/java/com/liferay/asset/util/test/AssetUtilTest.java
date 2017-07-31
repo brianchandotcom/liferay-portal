@@ -87,8 +87,8 @@ public class AssetUtilTest {
 
 		assetEntryQuery.setGroupIds(new long[] {_group.getGroupId()});
 
-		long[] assetCategoryIds = new long[] {_assetCategory.getCategoryId()};
-		String[] assetTagNames = new String[] {_assetTag.getName()};
+		long[] assetCategoryIds = {_assetCategory.getCategoryId()};
+		String[] assetTagNames = {_assetTag.getName()};
 
 		assertCount(
 			0, assetEntryQuery, assetCategoryIds, assetTagNames, null,

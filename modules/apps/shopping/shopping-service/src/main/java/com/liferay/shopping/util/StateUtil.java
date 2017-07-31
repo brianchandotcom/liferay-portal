@@ -21,7 +21,7 @@ import java.util.Arrays;
  */
 public class StateUtil {
 
-	public static final String[] STATE_IDS = new String[] {
+	public static final String[] STATE_IDS = {
 		"AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL", "GA", "HI",
 		"ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN",
 		"MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH",
@@ -29,7 +29,7 @@ public class StateUtil {
 		"WV", "WI", "WY"
 	};
 
-	public static final String[] STATE_IDS_ORDERED = new String[] {
+	public static final String[] STATE_IDS_ORDERED = {
 		"AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "HI",
 		"IA", "ID", "IL", "IN", "KS", "KY", "LA", "MA", "MD", "ME", "MI", "MN",
 		"MO", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH",
@@ -37,7 +37,7 @@ public class StateUtil {
 		"WI", "WV", "WY"
 	};
 
-	public static final State[] STATES = new State[] {
+	public static final State[] STATES = {
 		new State("AL", "Alabama"), new State("AK", "Alaska"),
 		new State("AZ", "Arizona"), new State("AR", "Arkansas"),
 		new State("CA", "California"), new State("CO", "Colorado"),

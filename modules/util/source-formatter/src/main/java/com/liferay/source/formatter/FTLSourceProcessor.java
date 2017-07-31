@@ -23,7 +23,7 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<String> doGetFileNames() throws Exception {
-		String[] excludes = new String[] {
+		String[] excludes = {
 			"**/journal/dependencies/template.ftl",
 			"**/service/builder/dependencies/props.ftl"
 		};
@@ -36,6 +36,6 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 		return _INCLUDES;
 	}
 
-	private static final String[] _INCLUDES = new String[] {"**/*.ftl"};
+	private static final String[] _INCLUDES = {"**/*.ftl"};
 
 }

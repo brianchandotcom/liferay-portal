@@ -143,7 +143,7 @@ public class UnitConverterUtil {
 		}
 	}
 
-	private static final double[] _AREA = new double[] {
+	private static final double[] _AREA = {
 		1.0,				// Square Kilometer
 		1000000.0,			// Square Meter
 		10000000000.0,		// Square Centimeter
@@ -156,7 +156,7 @@ public class UnitConverterUtil {
 		247.1054,			// Acre
 	};
 
-	private static final double[] _LENGTH = new double[] {
+	private static final double[] _LENGTH = {
 		1.0,				// Meter
 		1000.0,				// Millimeter
 		100.0,				// Centimeter
@@ -170,7 +170,7 @@ public class UnitConverterUtil {
 		13.12336			// Handbreath
 	};
 
-	private static final double[] _MASS = new double[] {
+	private static final double[] _MASS = {
 		1.0,				// Kilogram
 		2.204623,			// Pound
 		0.00110,			// Ton
@@ -182,7 +182,7 @@ public class UnitConverterUtil {
 		1763.698,			// Gerah
 	};
 
-	private static final double[] _VOLUME = new double[] {
+	private static final double[] _VOLUME = {
 		1.0,				// Liter
 		1000,				// Cubic Centimeter
 		61.02374,			// Cubic Inch (Liquid Measure)

@@ -116,7 +116,7 @@ public class ResourcePermissionFinderImpl
 		long companyId, String name, int scope, String primKey, long[] roleIds,
 		long actionId) {
 
-		Object[] finderArgs = new Object[] {
+		Object[] finderArgs = {
 			companyId, name, scope, primKey, StringUtil.merge(roleIds), actionId
 		};
 

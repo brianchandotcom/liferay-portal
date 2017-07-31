@@ -44,7 +44,7 @@ public class JavaXMLSecurityCheck extends BaseFileCheck {
 	private void _checkXMLSecurity(
 		String fileName, String absolutePath, String content) {
 
-		String[] xmlVulnerabitilies = new String[] {
+		String[] xmlVulnerabitilies = {
 			"DocumentBuilderFactory.newInstance",
 			"new javax.xml.parsers.SAXParser",
 			"new org.apache.xerces.parsers.SAXParser",

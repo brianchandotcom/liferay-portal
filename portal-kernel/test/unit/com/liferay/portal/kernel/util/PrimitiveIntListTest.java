@@ -26,7 +26,7 @@ public class PrimitiveIntListTest {
 
 	@Test
 	public void testAdd() {
-		int[] expected = new int[] {10, 11, 12};
+		int[] expected = {10, 11, 12};
 
 		PrimitiveIntList primitiveIntList = new PrimitiveIntList();
 
@@ -48,7 +48,7 @@ public class PrimitiveIntListTest {
 
 	@Test
 	public void testAddAll() {
-		int[] expected = new int[] {10, 11, 12};
+		int[] expected = {10, 11, 12};
 
 		PrimitiveIntList primitiveIntList = new PrimitiveIntList();
 

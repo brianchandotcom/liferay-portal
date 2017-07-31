@@ -30,7 +30,7 @@ public class ErrorTei extends TagExtraInfo {
 
 	private static class Concealer {
 
-		private static final VariableInfo[] _variableInfo = new VariableInfo[] {
+		private static final VariableInfo[] _variableInfo = {
 			new VariableInfo(
 				"errorException", Object.class.getName(), true,
 				VariableInfo.NESTED)

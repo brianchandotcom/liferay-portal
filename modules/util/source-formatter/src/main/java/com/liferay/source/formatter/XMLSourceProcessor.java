@@ -23,7 +23,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<String> doGetFileNames() throws Exception {
-		String[] excludes = new String[] {
+		String[] excludes = {
 			"**/.bnd/**", "**/.idea/**", "**/.ivy/**", "**/bin/**",
 			"**/javadocs-*.xml", "**/logs/**", "**/portal-impl/**/*.action",
 			"**/portal-impl/**/*.function", "**/portal-impl/**/*.macro",
@@ -40,7 +40,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return _INCLUDES;
 	}
 
-	private static final String[] _INCLUDES = new String[] {
+	private static final String[] _INCLUDES = {
 		"**/*.action", "**/*.function", "**/*.jrxml", "**/*.macro",
 		"**/*.testcase", "**/*.toggle", "**/*.xml"
 	};

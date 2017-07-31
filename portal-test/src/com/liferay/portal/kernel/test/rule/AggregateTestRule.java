@@ -82,7 +82,7 @@ public class AggregateTestRule implements ArquillianClassRuleHandler, TestRule {
 		}
 	}
 
-	private static final String[] _ORDERED_RULE_CLASS_NAMES = new String[] {
+	private static final String[] _ORDERED_RULE_CLASS_NAMES = {
 		TimeoutTestRule.class.getName(), HeapDumpTestRule.class.getName(),
 		CodeCoverageAssertor.class.getName(), NewEnvTestRule.class.getName(),
 		"com.liferay.portal.test.rule.PortalExecutorManagerTestRule",

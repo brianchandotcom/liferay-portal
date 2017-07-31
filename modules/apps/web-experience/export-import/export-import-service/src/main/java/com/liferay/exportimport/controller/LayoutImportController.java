@@ -895,9 +895,8 @@ public class LayoutImportController implements ImportController {
 
 		String larType = headerElement.attributeValue("type");
 
-		String[] expectedLARTypes = new String[] {
-			"layout-prototype", "layout-set", "layout-set-prototype"
-		};
+		String[] expectedLARTypes =
+			{"layout-prototype", "layout-set", "layout-set-prototype"};
 
 		if (Stream.of(expectedLARTypes).noneMatch(lt -> lt.equals(larType))) {
 			throw new LARTypeException(larType, expectedLARTypes);

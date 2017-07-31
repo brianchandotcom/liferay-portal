@@ -164,7 +164,7 @@ public class ExpandoSearchTest {
 		addExpandoColumn(columnName, ExpandoColumnConstants.INDEX_TYPE_KEYWORD);
 
 		String[] columnValues =
-			new String[] {"Software", "SoftWare", "softWare", "software"};
+			{"Software", "SoftWare", "softWare", "software"};
 
 		for (String columnValue : columnValues) {
 			addUser(columnName, columnValue);
@@ -325,7 +325,7 @@ public class ExpandoSearchTest {
 		int birthdayDay = 1;
 		int birthdayYear = 1970;
 		String jobTitle = null;
-		long[] groupIds = new long[] {TestPropsValues.getGroupId()};
+		long[] groupIds = {TestPropsValues.getGroupId()};
 		long[] organizationIds = null;
 		long[] roleIds = null;
 		long[] userGroupIds = null;

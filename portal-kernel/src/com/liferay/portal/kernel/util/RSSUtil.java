@@ -31,7 +31,7 @@ public class RSSUtil {
 
 	public static final String DISPLAY_STYLE_TITLE = "title";
 
-	public static final String[] DISPLAY_STYLES = new String[] {
+	public static final String[] DISPLAY_STYLES = {
 		DISPLAY_STYLE_ABSTRACT, DISPLAY_STYLE_FULL_CONTENT, DISPLAY_STYLE_TITLE
 	};
 

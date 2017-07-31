@@ -357,7 +357,7 @@ public class ServiceBuilderArgs {
 	private boolean _resourceActionsConfigsSet;
 	private String _resourcesDirName = "src";
 	private String _springFileName = "src/META-INF/portal-spring.xml";
-	private String[] _springNamespaces = new String[] {"beans"};
+	private String[] _springNamespaces = {"beans"};
 	private String _sqlDirName = "../sql";
 	private String _sqlFileName = "portal-tables.sql";
 	private String _sqlIndexesFileName = "indexes.sql";

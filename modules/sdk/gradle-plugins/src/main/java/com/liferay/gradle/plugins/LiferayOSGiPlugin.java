@@ -429,7 +429,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 					LiferayExtension liferayExtension = GradleUtil.getExtension(
 						project, LiferayExtension.class);
 
-					String[][] filesets = new String[][] {
+					String[][] filesets = {
 						{
 							project.relativePath(
 								liferayExtension.getAppServerPortalDir()),

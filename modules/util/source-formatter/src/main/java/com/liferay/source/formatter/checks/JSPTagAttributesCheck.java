@@ -423,9 +423,8 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 	}
 
 	private List<String> _getTLDFileNames() throws Exception {
-		String[] excludes = new String[] {
-			"**/dependencies/**", "**/util-taglib/**", "**/portal-web/**"
-		};
+		String[] excludes =
+			{"**/dependencies/**", "**/util-taglib/**", "**/portal-web/**"};
 
 		if (getExcludes() != null) {
 			excludes = ArrayUtil.append(excludes, getExcludes());

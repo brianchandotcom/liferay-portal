@@ -240,7 +240,7 @@ public abstract class BaseJenkinsResultsParserTestCase {
 	protected File dependenciesDir = new File(
 		"src/test/resources/dependencies/" + getSimpleClassName());
 
-	private static final String[][] _XML_REPLACEMENTS = new String[][] {
+	private static final String[][] _XML_REPLACEMENTS = {
 		{"<pre>", "<pre><![CDATA["}, {"</pre>", "]]></pre>"},
 		{"&raquo;", "[raquo]"}
 	};

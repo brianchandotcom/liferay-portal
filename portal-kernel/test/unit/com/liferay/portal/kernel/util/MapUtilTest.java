@@ -351,7 +351,7 @@ public class MapUtilTest {
 
 		@Test
 		public void shouldSucceedWithEvenLength() {
-			String[] array = new String[] {
+			String[] array = {
 				PropsKeys.MESSAGE_BOARDS_EMAIL_FROM_ADDRESS,
 				PropsKeys.ADMIN_EMAIL_FROM_ADDRESS,
 				PropsKeys.MESSAGE_BOARDS_EMAIL_FROM_NAME,

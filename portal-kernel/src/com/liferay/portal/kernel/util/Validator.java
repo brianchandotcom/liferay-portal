@@ -1322,12 +1322,12 @@ public class Validator {
 
 	private static final int _DIGIT_END = 57;
 
-	private static final char[] _EMAIL_ADDRESS_SPECIAL_CHAR = new char[] {
+	private static final char[] _EMAIL_ADDRESS_SPECIAL_CHAR = {
 		'.', '!', '#', '$', '%', '&', '\'', '*', '+', '-', '/', '=', '?', '^',
 		'_', '`', '{', '|', '}', '~'
 	};
 
-	private static final String[] _JAVA_KEYWORDS = new String[] {
+	private static final String[] _JAVA_KEYWORDS = {
 		"abstract", "assert", "boolean", "break", "byte", "case", "catch",
 		"char", "class", "const", "continue", "default", "do", "double", "else",
 		"enum", "extends", "false", "final", "finally", "float", "for", "goto",

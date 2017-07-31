@@ -41,7 +41,7 @@ public class AggregateUtil {
 	private AggregateUtil() {
 	}
 
-	private static final String[] _CSS_PATH_PLACEHOLDERS = new String[] {
+	private static final String[] _CSS_PATH_PLACEHOLDERS = {
 		"[$EMPTY_1$]", "[$EMPTY_2$]", "[$EMPTY_3$]", "[$TOKEN_1$]",
 		"[$TOKEN_2$]", "[$TOKEN_3$]", "[$ABSOLUTE_1$]", "[$ABSOLUTE_2$]",
 		"[$ABSOLUTE_3$]", "[$ABSOLUTE_4$]", "[$ABSOLUTE_5$]", "[$ABSOLUTE_6$]",
@@ -50,7 +50,7 @@ public class AggregateUtil {
 		"[$RELATIVE_2$]", "[$RELATIVE_3$]"
 	};
 
-	private static final String[] _CSS_PATH_TYPES = new String[] {
+	private static final String[] _CSS_PATH_TYPES = {
 		"url('')", "url(\"\")", "url()", "url('@", "url(\"@", "url(@",
 		"url('http://", "url(\"http://", "url(http://", "url('https://",
 		"url(\"https://", "url(https://", "url('/", "url(\"/", "url(/",

@@ -256,8 +256,7 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 
 	private static final String _CONFIGURATION = "DEFAULT";
 
-	private static final String[] _SUPPORTED_CONFIGURATIONS =
-		new String[] {_CONFIGURATION};
+	private static final String[] _SUPPORTED_CONFIGURATIONS = {_CONFIGURATION};
 
 	@BeanReference(type = RepositoryClassDefinitionCatalog.class)
 	private RepositoryClassDefinitionCatalog _repositoryClassDefinitionCatalog;

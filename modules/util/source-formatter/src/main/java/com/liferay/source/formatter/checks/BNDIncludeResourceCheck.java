@@ -144,13 +144,11 @@ public class BNDIncludeResourceCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private static final String[] _INCLUDE_RESOURCE_DIRS_BLACKLIST =
-		new String[] {
-			"classes",
-			"META-INF/resources=src/main/resources/META-INF/resources",
-			"META-INF/resources/content=src/main/resources/content",
-			"WEB-INF=src/main/resources/WEB-INF"
-		};
+	private static final String[] _INCLUDE_RESOURCE_DIRS_BLACKLIST = {
+		"classes", "META-INF/resources=src/main/resources/META-INF/resources",
+		"META-INF/resources/content=src/main/resources/content",
+		"WEB-INF=src/main/resources/WEB-INF"
+	};
 
 	private final Pattern _includeResourceJarPattern = Pattern.compile(
 		"-[0-9\\.]+\\.jar");

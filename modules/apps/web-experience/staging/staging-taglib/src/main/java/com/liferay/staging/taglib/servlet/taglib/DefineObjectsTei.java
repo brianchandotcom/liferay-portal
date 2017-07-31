@@ -35,7 +35,7 @@ public class DefineObjectsTei extends TagExtraInfo {
 
 	private static class Concealer {
 
-		private static final VariableInfo[] _variableInfo = new VariableInfo[] {
+		private static final VariableInfo[] _variableInfo = {
 			new VariableInfo(
 				"group", Group.class.getName(), true, VariableInfo.AT_END),
 			new VariableInfo(

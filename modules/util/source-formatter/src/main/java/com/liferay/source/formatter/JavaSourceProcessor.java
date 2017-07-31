@@ -121,7 +121,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		Collection<String> fileNames = new TreeSet<>();
 
-		String[] excludes = new String[] {
+		String[] excludes = {
 			"**/*_IW.java", "**/counter/service/**", "**/jsp/*",
 			"**/model/impl/*Model.java", "**/model/impl/*ModelImpl.java",
 			"**/portal/service/**", "**/portal-client/**",
@@ -197,7 +197,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	private static final String[] _INCLUDES = new String[] {"**/*.java"};
+	private static final String[] _INCLUDES = {"**/*.java"};
 
 	private final Set<File> _ungeneratedFiles = new CopyOnWriteArraySet<>();
 

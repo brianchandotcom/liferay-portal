@@ -61,7 +61,7 @@ public class UserGroupGroupRoleFinderTest {
 		UserLocalServiceUtil.addUserGroupUser(
 			_userGroup.getUserGroupId(), _user.getUserId());
 
-		long[] roleIds = new long[] {_role.getRoleId()};
+		long[] roleIds = {_role.getRoleId()};
 
 		UserGroupGroupRoleLocalServiceUtil.addUserGroupGroupRoles(
 			_userGroup.getUserGroupId(), _group.getGroupId(), roleIds);

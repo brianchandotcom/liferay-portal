@@ -112,9 +112,8 @@ public class RequestParameterAutoLogin extends BaseAutoLogin {
 			}
 		}
 
-		String[] credentials = new String[] {
-			String.valueOf(userId), password, Boolean.FALSE.toString()
-		};
+		String[] credentials =
+			{String.valueOf(userId), password, Boolean.FALSE.toString()};
 
 		return credentials;
 	}

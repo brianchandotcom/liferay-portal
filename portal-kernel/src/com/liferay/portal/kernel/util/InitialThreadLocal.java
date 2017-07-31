@@ -47,8 +47,8 @@ public class InitialThreadLocal<T> extends CentralizedThreadLocal<T> {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #InitialThreadLocal(
-	 *             String, Supplier, boolean)}
+	 * @deprecated As of 7.0.0, replaced by {@link #InitialThreadLocal(String,
+	 *             Supplier, boolean)}
 	 */
 	@Deprecated
 	public InitialThreadLocal(String name, T initialValue) {
@@ -56,8 +56,8 @@ public class InitialThreadLocal<T> extends CentralizedThreadLocal<T> {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #InitialThreadLocal(
-	 *             String, Supplier, boolean)}
+	 * @deprecated As of 7.0.0, replaced by {@link #InitialThreadLocal(String,
+	 *             Supplier, boolean)}
 	 */
 	@Deprecated
 	public InitialThreadLocal(String name, T initialValue, boolean shortLived) {

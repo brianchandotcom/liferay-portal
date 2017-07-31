@@ -240,8 +240,8 @@ public class LanguageExtension implements Extension {
 		}
 
 		/**
-		 * @deprecated As of 2.0.0, replaced by {@link #loadResourceBundle(
-		 *             Locale)}
+		 * @deprecated As of 2.0.0, replaced by {@link
+		 *             #loadResourceBundle(Locale)}
 		 */
 		@Deprecated
 		public ResourceBundle loadResourceBundle(String languageId) {

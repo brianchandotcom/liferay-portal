@@ -90,7 +90,8 @@ public @interface OSGiBeanProperties {
 	public static class Convert {
 
 		/**
-		 * Returns a properties map representing the object's OSGi bean properties.
+		 * Returns a properties map representing the object's OSGi bean
+		 * properties.
 		 *
 		 * @param  object the object that is possibly annotated with {@link
 		 *         OSGiBeanProperties}
@@ -183,8 +184,8 @@ public @interface OSGiBeanProperties {
 	public static class Service {
 
 		/**
-		 * Returns the types under which the bean is published as a service.
-		 * If no types are specified, they are calculated through class
+		 * Returns the types under which the bean is published as a service. If
+		 * no types are specified, they are calculated through class
 		 * introspection. If the bean is not assignable to a specified service
 		 * type, a {@link ClassCastException} is thrown.
 		 *

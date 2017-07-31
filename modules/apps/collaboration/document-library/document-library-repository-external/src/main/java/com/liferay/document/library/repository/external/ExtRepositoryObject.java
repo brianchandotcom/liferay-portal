@@ -74,8 +74,6 @@ public interface ExtRepositoryObject extends ExtRepositoryModel {
 	 * repository does not support shortcuts. However, it can return
 	 * <code>false</code> when asked for that permission.
 	 * </p>
-	 *
-	 * @author Iván Zaera
 	 */
 	public enum ExtRepositoryPermission {
 

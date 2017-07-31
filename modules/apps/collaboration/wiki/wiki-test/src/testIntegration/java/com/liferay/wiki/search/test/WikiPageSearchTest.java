@@ -232,7 +232,8 @@ public class WikiPageSearchTest extends BaseSearchTestCase {
 	protected class TestSpecificFieldsHelper {
 
 		/**
-		 * See https://dev.liferay.com/discover/portal/-/knowledge_base/6-2/searching-for-content-in-liferay
+		 * See
+		 * https://dev.liferay.com/discover/portal/-/knowledge_base/6-2/searching-for-content-in-liferay
 		 */
 		public void testSearchSpecificFields() throws Exception {
 			Assume.assumeTrue(

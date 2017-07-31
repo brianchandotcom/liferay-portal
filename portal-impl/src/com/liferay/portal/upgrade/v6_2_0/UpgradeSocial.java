@@ -227,21 +227,21 @@ public class UpgradeSocial extends UpgradeProcess {
 	 * </p>
 	 *
 	 * <ol>
-	 *     <li>
-	 *     What is the set of social activities the factory generates extra data
-	 *     for. See {@link #getActivitySQLWhereClause()} and {@link
-	 *     #setActivitySQLParameters(PreparedStatement)}.
-	 *     </li>
-	 *     <li>
-	 *     How to obtain the model entities related to such activities. See
-	 *     {@link #getSQL()} and {@link
-	 *     #setModelSQLParameters(PreparedStatement, long, long, long, long,
-	 *     long, int, String)}.
-	 *     </li>
-	 *     <li>
-	 *     How to generate extra data from that model entity. See {@link
-	 *     #createExtraDataJSONObject(ResultSet, String)}.
-	 *     </li>
+	 * <li>
+	 * What is the set of social activities the factory generates extra data
+	 * for. See {@link #getActivitySQLWhereClause()} and {@link
+	 * #setActivitySQLParameters(PreparedStatement)}.
+	 * </li>
+	 * <li>
+	 * How to obtain the model entities related to such activities. See
+	 * {@link #getSQL()} and {@link
+	 * #setModelSQLParameters(PreparedStatement, long, long, long, long,
+	 * long, int, String)}.
+	 * </li>
+	 * <li>
+	 * How to generate extra data from that model entity. See {@link
+	 * #createExtraDataJSONObject(ResultSet, String)}.
+	 * </li>
 	 * </ol>
 	 *
 	 * <p>

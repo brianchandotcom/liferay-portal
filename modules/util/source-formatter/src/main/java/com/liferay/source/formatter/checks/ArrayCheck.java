@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
 
@@ -34,6 +35,8 @@ public class ArrayCheck extends BaseFileCheck {
 		_checkInefficientAddAllCalls(
 			fileName, content, _addAllListUtilFromArrayPattern);
 
+		content = _formatArrayInitializer(content);
+
 		return _formatEmptyArray(content);
 	}
 
@@ -49,6 +52,75 @@ public class ArrayCheck extends BaseFileCheck {
 					getLineCount(content, matcher.start()));
 			}
 		}
+	}
+
+	private String _formatArrayInitializer(String content) {
+		Matcher matcher = _arrayInitializationPattern.matcher(content);
+
+		while (matcher.find()) {
+			String whitespace = matcher.group(6);
+
+			if (!whitespace.contains(StringPool.NEW_LINE)) {
+				return StringUtil.replaceFirst(
+					content, matcher.group(5), StringPool.BLANK,
+					matcher.start(5));
+			}
+
+			int lineCount = getLineCount(content, matcher.end(3));
+
+			String line = getLine(content, lineCount);
+
+			if (getLineLength(line) > (getMaxLineLength() - 2)) {
+				String whitespace2 = matcher.group(3);
+
+				if (whitespace2.contains(StringPool.NEW_LINE)) {
+					System.out.println(matcher.group());
+
+					return content;
+				}
+
+				return StringUtil.replaceFirst(
+					content, matcher.group(),
+					matcher.group(1) + whitespace + matcher.group(4) +
+						matcher.group(8));
+			}
+
+			if (matcher.group(9) == null) {
+				return StringUtil.replaceFirst(
+					content, matcher.group(5), StringPool.BLANK,
+					matcher.start(5));
+			}
+
+			content = StringUtil.replaceFirst(
+				content, matcher.group(),
+				matcher.group(1) + matcher.group(3) + matcher.group(4) + " {\n",
+				matcher.start());
+
+			int level = 1;
+			int start = lineCount + 1;
+
+			int count = start;
+
+			while (true) {
+				level += getLevel(getLine(content, count), "{", "}");
+
+				if (level != 0) {
+					count++;
+
+					continue;
+				}
+
+				for (int i = start; i <= count; i++) {
+					content = StringUtil.replaceFirst(
+						content, StringPool.TAB, StringPool.BLANK,
+						getLineStartPos(content, i));
+				}
+
+				return content;
+			}
+		}
+
+		return content;
 	}
 
 	private String _formatEmptyArray(String content) {
@@ -73,6 +145,8 @@ public class ArrayCheck extends BaseFileCheck {
 		"\\.addAll\\(\\s*Arrays\\.asList\\(");
 	private final Pattern _addAllListUtilFromArrayPattern = Pattern.compile(
 		"\\.addAll\\(\\s*ListUtil\\.fromArray\\(");
+	private final Pattern _arrayInitializationPattern = Pattern.compile(
+		"(\\W\\w+(\\[\\])+)(\\s+)(\\w+ =)((\\s+)new \\w+(\\[\\])+)( \\{(\n)?)");
 	private final Pattern _emptyArrayPattern = Pattern.compile(
 		"((\\[\\])+) \\{\\}");
 

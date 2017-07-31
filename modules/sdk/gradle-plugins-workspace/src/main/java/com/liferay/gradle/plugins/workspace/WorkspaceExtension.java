@@ -60,6 +60,9 @@ public class WorkspaceExtension {
 			settings, "bundle.token.force", _BUNDLE_TOKEN_FORCE);
 		_bundleTokenPassword = _getProperty(
 			settings, "bundle.token.password", _BUNDLE_TOKEN_PASSWORD);
+		_bundleTokenPasswordFile = _getProperty(
+			settings, "bundle.token.password.file",
+			_BUNDLE_TOKEN_PASSWORD_FILE);
 		_bundleUrl = _getProperty(
 			settings, "bundle.url", BundleSupportConstants.DEFAULT_BUNDLE_URL);
 		_configsDir = _getProperty(
@@ -84,6 +87,11 @@ public class WorkspaceExtension {
 
 	public String getBundleTokenPassword() {
 		return GradleUtil.toString(_bundleTokenPassword);
+	}
+
+	public File getBundleTokenPasswordFile() {
+		return GradleUtil.toFile(
+			_gradle.getRootProject(), _bundleTokenPasswordFile);
 	}
 
 	public String getBundleUrl() {
@@ -148,6 +156,10 @@ public class WorkspaceExtension {
 		_bundleTokenPassword = bundleTokenPassword;
 	}
 
+	public void setBundleTokenPasswordFile(Object bundleTokenPasswordFile) {
+		_bundleTokenPasswordFile = bundleTokenPasswordFile;
+	}
+
 	public void setBundleUrl(Object bundleUrl) {
 		_bundleUrl = bundleUrl;
 	}
@@ -188,11 +200,14 @@ public class WorkspaceExtension {
 
 	private static final String _BUNDLE_TOKEN_PASSWORD = null;
 
+	private static final String _BUNDLE_TOKEN_PASSWORD_FILE = null;
+
 	private Object _bundleDistRootDirName;
 	private Object _bundleTokenDownload;
 	private Object _bundleTokenEmailAddress;
 	private Object _bundleTokenForce;
 	private Object _bundleTokenPassword;
+	private Object _bundleTokenPasswordFile;
 	private Object _bundleUrl;
 	private Object _configsDir;
 	private Object _environment;

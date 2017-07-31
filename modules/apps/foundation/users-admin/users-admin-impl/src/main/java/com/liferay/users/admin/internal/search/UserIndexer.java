@@ -37,10 +37,8 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.security.auth.FullNameGenerator;
 import com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.permission.UserPermission;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -78,7 +76,6 @@ public class UserIndexer extends BaseIndexer<User> {
 			Field.ASSET_TAG_NAMES, Field.COMPANY_ID, Field.ENTRY_CLASS_NAME,
 			Field.ENTRY_CLASS_PK, Field.GROUP_ID, Field.MODIFIED_DATE,
 			Field.SCOPE_GROUP_ID, Field.UID, Field.USER_ID);
-		setFilterSearch(true);
 		setPermissionAware(true);
 		setStagingAware(false);
 	}
@@ -86,18 +83,6 @@ public class UserIndexer extends BaseIndexer<User> {
 	@Override
 	public String getClassName() {
 		return CLASS_NAME;
-	}
-
-	@Override
-	public boolean hasPermission(
-			PermissionChecker permissionChecker, String entryClassName,
-			long entryClassPK, String actionId)
-		throws Exception {
-
-		User user = userLocalService.getUser(entryClassPK);
-
-		return userPermission.contains(
-			permissionChecker, user.getUserId(), actionId);
 	}
 
 	@Override
@@ -444,9 +429,6 @@ public class UserIndexer extends BaseIndexer<User> {
 
 	@Reference
 	protected UserLocalService userLocalService;
-
-	@Reference
-	protected UserPermission userPermission;
 
 	private static final Log _log = LogFactoryUtil.getLog(UserIndexer.class);
 

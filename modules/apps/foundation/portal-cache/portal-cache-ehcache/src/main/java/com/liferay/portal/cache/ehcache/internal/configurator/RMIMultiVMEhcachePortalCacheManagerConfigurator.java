@@ -15,11 +15,8 @@
 package com.liferay.portal.cache.ehcache.internal.configurator;
 
 import com.liferay.portal.cache.configuration.PortalCacheManagerConfiguration;
-import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
-
-import java.net.URL;
 
 import net.sf.ehcache.config.Configuration;
 import net.sf.ehcache.config.FactoryConfiguration;
@@ -37,23 +34,37 @@ import org.osgi.service.component.annotations.Component;
 public class RMIMultiVMEhcachePortalCacheManagerConfigurator
 	extends MultiVMEhcachePortalCacheManagerConfigurator {
 
+	@Activate
 	@Override
-	@SuppressWarnings("rawtypes")
-	public ObjectValuePair
-		<Configuration, PortalCacheManagerConfiguration>
-			getConfigurationObjectValuePair(
-				String portalCacheManagerName, URL configurationURL,
-				boolean usingDefault) {
-
-		ObjectValuePair<Configuration, PortalCacheManagerConfiguration>
-			objectValuePair = super.getConfigurationObjectValuePair(
-				portalCacheManagerName, configurationURL, usingDefault);
+	protected void activate() {
+		super.activate();
 
 		if (!clusterEnabled) {
-			return objectValuePair;
+			return;
 		}
 
-		Configuration configuration = objectValuePair.getKey();
+		_peerListenerFactoryClass = props.get(
+			PropsKeys.EHCACHE_RMI_PEER_LISTENER_FACTORY_CLASS);
+		_peerListenerFactoryPropertiesString = getPortalPropertiesString(
+			PropsKeys.EHCACHE_RMI_PEER_LISTENER_FACTORY_PROPERTIES);
+		_peerProviderFactoryClass = props.get(
+			PropsKeys.EHCACHE_RMI_PEER_PROVIDER_FACTORY_CLASS);
+		_peerProviderFactoryPropertiesString = getPortalPropertiesString(
+			PropsKeys.EHCACHE_RMI_PEER_PROVIDER_FACTORY_PROPERTIES);
+	}
+
+	@Override
+	@SuppressWarnings("rawtypes")
+	protected void manageConfiguration(
+		Configuration configuration,
+		PortalCacheManagerConfiguration portalCacheManagerConfiguration) {
+
+		if (!clusterEnabled) {
+			return;
+		}
+
+		super.manageConfiguration(
+			configuration, portalCacheManagerConfiguration);
 
 		FactoryConfiguration peerProviderFactoryConfiguration =
 			new FactoryConfiguration();
@@ -76,27 +87,6 @@ public class RMIMultiVMEhcachePortalCacheManagerConfigurator
 
 		configuration.addCacheManagerPeerListenerFactory(
 			peerListenerFacotryConfiguration);
-
-		return objectValuePair;
-	}
-
-	@Activate
-	@Override
-	protected void activate() {
-		super.activate();
-
-		if (!clusterEnabled) {
-			return;
-		}
-
-		_peerListenerFactoryClass = props.get(
-			PropsKeys.EHCACHE_RMI_PEER_LISTENER_FACTORY_CLASS);
-		_peerListenerFactoryPropertiesString = getPortalPropertiesString(
-			PropsKeys.EHCACHE_RMI_PEER_LISTENER_FACTORY_PROPERTIES);
-		_peerProviderFactoryClass = props.get(
-			PropsKeys.EHCACHE_RMI_PEER_PROVIDER_FACTORY_CLASS);
-		_peerProviderFactoryPropertiesString = getPortalPropertiesString(
-			PropsKeys.EHCACHE_RMI_PEER_PROVIDER_FACTORY_PROPERTIES);
 	}
 
 	private String _peerListenerFactoryClass;

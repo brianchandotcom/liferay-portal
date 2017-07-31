@@ -24,8 +24,7 @@ import java.util.Set;
  */
 public class PortalCacheConfiguration {
 
-	public static final String DEFAULT_PORTAL_CACHE_NAME =
-		"DEFAULT_PORTAL_CACHE_NAME";
+	public static final String DEFAULT_PORTAL_CACHE_NAME = "default";
 
 	public static final String PORTAL_CACHE_LISTENER_SCOPE =
 		"PORTAL_CACHE_LISTENER_SCOPE";

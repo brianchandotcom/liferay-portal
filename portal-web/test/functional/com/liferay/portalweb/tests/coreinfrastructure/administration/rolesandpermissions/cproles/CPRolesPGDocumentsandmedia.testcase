@@ -75,10 +75,10 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="Permissions#definePermissionCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_DOCUMENT_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Add Document" />
-			<var name="roleTitle" value="Regrole Name" />
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="ADD_DOCUMENT"/>
+			<var name="resourceName" value="com.liferay.document.library"/>
+			<var name="roleTitle" value="Regrole Name"/>
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -100,10 +100,10 @@
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
-		<execute macro="Permissions#removePermissionCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_DOCUMENT_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Add Document" />
-			<var name="roleTitle" value="Regrole Name" />
+		<execute macro="Permissions#removePermissionViaAPI">
+			<var name="resourceAction" value="ADD_DOCUMENT"/>
+			<var name="resourceName" value="com.liferay.document.library"/>
+			<var name="roleTitle" value="Regrole Name"/>
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">

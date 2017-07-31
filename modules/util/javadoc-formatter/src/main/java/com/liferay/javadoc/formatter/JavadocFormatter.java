@@ -496,6 +496,34 @@ public class JavadocFormatter {
 		return commentsMap;
 	}
 
+	private void _addConstructorElement(
+			Element parentElement, JavaConstructor javaConstructor)
+		throws Exception {
+
+		Element constructorElement = parentElement.addElement("constructor");
+
+		Dom4jDocUtil.add(constructorElement, "name", javaConstructor.getName());
+
+		String comment = _getCDATA(javaConstructor);
+
+		if (Validator.isNotNull(comment)) {
+			Element commentElement = constructorElement.addElement("comment");
+
+			commentElement.addCDATA(_getCDATA(javaConstructor));
+		}
+
+		_addDocletElements(constructorElement, javaConstructor, "version");
+		_addParamElements(
+			constructorElement, javaConstructor,
+			javaConstructor.getTagsByName("param"));
+		_addThrowsElements(
+			constructorElement, javaConstructor,
+			javaConstructor.getTagsByName("throws"));
+		_addDocletElements(constructorElement, javaConstructor, "see");
+		_addDocletElements(constructorElement, javaConstructor, "since");
+		_addDocletElements(constructorElement, javaConstructor, "deprecated");
+	}
+
 	private String _addDeprecatedTag(
 			String comment, JavaAnnotatedElement javaAnnotatedElement,
 			String indent)
@@ -759,34 +787,6 @@ public class JavadocFormatter {
 		_addDocletElements(fieldElement, javaField, "see");
 		_addDocletElements(fieldElement, javaField, "since");
 		_addDocletElements(fieldElement, javaField, "deprecated");
-	}
-
-	private void _addConstructorElement(
-			Element parentElement, JavaConstructor javaConstructor)
-		throws Exception {
-
-		Element constructorElement = parentElement.addElement("constructor");
-
-		Dom4jDocUtil.add(constructorElement, "name", javaConstructor.getName());
-
-		String comment = _getCDATA(javaConstructor);
-
-		if (Validator.isNotNull(comment)) {
-			Element commentElement = constructorElement.addElement("comment");
-
-			commentElement.addCDATA(_getCDATA(javaConstructor));
-		}
-
-		_addDocletElements(constructorElement, javaConstructor, "version");
-		_addParamElements(
-			constructorElement, javaConstructor,
-			javaConstructor.getTagsByName("param"));
-		_addThrowsElements(
-			constructorElement, javaConstructor,
-			javaConstructor.getTagsByName("throws"));
-		_addDocletElements(constructorElement, javaConstructor, "see");
-		_addDocletElements(constructorElement, javaConstructor, "since");
-		_addDocletElements(constructorElement, javaConstructor, "deprecated");
 	}
 
 	private void _addMethodElement(Element parentElement, JavaMethod javaMethod)
@@ -1307,6 +1307,46 @@ public class JavadocFormatter {
 		return fileName.substring(pos + 1, fileName.length() - 5);
 	}
 
+	private String _getExecutableKey(Element executableElement) {
+		StringBundler sb = new StringBundler();
+
+		sb.append(executableElement.elementText("name"));
+		sb.append(StringPool.OPEN_PARENTHESIS);
+
+		List<Element> paramElements = executableElement.elements("param");
+
+		for (Element paramElement : paramElements) {
+			sb.append(paramElement.elementText("name"));
+			sb.append("|");
+			sb.append(paramElement.elementText("type"));
+			sb.append(",");
+		}
+
+		sb.append(StringPool.CLOSE_PARENTHESIS);
+
+		return sb.toString();
+	}
+
+	private String _getExecutableKey(JavaExecutable javaExecutable) {
+		StringBundler sb = new StringBundler();
+
+		sb.append(javaExecutable.getName());
+		sb.append(StringPool.OPEN_PARENTHESIS);
+
+		List<JavaParameter> javaParameters = javaExecutable.getParameters();
+
+		for (JavaParameter javaParameter : javaParameters) {
+			sb.append(javaParameter.getName());
+			sb.append("|");
+			sb.append(_getTypeValue(javaParameter));
+			sb.append(",");
+		}
+
+		sb.append(StringPool.CLOSE_PARENTHESIS);
+
+		return sb.toString();
+	}
+
 	private String _getFieldKey(Element fieldElement) {
 		return fieldElement.elementText("name");
 	}
@@ -1523,6 +1563,78 @@ public class JavadocFormatter {
 		return tuple;
 	}
 
+	private String _getJavaExecutableComment(
+			Map<String, Element> executableElementsMap,
+			JavaExecutable javaExecutable, String indent)
+		throws Exception {
+
+		String executableKey = _getExecutableKey(javaExecutable);
+
+		Element executableElement = executableElementsMap.get(executableKey);
+
+		if (executableElement == null) {
+			return null;
+		}
+
+		StringBundler sb = new StringBundler();
+
+		sb.append(indent);
+		sb.append("/**\n");
+
+		String comment = executableElement.elementText("comment");
+
+		if (Validator.isNotNull(comment)) {
+			comment = ToolsUtil.stripFullyQualifiedClassNames(
+				comment, _imports, _packagePath);
+
+			sb.append(_wrapText(comment, indent + " * "));
+		}
+
+		String[] tags = null;
+
+		if (javaExecutable instanceof JavaMethod) {
+			tags = new String[] {
+				"version", "param", "return", "throws", "see", "since",
+				"deprecated"
+			};
+		}
+		else {
+			tags = new String[] {
+				"version", "param", "throws", "see", "since", "deprecated"
+			};
+		}
+
+		String docletTags = _addDocletTags(
+			executableElement, tags, indent + " * ",
+			_hasPublicModifier(javaExecutable));
+
+		if (Validator.isNotNull(docletTags)) {
+			if (_initializeMissingJavadocs || Validator.isNotNull(comment)) {
+				sb.append(indent);
+				sb.append(" *\n");
+			}
+
+			sb.append(docletTags);
+		}
+
+		sb.append(indent);
+		sb.append(" */\n");
+
+		if (!_initializeMissingJavadocs && Validator.isNull(comment) &&
+			Validator.isNull(docletTags)) {
+
+			return null;
+		}
+
+		if (!_hasPublicModifier(javaExecutable) && Validator.isNull(comment) &&
+			Validator.isNull(docletTags)) {
+
+			return null;
+		}
+
+		return sb.toString();
+	}
+
 	private String _getJavaFieldComment(
 			Map<String, Element> fieldElementsMap, JavaField javaField,
 			String indent)
@@ -1574,79 +1686,6 @@ public class JavadocFormatter {
 		}
 
 		if (!_hasPublicModifier(javaField) && Validator.isNull(comment) &&
-			Validator.isNull(docletTags)) {
-
-			return null;
-		}
-
-		return sb.toString();
-	}
-
-	private String _getJavaExecutableComment(
-			Map<String, Element> executableElementsMap,
-			JavaExecutable javaExecutable, String indent)
-		throws Exception {
-
-		String executableKey = _getExecutableKey(javaExecutable);
-
-		Element executableElement = executableElementsMap.get(executableKey);
-
-		if (executableElement == null) {
-			return null;
-		}
-
-		StringBundler sb = new StringBundler();
-
-		sb.append(indent);
-		sb.append("/**\n");
-
-		String comment = executableElement.elementText("comment");
-
-		if (Validator.isNotNull(comment)) {
-			comment = ToolsUtil.stripFullyQualifiedClassNames(
-				comment, _imports, _packagePath);
-
-			sb.append(_wrapText(comment, indent + " * "));
-		}
-
-		String[] tags = null;
-
-		if (javaExecutable instanceof JavaMethod) {
-			tags = new String[] {
-				"version", "param", "return", "throws", "see", "since",
-				"deprecated"
-			};
-		}
-		else {
-			tags = new String[] {
-				"version", "param", "throws", "see", "since", "deprecated"
-			};
-		}
-
-		String docletTags = _addDocletTags(
-			executableElement, tags, indent + " * ",
-			_hasPublicModifier(javaExecutable));
-
-
-		if (Validator.isNotNull(docletTags)) {
-			if (_initializeMissingJavadocs || Validator.isNotNull(comment)) {
-				sb.append(indent);
-				sb.append(" *\n");
-			}
-
-			sb.append(docletTags);
-		}
-
-		sb.append(indent);
-		sb.append(" */\n");
-
-		if (!_initializeMissingJavadocs && Validator.isNull(comment) &&
-			Validator.isNull(docletTags)) {
-
-			return null;
-		}
-
-		if (!_hasPublicModifier(javaExecutable) && Validator.isNull(comment) &&
 			Validator.isNull(docletTags)) {
 
 			return null;
@@ -1744,46 +1783,6 @@ public class JavadocFormatter {
 		}
 
 		return lineNumbers;
-	}
-
-	private String _getExecutableKey(Element executableElement) {
-		StringBundler sb = new StringBundler();
-
-		sb.append(executableElement.elementText("name"));
-		sb.append(StringPool.OPEN_PARENTHESIS);
-
-		List<Element> paramElements = executableElement.elements("param");
-
-		for (Element paramElement : paramElements) {
-			sb.append(paramElement.elementText("name"));
-			sb.append("|");
-			sb.append(paramElement.elementText("type"));
-			sb.append(",");
-		}
-
-		sb.append(StringPool.CLOSE_PARENTHESIS);
-
-		return sb.toString();
-	}
-
-	private String _getExecutableKey(JavaExecutable javaExecutable) {
-		StringBundler sb = new StringBundler();
-
-		sb.append(javaExecutable.getName());
-		sb.append(StringPool.OPEN_PARENTHESIS);
-
-		List<JavaParameter> javaParameters = javaExecutable.getParameters();
-
-		for (JavaParameter javaParameter : javaParameters) {
-			sb.append(javaParameter.getName());
-			sb.append("|");
-			sb.append(_getTypeValue(javaParameter));
-			sb.append(",");
-		}
-
-		sb.append(StringPool.CLOSE_PARENTHESIS);
-
-		return sb.toString();
 	}
 
 	private SAXReader _getSAXReader() {

@@ -34,8 +34,8 @@ public class RequestParameterAuthVerifier
 
 	/**
 	 * @deprecated As of 2.0.0, replaced by {@link
-	 *		#RequestParameterAuthVerifier(ConfigurationProvider, Portal,
-	 *		UserLocalService)}
+	 *             #RequestParameterAuthVerifier(ConfigurationProvider, Portal,
+	 *             UserLocalService)}
 	 */
 	@Deprecated
 	public RequestParameterAuthVerifier() {

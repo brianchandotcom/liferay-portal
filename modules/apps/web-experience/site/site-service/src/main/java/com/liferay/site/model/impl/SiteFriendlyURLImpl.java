@@ -35,7 +35,9 @@ public class SiteFriendlyURLImpl extends SiteFriendlyURLBaseImpl {
 	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never reference this class directly. All methods that expect a site friendly url model instance should use the {@link com.liferay.site.model.SiteFriendlyURL} interface instead.
+	 * Never reference this class directly. All methods that expect a site
+	 * friendly url model instance should use the {@link
+	 * com.liferay.site.model.SiteFriendlyURL} interface instead.
 	 */
 	public SiteFriendlyURLImpl() {
 	}

@@ -73,8 +73,9 @@ public class WikiPageAssetRenderer
 	}
 
 	/**
-	 * @deprecated As of 1.6.0, replaced by {@link #WikiPageAssetRenderer(WikiPage,
-	 *             WikiEngineRenderer, TrashHelper)}
+	 * @deprecated As of 1.6.0, replaced by {@link
+	 *             #WikiPageAssetRenderer(WikiPage, WikiEngineRenderer,
+	 *             TrashHelper)}
 	 */
 	@Deprecated
 	public WikiPageAssetRenderer(

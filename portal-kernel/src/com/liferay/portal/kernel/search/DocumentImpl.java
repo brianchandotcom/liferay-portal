@@ -99,7 +99,7 @@ public class DocumentImpl implements Document {
 			return scoreFieldName;
 		}
 
-		return getSortableFieldName(fieldName);
+		return Field.getSortableFieldName(fieldName);
 	}
 
 	public static boolean isSortableFieldName(String name) {
@@ -812,7 +812,7 @@ public class DocumentImpl implements Document {
 			return get(name);
 		}
 
-		String localizedName = getLocalizedName(locale, name);
+		String localizedName = Field.getLocalizedName(locale, name);
 
 		Field field = getField(localizedName);
 
@@ -833,12 +833,12 @@ public class DocumentImpl implements Document {
 			return get(name, defaultName);
 		}
 
-		String localizedName = getLocalizedName(locale, name);
+		String localizedName = Field.getLocalizedName(locale, name);
 
 		Field field = getField(localizedName);
 
 		if (field == null) {
-			localizedName = getLocalizedName(locale, defaultName);
+			localizedName = Field.getLocalizedName(locale, defaultName);
 
 			field = getField(localizedName);
 		}
@@ -1072,7 +1072,7 @@ public class DocumentImpl implements Document {
 			name = name.concat(StringPool.UNDERLINE).concat("Number");
 		}
 
-		Field field = createField(getSortableFieldName(name), value);
+		Field field = createField(Field.getSortableFieldName(name), value);
 
 		field.setNumeric(true);
 		field.setNumericClass(clazz);
@@ -1099,7 +1099,8 @@ public class DocumentImpl implements Document {
 				0, _SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH);
 		}
 
-		createKeywordField(getSortableFieldName(name), truncatedValue, true);
+		createKeywordField(
+			Field.getSortableFieldName(name), truncatedValue, true);
 	}
 
 	protected void createSortableTextField(String name, String[] values) {

@@ -276,26 +276,21 @@ public class AssetCategoriesDisplayContext {
 		if (Validator.isNotNull(getKeywords())) {
 			AssetCategoryDisplay assetCategoryDisplay = null;
 
-			if (isFlattenedNavigationAllowed()) {
-				Sort sort = new Sort(
-					"leftCategoryId", Sort.INT_TYPE, orderByAsc);
+			Sort sort = null;
 
-				assetCategoryDisplay =
-					AssetCategoryServiceUtil.searchCategoriesDisplay(
-						new long[] {scopeGroupId}, getKeywords(),
-						new long[] {getVocabularyId()}, new long[0],
-						categoriesSearchContainer.getStart(),
-						categoriesSearchContainer.getEnd(), sort);
+			if (isFlattenedNavigationAllowed()) {
+				sort = new Sort("leftCategoryId", Sort.INT_TYPE, orderByAsc);
 			}
 			else {
-				Sort sort = new Sort("createDate", Sort.LONG_TYPE, orderByAsc);
-
-				assetCategoryDisplay =
-					AssetCategoryServiceUtil.searchCategoriesDisplay(
-						scopeGroupId, getKeywords(), getVocabularyId(),
-						getCategoryId(), categoriesSearchContainer.getStart(),
-						categoriesSearchContainer.getEnd(), sort);
+				sort = new Sort("createDate", Sort.LONG_TYPE, orderByAsc);
 			}
+
+			assetCategoryDisplay =
+				AssetCategoryServiceUtil.searchCategoriesDisplay(
+					new long[] {scopeGroupId}, getKeywords(),
+					new long[] {getVocabularyId()}, new long[0],
+					categoriesSearchContainer.getStart(),
+					categoriesSearchContainer.getEnd(), sort);
 
 			categoriesCount = assetCategoryDisplay.getTotal();
 

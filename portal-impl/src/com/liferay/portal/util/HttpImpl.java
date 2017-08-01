@@ -1223,13 +1223,13 @@ public class HttpImpl implements Http {
 	public String shortenURL(String url, int count) {
 		StringBundler sb = new StringBundler();
 
-		String[] parts = StringUtil.split(url, CharPool.QUESTION);
+		int index = url.indexOf(CharPool.QUESTION);
 
-		if (parts.length == 2) {
-			sb.append(parts[0]);
+		if (index > 0) {
+			sb.append(url.substring(0, index));
 			sb.append(CharPool.QUESTION);
 
-			url = parts[1];
+			url = url.substring(index + 1);
 		}
 
 		String[] params = StringUtil.split(url, CharPool.AMPERSAND);

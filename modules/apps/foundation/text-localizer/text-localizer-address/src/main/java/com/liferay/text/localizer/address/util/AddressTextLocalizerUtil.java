@@ -34,7 +34,7 @@ import java.util.Locale;
  */
 public class AddressTextLocalizerUtil {
 
-	public static String getCountry(Address address) {
+	public static String getCountryName(Address address) {
 		long countryId = address.getCountryId();
 
 		Country country = CountryServiceUtil.fetchCountry(countryId);
@@ -46,7 +46,7 @@ public class AddressTextLocalizerUtil {
 		return null;
 	}
 
-	public static String getRegion(Address address) {
+	public static String getRegionName(Address address) {
 		long regionId = address.getRegionId();
 
 		Region region = RegionServiceUtil.fetchRegion(regionId);

@@ -52,6 +52,9 @@
 		<property name="digitalSignature" ref="com.liferay.lcs.security.DigitalSignature" />
 		<property name="LCSConnectionManager" ref="com.liferay.lcs.util.LCSConnectionManager" />
 	</bean>
+	<bean class="com.liferay.lcs.messaging.LCSHotDeployMessageListener" id="messageListener.lcs_hot_deploy">
+		<property name="LCSConnectionManager" ref="com.liferay.lcs.util.LCSConnectionManager" />
+	</bean>
 	<bean class="com.liferay.lcs.messaging.LCSMessageBusMessageListener" id="messageListener.lcs_message_bus">
 		<property name="keyGenerator" ref="com.liferay.lcs.util.KeyGenerator" />
 		<property name="LCSConnectionManager" ref="com.liferay.lcs.util.LCSConnectionManager" />
@@ -73,6 +76,11 @@
 					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
 						<ref bean="messageListener.license_manager_validate_lcs" />
 						<ref bean="messageListener.license_manager_validate_subscription" />
+					</list>
+				</entry>
+				<entry key="liferay/hot_deploy">
+					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
+						<ref bean="messageListener.lcs_hot_deploy" />
 					</list>
 				</entry>
 				<entry key="liferay/lcs_commands">

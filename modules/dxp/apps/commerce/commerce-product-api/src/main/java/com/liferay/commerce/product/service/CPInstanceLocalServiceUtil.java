@@ -54,7 +54,8 @@ public class CPInstanceLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CPInstance addCPInstance(
-		long cpDefinitionId, java.lang.String sku, java.lang.String ddmContent,
+		long cpDefinitionId, java.lang.String sku, java.lang.String gtin,
+		java.lang.String manufacturerPartNumber, java.lang.String ddmContent,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
 		int expirationDateDay, int expirationDateYear, int expirationDateHour,
@@ -62,8 +63,9 @@ public class CPInstanceLocalServiceUtil {
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addCPInstance(cpDefinitionId, sku, ddmContent,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+				   .addCPInstance(cpDefinitionId, sku, gtin,
+			manufacturerPartNumber, ddmContent, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
 			neverExpire, serviceContext);
@@ -162,7 +164,8 @@ public class CPInstanceLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CPInstance updateCPInstance(
-		long cpInstanceId, java.lang.String sku, int displayDateMonth,
+		long cpInstanceId, java.lang.String sku, java.lang.String gtin,
+		java.lang.String manufacturerPartNumber, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
 		int expirationDateYear, int expirationDateHour,
@@ -170,11 +173,12 @@ public class CPInstanceLocalServiceUtil {
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .updateCPInstance(cpInstanceId, sku, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, serviceContext);
+				   .updateCPInstance(cpInstanceId, sku, gtin,
+			manufacturerPartNumber, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
 	}
 
 	public static com.liferay.commerce.product.model.CPInstance updateStatus(

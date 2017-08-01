@@ -64,13 +64,13 @@ public interface CPDefinition extends CPDefinitionModel, PersistedModel {
 
 	public java.util.Map<java.util.Locale, java.lang.String> getDescriptionMap();
 
+	public java.lang.String getLayoutUuid();
+
 	public java.util.Map<java.util.Locale, java.lang.String> getMetaDescriptionMap();
 
 	public java.util.Map<java.util.Locale, java.lang.String> getMetaKeywordsMap();
 
 	public java.util.Map<java.util.Locale, java.lang.String> getMetaTitleMap();
-
-	public java.lang.String getLayoutUuid();
 
 	public java.util.Map<java.util.Locale, java.lang.String> getShortDescriptionMap();
 

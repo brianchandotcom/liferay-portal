@@ -93,6 +93,8 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "baseSKU", Types.VARCHAR },
 			{ "productTypeName", Types.VARCHAR },
+			{ "gtin", Types.VARCHAR },
+			{ "manufacturerPartNumber", Types.VARCHAR },
 			{ "availableIndividually", Types.BOOLEAN },
 			{ "minCartQuantity", Types.INTEGER },
 			{ "maxCartQuantity", Types.INTEGER },
@@ -121,6 +123,8 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("baseSKU", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("productTypeName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("gtin", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("manufacturerPartNumber", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("availableIndividually", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("minCartQuantity", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("maxCartQuantity", Types.INTEGER);
@@ -137,7 +141,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		TABLE_COLUMNS_MAP.put("defaultLanguageId", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPDefinition (uuid_ VARCHAR(75) null,CPDefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,baseSKU VARCHAR(75) null,productTypeName VARCHAR(75) null,availableIndividually BOOLEAN,minCartQuantity INTEGER,maxCartQuantity INTEGER,allowedCartQuantity STRING null,multipleCartQuantity INTEGER,DDMStructureKey VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,defaultLanguageId VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table CPDefinition (uuid_ VARCHAR(75) null,CPDefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,baseSKU VARCHAR(75) null,productTypeName VARCHAR(75) null,gtin VARCHAR(75) null,manufacturerPartNumber VARCHAR(75) null,availableIndividually BOOLEAN,minCartQuantity INTEGER,maxCartQuantity INTEGER,allowedCartQuantity STRING null,multipleCartQuantity INTEGER,DDMStructureKey VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,defaultLanguageId VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table CPDefinition";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpDefinition.displayDate DESC, cpDefinition.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPDefinition.displayDate DESC, CPDefinition.createDate DESC";
@@ -183,6 +187,8 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setBaseSKU(soapModel.getBaseSKU());
 		model.setProductTypeName(soapModel.getProductTypeName());
+		model.setGtin(soapModel.getGtin());
+		model.setManufacturerPartNumber(soapModel.getManufacturerPartNumber());
 		model.setAvailableIndividually(soapModel.getAvailableIndividually());
 		model.setMinCartQuantity(soapModel.getMinCartQuantity());
 		model.setMaxCartQuantity(soapModel.getMaxCartQuantity());
@@ -271,6 +277,8 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("baseSKU", getBaseSKU());
 		attributes.put("productTypeName", getProductTypeName());
+		attributes.put("gtin", getGtin());
+		attributes.put("manufacturerPartNumber", getManufacturerPartNumber());
 		attributes.put("availableIndividually", getAvailableIndividually());
 		attributes.put("minCartQuantity", getMinCartQuantity());
 		attributes.put("maxCartQuantity", getMaxCartQuantity());
@@ -352,6 +360,19 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 
 		if (productTypeName != null) {
 			setProductTypeName(productTypeName);
+		}
+
+		String gtin = (String)attributes.get("gtin");
+
+		if (gtin != null) {
+			setGtin(gtin);
+		}
+
+		String manufacturerPartNumber = (String)attributes.get(
+				"manufacturerPartNumber");
+
+		if (manufacturerPartNumber != null) {
+			setManufacturerPartNumber(manufacturerPartNumber);
 		}
 
 		Boolean availableIndividually = (Boolean)attributes.get(
@@ -622,6 +643,171 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		return cpDefinitionLocalization.getDescription();
 	}
 
+	@Override
+	public String getMetaTitle() {
+		return getMetaTitle(getDefaultLanguageId(), false);
+	}
+
+	@Override
+	public String getMetaTitle(String languageId) {
+		return getMetaTitle(languageId, true);
+	}
+
+	@Override
+	public String getMetaTitle(String languageId, boolean useDefault) {
+		if (useDefault) {
+			return LocalizationUtil.getLocalization(new Function<String, String>() {
+					@Override
+					public String apply(String languageId) {
+						return _getMetaTitle(languageId);
+					}
+				}, languageId, getDefaultLanguageId());
+		}
+
+		return _getMetaTitle(languageId);
+	}
+
+	@Override
+	public String getMetaTitleMapAsXML() {
+		return LocalizationUtil.getXml(getLanguageIdToMetaTitleMap(),
+			getDefaultLanguageId(), "MetaTitle");
+	}
+
+	@Override
+	public Map<String, String> getLanguageIdToMetaTitleMap() {
+		Map<String, String> languageIdToMetaTitleMap = new HashMap<String, String>();
+
+		List<CPDefinitionLocalization> cpDefinitionLocalizations = CPDefinitionLocalServiceUtil.getCPDefinitionLocalizations(getPrimaryKey());
+
+		for (CPDefinitionLocalization cpDefinitionLocalization : cpDefinitionLocalizations) {
+			languageIdToMetaTitleMap.put(cpDefinitionLocalization.getLanguageId(),
+				cpDefinitionLocalization.getMetaTitle());
+		}
+
+		return languageIdToMetaTitleMap;
+	}
+
+	private String _getMetaTitle(String languageId) {
+		CPDefinitionLocalization cpDefinitionLocalization = CPDefinitionLocalServiceUtil.fetchCPDefinitionLocalization(getPrimaryKey(),
+				languageId);
+
+		if (cpDefinitionLocalization == null) {
+			return StringPool.BLANK;
+		}
+
+		return cpDefinitionLocalization.getMetaTitle();
+	}
+
+	@Override
+	public String getMetaKeywords() {
+		return getMetaKeywords(getDefaultLanguageId(), false);
+	}
+
+	@Override
+	public String getMetaKeywords(String languageId) {
+		return getMetaKeywords(languageId, true);
+	}
+
+	@Override
+	public String getMetaKeywords(String languageId, boolean useDefault) {
+		if (useDefault) {
+			return LocalizationUtil.getLocalization(new Function<String, String>() {
+					@Override
+					public String apply(String languageId) {
+						return _getMetaKeywords(languageId);
+					}
+				}, languageId, getDefaultLanguageId());
+		}
+
+		return _getMetaKeywords(languageId);
+	}
+
+	@Override
+	public String getMetaKeywordsMapAsXML() {
+		return LocalizationUtil.getXml(getLanguageIdToMetaKeywordsMap(),
+			getDefaultLanguageId(), "MetaKeywords");
+	}
+
+	@Override
+	public Map<String, String> getLanguageIdToMetaKeywordsMap() {
+		Map<String, String> languageIdToMetaKeywordsMap = new HashMap<String, String>();
+
+		List<CPDefinitionLocalization> cpDefinitionLocalizations = CPDefinitionLocalServiceUtil.getCPDefinitionLocalizations(getPrimaryKey());
+
+		for (CPDefinitionLocalization cpDefinitionLocalization : cpDefinitionLocalizations) {
+			languageIdToMetaKeywordsMap.put(cpDefinitionLocalization.getLanguageId(),
+				cpDefinitionLocalization.getMetaKeywords());
+		}
+
+		return languageIdToMetaKeywordsMap;
+	}
+
+	private String _getMetaKeywords(String languageId) {
+		CPDefinitionLocalization cpDefinitionLocalization = CPDefinitionLocalServiceUtil.fetchCPDefinitionLocalization(getPrimaryKey(),
+				languageId);
+
+		if (cpDefinitionLocalization == null) {
+			return StringPool.BLANK;
+		}
+
+		return cpDefinitionLocalization.getMetaKeywords();
+	}
+
+	@Override
+	public String getMetaDescription() {
+		return getMetaDescription(getDefaultLanguageId(), false);
+	}
+
+	@Override
+	public String getMetaDescription(String languageId) {
+		return getMetaDescription(languageId, true);
+	}
+
+	@Override
+	public String getMetaDescription(String languageId, boolean useDefault) {
+		if (useDefault) {
+			return LocalizationUtil.getLocalization(new Function<String, String>() {
+					@Override
+					public String apply(String languageId) {
+						return _getMetaDescription(languageId);
+					}
+				}, languageId, getDefaultLanguageId());
+		}
+
+		return _getMetaDescription(languageId);
+	}
+
+	@Override
+	public String getMetaDescriptionMapAsXML() {
+		return LocalizationUtil.getXml(getLanguageIdToMetaDescriptionMap(),
+			getDefaultLanguageId(), "MetaDescription");
+	}
+
+	@Override
+	public Map<String, String> getLanguageIdToMetaDescriptionMap() {
+		Map<String, String> languageIdToMetaDescriptionMap = new HashMap<String, String>();
+
+		List<CPDefinitionLocalization> cpDefinitionLocalizations = CPDefinitionLocalServiceUtil.getCPDefinitionLocalizations(getPrimaryKey());
+
+		for (CPDefinitionLocalization cpDefinitionLocalization : cpDefinitionLocalizations) {
+			languageIdToMetaDescriptionMap.put(cpDefinitionLocalization.getLanguageId(),
+				cpDefinitionLocalization.getMetaDescription());
+		}
+
+		return languageIdToMetaDescriptionMap;
+	}
+
+	private String _getMetaDescription(String languageId) {
+		CPDefinitionLocalization cpDefinitionLocalization = CPDefinitionLocalServiceUtil.fetchCPDefinitionLocalization(getPrimaryKey(),
+				languageId);
+
+		if (cpDefinitionLocalization == null) {
+			return StringPool.BLANK;
+		}
+
+		return cpDefinitionLocalization.getMetaDescription();
+	}
+
 	@JSON
 	@Override
 	public String getUuid() {
@@ -806,6 +992,38 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 	@Override
 	public void setProductTypeName(String productTypeName) {
 		_productTypeName = productTypeName;
+	}
+
+	@JSON
+	@Override
+	public String getGtin() {
+		if (_gtin == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _gtin;
+		}
+	}
+
+	@Override
+	public void setGtin(String gtin) {
+		_gtin = gtin;
+	}
+
+	@JSON
+	@Override
+	public String getManufacturerPartNumber() {
+		if (_manufacturerPartNumber == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _manufacturerPartNumber;
+		}
+	}
+
+	@Override
+	public void setManufacturerPartNumber(String manufacturerPartNumber) {
+		_manufacturerPartNumber = manufacturerPartNumber;
 	}
 
 	@JSON
@@ -1284,6 +1502,8 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		cpDefinitionImpl.setModifiedDate(getModifiedDate());
 		cpDefinitionImpl.setBaseSKU(getBaseSKU());
 		cpDefinitionImpl.setProductTypeName(getProductTypeName());
+		cpDefinitionImpl.setGtin(getGtin());
+		cpDefinitionImpl.setManufacturerPartNumber(getManufacturerPartNumber());
 		cpDefinitionImpl.setAvailableIndividually(getAvailableIndividually());
 		cpDefinitionImpl.setMinCartQuantity(getMinCartQuantity());
 		cpDefinitionImpl.setMaxCartQuantity(getMaxCartQuantity());
@@ -1452,6 +1672,23 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 			cpDefinitionCacheModel.productTypeName = null;
 		}
 
+		cpDefinitionCacheModel.gtin = getGtin();
+
+		String gtin = cpDefinitionCacheModel.gtin;
+
+		if ((gtin != null) && (gtin.length() == 0)) {
+			cpDefinitionCacheModel.gtin = null;
+		}
+
+		cpDefinitionCacheModel.manufacturerPartNumber = getManufacturerPartNumber();
+
+		String manufacturerPartNumber = cpDefinitionCacheModel.manufacturerPartNumber;
+
+		if ((manufacturerPartNumber != null) &&
+				(manufacturerPartNumber.length() == 0)) {
+			cpDefinitionCacheModel.manufacturerPartNumber = null;
+		}
+
 		cpDefinitionCacheModel.availableIndividually = getAvailableIndividually();
 
 		cpDefinitionCacheModel.minCartQuantity = getMinCartQuantity();
@@ -1538,7 +1775,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(53);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1560,6 +1797,10 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		sb.append(getBaseSKU());
 		sb.append(", productTypeName=");
 		sb.append(getProductTypeName());
+		sb.append(", gtin=");
+		sb.append(getGtin());
+		sb.append(", manufacturerPartNumber=");
+		sb.append(getManufacturerPartNumber());
 		sb.append(", availableIndividually=");
 		sb.append(getAvailableIndividually());
 		sb.append(", minCartQuantity=");
@@ -1595,7 +1836,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(76);
+		StringBundler sb = new StringBundler(82);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.product.model.CPDefinition");
@@ -1640,6 +1881,14 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		sb.append(
 			"<column><column-name>productTypeName</column-name><column-value><![CDATA[");
 		sb.append(getProductTypeName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>gtin</column-name><column-value><![CDATA[");
+		sb.append(getGtin());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>manufacturerPartNumber</column-name><column-value><![CDATA[");
+		sb.append(getManufacturerPartNumber());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>availableIndividually</column-name><column-value><![CDATA[");
@@ -1723,6 +1972,8 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 	private boolean _setModifiedDate;
 	private String _baseSKU;
 	private String _productTypeName;
+	private String _gtin;
+	private String _manufacturerPartNumber;
 	private boolean _availableIndividually;
 	private int _minCartQuantity;
 	private int _maxCartQuantity;

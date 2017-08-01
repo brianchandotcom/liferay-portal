@@ -78,7 +78,7 @@ public class CPDefinitionLocalizationCacheModel implements CacheModel<CPDefiniti
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -96,6 +96,12 @@ public class CPDefinitionLocalizationCacheModel implements CacheModel<CPDefiniti
 		sb.append(shortDescription);
 		sb.append(", description=");
 		sb.append(description);
+		sb.append(", metaTitle=");
+		sb.append(metaTitle);
+		sb.append(", metaKeywords=");
+		sb.append(metaKeywords);
+		sb.append(", metaDescription=");
+		sb.append(metaDescription);
 		sb.append("}");
 
 		return sb.toString();
@@ -138,6 +144,27 @@ public class CPDefinitionLocalizationCacheModel implements CacheModel<CPDefiniti
 			cpDefinitionLocalizationImpl.setDescription(description);
 		}
 
+		if (metaTitle == null) {
+			cpDefinitionLocalizationImpl.setMetaTitle(StringPool.BLANK);
+		}
+		else {
+			cpDefinitionLocalizationImpl.setMetaTitle(metaTitle);
+		}
+
+		if (metaKeywords == null) {
+			cpDefinitionLocalizationImpl.setMetaKeywords(StringPool.BLANK);
+		}
+		else {
+			cpDefinitionLocalizationImpl.setMetaKeywords(metaKeywords);
+		}
+
+		if (metaDescription == null) {
+			cpDefinitionLocalizationImpl.setMetaDescription(StringPool.BLANK);
+		}
+		else {
+			cpDefinitionLocalizationImpl.setMetaDescription(metaDescription);
+		}
+
 		cpDefinitionLocalizationImpl.resetOriginalValues();
 
 		return cpDefinitionLocalizationImpl;
@@ -156,6 +183,9 @@ public class CPDefinitionLocalizationCacheModel implements CacheModel<CPDefiniti
 		title = objectInput.readUTF();
 		shortDescription = objectInput.readUTF();
 		description = objectInput.readUTF();
+		metaTitle = objectInput.readUTF();
+		metaKeywords = objectInput.readUTF();
+		metaDescription = objectInput.readUTF();
 	}
 
 	@Override
@@ -196,6 +226,27 @@ public class CPDefinitionLocalizationCacheModel implements CacheModel<CPDefiniti
 		else {
 			objectOutput.writeUTF(description);
 		}
+
+		if (metaTitle == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(metaTitle);
+		}
+
+		if (metaKeywords == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(metaKeywords);
+		}
+
+		if (metaDescription == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(metaDescription);
+		}
 	}
 
 	public long mvccVersion;
@@ -206,4 +257,7 @@ public class CPDefinitionLocalizationCacheModel implements CacheModel<CPDefiniti
 	public String title;
 	public String shortDescription;
 	public String description;
+	public String metaTitle;
+	public String metaKeywords;
+	public String metaDescription;
 }

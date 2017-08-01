@@ -44,6 +44,8 @@ public class CPInstanceSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setCPDefinitionId(model.getCPDefinitionId());
 		soapModel.setSku(model.getSku());
+		soapModel.setGtin(model.getGtin());
+		soapModel.setManufacturerPartNumber(model.getManufacturerPartNumber());
 		soapModel.setDDMContent(model.getDDMContent());
 		soapModel.setDisplayDate(model.getDisplayDate());
 		soapModel.setExpirationDate(model.getExpirationDate());
@@ -184,6 +186,22 @@ public class CPInstanceSoap implements Serializable {
 		_sku = sku;
 	}
 
+	public String getGtin() {
+		return _gtin;
+	}
+
+	public void setGtin(String gtin) {
+		_gtin = gtin;
+	}
+
+	public String getManufacturerPartNumber() {
+		return _manufacturerPartNumber;
+	}
+
+	public void setManufacturerPartNumber(String manufacturerPartNumber) {
+		_manufacturerPartNumber = manufacturerPartNumber;
+	}
+
 	public String getDDMContent() {
 		return _DDMContent;
 	}
@@ -258,6 +276,8 @@ public class CPInstanceSoap implements Serializable {
 	private Date _modifiedDate;
 	private long _CPDefinitionId;
 	private String _sku;
+	private String _gtin;
+	private String _manufacturerPartNumber;
 	private String _DDMContent;
 	private Date _displayDate;
 	private Date _expirationDate;

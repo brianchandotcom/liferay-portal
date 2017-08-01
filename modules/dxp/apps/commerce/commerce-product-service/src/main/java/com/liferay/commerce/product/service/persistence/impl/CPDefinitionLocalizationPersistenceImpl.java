@@ -1231,6 +1231,9 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 		cpDefinitionLocalizationImpl.setTitle(cpDefinitionLocalization.getTitle());
 		cpDefinitionLocalizationImpl.setShortDescription(cpDefinitionLocalization.getShortDescription());
 		cpDefinitionLocalizationImpl.setDescription(cpDefinitionLocalization.getDescription());
+		cpDefinitionLocalizationImpl.setMetaTitle(cpDefinitionLocalization.getMetaTitle());
+		cpDefinitionLocalizationImpl.setMetaKeywords(cpDefinitionLocalization.getMetaKeywords());
+		cpDefinitionLocalizationImpl.setMetaDescription(cpDefinitionLocalization.getMetaDescription());
 
 		return cpDefinitionLocalizationImpl;
 	}

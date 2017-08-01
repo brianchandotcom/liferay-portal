@@ -5717,6 +5717,8 @@ public class CPDefinitionPersistenceImpl extends BasePersistenceImpl<CPDefinitio
 		cpDefinitionImpl.setModifiedDate(cpDefinition.getModifiedDate());
 		cpDefinitionImpl.setBaseSKU(cpDefinition.getBaseSKU());
 		cpDefinitionImpl.setProductTypeName(cpDefinition.getProductTypeName());
+		cpDefinitionImpl.setGtin(cpDefinition.getGtin());
+		cpDefinitionImpl.setManufacturerPartNumber(cpDefinition.getManufacturerPartNumber());
 		cpDefinitionImpl.setAvailableIndividually(cpDefinition.isAvailableIndividually());
 		cpDefinitionImpl.setMinCartQuantity(cpDefinition.getMinCartQuantity());
 		cpDefinitionImpl.setMaxCartQuantity(cpDefinition.getMaxCartQuantity());

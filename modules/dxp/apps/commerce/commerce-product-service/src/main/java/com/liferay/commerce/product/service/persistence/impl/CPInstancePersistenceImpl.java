@@ -5431,6 +5431,8 @@ public class CPInstancePersistenceImpl extends BasePersistenceImpl<CPInstance>
 		cpInstanceImpl.setModifiedDate(cpInstance.getModifiedDate());
 		cpInstanceImpl.setCPDefinitionId(cpInstance.getCPDefinitionId());
 		cpInstanceImpl.setSku(cpInstance.getSku());
+		cpInstanceImpl.setGtin(cpInstance.getGtin());
+		cpInstanceImpl.setManufacturerPartNumber(cpInstance.getManufacturerPartNumber());
 		cpInstanceImpl.setDDMContent(cpInstance.getDDMContent());
 		cpInstanceImpl.setDisplayDate(cpInstance.getDisplayDate());
 		cpInstanceImpl.setExpirationDate(cpInstance.getExpirationDate());

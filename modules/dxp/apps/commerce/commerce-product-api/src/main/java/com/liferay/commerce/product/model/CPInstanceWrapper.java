@@ -69,6 +69,8 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("CPDefinitionId", getCPDefinitionId());
 		attributes.put("sku", getSku());
+		attributes.put("gtin", getGtin());
+		attributes.put("manufacturerPartNumber", getManufacturerPartNumber());
 		attributes.put("DDMContent", getDDMContent());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
@@ -141,6 +143,19 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 
 		if (sku != null) {
 			setSku(sku);
+		}
+
+		String gtin = (String)attributes.get("gtin");
+
+		if (gtin != null) {
+			setGtin(gtin);
+		}
+
+		String manufacturerPartNumber = (String)attributes.get(
+				"manufacturerPartNumber");
+
+		if (manufacturerPartNumber != null) {
+			setManufacturerPartNumber(manufacturerPartNumber);
 		}
 
 		String DDMContent = (String)attributes.get("DDMContent");
@@ -404,6 +419,26 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	@Override
 	public java.lang.String getDDMContent() {
 		return _cpInstance.getDDMContent();
+	}
+
+	/**
+	* Returns the gtin of this cp instance.
+	*
+	* @return the gtin of this cp instance
+	*/
+	@Override
+	public java.lang.String getGtin() {
+		return _cpInstance.getGtin();
+	}
+
+	/**
+	* Returns the manufacturer part number of this cp instance.
+	*
+	* @return the manufacturer part number of this cp instance
+	*/
+	@Override
+	public java.lang.String getManufacturerPartNumber() {
+		return _cpInstance.getManufacturerPartNumber();
 	}
 
 	/**
@@ -723,6 +758,16 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	}
 
 	/**
+	* Sets the gtin of this cp instance.
+	*
+	* @param gtin the gtin of this cp instance
+	*/
+	@Override
+	public void setGtin(java.lang.String gtin) {
+		_cpInstance.setGtin(gtin);
+	}
+
+	/**
 	* Sets the last publish date of this cp instance.
 	*
 	* @param lastPublishDate the last publish date of this cp instance
@@ -730,6 +775,17 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
 		_cpInstance.setLastPublishDate(lastPublishDate);
+	}
+
+	/**
+	* Sets the manufacturer part number of this cp instance.
+	*
+	* @param manufacturerPartNumber the manufacturer part number of this cp instance
+	*/
+	@Override
+	public void setManufacturerPartNumber(
+		java.lang.String manufacturerPartNumber) {
+		_cpInstance.setManufacturerPartNumber(manufacturerPartNumber);
 	}
 
 	/**

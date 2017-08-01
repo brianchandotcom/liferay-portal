@@ -66,7 +66,7 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(53);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -88,6 +88,10 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		sb.append(baseSKU);
 		sb.append(", productTypeName=");
 		sb.append(productTypeName);
+		sb.append(", gtin=");
+		sb.append(gtin);
+		sb.append(", manufacturerPartNumber=");
+		sb.append(manufacturerPartNumber);
 		sb.append(", availableIndividually=");
 		sb.append(availableIndividually);
 		sb.append(", minCartQuantity=");
@@ -170,6 +174,20 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		}
 		else {
 			cpDefinitionImpl.setProductTypeName(productTypeName);
+		}
+
+		if (gtin == null) {
+			cpDefinitionImpl.setGtin(StringPool.BLANK);
+		}
+		else {
+			cpDefinitionImpl.setGtin(gtin);
+		}
+
+		if (manufacturerPartNumber == null) {
+			cpDefinitionImpl.setManufacturerPartNumber(StringPool.BLANK);
+		}
+		else {
+			cpDefinitionImpl.setManufacturerPartNumber(manufacturerPartNumber);
 		}
 
 		cpDefinitionImpl.setAvailableIndividually(availableIndividually);
@@ -258,6 +276,8 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		modifiedDate = objectInput.readLong();
 		baseSKU = objectInput.readUTF();
 		productTypeName = objectInput.readUTF();
+		gtin = objectInput.readUTF();
+		manufacturerPartNumber = objectInput.readUTF();
 
 		availableIndividually = objectInput.readBoolean();
 
@@ -322,6 +342,20 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 			objectOutput.writeUTF(productTypeName);
 		}
 
+		if (gtin == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(gtin);
+		}
+
+		if (manufacturerPartNumber == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(manufacturerPartNumber);
+		}
+
 		objectOutput.writeBoolean(availableIndividually);
 
 		objectOutput.writeInt(minCartQuantity);
@@ -379,6 +413,8 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 	public long modifiedDate;
 	public String baseSKU;
 	public String productTypeName;
+	public String gtin;
+	public String manufacturerPartNumber;
 	public boolean availableIndividually;
 	public int minCartQuantity;
 	public int maxCartQuantity;

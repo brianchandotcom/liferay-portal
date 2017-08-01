@@ -70,6 +70,8 @@ public class CPDefinitionWrapper implements CPDefinition,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("baseSKU", getBaseSKU());
 		attributes.put("productTypeName", getProductTypeName());
+		attributes.put("gtin", getGtin());
+		attributes.put("manufacturerPartNumber", getManufacturerPartNumber());
 		attributes.put("availableIndividually", getAvailableIndividually());
 		attributes.put("minCartQuantity", getMinCartQuantity());
 		attributes.put("maxCartQuantity", getMaxCartQuantity());
@@ -148,6 +150,19 @@ public class CPDefinitionWrapper implements CPDefinition,
 
 		if (productTypeName != null) {
 			setProductTypeName(productTypeName);
+		}
+
+		String gtin = (String)attributes.get("gtin");
+
+		if (gtin != null) {
+			setGtin(gtin);
+		}
+
+		String manufacturerPartNumber = (String)attributes.get(
+				"manufacturerPartNumber");
+
+		if (manufacturerPartNumber != null) {
+			setManufacturerPartNumber(manufacturerPartNumber);
 		}
 
 		Boolean availableIndividually = (Boolean)attributes.get(
@@ -554,9 +569,92 @@ public class CPDefinitionWrapper implements CPDefinition,
 		return _cpDefinition.getDescriptionMapAsXML();
 	}
 
+	/**
+	* Returns the gtin of this cp definition.
+	*
+	* @return the gtin of this cp definition
+	*/
+	@Override
+	public java.lang.String getGtin() {
+		return _cpDefinition.getGtin();
+	}
+
 	@Override
 	public java.lang.String getLayoutUuid() {
 		return _cpDefinition.getLayoutUuid();
+	}
+
+	/**
+	* Returns the manufacturer part number of this cp definition.
+	*
+	* @return the manufacturer part number of this cp definition
+	*/
+	@Override
+	public java.lang.String getManufacturerPartNumber() {
+		return _cpDefinition.getManufacturerPartNumber();
+	}
+
+	@Override
+	public java.lang.String getMetaDescription() {
+		return _cpDefinition.getMetaDescription();
+	}
+
+	@Override
+	public java.lang.String getMetaDescription(java.lang.String languageId) {
+		return _cpDefinition.getMetaDescription(languageId);
+	}
+
+	@Override
+	public java.lang.String getMetaDescription(java.lang.String languageId,
+		boolean useDefault) {
+		return _cpDefinition.getMetaDescription(languageId, useDefault);
+	}
+
+	@Override
+	public java.lang.String getMetaDescriptionMapAsXML() {
+		return _cpDefinition.getMetaDescriptionMapAsXML();
+	}
+
+	@Override
+	public java.lang.String getMetaKeywords() {
+		return _cpDefinition.getMetaKeywords();
+	}
+
+	@Override
+	public java.lang.String getMetaKeywords(java.lang.String languageId) {
+		return _cpDefinition.getMetaKeywords(languageId);
+	}
+
+	@Override
+	public java.lang.String getMetaKeywords(java.lang.String languageId,
+		boolean useDefault) {
+		return _cpDefinition.getMetaKeywords(languageId, useDefault);
+	}
+
+	@Override
+	public java.lang.String getMetaKeywordsMapAsXML() {
+		return _cpDefinition.getMetaKeywordsMapAsXML();
+	}
+
+	@Override
+	public java.lang.String getMetaTitle() {
+		return _cpDefinition.getMetaTitle();
+	}
+
+	@Override
+	public java.lang.String getMetaTitle(java.lang.String languageId) {
+		return _cpDefinition.getMetaTitle(languageId);
+	}
+
+	@Override
+	public java.lang.String getMetaTitle(java.lang.String languageId,
+		boolean useDefault) {
+		return _cpDefinition.getMetaTitle(languageId, useDefault);
+	}
+
+	@Override
+	public java.lang.String getMetaTitleMapAsXML() {
+		return _cpDefinition.getMetaTitleMapAsXML();
 	}
 
 	/**
@@ -759,6 +857,21 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public Map<java.lang.String, java.lang.String> getLanguageIdToDescriptionMap() {
 		return _cpDefinition.getLanguageIdToDescriptionMap();
+	}
+
+	@Override
+	public Map<java.lang.String, java.lang.String> getLanguageIdToMetaDescriptionMap() {
+		return _cpDefinition.getLanguageIdToMetaDescriptionMap();
+	}
+
+	@Override
+	public Map<java.lang.String, java.lang.String> getLanguageIdToMetaKeywordsMap() {
+		return _cpDefinition.getLanguageIdToMetaKeywordsMap();
+	}
+
+	@Override
+	public Map<java.lang.String, java.lang.String> getLanguageIdToMetaTitleMap() {
+		return _cpDefinition.getLanguageIdToMetaTitleMap();
 	}
 
 	@Override
@@ -1014,6 +1127,16 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	/**
+	* Sets the gtin of this cp definition.
+	*
+	* @param gtin the gtin of this cp definition
+	*/
+	@Override
+	public void setGtin(java.lang.String gtin) {
+		_cpDefinition.setGtin(gtin);
+	}
+
+	/**
 	* Sets the last publish date of this cp definition.
 	*
 	* @param lastPublishDate the last publish date of this cp definition
@@ -1026,6 +1149,17 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public void setLayoutUuid(java.lang.String layoutUuid) {
 		_cpDefinition.setLayoutUuid(layoutUuid);
+	}
+
+	/**
+	* Sets the manufacturer part number of this cp definition.
+	*
+	* @param manufacturerPartNumber the manufacturer part number of this cp definition
+	*/
+	@Override
+	public void setManufacturerPartNumber(
+		java.lang.String manufacturerPartNumber) {
+		_cpDefinition.setManufacturerPartNumber(manufacturerPartNumber);
 	}
 
 	/**

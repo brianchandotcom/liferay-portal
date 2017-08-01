@@ -244,6 +244,36 @@ public interface CPDefinitionModel extends BaseModel<CPDefinition>, ShardedModel
 	public void setProductTypeName(String productTypeName);
 
 	/**
+	 * Returns the gtin of this cp definition.
+	 *
+	 * @return the gtin of this cp definition
+	 */
+	@AutoEscape
+	public String getGtin();
+
+	/**
+	 * Sets the gtin of this cp definition.
+	 *
+	 * @param gtin the gtin of this cp definition
+	 */
+	public void setGtin(String gtin);
+
+	/**
+	 * Returns the manufacturer part number of this cp definition.
+	 *
+	 * @return the manufacturer part number of this cp definition
+	 */
+	@AutoEscape
+	public String getManufacturerPartNumber();
+
+	/**
+	 * Sets the manufacturer part number of this cp definition.
+	 *
+	 * @param manufacturerPartNumber the manufacturer part number of this cp definition
+	 */
+	public void setManufacturerPartNumber(String manufacturerPartNumber);
+
+	/**
 	 * Returns the available individually of this cp definition.
 	 *
 	 * @return the available individually of this cp definition
@@ -507,6 +537,36 @@ public interface CPDefinitionModel extends BaseModel<CPDefinition>, ShardedModel
 	public String getDescriptionMapAsXML();
 
 	public Map<String, String> getLanguageIdToDescriptionMap();
+
+	public String getMetaTitle();
+
+	public String getMetaTitle(String languageId);
+
+	public String getMetaTitle(String languageId, boolean useDefault);
+
+	public String getMetaTitleMapAsXML();
+
+	public Map<String, String> getLanguageIdToMetaTitleMap();
+
+	public String getMetaKeywords();
+
+	public String getMetaKeywords(String languageId);
+
+	public String getMetaKeywords(String languageId, boolean useDefault);
+
+	public String getMetaKeywordsMapAsXML();
+
+	public Map<String, String> getLanguageIdToMetaKeywordsMap();
+
+	public String getMetaDescription();
+
+	public String getMetaDescription(String languageId);
+
+	public String getMetaDescription(String languageId, boolean useDefault);
+
+	public String getMetaDescriptionMapAsXML();
+
+	public Map<String, String> getLanguageIdToMetaDescriptionMap();
 
 	/**
 	 * Returns the trash entry created when this cp definition was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this cp definition.

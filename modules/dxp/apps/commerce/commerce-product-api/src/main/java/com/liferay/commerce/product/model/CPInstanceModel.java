@@ -242,6 +242,36 @@ public interface CPInstanceModel extends BaseModel<CPInstance>, ShardedModel,
 	public void setSku(String sku);
 
 	/**
+	 * Returns the gtin of this cp instance.
+	 *
+	 * @return the gtin of this cp instance
+	 */
+	@AutoEscape
+	public String getGtin();
+
+	/**
+	 * Sets the gtin of this cp instance.
+	 *
+	 * @param gtin the gtin of this cp instance
+	 */
+	public void setGtin(String gtin);
+
+	/**
+	 * Returns the manufacturer part number of this cp instance.
+	 *
+	 * @return the manufacturer part number of this cp instance
+	 */
+	@AutoEscape
+	public String getManufacturerPartNumber();
+
+	/**
+	 * Sets the manufacturer part number of this cp instance.
+	 *
+	 * @param manufacturerPartNumber the manufacturer part number of this cp instance
+	 */
+	public void setManufacturerPartNumber(String manufacturerPartNumber);
+
+	/**
 	 * Returns the ddm content of this cp instance.
 	 *
 	 * @return the ddm content of this cp instance

@@ -143,6 +143,10 @@ public class CPDefinitionPersistenceTest {
 
 		newCPDefinition.setProductTypeName(RandomTestUtil.randomString());
 
+		newCPDefinition.setGtin(RandomTestUtil.randomString());
+
+		newCPDefinition.setManufacturerPartNumber(RandomTestUtil.randomString());
+
 		newCPDefinition.setAvailableIndividually(RandomTestUtil.randomBoolean());
 
 		newCPDefinition.setMinCartQuantity(RandomTestUtil.nextInt());
@@ -197,6 +201,10 @@ public class CPDefinitionPersistenceTest {
 			newCPDefinition.getBaseSKU());
 		Assert.assertEquals(existingCPDefinition.getProductTypeName(),
 			newCPDefinition.getProductTypeName());
+		Assert.assertEquals(existingCPDefinition.getGtin(),
+			newCPDefinition.getGtin());
+		Assert.assertEquals(existingCPDefinition.getManufacturerPartNumber(),
+			newCPDefinition.getManufacturerPartNumber());
 		Assert.assertEquals(existingCPDefinition.getAvailableIndividually(),
 			newCPDefinition.getAvailableIndividually());
 		Assert.assertEquals(existingCPDefinition.getMinCartQuantity(),
@@ -329,6 +337,7 @@ public class CPDefinitionPersistenceTest {
 			true, "CPDefinitionId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "baseSKU", true, "productTypeName", true,
+			"gtin", true, "manufacturerPartNumber", true,
 			"availableIndividually", true, "minCartQuantity", true,
 			"maxCartQuantity", true, "allowedCartQuantity", true,
 			"multipleCartQuantity", true, "DDMStructureKey", true,
@@ -569,6 +578,10 @@ public class CPDefinitionPersistenceTest {
 		cpDefinition.setBaseSKU(RandomTestUtil.randomString());
 
 		cpDefinition.setProductTypeName(RandomTestUtil.randomString());
+
+		cpDefinition.setGtin(RandomTestUtil.randomString());
+
+		cpDefinition.setManufacturerPartNumber(RandomTestUtil.randomString());
 
 		cpDefinition.setAvailableIndividually(RandomTestUtil.randomBoolean());
 

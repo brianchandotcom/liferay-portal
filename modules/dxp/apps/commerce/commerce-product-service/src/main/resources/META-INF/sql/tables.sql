@@ -51,6 +51,8 @@ create table CPDefinition (
 	modifiedDate DATE null,
 	baseSKU VARCHAR(75) null,
 	productTypeName VARCHAR(75) null,
+	gtin VARCHAR(75) null,
+	manufacturerPartNumber VARCHAR(75) null,
 	availableIndividually BOOLEAN,
 	minCartQuantity INTEGER,
 	maxCartQuantity INTEGER,
@@ -90,7 +92,10 @@ create table CPDefinitionLocalization (
 	languageId VARCHAR(75) null,
 	title STRING null,
 	shortDescription STRING null,
-	description TEXT null
+	description TEXT null,
+	metaTitle VARCHAR(75) null,
+	metaKeywords VARCHAR(75) null,
+	metaDescription VARCHAR(75) null
 );
 
 create table CPDefinitionOptionRel (
@@ -169,6 +174,8 @@ create table CPInstance (
 	modifiedDate DATE null,
 	CPDefinitionId LONG,
 	sku VARCHAR(75) null,
+	gtin VARCHAR(75) null,
+	manufacturerPartNumber VARCHAR(75) null,
 	DDMContent TEXT null,
 	displayDate DATE null,
 	expirationDate DATE null,

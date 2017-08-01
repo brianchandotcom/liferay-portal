@@ -66,7 +66,8 @@ import java.rmi.RemoteException;
 @ProviderType
 public class CPInstanceServiceSoap {
 	public static com.liferay.commerce.product.model.CPInstanceSoap addCPInstance(
-		long cpDefinitionId, java.lang.String sku, java.lang.String ddmContent,
+		long cpDefinitionId, java.lang.String sku, java.lang.String gtin,
+		java.lang.String manufacturerPartNumber, java.lang.String ddmContent,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
 		int expirationDateDay, int expirationDateYear, int expirationDateHour,
@@ -75,11 +76,11 @@ public class CPInstanceServiceSoap {
 		throws RemoteException {
 		try {
 			com.liferay.commerce.product.model.CPInstance returnValue = CPInstanceServiceUtil.addCPInstance(cpDefinitionId,
-					sku, ddmContent, displayDateMonth, displayDateDay,
-					displayDateYear, displayDateHour, displayDateMinute,
-					expirationDateMonth, expirationDateDay, expirationDateYear,
-					expirationDateHour, expirationDateMinute, neverExpire,
-					serviceContext);
+					sku, gtin, manufacturerPartNumber, ddmContent,
+					displayDateMonth, displayDateDay, displayDateYear,
+					displayDateHour, displayDateMinute, expirationDateMonth,
+					expirationDateDay, expirationDateYear, expirationDateHour,
+					expirationDateMinute, neverExpire, serviceContext);
 
 			return com.liferay.commerce.product.model.CPInstanceSoap.toSoapModel(returnValue);
 		}
@@ -197,7 +198,8 @@ public class CPInstanceServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CPInstanceSoap updateCPInstance(
-		long cpInstanceId, java.lang.String sku, int displayDateMonth,
+		long cpInstanceId, java.lang.String sku, java.lang.String gtin,
+		java.lang.String manufacturerPartNumber, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
 		int expirationDateYear, int expirationDateHour,
@@ -206,9 +208,10 @@ public class CPInstanceServiceSoap {
 		throws RemoteException {
 		try {
 			com.liferay.commerce.product.model.CPInstance returnValue = CPInstanceServiceUtil.updateCPInstance(cpInstanceId,
-					sku, displayDateMonth, displayDateDay, displayDateYear,
-					displayDateHour, displayDateMinute, expirationDateMonth,
-					expirationDateDay, expirationDateYear, expirationDateHour,
+					sku, gtin, manufacturerPartNumber, displayDateMonth,
+					displayDateDay, displayDateYear, displayDateHour,
+					displayDateMinute, expirationDateMonth, expirationDateDay,
+					expirationDateYear, expirationDateHour,
 					expirationDateMinute, neverExpire, serviceContext);
 
 			return com.liferay.commerce.product.model.CPInstanceSoap.toSoapModel(returnValue);

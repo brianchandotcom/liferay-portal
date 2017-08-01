@@ -41,6 +41,9 @@ public class CPDefinitionLocalizationSoap implements Serializable {
 		soapModel.setTitle(model.getTitle());
 		soapModel.setShortDescription(model.getShortDescription());
 		soapModel.setDescription(model.getDescription());
+		soapModel.setMetaTitle(model.getMetaTitle());
+		soapModel.setMetaKeywords(model.getMetaKeywords());
+		soapModel.setMetaDescription(model.getMetaDescription());
 
 		return soapModel;
 	}
@@ -160,6 +163,30 @@ public class CPDefinitionLocalizationSoap implements Serializable {
 		_description = description;
 	}
 
+	public String getMetaTitle() {
+		return _metaTitle;
+	}
+
+	public void setMetaTitle(String metaTitle) {
+		_metaTitle = metaTitle;
+	}
+
+	public String getMetaKeywords() {
+		return _metaKeywords;
+	}
+
+	public void setMetaKeywords(String metaKeywords) {
+		_metaKeywords = metaKeywords;
+	}
+
+	public String getMetaDescription() {
+		return _metaDescription;
+	}
+
+	public void setMetaDescription(String metaDescription) {
+		_metaDescription = metaDescription;
+	}
+
 	private long _mvccVersion;
 	private long _cpDefinitionLocalizationId;
 	private long _companyId;
@@ -168,4 +195,7 @@ public class CPDefinitionLocalizationSoap implements Serializable {
 	private String _title;
 	private String _shortDescription;
 	private String _description;
+	private String _metaTitle;
+	private String _metaKeywords;
+	private String _metaDescription;
 }

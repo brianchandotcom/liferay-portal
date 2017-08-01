@@ -183,6 +183,51 @@ public interface CPDefinitionLocalizationModel extends BaseModel<CPDefinitionLoc
 	 */
 	public void setDescription(String description);
 
+	/**
+	 * Returns the meta title of this cp definition localization.
+	 *
+	 * @return the meta title of this cp definition localization
+	 */
+	@AutoEscape
+	public String getMetaTitle();
+
+	/**
+	 * Sets the meta title of this cp definition localization.
+	 *
+	 * @param metaTitle the meta title of this cp definition localization
+	 */
+	public void setMetaTitle(String metaTitle);
+
+	/**
+	 * Returns the meta keywords of this cp definition localization.
+	 *
+	 * @return the meta keywords of this cp definition localization
+	 */
+	@AutoEscape
+	public String getMetaKeywords();
+
+	/**
+	 * Sets the meta keywords of this cp definition localization.
+	 *
+	 * @param metaKeywords the meta keywords of this cp definition localization
+	 */
+	public void setMetaKeywords(String metaKeywords);
+
+	/**
+	 * Returns the meta description of this cp definition localization.
+	 *
+	 * @return the meta description of this cp definition localization
+	 */
+	@AutoEscape
+	public String getMetaDescription();
+
+	/**
+	 * Sets the meta description of this cp definition localization.
+	 *
+	 * @param metaDescription the meta description of this cp definition localization
+	 */
+	public void setMetaDescription(String metaDescription);
+
 	@Override
 	public boolean isNew();
 

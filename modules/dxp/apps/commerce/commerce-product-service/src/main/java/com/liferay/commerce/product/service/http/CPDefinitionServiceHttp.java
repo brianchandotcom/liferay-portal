@@ -61,7 +61,11 @@ public class CPDefinitionServiceHttp {
 		java.util.Map<java.util.Locale, java.lang.String> shortDescriptionMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.util.Map<java.util.Locale, java.lang.String> urlTitleMap,
+		java.util.Map<java.util.Locale, java.lang.String> metaTitleMap,
+		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
+		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
 		java.lang.String layoutUuid, java.lang.String productTypeName,
+		java.lang.String gtin, java.lang.String manufacturerPartNumber,
 		int minCartQuantity, int maxCartQuantity,
 		java.lang.String allowedCartQuantity, int multipleCartQuantity,
 		java.lang.String ddmStructureKey, int displayDateMonth,
@@ -77,13 +81,14 @@ public class CPDefinitionServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, baseSKU,
 					titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
-					layoutUuid, productTypeName, minCartQuantity,
-					maxCartQuantity, allowedCartQuantity, multipleCartQuantity,
-					ddmStructureKey, displayDateMonth, displayDateDay,
-					displayDateYear, displayDateHour, displayDateMinute,
-					expirationDateMonth, expirationDateDay, expirationDateYear,
-					expirationDateHour, expirationDateMinute, neverExpire,
-					serviceContext);
+					metaTitleMap, metaKeywordsMap, metaDescriptionMap,
+					layoutUuid, productTypeName, gtin, manufacturerPartNumber,
+					minCartQuantity, maxCartQuantity, allowedCartQuantity,
+					multipleCartQuantity, ddmStructureKey, displayDateMonth,
+					displayDateDay, displayDateYear, displayDateHour,
+					displayDateMinute, expirationDateMonth, expirationDateDay,
+					expirationDateYear, expirationDateHour,
+					expirationDateMinute, neverExpire, serviceContext);
 
 			Object returnObj = null;
 
@@ -580,12 +585,16 @@ public class CPDefinitionServiceHttp {
 		java.util.Map<java.util.Locale, java.lang.String> shortDescriptionMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.util.Map<java.util.Locale, java.lang.String> urlTitleMap,
-		java.lang.String layoutUuid, int minCartQuantity, int maxCartQuantity,
-		java.lang.String allowedCartQuantity, int multipleCartQuantity,
-		java.lang.String ddmStructureKey, int displayDateMonth,
-		int displayDateDay, int displayDateYear, int displayDateHour,
-		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
-		int expirationDateYear, int expirationDateHour,
+		java.util.Map<java.util.Locale, java.lang.String> metaTitleMap,
+		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
+		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
+		java.lang.String layoutUuid, java.lang.String gtin,
+		java.lang.String manufacturerPartNumber, int minCartQuantity,
+		int maxCartQuantity, java.lang.String allowedCartQuantity,
+		int multipleCartQuantity, java.lang.String ddmStructureKey,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -595,13 +604,14 @@ public class CPDefinitionServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpDefinitionId, baseSKU, titleMap, shortDescriptionMap,
-					descriptionMap, urlTitleMap, layoutUuid, minCartQuantity,
-					maxCartQuantity, allowedCartQuantity, multipleCartQuantity,
-					ddmStructureKey, displayDateMonth, displayDateDay,
-					displayDateYear, displayDateHour, displayDateMinute,
-					expirationDateMonth, expirationDateDay, expirationDateYear,
-					expirationDateHour, expirationDateMinute, neverExpire,
-					serviceContext);
+					descriptionMap, urlTitleMap, metaTitleMap, metaKeywordsMap,
+					metaDescriptionMap, layoutUuid, gtin,
+					manufacturerPartNumber, minCartQuantity, maxCartQuantity,
+					allowedCartQuantity, multipleCartQuantity, ddmStructureKey,
+					displayDateMonth, displayDateDay, displayDateYear,
+					displayDateHour, displayDateMinute, expirationDateMonth,
+					expirationDateDay, expirationDateYear, expirationDateHour,
+					expirationDateMinute, neverExpire, serviceContext);
 
 			Object returnObj = null;
 
@@ -663,7 +673,9 @@ public class CPDefinitionServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(CPDefinitionServiceHttp.class);
 	private static final Class<?>[] _addCPDefinitionParameterTypes0 = new Class[] {
 			java.lang.String.class, java.util.Map.class, java.util.Map.class,
+			java.util.Map.class, java.util.Map.class, java.util.Map.class,
 			java.util.Map.class, java.util.Map.class, java.lang.String.class,
+			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, int.class, int.class, java.lang.String.class,
 			int.class, java.lang.String.class, int.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
@@ -718,6 +730,8 @@ public class CPDefinitionServiceHttp {
 	private static final Class<?>[] _updateCPDefinitionParameterTypes16 = new Class[] {
 			long.class, java.lang.String.class, java.util.Map.class,
 			java.util.Map.class, java.util.Map.class, java.util.Map.class,
+			java.util.Map.class, java.util.Map.class, java.util.Map.class,
+			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, int.class, int.class, java.lang.String.class,
 			int.class, java.lang.String.class, int.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,

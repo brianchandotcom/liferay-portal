@@ -542,7 +542,8 @@ public abstract class CPDefinitionLocalServiceBaseImpl
 
 	protected CPDefinitionLocalization updateCPDefinitionLocalization(
 		CPDefinition cpDefinition, String languageId, String title,
-		String shortDescription, String description) throws PortalException {
+		String shortDescription, String description, String metaTitle,
+		String metaKeywords, String metaDescription) throws PortalException {
 		CPDefinitionLocalization cpDefinitionLocalization = cpDefinitionLocalizationPersistence.fetchByCPDefinitionId_LanguageId(cpDefinition.getCPDefinitionId(),
 				languageId);
 
@@ -560,6 +561,9 @@ public abstract class CPDefinitionLocalServiceBaseImpl
 		cpDefinitionLocalization.setTitle(title);
 		cpDefinitionLocalization.setShortDescription(shortDescription);
 		cpDefinitionLocalization.setDescription(description);
+		cpDefinitionLocalization.setMetaTitle(metaTitle);
+		cpDefinitionLocalization.setMetaKeywords(metaKeywords);
+		cpDefinitionLocalization.setMetaDescription(metaDescription);
 
 		return cpDefinitionLocalizationPersistence.update(cpDefinitionLocalization);
 	}
@@ -567,7 +571,9 @@ public abstract class CPDefinitionLocalServiceBaseImpl
 	protected List<CPDefinitionLocalization> updateCPDefinitionLocalizations(
 		CPDefinition cpDefinition, Map<String, String> titleMap,
 		Map<String, String> shortDescriptionMap,
-		Map<String, String> descriptionMap) throws PortalException {
+		Map<String, String> descriptionMap, Map<String, String> metaTitleMap,
+		Map<String, String> metaKeywordsMap,
+		Map<String, String> metaDescriptionMap) throws PortalException {
 		Map<String, String[]> localizedValuesMap = new HashMap<String, String[]>();
 
 		for (Map.Entry<String, String> entry : titleMap.entrySet()) {
@@ -576,7 +582,7 @@ public abstract class CPDefinitionLocalServiceBaseImpl
 			String[] localizedValues = localizedValuesMap.get(languageId);
 
 			if (localizedValues == null) {
-				localizedValues = new String[3];
+				localizedValues = new String[6];
 
 				localizedValuesMap.put(languageId, localizedValues);
 			}
@@ -590,7 +596,7 @@ public abstract class CPDefinitionLocalServiceBaseImpl
 			String[] localizedValues = localizedValuesMap.get(languageId);
 
 			if (localizedValues == null) {
-				localizedValues = new String[3];
+				localizedValues = new String[6];
 
 				localizedValuesMap.put(languageId, localizedValues);
 			}
@@ -604,12 +610,54 @@ public abstract class CPDefinitionLocalServiceBaseImpl
 			String[] localizedValues = localizedValuesMap.get(languageId);
 
 			if (localizedValues == null) {
-				localizedValues = new String[3];
+				localizedValues = new String[6];
 
 				localizedValuesMap.put(languageId, localizedValues);
 			}
 
 			localizedValues[2] = entry.getValue();
+		}
+
+		for (Map.Entry<String, String> entry : metaTitleMap.entrySet()) {
+			String languageId = entry.getKey();
+
+			String[] localizedValues = localizedValuesMap.get(languageId);
+
+			if (localizedValues == null) {
+				localizedValues = new String[6];
+
+				localizedValuesMap.put(languageId, localizedValues);
+			}
+
+			localizedValues[3] = entry.getValue();
+		}
+
+		for (Map.Entry<String, String> entry : metaKeywordsMap.entrySet()) {
+			String languageId = entry.getKey();
+
+			String[] localizedValues = localizedValuesMap.get(languageId);
+
+			if (localizedValues == null) {
+				localizedValues = new String[6];
+
+				localizedValuesMap.put(languageId, localizedValues);
+			}
+
+			localizedValues[4] = entry.getValue();
+		}
+
+		for (Map.Entry<String, String> entry : metaDescriptionMap.entrySet()) {
+			String languageId = entry.getKey();
+
+			String[] localizedValues = localizedValuesMap.get(languageId);
+
+			if (localizedValues == null) {
+				localizedValues = new String[6];
+
+				localizedValuesMap.put(languageId, localizedValues);
+			}
+
+			localizedValues[5] = entry.getValue();
 		}
 
 		List<CPDefinitionLocalization> cpDefinitionLocalizations = new ArrayList<CPDefinitionLocalization>(localizedValuesMap.size());
@@ -627,6 +675,9 @@ public abstract class CPDefinitionLocalServiceBaseImpl
 				cpDefinitionLocalization.setTitle(localizedValues[0]);
 				cpDefinitionLocalization.setShortDescription(localizedValues[1]);
 				cpDefinitionLocalization.setDescription(localizedValues[2]);
+				cpDefinitionLocalization.setMetaTitle(localizedValues[3]);
+				cpDefinitionLocalization.setMetaKeywords(localizedValues[4]);
+				cpDefinitionLocalization.setMetaDescription(localizedValues[5]);
 
 				cpDefinitionLocalizations.add(cpDefinitionLocalizationPersistence.update(
 						cpDefinitionLocalization));
@@ -649,6 +700,9 @@ public abstract class CPDefinitionLocalServiceBaseImpl
 			cpDefinitionLocalization.setTitle(localizedValues[0]);
 			cpDefinitionLocalization.setShortDescription(localizedValues[1]);
 			cpDefinitionLocalization.setDescription(localizedValues[2]);
+			cpDefinitionLocalization.setMetaTitle(localizedValues[3]);
+			cpDefinitionLocalization.setMetaKeywords(localizedValues[4]);
+			cpDefinitionLocalization.setMetaDescription(localizedValues[5]);
 
 			cpDefinitionLocalizations.add(cpDefinitionLocalizationPersistence.update(
 					cpDefinitionLocalization));

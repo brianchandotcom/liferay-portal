@@ -135,6 +135,12 @@ public class CPDefinitionLocalizationPersistenceTest {
 
 		newCPDefinitionLocalization.setDescription(RandomTestUtil.randomString());
 
+		newCPDefinitionLocalization.setMetaTitle(RandomTestUtil.randomString());
+
+		newCPDefinitionLocalization.setMetaKeywords(RandomTestUtil.randomString());
+
+		newCPDefinitionLocalization.setMetaDescription(RandomTestUtil.randomString());
+
 		_cpDefinitionLocalizations.add(_persistence.update(
 				newCPDefinitionLocalization));
 
@@ -156,6 +162,12 @@ public class CPDefinitionLocalizationPersistenceTest {
 			newCPDefinitionLocalization.getShortDescription());
 		Assert.assertEquals(existingCPDefinitionLocalization.getDescription(),
 			newCPDefinitionLocalization.getDescription());
+		Assert.assertEquals(existingCPDefinitionLocalization.getMetaTitle(),
+			newCPDefinitionLocalization.getMetaTitle());
+		Assert.assertEquals(existingCPDefinitionLocalization.getMetaKeywords(),
+			newCPDefinitionLocalization.getMetaKeywords());
+		Assert.assertEquals(existingCPDefinitionLocalization.getMetaDescription(),
+			newCPDefinitionLocalization.getMetaDescription());
 	}
 
 	@Test
@@ -203,7 +215,8 @@ public class CPDefinitionLocalizationPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("CPDefinitionLocalization",
 			"mvccVersion", true, "cpDefinitionLocalizationId", true,
 			"companyId", true, "CPDefinitionId", true, "languageId", true,
-			"title", true, "shortDescription", true);
+			"title", true, "shortDescription", true, "metaTitle", true,
+			"metaKeywords", true, "metaDescription", true);
 	}
 
 	@Test
@@ -427,6 +440,12 @@ public class CPDefinitionLocalizationPersistenceTest {
 		cpDefinitionLocalization.setShortDescription(RandomTestUtil.randomString());
 
 		cpDefinitionLocalization.setDescription(RandomTestUtil.randomString());
+
+		cpDefinitionLocalization.setMetaTitle(RandomTestUtil.randomString());
+
+		cpDefinitionLocalization.setMetaKeywords(RandomTestUtil.randomString());
+
+		cpDefinitionLocalization.setMetaDescription(RandomTestUtil.randomString());
 
 		_cpDefinitionLocalizations.add(_persistence.update(
 				cpDefinitionLocalization));

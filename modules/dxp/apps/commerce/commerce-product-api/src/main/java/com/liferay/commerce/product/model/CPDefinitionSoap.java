@@ -44,6 +44,8 @@ public class CPDefinitionSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setBaseSKU(model.getBaseSKU());
 		soapModel.setProductTypeName(model.getProductTypeName());
+		soapModel.setGtin(model.getGtin());
+		soapModel.setManufacturerPartNumber(model.getManufacturerPartNumber());
 		soapModel.setAvailableIndividually(model.getAvailableIndividually());
 		soapModel.setMinCartQuantity(model.getMinCartQuantity());
 		soapModel.setMaxCartQuantity(model.getMaxCartQuantity());
@@ -190,6 +192,22 @@ public class CPDefinitionSoap implements Serializable {
 		_productTypeName = productTypeName;
 	}
 
+	public String getGtin() {
+		return _gtin;
+	}
+
+	public void setGtin(String gtin) {
+		_gtin = gtin;
+	}
+
+	public String getManufacturerPartNumber() {
+		return _manufacturerPartNumber;
+	}
+
+	public void setManufacturerPartNumber(String manufacturerPartNumber) {
+		_manufacturerPartNumber = manufacturerPartNumber;
+	}
+
 	public boolean getAvailableIndividually() {
 		return _availableIndividually;
 	}
@@ -316,6 +334,8 @@ public class CPDefinitionSoap implements Serializable {
 	private Date _modifiedDate;
 	private String _baseSKU;
 	private String _productTypeName;
+	private String _gtin;
+	private String _manufacturerPartNumber;
 	private boolean _availableIndividually;
 	private int _minCartQuantity;
 	private int _maxCartQuantity;

@@ -67,6 +67,9 @@ public class CPDefinitionLocalizationWrapper implements CPDefinitionLocalization
 		attributes.put("title", getTitle());
 		attributes.put("shortDescription", getShortDescription());
 		attributes.put("description", getDescription());
+		attributes.put("metaTitle", getMetaTitle());
+		attributes.put("metaKeywords", getMetaKeywords());
+		attributes.put("metaDescription", getMetaDescription());
 
 		return attributes;
 	}
@@ -120,6 +123,24 @@ public class CPDefinitionLocalizationWrapper implements CPDefinitionLocalization
 
 		if (description != null) {
 			setDescription(description);
+		}
+
+		String metaTitle = (String)attributes.get("metaTitle");
+
+		if (metaTitle != null) {
+			setMetaTitle(metaTitle);
+		}
+
+		String metaKeywords = (String)attributes.get("metaKeywords");
+
+		if (metaKeywords != null) {
+			setMetaKeywords(metaKeywords);
+		}
+
+		String metaDescription = (String)attributes.get("metaDescription");
+
+		if (metaDescription != null) {
+			setMetaDescription(metaDescription);
 		}
 	}
 
@@ -196,6 +217,36 @@ public class CPDefinitionLocalizationWrapper implements CPDefinitionLocalization
 	@Override
 	public java.lang.String getLanguageId() {
 		return _cpDefinitionLocalization.getLanguageId();
+	}
+
+	/**
+	* Returns the meta description of this cp definition localization.
+	*
+	* @return the meta description of this cp definition localization
+	*/
+	@Override
+	public java.lang.String getMetaDescription() {
+		return _cpDefinitionLocalization.getMetaDescription();
+	}
+
+	/**
+	* Returns the meta keywords of this cp definition localization.
+	*
+	* @return the meta keywords of this cp definition localization
+	*/
+	@Override
+	public java.lang.String getMetaKeywords() {
+		return _cpDefinitionLocalization.getMetaKeywords();
+	}
+
+	/**
+	* Returns the meta title of this cp definition localization.
+	*
+	* @return the meta title of this cp definition localization
+	*/
+	@Override
+	public java.lang.String getMetaTitle() {
+		return _cpDefinitionLocalization.getMetaTitle();
 	}
 
 	/**
@@ -347,6 +398,36 @@ public class CPDefinitionLocalizationWrapper implements CPDefinitionLocalization
 	@Override
 	public void setLanguageId(java.lang.String languageId) {
 		_cpDefinitionLocalization.setLanguageId(languageId);
+	}
+
+	/**
+	* Sets the meta description of this cp definition localization.
+	*
+	* @param metaDescription the meta description of this cp definition localization
+	*/
+	@Override
+	public void setMetaDescription(java.lang.String metaDescription) {
+		_cpDefinitionLocalization.setMetaDescription(metaDescription);
+	}
+
+	/**
+	* Sets the meta keywords of this cp definition localization.
+	*
+	* @param metaKeywords the meta keywords of this cp definition localization
+	*/
+	@Override
+	public void setMetaKeywords(java.lang.String metaKeywords) {
+		_cpDefinitionLocalization.setMetaKeywords(metaKeywords);
+	}
+
+	/**
+	* Sets the meta title of this cp definition localization.
+	*
+	* @param metaTitle the meta title of this cp definition localization
+	*/
+	@Override
+	public void setMetaTitle(java.lang.String metaTitle) {
+		_cpDefinitionLocalization.setMetaTitle(metaTitle);
 	}
 
 	/**

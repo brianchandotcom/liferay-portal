@@ -143,6 +143,10 @@ public class CPInstancePersistenceTest {
 
 		newCPInstance.setSku(RandomTestUtil.randomString());
 
+		newCPInstance.setGtin(RandomTestUtil.randomString());
+
+		newCPInstance.setManufacturerPartNumber(RandomTestUtil.randomString());
+
 		newCPInstance.setDDMContent(RandomTestUtil.randomString());
 
 		newCPInstance.setDisplayDate(RandomTestUtil.nextDate());
@@ -184,6 +188,10 @@ public class CPInstancePersistenceTest {
 		Assert.assertEquals(existingCPInstance.getCPDefinitionId(),
 			newCPInstance.getCPDefinitionId());
 		Assert.assertEquals(existingCPInstance.getSku(), newCPInstance.getSku());
+		Assert.assertEquals(existingCPInstance.getGtin(),
+			newCPInstance.getGtin());
+		Assert.assertEquals(existingCPInstance.getManufacturerPartNumber(),
+			newCPInstance.getManufacturerPartNumber());
 		Assert.assertEquals(existingCPInstance.getDDMContent(),
 			newCPInstance.getDDMContent());
 		Assert.assertEquals(Time.getShortTimestamp(
@@ -313,7 +321,8 @@ public class CPInstancePersistenceTest {
 		return OrderByComparatorFactoryUtil.create("CPInstance", "uuid", true,
 			"CPInstanceId", true, "groupId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,
-			"CPDefinitionId", true, "sku", true, "displayDate", true,
+			"CPDefinitionId", true, "sku", true, "gtin", true,
+			"manufacturerPartNumber", true, "displayDate", true,
 			"expirationDate", true, "lastPublishDate", true, "status", true,
 			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
 	}
@@ -557,6 +566,10 @@ public class CPInstancePersistenceTest {
 		cpInstance.setCPDefinitionId(RandomTestUtil.nextLong());
 
 		cpInstance.setSku(RandomTestUtil.randomString());
+
+		cpInstance.setGtin(RandomTestUtil.randomString());
+
+		cpInstance.setManufacturerPartNumber(RandomTestUtil.randomString());
 
 		cpInstance.setDDMContent(RandomTestUtil.randomString());
 

@@ -77,13 +77,21 @@ public class CPDefinitionServiceSoap {
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues,
 		java.lang.String[] urlTitleMapLanguageIds,
-		java.lang.String[] urlTitleMapValues, java.lang.String layoutUuid,
-		java.lang.String productTypeName, int minCartQuantity,
-		int maxCartQuantity, java.lang.String allowedCartQuantity,
-		int multipleCartQuantity, java.lang.String ddmStructureKey,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		java.lang.String[] urlTitleMapValues,
+		java.lang.String[] metaTitleMapLanguageIds,
+		java.lang.String[] metaTitleMapValues,
+		java.lang.String[] metaKeywordsMapLanguageIds,
+		java.lang.String[] metaKeywordsMapValues,
+		java.lang.String[] metaDescriptionMapLanguageIds,
+		java.lang.String[] metaDescriptionMapValues,
+		java.lang.String layoutUuid, java.lang.String productTypeName,
+		java.lang.String gtin, java.lang.String manufacturerPartNumber,
+		int minCartQuantity, int maxCartQuantity,
+		java.lang.String allowedCartQuantity, int multipleCartQuantity,
+		java.lang.String ddmStructureKey, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
@@ -96,16 +104,23 @@ public class CPDefinitionServiceSoap {
 					descriptionMapValues);
 			Map<Locale, String> urlTitleMap = LocalizationUtil.getLocalizationMap(urlTitleMapLanguageIds,
 					urlTitleMapValues);
+			Map<Locale, String> metaTitleMap = LocalizationUtil.getLocalizationMap(metaTitleMapLanguageIds,
+					metaTitleMapValues);
+			Map<Locale, String> metaKeywordsMap = LocalizationUtil.getLocalizationMap(metaKeywordsMapLanguageIds,
+					metaKeywordsMapValues);
+			Map<Locale, String> metaDescriptionMap = LocalizationUtil.getLocalizationMap(metaDescriptionMapLanguageIds,
+					metaDescriptionMapValues);
 
 			com.liferay.commerce.product.model.CPDefinition returnValue = CPDefinitionServiceUtil.addCPDefinition(baseSKU,
 					titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
-					layoutUuid, productTypeName, minCartQuantity,
-					maxCartQuantity, allowedCartQuantity, multipleCartQuantity,
-					ddmStructureKey, displayDateMonth, displayDateDay,
-					displayDateYear, displayDateHour, displayDateMinute,
-					expirationDateMonth, expirationDateDay, expirationDateYear,
-					expirationDateHour, expirationDateMinute, neverExpire,
-					serviceContext);
+					metaTitleMap, metaKeywordsMap, metaDescriptionMap,
+					layoutUuid, productTypeName, gtin, manufacturerPartNumber,
+					minCartQuantity, maxCartQuantity, allowedCartQuantity,
+					multipleCartQuantity, ddmStructureKey, displayDateMonth,
+					displayDateDay, displayDateYear, displayDateHour,
+					displayDateMinute, expirationDateMonth, expirationDateDay,
+					expirationDateYear, expirationDateHour,
+					expirationDateMinute, neverExpire, serviceContext);
 
 			return com.liferay.commerce.product.model.CPDefinitionSoap.toSoapModel(returnValue);
 		}
@@ -315,13 +330,20 @@ public class CPDefinitionServiceSoap {
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues,
 		java.lang.String[] urlTitleMapLanguageIds,
-		java.lang.String[] urlTitleMapValues, java.lang.String layoutUuid,
-		int minCartQuantity, int maxCartQuantity,
-		java.lang.String allowedCartQuantity, int multipleCartQuantity,
-		java.lang.String ddmStructureKey, int displayDateMonth,
-		int displayDateDay, int displayDateYear, int displayDateHour,
-		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
-		int expirationDateYear, int expirationDateHour,
+		java.lang.String[] urlTitleMapValues,
+		java.lang.String[] metaTitleMapLanguageIds,
+		java.lang.String[] metaTitleMapValues,
+		java.lang.String[] metaKeywordsMapLanguageIds,
+		java.lang.String[] metaKeywordsMapValues,
+		java.lang.String[] metaDescriptionMapLanguageIds,
+		java.lang.String[] metaDescriptionMapValues,
+		java.lang.String layoutUuid, java.lang.String gtin,
+		java.lang.String manufacturerPartNumber, int minCartQuantity,
+		int maxCartQuantity, java.lang.String allowedCartQuantity,
+		int multipleCartQuantity, java.lang.String ddmStructureKey,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
@@ -334,10 +356,18 @@ public class CPDefinitionServiceSoap {
 					descriptionMapValues);
 			Map<Locale, String> urlTitleMap = LocalizationUtil.getLocalizationMap(urlTitleMapLanguageIds,
 					urlTitleMapValues);
+			Map<Locale, String> metaTitleMap = LocalizationUtil.getLocalizationMap(metaTitleMapLanguageIds,
+					metaTitleMapValues);
+			Map<Locale, String> metaKeywordsMap = LocalizationUtil.getLocalizationMap(metaKeywordsMapLanguageIds,
+					metaKeywordsMapValues);
+			Map<Locale, String> metaDescriptionMap = LocalizationUtil.getLocalizationMap(metaDescriptionMapLanguageIds,
+					metaDescriptionMapValues);
 
 			com.liferay.commerce.product.model.CPDefinition returnValue = CPDefinitionServiceUtil.updateCPDefinition(cpDefinitionId,
 					baseSKU, titleMap, shortDescriptionMap, descriptionMap,
-					urlTitleMap, layoutUuid, minCartQuantity, maxCartQuantity,
+					urlTitleMap, metaTitleMap, metaKeywordsMap,
+					metaDescriptionMap, layoutUuid, gtin,
+					manufacturerPartNumber, minCartQuantity, maxCartQuantity,
 					allowedCartQuantity, multipleCartQuantity, ddmStructureKey,
 					displayDateMonth, displayDateDay, displayDateYear,
 					displayDateHour, displayDateMinute, expirationDateMonth,

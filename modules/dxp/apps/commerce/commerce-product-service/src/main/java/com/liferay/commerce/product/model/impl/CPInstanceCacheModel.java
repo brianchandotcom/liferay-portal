@@ -66,7 +66,7 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -88,6 +88,10 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 		sb.append(CPDefinitionId);
 		sb.append(", sku=");
 		sb.append(sku);
+		sb.append(", gtin=");
+		sb.append(gtin);
+		sb.append(", manufacturerPartNumber=");
+		sb.append(manufacturerPartNumber);
 		sb.append(", DDMContent=");
 		sb.append(DDMContent);
 		sb.append(", displayDate=");
@@ -153,6 +157,20 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 		}
 		else {
 			cpInstanceImpl.setSku(sku);
+		}
+
+		if (gtin == null) {
+			cpInstanceImpl.setGtin(StringPool.BLANK);
+		}
+		else {
+			cpInstanceImpl.setGtin(gtin);
+		}
+
+		if (manufacturerPartNumber == null) {
+			cpInstanceImpl.setManufacturerPartNumber(StringPool.BLANK);
+		}
+		else {
+			cpInstanceImpl.setManufacturerPartNumber(manufacturerPartNumber);
 		}
 
 		if (DDMContent == null) {
@@ -222,6 +240,8 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 
 		CPDefinitionId = objectInput.readLong();
 		sku = objectInput.readUTF();
+		gtin = objectInput.readUTF();
+		manufacturerPartNumber = objectInput.readUTF();
 		DDMContent = objectInput.readUTF();
 		displayDate = objectInput.readLong();
 		expirationDate = objectInput.readLong();
@@ -271,6 +291,20 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 			objectOutput.writeUTF(sku);
 		}
 
+		if (gtin == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(gtin);
+		}
+
+		if (manufacturerPartNumber == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(manufacturerPartNumber);
+		}
+
 		if (DDMContent == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -306,6 +340,8 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 	public long modifiedDate;
 	public long CPDefinitionId;
 	public String sku;
+	public String gtin;
+	public String manufacturerPartNumber;
 	public String DDMContent;
 	public long displayDate;
 	public long expirationDate;

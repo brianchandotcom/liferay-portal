@@ -89,6 +89,8 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "CPDefinitionId", Types.BIGINT },
 			{ "sku", Types.VARCHAR },
+			{ "gtin", Types.VARCHAR },
+			{ "manufacturerPartNumber", Types.VARCHAR },
 			{ "DDMContent", Types.CLOB },
 			{ "displayDate", Types.TIMESTAMP },
 			{ "expirationDate", Types.TIMESTAMP },
@@ -111,6 +113,8 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("CPDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("sku", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("gtin", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("manufacturerPartNumber", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("DDMContent", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("displayDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
@@ -121,7 +125,7 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPInstance (uuid_ VARCHAR(75) null,CPInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,sku VARCHAR(75) null,DDMContent TEXT null,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CPInstance (uuid_ VARCHAR(75) null,CPInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,sku VARCHAR(75) null,gtin VARCHAR(75) null,manufacturerPartNumber VARCHAR(75) null,DDMContent TEXT null,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CPInstance";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpInstance.displayDate DESC, cpInstance.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPInstance.displayDate DESC, CPInstance.createDate DESC";
@@ -169,6 +173,8 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setCPDefinitionId(soapModel.getCPDefinitionId());
 		model.setSku(soapModel.getSku());
+		model.setGtin(soapModel.getGtin());
+		model.setManufacturerPartNumber(soapModel.getManufacturerPartNumber());
 		model.setDDMContent(soapModel.getDDMContent());
 		model.setDisplayDate(soapModel.getDisplayDate());
 		model.setExpirationDate(soapModel.getExpirationDate());
@@ -251,6 +257,8 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("CPDefinitionId", getCPDefinitionId());
 		attributes.put("sku", getSku());
+		attributes.put("gtin", getGtin());
+		attributes.put("manufacturerPartNumber", getManufacturerPartNumber());
 		attributes.put("DDMContent", getDDMContent());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
@@ -326,6 +334,19 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 
 		if (sku != null) {
 			setSku(sku);
+		}
+
+		String gtin = (String)attributes.get("gtin");
+
+		if (gtin != null) {
+			setGtin(gtin);
+		}
+
+		String manufacturerPartNumber = (String)attributes.get(
+				"manufacturerPartNumber");
+
+		if (manufacturerPartNumber != null) {
+			setManufacturerPartNumber(manufacturerPartNumber);
 		}
 
 		String DDMContent = (String)attributes.get("DDMContent");
@@ -578,6 +599,38 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 
 	public String getOriginalSku() {
 		return GetterUtil.getString(_originalSku);
+	}
+
+	@JSON
+	@Override
+	public String getGtin() {
+		if (_gtin == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _gtin;
+		}
+	}
+
+	@Override
+	public void setGtin(String gtin) {
+		_gtin = gtin;
+	}
+
+	@JSON
+	@Override
+	public String getManufacturerPartNumber() {
+		if (_manufacturerPartNumber == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _manufacturerPartNumber;
+		}
+	}
+
+	@Override
+	public void setManufacturerPartNumber(String manufacturerPartNumber) {
+		_manufacturerPartNumber = manufacturerPartNumber;
 	}
 
 	@JSON
@@ -974,6 +1027,8 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		cpInstanceImpl.setModifiedDate(getModifiedDate());
 		cpInstanceImpl.setCPDefinitionId(getCPDefinitionId());
 		cpInstanceImpl.setSku(getSku());
+		cpInstanceImpl.setGtin(getGtin());
+		cpInstanceImpl.setManufacturerPartNumber(getManufacturerPartNumber());
 		cpInstanceImpl.setDDMContent(getDDMContent());
 		cpInstanceImpl.setDisplayDate(getDisplayDate());
 		cpInstanceImpl.setExpirationDate(getExpirationDate());
@@ -1135,6 +1190,23 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 			cpInstanceCacheModel.sku = null;
 		}
 
+		cpInstanceCacheModel.gtin = getGtin();
+
+		String gtin = cpInstanceCacheModel.gtin;
+
+		if ((gtin != null) && (gtin.length() == 0)) {
+			cpInstanceCacheModel.gtin = null;
+		}
+
+		cpInstanceCacheModel.manufacturerPartNumber = getManufacturerPartNumber();
+
+		String manufacturerPartNumber = cpInstanceCacheModel.manufacturerPartNumber;
+
+		if ((manufacturerPartNumber != null) &&
+				(manufacturerPartNumber.length() == 0)) {
+			cpInstanceCacheModel.manufacturerPartNumber = null;
+		}
+
 		cpInstanceCacheModel.DDMContent = getDDMContent();
 
 		String DDMContent = cpInstanceCacheModel.DDMContent;
@@ -1196,7 +1268,7 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1218,6 +1290,10 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		sb.append(getCPDefinitionId());
 		sb.append(", sku=");
 		sb.append(getSku());
+		sb.append(", gtin=");
+		sb.append(getGtin());
+		sb.append(", manufacturerPartNumber=");
+		sb.append(getManufacturerPartNumber());
 		sb.append(", DDMContent=");
 		sb.append(getDDMContent());
 		sb.append(", displayDate=");
@@ -1241,7 +1317,7 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(58);
+		StringBundler sb = new StringBundler(64);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.product.model.CPInstance");
@@ -1286,6 +1362,14 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		sb.append(
 			"<column><column-name>sku</column-name><column-value><![CDATA[");
 		sb.append(getSku());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>gtin</column-name><column-value><![CDATA[");
+		sb.append(getGtin());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>manufacturerPartNumber</column-name><column-value><![CDATA[");
+		sb.append(getManufacturerPartNumber());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>DDMContent</column-name><column-value><![CDATA[");
@@ -1348,6 +1432,8 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 	private boolean _setOriginalCPDefinitionId;
 	private String _sku;
 	private String _originalSku;
+	private String _gtin;
+	private String _manufacturerPartNumber;
 	private String _DDMContent;
 	private Date _displayDate;
 	private Date _originalDisplayDate;

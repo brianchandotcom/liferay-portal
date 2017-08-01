@@ -40,6 +40,8 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="baseSKU" type="String" />
 		<field name="productTypeName" type="String" />
+		<field name="gtin" type="String" />
+		<field name="manufacturerPartNumber" type="String" />
 		<field name="availableIndividually" type="boolean" />
 		<field name="minCartQuantity" type="int">
 			<hint name="default-value">1</hint>
@@ -95,6 +97,9 @@
 		<field name="description" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="metaTitle" type="String" />
+		<field name="metaKeywords" type="String" />
+		<field name="metaDescription" type="String" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPDefinitionOptionRel">
 		<field name="uuid" type="String" />
@@ -202,6 +207,8 @@
 		<field name="sku" type="String">
 			<validator name="required" />
 		</field>
+		<field name="gtin" type="String" />
+		<field name="manufacturerPartNumber" type="String" />
 		<field name="DDMContent" type="String">
 			<hint-collection name="CLOB" />
 		</field>

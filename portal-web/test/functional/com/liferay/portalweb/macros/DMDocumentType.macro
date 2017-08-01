@@ -176,6 +176,7 @@
 		<execute macro="DMDocumentType#selectDocumentTypeFrame" />
 
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="DM Document Type" />
+
 		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 
 		<while>

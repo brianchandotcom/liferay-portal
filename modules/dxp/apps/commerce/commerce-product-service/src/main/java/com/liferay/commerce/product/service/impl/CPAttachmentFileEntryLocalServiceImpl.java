@@ -15,9 +15,9 @@
 package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.constants.CPConstants;
+import com.liferay.commerce.product.exception.CPAttachmentFileEntryDisplayDateException;
+import com.liferay.commerce.product.exception.CPAttachmentFileEntryExpirationDateException;
 import com.liferay.commerce.product.exception.CPAttachmentFileEntryFileEntryIdException;
-import com.liferay.commerce.product.exception.CPDefinitionDisplayDateException;
-import com.liferay.commerce.product.exception.CPDefinitionExpirationDateException;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.base.CPAttachmentFileEntryLocalServiceBaseImpl;
@@ -48,7 +48,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 
 import java.io.Serializable;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -87,13 +86,13 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		displayDate = PortalUtil.getDate(
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, user.getTimeZone(),
-			CPDefinitionDisplayDateException.class);
+			CPAttachmentFileEntryDisplayDateException.class);
 
 		if (!neverExpire) {
 			expirationDate = PortalUtil.getDate(
 				expirationDateMonth, expirationDateDay, expirationDateYear,
 				expirationDateHour, expirationDateMinute, user.getTimeZone(),
-				CPDefinitionExpirationDateException.class);
+				CPAttachmentFileEntryExpirationDateException.class);
 		}
 
 		validate(fileEntryId);
@@ -299,13 +298,13 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		displayDate = PortalUtil.getDate(
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, user.getTimeZone(),
-			CPDefinitionDisplayDateException.class);
+			CPAttachmentFileEntryDisplayDateException.class);
 
 		if (!neverExpire) {
 			expirationDate = PortalUtil.getDate(
 				expirationDateMonth, expirationDateDay, expirationDateYear,
 				expirationDateHour, expirationDateMinute, user.getTimeZone(),
-				CPDefinitionExpirationDateException.class);
+				CPAttachmentFileEntryExpirationDateException.class);
 		}
 
 		validate(fileEntryId);

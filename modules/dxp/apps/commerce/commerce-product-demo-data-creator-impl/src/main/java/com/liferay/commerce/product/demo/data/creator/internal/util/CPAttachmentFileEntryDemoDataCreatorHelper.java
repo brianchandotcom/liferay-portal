@@ -197,8 +197,8 @@ public class CPAttachmentFileEntryDemoDataCreatorHelper
 			serviceContext.getTimeZone());
 
 		int displayDateMonth = displayCalendar.get(Calendar.MONTH);
-		int displayDateDay = displayCalendar.get(Calendar.DAY_OF_MONTH) - 1;
-		int displayDateYear = displayCalendar.get(Calendar.YEAR);
+		int displayDateDay = displayCalendar.get(Calendar.DAY_OF_MONTH);
+		int displayDateYear = displayCalendar.get(Calendar.YEAR) - 1;
 		int displayDateHour = displayCalendar.get(Calendar.HOUR);
 		int displayDateMinute = displayCalendar.get(Calendar.MINUTE);
 		int displayDateAmPm = displayCalendar.get(Calendar.AM_PM);

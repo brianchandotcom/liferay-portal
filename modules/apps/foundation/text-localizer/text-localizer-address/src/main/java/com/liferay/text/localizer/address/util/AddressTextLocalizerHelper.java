@@ -20,15 +20,13 @@ import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.text.localizer.address.AddressTextLocalizer;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Pei-Jung Lan
  */
-@Component(immediate = true, service = AddressTextLocalizerHelper.class)
 public class AddressTextLocalizerHelper {
 
 	public static String format(Address address) {
@@ -53,18 +51,17 @@ public class AddressTextLocalizerHelper {
 		return _serviceTrackerMap.getService(countryA2);
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
+	private static final ServiceTrackerMap<String, AddressTextLocalizer>
+		_serviceTrackerMap;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(
+			AddressTextLocalizerHelper.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, AddressTextLocalizer.class, "country");
 	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceTrackerMap.close();
-	}
-
-	private static ServiceTrackerMap<String, AddressTextLocalizer>
-		_serviceTrackerMap;
 
 }

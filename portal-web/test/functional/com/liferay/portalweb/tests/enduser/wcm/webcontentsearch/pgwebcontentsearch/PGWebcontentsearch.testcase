@@ -202,7 +202,9 @@
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
+		<execute macro="WebContentNavigator#gotoEditPGViaWCD">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
 
 		<execute macro="WebContent#selectCategory">
 			<var name="categoryName" value="Category Name" />
@@ -302,7 +304,9 @@
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
+		<execute macro="WebContentNavigator#gotoEditPGViaWCD">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
 
 		<execute macro="WebContent#selectCategory">
 			<var name="categoryName" value="Category Name" />
@@ -554,7 +558,9 @@
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
+		<execute macro="WebContentNavigator#gotoEditPGViaWCD">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
 
 		<execute macro="WebContent#addTagPGViaWCD">
 			<var name="tagName" value="tag name" />
@@ -636,7 +642,9 @@
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
+		<execute macro="WebContentNavigator#gotoEditPGViaWCD">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
 
 		<execute macro="WebContent#addTagPGViaWCD">
 			<var name="tagName" value="tag name" />

@@ -1396,7 +1396,9 @@
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
+		<execute macro="WebContentNavigator#gotoEditPGViaWCD">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
 
 		<execute macro="WebContent#editPGViaWCD">
 			<var name="structureName" value="Global WC Structure Name" />

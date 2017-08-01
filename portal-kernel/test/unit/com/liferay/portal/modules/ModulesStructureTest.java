@@ -101,6 +101,7 @@ public class ModulesStructureTest {
 
 					Path buildGradlePath = dirPath.resolve("build.gradle");
 					Path buildXMLPath = dirPath.resolve("build.xml");
+					Path ivyXmlPath = dirPath.resolve("ivy.xml");
 
 					boolean gitRepo = Files.exists(
 						dirPath.resolve(_GIT_REPO_FILE_NAME));
@@ -138,8 +139,6 @@ public class ModulesStructureTest {
 							"Forbidden " + buildXMLPath,
 							Files.exists(buildXMLPath));
 
-						Path ivyXmlPath = dirPath.resolve("ivy.xml");
-
 						Assert.assertFalse(
 							"Forbidden " + ivyXmlPath,
 							Files.exists(ivyXmlPath));
@@ -150,6 +149,7 @@ public class ModulesStructureTest {
 					if (Files.exists(buildXMLPath)) {
 						Assert.assertFalse(
 							"Forbidden " + buildGradlePath,
+							Files.notExists(ivyXmlPath) &&
 							Files.exists(buildGradlePath));
 
 						return FileVisitResult.SKIP_SUBTREE;

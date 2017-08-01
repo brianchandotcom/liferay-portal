@@ -30,6 +30,15 @@ import org.osgi.framework.FrameworkUtil;
 public class AddressTextLocalizerHelper {
 
 	public static String format(Address address) {
+		AddressTextLocalizer addressTextLocalizer = getAddressTextLocalizer(
+			address);
+
+		return addressTextLocalizer.format(address);
+	}
+
+	public static AddressTextLocalizer getAddressTextLocalizer(
+		Address address) {
+
 		Country country = address.getCountry();
 
 		AddressTextLocalizer addressTextLocalizer = null;
@@ -42,7 +51,7 @@ public class AddressTextLocalizerHelper {
 			addressTextLocalizer = getAddressTextLocalizer("US");
 		}
 
-		return addressTextLocalizer.format(address);
+		return addressTextLocalizer;
 	}
 
 	public static AddressTextLocalizer getAddressTextLocalizer(

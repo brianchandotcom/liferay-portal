@@ -25,6 +25,7 @@ List<DiffResult> sourceResults = diffResults[0];
 List<DiffResult> targetResults = diffResults[1];
 %>
 
+<div class="container-fluid-1280">
 <c:choose>
 	<c:when test="<%= !sourceResults.isEmpty() %>">
 		<table class="table table-bordered table-hover table-striped" id="taglib-diff-results">
@@ -98,6 +99,7 @@ List<DiffResult> targetResults = diffResults[1];
 		<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(sourceName), HtmlUtil.escape(targetName)} %>" key="there-are-no-differences-between-x-and-x" translateArguments="<%= false %>" />
 	</c:otherwise>
 </c:choose>
+</div>
 
 <%!
 private static String _processColumn(String changedLine) {

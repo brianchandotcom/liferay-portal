@@ -67,7 +67,7 @@ public class CPDefinitionServiceHttp {
 		java.lang.String layoutUuid, java.lang.String productTypeName,
 		java.lang.String gtin, java.lang.String manufacturerPartNumber,
 		int minCartQuantity, int maxCartQuantity,
-		java.lang.String allowedCartQuantity, int multipleCartQuantity,
+		java.lang.String allowedCartQuantities, int multipleCartQuantity,
 		java.lang.String ddmStructureKey, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
@@ -83,7 +83,7 @@ public class CPDefinitionServiceHttp {
 					titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
 					metaTitleMap, metaKeywordsMap, metaDescriptionMap,
 					layoutUuid, productTypeName, gtin, manufacturerPartNumber,
-					minCartQuantity, maxCartQuantity, allowedCartQuantity,
+					minCartQuantity, maxCartQuantity, allowedCartQuantities,
 					multipleCartQuantity, ddmStructureKey, displayDateMonth,
 					displayDateDay, displayDateYear, displayDateHour,
 					displayDateMinute, expirationDateMonth, expirationDateDay,
@@ -590,7 +590,7 @@ public class CPDefinitionServiceHttp {
 		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
 		java.lang.String layoutUuid, java.lang.String gtin,
 		java.lang.String manufacturerPartNumber, int minCartQuantity,
-		int maxCartQuantity, java.lang.String allowedCartQuantity,
+		int maxCartQuantity, java.lang.String allowedCartQuantities,
 		int multipleCartQuantity, java.lang.String ddmStructureKey,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
@@ -607,11 +607,12 @@ public class CPDefinitionServiceHttp {
 					descriptionMap, urlTitleMap, metaTitleMap, metaKeywordsMap,
 					metaDescriptionMap, layoutUuid, gtin,
 					manufacturerPartNumber, minCartQuantity, maxCartQuantity,
-					allowedCartQuantity, multipleCartQuantity, ddmStructureKey,
-					displayDateMonth, displayDateDay, displayDateYear,
-					displayDateHour, displayDateMinute, expirationDateMonth,
-					expirationDateDay, expirationDateYear, expirationDateHour,
-					expirationDateMinute, neverExpire, serviceContext);
+					allowedCartQuantities, multipleCartQuantity,
+					ddmStructureKey, displayDateMonth, displayDateDay,
+					displayDateYear, displayDateHour, displayDateMinute,
+					expirationDateMonth, expirationDateDay, expirationDateYear,
+					expirationDateHour, expirationDateMinute, neverExpire,
+					serviceContext);
 
 			Object returnObj = null;
 

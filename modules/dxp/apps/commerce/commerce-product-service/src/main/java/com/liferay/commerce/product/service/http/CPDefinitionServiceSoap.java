@@ -87,7 +87,7 @@ public class CPDefinitionServiceSoap {
 		java.lang.String layoutUuid, java.lang.String productTypeName,
 		java.lang.String gtin, java.lang.String manufacturerPartNumber,
 		int minCartQuantity, int maxCartQuantity,
-		java.lang.String allowedCartQuantity, int multipleCartQuantity,
+		java.lang.String allowedCartQuantities, int multipleCartQuantity,
 		java.lang.String ddmStructureKey, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
@@ -115,7 +115,7 @@ public class CPDefinitionServiceSoap {
 					titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
 					metaTitleMap, metaKeywordsMap, metaDescriptionMap,
 					layoutUuid, productTypeName, gtin, manufacturerPartNumber,
-					minCartQuantity, maxCartQuantity, allowedCartQuantity,
+					minCartQuantity, maxCartQuantity, allowedCartQuantities,
 					multipleCartQuantity, ddmStructureKey, displayDateMonth,
 					displayDateDay, displayDateYear, displayDateHour,
 					displayDateMinute, expirationDateMonth, expirationDateDay,
@@ -339,7 +339,7 @@ public class CPDefinitionServiceSoap {
 		java.lang.String[] metaDescriptionMapValues,
 		java.lang.String layoutUuid, java.lang.String gtin,
 		java.lang.String manufacturerPartNumber, int minCartQuantity,
-		int maxCartQuantity, java.lang.String allowedCartQuantity,
+		int maxCartQuantity, java.lang.String allowedCartQuantities,
 		int multipleCartQuantity, java.lang.String ddmStructureKey,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
@@ -368,11 +368,12 @@ public class CPDefinitionServiceSoap {
 					urlTitleMap, metaTitleMap, metaKeywordsMap,
 					metaDescriptionMap, layoutUuid, gtin,
 					manufacturerPartNumber, minCartQuantity, maxCartQuantity,
-					allowedCartQuantity, multipleCartQuantity, ddmStructureKey,
-					displayDateMonth, displayDateDay, displayDateYear,
-					displayDateHour, displayDateMinute, expirationDateMonth,
-					expirationDateDay, expirationDateYear, expirationDateHour,
-					expirationDateMinute, neverExpire, serviceContext);
+					allowedCartQuantities, multipleCartQuantity,
+					ddmStructureKey, displayDateMonth, displayDateDay,
+					displayDateYear, displayDateHour, displayDateMinute,
+					expirationDateMonth, expirationDateDay, expirationDateYear,
+					expirationDateHour, expirationDateMinute, neverExpire,
+					serviceContext);
 
 			return com.liferay.commerce.product.model.CPDefinitionSoap.toSoapModel(returnValue);
 		}

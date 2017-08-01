@@ -51,9 +51,7 @@
 			<hint name="default-value">10000</hint>
 			<validator name="number" />
 		</field>
-		<field name="allowedCartQuantity" type="String">
-			<hint-collection name="TEXTAREA" />
-		</field>
+		<field name="allowedCartQuantities" type="String" />
 		<field name="multipleCartQuantity" type="int">
 			<hint name="default-value">1</hint>
 			<validator name="number" />

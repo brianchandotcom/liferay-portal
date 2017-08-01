@@ -153,7 +153,7 @@ public class CPDefinitionPersistenceTest {
 
 		newCPDefinition.setMaxCartQuantity(RandomTestUtil.nextInt());
 
-		newCPDefinition.setAllowedCartQuantity(RandomTestUtil.randomString());
+		newCPDefinition.setAllowedCartQuantities(RandomTestUtil.randomString());
 
 		newCPDefinition.setMultipleCartQuantity(RandomTestUtil.nextInt());
 
@@ -211,8 +211,8 @@ public class CPDefinitionPersistenceTest {
 			newCPDefinition.getMinCartQuantity());
 		Assert.assertEquals(existingCPDefinition.getMaxCartQuantity(),
 			newCPDefinition.getMaxCartQuantity());
-		Assert.assertEquals(existingCPDefinition.getAllowedCartQuantity(),
-			newCPDefinition.getAllowedCartQuantity());
+		Assert.assertEquals(existingCPDefinition.getAllowedCartQuantities(),
+			newCPDefinition.getAllowedCartQuantities());
 		Assert.assertEquals(existingCPDefinition.getMultipleCartQuantity(),
 			newCPDefinition.getMultipleCartQuantity());
 		Assert.assertEquals(existingCPDefinition.getDDMStructureKey(),
@@ -339,7 +339,7 @@ public class CPDefinitionPersistenceTest {
 			"modifiedDate", true, "baseSKU", true, "productTypeName", true,
 			"gtin", true, "manufacturerPartNumber", true,
 			"availableIndividually", true, "minCartQuantity", true,
-			"maxCartQuantity", true, "allowedCartQuantity", true,
+			"maxCartQuantity", true, "allowedCartQuantities", true,
 			"multipleCartQuantity", true, "DDMStructureKey", true,
 			"displayDate", true, "expirationDate", true, "lastPublishDate",
 			true, "status", true, "statusByUserId", true, "statusByUserName",
@@ -589,7 +589,7 @@ public class CPDefinitionPersistenceTest {
 
 		cpDefinition.setMaxCartQuantity(RandomTestUtil.nextInt());
 
-		cpDefinition.setAllowedCartQuantity(RandomTestUtil.randomString());
+		cpDefinition.setAllowedCartQuantities(RandomTestUtil.randomString());
 
 		cpDefinition.setMultipleCartQuantity(RandomTestUtil.nextInt());
 

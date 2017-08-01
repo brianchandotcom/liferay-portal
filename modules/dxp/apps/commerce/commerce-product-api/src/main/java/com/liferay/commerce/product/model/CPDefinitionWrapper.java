@@ -75,7 +75,7 @@ public class CPDefinitionWrapper implements CPDefinition,
 		attributes.put("availableIndividually", getAvailableIndividually());
 		attributes.put("minCartQuantity", getMinCartQuantity());
 		attributes.put("maxCartQuantity", getMaxCartQuantity());
-		attributes.put("allowedCartQuantity", getAllowedCartQuantity());
+		attributes.put("allowedCartQuantities", getAllowedCartQuantities());
 		attributes.put("multipleCartQuantity", getMultipleCartQuantity());
 		attributes.put("DDMStructureKey", getDDMStructureKey());
 		attributes.put("displayDate", getDisplayDate());
@@ -184,11 +184,11 @@ public class CPDefinitionWrapper implements CPDefinition,
 			setMaxCartQuantity(maxCartQuantity);
 		}
 
-		String allowedCartQuantity = (String)attributes.get(
-				"allowedCartQuantity");
+		String allowedCartQuantities = (String)attributes.get(
+				"allowedCartQuantities");
 
-		if (allowedCartQuantity != null) {
-			setAllowedCartQuantity(allowedCartQuantity);
+		if (allowedCartQuantities != null) {
+			setAllowedCartQuantities(allowedCartQuantities);
 		}
 
 		Integer multipleCartQuantity = (Integer)attributes.get(
@@ -502,13 +502,13 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	/**
-	* Returns the allowed cart quantity of this cp definition.
+	* Returns the allowed cart quantities of this cp definition.
 	*
-	* @return the allowed cart quantity of this cp definition
+	* @return the allowed cart quantities of this cp definition
 	*/
 	@Override
-	public java.lang.String getAllowedCartQuantity() {
-		return _cpDefinition.getAllowedCartQuantity();
+	public java.lang.String getAllowedCartQuantities() {
+		return _cpDefinition.getAllowedCartQuantities();
 	}
 
 	/**
@@ -990,13 +990,13 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	/**
-	* Sets the allowed cart quantity of this cp definition.
+	* Sets the allowed cart quantities of this cp definition.
 	*
-	* @param allowedCartQuantity the allowed cart quantity of this cp definition
+	* @param allowedCartQuantities the allowed cart quantities of this cp definition
 	*/
 	@Override
-	public void setAllowedCartQuantity(java.lang.String allowedCartQuantity) {
-		_cpDefinition.setAllowedCartQuantity(allowedCartQuantity);
+	public void setAllowedCartQuantities(java.lang.String allowedCartQuantities) {
+		_cpDefinition.setAllowedCartQuantities(allowedCartQuantities);
 	}
 
 	/**

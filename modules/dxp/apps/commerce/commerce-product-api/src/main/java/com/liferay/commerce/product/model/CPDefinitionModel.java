@@ -323,19 +323,19 @@ public interface CPDefinitionModel extends BaseModel<CPDefinition>, ShardedModel
 	public void setMaxCartQuantity(int maxCartQuantity);
 
 	/**
-	 * Returns the allowed cart quantity of this cp definition.
+	 * Returns the allowed cart quantities of this cp definition.
 	 *
-	 * @return the allowed cart quantity of this cp definition
+	 * @return the allowed cart quantities of this cp definition
 	 */
 	@AutoEscape
-	public String getAllowedCartQuantity();
+	public String getAllowedCartQuantities();
 
 	/**
-	 * Sets the allowed cart quantity of this cp definition.
+	 * Sets the allowed cart quantities of this cp definition.
 	 *
-	 * @param allowedCartQuantity the allowed cart quantity of this cp definition
+	 * @param allowedCartQuantities the allowed cart quantities of this cp definition
 	 */
-	public void setAllowedCartQuantity(String allowedCartQuantity);
+	public void setAllowedCartQuantities(String allowedCartQuantities);
 
 	/**
 	 * Returns the multiple cart quantity of this cp definition.

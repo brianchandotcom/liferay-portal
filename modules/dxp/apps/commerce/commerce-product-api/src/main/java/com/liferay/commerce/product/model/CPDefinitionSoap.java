@@ -49,7 +49,7 @@ public class CPDefinitionSoap implements Serializable {
 		soapModel.setAvailableIndividually(model.getAvailableIndividually());
 		soapModel.setMinCartQuantity(model.getMinCartQuantity());
 		soapModel.setMaxCartQuantity(model.getMaxCartQuantity());
-		soapModel.setAllowedCartQuantity(model.getAllowedCartQuantity());
+		soapModel.setAllowedCartQuantities(model.getAllowedCartQuantities());
 		soapModel.setMultipleCartQuantity(model.getMultipleCartQuantity());
 		soapModel.setDDMStructureKey(model.getDDMStructureKey());
 		soapModel.setDisplayDate(model.getDisplayDate());
@@ -236,12 +236,12 @@ public class CPDefinitionSoap implements Serializable {
 		_maxCartQuantity = maxCartQuantity;
 	}
 
-	public String getAllowedCartQuantity() {
-		return _allowedCartQuantity;
+	public String getAllowedCartQuantities() {
+		return _allowedCartQuantities;
 	}
 
-	public void setAllowedCartQuantity(String allowedCartQuantity) {
-		_allowedCartQuantity = allowedCartQuantity;
+	public void setAllowedCartQuantities(String allowedCartQuantities) {
+		_allowedCartQuantities = allowedCartQuantities;
 	}
 
 	public int getMultipleCartQuantity() {
@@ -339,7 +339,7 @@ public class CPDefinitionSoap implements Serializable {
 	private boolean _availableIndividually;
 	private int _minCartQuantity;
 	private int _maxCartQuantity;
-	private String _allowedCartQuantity;
+	private String _allowedCartQuantities;
 	private int _multipleCartQuantity;
 	private String _DDMStructureKey;
 	private Date _displayDate;

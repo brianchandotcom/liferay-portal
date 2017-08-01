@@ -98,8 +98,8 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		sb.append(minCartQuantity);
 		sb.append(", maxCartQuantity=");
 		sb.append(maxCartQuantity);
-		sb.append(", allowedCartQuantity=");
-		sb.append(allowedCartQuantity);
+		sb.append(", allowedCartQuantities=");
+		sb.append(allowedCartQuantities);
 		sb.append(", multipleCartQuantity=");
 		sb.append(multipleCartQuantity);
 		sb.append(", DDMStructureKey=");
@@ -194,11 +194,11 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		cpDefinitionImpl.setMinCartQuantity(minCartQuantity);
 		cpDefinitionImpl.setMaxCartQuantity(maxCartQuantity);
 
-		if (allowedCartQuantity == null) {
-			cpDefinitionImpl.setAllowedCartQuantity(StringPool.BLANK);
+		if (allowedCartQuantities == null) {
+			cpDefinitionImpl.setAllowedCartQuantities(StringPool.BLANK);
 		}
 		else {
-			cpDefinitionImpl.setAllowedCartQuantity(allowedCartQuantity);
+			cpDefinitionImpl.setAllowedCartQuantities(allowedCartQuantities);
 		}
 
 		cpDefinitionImpl.setMultipleCartQuantity(multipleCartQuantity);
@@ -284,7 +284,7 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		minCartQuantity = objectInput.readInt();
 
 		maxCartQuantity = objectInput.readInt();
-		allowedCartQuantity = objectInput.readUTF();
+		allowedCartQuantities = objectInput.readUTF();
 
 		multipleCartQuantity = objectInput.readInt();
 		DDMStructureKey = objectInput.readUTF();
@@ -362,11 +362,11 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 
 		objectOutput.writeInt(maxCartQuantity);
 
-		if (allowedCartQuantity == null) {
+		if (allowedCartQuantities == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
-			objectOutput.writeUTF(allowedCartQuantity);
+			objectOutput.writeUTF(allowedCartQuantities);
 		}
 
 		objectOutput.writeInt(multipleCartQuantity);
@@ -418,7 +418,7 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 	public boolean availableIndividually;
 	public int minCartQuantity;
 	public int maxCartQuantity;
-	public String allowedCartQuantity;
+	public String allowedCartQuantities;
 	public int multipleCartQuantity;
 	public String DDMStructureKey;
 	public long displayDate;

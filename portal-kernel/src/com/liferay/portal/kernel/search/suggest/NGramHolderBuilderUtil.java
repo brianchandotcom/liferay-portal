@@ -56,6 +56,8 @@ public class NGramHolderBuilderUtil {
 		Registry registry = RegistryUtil.getRegistry();
 
 		_serviceTracker = registry.trackServices(NGramHolderBuilder.class);
+
+		_serviceTracker.open();
 	}
 
 	private static final NGramHolderBuilderUtil _instance =

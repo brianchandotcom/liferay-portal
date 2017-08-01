@@ -14,6 +14,7 @@
 
 package com.liferay.ant.sync.dir;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -21,7 +22,6 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -59,8 +59,8 @@ public class SyncDirTask extends Task {
 		_toDir = toDir;
 	}
 
-	private List<SyncFileCallable> _buildSyncFileCallables(
-		File dir, File toDir, List<SyncFileCallable> syncFileCallables,
+	private List<SyncFileRunnable> _buildSyncFileRunnables(
+		File dir, File toDir, List<SyncFileRunnable> syncFileRunnables,
 		AtomicInteger atomicInteger) {
 
 		toDir.mkdirs();
@@ -71,18 +71,18 @@ public class SyncDirTask extends Task {
 			File toFile = new File(toDir, name);
 
 			if (fromFile.isDirectory()) {
-				_buildSyncFileCallables(
-					fromFile, toFile, syncFileCallables, atomicInteger);
+				_buildSyncFileRunnables(
+					fromFile, toFile, syncFileRunnables, atomicInteger);
 			}
 			else if (!toFile.exists()) {
-				SyncFileCallable syncFileCallable = new SyncFileCallable(
+				SyncFileRunnable syncFileRunnable = new SyncFileRunnable(
 					fromFile, toFile, atomicInteger);
 
-				syncFileCallables.add(syncFileCallable);
+				syncFileRunnables.add(syncFileRunnable);
 			}
 		}
 
-		return syncFileCallables;
+		return syncFileRunnables;
 	}
 
 	private void _checkConfiguration() throws BuildException {
@@ -107,13 +107,13 @@ public class SyncDirTask extends Task {
 	private int _syncDirectory() {
 		AtomicInteger atomicInteger = new AtomicInteger();
 
-		List<SyncFileCallable> syncFileCallables = _buildSyncFileCallables(
-			_dir, _toDir, new ArrayList<SyncFileCallable>(), atomicInteger);
+		List<SyncFileRunnable> syncFileRunnables = _buildSyncFileRunnables(
+			_dir, _toDir, new ArrayList<SyncFileRunnable>(), atomicInteger);
 
 		ExecutorService executorService = Executors.newFixedThreadPool(10);
 
-		for (SyncFileCallable syncFileCallable : syncFileCallables) {
-			executorService.submit(syncFileCallable);
+		for (SyncFileRunnable syncFileRunnable : syncFileRunnables) {
+			executorService.execute(syncFileRunnable);
 		}
 
 		executorService.shutdown();
@@ -132,9 +132,9 @@ public class SyncDirTask extends Task {
 	private File _dir;
 	private File _toDir;
 
-	private static class SyncFileCallable implements Callable<Void> {
+	private static class SyncFileRunnable implements Runnable {
 
-		public SyncFileCallable(
+		public SyncFileRunnable(
 			File file, File toFile, AtomicInteger atomicInteger) {
 
 			_file = file;
@@ -142,11 +142,14 @@ public class SyncDirTask extends Task {
 			_atomicInteger = atomicInteger;
 		}
 
-		public Void call() throws IOException {
-			FileInputStream inputStream = new FileInputStream(_file);
-			FileOutputStream outputStream = new FileOutputStream(_toFile);
+		public void run() {
+			FileInputStream inputStream = null;
+			FileOutputStream outputStream = null;
 
 			try {
+				inputStream = new FileInputStream(_file);
+				outputStream = new FileOutputStream(_toFile);
+
 				byte[] buffer = new byte[8192];
 
 				int count;
@@ -157,12 +160,27 @@ public class SyncDirTask extends Task {
 
 				_atomicInteger.incrementAndGet();
 			}
+			catch (IOException ioe) {
+				throw new RuntimeException(
+					"Unable to sync " + _file + " into " + _toFile, ioe);
+			}
 			finally {
-				inputStream.close();
-				outputStream.close();
+				_close(inputStream);
+				_close(outputStream);
+			}
+		}
+
+		private void _close(Closeable closeable) {
+			if (closeable == null) {
+				return;
 			}
 
-			return null;
+			try {
+				closeable.close();
+			}
+			catch (IOException ioe) {
+				ioe.printStackTrace();
+			}
 		}
 
 		private final AtomicInteger _atomicInteger;

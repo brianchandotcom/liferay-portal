@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Pei-Jung Lan
@@ -87,7 +89,9 @@ public class AddressTextLocalizerUtil {
 			return false;
 		}
 
-		return addressString.matches("[\\w\\s\\-\\,\\.]+");
+		Matcher matcher = _romanizedAddressPattern.matcher(addressString);
+
+		return matcher.matches();
 	}
 
 	private static String _getAddressString(Address address) {
@@ -114,5 +118,8 @@ public class AddressTextLocalizerUtil {
 
 		return sb.toString();
 	}
+
+	private static final Pattern _romanizedAddressPattern = Pattern.compile(
+		"[\\w\\s\\-\\,\\.]+");
 
 }

@@ -1227,7 +1227,7 @@
 		<execute macro="DMDocumentType#viewNoAvailableActionsViaDocumentTypesPG" />
 	</command>
 
-	<command name="ViewDateFieldRequiredInContract" priority="4">
+	<command name="ViewDateFieldRequiredInContract" priority="5">
 		<description message="This is a use case for LPS-53009" />
 
 		<execute macro="ProductMenu#gotoSitesContent">

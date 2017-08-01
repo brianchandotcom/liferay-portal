@@ -344,8 +344,20 @@ public class HttpImplTest extends PowerMockito {
 		Assert.assertEquals(
 			"www.google.com", _httpImpl.shortenURL("www.google.com", 0));
 		Assert.assertEquals(
+			"www.google.com", _httpImpl.shortenURL("www.google.com?", 0));
+		Assert.assertEquals(
 			"www.google.com?first=foo&second=bar",
 			_httpImpl.shortenURL("www.google.com?first=foo&second=bar", 0));
+		Assert.assertEquals(
+			"www.google.com",
+			_httpImpl.shortenURL("www.google.com?_backURL=www.yahoo.com", 0));
+		Assert.assertEquals(
+			"www.google.com",
+			_httpImpl.shortenURL("www.google.com?_redirect=www.yahoo.com", 0));
+		Assert.assertEquals(
+			"www.google.com",
+			_httpImpl.shortenURL(
+				"www.google.com?_returnToFullPageURL=www.yahoo.com", 0));
 		Assert.assertEquals(
 			"www.google.com",
 			_httpImpl.shortenURL("www.google.com?redirect=www.yahoo.com", 0));
@@ -353,6 +365,20 @@ public class HttpImplTest extends PowerMockito {
 			"www.google.com?parameter=foo",
 			_httpImpl.shortenURL(
 				"www.google.com?redirect=www.yahoo.com&parameter=foo", 0));
+		Assert.assertEquals(
+			"www.google.com?redirect=www.yahoo.com%3Fredirect%3D" +
+				"www.bing.com%26parameter%3Dbar&parameter=foo",
+			_httpImpl.shortenURL(
+				"www.google.com?redirect=www.yahoo.com%3Fredirect%3D" +
+					"www.bing.com%26parameter%3Dbar&parameter=foo",
+				3));
+		Assert.assertEquals(
+			"www.google.com?redirect=www.yahoo.com%3Fredirect%3D" +
+				"www.bing.com%26parameter%3Dbar&parameter=foo",
+			_httpImpl.shortenURL(
+				"www.google.com?redirect=www.yahoo.com%3Fredirect%3D" +
+					"www.bing.com%26parameter%3Dbar&parameter=foo",
+				2));
 		Assert.assertEquals(
 			"www.google.com?redirect=www.yahoo.com%3Fparameter%3Dbar&" +
 				"parameter=foo",
@@ -366,6 +392,44 @@ public class HttpImplTest extends PowerMockito {
 				"www.google.com?redirect=www.yahoo.com%3Fredirect%3D" +
 					"www.bing.com%26parameter%3Dbar&parameter=foo",
 				0));
+
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					HttpImpl.class.getName(), Level.FINE)) {
+
+			Assert.assertEquals(
+				"www.google.com",
+				_httpImpl.shortenURL("www.google.com?redirect=%xy", 1));
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertEquals(
+				"Skipping undecodable parameter redirect=%xy",
+				logRecord.getMessage());
+
+			Throwable throwable = logRecord.getThrown();
+
+			Assert.assertSame(
+				IllegalArgumentException.class, throwable.getClass());
+			Assert.assertEquals("x is not a hex char", throwable.getMessage());
+		}
+
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					HttpImpl.class.getName(), Level.OFF)) {
+
+			Assert.assertEquals(
+				"www.google.com",
+				_httpImpl.shortenURL("www.google.com?redirect=%xy", 1));
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
+		}
 	}
 
 	protected void testDecodeURLWithInvalidURLEncoding(String url) {

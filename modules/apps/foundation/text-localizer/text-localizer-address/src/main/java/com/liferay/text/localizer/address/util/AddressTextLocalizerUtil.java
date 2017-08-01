@@ -85,7 +85,7 @@ public class AddressTextLocalizerUtil {
 	* <code>false</code> otherwise.
 	*/
 	public static boolean isRomanizedAddress(Address address) {
-		String addressString = _geteAddressString(address);
+		String addressString = _getAddressString(address);
 
 		if (Validator.isNull(addressString)) {
 			return false;
@@ -94,7 +94,7 @@ public class AddressTextLocalizerUtil {
 		return addressString.matches("[\\w\\s\\-\\,\\.]+");
 	}
 
-	private static String _geteAddressString(Address address) {
+	private static String _getAddressString(Address address) {
 		StringBundler sb = new StringBundler(7);
 
 		if (Validator.isNotNull(address.getStreet1())) {

@@ -9,13 +9,22 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="name" type="String" />
+		<field name="name" type="String">
+			<validator name="required" />
+		</field>
 		<field name="allowsBilling" type="boolean" />
 		<field name="allowsShipping" type="boolean" />
-		<field name="twoLettersISOCode" type="String" />
-		<field name="threeLettersISOCode" type="String" />
+		<field name="twoLettersISOCode" type="String">
+			<hint name="min-length">2</hint>
+			<hint name="max-length">2</hint>
+		</field>
+		<field name="threeLettersISOCode" type="String">
+			<hint name="min-length">3</hint>
+			<hint name="max-length">3</hint>
+		</field>
 		<field name="numericISOCode" type="int" />
-		<field name="priority" type="int" />
+		<field name="subjectToVAT" type="boolean" />
+		<field name="priority" type="double" />
 		<field name="published" type="boolean" />
 	</model>
 	<model name="com.liferay.commerce.address.model.CommerceRegion">
@@ -27,9 +36,11 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="commerceCountryId" type="long" />
-		<field name="name" type="String" />
+		<field name="name" type="String">
+			<validator name="required" />
+		</field>
 		<field name="abbreviation" type="String" />
-		<field name="priority" type="int" />
+		<field name="priority" type="double" />
 		<field name="published" type="boolean" />
 	</model>
 </model-hints>

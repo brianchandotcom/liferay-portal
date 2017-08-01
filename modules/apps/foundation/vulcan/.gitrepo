@@ -7,5 +7,5 @@
 	commit = d8869a9252d9b91487d1c0825861d097c8bcda2b
 	mergebuttonmergecommits = false
 	mode = pull
-	parent = 3c41e7009e37933b802ead85e99375490b482976
+	parent = 0000000000000000000000000000000000000000
 	remote = git@github.com:liferay/com-liferay-vulcan.git

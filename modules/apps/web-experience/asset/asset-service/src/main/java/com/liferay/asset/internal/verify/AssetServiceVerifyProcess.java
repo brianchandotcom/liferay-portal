@@ -12,28 +12,37 @@
  * details.
  */
 
-package com.liferay.portal.verify;
+package com.liferay.asset.internal.verify;
 
-import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
-import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
-import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.portal.kernel.util.LoggingTimer;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.verify.VerifyLayout;
+import com.liferay.portal.verify.VerifyProcess;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Douglas Wong
  */
-public class VerifyAsset extends VerifyProcess {
+@Component(
+	immediate = true,
+	property = {"verify.process.name=com.liferay.asset.service"},
+	service = VerifyProcess.class
+)
+public class AssetServiceVerifyProcess extends VerifyLayout {
 
 	protected void deleteOrphanedAssetEntries() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			long classNameId = PortalUtil.getClassNameId(
+			long classNameId = _portal.getClassNameId(
 				DLFileEntryConstants.getClassName());
 
 			StringBundler sb = new StringBundler(5);
@@ -53,10 +62,10 @@ public class VerifyAsset extends VerifyProcess {
 					long entryId = rs.getLong("entryId");
 
 					DLFileEntry dlFileEntry =
-						DLFileEntryLocalServiceUtil.fetchDLFileEntry(classPK);
+						_dlFileEntryLocalService.fetchDLFileEntry(classPK);
 
 					if (dlFileEntry == null) {
-						AssetEntryLocalServiceUtil.deleteAssetEntry(entryId);
+						_assetEntryLocalService.deleteAssetEntry(entryId);
 					}
 				}
 			}
@@ -66,22 +75,22 @@ public class VerifyAsset extends VerifyProcess {
 	@Override
 	protected void doVerify() throws Exception {
 		deleteOrphanedAssetEntries();
-		rebuildTree();
+		verifyAssetLayouts();
 	}
 
-	protected void rebuildTree() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement ps = connection.prepareStatement(
-				"select distinct groupId from AssetCategory where " +
-					"(leftCategoryId is null) or (rightCategoryId is null)");
-			ResultSet rs = ps.executeQuery()) {
-
-			while (rs.next()) {
-				long groupId = rs.getLong("groupId");
-
-				AssetCategoryLocalServiceUtil.rebuildTree(groupId, true);
-			}
+	protected void verifyAssetLayouts() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			verifyUuid("AssetEntry");
 		}
 	}
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

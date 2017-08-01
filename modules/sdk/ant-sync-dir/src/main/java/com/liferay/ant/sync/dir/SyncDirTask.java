@@ -32,6 +32,7 @@ import org.apache.tools.ant.Task;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Minhchau Dang
  */
 public class SyncDirTask extends Task {
 

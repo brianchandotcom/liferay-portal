@@ -258,14 +258,14 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 
 		return cpDefinitionLocalService.updateCPDefinition(
 			cpDefinitionId, baseSKU, titleMap, shortDescriptionMap,
-			descriptionMap, urlTitleMap, urlTitleMap, urlTitleMap, urlTitleMap,
-			urlTitleMap, metaTitleMap, metaKeywordsMap, metaDescriptionMap,
-			layoutUuid, gtin, manufacturerPartNumber, minCartQuantity,
-			maxCartQuantity, allowedCartQuantity, multipleCartQuantity,
-			ddmStructureKey, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, serviceContext);
+			descriptionMap, urlTitleMap, metaTitleMap, metaKeywordsMap,
+			metaDescriptionMap, layoutUuid, gtin, manufacturerPartNumber,
+			minCartQuantity, maxCartQuantity, allowedCartQuantity,
+			multipleCartQuantity, ddmStructureKey, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
 	}
 
 	@Override

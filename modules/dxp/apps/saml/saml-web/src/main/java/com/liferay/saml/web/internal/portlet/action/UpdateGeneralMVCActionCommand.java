@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.runtime.credential.KeyStoreManager;
 import com.liferay.saml.runtime.metadata.LocalEntityManager;
@@ -60,12 +61,22 @@ public class UpdateGeneralMVCActionCommand extends BaseMVCActionCommand {
 			properties.getProperty(PortletPropsKeys.SAML_ENABLED),
 			_samlProviderConfigurationHelper.isEnabled());
 
+		String samlEntityId = properties.getProperty(
+			PortletPropsKeys.SAML_ENTITY_ID);
+
 		if (enabled &&
 			!StringUtil.equalsIgnoreCase(
-				_localEntityManager.getLocalEntityId(),
-				properties.getProperty(PortletPropsKeys.SAML_ENTITY_ID))) {
+				_localEntityManager.getLocalEntityId(), samlEntityId)) {
 
 			SessionErrors.add(actionRequest, "entityIdInUse");
+
+			return;
+		}
+
+		if (Validator.isNotNull(samlEntityId) &&
+			(samlEntityId.length() > 1024)) {
+
+			SessionErrors.add(actionRequest, "entityIdTooLong");
 
 			return;
 		}

@@ -34,43 +34,47 @@ public class USAddressTextLocalizer implements AddressTextLocalizer {
 	public String format(Address address) {
 		StringBundler sb = new StringBundler(14);
 
-		if (Validator.isNotNull(address.getStreet1())) {
-			sb.append(address.getStreet1());
+		String street1 = address.getStreet1();
+		String street2 = address.getStreet2();
+		String street3 = address.getStreet3();
+		String city = address.getCity();
+		String regionName = AddressTextLocalizerUtil.getRegionName(address);
+		String zip = address.getZip();
+		String countryName = AddressTextLocalizerUtil.getCountryName(address);
+
+		if (Validator.isNotNull(street1)) {
+			sb.append(street1);
 		}
 
-		if (Validator.isNotNull(address.getStreet2())) {
+		if (Validator.isNotNull(street2)) {
 			sb.append(StringPool.NEW_LINE);
-			sb.append(address.getStreet2());
+			sb.append(street2);
 		}
 
-		if (Validator.isNotNull(address.getStreet3())) {
+		if (Validator.isNotNull(street3)) {
 			sb.append(StringPool.NEW_LINE);
-			sb.append(address.getStreet3());
+			sb.append(street3);
 		}
 
 		sb.append(StringPool.NEW_LINE);
 
-		if (Validator.isNotNull(address.getCity())) {
-			sb.append(address.getCity());
+		if (Validator.isNotNull(city)) {
+			sb.append(city);
 		}
 
-		if (Validator.isNotNull(
-				AddressTextLocalizerUtil.getRegionName(address))) {
-
+		if (Validator.isNotNull(regionName)) {
 			sb.append(StringPool.COMMA_AND_SPACE);
-			sb.append(AddressTextLocalizerUtil.getRegionName(address));
+			sb.append(regionName);
 		}
 
-		if (Validator.isNotNull(address.getZip())) {
+		if (Validator.isNotNull(zip)) {
 			sb.append(StringPool.SPACE);
-			sb.append(address.getZip());
+			sb.append(zip);
 		}
 
-		if (Validator.isNotNull(
-				AddressTextLocalizerUtil.getCountryName(address))) {
-
+		if (Validator.isNotNull(countryName)) {
 			sb.append(StringPool.NEW_LINE);
-			sb.append(AddressTextLocalizerUtil.getCountryName(address));
+			sb.append(countryName);
 		}
 
 		return sb.toString();

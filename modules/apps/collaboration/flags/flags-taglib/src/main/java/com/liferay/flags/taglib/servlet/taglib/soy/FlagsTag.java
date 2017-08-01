@@ -182,9 +182,7 @@ public class FlagsTag extends TemplateRendererTag {
 		dataJSONObject.put(namespace + "classPK", classPK);
 		dataJSONObject.put(
 			namespace + "contentTitle", context.get("contentTitle"));
-		dataJSONObject.put(
-			namespace + "contentURL",
-			PortalUtil.getPortalURL(request) + _getCurrentURL());
+		dataJSONObject.put(namespace + "contentURL", _getCurrentURL());
 		dataJSONObject.put(
 			namespace + "reportedUserId", context.get("reportedUserId"));
 

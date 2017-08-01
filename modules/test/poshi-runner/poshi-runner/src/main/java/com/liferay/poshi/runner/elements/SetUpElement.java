@@ -21,7 +21,15 @@ import org.dom4j.Element;
  */
 public class SetUpElement extends CommandElement {
 
-	public static boolean isElementType(String readableSyntax) {
+	public SetUpElement(Element element) {
+		super("set-up", element);
+	}
+
+	public SetUpElement(String readableSyntax) {
+		super("set-up", readableSyntax);
+	}
+
+	public boolean isElementType(String readableSyntax) {
 		readableSyntax = readableSyntax.trim();
 
 		if (!isBalancedReadableSyntax(readableSyntax)) {
@@ -47,14 +55,6 @@ public class SetUpElement extends CommandElement {
 		}
 
 		return true;
-	}
-
-	public SetUpElement(Element element) {
-		super("set-up", element);
-	}
-
-	public SetUpElement(String readableSyntax) {
-		super("set-up", readableSyntax);
 	}
 
 	@Override

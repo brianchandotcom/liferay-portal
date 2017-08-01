@@ -2,16 +2,44 @@
 	.affix, #wrapper {
 		margin-top: $has-control-menu-margin-top-mobile;
 
+		.portlet-boundary > span:first-child {
+			display: block;
+			position: relative;
+			top: -$has-control-menu-margin-top-mobile;
+			visibility: hidden;
+		}
+
 		@include sm() {
 			margin-top: $has-control-menu-margin-top-desktop;
+
+			.portlet-boundary > span:first-child {
+				display: block;
+				position: relative;
+				top: -$has-control-menu-margin-top-desktop;
+				visibility: hidden;
+			}
 		}
 	}
 
 	&.has-customization-menu .affix, &.has-customization-menu #wrapper {
 		margin-top: ($has-control-menu-margin-top-mobile + $has-customization-menu-margin-top-mobile);
 
+		.portlet-boundary > span:first-child {
+			display: block;
+			position: relative;
+			top: -($has-control-menu-margin-top-mobile + $has-customization-menu-margin-top-mobile);
+			visibility: hidden;
+		}
+
 		@include sm() {
 			margin-top: ($has-control-menu-margin-top-desktop + $has-customization-menu-margin-top-desktop);
+
+			.portlet-boundary > span:first-child {
+				display: block;
+				position: relative;
+				top: -($has-control-menu-margin-top-desktop + $has-customization-menu-margin-top-desktop);
+				visibility: hidden;
+			}
 		}
 	}
 }

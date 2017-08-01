@@ -158,7 +158,6 @@ public class SyncDirTask extends Task {
 				_atomicInteger.incrementAndGet();
 
 				inputStream.close();
-
 				outputStream.close();
 			}
 

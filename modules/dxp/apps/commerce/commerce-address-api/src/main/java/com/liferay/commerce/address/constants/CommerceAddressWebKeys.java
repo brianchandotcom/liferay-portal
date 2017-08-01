@@ -17,5 +17,10 @@ package com.liferay.commerce.address.constants;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommerceAddressConstants {
+public class CommerceAddressWebKeys {
+
+	public static final String COMMERCE_COUNTRY = "COMMERCE_COUNTRY";
+
+	public static final String COMMERCE_REGION = "COMMERCE_REGION";
+
 }

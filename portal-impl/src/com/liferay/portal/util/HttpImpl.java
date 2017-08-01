@@ -1263,16 +1263,10 @@ public class HttpImpl implements Http {
 					continue;
 				}
 
-				String newURL = shortenURL(redirect, count - 1);
-
-				if (newURL != null) {
-					newURL = URLCodec.encodeURL(newURL);
-
-					sb.append(qName);
-					sb.append(StringPool.EQUAL);
-					sb.append(newURL);
-					sb.append(CharPool.AMPERSAND);
-				}
+				sb.append(qName);
+				sb.append(StringPool.EQUAL);
+				sb.append(URLCodec.encodeURL(shortenURL(redirect, count - 1)));
+				sb.append(CharPool.AMPERSAND);
 			}
 			else {
 				sb.append(param);

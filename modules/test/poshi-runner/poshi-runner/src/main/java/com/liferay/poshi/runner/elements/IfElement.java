@@ -158,7 +158,7 @@ public class IfElement extends PoshiElement {
 
 			readableBlock = readableBlock.trim();
 
-			if ((line.startsWith(getName() + " (") && line.endsWith("{")) &&
+			if (line.startsWith(getName() + " (") && line.endsWith("{") &&
 				(readableBlock.length() == 0)) {
 
 				readableBlocks.add(line);

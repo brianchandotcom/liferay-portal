@@ -26,9 +26,16 @@ import com.liferay.portal.verify.VerifyProcess;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Douglas Wong
  */
+@Component(
+	immediate = true,
+	property = {"verify.process.name=com.liferay.asset.service"},
+	service = VerifyProcess.class
+)
 public class AssetServiceVerifyProcess extends VerifyProcess {
 
 	protected void deleteOrphanedAssetEntries() throws Exception {

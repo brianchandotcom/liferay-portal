@@ -56,7 +56,7 @@ create table CPDefinition (
 	availableIndividually BOOLEAN,
 	minCartQuantity INTEGER,
 	maxCartQuantity INTEGER,
-	allowedCartQuantities VARCHAR(75) null,
+	allowedCartQuantities VARCHAR(255) null,
 	multipleCartQuantity INTEGER,
 	DDMStructureKey VARCHAR(75) null,
 	displayDate DATE null,

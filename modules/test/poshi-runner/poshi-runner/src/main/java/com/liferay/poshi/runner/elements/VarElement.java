@@ -38,7 +38,9 @@ public class VarElement extends PoshiElement {
 	public VarElement(String name, Element element) {
 		super(name, element);
 
-		initValueAttributeName(element);
+		if (isElementType(name, element)) {
+			initValueAttributeName(element);
+		}
 	}
 
 	public VarElement(String name, String readableSyntax) {

@@ -315,6 +315,10 @@
 
 				var focusable = !el.is(':disabled') && !el.is(':hidden');
 
+				if (el.parents(":disabled").length > 0) {
+					focusable =false;
+				}
+
 				if (!form.length || focusable) {
 					el.focus();
 				}

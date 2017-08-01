@@ -33,5 +33,5 @@ CPDefinition cpDefinition = cpInstanceDisplayContext.getCPDefinition();
 
 	<aui:input helpMessage="gtin-help" label="global-trade-item-number" name="gtin" />
 
-	<aui:input helpMessage="manufacturer-part-number-help" name="manufacturerPartNumber" />
+	<aui:input name="manufacturerPartNumber" />
 </aui:fieldset>

@@ -34,7 +34,7 @@ import org.junit.runner.RunWith;
  * @author Manuel de la Peña
  */
 @RunWith(Arquillian.class)
-public class VerifyAssetTest extends BaseVerifyProcessTestCase {
+public class AssetVerifyProcessTest extends BaseVerifyProcessTestCase {
 
 	@ClassRule
 	@Rule

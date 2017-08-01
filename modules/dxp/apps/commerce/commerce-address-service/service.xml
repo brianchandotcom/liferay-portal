@@ -30,7 +30,8 @@
 		<column name="twoLettersISOCode" type="String" />
 		<column name="threeLettersISOCode" type="String" />
 		<column name="numericISOCode" type="int" />
-		<column name="priority" type="int" />
+		<column name="subjectToVAT" type="boolean" />
+		<column name="priority" type="double" />
 		<column name="published" type="boolean" />
 
 		<!-- Order -->
@@ -63,7 +64,7 @@
 		<column name="commerceCountryId" type="long" />
 		<column name="name" type="String" />
 		<column name="abbreviation" type="String" />
-		<column name="priority" type="int" />
+		<column name="priority" type="double" />
 		<column name="published" type="boolean" />
 
 		<!-- Order -->

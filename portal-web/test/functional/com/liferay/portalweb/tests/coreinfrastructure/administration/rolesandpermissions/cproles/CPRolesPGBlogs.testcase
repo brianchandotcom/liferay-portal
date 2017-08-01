@@ -1920,18 +1920,19 @@
 
 		<execute macro="BlogsConfiguration#viewNoPermissionPG" />
 
-		<execute macro="Permissions#definePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_BLOGS_APPLICATION_PERMISSIONS_CONFIGURATION_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Configuration" />
-			<var name="roleTitle" value="Regrole Name" />
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="CONFIGURATION"/>
+			<var name="resourceName" value="com_liferay_blogs_web_portlet_BlogsPortlet"/>
+			<var name="roleTitle" value="Regrole Name"/>
 		</execute>
 
-		<execute macro="Permissions#definePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_BLOGS_APPLICATION_PERMISSIONS_PERMISSIONS_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Permissions" />
-			<var name="roleTitle" value="Regrole Name" />
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="PERMISSIONS"/>
+			<var name="resourceName" value="com_liferay_blogs_web_portlet_BlogsPortlet"/>
+			<var name="roleTitle" value="Regrole Name"/>
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="userea@liferay.com" />
 			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
@@ -1942,18 +1943,19 @@
 
 		<execute macro="BlogsConfiguration#viewPermissionsPG" />
 
-		<execute macro="Permissions#removePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_BLOGS_APPLICATION_PERMISSIONS_CONFIGURATION_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Configuration" />
-			<var name="roleTitle" value="Regrole Name" />
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
+		<execute macro="Permissions#removePermissionViaAPI">
+			<var name="resourceAction" value="CONFIGURATION"/>
+			<var name="resourceName" value="com_liferay_blogs_web_portlet_BlogsPortlet"/>
+			<var name="roleTitle" value="Regrole Name"/>
 		</execute>
 
-		<execute macro="Permissions#removePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_BLOGS_APPLICATION_PERMISSIONS_PERMISSIONS_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Permissions" />
-			<var name="roleTitle" value="Regrole Name" />
+		<execute macro="Permissions#removePermissionViaAPI">
+			<var name="resourceAction" value="PERMISSIONS"/>
+			<var name="resourceName" value="com_liferay_blogs_web_portlet_BlogsPortlet"/>
+			<var name="roleTitle" value="Regrole Name"/>
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="userea@liferay.com" />
 			<var name="userLoginFullName" value="userfn userln" />
 		</execute>

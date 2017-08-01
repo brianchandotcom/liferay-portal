@@ -344,9 +344,6 @@ public class HttpImplTest extends PowerMockito {
 		Assert.assertEquals(
 			"www.google.com", _httpImpl.shortenURL("www.google.com", 0));
 		Assert.assertEquals(
-			"www.google.com&first=foo&second=bar",
-			_httpImpl.shortenURL("www.google.com&first=foo&second=bar", 0));
-		Assert.assertEquals(
 			"www.google.com?first=foo&second=bar",
 			_httpImpl.shortenURL("www.google.com?first=foo&second=bar", 0));
 		Assert.assertEquals(

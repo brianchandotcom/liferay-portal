@@ -269,8 +269,6 @@ public class VerifyLayout extends VerifyProcess {
 
 	protected void verifyUuid() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			verifyUuid("AssetEntry");
-
 			runSQL(
 				"update Layout set uuid_ = sourcePrototypeLayoutUuid where " +
 					"sourcePrototypeLayoutUuid != '' and uuid_ != " +

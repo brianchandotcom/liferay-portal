@@ -21,6 +21,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.verify.VerifyLayout;
 import com.liferay.portal.verify.VerifyProcess;
 
 import java.sql.PreparedStatement;
@@ -37,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {"verify.process.name=com.liferay.asset.service"},
 	service = VerifyProcess.class
 )
-public class AssetServiceVerifyProcess extends VerifyProcess {
+public class AssetServiceVerifyProcess extends VerifyLayout {
 
 	protected void deleteOrphanedAssetEntries() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
@@ -81,25 +82,6 @@ public class AssetServiceVerifyProcess extends VerifyProcess {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			verifyUuid("AssetEntry");
 		}
-	}
-
-	protected void verifyUuid(String tableName) throws Exception {
-		StringBundler sb = new StringBundler(12);
-
-		sb.append("update ");
-		sb.append(tableName);
-		sb.append(" set layoutUuid = (select distinct ");
-		sb.append("sourcePrototypeLayoutUuid from Layout where Layout.uuid_ ");
-		sb.append("= ");
-		sb.append(tableName);
-		sb.append(".layoutUuid) where exists (select 1 from Layout where ");
-		sb.append("Layout.uuid_ = ");
-		sb.append(tableName);
-		sb.append(".layoutUuid and Layout.uuid_ != ");
-		sb.append("Layout.sourcePrototypeLayoutUuid and ");
-		sb.append("Layout.sourcePrototypeLayoutUuid != '')");
-
-		runSQL(sb.toString());
 	}
 
 	@Reference

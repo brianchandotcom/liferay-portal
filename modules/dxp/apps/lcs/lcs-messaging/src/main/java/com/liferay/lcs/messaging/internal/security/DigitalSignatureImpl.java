@@ -145,7 +145,6 @@ public class DigitalSignatureImpl implements DigitalSignature {
 	 * @param message the message
 	 * @since LCS 0.1
 	 */
-
 	@Override
 	public void signMessage(Message message) {
 		if (!(message instanceof CommandMessage)) {
@@ -289,8 +288,8 @@ public class DigitalSignatureImpl implements DigitalSignature {
 	}
 
 	/**
-	 * Returns the command message value of the signaturesstring as bytes
-	 * used for digital signing.
+	 * Returns the command message value of the signaturesstring as bytes used
+	 * for digital signing.
 	 *
 	 * @param  commandMessage the command message
 	 * @return the command message's values as bytes

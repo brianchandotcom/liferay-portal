@@ -29,7 +29,7 @@ CPDefinition cpDefinition = (CPDefinition)request.getAttribute(CPWebKeys.CP_DEFI
 
 	<aui:input name="maxCartQuantity" />
 
-	<aui:input name="allowedCartQuantity" />
+	<aui:input name="allowedCartQuantities" />
 
 	<aui:input name="multipleCartQuantity" />
 </aui:fieldset>

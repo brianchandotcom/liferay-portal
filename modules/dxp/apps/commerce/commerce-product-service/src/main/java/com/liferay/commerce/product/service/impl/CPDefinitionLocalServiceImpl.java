@@ -97,7 +97,7 @@ public class CPDefinitionLocalServiceImpl
 			Map<Locale, String> metaDescriptionMap, String layoutUuid,
 			String productTypeName, String gtin, String manufacturerPartNumber,
 			int minCartQuantity, int maxCartQuantity,
-			String allowedCartQuantity, int multipleCartQuantity,
+			String allowedCartQuantities, int multipleCartQuantity,
 			String ddmStructureKey, int displayDateMonth, int displayDateDay,
 			int displayDateYear, int displayDateHour, int displayDateMinute,
 			int expirationDateMonth, int expirationDateDay,
@@ -147,7 +147,7 @@ public class CPDefinitionLocalServiceImpl
 		cpDefinition.setManufacturerPartNumber(manufacturerPartNumber);
 		cpDefinition.setMinCartQuantity(minCartQuantity);
 		cpDefinition.setMaxCartQuantity(maxCartQuantity);
-		cpDefinition.setAllowedCartQuantity(allowedCartQuantity);
+		cpDefinition.setAllowedCartQuantities(allowedCartQuantities);
 		cpDefinition.setMultipleCartQuantity(multipleCartQuantity);
 		cpDefinition.setDDMStructureKey(ddmStructureKey);
 		cpDefinition.setDefaultLanguageId(LocaleUtil.toLanguageId(locale));
@@ -757,7 +757,7 @@ public class CPDefinitionLocalServiceImpl
 			Map<Locale, String> metaKeywordsMap,
 			Map<Locale, String> metaDescriptionMap, String layoutUuid,
 			String gtin, String manufacturerPartNumber, int minCartQuantity,
-			int maxCartQuantity, String allowedCartQuantity,
+			int maxCartQuantity, String allowedCartQuantities,
 			int multipleCartQuantity, String ddmStructureKey,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
@@ -796,7 +796,7 @@ public class CPDefinitionLocalServiceImpl
 		cpDefinition.setManufacturerPartNumber(manufacturerPartNumber);
 		cpDefinition.setMinCartQuantity(minCartQuantity);
 		cpDefinition.setMaxCartQuantity(maxCartQuantity);
-		cpDefinition.setAllowedCartQuantity(allowedCartQuantity);
+		cpDefinition.setAllowedCartQuantities(allowedCartQuantities);
 		cpDefinition.setMultipleCartQuantity(multipleCartQuantity);
 		cpDefinition.setDDMStructureKey(ddmStructureKey);
 		cpDefinition.setDisplayDate(displayDate);

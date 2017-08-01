@@ -40,20 +40,18 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.kernel.service.TrashEntryService;
 import com.liferay.trash.kernel.util.TrashUtil;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Alessio Antonio Rendina
@@ -253,8 +251,8 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "minCartQuantity");
 		int maxCartQuantity = ParamUtil.getInteger(
 			actionRequest, "maxCartQuantity");
-		String allowedCartQuantity = ParamUtil.getString(
-			actionRequest, "allowedCartQuantity");
+		String allowedCartQuantities = ParamUtil.getString(
+			actionRequest, "allowedCartQuantities");
 		int multipleCartQuantity = ParamUtil.getInteger(
 			actionRequest, "multipleCartQuantity");
 
@@ -308,7 +306,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				baseSKU, titleMap, shortDescriptionMap, descriptionMap,
 				urlTitleMap, metaTitleMap, metaKeywordsMap, metaDescriptionMap,
 				layoutUuid, productTypeName, gtin, manufacturerPartNumber,
-				minCartQuantity, maxCartQuantity, allowedCartQuantity,
+				minCartQuantity, maxCartQuantity, allowedCartQuantities,
 				multipleCartQuantity, null, displayDateMonth, displayDateDay,
 				displayDateYear, displayDateHour, displayDateMinute,
 				expirationDateMonth, expirationDateDay, expirationDateYear,
@@ -323,7 +321,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				cpDefinitionId, baseSKU, titleMap, shortDescriptionMap,
 				descriptionMap, urlTitleMap, metaTitleMap, metaKeywordsMap,
 				metaDescriptionMap, layoutUuid, gtin, manufacturerPartNumber,
-				minCartQuantity, maxCartQuantity, allowedCartQuantity,
+				minCartQuantity, maxCartQuantity, allowedCartQuantities,
 				multipleCartQuantity, null, displayDateMonth, displayDateDay,
 				displayDateYear, displayDateHour, displayDateMinute,
 				expirationDateMonth, expirationDateDay, expirationDateYear,

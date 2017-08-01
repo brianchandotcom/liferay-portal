@@ -131,7 +131,7 @@ public class SyncDirTask extends Task {
 	private File _dir;
 	private File _toDir;
 
-	private static class SyncFileCallable implements Callable<Boolean> {
+	private static class SyncFileCallable implements Callable<Void> {
 
 		public SyncFileCallable(
 			File file, File toFile, AtomicInteger atomicInteger) {
@@ -141,7 +141,7 @@ public class SyncDirTask extends Task {
 			_atomicInteger = atomicInteger;
 		}
 
-		public Boolean call() throws IOException {
+		public Void call() throws IOException {
 			FileInputStream inputStream = new FileInputStream(_file);
 			FileOutputStream outputStream = new FileOutputStream(_toFile);
 
@@ -161,7 +161,7 @@ public class SyncDirTask extends Task {
 				outputStream.close();
 			}
 
-			return Boolean.TRUE;
+			return null;
 		}
 
 		private final AtomicInteger _atomicInteger;

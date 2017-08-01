@@ -14,7 +14,7 @@
 
 package com.liferay.asset.categories.internal.verify;
 
-import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.verify.VerifyProcess;
 
@@ -22,6 +22,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -48,9 +49,12 @@ public class AssetCategoriesServiceVerifyProcess extends VerifyProcess {
 			while (rs.next()) {
 				long groupId = rs.getLong("groupId");
 
-				AssetCategoryLocalServiceUtil.rebuildTree(groupId, true);
+				_assetCategoryLocalService.rebuildTree(groupId, true);
 			}
 		}
 	}
+
+	@Reference
+	private AssetCategoryLocalService _assetCategoryLocalService;
 
 }

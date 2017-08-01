@@ -6,4 +6,5 @@ Export-Package:\
 	com.liferay.commerce.address.exception,\
 	com.liferay.commerce.address.model,\
 	com.liferay.commerce.address.service,\
-	com.liferay.commerce.address.service.persistence
+	com.liferay.commerce.address.service.persistence,\
+	com.liferay.commerce.address.util.comparator

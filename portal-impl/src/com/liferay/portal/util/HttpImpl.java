@@ -1252,7 +1252,7 @@ public class HttpImpl implements Http {
 				String redirect = param.substring(pos + 1);
 
 				try {
-					redirect = decodeURL(redirect);
+					redirect = URLCodec.decodeURL(redirect, StringPool.UTF8);
 				}
 				catch (IllegalArgumentException iae) {
 					if (_log.isDebugEnabled()) {

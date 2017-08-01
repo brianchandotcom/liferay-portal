@@ -22,9 +22,13 @@
 			<hint name="min-length">3</hint>
 			<hint name="max-length">3</hint>
 		</field>
-		<field name="numericISOCode" type="int" />
+		<field name="numericISOCode" type="int">
+			<validator name="number" />
+		</field>
 		<field name="subjectToVAT" type="boolean" />
-		<field name="priority" type="double" />
+		<field name="priority" type="double">
+			<validator name="number" />
+		</field>
 		<field name="published" type="boolean" />
 	</model>
 	<model name="com.liferay.commerce.address.model.CommerceRegion">
@@ -40,7 +44,9 @@
 			<validator name="required" />
 		</field>
 		<field name="abbreviation" type="String" />
-		<field name="priority" type="double" />
+		<field name="priority" type="double">
+			<validator name="number" />
+		</field>
 		<field name="published" type="boolean" />
 	</model>
 </model-hints>

@@ -27,13 +27,11 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public class CommerceCountryImpl extends CommerceCountryBaseImpl {
-
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a commerce country model instance should use the {@link com.liferay.commerce.address.model.CommerceCountry} interface instead.
 	 */
 	public CommerceCountryImpl() {
 	}
-
 }

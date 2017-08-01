@@ -20,7 +20,8 @@
 		<property name="twoLettersISOCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="threeLettersISOCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="numericISOCode" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="subjectToVAT" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="published" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.commerce.address.model.impl.CommerceRegionImpl" table="CommerceRegion">
@@ -36,7 +37,7 @@
 		<property name="commerceCountryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="abbreviation" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="published" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 </hibernate-mapping>

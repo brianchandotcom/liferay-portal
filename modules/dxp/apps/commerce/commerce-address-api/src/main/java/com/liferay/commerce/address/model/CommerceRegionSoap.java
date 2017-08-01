@@ -178,11 +178,11 @@ public class CommerceRegionSoap implements Serializable {
 		_abbreviation = abbreviation;
 	}
 
-	public int getPriority() {
+	public double getPriority() {
 		return _priority;
 	}
 
-	public void setPriority(int priority) {
+	public void setPriority(double priority) {
 		_priority = priority;
 	}
 
@@ -208,6 +208,6 @@ public class CommerceRegionSoap implements Serializable {
 	private long _commerceCountryId;
 	private String _name;
 	private String _abbreviation;
-	private int _priority;
+	private double _priority;
 	private boolean _published;
 }

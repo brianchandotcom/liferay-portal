@@ -67,7 +67,7 @@ import java.rmi.RemoteException;
 public class CommerceRegionServiceSoap {
 	public static com.liferay.commerce.address.model.CommerceRegionSoap addCommerceRegion(
 		long commerceCountryId, java.lang.String name,
-		java.lang.String abbreviation, int priority, boolean published,
+		java.lang.String abbreviation, double priority, boolean published,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -97,12 +97,12 @@ public class CommerceRegionServiceSoap {
 		}
 	}
 
-	public static int getCommerceRegionsCount(long commerceCountryId)
-		throws RemoteException {
+	public static com.liferay.commerce.address.model.CommerceRegionSoap fetchCommerceRegion(
+		long commerceRegionId) throws RemoteException {
 		try {
-			int returnValue = CommerceRegionServiceUtil.getCommerceRegionsCount(commerceCountryId);
+			com.liferay.commerce.address.model.CommerceRegion returnValue = CommerceRegionServiceUtil.fetchCommerceRegion(commerceRegionId);
 
-			return returnValue;
+			return com.liferay.commerce.address.model.CommerceRegionSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -129,9 +129,23 @@ public class CommerceRegionServiceSoap {
 		}
 	}
 
+	public static int getCommerceRegionsCount(long commerceCountryId)
+		throws RemoteException {
+		try {
+			int returnValue = CommerceRegionServiceUtil.getCommerceRegionsCount(commerceCountryId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.address.model.CommerceRegionSoap updateCommerceRegion(
 		long commerceRegionId, java.lang.String name,
-		java.lang.String abbreviation, int priority, boolean published)
+		java.lang.String abbreviation, double priority, boolean published)
 		throws RemoteException {
 		try {
 			com.liferay.commerce.address.model.CommerceRegion returnValue = CommerceRegionServiceUtil.updateCommerceRegion(commerceRegionId,

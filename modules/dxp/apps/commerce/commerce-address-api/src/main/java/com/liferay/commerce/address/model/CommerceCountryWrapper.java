@@ -71,6 +71,7 @@ public class CommerceCountryWrapper implements CommerceCountry,
 		attributes.put("twoLettersISOCode", getTwoLettersISOCode());
 		attributes.put("threeLettersISOCode", getThreeLettersISOCode());
 		attributes.put("numericISOCode", getNumericISOCode());
+		attributes.put("subjectToVAT", getSubjectToVAT());
 		attributes.put("priority", getPriority());
 		attributes.put("published", getPublished());
 
@@ -158,7 +159,13 @@ public class CommerceCountryWrapper implements CommerceCountry,
 			setNumericISOCode(numericISOCode);
 		}
 
-		Integer priority = (Integer)attributes.get("priority");
+		Boolean subjectToVAT = (Boolean)attributes.get("subjectToVAT");
+
+		if (subjectToVAT != null) {
+			setSubjectToVAT(subjectToVAT);
+		}
+
+		Double priority = (Double)attributes.get("priority");
 
 		if (priority != null) {
 			setPriority(priority);
@@ -212,6 +219,16 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	}
 
 	/**
+	* Returns the subject to vat of this commerce country.
+	*
+	* @return the subject to vat of this commerce country
+	*/
+	@Override
+	public boolean getSubjectToVAT() {
+		return _commerceCountry.getSubjectToVAT();
+	}
+
+	/**
 	* Returns <code>true</code> if this commerce country is allows billing.
 	*
 	* @return <code>true</code> if this commerce country is allows billing; <code>false</code> otherwise
@@ -256,6 +273,16 @@ public class CommerceCountryWrapper implements CommerceCountry,
 		return _commerceCountry.isPublished();
 	}
 
+	/**
+	* Returns <code>true</code> if this commerce country is subject to vat.
+	*
+	* @return <code>true</code> if this commerce country is subject to vat; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isSubjectToVAT() {
+		return _commerceCountry.isSubjectToVAT();
+	}
+
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _commerceCountry.getExpandoBridge();
@@ -264,6 +291,16 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	@Override
 	public com.liferay.portal.kernel.model.CacheModel<CommerceCountry> toCacheModel() {
 		return _commerceCountry.toCacheModel();
+	}
+
+	/**
+	* Returns the priority of this commerce country.
+	*
+	* @return the priority of this commerce country
+	*/
+	@Override
+	public double getPriority() {
+		return _commerceCountry.getPriority();
 	}
 
 	@Override
@@ -279,16 +316,6 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	@Override
 	public int getNumericISOCode() {
 		return _commerceCountry.getNumericISOCode();
-	}
-
-	/**
-	* Returns the priority of this commerce country.
-	*
-	* @return the priority of this commerce country
-	*/
-	@Override
-	public int getPriority() {
-		return _commerceCountry.getPriority();
 	}
 
 	@Override
@@ -578,7 +605,7 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	* @param priority the priority of this commerce country
 	*/
 	@Override
-	public void setPriority(int priority) {
+	public void setPriority(double priority) {
 		_commerceCountry.setPriority(priority);
 	}
 
@@ -590,6 +617,16 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	@Override
 	public void setPublished(boolean published) {
 		_commerceCountry.setPublished(published);
+	}
+
+	/**
+	* Sets whether this commerce country is subject to vat.
+	*
+	* @param subjectToVAT the subject to vat of this commerce country
+	*/
+	@Override
+	public void setSubjectToVAT(boolean subjectToVAT) {
+		_commerceCountry.setSubjectToVAT(subjectToVAT);
 	}
 
 	/**

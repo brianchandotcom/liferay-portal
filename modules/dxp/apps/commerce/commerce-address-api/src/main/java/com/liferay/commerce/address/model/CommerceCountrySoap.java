@@ -47,6 +47,7 @@ public class CommerceCountrySoap implements Serializable {
 		soapModel.setTwoLettersISOCode(model.getTwoLettersISOCode());
 		soapModel.setThreeLettersISOCode(model.getThreeLettersISOCode());
 		soapModel.setNumericISOCode(model.getNumericISOCode());
+		soapModel.setSubjectToVAT(model.getSubjectToVAT());
 		soapModel.setPriority(model.getPriority());
 		soapModel.setPublished(model.getPublished());
 
@@ -215,11 +216,23 @@ public class CommerceCountrySoap implements Serializable {
 		_numericISOCode = numericISOCode;
 	}
 
-	public int getPriority() {
+	public boolean getSubjectToVAT() {
+		return _subjectToVAT;
+	}
+
+	public boolean isSubjectToVAT() {
+		return _subjectToVAT;
+	}
+
+	public void setSubjectToVAT(boolean subjectToVAT) {
+		_subjectToVAT = subjectToVAT;
+	}
+
+	public double getPriority() {
 		return _priority;
 	}
 
-	public void setPriority(int priority) {
+	public void setPriority(double priority) {
 		_priority = priority;
 	}
 
@@ -248,6 +261,7 @@ public class CommerceCountrySoap implements Serializable {
 	private String _twoLettersISOCode;
 	private String _threeLettersISOCode;
 	private int _numericISOCode;
-	private int _priority;
+	private boolean _subjectToVAT;
+	private double _priority;
 	private boolean _published;
 }

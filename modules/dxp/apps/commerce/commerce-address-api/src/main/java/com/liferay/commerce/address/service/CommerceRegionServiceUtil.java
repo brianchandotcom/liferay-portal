@@ -43,7 +43,7 @@ public class CommerceRegionServiceUtil {
 	 */
 	public static com.liferay.commerce.address.model.CommerceRegion addCommerceRegion(
 		long commerceCountryId, java.lang.String name,
-		java.lang.String abbreviation, int priority, boolean published,
+		java.lang.String abbreviation, double priority, boolean published,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -57,9 +57,14 @@ public class CommerceRegionServiceUtil {
 		return getService().deleteCommerceRegion(commerceRegionId);
 	}
 
+	public static com.liferay.commerce.address.model.CommerceRegion fetchCommerceRegion(
+		long commerceRegionId) {
+		return getService().fetchCommerceRegion(commerceRegionId);
+	}
+
 	public static com.liferay.commerce.address.model.CommerceRegion updateCommerceRegion(
 		long commerceRegionId, java.lang.String name,
-		java.lang.String abbreviation, int priority, boolean published)
+		java.lang.String abbreviation, double priority, boolean published)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCommerceRegion(commerceRegionId, name, abbreviation,

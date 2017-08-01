@@ -168,7 +168,7 @@ public class CommerceRegionCacheModel implements CacheModel<CommerceRegion>,
 		name = objectInput.readUTF();
 		abbreviation = objectInput.readUTF();
 
-		priority = objectInput.readInt();
+		priority = objectInput.readDouble();
 
 		published = objectInput.readBoolean();
 	}
@@ -210,7 +210,7 @@ public class CommerceRegionCacheModel implements CacheModel<CommerceRegion>,
 			objectOutput.writeUTF(abbreviation);
 		}
 
-		objectOutput.writeInt(priority);
+		objectOutput.writeDouble(priority);
 
 		objectOutput.writeBoolean(published);
 	}
@@ -225,6 +225,6 @@ public class CommerceRegionCacheModel implements CacheModel<CommerceRegion>,
 	public long commerceCountryId;
 	public String name;
 	public String abbreviation;
-	public int priority;
+	public double priority;
 	public boolean published;
 }

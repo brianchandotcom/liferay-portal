@@ -364,6 +364,7 @@ public class CommerceCountryPersistenceImpl extends BasePersistenceImpl<Commerce
 		commerceCountryImpl.setTwoLettersISOCode(commerceCountry.getTwoLettersISOCode());
 		commerceCountryImpl.setThreeLettersISOCode(commerceCountry.getThreeLettersISOCode());
 		commerceCountryImpl.setNumericISOCode(commerceCountry.getNumericISOCode());
+		commerceCountryImpl.setSubjectToVAT(commerceCountry.isSubjectToVAT());
 		commerceCountryImpl.setPriority(commerceCountry.getPriority());
 		commerceCountryImpl.setPublished(commerceCountry.isPublished());
 

@@ -74,9 +74,9 @@ public interface CommerceCountryLocalService extends BaseLocalService,
 	public CommerceCountry addCommerceCountry(java.lang.String name,
 		boolean allowsBilling, boolean allowsShipping,
 		java.lang.String twoLettersISOCode,
-		java.lang.String threeLettersISOCode, int numericISOCode, int priority,
-		boolean published, ServiceContext serviceContext)
-		throws PortalException;
+		java.lang.String threeLettersISOCode, int numericISOCode,
+		boolean subjectToVAT, double priority, boolean published,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new commerce country with the primary key. Does not add the commerce country to the database.
@@ -134,8 +134,9 @@ public interface CommerceCountryLocalService extends BaseLocalService,
 	public CommerceCountry updateCommerceCountry(long commerceCountryId,
 		java.lang.String name, boolean allowsBilling, boolean allowsShipping,
 		java.lang.String twoLettersISOCode,
-		java.lang.String threeLettersISOCode, int numericISOCode, int priority,
-		boolean published) throws PortalException;
+		java.lang.String threeLettersISOCode, int numericISOCode,
+		boolean subjectToVAT, double priority, boolean published)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();

@@ -294,18 +294,39 @@ public interface CommerceCountryModel extends BaseModel<CommerceCountry>,
 	public void setNumericISOCode(int numericISOCode);
 
 	/**
+	 * Returns the subject to vat of this commerce country.
+	 *
+	 * @return the subject to vat of this commerce country
+	 */
+	public boolean getSubjectToVAT();
+
+	/**
+	 * Returns <code>true</code> if this commerce country is subject to vat.
+	 *
+	 * @return <code>true</code> if this commerce country is subject to vat; <code>false</code> otherwise
+	 */
+	public boolean isSubjectToVAT();
+
+	/**
+	 * Sets whether this commerce country is subject to vat.
+	 *
+	 * @param subjectToVAT the subject to vat of this commerce country
+	 */
+	public void setSubjectToVAT(boolean subjectToVAT);
+
+	/**
 	 * Returns the priority of this commerce country.
 	 *
 	 * @return the priority of this commerce country
 	 */
-	public int getPriority();
+	public double getPriority();
 
 	/**
 	 * Sets the priority of this commerce country.
 	 *
 	 * @param priority the priority of this commerce country
 	 */
-	public void setPriority(int priority);
+	public void setPriority(double priority);
 
 	/**
 	 * Returns the published of this commerce country.

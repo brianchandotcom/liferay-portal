@@ -241,14 +241,14 @@ public interface CommerceRegionModel extends BaseModel<CommerceRegion>,
 	 *
 	 * @return the priority of this commerce region
 	 */
-	public int getPriority();
+	public double getPriority();
 
 	/**
 	 * Sets the priority of this commerce region.
 	 *
 	 * @param priority the priority of this commerce region
 	 */
-	public void setPriority(int priority);
+	public void setPriority(double priority);
 
 	/**
 	 * Returns the published of this commerce region.

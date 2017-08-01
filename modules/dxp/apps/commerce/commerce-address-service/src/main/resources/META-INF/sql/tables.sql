@@ -12,7 +12,8 @@ create table CommerceCountry (
 	twoLettersISOCode VARCHAR(75) null,
 	threeLettersISOCode VARCHAR(75) null,
 	numericISOCode INTEGER,
-	priority INTEGER,
+	subjectToVAT BOOLEAN,
+	priority DOUBLE,
 	published BOOLEAN
 );
 
@@ -27,6 +28,6 @@ create table CommerceRegion (
 	commerceCountryId LONG,
 	name VARCHAR(75) null,
 	abbreviation VARCHAR(75) null,
-	priority INTEGER,
+	priority DOUBLE,
 	published BOOLEAN
 );

@@ -36,7 +36,7 @@ public class CommerceRegionServiceWrapper implements CommerceRegionService,
 	@Override
 	public com.liferay.commerce.address.model.CommerceRegion addCommerceRegion(
 		long commerceCountryId, java.lang.String name,
-		java.lang.String abbreviation, int priority, boolean published,
+		java.lang.String abbreviation, double priority, boolean published,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceRegionService.addCommerceRegion(commerceCountryId,
@@ -51,9 +51,15 @@ public class CommerceRegionServiceWrapper implements CommerceRegionService,
 	}
 
 	@Override
+	public com.liferay.commerce.address.model.CommerceRegion fetchCommerceRegion(
+		long commerceRegionId) {
+		return _commerceRegionService.fetchCommerceRegion(commerceRegionId);
+	}
+
+	@Override
 	public com.liferay.commerce.address.model.CommerceRegion updateCommerceRegion(
 		long commerceRegionId, java.lang.String name,
-		java.lang.String abbreviation, int priority, boolean published)
+		java.lang.String abbreviation, double priority, boolean published)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceRegionService.updateCommerceRegion(commerceRegionId,
 			name, abbreviation, priority, published);

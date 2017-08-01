@@ -37,13 +37,13 @@ public class CommerceCountryServiceWrapper implements CommerceCountryService,
 	public com.liferay.commerce.address.model.CommerceCountry addCommerceCountry(
 		java.lang.String name, boolean allowsBilling, boolean allowsShipping,
 		java.lang.String twoLettersISOCode,
-		java.lang.String threeLettersISOCode, int numericISOCode, int priority,
-		boolean published,
+		java.lang.String threeLettersISOCode, int numericISOCode,
+		boolean subjectToVAT, double priority, boolean published,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceCountryService.addCommerceCountry(name, allowsBilling,
 			allowsShipping, twoLettersISOCode, threeLettersISOCode,
-			numericISOCode, priority, published, serviceContext);
+			numericISOCode, subjectToVAT, priority, published, serviceContext);
 	}
 
 	@Override
@@ -54,15 +54,27 @@ public class CommerceCountryServiceWrapper implements CommerceCountryService,
 	}
 
 	@Override
+	public com.liferay.commerce.address.model.CommerceCountry fetchCommerceCountry(
+		long commerceCountryId) {
+		return _commerceCountryService.fetchCommerceCountry(commerceCountryId);
+	}
+
+	@Override
 	public com.liferay.commerce.address.model.CommerceCountry updateCommerceCountry(
 		long commerceCountryId, java.lang.String name, boolean allowsBilling,
 		boolean allowsShipping, java.lang.String twoLettersISOCode,
-		java.lang.String threeLettersISOCode, int numericISOCode, int priority,
-		boolean published)
+		java.lang.String threeLettersISOCode, int numericISOCode,
+		boolean subjectToVAT, double priority, boolean published)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceCountryService.updateCommerceCountry(commerceCountryId,
 			name, allowsBilling, allowsShipping, twoLettersISOCode,
-			threeLettersISOCode, numericISOCode, priority, published);
+			threeLettersISOCode, numericISOCode, subjectToVAT, priority,
+			published);
+	}
+
+	@Override
+	public int getCommerceCountriesCount() {
+		return _commerceCountryService.getCommerceCountriesCount();
 	}
 
 	/**

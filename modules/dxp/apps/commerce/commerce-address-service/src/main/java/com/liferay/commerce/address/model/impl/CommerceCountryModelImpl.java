@@ -83,7 +83,8 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 			{ "twoLettersISOCode", Types.VARCHAR },
 			{ "threeLettersISOCode", Types.VARCHAR },
 			{ "numericISOCode", Types.INTEGER },
-			{ "priority", Types.INTEGER },
+			{ "subjectToVAT", Types.BOOLEAN },
+			{ "priority", Types.DOUBLE },
 			{ "published", Types.BOOLEAN }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -102,11 +103,12 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 		TABLE_COLUMNS_MAP.put("twoLettersISOCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("threeLettersISOCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("numericISOCode", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("subjectToVAT", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("published", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceCountry (commerceCountryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,allowsBilling BOOLEAN,allowsShipping BOOLEAN,twoLettersISOCode VARCHAR(75) null,threeLettersISOCode VARCHAR(75) null,numericISOCode INTEGER,priority INTEGER,published BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceCountry (commerceCountryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,allowsBilling BOOLEAN,allowsShipping BOOLEAN,twoLettersISOCode VARCHAR(75) null,threeLettersISOCode VARCHAR(75) null,numericISOCode INTEGER,subjectToVAT BOOLEAN,priority DOUBLE,published BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceCountry";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceCountry.name ASC, commerceCountry.priority ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceCountry.name ASC, CommerceCountry.priority ASC";
@@ -147,6 +149,7 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 		model.setTwoLettersISOCode(soapModel.getTwoLettersISOCode());
 		model.setThreeLettersISOCode(soapModel.getThreeLettersISOCode());
 		model.setNumericISOCode(soapModel.getNumericISOCode());
+		model.setSubjectToVAT(soapModel.getSubjectToVAT());
 		model.setPriority(soapModel.getPriority());
 		model.setPublished(soapModel.getPublished());
 
@@ -227,6 +230,7 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 		attributes.put("twoLettersISOCode", getTwoLettersISOCode());
 		attributes.put("threeLettersISOCode", getThreeLettersISOCode());
 		attributes.put("numericISOCode", getNumericISOCode());
+		attributes.put("subjectToVAT", getSubjectToVAT());
 		attributes.put("priority", getPriority());
 		attributes.put("published", getPublished());
 
@@ -317,7 +321,13 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 			setNumericISOCode(numericISOCode);
 		}
 
-		Integer priority = (Integer)attributes.get("priority");
+		Boolean subjectToVAT = (Boolean)attributes.get("subjectToVAT");
+
+		if (subjectToVAT != null) {
+			setSubjectToVAT(subjectToVAT);
+		}
+
+		Double priority = (Double)attributes.get("priority");
 
 		if (priority != null) {
 			setPriority(priority);
@@ -529,12 +539,29 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 
 	@JSON
 	@Override
-	public int getPriority() {
+	public boolean getSubjectToVAT() {
+		return _subjectToVAT;
+	}
+
+	@JSON
+	@Override
+	public boolean isSubjectToVAT() {
+		return _subjectToVAT;
+	}
+
+	@Override
+	public void setSubjectToVAT(boolean subjectToVAT) {
+		_subjectToVAT = subjectToVAT;
+	}
+
+	@JSON
+	@Override
+	public double getPriority() {
 		return _priority;
 	}
 
 	@Override
-	public void setPriority(int priority) {
+	public void setPriority(double priority) {
 		_priority = priority;
 	}
 
@@ -595,6 +622,7 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 		commerceCountryImpl.setTwoLettersISOCode(getTwoLettersISOCode());
 		commerceCountryImpl.setThreeLettersISOCode(getThreeLettersISOCode());
 		commerceCountryImpl.setNumericISOCode(getNumericISOCode());
+		commerceCountryImpl.setSubjectToVAT(getSubjectToVAT());
 		commerceCountryImpl.setPriority(getPriority());
 		commerceCountryImpl.setPublished(getPublished());
 
@@ -743,6 +771,8 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 
 		commerceCountryCacheModel.numericISOCode = getNumericISOCode();
 
+		commerceCountryCacheModel.subjectToVAT = getSubjectToVAT();
+
 		commerceCountryCacheModel.priority = getPriority();
 
 		commerceCountryCacheModel.published = getPublished();
@@ -752,7 +782,7 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{commerceCountryId=");
 		sb.append(getCommerceCountryId());
@@ -780,6 +810,8 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 		sb.append(getThreeLettersISOCode());
 		sb.append(", numericISOCode=");
 		sb.append(getNumericISOCode());
+		sb.append(", subjectToVAT=");
+		sb.append(getSubjectToVAT());
 		sb.append(", priority=");
 		sb.append(getPriority());
 		sb.append(", published=");
@@ -791,7 +823,7 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(52);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.address.model.CommerceCountry");
@@ -850,6 +882,10 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 		sb.append(getNumericISOCode());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>subjectToVAT</column-name><column-value><![CDATA[");
+		sb.append(getSubjectToVAT());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>priority</column-name><column-value><![CDATA[");
 		sb.append(getPriority());
 		sb.append("]]></column-value></column>");
@@ -881,7 +917,8 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 	private String _twoLettersISOCode;
 	private String _threeLettersISOCode;
 	private int _numericISOCode;
-	private int _priority;
+	private boolean _subjectToVAT;
+	private double _priority;
 	private boolean _published;
 	private CommerceCountry _escapedModel;
 }

@@ -80,7 +80,7 @@ public class CommerceRegionModelImpl extends BaseModelImpl<CommerceRegion>
 			{ "commerceCountryId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
 			{ "abbreviation", Types.VARCHAR },
-			{ "priority", Types.INTEGER },
+			{ "priority", Types.DOUBLE },
 			{ "published", Types.BOOLEAN }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -96,11 +96,11 @@ public class CommerceRegionModelImpl extends BaseModelImpl<CommerceRegion>
 		TABLE_COLUMNS_MAP.put("commerceCountryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("abbreviation", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("published", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceRegion (commerceRegionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceCountryId LONG,name VARCHAR(75) null,abbreviation VARCHAR(75) null,priority INTEGER,published BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceRegion (commerceRegionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceCountryId LONG,name VARCHAR(75) null,abbreviation VARCHAR(75) null,priority DOUBLE,published BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceRegion";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceRegion.name ASC, commerceRegion.priority ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceRegion.name ASC, CommerceRegion.priority ASC";
@@ -290,7 +290,7 @@ public class CommerceRegionModelImpl extends BaseModelImpl<CommerceRegion>
 			setAbbreviation(abbreviation);
 		}
 
-		Integer priority = (Integer)attributes.get("priority");
+		Double priority = (Double)attributes.get("priority");
 
 		if (priority != null) {
 			setPriority(priority);
@@ -466,12 +466,12 @@ public class CommerceRegionModelImpl extends BaseModelImpl<CommerceRegion>
 
 	@JSON
 	@Override
-	public int getPriority() {
+	public double getPriority() {
 		return _priority;
 	}
 
 	@Override
-	public void setPriority(int priority) {
+	public void setPriority(double priority) {
 		_columnBitmask = -1L;
 
 		_priority = priority;
@@ -795,7 +795,7 @@ public class CommerceRegionModelImpl extends BaseModelImpl<CommerceRegion>
 	private boolean _setOriginalCommerceCountryId;
 	private String _name;
 	private String _abbreviation;
-	private int _priority;
+	private double _priority;
 	private boolean _published;
 	private long _columnBitmask;
 	private CommerceRegion _escapedModel;

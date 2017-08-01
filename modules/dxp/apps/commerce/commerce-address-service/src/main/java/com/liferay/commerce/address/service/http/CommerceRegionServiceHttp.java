@@ -57,7 +57,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class CommerceRegionServiceHttp {
 	public static com.liferay.commerce.address.model.CommerceRegion addCommerceRegion(
 		HttpPrincipal httpPrincipal, long commerceCountryId,
-		java.lang.String name, java.lang.String abbreviation, int priority,
+		java.lang.String name, java.lang.String abbreviation, double priority,
 		boolean published,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -123,15 +123,14 @@ public class CommerceRegionServiceHttp {
 		}
 	}
 
-	public static int getCommerceRegionsCount(HttpPrincipal httpPrincipal,
-		long commerceCountryId) {
+	public static com.liferay.commerce.address.model.CommerceRegion fetchCommerceRegion(
+		HttpPrincipal httpPrincipal, long commerceRegionId) {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceRegionServiceUtil.class,
-					"getCommerceRegionsCount",
-					_getCommerceRegionsCountParameterTypes2);
+					"fetchCommerceRegion", _fetchCommerceRegionParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					commerceCountryId);
+					commerceRegionId);
 
 			Object returnObj = null;
 
@@ -142,7 +141,7 @@ public class CommerceRegionServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return ((Integer)returnObj).intValue();
+			return (com.liferay.commerce.address.model.CommerceRegion)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -180,14 +179,42 @@ public class CommerceRegionServiceHttp {
 		}
 	}
 
+	public static int getCommerceRegionsCount(HttpPrincipal httpPrincipal,
+		long commerceCountryId) {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceRegionServiceUtil.class,
+					"getCommerceRegionsCount",
+					_getCommerceRegionsCountParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					commerceCountryId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.commerce.address.model.CommerceRegion updateCommerceRegion(
 		HttpPrincipal httpPrincipal, long commerceRegionId,
-		java.lang.String name, java.lang.String abbreviation, int priority,
+		java.lang.String name, java.lang.String abbreviation, double priority,
 		boolean published)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceRegionServiceUtil.class,
-					"updateCommerceRegion", _updateCommerceRegionParameterTypes4);
+					"updateCommerceRegion", _updateCommerceRegionParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceRegionId, name, abbreviation, priority, published);
@@ -217,21 +244,24 @@ public class CommerceRegionServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(CommerceRegionServiceHttp.class);
 	private static final Class<?>[] _addCommerceRegionParameterTypes0 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
-			int.class, boolean.class,
+			double.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCommerceRegionParameterTypes1 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getCommerceRegionsCountParameterTypes2 = new Class[] {
+	private static final Class<?>[] _fetchCommerceRegionParameterTypes2 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[] _getCommerceRegionsParameterTypes3 = new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _updateCommerceRegionParameterTypes4 = new Class[] {
+	private static final Class<?>[] _getCommerceRegionsCountParameterTypes4 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _updateCommerceRegionParameterTypes5 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
-			int.class, boolean.class
+			double.class, boolean.class
 		};
 }

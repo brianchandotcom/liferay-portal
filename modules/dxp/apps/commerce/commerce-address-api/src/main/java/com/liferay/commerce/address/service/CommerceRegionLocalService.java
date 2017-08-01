@@ -72,7 +72,7 @@ public interface CommerceRegionLocalService extends BaseLocalService,
 	public CommerceRegion addCommerceRegion(CommerceRegion commerceRegion);
 
 	public CommerceRegion addCommerceRegion(long commerceCountryId,
-		java.lang.String name, java.lang.String abbreviation, int priority,
+		java.lang.String name, java.lang.String abbreviation, double priority,
 		boolean published, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -128,7 +128,7 @@ public interface CommerceRegionLocalService extends BaseLocalService,
 	public CommerceRegion updateCommerceRegion(CommerceRegion commerceRegion);
 
 	public CommerceRegion updateCommerceRegion(long commerceRegionId,
-		java.lang.String name, java.lang.String abbreviation, int priority,
+		java.lang.String name, java.lang.String abbreviation, double priority,
 		boolean published) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

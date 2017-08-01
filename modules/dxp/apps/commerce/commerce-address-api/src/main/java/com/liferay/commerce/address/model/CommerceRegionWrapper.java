@@ -136,7 +136,7 @@ public class CommerceRegionWrapper implements CommerceRegion,
 			setAbbreviation(abbreviation);
 		}
 
-		Integer priority = (Integer)attributes.get("priority");
+		Double priority = (Double)attributes.get("priority");
 
 		if (priority != null) {
 			setPriority(priority);
@@ -204,19 +204,19 @@ public class CommerceRegionWrapper implements CommerceRegion,
 		return _commerceRegion.toCacheModel();
 	}
 
-	@Override
-	public int compareTo(CommerceRegion commerceRegion) {
-		return _commerceRegion.compareTo(commerceRegion);
-	}
-
 	/**
 	* Returns the priority of this commerce region.
 	*
 	* @return the priority of this commerce region
 	*/
 	@Override
-	public int getPriority() {
+	public double getPriority() {
 		return _commerceRegion.getPriority();
+	}
+
+	@Override
+	public int compareTo(CommerceRegion commerceRegion) {
+		return _commerceRegion.compareTo(commerceRegion);
 	}
 
 	@Override
@@ -496,7 +496,7 @@ public class CommerceRegionWrapper implements CommerceRegion,
 	* @param priority the priority of this commerce region
 	*/
 	@Override
-	public void setPriority(int priority) {
+	public void setPriority(double priority) {
 		_commerceRegion.setPriority(priority);
 	}
 

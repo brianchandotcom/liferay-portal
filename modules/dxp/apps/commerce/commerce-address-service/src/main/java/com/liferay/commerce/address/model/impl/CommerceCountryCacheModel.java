@@ -66,7 +66,7 @@ public class CommerceCountryCacheModel implements CacheModel<CommerceCountry>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{commerceCountryId=");
 		sb.append(commerceCountryId);
@@ -94,6 +94,8 @@ public class CommerceCountryCacheModel implements CacheModel<CommerceCountry>,
 		sb.append(threeLettersISOCode);
 		sb.append(", numericISOCode=");
 		sb.append(numericISOCode);
+		sb.append(", subjectToVAT=");
+		sb.append(subjectToVAT);
 		sb.append(", priority=");
 		sb.append(priority);
 		sb.append(", published=");
@@ -158,6 +160,7 @@ public class CommerceCountryCacheModel implements CacheModel<CommerceCountry>,
 		}
 
 		commerceCountryImpl.setNumericISOCode(numericISOCode);
+		commerceCountryImpl.setSubjectToVAT(subjectToVAT);
 		commerceCountryImpl.setPriority(priority);
 		commerceCountryImpl.setPublished(published);
 
@@ -188,7 +191,9 @@ public class CommerceCountryCacheModel implements CacheModel<CommerceCountry>,
 
 		numericISOCode = objectInput.readInt();
 
-		priority = objectInput.readInt();
+		subjectToVAT = objectInput.readBoolean();
+
+		priority = objectInput.readDouble();
 
 		published = objectInput.readBoolean();
 	}
@@ -241,7 +246,9 @@ public class CommerceCountryCacheModel implements CacheModel<CommerceCountry>,
 
 		objectOutput.writeInt(numericISOCode);
 
-		objectOutput.writeInt(priority);
+		objectOutput.writeBoolean(subjectToVAT);
+
+		objectOutput.writeDouble(priority);
 
 		objectOutput.writeBoolean(published);
 	}
@@ -259,6 +266,7 @@ public class CommerceCountryCacheModel implements CacheModel<CommerceCountry>,
 	public String twoLettersISOCode;
 	public String threeLettersISOCode;
 	public int numericISOCode;
-	public int priority;
+	public boolean subjectToVAT;
+	public double priority;
 	public boolean published;
 }

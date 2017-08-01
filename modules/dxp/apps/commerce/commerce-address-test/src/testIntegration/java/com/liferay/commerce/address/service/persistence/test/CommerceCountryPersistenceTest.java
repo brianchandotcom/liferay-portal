@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -146,7 +147,9 @@ public class CommerceCountryPersistenceTest {
 
 		newCommerceCountry.setNumericISOCode(RandomTestUtil.nextInt());
 
-		newCommerceCountry.setPriority(RandomTestUtil.nextInt());
+		newCommerceCountry.setSubjectToVAT(RandomTestUtil.randomBoolean());
+
+		newCommerceCountry.setPriority(RandomTestUtil.nextDouble());
 
 		newCommerceCountry.setPublished(RandomTestUtil.randomBoolean());
 
@@ -182,7 +185,9 @@ public class CommerceCountryPersistenceTest {
 			newCommerceCountry.getThreeLettersISOCode());
 		Assert.assertEquals(existingCommerceCountry.getNumericISOCode(),
 			newCommerceCountry.getNumericISOCode());
-		Assert.assertEquals(existingCommerceCountry.getPriority(),
+		Assert.assertEquals(existingCommerceCountry.getSubjectToVAT(),
+			newCommerceCountry.getSubjectToVAT());
+		AssertUtils.assertEquals(existingCommerceCountry.getPriority(),
 			newCommerceCountry.getPriority());
 		Assert.assertEquals(existingCommerceCountry.getPublished(),
 			newCommerceCountry.getPublished());
@@ -216,8 +221,8 @@ public class CommerceCountryPersistenceTest {
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "name", true, "allowsBilling", true,
 			"allowsShipping", true, "twoLettersISOCode", true,
-			"threeLettersISOCode", true, "numericISOCode", true, "priority",
-			true, "published", true);
+			"threeLettersISOCode", true, "numericISOCode", true,
+			"subjectToVAT", true, "priority", true, "published", true);
 	}
 
 	@Test
@@ -443,7 +448,9 @@ public class CommerceCountryPersistenceTest {
 
 		commerceCountry.setNumericISOCode(RandomTestUtil.nextInt());
 
-		commerceCountry.setPriority(RandomTestUtil.nextInt());
+		commerceCountry.setSubjectToVAT(RandomTestUtil.randomBoolean());
+
+		commerceCountry.setPriority(RandomTestUtil.nextDouble());
 
 		commerceCountry.setPublished(RandomTestUtil.randomBoolean());
 

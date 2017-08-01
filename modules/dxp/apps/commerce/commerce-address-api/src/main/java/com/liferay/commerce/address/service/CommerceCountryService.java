@@ -59,18 +59,25 @@ public interface CommerceCountryService extends BaseService {
 	public CommerceCountry addCommerceCountry(java.lang.String name,
 		boolean allowsBilling, boolean allowsShipping,
 		java.lang.String twoLettersISOCode,
-		java.lang.String threeLettersISOCode, int numericISOCode, int priority,
-		boolean published, ServiceContext serviceContext)
-		throws PortalException;
+		java.lang.String threeLettersISOCode, int numericISOCode,
+		boolean subjectToVAT, double priority, boolean published,
+		ServiceContext serviceContext) throws PortalException;
 
 	public CommerceCountry deleteCommerceCountry(long commerceCountryId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceCountry fetchCommerceCountry(long commerceCountryId);
+
 	public CommerceCountry updateCommerceCountry(long commerceCountryId,
 		java.lang.String name, boolean allowsBilling, boolean allowsShipping,
 		java.lang.String twoLettersISOCode,
-		java.lang.String threeLettersISOCode, int numericISOCode, int priority,
-		boolean published) throws PortalException;
+		java.lang.String threeLettersISOCode, int numericISOCode,
+		boolean subjectToVAT, double priority, boolean published)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceCountriesCount();
 
 	/**
 	* Returns the OSGi service identifier.

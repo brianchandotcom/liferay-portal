@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -140,7 +141,7 @@ public class CommerceRegionPersistenceTest {
 
 		newCommerceRegion.setAbbreviation(RandomTestUtil.randomString());
 
-		newCommerceRegion.setPriority(RandomTestUtil.nextInt());
+		newCommerceRegion.setPriority(RandomTestUtil.nextDouble());
 
 		newCommerceRegion.setPublished(RandomTestUtil.randomBoolean());
 
@@ -170,7 +171,7 @@ public class CommerceRegionPersistenceTest {
 			newCommerceRegion.getName());
 		Assert.assertEquals(existingCommerceRegion.getAbbreviation(),
 			newCommerceRegion.getAbbreviation());
-		Assert.assertEquals(existingCommerceRegion.getPriority(),
+		AssertUtils.assertEquals(existingCommerceRegion.getPriority(),
 			newCommerceRegion.getPriority());
 		Assert.assertEquals(existingCommerceRegion.getPublished(),
 			newCommerceRegion.getPublished());
@@ -430,7 +431,7 @@ public class CommerceRegionPersistenceTest {
 
 		commerceRegion.setAbbreviation(RandomTestUtil.randomString());
 
-		commerceRegion.setPriority(RandomTestUtil.nextInt());
+		commerceRegion.setPriority(RandomTestUtil.nextDouble());
 
 		commerceRegion.setPublished(RandomTestUtil.randomBoolean());
 

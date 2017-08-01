@@ -478,21 +478,8 @@ public class ResourceBlockLocalServiceImpl
 						qPos.add(resourceBlockId);
 
 						if (sqlQuery.executeUpdate() > 0) {
-							Callable<Void> callable = new Callable<Void>() {
-
-								@Override
-								public Void call() throws Exception {
-									resourceBlockPermissionLocalService.
-										deleteResourceBlockPermissions(
-											resourceBlockId);
-
-									return null;
-								}
-
-							};
-
-							TransactionCommitCallbackUtil.registerCallback(
-								callable);
+							resourceBlockPermissionLocalService.
+								deleteResourceBlockPermissions(resourceBlockId);
 						}
 
 						PermissionCacheUtil.clearResourceBlockCache(

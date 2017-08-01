@@ -130,9 +130,9 @@ public class ExecuteElement extends PoshiElement {
 			assignment = assignment.trim();
 
 			if (executeType.equals("macro")) {
-				assignment = "var " + assignment;
+				assignment = "var " + assignment + ";";
 
-				addElementFromReadableSyntax(assignment);
+				add(new VarElement(assignment));
 
 				continue;
 			}

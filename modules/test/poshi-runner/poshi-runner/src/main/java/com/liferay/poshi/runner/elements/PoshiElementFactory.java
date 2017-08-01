@@ -102,47 +102,23 @@ public class PoshiElementFactory {
 	}
 
 	public static PoshiElement newPoshiElement(String readableSyntax) {
-		if (CommandElement.isElementType(readableSyntax)) {
-			return new CommandElement(readableSyntax);
-		}
+		PoshiElement[] poshiElements = {
+			new CommandElement(readableSyntax),
+			new DefinitionElement(readableSyntax),
+			new ExecuteElement(readableSyntax), new ForElement(readableSyntax),
+			new IfElement(readableSyntax), new PropertyElement(readableSyntax),
+			new SetUpElement(readableSyntax),
+			new TearDownElement(readableSyntax), new VarElement(readableSyntax),
+			new WhileElement(readableSyntax)
+		};
 
-		if (DefinitionElement.isElementType(readableSyntax)) {
-			return new DefinitionElement(readableSyntax);
-		}
+		for (PoshiElement poshiElement : poshiElements) {
+			String poshiElementName = poshiElement.getName();
 
-		if (ExecuteElement.isElementType(readableSyntax)) {
-			return new ExecuteElement(readableSyntax);
+			if (!poshiElementName.equals("unsupported")) {
+				return poshiElement;
+			}
 		}
-
-		if (ForElement.isElementType(readableSyntax)) {
-			return new ForElement(readableSyntax);
-		}
-
-		if (IfElement.isElementType(readableSyntax)) {
-			return new IfElement(readableSyntax);
-		}
-
-		if (PropertyElement.isElementType(readableSyntax)) {
-			return new PropertyElement(readableSyntax);
-		}
-
-		if (SetUpElement.isElementType(readableSyntax)) {
-			return new SetUpElement(readableSyntax);
-		}
-
-		if (TearDownElement.isElementType(readableSyntax)) {
-			return new TearDownElement(readableSyntax);
-		}
-
-		if (VarElement.isElementType(readableSyntax)) {
-			return new VarElement(readableSyntax);
-		}
-
-		if (WhileElement.isElementType(readableSyntax)) {
-			return new WhileElement(readableSyntax);
-		}
-
-		System.out.println("Unable to generate the Poshi element");
 
 		return new UnsupportedElement(readableSyntax);
 	}

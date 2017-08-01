@@ -94,16 +94,16 @@ public class CPDefinitionLocalServiceImpl
 			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
 			Map<Locale, String> metaTitleMap,
 			Map<Locale, String> metaKeywordsMap,
-			Map<Locale, String> metaDescriptionMap,
-			String layoutUuid, String productTypeName,String gtin,
-			String manufacturerPartNumber, int minCartQuantity,
-			int maxCartQuantity, String allowedCartQuantity,
-			int multipleCartQuantity, String ddmStructureKey,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, ServiceContext serviceContext)
+			Map<Locale, String> metaDescriptionMap, String layoutUuid,
+			String productTypeName, String gtin, String manufacturerPartNumber,
+			int minCartQuantity, int maxCartQuantity,
+			String allowedCartQuantity, int multipleCartQuantity,
+			String ddmStructureKey, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product definition
@@ -755,16 +755,15 @@ public class CPDefinitionLocalServiceImpl
 			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
 			Map<Locale, String> metaTitleMap,
 			Map<Locale, String> metaKeywordsMap,
-			Map<Locale, String> metaDescriptionMap,
-			String layoutUuid, String gtin, String manufacturerPartNumber,
-			int minCartQuantity, int maxCartQuantity,String allowedCartQuantity,
-			int multipleCartQuantity, String ddmStructureKey, int displayDateMonth,
-			int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire,
-			ServiceContext serviceContext)
+			Map<Locale, String> metaDescriptionMap, String layoutUuid,
+			String gtin, String manufacturerPartNumber, int minCartQuantity,
+			int maxCartQuantity, String allowedCartQuantity,
+			int multipleCartQuantity, String ddmStructureKey,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product definition

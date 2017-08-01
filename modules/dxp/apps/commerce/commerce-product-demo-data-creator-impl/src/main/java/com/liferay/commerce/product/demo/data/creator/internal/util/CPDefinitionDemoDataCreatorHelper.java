@@ -222,11 +222,12 @@ public class CPDefinitionDemoDataCreatorHelper
 			Locale.US, urlTitle);
 
 		cpDefinition = _cpDefinitionLocalService.addCPDefinition(
-			baseSKU, titleMap, null, descriptionMap, urlTitleMap, null, null, null, layoutUuid,
-			productTypeName, null, null, 1, 10000, null, 1, null, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, true, serviceContext);
+			baseSKU, titleMap, null, descriptionMap, urlTitleMap, null, null,
+			null, layoutUuid, productTypeName, null, null, 1, 10000, null, 1,
+			null, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, true, serviceContext);
 
 		_cpDefinitions.put(title, cpDefinition);
 

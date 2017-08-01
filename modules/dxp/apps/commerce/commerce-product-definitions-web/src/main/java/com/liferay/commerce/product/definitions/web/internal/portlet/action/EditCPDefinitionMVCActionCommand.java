@@ -306,13 +306,14 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 			cpDefinition = _cpDefinitionService.addCPDefinition(
 				baseSKU, titleMap, shortDescriptionMap, descriptionMap,
-				urlTitleMap, metaTitleMap, metaKeywordsMap, metaDescriptionMap, layoutUuid, productTypeName,gtin,
-				manufacturerPartNumber, minCartQuantity,
-				maxCartQuantity, allowedCartQuantity, multipleCartQuantity,
-				null, displayDateMonth, displayDateDay, displayDateYear,
-				displayDateHour, displayDateMinute, expirationDateMonth,
-				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, neverExpire, serviceContext);
+				urlTitleMap, metaTitleMap, metaKeywordsMap, metaDescriptionMap,
+				layoutUuid, productTypeName, gtin, manufacturerPartNumber,
+				minCartQuantity, maxCartQuantity, allowedCartQuantity,
+				multipleCartQuantity, null, displayDateMonth, displayDateDay,
+				displayDateYear, displayDateHour, displayDateMinute,
+				expirationDateMonth, expirationDateDay, expirationDateYear,
+				expirationDateHour, expirationDateMinute, neverExpire,
+				serviceContext);
 		}
 		else {
 
@@ -320,13 +321,14 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 			cpDefinition = _cpDefinitionService.updateCPDefinition(
 				cpDefinitionId, baseSKU, titleMap, shortDescriptionMap,
-				descriptionMap, urlTitleMap, metaTitleMap, metaKeywordsMap, metaDescriptionMap, layoutUuid, gtin,
-				manufacturerPartNumber, minCartQuantity,
-				maxCartQuantity, allowedCartQuantity, multipleCartQuantity,
-				null, displayDateMonth, displayDateDay, displayDateYear,
-				displayDateHour, displayDateMinute, expirationDateMonth,
-				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, neverExpire, serviceContext);
+				descriptionMap, urlTitleMap, metaTitleMap, metaKeywordsMap,
+				metaDescriptionMap, layoutUuid, gtin, manufacturerPartNumber,
+				minCartQuantity, maxCartQuantity, allowedCartQuantity,
+				multipleCartQuantity, null, displayDateMonth, displayDateDay,
+				displayDateYear, displayDateHour, displayDateMinute,
+				expirationDateMonth, expirationDateDay, expirationDateYear,
+				expirationDateHour, expirationDateMinute, neverExpire,
+				serviceContext);
 		}
 
 		return cpDefinition;

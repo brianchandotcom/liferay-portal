@@ -49,16 +49,16 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
 			Map<Locale, String> metaTitleMap,
 			Map<Locale, String> metaKeywordsMap,
-			Map<Locale, String> metaDescriptionMap,
-			String layoutUuid, String productTypeName, String gtin,
-			String manufacturerPartNumber, int minCartQuantity,
-			int maxCartQuantity, String allowedCartQuantity,
-			int multipleCartQuantity, String ddmStructureKey,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, ServiceContext serviceContext)
+			Map<Locale, String> metaDescriptionMap, String layoutUuid,
+			String productTypeName, String gtin, String manufacturerPartNumber,
+			int minCartQuantity, int maxCartQuantity,
+			String allowedCartQuantity, int multipleCartQuantity,
+			String ddmStructureKey, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CPPermission.check(
@@ -67,13 +67,13 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 
 		return cpDefinitionLocalService.addCPDefinition(
 			baseSKU, titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
-			metaTitleMap, metaKeywordsMap, metaDescriptionMap,
-			layoutUuid, productTypeName,gtin, manufacturerPartNumber, minCartQuantity,
-			maxCartQuantity, allowedCartQuantity, multipleCartQuantity, ddmStructureKey,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, serviceContext);
+			metaTitleMap, metaKeywordsMap, metaDescriptionMap, layoutUuid,
+			productTypeName, gtin, manufacturerPartNumber, minCartQuantity,
+			maxCartQuantity, allowedCartQuantity, multipleCartQuantity,
+			ddmStructureKey, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, serviceContext);
 	}
 
 	@Override
@@ -242,15 +242,15 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
 			Map<Locale, String> metaTitleMap,
 			Map<Locale, String> metaKeywordsMap,
-			Map<Locale, String> metaDescriptionMap,
-			String layoutUuid, String gtin, String manufacturerPartNumber, int minCartQuantity, int maxCartQuantity,
-			String allowedCartQuantity, int multipleCartQuantity,
-			String ddmStructureKey, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire,
-			ServiceContext serviceContext)
+			Map<Locale, String> metaDescriptionMap, String layoutUuid,
+			String gtin, String manufacturerPartNumber, int minCartQuantity,
+			int maxCartQuantity, String allowedCartQuantity,
+			int multipleCartQuantity, String ddmStructureKey,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
 		CPDefinitionPermission.check(
@@ -258,8 +258,9 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 
 		return cpDefinitionLocalService.updateCPDefinition(
 			cpDefinitionId, baseSKU, titleMap, shortDescriptionMap,
-			descriptionMap, urlTitleMap,metaTitleMap, metaKeywordsMap, metaDescriptionMap,
-			layoutUuid, gtin, manufacturerPartNumber minCartQuantity,
+			descriptionMap, urlTitleMap, urlTitleMap, urlTitleMap, urlTitleMap,
+			urlTitleMap, metaTitleMap, metaKeywordsMap, metaDescriptionMap,
+			layoutUuid, gtin, manufacturerPartNumber, minCartQuantity,
 			maxCartQuantity, allowedCartQuantity, multipleCartQuantity,
 			ddmStructureKey, displayDateMonth, displayDateDay, displayDateYear,
 			displayDateHour, displayDateMinute, expirationDateMonth,

@@ -57,8 +57,7 @@ public class USAddressTextLocalizer implements AddressTextLocalizer {
 		if (Validator.isNotNull(
 				AddressTextLocalizerUtil.getRegionName(address))) {
 
-			sb.append(StringPool.COMMA);
-			sb.append(StringPool.SPACE);
+			sb.append(StringPool.COMMA_AND_SPACE);
 			sb.append(AddressTextLocalizerUtil.getRegionName(address));
 		}
 

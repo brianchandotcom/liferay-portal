@@ -33,8 +33,8 @@ public class CommerceCountryLocalServiceImpl
 	public CommerceCountry addCommerceCountry(
 			String name, boolean allowsBilling, boolean allowsShipping,
 			String twoLettersISOCode, String threeLettersISOCode,
-			int numericISOCode, int priority, boolean published,
-			ServiceContext serviceContext)
+			int numericISOCode, boolean subjectToVAT, double priority,
+			boolean published, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
@@ -55,6 +55,7 @@ public class CommerceCountryLocalServiceImpl
 		commerceCountry.setTwoLettersISOCode(twoLettersISOCode);
 		commerceCountry.setThreeLettersISOCode(threeLettersISOCode);
 		commerceCountry.setNumericISOCode(numericISOCode);
+		commerceCountry.setSubjectToVAT(subjectToVAT);
 		commerceCountry.setPriority(priority);
 		commerceCountry.setPublished(published);
 
@@ -103,8 +104,8 @@ public class CommerceCountryLocalServiceImpl
 	public CommerceCountry updateCommerceCountry(
 			long commerceCountryId, String name, boolean allowsBilling,
 			boolean allowsShipping, String twoLettersISOCode,
-			String threeLettersISOCode, int numericISOCode, int priority,
-			boolean published)
+			String threeLettersISOCode, int numericISOCode,
+			boolean subjectToVAT, double priority, boolean published)
 		throws PortalException {
 
 		CommerceCountry commerceCountry =
@@ -116,6 +117,7 @@ public class CommerceCountryLocalServiceImpl
 		commerceCountry.setTwoLettersISOCode(twoLettersISOCode);
 		commerceCountry.setThreeLettersISOCode(threeLettersISOCode);
 		commerceCountry.setNumericISOCode(numericISOCode);
+		commerceCountry.setSubjectToVAT(subjectToVAT);
 		commerceCountry.setPriority(priority);
 		commerceCountry.setPublished(published);
 

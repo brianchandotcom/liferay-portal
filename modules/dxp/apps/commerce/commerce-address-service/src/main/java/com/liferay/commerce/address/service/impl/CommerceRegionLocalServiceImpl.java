@@ -33,7 +33,7 @@ public class CommerceRegionLocalServiceImpl
 	@Override
 	public CommerceRegion addCommerceRegion(
 			long commerceCountryId, String name, String abbreviation,
-			int priority, boolean published, ServiceContext serviceContext)
+			double priority, boolean published, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
@@ -103,7 +103,7 @@ public class CommerceRegionLocalServiceImpl
 	@Override
 	public CommerceRegion updateCommerceRegion(
 			long commerceRegionId, String name, String abbreviation,
-			int priority, boolean published)
+			double priority, boolean published)
 		throws PortalException {
 
 		CommerceRegion commerceRegion =

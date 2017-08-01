@@ -31,14 +31,14 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 	public CommerceCountry addCommerceCountry(
 			String name, boolean allowsBilling, boolean allowsShipping,
 			String twoLettersISOCode, String threeLettersISOCode,
-			int numericISOCode, int priority, boolean published,
-			ServiceContext serviceContext)
+			int numericISOCode, boolean subjectToVAT, double priority,
+			boolean published, ServiceContext serviceContext)
 		throws PortalException {
 
 		return commerceCountryLocalService.addCommerceCountry(
 			name, allowsBilling, allowsShipping, twoLettersISOCode,
-			threeLettersISOCode, numericISOCode, priority, published,
-			serviceContext);
+			threeLettersISOCode, numericISOCode, subjectToVAT, priority,
+			published, serviceContext);
 	}
 
 	@Override
@@ -46,6 +46,12 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 		throws PortalException {
 
 		return commerceCountryLocalService.deleteCommerceCountry(
+			commerceCountryId);
+	}
+
+	@Override
+	public CommerceCountry fetchCommerceCountry(long commerceCountryId) {
+		return commerceCountryLocalService.fetchCommerceCountry(
 			commerceCountryId);
 	}
 
@@ -59,17 +65,22 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 	}
 
 	@Override
+	public int getCommerceCountriesCount() {
+		return commerceCountryLocalService.getCommerceCountriesCount();
+	}
+
+	@Override
 	public CommerceCountry updateCommerceCountry(
 			long commerceCountryId, String name, boolean allowsBilling,
 			boolean allowsShipping, String twoLettersISOCode,
-			String threeLettersISOCode, int numericISOCode, int priority,
-			boolean published)
+			String threeLettersISOCode, int numericISOCode,
+			boolean subjectToVAT, double priority, boolean published)
 		throws PortalException {
 
 		return commerceCountryLocalService.updateCommerceCountry(
 			commerceCountryId, name, allowsBilling, allowsShipping,
-			twoLettersISOCode, threeLettersISOCode, numericISOCode, priority,
-			published);
+			twoLettersISOCode, threeLettersISOCode, numericISOCode,
+			subjectToVAT, priority, published);
 	}
 
 }

@@ -27,6 +27,34 @@ import org.dom4j.Element;
  */
 public class CommandElement extends PoshiElement {
 
+	public static boolean isElementType(String readableSyntax) {
+		readableSyntax = readableSyntax.trim();
+
+		if (!isBalancedReadableSyntax(readableSyntax)) {
+			return false;
+		}
+
+		if (!readableSyntax.endsWith("}")) {
+			return false;
+		}
+
+		for (String line : readableSyntax.split("\n")) {
+			line = line.trim();
+
+			if (line.startsWith("@")) {
+				continue;
+			}
+
+			if (!(line.endsWith("{") && line.startsWith("test"))) {
+				return false;
+			}
+
+			break;
+		}
+
+		return true;
+	}
+
 	public CommandElement(Element element) {
 		this("command", element);
 	}

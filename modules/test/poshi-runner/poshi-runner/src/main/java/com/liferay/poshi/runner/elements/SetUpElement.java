@@ -21,6 +21,34 @@ import org.dom4j.Element;
  */
 public class SetUpElement extends CommandElement {
 
+	public static boolean isElementType(String readableSyntax) {
+		readableSyntax = readableSyntax.trim();
+
+		if (!isBalancedReadableSyntax(readableSyntax)) {
+			return false;
+		}
+
+		if (!readableSyntax.endsWith("}")) {
+			return false;
+		}
+
+		for (String line : readableSyntax.split("\n")) {
+			line = line.trim();
+
+			if (line.startsWith("@")) {
+				continue;
+			}
+
+			if (!line.equals("setUp {")) {
+				return false;
+			}
+
+			break;
+		}
+
+		return true;
+	}
+
 	public SetUpElement(Element element) {
 		super("set-up", element);
 	}

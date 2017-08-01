@@ -21,6 +21,24 @@ import org.dom4j.Element;
  */
 public class WhileElement extends IfElement {
 
+	public static boolean isElementType(String readableSyntax) {
+		readableSyntax = readableSyntax.trim();
+
+		if (!isBalancedReadableSyntax(readableSyntax)) {
+			return false;
+		}
+
+		if (!readableSyntax.startsWith("while (")) {
+			return false;
+		}
+
+		if (!readableSyntax.endsWith("}")) {
+			return false;
+		}
+
+		return true;
+	}
+
 	public WhileElement(Element element) {
 		super("while", element);
 	}

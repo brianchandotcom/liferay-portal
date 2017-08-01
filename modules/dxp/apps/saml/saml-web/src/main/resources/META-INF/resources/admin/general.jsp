@@ -35,6 +35,7 @@ boolean certificateAuthNeeded = GetterUtil.getBoolean(request.getAttribute(SamlW
 <aui:form action="<%= updateGeneralURL %>">
 	<liferay-ui:error key="certificateInvalid" message="please-create-a-signing-credential-before-enabling" />
 	<liferay-ui:error key="entityIdInUse" message="saml-must-be-disabled-before-changing-the-entity-id" />
+	<liferay-ui:error key="entityIdTooLong" message="entity-id-too-long" />
 	<liferay-ui:error key="identityProviderInvalid" message="please-configure-identity-provider-before-enabling" />
 
 	<aui:fieldset>

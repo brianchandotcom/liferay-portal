@@ -66,9 +66,21 @@ public class IfElement extends PoshiElement {
 	public void parseReadableSyntax(String readableSyntax) {
 		for (String readableBlock : getReadableBlocks(readableSyntax)) {
 			if (readableBlock.startsWith(getName() + " (")) {
-				String ifContent = getParentheticalContent(readableBlock);
+				String condition = getParentheticalContent(readableBlock);
 
-				addElementFromReadableSyntax(ifContent);
+				addConditionElement(condition);
+
+				continue;
+			}
+
+			if (readableBlock.startsWith("{")) {
+				add(new ThenElement(readableBlock));
+
+				continue;
+			}
+
+			if (readableBlock.startsWith("else {")) {
+				add(new ElseElement(readableBlock));
 
 				continue;
 			}
@@ -96,6 +108,26 @@ public class IfElement extends PoshiElement {
 		}
 
 		return sb.toString();
+	}
+
+	protected void addConditionElement(String condition) {
+		if (condition.contains("==")) {
+			add(new EqualsElement(condition));
+
+			return;
+		}
+
+		if (condition.startsWith("isset(")) {
+			add(new IssetElement(condition));
+
+			return;
+		}
+
+		if (condition.endsWith(")")) {
+			add(new ConditionElement(condition));
+
+			return;
+		}
 	}
 
 	protected List<String> getReadableBlocks(String readableSyntax) {

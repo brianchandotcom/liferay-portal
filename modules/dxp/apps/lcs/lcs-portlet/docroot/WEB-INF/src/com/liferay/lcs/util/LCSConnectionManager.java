@@ -43,6 +43,8 @@ public interface LCSConnectionManager {
 
 	public void onHandshakeSuccess();
 
+	public void onPortletDeployed();
+
 	public void putLCSConnectionMetadata(String key, String value);
 
 	public void sendMessage(Message message) throws PortalException;

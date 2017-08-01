@@ -20,6 +20,7 @@ import com.liferay.lcs.messaging.Message;
 import com.liferay.lcs.messaging.scheduler.MessageListenerSchedulerService;
 import com.liferay.lcs.runnable.LCSConnectorRunnable;
 import com.liferay.lcs.runnable.LCSGatewayUnavailableRunnable;
+import com.liferay.lcs.runnable.LCSThreadFactory;
 import com.liferay.lcs.service.LCSGatewayService;
 import com.liferay.lcs.task.CommandMessageTask;
 import com.liferay.lcs.task.HandshakeTask;
@@ -54,19 +55,6 @@ import java.util.concurrent.TimeUnit;
  * @author Ivica Cardic
  */
 public class LCSConnectionManagerImpl implements LCSConnectionManager {
-
-	public void afterPropertiesSet() {
-		try {
-			_uptimeMonitoringAdvisor.init();
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		_scheduleUptimeMonitoringTask();
-
-		_executeLCSConnectorRunnable();
-	}
 
 	@Override
 	public void deleteMessages(String key) throws PortalException {
@@ -205,6 +193,20 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 		_scheduledFutures.add(
 			_scheduledExecutorService.scheduleAtFixedRate(
 				_licenseManagerTask, 2, 2, TimeUnit.MINUTES));
+	}
+
+	@Override
+	public void onPortletDeployed() {
+		try {
+			_uptimeMonitoringAdvisor.init();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		_scheduleUptimeMonitoringTask();
+
+		_executeLCSConnectorRunnable();
 	}
 
 	@Override
@@ -473,7 +475,7 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 		LCSConnectionManagerImpl.class);
 
 	private static final ScheduledExecutorService _scheduledExecutorService =
-		Executors.newScheduledThreadPool(10);
+		Executors.newScheduledThreadPool(10, new LCSThreadFactory());
 
 	private CommandMessageTask _commandMessageTask;
 	private HandshakeTask _handshakeTask;

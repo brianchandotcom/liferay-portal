@@ -196,6 +196,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>HISTORY_VERSION_NAME</td>
+	<td>//select/option[contains(.,'${key_historyVersionName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

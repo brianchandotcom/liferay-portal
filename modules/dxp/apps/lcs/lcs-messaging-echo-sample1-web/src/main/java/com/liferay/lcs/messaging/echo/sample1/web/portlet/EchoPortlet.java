@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.lcs.messaging.echo.sample1.portlet;
+package com.liferay.lcs.messaging.echo.sample1.web.portlet;
 
 import com.liferay.lcs.messaging.LCSMessageBusService;
 import com.liferay.lcs.messaging.MessageBusMessage;
@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.mime-type=text/html",
-		"javax.portlet.name=com_liferay_lcs_messaging_echo_sample1_portlet_EchoPortlet",
+		"javax.portlet.name=com_liferay_lcs_messaging_echo_sample1_web_portlet_EchoPortlet",
 		"javax.portlet.security-role-ref=administrator,guest,power-user,user"
 	},
 	service = Portlet.class

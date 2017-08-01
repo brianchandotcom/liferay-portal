@@ -21,6 +21,24 @@ import org.dom4j.Element;
  */
 public class PropertyElement extends VarElement {
 
+	public static boolean isElementType(String readableSyntax) {
+		readableSyntax = readableSyntax.trim();
+
+		if (!isBalancedReadableSyntax(readableSyntax)) {
+			return false;
+		}
+
+		if (!readableSyntax.endsWith(";")) {
+			return false;
+		}
+
+		if (!readableSyntax.startsWith("property ")) {
+			return false;
+		}
+
+		return true;
+	}
+
 	public PropertyElement(Element element) {
 		super("property", element);
 	}

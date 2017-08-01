@@ -1254,13 +1254,13 @@
 			<var name="dmDocumentTypeName" value="Contract" />
 		</execute>
 
-		<var name="key_fieldFieldLabel" value="Effective Date" />
+		<execute function="AssertElementPresent" locator1="Icon#ASTERISK_DATE_FIELD">
+			<var name="key_fieldFieldLabel" value="Effective Date" />
+		</function>
 
-		<execute function="AssertElementPresent" locator1="Icon#ASTERISK_DATE_FIELD" />
-
-		<var name="key_fieldFieldLabel" value="Expiration Date" />
-
-		<execute function="AssertElementPresent" locator1="Icon#ASTERISK_DATE_FIELD" />
+		<execute function="AssertElementPresent" locator1="Icon#ASTERISK_DATE_FIELD">
+			<var name="key_fieldFieldLabel" value="Expiration Date" />
+		</execute>
 	</command>
 
 	<command name="ViewDocumentWithGlobalScope" priority="5">

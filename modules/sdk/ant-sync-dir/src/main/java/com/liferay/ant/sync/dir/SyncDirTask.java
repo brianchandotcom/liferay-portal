@@ -59,6 +59,32 @@ public class SyncDirTask extends Task {
 		_toDir = toDir;
 	}
 
+	private List<SyncFileCallable> _buildSyncFileCallables(
+		File dir, File toDir, List<SyncFileCallable> syncFileCallables,
+		AtomicInteger atomicInteger) {
+
+		toDir.mkdirs();
+
+		for (File fromFile : dir.listFiles()) {
+			String name = fromFile.getName();
+
+			File toFile = new File(toDir, name);
+
+			if (fromFile.isDirectory()) {
+				_buildSyncFileCallables(
+					fromFile, toFile, syncFileCallables, atomicInteger);
+			}
+			else if (!toFile.exists()) {
+				SyncFileCallable syncFileCallable = new SyncFileCallable(
+					fromFile, toFile, atomicInteger);
+
+				syncFileCallables.add(syncFileCallable);
+			}
+		}
+
+		return syncFileCallables;
+	}
+
 	private void _checkConfiguration() throws BuildException {
 		if (_dir == null) {
 			throw new BuildException("No directory specified", getLocation());
@@ -81,13 +107,13 @@ public class SyncDirTask extends Task {
 	private int _syncDirectory() {
 		AtomicInteger atomicInteger = new AtomicInteger();
 
-		List<SyncFileCallable> copyTasks = _syncDirectory(
+		List<SyncFileCallable> syncFileCallables = _buildSyncFileCallables(
 			_dir, _toDir, new ArrayList<SyncFileCallable>(), atomicInteger);
 
 		ExecutorService executorService = Executors.newFixedThreadPool(10);
 
-		for (SyncFileCallable copyTask : copyTasks) {
-			executorService.submit(copyTask);
+		for (SyncFileCallable syncFileCallable : syncFileCallables) {
+			executorService.submit(syncFileCallable);
 		}
 
 		executorService.shutdown();
@@ -101,31 +127,6 @@ public class SyncDirTask extends Task {
 		}
 
 		return atomicInteger.intValue();
-	}
-
-	private List<SyncFileCallable> _syncDirectory(
-		File dir, File toDir, List<SyncFileCallable> copyTasks,
-		AtomicInteger atomicInteger) {
-
-		toDir.mkdirs();
-
-		for (File fromFile : dir.listFiles()) {
-			String name = fromFile.getName();
-
-			File toFile = new File(toDir, name);
-
-			if (fromFile.isDirectory()) {
-				_syncDirectory(fromFile, toFile, copyTasks, atomicInteger);
-			}
-			else if (!toFile.exists()) {
-				SyncFileCallable copyTask = new SyncFileCallable(
-					fromFile, toFile, atomicInteger);
-
-				copyTasks.add(copyTask);
-			}
-		}
-
-		return copyTasks;
 	}
 
 	private File _dir;

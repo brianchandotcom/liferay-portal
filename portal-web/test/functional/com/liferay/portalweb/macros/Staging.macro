@@ -442,6 +442,25 @@
 		</if>
 	</command>
 
+	<command name="copyFromLive">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="${portletName}" />
+			<var name="portletOption" value="${portletOption}" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute function="ClickNoError" locator1="Button#COPY_FROM_LIVE" />
+
+		<execute function="Confirm" value1="Are you sure you want to copy from live and update the existing staging portlet information?" />
+
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute function="Click" locator1="Icon#CLOSE" />
+	</command>
+
 	<command name="deactivateStagingCP">
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 

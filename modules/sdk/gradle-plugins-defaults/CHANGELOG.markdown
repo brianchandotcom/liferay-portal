@@ -1830,6 +1830,11 @@ attribute in Ivy `<dependency>` elements.
 `QUIET` instead of `LIFECYCLE`.
 - [LPS-73855]: Update the [Liferay Gradle Plugins] dependency to version 3.4.17.
 
+## 5.0.1 - 2017-08-01
+
+### Changed
+- Update the [Liferay Gradle Plugins] dependency to version 3.4.18.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins

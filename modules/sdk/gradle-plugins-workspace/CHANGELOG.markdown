@@ -128,7 +128,7 @@ version 3.0.2.
 - [LPS-73746]: Trim authentication token in case users add extra lines into
 their token file.
 
-## 1.6.0 - 2017-07-31
+## 1.6.0 - 2017-08-01
 
 ### Added
 - [LPS-73913]: Add the ability to pass the Liferay bundle authentication token

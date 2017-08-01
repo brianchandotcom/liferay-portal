@@ -1237,12 +1237,12 @@
 		<execute macro="DMNavigator#gotoDocumentType" />
 
 		<execute macro="DMDocumentType#edit">
-			<var name="dmDocumentTypeEditFieldRequired" value="Effective Date" />
+			<var name="dmDocumentTypeFieldRequiredEdit" value="Effective Date" />
 			<var name="dmDocumentTypeName" value="Contract" />
 		</execute>
 
 		<execute macro="DMDocumentType#edit">
-			<var name="dmDocumentTypeEditFieldRequired" value="Expiration Date" />
+			<var name="dmDocumentTypeFieldRequiredEdit" value="Expiration Date" />
 			<var name="dmDocumentTypeName" value="Contract" />
 		</execute>
 

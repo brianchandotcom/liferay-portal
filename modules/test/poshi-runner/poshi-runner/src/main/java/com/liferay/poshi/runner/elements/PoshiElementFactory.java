@@ -134,14 +134,6 @@ public class PoshiElementFactory {
 					return new DefinitionElement(readableSyntax);
 				}
 
-				if (line.startsWith("{")) {
-					return new ThenElement(readableSyntax);
-				}
-
-				if (line.startsWith("else {")) {
-					return new ElseElement(readableSyntax);
-				}
-
 				if (line.startsWith("for (")) {
 					return new ForElement(readableSyntax);
 				}
@@ -152,18 +144,6 @@ public class PoshiElementFactory {
 
 				if (line.startsWith("while (")) {
 					return new WhileElement(readableSyntax);
-				}
-
-				if (line.contains("==")) {
-					return new EqualsElement(readableSyntax);
-				}
-
-				if (line.startsWith("isset(")) {
-					return new IssetElement(readableSyntax);
-				}
-
-				if (line.endsWith(")")) {
-					return new ConditionElement(readableSyntax);
 				}
 
 				if (line.startsWith("property ")) {

@@ -18,6 +18,7 @@ import com.liferay.portal.cache.PortalCacheBootstrapLoader;
 import com.liferay.portal.cache.PortalCacheBootstrapLoaderFactory;
 import com.liferay.portal.cache.ehcache.multiple.configuration.EhcacheMultipleConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.executor.PortalExecutorManager;
@@ -72,7 +73,8 @@ public class EhcachePortalCacheBootstrapLoaderFactory
 			return new EhcachePortalCacheBootstrapLoaderAdapter(
 				bootstrapCacheLoaderFactory.createBootstrapCacheLoader(
 					newProperties),
-				bootstrapAsynchronously, _threadPoolExecutor);
+				bootstrapAsynchronously, _threadPoolExecutor,
+				_clusterMasterExecutor);
 		}
 		catch (Exception e) {
 			throw new SystemException(
@@ -108,6 +110,9 @@ public class EhcachePortalCacheBootstrapLoaderFactory
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EhcachePortalCacheBootstrapLoaderFactory.class);
+
+	@Reference
+	private ClusterMasterExecutor _clusterMasterExecutor;
 
 	private volatile EhcacheMultipleConfiguration _ehcacheMultipleConfiguration;
 

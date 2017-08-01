@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerProvider;
 import com.liferay.portal.kernel.cache.SkipReplicationThreadLocal;
+import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -34,12 +35,13 @@ public class EhcachePortalCacheBootstrapLoaderAdapter
 
 	public EhcachePortalCacheBootstrapLoaderAdapter(
 		BootstrapCacheLoader bootstrapCacheLoader,
-		boolean bootstrapAsynchronously,
-		ThreadPoolExecutor threadPoolExecutor) {
+		boolean bootstrapAsynchronously, ThreadPoolExecutor threadPoolExecutor,
+		ClusterMasterExecutor clusterMasterExecutor) {
 
 		_bootstrapCacheLoader = bootstrapCacheLoader;
 		_bootstrapAsynchronously = bootstrapAsynchronously;
 		_threadPoolExecutor = threadPoolExecutor;
+		_clusterMasterExecutor = clusterMasterExecutor;
 	}
 
 	@Override
@@ -67,6 +69,17 @@ public class EhcachePortalCacheBootstrapLoaderAdapter
 			portalCacheName);
 
 		if (!_bootstrapAsynchronously) {
+			if (_clusterMasterExecutor.isMaster()) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Not loading cache " +
+							portalCache.getPortalCacheName() + "from cluster " +
+								"because a cluster peer was not found");
+				}
+
+				return;
+			}
+
 			_loadPortalCache(portalCache);
 
 			return;
@@ -102,6 +115,7 @@ public class EhcachePortalCacheBootstrapLoaderAdapter
 
 	private final boolean _bootstrapAsynchronously;
 	private final BootstrapCacheLoader _bootstrapCacheLoader;
+	private final ClusterMasterExecutor _clusterMasterExecutor;
 	private final ThreadPoolExecutor _threadPoolExecutor;
 
 }

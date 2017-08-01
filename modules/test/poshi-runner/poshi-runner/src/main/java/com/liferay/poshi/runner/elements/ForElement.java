@@ -54,8 +54,7 @@ public class ForElement extends PoshiElement {
 	public String getBlockName() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("for ");
-		sb.append("(");
+		sb.append("for (");
 		sb.append(attributeValue("param"));
 		sb.append(" : \"");
 		sb.append(attributeValue("list"));

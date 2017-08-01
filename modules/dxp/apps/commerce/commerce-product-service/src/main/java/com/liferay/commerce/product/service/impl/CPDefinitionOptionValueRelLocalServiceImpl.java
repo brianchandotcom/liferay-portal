@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.exception.CPDefinitionOptionValueRelKeyException;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPOption;
@@ -109,6 +110,9 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		cpDefinitionOptionValueRelPersistence.update(
 			cpDefinitionOptionValueRel);
 
+		reindexCPDefinition(
+			cpDefinitionOptionValueRel.getCPDefinitionOptionRel());
+
 		return cpDefinitionOptionValueRel;
 	}
 
@@ -128,6 +132,9 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 
 		expandoRowLocalService.deleteRows(
 			cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId());
+
+		reindexCPDefinition(
+			cpDefinitionOptionValueRel.getCPDefinitionOptionRel());
 
 		return cpDefinitionOptionValueRel;
 	}
@@ -272,6 +279,9 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		cpDefinitionOptionValueRelPersistence.update(
 			cpDefinitionOptionValueRel);
 
+		reindexCPDefinition(
+			cpDefinitionOptionValueRel.getCPDefinitionOptionRel());
+
 		return cpDefinitionOptionValueRel;
 	}
 
@@ -317,6 +327,18 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		}
 
 		return searchContext;
+	}
+
+	protected void reindexCPDefinition(
+			CPDefinitionOptionRel cpDefinitionOptionRel)
+		throws PortalException {
+
+		Indexer<CPDefinition> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			CPDefinition.class);
+
+		indexer.reindex(
+			CPDefinition.class.getName(),
+			cpDefinitionOptionRel.getCPDefinitionId());
 	}
 
 	protected BaseModelSearchResult<CPDefinitionOptionValueRel> searchCPOptions(

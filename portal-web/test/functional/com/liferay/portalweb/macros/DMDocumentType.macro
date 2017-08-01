@@ -86,6 +86,10 @@
 					<var name="panelHeading" value="Main Metadata Fields" />
 				</execute>
 
+				<execute macro="DynamicDataMapping#editFieldSettings">
+					<var name="fieldFieldLabel" value="${dmDocumentTypeFieldRequiredEdit}" />
+				</execute>
+
 				<var name="key_fieldFieldLabel" value="${dmDocumentTypeFieldRequiredEdit}" />
 
 				<execute function="DoubleClick" locator1="DDMEditStructure#FORM_FIELD" />

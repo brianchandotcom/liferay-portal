@@ -1,6 +1,6 @@
 <definition>
 	<command name="_editFieldLabel">
-		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
+		<execute macro="DynamicDataMapping#editFieldSettings">
 			<var name="fieldFieldLabel" value="${field}" />
 		</execute>
 
@@ -160,7 +160,7 @@
 	<command name="editField">
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
-		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
+		<execute macro="DynamicDataMapping#editFieldSettings">
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
@@ -198,7 +198,7 @@
 	<command name="editFieldIndexable">
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
-		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
+		<execute macro="DynamicDataMapping#editFieldSettings">
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
@@ -243,7 +243,7 @@
 	<command name="editFieldLocalizable">
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
-		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
+		<execute macro="DynamicDataMapping#editFieldSettings">
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
@@ -259,7 +259,7 @@
 	</command>
 
 	<command name="editFieldNameCmd">
-		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
+		<execute macro="DynamicDataMapping#editFieldSettings">
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
@@ -325,7 +325,7 @@
 	<command name="editFieldOptions">
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
-		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
+		<execute macro="DynamicDataMapping#editFieldSettings">
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
@@ -368,7 +368,7 @@
 	<command name="editFieldPredefinedValue">
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
-		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
+		<execute macro="DynamicDataMapping#editFieldSettings">
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
@@ -445,7 +445,7 @@
 	<command name="editFieldRepeatable">
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
-		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
+		<execute macro="DynamicDataMapping#editFieldSettings">
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
@@ -463,7 +463,7 @@
 	<command name="editFieldRequired">
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
-		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
+		<execute macro="DynamicDataMapping#editFieldSettings">
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
@@ -478,7 +478,7 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
-	<command name="editFieldSettingsCmd">
+	<command name="editFieldSettings">
 		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
 
 		<execute function="DoubleClick" locator1="DDMEditStructure#FORM_FIELD" />
@@ -495,7 +495,7 @@
 	<command name="editFieldShowLabel">
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
-		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
+		<execute macro="DynamicDataMapping#editFieldSettings">
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
@@ -529,7 +529,7 @@
 	<command name="editFieldStyle">
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
-		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
+		<execute macro="DynamicDataMapping#editFieldSettings">
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
@@ -547,7 +547,7 @@
 	<command name="editFieldText">
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
-		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
+		<execute macro="DynamicDataMapping#editFieldSettings">
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
@@ -565,7 +565,7 @@
 	<command name="editFieldTip">
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
-		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
+		<execute macro="DynamicDataMapping#editFieldSettings">
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
@@ -585,7 +585,7 @@
 	<command name="editFieldWidth">
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
-		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
+		<execute macro="DynamicDataMapping#editFieldSettings">
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 

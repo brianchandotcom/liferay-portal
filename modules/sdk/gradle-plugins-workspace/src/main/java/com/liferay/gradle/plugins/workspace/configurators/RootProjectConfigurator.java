@@ -238,6 +238,16 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 			});
 
+		createTokenTask.setPasswordFile(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return workspaceExtension.getBundleTokenPasswordFile();
+				}
+
+			});
+
 		return createTokenTask;
 	}
 

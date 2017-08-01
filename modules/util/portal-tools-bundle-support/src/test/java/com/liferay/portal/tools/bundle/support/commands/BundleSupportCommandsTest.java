@@ -40,6 +40,7 @@ import java.net.ServerSocket;
 import java.net.URI;
 import java.net.URL;
 
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.PosixFilePermission;
@@ -143,7 +144,7 @@ public class BundleSupportCommandsTest {
 	public void testCreateTokenForce() throws Exception {
 		File tokenFile = temporaryFolder.newFile();
 
-		_testCreateToken(_CONTEXT_PATH_TOKEN, true, tokenFile);
+		_testCreateToken(_CONTEXT_PATH_TOKEN, true, null, tokenFile);
 	}
 
 	@Test
@@ -151,7 +152,19 @@ public class BundleSupportCommandsTest {
 		File tokenFile = new File(
 			temporaryFolder.getRoot(), "nonexistent/directory/token");
 
-		_testCreateToken(_CONTEXT_PATH_TOKEN, false, tokenFile);
+		_testCreateToken(_CONTEXT_PATH_TOKEN, false, null, tokenFile);
+	}
+
+	@Test
+	public void testCreateTokenPasswordFile() throws Exception {
+		File passwordFile = temporaryFolder.newFile();
+		File tokenFile = temporaryFolder.newFile();
+
+		Files.write(
+			passwordFile.toPath(),
+			_HTTP_SERVER_PASSWORD.getBytes(StandardCharsets.UTF_8));
+
+		_testCreateToken(_CONTEXT_PATH_TOKEN, true, passwordFile, tokenFile);
 	}
 
 	@Test
@@ -285,8 +298,8 @@ public class BundleSupportCommandsTest {
 	}
 
 	protected void createToken(
-			String emailAddress, boolean force, String password, File tokenFile,
-			URL tokenUrl)
+			String emailAddress, boolean force, String password,
+			File passwordFile, File tokenFile, URL tokenUrl)
 		throws Exception {
 
 		CreateTokenCommand createTokenCommand = new CreateTokenCommand();
@@ -294,6 +307,7 @@ public class BundleSupportCommandsTest {
 		createTokenCommand.setEmailAddress(emailAddress);
 		createTokenCommand.setForce(force);
 		createTokenCommand.setPassword(password);
+		createTokenCommand.setPasswordFile(passwordFile);
 		createTokenCommand.setTokenFile(tokenFile);
 		createTokenCommand.setTokenUrl(tokenUrl);
 
@@ -608,17 +622,24 @@ public class BundleSupportCommandsTest {
 	private void _testCreateToken(String contextPath) throws Exception {
 		File tokenFile = new File(temporaryFolder.getRoot(), "token");
 
-		_testCreateToken(contextPath, false, tokenFile);
+		_testCreateToken(contextPath, false, null, tokenFile);
 	}
 
 	private void _testCreateToken(
-			String contextPath, boolean force, File tokenFile)
+			String contextPath, boolean force, File passwordFile,
+			File tokenFile)
 		throws Exception {
+
+		String password = null;
+
+		if (passwordFile == null) {
+			password = _HTTP_SERVER_PASSWORD;
+		}
 
 		URL tokenUrl = _getHttpServerUrl(contextPath);
 
 		createToken(
-			_HTTP_SERVER_PASSWORD, force, _HTTP_SERVER_USER_NAME, tokenFile,
+			_HTTP_SERVER_USER_NAME, force, password, passwordFile, tokenFile,
 			tokenUrl);
 
 		Assert.assertEquals("hello-world", FileUtil.read(tokenFile));

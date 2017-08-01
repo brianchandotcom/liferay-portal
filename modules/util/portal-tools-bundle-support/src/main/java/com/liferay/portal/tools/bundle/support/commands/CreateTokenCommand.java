@@ -18,6 +18,7 @@ import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 
 import com.liferay.portal.tools.bundle.support.constants.BundleSupportConstants;
+import com.liferay.portal.tools.bundle.support.internal.util.FileUtil;
 import com.liferay.portal.tools.bundle.support.internal.util.HttpUtil;
 
 import java.io.Console;
@@ -55,11 +56,16 @@ public class CreateTokenCommand implements Command {
 			_emailAddress = console.readLine("Email Address: ");
 		}
 
-		while ((_password == null) || _password.isEmpty()) {
-			char[] characters = console.readPassword("Password: ");
+		if ((_passwordFile != null) && _passwordFile.exists()) {
+			_password = FileUtil.read(_passwordFile);
+		}
+		else {
+			while ((_password == null) || _password.isEmpty()) {
+				char[] characters = console.readPassword("Password: ");
 
-			if (characters != null) {
-				_password = new String(characters);
+				if (characters != null) {
+					_password = new String(characters);
+				}
 			}
 		}
 
@@ -85,6 +91,10 @@ public class CreateTokenCommand implements Command {
 		return _password;
 	}
 
+	public File getPasswordFile() {
+		return _passwordFile;
+	}
+
 	public File getTokenFile() {
 		return _tokenFile;
 	}
@@ -107,6 +117,10 @@ public class CreateTokenCommand implements Command {
 
 	public void setPassword(String password) {
 		_password = password;
+	}
+
+	public void setPasswordFile(File passwordFile) {
+		_passwordFile = passwordFile;
 	}
 
 	public void setTokenFile(File tokenFile) {
@@ -145,6 +159,12 @@ public class CreateTokenCommand implements Command {
 		description = "Your liferay.com password.", names = {"-p", "--password"}
 	)
 	private String _password;
+
+	@Parameter(
+		description = "The file where to read the password value.",
+		names = "--password-file"
+	)
+	private File _passwordFile;
 
 	@Parameter(
 		description = "The file where to store your liferay.com download token.",

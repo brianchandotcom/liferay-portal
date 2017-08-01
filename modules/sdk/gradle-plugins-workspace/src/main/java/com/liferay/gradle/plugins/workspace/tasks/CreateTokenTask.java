@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins.workspace.tasks;
 
+import com.liferay.gradle.plugins.workspace.internal.util.FileUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 import com.liferay.portal.tools.bundle.support.commands.CreateTokenCommand;
@@ -35,11 +36,13 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.TaskAction;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Gregory Amerson
  */
 public class CreateTokenTask extends DefaultTask {
 
@@ -90,6 +93,12 @@ public class CreateTokenTask extends DefaultTask {
 		return GradleUtil.toString(_password);
 	}
 
+	@InputFile
+	@Optional
+	public File getPasswordFile() {
+		return GradleUtil.toFile(getProject(), _passwordFile);
+	}
+
 	@Input
 	public File getTokenFile() {
 		return GradleUtil.toFile(getProject(), _tokenFile);
@@ -114,6 +123,11 @@ public class CreateTokenTask extends DefaultTask {
 
 	public void setPassword(Object password) {
 		_password = password;
+	}
+
+	@Input
+	public void setPasswordFile(Object passwordFile) {
+		_passwordFile = passwordFile;
 	}
 
 	@Input
@@ -156,9 +170,10 @@ public class CreateTokenTask extends DefaultTask {
 	private void _setCredentials() {
 		String emailAddress = getEmailAddress();
 		String password = getPassword();
+		File passwordFile = getPasswordFile();
 
 		if (Validator.isNotNull(emailAddress) &&
-			Validator.isNotNull(password)) {
+			(Validator.isNotNull(password) || (passwordFile != null))) {
 
 			return;
 		}
@@ -174,8 +189,14 @@ public class CreateTokenTask extends DefaultTask {
 
 		setEmailAddress(emailAddress);
 
-		while (Validator.isNull(password)) {
-			password = _readInput(antBuilder, "Password:", "password", true);
+		if (passwordFile != null) {
+			password = FileUtil.read(passwordFile);
+		}
+		else {
+			while (Validator.isNull(password)) {
+				password = _readInput(
+					antBuilder, "Password:", "password", true);
+			}
 		}
 
 		setPassword(password);
@@ -184,6 +205,7 @@ public class CreateTokenTask extends DefaultTask {
 	private Object _emailAddress;
 	private Object _force;
 	private Object _password;
+	private Object _passwordFile;
 	private Object _tokenFile = BundleSupportConstants.DEFAULT_TOKEN_FILE;
 	private Object _tokenUrl = BundleSupportConstants.DEFAULT_TOKEN_URL;
 

@@ -29,21 +29,30 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Miguel Pastor
  */
-@PowerMockIgnore({"javax.net.ssl.*", "javax.xml.datatype.*"})
-@PrepareForTest(PortalUtil.class)
-@RunWith(PowerMockRunner.class)
 public class HttpImplTest extends PowerMockito {
+
+	@BeforeClass
+	public static void setUpClass() {
+		PortalUtil portalUtil = new PortalUtil();
+
+		portalUtil.setPortal(
+			new PortalImpl() {
+
+				@Override
+				public String[] stripURLAnchor(String url, String separator) {
+					return new String[] {url, StringPool.BLANK};
+				}
+
+			});
+	}
 
 	@Test
 	public void testAddBooleanParameter() {
@@ -373,18 +382,8 @@ public class HttpImplTest extends PowerMockito {
 	private void _addParameter(
 		String url, String parameterName, String parameterValue) {
 
-		mockStatic(PortalUtil.class);
-
-		when(
-			PortalUtil.stripURLAnchor(url, StringPool.POUND)
-		).thenReturn(
-			new String[] {url, StringPool.BLANK}
-		);
-
 		String newURL = _httpImpl.addParameter(
 			url, parameterName, parameterValue);
-
-		verifyStatic();
 
 		StringBundler sb = new StringBundler(5);
 

@@ -107,6 +107,38 @@ public abstract class PoshiElement extends DefaultElement {
 		return RegexUtil.getGroup(readableSyntax, ".*?\"(.*)\"", 1);
 	}
 
+	protected static boolean isBalancedReadableSyntax(String readableSyntax) {
+		Stack<Character> stack = new Stack<>();
+
+		for (char c : readableSyntax.toCharArray()) {
+			if (!stack.isEmpty()) {
+				Character topCodeBoundary = stack.peek();
+
+				if (c == _codeBoundariesMap.get(topCodeBoundary)) {
+					stack.pop();
+
+					continue;
+				}
+
+				if (topCodeBoundary == '\"') {
+					continue;
+				}
+			}
+
+			if (_codeBoundariesMap.containsKey(c)) {
+				stack.push(c);
+
+				continue;
+			}
+
+			if (_codeBoundariesMap.containsValue(c)) {
+				return false;
+			}
+		}
+
+		return stack.isEmpty();
+	}
+
 	protected void addElementFromReadableSyntax(String readableSyntax) {
 		PoshiElement poshiElement = PoshiElementFactory.newPoshiElement(
 			readableSyntax);
@@ -143,38 +175,6 @@ public abstract class PoshiElement extends DefaultElement {
 
 	protected String getPad() {
 		return "\t";
-	}
-
-	protected boolean isBalancedReadableSyntax(String readableSyntax) {
-		Stack<Character> stack = new Stack<>();
-
-		for (char c : readableSyntax.toCharArray()) {
-			if (!stack.isEmpty()) {
-				Character topCodeBoundary = stack.peek();
-
-				if (c == _codeBoundariesMap.get(topCodeBoundary)) {
-					stack.pop();
-
-					continue;
-				}
-
-				if (topCodeBoundary == '\"') {
-					continue;
-				}
-			}
-
-			if (_codeBoundariesMap.containsKey(c)) {
-				stack.push(c);
-
-				continue;
-			}
-
-			if (_codeBoundariesMap.containsValue(c)) {
-				return false;
-			}
-		}
-
-		return stack.isEmpty();
 	}
 
 	protected boolean isBalanceValidationRequired(String readableSyntax) {

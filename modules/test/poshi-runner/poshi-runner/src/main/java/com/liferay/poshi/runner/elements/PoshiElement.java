@@ -40,7 +40,7 @@ public abstract class PoshiElement extends DefaultElement {
 			_addElements(element);
 		}
 		else {
-			this.setName("unsupported");
+			setName("unsupported");
 		}
 	}
 
@@ -51,7 +51,7 @@ public abstract class PoshiElement extends DefaultElement {
 			parseReadableSyntax(readableSyntax);
 		}
 		else {
-			this.setName("unsupported");
+			setName("unsupported");
 		}
 	}
 

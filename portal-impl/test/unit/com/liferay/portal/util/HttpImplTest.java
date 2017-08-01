@@ -397,6 +397,29 @@ public class HttpImplTest extends PowerMockito {
 				JDKLoggerTestUtil.configureJDKLogger(
 					HttpImpl.class.getName(), Level.FINE)) {
 
+			Assert.assertEquals("", _httpImpl.shortenURL("redirect=%xy", 1));
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertEquals(
+				"Skipping undecodable parameter redirect=%xy",
+				logRecord.getMessage());
+
+			Throwable throwable = logRecord.getThrown();
+
+			Assert.assertSame(
+				IllegalArgumentException.class, throwable.getClass());
+			Assert.assertEquals("x is not a hex char", throwable.getMessage());
+		}
+
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					HttpImpl.class.getName(), Level.FINE)) {
+
 			Assert.assertEquals(
 				"www.google.com",
 				_httpImpl.shortenURL("www.google.com?redirect=%xy", 1));

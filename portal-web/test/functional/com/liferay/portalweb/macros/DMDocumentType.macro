@@ -90,21 +90,7 @@
 					<var name="fieldFieldLabel" value="${dmDocumentTypeFieldRequiredEdit}" />
 				</execute>
 
-				<var name="key_fieldFieldLabel" value="${dmDocumentTypeFieldRequiredEdit}" />
-
-				<execute function="DoubleClick" locator1="DDMEditStructure#FORM_FIELD" />
-
-				<execute function="AssertClick" locator1="DDMEditStructure#SETTINGS_LINK" value1="Settings" />
-
-				<execute function="DoubleClick" locator1="DDMEditStructure#SETTINGS_REQUIRED" />
-
-				<execute function="Click" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_YES_RADIO" />
-
-				<execute function="AssertClick" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
-
-				<execute function="AssertClick#pauseAssertTextClickAt" locator1="DDMEditStructure#FIELDS_LINK" value1="Fields" />
-
-				<execute function="SelectFrame" value1="relative=top" />
+				<execute macro="DynamicDataMapping#makeFieldRepeatable">
 			</then>
 		</if>
 

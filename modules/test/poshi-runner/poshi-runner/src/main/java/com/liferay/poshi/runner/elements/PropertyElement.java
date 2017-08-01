@@ -21,7 +21,15 @@ import org.dom4j.Element;
  */
 public class PropertyElement extends VarElement {
 
-	public static boolean isElementType(String readableSyntax) {
+	public PropertyElement(Element element) {
+		super("property", element);
+	}
+
+	public PropertyElement(String readableSyntax) {
+		super("property", readableSyntax);
+	}
+
+	public boolean isElementType(String readableSyntax) {
 		readableSyntax = readableSyntax.trim();
 
 		if (!isBalancedReadableSyntax(readableSyntax)) {
@@ -37,14 +45,6 @@ public class PropertyElement extends VarElement {
 		}
 
 		return true;
-	}
-
-	public PropertyElement(Element element) {
-		super("property", element);
-	}
-
-	public PropertyElement(String readableSyntax) {
-		super("property", readableSyntax);
 	}
 
 }

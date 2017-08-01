@@ -24,7 +24,15 @@ import org.dom4j.Element;
  */
 public class DefinitionElement extends PoshiElement {
 
-	public static boolean isElementType(String readableSyntax) {
+	public DefinitionElement(Element element) {
+		super("definition", element);
+	}
+
+	public DefinitionElement(String readableSyntax) {
+		super("definition", readableSyntax);
+	}
+
+	public boolean isElementType(String readableSyntax) {
 		readableSyntax = readableSyntax.trim();
 
 		if (!isBalancedReadableSyntax(readableSyntax)) {
@@ -50,14 +58,6 @@ public class DefinitionElement extends PoshiElement {
 		}
 
 		return true;
-	}
-
-	public DefinitionElement(Element element) {
-		super("definition", element);
-	}
-
-	public DefinitionElement(String readableSyntax) {
-		super("definition", readableSyntax);
 	}
 
 	@Override

@@ -28,7 +28,23 @@ import org.dom4j.Element;
  */
 public class ExecuteElement extends PoshiElement {
 
-	public static boolean isElementType(String readableSyntax) {
+	public ExecuteElement(Element element) {
+		super("execute", element);
+	}
+
+	public ExecuteElement(String readableSyntax) {
+		super("execute", readableSyntax);
+	}
+
+	public ExecuteElement(String name, Element element) {
+		super(name, element);
+	}
+
+	public ExecuteElement(String name, String readableSyntax) {
+		super(name, readableSyntax);
+	}
+
+	public boolean isElementType(String readableSyntax) {
 		readableSyntax = readableSyntax.trim();
 
 		if (!isBalancedReadableSyntax(readableSyntax)) {
@@ -54,22 +70,6 @@ public class ExecuteElement extends PoshiElement {
 		}
 
 		return true;
-	}
-
-	public ExecuteElement(Element element) {
-		super("execute", element);
-	}
-
-	public ExecuteElement(String readableSyntax) {
-		super("execute", readableSyntax);
-	}
-
-	public ExecuteElement(String name, Element element) {
-		super(name, element);
-	}
-
-	public ExecuteElement(String name, String readableSyntax) {
-		super(name, readableSyntax);
 	}
 
 	@Override

@@ -21,7 +21,15 @@ import org.dom4j.Element;
  */
 public class WhileElement extends IfElement {
 
-	public static boolean isElementType(String readableSyntax) {
+	public WhileElement(Element element) {
+		super("while", element);
+	}
+
+	public WhileElement(String readableSyntax) {
+		super("while", readableSyntax);
+	}
+
+	public boolean isElementType(String readableSyntax) {
 		readableSyntax = readableSyntax.trim();
 
 		if (!isBalancedReadableSyntax(readableSyntax)) {
@@ -37,14 +45,6 @@ public class WhileElement extends IfElement {
 		}
 
 		return true;
-	}
-
-	public WhileElement(Element element) {
-		super("while", element);
-	}
-
-	public WhileElement(String readableSyntax) {
-		super("while", readableSyntax);
 	}
 
 }

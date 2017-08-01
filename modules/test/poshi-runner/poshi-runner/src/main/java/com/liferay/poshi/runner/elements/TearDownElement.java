@@ -21,7 +21,15 @@ import org.dom4j.Element;
  */
 public class TearDownElement extends CommandElement {
 
-	public static boolean isElementType(String readableSyntax) {
+	public TearDownElement(Element element) {
+		super("tear-down", element);
+	}
+
+	public TearDownElement(String readableSyntax) {
+		super("tear-down", readableSyntax);
+	}
+
+	public boolean isElementType(String readableSyntax) {
 		readableSyntax = readableSyntax.trim();
 
 		if (!isBalancedReadableSyntax(readableSyntax)) {
@@ -47,14 +55,6 @@ public class TearDownElement extends CommandElement {
 		}
 
 		return true;
-	}
-
-	public TearDownElement(Element element) {
-		super("tear-down", element);
-	}
-
-	public TearDownElement(String readableSyntax) {
-		super("tear-down", readableSyntax);
 	}
 
 	@Override

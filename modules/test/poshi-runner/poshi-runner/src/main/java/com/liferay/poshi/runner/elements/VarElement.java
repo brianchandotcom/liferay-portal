@@ -27,28 +27,6 @@ import org.dom4j.Node;
  */
 public class VarElement extends PoshiElement {
 
-	public static boolean isElementType(String readableSyntax) {
-		readableSyntax = readableSyntax.trim();
-
-		if (!isBalancedReadableSyntax(readableSyntax)) {
-			return false;
-		}
-
-		if (!readableSyntax.endsWith(";")) {
-			return false;
-		}
-
-		if (!readableSyntax.startsWith("var ")) {
-			return false;
-		}
-
-		if (readableSyntax.contains(" = return(")) {
-			return false;
-		}
-
-		return true;
-	}
-
 	public VarElement(Element element) {
 		this("var", element);
 	}
@@ -77,6 +55,28 @@ public class VarElement extends PoshiElement {
 		}
 
 		return attributeValue(valueAttributeName);
+	}
+
+	public boolean isElementType(String readableSyntax) {
+		readableSyntax = readableSyntax.trim();
+
+		if (!isBalancedReadableSyntax(readableSyntax)) {
+			return false;
+		}
+
+		if (!readableSyntax.endsWith(";")) {
+			return false;
+		}
+
+		if (!readableSyntax.startsWith("var ")) {
+			return false;
+		}
+
+		if (readableSyntax.contains(" = return(")) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override

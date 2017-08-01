@@ -42,7 +42,12 @@ public abstract class PoshiElement extends DefaultElement {
 	public PoshiElement(String name, String readableSyntax) {
 		super(name);
 
-		parseReadableSyntax(readableSyntax);
+		if (isElementType(readableSyntax)) {
+			parseReadableSyntax(readableSyntax);
+		}
+		else {
+			this.setName("unsupported");
+		}
 	}
 
 	@Override
@@ -54,6 +59,10 @@ public abstract class PoshiElement extends DefaultElement {
 		}
 
 		super.add(new PoshiElementAttribute(attribute));
+	}
+
+	public boolean isElementType(String readableSyntax) {
+		return true;
 	}
 
 	public abstract void parseReadableSyntax(String readableSyntax);

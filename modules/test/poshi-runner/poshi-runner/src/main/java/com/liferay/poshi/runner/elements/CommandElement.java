@@ -27,7 +27,23 @@ import org.dom4j.Element;
  */
 public class CommandElement extends PoshiElement {
 
-	public static boolean isElementType(String readableSyntax) {
+	public CommandElement(Element element) {
+		this("command", element);
+	}
+
+	public CommandElement(String readableSyntax) {
+		this("command", readableSyntax);
+	}
+
+	public CommandElement(String name, Element element) {
+		super(name, element);
+	}
+
+	public CommandElement(String name, String readableSyntax) {
+		super(name, readableSyntax);
+	}
+
+	public boolean isElementType(String readableSyntax) {
 		readableSyntax = readableSyntax.trim();
 
 		if (!isBalancedReadableSyntax(readableSyntax)) {
@@ -53,22 +69,6 @@ public class CommandElement extends PoshiElement {
 		}
 
 		return true;
-	}
-
-	public CommandElement(Element element) {
-		this("command", element);
-	}
-
-	public CommandElement(String readableSyntax) {
-		this("command", readableSyntax);
-	}
-
-	public CommandElement(String name, Element element) {
-		super(name, element);
-	}
-
-	public CommandElement(String name, String readableSyntax) {
-		super(name, readableSyntax);
 	}
 
 	@Override

@@ -24,24 +24,6 @@ import org.dom4j.Element;
  */
 public class IfElement extends PoshiElement {
 
-	public static boolean isElementType(String readableSyntax) {
-		readableSyntax = readableSyntax.trim();
-
-		if (!isBalancedReadableSyntax(readableSyntax)) {
-			return false;
-		}
-
-		if (!readableSyntax.startsWith("if (")) {
-			return false;
-		}
-
-		if (!readableSyntax.endsWith("}")) {
-			return false;
-		}
-
-		return true;
-	}
-
 	public IfElement(Element element) {
 		super("if", element);
 	}
@@ -78,6 +60,24 @@ public class IfElement extends PoshiElement {
 		}
 
 		return sb.toString();
+	}
+
+	public boolean isElementType(String readableSyntax) {
+		readableSyntax = readableSyntax.trim();
+
+		if (!isBalancedReadableSyntax(readableSyntax)) {
+			return false;
+		}
+
+		if (!readableSyntax.startsWith("if (")) {
+			return false;
+		}
+
+		if (!readableSyntax.endsWith("}")) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override

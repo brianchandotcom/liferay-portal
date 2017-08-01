@@ -28,6 +28,34 @@ import org.dom4j.Element;
  */
 public class ExecuteElement extends PoshiElement {
 
+	public static boolean isElementType(String readableSyntax) {
+		readableSyntax = readableSyntax.trim();
+
+		if (!isBalancedReadableSyntax(readableSyntax)) {
+			return false;
+		}
+
+		if (readableSyntax.startsWith("property ")) {
+			return false;
+		}
+
+		if (readableSyntax.startsWith("var ") &&
+			readableSyntax.contains(" = return(")) {
+
+			return true;
+		}
+
+		if (readableSyntax.startsWith("var ")) {
+			return false;
+		}
+
+		if (!readableSyntax.endsWith(");")) {
+			return false;
+		}
+
+		return true;
+	}
+
 	public ExecuteElement(Element element) {
 		super("execute", element);
 	}

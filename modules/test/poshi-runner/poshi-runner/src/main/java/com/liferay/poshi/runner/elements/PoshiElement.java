@@ -35,8 +35,13 @@ public abstract class PoshiElement extends DefaultElement {
 	public PoshiElement(String name, Element element) {
 		super(name);
 
-		_addAttributes(element);
-		_addElements(element);
+		if (isElementType(name, element)) {
+			_addAttributes(element);
+			_addElements(element);
+		}
+		else {
+			this.setName("unsupported");
+		}
 	}
 
 	public PoshiElement(String name, String readableSyntax) {
@@ -63,6 +68,14 @@ public abstract class PoshiElement extends DefaultElement {
 
 	public boolean isElementType(String readableSyntax) {
 		return true;
+	}
+
+	public boolean isElementType(String name, Element element) {
+		if (name.equals(element.getName())) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public abstract void parseReadableSyntax(String readableSyntax);

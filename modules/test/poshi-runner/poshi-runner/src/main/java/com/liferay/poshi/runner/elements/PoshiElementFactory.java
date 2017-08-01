@@ -17,9 +17,7 @@ package com.liferay.poshi.runner.elements;
 import com.liferay.poshi.runner.util.Dom4JUtil;
 import com.liferay.poshi.runner.util.FileUtil;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.StringReader;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -104,68 +102,47 @@ public class PoshiElementFactory {
 	}
 
 	public static PoshiElement newPoshiElement(String readableSyntax) {
-		try (BufferedReader bufferedReader = new BufferedReader(
-				new StringReader(readableSyntax))) {
-
-			String line = null;
-
-			while ((line = bufferedReader.readLine()) != null) {
-				line = line.trim();
-
-				if (line.length() == 0) {
-					continue;
-				}
-
-				if (ExecuteElement.isElementType(readableSyntax)) {
-					return new ExecuteElement(readableSyntax);
-				}
-
-				if (line.startsWith("@")) {
-					continue;
-				}
-
-				if (DefinitionElement.isElementType(readableSyntax)) {
-					return new DefinitionElement(readableSyntax);
-				}
-
-				if (ForElement.isElementType(readableSyntax)) {
-					return new ForElement(readableSyntax);
-				}
-
-				if (IfElement.isElementType(readableSyntax)) {
-					return new IfElement(readableSyntax);
-				}
-
-				if (WhileElement.isElementType(readableSyntax)) {
-					return new WhileElement(readableSyntax);
-				}
-
-				if (PropertyElement.isElementType(readableSyntax)) {
-					return new PropertyElement(readableSyntax);
-				}
-
-				if (SetUpElement.isElementType(readableSyntax)) {
-					return new SetUpElement(readableSyntax);
-				}
-
-				if (TearDownElement.isElementType(readableSyntax)) {
-					return new TearDownElement(readableSyntax);
-				}
-
-				if (CommandElement.isElementType(readableSyntax)) {
-					return new CommandElement(readableSyntax);
-				}
-
-				if (VarElement.isElementType(readableSyntax)) {
-					return new VarElement(readableSyntax);
-				}
-			}
+		if (CommandElement.isElementType(readableSyntax)) {
+			return new CommandElement(readableSyntax);
 		}
-		catch (Exception e) {
-			System.out.println("Unable to generate the Poshi element");
 
-			e.printStackTrace();
+		if (DefinitionElement.isElementType(readableSyntax)) {
+			return new DefinitionElement(readableSyntax);
 		}
+
+		if (ExecuteElement.isElementType(readableSyntax)) {
+			return new ExecuteElement(readableSyntax);
+		}
+
+		if (ForElement.isElementType(readableSyntax)) {
+			return new ForElement(readableSyntax);
+		}
+
+		if (IfElement.isElementType(readableSyntax)) {
+			return new IfElement(readableSyntax);
+		}
+
+		if (PropertyElement.isElementType(readableSyntax)) {
+			return new PropertyElement(readableSyntax);
+		}
+
+		if (SetUpElement.isElementType(readableSyntax)) {
+			return new SetUpElement(readableSyntax);
+		}
+
+		if (TearDownElement.isElementType(readableSyntax)) {
+			return new TearDownElement(readableSyntax);
+		}
+
+		if (VarElement.isElementType(readableSyntax)) {
+			return new VarElement(readableSyntax);
+		}
+
+		if (WhileElement.isElementType(readableSyntax)) {
+			return new WhileElement(readableSyntax);
+		}
+
+		System.out.println("Unable to generate the Poshi element");
 
 		return new UnsupportedElement(readableSyntax);
 	}

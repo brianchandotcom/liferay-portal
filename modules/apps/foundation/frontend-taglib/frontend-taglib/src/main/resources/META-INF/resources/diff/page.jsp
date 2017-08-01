@@ -26,79 +26,79 @@ List<DiffResult> targetResults = diffResults[1];
 %>
 
 <div class="container-fluid-1280">
-<c:choose>
-	<c:when test="<%= !sourceResults.isEmpty() %>">
-		<table class="table table-bordered table-hover table-striped" id="taglib-diff-results">
-			<tr>
-				<td>
-					<%= HtmlUtil.escape(sourceName) %>
-				</td>
-				<td>
-					<%= HtmlUtil.escape(targetName) %>
-				</td>
-			</tr>
-
-			<%
-			for (int i = 0; i < sourceResults.size(); i++) {
-				DiffResult sourceResult = sourceResults.get(i);
-				DiffResult targetResult = targetResults.get(i);
-			%>
-
+	<c:choose>
+		<c:when test="<%= !sourceResults.isEmpty() %>">
+			<table class="table table-bordered table-hover table-striped" id="taglib-diff-results">
 				<tr>
-					<th class="table-header">
-						<liferay-ui:message key="line" /> <%= sourceResult.getLineNumber() %>
-					</th>
-					<th class="table-header">
-						<liferay-ui:message key="line" /> <%= targetResult.getLineNumber() %>
-					</th>
-				</tr>
-				<tr>
-					<td width="50%">
-						<table class="taglib-diff-table">
-
-							<%
-							for (String changedLine : sourceResult.getChangedLines()) {
-							%>
-
-								<tr class="lfr-top">
-									<%= _processColumn(changedLine) %>
-								</tr>
-
-							<%
-							}
-							%>
-
-						</table>
+					<td>
+						<%= HtmlUtil.escape(sourceName) %>
 					</td>
-					<td class="lfr-top" width="50%">
-						<table class="taglib-diff-table">
-
-							<%
-							for (String changedLine : targetResult.getChangedLines()) {
-							%>
-
-								<tr class="lfr-top">
-									<%= _processColumn(changedLine) %>
-								</tr>
-
-							<%
-							}
-							%>
-
-						</table>
+					<td>
+						<%= HtmlUtil.escape(targetName) %>
 					</td>
 				</tr>
 
-			<%
-			}
-			%>
+				<%
+				for (int i = 0; i < sourceResults.size(); i++) {
+					DiffResult sourceResult = sourceResults.get(i);
+					DiffResult targetResult = targetResults.get(i);
+				%>
 
-		</table>
-	</c:when>
-	<c:otherwise>
-		<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(sourceName), HtmlUtil.escape(targetName)} %>" key="there-are-no-differences-between-x-and-x" translateArguments="<%= false %>" />
-	</c:otherwise>
-</c:choose>
+					<tr>
+						<th class="table-header">
+							<liferay-ui:message key="line" /> <%= sourceResult.getLineNumber() %>
+						</th>
+						<th class="table-header">
+							<liferay-ui:message key="line" /> <%= targetResult.getLineNumber() %>
+						</th>
+					</tr>
+					<tr>
+						<td width="50%">
+							<table class="taglib-diff-table">
+
+								<%
+								for (String changedLine : sourceResult.getChangedLines()) {
+								%>
+
+									<tr class="lfr-top">
+										<%= _processColumn(changedLine) %>
+									</tr>
+
+								<%
+								}
+								%>
+
+							</table>
+						</td>
+						<td class="lfr-top" width="50%">
+							<table class="taglib-diff-table">
+
+								<%
+								for (String changedLine : targetResult.getChangedLines()) {
+								%>
+
+									<tr class="lfr-top">
+										<%= _processColumn(changedLine) %>
+									</tr>
+
+								<%
+								}
+								%>
+
+							</table>
+						</td>
+					</tr>
+
+				<%
+				}
+				%>
+
+			</table>
+		</c:when>
+		<c:otherwise>
+			<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(sourceName), HtmlUtil.escape(targetName)} %>" key="there-are-no-differences-between-x-and-x" translateArguments="<%= false %>" />
+		</c:otherwise>
+	</c:choose>
 </div>
 
 <%!

@@ -116,7 +116,7 @@ public class PoshiElementFactory {
 					continue;
 				}
 
-				if (line.endsWith(");")) {
+				if (ExecuteElement.isElementType(readableSyntax)) {
 					return new ExecuteElement(readableSyntax);
 				}
 
@@ -124,43 +124,39 @@ public class PoshiElementFactory {
 					continue;
 				}
 
-				if (line.startsWith("definition {")) {
+				if (DefinitionElement.isElementType(readableSyntax)) {
 					return new DefinitionElement(readableSyntax);
 				}
 
-				if (line.startsWith("for (")) {
+				if (ForElement.isElementType(readableSyntax)) {
 					return new ForElement(readableSyntax);
 				}
 
-				if (line.startsWith("if (")) {
+				if (IfElement.isElementType(readableSyntax)) {
 					return new IfElement(readableSyntax);
 				}
 
-				if (line.startsWith("while (")) {
+				if (WhileElement.isElementType(readableSyntax)) {
 					return new WhileElement(readableSyntax);
 				}
 
-				if (line.startsWith("property ")) {
+				if (PropertyElement.isElementType(readableSyntax)) {
 					return new PropertyElement(readableSyntax);
 				}
 
-				if (line.startsWith("setUp {")) {
+				if (SetUpElement.isElementType(readableSyntax)) {
 					return new SetUpElement(readableSyntax);
 				}
 
-				if (line.startsWith("tearDown {")) {
+				if (TearDownElement.isElementType(readableSyntax)) {
 					return new TearDownElement(readableSyntax);
 				}
 
-				if (line.startsWith("test") && line.endsWith(" {")) {
+				if (CommandElement.isElementType(readableSyntax)) {
 					return new CommandElement(readableSyntax);
 				}
 
-				if (line.startsWith("var") && line.endsWith("return(")) {
-					return new ExecuteElement(readableSyntax);
-				}
-
-				if (line.startsWith("var ")) {
+				if (VarElement.isElementType(readableSyntax)) {
 					return new VarElement(readableSyntax);
 				}
 			}

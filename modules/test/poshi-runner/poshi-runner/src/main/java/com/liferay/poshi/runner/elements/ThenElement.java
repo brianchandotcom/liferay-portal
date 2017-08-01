@@ -60,7 +60,7 @@ public class ThenElement extends PoshiElement {
 		for (String line : readableSyntax.split("\n")) {
 			String readableBlock = sb.toString();
 
-			if ((line.endsWith("{")) && (readableBlocks.isEmpty())) {
+			if (line.endsWith("{") && readableBlocks.isEmpty()) {
 				continue;
 			}
 

@@ -153,10 +153,10 @@ public class SyncDirTask extends Task {
 				while ((count = inputStream.read(buffer)) > 0) {
 					outputStream.write(buffer, 0, count);
 				}
+
+				_atomicInteger.incrementAndGet();
 			}
 			finally {
-				_atomicInteger.incrementAndGet();
-
 				inputStream.close();
 				outputStream.close();
 			}

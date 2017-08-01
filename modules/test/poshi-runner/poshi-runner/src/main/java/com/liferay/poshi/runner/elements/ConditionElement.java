@@ -34,6 +34,10 @@ public class ConditionElement extends ExecuteElement {
 		return attributeValue("function");
 	}
 
+	public boolean isElementType(String readableSyntax) {
+		return true;
+	}
+
 	@Override
 	protected String createReadableBlock(String content) {
 		String readableBlock = super.createReadableBlock(content);

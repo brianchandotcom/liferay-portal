@@ -24,6 +24,24 @@ import org.dom4j.Element;
  */
 public class ForElement extends PoshiElement {
 
+	public static boolean isElementType(String readableSyntax) {
+		readableSyntax = readableSyntax.trim();
+
+		if (!isBalancedReadableSyntax(readableSyntax)) {
+			return false;
+		}
+
+		if (!readableSyntax.startsWith("for (")) {
+			return false;
+		}
+
+		if (!readableSyntax.endsWith("}")) {
+			return false;
+		}
+
+		return true;
+	}
+
 	public ForElement(Element element) {
 		super("for", element);
 	}

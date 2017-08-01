@@ -21,9 +21,16 @@ import com.liferay.portal.verify.VerifyProcess;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Eudaldo Alonso
  */
+@Component(
+	immediate = true,
+	property = {"verify.process.name=com.liferay.asset.categories.service"},
+	service = VerifyProcess.class
+)
 public class AssetCategoriesServiceVerifyProcess extends VerifyProcess {
 
 	@Override

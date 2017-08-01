@@ -27,6 +27,20 @@ import org.dom4j.Element;
  */
 public class PoshiElementFactory {
 
+	public static PoshiElement getSupportedPoshiElement(
+		PoshiElement[] poshiElements) {
+
+		for (PoshiElement poshiElement : poshiElements) {
+			String poshiElementName = poshiElement.getName();
+
+			if (!poshiElementName.equals("unsupported")) {
+				return poshiElement;
+			}
+		}
+
+		return null;
+	}
+
 	public static PoshiElement newPoshiElement(Element element) {
 		PoshiElement[] poshiElements = {
 			new CommandElement(element), new ConditionElement(element),
@@ -40,12 +54,10 @@ public class PoshiElementFactory {
 			new WhileElement(element)
 		};
 
-		for (PoshiElement poshiElement : poshiElements) {
-			String poshiElementName = poshiElement.getName();
+		PoshiElement poshiElement = getSupportedPoshiElement(poshiElements);
 
-			if (!poshiElementName.equals("unsupported")) {
-				return poshiElement;
-			}
+		if (poshiElement != null) {
+			return poshiElement;
 		}
 
 		return new UnsupportedElement(element);
@@ -62,12 +74,10 @@ public class PoshiElementFactory {
 			new WhileElement(readableSyntax)
 		};
 
-		for (PoshiElement poshiElement : poshiElements) {
-			String poshiElementName = poshiElement.getName();
+		PoshiElement poshiElement = getSupportedPoshiElement(poshiElements);
 
-			if (!poshiElementName.equals("unsupported")) {
-				return poshiElement;
-			}
+		if (poshiElement != null) {
+			return poshiElement;
 		}
 
 		return new UnsupportedElement(readableSyntax);

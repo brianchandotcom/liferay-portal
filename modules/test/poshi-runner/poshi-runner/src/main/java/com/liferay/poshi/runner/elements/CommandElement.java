@@ -50,10 +50,14 @@ public class CommandElement extends PoshiElement {
 				System.out.println(readableBlock);
 			}
 
-			if (readableBlock.endsWith("}") || readableBlock.endsWith(";") ||
-				readableBlock.startsWith("@description")) {
-
+			if (readableBlock.endsWith("}") || readableBlock.endsWith(";")) {
 				addElementFromReadableSyntax(readableBlock);
+
+				continue;
+			}
+
+			if (readableBlock.startsWith("@description")) {
+				add(new DescriptionElement(readableBlock));
 
 				continue;
 			}

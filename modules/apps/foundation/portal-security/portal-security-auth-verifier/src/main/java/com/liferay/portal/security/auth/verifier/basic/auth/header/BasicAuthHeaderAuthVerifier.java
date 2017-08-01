@@ -39,7 +39,7 @@ public class BasicAuthHeaderAuthVerifier
 
 	/**
 	 * @deprecated As of 2.0.0, replaced by {@link
-	 *		#BasicAuthHeaderAuthVerifier(ConfigurationProvider, Portal)}
+	 *             #BasicAuthHeaderAuthVerifier(ConfigurationProvider, Portal)}
 	 */
 	@Deprecated
 	public BasicAuthHeaderAuthVerifier() {

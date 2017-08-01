@@ -26,7 +26,8 @@ public class UploadItemSelectorCriterion extends BaseItemSelectorCriterion {
 	}
 
 	/**
-	 * @deprecated As of 2.1.0, replaced by {@link #UploadItemSelectorCriterion(String, String, String)}
+	 * @deprecated As of 2.1.0, replaced by {@link
+	 *             #UploadItemSelectorCriterion(String, String, String)}
 	 */
 	@Deprecated
 	public UploadItemSelectorCriterion(String url, String repositoryName) {
@@ -36,7 +37,8 @@ public class UploadItemSelectorCriterion extends BaseItemSelectorCriterion {
 	}
 
 	/**
-	 * @deprecated As of 2.1.0, replaced by {@link #UploadItemSelectorCriterion(String, String, String, long)}
+	 * @deprecated As of 2.1.0, replaced by {@link
+	 *             #UploadItemSelectorCriterion(String, String, String, long)}
 	 */
 	@Deprecated
 	public UploadItemSelectorCriterion(
@@ -46,7 +48,9 @@ public class UploadItemSelectorCriterion extends BaseItemSelectorCriterion {
 	}
 
 	/**
-	 * @deprecated As of 2.1.0, replaced by {@link #UploadItemSelectorCriterion(String, String, String, long, String[])}
+	 * @deprecated As of 2.1.0, replaced by {@link
+	 *             #UploadItemSelectorCriterion(String, String, String, long,
+	 *             String[])}
 	 */
 	@Deprecated
 	public UploadItemSelectorCriterion(

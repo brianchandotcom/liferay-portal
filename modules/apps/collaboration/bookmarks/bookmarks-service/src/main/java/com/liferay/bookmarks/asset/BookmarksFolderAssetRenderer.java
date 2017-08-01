@@ -52,8 +52,8 @@ public class BookmarksFolderAssetRenderer
 	public static final String TYPE = "bookmarks_folder";
 
 	/**
-	 * @deprecated As of 1.1.0, replaced by {@link #BookmarksFolderAssetRenderer(
-	 *             BookmarksFolder, TrashHelper)}
+	 * @deprecated As of 1.1.0, replaced by {@link
+	 *             #BookmarksFolderAssetRenderer(BookmarksFolder, TrashHelper)}
 	 */
 	@Deprecated
 	public BookmarksFolderAssetRenderer(BookmarksFolder folder) {

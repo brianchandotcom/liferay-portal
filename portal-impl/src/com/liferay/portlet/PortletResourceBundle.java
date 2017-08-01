@@ -70,8 +70,8 @@ public class PortletResourceBundle extends ResourceBundle {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link PortletResourceBundle(
-	 *             ResourceBundle, Map)}
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             PortletResourceBundle(ResourceBundle, Map)}
 	 */
 	@Deprecated
 	public PortletResourceBundle(PortletInfo portletInfo) {
@@ -86,8 +86,8 @@ public class PortletResourceBundle extends ResourceBundle {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link PortletResourceBundle(
-	 *             ResourceBundle, Map)}
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             PortletResourceBundle(ResourceBundle, Map)}
 	 */
 	@Deprecated
 	public PortletResourceBundle(

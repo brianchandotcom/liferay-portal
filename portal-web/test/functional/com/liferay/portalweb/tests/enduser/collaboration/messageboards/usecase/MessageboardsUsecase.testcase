@@ -1571,6 +1571,46 @@
 		</execute>
 	</command>
 
+	<command name="ViewNoHTMLXSS" priority="5">
+		<description message="This is a use case for LPS-65365." />
+
+		<property name="custom.properties" value="message.boards.message.formats.default=html" />
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="SitePageNavigator#gotoEditPage">
+			<var name="page" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="Page#editPageLayoutColumn">
+			<var name="columnName" value="1 Column" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="" />
+			<var name="threadSubject"><![CDATA[<script>alert(1)</script>]]></var>
+		</execute>
+
+		<execute macro="MessageboardsThread#viewNoXSSPG">
+			<var name="threadBody" value="" />
+			<var name="threadSubject"><![CDATA[<script>alert(1)</script>]]></var>
+		</execute>
+	</command>
+
 	<command name="ViewNoMBThreadXSS" priority="4">
 		<execute macro="Page#add">
 			<var name="pageName" value="Message Boards Page" />

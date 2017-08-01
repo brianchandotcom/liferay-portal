@@ -17,7 +17,9 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="InvitationPortletSmoke" priority="">
+	<command name="InvitationPortletSmoke" priority="4">
+		<property name="portal.release" value="true" />
+
 		<var name="appName" value="Invitation" />
 
 		<execute macro="Navigator#gotoPage">

@@ -335,6 +335,8 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 
 			DLStoreUtil.deleteDirectory(
 				companyId, REPOSITORY_ID, thumbnailFilePath);
+
+			DLStoreUtil.deleteFile(companyId, REPOSITORY_ID, thumbnailFilePath);
 		}
 		catch (Exception e) {
 		}

@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.concurrent.NoticeableFutureConverter;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.Validator;
@@ -255,10 +254,6 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 
 		_clusterMasterTokenTransitionListeners.addAll(
 			clusterMasterTokenTransitionListeners);
-	}
-
-	@Reference(target = "(servlet.context.name=portal)", unbind = "-")
-	protected void setRelease(Release release) {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -14,12 +14,12 @@
 
 package com.liferay.asset.internal.verify;
 
-import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
-import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.portal.kernel.util.LoggingTimer;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.verify.VerifyProcess;
 
@@ -27,6 +27,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Douglas Wong
@@ -40,7 +41,7 @@ public class AssetServiceVerifyProcess extends VerifyProcess {
 
 	protected void deleteOrphanedAssetEntries() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			long classNameId = PortalUtil.getClassNameId(
+			long classNameId = _portal.getClassNameId(
 				DLFileEntryConstants.getClassName());
 
 			StringBundler sb = new StringBundler(5);
@@ -60,10 +61,10 @@ public class AssetServiceVerifyProcess extends VerifyProcess {
 					long entryId = rs.getLong("entryId");
 
 					DLFileEntry dlFileEntry =
-						DLFileEntryLocalServiceUtil.fetchDLFileEntry(classPK);
+						_dlFileEntryLocalService.fetchDLFileEntry(classPK);
 
 					if (dlFileEntry == null) {
-						AssetEntryLocalServiceUtil.deleteAssetEntry(entryId);
+						_assetEntryLocalService.deleteAssetEntry(entryId);
 					}
 				}
 			}
@@ -74,5 +75,14 @@ public class AssetServiceVerifyProcess extends VerifyProcess {
 	protected void doVerify() throws Exception {
 		deleteOrphanedAssetEntries();
 	}
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

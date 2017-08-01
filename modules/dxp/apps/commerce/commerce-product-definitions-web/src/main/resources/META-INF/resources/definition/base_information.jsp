@@ -60,7 +60,7 @@ if (Validator.isNotNull(layoutUuid)) {
 
 	<aui:input helpMessage="gtin-help" label="global-trade-item-number" name="gtin" />
 
-	<aui:input helpMessage="manufacturer-part-number-help" name="manufacturerPartNumber" />
+	<aui:input name="manufacturerPartNumber" />
 
 	<aui:input id="pagesContainerInput" ignoreRequestValue="<%= true %>" name="layoutUuid" type="hidden" value="<%= layoutUuid %>" />
 

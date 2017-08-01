@@ -74,10 +74,6 @@ public class CommandElement extends PoshiElement {
 	@Override
 	public void parseReadableSyntax(String readableSyntax) {
 		for (String readableBlock : getReadableBlocks(readableSyntax)) {
-			if (readableBlock.startsWith("setUp")) {
-				System.out.println(readableBlock);
-			}
-
 			if (readableBlock.endsWith("}") || readableBlock.endsWith(";")) {
 				addElementFromReadableSyntax(readableBlock);
 

@@ -51,7 +51,9 @@
 			<hint name="default-value">10000</hint>
 			<validator name="number" />
 		</field>
-		<field name="allowedCartQuantities" type="String" />
+		<field name="allowedCartQuantities" type="String">
+			<hint name="max-length">255</hint>
+		</field>
 		<field name="multipleCartQuantity" type="int">
 			<hint name="default-value">1</hint>
 			<validator name="number" />

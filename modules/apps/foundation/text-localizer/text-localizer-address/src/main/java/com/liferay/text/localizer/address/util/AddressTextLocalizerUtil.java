@@ -58,15 +58,11 @@ public class AddressTextLocalizerUtil {
 		return null;
 	}
 
-	public static ThemeDisplay getThemeDisplay() {
+	public static Locale getUserLocale() {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		return serviceContext.getThemeDisplay();
-	}
-
-	public static Locale getUserLocale() {
-		ThemeDisplay themeDisplay = getThemeDisplay();
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
 		User user = themeDisplay.getUser();
 

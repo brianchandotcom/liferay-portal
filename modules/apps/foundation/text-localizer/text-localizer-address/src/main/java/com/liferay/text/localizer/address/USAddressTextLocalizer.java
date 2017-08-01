@@ -54,10 +54,12 @@ public class USAddressTextLocalizer implements AddressTextLocalizer {
 			sb.append(address.getCity());
 		}
 
-		if (Validator.isNotNull(AddressTextLocalizerUtil.getRegion(address))) {
+		if (Validator.isNotNull(
+				AddressTextLocalizerUtil.getRegionName(address))) {
+
 			sb.append(StringPool.COMMA);
 			sb.append(StringPool.SPACE);
-			sb.append(AddressTextLocalizerUtil.getRegion(address));
+			sb.append(AddressTextLocalizerUtil.getRegionName(address));
 		}
 
 		if (Validator.isNotNull(address.getZip())) {
@@ -65,9 +67,11 @@ public class USAddressTextLocalizer implements AddressTextLocalizer {
 			sb.append(address.getZip());
 		}
 
-		if (Validator.isNotNull(AddressTextLocalizerUtil.getCountry(address))) {
+		if (Validator.isNotNull(
+				AddressTextLocalizerUtil.getCountryName(address))) {
+
 			sb.append(StringPool.NEW_LINE);
-			sb.append(AddressTextLocalizerUtil.getCountry(address));
+			sb.append(AddressTextLocalizerUtil.getCountryName(address));
 		}
 
 		return sb.toString();

@@ -2,6 +2,7 @@
 <!DOCTYPE suppressions PUBLIC "-//Puppy Crawl//DTD Suppressions 1.1//EN" "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
 
 <suppressions>
+	<suppress checks="JSONNaming" files="portal-kernel/src/com/liferay/portal/kernel/util/Autocomplete\.java" />
 	<suppress checks="MemberName" files=".*ContextContributor\.java" />
 	<suppress checks="MemberName" files="portal-impl/src/com/liferay/portlet/trash/util/TrashImpl\.java" />
 	<suppress checks="MemberName" files="portal-impl/test/unit/com/liferay/portal/bean/ConstantsBeanFactoryImplTest\.java" />

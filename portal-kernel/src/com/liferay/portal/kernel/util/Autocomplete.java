@@ -12,25 +12,19 @@
  * details.
  */
 
-package com.liferay.util;
+package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
- * @author     Brian Wing Shun Chan
- * @deprecated As of 7.0.0, moved to {@link
- *             com.liferay.portal.kernel.util.Autocomplete}
+ * @author Brian Wing Shun Chan
  */
-@Deprecated
 public class Autocomplete {
 
 	public static JSONArray arrayToJson(String[] array, int max) {

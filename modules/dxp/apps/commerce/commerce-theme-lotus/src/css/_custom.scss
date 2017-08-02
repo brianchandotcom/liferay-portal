@@ -33,6 +33,10 @@
 #content {
 	color: $brand-color;
 	min-height: 100vh;
+
+	.table {
+		margin-top: 40px;
+	}
 }
 
 .collapse-login {

@@ -58,6 +58,35 @@
 		</if>
 	</tear-down>
 
+	<command name="DeleteChildPageFromVariationWhereNotEnabled" priority="4">
+		<execute macro="Staging#addSitePagesVariationPG">
+			<var name="copySitePagesVariationName" value="Main Variation" />
+			<var name="sitePagesVariationName" value="Summer" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#addChild">
+			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteChildPageName" value="Page 1" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteScopeSelected" value="true" />
+		</execute>
+
+		<execute macro="Staging#changeSitePageVariationPG">
+			<var name="sitePagesVariationMenulistName" value="Main Variation" />
+			<var name="sitePagesVariationName" value="Summer" />
+		</execute>
+
+		<execute macro="Staging#viewNotAvailableMenuItem">
+			<var name="pageName" value="Page 1" />
+		</execute>
+	</command>
+
 	<command name="EnableAndDeleteSitePageVariationPage" priority="4">
 		<execute macro="Staging#addSitePagesVariationPG">
 			<var name="copySitePagesVariationName" value="Main Variation" />

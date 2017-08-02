@@ -22,12 +22,12 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
  */
 public class MDRRuleUpgrade extends UpgradeProcess {
 
-    @Override
-    public void doUpgrade() throws Exception {
+	@Override
+	public void doUpgrade() throws Exception {
 		runSQL(
 			"update MDRRule set type_ = '" + SimpleRuleHandler.class.getName() +
 				"' where type_ = 'com.liferay.portal.mobile.device.rulegroup." +
 					"rule.impl.SimpleRuleHandler'");
-    }
+	}
 
 }

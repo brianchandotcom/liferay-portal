@@ -17,7 +17,7 @@
 <c:if test="<%= (portlets != null) && !portlets.isEmpty() %>">
 
 	<%
-	PortletResourceAccessor[] portletResourceAccessors = new PortletResourceAccessor[] {PortletResourceAccessor.FOOTER_PORTAL_CSS, PortletResourceAccessor.FOOTER_PORTLET_CSS};
+	PortletResourceAccessor[] portletResourceAccessors = {PortletResourceAccessor.FOOTER_PORTAL_CSS, PortletResourceAccessor.FOOTER_PORTLET_CSS};
 	PredicateFilter<String> predicateFilter = PredicateFilter.ALL;
 	boolean useComboServletStaticURLGenerator = themeDisplay.isThemeCssFastLoad();
 	%>

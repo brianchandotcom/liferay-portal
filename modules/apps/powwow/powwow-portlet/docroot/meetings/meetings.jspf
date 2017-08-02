@@ -17,7 +17,7 @@
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1", "current");
 
-int[] statuses = new int[] {PowwowMeetingConstants.STATUS_IN_PROGRESS, PowwowMeetingConstants.STATUS_SCHEDULED};
+int[] statuses = {PowwowMeetingConstants.STATUS_IN_PROGRESS, PowwowMeetingConstants.STATUS_SCHEDULED};
 
 if (tabs1.equals("completed")) {
 	statuses = new int[] {PowwowMeetingConstants.STATUS_COMPLETED};
@@ -64,7 +64,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 			searchContext.setAttribute(Field.USER_ID, user.getUserId());
 			searchContext.setAttribute("paginationType", "regular");
 
-			String[] powwowParticipantKeys = new String[] {(user.getUserId() + StringPool.UNDERLINE + PowwowParticipantConstants.TYPE_ATTENDEE), (user.getUserId() + StringPool.UNDERLINE + PowwowParticipantConstants.TYPE_HOST)};
+			String[] powwowParticipantKeys = {(user.getUserId() + StringPool.UNDERLINE + PowwowParticipantConstants.TYPE_ATTENDEE), (user.getUserId() + StringPool.UNDERLINE + PowwowParticipantConstants.TYPE_HOST)};
 
 			searchContext.setAttribute("powwowParticipantKeys", powwowParticipantKeys);
 

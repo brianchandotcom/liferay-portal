@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String[] tab2Names = new String[] {"update-categories", "add-category"};
+String[] tab2Names = {"update-categories", "add-category"};
 
 if (!ArrayUtil.contains(tab2Names, tabs2)) {
 	tabs2 = tab2Names[0];

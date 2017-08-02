@@ -308,7 +308,7 @@ SearchContainer dlSearchContainer = new SearchContainer(liferayPortletRequest, p
 		searchRepositoryURL.setParameter("showRepositoryTabs", Boolean.TRUE.toString());
 		searchRepositoryURL.setParameter("showSearchInfo", Boolean.TRUE.toString());
 
-		String[] tabsUrls = new String[] {searchRepositoryURL.toString()};
+		String[] tabsUrls = {searchRepositoryURL.toString()};
 
 		String selectedTab = LanguageUtil.get(request, "local");
 

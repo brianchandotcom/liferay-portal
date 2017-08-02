@@ -49,7 +49,7 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 
 		Role guestRole = RoleLocalServiceUtil.getRole(themeDisplay.getCompanyId(), RoleConstants.GUEST);
 
-		String[] roleNames = new String[] {RoleConstants.GUEST};
+		String[] roleNames = {RoleConstants.GUEST};
 
 		if (hasViewDefaultGroupRolePermission) {
 			roleNames = ArrayUtil.append(roleNames, defaultGroupRole.getName());

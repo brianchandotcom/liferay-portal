@@ -61,7 +61,7 @@ boolean useAssetEntryQuery = (assetCategoryId > 0) || Validator.isNotNull(assetT
 
 String displayStyle = ParamUtil.getString(request, "displayStyle");
 
-String[] displayViews = new String[] {"descriptive", "list"};
+String[] displayViews = {"descriptive", "list"};
 
 if (Validator.isNull(displayStyle)) {
 	displayStyle = portalPreferences.getValue(BookmarksPortletKeys.BOOKMARKS, "display-style", "descriptive");

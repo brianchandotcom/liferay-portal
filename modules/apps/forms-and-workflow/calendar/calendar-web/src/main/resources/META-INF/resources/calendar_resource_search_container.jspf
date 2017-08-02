@@ -17,8 +17,8 @@
 <liferay-ui:search-container searchContainer="<%= new CalendarResourceSearch(renderRequest, CalendarResourceSearch.DEFAULT_CUR_PARAM, iteratorURL) %>">
 
 	<%
-	long[] groupIds = new long[] {themeDisplay.getScopeGroupId()};
-	long[] classNameIds = new long[] {PortalUtil.getClassNameId(CalendarResource.class.getName())};
+	long[] groupIds = {themeDisplay.getScopeGroupId()};
+	long[] classNameIds = {PortalUtil.getClassNameId(CalendarResource.class.getName())};
 
 	if (displayTerms.isAdvancedSearch()) {
 		total = CalendarResourceServiceUtil.searchCount(themeDisplay.getCompanyId(), groupIds, classNameIds, displayTerms.getCode(), displayTerms.getName(), displayTerms.getDescription(), displayTerms.isActive(), displayTerms.isAndOperator());

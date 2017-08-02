@@ -48,7 +48,7 @@ portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("passwordPolicyId", String.valueOf(passwordPolicy.getPasswordPolicyId()));
 portletURL.setParameter("eventName", eventName);
 
-String[] orderColumns = new String[] {"first-name", "screen-name"};
+String[] orderColumns = {"first-name", "screen-name"};
 RowChecker rowChecker = new AddUserPasswordPolicyChecker(renderResponse, passwordPolicy);
 PortletURL searchURL = PortletURLUtil.clone(portletURL, renderResponse);
 SearchContainer searchContainer = new UserSearch(renderRequest, searchURL);

@@ -19,14 +19,7 @@
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-CommerceRegion commerceRegion = null;
-
-if (row != null) {
-	commerceRegion = (CommerceRegion)row.getObject();
-}
-else {
-	commerceRegion = (CommerceRegion)request.getAttribute("info_panel.jsp-entry");
-}
+CommerceRegion commerceRegion = (CommerceRegion)row.getObject();
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">

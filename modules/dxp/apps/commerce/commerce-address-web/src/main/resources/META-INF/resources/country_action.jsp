@@ -19,14 +19,7 @@
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-CommerceCountry commerceCountry = null;
-
-if (row != null) {
-	commerceCountry = (CommerceCountry)row.getObject();
-}
-else {
-	commerceCountry = (CommerceCountry)request.getAttribute("info_panel.jsp-entry");
-}
+CommerceCountry commerceCountry = (CommerceCountry)row.getObject();
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">

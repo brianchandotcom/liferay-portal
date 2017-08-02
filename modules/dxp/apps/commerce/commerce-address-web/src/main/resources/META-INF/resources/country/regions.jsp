@@ -58,47 +58,45 @@ boolean hasManageCommerceCountriesPermission = CommerceAddressPermission.contain
 	</c:if>
 </liferay-frontend:management-bar>
 
-<div class="container-fluid-1280" id="<portlet:namespace />commerceRegionsContainer">
-	<aui:form action="<%= commerceRegionsDisplayContext.getPortletURL() %>" method="post" name="fm">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" />
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-		<aui:input name="deleteCommerceRegionIds" type="hidden" />
+<portlet:actionURL name="editCommerceRegion" var="editCommerceRegionActionURL" />
 
-		<div class="commerce-regions-container" id="<portlet:namespace />entriesContainer">
-			<liferay-ui:search-container
-				id="commerceRegions"
-				searchContainer="<%= commerceRegionSearchContainer %>"
-			>
-				<liferay-ui:search-container-row
-					className="com.liferay.commerce.address.model.CommerceRegion"
-					keyProperty="commerceRegionId"
-				>
-					<liferay-ui:search-container-column-text
-						property="name"
-					/>
+<aui:form action="<%= editCommerceRegionActionURL %>" method="post" name="fm">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.DELETE %>" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="deleteCommerceRegionIds" type="hidden" />
 
-					<liferay-ui:search-container-column-text
-						property="code"
-					/>
+	<liferay-ui:search-container
+		id="commerceRegions"
+		searchContainer="<%= commerceRegionSearchContainer %>"
+	>
+		<liferay-ui:search-container-row
+			className="com.liferay.commerce.address.model.CommerceRegion"
+			keyProperty="commerceRegionId"
+		>
+			<liferay-ui:search-container-column-text
+				property="name"
+			/>
 
-					<liferay-ui:search-container-column-text
-						property="active"
-					/>
+			<liferay-ui:search-container-column-text
+				property="code"
+			/>
 
-					<liferay-ui:search-container-column-text
-						property="priority"
-					/>
+			<liferay-ui:search-container-column-text
+				property="active"
+			/>
 
-					<liferay-ui:search-container-column-jsp
-						path="/region_action.jsp"
-					/>
-				</liferay-ui:search-container-row>
+			<liferay-ui:search-container-column-text
+				property="priority"
+			/>
 
-				<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" searchContainer="<%= commerceRegionSearchContainer %>" />
-			</liferay-ui:search-container>
-		</div>
-	</aui:form>
-</div>
+			<liferay-ui:search-container-column-jsp
+				path="/region_action.jsp"
+			/>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator markupView="lexicon" />
+	</liferay-ui:search-container>
+</aui:form>
 
 <c:if test="<%= hasManageCommerceCountriesPermission %>">
 	<portlet:renderURL var="addCommerceRegionURL">
@@ -117,11 +115,9 @@ boolean hasManageCommerceCountriesPermission = CommerceAddressPermission.contain
 		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-regions") %>')) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
-			form.attr('method', 'post');
-			form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
 			form.fm('deleteCommerceRegionIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-			submitForm(form, '<portlet:actionURL name="editCommerceRegion" />');
+			submitForm(form);
 		}
 	}
 </aui:script>

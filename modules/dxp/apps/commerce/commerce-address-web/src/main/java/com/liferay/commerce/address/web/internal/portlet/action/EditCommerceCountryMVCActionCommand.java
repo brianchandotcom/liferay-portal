@@ -134,10 +134,10 @@ public class EditCommerceCountryMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "commerceCountryId");
 
 		String name = ParamUtil.getString(actionRequest, "name");
-		boolean allowsBilling = ParamUtil.getBoolean(
-			actionRequest, "allowsBilling");
-		boolean allowsShipping = ParamUtil.getBoolean(
-			actionRequest, "allowsShipping");
+		boolean billingAllowed = ParamUtil.getBoolean(
+			actionRequest, "billingAllowed");
+		boolean shippingAllowed = ParamUtil.getBoolean(
+			actionRequest, "shippingAllowed");
 		String twoLettersISOCode = ParamUtil.getString(
 			actionRequest, "twoLettersISOCode");
 		String threeLettersISOCode = ParamUtil.getString(
@@ -159,7 +159,7 @@ public class EditCommerceCountryMVCActionCommand extends BaseMVCActionCommand {
 			// Add commerce country
 
 			commerceCountry = _commerceCountryService.addCommerceCountry(
-				name, allowsBilling, allowsShipping, twoLettersISOCode,
+				name, billingAllowed, shippingAllowed, twoLettersISOCode,
 				threeLettersISOCode, numericISOCode, subjectToVAT, priority,
 				active, serviceContext);
 		}
@@ -168,7 +168,7 @@ public class EditCommerceCountryMVCActionCommand extends BaseMVCActionCommand {
 			// Update commerce country
 
 			commerceCountry = _commerceCountryService.updateCommerceCountry(
-				commerceCountryId, name, allowsBilling, allowsShipping,
+				commerceCountryId, name, billingAllowed, shippingAllowed,
 				twoLettersISOCode, threeLettersISOCode, numericISOCode,
 				subjectToVAT, priority, active);
 		}

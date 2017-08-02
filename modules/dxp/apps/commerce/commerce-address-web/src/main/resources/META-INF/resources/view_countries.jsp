@@ -73,13 +73,13 @@ SearchContainer<CommerceCountry> commerceCountrySearchContainer = commerceCountr
 					/>
 
 					<liferay-ui:search-container-column-text
-						name="allows-billing"
-						property="allowsBilling"
+						name="billing-allowed"
+						property="billingAllowed"
 					/>
 
 					<liferay-ui:search-container-column-text
-						name="allows-shipping"
-						property="allowsShipping"
+						name="shipping-allowed"
+						property="shippingAllowed"
 					/>
 
 					<liferay-ui:search-container-column-text

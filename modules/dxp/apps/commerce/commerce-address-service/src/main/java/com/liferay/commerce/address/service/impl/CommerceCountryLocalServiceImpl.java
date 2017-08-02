@@ -31,7 +31,7 @@ public class CommerceCountryLocalServiceImpl
 
 	@Override
 	public CommerceCountry addCommerceCountry(
-			String name, boolean allowsBilling, boolean allowsShipping,
+			String name, boolean billingAllowed, boolean shippingAllowed,
 			String twoLettersISOCode, String threeLettersISOCode,
 			int numericISOCode, boolean subjectToVAT, double priority,
 			boolean active, ServiceContext serviceContext)
@@ -50,8 +50,8 @@ public class CommerceCountryLocalServiceImpl
 		commerceCountry.setUserId(user.getUserId());
 		commerceCountry.setUserName(user.getFullName());
 		commerceCountry.setName(name);
-		commerceCountry.setAllowsBilling(allowsBilling);
-		commerceCountry.setAllowsShipping(allowsShipping);
+		commerceCountry.setBillingAllowed(billingAllowed);
+		commerceCountry.setShippingAllowed(shippingAllowed);
 		commerceCountry.setTwoLettersISOCode(twoLettersISOCode);
 		commerceCountry.setThreeLettersISOCode(threeLettersISOCode);
 		commerceCountry.setNumericISOCode(numericISOCode);
@@ -102,8 +102,8 @@ public class CommerceCountryLocalServiceImpl
 
 	@Override
 	public CommerceCountry updateCommerceCountry(
-			long commerceCountryId, String name, boolean allowsBilling,
-			boolean allowsShipping, String twoLettersISOCode,
+			long commerceCountryId, String name, boolean billingAllowed,
+			boolean shippingAllowed, String twoLettersISOCode,
 			String threeLettersISOCode, int numericISOCode,
 			boolean subjectToVAT, double priority, boolean active)
 		throws PortalException {
@@ -112,8 +112,8 @@ public class CommerceCountryLocalServiceImpl
 			commerceCountryPersistence.findByPrimaryKey(commerceCountryId);
 
 		commerceCountry.setName(name);
-		commerceCountry.setAllowsBilling(allowsBilling);
-		commerceCountry.setAllowsShipping(allowsShipping);
+		commerceCountry.setBillingAllowed(billingAllowed);
+		commerceCountry.setShippingAllowed(shippingAllowed);
 		commerceCountry.setTwoLettersISOCode(twoLettersISOCode);
 		commerceCountry.setThreeLettersISOCode(threeLettersISOCode);
 		commerceCountry.setNumericISOCode(numericISOCode);

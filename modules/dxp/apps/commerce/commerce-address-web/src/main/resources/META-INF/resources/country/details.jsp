@@ -36,9 +36,9 @@ long commerceCountryId = commerceCountryDisplayContext.getCommerceCountryId();
 	<aui:fieldset>
 		<aui:input autoFocus="<%= true %>" name="name" />
 
-		<aui:input name="allowsBilling" />
+		<aui:input name="billingAllowed" />
 
-		<aui:input name="allowsShipping" />
+		<aui:input name="shippingAllowed" />
 
 		<aui:input name="twoLettersISOCode" />
 

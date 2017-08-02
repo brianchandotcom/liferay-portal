@@ -25,8 +25,8 @@
 		<!-- Other fields -->
 
 		<column name="name" type="String" />
-		<column name="allowsBilling" type="boolean" />
-		<column name="allowsShipping" type="boolean" />
+		<column name="billingAllowed" type="boolean" />
+		<column name="shippingAllowed" type="boolean" />
 		<column name="twoLettersISOCode" type="String" />
 		<column name="threeLettersISOCode" type="String" />
 		<column name="numericISOCode" type="int" />

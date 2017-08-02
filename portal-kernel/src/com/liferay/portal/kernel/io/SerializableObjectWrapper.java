@@ -24,6 +24,8 @@ import java.io.Serializable;
 
 import java.nio.ByteBuffer;
 
+import java.util.Arrays;
+
 /**
  * @author Tina Tian
  */
@@ -36,6 +38,14 @@ public class SerializableObjectWrapper implements Externalizable {
 
 		SerializableObjectWrapper serializableWrapper =
 			(SerializableObjectWrapper)object;
+
+		if (serializableWrapper._serializable instanceof LazySerializable) {
+			LazySerializable lazySerializable =
+				(LazySerializable)serializableWrapper._serializable;
+
+			serializableWrapper._serializable =
+				lazySerializable.getSerializable();
+		}
 
 		return (T)serializableWrapper._serializable;
 	}
@@ -64,11 +74,43 @@ public class SerializableObjectWrapper implements Externalizable {
 		SerializableObjectWrapper serializableWrapper =
 			(SerializableObjectWrapper)object;
 
+		if ((_serializable instanceof LazySerializable) &&
+			(serializableWrapper._serializable instanceof LazySerializable)) {
+
+			LazySerializable lazySerializable1 =
+				(LazySerializable)_serializable;
+			LazySerializable lazySerializable2 =
+				(LazySerializable)serializableWrapper._serializable;
+
+			return Arrays.equals(
+				lazySerializable1.getData(), lazySerializable2.getData());
+		}
+
+		if (_serializable instanceof LazySerializable) {
+			LazySerializable lazySerializable = (LazySerializable)_serializable;
+
+			_serializable = lazySerializable.getSerializable();
+		}
+
+		if (serializableWrapper._serializable instanceof LazySerializable) {
+			LazySerializable lazySerializable =
+				(LazySerializable)serializableWrapper._serializable;
+
+			serializableWrapper._serializable =
+				lazySerializable.getSerializable();
+		}
+
 		return _serializable.equals(serializableWrapper._serializable);
 	}
 
 	@Override
 	public int hashCode() {
+		if (_serializable instanceof LazySerializable) {
+			LazySerializable lazySerializable = (LazySerializable)_serializable;
+
+			_serializable = lazySerializable.getSerializable();
+		}
+
 		return _serializable.hashCode();
 	}
 
@@ -78,18 +120,22 @@ public class SerializableObjectWrapper implements Externalizable {
 
 		objectInput.readFully(data);
 
-		Deserializer deserializer = new Deserializer(ByteBuffer.wrap(data));
-
-		try {
-			_serializable = deserializer.readObject();
-		}
-		catch (ClassNotFoundException cnfe) {
-			_log.error("Unable to deserialize object", cnfe);
-		}
+		_serializable = new LazySerializable(data);
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		if (_serializable instanceof LazySerializable) {
+			LazySerializable lazySerializable = (LazySerializable)_serializable;
+
+			byte[] data = lazySerializable.getData();
+
+			objectOutput.writeInt(data.length);
+			objectOutput.write(data, 0, data.length);
+
+			return;
+		}
+
 		Serializer serializer = new Serializer();
 
 		serializer.writeObject(_serializable);
@@ -105,6 +151,34 @@ public class SerializableObjectWrapper implements Externalizable {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SerializableObjectWrapper.class);
 
-	private Serializable _serializable;
+	private volatile Serializable _serializable;
+
+	private static class LazySerializable implements Serializable {
+
+		public byte[] getData() {
+			return _data;
+		}
+
+		public Serializable getSerializable() {
+			Deserializer deserializer = new Deserializer(
+				ByteBuffer.wrap(_data));
+
+			try {
+				return deserializer.readObject();
+			}
+			catch (ClassNotFoundException cnfe) {
+				_log.error("Unable to deserialize object", cnfe);
+
+				return null;
+			}
+		}
+
+		private LazySerializable(byte[] data) {
+			_data = data;
+		}
+
+		private final byte[] _data;
+
+	}
 
 }

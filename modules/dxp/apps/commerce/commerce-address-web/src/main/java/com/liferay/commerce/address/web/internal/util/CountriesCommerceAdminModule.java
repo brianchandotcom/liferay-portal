@@ -19,6 +19,9 @@ import com.liferay.commerce.address.web.internal.display.context.CommerceCountri
 import com.liferay.commerce.address.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.admin.web.util.CommerceAdminModule;
 import com.liferay.commerce.product.util.JSPRenderer;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -26,6 +29,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -54,11 +59,43 @@ public class CountriesCommerceAdminModule implements CommerceAdminModule {
 	public static final String KEY = "countries";
 
 	@Override
+	public void deleteData(PortletDataContext portletDataContext)
+		throws Exception {
+	}
+
+	@Override
+	public void exportData(
+			String namespace, PortletDataContext portletDataContext)
+		throws Exception {
+	}
+
+	@Override
+	public List<StagedModelType> getDeletionSystemEventStagedModelTypes() {
+		return Collections.emptyList();
+	}
+
+	@Override
+	public List<PortletDataHandlerControl> getExportControls(String namespace) {
+		return Collections.emptyList();
+	}
+
+	@Override
 	public String getLabel(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
 		return LanguageUtil.get(resourceBundle, "countries");
+	}
+
+	@Override
+	public void importData(
+			String namespace, PortletDataContext portletDataContext)
+		throws Exception {
+	}
+
+	@Override
+	public void prepareManifestSummary(PortletDataContext portletDataContext)
+		throws Exception {
 	}
 
 	@Override

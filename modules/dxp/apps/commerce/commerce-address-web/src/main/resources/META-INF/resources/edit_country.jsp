@@ -17,9 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceCountriesDisplayContext commerceCountryDisplayContext = (CommerceCountriesDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CommerceCountriesDisplayContext commerceCountriesDisplayContext = (CommerceCountriesDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-CommerceCountry commerceCountry = commerceCountryDisplayContext.getCommerceCountry();
+CommerceCountry commerceCountry = commerceCountriesDisplayContext.getCommerceCountry();
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(settingsURL);

@@ -129,6 +129,11 @@ public class TestPortalCacheManager<K extends Serializable, V>
 		aggregatedPortalCacheManagerListener.init();
 	}
 
+	@Override
+	protected void removeConfigurableEhcachePortalCacheListeners(
+		PortalCache<K, V> portalCache) {
+	}
+
 	private ConcurrentMap<String, TestPortalCache<K, V>> _testPortalCaches;
 
 }

@@ -61,7 +61,7 @@ renderResponse.setTitle(title);
 	<aui:fieldset>
 		<aui:input autoFocus="<%= true %>" name="name" />
 
-		<aui:input name="abbreviation" />
+		<aui:input name="code" />
 
 		<aui:input name="priority" />
 

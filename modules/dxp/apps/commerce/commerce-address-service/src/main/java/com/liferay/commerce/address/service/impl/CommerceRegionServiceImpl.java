@@ -33,8 +33,8 @@ public class CommerceRegionServiceImpl extends CommerceRegionServiceBaseImpl {
 
 	@Override
 	public CommerceRegion addCommerceRegion(
-			long commerceCountryId, String name, String abbreviation,
-			double priority, boolean active, ServiceContext serviceContext)
+			long commerceCountryId, String name, String code, double priority,
+			boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
 		CommerceCountry commerceCountry =
@@ -45,8 +45,8 @@ public class CommerceRegionServiceImpl extends CommerceRegionServiceBaseImpl {
 			CommerceAddressActionKeys.MANAGE_COMMERCE_COUNTRIES);
 
 		return commerceRegionLocalService.addCommerceRegion(
-			commerceCountry.getCommerceCountryId(), name, abbreviation,
-			priority, active, serviceContext);
+			commerceCountry.getCommerceCountryId(), name, code, priority,
+			active, serviceContext);
 	}
 
 	@Override
@@ -102,8 +102,8 @@ public class CommerceRegionServiceImpl extends CommerceRegionServiceBaseImpl {
 
 	@Override
 	public CommerceRegion updateCommerceRegion(
-			long commerceRegionId, String name, String abbreviation,
-			double priority, boolean active)
+			long commerceRegionId, String name, String code, double priority,
+			boolean active)
 		throws PortalException {
 
 		CommerceRegion commerceRegion =
@@ -114,8 +114,7 @@ public class CommerceRegionServiceImpl extends CommerceRegionServiceBaseImpl {
 			CommerceAddressActionKeys.MANAGE_COMMERCE_COUNTRIES);
 
 		return commerceRegionLocalService.updateCommerceRegion(
-			commerceRegion.getCommerceRegionId(), name, abbreviation, priority,
-			active);
+			commerceRegion.getCommerceRegionId(), name, code, priority, active);
 	}
 
 }

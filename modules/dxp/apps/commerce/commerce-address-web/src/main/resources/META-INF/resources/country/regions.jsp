@@ -78,7 +78,7 @@ boolean hasManageCommerceCountriesPermission = CommerceAddressPermission.contain
 					/>
 
 					<liferay-ui:search-container-column-text
-						property="abbreviation"
+						property="code"
 					/>
 
 					<liferay-ui:search-container-column-text

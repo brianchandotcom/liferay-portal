@@ -72,7 +72,7 @@
 
 		<column name="commerceCountryId" type="long" />
 		<column name="name" type="String" />
-		<column name="abbreviation" type="String" />
+		<column name="code" type="String" />
 		<column name="priority" type="double" />
 		<column name="active" type="boolean" />
 

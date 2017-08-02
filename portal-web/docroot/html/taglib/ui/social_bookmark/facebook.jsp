@@ -29,21 +29,23 @@ else if (displayStyle.equals("vertical")) {
 
 <liferay-util:html-bottom outputKey="taglib_ui_social_bookmark_facebook">
 	<script data-senna-track="temporary" type="text/javascript">
-		if (window.FB) {
-			delete window.FB;
+	(function(d, s, id) {
+		var fjs = d.getElementsByTagName(s)[0];
+		var js;
+
+		if (d.getElementById(id)) {
+			return;
 		}
 
-		window.fbAsyncInit = function() {
-			FB.init(
-				{
-					version: 'v2.8',
-					xfbml: true
-				}
-			);
-		}
+		js = d.createElement(s);
+
+		js.id = id;
+
+		js.src = '<%= HttpUtil.getProtocol(request) %>://connect.facebook.net/<%= locale.getLanguage() %>_<%= locale.getCountry() %>/sdk.js#xfbml=1&version=v2.7';
+
+		fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));
 	</script>
-
-	<script async data-senna-track="temporary" src="<%= HttpUtil.getProtocol(request) %>://connect.facebook.net/<%= locale.getLanguage() %>_<%= locale.getCountry() %>/sdk.js" type="text/javascript"></script>
 </liferay-util:html-bottom>
 
 <div id="fb-root"></div>

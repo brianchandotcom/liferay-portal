@@ -39,11 +39,10 @@ public class CommerceRegionServiceImpl extends CommerceRegionServiceBaseImpl {
 	}
 
 	@Override
-	public CommerceRegion deleteCommerceRegion(long commerceRegionId)
+	public void deleteCommerceRegion(long commerceRegionId)
 		throws PortalException {
 
-		return commerceRegionLocalService.deleteCommerceRegion(
-			commerceRegionId);
+		commerceRegionLocalService.deleteCommerceRegion(commerceRegionId);
 	}
 
 	@Override

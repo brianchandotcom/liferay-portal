@@ -45,11 +45,10 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 	}
 
 	@Override
-	public CommerceCountry deleteCommerceCountry(long commerceCountryId)
+	public void deleteCommerceCountry(long commerceCountryId)
 		throws PortalException {
 
-		return commerceCountryLocalService.deleteCommerceCountry(
-			commerceCountryId);
+		commerceCountryLocalService.deleteCommerceCountry(commerceCountryId);
 	}
 
 	@Override

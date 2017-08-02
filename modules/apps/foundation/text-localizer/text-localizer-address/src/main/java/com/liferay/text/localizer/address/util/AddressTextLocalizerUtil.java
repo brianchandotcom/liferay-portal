@@ -37,27 +37,15 @@ import java.util.regex.Pattern;
 public class AddressTextLocalizerUtil {
 
 	public static String getCountryName(Address address) {
-		long countryId = address.getCountryId();
+		Country country = address.getCountry();
 
-		Country country = CountryServiceUtil.fetchCountry(countryId);
-
-		if (country != null) {
-			return country.getName(getUserLocale());
-		}
-
-		return null;
+		return country.getName(getUserLocale());
 	}
 
 	public static String getRegionName(Address address) {
-		long regionId = address.getRegionId();
+		Region region = address.getRegion();
 
-		Region region = RegionServiceUtil.fetchRegion(regionId);
-
-		if (region != null) {
-			return region.getName();
-		}
-
-		return null;
+		return region.getName();
 	}
 
 	public static Locale getUserLocale() {

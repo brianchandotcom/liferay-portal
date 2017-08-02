@@ -20,7 +20,6 @@ import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.portal.kernel.search.BaseSearcher;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.Query;
@@ -273,7 +272,7 @@ public class AssetSearcher extends BaseSearcher {
 		Map<String, Query> queries = super.addSearchKeywords(
 			searchQuery, searchContext);
 
-		String field = DocumentImpl.getLocalizedName(
+		String field = Field.getLocalizedName(
 			searchContext.getLocale(), "localized_title");
 
 		Query query = searchQuery.addTerm(field, keywords, true);

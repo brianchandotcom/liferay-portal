@@ -123,19 +123,6 @@ public class UserGroupIndexer extends BaseIndexer<UserGroup> {
 	}
 
 	@Override
-	protected String doGetSortField(String orderByCol) {
-		if (orderByCol.equals("description")) {
-			return "description";
-		}
-		else if (orderByCol.equals("name")) {
-			return "name";
-		}
-		else {
-			return orderByCol;
-		}
-	}
-
-	@Override
 	protected Summary doGetSummary(
 		Document document, Locale locale, String snippet,
 		PortletRequest portletRequest, PortletResponse portletResponse) {

@@ -285,28 +285,6 @@ public class UserIndexer extends BaseIndexer<User> {
 	}
 
 	@Override
-	protected String doGetSortField(String orderByCol) {
-		if (orderByCol.equals("email-address")) {
-			return "emailAddress";
-		}
-		else if (orderByCol.equals("first-name")) {
-			return "firstName";
-		}
-		else if (orderByCol.equals("job-title")) {
-			return "jobTitle";
-		}
-		else if (orderByCol.equals("last-name")) {
-			return "lastName";
-		}
-		else if (orderByCol.equals("screen-name")) {
-			return "screenName";
-		}
-		else {
-			return orderByCol;
-		}
-	}
-
-	@Override
 	protected Summary doGetSummary(
 		Document document, Locale locale, String snippet,
 		PortletRequest portletRequest, PortletResponse portletResponse) {

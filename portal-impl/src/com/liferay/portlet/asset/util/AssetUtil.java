@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
@@ -960,13 +959,13 @@ public class AssetUtil {
 					"Number");
 			}
 
-			sortField = DocumentImpl.getSortableFieldName(sortField);
+			sortField = Field.getSortableFieldName(sortField);
 		}
 		else if (sortField.equals("modifiedDate")) {
 			sortField = Field.MODIFIED_DATE;
 		}
 		else if (sortField.equals("title")) {
-			sortField = DocumentImpl.getSortableFieldName(
+			sortField = Field.getSortableFieldName(
 				"localized_title_".concat(LocaleUtil.toLanguageId(locale)));
 		}
 

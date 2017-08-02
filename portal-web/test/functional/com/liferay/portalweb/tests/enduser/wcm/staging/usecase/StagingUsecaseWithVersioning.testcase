@@ -233,6 +233,86 @@
 		<execute macro="Staging#publishToLive" />
 	</command>
 
+	<command name="StagingDeletePageVariation" priority="4">
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Staging#viewSitePagesVariationPG">
+			<var name="sitePagesVariationName" value="Main Variation" />
+		</execute>
+
+		<execute macro="Staging#addPageVariationPG">
+			<var name="pageVariationName" value="Monday" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="Staging#markAsReadyForPublication" />
+
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute macro="Staging#publishToLive" />
+
+		<execute macro="ProductMenu#gotoLiveSite" />
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Staging#addPageVariationPG">
+			<var name="pageVariationName" value="Wednesday" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="YouTube" />
+		</execute>
+
+		<execute macro="Staging#deletePageVariationPG">
+			<var name="pageVariationName" value="Monday" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute function="IsElementNotPresent" locator1="Staging#PAGE_VARIATION" />
+
+		<execute macro="Staging#changePageVariationInHistory" >
+			<var name="pageVariationName" value="All Page Variations" />
+			<var name="pageVariationNameMenulistName" value="Wednesday" />
+		</execute>
+
+		<execute macro="Staging#viewHistoryVersionPG" >
+			<var name="historyVersionName" value="Wednesday" />
+		</execute>
+
+		<execute macro="Staging#markAsReadyForPublication" />
+
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute macro="Staging#publishToLive" />
+
+		<execute macro="ProductMenu#gotoLiveSite" />
+
+		<var name="key_portletName" value="Web Content Display" />
+
+		<execute function="AssertElementPresent" locator1="Home#PORTLET" />
+
+		<var name="key_portletName" value="YouTube" />
+
+		<execute function="AssertElementPresent" locator1="Home#PORTLET" />
+	</command>
+
 	<command name="StagingDeleteSitePagesVariation" priority="4">
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Site Name" />

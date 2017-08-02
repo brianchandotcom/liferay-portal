@@ -229,6 +229,10 @@
 		<execute function="Select" locator1="Staging#VARIATIONS_SELECTOR" value1="${pageVariationNameMenulistName}">
 			<var name="key_pageVariationName" value="${pageVariationNameMenulistName}" />
 		</execute>
+
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute function="Click" locator1="Icon#CLOSE" />
 	</command>
 
 	<command name="changePageVariationPG">
@@ -239,6 +243,10 @@
 		<var name="key_pageVariationName" value="${pageVariationNameMenulistName}" />
 
 		<execute function="AssertClick" locator1="Staging#PAGE_VARIATION_MENULIST_NAME" value1="${pageVariationNameMenulistName}" />
+
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute function="Click" locator1="Icon#CLOSE" />
 	</command>
 
 	<command name="changeSitePageVariationPG">
@@ -482,6 +490,32 @@
 		</if>
 
 		<execute function="AssertElementNotPresent#assertNotVisible" locator1="SiteSettingsStaging#ENABLED_ON_PUBLIC_PAGES_CHECKBOX" />
+	</command>
+
+	<command name="deletePageVariationPG">
+		<var name="key_PagesVariationName" value="${pageVariationName}" />
+
+		<var name="key_rowEntry" value="${pageVariationName}" />
+
+		<execute function="Click" locator1="Icon#STAGING_BAR_VERTICAL_ELLIPSIS" />
+
+		<execute function="Click" locator1="Staging#STAGING_MENU_MANAGE_PAGE_VARIATION" />
+
+		<execute function="SelectFrame" locator1="IFrame#PAGE_VARIATION_IFRAME" />
+
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+
+		<execute function="ClickNoError" locator1="MenuItem#ANY_MENU_ITEM">
+			<var name="key_menuItem" value="Delete" />
+		</execute>
+
+		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute function="Click" locator1="Icon#CLOSE" />
 	</command>
 
 	<command name="deletePublishTemplate">
@@ -1047,6 +1081,14 @@
 			<then>
 				<execute function="AssertTextNotEquals" locator1="Staging#HISTORY_VERSION" value1="${historyVersion}" />
 			</then>
+			<elseif>
+				<isset var="historyVersionName" />
+				<then>
+					<var name="key_historyVersionName" value="${historyVersionName}" />
+
+					<execute function="AssertTextEquals#assertPartialText" locator1="Staging#HISTORY_VERSION_NAME" value1="${historyVersionName}" />
+				</then>
+			</elseif>
 			<elseif>
 				<condition function="IsElementPresent#isVisible" locator1="Staging#HISTORY_VERSION" />
 				<then>

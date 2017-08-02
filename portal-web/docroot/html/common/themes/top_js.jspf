@@ -422,31 +422,12 @@
 <script data-senna-track="temporary" type="text/javascript">
 	// <![CDATA[
 		<c:if test="<%= layoutTypePortlet != null %>">
-
-			<%
-			StringBundler sb = new StringBundler(portlets.size() * 2);
-
-			for (Portlet portlet : portlets) {
-				if (portlet.isActive() && portlet.isReady() && !portlet.isUndeployedPortlet()) {
-					sb.append(HtmlUtil.escapeJS(portlet.getPortletId()));
-					sb.append("', '");
-				}
-			}
-
-			if (sb.index() > 0) {
-				sb.setIndex(sb.index() - 1);
-			}
-			%>
-
 			<c:choose>
 				<c:when test="<%= layoutTypePortlet.hasStateMax() %>">
-					Liferay.Portlet.list = ['<%= HtmlUtil.escapeJS(layoutTypePortlet.getStateMaxPortletId()) %>'];
+					Liferay.Portlet.register('<%= HtmlUtil.escapeJS(layoutTypePortlet.getStateMaxPortletId()) %>');
 				</c:when>
 				<c:when test="<%= themeDisplay.isStatePopUp() %>">
-					Liferay.Portlet.list = ['<%= HtmlUtil.escapeJS(themeDisplay.getPpid()) %>'];
-				</c:when>
-				<c:when test="<%= (sb.index() > 0) && !layoutTypePortlet.hasStateMax() %>">
-					Liferay.Portlet.list = ['<%= sb.toString() %>'];
+					Liferay.Portlet.register('<%= HtmlUtil.escapeJS(themeDisplay.getPpid()) %>');
 				</c:when>
 			</c:choose>
 		</c:if>

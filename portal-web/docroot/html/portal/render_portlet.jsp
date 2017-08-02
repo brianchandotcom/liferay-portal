@@ -1101,6 +1101,10 @@ else {
 %>
 
 <aui:script position='<%= themeDisplay.isIsolated() ? "inline" : "auto" %>'>
+	<c:if test="<%= !layoutTypePortlet.hasStateMax() && !themeDisplay.isStatePopUp() %>">
+		Liferay.Portlet.register('<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>');
+	</c:if>
+
 	Liferay.Portlet.onLoad(
 		{
 			canEditTitle: <%= showConfigurationIcon %>,

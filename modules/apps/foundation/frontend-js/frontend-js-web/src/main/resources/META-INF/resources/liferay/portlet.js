@@ -21,6 +21,14 @@
 		refreshLayout: function(portletBoundary) {
 		},
 
+		register: function(portletId) {
+			var instance = this;
+
+			if (instance.list.indexOf(portletId) < 0) {
+				instance.list.push(portletId);
+			}
+		},
+
 		_defCloseFn: function(event) {
 			var instance = this;
 

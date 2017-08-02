@@ -7,6 +7,18 @@
 		<execute function="AssertClick" locator1="Button#CONFIRM" value1="Confirm" />
 	</command>
 
+	<command name="deleteNotification">
+		<var name="key_contentBody" value="${contentBody}" />
+
+		<execute function="Click" locator1="Notifications#NOTIFICATIONS_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
+			<var name="key_menuItem" value="Delete" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="Notifications#NOTIFICATIONS_CONTENT" value1="${contentBody}" />
+	</command>
+
 	<command name="gotoNotifications">
 		<if>
 			<condition function="IsElementPresent" locator1="Notifications#USER_BAR_BADGE_COUNT" />

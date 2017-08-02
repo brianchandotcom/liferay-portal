@@ -95,7 +95,19 @@ public class CommerceRegionsDisplayContext
 			return searchContainer;
 		}
 
+		Boolean active = null;
 		String emptyResultsMessage = "there-are-no-regions";
+
+		String navigation = getNavigation();
+
+		if (navigation.equals("active")) {
+			active = Boolean.TRUE;
+			emptyResultsMessage = "there-are-no-active-regions";
+		}
+		else if (navigation.equals("inactive")) {
+			active = Boolean.FALSE;
+			emptyResultsMessage = "there-are-no-inactive-regions";
+		}
 
 		searchContainer = new SearchContainer<>(
 			renderRequest, getPortletURL(), null, emptyResultsMessage);
@@ -112,13 +124,25 @@ public class CommerceRegionsDisplayContext
 		searchContainer.setOrderByType(orderByType);
 		searchContainer.setRowChecker(getRowChecker());
 
-		int total = _commerceRegionService.getCommerceRegionsCount(
-			getCommerceCountryId());
+		int total;
+		List<CommerceRegion> results;
 
-		List<CommerceRegion> results =
-			_commerceRegionService.getCommerceRegions(
-				getCommerceCountryId(), searchContainer.getStart(),
+		long commerceCountryId = getCommerceCountryId();
+
+		if (active != null) {
+			total = _commerceRegionService.getCommerceRegionsCount(
+				commerceCountryId, active);
+			results = _commerceRegionService.getCommerceRegions(
+				commerceCountryId, active, searchContainer.getStart(),
 				searchContainer.getEnd(), orderByComparator);
+		}
+		else {
+			total = _commerceRegionService.getCommerceRegionsCount(
+				commerceCountryId);
+			results = _commerceRegionService.getCommerceRegions(
+				commerceCountryId, searchContainer.getStart(),
+				searchContainer.getEnd(), orderByComparator);
+		}
 
 		searchContainer.setTotal(total);
 		searchContainer.setResults(results);

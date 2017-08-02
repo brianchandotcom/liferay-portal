@@ -72,6 +72,15 @@ public class CommerceRegionServiceImpl extends CommerceRegionServiceBaseImpl {
 
 	@Override
 	public List<CommerceRegion> getCommerceRegions(
+		long commerceCountryId, boolean active, int start, int end,
+		OrderByComparator<CommerceRegion> orderByComparator) {
+
+		return commerceRegionLocalService.getCommerceRegions(
+			commerceCountryId, active, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<CommerceRegion> getCommerceRegions(
 		long commerceCountryId, int start, int end,
 		OrderByComparator<CommerceRegion> orderByComparator) {
 
@@ -83,6 +92,12 @@ public class CommerceRegionServiceImpl extends CommerceRegionServiceBaseImpl {
 	public int getCommerceRegionsCount(long commerceCountryId) {
 		return commerceRegionLocalService.getCommerceRegionsCount(
 			commerceCountryId);
+	}
+
+	@Override
+	public int getCommerceRegionsCount(long commerceCountryId, boolean active) {
+		return commerceRegionLocalService.getCommerceRegionsCount(
+			commerceCountryId, active);
 	}
 
 	@Override

@@ -94,6 +94,15 @@ public class CommerceRegionLocalServiceImpl
 
 	@Override
 	public List<CommerceRegion> getCommerceRegions(
+		long commerceCountryId, boolean active, int start, int end,
+		OrderByComparator<CommerceRegion> orderByComparator) {
+
+		return commerceRegionPersistence.findByC_A(
+			commerceCountryId, active, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<CommerceRegion> getCommerceRegions(
 		long commerceCountryId, int start, int end,
 		OrderByComparator<CommerceRegion> orderByComparator) {
 
@@ -105,6 +114,11 @@ public class CommerceRegionLocalServiceImpl
 	public int getCommerceRegionsCount(long commerceCountryId) {
 		return commerceRegionPersistence.countByCommerceCountryId(
 			commerceCountryId);
+	}
+
+	@Override
+	public int getCommerceRegionsCount(long commerceCountryId, boolean active) {
+		return commerceRegionPersistence.countByC_A(commerceCountryId, active);
 	}
 
 	@Override

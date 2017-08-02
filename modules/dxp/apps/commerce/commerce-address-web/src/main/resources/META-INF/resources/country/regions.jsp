@@ -31,7 +31,7 @@ boolean hasManageCommerceCountriesPermission = CommerceAddressPermission.contain
 >
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
+			navigationKeys='<%= new String[] {"all", "active", "inactive"} %>'
 			portletURL="<%= commerceRegionsDisplayContext.getPortletURL() %>"
 		/>
 

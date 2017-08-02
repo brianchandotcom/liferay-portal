@@ -56,7 +56,19 @@ public class CommerceCountriesDisplayContext
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		Boolean active = null;
 		String emptyResultsMessage = "there-are-no-countries";
+
+		String navigation = getNavigation();
+
+		if (navigation.equals("active")) {
+			active = Boolean.TRUE;
+			emptyResultsMessage = "there-are-no-active-countries";
+		}
+		else if (navigation.equals("inactive")) {
+			active = Boolean.FALSE;
+			emptyResultsMessage = "there-are-no-inactive-countries";
+		}
 
 		searchContainer = new SearchContainer<>(
 			renderRequest, getPortletURL(), null, emptyResultsMessage);
@@ -73,13 +85,24 @@ public class CommerceCountriesDisplayContext
 		searchContainer.setOrderByType(orderByType);
 		searchContainer.setRowChecker(getRowChecker());
 
-		int total = _commerceCountryService.getCommerceCountriesCount(
-			themeDisplay.getScopeGroupId());
+		int total;
+		List<CommerceCountry> results;
 
-		List<CommerceCountry> results =
-			_commerceCountryService.getCommerceCountries(
+		if (active != null) {
+			total = _commerceCountryService.getCommerceCountriesCount(
+				themeDisplay.getScopeGroupId(), active);
+			results = _commerceCountryService.getCommerceCountries(
+				themeDisplay.getScopeGroupId(), active,
+				searchContainer.getStart(), searchContainer.getEnd(),
+				orderByComparator);
+		}
+		else {
+			total = _commerceCountryService.getCommerceCountriesCount(
+				themeDisplay.getScopeGroupId());
+			results = _commerceCountryService.getCommerceCountries(
 				themeDisplay.getScopeGroupId(), searchContainer.getStart(),
 				searchContainer.getEnd(), orderByComparator);
+		}
 
 		searchContainer.setTotal(total);
 		searchContainer.setResults(results);

@@ -114,6 +114,15 @@ public class CommerceCountryLocalServiceImpl
 
 	@Override
 	public List<CommerceCountry> getCommerceCountries(
+		long groupId, boolean active, int start, int end,
+		OrderByComparator<CommerceCountry> orderByComparator) {
+
+		return commerceCountryPersistence.findByG_A(
+			groupId, active, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<CommerceCountry> getCommerceCountries(
 		long groupId, int start, int end,
 		OrderByComparator<CommerceCountry> orderByComparator) {
 
@@ -124,6 +133,11 @@ public class CommerceCountryLocalServiceImpl
 	@Override
 	public int getCommerceCountriesCount(long groupId) {
 		return commerceCountryPersistence.countByGroupId(groupId);
+	}
+
+	@Override
+	public int getCommerceCountriesCount(long groupId, boolean active) {
+		return commerceCountryPersistence.countByG_A(groupId, active);
 	}
 
 	@Override

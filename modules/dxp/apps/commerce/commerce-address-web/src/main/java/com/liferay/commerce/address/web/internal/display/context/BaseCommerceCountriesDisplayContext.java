@@ -79,6 +79,7 @@ public abstract class BaseCommerceCountriesDisplayContext<T> {
 
 		portletURL.setParameter(
 			"commerceAdminModuleKey", CountriesCommerceAdminModule.KEY);
+		portletURL.setParameter("navigation", getNavigation());
 		portletURL.setParameter("orderByCol", getOrderByCol());
 		portletURL.setParameter("orderByType", getOrderByType());
 
@@ -106,6 +107,10 @@ public abstract class BaseCommerceCountriesDisplayContext<T> {
 
 	public void setDefaultOrderByType(String defaultOrderByType) {
 		_defaultOrderByType = defaultOrderByType;
+	}
+
+	protected String getNavigation() {
+		return ParamUtil.getString(renderRequest, "navigation");
 	}
 
 	protected final ActionHelper actionHelper;

@@ -25,8 +25,6 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 page import="com.liferay.commerce.address.exception.CommerceCountryThreeLettersISOCodeException" %><%@
 page import="com.liferay.commerce.address.exception.CommerceCountryTwoLettersISOCodeException" %><%@
 page import="com.liferay.commerce.address.exception.CommerceRegionNameException" %><%@
-page import="com.liferay.commerce.address.exception.NoSuchCountryException" %><%@
-page import="com.liferay.commerce.address.exception.NoSuchRegionException" %><%@
 page import="com.liferay.commerce.address.model.CommerceCountry" %><%@
 page import="com.liferay.commerce.address.model.CommerceRegion" %><%@
 page import="com.liferay.commerce.address.web.internal.display.context.CommerceCountriesDisplayContext" %><%@

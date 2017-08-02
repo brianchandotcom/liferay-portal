@@ -14,11 +14,14 @@
 
 package com.liferay.commerce.address.web.internal.portlet.action;
 
+import com.liferay.commerce.address.exception.NoSuchCountryException;
 import com.liferay.commerce.address.service.CommerceCountryService;
 import com.liferay.commerce.address.web.internal.display.context.CommerceCountriesDisplayContext;
 import com.liferay.commerce.admin.web.constants.CommerceAdminPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -72,7 +75,17 @@ public class EditCommerceCountryMVCRenderCommand implements MVCRenderCommand {
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception e) {
-			throw new PortletException("Unable to include edit_country.jsp", e);
+			if (e instanceof NoSuchCountryException ||
+				e instanceof PrincipalException) {
+
+				SessionErrors.add(renderRequest, e.getClass());
+
+				return "/error.jsp";
+			}
+			else {
+				throw new PortletException(
+					"Unable to include edit_country.jsp", e);
+			}
 		}
 
 		return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;

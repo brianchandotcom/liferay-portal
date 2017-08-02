@@ -69,10 +69,10 @@
 
 		<!-- Order -->
 
-			<order by="asc">
-				<order-column name="name" />
-				<order-column name="priority" />
-			</order>
+		<order by="asc">
+			<order-column name="name" />
+			<order-column name="priority" />
+		</order>
 
 		<!-- Finder methods -->
 

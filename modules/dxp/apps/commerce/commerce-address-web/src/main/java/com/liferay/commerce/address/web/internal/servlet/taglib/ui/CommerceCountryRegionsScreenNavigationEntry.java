@@ -102,11 +102,7 @@ public class CommerceCountryRegionsScreenNavigationEntry
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceRegionsDisplayContext);
 
 		_jspRenderer.renderJSP(
-			_servletContext, request, response, getJspPath());
-	}
-
-	protected String getJspPath() {
-		return "/country/regions.jsp";
+			_servletContext, request, response, "/country/regions.jsp");
 	}
 
 	@Reference

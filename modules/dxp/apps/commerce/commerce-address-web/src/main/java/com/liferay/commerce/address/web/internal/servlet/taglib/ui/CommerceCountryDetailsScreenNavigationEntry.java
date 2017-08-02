@@ -71,11 +71,7 @@ public class CommerceCountryDetailsScreenNavigationEntry
 		throws IOException {
 
 		_jspRenderer.renderJSP(
-			_servletContext, request, response, getJspPath());
-	}
-
-	protected String getJspPath() {
-		return "/country/details.jsp";
+			_servletContext, request, response, "/country/details.jsp");
 	}
 
 	@Reference

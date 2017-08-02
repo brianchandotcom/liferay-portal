@@ -26,7 +26,7 @@ long commerceCountryId = commerceCountriesDisplayContext.getCommerceCountryId();
 
 <portlet:actionURL name="editCommerceCountry" var="editCommerceCountryActionURL" />
 
-<aui:form action="<%= editCommerceCountryActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+<aui:form action="<%= editCommerceCountryActionURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCommerceCountry();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceCountry == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="commerceCountryId" type="hidden" value="<%= String.valueOf(commerceCountryId) %>" />
@@ -63,3 +63,9 @@ long commerceCountryId = commerceCountriesDisplayContext.getCommerceCountryId();
 		<aui:button cssClass="btn-lg" href="<%= settingsURL %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
+
+<aui:script>
+	function <portlet:namespace />saveCommerceCountry() {
+		submitForm(document.<portlet:namespace />fm);
+	}
+</aui:script>

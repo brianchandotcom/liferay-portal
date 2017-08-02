@@ -48,7 +48,7 @@ renderResponse.setTitle(title);
 
 <portlet:actionURL name="editCommerceRegion" var="editCommerceRegionActionURL" />
 
-<aui:form action="<%= editCommerceRegionActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+<aui:form action="<%= editCommerceRegionActionURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCommerceRegion();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceRegion == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="commerceCountryId" type="hidden" value="<%= String.valueOf(commerceCountryId) %>" />
@@ -74,3 +74,9 @@ renderResponse.setTitle(title);
 		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
+
+<aui:script>
+	function <portlet:namespace />saveCommerceRegion() {
+		submitForm(document.<portlet:namespace />fm);
+	}
+</aui:script>

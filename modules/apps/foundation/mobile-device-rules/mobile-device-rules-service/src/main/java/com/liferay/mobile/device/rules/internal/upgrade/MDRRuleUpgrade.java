@@ -14,26 +14,20 @@
 
 package com.liferay.mobile.device.rules.internal.upgrade;
 
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
-import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-
-import org.osgi.service.component.annotations.Component;
+import com.liferay.mobile.device.rules.rule.group.rule.SimpleRuleHandler;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
- * @author Cristina González
+ * @author Tom Wang
  */
-@Component(immediate = true, service = UpgradeStepRegistrator.class)
-public class MDRServiceUpgrade implements UpgradeStepRegistrator {
+public class MDRRuleUpgrade extends UpgradeProcess {
 
-	@Override
-	public void register(Registry registry) {
-		registry.register(
-			"com.liferay.mobile.device.rules.service", "0.0.1", "1.0.0",
-			new DummyUpgradeStep());
-
-		registry.register(
-			"com.liferay.mobile.device.rules.service", "1.0.0", "1.0.1",
-			new MDRRuleUpgrade());
-	}
+    @Override
+    public void doUpgrade() throws Exception {
+		runSQL(
+			"update MDRRule set type_ = '" + SimpleRuleHandler.class.getName() +
+				"' where type_ = 'com.liferay.portal.mobile.device.rulegroup." +
+					"rule.impl.SimpleRuleHandler'");
+    }
 
 }

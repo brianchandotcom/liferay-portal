@@ -74,22 +74,27 @@ boolean hasManageCommerceCountriesPermission = CommerceAddressPermission.contain
 			keyProperty="commerceRegionId"
 		>
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				property="name"
 			/>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				property="code"
 			/>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				property="active"
 			/>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				property="priority"
 			/>
 
 			<liferay-ui:search-container-column-jsp
+				cssClass="entry-action-column"
 				path="/region_action.jsp"
 			/>
 		</liferay-ui:search-container-row>

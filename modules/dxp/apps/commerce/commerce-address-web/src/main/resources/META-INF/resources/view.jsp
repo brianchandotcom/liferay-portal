@@ -73,38 +73,46 @@ boolean hasManageCommerceCountriesPermission = CommerceAddressPermission.contain
 			keyProperty="commerceCountryId"
 		>
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				property="name"
 			/>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				name="billing-allowed"
 				property="billingAllowed"
 			/>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				name="shipping-allowed"
 				property="shippingAllowed"
 			/>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				name="two-letters-iso-code"
 				property="twoLettersISOCode"
 			/>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				name="subject-to-vat"
 				property="subjectToVAT"
 			/>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				property="active"
 			/>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				property="priority"
 			/>
 
 			<liferay-ui:search-container-column-jsp
+				cssClass="entry-action-column"
 				path="/country_action.jsp"
 			/>
 		</liferay-ui:search-container-row>

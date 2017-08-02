@@ -44,6 +44,22 @@
 		</if>
 	</command>
 
+	<command name="goToReadFilter">
+		<execute function="Click" locator1="Dropdown#FILTER" />
+
+		<var name="key_filterValue" value="Read" />
+
+		<execute function="AssertClick" locator1="Dropdown#FILTER_VALUES" value1="Read" />
+	</command>
+
+	<command name="goToUnreadFilter">
+		<execute function="Click" locator1="Dropdown#FILTER" />
+
+		<var name="key_filterValue" value="Unread" />
+
+		<execute function="AssertClick" locator1="Dropdown#FILTER_VALUES" value1="Unread" />
+	</command>
+
 	<command name="markAllAsRead">
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 

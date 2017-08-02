@@ -481,11 +481,9 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 						themeDisplay, body, message, new ArrayList<String>(),
 						formatHandler);
 
-					_mbMessageLocalService.updateMessage(
-						themeDisplay.getUserId(), message.getMessageId(),
-						message.getSubject(), body, null, null,
-						message.getPriority(), message.getAllowPingbacks(),
-						serviceContext);
+					message.setBody(body);
+
+					_mbMessageLocalService.updateMBMessage(message);
 				}
 			}
 			else {

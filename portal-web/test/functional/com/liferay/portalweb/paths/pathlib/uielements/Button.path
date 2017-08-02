@@ -750,7 +750,7 @@
 </tr>
 <tr>
 	<td>UNDO</td>
-	<td>//button[contains(.,'Undo')]</td>
+	<td>//button[contains(.,'Undo')] | //a[contains(@href,'restoreJournalArticle') and contains(.,'Undo')]</td>
 	<td></td>
 </tr>
 <tr>

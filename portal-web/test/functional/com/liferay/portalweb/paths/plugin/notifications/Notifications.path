@@ -50,6 +50,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NOTIFICATIONS_VERTICAL_ELLIPSIS</td>
+	<td>//li[contains(.,'${key_contentBody}')]//span/*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NOTIFICATIONS_WORKFLOW_TITLE</td>
 	<td>//div[@class='body-container']</td>
 	<td></td>

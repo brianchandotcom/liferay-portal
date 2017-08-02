@@ -132,6 +132,9 @@ public class CentralSubrepository {
 		if (subrepositoryUpstreamBranchName.contains("7.0")) {
 			subrepositoryUpstreamBranchName = "7.0.x";
 		}
+		else if (subrepositoryUpstreamBranchName.contains("master")) {
+			subrepositoryUpstreamBranchName = "master";
+		}
 
 		if (remote.contains("-private")) {
 			subrepositoryUpstreamBranchName += "-private";

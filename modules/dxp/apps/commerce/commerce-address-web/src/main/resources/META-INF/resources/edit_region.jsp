@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+
 CommerceRegionsDisplayContext commerceRegionsDisplayContext = (CommerceRegionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CommerceCountry commerceCountry = commerceRegionsDisplayContext.getCommerceCountry();
@@ -26,8 +28,6 @@ long commerceCountryId = commerceRegionsDisplayContext.getCommerceCountryId();
 CommerceRegion commerceRegion = commerceRegionsDisplayContext.getCommerceRegion();
 
 long commerceRegionId = commerceRegionsDisplayContext.getCommerceRegionId();
-
-String redirect = ParamUtil.getString(request, "redirect");
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
@@ -54,19 +54,23 @@ renderResponse.setTitle(title);
 	<aui:input name="commerceCountryId" type="hidden" value="<%= String.valueOf(commerceCountryId) %>" />
 	<aui:input name="commerceRegionId" type="hidden" value="<%= String.valueOf(commerceRegionId) %>" />
 
-	<liferay-ui:error exception="<%= CommerceRegionNameException.class %>" message="please-enter-a-valid-name" />
+	<div class="lfr-form-content">
+		<liferay-ui:error exception="<%= CommerceRegionNameException.class %>" message="please-enter-a-valid-name" />
 
-	<aui:model-context bean="<%= commerceRegion %>" model="<%= CommerceRegion.class %>" />
+		<aui:model-context bean="<%= commerceRegion %>" model="<%= CommerceRegion.class %>" />
 
-	<aui:fieldset>
-		<aui:input autoFocus="<%= true %>" name="name" />
+		<aui:fieldset-group markupView="lexicon">
+			<aui:fieldset>
+				<aui:input autoFocus="<%= true %>" name="name" />
 
-		<aui:input name="code" />
+				<aui:input name="code" />
 
-		<aui:input name="priority" />
+				<aui:input name="priority" />
 
-		<aui:input name="active" />
-	</aui:fieldset>
+				<aui:input name="active" />
+			</aui:fieldset>
+		</aui:fieldset-group>
+	</div>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />

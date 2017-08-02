@@ -109,6 +109,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGES_ICON</td>
+	<td>//*[contains(@data-qa-id,'PagesOptions')]//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_PAGE_ICON</td>
 	<td>//span/*[name()='a' or 'span'][contains(.,'${key_page}')]/..//span/*[name()='svg'][contains(@class,'icon-plus')]</td>
 	<td></td>
@@ -136,6 +141,16 @@
 <tr>
 	<td>EDIT_PAGE</td>
 	<td>//a[contains(@class,'tree-edit') and contains(.,'${key_page}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LAYOUT_SET_1</td>
+	<td>//div[@class='layout-set-tabs']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LAYOUT_SET_2</td>
+	<td>//div[@class='layout-set-tabs']/div[2]</td>
 	<td></td>
 </tr>
 <tr>

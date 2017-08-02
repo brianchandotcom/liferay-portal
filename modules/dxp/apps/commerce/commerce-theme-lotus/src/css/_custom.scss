@@ -152,3 +152,16 @@
 	border-radius: 0;
 	box-shadow: none;
 }
+
+.collapse-hover {
+	&:hover {
+		.collapse {
+			display: block;
+		}
+
+		.lexicon-icon {
+			fill: $brand-color;
+			transition: fill 0.4s ease-in-out;
+		}
+	}
+}

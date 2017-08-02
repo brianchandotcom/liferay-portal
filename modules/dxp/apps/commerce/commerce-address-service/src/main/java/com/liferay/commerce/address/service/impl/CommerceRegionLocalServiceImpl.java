@@ -33,7 +33,7 @@ public class CommerceRegionLocalServiceImpl
 	@Override
 	public CommerceRegion addCommerceRegion(
 			long commerceCountryId, String name, String abbreviation,
-			double priority, boolean published, ServiceContext serviceContext)
+			double priority, boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
@@ -52,7 +52,7 @@ public class CommerceRegionLocalServiceImpl
 		commerceRegion.setName(name);
 		commerceRegion.setAbbreviation(abbreviation);
 		commerceRegion.setPriority(priority);
-		commerceRegion.setPublished(published);
+		commerceRegion.setActive(active);
 
 		commerceRegionPersistence.update(commerceRegion);
 
@@ -103,7 +103,7 @@ public class CommerceRegionLocalServiceImpl
 	@Override
 	public CommerceRegion updateCommerceRegion(
 			long commerceRegionId, String name, String abbreviation,
-			double priority, boolean published)
+			double priority, boolean active)
 		throws PortalException {
 
 		CommerceRegion commerceRegion =
@@ -112,7 +112,7 @@ public class CommerceRegionLocalServiceImpl
 		commerceRegion.setName(name);
 		commerceRegion.setAbbreviation(abbreviation);
 		commerceRegion.setPriority(priority);
-		commerceRegion.setPublished(published);
+		commerceRegion.setActive(active);
 
 		commerceRegionPersistence.update(commerceRegion);
 

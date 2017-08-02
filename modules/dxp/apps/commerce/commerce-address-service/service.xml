@@ -32,7 +32,7 @@
 		<column name="numericISOCode" type="int" />
 		<column name="subjectToVAT" type="boolean" />
 		<column name="priority" type="double" />
-		<column name="published" type="boolean" />
+		<column name="active" type="boolean" />
 
 		<!-- Order -->
 
@@ -65,7 +65,7 @@
 		<column name="name" type="String" />
 		<column name="abbreviation" type="String" />
 		<column name="priority" type="double" />
-		<column name="published" type="boolean" />
+		<column name="active" type="boolean" />
 
 		<!-- Order -->
 

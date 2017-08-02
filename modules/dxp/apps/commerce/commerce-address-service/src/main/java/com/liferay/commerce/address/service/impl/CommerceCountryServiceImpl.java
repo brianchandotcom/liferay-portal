@@ -32,13 +32,13 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 			String name, boolean allowsBilling, boolean allowsShipping,
 			String twoLettersISOCode, String threeLettersISOCode,
 			int numericISOCode, boolean subjectToVAT, double priority,
-			boolean published, ServiceContext serviceContext)
+			boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
 		return commerceCountryLocalService.addCommerceCountry(
 			name, allowsBilling, allowsShipping, twoLettersISOCode,
-			threeLettersISOCode, numericISOCode, subjectToVAT, priority,
-			published, serviceContext);
+			threeLettersISOCode, numericISOCode, subjectToVAT, priority, active,
+			serviceContext);
 	}
 
 	@Override
@@ -74,13 +74,13 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 			long commerceCountryId, String name, boolean allowsBilling,
 			boolean allowsShipping, String twoLettersISOCode,
 			String threeLettersISOCode, int numericISOCode,
-			boolean subjectToVAT, double priority, boolean published)
+			boolean subjectToVAT, double priority, boolean active)
 		throws PortalException {
 
 		return commerceCountryLocalService.updateCommerceCountry(
 			commerceCountryId, name, allowsBilling, allowsShipping,
 			twoLettersISOCode, threeLettersISOCode, numericISOCode,
-			subjectToVAT, priority, published);
+			subjectToVAT, priority, active);
 	}
 
 }

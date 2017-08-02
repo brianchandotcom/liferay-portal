@@ -147,7 +147,7 @@ public class EditCommerceCountryMVCActionCommand extends BaseMVCActionCommand {
 		boolean subjectToVAT = ParamUtil.getBoolean(
 			actionRequest, "subjectToVAT");
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
-		boolean published = ParamUtil.getBoolean(actionRequest, "published");
+		boolean active = ParamUtil.getBoolean(actionRequest, "active");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CommerceCountry.class.getName(), actionRequest);
@@ -161,7 +161,7 @@ public class EditCommerceCountryMVCActionCommand extends BaseMVCActionCommand {
 			commerceCountry = _commerceCountryService.addCommerceCountry(
 				name, allowsBilling, allowsShipping, twoLettersISOCode,
 				threeLettersISOCode, numericISOCode, subjectToVAT, priority,
-				published, serviceContext);
+				active, serviceContext);
 		}
 		else {
 
@@ -170,7 +170,7 @@ public class EditCommerceCountryMVCActionCommand extends BaseMVCActionCommand {
 			commerceCountry = _commerceCountryService.updateCommerceCountry(
 				commerceCountryId, name, allowsBilling, allowsShipping,
 				twoLettersISOCode, threeLettersISOCode, numericISOCode,
-				subjectToVAT, priority, published);
+				subjectToVAT, priority, active);
 		}
 
 		return commerceCountry;

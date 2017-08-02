@@ -77,7 +77,7 @@ SearchContainer<CommerceRegion> commerceRegionSearchContainer = commerceRegionsD
 					/>
 
 					<liferay-ui:search-container-column-text
-						property="published"
+						property="active"
 					/>
 
 					<liferay-ui:search-container-column-text

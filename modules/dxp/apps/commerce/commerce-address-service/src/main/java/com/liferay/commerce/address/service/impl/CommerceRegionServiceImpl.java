@@ -30,11 +30,11 @@ public class CommerceRegionServiceImpl extends CommerceRegionServiceBaseImpl {
 	@Override
 	public CommerceRegion addCommerceRegion(
 			long commerceCountryId, String name, String abbreviation,
-			double priority, boolean published, ServiceContext serviceContext)
+			double priority, boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
 		return commerceRegionLocalService.addCommerceRegion(
-			commerceCountryId, name, abbreviation, priority, published,
+			commerceCountryId, name, abbreviation, priority, active,
 			serviceContext);
 	}
 
@@ -69,11 +69,11 @@ public class CommerceRegionServiceImpl extends CommerceRegionServiceBaseImpl {
 	@Override
 	public CommerceRegion updateCommerceRegion(
 			long commerceRegionId, String name, String abbreviation,
-			double priority, boolean published)
+			double priority, boolean active)
 		throws PortalException {
 
 		return commerceRegionLocalService.updateCommerceRegion(
-			commerceRegionId, name, abbreviation, priority, published);
+			commerceRegionId, name, abbreviation, priority, active);
 	}
 
 }

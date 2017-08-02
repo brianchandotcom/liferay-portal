@@ -50,7 +50,7 @@ long commerceCountryId = commerceCountryDisplayContext.getCommerceCountryId();
 
 		<aui:input name="priority" />
 
-		<aui:input name="published" />
+		<aui:input name="active" />
 	</aui:fieldset>
 
 	<aui:button-row>

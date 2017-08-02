@@ -112,7 +112,7 @@ public class EditCommerceRegionMVCActionCommand extends BaseMVCActionCommand {
 		String abbreviation = ParamUtil.getString(
 			actionRequest, "abbreviation");
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
-		boolean published = ParamUtil.getBoolean(actionRequest, "published");
+		boolean active = ParamUtil.getBoolean(actionRequest, "active");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CommerceRegion.class.getName(), actionRequest);
@@ -124,7 +124,7 @@ public class EditCommerceRegionMVCActionCommand extends BaseMVCActionCommand {
 			// Add commerce region
 
 			commerceRegion = _commerceRegionService.addCommerceRegion(
-				commerceCountryId, name, abbreviation, priority, published,
+				commerceCountryId, name, abbreviation, priority, active,
 				serviceContext);
 		}
 		else {
@@ -132,7 +132,7 @@ public class EditCommerceRegionMVCActionCommand extends BaseMVCActionCommand {
 			// Update commerce region
 
 			commerceRegion = _commerceRegionService.updateCommerceRegion(
-				commerceRegionId, name, abbreviation, priority, published);
+				commerceRegionId, name, abbreviation, priority, active);
 		}
 
 		return commerceRegion;

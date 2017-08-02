@@ -184,6 +184,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MARK_AS_READ</td>
+	<td>//span/*[name()='svg'][contains(@class,'icon-envelope-open')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MARK_AS_UNREAD</td>
+	<td>//span/*[name()='svg'][contains(@class,'icon-envelope-closed')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MERGE</td>
 	<td>//*[@data-qa-id='mergeButton'] | //a[contains(@id,'merge')]//span[contains(@class,'icon-random')]</td>
 	<td></td>

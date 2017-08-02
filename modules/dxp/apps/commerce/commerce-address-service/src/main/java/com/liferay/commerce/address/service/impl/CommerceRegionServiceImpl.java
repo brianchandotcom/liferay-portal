@@ -27,6 +27,7 @@ import java.util.List;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Andrea Di Giorgi
  */
 public class CommerceRegionServiceImpl extends CommerceRegionServiceBaseImpl {
 

@@ -28,6 +28,7 @@ import java.util.Map;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Andrea Di Giorgi
  */
 public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 

@@ -56,7 +56,7 @@ public class CommerceCountriesDisplayContext
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String emptyResultsMessage = "no-countries-were-found";
+		String emptyResultsMessage = "there-are-no-countries";
 
 		searchContainer = new SearchContainer<>(
 			renderRequest, getPortletURL(), null, emptyResultsMessage);

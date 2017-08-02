@@ -95,7 +95,7 @@ public class CommerceRegionsDisplayContext
 			return searchContainer;
 		}
 
-		String emptyResultsMessage = "no-regions-were-found";
+		String emptyResultsMessage = "there-are-no-regions";
 
 		searchContainer = new SearchContainer<>(
 			renderRequest, getPortletURL(), null, emptyResultsMessage);

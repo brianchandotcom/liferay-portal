@@ -34,15 +34,12 @@ page import="com.liferay.commerce.address.service.permission.CommerceAddressPerm
 page import="com.liferay.commerce.address.web.internal.display.context.CommerceCountriesDisplayContext" %><%@
 page import="com.liferay.commerce.address.web.internal.display.context.CommerceRegionsDisplayContext" %><%@
 page import="com.liferay.commerce.address.web.internal.servlet.taglib.ui.CommerceCountryScreenNavigationConstants" %><%@
-page import="com.liferay.commerce.address.web.internal.util.CountriesCommerceAdminModule" %><%@
-page import="com.liferay.commerce.admin.web.constants.CommerceAdminPortletKeys" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 
@@ -53,13 +50,3 @@ page import="com.liferay.portal.kernel.util.WebKeys" %>
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
-
-<%
-String lifecycle = (String)request.getAttribute(liferayPortletRequest.LIFECYCLE_PHASE);
-
-PortletURL settingsURLObj = PortalUtil.getControlPanelPortletURL(request, CommerceAdminPortletKeys.COMMERCE_ADMIN, lifecycle);
-
-settingsURLObj.setParameter("commerceAdminModuleKey", CountriesCommerceAdminModule.KEY);
-
-String settingsURL = settingsURLObj.toString();
-%>

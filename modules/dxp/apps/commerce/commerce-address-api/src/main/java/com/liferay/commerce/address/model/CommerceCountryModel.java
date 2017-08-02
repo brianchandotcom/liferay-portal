@@ -19,15 +19,19 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
 import java.util.Date;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * The base model interface for the CommerceCountry service. Represents a row in the &quot;CommerceCountry&quot; database table, with each column mapped to a property of this class.
@@ -44,7 +48,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface CommerceCountryModel extends BaseModel<CommerceCountry>,
-	GroupedModel, ShardedModel {
+	LocalizedModel, ShardedModel, StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -64,6 +68,23 @@ public interface CommerceCountryModel extends BaseModel<CommerceCountry>,
 	 * @param primaryKey the primary key of this commerce country
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the uuid of this commerce country.
+	 *
+	 * @return the uuid of this commerce country
+	 */
+	@AutoEscape
+	@Override
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this commerce country.
+	 *
+	 * @param uuid the uuid of this commerce country
+	 */
+	@Override
+	public void setUuid(String uuid);
 
 	/**
 	 * Returns the commerce country ID of this commerce country.
@@ -197,8 +218,58 @@ public interface CommerceCountryModel extends BaseModel<CommerceCountry>,
 	 *
 	 * @return the name of this commerce country
 	 */
-	@AutoEscape
 	public String getName();
+
+	/**
+	 * Returns the localized name of this commerce country in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the locale of the language
+	 * @return the localized name of this commerce country
+	 */
+	@AutoEscape
+	public String getName(Locale locale);
+
+	/**
+	 * Returns the localized name of this commerce country in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the local of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized name of this commerce country. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 */
+	@AutoEscape
+	public String getName(Locale locale, boolean useDefault);
+
+	/**
+	 * Returns the localized name of this commerce country in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @return the localized name of this commerce country
+	 */
+	@AutoEscape
+	public String getName(String languageId);
+
+	/**
+	 * Returns the localized name of this commerce country in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized name of this commerce country
+	 */
+	@AutoEscape
+	public String getName(String languageId, boolean useDefault);
+
+	@AutoEscape
+	public String getNameCurrentLanguageId();
+
+	@AutoEscape
+	public String getNameCurrentValue();
+
+	/**
+	 * Returns a map of the locales and localized names of this commerce country.
+	 *
+	 * @return the locales and localized names of this commerce country
+	 */
+	public Map<Locale, String> getNameMap();
 
 	/**
 	 * Sets the name of this commerce country.
@@ -208,46 +279,80 @@ public interface CommerceCountryModel extends BaseModel<CommerceCountry>,
 	public void setName(String name);
 
 	/**
-	 * Returns the allows billing of this commerce country.
+	 * Sets the localized name of this commerce country in the language.
 	 *
-	 * @return the allows billing of this commerce country
+	 * @param name the localized name of this commerce country
+	 * @param locale the locale of the language
 	 */
-	public boolean getAllowsBilling();
+	public void setName(String name, Locale locale);
 
 	/**
-	 * Returns <code>true</code> if this commerce country is allows billing.
+	 * Sets the localized name of this commerce country in the language, and sets the default locale.
 	 *
-	 * @return <code>true</code> if this commerce country is allows billing; <code>false</code> otherwise
+	 * @param name the localized name of this commerce country
+	 * @param locale the locale of the language
+	 * @param defaultLocale the default locale
 	 */
-	public boolean isAllowsBilling();
+	public void setName(String name, Locale locale, Locale defaultLocale);
+
+	public void setNameCurrentLanguageId(String languageId);
 
 	/**
-	 * Sets whether this commerce country is allows billing.
+	 * Sets the localized names of this commerce country from the map of locales and localized names.
 	 *
-	 * @param allowsBilling the allows billing of this commerce country
+	 * @param nameMap the locales and localized names of this commerce country
 	 */
-	public void setAllowsBilling(boolean allowsBilling);
+	public void setNameMap(Map<Locale, String> nameMap);
 
 	/**
-	 * Returns the allows shipping of this commerce country.
+	 * Sets the localized names of this commerce country from the map of locales and localized names, and sets the default locale.
 	 *
-	 * @return the allows shipping of this commerce country
+	 * @param nameMap the locales and localized names of this commerce country
+	 * @param defaultLocale the default locale
 	 */
-	public boolean getAllowsShipping();
+	public void setNameMap(Map<Locale, String> nameMap, Locale defaultLocale);
 
 	/**
-	 * Returns <code>true</code> if this commerce country is allows shipping.
+	 * Returns the billing allowed of this commerce country.
 	 *
-	 * @return <code>true</code> if this commerce country is allows shipping; <code>false</code> otherwise
+	 * @return the billing allowed of this commerce country
 	 */
-	public boolean isAllowsShipping();
+	public boolean getBillingAllowed();
 
 	/**
-	 * Sets whether this commerce country is allows shipping.
+	 * Returns <code>true</code> if this commerce country is billing allowed.
 	 *
-	 * @param allowsShipping the allows shipping of this commerce country
+	 * @return <code>true</code> if this commerce country is billing allowed; <code>false</code> otherwise
 	 */
-	public void setAllowsShipping(boolean allowsShipping);
+	public boolean isBillingAllowed();
+
+	/**
+	 * Sets whether this commerce country is billing allowed.
+	 *
+	 * @param billingAllowed the billing allowed of this commerce country
+	 */
+	public void setBillingAllowed(boolean billingAllowed);
+
+	/**
+	 * Returns the shipping allowed of this commerce country.
+	 *
+	 * @return the shipping allowed of this commerce country
+	 */
+	public boolean getShippingAllowed();
+
+	/**
+	 * Returns <code>true</code> if this commerce country is shipping allowed.
+	 *
+	 * @return <code>true</code> if this commerce country is shipping allowed; <code>false</code> otherwise
+	 */
+	public boolean isShippingAllowed();
+
+	/**
+	 * Sets whether this commerce country is shipping allowed.
+	 *
+	 * @param shippingAllowed the shipping allowed of this commerce country
+	 */
+	public void setShippingAllowed(boolean shippingAllowed);
 
 	/**
 	 * Returns the two letters iso code of this commerce country.
@@ -329,25 +434,41 @@ public interface CommerceCountryModel extends BaseModel<CommerceCountry>,
 	public void setPriority(double priority);
 
 	/**
-	 * Returns the published of this commerce country.
+	 * Returns the active of this commerce country.
 	 *
-	 * @return the published of this commerce country
+	 * @return the active of this commerce country
 	 */
-	public boolean getPublished();
+	public boolean getActive();
 
 	/**
-	 * Returns <code>true</code> if this commerce country is published.
+	 * Returns <code>true</code> if this commerce country is active.
 	 *
-	 * @return <code>true</code> if this commerce country is published; <code>false</code> otherwise
+	 * @return <code>true</code> if this commerce country is active; <code>false</code> otherwise
 	 */
-	public boolean isPublished();
+	public boolean isActive();
 
 	/**
-	 * Sets whether this commerce country is published.
+	 * Sets whether this commerce country is active.
 	 *
-	 * @param published the published of this commerce country
+	 * @param active the active of this commerce country
 	 */
-	public void setPublished(boolean published);
+	public void setActive(boolean active);
+
+	/**
+	 * Returns the last publish date of this commerce country.
+	 *
+	 * @return the last publish date of this commerce country
+	 */
+	@Override
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this commerce country.
+	 *
+	 * @param lastPublishDate the last publish date of this commerce country
+	 */
+	@Override
+	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override
 	public boolean isNew();
@@ -381,6 +502,19 @@ public interface CommerceCountryModel extends BaseModel<CommerceCountry>,
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext);
+
+	@Override
+	public String[] getAvailableLanguageIds();
+
+	@Override
+	public String getDefaultLanguageId();
+
+	@Override
+	public void prepareLocalizedFieldsForImport() throws LocaleException;
+
+	@Override
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
+		throws LocaleException;
 
 	@Override
 	public Object clone();

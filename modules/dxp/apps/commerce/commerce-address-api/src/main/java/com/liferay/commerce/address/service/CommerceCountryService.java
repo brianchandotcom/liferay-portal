@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the remote service interface for CommerceCountry. Methods of this
@@ -56,28 +58,29 @@ public interface CommerceCountryService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceCountryServiceUtil} to access the commerce country remote service. Add custom service methods to {@link com.liferay.commerce.address.service.impl.CommerceCountryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public CommerceCountry addCommerceCountry(java.lang.String name,
-		boolean allowsBilling, boolean allowsShipping,
-		java.lang.String twoLettersISOCode,
+	public CommerceCountry addCommerceCountry(
+		Map<Locale, java.lang.String> nameMap, boolean billingAllowed,
+		boolean shippingAllowed, java.lang.String twoLettersISOCode,
 		java.lang.String threeLettersISOCode, int numericISOCode,
-		boolean subjectToVAT, double priority, boolean published,
+		boolean subjectToVAT, double priority, boolean active,
 		ServiceContext serviceContext) throws PortalException;
 
-	public CommerceCountry deleteCommerceCountry(long commerceCountryId)
-		throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceCountry fetchCommerceCountry(long commerceCountryId);
+	public CommerceCountry getCommerceCountry(long commerceCountryId)
+		throws PortalException;
 
 	public CommerceCountry updateCommerceCountry(long commerceCountryId,
-		java.lang.String name, boolean allowsBilling, boolean allowsShipping,
-		java.lang.String twoLettersISOCode,
+		Map<Locale, java.lang.String> nameMap, boolean billingAllowed,
+		boolean shippingAllowed, java.lang.String twoLettersISOCode,
 		java.lang.String threeLettersISOCode, int numericISOCode,
-		boolean subjectToVAT, double priority, boolean published)
-		throws PortalException;
+		boolean subjectToVAT, double priority, boolean active,
+		ServiceContext serviceContext) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceCountriesCount();
+	public int getCommerceCountriesCount(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceCountriesCount(long groupId, boolean active);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -87,6 +90,14 @@ public interface CommerceCountryService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceCountry> getCommerceCountries(int start, int end,
+	public List<CommerceCountry> getCommerceCountries(long groupId,
+		boolean active, int start, int end,
 		OrderByComparator<CommerceCountry> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceCountry> getCommerceCountries(long groupId, int start,
+		int end, OrderByComparator<CommerceCountry> orderByComparator);
+
+	public void deleteCommerceCountry(long commerceCountryId)
+		throws PortalException;
 }

@@ -54,4 +54,7 @@ public interface CommerceRegion extends CommerceRegionModel, PersistedModel {
 				return CommerceRegion.class;
 			}
 		};
+
+	public CommerceCountry getCommerceCountry()
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

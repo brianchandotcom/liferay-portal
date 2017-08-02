@@ -29,12 +29,14 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.test.AssertUtils;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -56,6 +58,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -123,6 +126,8 @@ public class CommerceRegionPersistenceTest {
 
 		CommerceRegion newCommerceRegion = _persistence.create(pk);
 
+		newCommerceRegion.setUuid(RandomTestUtil.randomString());
+
 		newCommerceRegion.setGroupId(RandomTestUtil.nextLong());
 
 		newCommerceRegion.setCompanyId(RandomTestUtil.nextLong());
@@ -139,16 +144,20 @@ public class CommerceRegionPersistenceTest {
 
 		newCommerceRegion.setName(RandomTestUtil.randomString());
 
-		newCommerceRegion.setAbbreviation(RandomTestUtil.randomString());
+		newCommerceRegion.setCode(RandomTestUtil.randomString());
 
 		newCommerceRegion.setPriority(RandomTestUtil.nextDouble());
 
-		newCommerceRegion.setPublished(RandomTestUtil.randomBoolean());
+		newCommerceRegion.setActive(RandomTestUtil.randomBoolean());
+
+		newCommerceRegion.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_commerceRegions.add(_persistence.update(newCommerceRegion));
 
 		CommerceRegion existingCommerceRegion = _persistence.findByPrimaryKey(newCommerceRegion.getPrimaryKey());
 
+		Assert.assertEquals(existingCommerceRegion.getUuid(),
+			newCommerceRegion.getUuid());
 		Assert.assertEquals(existingCommerceRegion.getCommerceRegionId(),
 			newCommerceRegion.getCommerceRegionId());
 		Assert.assertEquals(existingCommerceRegion.getGroupId(),
@@ -169,12 +178,42 @@ public class CommerceRegionPersistenceTest {
 			newCommerceRegion.getCommerceCountryId());
 		Assert.assertEquals(existingCommerceRegion.getName(),
 			newCommerceRegion.getName());
-		Assert.assertEquals(existingCommerceRegion.getAbbreviation(),
-			newCommerceRegion.getAbbreviation());
+		Assert.assertEquals(existingCommerceRegion.getCode(),
+			newCommerceRegion.getCode());
 		AssertUtils.assertEquals(existingCommerceRegion.getPriority(),
 			newCommerceRegion.getPriority());
-		Assert.assertEquals(existingCommerceRegion.getPublished(),
-			newCommerceRegion.getPublished());
+		Assert.assertEquals(existingCommerceRegion.getActive(),
+			newCommerceRegion.getActive());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingCommerceRegion.getLastPublishDate()),
+			Time.getShortTimestamp(newCommerceRegion.getLastPublishDate()));
+	}
+
+	@Test
+	public void testCountByUuid() throws Exception {
+		_persistence.countByUuid(StringPool.BLANK);
+
+		_persistence.countByUuid(StringPool.NULL);
+
+		_persistence.countByUuid((String)null);
+	}
+
+	@Test
+	public void testCountByUUID_G() throws Exception {
+		_persistence.countByUUID_G(StringPool.BLANK, RandomTestUtil.nextLong());
+
+		_persistence.countByUUID_G(StringPool.NULL, 0L);
+
+		_persistence.countByUUID_G((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByUuid_C() throws Exception {
+		_persistence.countByUuid_C(StringPool.BLANK, RandomTestUtil.nextLong());
+
+		_persistence.countByUuid_C(StringPool.NULL, 0L);
+
+		_persistence.countByUuid_C((String)null, 0L);
 	}
 
 	@Test
@@ -182,6 +221,14 @@ public class CommerceRegionPersistenceTest {
 		_persistence.countByCommerceCountryId(RandomTestUtil.nextLong());
 
 		_persistence.countByCommerceCountryId(0L);
+	}
+
+	@Test
+	public void testCountByC_A() throws Exception {
+		_persistence.countByC_A(RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean());
+
+		_persistence.countByC_A(0L, RandomTestUtil.randomBoolean());
 	}
 
 	@Test
@@ -207,11 +254,12 @@ public class CommerceRegionPersistenceTest {
 	}
 
 	protected OrderByComparator<CommerceRegion> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("CommerceRegion",
-			"commerceRegionId", true, "groupId", true, "companyId", true,
+		return OrderByComparatorFactoryUtil.create("CommerceRegion", "uuid",
+			true, "commerceRegionId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "commerceCountryId", true, "name", true,
-			"abbreviation", true, "priority", true, "published", true);
+			"code", true, "priority", true, "active", true, "lastPublishDate",
+			true);
 	}
 
 	@Test
@@ -408,10 +456,28 @@ public class CommerceRegionPersistenceTest {
 		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		CommerceRegion newCommerceRegion = addCommerceRegion();
+
+		_persistence.clearCache();
+
+		CommerceRegion existingCommerceRegion = _persistence.findByPrimaryKey(newCommerceRegion.getPrimaryKey());
+
+		Assert.assertTrue(Objects.equals(existingCommerceRegion.getUuid(),
+				ReflectionTestUtil.invoke(existingCommerceRegion,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(existingCommerceRegion.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingCommerceRegion,
+				"getOriginalGroupId", new Class<?>[0]));
+	}
+
 	protected CommerceRegion addCommerceRegion() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		CommerceRegion commerceRegion = _persistence.create(pk);
+
+		commerceRegion.setUuid(RandomTestUtil.randomString());
 
 		commerceRegion.setGroupId(RandomTestUtil.nextLong());
 
@@ -429,11 +495,13 @@ public class CommerceRegionPersistenceTest {
 
 		commerceRegion.setName(RandomTestUtil.randomString());
 
-		commerceRegion.setAbbreviation(RandomTestUtil.randomString());
+		commerceRegion.setCode(RandomTestUtil.randomString());
 
 		commerceRegion.setPriority(RandomTestUtil.nextDouble());
 
-		commerceRegion.setPublished(RandomTestUtil.randomBoolean());
+		commerceRegion.setActive(RandomTestUtil.randomBoolean());
+
+		commerceRegion.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_commerceRegions.add(_persistence.update(commerceRegion));
 

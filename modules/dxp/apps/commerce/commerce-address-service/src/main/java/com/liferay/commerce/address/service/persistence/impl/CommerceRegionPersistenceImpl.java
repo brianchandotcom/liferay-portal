@@ -37,11 +37,17 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
+
+import java.lang.reflect.Field;
 
 import java.util.Collections;
 import java.util.Date;
@@ -50,6 +56,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -88,6 +95,1398 @@ public class CommerceRegionPersistenceImpl extends BasePersistenceImpl<CommerceR
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceRegionModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID = new FinderPath(CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceRegionModelImpl.FINDER_CACHE_ENABLED,
+			CommerceRegionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByUuid",
+			new String[] {
+				String.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID = new FinderPath(CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceRegionModelImpl.FINDER_CACHE_ENABLED,
+			CommerceRegionImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+			new String[] { String.class.getName() },
+			CommerceRegionModelImpl.UUID_COLUMN_BITMASK |
+			CommerceRegionModelImpl.PRIORITY_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_UUID = new FinderPath(CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceRegionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+			new String[] { String.class.getName() });
+
+	/**
+	 * Returns all the commerce regions where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching commerce regions
+	 */
+	@Override
+	public List<CommerceRegion> findByUuid(String uuid) {
+		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the commerce regions where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceRegionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of commerce regions
+	 * @param end the upper bound of the range of commerce regions (not inclusive)
+	 * @return the range of matching commerce regions
+	 */
+	@Override
+	public List<CommerceRegion> findByUuid(String uuid, int start, int end) {
+		return findByUuid(uuid, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce regions where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceRegionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of commerce regions
+	 * @param end the upper bound of the range of commerce regions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce regions
+	 */
+	@Override
+	public List<CommerceRegion> findByUuid(String uuid, int start, int end,
+		OrderByComparator<CommerceRegion> orderByComparator) {
+		return findByUuid(uuid, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce regions where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceRegionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of commerce regions
+	 * @param end the upper bound of the range of commerce regions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching commerce regions
+	 */
+	@Override
+	public List<CommerceRegion> findByUuid(String uuid, int start, int end,
+		OrderByComparator<CommerceRegion> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID;
+			finderArgs = new Object[] { uuid };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID;
+			finderArgs = new Object[] { uuid, start, end, orderByComparator };
+		}
+
+		List<CommerceRegion> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<CommerceRegion>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CommerceRegion commerceRegion : list) {
+					if (!Objects.equals(uuid, commerceRegion.getUuid())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_COMMERCEREGION_WHERE);
+
+			boolean bindUuid = false;
+
+			if (uuid == null) {
+				query.append(_FINDER_COLUMN_UUID_UUID_1);
+			}
+			else if (uuid.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_UUID_UUID_3);
+			}
+			else {
+				bindUuid = true;
+
+				query.append(_FINDER_COLUMN_UUID_UUID_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(CommerceRegionModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindUuid) {
+					qPos.add(uuid);
+				}
+
+				if (!pagination) {
+					list = (List<CommerceRegion>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<CommerceRegion>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first commerce region in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce region
+	 * @throws NoSuchRegionException if a matching commerce region could not be found
+	 */
+	@Override
+	public CommerceRegion findByUuid_First(String uuid,
+		OrderByComparator<CommerceRegion> orderByComparator)
+		throws NoSuchRegionException {
+		CommerceRegion commerceRegion = fetchByUuid_First(uuid,
+				orderByComparator);
+
+		if (commerceRegion != null) {
+			return commerceRegion;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("uuid=");
+		msg.append(uuid);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchRegionException(msg.toString());
+	}
+
+	/**
+	 * Returns the first commerce region in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce region, or <code>null</code> if a matching commerce region could not be found
+	 */
+	@Override
+	public CommerceRegion fetchByUuid_First(String uuid,
+		OrderByComparator<CommerceRegion> orderByComparator) {
+		List<CommerceRegion> list = findByUuid(uuid, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last commerce region in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce region
+	 * @throws NoSuchRegionException if a matching commerce region could not be found
+	 */
+	@Override
+	public CommerceRegion findByUuid_Last(String uuid,
+		OrderByComparator<CommerceRegion> orderByComparator)
+		throws NoSuchRegionException {
+		CommerceRegion commerceRegion = fetchByUuid_Last(uuid, orderByComparator);
+
+		if (commerceRegion != null) {
+			return commerceRegion;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("uuid=");
+		msg.append(uuid);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchRegionException(msg.toString());
+	}
+
+	/**
+	 * Returns the last commerce region in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce region, or <code>null</code> if a matching commerce region could not be found
+	 */
+	@Override
+	public CommerceRegion fetchByUuid_Last(String uuid,
+		OrderByComparator<CommerceRegion> orderByComparator) {
+		int count = countByUuid(uuid);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CommerceRegion> list = findByUuid(uuid, count - 1, count,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the commerce regions before and after the current commerce region in the ordered set where uuid = &#63;.
+	 *
+	 * @param commerceRegionId the primary key of the current commerce region
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce region
+	 * @throws NoSuchRegionException if a commerce region with the primary key could not be found
+	 */
+	@Override
+	public CommerceRegion[] findByUuid_PrevAndNext(long commerceRegionId,
+		String uuid, OrderByComparator<CommerceRegion> orderByComparator)
+		throws NoSuchRegionException {
+		CommerceRegion commerceRegion = findByPrimaryKey(commerceRegionId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CommerceRegion[] array = new CommerceRegionImpl[3];
+
+			array[0] = getByUuid_PrevAndNext(session, commerceRegion, uuid,
+					orderByComparator, true);
+
+			array[1] = commerceRegion;
+
+			array[2] = getByUuid_PrevAndNext(session, commerceRegion, uuid,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CommerceRegion getByUuid_PrevAndNext(Session session,
+		CommerceRegion commerceRegion, String uuid,
+		OrderByComparator<CommerceRegion> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_COMMERCEREGION_WHERE);
+
+		boolean bindUuid = false;
+
+		if (uuid == null) {
+			query.append(_FINDER_COLUMN_UUID_UUID_1);
+		}
+		else if (uuid.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_UUID_UUID_3);
+		}
+		else {
+			bindUuid = true;
+
+			query.append(_FINDER_COLUMN_UUID_UUID_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(CommerceRegionModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		if (bindUuid) {
+			qPos.add(uuid);
+		}
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(commerceRegion);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<CommerceRegion> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the commerce regions where uuid = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 */
+	@Override
+	public void removeByUuid(String uuid) {
+		for (CommerceRegion commerceRegion : findByUuid(uuid,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(commerceRegion);
+		}
+	}
+
+	/**
+	 * Returns the number of commerce regions where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the number of matching commerce regions
+	 */
+	@Override
+	public int countByUuid(String uuid) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID;
+
+		Object[] finderArgs = new Object[] { uuid };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_COMMERCEREGION_WHERE);
+
+			boolean bindUuid = false;
+
+			if (uuid == null) {
+				query.append(_FINDER_COLUMN_UUID_UUID_1);
+			}
+			else if (uuid.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_UUID_UUID_3);
+			}
+			else {
+				bindUuid = true;
+
+				query.append(_FINDER_COLUMN_UUID_UUID_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindUuid) {
+					qPos.add(uuid);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_UUID_UUID_1 = "commerceRegion.uuid IS NULL";
+	private static final String _FINDER_COLUMN_UUID_UUID_2 = "commerceRegion.uuid = ?";
+	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(commerceRegion.uuid IS NULL OR commerceRegion.uuid = '')";
+	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceRegionModelImpl.FINDER_CACHE_ENABLED,
+			CommerceRegionImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByUUID_G",
+			new String[] { String.class.getName(), Long.class.getName() },
+			CommerceRegionModelImpl.UUID_COLUMN_BITMASK |
+			CommerceRegionModelImpl.GROUPID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_G = new FinderPath(CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceRegionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
+			new String[] { String.class.getName(), Long.class.getName() });
+
+	/**
+	 * Returns the commerce region where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchRegionException} if it could not be found.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching commerce region
+	 * @throws NoSuchRegionException if a matching commerce region could not be found
+	 */
+	@Override
+	public CommerceRegion findByUUID_G(String uuid, long groupId)
+		throws NoSuchRegionException {
+		CommerceRegion commerceRegion = fetchByUUID_G(uuid, groupId);
+
+		if (commerceRegion == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("uuid=");
+			msg.append(uuid);
+
+			msg.append(", groupId=");
+			msg.append(groupId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchRegionException(msg.toString());
+		}
+
+		return commerceRegion;
+	}
+
+	/**
+	 * Returns the commerce region where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching commerce region, or <code>null</code> if a matching commerce region could not be found
+	 */
+	@Override
+	public CommerceRegion fetchByUUID_G(String uuid, long groupId) {
+		return fetchByUUID_G(uuid, groupId, true);
+	}
+
+	/**
+	 * Returns the commerce region where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching commerce region, or <code>null</code> if a matching commerce region could not be found
+	 */
+	@Override
+	public CommerceRegion fetchByUUID_G(String uuid, long groupId,
+		boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { uuid, groupId };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_UUID_G,
+					finderArgs, this);
+		}
+
+		if (result instanceof CommerceRegion) {
+			CommerceRegion commerceRegion = (CommerceRegion)result;
+
+			if (!Objects.equals(uuid, commerceRegion.getUuid()) ||
+					(groupId != commerceRegion.getGroupId())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_COMMERCEREGION_WHERE);
+
+			boolean bindUuid = false;
+
+			if (uuid == null) {
+				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
+			}
+			else if (uuid.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
+			}
+			else {
+				bindUuid = true;
+
+				query.append(_FINDER_COLUMN_UUID_G_UUID_2);
+			}
+
+			query.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindUuid) {
+					qPos.add(uuid);
+				}
+
+				qPos.add(groupId);
+
+				List<CommerceRegion> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+						finderArgs, list);
+				}
+				else {
+					CommerceRegion commerceRegion = list.get(0);
+
+					result = commerceRegion;
+
+					cacheResult(commerceRegion);
+
+					if ((commerceRegion.getUuid() == null) ||
+							!commerceRegion.getUuid().equals(uuid) ||
+							(commerceRegion.getGroupId() != groupId)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+							finderArgs, commerceRegion);
+					}
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (CommerceRegion)result;
+		}
+	}
+
+	/**
+	 * Removes the commerce region where uuid = &#63; and groupId = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the commerce region that was removed
+	 */
+	@Override
+	public CommerceRegion removeByUUID_G(String uuid, long groupId)
+		throws NoSuchRegionException {
+		CommerceRegion commerceRegion = findByUUID_G(uuid, groupId);
+
+		return remove(commerceRegion);
+	}
+
+	/**
+	 * Returns the number of commerce regions where uuid = &#63; and groupId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the number of matching commerce regions
+	 */
+	@Override
+	public int countByUUID_G(String uuid, long groupId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID_G;
+
+		Object[] finderArgs = new Object[] { uuid, groupId };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_COMMERCEREGION_WHERE);
+
+			boolean bindUuid = false;
+
+			if (uuid == null) {
+				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
+			}
+			else if (uuid.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
+			}
+			else {
+				bindUuid = true;
+
+				query.append(_FINDER_COLUMN_UUID_G_UUID_2);
+			}
+
+			query.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindUuid) {
+					qPos.add(uuid);
+				}
+
+				qPos.add(groupId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "commerceRegion.uuid IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "commerceRegion.uuid = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(commerceRegion.uuid IS NULL OR commerceRegion.uuid = '') AND ";
+	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "commerceRegion.groupId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceRegionModelImpl.FINDER_CACHE_ENABLED,
+			CommerceRegionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByUuid_C",
+			new String[] {
+				String.class.getName(), Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C =
+		new FinderPath(CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceRegionModelImpl.FINDER_CACHE_ENABLED,
+			CommerceRegionImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+			new String[] { String.class.getName(), Long.class.getName() },
+			CommerceRegionModelImpl.UUID_COLUMN_BITMASK |
+			CommerceRegionModelImpl.COMPANYID_COLUMN_BITMASK |
+			CommerceRegionModelImpl.PRIORITY_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_C = new FinderPath(CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceRegionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+			new String[] { String.class.getName(), Long.class.getName() });
+
+	/**
+	 * Returns all the commerce regions where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching commerce regions
+	 */
+	@Override
+	public List<CommerceRegion> findByUuid_C(String uuid, long companyId) {
+		return findByUuid_C(uuid, companyId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the commerce regions where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceRegionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of commerce regions
+	 * @param end the upper bound of the range of commerce regions (not inclusive)
+	 * @return the range of matching commerce regions
+	 */
+	@Override
+	public List<CommerceRegion> findByUuid_C(String uuid, long companyId,
+		int start, int end) {
+		return findByUuid_C(uuid, companyId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce regions where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceRegionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of commerce regions
+	 * @param end the upper bound of the range of commerce regions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce regions
+	 */
+	@Override
+	public List<CommerceRegion> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<CommerceRegion> orderByComparator) {
+		return findByUuid_C(uuid, companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce regions where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceRegionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of commerce regions
+	 * @param end the upper bound of the range of commerce regions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching commerce regions
+	 */
+	@Override
+	public List<CommerceRegion> findByUuid_C(String uuid, long companyId,
+		int start, int end,
+		OrderByComparator<CommerceRegion> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C;
+			finderArgs = new Object[] { uuid, companyId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C;
+			finderArgs = new Object[] {
+					uuid, companyId,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<CommerceRegion> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<CommerceRegion>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CommerceRegion commerceRegion : list) {
+					if (!Objects.equals(uuid, commerceRegion.getUuid()) ||
+							(companyId != commerceRegion.getCompanyId())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_COMMERCEREGION_WHERE);
+
+			boolean bindUuid = false;
+
+			if (uuid == null) {
+				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
+			}
+			else if (uuid.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
+			}
+			else {
+				bindUuid = true;
+
+				query.append(_FINDER_COLUMN_UUID_C_UUID_2);
+			}
+
+			query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(CommerceRegionModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindUuid) {
+					qPos.add(uuid);
+				}
+
+				qPos.add(companyId);
+
+				if (!pagination) {
+					list = (List<CommerceRegion>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<CommerceRegion>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first commerce region in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce region
+	 * @throws NoSuchRegionException if a matching commerce region could not be found
+	 */
+	@Override
+	public CommerceRegion findByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<CommerceRegion> orderByComparator)
+		throws NoSuchRegionException {
+		CommerceRegion commerceRegion = fetchByUuid_C_First(uuid, companyId,
+				orderByComparator);
+
+		if (commerceRegion != null) {
+			return commerceRegion;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("uuid=");
+		msg.append(uuid);
+
+		msg.append(", companyId=");
+		msg.append(companyId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchRegionException(msg.toString());
+	}
+
+	/**
+	 * Returns the first commerce region in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce region, or <code>null</code> if a matching commerce region could not be found
+	 */
+	@Override
+	public CommerceRegion fetchByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<CommerceRegion> orderByComparator) {
+		List<CommerceRegion> list = findByUuid_C(uuid, companyId, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last commerce region in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce region
+	 * @throws NoSuchRegionException if a matching commerce region could not be found
+	 */
+	@Override
+	public CommerceRegion findByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<CommerceRegion> orderByComparator)
+		throws NoSuchRegionException {
+		CommerceRegion commerceRegion = fetchByUuid_C_Last(uuid, companyId,
+				orderByComparator);
+
+		if (commerceRegion != null) {
+			return commerceRegion;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("uuid=");
+		msg.append(uuid);
+
+		msg.append(", companyId=");
+		msg.append(companyId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchRegionException(msg.toString());
+	}
+
+	/**
+	 * Returns the last commerce region in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce region, or <code>null</code> if a matching commerce region could not be found
+	 */
+	@Override
+	public CommerceRegion fetchByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<CommerceRegion> orderByComparator) {
+		int count = countByUuid_C(uuid, companyId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CommerceRegion> list = findByUuid_C(uuid, companyId, count - 1,
+				count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the commerce regions before and after the current commerce region in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param commerceRegionId the primary key of the current commerce region
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce region
+	 * @throws NoSuchRegionException if a commerce region with the primary key could not be found
+	 */
+	@Override
+	public CommerceRegion[] findByUuid_C_PrevAndNext(long commerceRegionId,
+		String uuid, long companyId,
+		OrderByComparator<CommerceRegion> orderByComparator)
+		throws NoSuchRegionException {
+		CommerceRegion commerceRegion = findByPrimaryKey(commerceRegionId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CommerceRegion[] array = new CommerceRegionImpl[3];
+
+			array[0] = getByUuid_C_PrevAndNext(session, commerceRegion, uuid,
+					companyId, orderByComparator, true);
+
+			array[1] = commerceRegion;
+
+			array[2] = getByUuid_C_PrevAndNext(session, commerceRegion, uuid,
+					companyId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CommerceRegion getByUuid_C_PrevAndNext(Session session,
+		CommerceRegion commerceRegion, String uuid, long companyId,
+		OrderByComparator<CommerceRegion> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(4);
+		}
+
+		query.append(_SQL_SELECT_COMMERCEREGION_WHERE);
+
+		boolean bindUuid = false;
+
+		if (uuid == null) {
+			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
+		}
+		else if (uuid.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_UUID_C_UUID_3);
+		}
+		else {
+			bindUuid = true;
+
+			query.append(_FINDER_COLUMN_UUID_C_UUID_2);
+		}
+
+		query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(CommerceRegionModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		if (bindUuid) {
+			qPos.add(uuid);
+		}
+
+		qPos.add(companyId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(commerceRegion);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<CommerceRegion> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the commerce regions where uuid = &#63; and companyId = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 */
+	@Override
+	public void removeByUuid_C(String uuid, long companyId) {
+		for (CommerceRegion commerceRegion : findByUuid_C(uuid, companyId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(commerceRegion);
+		}
+	}
+
+	/**
+	 * Returns the number of commerce regions where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the number of matching commerce regions
+	 */
+	@Override
+	public int countByUuid_C(String uuid, long companyId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID_C;
+
+		Object[] finderArgs = new Object[] { uuid, companyId };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_COMMERCEREGION_WHERE);
+
+			boolean bindUuid = false;
+
+			if (uuid == null) {
+				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
+			}
+			else if (uuid.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
+			}
+			else {
+				bindUuid = true;
+
+				query.append(_FINDER_COLUMN_UUID_C_UUID_2);
+			}
+
+			query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindUuid) {
+					qPos.add(uuid);
+				}
+
+				qPos.add(companyId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "commerceRegion.uuid IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "commerceRegion.uuid = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(commerceRegion.uuid IS NULL OR commerceRegion.uuid = '') AND ";
+	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "commerceRegion.companyId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_COMMERCECOUNTRYID =
 		new FinderPath(CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceRegionModelImpl.FINDER_CACHE_ENABLED,
@@ -106,7 +1505,6 @@ public class CommerceRegionPersistenceImpl extends BasePersistenceImpl<CommerceR
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCommerceCountryId", new String[] { Long.class.getName() },
 			CommerceRegionModelImpl.COMMERCECOUNTRYID_COLUMN_BITMASK |
-			CommerceRegionModelImpl.NAME_COLUMN_BITMASK |
 			CommerceRegionModelImpl.PRIORITY_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_COMMERCECOUNTRYID = new FinderPath(CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceRegionModelImpl.FINDER_CACHE_ENABLED, Long.class,
@@ -610,9 +2008,574 @@ public class CommerceRegionPersistenceImpl extends BasePersistenceImpl<CommerceR
 
 	private static final String _FINDER_COLUMN_COMMERCECOUNTRYID_COMMERCECOUNTRYID_2 =
 		"commerceRegion.commerceCountryId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_A = new FinderPath(CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceRegionModelImpl.FINDER_CACHE_ENABLED,
+			CommerceRegionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByC_A",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_A = new FinderPath(CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceRegionModelImpl.FINDER_CACHE_ENABLED,
+			CommerceRegionImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A",
+			new String[] { Long.class.getName(), Boolean.class.getName() },
+			CommerceRegionModelImpl.COMMERCECOUNTRYID_COLUMN_BITMASK |
+			CommerceRegionModelImpl.ACTIVE_COLUMN_BITMASK |
+			CommerceRegionModelImpl.PRIORITY_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_C_A = new FinderPath(CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceRegionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A",
+			new String[] { Long.class.getName(), Boolean.class.getName() });
+
+	/**
+	 * Returns all the commerce regions where commerceCountryId = &#63; and active = &#63;.
+	 *
+	 * @param commerceCountryId the commerce country ID
+	 * @param active the active
+	 * @return the matching commerce regions
+	 */
+	@Override
+	public List<CommerceRegion> findByC_A(long commerceCountryId, boolean active) {
+		return findByC_A(commerceCountryId, active, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the commerce regions where commerceCountryId = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceRegionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param commerceCountryId the commerce country ID
+	 * @param active the active
+	 * @param start the lower bound of the range of commerce regions
+	 * @param end the upper bound of the range of commerce regions (not inclusive)
+	 * @return the range of matching commerce regions
+	 */
+	@Override
+	public List<CommerceRegion> findByC_A(long commerceCountryId,
+		boolean active, int start, int end) {
+		return findByC_A(commerceCountryId, active, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce regions where commerceCountryId = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceRegionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param commerceCountryId the commerce country ID
+	 * @param active the active
+	 * @param start the lower bound of the range of commerce regions
+	 * @param end the upper bound of the range of commerce regions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce regions
+	 */
+	@Override
+	public List<CommerceRegion> findByC_A(long commerceCountryId,
+		boolean active, int start, int end,
+		OrderByComparator<CommerceRegion> orderByComparator) {
+		return findByC_A(commerceCountryId, active, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce regions where commerceCountryId = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceRegionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param commerceCountryId the commerce country ID
+	 * @param active the active
+	 * @param start the lower bound of the range of commerce regions
+	 * @param end the upper bound of the range of commerce regions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching commerce regions
+	 */
+	@Override
+	public List<CommerceRegion> findByC_A(long commerceCountryId,
+		boolean active, int start, int end,
+		OrderByComparator<CommerceRegion> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_A;
+			finderArgs = new Object[] { commerceCountryId, active };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_A;
+			finderArgs = new Object[] {
+					commerceCountryId, active,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<CommerceRegion> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<CommerceRegion>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CommerceRegion commerceRegion : list) {
+					if ((commerceCountryId != commerceRegion.getCommerceCountryId()) ||
+							(active != commerceRegion.getActive())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_COMMERCEREGION_WHERE);
+
+			query.append(_FINDER_COLUMN_C_A_COMMERCECOUNTRYID_2);
+
+			query.append(_FINDER_COLUMN_C_A_ACTIVE_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(CommerceRegionModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(commerceCountryId);
+
+				qPos.add(active);
+
+				if (!pagination) {
+					list = (List<CommerceRegion>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<CommerceRegion>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first commerce region in the ordered set where commerceCountryId = &#63; and active = &#63;.
+	 *
+	 * @param commerceCountryId the commerce country ID
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce region
+	 * @throws NoSuchRegionException if a matching commerce region could not be found
+	 */
+	@Override
+	public CommerceRegion findByC_A_First(long commerceCountryId,
+		boolean active, OrderByComparator<CommerceRegion> orderByComparator)
+		throws NoSuchRegionException {
+		CommerceRegion commerceRegion = fetchByC_A_First(commerceCountryId,
+				active, orderByComparator);
+
+		if (commerceRegion != null) {
+			return commerceRegion;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("commerceCountryId=");
+		msg.append(commerceCountryId);
+
+		msg.append(", active=");
+		msg.append(active);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchRegionException(msg.toString());
+	}
+
+	/**
+	 * Returns the first commerce region in the ordered set where commerceCountryId = &#63; and active = &#63;.
+	 *
+	 * @param commerceCountryId the commerce country ID
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce region, or <code>null</code> if a matching commerce region could not be found
+	 */
+	@Override
+	public CommerceRegion fetchByC_A_First(long commerceCountryId,
+		boolean active, OrderByComparator<CommerceRegion> orderByComparator) {
+		List<CommerceRegion> list = findByC_A(commerceCountryId, active, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last commerce region in the ordered set where commerceCountryId = &#63; and active = &#63;.
+	 *
+	 * @param commerceCountryId the commerce country ID
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce region
+	 * @throws NoSuchRegionException if a matching commerce region could not be found
+	 */
+	@Override
+	public CommerceRegion findByC_A_Last(long commerceCountryId,
+		boolean active, OrderByComparator<CommerceRegion> orderByComparator)
+		throws NoSuchRegionException {
+		CommerceRegion commerceRegion = fetchByC_A_Last(commerceCountryId,
+				active, orderByComparator);
+
+		if (commerceRegion != null) {
+			return commerceRegion;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("commerceCountryId=");
+		msg.append(commerceCountryId);
+
+		msg.append(", active=");
+		msg.append(active);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchRegionException(msg.toString());
+	}
+
+	/**
+	 * Returns the last commerce region in the ordered set where commerceCountryId = &#63; and active = &#63;.
+	 *
+	 * @param commerceCountryId the commerce country ID
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce region, or <code>null</code> if a matching commerce region could not be found
+	 */
+	@Override
+	public CommerceRegion fetchByC_A_Last(long commerceCountryId,
+		boolean active, OrderByComparator<CommerceRegion> orderByComparator) {
+		int count = countByC_A(commerceCountryId, active);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CommerceRegion> list = findByC_A(commerceCountryId, active,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the commerce regions before and after the current commerce region in the ordered set where commerceCountryId = &#63; and active = &#63;.
+	 *
+	 * @param commerceRegionId the primary key of the current commerce region
+	 * @param commerceCountryId the commerce country ID
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce region
+	 * @throws NoSuchRegionException if a commerce region with the primary key could not be found
+	 */
+	@Override
+	public CommerceRegion[] findByC_A_PrevAndNext(long commerceRegionId,
+		long commerceCountryId, boolean active,
+		OrderByComparator<CommerceRegion> orderByComparator)
+		throws NoSuchRegionException {
+		CommerceRegion commerceRegion = findByPrimaryKey(commerceRegionId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CommerceRegion[] array = new CommerceRegionImpl[3];
+
+			array[0] = getByC_A_PrevAndNext(session, commerceRegion,
+					commerceCountryId, active, orderByComparator, true);
+
+			array[1] = commerceRegion;
+
+			array[2] = getByC_A_PrevAndNext(session, commerceRegion,
+					commerceCountryId, active, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CommerceRegion getByC_A_PrevAndNext(Session session,
+		CommerceRegion commerceRegion, long commerceCountryId, boolean active,
+		OrderByComparator<CommerceRegion> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(4);
+		}
+
+		query.append(_SQL_SELECT_COMMERCEREGION_WHERE);
+
+		query.append(_FINDER_COLUMN_C_A_COMMERCECOUNTRYID_2);
+
+		query.append(_FINDER_COLUMN_C_A_ACTIVE_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(CommerceRegionModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(commerceCountryId);
+
+		qPos.add(active);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(commerceRegion);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<CommerceRegion> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the commerce regions where commerceCountryId = &#63; and active = &#63; from the database.
+	 *
+	 * @param commerceCountryId the commerce country ID
+	 * @param active the active
+	 */
+	@Override
+	public void removeByC_A(long commerceCountryId, boolean active) {
+		for (CommerceRegion commerceRegion : findByC_A(commerceCountryId,
+				active, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(commerceRegion);
+		}
+	}
+
+	/**
+	 * Returns the number of commerce regions where commerceCountryId = &#63; and active = &#63;.
+	 *
+	 * @param commerceCountryId the commerce country ID
+	 * @param active the active
+	 * @return the number of matching commerce regions
+	 */
+	@Override
+	public int countByC_A(long commerceCountryId, boolean active) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_A;
+
+		Object[] finderArgs = new Object[] { commerceCountryId, active };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_COMMERCEREGION_WHERE);
+
+			query.append(_FINDER_COLUMN_C_A_COMMERCECOUNTRYID_2);
+
+			query.append(_FINDER_COLUMN_C_A_ACTIVE_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(commerceCountryId);
+
+				qPos.add(active);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_A_COMMERCECOUNTRYID_2 = "commerceRegion.commerceCountryId = ? AND ";
+	private static final String _FINDER_COLUMN_C_A_ACTIVE_2 = "commerceRegion.active = ?";
 
 	public CommerceRegionPersistenceImpl() {
 		setModelClass(CommerceRegion.class);
+
+		try {
+			Field field = ReflectionUtil.getDeclaredField(BasePersistenceImpl.class,
+					"_dbColumnNames");
+
+			Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+			dbColumnNames.put("uuid", "uuid_");
+			dbColumnNames.put("code", "code_");
+			dbColumnNames.put("active", "active_");
+
+			field.set(this, dbColumnNames);
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+		}
 	}
 
 	/**
@@ -624,6 +2587,10 @@ public class CommerceRegionPersistenceImpl extends BasePersistenceImpl<CommerceR
 	public void cacheResult(CommerceRegion commerceRegion) {
 		entityCache.putResult(CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceRegionImpl.class, commerceRegion.getPrimaryKey(),
+			commerceRegion);
+
+		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+			new Object[] { commerceRegion.getUuid(), commerceRegion.getGroupId() },
 			commerceRegion);
 
 		commerceRegion.resetOriginalValues();
@@ -678,6 +2645,8 @@ public class CommerceRegionPersistenceImpl extends BasePersistenceImpl<CommerceR
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache((CommerceRegionModelImpl)commerceRegion, true);
 	}
 
 	@Override
@@ -688,6 +2657,46 @@ public class CommerceRegionPersistenceImpl extends BasePersistenceImpl<CommerceR
 		for (CommerceRegion commerceRegion : commerceRegions) {
 			entityCache.removeResult(CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
 				CommerceRegionImpl.class, commerceRegion.getPrimaryKey());
+
+			clearUniqueFindersCache((CommerceRegionModelImpl)commerceRegion,
+				true);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(
+		CommerceRegionModelImpl commerceRegionModelImpl) {
+		Object[] args = new Object[] {
+				commerceRegionModelImpl.getUuid(),
+				commerceRegionModelImpl.getGroupId()
+			};
+
+		finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+			commerceRegionModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		CommerceRegionModelImpl commerceRegionModelImpl, boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					commerceRegionModelImpl.getUuid(),
+					commerceRegionModelImpl.getGroupId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		}
+
+		if ((commerceRegionModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
+			Object[] args = new Object[] {
+					commerceRegionModelImpl.getOriginalUuid(),
+					commerceRegionModelImpl.getOriginalGroupId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 		}
 	}
 
@@ -703,6 +2712,10 @@ public class CommerceRegionPersistenceImpl extends BasePersistenceImpl<CommerceR
 
 		commerceRegion.setNew(true);
 		commerceRegion.setPrimaryKey(commerceRegionId);
+
+		String uuid = PortalUUIDUtil.generate();
+
+		commerceRegion.setUuid(uuid);
 
 		commerceRegion.setCompanyId(companyProvider.getCompanyId());
 
@@ -802,6 +2815,12 @@ public class CommerceRegionPersistenceImpl extends BasePersistenceImpl<CommerceR
 
 		CommerceRegionModelImpl commerceRegionModelImpl = (CommerceRegionModelImpl)commerceRegion;
 
+		if (Validator.isNull(commerceRegion.getUuid())) {
+			String uuid = PortalUUIDUtil.generate();
+
+			commerceRegion.setUuid(uuid);
+		}
+
 		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 
 		Date now = new Date();
@@ -853,13 +2872,35 @@ public class CommerceRegionPersistenceImpl extends BasePersistenceImpl<CommerceR
 		}
 		else
 		 if (isNew) {
-			Object[] args = new Object[] {
-					commerceRegionModelImpl.getCommerceCountryId()
+			Object[] args = new Object[] { commerceRegionModelImpl.getUuid() };
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				args);
+
+			args = new Object[] {
+					commerceRegionModelImpl.getUuid(),
+					commerceRegionModelImpl.getCompanyId()
 				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+				args);
+
+			args = new Object[] { commerceRegionModelImpl.getCommerceCountryId() };
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_COMMERCECOUNTRYID,
 				args);
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMMERCECOUNTRYID,
+				args);
+
+			args = new Object[] {
+					commerceRegionModelImpl.getCommerceCountryId(),
+					commerceRegionModelImpl.getActive()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_A, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_A,
 				args);
 
 			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
@@ -868,6 +2909,44 @@ public class CommerceRegionPersistenceImpl extends BasePersistenceImpl<CommerceR
 		}
 
 		else {
+			if ((commerceRegionModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						commerceRegionModelImpl.getOriginalUuid()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+					args);
+
+				args = new Object[] { commerceRegionModelImpl.getUuid() };
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+					args);
+			}
+
+			if ((commerceRegionModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						commerceRegionModelImpl.getOriginalUuid(),
+						commerceRegionModelImpl.getOriginalCompanyId()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+					args);
+
+				args = new Object[] {
+						commerceRegionModelImpl.getUuid(),
+						commerceRegionModelImpl.getCompanyId()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+					args);
+			}
+
 			if ((commerceRegionModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMMERCECOUNTRYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
@@ -888,11 +2967,35 @@ public class CommerceRegionPersistenceImpl extends BasePersistenceImpl<CommerceR
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMMERCECOUNTRYID,
 					args);
 			}
+
+			if ((commerceRegionModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_A.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						commerceRegionModelImpl.getOriginalCommerceCountryId(),
+						commerceRegionModelImpl.getOriginalActive()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_A, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_A,
+					args);
+
+				args = new Object[] {
+						commerceRegionModelImpl.getCommerceCountryId(),
+						commerceRegionModelImpl.getActive()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_A, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_A,
+					args);
+			}
 		}
 
 		entityCache.putResult(CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceRegionImpl.class, commerceRegion.getPrimaryKey(),
 			commerceRegion, false);
+
+		clearUniqueFindersCache(commerceRegionModelImpl, false);
+		cacheUniqueFindersCache(commerceRegionModelImpl);
 
 		commerceRegion.resetOriginalValues();
 
@@ -909,6 +3012,7 @@ public class CommerceRegionPersistenceImpl extends BasePersistenceImpl<CommerceR
 		commerceRegionImpl.setNew(commerceRegion.isNew());
 		commerceRegionImpl.setPrimaryKey(commerceRegion.getPrimaryKey());
 
+		commerceRegionImpl.setUuid(commerceRegion.getUuid());
 		commerceRegionImpl.setCommerceRegionId(commerceRegion.getCommerceRegionId());
 		commerceRegionImpl.setGroupId(commerceRegion.getGroupId());
 		commerceRegionImpl.setCompanyId(commerceRegion.getCompanyId());
@@ -918,9 +3022,10 @@ public class CommerceRegionPersistenceImpl extends BasePersistenceImpl<CommerceR
 		commerceRegionImpl.setModifiedDate(commerceRegion.getModifiedDate());
 		commerceRegionImpl.setCommerceCountryId(commerceRegion.getCommerceCountryId());
 		commerceRegionImpl.setName(commerceRegion.getName());
-		commerceRegionImpl.setAbbreviation(commerceRegion.getAbbreviation());
+		commerceRegionImpl.setCode(commerceRegion.getCode());
 		commerceRegionImpl.setPriority(commerceRegion.getPriority());
-		commerceRegionImpl.setPublished(commerceRegion.isPublished());
+		commerceRegionImpl.setActive(commerceRegion.isActive());
+		commerceRegionImpl.setLastPublishDate(commerceRegion.getLastPublishDate());
 
 		return commerceRegionImpl;
 	}
@@ -1307,6 +3412,11 @@ public class CommerceRegionPersistenceImpl extends BasePersistenceImpl<CommerceR
 	}
 
 	@Override
+	public Set<String> getBadColumnNames() {
+		return _badColumnNames;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return CommerceRegionModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -1339,4 +3449,7 @@ public class CommerceRegionPersistenceImpl extends BasePersistenceImpl<CommerceR
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No CommerceRegion exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No CommerceRegion exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(CommerceRegionPersistenceImpl.class);
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+				"uuid", "code", "active"
+			});
 }

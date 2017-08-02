@@ -75,6 +75,16 @@ public class CommerceCountryLocalServiceImpl
 	}
 
 	@Override
+	public void deleteCommerceCountries(long groupId) {
+		List<CommerceCountry> commerceCountries =
+			commerceCountryPersistence.findByGroupId(groupId);
+
+		for (CommerceCountry commerceCountry : commerceCountries) {
+			commerceCountryLocalService.deleteCommerceCountry(commerceCountry);
+		}
+	}
+
+	@Override
 	public CommerceCountry deleteCommerceCountry(
 		CommerceCountry commerceCountry) {
 

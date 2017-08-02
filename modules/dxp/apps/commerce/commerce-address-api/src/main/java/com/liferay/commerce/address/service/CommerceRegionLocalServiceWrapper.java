@@ -48,12 +48,12 @@ public class CommerceRegionLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.address.model.CommerceRegion addCommerceRegion(
-		long commerceCountryId, java.lang.String name,
-		java.lang.String abbreviation, double priority, boolean published,
+		long commerceCountryId, java.lang.String name, java.lang.String code,
+		double priority, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceRegionLocalService.addCommerceRegion(commerceCountryId,
-			name, abbreviation, priority, published, serviceContext);
+			name, code, priority, active, serviceContext);
 	}
 
 	/**
@@ -101,6 +101,20 @@ public class CommerceRegionLocalServiceWrapper
 	}
 
 	/**
+	* Returns the commerce region matching the UUID and group.
+	*
+	* @param uuid the commerce region's UUID
+	* @param groupId the primary key of the group
+	* @return the matching commerce region, or <code>null</code> if a matching commerce region could not be found
+	*/
+	@Override
+	public com.liferay.commerce.address.model.CommerceRegion fetchCommerceRegionByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return _commerceRegionLocalService.fetchCommerceRegionByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	/**
 	* Returns the commerce region with the primary key.
 	*
 	* @param commerceRegionId the primary key of the commerce region
@@ -112,6 +126,22 @@ public class CommerceRegionLocalServiceWrapper
 		long commerceRegionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceRegionLocalService.getCommerceRegion(commerceRegionId);
+	}
+
+	/**
+	* Returns the commerce region matching the UUID and group.
+	*
+	* @param uuid the commerce region's UUID
+	* @param groupId the primary key of the group
+	* @return the matching commerce region
+	* @throws PortalException if a matching commerce region could not be found
+	*/
+	@Override
+	public com.liferay.commerce.address.model.CommerceRegion getCommerceRegionByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceRegionLocalService.getCommerceRegionByUuidAndGroupId(uuid,
+			groupId);
 	}
 
 	/**
@@ -128,11 +158,12 @@ public class CommerceRegionLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.address.model.CommerceRegion updateCommerceRegion(
-		long commerceRegionId, java.lang.String name,
-		java.lang.String abbreviation, double priority, boolean published)
+		long commerceRegionId, java.lang.String name, java.lang.String code,
+		double priority, boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceRegionLocalService.updateCommerceRegion(commerceRegionId,
-			name, abbreviation, priority, published);
+			name, code, priority, active, serviceContext);
 	}
 
 	@Override
@@ -143,6 +174,12 @@ public class CommerceRegionLocalServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _commerceRegionLocalService.dynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return _commerceRegionLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	@Override
@@ -180,6 +217,12 @@ public class CommerceRegionLocalServiceWrapper
 	@Override
 	public int getCommerceRegionsCount(long commerceCountryId) {
 		return _commerceRegionLocalService.getCommerceRegionsCount(commerceCountryId);
+	}
+
+	@Override
+	public int getCommerceRegionsCount(long commerceCountryId, boolean active) {
+		return _commerceRegionLocalService.getCommerceRegionsCount(commerceCountryId,
+			active);
 	}
 
 	/**
@@ -264,10 +307,50 @@ public class CommerceRegionLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.commerce.address.model.CommerceRegion> getCommerceRegions(
+		long commerceCountryId, boolean active, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.address.model.CommerceRegion> orderByComparator) {
+		return _commerceRegionLocalService.getCommerceRegions(commerceCountryId,
+			active, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.address.model.CommerceRegion> getCommerceRegions(
 		long commerceCountryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.address.model.CommerceRegion> orderByComparator) {
 		return _commerceRegionLocalService.getCommerceRegions(commerceCountryId,
 			start, end, orderByComparator);
+	}
+
+	/**
+	* Returns all the commerce regions matching the UUID and company.
+	*
+	* @param uuid the UUID of the commerce regions
+	* @param companyId the primary key of the company
+	* @return the matching commerce regions, or an empty list if no matches were found
+	*/
+	@Override
+	public java.util.List<com.liferay.commerce.address.model.CommerceRegion> getCommerceRegionsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return _commerceRegionLocalService.getCommerceRegionsByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	/**
+	* Returns a range of commerce regions matching the UUID and company.
+	*
+	* @param uuid the UUID of the commerce regions
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of commerce regions
+	* @param end the upper bound of the range of commerce regions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching commerce regions, or an empty list if no matches were found
+	*/
+	@Override
+	public java.util.List<com.liferay.commerce.address.model.CommerceRegion> getCommerceRegionsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.address.model.CommerceRegion> orderByComparator) {
+		return _commerceRegionLocalService.getCommerceRegionsByUuidAndCompanyId(uuid,
+			companyId, start, end, orderByComparator);
 	}
 
 	/**

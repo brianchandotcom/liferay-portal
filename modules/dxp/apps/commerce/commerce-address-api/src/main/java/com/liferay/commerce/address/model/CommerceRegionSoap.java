@@ -34,6 +34,7 @@ public class CommerceRegionSoap implements Serializable {
 	public static CommerceRegionSoap toSoapModel(CommerceRegion model) {
 		CommerceRegionSoap soapModel = new CommerceRegionSoap();
 
+		soapModel.setUuid(model.getUuid());
 		soapModel.setCommerceRegionId(model.getCommerceRegionId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -43,9 +44,10 @@ public class CommerceRegionSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setCommerceCountryId(model.getCommerceCountryId());
 		soapModel.setName(model.getName());
-		soapModel.setAbbreviation(model.getAbbreviation());
+		soapModel.setCode(model.getCode());
 		soapModel.setPriority(model.getPriority());
-		soapModel.setPublished(model.getPublished());
+		soapModel.setActive(model.getActive());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -96,6 +98,14 @@ public class CommerceRegionSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceRegionId(pk);
+	}
+
+	public String getUuid() {
+		return _uuid;
+	}
+
+	public void setUuid(String uuid) {
+		_uuid = uuid;
 	}
 
 	public long getCommerceRegionId() {
@@ -170,12 +180,12 @@ public class CommerceRegionSoap implements Serializable {
 		_name = name;
 	}
 
-	public String getAbbreviation() {
-		return _abbreviation;
+	public String getCode() {
+		return _code;
 	}
 
-	public void setAbbreviation(String abbreviation) {
-		_abbreviation = abbreviation;
+	public void setCode(String code) {
+		_code = code;
 	}
 
 	public double getPriority() {
@@ -186,18 +196,27 @@ public class CommerceRegionSoap implements Serializable {
 		_priority = priority;
 	}
 
-	public boolean getPublished() {
-		return _published;
+	public boolean getActive() {
+		return _active;
 	}
 
-	public boolean isPublished() {
-		return _published;
+	public boolean isActive() {
+		return _active;
 	}
 
-	public void setPublished(boolean published) {
-		_published = published;
+	public void setActive(boolean active) {
+		_active = active;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
+	private String _uuid;
 	private long _commerceRegionId;
 	private long _groupId;
 	private long _companyId;
@@ -207,7 +226,8 @@ public class CommerceRegionSoap implements Serializable {
 	private Date _modifiedDate;
 	private long _commerceCountryId;
 	private String _name;
-	private String _abbreviation;
+	private String _code;
 	private double _priority;
-	private boolean _published;
+	private boolean _active;
+	private Date _lastPublishDate;
 }

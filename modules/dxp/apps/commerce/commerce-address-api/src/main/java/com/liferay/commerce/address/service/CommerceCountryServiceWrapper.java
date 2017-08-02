@@ -35,46 +35,50 @@ public class CommerceCountryServiceWrapper implements CommerceCountryService,
 
 	@Override
 	public com.liferay.commerce.address.model.CommerceCountry addCommerceCountry(
-		java.lang.String name, boolean allowsBilling, boolean allowsShipping,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		boolean billingAllowed, boolean shippingAllowed,
 		java.lang.String twoLettersISOCode,
 		java.lang.String threeLettersISOCode, int numericISOCode,
-		boolean subjectToVAT, double priority, boolean published,
+		boolean subjectToVAT, double priority, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceCountryService.addCommerceCountry(name, allowsBilling,
-			allowsShipping, twoLettersISOCode, threeLettersISOCode,
-			numericISOCode, subjectToVAT, priority, published, serviceContext);
+		return _commerceCountryService.addCommerceCountry(nameMap,
+			billingAllowed, shippingAllowed, twoLettersISOCode,
+			threeLettersISOCode, numericISOCode, subjectToVAT, priority,
+			active, serviceContext);
 	}
 
 	@Override
-	public com.liferay.commerce.address.model.CommerceCountry deleteCommerceCountry(
+	public com.liferay.commerce.address.model.CommerceCountry getCommerceCountry(
 		long commerceCountryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceCountryService.deleteCommerceCountry(commerceCountryId);
-	}
-
-	@Override
-	public com.liferay.commerce.address.model.CommerceCountry fetchCommerceCountry(
-		long commerceCountryId) {
-		return _commerceCountryService.fetchCommerceCountry(commerceCountryId);
+		return _commerceCountryService.getCommerceCountry(commerceCountryId);
 	}
 
 	@Override
 	public com.liferay.commerce.address.model.CommerceCountry updateCommerceCountry(
-		long commerceCountryId, java.lang.String name, boolean allowsBilling,
-		boolean allowsShipping, java.lang.String twoLettersISOCode,
+		long commerceCountryId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		boolean billingAllowed, boolean shippingAllowed,
+		java.lang.String twoLettersISOCode,
 		java.lang.String threeLettersISOCode, int numericISOCode,
-		boolean subjectToVAT, double priority, boolean published)
+		boolean subjectToVAT, double priority, boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceCountryService.updateCommerceCountry(commerceCountryId,
-			name, allowsBilling, allowsShipping, twoLettersISOCode,
+			nameMap, billingAllowed, shippingAllowed, twoLettersISOCode,
 			threeLettersISOCode, numericISOCode, subjectToVAT, priority,
-			published);
+			active, serviceContext);
 	}
 
 	@Override
-	public int getCommerceCountriesCount() {
-		return _commerceCountryService.getCommerceCountriesCount();
+	public int getCommerceCountriesCount(long groupId) {
+		return _commerceCountryService.getCommerceCountriesCount(groupId);
+	}
+
+	@Override
+	public int getCommerceCountriesCount(long groupId, boolean active) {
+		return _commerceCountryService.getCommerceCountriesCount(groupId, active);
 	}
 
 	/**
@@ -89,10 +93,24 @@ public class CommerceCountryServiceWrapper implements CommerceCountryService,
 
 	@Override
 	public java.util.List<com.liferay.commerce.address.model.CommerceCountry> getCommerceCountries(
-		int start, int end,
+		long groupId, boolean active, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.address.model.CommerceCountry> orderByComparator) {
-		return _commerceCountryService.getCommerceCountries(start, end,
-			orderByComparator);
+		return _commerceCountryService.getCommerceCountries(groupId, active,
+			start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.address.model.CommerceCountry> getCommerceCountries(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.address.model.CommerceCountry> orderByComparator) {
+		return _commerceCountryService.getCommerceCountries(groupId, start,
+			end, orderByComparator);
+	}
+
+	@Override
+	public void deleteCommerceCountry(long commerceCountryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_commerceCountryService.deleteCommerceCountry(commerceCountryId);
 	}
 
 	@Override

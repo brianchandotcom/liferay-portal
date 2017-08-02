@@ -57,22 +57,24 @@ public interface CommerceRegionService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link CommerceRegionServiceUtil} to access the commerce region remote service. Add custom service methods to {@link com.liferay.commerce.address.service.impl.CommerceRegionServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public CommerceRegion addCommerceRegion(long commerceCountryId,
-		java.lang.String name, java.lang.String abbreviation, double priority,
-		boolean published, ServiceContext serviceContext)
-		throws PortalException;
-
-	public CommerceRegion deleteCommerceRegion(long commerceRegionId)
+		java.lang.String name, java.lang.String code, double priority,
+		boolean active, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceRegion fetchCommerceRegion(long commerceRegionId);
+	public CommerceRegion getCommerceRegion(long commerceRegionId)
+		throws PortalException;
 
 	public CommerceRegion updateCommerceRegion(long commerceRegionId,
-		java.lang.String name, java.lang.String abbreviation, double priority,
-		boolean published) throws PortalException;
+		java.lang.String name, java.lang.String code, double priority,
+		boolean active, ServiceContext serviceContext)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceRegionsCount(long commerceCountryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceRegionsCount(long commerceCountryId, boolean active);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -83,5 +85,13 @@ public interface CommerceRegionService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceRegion> getCommerceRegions(long commerceCountryId,
+		boolean active, int start, int end,
+		OrderByComparator<CommerceRegion> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceRegion> getCommerceRegions(long commerceCountryId,
 		int start, int end, OrderByComparator<CommerceRegion> orderByComparator);
+
+	public void deleteCommerceRegion(long commerceRegionId)
+		throws PortalException;
 }

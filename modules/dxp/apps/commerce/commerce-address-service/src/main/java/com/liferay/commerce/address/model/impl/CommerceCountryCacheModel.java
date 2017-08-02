@@ -66,9 +66,11 @@ public class CommerceCountryCacheModel implements CacheModel<CommerceCountry>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(37);
 
-		sb.append("{commerceCountryId=");
+		sb.append("{uuid=");
+		sb.append(uuid);
+		sb.append(", commerceCountryId=");
 		sb.append(commerceCountryId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -84,10 +86,10 @@ public class CommerceCountryCacheModel implements CacheModel<CommerceCountry>,
 		sb.append(modifiedDate);
 		sb.append(", name=");
 		sb.append(name);
-		sb.append(", allowsBilling=");
-		sb.append(allowsBilling);
-		sb.append(", allowsShipping=");
-		sb.append(allowsShipping);
+		sb.append(", billingAllowed=");
+		sb.append(billingAllowed);
+		sb.append(", shippingAllowed=");
+		sb.append(shippingAllowed);
 		sb.append(", twoLettersISOCode=");
 		sb.append(twoLettersISOCode);
 		sb.append(", threeLettersISOCode=");
@@ -98,8 +100,10 @@ public class CommerceCountryCacheModel implements CacheModel<CommerceCountry>,
 		sb.append(subjectToVAT);
 		sb.append(", priority=");
 		sb.append(priority);
-		sb.append(", published=");
-		sb.append(published);
+		sb.append(", active=");
+		sb.append(active);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -108,6 +112,13 @@ public class CommerceCountryCacheModel implements CacheModel<CommerceCountry>,
 	@Override
 	public CommerceCountry toEntityModel() {
 		CommerceCountryImpl commerceCountryImpl = new CommerceCountryImpl();
+
+		if (uuid == null) {
+			commerceCountryImpl.setUuid(StringPool.BLANK);
+		}
+		else {
+			commerceCountryImpl.setUuid(uuid);
+		}
 
 		commerceCountryImpl.setCommerceCountryId(commerceCountryId);
 		commerceCountryImpl.setGroupId(groupId);
@@ -142,8 +153,8 @@ public class CommerceCountryCacheModel implements CacheModel<CommerceCountry>,
 			commerceCountryImpl.setName(name);
 		}
 
-		commerceCountryImpl.setAllowsBilling(allowsBilling);
-		commerceCountryImpl.setAllowsShipping(allowsShipping);
+		commerceCountryImpl.setBillingAllowed(billingAllowed);
+		commerceCountryImpl.setShippingAllowed(shippingAllowed);
 
 		if (twoLettersISOCode == null) {
 			commerceCountryImpl.setTwoLettersISOCode(StringPool.BLANK);
@@ -162,7 +173,14 @@ public class CommerceCountryCacheModel implements CacheModel<CommerceCountry>,
 		commerceCountryImpl.setNumericISOCode(numericISOCode);
 		commerceCountryImpl.setSubjectToVAT(subjectToVAT);
 		commerceCountryImpl.setPriority(priority);
-		commerceCountryImpl.setPublished(published);
+		commerceCountryImpl.setActive(active);
+
+		if (lastPublishDate == Long.MIN_VALUE) {
+			commerceCountryImpl.setLastPublishDate(null);
+		}
+		else {
+			commerceCountryImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
 
 		commerceCountryImpl.resetOriginalValues();
 
@@ -171,6 +189,8 @@ public class CommerceCountryCacheModel implements CacheModel<CommerceCountry>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		uuid = objectInput.readUTF();
+
 		commerceCountryId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -183,9 +203,9 @@ public class CommerceCountryCacheModel implements CacheModel<CommerceCountry>,
 		modifiedDate = objectInput.readLong();
 		name = objectInput.readUTF();
 
-		allowsBilling = objectInput.readBoolean();
+		billingAllowed = objectInput.readBoolean();
 
-		allowsShipping = objectInput.readBoolean();
+		shippingAllowed = objectInput.readBoolean();
 		twoLettersISOCode = objectInput.readUTF();
 		threeLettersISOCode = objectInput.readUTF();
 
@@ -195,12 +215,20 @@ public class CommerceCountryCacheModel implements CacheModel<CommerceCountry>,
 
 		priority = objectInput.readDouble();
 
-		published = objectInput.readBoolean();
+		active = objectInput.readBoolean();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		if (uuid == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
 		objectOutput.writeLong(commerceCountryId);
 
 		objectOutput.writeLong(groupId);
@@ -226,9 +254,9 @@ public class CommerceCountryCacheModel implements CacheModel<CommerceCountry>,
 			objectOutput.writeUTF(name);
 		}
 
-		objectOutput.writeBoolean(allowsBilling);
+		objectOutput.writeBoolean(billingAllowed);
 
-		objectOutput.writeBoolean(allowsShipping);
+		objectOutput.writeBoolean(shippingAllowed);
 
 		if (twoLettersISOCode == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -250,9 +278,11 @@ public class CommerceCountryCacheModel implements CacheModel<CommerceCountry>,
 
 		objectOutput.writeDouble(priority);
 
-		objectOutput.writeBoolean(published);
+		objectOutput.writeBoolean(active);
+		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public String uuid;
 	public long commerceCountryId;
 	public long groupId;
 	public long companyId;
@@ -261,12 +291,13 @@ public class CommerceCountryCacheModel implements CacheModel<CommerceCountry>,
 	public long createDate;
 	public long modifiedDate;
 	public String name;
-	public boolean allowsBilling;
-	public boolean allowsShipping;
+	public boolean billingAllowed;
+	public boolean shippingAllowed;
 	public String twoLettersISOCode;
 	public String threeLettersISOCode;
 	public int numericISOCode;
 	public boolean subjectToVAT;
 	public double priority;
-	public boolean published;
+	public boolean active;
+	public long lastPublishDate;
 }

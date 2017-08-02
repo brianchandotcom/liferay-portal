@@ -18,6 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -58,6 +60,7 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("commerceCountryId", getCommerceCountryId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -66,20 +69,27 @@ public class CommerceCountryWrapper implements CommerceCountry,
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
-		attributes.put("allowsBilling", getAllowsBilling());
-		attributes.put("allowsShipping", getAllowsShipping());
+		attributes.put("billingAllowed", getBillingAllowed());
+		attributes.put("shippingAllowed", getShippingAllowed());
 		attributes.put("twoLettersISOCode", getTwoLettersISOCode());
 		attributes.put("threeLettersISOCode", getThreeLettersISOCode());
 		attributes.put("numericISOCode", getNumericISOCode());
 		attributes.put("subjectToVAT", getSubjectToVAT());
 		attributes.put("priority", getPriority());
-		attributes.put("published", getPublished());
+		attributes.put("active", getActive());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long commerceCountryId = (Long)attributes.get("commerceCountryId");
 
 		if (commerceCountryId != null) {
@@ -128,16 +138,16 @@ public class CommerceCountryWrapper implements CommerceCountry,
 			setName(name);
 		}
 
-		Boolean allowsBilling = (Boolean)attributes.get("allowsBilling");
+		Boolean billingAllowed = (Boolean)attributes.get("billingAllowed");
 
-		if (allowsBilling != null) {
-			setAllowsBilling(allowsBilling);
+		if (billingAllowed != null) {
+			setBillingAllowed(billingAllowed);
 		}
 
-		Boolean allowsShipping = (Boolean)attributes.get("allowsShipping");
+		Boolean shippingAllowed = (Boolean)attributes.get("shippingAllowed");
 
-		if (allowsShipping != null) {
-			setAllowsShipping(allowsShipping);
+		if (shippingAllowed != null) {
+			setShippingAllowed(shippingAllowed);
 		}
 
 		String twoLettersISOCode = (String)attributes.get("twoLettersISOCode");
@@ -171,10 +181,16 @@ public class CommerceCountryWrapper implements CommerceCountry,
 			setPriority(priority);
 		}
 
-		Boolean published = (Boolean)attributes.get("published");
+		Boolean active = (Boolean)attributes.get("active");
 
-		if (published != null) {
-			setPublished(published);
+		if (active != null) {
+			setActive(active);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -189,33 +205,33 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	}
 
 	/**
-	* Returns the allows billing of this commerce country.
+	* Returns the active of this commerce country.
 	*
-	* @return the allows billing of this commerce country
+	* @return the active of this commerce country
 	*/
 	@Override
-	public boolean getAllowsBilling() {
-		return _commerceCountry.getAllowsBilling();
+	public boolean getActive() {
+		return _commerceCountry.getActive();
 	}
 
 	/**
-	* Returns the allows shipping of this commerce country.
+	* Returns the billing allowed of this commerce country.
 	*
-	* @return the allows shipping of this commerce country
+	* @return the billing allowed of this commerce country
 	*/
 	@Override
-	public boolean getAllowsShipping() {
-		return _commerceCountry.getAllowsShipping();
+	public boolean getBillingAllowed() {
+		return _commerceCountry.getBillingAllowed();
 	}
 
 	/**
-	* Returns the published of this commerce country.
+	* Returns the shipping allowed of this commerce country.
 	*
-	* @return the published of this commerce country
+	* @return the shipping allowed of this commerce country
 	*/
 	@Override
-	public boolean getPublished() {
-		return _commerceCountry.getPublished();
+	public boolean getShippingAllowed() {
+		return _commerceCountry.getShippingAllowed();
 	}
 
 	/**
@@ -229,23 +245,23 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	}
 
 	/**
-	* Returns <code>true</code> if this commerce country is allows billing.
+	* Returns <code>true</code> if this commerce country is active.
 	*
-	* @return <code>true</code> if this commerce country is allows billing; <code>false</code> otherwise
+	* @return <code>true</code> if this commerce country is active; <code>false</code> otherwise
 	*/
 	@Override
-	public boolean isAllowsBilling() {
-		return _commerceCountry.isAllowsBilling();
+	public boolean isActive() {
+		return _commerceCountry.isActive();
 	}
 
 	/**
-	* Returns <code>true</code> if this commerce country is allows shipping.
+	* Returns <code>true</code> if this commerce country is billing allowed.
 	*
-	* @return <code>true</code> if this commerce country is allows shipping; <code>false</code> otherwise
+	* @return <code>true</code> if this commerce country is billing allowed; <code>false</code> otherwise
 	*/
 	@Override
-	public boolean isAllowsShipping() {
-		return _commerceCountry.isAllowsShipping();
+	public boolean isBillingAllowed() {
+		return _commerceCountry.isBillingAllowed();
 	}
 
 	@Override
@@ -264,13 +280,13 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	}
 
 	/**
-	* Returns <code>true</code> if this commerce country is published.
+	* Returns <code>true</code> if this commerce country is shipping allowed.
 	*
-	* @return <code>true</code> if this commerce country is published; <code>false</code> otherwise
+	* @return <code>true</code> if this commerce country is shipping allowed; <code>false</code> otherwise
 	*/
 	@Override
-	public boolean isPublished() {
-		return _commerceCountry.isPublished();
+	public boolean isShippingAllowed() {
+		return _commerceCountry.isShippingAllowed();
 	}
 
 	/**
@@ -333,6 +349,11 @@ public class CommerceCountryWrapper implements CommerceCountry,
 		return new CommerceCountryWrapper((CommerceCountry)_commerceCountry.clone());
 	}
 
+	@Override
+	public java.lang.String getDefaultLanguageId() {
+		return _commerceCountry.getDefaultLanguageId();
+	}
+
 	/**
 	* Returns the name of this commerce country.
 	*
@@ -341,6 +362,63 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	@Override
 	public java.lang.String getName() {
 		return _commerceCountry.getName();
+	}
+
+	/**
+	* Returns the localized name of this commerce country in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized name of this commerce country
+	*/
+	@Override
+	public java.lang.String getName(java.lang.String languageId) {
+		return _commerceCountry.getName(languageId);
+	}
+
+	/**
+	* Returns the localized name of this commerce country in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized name of this commerce country
+	*/
+	@Override
+	public java.lang.String getName(java.lang.String languageId,
+		boolean useDefault) {
+		return _commerceCountry.getName(languageId, useDefault);
+	}
+
+	/**
+	* Returns the localized name of this commerce country in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized name of this commerce country
+	*/
+	@Override
+	public java.lang.String getName(java.util.Locale locale) {
+		return _commerceCountry.getName(locale);
+	}
+
+	/**
+	* Returns the localized name of this commerce country in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized name of this commerce country. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
+		return _commerceCountry.getName(locale, useDefault);
+	}
+
+	@Override
+	public java.lang.String getNameCurrentLanguageId() {
+		return _commerceCountry.getNameCurrentLanguageId();
+	}
+
+	@Override
+	public java.lang.String getNameCurrentValue() {
+		return _commerceCountry.getNameCurrentValue();
 	}
 
 	/**
@@ -383,6 +461,16 @@ public class CommerceCountryWrapper implements CommerceCountry,
 		return _commerceCountry.getUserUuid();
 	}
 
+	/**
+	* Returns the uuid of this commerce country.
+	*
+	* @return the uuid of this commerce country
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _commerceCountry.getUuid();
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _commerceCountry.toString();
@@ -391,6 +479,11 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	@Override
 	public java.lang.String toXmlString() {
 		return _commerceCountry.toXmlString();
+	}
+
+	@Override
+	public java.lang.String[] getAvailableLanguageIds() {
+		return _commerceCountry.getAvailableLanguageIds();
 	}
 
 	/**
@@ -404,6 +497,16 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	}
 
 	/**
+	* Returns the last publish date of this commerce country.
+	*
+	* @return the last publish date of this commerce country
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _commerceCountry.getLastPublishDate();
+	}
+
+	/**
 	* Returns the modified date of this commerce country.
 	*
 	* @return the modified date of this commerce country
@@ -411,6 +514,16 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	@Override
 	public Date getModifiedDate() {
 		return _commerceCountry.getModifiedDate();
+	}
+
+	/**
+	* Returns a map of the locales and localized names of this commerce country.
+	*
+	* @return the locales and localized names of this commerce country
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getNameMap() {
+		return _commerceCountry.getNameMap();
 	}
 
 	/**
@@ -468,24 +581,37 @@ public class CommerceCountryWrapper implements CommerceCountry,
 		_commerceCountry.persist();
 	}
 
-	/**
-	* Sets whether this commerce country is allows billing.
-	*
-	* @param allowsBilling the allows billing of this commerce country
-	*/
 	@Override
-	public void setAllowsBilling(boolean allowsBilling) {
-		_commerceCountry.setAllowsBilling(allowsBilling);
+	public void prepareLocalizedFieldsForImport()
+		throws com.liferay.portal.kernel.exception.LocaleException {
+		_commerceCountry.prepareLocalizedFieldsForImport();
+	}
+
+	@Override
+	public void prepareLocalizedFieldsForImport(
+		java.util.Locale defaultImportLocale)
+		throws com.liferay.portal.kernel.exception.LocaleException {
+		_commerceCountry.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	/**
-	* Sets whether this commerce country is allows shipping.
+	* Sets whether this commerce country is active.
 	*
-	* @param allowsShipping the allows shipping of this commerce country
+	* @param active the active of this commerce country
 	*/
 	@Override
-	public void setAllowsShipping(boolean allowsShipping) {
-		_commerceCountry.setAllowsShipping(allowsShipping);
+	public void setActive(boolean active) {
+		_commerceCountry.setActive(active);
+	}
+
+	/**
+	* Sets whether this commerce country is billing allowed.
+	*
+	* @param billingAllowed the billing allowed of this commerce country
+	*/
+	@Override
+	public void setBillingAllowed(boolean billingAllowed) {
+		_commerceCountry.setBillingAllowed(billingAllowed);
 	}
 
 	@Override
@@ -550,6 +676,16 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	}
 
 	/**
+	* Sets the last publish date of this commerce country.
+	*
+	* @param lastPublishDate the last publish date of this commerce country
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_commerceCountry.setLastPublishDate(lastPublishDate);
+	}
+
+	/**
 	* Sets the modified date of this commerce country.
 	*
 	* @param modifiedDate the modified date of this commerce country
@@ -567,6 +703,57 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	@Override
 	public void setName(java.lang.String name) {
 		_commerceCountry.setName(name);
+	}
+
+	/**
+	* Sets the localized name of this commerce country in the language.
+	*
+	* @param name the localized name of this commerce country
+	* @param locale the locale of the language
+	*/
+	@Override
+	public void setName(java.lang.String name, java.util.Locale locale) {
+		_commerceCountry.setName(name, locale);
+	}
+
+	/**
+	* Sets the localized name of this commerce country in the language, and sets the default locale.
+	*
+	* @param name the localized name of this commerce country
+	* @param locale the locale of the language
+	* @param defaultLocale the default locale
+	*/
+	@Override
+	public void setName(java.lang.String name, java.util.Locale locale,
+		java.util.Locale defaultLocale) {
+		_commerceCountry.setName(name, locale, defaultLocale);
+	}
+
+	@Override
+	public void setNameCurrentLanguageId(java.lang.String languageId) {
+		_commerceCountry.setNameCurrentLanguageId(languageId);
+	}
+
+	/**
+	* Sets the localized names of this commerce country from the map of locales and localized names.
+	*
+	* @param nameMap the locales and localized names of this commerce country
+	*/
+	@Override
+	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap) {
+		_commerceCountry.setNameMap(nameMap);
+	}
+
+	/**
+	* Sets the localized names of this commerce country from the map of locales and localized names, and sets the default locale.
+	*
+	* @param nameMap the locales and localized names of this commerce country
+	* @param defaultLocale the default locale
+	*/
+	@Override
+	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Locale defaultLocale) {
+		_commerceCountry.setNameMap(nameMap, defaultLocale);
 	}
 
 	@Override
@@ -610,13 +797,13 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	}
 
 	/**
-	* Sets whether this commerce country is published.
+	* Sets whether this commerce country is shipping allowed.
 	*
-	* @param published the published of this commerce country
+	* @param shippingAllowed the shipping allowed of this commerce country
 	*/
 	@Override
-	public void setPublished(boolean published) {
-		_commerceCountry.setPublished(published);
+	public void setShippingAllowed(boolean shippingAllowed) {
+		_commerceCountry.setShippingAllowed(shippingAllowed);
 	}
 
 	/**
@@ -679,6 +866,16 @@ public class CommerceCountryWrapper implements CommerceCountry,
 		_commerceCountry.setUserUuid(userUuid);
 	}
 
+	/**
+	* Sets the uuid of this commerce country.
+	*
+	* @param uuid the uuid of this commerce country
+	*/
+	@Override
+	public void setUuid(java.lang.String uuid) {
+		_commerceCountry.setUuid(uuid);
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -697,6 +894,11 @@ public class CommerceCountryWrapper implements CommerceCountry,
 		}
 
 		return false;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _commerceCountry.getStagedModelType();
 	}
 
 	@Override

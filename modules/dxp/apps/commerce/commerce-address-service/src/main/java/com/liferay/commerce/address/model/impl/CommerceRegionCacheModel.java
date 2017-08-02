@@ -66,9 +66,11 @@ public class CommerceRegionCacheModel implements CacheModel<CommerceRegion>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(29);
 
-		sb.append("{commerceRegionId=");
+		sb.append("{uuid=");
+		sb.append(uuid);
+		sb.append(", commerceRegionId=");
 		sb.append(commerceRegionId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -86,12 +88,14 @@ public class CommerceRegionCacheModel implements CacheModel<CommerceRegion>,
 		sb.append(commerceCountryId);
 		sb.append(", name=");
 		sb.append(name);
-		sb.append(", abbreviation=");
-		sb.append(abbreviation);
+		sb.append(", code=");
+		sb.append(code);
 		sb.append(", priority=");
 		sb.append(priority);
-		sb.append(", published=");
-		sb.append(published);
+		sb.append(", active=");
+		sb.append(active);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -100,6 +104,13 @@ public class CommerceRegionCacheModel implements CacheModel<CommerceRegion>,
 	@Override
 	public CommerceRegion toEntityModel() {
 		CommerceRegionImpl commerceRegionImpl = new CommerceRegionImpl();
+
+		if (uuid == null) {
+			commerceRegionImpl.setUuid(StringPool.BLANK);
+		}
+		else {
+			commerceRegionImpl.setUuid(uuid);
+		}
 
 		commerceRegionImpl.setCommerceRegionId(commerceRegionId);
 		commerceRegionImpl.setGroupId(groupId);
@@ -136,15 +147,22 @@ public class CommerceRegionCacheModel implements CacheModel<CommerceRegion>,
 			commerceRegionImpl.setName(name);
 		}
 
-		if (abbreviation == null) {
-			commerceRegionImpl.setAbbreviation(StringPool.BLANK);
+		if (code == null) {
+			commerceRegionImpl.setCode(StringPool.BLANK);
 		}
 		else {
-			commerceRegionImpl.setAbbreviation(abbreviation);
+			commerceRegionImpl.setCode(code);
 		}
 
 		commerceRegionImpl.setPriority(priority);
-		commerceRegionImpl.setPublished(published);
+		commerceRegionImpl.setActive(active);
+
+		if (lastPublishDate == Long.MIN_VALUE) {
+			commerceRegionImpl.setLastPublishDate(null);
+		}
+		else {
+			commerceRegionImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
 
 		commerceRegionImpl.resetOriginalValues();
 
@@ -153,6 +171,8 @@ public class CommerceRegionCacheModel implements CacheModel<CommerceRegion>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		uuid = objectInput.readUTF();
+
 		commerceRegionId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -166,16 +186,24 @@ public class CommerceRegionCacheModel implements CacheModel<CommerceRegion>,
 
 		commerceCountryId = objectInput.readLong();
 		name = objectInput.readUTF();
-		abbreviation = objectInput.readUTF();
+		code = objectInput.readUTF();
 
 		priority = objectInput.readDouble();
 
-		published = objectInput.readBoolean();
+		active = objectInput.readBoolean();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		if (uuid == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
 		objectOutput.writeLong(commerceRegionId);
 
 		objectOutput.writeLong(groupId);
@@ -203,18 +231,20 @@ public class CommerceRegionCacheModel implements CacheModel<CommerceRegion>,
 			objectOutput.writeUTF(name);
 		}
 
-		if (abbreviation == null) {
+		if (code == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
-			objectOutput.writeUTF(abbreviation);
+			objectOutput.writeUTF(code);
 		}
 
 		objectOutput.writeDouble(priority);
 
-		objectOutput.writeBoolean(published);
+		objectOutput.writeBoolean(active);
+		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public String uuid;
 	public long commerceRegionId;
 	public long groupId;
 	public long companyId;
@@ -224,7 +254,8 @@ public class CommerceRegionCacheModel implements CacheModel<CommerceRegion>,
 	public long modifiedDate;
 	public long commerceCountryId;
 	public String name;
-	public String abbreviation;
+	public String code;
 	public double priority;
-	public boolean published;
+	public boolean active;
+	public long lastPublishDate;
 }

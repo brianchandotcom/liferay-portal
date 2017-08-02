@@ -18,18 +18,23 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.address.model.CommerceCountry;
 
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -38,6 +43,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the local service interface for CommerceCountry. Methods of this
@@ -71,11 +78,11 @@ public interface CommerceCountryLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceCountry addCommerceCountry(CommerceCountry commerceCountry);
 
-	public CommerceCountry addCommerceCountry(java.lang.String name,
-		boolean allowsBilling, boolean allowsShipping,
-		java.lang.String twoLettersISOCode,
+	public CommerceCountry addCommerceCountry(
+		Map<Locale, java.lang.String> nameMap, boolean billingAllowed,
+		boolean shippingAllowed, java.lang.String twoLettersISOCode,
 		java.lang.String threeLettersISOCode, int numericISOCode,
-		boolean subjectToVAT, double priority, boolean published,
+		boolean subjectToVAT, double priority, boolean active,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -93,6 +100,7 @@ public interface CommerceCountryLocalService extends BaseLocalService,
 	* @return the commerce country that was removed
 	*/
 	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CommerceCountry deleteCommerceCountry(
 		CommerceCountry commerceCountry);
 
@@ -111,6 +119,17 @@ public interface CommerceCountryLocalService extends BaseLocalService,
 	public CommerceCountry fetchCommerceCountry(long commerceCountryId);
 
 	/**
+	* Returns the commerce country matching the UUID and group.
+	*
+	* @param uuid the commerce country's UUID
+	* @param groupId the primary key of the group
+	* @return the matching commerce country, or <code>null</code> if a matching commerce country could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceCountry fetchCommerceCountryByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
+	/**
 	* Returns the commerce country with the primary key.
 	*
 	* @param commerceCountryId the primary key of the commerce country
@@ -120,6 +139,18 @@ public interface CommerceCountryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceCountry getCommerceCountry(long commerceCountryId)
 		throws PortalException;
+
+	/**
+	* Returns the commerce country matching the UUID and group.
+	*
+	* @param uuid the commerce country's UUID
+	* @param groupId the primary key of the group
+	* @return the matching commerce country
+	* @throws PortalException if a matching commerce country could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceCountry getCommerceCountryByUuidAndGroupId(
+		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
 	* Updates the commerce country in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -132,16 +163,20 @@ public interface CommerceCountryLocalService extends BaseLocalService,
 		CommerceCountry commerceCountry);
 
 	public CommerceCountry updateCommerceCountry(long commerceCountryId,
-		java.lang.String name, boolean allowsBilling, boolean allowsShipping,
-		java.lang.String twoLettersISOCode,
+		Map<Locale, java.lang.String> nameMap, boolean billingAllowed,
+		boolean shippingAllowed, java.lang.String twoLettersISOCode,
 		java.lang.String threeLettersISOCode, int numericISOCode,
-		boolean subjectToVAT, double priority, boolean published)
-		throws PortalException;
+		boolean subjectToVAT, double priority, boolean active,
+		ServiceContext serviceContext) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -165,6 +200,12 @@ public interface CommerceCountryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceCountriesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceCountriesCount(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceCountriesCount(long groupId, boolean active);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -227,7 +268,38 @@ public interface CommerceCountryLocalService extends BaseLocalService,
 	public List<CommerceCountry> getCommerceCountries(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceCountry> getCommerceCountries(int start, int end,
+	public List<CommerceCountry> getCommerceCountries(long groupId,
+		boolean active, int start, int end,
+		OrderByComparator<CommerceCountry> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceCountry> getCommerceCountries(long groupId, int start,
+		int end, OrderByComparator<CommerceCountry> orderByComparator);
+
+	/**
+	* Returns all the commerce countries matching the UUID and company.
+	*
+	* @param uuid the UUID of the commerce countries
+	* @param companyId the primary key of the company
+	* @return the matching commerce countries, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceCountry> getCommerceCountriesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId);
+
+	/**
+	* Returns a range of commerce countries matching the UUID and company.
+	*
+	* @param uuid the UUID of the commerce countries
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of commerce countries
+	* @param end the upper bound of the range of commerce countries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching commerce countries, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceCountry> getCommerceCountriesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
 		OrderByComparator<CommerceCountry> orderByComparator);
 
 	/**
@@ -247,4 +319,6 @@ public interface CommerceCountryLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	public void deleteCommerceCountries(long groupId);
 }

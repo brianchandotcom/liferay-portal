@@ -57,8 +57,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class CommerceRegionServiceHttp {
 	public static com.liferay.commerce.address.model.CommerceRegion addCommerceRegion(
 		HttpPrincipal httpPrincipal, long commerceCountryId,
-		java.lang.String name, java.lang.String abbreviation, double priority,
-		boolean published,
+		java.lang.String name, java.lang.String code, double priority,
+		boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -66,7 +66,7 @@ public class CommerceRegionServiceHttp {
 					"addCommerceRegion", _addCommerceRegionParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					commerceCountryId, name, abbreviation, priority, published,
+					commerceCountryId, name, code, priority, active,
 					serviceContext);
 
 			Object returnObj = null;
@@ -91,12 +91,40 @@ public class CommerceRegionServiceHttp {
 		}
 	}
 
-	public static com.liferay.commerce.address.model.CommerceRegion deleteCommerceRegion(
-		HttpPrincipal httpPrincipal, long commerceRegionId)
+	public static void deleteCommerceRegion(HttpPrincipal httpPrincipal,
+		long commerceRegionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceRegionServiceUtil.class,
 					"deleteCommerceRegion", _deleteCommerceRegionParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					commerceRegionId);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.commerce.address.model.CommerceRegion getCommerceRegion(
+		HttpPrincipal httpPrincipal, long commerceRegionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceRegionServiceUtil.class,
+					"getCommerceRegion", _getCommerceRegionParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceRegionId);
@@ -123,14 +151,16 @@ public class CommerceRegionServiceHttp {
 		}
 	}
 
-	public static com.liferay.commerce.address.model.CommerceRegion fetchCommerceRegion(
-		HttpPrincipal httpPrincipal, long commerceRegionId) {
+	public static java.util.List<com.liferay.commerce.address.model.CommerceRegion> getCommerceRegions(
+		HttpPrincipal httpPrincipal, long commerceCountryId, boolean active,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.address.model.CommerceRegion> orderByComparator) {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceRegionServiceUtil.class,
-					"fetchCommerceRegion", _fetchCommerceRegionParameterTypes2);
+					"getCommerceRegions", _getCommerceRegionsParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					commerceRegionId);
+					commerceCountryId, active, start, end, orderByComparator);
 
 			Object returnObj = null;
 
@@ -141,7 +171,7 @@ public class CommerceRegionServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.commerce.address.model.CommerceRegion)returnObj;
+			return (java.util.List<com.liferay.commerce.address.model.CommerceRegion>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -156,7 +186,7 @@ public class CommerceRegionServiceHttp {
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.address.model.CommerceRegion> orderByComparator) {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceRegionServiceUtil.class,
-					"getCommerceRegions", _getCommerceRegionsParameterTypes3);
+					"getCommerceRegions", _getCommerceRegionsParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceCountryId, start, end, orderByComparator);
@@ -184,7 +214,7 @@ public class CommerceRegionServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceRegionServiceUtil.class,
 					"getCommerceRegionsCount",
-					_getCommerceRegionsCountParameterTypes4);
+					_getCommerceRegionsCountParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceCountryId);
@@ -207,17 +237,47 @@ public class CommerceRegionServiceHttp {
 		}
 	}
 
+	public static int getCommerceRegionsCount(HttpPrincipal httpPrincipal,
+		long commerceCountryId, boolean active) {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceRegionServiceUtil.class,
+					"getCommerceRegionsCount",
+					_getCommerceRegionsCountParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					commerceCountryId, active);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.commerce.address.model.CommerceRegion updateCommerceRegion(
 		HttpPrincipal httpPrincipal, long commerceRegionId,
-		java.lang.String name, java.lang.String abbreviation, double priority,
-		boolean published)
+		java.lang.String name, java.lang.String code, double priority,
+		boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceRegionServiceUtil.class,
-					"updateCommerceRegion", _updateCommerceRegionParameterTypes5);
+					"updateCommerceRegion", _updateCommerceRegionParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					commerceRegionId, name, abbreviation, priority, published);
+					commerceRegionId, name, code, priority, active,
+					serviceContext);
 
 			Object returnObj = null;
 
@@ -250,18 +310,26 @@ public class CommerceRegionServiceHttp {
 	private static final Class<?>[] _deleteCommerceRegionParameterTypes1 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _fetchCommerceRegionParameterTypes2 = new Class[] {
+	private static final Class<?>[] _getCommerceRegionParameterTypes2 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[] _getCommerceRegionsParameterTypes3 = new Class[] {
+			long.class, boolean.class, int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
+		};
+	private static final Class<?>[] _getCommerceRegionsParameterTypes4 = new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getCommerceRegionsCountParameterTypes4 = new Class[] {
+	private static final Class<?>[] _getCommerceRegionsCountParameterTypes5 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _updateCommerceRegionParameterTypes5 = new Class[] {
+	private static final Class<?>[] _getCommerceRegionsCountParameterTypes6 = new Class[] {
+			long.class, boolean.class
+		};
+	private static final Class<?>[] _updateCommerceRegionParameterTypes7 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
-			double.class, boolean.class
+			double.class, boolean.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

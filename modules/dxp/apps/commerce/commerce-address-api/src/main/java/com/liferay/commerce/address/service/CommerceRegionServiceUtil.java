@@ -42,37 +42,38 @@ public class CommerceRegionServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.address.service.impl.CommerceRegionServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.commerce.address.model.CommerceRegion addCommerceRegion(
-		long commerceCountryId, java.lang.String name,
-		java.lang.String abbreviation, double priority, boolean published,
+		long commerceCountryId, java.lang.String name, java.lang.String code,
+		double priority, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addCommerceRegion(commerceCountryId, name, abbreviation,
-			priority, published, serviceContext);
+				   .addCommerceRegion(commerceCountryId, name, code, priority,
+			active, serviceContext);
 	}
 
-	public static com.liferay.commerce.address.model.CommerceRegion deleteCommerceRegion(
+	public static com.liferay.commerce.address.model.CommerceRegion getCommerceRegion(
 		long commerceRegionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteCommerceRegion(commerceRegionId);
-	}
-
-	public static com.liferay.commerce.address.model.CommerceRegion fetchCommerceRegion(
-		long commerceRegionId) {
-		return getService().fetchCommerceRegion(commerceRegionId);
+		return getService().getCommerceRegion(commerceRegionId);
 	}
 
 	public static com.liferay.commerce.address.model.CommerceRegion updateCommerceRegion(
-		long commerceRegionId, java.lang.String name,
-		java.lang.String abbreviation, double priority, boolean published)
+		long commerceRegionId, java.lang.String name, java.lang.String code,
+		double priority, boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .updateCommerceRegion(commerceRegionId, name, abbreviation,
-			priority, published);
+				   .updateCommerceRegion(commerceRegionId, name, code,
+			priority, active, serviceContext);
 	}
 
 	public static int getCommerceRegionsCount(long commerceCountryId) {
 		return getService().getCommerceRegionsCount(commerceCountryId);
+	}
+
+	public static int getCommerceRegionsCount(long commerceCountryId,
+		boolean active) {
+		return getService().getCommerceRegionsCount(commerceCountryId, active);
 	}
 
 	/**
@@ -85,11 +86,24 @@ public class CommerceRegionServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.address.model.CommerceRegion> getCommerceRegions(
+		long commerceCountryId, boolean active, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.address.model.CommerceRegion> orderByComparator) {
+		return getService()
+				   .getCommerceRegions(commerceCountryId, active, start, end,
+			orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.commerce.address.model.CommerceRegion> getCommerceRegions(
 		long commerceCountryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.address.model.CommerceRegion> orderByComparator) {
 		return getService()
 				   .getCommerceRegions(commerceCountryId, start, end,
 			orderByComparator);
+	}
+
+	public static void deleteCommerceRegion(long commerceRegionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteCommerceRegion(commerceRegionId);
 	}
 
 	public static CommerceRegionService getService() {

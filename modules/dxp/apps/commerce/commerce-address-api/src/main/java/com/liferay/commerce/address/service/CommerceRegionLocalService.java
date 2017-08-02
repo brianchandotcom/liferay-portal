@@ -18,18 +18,23 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.address.model.CommerceRegion;
 
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -72,8 +77,8 @@ public interface CommerceRegionLocalService extends BaseLocalService,
 	public CommerceRegion addCommerceRegion(CommerceRegion commerceRegion);
 
 	public CommerceRegion addCommerceRegion(long commerceCountryId,
-		java.lang.String name, java.lang.String abbreviation, double priority,
-		boolean published, ServiceContext serviceContext)
+		java.lang.String name, java.lang.String code, double priority,
+		boolean active, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -91,6 +96,7 @@ public interface CommerceRegionLocalService extends BaseLocalService,
 	* @return the commerce region that was removed
 	*/
 	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CommerceRegion deleteCommerceRegion(CommerceRegion commerceRegion);
 
 	/**
@@ -108,6 +114,17 @@ public interface CommerceRegionLocalService extends BaseLocalService,
 	public CommerceRegion fetchCommerceRegion(long commerceRegionId);
 
 	/**
+	* Returns the commerce region matching the UUID and group.
+	*
+	* @param uuid the commerce region's UUID
+	* @param groupId the primary key of the group
+	* @return the matching commerce region, or <code>null</code> if a matching commerce region could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceRegion fetchCommerceRegionByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
+	/**
 	* Returns the commerce region with the primary key.
 	*
 	* @param commerceRegionId the primary key of the commerce region
@@ -119,6 +136,18 @@ public interface CommerceRegionLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
+	* Returns the commerce region matching the UUID and group.
+	*
+	* @param uuid the commerce region's UUID
+	* @param groupId the primary key of the group
+	* @return the matching commerce region
+	* @throws PortalException if a matching commerce region could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceRegion getCommerceRegionByUuidAndGroupId(
+		java.lang.String uuid, long groupId) throws PortalException;
+
+	/**
 	* Updates the commerce region in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param commerceRegion the commerce region
@@ -128,13 +157,18 @@ public interface CommerceRegionLocalService extends BaseLocalService,
 	public CommerceRegion updateCommerceRegion(CommerceRegion commerceRegion);
 
 	public CommerceRegion updateCommerceRegion(long commerceRegionId,
-		java.lang.String name, java.lang.String abbreviation, double priority,
-		boolean published) throws PortalException;
+		java.lang.String name, java.lang.String code, double priority,
+		boolean active, ServiceContext serviceContext)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -161,6 +195,9 @@ public interface CommerceRegionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceRegionsCount(long commerceCountryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceRegionsCount(long commerceCountryId, boolean active);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -224,7 +261,38 @@ public interface CommerceRegionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceRegion> getCommerceRegions(long commerceCountryId,
+		boolean active, int start, int end,
+		OrderByComparator<CommerceRegion> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceRegion> getCommerceRegions(long commerceCountryId,
 		int start, int end, OrderByComparator<CommerceRegion> orderByComparator);
+
+	/**
+	* Returns all the commerce regions matching the UUID and company.
+	*
+	* @param uuid the UUID of the commerce regions
+	* @param companyId the primary key of the company
+	* @return the matching commerce regions, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceRegion> getCommerceRegionsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId);
+
+	/**
+	* Returns a range of commerce regions matching the UUID and company.
+	*
+	* @param uuid the UUID of the commerce regions
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of commerce regions
+	* @param end the upper bound of the range of commerce regions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching commerce regions, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceRegion> getCommerceRegionsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		OrderByComparator<CommerceRegion> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.

@@ -21,8 +21,8 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
@@ -44,7 +44,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface CommerceRegionModel extends BaseModel<CommerceRegion>,
-	GroupedModel, ShardedModel {
+	ShardedModel, StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -64,6 +64,23 @@ public interface CommerceRegionModel extends BaseModel<CommerceRegion>,
 	 * @param primaryKey the primary key of this commerce region
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the uuid of this commerce region.
+	 *
+	 * @return the uuid of this commerce region
+	 */
+	@AutoEscape
+	@Override
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this commerce region.
+	 *
+	 * @param uuid the uuid of this commerce region
+	 */
+	@Override
+	public void setUuid(String uuid);
 
 	/**
 	 * Returns the commerce region ID of this commerce region.
@@ -222,19 +239,19 @@ public interface CommerceRegionModel extends BaseModel<CommerceRegion>,
 	public void setName(String name);
 
 	/**
-	 * Returns the abbreviation of this commerce region.
+	 * Returns the code of this commerce region.
 	 *
-	 * @return the abbreviation of this commerce region
+	 * @return the code of this commerce region
 	 */
 	@AutoEscape
-	public String getAbbreviation();
+	public String getCode();
 
 	/**
-	 * Sets the abbreviation of this commerce region.
+	 * Sets the code of this commerce region.
 	 *
-	 * @param abbreviation the abbreviation of this commerce region
+	 * @param code the code of this commerce region
 	 */
-	public void setAbbreviation(String abbreviation);
+	public void setCode(String code);
 
 	/**
 	 * Returns the priority of this commerce region.
@@ -251,25 +268,41 @@ public interface CommerceRegionModel extends BaseModel<CommerceRegion>,
 	public void setPriority(double priority);
 
 	/**
-	 * Returns the published of this commerce region.
+	 * Returns the active of this commerce region.
 	 *
-	 * @return the published of this commerce region
+	 * @return the active of this commerce region
 	 */
-	public boolean getPublished();
+	public boolean getActive();
 
 	/**
-	 * Returns <code>true</code> if this commerce region is published.
+	 * Returns <code>true</code> if this commerce region is active.
 	 *
-	 * @return <code>true</code> if this commerce region is published; <code>false</code> otherwise
+	 * @return <code>true</code> if this commerce region is active; <code>false</code> otherwise
 	 */
-	public boolean isPublished();
+	public boolean isActive();
 
 	/**
-	 * Sets whether this commerce region is published.
+	 * Sets whether this commerce region is active.
 	 *
-	 * @param published the published of this commerce region
+	 * @param active the active of this commerce region
 	 */
-	public void setPublished(boolean published);
+	public void setActive(boolean active);
+
+	/**
+	 * Returns the last publish date of this commerce region.
+	 *
+	 * @return the last publish date of this commerce region
+	 */
+	@Override
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this commerce region.
+	 *
+	 * @param lastPublishDate the last publish date of this commerce region
+	 */
+	@Override
+	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override
 	public boolean isNew();

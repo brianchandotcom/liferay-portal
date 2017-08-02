@@ -20,8 +20,12 @@ import com.liferay.commerce.address.service.CommerceCountryServiceUtil;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 
 import java.rmi.RemoteException;
+
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the SOAP utility for the
@@ -66,17 +70,21 @@ import java.rmi.RemoteException;
 @ProviderType
 public class CommerceCountryServiceSoap {
 	public static com.liferay.commerce.address.model.CommerceCountrySoap addCommerceCountry(
-		java.lang.String name, boolean allowsBilling, boolean allowsShipping,
-		java.lang.String twoLettersISOCode,
+		java.lang.String[] nameMapLanguageIds,
+		java.lang.String[] nameMapValues, boolean billingAllowed,
+		boolean shippingAllowed, java.lang.String twoLettersISOCode,
 		java.lang.String threeLettersISOCode, int numericISOCode,
-		boolean subjectToVAT, double priority, boolean published,
+		boolean subjectToVAT, double priority, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			com.liferay.commerce.address.model.CommerceCountry returnValue = CommerceCountryServiceUtil.addCommerceCountry(name,
-					allowsBilling, allowsShipping, twoLettersISOCode,
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
+
+			com.liferay.commerce.address.model.CommerceCountry returnValue = CommerceCountryServiceUtil.addCommerceCountry(nameMap,
+					billingAllowed, shippingAllowed, twoLettersISOCode,
 					threeLettersISOCode, numericISOCode, subjectToVAT,
-					priority, published, serviceContext);
+					priority, active, serviceContext);
 
 			return com.liferay.commerce.address.model.CommerceCountrySoap.toSoapModel(returnValue);
 		}
@@ -87,26 +95,10 @@ public class CommerceCountryServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.address.model.CommerceCountrySoap deleteCommerceCountry(
-		long commerceCountryId) throws RemoteException {
+	public static void deleteCommerceCountry(long commerceCountryId)
+		throws RemoteException {
 		try {
-			com.liferay.commerce.address.model.CommerceCountry returnValue = CommerceCountryServiceUtil.deleteCommerceCountry(commerceCountryId);
-
-			return com.liferay.commerce.address.model.CommerceCountrySoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.commerce.address.model.CommerceCountrySoap fetchCommerceCountry(
-		long commerceCountryId) throws RemoteException {
-		try {
-			com.liferay.commerce.address.model.CommerceCountry returnValue = CommerceCountryServiceUtil.fetchCommerceCountry(commerceCountryId);
-
-			return com.liferay.commerce.address.model.CommerceCountrySoap.toSoapModel(returnValue);
+			CommerceCountryServiceUtil.deleteCommerceCountry(commerceCountryId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -116,13 +108,13 @@ public class CommerceCountryServiceSoap {
 	}
 
 	public static com.liferay.commerce.address.model.CommerceCountrySoap[] getCommerceCountries(
-		int start, int end,
+		long groupId, boolean active, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.address.model.CommerceCountry> orderByComparator)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.commerce.address.model.CommerceCountry> returnValue =
-				CommerceCountryServiceUtil.getCommerceCountries(start, end,
-					orderByComparator);
+				CommerceCountryServiceUtil.getCommerceCountries(groupId,
+					active, start, end, orderByComparator);
 
 			return com.liferay.commerce.address.model.CommerceCountrySoap.toSoapModels(returnValue);
 		}
@@ -133,9 +125,28 @@ public class CommerceCountryServiceSoap {
 		}
 	}
 
-	public static int getCommerceCountriesCount() throws RemoteException {
+	public static com.liferay.commerce.address.model.CommerceCountrySoap[] getCommerceCountries(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.address.model.CommerceCountry> orderByComparator)
+		throws RemoteException {
 		try {
-			int returnValue = CommerceCountryServiceUtil.getCommerceCountriesCount();
+			java.util.List<com.liferay.commerce.address.model.CommerceCountry> returnValue =
+				CommerceCountryServiceUtil.getCommerceCountries(groupId, start,
+					end, orderByComparator);
+
+			return com.liferay.commerce.address.model.CommerceCountrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getCommerceCountriesCount(long groupId)
+		throws RemoteException {
+		try {
+			int returnValue = CommerceCountryServiceUtil.getCommerceCountriesCount(groupId);
 
 			return returnValue;
 		}
@@ -146,17 +157,51 @@ public class CommerceCountryServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.address.model.CommerceCountrySoap updateCommerceCountry(
-		long commerceCountryId, java.lang.String name, boolean allowsBilling,
-		boolean allowsShipping, java.lang.String twoLettersISOCode,
-		java.lang.String threeLettersISOCode, int numericISOCode,
-		boolean subjectToVAT, double priority, boolean published)
+	public static int getCommerceCountriesCount(long groupId, boolean active)
 		throws RemoteException {
 		try {
+			int returnValue = CommerceCountryServiceUtil.getCommerceCountriesCount(groupId,
+					active);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.address.model.CommerceCountrySoap getCommerceCountry(
+		long commerceCountryId) throws RemoteException {
+		try {
+			com.liferay.commerce.address.model.CommerceCountry returnValue = CommerceCountryServiceUtil.getCommerceCountry(commerceCountryId);
+
+			return com.liferay.commerce.address.model.CommerceCountrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.address.model.CommerceCountrySoap updateCommerceCountry(
+		long commerceCountryId, java.lang.String[] nameMapLanguageIds,
+		java.lang.String[] nameMapValues, boolean billingAllowed,
+		boolean shippingAllowed, java.lang.String twoLettersISOCode,
+		java.lang.String threeLettersISOCode, int numericISOCode,
+		boolean subjectToVAT, double priority, boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
+
 			com.liferay.commerce.address.model.CommerceCountry returnValue = CommerceCountryServiceUtil.updateCommerceCountry(commerceCountryId,
-					name, allowsBilling, allowsShipping, twoLettersISOCode,
-					threeLettersISOCode, numericISOCode, subjectToVAT,
-					priority, published);
+					nameMap, billingAllowed, shippingAllowed,
+					twoLettersISOCode, threeLettersISOCode, numericISOCode,
+					subjectToVAT, priority, active, serviceContext);
 
 			return com.liferay.commerce.address.model.CommerceCountrySoap.toSoapModel(returnValue);
 		}

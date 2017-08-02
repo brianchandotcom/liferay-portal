@@ -23,6 +23,8 @@ import com.liferay.commerce.address.model.CommerceRegionSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -32,6 +34,7 @@ import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -70,6 +73,7 @@ public class CommerceRegionModelImpl extends BaseModelImpl<CommerceRegion>
 	 */
 	public static final String TABLE_NAME = "CommerceRegion";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "uuid_", Types.VARCHAR },
 			{ "commerceRegionId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
@@ -79,13 +83,15 @@ public class CommerceRegionModelImpl extends BaseModelImpl<CommerceRegion>
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "commerceCountryId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
-			{ "abbreviation", Types.VARCHAR },
+			{ "code_", Types.VARCHAR },
 			{ "priority", Types.DOUBLE },
-			{ "published", Types.BOOLEAN }
+			{ "active_", Types.BOOLEAN },
+			{ "lastPublishDate", Types.TIMESTAMP }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceRegionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -95,15 +101,16 @@ public class CommerceRegionModelImpl extends BaseModelImpl<CommerceRegion>
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("commerceCountryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("abbreviation", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("code_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
-		TABLE_COLUMNS_MAP.put("published", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceRegion (commerceRegionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceCountryId LONG,name VARCHAR(75) null,abbreviation VARCHAR(75) null,priority DOUBLE,published BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceRegion (uuid_ VARCHAR(75) null,commerceRegionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceCountryId LONG,name VARCHAR(75) null,code_ VARCHAR(75) null,priority DOUBLE,active_ BOOLEAN,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceRegion";
-	public static final String ORDER_BY_JPQL = " ORDER BY commerceRegion.name ASC, commerceRegion.priority ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY CommerceRegion.name ASC, CommerceRegion.priority ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY commerceRegion.priority ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY CommerceRegion.priority ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -116,9 +123,12 @@ public class CommerceRegionModelImpl extends BaseModelImpl<CommerceRegion>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.commerce.address.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.commerce.address.model.CommerceRegion"),
 			true);
-	public static final long COMMERCECOUNTRYID_COLUMN_BITMASK = 1L;
-	public static final long NAME_COLUMN_BITMASK = 2L;
-	public static final long PRIORITY_COLUMN_BITMASK = 4L;
+	public static final long ACTIVE_COLUMN_BITMASK = 1L;
+	public static final long COMMERCECOUNTRYID_COLUMN_BITMASK = 2L;
+	public static final long COMPANYID_COLUMN_BITMASK = 4L;
+	public static final long GROUPID_COLUMN_BITMASK = 8L;
+	public static final long UUID_COLUMN_BITMASK = 16L;
+	public static final long PRIORITY_COLUMN_BITMASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -133,6 +143,7 @@ public class CommerceRegionModelImpl extends BaseModelImpl<CommerceRegion>
 
 		CommerceRegion model = new CommerceRegionImpl();
 
+		model.setUuid(soapModel.getUuid());
 		model.setCommerceRegionId(soapModel.getCommerceRegionId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -142,9 +153,10 @@ public class CommerceRegionModelImpl extends BaseModelImpl<CommerceRegion>
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setCommerceCountryId(soapModel.getCommerceCountryId());
 		model.setName(soapModel.getName());
-		model.setAbbreviation(soapModel.getAbbreviation());
+		model.setCode(soapModel.getCode());
 		model.setPriority(soapModel.getPriority());
-		model.setPublished(soapModel.getPublished());
+		model.setActive(soapModel.getActive());
+		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
 	}
@@ -209,6 +221,7 @@ public class CommerceRegionModelImpl extends BaseModelImpl<CommerceRegion>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("commerceRegionId", getCommerceRegionId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -218,9 +231,10 @@ public class CommerceRegionModelImpl extends BaseModelImpl<CommerceRegion>
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("commerceCountryId", getCommerceCountryId());
 		attributes.put("name", getName());
-		attributes.put("abbreviation", getAbbreviation());
+		attributes.put("code", getCode());
 		attributes.put("priority", getPriority());
-		attributes.put("published", getPublished());
+		attributes.put("active", getActive());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -230,6 +244,12 @@ public class CommerceRegionModelImpl extends BaseModelImpl<CommerceRegion>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long commerceRegionId = (Long)attributes.get("commerceRegionId");
 
 		if (commerceRegionId != null) {
@@ -284,10 +304,10 @@ public class CommerceRegionModelImpl extends BaseModelImpl<CommerceRegion>
 			setName(name);
 		}
 
-		String abbreviation = (String)attributes.get("abbreviation");
+		String code = (String)attributes.get("code");
 
-		if (abbreviation != null) {
-			setAbbreviation(abbreviation);
+		if (code != null) {
+			setCode(code);
 		}
 
 		Double priority = (Double)attributes.get("priority");
@@ -296,11 +316,41 @@ public class CommerceRegionModelImpl extends BaseModelImpl<CommerceRegion>
 			setPriority(priority);
 		}
 
-		Boolean published = (Boolean)attributes.get("published");
+		Boolean active = (Boolean)attributes.get("active");
 
-		if (published != null) {
-			setPublished(published);
+		if (active != null) {
+			setActive(active);
 		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
+		}
+	}
+
+	@JSON
+	@Override
+	public String getUuid() {
+		if (_uuid == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	@Override
+	public void setUuid(String uuid) {
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
+		}
+
+		_uuid = uuid;
+	}
+
+	public String getOriginalUuid() {
+		return GetterUtil.getString(_originalUuid);
 	}
 
 	@JSON
@@ -322,7 +372,19 @@ public class CommerceRegionModelImpl extends BaseModelImpl<CommerceRegion>
 
 	@Override
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
 		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
 	}
 
 	@JSON
@@ -333,7 +395,19 @@ public class CommerceRegionModelImpl extends BaseModelImpl<CommerceRegion>
 
 	@Override
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -443,25 +517,23 @@ public class CommerceRegionModelImpl extends BaseModelImpl<CommerceRegion>
 
 	@Override
 	public void setName(String name) {
-		_columnBitmask = -1L;
-
 		_name = name;
 	}
 
 	@JSON
 	@Override
-	public String getAbbreviation() {
-		if (_abbreviation == null) {
+	public String getCode() {
+		if (_code == null) {
 			return StringPool.BLANK;
 		}
 		else {
-			return _abbreviation;
+			return _code;
 		}
 	}
 
 	@Override
-	public void setAbbreviation(String abbreviation) {
-		_abbreviation = abbreviation;
+	public void setCode(String code) {
+		_code = code;
 	}
 
 	@JSON
@@ -479,19 +551,48 @@ public class CommerceRegionModelImpl extends BaseModelImpl<CommerceRegion>
 
 	@JSON
 	@Override
-	public boolean getPublished() {
-		return _published;
+	public boolean getActive() {
+		return _active;
 	}
 
 	@JSON
 	@Override
-	public boolean isPublished() {
-		return _published;
+	public boolean isActive() {
+		return _active;
 	}
 
 	@Override
-	public void setPublished(boolean published) {
-		_published = published;
+	public void setActive(boolean active) {
+		_columnBitmask |= ACTIVE_COLUMN_BITMASK;
+
+		if (!_setOriginalActive) {
+			_setOriginalActive = true;
+
+			_originalActive = _active;
+		}
+
+		_active = active;
+	}
+
+	public boolean getOriginalActive() {
+		return _originalActive;
+	}
+
+	@JSON
+	@Override
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(PortalUtil.getClassNameId(
+				CommerceRegion.class.getName()));
 	}
 
 	public long getColumnBitmask() {
@@ -525,6 +626,7 @@ public class CommerceRegionModelImpl extends BaseModelImpl<CommerceRegion>
 	public Object clone() {
 		CommerceRegionImpl commerceRegionImpl = new CommerceRegionImpl();
 
+		commerceRegionImpl.setUuid(getUuid());
 		commerceRegionImpl.setCommerceRegionId(getCommerceRegionId());
 		commerceRegionImpl.setGroupId(getGroupId());
 		commerceRegionImpl.setCompanyId(getCompanyId());
@@ -534,9 +636,10 @@ public class CommerceRegionModelImpl extends BaseModelImpl<CommerceRegion>
 		commerceRegionImpl.setModifiedDate(getModifiedDate());
 		commerceRegionImpl.setCommerceCountryId(getCommerceCountryId());
 		commerceRegionImpl.setName(getName());
-		commerceRegionImpl.setAbbreviation(getAbbreviation());
+		commerceRegionImpl.setCode(getCode());
 		commerceRegionImpl.setPriority(getPriority());
-		commerceRegionImpl.setPublished(getPublished());
+		commerceRegionImpl.setActive(getActive());
+		commerceRegionImpl.setLastPublishDate(getLastPublishDate());
 
 		commerceRegionImpl.resetOriginalValues();
 
@@ -546,12 +649,6 @@ public class CommerceRegionModelImpl extends BaseModelImpl<CommerceRegion>
 	@Override
 	public int compareTo(CommerceRegion commerceRegion) {
 		int value = 0;
-
-		value = getName().compareTo(commerceRegion.getName());
-
-		if (value != 0) {
-			return value;
-		}
 
 		if (getPriority() < commerceRegion.getPriority()) {
 			value = -1;
@@ -611,11 +708,25 @@ public class CommerceRegionModelImpl extends BaseModelImpl<CommerceRegion>
 	public void resetOriginalValues() {
 		CommerceRegionModelImpl commerceRegionModelImpl = this;
 
+		commerceRegionModelImpl._originalUuid = commerceRegionModelImpl._uuid;
+
+		commerceRegionModelImpl._originalGroupId = commerceRegionModelImpl._groupId;
+
+		commerceRegionModelImpl._setOriginalGroupId = false;
+
+		commerceRegionModelImpl._originalCompanyId = commerceRegionModelImpl._companyId;
+
+		commerceRegionModelImpl._setOriginalCompanyId = false;
+
 		commerceRegionModelImpl._setModifiedDate = false;
 
 		commerceRegionModelImpl._originalCommerceCountryId = commerceRegionModelImpl._commerceCountryId;
 
 		commerceRegionModelImpl._setOriginalCommerceCountryId = false;
+
+		commerceRegionModelImpl._originalActive = commerceRegionModelImpl._active;
+
+		commerceRegionModelImpl._setOriginalActive = false;
 
 		commerceRegionModelImpl._columnBitmask = 0;
 	}
@@ -623,6 +734,14 @@ public class CommerceRegionModelImpl extends BaseModelImpl<CommerceRegion>
 	@Override
 	public CacheModel<CommerceRegion> toCacheModel() {
 		CommerceRegionCacheModel commerceRegionCacheModel = new CommerceRegionCacheModel();
+
+		commerceRegionCacheModel.uuid = getUuid();
+
+		String uuid = commerceRegionCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			commerceRegionCacheModel.uuid = null;
+		}
 
 		commerceRegionCacheModel.commerceRegionId = getCommerceRegionId();
 
@@ -668,26 +787,37 @@ public class CommerceRegionModelImpl extends BaseModelImpl<CommerceRegion>
 			commerceRegionCacheModel.name = null;
 		}
 
-		commerceRegionCacheModel.abbreviation = getAbbreviation();
+		commerceRegionCacheModel.code = getCode();
 
-		String abbreviation = commerceRegionCacheModel.abbreviation;
+		String code = commerceRegionCacheModel.code;
 
-		if ((abbreviation != null) && (abbreviation.length() == 0)) {
-			commerceRegionCacheModel.abbreviation = null;
+		if ((code != null) && (code.length() == 0)) {
+			commerceRegionCacheModel.code = null;
 		}
 
 		commerceRegionCacheModel.priority = getPriority();
 
-		commerceRegionCacheModel.published = getPublished();
+		commerceRegionCacheModel.active = getActive();
+
+		Date lastPublishDate = getLastPublishDate();
+
+		if (lastPublishDate != null) {
+			commerceRegionCacheModel.lastPublishDate = lastPublishDate.getTime();
+		}
+		else {
+			commerceRegionCacheModel.lastPublishDate = Long.MIN_VALUE;
+		}
 
 		return commerceRegionCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(29);
 
-		sb.append("{commerceRegionId=");
+		sb.append("{uuid=");
+		sb.append(getUuid());
+		sb.append(", commerceRegionId=");
 		sb.append(getCommerceRegionId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
@@ -705,12 +835,14 @@ public class CommerceRegionModelImpl extends BaseModelImpl<CommerceRegion>
 		sb.append(getCommerceCountryId());
 		sb.append(", name=");
 		sb.append(getName());
-		sb.append(", abbreviation=");
-		sb.append(getAbbreviation());
+		sb.append(", code=");
+		sb.append(getCode());
 		sb.append(", priority=");
 		sb.append(getPriority());
-		sb.append(", published=");
-		sb.append(getPublished());
+		sb.append(", active=");
+		sb.append(getActive());
+		sb.append(", lastPublishDate=");
+		sb.append(getLastPublishDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -718,12 +850,16 @@ public class CommerceRegionModelImpl extends BaseModelImpl<CommerceRegion>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(40);
+		StringBundler sb = new StringBundler(46);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.address.model.CommerceRegion");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>uuid</column-name><column-value><![CDATA[");
+		sb.append(getUuid());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>commerceRegionId</column-name><column-value><![CDATA[");
 		sb.append(getCommerceRegionId());
@@ -761,16 +897,20 @@ public class CommerceRegionModelImpl extends BaseModelImpl<CommerceRegion>
 		sb.append(getName());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>abbreviation</column-name><column-value><![CDATA[");
-		sb.append(getAbbreviation());
+			"<column><column-name>code</column-name><column-value><![CDATA[");
+		sb.append(getCode());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>priority</column-name><column-value><![CDATA[");
 		sb.append(getPriority());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>published</column-name><column-value><![CDATA[");
-		sb.append(getPublished());
+			"<column><column-name>active</column-name><column-value><![CDATA[");
+		sb.append(getActive());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
+		sb.append(getLastPublishDate());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -782,9 +922,15 @@ public class CommerceRegionModelImpl extends BaseModelImpl<CommerceRegion>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			CommerceRegion.class
 		};
+	private String _uuid;
+	private String _originalUuid;
 	private long _commerceRegionId;
 	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -794,9 +940,12 @@ public class CommerceRegionModelImpl extends BaseModelImpl<CommerceRegion>
 	private long _originalCommerceCountryId;
 	private boolean _setOriginalCommerceCountryId;
 	private String _name;
-	private String _abbreviation;
+	private String _code;
 	private double _priority;
-	private boolean _published;
+	private boolean _active;
+	private boolean _originalActive;
+	private boolean _setOriginalActive;
+	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private CommerceRegion _escapedModel;
 }

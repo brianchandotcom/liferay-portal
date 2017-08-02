@@ -34,6 +34,7 @@ public class CommerceCountrySoap implements Serializable {
 	public static CommerceCountrySoap toSoapModel(CommerceCountry model) {
 		CommerceCountrySoap soapModel = new CommerceCountrySoap();
 
+		soapModel.setUuid(model.getUuid());
 		soapModel.setCommerceCountryId(model.getCommerceCountryId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -42,14 +43,15 @@ public class CommerceCountrySoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setName(model.getName());
-		soapModel.setAllowsBilling(model.getAllowsBilling());
-		soapModel.setAllowsShipping(model.getAllowsShipping());
+		soapModel.setBillingAllowed(model.getBillingAllowed());
+		soapModel.setShippingAllowed(model.getShippingAllowed());
 		soapModel.setTwoLettersISOCode(model.getTwoLettersISOCode());
 		soapModel.setThreeLettersISOCode(model.getThreeLettersISOCode());
 		soapModel.setNumericISOCode(model.getNumericISOCode());
 		soapModel.setSubjectToVAT(model.getSubjectToVAT());
 		soapModel.setPriority(model.getPriority());
-		soapModel.setPublished(model.getPublished());
+		soapModel.setActive(model.getActive());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -102,6 +104,14 @@ public class CommerceCountrySoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceCountryId(pk);
+	}
+
+	public String getUuid() {
+		return _uuid;
+	}
+
+	public void setUuid(String uuid) {
+		_uuid = uuid;
 	}
 
 	public long getCommerceCountryId() {
@@ -168,28 +178,28 @@ public class CommerceCountrySoap implements Serializable {
 		_name = name;
 	}
 
-	public boolean getAllowsBilling() {
-		return _allowsBilling;
+	public boolean getBillingAllowed() {
+		return _billingAllowed;
 	}
 
-	public boolean isAllowsBilling() {
-		return _allowsBilling;
+	public boolean isBillingAllowed() {
+		return _billingAllowed;
 	}
 
-	public void setAllowsBilling(boolean allowsBilling) {
-		_allowsBilling = allowsBilling;
+	public void setBillingAllowed(boolean billingAllowed) {
+		_billingAllowed = billingAllowed;
 	}
 
-	public boolean getAllowsShipping() {
-		return _allowsShipping;
+	public boolean getShippingAllowed() {
+		return _shippingAllowed;
 	}
 
-	public boolean isAllowsShipping() {
-		return _allowsShipping;
+	public boolean isShippingAllowed() {
+		return _shippingAllowed;
 	}
 
-	public void setAllowsShipping(boolean allowsShipping) {
-		_allowsShipping = allowsShipping;
+	public void setShippingAllowed(boolean shippingAllowed) {
+		_shippingAllowed = shippingAllowed;
 	}
 
 	public String getTwoLettersISOCode() {
@@ -236,18 +246,27 @@ public class CommerceCountrySoap implements Serializable {
 		_priority = priority;
 	}
 
-	public boolean getPublished() {
-		return _published;
+	public boolean getActive() {
+		return _active;
 	}
 
-	public boolean isPublished() {
-		return _published;
+	public boolean isActive() {
+		return _active;
 	}
 
-	public void setPublished(boolean published) {
-		_published = published;
+	public void setActive(boolean active) {
+		_active = active;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
+	private String _uuid;
 	private long _commerceCountryId;
 	private long _groupId;
 	private long _companyId;
@@ -256,12 +275,13 @@ public class CommerceCountrySoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private String _name;
-	private boolean _allowsBilling;
-	private boolean _allowsShipping;
+	private boolean _billingAllowed;
+	private boolean _shippingAllowed;
 	private String _twoLettersISOCode;
 	private String _threeLettersISOCode;
 	private int _numericISOCode;
 	private boolean _subjectToVAT;
 	private double _priority;
-	private boolean _published;
+	private boolean _active;
+	private Date _lastPublishDate;
 }

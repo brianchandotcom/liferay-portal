@@ -29,12 +29,14 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.test.AssertUtils;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -56,6 +58,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -123,6 +126,8 @@ public class CommerceCountryPersistenceTest {
 
 		CommerceCountry newCommerceCountry = _persistence.create(pk);
 
+		newCommerceCountry.setUuid(RandomTestUtil.randomString());
+
 		newCommerceCountry.setGroupId(RandomTestUtil.nextLong());
 
 		newCommerceCountry.setCompanyId(RandomTestUtil.nextLong());
@@ -137,13 +142,13 @@ public class CommerceCountryPersistenceTest {
 
 		newCommerceCountry.setName(RandomTestUtil.randomString());
 
-		newCommerceCountry.setAllowsBilling(RandomTestUtil.randomBoolean());
+		newCommerceCountry.setBillingAllowed(RandomTestUtil.randomBoolean());
 
-		newCommerceCountry.setAllowsShipping(RandomTestUtil.randomBoolean());
+		newCommerceCountry.setShippingAllowed(RandomTestUtil.randomBoolean());
 
-		newCommerceCountry.setTwoLettersISOCode(RandomTestUtil.randomString());
+		newCommerceCountry.setTwoLettersISOCode(RandomTestUtil.randomString(2));
 
-		newCommerceCountry.setThreeLettersISOCode(RandomTestUtil.randomString());
+		newCommerceCountry.setThreeLettersISOCode(RandomTestUtil.randomString(3));
 
 		newCommerceCountry.setNumericISOCode(RandomTestUtil.nextInt());
 
@@ -151,12 +156,16 @@ public class CommerceCountryPersistenceTest {
 
 		newCommerceCountry.setPriority(RandomTestUtil.nextDouble());
 
-		newCommerceCountry.setPublished(RandomTestUtil.randomBoolean());
+		newCommerceCountry.setActive(RandomTestUtil.randomBoolean());
+
+		newCommerceCountry.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_commerceCountries.add(_persistence.update(newCommerceCountry));
 
 		CommerceCountry existingCommerceCountry = _persistence.findByPrimaryKey(newCommerceCountry.getPrimaryKey());
 
+		Assert.assertEquals(existingCommerceCountry.getUuid(),
+			newCommerceCountry.getUuid());
 		Assert.assertEquals(existingCommerceCountry.getCommerceCountryId(),
 			newCommerceCountry.getCommerceCountryId());
 		Assert.assertEquals(existingCommerceCountry.getGroupId(),
@@ -175,10 +184,10 @@ public class CommerceCountryPersistenceTest {
 			Time.getShortTimestamp(newCommerceCountry.getModifiedDate()));
 		Assert.assertEquals(existingCommerceCountry.getName(),
 			newCommerceCountry.getName());
-		Assert.assertEquals(existingCommerceCountry.getAllowsBilling(),
-			newCommerceCountry.getAllowsBilling());
-		Assert.assertEquals(existingCommerceCountry.getAllowsShipping(),
-			newCommerceCountry.getAllowsShipping());
+		Assert.assertEquals(existingCommerceCountry.getBillingAllowed(),
+			newCommerceCountry.getBillingAllowed());
+		Assert.assertEquals(existingCommerceCountry.getShippingAllowed(),
+			newCommerceCountry.getShippingAllowed());
 		Assert.assertEquals(existingCommerceCountry.getTwoLettersISOCode(),
 			newCommerceCountry.getTwoLettersISOCode());
 		Assert.assertEquals(existingCommerceCountry.getThreeLettersISOCode(),
@@ -189,8 +198,53 @@ public class CommerceCountryPersistenceTest {
 			newCommerceCountry.getSubjectToVAT());
 		AssertUtils.assertEquals(existingCommerceCountry.getPriority(),
 			newCommerceCountry.getPriority());
-		Assert.assertEquals(existingCommerceCountry.getPublished(),
-			newCommerceCountry.getPublished());
+		Assert.assertEquals(existingCommerceCountry.getActive(),
+			newCommerceCountry.getActive());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingCommerceCountry.getLastPublishDate()),
+			Time.getShortTimestamp(newCommerceCountry.getLastPublishDate()));
+	}
+
+	@Test
+	public void testCountByUuid() throws Exception {
+		_persistence.countByUuid(StringPool.BLANK);
+
+		_persistence.countByUuid(StringPool.NULL);
+
+		_persistence.countByUuid((String)null);
+	}
+
+	@Test
+	public void testCountByUUID_G() throws Exception {
+		_persistence.countByUUID_G(StringPool.BLANK, RandomTestUtil.nextLong());
+
+		_persistence.countByUUID_G(StringPool.NULL, 0L);
+
+		_persistence.countByUUID_G((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByUuid_C() throws Exception {
+		_persistence.countByUuid_C(StringPool.BLANK, RandomTestUtil.nextLong());
+
+		_persistence.countByUuid_C(StringPool.NULL, 0L);
+
+		_persistence.countByUuid_C((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByGroupId() throws Exception {
+		_persistence.countByGroupId(RandomTestUtil.nextLong());
+
+		_persistence.countByGroupId(0L);
+	}
+
+	@Test
+	public void testCountByG_A() throws Exception {
+		_persistence.countByG_A(RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_A(0L, RandomTestUtil.randomBoolean());
 	}
 
 	@Test
@@ -216,13 +270,14 @@ public class CommerceCountryPersistenceTest {
 	}
 
 	protected OrderByComparator<CommerceCountry> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("CommerceCountry",
-			"commerceCountryId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "name", true, "allowsBilling", true,
-			"allowsShipping", true, "twoLettersISOCode", true,
+		return OrderByComparatorFactoryUtil.create("CommerceCountry", "uuid",
+			true, "commerceCountryId", true, "groupId", true, "companyId",
+			true, "userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "name", true, "billingAllowed", true,
+			"shippingAllowed", true, "twoLettersISOCode", true,
 			"threeLettersISOCode", true, "numericISOCode", true,
-			"subjectToVAT", true, "priority", true, "published", true);
+			"subjectToVAT", true, "priority", true, "active", true,
+			"lastPublishDate", true);
 	}
 
 	@Test
@@ -419,10 +474,28 @@ public class CommerceCountryPersistenceTest {
 		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		CommerceCountry newCommerceCountry = addCommerceCountry();
+
+		_persistence.clearCache();
+
+		CommerceCountry existingCommerceCountry = _persistence.findByPrimaryKey(newCommerceCountry.getPrimaryKey());
+
+		Assert.assertTrue(Objects.equals(existingCommerceCountry.getUuid(),
+				ReflectionTestUtil.invoke(existingCommerceCountry,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(existingCommerceCountry.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingCommerceCountry,
+				"getOriginalGroupId", new Class<?>[0]));
+	}
+
 	protected CommerceCountry addCommerceCountry() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		CommerceCountry commerceCountry = _persistence.create(pk);
+
+		commerceCountry.setUuid(RandomTestUtil.randomString());
 
 		commerceCountry.setGroupId(RandomTestUtil.nextLong());
 
@@ -438,13 +511,13 @@ public class CommerceCountryPersistenceTest {
 
 		commerceCountry.setName(RandomTestUtil.randomString());
 
-		commerceCountry.setAllowsBilling(RandomTestUtil.randomBoolean());
+		commerceCountry.setBillingAllowed(RandomTestUtil.randomBoolean());
 
-		commerceCountry.setAllowsShipping(RandomTestUtil.randomBoolean());
+		commerceCountry.setShippingAllowed(RandomTestUtil.randomBoolean());
 
-		commerceCountry.setTwoLettersISOCode(RandomTestUtil.randomString());
+		commerceCountry.setTwoLettersISOCode(RandomTestUtil.randomString(2));
 
-		commerceCountry.setThreeLettersISOCode(RandomTestUtil.randomString());
+		commerceCountry.setThreeLettersISOCode(RandomTestUtil.randomString(3));
 
 		commerceCountry.setNumericISOCode(RandomTestUtil.nextInt());
 
@@ -452,7 +525,9 @@ public class CommerceCountryPersistenceTest {
 
 		commerceCountry.setPriority(RandomTestUtil.nextDouble());
 
-		commerceCountry.setPublished(RandomTestUtil.randomBoolean());
+		commerceCountry.setActive(RandomTestUtil.randomBoolean());
+
+		commerceCountry.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_commerceCountries.add(_persistence.update(commerceCountry));
 

@@ -23,7 +23,10 @@ import com.liferay.commerce.address.model.CommerceCountrySoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
+import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -32,9 +35,13 @@ import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -44,7 +51,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * The base model implementation for the CommerceCountry service. Represents a row in the &quot;CommerceCountry&quot; database table, with each column mapped to a property of this class.
@@ -70,6 +80,7 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 	 */
 	public static final String TABLE_NAME = "CommerceCountry";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "uuid_", Types.VARCHAR },
 			{ "commerceCountryId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
@@ -78,18 +89,20 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "name", Types.VARCHAR },
-			{ "allowsBilling", Types.BOOLEAN },
-			{ "allowsShipping", Types.BOOLEAN },
+			{ "billingAllowed", Types.BOOLEAN },
+			{ "shippingAllowed", Types.BOOLEAN },
 			{ "twoLettersISOCode", Types.VARCHAR },
 			{ "threeLettersISOCode", Types.VARCHAR },
 			{ "numericISOCode", Types.INTEGER },
 			{ "subjectToVAT", Types.BOOLEAN },
 			{ "priority", Types.DOUBLE },
-			{ "published", Types.BOOLEAN }
+			{ "active_", Types.BOOLEAN },
+			{ "lastPublishDate", Types.TIMESTAMP }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceCountryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -98,20 +111,21 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("allowsBilling", Types.BOOLEAN);
-		TABLE_COLUMNS_MAP.put("allowsShipping", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("billingAllowed", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("shippingAllowed", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("twoLettersISOCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("threeLettersISOCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("numericISOCode", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("subjectToVAT", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
-		TABLE_COLUMNS_MAP.put("published", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceCountry (commerceCountryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,allowsBilling BOOLEAN,allowsShipping BOOLEAN,twoLettersISOCode VARCHAR(75) null,threeLettersISOCode VARCHAR(75) null,numericISOCode INTEGER,subjectToVAT BOOLEAN,priority DOUBLE,published BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceCountry (uuid_ VARCHAR(75) null,commerceCountryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,billingAllowed BOOLEAN,shippingAllowed BOOLEAN,twoLettersISOCode VARCHAR(2) null,threeLettersISOCode VARCHAR(3) null,numericISOCode INTEGER,subjectToVAT BOOLEAN,priority DOUBLE,active_ BOOLEAN,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceCountry";
-	public static final String ORDER_BY_JPQL = " ORDER BY commerceCountry.name ASC, commerceCountry.priority ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY CommerceCountry.name ASC, CommerceCountry.priority ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY commerceCountry.priority ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY CommerceCountry.priority ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -121,7 +135,14 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.commerce.address.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.com.liferay.commerce.address.model.CommerceCountry"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.commerce.address.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.commerce.address.model.CommerceCountry"),
+			true);
+	public static final long ACTIVE_COLUMN_BITMASK = 1L;
+	public static final long COMPANYID_COLUMN_BITMASK = 2L;
+	public static final long GROUPID_COLUMN_BITMASK = 4L;
+	public static final long UUID_COLUMN_BITMASK = 8L;
+	public static final long PRIORITY_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -136,6 +157,7 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 
 		CommerceCountry model = new CommerceCountryImpl();
 
+		model.setUuid(soapModel.getUuid());
 		model.setCommerceCountryId(soapModel.getCommerceCountryId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -144,14 +166,15 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setName(soapModel.getName());
-		model.setAllowsBilling(soapModel.getAllowsBilling());
-		model.setAllowsShipping(soapModel.getAllowsShipping());
+		model.setBillingAllowed(soapModel.getBillingAllowed());
+		model.setShippingAllowed(soapModel.getShippingAllowed());
 		model.setTwoLettersISOCode(soapModel.getTwoLettersISOCode());
 		model.setThreeLettersISOCode(soapModel.getThreeLettersISOCode());
 		model.setNumericISOCode(soapModel.getNumericISOCode());
 		model.setSubjectToVAT(soapModel.getSubjectToVAT());
 		model.setPriority(soapModel.getPriority());
-		model.setPublished(soapModel.getPublished());
+		model.setActive(soapModel.getActive());
+		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
 	}
@@ -217,6 +240,7 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("commerceCountryId", getCommerceCountryId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -225,14 +249,15 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
-		attributes.put("allowsBilling", getAllowsBilling());
-		attributes.put("allowsShipping", getAllowsShipping());
+		attributes.put("billingAllowed", getBillingAllowed());
+		attributes.put("shippingAllowed", getShippingAllowed());
 		attributes.put("twoLettersISOCode", getTwoLettersISOCode());
 		attributes.put("threeLettersISOCode", getThreeLettersISOCode());
 		attributes.put("numericISOCode", getNumericISOCode());
 		attributes.put("subjectToVAT", getSubjectToVAT());
 		attributes.put("priority", getPriority());
-		attributes.put("published", getPublished());
+		attributes.put("active", getActive());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -242,6 +267,12 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long commerceCountryId = (Long)attributes.get("commerceCountryId");
 
 		if (commerceCountryId != null) {
@@ -290,16 +321,16 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 			setName(name);
 		}
 
-		Boolean allowsBilling = (Boolean)attributes.get("allowsBilling");
+		Boolean billingAllowed = (Boolean)attributes.get("billingAllowed");
 
-		if (allowsBilling != null) {
-			setAllowsBilling(allowsBilling);
+		if (billingAllowed != null) {
+			setBillingAllowed(billingAllowed);
 		}
 
-		Boolean allowsShipping = (Boolean)attributes.get("allowsShipping");
+		Boolean shippingAllowed = (Boolean)attributes.get("shippingAllowed");
 
-		if (allowsShipping != null) {
-			setAllowsShipping(allowsShipping);
+		if (shippingAllowed != null) {
+			setShippingAllowed(shippingAllowed);
 		}
 
 		String twoLettersISOCode = (String)attributes.get("twoLettersISOCode");
@@ -333,11 +364,41 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 			setPriority(priority);
 		}
 
-		Boolean published = (Boolean)attributes.get("published");
+		Boolean active = (Boolean)attributes.get("active");
 
-		if (published != null) {
-			setPublished(published);
+		if (active != null) {
+			setActive(active);
 		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
+		}
+	}
+
+	@JSON
+	@Override
+	public String getUuid() {
+		if (_uuid == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	@Override
+	public void setUuid(String uuid) {
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
+		}
+
+		_uuid = uuid;
+	}
+
+	public String getOriginalUuid() {
+		return GetterUtil.getString(_originalUuid);
 	}
 
 	@JSON
@@ -359,7 +420,19 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 
 	@Override
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
 		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
 	}
 
 	@JSON
@@ -370,7 +443,19 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 
 	@Override
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -456,42 +541,125 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 	}
 
 	@Override
+	public String getName(Locale locale) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return getName(languageId);
+	}
+
+	@Override
+	public String getName(Locale locale, boolean useDefault) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return getName(languageId, useDefault);
+	}
+
+	@Override
+	public String getName(String languageId) {
+		return LocalizationUtil.getLocalization(getName(), languageId);
+	}
+
+	@Override
+	public String getName(String languageId, boolean useDefault) {
+		return LocalizationUtil.getLocalization(getName(), languageId,
+			useDefault);
+	}
+
+	@Override
+	public String getNameCurrentLanguageId() {
+		return _nameCurrentLanguageId;
+	}
+
+	@JSON
+	@Override
+	public String getNameCurrentValue() {
+		Locale locale = getLocale(_nameCurrentLanguageId);
+
+		return getName(locale);
+	}
+
+	@Override
+	public Map<Locale, String> getNameMap() {
+		return LocalizationUtil.getLocalizationMap(getName());
+	}
+
+	@Override
 	public void setName(String name) {
 		_name = name;
 	}
 
-	@JSON
 	@Override
-	public boolean getAllowsBilling() {
-		return _allowsBilling;
+	public void setName(String name, Locale locale) {
+		setName(name, locale, LocaleUtil.getSiteDefault());
+	}
+
+	@Override
+	public void setName(String name, Locale locale, Locale defaultLocale) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+
+		if (Validator.isNotNull(name)) {
+			setName(LocalizationUtil.updateLocalization(getName(), "Name",
+					name, languageId, defaultLanguageId));
+		}
+		else {
+			setName(LocalizationUtil.removeLocalization(getName(), "Name",
+					languageId));
+		}
+	}
+
+	@Override
+	public void setNameCurrentLanguageId(String languageId) {
+		_nameCurrentLanguageId = languageId;
+	}
+
+	@Override
+	public void setNameMap(Map<Locale, String> nameMap) {
+		setNameMap(nameMap, LocaleUtil.getSiteDefault());
+	}
+
+	@Override
+	public void setNameMap(Map<Locale, String> nameMap, Locale defaultLocale) {
+		if (nameMap == null) {
+			return;
+		}
+
+		setName(LocalizationUtil.updateLocalization(nameMap, getName(), "Name",
+				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
 	@JSON
 	@Override
-	public boolean isAllowsBilling() {
-		return _allowsBilling;
-	}
-
-	@Override
-	public void setAllowsBilling(boolean allowsBilling) {
-		_allowsBilling = allowsBilling;
+	public boolean getBillingAllowed() {
+		return _billingAllowed;
 	}
 
 	@JSON
 	@Override
-	public boolean getAllowsShipping() {
-		return _allowsShipping;
+	public boolean isBillingAllowed() {
+		return _billingAllowed;
+	}
+
+	@Override
+	public void setBillingAllowed(boolean billingAllowed) {
+		_billingAllowed = billingAllowed;
 	}
 
 	@JSON
 	@Override
-	public boolean isAllowsShipping() {
-		return _allowsShipping;
+	public boolean getShippingAllowed() {
+		return _shippingAllowed;
+	}
+
+	@JSON
+	@Override
+	public boolean isShippingAllowed() {
+		return _shippingAllowed;
 	}
 
 	@Override
-	public void setAllowsShipping(boolean allowsShipping) {
-		_allowsShipping = allowsShipping;
+	public void setShippingAllowed(boolean shippingAllowed) {
+		_shippingAllowed = shippingAllowed;
 	}
 
 	@JSON
@@ -562,24 +730,59 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 
 	@Override
 	public void setPriority(double priority) {
+		_columnBitmask = -1L;
+
 		_priority = priority;
 	}
 
 	@JSON
 	@Override
-	public boolean getPublished() {
-		return _published;
+	public boolean getActive() {
+		return _active;
 	}
 
 	@JSON
 	@Override
-	public boolean isPublished() {
-		return _published;
+	public boolean isActive() {
+		return _active;
 	}
 
 	@Override
-	public void setPublished(boolean published) {
-		_published = published;
+	public void setActive(boolean active) {
+		_columnBitmask |= ACTIVE_COLUMN_BITMASK;
+
+		if (!_setOriginalActive) {
+			_setOriginalActive = true;
+
+			_originalActive = _active;
+		}
+
+		_active = active;
+	}
+
+	public boolean getOriginalActive() {
+		return _originalActive;
+	}
+
+	@JSON
+	@Override
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(PortalUtil.getClassNameId(
+				CommerceCountry.class.getName()));
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -596,6 +799,67 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 	}
 
 	@Override
+	public String[] getAvailableLanguageIds() {
+		Set<String> availableLanguageIds = new TreeSet<String>();
+
+		Map<Locale, String> nameMap = getNameMap();
+
+		for (Map.Entry<Locale, String> entry : nameMap.entrySet()) {
+			Locale locale = entry.getKey();
+			String value = entry.getValue();
+
+			if (Validator.isNotNull(value)) {
+				availableLanguageIds.add(LocaleUtil.toLanguageId(locale));
+			}
+		}
+
+		return availableLanguageIds.toArray(new String[availableLanguageIds.size()]);
+	}
+
+	@Override
+	public String getDefaultLanguageId() {
+		String xml = getName();
+
+		if (xml == null) {
+			return StringPool.BLANK;
+		}
+
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
+
+		return LocalizationUtil.getDefaultLanguageId(xml, defaultLocale);
+	}
+
+	@Override
+	public void prepareLocalizedFieldsForImport() throws LocaleException {
+		Locale defaultLocale = LocaleUtil.fromLanguageId(getDefaultLanguageId());
+
+		Locale[] availableLocales = LocaleUtil.fromLanguageIds(getAvailableLanguageIds());
+
+		Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(CommerceCountry.class.getName(),
+				getPrimaryKey(), defaultLocale, availableLocales);
+
+		prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
+	@Override
+	@SuppressWarnings("unused")
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
+		throws LocaleException {
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
+
+		String modelDefaultLanguageId = getDefaultLanguageId();
+
+		String name = getName(defaultLocale);
+
+		if (Validator.isNull(name)) {
+			setName(getName(modelDefaultLanguageId), defaultLocale);
+		}
+		else {
+			setName(getName(defaultLocale), defaultLocale, defaultLocale);
+		}
+	}
+
+	@Override
 	public CommerceCountry toEscapedModel() {
 		if (_escapedModel == null) {
 			_escapedModel = (CommerceCountry)ProxyUtil.newProxyInstance(_classLoader,
@@ -609,6 +873,7 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 	public Object clone() {
 		CommerceCountryImpl commerceCountryImpl = new CommerceCountryImpl();
 
+		commerceCountryImpl.setUuid(getUuid());
 		commerceCountryImpl.setCommerceCountryId(getCommerceCountryId());
 		commerceCountryImpl.setGroupId(getGroupId());
 		commerceCountryImpl.setCompanyId(getCompanyId());
@@ -617,14 +882,15 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 		commerceCountryImpl.setCreateDate(getCreateDate());
 		commerceCountryImpl.setModifiedDate(getModifiedDate());
 		commerceCountryImpl.setName(getName());
-		commerceCountryImpl.setAllowsBilling(getAllowsBilling());
-		commerceCountryImpl.setAllowsShipping(getAllowsShipping());
+		commerceCountryImpl.setBillingAllowed(getBillingAllowed());
+		commerceCountryImpl.setShippingAllowed(getShippingAllowed());
 		commerceCountryImpl.setTwoLettersISOCode(getTwoLettersISOCode());
 		commerceCountryImpl.setThreeLettersISOCode(getThreeLettersISOCode());
 		commerceCountryImpl.setNumericISOCode(getNumericISOCode());
 		commerceCountryImpl.setSubjectToVAT(getSubjectToVAT());
 		commerceCountryImpl.setPriority(getPriority());
-		commerceCountryImpl.setPublished(getPublished());
+		commerceCountryImpl.setActive(getActive());
+		commerceCountryImpl.setLastPublishDate(getLastPublishDate());
 
 		commerceCountryImpl.resetOriginalValues();
 
@@ -634,12 +900,6 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 	@Override
 	public int compareTo(CommerceCountry commerceCountry) {
 		int value = 0;
-
-		value = getName().compareTo(commerceCountry.getName());
-
-		if (value != 0) {
-			return value;
-		}
 
 		if (getPriority() < commerceCountry.getPriority()) {
 			value = -1;
@@ -699,12 +959,36 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 	public void resetOriginalValues() {
 		CommerceCountryModelImpl commerceCountryModelImpl = this;
 
+		commerceCountryModelImpl._originalUuid = commerceCountryModelImpl._uuid;
+
+		commerceCountryModelImpl._originalGroupId = commerceCountryModelImpl._groupId;
+
+		commerceCountryModelImpl._setOriginalGroupId = false;
+
+		commerceCountryModelImpl._originalCompanyId = commerceCountryModelImpl._companyId;
+
+		commerceCountryModelImpl._setOriginalCompanyId = false;
+
 		commerceCountryModelImpl._setModifiedDate = false;
+
+		commerceCountryModelImpl._originalActive = commerceCountryModelImpl._active;
+
+		commerceCountryModelImpl._setOriginalActive = false;
+
+		commerceCountryModelImpl._columnBitmask = 0;
 	}
 
 	@Override
 	public CacheModel<CommerceCountry> toCacheModel() {
 		CommerceCountryCacheModel commerceCountryCacheModel = new CommerceCountryCacheModel();
+
+		commerceCountryCacheModel.uuid = getUuid();
+
+		String uuid = commerceCountryCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			commerceCountryCacheModel.uuid = null;
+		}
 
 		commerceCountryCacheModel.commerceCountryId = getCommerceCountryId();
 
@@ -748,9 +1032,9 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 			commerceCountryCacheModel.name = null;
 		}
 
-		commerceCountryCacheModel.allowsBilling = getAllowsBilling();
+		commerceCountryCacheModel.billingAllowed = getBillingAllowed();
 
-		commerceCountryCacheModel.allowsShipping = getAllowsShipping();
+		commerceCountryCacheModel.shippingAllowed = getShippingAllowed();
 
 		commerceCountryCacheModel.twoLettersISOCode = getTwoLettersISOCode();
 
@@ -775,16 +1059,27 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 
 		commerceCountryCacheModel.priority = getPriority();
 
-		commerceCountryCacheModel.published = getPublished();
+		commerceCountryCacheModel.active = getActive();
+
+		Date lastPublishDate = getLastPublishDate();
+
+		if (lastPublishDate != null) {
+			commerceCountryCacheModel.lastPublishDate = lastPublishDate.getTime();
+		}
+		else {
+			commerceCountryCacheModel.lastPublishDate = Long.MIN_VALUE;
+		}
 
 		return commerceCountryCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(37);
 
-		sb.append("{commerceCountryId=");
+		sb.append("{uuid=");
+		sb.append(getUuid());
+		sb.append(", commerceCountryId=");
 		sb.append(getCommerceCountryId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
@@ -800,10 +1095,10 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 		sb.append(getModifiedDate());
 		sb.append(", name=");
 		sb.append(getName());
-		sb.append(", allowsBilling=");
-		sb.append(getAllowsBilling());
-		sb.append(", allowsShipping=");
-		sb.append(getAllowsShipping());
+		sb.append(", billingAllowed=");
+		sb.append(getBillingAllowed());
+		sb.append(", shippingAllowed=");
+		sb.append(getShippingAllowed());
 		sb.append(", twoLettersISOCode=");
 		sb.append(getTwoLettersISOCode());
 		sb.append(", threeLettersISOCode=");
@@ -814,8 +1109,10 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 		sb.append(getSubjectToVAT());
 		sb.append(", priority=");
 		sb.append(getPriority());
-		sb.append(", published=");
-		sb.append(getPublished());
+		sb.append(", active=");
+		sb.append(getActive());
+		sb.append(", lastPublishDate=");
+		sb.append(getLastPublishDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -823,12 +1120,16 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(52);
+		StringBundler sb = new StringBundler(58);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.address.model.CommerceCountry");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>uuid</column-name><column-value><![CDATA[");
+		sb.append(getUuid());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>commerceCountryId</column-name><column-value><![CDATA[");
 		sb.append(getCommerceCountryId());
@@ -862,12 +1163,12 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 		sb.append(getName());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>allowsBilling</column-name><column-value><![CDATA[");
-		sb.append(getAllowsBilling());
+			"<column><column-name>billingAllowed</column-name><column-value><![CDATA[");
+		sb.append(getBillingAllowed());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>allowsShipping</column-name><column-value><![CDATA[");
-		sb.append(getAllowsShipping());
+			"<column><column-name>shippingAllowed</column-name><column-value><![CDATA[");
+		sb.append(getShippingAllowed());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>twoLettersISOCode</column-name><column-value><![CDATA[");
@@ -890,8 +1191,12 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 		sb.append(getPriority());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>published</column-name><column-value><![CDATA[");
-		sb.append(getPublished());
+			"<column><column-name>active</column-name><column-value><![CDATA[");
+		sb.append(getActive());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
+		sb.append(getLastPublishDate());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -903,22 +1208,33 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			CommerceCountry.class
 		};
+	private String _uuid;
+	private String _originalUuid;
 	private long _commerceCountryId;
 	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private String _name;
-	private boolean _allowsBilling;
-	private boolean _allowsShipping;
+	private String _nameCurrentLanguageId;
+	private boolean _billingAllowed;
+	private boolean _shippingAllowed;
 	private String _twoLettersISOCode;
 	private String _threeLettersISOCode;
 	private int _numericISOCode;
 	private boolean _subjectToVAT;
 	private double _priority;
-	private boolean _published;
+	private boolean _active;
+	private boolean _originalActive;
+	private boolean _setOriginalActive;
+	private Date _lastPublishDate;
+	private long _columnBitmask;
 	private CommerceCountry _escapedModel;
 }

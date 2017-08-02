@@ -18,6 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -58,6 +60,7 @@ public class CommerceRegionWrapper implements CommerceRegion,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("commerceRegionId", getCommerceRegionId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -67,15 +70,22 @@ public class CommerceRegionWrapper implements CommerceRegion,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("commerceCountryId", getCommerceCountryId());
 		attributes.put("name", getName());
-		attributes.put("abbreviation", getAbbreviation());
+		attributes.put("code", getCode());
 		attributes.put("priority", getPriority());
-		attributes.put("published", getPublished());
+		attributes.put("active", getActive());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long commerceRegionId = (Long)attributes.get("commerceRegionId");
 
 		if (commerceRegionId != null) {
@@ -130,10 +140,10 @@ public class CommerceRegionWrapper implements CommerceRegion,
 			setName(name);
 		}
 
-		String abbreviation = (String)attributes.get("abbreviation");
+		String code = (String)attributes.get("code");
 
-		if (abbreviation != null) {
-			setAbbreviation(abbreviation);
+		if (code != null) {
+			setCode(code);
 		}
 
 		Double priority = (Double)attributes.get("priority");
@@ -142,11 +152,23 @@ public class CommerceRegionWrapper implements CommerceRegion,
 			setPriority(priority);
 		}
 
-		Boolean published = (Boolean)attributes.get("published");
+		Boolean active = (Boolean)attributes.get("active");
 
-		if (published != null) {
-			setPublished(published);
+		if (active != null) {
+			setActive(active);
 		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
+		}
+	}
+
+	@Override
+	public CommerceCountry getCommerceCountry()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceRegion.getCommerceCountry();
 	}
 
 	@Override
@@ -160,13 +182,23 @@ public class CommerceRegionWrapper implements CommerceRegion,
 	}
 
 	/**
-	* Returns the published of this commerce region.
+	* Returns the active of this commerce region.
 	*
-	* @return the published of this commerce region
+	* @return the active of this commerce region
 	*/
 	@Override
-	public boolean getPublished() {
-		return _commerceRegion.getPublished();
+	public boolean getActive() {
+		return _commerceRegion.getActive();
+	}
+
+	/**
+	* Returns <code>true</code> if this commerce region is active.
+	*
+	* @return <code>true</code> if this commerce region is active; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isActive() {
+		return _commerceRegion.isActive();
 	}
 
 	@Override
@@ -182,16 +214,6 @@ public class CommerceRegionWrapper implements CommerceRegion,
 	@Override
 	public boolean isNew() {
 		return _commerceRegion.isNew();
-	}
-
-	/**
-	* Returns <code>true</code> if this commerce region is published.
-	*
-	* @return <code>true</code> if this commerce region is published; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isPublished() {
-		return _commerceRegion.isPublished();
 	}
 
 	@Override
@@ -235,13 +257,13 @@ public class CommerceRegionWrapper implements CommerceRegion,
 	}
 
 	/**
-	* Returns the abbreviation of this commerce region.
+	* Returns the code of this commerce region.
 	*
-	* @return the abbreviation of this commerce region
+	* @return the code of this commerce region
 	*/
 	@Override
-	public java.lang.String getAbbreviation() {
-		return _commerceRegion.getAbbreviation();
+	public java.lang.String getCode() {
+		return _commerceRegion.getCode();
 	}
 
 	/**
@@ -274,6 +296,16 @@ public class CommerceRegionWrapper implements CommerceRegion,
 		return _commerceRegion.getUserUuid();
 	}
 
+	/**
+	* Returns the uuid of this commerce region.
+	*
+	* @return the uuid of this commerce region
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _commerceRegion.getUuid();
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _commerceRegion.toString();
@@ -292,6 +324,16 @@ public class CommerceRegionWrapper implements CommerceRegion,
 	@Override
 	public Date getCreateDate() {
 		return _commerceRegion.getCreateDate();
+	}
+
+	/**
+	* Returns the last publish date of this commerce region.
+	*
+	* @return the last publish date of this commerce region
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _commerceRegion.getLastPublishDate();
 	}
 
 	/**
@@ -370,18 +412,28 @@ public class CommerceRegionWrapper implements CommerceRegion,
 	}
 
 	/**
-	* Sets the abbreviation of this commerce region.
+	* Sets whether this commerce region is active.
 	*
-	* @param abbreviation the abbreviation of this commerce region
+	* @param active the active of this commerce region
 	*/
 	@Override
-	public void setAbbreviation(java.lang.String abbreviation) {
-		_commerceRegion.setAbbreviation(abbreviation);
+	public void setActive(boolean active) {
+		_commerceRegion.setActive(active);
 	}
 
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_commerceRegion.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the code of this commerce region.
+	*
+	* @param code the code of this commerce region
+	*/
+	@Override
+	public void setCode(java.lang.String code) {
+		_commerceRegion.setCode(code);
 	}
 
 	/**
@@ -451,6 +503,16 @@ public class CommerceRegionWrapper implements CommerceRegion,
 	}
 
 	/**
+	* Sets the last publish date of this commerce region.
+	*
+	* @param lastPublishDate the last publish date of this commerce region
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_commerceRegion.setLastPublishDate(lastPublishDate);
+	}
+
+	/**
 	* Sets the modified date of this commerce region.
 	*
 	* @param modifiedDate the modified date of this commerce region
@@ -501,16 +563,6 @@ public class CommerceRegionWrapper implements CommerceRegion,
 	}
 
 	/**
-	* Sets whether this commerce region is published.
-	*
-	* @param published the published of this commerce region
-	*/
-	@Override
-	public void setPublished(boolean published) {
-		_commerceRegion.setPublished(published);
-	}
-
-	/**
 	* Sets the user ID of this commerce region.
 	*
 	* @param userId the user ID of this commerce region
@@ -540,6 +592,16 @@ public class CommerceRegionWrapper implements CommerceRegion,
 		_commerceRegion.setUserUuid(userUuid);
 	}
 
+	/**
+	* Sets the uuid of this commerce region.
+	*
+	* @param uuid the uuid of this commerce region
+	*/
+	@Override
+	public void setUuid(java.lang.String uuid) {
+		_commerceRegion.setUuid(uuid);
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -558,6 +620,11 @@ public class CommerceRegionWrapper implements CommerceRegion,
 		}
 
 		return false;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _commerceRegion.getStagedModelType();
 	}
 
 	@Override

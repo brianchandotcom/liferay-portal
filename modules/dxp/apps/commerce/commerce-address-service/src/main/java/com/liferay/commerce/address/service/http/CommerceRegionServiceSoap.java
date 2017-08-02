@@ -66,13 +66,13 @@ import java.rmi.RemoteException;
 @ProviderType
 public class CommerceRegionServiceSoap {
 	public static com.liferay.commerce.address.model.CommerceRegionSoap addCommerceRegion(
-		long commerceCountryId, java.lang.String name,
-		java.lang.String abbreviation, double priority, boolean published,
+		long commerceCountryId, java.lang.String name, java.lang.String code,
+		double priority, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.commerce.address.model.CommerceRegion returnValue = CommerceRegionServiceUtil.addCommerceRegion(commerceCountryId,
-					name, abbreviation, priority, published, serviceContext);
+					name, code, priority, active, serviceContext);
 
 			return com.liferay.commerce.address.model.CommerceRegionSoap.toSoapModel(returnValue);
 		}
@@ -83,10 +83,22 @@ public class CommerceRegionServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.address.model.CommerceRegionSoap deleteCommerceRegion(
+	public static void deleteCommerceRegion(long commerceRegionId)
+		throws RemoteException {
+		try {
+			CommerceRegionServiceUtil.deleteCommerceRegion(commerceRegionId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.address.model.CommerceRegionSoap getCommerceRegion(
 		long commerceRegionId) throws RemoteException {
 		try {
-			com.liferay.commerce.address.model.CommerceRegion returnValue = CommerceRegionServiceUtil.deleteCommerceRegion(commerceRegionId);
+			com.liferay.commerce.address.model.CommerceRegion returnValue = CommerceRegionServiceUtil.getCommerceRegion(commerceRegionId);
 
 			return com.liferay.commerce.address.model.CommerceRegionSoap.toSoapModel(returnValue);
 		}
@@ -97,12 +109,16 @@ public class CommerceRegionServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.address.model.CommerceRegionSoap fetchCommerceRegion(
-		long commerceRegionId) throws RemoteException {
+	public static com.liferay.commerce.address.model.CommerceRegionSoap[] getCommerceRegions(
+		long commerceCountryId, boolean active, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.address.model.CommerceRegion> orderByComparator)
+		throws RemoteException {
 		try {
-			com.liferay.commerce.address.model.CommerceRegion returnValue = CommerceRegionServiceUtil.fetchCommerceRegion(commerceRegionId);
+			java.util.List<com.liferay.commerce.address.model.CommerceRegion> returnValue =
+				CommerceRegionServiceUtil.getCommerceRegions(commerceCountryId,
+					active, start, end, orderByComparator);
 
-			return com.liferay.commerce.address.model.CommerceRegionSoap.toSoapModel(returnValue);
+			return com.liferay.commerce.address.model.CommerceRegionSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -143,13 +159,29 @@ public class CommerceRegionServiceSoap {
 		}
 	}
 
+	public static int getCommerceRegionsCount(long commerceCountryId,
+		boolean active) throws RemoteException {
+		try {
+			int returnValue = CommerceRegionServiceUtil.getCommerceRegionsCount(commerceCountryId,
+					active);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.address.model.CommerceRegionSoap updateCommerceRegion(
-		long commerceRegionId, java.lang.String name,
-		java.lang.String abbreviation, double priority, boolean published)
+		long commerceRegionId, java.lang.String name, java.lang.String code,
+		double priority, boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.commerce.address.model.CommerceRegion returnValue = CommerceRegionServiceUtil.updateCommerceRegion(commerceRegionId,
-					name, abbreviation, priority, published);
+					name, code, priority, active, serviceContext);
 
 			return com.liferay.commerce.address.model.CommerceRegionSoap.toSoapModel(returnValue);
 		}

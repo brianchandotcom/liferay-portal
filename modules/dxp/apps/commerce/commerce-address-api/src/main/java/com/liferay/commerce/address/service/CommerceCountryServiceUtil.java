@@ -42,44 +42,47 @@ public class CommerceCountryServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.address.service.impl.CommerceCountryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.commerce.address.model.CommerceCountry addCommerceCountry(
-		java.lang.String name, boolean allowsBilling, boolean allowsShipping,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		boolean billingAllowed, boolean shippingAllowed,
 		java.lang.String twoLettersISOCode,
 		java.lang.String threeLettersISOCode, int numericISOCode,
-		boolean subjectToVAT, double priority, boolean published,
+		boolean subjectToVAT, double priority, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addCommerceCountry(name, allowsBilling, allowsShipping,
-			twoLettersISOCode, threeLettersISOCode, numericISOCode,
-			subjectToVAT, priority, published, serviceContext);
+				   .addCommerceCountry(nameMap, billingAllowed,
+			shippingAllowed, twoLettersISOCode, threeLettersISOCode,
+			numericISOCode, subjectToVAT, priority, active, serviceContext);
 	}
 
-	public static com.liferay.commerce.address.model.CommerceCountry deleteCommerceCountry(
+	public static com.liferay.commerce.address.model.CommerceCountry getCommerceCountry(
 		long commerceCountryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteCommerceCountry(commerceCountryId);
-	}
-
-	public static com.liferay.commerce.address.model.CommerceCountry fetchCommerceCountry(
-		long commerceCountryId) {
-		return getService().fetchCommerceCountry(commerceCountryId);
+		return getService().getCommerceCountry(commerceCountryId);
 	}
 
 	public static com.liferay.commerce.address.model.CommerceCountry updateCommerceCountry(
-		long commerceCountryId, java.lang.String name, boolean allowsBilling,
-		boolean allowsShipping, java.lang.String twoLettersISOCode,
+		long commerceCountryId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		boolean billingAllowed, boolean shippingAllowed,
+		java.lang.String twoLettersISOCode,
 		java.lang.String threeLettersISOCode, int numericISOCode,
-		boolean subjectToVAT, double priority, boolean published)
+		boolean subjectToVAT, double priority, boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .updateCommerceCountry(commerceCountryId, name,
-			allowsBilling, allowsShipping, twoLettersISOCode,
+				   .updateCommerceCountry(commerceCountryId, nameMap,
+			billingAllowed, shippingAllowed, twoLettersISOCode,
 			threeLettersISOCode, numericISOCode, subjectToVAT, priority,
-			published);
+			active, serviceContext);
 	}
 
-	public static int getCommerceCountriesCount() {
-		return getService().getCommerceCountriesCount();
+	public static int getCommerceCountriesCount(long groupId) {
+		return getService().getCommerceCountriesCount(groupId);
+	}
+
+	public static int getCommerceCountriesCount(long groupId, boolean active) {
+		return getService().getCommerceCountriesCount(groupId, active);
 	}
 
 	/**
@@ -92,9 +95,23 @@ public class CommerceCountryServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.address.model.CommerceCountry> getCommerceCountries(
-		int start, int end,
+		long groupId, boolean active, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.address.model.CommerceCountry> orderByComparator) {
-		return getService().getCommerceCountries(start, end, orderByComparator);
+		return getService()
+				   .getCommerceCountries(groupId, active, start, end,
+			orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.commerce.address.model.CommerceCountry> getCommerceCountries(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.address.model.CommerceCountry> orderByComparator) {
+		return getService()
+				   .getCommerceCountries(groupId, start, end, orderByComparator);
+	}
+
+	public static void deleteCommerceCountry(long commerceCountryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteCommerceCountry(commerceCountryId);
 	}
 
 	public static CommerceCountryService getService() {

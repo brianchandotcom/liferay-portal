@@ -75,6 +75,14 @@
 		</execute>
 	</command>
 
+	<command name="gotoArticleMenuPGViaWCD">
+		<execute function="MouseOver" locator1="WCD#WEB_CONTENT_CONTENT" />
+
+		<execute function="Click#makeVisibleClickAt" locator1="WCD#ARTICLE_ELLIPSIS_ICON">
+			<var name="key_webContentTitle" value="${webContentTitle}" />
+		</execute>
+	</command>
+
 	<command name="gotoEditCP">
 		<execute macro="WebContentNavigator#_openDescriptiveMenulistCP">
 			<var name="webContentTitle" value="${webContentTitle}" />
@@ -98,9 +106,12 @@
 	</command>
 
 	<command name="gotoEditPGViaWCD">
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Web Content Display" />
-			<var name="portletOption" value="Edit Web Content" />
+		<execute macro="WebContentNavigator#gotoArticleMenuPGViaWCD">
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit Web Content">
+			<var name="key_menuItem" value="Edit Web Content" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#MODAL_IFRAME" />

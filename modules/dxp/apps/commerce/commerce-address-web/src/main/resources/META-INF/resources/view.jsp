@@ -20,6 +20,8 @@
 CommerceCountriesDisplayContext commerceCountriesDisplayContext = (CommerceCountriesDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 SearchContainer<CommerceCountry> commerceCountrySearchContainer = commerceCountriesDisplayContext.getSearchContainer();
+
+boolean hasManageCommerceCountriesPermission = CommerceAddressPermission.contains(permissionChecker, scopeGroupId, CommerceAddressActionKeys.MANAGE_COMMERCE_COUNTRIES);
 %>
 
 <liferay-frontend:management-bar
@@ -48,9 +50,11 @@ SearchContainer<CommerceCountry> commerceCountrySearchContainer = commerceCountr
 		/>
 	</liferay-frontend:management-bar-buttons>
 
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceCountries();" %>' icon="trash" label="delete" />
-	</liferay-frontend:management-bar-action-buttons>
+	<c:if test="<%= hasManageCommerceCountriesPermission %>">
+		<liferay-frontend:management-bar-action-buttons>
+			<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceCountries();" %>' icon="trash" label="delete" />
+		</liferay-frontend:management-bar-action-buttons>
+	</c:if>
 </liferay-frontend:management-bar>
 
 <div class="container-fluid-1280" id="<portlet:namespace />commerceCountriesContainer">
@@ -111,14 +115,16 @@ SearchContainer<CommerceCountry> commerceCountrySearchContainer = commerceCountr
 	</aui:form>
 </div>
 
-<portlet:renderURL var="addCommerceCountryURL">
-	<portlet:param name="mvcRenderCommandName" value="editCommerceCountry" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-</portlet:renderURL>
+<c:if test="<%= hasManageCommerceCountriesPermission %>">
+	<portlet:renderURL var="addCommerceCountryURL">
+		<portlet:param name="mvcRenderCommandName" value="editCommerceCountry" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+	</portlet:renderURL>
 
-<liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-country") %>' url="<%= addCommerceCountryURL.toString() %>" />
-</liferay-frontend:add-menu>
+	<liferay-frontend:add-menu>
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-country") %>' url="<%= addCommerceCountryURL.toString() %>" />
+	</liferay-frontend:add-menu>
+</c:if>
 
 <aui:script>
 	function <portlet:namespace />deleteCommerceCountries() {

@@ -14,8 +14,11 @@
 
 package com.liferay.commerce.address.service.impl;
 
+import com.liferay.commerce.address.constants.CommerceAddressActionKeys;
+import com.liferay.commerce.address.model.CommerceCountry;
 import com.liferay.commerce.address.model.CommerceRegion;
 import com.liferay.commerce.address.service.base.CommerceRegionServiceBaseImpl;
+import com.liferay.commerce.address.service.permission.CommerceAddressPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -33,16 +36,30 @@ public class CommerceRegionServiceImpl extends CommerceRegionServiceBaseImpl {
 			double priority, boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
+		CommerceCountry commerceCountry =
+			commerceCountryPersistence.findByPrimaryKey(commerceCountryId);
+
+		CommerceAddressPermission.check(
+			getPermissionChecker(), commerceCountry.getGroupId(),
+			CommerceAddressActionKeys.MANAGE_COMMERCE_COUNTRIES);
+
 		return commerceRegionLocalService.addCommerceRegion(
-			commerceCountryId, name, abbreviation, priority, active,
-			serviceContext);
+			commerceCountry.getCommerceCountryId(), name, abbreviation,
+			priority, active, serviceContext);
 	}
 
 	@Override
 	public void deleteCommerceRegion(long commerceRegionId)
 		throws PortalException {
 
-		commerceRegionLocalService.deleteCommerceRegion(commerceRegionId);
+		CommerceRegion commerceRegion =
+			commerceRegionPersistence.findByPrimaryKey(commerceRegionId);
+
+		CommerceAddressPermission.check(
+			getPermissionChecker(), commerceRegion.getGroupId(),
+			CommerceAddressActionKeys.MANAGE_COMMERCE_COUNTRIES);
+
+		commerceRegionLocalService.deleteCommerceRegion(commerceRegion);
 	}
 
 	@Override
@@ -71,8 +88,16 @@ public class CommerceRegionServiceImpl extends CommerceRegionServiceBaseImpl {
 			double priority, boolean active)
 		throws PortalException {
 
+		CommerceRegion commerceRegion =
+			commerceRegionPersistence.findByPrimaryKey(commerceRegionId);
+
+		CommerceAddressPermission.check(
+			getPermissionChecker(), commerceRegion.getGroupId(),
+			CommerceAddressActionKeys.MANAGE_COMMERCE_COUNTRIES);
+
 		return commerceRegionLocalService.updateCommerceRegion(
-			commerceRegionId, name, abbreviation, priority, active);
+			commerceRegion.getCommerceRegionId(), name, abbreviation, priority,
+			active);
 	}
 
 }

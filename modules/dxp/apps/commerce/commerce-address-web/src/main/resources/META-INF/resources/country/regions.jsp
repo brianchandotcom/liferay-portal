@@ -19,7 +19,10 @@
 <%
 CommerceRegionsDisplayContext commerceRegionsDisplayContext = (CommerceRegionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
+CommerceCountry commerceCountry = commerceRegionsDisplayContext.getCommerceCountry();
 SearchContainer<CommerceRegion> commerceRegionSearchContainer = commerceRegionsDisplayContext.getSearchContainer();
+
+boolean hasManageCommerceCountriesPermission = CommerceAddressPermission.contains(permissionChecker, commerceCountry.getGroupId(), CommerceAddressActionKeys.MANAGE_COMMERCE_COUNTRIES);
 %>
 
 <liferay-frontend:management-bar
@@ -48,9 +51,11 @@ SearchContainer<CommerceRegion> commerceRegionSearchContainer = commerceRegionsD
 		/>
 	</liferay-frontend:management-bar-buttons>
 
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceRegions();" %>' icon="trash" label="delete" />
-	</liferay-frontend:management-bar-action-buttons>
+	<c:if test="<%= hasManageCommerceCountriesPermission %>">
+		<liferay-frontend:management-bar-action-buttons>
+			<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceRegions();" %>' icon="trash" label="delete" />
+		</liferay-frontend:management-bar-action-buttons>
+	</c:if>
 </liferay-frontend:management-bar>
 
 <div class="container-fluid-1280" id="<portlet:namespace />commerceRegionsContainer">
@@ -95,15 +100,17 @@ SearchContainer<CommerceRegion> commerceRegionSearchContainer = commerceRegionsD
 	</aui:form>
 </div>
 
-<portlet:renderURL var="addCommerceRegionURL">
-	<portlet:param name="mvcRenderCommandName" value="editCommerceRegion" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-	<portlet:param name="commerceCountryId" value="<%= String.valueOf(commerceRegionsDisplayContext.getCommerceCountryId()) %>" />
-</portlet:renderURL>
+<c:if test="<%= hasManageCommerceCountriesPermission %>">
+	<portlet:renderURL var="addCommerceRegionURL">
+		<portlet:param name="mvcRenderCommandName" value="editCommerceRegion" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="commerceCountryId" value="<%= String.valueOf(commerceCountry.getCommerceCountryId()) %>" />
+	</portlet:renderURL>
 
-<liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-region") %>' url="<%= addCommerceRegionURL.toString() %>" />
-</liferay-frontend:add-menu>
+	<liferay-frontend:add-menu>
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-region") %>' url="<%= addCommerceRegionURL.toString() %>" />
+	</liferay-frontend:add-menu>
+</c:if>
 
 <aui:script>
 	function <portlet:namespace />deleteCommerceRegions() {

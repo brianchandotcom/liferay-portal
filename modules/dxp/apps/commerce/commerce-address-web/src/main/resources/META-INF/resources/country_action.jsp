@@ -30,24 +30,26 @@ else {
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
-	<portlet:renderURL var="editURL">
-		<portlet:param name="mvcRenderCommandName" value="editCommerceCountry" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="commerceCountryId" value="<%= String.valueOf(commerceCountry.getCommerceCountryId()) %>" />
-	</portlet:renderURL>
+	<c:if test="<%= CommerceAddressPermission.contains(permissionChecker, commerceCountry.getGroupId(), CommerceAddressActionKeys.MANAGE_COMMERCE_COUNTRIES) %>">
+		<portlet:renderURL var="editURL">
+			<portlet:param name="mvcRenderCommandName" value="editCommerceCountry" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="commerceCountryId" value="<%= String.valueOf(commerceCountry.getCommerceCountryId()) %>" />
+		</portlet:renderURL>
 
-	<liferay-ui:icon
-		message="edit"
-		url="<%= editURL %>"
-	/>
+		<liferay-ui:icon
+			message="edit"
+			url="<%= editURL %>"
+		/>
 
-	<portlet:actionURL name="editCommerceCountry" var="deleteURL">
-		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="commerceCountryId" value="<%= String.valueOf(commerceCountry.getCommerceCountryId()) %>" />
-	</portlet:actionURL>
+		<portlet:actionURL name="editCommerceCountry" var="deleteURL">
+			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="commerceCountryId" value="<%= String.valueOf(commerceCountry.getCommerceCountryId()) %>" />
+		</portlet:actionURL>
 
-	<liferay-ui:icon-delete
-		url="<%= deleteURL %>"
-	/>
+		<liferay-ui:icon-delete
+			url="<%= deleteURL %>"
+		/>
+	</c:if>
 </liferay-ui:icon-menu>

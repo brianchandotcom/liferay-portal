@@ -14,8 +14,10 @@
 
 package com.liferay.commerce.address.service.impl;
 
+import com.liferay.commerce.address.constants.CommerceAddressActionKeys;
 import com.liferay.commerce.address.model.CommerceCountry;
 import com.liferay.commerce.address.service.base.CommerceCountryServiceBaseImpl;
+import com.liferay.commerce.address.service.permission.CommerceAddressPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -38,6 +40,10 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		CommerceAddressPermission.check(
+			getPermissionChecker(), serviceContext.getScopeGroupId(),
+			CommerceAddressActionKeys.MANAGE_COMMERCE_COUNTRIES);
+
 		return commerceCountryLocalService.addCommerceCountry(
 			nameMap, billingAllowed, shippingAllowed, twoLettersISOCode,
 			threeLettersISOCode, numericISOCode, subjectToVAT, priority, active,
@@ -48,7 +54,14 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 	public void deleteCommerceCountry(long commerceCountryId)
 		throws PortalException {
 
-		commerceCountryLocalService.deleteCommerceCountry(commerceCountryId);
+		CommerceCountry commerceCountry =
+			commerceCountryPersistence.findByPrimaryKey(commerceCountryId);
+
+		CommerceAddressPermission.check(
+			getPermissionChecker(), commerceCountry.getGroupId(),
+			CommerceAddressActionKeys.MANAGE_COMMERCE_COUNTRIES);
+
+		commerceCountryLocalService.deleteCommerceCountry(commerceCountry);
 	}
 
 	@Override
@@ -80,10 +93,17 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 			boolean active)
 		throws PortalException {
 
+		CommerceCountry commerceCountry =
+			commerceCountryPersistence.findByPrimaryKey(commerceCountryId);
+
+		CommerceAddressPermission.check(
+			getPermissionChecker(), commerceCountry.getGroupId(),
+			CommerceAddressActionKeys.MANAGE_COMMERCE_COUNTRIES);
+
 		return commerceCountryLocalService.updateCommerceCountry(
-			commerceCountryId, nameMap, billingAllowed, shippingAllowed,
-			twoLettersISOCode, threeLettersISOCode, numericISOCode,
-			subjectToVAT, priority, active);
+			commerceCountry.getCommerceCountryId(), nameMap, billingAllowed,
+			shippingAllowed, twoLettersISOCode, threeLettersISOCode,
+			numericISOCode, subjectToVAT, priority, active);
 	}
 
 }

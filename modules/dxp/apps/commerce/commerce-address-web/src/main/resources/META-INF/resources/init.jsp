@@ -21,7 +21,11 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.commerce.address.exception.NoSuchCountryException" %><%@
+<%@ page import="com.liferay.commerce.address.exception.CommerceCountryNameException" %><%@
+page import="com.liferay.commerce.address.exception.CommerceCountryThreeLettersISOCodeException" %><%@
+page import="com.liferay.commerce.address.exception.CommerceCountryTwoLettersISOCodeException" %><%@
+page import="com.liferay.commerce.address.exception.CommerceRegionNameException" %><%@
+page import="com.liferay.commerce.address.exception.NoSuchCountryException" %><%@
 page import="com.liferay.commerce.address.exception.NoSuchRegionException" %><%@
 page import="com.liferay.commerce.address.model.CommerceCountry" %><%@
 page import="com.liferay.commerce.address.model.CommerceRegion" %><%@

@@ -54,6 +54,8 @@ renderResponse.setTitle(title);
 	<aui:input name="commerceCountryId" type="hidden" value="<%= String.valueOf(commerceCountryId) %>" />
 	<aui:input name="commerceRegionId" type="hidden" value="<%= String.valueOf(commerceRegionId) %>" />
 
+	<liferay-ui:error exception="<%= CommerceRegionNameException.class %>" message="please-enter-a-valid-name" />
+
 	<aui:model-context bean="<%= commerceRegion %>" model="<%= CommerceRegion.class %>" />
 
 	<aui:fieldset>

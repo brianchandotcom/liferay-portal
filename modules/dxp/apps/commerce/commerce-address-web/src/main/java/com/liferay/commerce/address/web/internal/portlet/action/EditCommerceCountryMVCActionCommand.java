@@ -14,6 +14,9 @@
 
 package com.liferay.commerce.address.web.internal.portlet.action;
 
+import com.liferay.commerce.address.exception.CommerceCountryNameException;
+import com.liferay.commerce.address.exception.CommerceCountryThreeLettersISOCodeException;
+import com.liferay.commerce.address.exception.CommerceCountryTwoLettersISOCodeException;
 import com.liferay.commerce.address.exception.NoSuchCountryException;
 import com.liferay.commerce.address.model.CommerceCountry;
 import com.liferay.commerce.address.service.CommerceCountryService;
@@ -105,6 +108,20 @@ public class EditCommerceCountryMVCActionCommand extends BaseMVCActionCommand {
 				SessionErrors.add(actionRequest, e.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
+			}
+			else if (e instanceof CommerceCountryNameException ||
+					 e instanceof CommerceCountryThreeLettersISOCodeException ||
+					 e instanceof CommerceCountryTwoLettersISOCodeException) {
+
+				hideDefaultErrorMessage(actionRequest);
+				hideDefaultSuccessMessage(actionRequest);
+
+				SessionErrors.add(actionRequest, e.getClass());
+
+				actionResponse.setRenderParameter(
+					"mvcRenderCommandName", "editCommerceCountry");
+
+				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
 				throw e;

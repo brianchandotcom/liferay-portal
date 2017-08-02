@@ -78,4 +78,10 @@
 			<finder-column name="commerceCountryId" />
 		</finder>
 	</entity>
+	<exceptions>
+		<exception>CommerceCountryName</exception>
+		<exception>CommerceCountryThreeLettersISOCode</exception>
+		<exception>CommerceCountryTwoLettersISOCode</exception>
+		<exception>CommerceRegionName</exception>
+	</exceptions>
 </service-builder>

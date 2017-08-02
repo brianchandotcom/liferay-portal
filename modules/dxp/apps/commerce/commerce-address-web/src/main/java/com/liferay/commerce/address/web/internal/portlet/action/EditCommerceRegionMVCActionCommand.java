@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.address.web.internal.portlet.action;
 
+import com.liferay.commerce.address.exception.CommerceRegionNameException;
 import com.liferay.commerce.address.exception.NoSuchRegionException;
 import com.liferay.commerce.address.model.CommerceRegion;
 import com.liferay.commerce.address.service.CommerceRegionService;
@@ -92,6 +93,17 @@ public class EditCommerceRegionMVCActionCommand extends BaseMVCActionCommand {
 				SessionErrors.add(actionRequest, e.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
+			}
+			else if (e instanceof CommerceRegionNameException) {
+				hideDefaultErrorMessage(actionRequest);
+				hideDefaultSuccessMessage(actionRequest);
+
+				SessionErrors.add(actionRequest, e.getClass());
+
+				actionResponse.setRenderParameter(
+					"mvcRenderCommandName", "editCommerceCountry");
+
+				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
 				throw e;

@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.address.service.impl;
 
+import com.liferay.commerce.address.exception.CommerceRegionNameException;
 import com.liferay.commerce.address.model.CommerceRegion;
 import com.liferay.commerce.address.service.base.CommerceRegionLocalServiceBaseImpl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 
@@ -38,6 +40,8 @@ public class CommerceRegionLocalServiceImpl
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
+
+		validate(name);
 
 		long commerceRegionId = counterLocalService.increment();
 
@@ -109,6 +113,8 @@ public class CommerceRegionLocalServiceImpl
 		CommerceRegion commerceRegion =
 			commerceRegionPersistence.findByPrimaryKey(commerceRegionId);
 
+		validate(name);
+
 		commerceRegion.setName(name);
 		commerceRegion.setAbbreviation(abbreviation);
 		commerceRegion.setPriority(priority);
@@ -117,6 +123,12 @@ public class CommerceRegionLocalServiceImpl
 		commerceRegionPersistence.update(commerceRegion);
 
 		return commerceRegion;
+	}
+
+	protected void validate(String name) throws PortalException {
+		if (Validator.isNull(name)) {
+			throw new CommerceRegionNameException();
+		}
 	}
 
 }

@@ -14,12 +14,17 @@
 
 package com.liferay.commerce.address.service.impl;
 
+import com.liferay.commerce.address.exception.CommerceCountryNameException;
+import com.liferay.commerce.address.exception.CommerceCountryThreeLettersISOCodeException;
+import com.liferay.commerce.address.exception.CommerceCountryTwoLettersISOCodeException;
 import com.liferay.commerce.address.model.CommerceCountry;
 import com.liferay.commerce.address.service.base.CommerceCountryLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.Locale;
@@ -42,6 +47,8 @@ public class CommerceCountryLocalServiceImpl
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
+
+		validate(nameMap, twoLettersISOCode, threeLettersISOCode);
 
 		long commerceCountryId = counterLocalService.increment();
 
@@ -115,6 +122,8 @@ public class CommerceCountryLocalServiceImpl
 		CommerceCountry commerceCountry =
 			commerceCountryPersistence.findByPrimaryKey(commerceCountryId);
 
+		validate(nameMap, twoLettersISOCode, threeLettersISOCode);
+
 		commerceCountry.setNameMap(nameMap);
 		commerceCountry.setBillingAllowed(billingAllowed);
 		commerceCountry.setShippingAllowed(shippingAllowed);
@@ -128,6 +137,32 @@ public class CommerceCountryLocalServiceImpl
 		commerceCountryPersistence.update(commerceCountry);
 
 		return commerceCountry;
+	}
+
+	protected void validate(
+			Map<Locale, String> nameMap, String twoLettersISOCode,
+			String threeLettersISOCode)
+		throws PortalException {
+
+		Locale locale = LocaleUtil.getSiteDefault();
+
+		String name = nameMap.get(locale);
+
+		if (Validator.isNull(name)) {
+			throw new CommerceCountryNameException();
+		}
+
+		if (Validator.isNotNull(twoLettersISOCode) &&
+			(twoLettersISOCode.length() != 2)) {
+
+			throw new CommerceCountryTwoLettersISOCodeException();
+		}
+
+		if (Validator.isNotNull(threeLettersISOCode) &&
+			(threeLettersISOCode.length() != 2)) {
+
+			throw new CommerceCountryThreeLettersISOCodeException();
+		}
 	}
 
 }

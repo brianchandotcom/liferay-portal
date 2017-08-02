@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.address.web.internal.portlet.action;
 
-import com.liferay.commerce.address.constants.CommerceAddressWebKeys;
 import com.liferay.commerce.address.model.CommerceCountry;
 import com.liferay.commerce.address.model.CommerceRegion;
 import com.liferay.commerce.address.service.CommerceCountryService;
@@ -59,55 +58,28 @@ public class ActionHelper {
 	public CommerceCountry getCommerceCountry(RenderRequest renderRequest)
 		throws PortalException {
 
-		CommerceCountry commerceCountry =
-			(CommerceCountry)renderRequest.getAttribute(
-				CommerceAddressWebKeys.COMMERCE_COUNTRY);
-
-		if (commerceCountry != null) {
-			return commerceCountry;
-		}
-
 		long commerceCountryId = ParamUtil.getLong(
 			renderRequest, "commerceCountryId");
 
 		if (commerceCountryId > 0) {
-			commerceCountry = _commerceCountryService.getCommerceCountry(
+			return _commerceCountryService.getCommerceCountry(
 				commerceCountryId);
 		}
 
-		if (commerceCountry != null) {
-			renderRequest.setAttribute(
-				CommerceAddressWebKeys.COMMERCE_COUNTRY, commerceCountry);
-		}
-
-		return commerceCountry;
+		return null;
 	}
 
 	public CommerceRegion getCommerceRegion(RenderRequest renderRequest)
 		throws PortalException {
 
-		CommerceRegion commerceRegion =
-			(CommerceRegion)renderRequest.getAttribute(
-				CommerceAddressWebKeys.COMMERCE_REGION);
-
-		if (commerceRegion != null) {
-			return commerceRegion;
-		}
-
 		long commerceRegionId = ParamUtil.getLong(
 			renderRequest, "commerceRegionId");
 
 		if (commerceRegionId > 0) {
-			commerceRegion = _commerceRegionService.getCommerceRegion(
-				commerceRegionId);
+			return _commerceRegionService.getCommerceRegion(commerceRegionId);
 		}
 
-		if (commerceRegion != null) {
-			renderRequest.setAttribute(
-				CommerceAddressWebKeys.COMMERCE_REGION, commerceRegion);
-		}
-
-		return commerceRegion;
+		return null;
 	}
 
 	@Reference

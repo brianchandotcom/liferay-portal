@@ -9,6 +9,13 @@
 		<execute macro="ProductMenuHelper#expandPageTree" />
 
 		<if>
+			<contains string="${sitePagePrivacy}" substring="{sitePagePrivacy}" />
+			<then>
+				<var name="sitePagePrivacy" value="Public" />
+			</then>
+		</if>
+
+		<if>
 			<and>
 				<condition function="IsElementNotPresent" locator1="ProductMenu#PUBLIC_PAGES" />
 				<condition function="IsElementNotPresent" locator1="ProductMenu#PRIVATE_PAGES" />

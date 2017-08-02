@@ -323,11 +323,8 @@ public class TrashPortlet extends MVCPortlet {
 
 			sendRedirect(actionRequest, actionResponse);
 
-			com.liferay.trash.exception.RestoreEntryException exception =
-				new com.liferay.trash.exception.RestoreEntryException(
-					ree.getType(), ree.getCause());
-
-			throw exception;
+			throw new com.liferay.trash.exception.RestoreEntryException(
+				ree.getType(), ree.getCause());
 		}
 	}
 

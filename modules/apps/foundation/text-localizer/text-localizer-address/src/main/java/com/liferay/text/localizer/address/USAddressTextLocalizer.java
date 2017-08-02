@@ -66,15 +66,21 @@ public class USAddressTextLocalizer implements AddressTextLocalizer {
 
 		if (hasCity) {
 			sb.append(city);
+
+			if (hasRegionName || hasZip) {
+				sb.append(StringPool.COMMA_AND_SPACE);
+			}
 		}
 
 		if (hasRegionName) {
-			sb.append(StringPool.COMMA_AND_SPACE);
 			sb.append(regionName);
 		}
 
 		if (hasZip) {
-			sb.append(StringPool.SPACE);
+			if (hasRegionName) {
+				sb.append(StringPool.SPACE);
+			}
+
 			sb.append(zip);
 		}
 

@@ -57,63 +57,61 @@ boolean hasManageCommerceCountriesPermission = CommerceAddressPermission.contain
 	</c:if>
 </liferay-frontend:management-bar>
 
-<div class="container-fluid-1280" id="<portlet:namespace />commerceCountriesContainer">
-	<aui:form action="<%= commerceCountriesDisplayContext.getPortletURL() %>" method="post" name="fm">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" />
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-		<aui:input name="deleteCommerceCountryIds" type="hidden" />
+<portlet:actionURL name="editCommerceCountry" var="editCommerceCountryActionURL" />
 
-		<div class="commerce-countries-container" id="<portlet:namespace />entriesContainer">
-			<liferay-ui:search-container
-				id="commerceCountries"
-				searchContainer="<%= commerceCountrySearchContainer %>"
-			>
-				<liferay-ui:search-container-row
-					className="com.liferay.commerce.address.model.CommerceCountry"
-					keyProperty="commerceCountryId"
-				>
-					<liferay-ui:search-container-column-text
-						property="name"
-					/>
+<aui:form action="<%= editCommerceCountryActionURL %>" method="post" name="fm">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.DELETE %>" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="deleteCommerceCountryIds" type="hidden" />
 
-					<liferay-ui:search-container-column-text
-						name="billing-allowed"
-						property="billingAllowed"
-					/>
+	<liferay-ui:search-container
+		id="commerceCountries"
+		searchContainer="<%= commerceCountrySearchContainer %>"
+	>
+		<liferay-ui:search-container-row
+			className="com.liferay.commerce.address.model.CommerceCountry"
+			keyProperty="commerceCountryId"
+		>
+			<liferay-ui:search-container-column-text
+				property="name"
+			/>
 
-					<liferay-ui:search-container-column-text
-						name="shipping-allowed"
-						property="shippingAllowed"
-					/>
+			<liferay-ui:search-container-column-text
+				name="billing-allowed"
+				property="billingAllowed"
+			/>
 
-					<liferay-ui:search-container-column-text
-						name="two-letters-iso-code"
-						property="twoLettersISOCode"
-					/>
+			<liferay-ui:search-container-column-text
+				name="shipping-allowed"
+				property="shippingAllowed"
+			/>
 
-					<liferay-ui:search-container-column-text
-						name="subject-to-vat"
-						property="subjectToVAT"
-					/>
+			<liferay-ui:search-container-column-text
+				name="two-letters-iso-code"
+				property="twoLettersISOCode"
+			/>
 
-					<liferay-ui:search-container-column-text
-						property="active"
-					/>
+			<liferay-ui:search-container-column-text
+				name="subject-to-vat"
+				property="subjectToVAT"
+			/>
 
-					<liferay-ui:search-container-column-text
-						property="priority"
-					/>
+			<liferay-ui:search-container-column-text
+				property="active"
+			/>
 
-					<liferay-ui:search-container-column-jsp
-						path="/country_action.jsp"
-					/>
-				</liferay-ui:search-container-row>
+			<liferay-ui:search-container-column-text
+				property="priority"
+			/>
 
-				<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" searchContainer="<%= commerceCountrySearchContainer %>" />
-			</liferay-ui:search-container>
-		</div>
-	</aui:form>
-</div>
+			<liferay-ui:search-container-column-jsp
+				path="/country_action.jsp"
+			/>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator markupView="lexicon" />
+	</liferay-ui:search-container>
+</aui:form>
 
 <c:if test="<%= hasManageCommerceCountriesPermission %>">
 	<portlet:renderURL var="addCommerceCountryURL">
@@ -131,11 +129,9 @@ boolean hasManageCommerceCountriesPermission = CommerceAddressPermission.contain
 		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-countries") %>')) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
-			form.attr('method', 'post');
-			form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
 			form.fm('deleteCommerceCountryIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-			submitForm(form, '<portlet:actionURL name="editCommerceCountry" />');
+			submitForm(form);
 		}
 	}
 </aui:script>

@@ -90,7 +90,7 @@
 					<var name="fieldFieldLabel" value="${dmDocumentTypeFieldRequiredEdit}" />
 				</execute>
 
-				<execute macro="DynamicDataMapping#makeFieldRepeatable">
+				<execute macro="DynamicDataMapping#makeFieldRequired" />
 			</then>
 		</if>
 

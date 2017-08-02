@@ -467,7 +467,7 @@
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
-		<execute macro="DynamicDataMapping#makeFieldRepeatable">
+		<execute macro="DynamicDataMapping#makeFieldRequired" />
 	</command>
 
 	<command name="editFieldSettings">
@@ -592,7 +592,7 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
-	<command name="makeFieldRepeatable">
+	<command name="makeFieldRequired">
 		<execute function="DoubleClick" locator1="DDMEditStructure#SETTINGS_REQUIRED" />
 
 		<execute function="Click" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_YES_RADIO" />

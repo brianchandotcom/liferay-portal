@@ -15,8 +15,8 @@
 package com.liferay.portal.cache.ehcache.internal.event;
 
 import com.liferay.portal.cache.PortalCacheManagerListenerFactory;
-import com.liferay.portal.cache.ehcache.EhcacheConstants;
 import com.liferay.portal.cache.ehcache.event.EhcachePortalCacheManagerListenerAdapter;
+import com.liferay.portal.cache.ehcache.internal.EhcacheConstants;
 import com.liferay.portal.cache.ehcache.internal.EhcachePortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerListener;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -43,7 +43,8 @@ public class EhcachePortalCacheManagerListenerFactory
 		Properties properties) {
 
 		String className = properties.getProperty(
-			EhcacheConstants.CACHE_MANAGER_LISTENER_FACTORY_CLASS_NAME);
+			EhcacheConstants.
+				CACHE_MANAGER_LISTENER_PROPERTIES_KEY_FACTORY_CLASS_NAME);
 
 		if (Validator.isNull(className)) {
 			return null;

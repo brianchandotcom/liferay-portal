@@ -16,7 +16,7 @@ package com.liferay.portal.cache.ehcache.internal.configurator;
 
 import com.liferay.portal.cache.configuration.PortalCacheConfiguration;
 import com.liferay.portal.cache.configuration.PortalCacheManagerConfiguration;
-import com.liferay.portal.cache.ehcache.EhcacheConstants;
+import com.liferay.portal.cache.ehcache.internal.EhcacheConstants;
 import com.liferay.portal.cache.ehcache.internal.EhcachePortalCacheConfiguration;
 import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
@@ -179,7 +179,8 @@ public abstract class BaseEhcachePortalCacheManagerConfigurator {
 					getFullyQualifiedClassPath();
 
 			properties.put(
-				EhcacheConstants.CACHE_EVENT_LISTENER_FACTORY_CLASS_NAME,
+				EhcacheConstants.
+					CACHE_LISTENER_PROPERTIES_KEY_FACTORY_CLASS_NAME,
 				factoryClassName);
 
 			PortalCacheListenerScope portalCacheListenerScope =
@@ -225,7 +226,8 @@ public abstract class BaseEhcachePortalCacheManagerConfigurator {
 			factoryConfiguration.getPropertySeparator());
 
 		properties.put(
-			EhcacheConstants.CACHE_MANAGER_LISTENER_FACTORY_CLASS_NAME,
+			EhcacheConstants.
+				CACHE_MANAGER_LISTENER_PROPERTIES_KEY_FACTORY_CLASS_NAME,
 			factoryConfiguration.getFullyQualifiedClassPath());
 
 		return Collections.singleton(properties);

@@ -74,8 +74,18 @@ boolean hasManageCommerceCountriesPermission = CommerceAddressPermission.contain
 			keyProperty="commerceRegionId"
 			modelVar="commerceRegion"
 		>
+
+			<%
+			PortletURL rowURL = renderResponse.createRenderURL();
+
+			rowURL.setParameter("mvcRenderCommandName", "editCommerceRegion");
+			rowURL.setParameter("redirect", currentURL);
+			rowURL.setParameter("commerceRegionId", String.valueOf(commerceRegion.getCommerceRegionId()));
+			%>
+
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
+				href="<%= rowURL %>"
 				property="name"
 			/>
 

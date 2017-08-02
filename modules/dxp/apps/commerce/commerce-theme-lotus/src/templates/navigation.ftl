@@ -26,7 +26,7 @@
 
 		<#if show_wishlist_icon>
 			<li class="collapse-hover" id="wishlistIcon">
-				<a class="btn hidden-xs" href="/wishlist">
+				<a class="btn hidden-xs animate" href="/wishlist">
 					<#if wishListItemsCount != 0>
 						<svg class="lexicon-icon">
 							<use xlink:href="${images_folder}/theme-icons.svg#icon-whislist-full" />
@@ -50,7 +50,7 @@
 
 		<#if show_cart_icon>
 			<li class="collapse-hover" id="cartIcon">
-				<a class="btn hidden-xs" href="/cart">
+				<a class="btn hidden-xs animate" href="/cart">
 					<#if cartItemsCount != 0>
 						<svg class="lexicon-icon">
 							<use xlink:href="${images_folder}/theme-icons.svg#icon-bag-full" />

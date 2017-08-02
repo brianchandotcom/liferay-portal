@@ -56,18 +56,24 @@ public class USAddressTextLocalizer implements AddressTextLocalizer {
 			sb.append(street3);
 		}
 
-		sb.append(StringPool.NEW_LINE);
+		boolean hasCity = Validator.isNotNull(city);
+		boolean hasRegionName = Validator.isNotNull(regionName);
+		boolean hasZip = Validator.isNotNull(zip);
 
-		if (Validator.isNotNull(city)) {
+		if (hasCity || hasRegionName || hasZip) {
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		if (hasCity) {
 			sb.append(city);
 		}
 
-		if (Validator.isNotNull(regionName)) {
+		if (hasRegionName) {
 			sb.append(StringPool.COMMA_AND_SPACE);
 			sb.append(regionName);
 		}
 
-		if (Validator.isNotNull(zip)) {
+		if (hasZip) {
 			sb.append(StringPool.SPACE);
 			sb.append(zip);
 		}

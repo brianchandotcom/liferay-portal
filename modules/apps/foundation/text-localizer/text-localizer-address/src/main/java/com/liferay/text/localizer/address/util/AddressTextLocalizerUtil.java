@@ -39,28 +39,16 @@ public class AddressTextLocalizerUtil {
 	public static String getCountryName(Address address) {
 		Country country = address.getCountry();
 
-		return country.getName(getUserLocale());
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		return country.getName(serviceContext.getLocale());
 	}
 
 	public static String getRegionName(Address address) {
 		Region region = address.getRegion();
 
 		return region.getName();
-	}
-
-	public static Locale getUserLocale() {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
-		User user = themeDisplay.getUser();
-
-		if (user != null) {
-			return user.getLocale();
-		}
-
-		return themeDisplay.getLocale();
 	}
 
 	/**

@@ -49,10 +49,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {
-		"commerce.admin.module.key=" + CountriesCommerceAdminModule.KEY,
-		"service.ranking:Integer=100"
-	}
+	property = "commerce.admin.module.key=" + CountriesCommerceAdminModule.KEY
 )
 public class CountriesCommerceAdminModule implements CommerceAdminModule {
 

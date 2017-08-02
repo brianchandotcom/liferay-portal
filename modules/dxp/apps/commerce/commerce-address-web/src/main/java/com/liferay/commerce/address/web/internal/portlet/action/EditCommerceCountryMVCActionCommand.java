@@ -177,18 +177,12 @@ public class EditCommerceCountryMVCActionCommand extends BaseMVCActionCommand {
 		CommerceCountry commerceCountry = null;
 
 		if (commerceCountryId <= 0) {
-
-			// Add commerce country
-
 			commerceCountry = _commerceCountryService.addCommerceCountry(
 				nameMap, billingAllowed, shippingAllowed, twoLettersISOCode,
 				threeLettersISOCode, numericISOCode, subjectToVAT, priority,
 				active, serviceContext);
 		}
 		else {
-
-			// Update commerce country
-
 			commerceCountry = _commerceCountryService.updateCommerceCountry(
 				commerceCountryId, nameMap, billingAllowed, shippingAllowed,
 				twoLettersISOCode, threeLettersISOCode, numericISOCode,

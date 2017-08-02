@@ -132,17 +132,11 @@ public class EditCommerceRegionMVCActionCommand extends BaseMVCActionCommand {
 		CommerceRegion commerceRegion = null;
 
 		if (commerceRegionId <= 0) {
-
-			// Add commerce region
-
 			commerceRegion = _commerceRegionService.addCommerceRegion(
 				commerceCountryId, name, abbreviation, priority, active,
 				serviceContext);
 		}
 		else {
-
-			// Update commerce region
-
 			commerceRegion = _commerceRegionService.updateCommerceRegion(
 				commerceRegionId, name, abbreviation, priority, active);
 		}

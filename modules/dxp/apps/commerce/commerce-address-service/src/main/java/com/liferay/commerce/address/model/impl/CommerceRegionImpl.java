@@ -17,22 +17,11 @@ package com.liferay.commerce.address.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 /**
- * The extended model implementation for the CommerceRegion service. Represents a row in the &quot;CommerceRegion&quot; database table, with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.commerce.address.model.CommerceRegion} interface.
- * </p>
- *
  * @author Alessio Antonio Rendina
  */
 @ProviderType
 public class CommerceRegionImpl extends CommerceRegionBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a commerce region model instance should use the {@link com.liferay.commerce.address.model.CommerceRegion} interface instead.
-	 */
 	public CommerceRegionImpl() {
 	}
 

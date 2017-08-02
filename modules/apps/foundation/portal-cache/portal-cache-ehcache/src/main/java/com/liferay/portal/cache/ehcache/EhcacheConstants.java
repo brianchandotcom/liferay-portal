@@ -16,7 +16,10 @@ package com.liferay.portal.cache.ehcache;
 
 /**
  * @author Tina Tian
+ * @deprecated As of 2.1.0, replaced by {@link
+ *			com.liferay.portal.cache.ehcache.internal.EhcacheConstants}
  */
+@Deprecated
 public interface EhcacheConstants {
 
 	public static final String BOOTSTRAP_CACHE_LOADER_FACTORY_CLASS_NAME =

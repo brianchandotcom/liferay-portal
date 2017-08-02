@@ -48,11 +48,9 @@ public class ActionHelper {
 
 		for (long commerceCountryId : commerceCountryIds) {
 			CommerceCountry commerceCountry =
-				_commerceCountryService.fetchCommerceCountry(commerceCountryId);
+				_commerceCountryService.getCommerceCountry(commerceCountryId);
 
-			if (commerceCountry != null) {
-				commerceCountries.add(commerceCountry);
-			}
+			commerceCountries.add(commerceCountry);
 		}
 
 		return commerceCountries;
@@ -73,7 +71,7 @@ public class ActionHelper {
 			renderRequest, "commerceCountryId");
 
 		if (commerceCountryId > 0) {
-			commerceCountry = _commerceCountryService.fetchCommerceCountry(
+			commerceCountry = _commerceCountryService.getCommerceCountry(
 				commerceCountryId);
 		}
 
@@ -100,7 +98,7 @@ public class ActionHelper {
 			renderRequest, "commerceRegionId");
 
 		if (commerceRegionId > 0) {
-			commerceRegion = _commerceRegionService.fetchCommerceRegion(
+			commerceRegion = _commerceRegionService.getCommerceRegion(
 				commerceRegionId);
 		}
 

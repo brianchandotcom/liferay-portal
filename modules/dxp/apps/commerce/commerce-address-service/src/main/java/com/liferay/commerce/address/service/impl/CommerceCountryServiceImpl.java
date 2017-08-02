@@ -65,12 +65,6 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 	}
 
 	@Override
-	public CommerceCountry fetchCommerceCountry(long commerceCountryId) {
-		return commerceCountryLocalService.fetchCommerceCountry(
-			commerceCountryId);
-	}
-
-	@Override
 	public List<CommerceCountry> getCommerceCountries(
 		int start, int end,
 		OrderByComparator<CommerceCountry> orderByComparator) {
@@ -82,6 +76,14 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 	@Override
 	public int getCommerceCountriesCount() {
 		return commerceCountryLocalService.getCommerceCountriesCount();
+	}
+
+	@Override
+	public CommerceCountry getCommerceCountry(long commerceCountryId)
+		throws PortalException {
+
+		return commerceCountryLocalService.getCommerceCountry(
+			commerceCountryId);
 	}
 
 	@Override

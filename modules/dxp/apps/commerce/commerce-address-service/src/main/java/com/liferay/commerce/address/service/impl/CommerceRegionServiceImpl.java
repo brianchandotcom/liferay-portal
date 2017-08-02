@@ -63,8 +63,10 @@ public class CommerceRegionServiceImpl extends CommerceRegionServiceBaseImpl {
 	}
 
 	@Override
-	public CommerceRegion fetchCommerceRegion(long commerceRegionId) {
-		return commerceRegionLocalService.fetchCommerceRegion(commerceRegionId);
+	public CommerceRegion getCommerceRegion(long commerceRegionId)
+		throws PortalException {
+
+		return commerceRegionLocalService.getCommerceRegion(commerceRegionId);
 	}
 
 	@Override

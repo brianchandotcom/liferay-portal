@@ -72,6 +72,7 @@ boolean hasManageCommerceCountriesPermission = CommerceAddressPermission.contain
 		<liferay-ui:search-container-row
 			className="com.liferay.commerce.address.model.CommerceRegion"
 			keyProperty="commerceRegionId"
+			modelVar="commerceRegion"
 		>
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
@@ -85,7 +86,8 @@ boolean hasManageCommerceCountriesPermission = CommerceAddressPermission.contain
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
-				property="active"
+				name="active"
+				value='<%= LanguageUtil.get(request, commerceRegion.isActive() ? "yes" : "no") %>'
 			/>
 
 			<liferay-ui:search-container-column-text

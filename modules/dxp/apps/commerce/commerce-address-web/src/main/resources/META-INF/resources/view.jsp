@@ -71,6 +71,7 @@ boolean hasManageCommerceCountriesPermission = CommerceAddressPermission.contain
 		<liferay-ui:search-container-row
 			className="com.liferay.commerce.address.model.CommerceCountry"
 			keyProperty="commerceCountryId"
+			modelVar="commerceCountry"
 		>
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
@@ -80,13 +81,13 @@ boolean hasManageCommerceCountriesPermission = CommerceAddressPermission.contain
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
 				name="billing-allowed"
-				property="billingAllowed"
+				value='<%= LanguageUtil.get(request, commerceCountry.isBillingAllowed() ? "yes" : "no") %>'
 			/>
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
 				name="shipping-allowed"
-				property="shippingAllowed"
+				value='<%= LanguageUtil.get(request, commerceCountry.isShippingAllowed() ? "yes" : "no") %>'
 			/>
 
 			<liferay-ui:search-container-column-text
@@ -98,12 +99,13 @@ boolean hasManageCommerceCountriesPermission = CommerceAddressPermission.contain
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
 				name="subject-to-vat"
-				property="subjectToVAT"
+				value='<%= LanguageUtil.get(request, commerceCountry.isSubjectToVAT() ? "yes" : "no") %>'
 			/>
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
-				property="active"
+				name="active"
+				value='<%= LanguageUtil.get(request, commerceCountry.isActive() ? "yes" : "no") %>'
 			/>
 
 			<liferay-ui:search-container-column-text

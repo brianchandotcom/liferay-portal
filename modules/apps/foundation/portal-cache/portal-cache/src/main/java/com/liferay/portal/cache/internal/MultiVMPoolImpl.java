@@ -139,7 +139,7 @@ public class MultiVMPoolImpl implements MultiVMPool {
 
 	@Deactivate
 	protected void deactivate() {
-		_portalCacheManager.clearAll();
+		_portalCacheManager.destroy();
 
 		_serviceTracker.close();
 

@@ -16,7 +16,6 @@ package com.liferay.commerce.address.web.internal.util;
 
 import com.liferay.commerce.address.model.CommerceCountry;
 import com.liferay.commerce.address.model.CommerceRegion;
-import com.liferay.commerce.address.util.comparator.CommerceCountryNameComparator;
 import com.liferay.commerce.address.util.comparator.CommerceCountryPriorityComparator;
 import com.liferay.commerce.address.util.comparator.CommerceRegionNameComparator;
 import com.liferay.commerce.address.util.comparator.CommerceRegionPriorityComparator;
@@ -39,10 +38,7 @@ public class CommerceAddressUtil {
 
 		OrderByComparator<CommerceCountry> orderByComparator = null;
 
-		if (orderByCol.equals("name")) {
-			orderByComparator = new CommerceCountryNameComparator(orderByAsc);
-		}
-		else if (orderByCol.equals("priority")) {
+		if (orderByCol.equals("priority")) {
 			orderByComparator = new CommerceCountryPriorityComparator(
 				orderByAsc);
 		}

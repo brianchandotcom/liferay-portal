@@ -35,7 +35,7 @@ SearchContainer<CommerceCountry> commerceCountrySearchContainer = commerceCountr
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= commerceCountriesDisplayContext.getOrderByCol() %>"
 			orderByType="<%= commerceCountriesDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"name", "priority"} %>'
+			orderColumns='<%= new String[] {"priority"} %>'
 			portletURL="<%= commerceCountriesDisplayContext.getPortletURL() %>"
 		/>
 	</liferay-frontend:management-bar-filters>

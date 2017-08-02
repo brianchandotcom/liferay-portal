@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Alessio Antonio Rendina
@@ -31,10 +33,11 @@ public class CommerceCountryLocalServiceImpl
 
 	@Override
 	public CommerceCountry addCommerceCountry(
-			String name, boolean billingAllowed, boolean shippingAllowed,
-			String twoLettersISOCode, String threeLettersISOCode,
-			int numericISOCode, boolean subjectToVAT, double priority,
-			boolean active, ServiceContext serviceContext)
+			Map<Locale, String> nameMap, boolean billingAllowed,
+			boolean shippingAllowed, String twoLettersISOCode,
+			String threeLettersISOCode, int numericISOCode,
+			boolean subjectToVAT, double priority, boolean active,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
@@ -49,7 +52,7 @@ public class CommerceCountryLocalServiceImpl
 		commerceCountry.setCompanyId(user.getCompanyId());
 		commerceCountry.setUserId(user.getUserId());
 		commerceCountry.setUserName(user.getFullName());
-		commerceCountry.setName(name);
+		commerceCountry.setNameMap(nameMap);
 		commerceCountry.setBillingAllowed(billingAllowed);
 		commerceCountry.setShippingAllowed(shippingAllowed);
 		commerceCountry.setTwoLettersISOCode(twoLettersISOCode);
@@ -102,16 +105,17 @@ public class CommerceCountryLocalServiceImpl
 
 	@Override
 	public CommerceCountry updateCommerceCountry(
-			long commerceCountryId, String name, boolean billingAllowed,
-			boolean shippingAllowed, String twoLettersISOCode,
-			String threeLettersISOCode, int numericISOCode,
-			boolean subjectToVAT, double priority, boolean active)
+			long commerceCountryId, Map<Locale, String> nameMap,
+			boolean billingAllowed, boolean shippingAllowed,
+			String twoLettersISOCode, String threeLettersISOCode,
+			int numericISOCode, boolean subjectToVAT, double priority,
+			boolean active)
 		throws PortalException {
 
 		CommerceCountry commerceCountry =
 			commerceCountryPersistence.findByPrimaryKey(commerceCountryId);
 
-		commerceCountry.setName(name);
+		commerceCountry.setNameMap(nameMap);
 		commerceCountry.setBillingAllowed(billingAllowed);
 		commerceCountry.setShippingAllowed(shippingAllowed);
 		commerceCountry.setTwoLettersISOCode(twoLettersISOCode);

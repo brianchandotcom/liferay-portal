@@ -24,7 +24,7 @@
 
 		<!-- Other fields -->
 
-		<column name="name" type="String" />
+		<column localized="true" name="name" type="String" />
 		<column name="billingAllowed" type="boolean" />
 		<column name="shippingAllowed" type="boolean" />
 		<column name="twoLettersISOCode" type="String" />

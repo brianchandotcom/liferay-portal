@@ -32,7 +32,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-String contextTitle = commerceCountry.getName();
+String contextTitle = commerceCountry.getName(locale);
 
 String title;
 

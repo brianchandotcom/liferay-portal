@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Alessio Antonio Rendina
@@ -29,14 +31,15 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 
 	@Override
 	public CommerceCountry addCommerceCountry(
-			String name, boolean billingAllowed, boolean shippingAllowed,
-			String twoLettersISOCode, String threeLettersISOCode,
-			int numericISOCode, boolean subjectToVAT, double priority,
-			boolean active, ServiceContext serviceContext)
+			Map<Locale, String> nameMap, boolean billingAllowed,
+			boolean shippingAllowed, String twoLettersISOCode,
+			String threeLettersISOCode, int numericISOCode,
+			boolean subjectToVAT, double priority, boolean active,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		return commerceCountryLocalService.addCommerceCountry(
-			name, billingAllowed, shippingAllowed, twoLettersISOCode,
+			nameMap, billingAllowed, shippingAllowed, twoLettersISOCode,
 			threeLettersISOCode, numericISOCode, subjectToVAT, priority, active,
 			serviceContext);
 	}
@@ -71,14 +74,15 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 
 	@Override
 	public CommerceCountry updateCommerceCountry(
-			long commerceCountryId, String name, boolean billingAllowed,
-			boolean shippingAllowed, String twoLettersISOCode,
-			String threeLettersISOCode, int numericISOCode,
-			boolean subjectToVAT, double priority, boolean active)
+			long commerceCountryId, Map<Locale, String> nameMap,
+			boolean billingAllowed, boolean shippingAllowed,
+			String twoLettersISOCode, String threeLettersISOCode,
+			int numericISOCode, boolean subjectToVAT, double priority,
+			boolean active)
 		throws PortalException {
 
 		return commerceCountryLocalService.updateCommerceCountry(
-			commerceCountryId, name, billingAllowed, shippingAllowed,
+			commerceCountryId, nameMap, billingAllowed, shippingAllowed,
 			twoLettersISOCode, threeLettersISOCode, numericISOCode,
 			subjectToVAT, priority, active);
 	}

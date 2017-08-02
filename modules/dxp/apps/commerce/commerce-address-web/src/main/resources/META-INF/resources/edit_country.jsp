@@ -24,7 +24,7 @@ CommerceCountry commerceCountry = commerceCountryDisplayContext.getCommerceCount
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(settingsURL);
 
-renderResponse.setTitle((commerceCountry == null) ? LanguageUtil.get(request, "add-country") : commerceCountry.getName());
+renderResponse.setTitle((commerceCountry == null) ? LanguageUtil.get(request, "add-country") : LanguageUtil.format(request, "edit-x", commerceCountry.getName(locale), false));
 %>
 
 <liferay-frontend:screen-navigation

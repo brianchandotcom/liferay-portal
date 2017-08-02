@@ -25,9 +25,13 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+
+import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -133,7 +137,8 @@ public class EditCommerceCountryMVCActionCommand extends BaseMVCActionCommand {
 		long commerceCountryId = ParamUtil.getLong(
 			actionRequest, "commerceCountryId");
 
-		String name = ParamUtil.getString(actionRequest, "name");
+		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "name");
 		boolean billingAllowed = ParamUtil.getBoolean(
 			actionRequest, "billingAllowed");
 		boolean shippingAllowed = ParamUtil.getBoolean(
@@ -159,7 +164,7 @@ public class EditCommerceCountryMVCActionCommand extends BaseMVCActionCommand {
 			// Add commerce country
 
 			commerceCountry = _commerceCountryService.addCommerceCountry(
-				name, billingAllowed, shippingAllowed, twoLettersISOCode,
+				nameMap, billingAllowed, shippingAllowed, twoLettersISOCode,
 				threeLettersISOCode, numericISOCode, subjectToVAT, priority,
 				active, serviceContext);
 		}
@@ -168,7 +173,7 @@ public class EditCommerceCountryMVCActionCommand extends BaseMVCActionCommand {
 			// Update commerce country
 
 			commerceCountry = _commerceCountryService.updateCommerceCountry(
-				commerceCountryId, name, billingAllowed, shippingAllowed,
+				commerceCountryId, nameMap, billingAllowed, shippingAllowed,
 				twoLettersISOCode, threeLettersISOCode, numericISOCode,
 				subjectToVAT, priority, active);
 		}

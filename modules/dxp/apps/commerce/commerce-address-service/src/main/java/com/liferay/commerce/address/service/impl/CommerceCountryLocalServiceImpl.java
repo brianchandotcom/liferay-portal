@@ -103,11 +103,16 @@ public class CommerceCountryLocalServiceImpl
 
 	@Override
 	public List<CommerceCountry> getCommerceCountries(
-		int start, int end,
+		long groupId, int start, int end,
 		OrderByComparator<CommerceCountry> orderByComparator) {
 
-		return commerceCountryPersistence.findAll(
-			start, end, orderByComparator);
+		return commerceCountryPersistence.findByGroupId(
+			groupId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getCommerceCountriesCount(long groupId) {
+		return commerceCountryPersistence.countByGroupId(groupId);
 	}
 
 	@Override

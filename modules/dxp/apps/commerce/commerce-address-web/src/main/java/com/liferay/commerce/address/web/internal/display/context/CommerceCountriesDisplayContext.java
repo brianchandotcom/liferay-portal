@@ -20,7 +20,9 @@ import com.liferay.commerce.address.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.address.web.internal.util.CommerceAddressUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
@@ -51,6 +53,9 @@ public class CommerceCountriesDisplayContext
 			return searchContainer;
 		}
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		String emptyResultsMessage = "no-countries-were-found";
 
 		searchContainer = new SearchContainer<>(
@@ -68,12 +73,13 @@ public class CommerceCountriesDisplayContext
 		searchContainer.setOrderByType(orderByType);
 		searchContainer.setRowChecker(getRowChecker());
 
-		int total = _commerceCountryService.getCommerceCountriesCount();
+		int total = _commerceCountryService.getCommerceCountriesCount(
+			themeDisplay.getScopeGroupId());
 
 		List<CommerceCountry> results =
 			_commerceCountryService.getCommerceCountries(
-				searchContainer.getStart(), searchContainer.getEnd(),
-				orderByComparator);
+				themeDisplay.getScopeGroupId(), searchContainer.getStart(),
+				searchContainer.getEnd(), orderByComparator);
 
 		searchContainer.setTotal(total);
 		searchContainer.setResults(results);

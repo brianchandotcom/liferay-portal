@@ -1,4 +1,7 @@
 .table {
+	a {
+		color: $brand-dark;
+	}
 
 	> thead:first-child > tr:first-child > th {
 		border-bottom: 1px solid $brand-color;

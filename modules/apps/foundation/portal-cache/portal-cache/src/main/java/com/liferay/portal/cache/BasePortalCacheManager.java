@@ -345,7 +345,8 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 
 			PortalCacheListenerScope portalCacheListenerScope =
 				(PortalCacheListenerScope)properties.remove(
-					PortalCacheConfiguration.PORTAL_CACHE_LISTENER_SCOPE);
+					PortalCacheConfiguration.
+						PORTAL_CACHE_LISTENER_PROPERTIES_KEY_SCOPE);
 
 			if (portalCacheListenerScope == null) {
 				portalCacheListenerScope = PortalCacheListenerScope.ALL;

@@ -188,7 +188,8 @@ public abstract class BaseEhcachePortalCacheManagerConfigurator {
 					cacheEventListenerFactoryConfiguration.getListenFor());
 
 			properties.put(
-				PortalCacheConfiguration.PORTAL_CACHE_LISTENER_SCOPE,
+				PortalCacheConfiguration.
+					PORTAL_CACHE_LISTENER_PROPERTIES_KEY_SCOPE,
 				portalCacheListenerScope);
 
 			portalCacheListenerPropertiesSet.add(properties);
@@ -249,7 +250,7 @@ public abstract class BaseEhcachePortalCacheManagerConfigurator {
 		}
 
 		defaultCacheConfiguration.setName(
-			PortalCacheConfiguration.DEFAULT_PORTAL_CACHE_NAME);
+			PortalCacheConfiguration.PORTAL_CACHE_NAME_DEFAULT);
 
 		PortalCacheConfiguration defaultPortalCacheConfiguration =
 			parseCacheListenerConfigurations(

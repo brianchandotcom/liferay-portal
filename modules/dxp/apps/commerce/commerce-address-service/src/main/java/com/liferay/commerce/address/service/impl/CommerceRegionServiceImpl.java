@@ -103,7 +103,7 @@ public class CommerceRegionServiceImpl extends CommerceRegionServiceBaseImpl {
 	@Override
 	public CommerceRegion updateCommerceRegion(
 			long commerceRegionId, String name, String code, double priority,
-			boolean active)
+			boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
 		CommerceRegion commerceRegion =

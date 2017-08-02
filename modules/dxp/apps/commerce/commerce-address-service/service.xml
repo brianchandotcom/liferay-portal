@@ -4,7 +4,7 @@
 <service-builder auto-namespace-tables="false" package-path="com.liferay.commerce.address">
 	<author>Alessio Antonio Rendina</author>
 	<namespace>Commerce</namespace>
-	<entity local-service="true" name="CommerceCountry" remote-service="true">
+	<entity local-service="true" name="CommerceCountry" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -33,6 +33,7 @@
 		<column name="subjectToVAT" type="boolean" />
 		<column name="priority" type="double" />
 		<column name="active" type="boolean" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
 
@@ -50,7 +51,7 @@
 			<finder-column name="active" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="CommerceRegion" remote-service="true">
+	<entity local-service="true" name="CommerceRegion" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -75,6 +76,7 @@
 		<column name="code" type="String" />
 		<column name="priority" type="double" />
 		<column name="active" type="boolean" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
 

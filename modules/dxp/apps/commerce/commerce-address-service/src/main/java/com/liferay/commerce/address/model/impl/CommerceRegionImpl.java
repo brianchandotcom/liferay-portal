@@ -16,6 +16,10 @@ package com.liferay.commerce.address.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.address.model.CommerceCountry;
+import com.liferay.commerce.address.service.CommerceCountryLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
  * @author Alessio Antonio Rendina
  */
@@ -23,6 +27,12 @@ import aQute.bnd.annotation.ProviderType;
 public class CommerceRegionImpl extends CommerceRegionBaseImpl {
 
 	public CommerceRegionImpl() {
+	}
+
+	@Override
+	public CommerceCountry getCommerceCountry() throws PortalException {
+		return CommerceCountryLocalServiceUtil.getCommerceCountry(
+			getCommerceCountryId());
 	}
 
 }

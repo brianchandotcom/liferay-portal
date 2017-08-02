@@ -20,8 +20,10 @@ import com.liferay.commerce.address.model.CommerceRegion;
 import com.liferay.commerce.address.service.base.CommerceRegionLocalServiceBaseImpl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -51,6 +53,7 @@ public class CommerceRegionLocalServiceImpl
 		CommerceRegion commerceRegion = commerceRegionPersistence.create(
 			commerceRegionId);
 
+		commerceRegion.setUuid(serviceContext.getUuid());
 		commerceRegion.setGroupId(commerceCountry.getGroupId());
 		commerceRegion.setCompanyId(user.getCompanyId());
 		commerceRegion.setUserId(user.getUserId());
@@ -67,6 +70,7 @@ public class CommerceRegionLocalServiceImpl
 	}
 
 	@Override
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CommerceRegion deleteCommerceRegion(CommerceRegion commerceRegion) {
 		return commerceRegionPersistence.remove(commerceRegion);
 	}
@@ -124,7 +128,7 @@ public class CommerceRegionLocalServiceImpl
 	@Override
 	public CommerceRegion updateCommerceRegion(
 			long commerceRegionId, String name, String code, double priority,
-			boolean active)
+			boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
 		CommerceRegion commerceRegion =

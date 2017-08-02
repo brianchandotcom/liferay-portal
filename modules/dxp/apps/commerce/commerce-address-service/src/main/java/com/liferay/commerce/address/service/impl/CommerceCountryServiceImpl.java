@@ -108,7 +108,7 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 			boolean billingAllowed, boolean shippingAllowed,
 			String twoLettersISOCode, String threeLettersISOCode,
 			int numericISOCode, boolean subjectToVAT, double priority,
-			boolean active)
+			boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
 		CommerceCountry commerceCountry =

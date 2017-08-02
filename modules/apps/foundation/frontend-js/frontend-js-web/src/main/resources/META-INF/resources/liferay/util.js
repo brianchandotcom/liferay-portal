@@ -315,6 +315,8 @@
 
 				var focusable = !el.is(':disabled') && !el.is(':hidden');
 
+				// LPS-70650
+
 				if (el.parents(":disabled").length > 0) {
 					focusable = false;
 				}

@@ -42,7 +42,7 @@ public class AdaptiveMediaImageAttributeTest {
 				AdaptiveMediaImageAttribute.IMAGE_WIDTH);
 
 		Map<String, AdaptiveMediaAttribute<?, ?>> allowedAttributesMap =
-			AdaptiveMediaImageAttribute.getAllowedAttributes();
+			AdaptiveMediaImageAttribute.getAllowedAdaptiveMediaAttributes();
 
 		Collection<AdaptiveMediaAttribute<?, ?>> allowedAttributes =
 			allowedAttributesMap.values();

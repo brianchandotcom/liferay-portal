@@ -12,17 +12,16 @@
  * details.
  */
 
-package com.liferay.adaptive.media.processor;
+package com.liferay.portal.search.sort;
 
 /**
- * Responsible to locate the available {@link AdaptiveMediaAsyncProcessor}
- *
- * @review
- *
- * @author Adolfo Pérez
+ * @author Michael C. Han
  */
-public interface AdaptiveMediaAsyncProcessorLocator {
+public interface SortFieldBuilder {
 
-	public <M> AdaptiveMediaAsyncProcessor<M, ?> locateForClass(Class<M> clazz);
+	public String getSortField(String entityClassName, String orderByCol);
+
+	public String getSortField(
+		String entityClassName, String orderByCol, int sortType);
 
 }

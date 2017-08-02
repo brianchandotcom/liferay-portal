@@ -140,9 +140,9 @@ public class AdaptiveMediaImageEntryLocalServiceImpl
 	 * it also deletes the bytes from the file store.
 	 * </p>
 	 *
-	 * @param  companyId the primary key of the company
-	 * @param  configurationEntry the configuration used to create the adaptive
-	 *         media image
+	 * @param companyId the primary key of the company
+	 * @param configurationEntry the configuration used to create the adaptive
+	 *        media image
 	 *
 	 * @review
 	 */

@@ -27,6 +27,13 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 
 /**
+ * Transforms the content by invoking the {@link ContentTransformer} available
+ * for a particular {@link ContentTransformerContentType}. There can be more
+ * than one content transformer available for a particular content type, and
+ * they will all be executed but the order is not guaranteed.
+ *
+ * @review
+ *
  * @author Alejandro Tardín
  */
 @Component(immediate = true, service = ContentTransformerHandler.class)

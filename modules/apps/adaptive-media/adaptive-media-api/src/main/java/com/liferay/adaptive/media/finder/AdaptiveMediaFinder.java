@@ -46,9 +46,6 @@ public interface AdaptiveMediaFinder
 	 * @return a non-<code>null</code>, possibly empty stream of all media
 	 *         instances matching the query ordered by score: better matches are
 	 *         prioritized first
-	 * @throws AdaptiveMediaException if an error occurred while getting the
-	 *         {@link AdaptiveMedia}. See {@link AdaptiveMediaException} inner
-	 *         classes for the set of possible exceptions.
 	 * @throws PortalException if an error occurred while calling any Liferay
 	 *         service
 	 */

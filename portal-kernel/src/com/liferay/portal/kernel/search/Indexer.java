@@ -66,8 +66,18 @@ public interface Indexer<T> {
 
 	public String getSearchEngineId();
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by
+	 *             {@link com.liferay.portal.sort.SortFieldBuilder}
+	 */
+	@Deprecated
 	public String getSortField(String orderByCol);
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by
+	 *             {@link com.liferay.portal.sort.SortFieldBuilder}
+	 */
+	@Deprecated
 	public String getSortField(String orderByCol, int sortType);
 
 	/**

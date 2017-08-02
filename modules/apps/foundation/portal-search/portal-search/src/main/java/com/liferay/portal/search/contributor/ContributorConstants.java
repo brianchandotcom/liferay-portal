@@ -12,17 +12,14 @@
  * details.
  */
 
-package com.liferay.adaptive.media.processor;
+package com.liferay.portal.search.contributor;
 
 /**
- * Responsible to locate the available {@link AdaptiveMediaAsyncProcessor}
- *
- * @review
- *
- * @author Adolfo Pérez
+ * @author Michael C. Han
  */
-public interface AdaptiveMediaAsyncProcessorLocator {
+public class ContributorConstants {
 
-	public <M> AdaptiveMediaAsyncProcessor<M, ?> locateForClass(Class<M> clazz);
+	public static final String ENTRY_CLASS_NAME_PROPERTY_KEY =
+		"entry.class.name";
 
 }

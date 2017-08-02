@@ -41,7 +41,7 @@ public class AdaptiveMediaAttributeTest {
 
 		Map<String, AdaptiveMediaAttribute<?, ?>>
 			allowedAdaptiveMediaAttributesMap =
-				AdaptiveMediaAttribute.getAllowedAttributes();
+				AdaptiveMediaAttribute.getAllowedAdaptiveMediaAttributes();
 
 		Collection<AdaptiveMediaAttribute<?, ?>>
 			allowedAdaptiveMediaAttributes =

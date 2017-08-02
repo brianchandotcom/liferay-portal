@@ -17,13 +17,13 @@ package com.liferay.adaptive.media.util;
 import com.liferay.adaptive.media.exception.AdaptiveMediaRuntimeException;
 
 /**
- * Provides a set of functions for converting data into
- * {@link AdaptiveMediaAttribute} values.
+ * Provides a set of functions for converting data into {@link
+ * AdaptiveMediaAttribute} values.
  *
  * <p>
  * These functions should throw an {@link
- * AdaptiveMediaRuntimeException.AdaptiveMediaAttributeFormatException}
- * if they cannot convert the String.
+ * AdaptiveMediaRuntimeException.AdaptiveMediaAttributeFormatException} if they
+ * cannot convert the String.
  * </p>
  *
  * @author Alejandro Hernández

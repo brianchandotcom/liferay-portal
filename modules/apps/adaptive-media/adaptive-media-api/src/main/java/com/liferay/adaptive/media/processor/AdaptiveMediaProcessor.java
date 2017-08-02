@@ -33,13 +33,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 public interface AdaptiveMediaProcessor<M, T> {
 
 	/**
-	 * Completely removes any generated media for the model. After calling this
-	 * method on a model, the result of calling {@link
-	 * com.liferay.adaptive.media.processor#getMedia} with that same model is
-	 * undefined.
+	 * Completely removes any generated media for the model.
 	 *
 	 * @param  model the model for which all generated media is deleted
-	 * @throws PortalException
+	 * @throws PortalException if an error occurred while calling any Liferay
+	 *         services
 	 */
 	public void cleanUp(M model) throws PortalException;
 

@@ -12,17 +12,16 @@
  * details.
  */
 
-package com.liferay.adaptive.media.processor;
+package com.liferay.portal.search.contributor.sort;
+
+import aQute.bnd.annotation.ProviderType;
 
 /**
- * Responsible to locate the available {@link AdaptiveMediaAsyncProcessor}
- *
- * @review
- *
- * @author Adolfo Pérez
+ * @author Michael C. Han
  */
-public interface AdaptiveMediaAsyncProcessorLocator {
+@ProviderType
+public interface SortFieldNameTranslator {
 
-	public <M> AdaptiveMediaAsyncProcessor<M, ?> locateForClass(Class<M> clazz);
+	public String getSortFieldName(String orderByCol);
 
 }

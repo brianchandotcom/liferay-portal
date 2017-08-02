@@ -960,13 +960,13 @@ public class AssetUtil {
 					"Number");
 			}
 
-			sortField = DocumentImpl.getSortableFieldName(sortField);
+			sortField = Field.getSortableFieldName(sortField);
 		}
 		else if (sortField.equals("modifiedDate")) {
 			sortField = Field.MODIFIED_DATE;
 		}
 		else if (sortField.equals("title")) {
-			sortField = DocumentImpl.getSortableFieldName(
+			sortField = Field.getSortableFieldName(
 				"localized_title_".concat(LocaleUtil.toLanguageId(locale)));
 		}
 

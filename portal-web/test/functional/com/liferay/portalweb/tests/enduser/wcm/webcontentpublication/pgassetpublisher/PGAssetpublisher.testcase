@@ -913,11 +913,16 @@
 			<var name="assetTitle3" value="WebContent Title 3" />
 		</execute>
 
-		<execute macro="WebContent#editPGViaAP">
+		<execute macro="AssetPublisherPortlet#gotoEditAssetPG">
 			<var name="assetTitle" value="WebContent Title 1" />
-			<var name="webContentContentEdit" value="WebContent Content 1 Edit" />
-			<var name="webContentTitleEdit" value="WebContent Title 1 Edit" />
 		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WebContent Content 1 Edit" />
+			<var name="webContentTitle" value="WebContent Title 1 Edit" />
+		</execute>
+
+		<execute macro="Button#clickPublish" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Asset Publisher Page" />
@@ -988,11 +993,16 @@
 			<var name="assetTitle3" value="WebContent Title 3" />
 		</execute>
 
-		<execute macro="WebContent#editPGViaAP">
+		<execute macro="AssetPublisherPortlet#gotoEditAssetPG">
 			<var name="assetTitle" value="WebContent Title 1" />
-			<var name="webContentContentEdit" value="WebContent Content 1 Edit" />
-			<var name="webContentTitleEdit" value="WebContent Title 1 Edit" />
 		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WebContent Content 1 Edit" />
+			<var name="webContentTitle" value="WebContent Title 1 Edit" />
+		</execute>
+
+		<execute macro="Button#clickPublish" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Asset Publisher Page" />

@@ -948,26 +948,6 @@
 		<execute function="Click" locator1="Button#PUBLISH" value1="Publish" />
 	</command>
 
-	<command name="editPGViaAP">
-		<var name="key_assetTitle" value="${assetTitle}" />
-
-		<execute function="MouseOver" locator1="AP#BODY" />
-
-		<execute function="Click#mouseOverClick" locator1="Icon#EDIT" />
-
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-
-		<execute macro="PortletEntry#inputTitle">
-			<var name="title" value="${webContentTitleEdit}" />
-		</execute>
-
-		<execute macro="AlloyEditor#addContent">
-			<var name="content" value="${webContentContentEdit}" />
-		</execute>
-
-		<execute function="Click" locator1="Button#PUBLISH" value1="Publish" />
-	</command>
-
 	<command name="editPGViaWCD">
 		<execute macro="PortletEntry#inputTitle">
 			<var name="title" value="${webContentTitleEdit}" />

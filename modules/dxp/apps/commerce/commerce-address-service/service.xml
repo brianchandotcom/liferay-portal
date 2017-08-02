@@ -37,7 +37,6 @@
 		<!-- Order -->
 
 		<order by="asc">
-			<order-column name="name" />
 			<order-column name="priority" />
 		</order>
 	</entity>
@@ -70,7 +69,6 @@
 		<!-- Order -->
 
 		<order by="asc">
-			<order-column name="name" />
 			<order-column name="priority" />
 		</order>
 

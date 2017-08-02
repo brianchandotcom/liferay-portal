@@ -5,8 +5,8 @@
 
 	<ul class="nav navbar-nav navbar-right navbar-recursive" role="search">
 		<#if show_main_search_icon>
-			<li class="hidden-xs">
-				<a class="btn btn-xs collapsed" role="button" data-toggle="collapse" href="#collapseSearch" aria-expanded="false" aria-controls="collapseSearch">
+			<li id="mainSearchIcon">
+				<a class="btn btn-xs collapsed hidden-xs" role="button" data-toggle="collapse" href="#collapseSearch" aria-expanded="false" aria-controls="collapseSearch">
 					<svg class="lexicon-icon lexicon-icon-search">
 						<use xlink:href="${images_folder}/theme-icons.svg#icon-search" />
 					</svg>
@@ -15,12 +15,18 @@
 						<use xlink:href="${images_folder}/theme-icons.svg#icon-close" />
 					</svg>
 				</a>
+
+				<div class="collapse position-anchored" id="collapseSearch">
+					<div class="well small">
+						<@liferay.search default_preferences=freeMarkerPortletPreferences.getPreferences("portletSetupPortletDecoratorId", "barebone") />
+					</div>
+				</div>
 			</li>
 		</#if>
 
 		<#if show_wishlist_icon>
-			<li class="hidden-xs">
-				<a class="btn btn-xs collapsed" role="button" data-toggle="collapse" href="#collapseWishlist" aria-expanded="false" aria-controls="collapseWishlist">
+			<li class="collapse-hover" id="wishlistIcon">
+				<a class="btn hidden-xs" href="/wishlist">
 					<#if wishListItemsCount != 0>
 						<svg class="lexicon-icon">
 							<use xlink:href="${images_folder}/theme-icons.svg#icon-whislist-full" />
@@ -33,12 +39,18 @@
 						</svg>
 					</#if>
 				</a>
+
+				<div class="collapse position-anchored">
+					<div class="well small">
+						<#include "${full_templates_path}/wishlist.ftl" />
+					</div>
+				</div>
 			</li>
 		</#if>
 
 		<#if show_cart_icon>
-			<li class="hidden-xs">
-				<a class="btn collapsed" role="button" data-toggle="collapse" href="#collapseCart" aria-expanded="false" aria-controls="collapseCart">
+			<li class="collapse-hover" id="cartIcon">
+				<a class="btn hidden-xs" href="/cart">
 					<#if cartItemsCount != 0>
 						<svg class="lexicon-icon">
 							<use xlink:href="${images_folder}/theme-icons.svg#icon-bag-full" />
@@ -48,9 +60,15 @@
 					<#else>
 						<svg class="lexicon-icon">
 							<use xlink:href="${images_folder}/theme-icons.svg#icon-bag" />
-						</svg>
+						</svg>s
 					</#if>
 				</a>
+
+				<div class="collapse position-anchored">
+					<div class="well small">
+						<#include "${full_templates_path}/cart.ftl" />
+					</div>
+				</div>
 			</li>
 		</#if>
 
@@ -66,28 +84,4 @@
 			</#if>
 		</li>
 	</ul>
-
-	<#if show_main_search_icon>
-		<div class="collapse position-anchored" id="collapseSearch">
-			<div class="well small">
-				<@liferay.search default_preferences=freeMarkerPortletPreferences.getPreferences("portletSetupPortletDecoratorId", "barebone") />
-			</div>
-		</div>
-	</#if>
-
-	<#if show_wishlist_icon && (wishListItemsCount != 0)>
-		<div class="collapse position-anchored" id="collapseWishlist">
-			<div class="well small">
-				<#include "${full_templates_path}/wishlist.ftl" />
-			</div>
-		</div>
-	</#if>
-
-	<#if show_cart_icon && (cartItemsCount != 0)>
-		<div class="collapse position-anchored" id="collapseCart">
-			<div class="well small">
-				<#include "${full_templates_path}/cart.ftl" />
-			</div>
-		</div>
-	</#if>
 </div>

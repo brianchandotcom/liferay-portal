@@ -591,8 +591,6 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 			new MockClusterExecutor(true));
 
 		clusterMasterExecutorImpl.activate();
-
-		clusterMasterExecutorImpl.setRelease(null);
 	}
 
 	@Test

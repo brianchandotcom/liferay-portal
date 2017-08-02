@@ -115,7 +115,7 @@ public class CountriesCommerceAdminModule implements CommerceAdminModule {
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
-			"/view_countries.jsp");
+			"/view.jsp");
 	}
 
 	@Reference

@@ -15,6 +15,7 @@
 package com.liferay.commerce.address.service.impl;
 
 import com.liferay.commerce.address.exception.CommerceRegionNameException;
+import com.liferay.commerce.address.model.CommerceCountry;
 import com.liferay.commerce.address.model.CommerceRegion;
 import com.liferay.commerce.address.service.base.CommerceRegionLocalServiceBaseImpl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -38,8 +39,9 @@ public class CommerceRegionLocalServiceImpl
 			double priority, boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
+		CommerceCountry commerceCountry =
+			commerceCountryPersistence.findByPrimaryKey(commerceCountryId);
 		User user = userLocalService.getUser(serviceContext.getUserId());
-		long groupId = serviceContext.getScopeGroupId();
 
 		validate(name);
 
@@ -48,7 +50,7 @@ public class CommerceRegionLocalServiceImpl
 		CommerceRegion commerceRegion = commerceRegionPersistence.create(
 			commerceRegionId);
 
-		commerceRegion.setGroupId(groupId);
+		commerceRegion.setGroupId(commerceCountry.getGroupId());
 		commerceRegion.setCompanyId(user.getCompanyId());
 		commerceRegion.setUserId(user.getUserId());
 		commerceRegion.setUserName(user.getFullName());

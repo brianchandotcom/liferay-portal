@@ -148,19 +148,19 @@ public class CommerceCurrenciesDisplayContext {
 		List<CommerceCurrency> results;
 
 		if (active != null) {
+			total = _commerceCurrencyService.getCommerceCurrenciesCount(
+				themeDisplay.getScopeGroupId(), active);
 			results = _commerceCurrencyService.getCommerceCurrencies(
 				themeDisplay.getScopeGroupId(), active,
 				_searchContainer.getStart(), _searchContainer.getEnd(),
 				orderByComparator);
-			total = _commerceCurrencyService.getCommerceCurrenciesCount(
-				themeDisplay.getScopeGroupId(), active);
 		}
 		else {
+			total = _commerceCurrencyService.getCommerceCurrenciesCount(
+				themeDisplay.getScopeGroupId());
 			results = _commerceCurrencyService.getCommerceCurrencies(
 				themeDisplay.getScopeGroupId(), _searchContainer.getStart(),
 				_searchContainer.getEnd(), orderByComparator);
-			total = _commerceCurrencyService.getCommerceCurrenciesCount(
-				themeDisplay.getScopeGroupId());
 		}
 
 		_searchContainer.setTotal(total);

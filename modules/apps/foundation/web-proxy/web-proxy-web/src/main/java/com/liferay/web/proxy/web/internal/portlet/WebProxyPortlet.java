@@ -65,7 +65,7 @@ import org.portletbridge.portlet.PortletBridgeServlet;
 		"com.liferay.portlet.instanceable=true",
 		"com.liferay.portlet.preferences-owned-by-group=true",
 		"com.liferay.portlet.private-request-attributes=false",
-		"com.liferay.portlet.private-session-attributes=false",
+		"com.liferay.portlet.private-session-attributes=true",
 		"com.liferay.portlet.render-weight=50",
 		"javax.portlet.display-name=Web Proxy",
 		"javax.portlet.expiration-cache=0",

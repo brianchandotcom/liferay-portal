@@ -49,6 +49,7 @@ SearchContainer<CommerceCurrency> commerceCurrencySearchContainer = commerceCurr
 </liferay-frontend:management-bar>
 
 <liferay-ui:search-container
+	id="commerceCurrencies"
 	searchContainer="<%= commerceCurrencySearchContainer %>"
 >
 	<liferay-ui:search-container-row

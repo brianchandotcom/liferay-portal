@@ -668,6 +668,73 @@
 		</execute>
 	</command>
 
+	<command name="viewNotifications">
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Welcome" />
+		</execute>
+
+		<execute macro="Notifications#gotoNotifications" />
+
+		<execute macro="Notifications#viewNewContent">
+			<var name="assetType" value="message boards message" />
+			<var name="contentBody" value="Message Boards Subject 1" />
+			<var name="user" value="Test Test" />
+		</execute>
+
+		<execute macro="Notifications#navigateToContent">
+			<var name="contentBody" value="Message Boards Subject 1" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewPG">
+			<var name="threadBody" value="Message Boards Body" />
+			<var name="threadSubject" value="Message Boards Subject 1" />
+		</execute>
+
+		<execute macro="Notifications#viewBadgeCount">
+			<var name="activePanel" value="Notifications" />
+			<var name="notificationCount" value="2" />
+		</execute>
+
+		<execute macro="Notifications#gotoNotifications" />
+
+		<execute macro="Notifications#viewNewContent">
+			<var name="assetType" value="message boards message" />
+			<var name="contentBody" value="Message Boards Subject 2" />
+			<var name="user" value="Test Test" />
+		</execute>
+
+		<execute macro="Notifications#navigateToContent">
+			<var name="contentBody" value="Message Boards Subject 2" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewPG">
+			<var name="threadBody" value="Message Boards Body" />
+			<var name="threadSubject" value="Message Boards Subject 2" />
+		</execute>
+
+		<execute macro="Notifications#viewBadgeCount">
+			<var name="activePanel" value="Notifications" />
+			<var name="notificationCount" value="1" />
+		</execute>
+
+		<execute macro="Notifications#gotoNotifications" />
+
+		<execute macro="Notifications#viewNewContent">
+			<var name="assetType" value="message boards message" />
+			<var name="contentBody" value="Message Boards Subject 3" />
+			<var name="user" value="Test Test" />
+		</execute>
+
+		<execute macro="Notifications#navigateToContent">
+			<var name="contentBody" value="Message Boards Subject 3" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewPG">
+			<var name="threadBody" value="Message Boards Body" />
+			<var name="threadSubject" value="Message Boards Subject 3" />
+		</execute>
+	</command>
+
 	<command name="viewPolls">
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Polls" />

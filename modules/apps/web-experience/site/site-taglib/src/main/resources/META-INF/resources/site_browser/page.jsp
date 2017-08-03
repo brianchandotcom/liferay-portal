@@ -57,6 +57,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 	<liferay-ui:search-container
 		emptyResultsMessage="<%= emptyResultsMessage %>"
 		total="<%= groupsCount %>"
+		iteratorURL="<%= portletURL %>"
 	>
 		<liferay-ui:search-container-results
 			results="<%= groups %>"

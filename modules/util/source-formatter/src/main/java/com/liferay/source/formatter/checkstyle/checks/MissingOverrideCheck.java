@@ -348,7 +348,7 @@ public class MissingOverrideCheck extends AbstractCheck {
 		return false;
 	}
 
-	private static final String[] _EXCLUDES = new String[] {
+	private static final String[] _EXCLUDES = {
 		"**/.git/**", "**/.gradle/**", "**/bin/**", "**/build/**",
 		"**/classes/**", "**/node_modules/**", "**/npm-shrinkwrap.json",
 		"**/package-lock.json", "**/test-classes/**", "**/test-coverage/**",

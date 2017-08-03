@@ -112,7 +112,7 @@ public class HttpTimelineProcessor implements TimelineProcessor {
 
 	private static final String _URL = "https://www.twitter.com/";
 
-	private static final String[] _USER_AGENTS = new String[] {
+	private static final String[] _USER_AGENTS = {
 		"Mozilla/1.22 (compatible; MSIE 10.0; Windows 3.1)",
 		"Mozilla/5.0 (Windows; U; MSIE 7.0; Windows NT 5.2)",
 		"Mozilla/5.0 (Windows NT 5.1; rv:5.0.1) Gecko/20100101 Firefox/5.0.1",

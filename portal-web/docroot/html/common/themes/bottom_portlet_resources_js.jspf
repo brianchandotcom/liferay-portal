@@ -17,7 +17,7 @@
 <c:if test="<%= (portlets != null) && !portlets.isEmpty() %>">
 
 	<%
-	PortletResourceAccessor[] portletResourceAccessors = new PortletResourceAccessor[] {PortletResourceAccessor.FOOTER_PORTAL_JAVASCRIPT, PortletResourceAccessor.FOOTER_PORTLET_JAVASCRIPT};
+	PortletResourceAccessor[] portletResourceAccessors = {PortletResourceAccessor.FOOTER_PORTAL_JAVASCRIPT, PortletResourceAccessor.FOOTER_PORTLET_JAVASCRIPT};
 	PredicateFilter<String> predicateFilter = new JavaScriptPortletResourcePredicateFilter(themeDisplay);
 	boolean useComboServletStaticURLGenerator = themeDisplay.isThemeJsFastLoad();
 	%>

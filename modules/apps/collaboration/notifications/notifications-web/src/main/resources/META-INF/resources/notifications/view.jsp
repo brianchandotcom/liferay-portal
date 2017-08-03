@@ -77,7 +77,7 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 	<liferay-frontend:management-bar-filters>
 
 		<%
-		String[] navigationKeys = new String[] {"all"};
+		String[] navigationKeys = {"all"};
 
 		if (!actionRequired) {
 			navigationKeys = new String[] {"all", "unread", "read"};

@@ -114,7 +114,7 @@ public class StripDoctypeXMLReaderTest {
 		}
 	}
 
-	private static final String[] _ORIGINAL_XML = new String[] {
+	private static final String[] _ORIGINAL_XML = {
 		"<?xml version=\"1.0\"?><!DOCTYPE root><root />",
 		"<!DOCTYPE root [<!ELEMENT root ANY >]><root />",
 		"<!-- comment --><!DOCTYPE root [<!ELEMENT root ANY >]><root />",
@@ -124,7 +124,7 @@ public class StripDoctypeXMLReaderTest {
 		"<?xml version=\"1.0\"?><root attribute=\"<!DOCTYPE root>\"/>"
 	};
 
-	private static final String[] _SANITIZED_XML = new String[] {
+	private static final String[] _SANITIZED_XML = {
 		"<?xml version=\"1.0\"?><root />", "<root />",
 		"<!-- comment --><root />",
 		"<?xml version=\"1.0\"?><!-- comment --><root />",

@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String[] tabs2Names = new String[] {"system-properties", "portal-properties"};
+String[] tabs2Names = {"system-properties", "portal-properties"};
 
 if (!ArrayUtil.contains(tabs2Names, tabs2)) {
 	tabs2 = tabs2Names[0];

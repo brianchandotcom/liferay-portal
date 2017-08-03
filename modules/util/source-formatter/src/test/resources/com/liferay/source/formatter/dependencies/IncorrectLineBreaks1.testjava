@@ -147,10 +147,9 @@ public class IncorrectLineBreaks1 {
 		}
 	}
 
-	private static final String[] _NUMBERS =
-		new String[] {
-			"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight",
-			"Nine", "Ten"
-		};
+	private static final String[] _NUMBERS = {
+		"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
+		"Ten"
+	};
 
 }

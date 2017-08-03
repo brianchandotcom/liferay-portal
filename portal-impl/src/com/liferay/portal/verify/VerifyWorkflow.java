@@ -86,7 +86,7 @@ public class VerifyWorkflow extends VerifyProcess {
 		PortalUtil.getClassNameId(
 			"com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess"));
 
-	private static final String[][] _ORPHANED_ATTACHED_MODELS = new String[][] {
+	private static final String[][] _ORPHANED_ATTACHED_MODELS = {
 		new String[] {
 			"KaleoInstance", "className",
 			"'com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess'",

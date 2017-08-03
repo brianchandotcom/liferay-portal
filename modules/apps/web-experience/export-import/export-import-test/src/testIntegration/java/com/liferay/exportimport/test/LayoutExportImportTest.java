@@ -335,8 +335,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		layout1 = LayoutLocalServiceUtil.updateLayout(layout1);
 		layout3 = LayoutLocalServiceUtil.updateLayout(layout3);
 
-		long[] layoutIds =
-			new long[] {layout1.getLayoutId(), layout2.getLayoutId()};
+		long[] layoutIds = {layout1.getLayoutId(), layout2.getLayoutId()};
 
 		exportImportLayouts(layoutIds, getImportParameterMap());
 
@@ -395,7 +394,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 	public void testExportImportSelectedLayouts() throws Exception {
 		Layout layout = LayoutTestUtil.addLayout(group);
 
-		long[] layoutIds = new long[] {layout.getLayoutId()};
+		long[] layoutIds = {layout.getLayoutId()};
 
 		exportImportLayouts(layoutIds, getImportParameterMap());
 

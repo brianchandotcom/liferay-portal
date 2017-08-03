@@ -52,7 +52,7 @@ portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle(passwordPolicy.getName());
 
-String[] orderColumns = new String[] {"first-name", "last-name", "screen-name"};
+String[] orderColumns = {"first-name", "last-name", "screen-name"};
 RowChecker rowChecker = new DeleteUserPasswordPolicyChecker(renderResponse, passwordPolicy);
 PortletURL searchURL = PortletURLUtil.clone(portletURL, renderResponse);
 SearchContainer searchContainer = new UserSearch(renderRequest, searchURL);

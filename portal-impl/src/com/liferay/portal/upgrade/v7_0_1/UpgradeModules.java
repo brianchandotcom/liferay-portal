@@ -30,7 +30,7 @@ public class UpgradeModules
 		return _CONVERTED_LEGACY_MODULES;
 	}
 
-	private static final String[] _BUNDLE_SYMBOLIC_NAMES = new String[] {
+	private static final String[] _BUNDLE_SYMBOLIC_NAMES = {
 		"com.liferay.announcements.web", "com.liferay.directory.web",
 		"com.liferay.microblogs.web", "com.liferay.notifications.web",
 		"com.liferay.recent.documents.web", "com.liferay.social.networking.web",

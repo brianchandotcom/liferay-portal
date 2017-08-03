@@ -246,14 +246,14 @@ public class RecurrenceSerializerTest extends RecurrenceSerializer {
 	}
 
 	private static final DayAndPosition[]
-		_firstMondayDayAndFirstFridayAndPositions = new DayAndPosition[] {
+		_firstMondayDayAndFirstFridayAndPositions = {
 			new DayAndPosition(Calendar.MONDAY, 0),
 			new DayAndPosition(Calendar.FRIDAY, 0)
 		};
 	private static final DayAndPosition[] _firstMondayDayAndPositions =
-		new DayAndPosition[] {new DayAndPosition(Calendar.MONDAY, 0)};
+		{new DayAndPosition(Calendar.MONDAY, 0)};
 	private static final DayAndPosition[] _lastMondayDayAndPositions =
-		new DayAndPosition[] {new DayAndPosition(Calendar.MONDAY, -1)};
+		{new DayAndPosition(Calendar.MONDAY, -1)};
 	private static final Calendar _recurrenceCalendar = new GregorianCalendar(
 		2010, 0, 2, 3, 4, 5);
 

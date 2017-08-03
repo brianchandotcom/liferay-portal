@@ -75,7 +75,7 @@ public class SocialHotDeployListener extends BaseHotDeployListener {
 			_log.debug("Invoking deploy for " + servletContextName);
 		}
 
-		String[] xmls = new String[] {
+		String[] xmls = {
 			HttpUtil.URLtoString(
 				servletContext.getResource("/WEB-INF/liferay-social.xml"))
 		};

@@ -38,7 +38,7 @@ List rightList = new ArrayList();
 
 Arrays.sort(metadataFields);
 
-String[] allMetadataFields = new String[] {"create-date", "modified-date", "publish-date", "expiration-date", "priority", "author", "view-count", "categories", "tags"};
+String[] allMetadataFields = {"create-date", "modified-date", "publish-date", "expiration-date", "priority", "author", "view-count", "categories", "tags"};
 
 for (String folderColumn : allMetadataFields) {
 	if (Arrays.binarySearch(metadataFields, folderColumn) < 0) {

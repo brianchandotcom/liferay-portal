@@ -847,7 +847,7 @@ public class MainServlet extends ActionServlet {
 
 						ServletContext servletContext = getServletContext();
 
-						String[] xmls = new String[] {
+						String[] xmls = {
 							HttpUtil.URLtoString(
 								servletContext.getResource(
 									"/WEB-INF/liferay-layout-templates.xml")),
@@ -1000,7 +1000,7 @@ public class MainServlet extends ActionServlet {
 
 		ServletContext servletContext = getServletContext();
 
-		String[] xmls = new String[] {
+		String[] xmls = {
 			HttpUtil.URLtoString(
 				servletContext.getResource("/WEB-INF/liferay-social.xml")),
 			HttpUtil.URLtoString(
@@ -1016,7 +1016,7 @@ public class MainServlet extends ActionServlet {
 
 		ServletContext servletContext = getServletContext();
 
-		String[] xmls = new String[] {
+		String[] xmls = {
 			HttpUtil.URLtoString(
 				servletContext.getResource(
 					"/WEB-INF/liferay-look-and-feel.xml")),

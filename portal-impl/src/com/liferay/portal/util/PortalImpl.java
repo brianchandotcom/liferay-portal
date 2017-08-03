@@ -6019,7 +6019,7 @@ public class PortalImpl implements Portal {
 
 		DB db = DBManagerUtil.getDB();
 
-		Object[] customSqlValues = new Object[] {
+		Object[] customSqlValues = {
 			getClassNameId(Group.class), getClassNameId(Layout.class),
 			getClassNameId(Organization.class), getClassNameId(Role.class),
 			getClassNameId(Team.class), getClassNameId(User.class),

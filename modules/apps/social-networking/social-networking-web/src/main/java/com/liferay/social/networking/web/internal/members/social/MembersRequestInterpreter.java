@@ -174,7 +174,7 @@ public class MembersRequestInterpreter extends BaseSocialRequestInterpreter {
 	}
 
 	private static final String[] _CLASS_NAMES =
-		new String[] {Group.class.getName(), Organization.class.getName()};
+		{Group.class.getName(), Organization.class.getName()};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MembersRequestInterpreter.class);

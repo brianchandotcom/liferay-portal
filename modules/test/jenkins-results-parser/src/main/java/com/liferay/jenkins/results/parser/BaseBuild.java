@@ -2052,9 +2052,8 @@ public abstract class BaseBuild implements Build {
 			new GenericFailureMessageGenerator()
 		};
 
-	private static final String[] _HIGH_PRIORITY_CONTENT_FLAGS = new String[] {
-		"compileJSP", "SourceFormatter.format", "Unable to compile JSPs"
-	};
+	private static final String[] _HIGH_PRIORITY_CONTENT_FLAGS =
+		{"compileJSP", "SourceFormatter.format", "Unable to compile JSPs"};
 
 	private int _buildNumber = -1;
 	private int _consoleReadCursor;

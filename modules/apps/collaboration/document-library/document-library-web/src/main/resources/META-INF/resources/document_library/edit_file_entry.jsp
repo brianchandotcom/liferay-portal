@@ -121,7 +121,7 @@ else {
 
 String defaultLanguageId = themeDisplay.getLanguageId();
 
-Locale[] availableLocales = new Locale[] {LocaleUtil.fromLanguageId(defaultLanguageId)};
+Locale[] availableLocales = {LocaleUtil.fromLanguageId(defaultLanguageId)};
 
 if (fileEntryTypeId > 0) {
 	DLFileEntryType fileEntryType = DLFileEntryTypeLocalServiceUtil.getFileEntryType(fileEntryTypeId);

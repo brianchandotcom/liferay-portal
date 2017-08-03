@@ -154,7 +154,7 @@ public class WAIFriendlyURLMapper implements FriendlyURLMapper {
 
 	protected Router router;
 
-	private static final String[] _BINARY_EXTENSIONS = new String[] {
+	private static final String[] _BINARY_EXTENSIONS = {
 		".css", ".doc", ".gif", ".jpeg", ".jpg", ".js", ".odp", ".png", ".ppt",
 		".tgz", ".xls", ".zip"
 	};

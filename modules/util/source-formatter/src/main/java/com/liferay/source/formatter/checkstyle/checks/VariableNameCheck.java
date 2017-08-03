@@ -161,7 +161,7 @@ public class VariableNameCheck extends AbstractCheck {
 		return false;
 	}
 
-	private static final String[][] _ALL_CAPS_STRINGS = new String[][] {
+	private static final String[][] _ALL_CAPS_STRINGS = {
 		new String[] {"DDL", "Ddl"}, new String[] {"DDM", "Ddm"},
 		new String[] {"DL", "Dl"}, new String[] {"PK", "Pk"}
 	};

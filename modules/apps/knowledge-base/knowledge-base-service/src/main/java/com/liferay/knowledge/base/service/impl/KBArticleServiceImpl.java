@@ -401,7 +401,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 
 		List<KBArticle> kbArticles = new ArrayList<>();
 
-		Long[][] params = new Long[][] {ArrayUtil.toArray(resourcePrimKeys)};
+		Long[][] params = {ArrayUtil.toArray(resourcePrimKeys)};
 
 		while ((params = KnowledgeBaseUtil.getParams(params[0])) != null) {
 			List<KBArticle> curKBArticles = null;
@@ -465,7 +465,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 
 		int count = 0;
 
-		Long[][] params = new Long[][] {ArrayUtil.toArray(resourcePrimKeys)};
+		Long[][] params = {ArrayUtil.toArray(resourcePrimKeys)};
 
 		while ((params = KnowledgeBaseUtil.getParams(params[0])) != null) {
 			if (status == WorkflowConstants.STATUS_ANY) {

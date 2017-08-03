@@ -26,7 +26,7 @@ public class PrimitiveLongListTest {
 
 	@Test
 	public void testAdd() {
-		long[] expected = new long[] {10L, 11L, 12L};
+		long[] expected = {10L, 11L, 12L};
 
 		PrimitiveLongList primitiveLongList = new PrimitiveLongList();
 
@@ -48,7 +48,7 @@ public class PrimitiveLongListTest {
 
 	@Test
 	public void testAddAll() {
-		long[] expected = new long[] {10L, 11L, 12L};
+		long[] expected = {10L, 11L, 12L};
 
 		PrimitiveLongList primitiveLongList = new PrimitiveLongList();
 

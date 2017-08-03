@@ -32,7 +32,7 @@ public class UserDisplayTei extends TagExtraInfo {
 
 	private static class Concealer {
 
-		private static final VariableInfo[] _variableInfo = new VariableInfo[] {
+		private static final VariableInfo[] _variableInfo = {
 			new VariableInfo(
 				"userDisplay", User.class.getName(), true,
 				VariableInfo.AT_BEGIN)

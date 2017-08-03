@@ -115,7 +115,7 @@ public class ExportImportHelperUtilTest {
 			_stagingGroup, layout.getPlid());
 
 		long[] selectedLayoutIds =
-			new long[] {layout.getLayoutId(), childLayout.getLayoutId()};
+			{layout.getLayoutId(), childLayout.getLayoutId()};
 
 		String selectedLayoutsJSON =
 			ExportImportHelperUtil.getSelectedLayoutsJSON(
@@ -140,7 +140,7 @@ public class ExportImportHelperUtilTest {
 		Layout childLayout = LayoutTestUtil.addLayout(
 			_stagingGroup, layout.getPlid());
 
-		long[] selectedLayoutIds = new long[] {childLayout.getLayoutId()};
+		long[] selectedLayoutIds = {childLayout.getLayoutId()};
 
 		String selectedLayoutsJSON =
 			ExportImportHelperUtil.getSelectedLayoutsJSON(
@@ -185,7 +185,7 @@ public class ExportImportHelperUtilTest {
 		LayoutTestUtil.addLayout(
 			_stagingGroup.getGroupId(), "Child Layout", layout.getPlid());
 
-		long[] selectedLayoutIds = new long[] {layout.getLayoutId()};
+		long[] selectedLayoutIds = {layout.getLayoutId()};
 
 		String selectedLayoutsJSON =
 			ExportImportHelperUtil.getSelectedLayoutsJSON(

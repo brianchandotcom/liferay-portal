@@ -19,7 +19,7 @@
 <%
 Collection<DynamicInclude> dynamicIncludes = (Collection)request.getAttribute(PortalSettingsWebKeys.AUTHENTICATION_DYNAMIC_INCLUDES);
 
-String[] tabsNames = new String[] {"general"};
+String[] tabsNames = {"general"};
 
 tabsNames = ArrayUtil.append(tabsNames, PropsValues.COMPANY_SETTINGS_FORM_AUTHENTICATION);
 

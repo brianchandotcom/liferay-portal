@@ -106,7 +106,7 @@ public class AssetUtil {
 
 	public static final String CLASSNAME_SEPARATOR = "_CLASSNAME_";
 
-	public static final char[] INVALID_CHARACTERS = new char[] {
+	public static final char[] INVALID_CHARACTERS = {
 		CharPool.AMPERSAND, CharPool.APOSTROPHE, CharPool.AT,
 		CharPool.BACK_SLASH, CharPool.CLOSE_BRACKET, CharPool.CLOSE_CURLY_BRACE,
 		CharPool.COLON, CharPool.COMMA, CharPool.EQUAL, CharPool.GREATER_THAN,

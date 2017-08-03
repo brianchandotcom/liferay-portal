@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class KeywordsUtil {
 
-	public static final String[] SPECIAL = new String[] {
+	public static final String[] SPECIAL = {
 		"+", "-", "&&", "||", "!", "(", ")", "{", "}", "[", "]", "^", "\"", "~",
 		"*", "?", ":", "\\"
 	};

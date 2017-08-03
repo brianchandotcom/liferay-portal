@@ -1987,29 +1987,28 @@ public class FileSystemImporter extends BaseImporter {
 	private static final String _APPLICATION_DISPLAY_TEMPLATE_DIR_NAME =
 		"/templates/application_display";
 
-	private static final Object[][] _APPLICATION_DISPLAY_TEMPLATE_TYPES =
-		new Object[][] {
-			{"asset_category", "com.liferay.asset.kernel.model.AssetCategory"},
-			{"asset_entry", "com.liferay.asset.kernel.model.AssetEntry"},
-			{"asset_tag", "com.liferay.asset.kernel.model.AssetTag"},
-			{"blogs_entry", "com.liferay.blogs.model.BlogsEntry"},
-			{
-				"bread_crumb",
-				"com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry"
-			},
-			{
-				"document_library",
-				"com.liferay.portal.kernel.repository.model.FileEntry"
-			},
-			{
-				"language_entry",
-				"com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry"
-			},
-			{"rss_feed", "com.liferay.rss.web.util.RSSFeed"},
-			{"site_map", "com.liferay.portal.kernel.model.LayoutSet"},
-			{"site_navigation", "com.liferay.portal.kernel.theme.NavItem"},
-			{"wiki_page", "com.liferay.wiki.model.WikiPage"}
-		};
+	private static final Object[][] _APPLICATION_DISPLAY_TEMPLATE_TYPES = {
+		{"asset_category", "com.liferay.asset.kernel.model.AssetCategory"},
+		{"asset_entry", "com.liferay.asset.kernel.model.AssetEntry"},
+		{"asset_tag", "com.liferay.asset.kernel.model.AssetTag"},
+		{"blogs_entry", "com.liferay.blogs.model.BlogsEntry"},
+		{
+			"bread_crumb",
+			"com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry"
+		},
+		{
+			"document_library",
+			"com.liferay.portal.kernel.repository.model.FileEntry"
+		},
+		{
+			"language_entry",
+			"com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry"
+		},
+		{"rss_feed", "com.liferay.rss.web.util.RSSFeed"},
+		{"site_map", "com.liferay.portal.kernel.model.LayoutSet"},
+		{"site_navigation", "com.liferay.portal.kernel.theme.NavItem"},
+		{"wiki_page", "com.liferay.wiki.model.WikiPage"}
+	};
 
 	private static final String _DDL_STRUCTURE_DIR_NAME =
 		"/templates/dynamic_data_list/structure";

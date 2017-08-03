@@ -104,7 +104,7 @@ public class ExportedMissingReferenceBackwardCompatbilityExportImportTest
 			DummyFolderPortletKeys.DUMMY_FOLDER_WITH_MISSING_REFERENCE,
 			DummyFolderWithMissingDummyPortletDataHandler.class);
 
-		long[] layoutIds = new long[] {layout.getLayoutId()};
+		long[] layoutIds = {layout.getLayoutId()};
 
 		try {
 			exportImportLayouts(layoutIds, getExportParameterMap());

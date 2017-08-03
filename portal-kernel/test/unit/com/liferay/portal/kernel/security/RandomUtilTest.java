@@ -48,7 +48,7 @@ public class RandomUtilTest {
 
 	@Test
 	public void testNextInts() {
-		int[] expectedResult = new int[] {6, 0, 1, 8, 4, 9, 3, 7, 2, 5};
+		int[] expectedResult = {6, 0, 1, 8, 4, 9, 3, 7, 2, 5};
 
 		RandomUtil.random = new PredictableRandom(_NUMBERS);
 
@@ -79,8 +79,7 @@ public class RandomUtilTest {
 		Assert.assertEquals(inputString, new String(shutffledChars));
 	}
 
-	private static final int[] _NUMBERS =
-		new int[] {5, 2, 7, 3, 5, 4, 2, 1, 0, 0};
+	private static final int[] _NUMBERS = {5, 2, 7, 3, 5, 4, 2, 1, 0, 0};
 
 	private static class PredictableRandom extends Random {
 

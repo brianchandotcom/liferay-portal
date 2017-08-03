@@ -47,7 +47,7 @@ public class BarData {
 		_value = value;
 	}
 
-	private int[] _array = new int[] {1, 2, 3};
+	private int[] _array = {1, 2, 3};
 	private String _secret = "secret";
 	private String _value = "value";
 

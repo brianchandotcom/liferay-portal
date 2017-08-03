@@ -101,7 +101,7 @@ public class SortFactoryImpl implements SortFactory {
 	@Reference
 	protected SortFieldBuilder sortFieldBuilder;
 
-	private static final Sort[] _DEFAULT_SORTS = new Sort[] {
+	private static final Sort[] _DEFAULT_SORTS = {
 		new Sort(null, Sort.SCORE_TYPE, false),
 		new Sort(Field.MODIFIED_DATE, Sort.LONG_TYPE, true)
 	};

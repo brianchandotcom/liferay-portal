@@ -30,7 +30,7 @@ public class SectionTei extends TagExtraInfo {
 
 	private static class Concealer {
 
-		private static final VariableInfo[] _variableInfo = new VariableInfo[] {
+		private static final VariableInfo[] _variableInfo = {
 			new VariableInfo(
 				"sectionParam", String.class.getName(), true,
 				VariableInfo.NESTED),

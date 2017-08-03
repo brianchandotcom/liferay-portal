@@ -33,7 +33,7 @@ serverURL.setParameter("tabs2", tabs2);
 			<aui:nav cssClass="navbar-nav">
 
 				<%
-				String[] tabs1Names = new String[] {"resources", "log-levels", "properties", "data-migration", "file-uploads", "mail", "external-services", "script", "shutdown"};
+				String[] tabs1Names = {"resources", "log-levels", "properties", "data-migration", "file-uploads", "mail", "external-services", "script", "shutdown"};
 
 				for (String tabs1Name : tabs1Names) {
 					serverURL.setParameter("tabs1", tabs1Name);

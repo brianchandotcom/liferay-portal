@@ -92,7 +92,7 @@ public class AssetLinkExportImportTest extends BaseExportImportTestCase {
 
 	@Test
 	public void testBothAssetEntriesExported() throws Exception {
-		long[] layoutIds = new long[] {layout.getLayoutId()};
+		long[] layoutIds = {layout.getLayoutId()};
 
 		exportImportLayouts(layoutIds, getImportParameterMap());
 
@@ -109,7 +109,7 @@ public class AssetLinkExportImportTest extends BaseExportImportTestCase {
 
 	@Test
 	public void testOnlyAssetLinkExported() throws Exception {
-		long[] layoutIds = new long[] {layout.getLayoutId()};
+		long[] layoutIds = {layout.getLayoutId()};
 
 		Map<String, String[]> exportParameterMap = getExportParameterMap();
 
@@ -147,7 +147,7 @@ public class AssetLinkExportImportTest extends BaseExportImportTestCase {
 
 	@Test
 	public void testOnlyOneAssetEntryExported() throws Exception {
-		long[] layoutIds = new long[] {layout.getLayoutId()};
+		long[] layoutIds = {layout.getLayoutId()};
 
 		Map<String, String[]> exportParameterMap = getExportParameterMap();
 

@@ -41,8 +41,7 @@ public class MBPortletLayoutFinder extends BasePortletLayoutFinder {
 
 	// Order is important. See LPS-23770.
 
-	private static final String[] _PORTLET_IDS = new String[] {
-		MBPortletKeys.MESSAGE_BOARDS_ADMIN, MBPortletKeys.MESSAGE_BOARDS
-	};
+	private static final String[] _PORTLET_IDS =
+		{MBPortletKeys.MESSAGE_BOARDS_ADMIN, MBPortletKeys.MESSAGE_BOARDS};
 
 }

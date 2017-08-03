@@ -31,7 +31,7 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 		return _RESOURCE_NAMES;
 	}
 
-	private static final String[][] _CLASS_NAMES = new String[][] {
+	private static final String[][] _CLASS_NAMES = {
 		{
 			"com.liferay.trash.kernel.model.TrashEntry",
 			"com.liferay.trash.model.TrashEntry"

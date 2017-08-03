@@ -49,7 +49,7 @@ if (Validator.isNull(defaultLanguageId)) {
 	defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
 }
 
-Locale[] availableLocales = new Locale[] {LocaleUtil.fromLanguageId(defaultLanguageId)};
+Locale[] availableLocales = {LocaleUtil.fromLanguageId(defaultLanguageId)};
 
 boolean changeableDefaultLanguage = ddlDisplayContext.changeableDefaultLanguage();
 

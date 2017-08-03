@@ -14,10 +14,8 @@
 
 package com.liferay.portal.settings.authentication.openid.connect.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectConstants;
 import com.liferay.portal.settings.authentication.openid.connect.web.internal.constants.PortalSettingsOpenIdConnectConstants;
-import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
 import com.liferay.portal.settings.web.portlet.action.PortalSettingsFormContributor;
 
 import java.util.Optional;
@@ -31,14 +29,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Edward C. Han
  */
-@Component(
-	immediate = true,
-	property = {
-		"javax.portlet.name=" + PortalSettingsPortletKeys.PORTAL_SETTINGS,
-		"mvc.command.name=/portal_settings/openid_connect"
-	},
-	service = MVCActionCommand.class
-)
+@Component(immediate = true, service = PortalSettingsFormContributor.class)
 public class OpenIdConnectPortalSettingsFormContributor
 	implements PortalSettingsFormContributor {
 

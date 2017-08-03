@@ -14,10 +14,8 @@
 
 package com.liferay.portal.settings.authentication.ntlm.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.security.sso.ntlm.constants.NtlmConstants;
 import com.liferay.portal.settings.authentication.ntlm.web.internal.constants.PortalSettingsNtlmConstants;
-import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
 import com.liferay.portal.settings.web.portlet.action.PortalSettingsFormContributor;
 
 import java.util.Optional;
@@ -31,13 +29,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Philip Jones
  */
-@Component(
-	property = {
-		"javax.portlet.name=" + PortalSettingsPortletKeys.PORTAL_SETTINGS,
-		"mvc.command.name=/portal_settings/ntlm"
-	},
-	service = MVCActionCommand.class
-)
+@Component(immediate = true, service = PortalSettingsFormContributor.class)
 public class NtlmPortalSettingsFormContributor
 	implements PortalSettingsFormContributor {
 

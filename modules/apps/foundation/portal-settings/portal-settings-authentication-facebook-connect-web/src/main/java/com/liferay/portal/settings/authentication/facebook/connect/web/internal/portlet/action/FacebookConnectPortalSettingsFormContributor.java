@@ -14,12 +14,10 @@
 
 package com.liferay.portal.settings.authentication.facebook.connect.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectConstants;
 import com.liferay.portal.settings.authentication.facebook.connect.web.internal.constants.PortalSettingsFacebookConnectConstants;
-import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
 import com.liferay.portal.settings.web.portlet.action.PortalSettingsFormContributor;
 import com.liferay.portal.settings.web.portlet.action.PortalSettingsParameterUtil;
 
@@ -35,14 +33,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Tomas Polesovsky
  * @author Stian Sigvartsen
  */
-@Component(
-	immediate = true,
-	property = {
-		"javax.portlet.name=" + PortalSettingsPortletKeys.PORTAL_SETTINGS,
-		"mvc.command.name=/portal_settings/facebook_connect"
-	},
-	service = MVCActionCommand.class
-)
+@Component(immediate = true, service = PortalSettingsFormContributor.class)
 public class FacebookConnectPortalSettingsFormContributor
 	implements PortalSettingsFormContributor {
 

@@ -14,12 +14,10 @@
 
 package com.liferay.portal.settings.authentication.google.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.google.constants.GoogleConstants;
 import com.liferay.portal.settings.authentication.google.web.internal.constants.PortalSettingsGoogleConstants;
-import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
 import com.liferay.portal.settings.web.portlet.action.PortalSettingsFormContributor;
 import com.liferay.portal.settings.web.portlet.action.PortalSettingsParameterUtil;
 
@@ -34,14 +32,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Stian Sigvartsen
  */
-@Component(
-	immediate = true,
-	property = {
-		"javax.portlet.name=" + PortalSettingsPortletKeys.PORTAL_SETTINGS,
-		"mvc.command.name=/portal_settings/google"
-	},
-	service = MVCActionCommand.class
-)
+@Component(immediate = true, service = PortalSettingsFormContributor.class)
 public class GooglePortalSettingsFormContributor
 	implements PortalSettingsFormContributor {
 

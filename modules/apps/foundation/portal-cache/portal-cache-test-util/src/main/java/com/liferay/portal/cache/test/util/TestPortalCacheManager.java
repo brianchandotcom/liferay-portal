@@ -118,7 +118,7 @@ public class TestPortalCacheManager<K extends Serializable, V>
 		return new PortalCacheManagerConfiguration(
 			null,
 			new PortalCacheConfiguration(
-				PortalCacheConfiguration.DEFAULT_PORTAL_CACHE_NAME, null, null),
+				PortalCacheConfiguration.PORTAL_CACHE_NAME_DEFAULT, null, null),
 			null);
 	}
 
@@ -127,6 +127,11 @@ public class TestPortalCacheManager<K extends Serializable, V>
 		_testPortalCaches = new ConcurrentHashMap<>();
 
 		aggregatedPortalCacheManagerListener.init();
+	}
+
+	@Override
+	protected void removeConfigurableEhcachePortalCacheListeners(
+		PortalCache<K, V> portalCache) {
 	}
 
 	private ConcurrentMap<String, TestPortalCache<K, V>> _testPortalCaches;

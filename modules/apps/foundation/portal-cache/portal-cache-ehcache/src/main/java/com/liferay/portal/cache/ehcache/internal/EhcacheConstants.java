@@ -12,23 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.cache.ehcache;
+package com.liferay.portal.cache.ehcache.internal;
 
 /**
  * @author Tina Tian
- * @deprecated As of 2.1.0, replaced by {@link
- *			com.liferay.portal.cache.ehcache.internal.EhcacheConstants}
  */
-@Deprecated
-public interface EhcacheConstants {
+public class EhcacheConstants {
 
-	public static final String BOOTSTRAP_CACHE_LOADER_FACTORY_CLASS_NAME =
-		"BOOTSTRAP_CACHE_LOADER_FACTORY_CLASS_NAME";
+	public static final String
+		CACHE_LISTENER_PROPERTIES_KEY_FACTORY_CLASS_NAME =
+			"CACHE_LISTENER_PROPERTIES_KEY_FACTORY_CLASS_NAME";
 
-	public static final String CACHE_EVENT_LISTENER_FACTORY_CLASS_NAME =
-		"CACHE_EVENT_LISTENER_FACTORY_CLASS_NAME";
-
-	public static final String CACHE_MANAGER_LISTENER_FACTORY_CLASS_NAME =
-		"CACHE_MANAGER_LISTENER_FACTORY_CLASS_NAME";
+	public static final String
+		CACHE_MANAGER_LISTENER_PROPERTIES_KEY_FACTORY_CLASS_NAME =
+			"CACHE_MANAGER_LISTENER_PROPERTIES_KEY_FACTORY_CLASS_NAME";
 
 }

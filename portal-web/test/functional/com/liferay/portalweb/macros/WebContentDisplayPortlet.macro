@@ -161,9 +161,7 @@
 
 		<execute macro="Button#clickRemove" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="saveConfiguration">

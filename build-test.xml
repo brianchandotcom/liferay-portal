@@ -5107,8 +5107,6 @@ go]]></replacevalue>
 
 						<local name="sync.connector.override" />
 
-						<property name="sync.connector.override" value="false" />
-
 						<if>
 							<matches pattern="https?://" string="${test.build.fix.pack.zip.url}" />
 							<then>
@@ -5122,8 +5120,8 @@ go]]></replacevalue>
 										if (appFileName.equals("Liferay Sync Connector.lpkg") && (fixpackVersion != null)) {
 											int fixpackVersionInt = Integer.valueOf(fixpackVersion);
 
-											if (fixpackVersionInt >= 19) {
-												project.setProperty("sync.connector.override", "true");
+											if (fixpackVersionInt < 19) {
+												project.setProperty("sync.connector.override", "false");
 											}
 										}
 									]]>
@@ -8368,7 +8366,7 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 						String fixpackVersion = project.getProperty("fixpack.version");
 
 						if (fixpackVersion != null) {
-							Integer fixpackVersionInt = Integer.valueOf(fixpackVersion);
+							int fixpackVersionInt = Integer.valueOf(fixpackVersion);
 
 							if (fixpackVersionInt >= 16) {
 								project.setProperty("enable.ext.environment", "true");

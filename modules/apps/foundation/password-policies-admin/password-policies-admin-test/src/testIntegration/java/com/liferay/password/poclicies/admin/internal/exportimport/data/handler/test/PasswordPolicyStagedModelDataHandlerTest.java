@@ -14,6 +14,7 @@
 
 package com.liferay.password.poclicies.admin.internal.exportimport.data.handler.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.model.StagedModel;
@@ -34,10 +35,12 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.runner.RunWith;
 
 /**
  * @author Daniela Zapata Riesco
  */
+@RunWith(Arquillian.class)
 @Sync
 public class PasswordPolicyStagedModelDataHandlerTest
 	extends BaseStagedModelDataHandlerTestCase {

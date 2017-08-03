@@ -1,7 +1,9 @@
 Bundle-Name: Liferay Portal Settings Web
 Bundle-SymbolicName: com.liferay.portal.settings.web
 Bundle-Version: 1.1.10
-Export-Package: com.liferay.portal.settings.web.constants
+Export-Package: \
+	com.liferay.portal.settings.web.constants,\
+	com.liferay.portal.settings.web.portlet.action
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 Web-ContextPath: /portal-settings-web

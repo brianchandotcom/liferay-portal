@@ -69,67 +69,61 @@
 		</execute>
 
 		<execute macro="JSONRole#addSiteRole">
-			<var name="roleTitle" value="Staging Admin"/>
-			<var name="roleKey" value="Staging Admin"/>
+			<var name="roleKey" value="Staging Admin" />
+			<var name="roleTitle" value="Staging Admin" />
 		</execute>
 
-		<for list="PERMISSIONS,OVERRIDE_CHECKOUT,DELETE_DISCUSSION,DELETE,ADD_DISCUSSION,VIEW,UPDATE_DISCUSSION,UPDATE"
-			param="resourceActionIndex">
+		<for list="PERMISSIONS,OVERRIDE_CHECKOUT,DELETE_DISCUSSION,DELETE,ADD_DISCUSSION,VIEW,UPDATE_DISCUSSION,UPDATE" param="resourceActionIndex">
 			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}"/>
-				<var name="resourceName" value="com.liferay.document.library.kernel.model.DLFileEntry"/>
-				<var name="roleTitle" value="Staging Admin"/>
-				<var name="roleType" value="site"/>
+				<var name="resourceAction" value="${resourceActionIndex}" />
+				<var name="resourceName" value="com.liferay.document.library.kernel.model.DLFileEntry" />
+				<var name="roleTitle" value="Staging Admin" />
+				<var name="roleType" value="site" />
 			</execute>
 		</for>
 
-		<for list="DELETE,PERMISSIONS,CONFIGURE_PORTLETS,MANAGE_TEAMS,VIEW_STAGING,ASSIGN_USER_ROLES,MANAGE_SUBGROUPS,VIEW_SITE_ADMINISTRATION,ASSIGN_MEMBERS,MANAGE_STAGING,VIEW_MEMBERS,ADD_LAYOUT_SET_BRANCH,MANAGE_LAYOUTS,VIEW,ADD_LAYOUT_BRANCH,MANAGE_ARCHIVED_SETUPS,UPDATE,ADD_LAYOUT,MANAGE_ANNOUNCEMENTS,PUBLISH_STAGING,ADD_COMMUNITY,EXPORT_IMPORT_PORTLET_INFO,PUBLISH_PORTLET_INFO,EXPORT_IMPORT_LAYOUTS,PREVIEW_IN_DEVICE"
-			param="resourceActionIndex">
+		<for list="DELETE,PERMISSIONS,CONFIGURE_PORTLETS,MANAGE_TEAMS,VIEW_STAGING,ASSIGN_USER_ROLES,MANAGE_SUBGROUPS,VIEW_SITE_ADMINISTRATION,ASSIGN_MEMBERS,MANAGE_STAGING,VIEW_MEMBERS,ADD_LAYOUT_SET_BRANCH,MANAGE_LAYOUTS,VIEW,ADD_LAYOUT_BRANCH,MANAGE_ARCHIVED_SETUPS,UPDATE,ADD_LAYOUT,MANAGE_ANNOUNCEMENTS,PUBLISH_STAGING,ADD_COMMUNITY,EXPORT_IMPORT_PORTLET_INFO,PUBLISH_PORTLET_INFO,EXPORT_IMPORT_LAYOUTS,PREVIEW_IN_DEVICE" param="resourceActionIndex">
 			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}"/>
-				<var name="resourceName" value="com.liferay.portal.kernel.model.Group"/>
-				<var name="roleTitle" value="Staging Admin"/>
-				<var name="roleType" value="site"/>
+				<var name="resourceAction" value="${resourceActionIndex}" />
+				<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
+				<var name="roleTitle" value="Staging Admin" />
+				<var name="roleType" value="site" />
 			</execute>
 		</for>
 
-		<for list="UPDATE_DISCUSSION,UPDATE,PERMISSIONS,DELETE_DISCUSSION,DELETE,CUSTOMIZE,CONFIGURE_PORTLETS,ADD_LAYOUT,ADD_DISCUSSION,VIEW"
-			param="resourceActionIndex">
+		<for list="UPDATE_DISCUSSION,UPDATE,PERMISSIONS,DELETE_DISCUSSION,DELETE,CUSTOMIZE,CONFIGURE_PORTLETS,ADD_LAYOUT,ADD_DISCUSSION,VIEW" param="resourceActionIndex">
 			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}"/>
-				<var name="resourceName" value="com.liferay.portal.kernel.model.Layout"/>
-				<var name="roleTitle" value="Staging Admin"/>
-				<var name="roleType" value="site"/>
+				<var name="resourceAction" value="${resourceActionIndex}" />
+				<var name="resourceName" value="com.liferay.portal.kernel.model.Layout" />
+				<var name="roleTitle" value="Staging Admin" />
+				<var name="roleType" value="site" />
 			</execute>
 		</for>
 
-		<for list="UPDATE,PERMISSIONS,DELETE"
-			param="resourceActionIndex">
+		<for list="UPDATE,PERMISSIONS,DELETE" param="resourceActionIndex">
 			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}"/>
-				<var name="resourceName" value="com.liferay.portal.kernel.model.LayoutBranch"/>
-				<var name="roleTitle" value="Staging Admin"/>
-				<var name="roleType" value="site"/>
+				<var name="resourceAction" value="${resourceActionIndex}" />
+				<var name="resourceName" value="com.liferay.portal.kernel.model.LayoutBranch" />
+				<var name="roleTitle" value="Staging Admin" />
+				<var name="roleType" value="site" />
 			</execute>
 		</for>
 
-		<for list="UPDATE,PERMISSIONS,MERGE,DELETE"
-			param="resourceActionIndex">
+		<for list="UPDATE,PERMISSIONS,MERGE,DELETE" param="resourceActionIndex">
 			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}"/>
-				<var name="resourceName" value="com.liferay.portal.kernel.model.LayoutSetBranch"/>
-				<var name="roleTitle" value="Staging Admin"/>
-				<var name="roleType" value="site"/>
+				<var name="resourceAction" value="${resourceActionIndex}" />
+				<var name="resourceName" value="com.liferay.portal.kernel.model.LayoutSetBranch" />
+				<var name="roleTitle" value="Staging Admin" />
+				<var name="roleType" value="site" />
 			</execute>
 		</for>
 
-		<for list="ACCESS_IN_CONTROL_PANEL,VIEW,PREFERENCES,PERMISSIONS,CONFIGURATION,ADD_TO_PAGE"
-			param="resourceActionIndex">
+		<for list="ACCESS_IN_CONTROL_PANEL,VIEW,PREFERENCES,PERMISSIONS,CONFIGURATION,ADD_TO_PAGE" param="resourceActionIndex">
 			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}"/>
-				<var name="resourceName" value="com_liferay_layout_admin_web_portlet_GroupPagesPortlet"/>
-				<var name="roleTitle" value="Staging Admin"/>
-				<var name="roleType" value="site"/>
+				<var name="resourceAction" value="${resourceActionIndex}" />
+				<var name="resourceName" value="com_liferay_layout_admin_web_portlet_GroupPagesPortlet" />
+				<var name="roleTitle" value="Staging Admin" />
+				<var name="roleType" value="site" />
 			</execute>
 		</for>
 
@@ -933,119 +927,109 @@
 		</execute>
 
 		<execute macro="JSONRole#addSiteRole">
-			<var name="roleTitle" value="Staging Admin"/>
-			<var name="roleKey" value="Staging Admin"/>
+			<var name="roleKey" value="Staging Admin" />
+			<var name="roleTitle" value="Staging Admin" />
 		</execute>
 
-		<for list="VIEW_SITE_ADMINISTRATION,MANAGE_ANNOUNCEMENTS,VIEW_MEMBERS,EXPORT_IMPORT_PORTLET_INFO,VIEW,EXPORT_IMPORT_LAYOUTS,UPDATE,DELETE,PUBLISH_STAGING,CONFIGURE_PORTLETS,PUBLISH_PORTLET_INFO,ASSIGN_USER_ROLES,PREVIEW_IN_DEVICE,ASSIGN_MEMBERS,PERMISSIONS,ADD_LAYOUT_SET_BRANCH,MANAGE_TEAMS,ADD_LAYOUT_BRANCH,MANAGE_SUBGROUPS,ADD_LAYOUT,MANAGE_STAGING,ADD_COMMUNITY,MANAGE_LAYOUTS,VIEW_STAGING,MANAGE_ARCHIVED_SETUPS"
-			param="resourceActionIndex">
+		<for list="VIEW_SITE_ADMINISTRATION,MANAGE_ANNOUNCEMENTS,VIEW_MEMBERS,EXPORT_IMPORT_PORTLET_INFO,VIEW,EXPORT_IMPORT_LAYOUTS,UPDATE,DELETE,PUBLISH_STAGING,CONFIGURE_PORTLETS,PUBLISH_PORTLET_INFO,ASSIGN_USER_ROLES,PREVIEW_IN_DEVICE,ASSIGN_MEMBERS,PERMISSIONS,ADD_LAYOUT_SET_BRANCH,MANAGE_TEAMS,ADD_LAYOUT_BRANCH,MANAGE_SUBGROUPS,ADD_LAYOUT,MANAGE_STAGING,ADD_COMMUNITY,MANAGE_LAYOUTS,VIEW_STAGING,MANAGE_ARCHIVED_SETUPS" param="resourceActionIndex">
 			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}"/>
-				<var name="resourceName" value="com.liferay.portal.kernel.model.Group"/>
-				<var name="roleTitle" value="Staging Admin"/>
-				<var name="roleType" value="site"/>
+				<var name="resourceAction" value="${resourceActionIndex}" />
+				<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
+				<var name="roleTitle" value="Staging Admin" />
+				<var name="roleType" value="site" />
 			</execute>
 		</for>
 
-		<for list="ADD_LAYOUT,ADD_DISCUSSION,VIEW,UPDATE_DISCUSSION,UPDATE,PERMISSIONS,DELETE_DISCUSSION,DELETE,CUSTOMIZE,CONFIGURE_PORTLETS"
-			param="resourceActionIndex">
+		<for list="ADD_LAYOUT,ADD_DISCUSSION,VIEW,UPDATE_DISCUSSION,UPDATE,PERMISSIONS,DELETE_DISCUSSION,DELETE,CUSTOMIZE,CONFIGURE_PORTLETS" param="resourceActionIndex">
 			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}"/>
-				<var name="resourceName" value="com.liferay.portal.kernel.model.Layout"/>
-				<var name="roleTitle" value="Staging Admin"/>
-				<var name="roleType" value="site"/>
+				<var name="resourceAction" value="${resourceActionIndex}" />
+				<var name="resourceName" value="com.liferay.portal.kernel.model.Layout" />
+				<var name="roleTitle" value="Staging Admin" />
+				<var name="roleType" value="site" />
 			</execute>
 		</for>
 
-		<for list="UPDATE,PERMISSIONS,DELETE"
-			param="resourceActionIndex">
+		<for list="UPDATE,PERMISSIONS,DELETE" param="resourceActionIndex">
 			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}"/>
-				<var name="resourceName" value="com.liferay.portal.kernel.model.LayoutBranch"/>
-				<var name="roleTitle" value="Staging Admin"/>
-				<var name="roleType" value="site"/>
+				<var name="resourceAction" value="${resourceActionIndex}" />
+				<var name="resourceName" value="com.liferay.portal.kernel.model.LayoutBranch" />
+				<var name="roleTitle" value="Staging Admin" />
+				<var name="roleType" value="site" />
 			</execute>
 		</for>
 
-		<for list="UPDATE,PERMISSIONS,MERGE,DELETE"
-			param="resourceActionIndex">
+		<for list="UPDATE,PERMISSIONS,MERGE,DELETE" param="resourceActionIndex">
 			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}"/>
-				<var name="resourceName" value="com.liferay.portal.kernel.model.LayoutSetBranch"/>
-				<var name="roleTitle" value="Staging Admin"/>
-				<var name="roleType" value="site"/>
+				<var name="resourceAction" value="${resourceActionIndex}" />
+				<var name="resourceName" value="com.liferay.portal.kernel.model.LayoutSetBranch" />
+				<var name="roleTitle" value="Staging Admin" />
+				<var name="roleType" value="site" />
 			</execute>
 		</for>
 
-		<for list="VIEW,PREFERENCES,PERMISSIONS,CONFIGURATION,ADD_TO_PAGE,ACCESS_IN_CONTROL_PANEL"
-			param="resourceActionIndex">
+		<for list="VIEW,PREFERENCES,PERMISSIONS,CONFIGURATION,ADD_TO_PAGE,ACCESS_IN_CONTROL_PANEL" param="resourceActionIndex">
 			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}"/>
-				<var name="resourceName" value="com_liferay_layout_admin_web_portlet_GroupPagesPortlet"/>
-				<var name="roleTitle" value="Staging Admin"/>
-				<var name="roleType" value="site"/>
+				<var name="resourceAction" value="${resourceActionIndex}" />
+				<var name="resourceName" value="com_liferay_layout_admin_web_portlet_GroupPagesPortlet" />
+				<var name="roleTitle" value="Staging Admin" />
+				<var name="roleType" value="site" />
 			</execute>
 		</for>
 
 		<execute macro="JSONRole#addSiteRole">
-			<var name="roleTitle" value="Content Creator"/>
-			<var name="roleKey" value="Content Creator"/>
+			<var name="roleKey" value="Content Creator" />
+			<var name="roleTitle" value="Content Creator" />
 		</execute>
 
-		<for list="PERMISSIONS,ADD_TEMPLATE,ADD_STRUCTURE,ADD_FOLDER,ADD_FEED,ADD_ARTICLE,VIEW,UPDATE,SUBSCRIBE"
-			param="resourceActionIndex">
+		<for list="PERMISSIONS,ADD_TEMPLATE,ADD_STRUCTURE,ADD_FOLDER,ADD_FEED,ADD_ARTICLE,VIEW,UPDATE,SUBSCRIBE" param="resourceActionIndex">
 			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}"/>
-				<var name="resourceName" value="com.liferay.journal"/>
-				<var name="roleTitle" value="Content Creator"/>
-				<var name="roleType" value="site"/>
+				<var name="resourceAction" value="${resourceActionIndex}" />
+				<var name="resourceName" value="com.liferay.journal" />
+				<var name="roleTitle" value="Content Creator" />
+				<var name="roleType" value="site" />
 			</execute>
 		</for>
 
-		<for list="DELETE,ADD_DISCUSSION,VIEW,UPDATE_DISCUSSION,UPDATE,SUBSCRIBE,PERMISSIONS,EXPIRE,DELETE_DISCUSSION"
-			param="resourceActionIndex">
+		<for list="DELETE,ADD_DISCUSSION,VIEW,UPDATE_DISCUSSION,UPDATE,SUBSCRIBE,PERMISSIONS,EXPIRE,DELETE_DISCUSSION" param="resourceActionIndex">
 			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}"/>
-				<var name="resourceName" value="com.liferay.journal.model.JournalArticle"/>
-				<var name="roleTitle" value="Content Creator"/>
-				<var name="roleType" value="site"/>
+				<var name="resourceAction" value="${resourceActionIndex}" />
+				<var name="resourceName" value="com.liferay.journal.model.JournalArticle" />
+				<var name="roleTitle" value="Content Creator" />
+				<var name="roleType" value="site" />
 			</execute>
 		</for>
 
-		<for list="VIEW,UPDATE,PERMISSIONS,DELETE"
-			param="resourceActionIndex">
+		<for list="VIEW,UPDATE,PERMISSIONS,DELETE" param="resourceActionIndex">
 			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}"/>
-				<var name="resourceName" value="com.liferay.journal.model.JournalFeed"/>
-				<var name="roleTitle" value="Content Creator"/>
-				<var name="roleType" value="site"/>
+				<var name="resourceAction" value="${resourceActionIndex}" />
+				<var name="resourceName" value="com.liferay.journal.model.JournalFeed" />
+				<var name="roleTitle" value="Content Creator" />
+				<var name="roleType" value="site" />
 			</execute>
 		</for>
 
-		<for list="VIEW,UPDATE,SUBSCRIBE,PERMISSIONS,DELETE,ADD_SUBFOLDER,ADD_ARTICLE,ACCESS"
-			param="resourceActionIndex">
+		<for list="VIEW,UPDATE,SUBSCRIBE,PERMISSIONS,DELETE,ADD_SUBFOLDER,ADD_ARTICLE,ACCESS" param="resourceActionIndex">
 			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}"/>
-				<var name="resourceName" value="com.liferay.journal.model.JournalFolder"/>
-				<var name="roleTitle" value="Content Creator"/>
-				<var name="roleType" value="site"/>
+				<var name="resourceAction" value="${resourceActionIndex}" />
+				<var name="resourceName" value="com.liferay.journal.model.JournalFolder" />
+				<var name="roleTitle" value="Content Creator" />
+				<var name="roleType" value="site" />
 			</execute>
 		</for>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW_SITE_ADMINISTRATION"/>
-			<var name="resourceName" value="com.liferay.portal.kernel.model.Group"/>
-			<var name="roleTitle" value="Content Creator"/>
-			<var name="roleType" value="site"/>
+			<var name="resourceAction" value="VIEW_SITE_ADMINISTRATION" />
+			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
+			<var name="roleTitle" value="Content Creator" />
+			<var name="roleType" value="site" />
 		</execute>
-		
-		<for list="ACCESS_IN_CONTROL_PANEL,VIEW,PREFERENCES,PERMISSIONS,CONFIGURATION"
-			param="resourceActionIndex">
+
+		<for list="ACCESS_IN_CONTROL_PANEL,VIEW,PREFERENCES,PERMISSIONS,CONFIGURATION" param="resourceActionIndex">
 			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}"/>
-				<var name="resourceName" value="com_liferay_journal_web_portlet_JournalPortlet"/>
-				<var name="roleTitle" value="Content Creator"/>
-				<var name="roleType" value="site"/>
+				<var name="resourceAction" value="${resourceActionIndex}" />
+				<var name="resourceName" value="com_liferay_journal_web_portlet_JournalPortlet" />
+				<var name="roleTitle" value="Content Creator" />
+				<var name="roleType" value="site" />
 			</execute>
 		</for>
 

@@ -86,15 +86,16 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userScreenName" value="usersn" />
 		</execute>
+
 		<execute macro="JSONRole#addRegularRole">
-			<var name="roleTitle" value="Roles Regrole Name"/>
-			<var name="roleKey" value="Roles Regrole Name"/>
+			<var name="roleKey" value="Roles Regrole Name" />
+			<var name="roleTitle" value="Roles Regrole Name" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="CUSTOMIZE"/>
-			<var name="resourceName" value="com.liferay.portal.kernel.model.Layout"/>
-			<var name="roleTitle" value="Roles Regrole Name"/>
+			<var name="resourceAction" value="CUSTOMIZE" />
+			<var name="resourceName" value="com.liferay.portal.kernel.model.Layout" />
+			<var name="roleTitle" value="Roles Regrole Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">

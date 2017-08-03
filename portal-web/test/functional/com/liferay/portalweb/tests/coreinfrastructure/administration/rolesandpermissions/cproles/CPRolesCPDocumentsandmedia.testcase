@@ -53,21 +53,21 @@
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW"/>
-			<var name="resourceName" value="com.liferay.document.library"/>
-			<var name="roleTitle" value="Regrole Name"/>
+			<var name="resourceAction" value="VIEW" />
+			<var name="resourceName" value="com.liferay.document.library" />
+			<var name="roleTitle" value="Regrole Name" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW_SITE_ADMINISTRATION"/>
-			<var name="resourceName" value="com.liferay.portal.kernel.model.Group"/>
-			<var name="roleTitle" value="Regrole Name"/>
+			<var name="resourceAction" value="VIEW_SITE_ADMINISTRATION" />
+			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
+			<var name="roleTitle" value="Regrole Name" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL"/>
-			<var name="resourceName" value="com_liferay_document_library_web_portlet_DLAdminPortlet"/>
-			<var name="roleTitle" value="Regrole Name"/>
+			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL" />
+			<var name="resourceName" value="com_liferay_document_library_web_portlet_DLAdminPortlet" />
+			<var name="roleTitle" value="Regrole Name" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -82,7 +82,6 @@
 		</execute>
 
 		<execute macro="DMPortlet#viewNoPermissionCP" />
-
 	</command>
 
 	<command name="ViewDocumentsAndMediaPortletSiteRole" priority="4">
@@ -107,24 +106,24 @@
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW"/>
-			<var name="resourceName" value="com.liferay.document.library"/>
-			<var name="roleTitle" value="Roles Siterole Name"/>
-			<var name="roleType" value="site"/>
+			<var name="resourceAction" value="VIEW" />
+			<var name="resourceName" value="com.liferay.document.library" />
+			<var name="roleTitle" value="Roles Siterole Name" />
+			<var name="roleType" value="site" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW_SITE_ADMINISTRATION"/>
-			<var name="resourceName" value="com.liferay.portal.kernel.model.Group"/>
-			<var name="roleTitle" value="Roles Siterole Name"/>
-			<var name="roleType" value="site"/>
+			<var name="resourceAction" value="VIEW_SITE_ADMINISTRATION" />
+			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
+			<var name="roleTitle" value="Roles Siterole Name" />
+			<var name="roleType" value="site" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL"/>
-			<var name="resourceName" value="com_liferay_document_library_web_portlet_DLAdminPortlet"/>
-			<var name="roleTitle" value="Roles Siterole Name"/>
-			<var name="roleType" value="site"/>
+			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL" />
+			<var name="resourceName" value="com_liferay_document_library_web_portlet_DLAdminPortlet" />
+			<var name="roleTitle" value="Roles Siterole Name" />
+			<var name="roleType" value="site" />
 		</execute>
 
 		<execute macro="Navigator#openSiteURL">

@@ -50,21 +50,21 @@
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW"/>
-			<var name="resourceName" value="com.liferay.message.boards"/>
-			<var name="roleTitle" value="Regrole Name"/>
+			<var name="resourceAction" value="VIEW" />
+			<var name="resourceName" value="com.liferay.message.boards" />
+			<var name="roleTitle" value="Regrole Name" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW_SITE_ADMINISTRATION"/>
-			<var name="resourceName" value="com.liferay.portal.kernel.model.Group"/>
-			<var name="roleTitle" value="Regrole Name"/>
+			<var name="resourceAction" value="VIEW_SITE_ADMINISTRATION" />
+			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
+			<var name="roleTitle" value="Regrole Name" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL"/>
-			<var name="resourceName" value="com_liferay_message_boards_web_portlet_MBAdminPortlet"/>
-			<var name="roleTitle" value="Regrole Name"/>
+			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL" />
+			<var name="resourceName" value="com_liferay_message_boards_web_portlet_MBAdminPortlet" />
+			<var name="roleTitle" value="Regrole Name" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -98,24 +98,24 @@
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW"/>
-			<var name="resourceName" value="com.liferay.message.boards"/>
-			<var name="roleTitle" value="Roles Siterole Name"/>
-			<var name="roleType" value="site"/>
+			<var name="resourceAction" value="VIEW" />
+			<var name="resourceName" value="com.liferay.message.boards" />
+			<var name="roleTitle" value="Roles Siterole Name" />
+			<var name="roleType" value="site" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW_SITE_ADMINISTRATION"/>
-			<var name="resourceName" value="com.liferay.portal.kernel.model.Group"/>
-			<var name="roleTitle" value="Roles Siterole Name"/>
-			<var name="roleType" value="site"/>
+			<var name="resourceAction" value="VIEW_SITE_ADMINISTRATION" />
+			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
+			<var name="roleTitle" value="Roles Siterole Name" />
+			<var name="roleType" value="site" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL"/>
-			<var name="resourceName" value="com_liferay_message_boards_web_portlet_MBAdminPortlet"/>
-			<var name="roleTitle" value="Roles Siterole Name"/>
-			<var name="roleType" value="site"/>
+			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL" />
+			<var name="resourceName" value="com_liferay_message_boards_web_portlet_MBAdminPortlet" />
+			<var name="roleTitle" value="Roles Siterole Name" />
+			<var name="roleType" value="site" />
 		</execute>
 
 		<execute macro="Navigator#openSiteURL">

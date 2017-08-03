@@ -48,21 +48,21 @@
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW_CONTROL_PANEL"/>
-			<var name="resourceName" value="90"/>
-			<var name="roleTitle" value="Regrole Name"/>
+			<var name="resourceAction" value="VIEW_CONTROL_PANEL" />
+			<var name="resourceName" value="90" />
+			<var name="roleTitle" value="Regrole Name" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL"/>
-			<var name="resourceName" value="com_liferay_site_admin_web_portlet_SiteAdminPortlet"/>
-			<var name="roleTitle" value="Regrole Name"/>
+			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL" />
+			<var name="resourceName" value="com_liferay_site_admin_web_portlet_SiteAdminPortlet" />
+			<var name="roleTitle" value="Regrole Name" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL"/>
-			<var name="resourceName" value="com_liferay_roles_admin_web_portlet_RolesAdminPortlet"/>
-			<var name="roleTitle" value="Regrole Name"/>
+			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL" />
+			<var name="resourceName" value="com_liferay_roles_admin_web_portlet_RolesAdminPortlet" />
+			<var name="roleTitle" value="Regrole Name" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -77,9 +77,9 @@
 		<execute function="AssertElementNotPresent" locator1="Button#ADD" />
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ADD_COMMUNITY"/>
-			<var name="resourceName" value="90"/>
-			<var name="roleTitle" value="Regrole Name"/>
+			<var name="resourceAction" value="ADD_COMMUNITY" />
+			<var name="resourceName" value="90" />
+			<var name="roleTitle" value="Regrole Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
@@ -333,31 +333,31 @@
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW_CONTROL_PANEL"/>
-			<var name="resourceName" value="90"/>
-			<var name="roleTitle" value="Regrole Name"/>
+			<var name="resourceAction" value="VIEW_CONTROL_PANEL" />
+			<var name="resourceName" value="90" />
+			<var name="roleTitle" value="Regrole Name" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL"/>
-			<var name="resourceName" value="com_liferay_site_admin_web_portlet_SiteAdminPortlet"/>
-			<var name="roleTitle" value="Regrole Name"/>
+			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL" />
+			<var name="resourceName" value="com_liferay_site_admin_web_portlet_SiteAdminPortlet" />
+			<var name="roleTitle" value="Regrole Name" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="UPDATE"/>
-			<var name="resourceName" value="com.liferay.portal.kernel.model.Group"/>
-			<var name="roleType" value="site"/>
-			<var name="roleTitle" value="Siterole Name"/>
+			<var name="resourceAction" value="UPDATE" />
+			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
+			<var name="roleTitle" value="Siterole Name" />
+			<var name="roleType" value="site" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ADD_COMMUNITY"/>
-			<var name="resourceName" value="com.liferay.portal.kernel.model.Group"/>
-			<var name="roleType" value="site"/>
-			<var name="roleTitle" value="Siterole Name"/>
+			<var name="resourceAction" value="ADD_COMMUNITY" />
+			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
+			<var name="roleTitle" value="Siterole Name" />
+			<var name="roleType" value="site" />
 		</execute>
-	
+
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="userea@liferay.com" />
 			<var name="userLoginFullName" value="userfn userln" />
@@ -410,12 +410,12 @@
 		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="Public Pages" />
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="MANAGE_SUBGROUPS"/>
-			<var name="resourceName" value="com.liferay.portal.kernel.model.Group"/>
-			<var name="roleType" value="site"/>
-			<var name="roleTitle" value="Siterole Name"/>
+			<var name="resourceAction" value="MANAGE_SUBGROUPS" />
+			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
+			<var name="roleTitle" value="Siterole Name" />
+			<var name="roleType" value="site" />
 		</execute>
-	
+
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="userea@liferay.com" />
 			<var name="userLoginFullName" value="userfn userln" />
@@ -446,10 +446,10 @@
 		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="Public Pages" />
 
 		<execute macro="Permissions#removePermissionViaAPI">
-			<var name="resourceAction" value="MANAGE_SUBGROUPS"/>
-			<var name="resourceName" value="com.liferay.portal.kernel.model.Group"/>
-			<var name="roleType" value="site"/>
-			<var name="roleTitle" value="Siterole Name"/>
+			<var name="resourceAction" value="MANAGE_SUBGROUPS" />
+			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
+			<var name="roleTitle" value="Siterole Name" />
+			<var name="roleType" value="site" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -517,15 +517,15 @@
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL"/>
-			<var name="resourceName" value="com_liferay_site_admin_web_portlet_SiteAdminPortlet"/>
-			<var name="roleTitle" value="Regrole Name"/>
+			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL" />
+			<var name="resourceName" value="com_liferay_site_admin_web_portlet_SiteAdminPortlet" />
+			<var name="roleTitle" value="Regrole Name" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW_CONTROL_PANEL"/>
-			<var name="resourceName" value="90"/>
-			<var name="roleTitle" value="Regrole Name"/>
+			<var name="resourceAction" value="VIEW_CONTROL_PANEL" />
+			<var name="resourceName" value="90" />
+			<var name="roleTitle" value="Regrole Name" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -542,15 +542,15 @@
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No sites were found." />
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW"/>
-			<var name="resourceName" value="com.liferay.portal.kernel.model.Group"/>
-			<var name="roleTitle" value="Regrole Name"/>
+			<var name="resourceAction" value="VIEW" />
+			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
+			<var name="roleTitle" value="Regrole Name" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="MANAGE_LAYOUTS"/>
-			<var name="resourceName" value="com.liferay.portal.kernel.model.Group"/>
-			<var name="roleTitle" value="Regrole Name"/>
+			<var name="resourceAction" value="MANAGE_LAYOUTS" />
+			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
+			<var name="roleTitle" value="Regrole Name" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -587,15 +587,15 @@
 		<execute function="AssertElementPresent" locator1="SitePages#SITE_NAME" value1="Site Name" />
 
 		<execute macro="Permissions#removePermissionViaAPI">
-			<var name="resourceAction" value="VIEW"/>
-			<var name="resourceName" value="com.liferay.portal.kernel.model.Group"/>
-			<var name="roleTitle" value="Regrole Name"/>
+			<var name="resourceAction" value="VIEW" />
+			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
+			<var name="roleTitle" value="Regrole Name" />
 		</execute>
 
 		<execute macro="Permissions#removePermissionViaAPI">
-			<var name="resourceAction" value="MANAGE_LAYOUTS"/>
-			<var name="resourceName" value="com.liferay.portal.kernel.model.Group"/>
-			<var name="roleTitle" value="Regrole Name"/>
+			<var name="resourceAction" value="MANAGE_LAYOUTS" />
+			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
+			<var name="roleTitle" value="Regrole Name" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">

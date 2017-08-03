@@ -47,15 +47,15 @@
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW_CONTROL_PANEL"/>
-			<var name="resourceName" value="90"/>
-			<var name="roleTitle" value="Regrole Name"/>
+			<var name="resourceAction" value="VIEW_CONTROL_PANEL" />
+			<var name="resourceName" value="90" />
+			<var name="roleTitle" value="Regrole Name" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL"/>
-			<var name="resourceName" value="com_liferay_user_groups_admin_web_portlet_UserGroupsAdminPortlet"/>
-			<var name="roleTitle" value="Regrole Name"/>
+			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL" />
+			<var name="resourceName" value="com_liferay_user_groups_admin_web_portlet_UserGroupsAdminPortlet" />
+			<var name="roleTitle" value="Regrole Name" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -70,15 +70,15 @@
 		<execute function="AssertElementNotPresent" locator1="NavBar#ADD" />
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ADD_USER_GROUP"/>
-			<var name="resourceName" value="90"/>
-			<var name="roleTitle" value="Regrole Name"/>
+			<var name="resourceAction" value="ADD_USER_GROUP" />
+			<var name="resourceName" value="90" />
+			<var name="roleTitle" value="Regrole Name" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW"/>
-			<var name="resourceName" value="com.liferay.portal.kernel.model.UserGroup"/>
-			<var name="roleTitle" value="Regrole Name"/>
+			<var name="resourceAction" value="VIEW" />
+			<var name="resourceName" value="com.liferay.portal.kernel.model.UserGroup" />
+			<var name="roleTitle" value="Regrole Name" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -95,15 +95,15 @@
 		</execute>
 
 		<execute macro="Permissions#removePermissionViaAPI">
-			<var name="resourceAction" value="ADD_USER_GROUP"/>
-			<var name="resourceName" value="90"/>
-			<var name="roleTitle" value="Regrole Name"/>
+			<var name="resourceAction" value="ADD_USER_GROUP" />
+			<var name="resourceName" value="90" />
+			<var name="roleTitle" value="Regrole Name" />
 		</execute>
 
 		<execute macro="Permissions#removePermissionViaAPI">
-			<var name="resourceAction" value="VIEW"/>
-			<var name="resourceName" value="com.liferay.portal.kernel.model.UserGroup"/>
-			<var name="roleTitle" value="Regrole Name"/>
+			<var name="resourceAction" value="VIEW" />
+			<var name="resourceName" value="com.liferay.portal.kernel.model.UserGroup" />
+			<var name="roleTitle" value="Regrole Name" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">

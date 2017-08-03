@@ -51,9 +51,9 @@
 		<execute function="AssertElementNotPresent" locator1="ControlMenu#SIMULATION" />
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="PREVIEW_IN_DEVICE"/>
-			<var name="resourceName" value="com.liferay.portal.kernel.model.Group"/>
-			<var name="roleTitle" value="Regrole Name"/>
+			<var name="resourceAction" value="PREVIEW_IN_DEVICE" />
+			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
+			<var name="roleTitle" value="Regrole Name" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -68,9 +68,9 @@
 		</execute>
 
 		<execute macro="Permissions#removePermissionViaAPI">
-			<var name="resourceAction" value="PREVIEW_IN_DEVICE"/>
-			<var name="resourceName" value="com.liferay.portal.kernel.model.Group"/>
-			<var name="roleTitle" value="Regrole Name"/>
+			<var name="resourceAction" value="PREVIEW_IN_DEVICE" />
+			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
+			<var name="roleTitle" value="Regrole Name" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">

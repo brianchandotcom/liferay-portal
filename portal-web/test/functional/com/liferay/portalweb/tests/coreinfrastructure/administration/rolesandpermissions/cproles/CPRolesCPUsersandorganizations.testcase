@@ -47,15 +47,15 @@
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW_CONTROL_PANEL"/>
-			<var name="resourceName" value="90"/>
-			<var name="roleTitle" value="Regrole Name"/>
+			<var name="resourceAction" value="VIEW_CONTROL_PANEL" />
+			<var name="resourceName" value="90" />
+			<var name="roleTitle" value="Regrole Name" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL"/>
-			<var name="resourceName" value="com_liferay_users_admin_web_portlet_UsersAdminPortlet"/>
-			<var name="roleTitle" value="Regrole Name"/>
+			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL" />
+			<var name="resourceName" value="com_liferay_users_admin_web_portlet_UsersAdminPortlet" />
+			<var name="roleTitle" value="Regrole Name" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -64,9 +64,9 @@
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW"/>
-			<var name="resourceName" value="com.liferay.portal.kernel.model.UserGroup"/>
-			<var name="roleTitle" value="Regrole Name"/>
+			<var name="resourceAction" value="VIEW" />
+			<var name="resourceName" value="com.liferay.portal.kernel.model.UserGroup" />
+			<var name="roleTitle" value="Regrole Name" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -84,9 +84,9 @@
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="You do not belong to an organization and are not allowed to view other organizations." />
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ADD_ORGANIZATION"/>
-			<var name="resourceName" value="90"/>
-			<var name="roleTitle" value="Regrole Name"/>
+			<var name="resourceAction" value="ADD_ORGANIZATION" />
+			<var name="resourceName" value="90" />
+			<var name="roleTitle" value="Regrole Name" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -104,9 +104,9 @@
 		</execute>
 
 		<execute macro="Permissions#removePermissionViaAPI">
-			<var name="resourceAction" value="ADD_ORGANIZATION"/>
-			<var name="resourceName" value="90"/>
-			<var name="roleTitle" value="Regrole Name"/>
+			<var name="resourceAction" value="ADD_ORGANIZATION" />
+			<var name="resourceName" value="90" />
+			<var name="roleTitle" value="Regrole Name" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -134,15 +134,15 @@
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW_CONTROL_PANEL"/>
-			<var name="resourceName" value="90"/>
-			<var name="roleTitle" value="Regrole Name"/>
+			<var name="resourceAction" value="VIEW_CONTROL_PANEL" />
+			<var name="resourceName" value="90" />
+			<var name="roleTitle" value="Regrole Name" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL"/>
-			<var name="resourceName" value="com_liferay_users_admin_web_portlet_UsersAdminPortlet"/>
-			<var name="roleTitle" value="Regrole Name"/>
+			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL" />
+			<var name="resourceName" value="com_liferay_users_admin_web_portlet_UsersAdminPortlet" />
+			<var name="roleTitle" value="Regrole Name" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -160,9 +160,9 @@
 		<execute function="AssertElementNotPresent" locator1="UsersAndOrganizations#ADD" />
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ADD_USER"/>
-			<var name="resourceName" value="90"/>
-			<var name="roleTitle" value="Regrole Name"/>
+			<var name="resourceAction" value="ADD_USER" />
+			<var name="resourceName" value="90" />
+			<var name="roleTitle" value="Regrole Name" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -182,9 +182,9 @@
 		</execute>
 
 		<execute macro="Permissions#removePermissionViaAPI">
-			<var name="resourceAction" value="ADD_USER"/>
-			<var name="resourceName" value="90"/>
-			<var name="roleTitle" value="Regrole Name"/>
+			<var name="resourceAction" value="ADD_USER" />
+			<var name="resourceName" value="90" />
+			<var name="roleTitle" value="Regrole Name" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">

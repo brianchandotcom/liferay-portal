@@ -198,36 +198,36 @@
 		</execute>
 
 		<execute macro="JSONRole#addSiteRole">
-			<var name="roleTitle" value="Power User Name"/>
-			<var name="roleKey" value="Power User Name"/>
-		</execute>
-		
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="MANAGE_LAYOUTS"/>
-			<var name="resourceName" value="com.liferay.portal.kernel.model.Group"/>
-			<var name="roleTitle" value="Power User Name"/>
-			<var name="roleType" value="site"/>
+			<var name="roleKey" value="Power User Name" />
+			<var name="roleTitle" value="Power User Name" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW_SITE_ADMINISTRATION"/>
-			<var name="resourceName" value="com.liferay.portal.kernel.model.Group"/>
-			<var name="roleTitle" value="Power User Name"/>
-			<var name="roleType" value="site"/>
+			<var name="resourceAction" value="MANAGE_LAYOUTS" />
+			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
+			<var name="roleTitle" value="Power User Name" />
+			<var name="roleType" value="site" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL"/>
-			<var name="resourceName" value="com_liferay_layout_admin_web_portlet_GroupPagesPortlet"/>
-			<var name="roleTitle" value="Power User Name"/>
-			<var name="roleType" value="site"/>
+			<var name="resourceAction" value="VIEW_SITE_ADMINISTRATION" />
+			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
+			<var name="roleTitle" value="Power User Name" />
+			<var name="roleType" value="site" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ADD_ENTRY"/>
-			<var name="resourceName" value="com.liferay.blogs"/>
-			<var name="roleTitle" value="Power User Name"/>
-			<var name="roleType" value="site"/>
+			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL" />
+			<var name="resourceName" value="com_liferay_layout_admin_web_portlet_GroupPagesPortlet" />
+			<var name="roleTitle" value="Power User Name" />
+			<var name="roleType" value="site" />
+		</execute>
+
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="ADD_ENTRY" />
+			<var name="resourceName" value="com.liferay.blogs" />
+			<var name="roleTitle" value="Power User Name" />
+			<var name="roleType" value="site" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">

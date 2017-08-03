@@ -47,53 +47,49 @@
 
 	<command name="EditTeamPermissions" priority="4">
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW_CONTROL_PANEL"/>
-			<var name="resourceName" value="90"/>
-			<var name="roleTitle" value="User"/>
+			<var name="resourceAction" value="VIEW_CONTROL_PANEL" />
+			<var name="resourceName" value="90" />
+			<var name="roleTitle" value="User" />
 		</execute>
 
 		<execute macro="JSONRole#addSiteRole">
-			<var name="roleTitle" value="Roles Siterole Name"/>
-			<var name="roleKey" value="Roles Siterole Name"/>
+			<var name="roleKey" value="Roles Siterole Name" />
+			<var name="roleTitle" value="Roles Siterole Name" />
 		</execute>
 
-		<for list="ACCESS_IN_CONTROL_PANEL,ADD_TO_PAGE,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW"
-			param="resourceActionIndex">
+		<for list="ACCESS_IN_CONTROL_PANEL,ADD_TO_PAGE,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW" param="resourceActionIndex">
 			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}"/>
-				<var name="resourceName" value="com_liferay_site_memberships_web_portlet_SiteMembershipsPortlet"/>
-				<var name="roleTitle" value="Roles Siterole Name"/>
-				<var name="roleType" value="site"/>
+				<var name="resourceAction" value="${resourceActionIndex}" />
+				<var name="resourceName" value="com_liferay_site_memberships_web_portlet_SiteMembershipsPortlet" />
+				<var name="roleTitle" value="Roles Siterole Name" />
+				<var name="roleType" value="site" />
 			</execute>
 		</for>
 
-		<for list="ADD_COMMUNITY,ADD_LAYOUT,ADD_LAYOUT_BRANCH,ADD_LAYOUT_SET_BRANCH,ASSIGN_MEMBERS,ASSIGN_USER_ROLES,CONFIGURE_PORTLETS,DELETE,EXPORT_IMPORT_LAYOUTS,EXPORT_IMPORT_PORTLET_INFO,MANAGE_ANNOUNCEMENTS,MANAGE_ARCHIVED_SETUPS,MANAGE_LAYOUTS,MANAGE_STAGING,MANAGE_SUBGROUPS,MANAGE_TEAMS,PERMISSIONS,PREVIEW_IN_DEVICE,PUBLISH_PORTLET_INFO,PUBLISH_STAGING,UPDATE,VIEW,VIEW_MEMBERS,VIEW_SITE_ADMINISTRATION,VIEW_STAGING"
-			param="resourceActionIndex">
+		<for list="ADD_COMMUNITY,ADD_LAYOUT,ADD_LAYOUT_BRANCH,ADD_LAYOUT_SET_BRANCH,ASSIGN_MEMBERS,ASSIGN_USER_ROLES,CONFIGURE_PORTLETS,DELETE,EXPORT_IMPORT_LAYOUTS,EXPORT_IMPORT_PORTLET_INFO,MANAGE_ANNOUNCEMENTS,MANAGE_ARCHIVED_SETUPS,MANAGE_LAYOUTS,MANAGE_STAGING,MANAGE_SUBGROUPS,MANAGE_TEAMS,PERMISSIONS,PREVIEW_IN_DEVICE,PUBLISH_PORTLET_INFO,PUBLISH_STAGING,UPDATE,VIEW,VIEW_MEMBERS,VIEW_SITE_ADMINISTRATION,VIEW_STAGING" param="resourceActionIndex">
 			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}"/>
-				<var name="resourceName" value="com.liferay.portal.kernel.model.Group"/>
-				<var name="roleTitle" value="Roles Siterole Name"/>
-				<var name="roleType" value="site"/>
+				<var name="resourceAction" value="${resourceActionIndex}" />
+				<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
+				<var name="roleTitle" value="Roles Siterole Name" />
+				<var name="roleType" value="site" />
 			</execute>
 		</for>
 
-		<for list="ASSIGN_MEMBERS,DELETE,PERMISSIONS,UPDATE,VIEW"
-			param="resourceActionIndex">
+		<for list="ASSIGN_MEMBERS,DELETE,PERMISSIONS,UPDATE,VIEW" param="resourceActionIndex">
 			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}"/>
-				<var name="resourceName" value="com.liferay.portal.kernel.model.Team"/>
-				<var name="roleTitle" value="Roles Siterole Name"/>
-				<var name="roleType" value="site"/>
+				<var name="resourceAction" value="${resourceActionIndex}" />
+				<var name="resourceName" value="com.liferay.portal.kernel.model.Team" />
+				<var name="roleTitle" value="Roles Siterole Name" />
+				<var name="roleType" value="site" />
 			</execute>
-		</for>		
+		</for>
 
-		<for list="ADD_TO_PAGE,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW"
-			param="resourceActionIndex">
+		<for list="ADD_TO_PAGE,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW" param="resourceActionIndex">
 			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}"/>
-				<var name="resourceName" value="com_liferay_journal_content_web_portlet_JournalContentPortlet"/>
-				<var name="roleTitle" value="Roles Siterole Name"/>
-				<var name="roleType" value="site"/>
+				<var name="resourceAction" value="${resourceActionIndex}" />
+				<var name="resourceName" value="com_liferay_journal_content_web_portlet_JournalContentPortlet" />
+				<var name="roleTitle" value="Roles Siterole Name" />
+				<var name="roleType" value="site" />
 			</execute>
 		</for>
 
@@ -733,41 +729,41 @@
 		</execute>
 
 		<execute macro="JSONRole#addSiteRole">
-			<var name="roleTitle" value="Data Recorder Name"/>
-			<var name="roleKey" value="Data Recorder Name"/>
+			<var name="roleKey" value="Data Recorder Name" />
+			<var name="roleTitle" value="Data Recorder Name" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ADD_RECORD"/>
-			<var name="resourceName" value="com.liferay.dynamic.data.lists.model.DDLRecordSet"/>
-			<var name="roleTitle" value="Data Recorder Name"/>
-			<var name="roleType" value="site"/>
+			<var name="resourceAction" value="ADD_RECORD" />
+			<var name="resourceName" value="com.liferay.dynamic.data.lists.model.DDLRecordSet" />
+			<var name="roleTitle" value="Data Recorder Name" />
+			<var name="roleType" value="site" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="View"/>
-			<var name="resourceName" value="com.liferay.dynamic.data.lists.model.DDLRecordSet"/>
-			<var name="roleTitle" value="Data REcorder Name"/>
-			<var name="roleType" value="site"/>
+			<var name="resourceAction" value="View" />
+			<var name="resourceName" value="com.liferay.dynamic.data.lists.model.DDLRecordSet" />
+			<var name="roleTitle" value="Data REcorder Name" />
+			<var name="roleType" value="site" />
 		</execute>
-		
+
 		<execute macro="JSONRole#addSiteRole">
-			<var name="roleTitle" value="Records Manager Name"/>
-			<var name="roleKey" value="Records Manager Name"/>
+			<var name="roleKey" value="Records Manager Name" />
+			<var name="roleTitle" value="Records Manager Name" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="UPDATE"/>
-			<var name="resourceName" value="com.liferay.dynamic.data.lists.model.DDLRecordSet"/>
-			<var name="roleTitle" value="Records Manager Name"/>
-			<var name="roleType" value="site"/>
+			<var name="resourceAction" value="UPDATE" />
+			<var name="resourceName" value="com.liferay.dynamic.data.lists.model.DDLRecordSet" />
+			<var name="roleTitle" value="Records Manager Name" />
+			<var name="roleType" value="site" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW"/>
-			<var name="resourceName" value="com.liferay.dynamic.data.lists.model.DDLRecordSet"/>
-			<var name="roleTitle" value="Records Manager Name"/>
-			<var name="roleType" value="site"/>
+			<var name="resourceAction" value="VIEW" />
+			<var name="resourceName" value="com.liferay.dynamic.data.lists.model.DDLRecordSet" />
+			<var name="roleTitle" value="Records Manager Name" />
+			<var name="roleType" value="site" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -1502,136 +1498,134 @@
 		</execute>
 
 		<execute macro="JSONRole#addSiteRole">
-			<var name="roleTitle" value="Movie Blogger Name"/>
-			<var name="roleKey" value="Movie Blogger Name"/>
+			<var name="roleKey" value="Movie Blogger Name" />
+			<var name="roleTitle" value="Movie Blogger Name" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ADD_ENTRY"/>
-			<var name="resourceName" value="com.liferay.blogs"/>
-			<var name="roleTitle" value="Movie Blogger Name"/>
-			<var name="roleType" value="site"/>
+			<var name="resourceAction" value="ADD_ENTRY" />
+			<var name="resourceName" value="com.liferay.blogs" />
+			<var name="roleTitle" value="Movie Blogger Name" />
+			<var name="roleType" value="site" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW"/>
-			<var name="resourceName" value="com.liferay.blogs.model.BlogsEntry"/>
-			<var name="roleTitle" value="Movie Blogger Name"/>
-			<var name="roleType" value="site"/>
+			<var name="resourceAction" value="VIEW" />
+			<var name="resourceName" value="com.liferay.blogs.model.BlogsEntry" />
+			<var name="roleTitle" value="Movie Blogger Name" />
+			<var name="roleType" value="site" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ADD_TO_PAGE"/>
-			<var name="resourceName" value="com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet"/>
-			<var name="roleTitle" value="Movie Blogger Name"/>
-			<var name="roleType" value="site"/>
+			<var name="resourceAction" value="ADD_TO_PAGE" />
+			<var name="resourceName" value="com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet" />
+			<var name="roleTitle" value="Movie Blogger Name" />
+			<var name="roleType" value="site" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW"/>
-			<var name="resourceName" value="com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet"/>
-			<var name="roleTitle" value="Movie Blogger Name"/>
-			<var name="roleType" value="site"/>
+			<var name="resourceAction" value="VIEW" />
+			<var name="resourceName" value="com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet" />
+			<var name="roleTitle" value="Movie Blogger Name" />
+			<var name="roleType" value="site" />
 		</execute>
 
 		<execute macro="JSONRole#addSiteRole">
-			<var name="roleTitle" value="Music Fan Name"/>
-			<var name="roleKey" value="Music Fan Name"/>
+			<var name="roleKey" value="Music Fan Name" />
+			<var name="roleTitle" value="Music Fan Name" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW"/>
-			<var name="resourceName" value="com.liferay.message.boards"/>
-			<var name="roleTitle" value="Music Fan Name"/>
-			<var name="roleType" value="site"/>
+			<var name="resourceAction" value="VIEW" />
+			<var name="resourceName" value="com.liferay.message.boards" />
+			<var name="roleTitle" value="Music Fan Name" />
+			<var name="roleType" value="site" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ADD_CATEGORY"/>
-			<var name="resourceName" value="com.liferay.message.boards"/>
-			<var name="roleTitle" value="Music Fan Name"/>
-			<var name="roleType" value="site"/>
+			<var name="resourceAction" value="ADD_CATEGORY" />
+			<var name="resourceName" value="com.liferay.message.boards" />
+			<var name="roleTitle" value="Music Fan Name" />
+			<var name="roleType" value="site" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ADD_MESSAGE"/>
-			<var name="resourceName" value="com.liferay.message.boards"/>
-			<var name="roleTitle" value="Music Fan Name"/>
-			<var name="roleType" value="site"/>
+			<var name="resourceAction" value="ADD_MESSAGE" />
+			<var name="resourceName" value="com.liferay.message.boards" />
+			<var name="roleTitle" value="Music Fan Name" />
+			<var name="roleType" value="site" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW"/>
-			<var name="resourceName" value="com.liferay.message.boards.kernel.model.MBCategory"/>
-			<var name="roleTitle" value="Music Fan Name"/>
-			<var name="roleType" value="site"/>
+			<var name="resourceAction" value="VIEW" />
+			<var name="resourceName" value="com.liferay.message.boards.kernel.model.MBCategory" />
+			<var name="roleTitle" value="Music Fan Name" />
+			<var name="roleType" value="site" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ADD_MESSAGE"/>
-			<var name="resourceName" value="com.liferay.message.boards.kernel.model.MBCategory"/>
-			<var name="roleTitle" value="Music Fan Name"/>
-			<var name="roleType" value="site"/>
+			<var name="resourceAction" value="ADD_MESSAGE" />
+			<var name="resourceName" value="com.liferay.message.boards.kernel.model.MBCategory" />
+			<var name="roleTitle" value="Music Fan Name" />
+			<var name="roleType" value="site" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW"/>
-			<var name="resourceName" value="com.liferay.message.boards.kernel.model.MBMessage"/>
-			<var name="roleTitle" value="Music Fan Name"/>
-			<var name="roleType" value="site"/>
+			<var name="resourceAction" value="VIEW" />
+			<var name="resourceName" value="com.liferay.message.boards.kernel.model.MBMessage" />
+			<var name="roleTitle" value="Music Fan Name" />
+			<var name="roleType" value="site" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW"/>
-			<var name="resourceName" value="com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet"/>
-			<var name="roleTitle" value="Music Fan Name"/>
-			<var name="roleType" value="site"/>
+			<var name="resourceAction" value="VIEW" />
+			<var name="resourceName" value="com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet" />
+			<var name="roleTitle" value="Music Fan Name" />
+			<var name="roleType" value="site" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ADD_TO_PAGE"/>
-			<var name="resourceName" value="com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet"/>
-			<var name="roleTitle" value="Music Fan Name"/>
-			<var name="roleType" value="site"/>
+			<var name="resourceAction" value="ADD_TO_PAGE" />
+			<var name="resourceName" value="com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet" />
+			<var name="roleTitle" value="Music Fan Name" />
+			<var name="roleType" value="site" />
 		</execute>
 
 		<execute macro="JSONRole#addSiteRole">
-			<var name="roleTitle" value="Sports Journalist Name"/>
-			<var name="roleKey" value="Sports Journalist Name"/>
+			<var name="roleKey" value="Sports Journalist Name" />
+			<var name="roleTitle" value="Sports Journalist Name" />
 		</execute>
 
-		<for list="ADD_DISCUSSION,DELETE,DELETE_DISCUSSION,EXPIRE,PERMISSIONS,SUBSCRIBE,UPDATE,UPDATE_DISCUSSION,VIEW"
-			param="resourceActionIndex">
+		<for list="ADD_DISCUSSION,DELETE,DELETE_DISCUSSION,EXPIRE,PERMISSIONS,SUBSCRIBE,UPDATE,UPDATE_DISCUSSION,VIEW" param="resourceActionIndex">
 			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}"/>
-				<var name="resourceName" value="com.liferay.journal.model.JournalArticle"/>
-				<var name="roleTitle" value="Sports Journalist Name"/>
-				<var name="roleType" value="site"/>
+				<var name="resourceAction" value="${resourceActionIndex}" />
+				<var name="resourceName" value="com.liferay.journal.model.JournalArticle" />
+				<var name="roleTitle" value="Sports Journalist Name" />
+				<var name="roleType" value="site" />
 			</execute>
 		</for>
 
-		<for list="ADD_ARTICLE,ADD_FEED,ADD_FOLDER,ADD_STRUCTURE,ADD_TEMPLATE,PERMISSIONS,SUBSCRIBE,UPDATE,VIEW"
-			param="resourceActionIndex">
+		<for list="ADD_ARTICLE,ADD_FEED,ADD_FOLDER,ADD_STRUCTURE,ADD_TEMPLATE,PERMISSIONS,SUBSCRIBE,UPDATE,VIEW" param="resourceActionIndex">
 			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}"/>
-				<var name="resourceName" value="com.liferay.journal"/>
-				<var name="roleTitle" value="Sports Journalist Name"/>
-				<var name="roleType" value="site"/>
+				<var name="resourceAction" value="${resourceActionIndex}" />
+				<var name="resourceName" value="com.liferay.journal" />
+				<var name="roleTitle" value="Sports Journalist Name" />
+				<var name="roleType" value="site" />
 			</execute>
 		</for>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW"/>
-			<var name="resourceName" value="com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet"/>
-			<var name="roleTitle" value="Sports Journalist Name"/>
-			<var name="roleType" value="site"/>
+			<var name="resourceAction" value="VIEW" />
+			<var name="resourceName" value="com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet" />
+			<var name="roleTitle" value="Sports Journalist Name" />
+			<var name="roleType" value="site" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ADD_TO_PAGE"/>
-			<var name="resourceName" value="com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet"/>
-			<var name="roleTitle" value="Sports Journalist Name"/>
-			<var name="roleType" value="site"/>
+			<var name="resourceAction" value="ADD_TO_PAGE" />
+			<var name="resourceName" value="com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet" />
+			<var name="roleTitle" value="Sports Journalist Name" />
+			<var name="roleType" value="site" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
@@ -2331,38 +2325,38 @@
 
 	<command name="ViewRegRolePermissionsDefaultView" priority="4">
 		<execute macro="JSONRole#addRegularRole">
-			<var name="roleTitle" value="Roles Regrole Name"/>
-			<var name="roleKey" value="Roles Regrole Name"/>
+			<var name="roleKey" value="Roles Regrole Name" />
+			<var name="roleTitle" value="Roles Regrole Name" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL"/>
-			<var name="resourceName" value="com_liferay_journal_web_portlet_JournalPortlet"/>
-			<var name="roleTitle" value="Roles Regrole Name"/>
+			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL" />
+			<var name="resourceName" value="com_liferay_journal_web_portlet_JournalPortlet" />
+			<var name="roleTitle" value="Roles Regrole Name" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW"/>
-			<var name="resourceName" value="com_liferay_journal_web_portlet_JournalPortlet"/>
-			<var name="roleTitle" value="Roles Regrole Name"/>
+			<var name="resourceAction" value="VIEW" />
+			<var name="resourceName" value="com_liferay_journal_web_portlet_JournalPortlet" />
+			<var name="roleTitle" value="Roles Regrole Name" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW_SITE_ADMINISTRATION"/>
-			<var name="resourceName" value="com.liferay.portal.kernel.model.Group"/>
-			<var name="roleTitle" value="Roles Regrole Name"/>
+			<var name="resourceAction" value="VIEW_SITE_ADMINISTRATION" />
+			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
+			<var name="roleTitle" value="Roles Regrole Name" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ADD_ARTICLE"/>
-			<var name="resourceName" value="com.liferay.journal"/>
-			<var name="roleTitle" value="Roles Regrole Name"/>
+			<var name="resourceAction" value="ADD_ARTICLE" />
+			<var name="resourceName" value="com.liferay.journal" />
+			<var name="roleTitle" value="Roles Regrole Name" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW"/>
-			<var name="resourceName" value="com.liferay.journal"/>
-			<var name="roleTitle" value="Roles Regrole Name"/>
+			<var name="resourceAction" value="VIEW" />
+			<var name="resourceName" value="com.liferay.journal" />
+			<var name="roleTitle" value="Roles Regrole Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelSites">

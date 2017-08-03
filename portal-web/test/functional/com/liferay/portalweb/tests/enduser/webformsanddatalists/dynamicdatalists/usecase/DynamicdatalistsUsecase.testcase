@@ -804,31 +804,29 @@
 	<command name="AddRepeatableFieldAsNonAdminUser" priority="4">
 		<description message="This is a use case for LPS-69273." />
 		<execute macro="JSONRole#addRegularRole">
-			<var name="roleTitle" value="DDMRegRole Name"/>
-			<var name="roleKey" value="DDMRegRole Name"/>
+			<var name="roleKey" value="DDMRegRole Name" />
+			<var name="roleTitle" value="DDMRegRole Name" />
 		</execute>
 
-		<for list="VIEW,ADD_RECORD"
-			param="resourceActionIndex">
+		<for list="VIEW,ADD_RECORD" param="resourceActionIndex">
 			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}"/>
-				<var name="resourceName" value="com.liferay.dynamic.data.lists.model.DDLRecordSet"/>
-				<var name="roleTitle" value="DDMRegRole Name"/>
+				<var name="resourceAction" value="${resourceActionIndex}" />
+				<var name="resourceName" value="com.liferay.dynamic.data.lists.model.DDLRecordSet" />
+				<var name="roleTitle" value="DDMRegRole Name" />
 			</execute>
 		</for>
-		
+
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW_SITE_ADMINISTRATION"/>
-			<var name="resourceName" value="com.liferay.portal.kernel.model.Group"/>
-			<var name="roleTitle" value="DDMRegRole Name"/>
+			<var name="resourceAction" value="VIEW_SITE_ADMINISTRATION" />
+			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
+			<var name="roleTitle" value="DDMRegRole Name" />
 		</execute>
 
-		<for list="VIEW,PREFERENCES,PERMISSIONS,CONFIGURATION,ACCESS_IN_CONTROL_PANEL"
-			param="resourceActionIndex">
+		<for list="VIEW,PREFERENCES,PERMISSIONS,CONFIGURATION,ACCESS_IN_CONTROL_PANEL" param="resourceActionIndex">
 			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}"/>
-				<var name="resourceName" value="com_liferay_dynamic_data_lists_web_portlet_DDLPortlet"/>
-				<var name="roleTitle" value="DDMRegRole Name"/>
+				<var name="resourceAction" value="${resourceActionIndex}" />
+				<var name="resourceName" value="com_liferay_dynamic_data_lists_web_portlet_DDLPortlet" />
+				<var name="roleTitle" value="DDMRegRole Name" />
 			</execute>
 		</for>
 

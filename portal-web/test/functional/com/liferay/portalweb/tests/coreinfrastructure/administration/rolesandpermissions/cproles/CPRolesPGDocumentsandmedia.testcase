@@ -76,9 +76,9 @@
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ADD_DOCUMENT"/>
-			<var name="resourceName" value="com.liferay.document.library"/>
-			<var name="roleTitle" value="Regrole Name"/>
+			<var name="resourceAction" value="ADD_DOCUMENT" />
+			<var name="resourceName" value="com.liferay.document.library" />
+			<var name="roleTitle" value="Regrole Name" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -101,9 +101,9 @@
 		</execute>
 
 		<execute macro="Permissions#removePermissionViaAPI">
-			<var name="resourceAction" value="ADD_DOCUMENT"/>
-			<var name="resourceName" value="com.liferay.document.library"/>
-			<var name="roleTitle" value="Regrole Name"/>
+			<var name="resourceAction" value="ADD_DOCUMENT" />
+			<var name="resourceName" value="com.liferay.document.library" />
+			<var name="roleTitle" value="Regrole Name" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -260,10 +260,10 @@
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ADD_DOCUMENT"/>
-			<var name="resourceName" value="com.liferay.document.library"/>
-			<var name="roleTitle" value="Roles Siterole Name"/>
-			<var name= "roleType" value="site"/>
+			<var name="resourceAction" value="ADD_DOCUMENT" />
+			<var name="resourceName" value="com.liferay.document.library" />
+			<var name="roleTitle" value="Roles Siterole Name" />
+			<var name="roleType" value="site" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -282,8 +282,8 @@
 		</execute>
 
 		<execute macro="Permissions#removePermissionViaAPI">
-			<var name="resourceAction" value="ADD_DOCUMENT"/>
-			<var name="resourceName" value="com.liferay.document.library"/>
+			<var name="resourceAction" value="ADD_DOCUMENT" />
+			<var name="resourceName" value="com.liferay.document.library" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">

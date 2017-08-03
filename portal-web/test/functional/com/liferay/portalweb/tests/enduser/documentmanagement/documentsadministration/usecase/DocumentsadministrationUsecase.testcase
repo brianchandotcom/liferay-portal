@@ -1027,69 +1027,64 @@
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="JSONRole#addRegularRole">
-			<var name="roleTitle" value="Technical Writer"/>
-			<var name="roleKey" value="Technical Writer"/>
+			<var name="roleKey" value="Technical Writer" />
+			<var name="roleTitle" value="Technical Writer" />
 		</execute>
 
-		<for list="DELETE,VIEW,UPDATE"
-			param="resourceActionIndex">
+		<for list="DELETE,VIEW,UPDATE" param="resourceActionIndex">
 			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}"/>
-				<var name="resourceName" value="com.liferay.document.library.kernel.model.DLFileEntryType"/>
-				<var name="roleTitle" value="Technical Writer"/>
+				<var name="resourceAction" value="${resourceActionIndex}" />
+				<var name="resourceName" value="com.liferay.document.library.kernel.model.DLFileEntryType" />
+				<var name="roleTitle" value="Technical Writer" />
 			</execute>
 		</for>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW"/>
-			<var name="resourceName" value="com_liferay_document_library_web_portlet_DLAdminPortlet"/>
-			<var name="roleTitle" value="Technical Writer"/>
+			<var name="resourceAction" value="VIEW" />
+			<var name="resourceName" value="com_liferay_document_library_web_portlet_DLAdminPortlet" />
+			<var name="roleTitle" value="Technical Writer" />
 		</execute>
 
-		<for list="VIEW,ADD_FOLDER,ADD_DOCUMENT"
-			param="resourceActionIndex">
+		<for list="VIEW,ADD_FOLDER,ADD_DOCUMENT" param="resourceActionIndex">
 			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}"/>
-				<var name="resourceName" value="com.liferay.document.library"/>
-				<var name="roleTitle" value="Site Member"/>
-				<var name="roleType" value="site"/>
+				<var name="resourceAction" value="${resourceActionIndex}" />
+				<var name="resourceName" value="com.liferay.document.library" />
+				<var name="roleTitle" value="Site Member" />
+				<var name="roleType" value="site" />
 			</execute>
 		</for>
 
-		<for list="UPDATE,DELETE"
-			param="resourceActionIndex">
+		<for list="UPDATE,DELETE" param="resourceActionIndex">
 			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}"/>
-				<var name="resourceName" value="com.liferay.document.library.kernel.model.DLFileEntry"/>
-				<var name="roleTitle" value="Site Member"/>
-				<var name="roleType" value="site"/>
+				<var name="resourceAction" value="${resourceActionIndex}" />
+				<var name="resourceName" value="com.liferay.document.library.kernel.model.DLFileEntry" />
+				<var name="roleTitle" value="Site Member" />
+				<var name="roleType" value="site" />
 			</execute>
 		</for>
 
-		<for list="UPDATE,ADD_SUBFOLDER,ADD_DOCUMENT"
-			param="resourceActionIndex">
+		<for list="UPDATE,ADD_SUBFOLDER,ADD_DOCUMENT" param="resourceActionIndex">
 			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}"/>
-				<var name="resourceName" value="com.liferay.document.library.kernel.model.DLFolder"/>
-				<var name="roleTitle" value="Site Member"/>
-				<var name="roleType" value="site"/>
+				<var name="resourceAction" value="${resourceActionIndex}" />
+				<var name="resourceName" value="com.liferay.document.library.kernel.model.DLFolder" />
+				<var name="roleTitle" value="Site Member" />
+				<var name="roleType" value="site" />
 			</execute>
 		</for>
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW_SITE_ADMINISTRATION"/>
-			<var name="resourceName" value="com.liferay.portal.kernel.model.Group"/>
-			<var name="roleTitle" value="Site Member"/>
-			<var name="roleType" value="site"/>
+			<var name="resourceAction" value="VIEW_SITE_ADMINISTRATION" />
+			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
+			<var name="roleTitle" value="Site Member" />
+			<var name="roleType" value="site" />
 		</execute>
 
-		<for list="VIEW,ACCESS_IN_CONTROL_PANEL"
-			param="resourceActionIndex">
+		<for list="VIEW,ACCESS_IN_CONTROL_PANEL" param="resourceActionIndex">
 			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}"/>
-				<var name="resourceName" value="com_liferay_document_library_web_portlet_DLAdminPortlet"/>
-				<var name="roleTitle" value="Site Member"/>
-				<var name="roleType" value="site"/>
+				<var name="resourceAction" value="${resourceActionIndex}" />
+				<var name="resourceName" value="com_liferay_document_library_web_portlet_DLAdminPortlet" />
+				<var name="roleTitle" value="Site Member" />
+				<var name="roleType" value="site" />
 			</execute>
 		</for>
 

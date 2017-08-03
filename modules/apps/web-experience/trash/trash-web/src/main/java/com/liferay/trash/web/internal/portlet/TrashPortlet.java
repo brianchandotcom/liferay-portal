@@ -323,13 +323,16 @@ public class TrashPortlet extends MVCPortlet {
 
 			sendRedirect(actionRequest, actionResponse);
 
-			throw ree;
+			throw new com.liferay.trash.exception.RestoreEntryException(
+				ree.getType(), ree.getCause());
 		}
 	}
 
 	@Override
 	protected boolean isSessionErrorException(Throwable cause) {
-		if (cause instanceof RestoreEntryException ||
+		if (cause instanceof com.
+				liferay.trash.exception.RestoreEntryException ||
+			cause instanceof RestoreEntryException ||
 			cause instanceof TrashPermissionException) {
 
 			return true;

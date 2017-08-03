@@ -5,4 +5,5 @@ dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	testIntegrationCompile project(":apps:forms-and-workflow:polls:polls-api")
 	testIntegrationCompile project(":apps:forms-and-workflow:polls:polls-service")
+	testIntegrationCompile project(":apps:web-experience:export-import:export-import-test-util")
 }

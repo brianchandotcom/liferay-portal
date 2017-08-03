@@ -16,6 +16,8 @@ package com.liferay.portal.search.solr.internal;
 
 import com.liferay.portal.kernel.search.IndexSearcher;
 import com.liferay.portal.kernel.search.IndexWriter;
+import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.search.solr.connection.SolrClientManager;
 import com.liferay.portal.search.solr.connection.TestSolrClientManager;
 import com.liferay.portal.search.solr.document.SolrUpdateDocumentCommand;
@@ -54,6 +56,8 @@ import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import org.mockito.Mockito;
 
 /**
  * @author Miguel Angelo Caldas Gallindo
@@ -145,6 +149,8 @@ public class SolrIndexingFixture implements IndexingFixture {
 
 		return new SolrIndexSearcher() {
 			{
+				props = createProps();
+
 				setFacetProcessor(new DefaultFacetProcessor());
 				setFilterTranslator(createSolrFilterTranslator());
 				setGroupByTranslator(new DefaultGroupByTranslator());
@@ -174,6 +180,20 @@ public class SolrIndexingFixture implements IndexingFixture {
 				setSolrUpdateDocumentCommand(updateDocumentCommand);
 			}
 		};
+	}
+
+	protected Props createProps() {
+		Props props = Mockito.mock(Props.class);
+
+		Mockito.doReturn(
+			"20"
+		).when(
+			props
+		).get(
+			PropsKeys.INDEX_SEARCH_LIMIT
+		);
+
+		return props;
 	}
 
 	protected Map<String, Object> createSolrConfigurationProperties() {

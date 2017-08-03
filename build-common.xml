@@ -574,6 +574,19 @@ information.
 			<setup-binaries-cache unless:true="${setup.binaries.cache.executed}" />
 
 			<if>
+				<not>
+					<available file="${project.dir}/tools/${build.binaries.gradle.file}" />
+				</not>
+				<then>
+					<mirrors-get
+						dest="${project.dir}/tools/${build.binaries.gradle.file}"
+						skipChecksum="true"
+						src="${build.binaries.gradle.url}"
+					/>
+				</then>
+			</if>
+
+			<if>
 				<os family="unix" />
 				<then>
 					<property name="gradlew.suffix" value="" />
@@ -1061,6 +1074,11 @@ information.
 					<sync-dir
 						dir="${project.dir}/${build.binaries.cache.dir}/.gradle/caches/modules-2/files-2.1"
 						toDir="${project.dir}/.gradle/caches/modules-2/files-2.1"
+					/>
+
+					<copy
+						file="${project.dir}/${build.binaries.cache.dir}/${build.binaries.gradle.file}"
+						todir="${project.dir}/tools"
 					/>
 				</then>
 			</if>

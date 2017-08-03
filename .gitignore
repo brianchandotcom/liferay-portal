@@ -427,6 +427,7 @@
 /test-results
 /test.*.properties
 /tmp
+/tools/gradle-*-bin.zip
 /tools/maven/*.asc
 /tools/node*
 /tools/sdk

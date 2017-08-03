@@ -8256,6 +8256,8 @@ public class PortalImpl implements Portal {
 		}
 
 		for (Locale locale : availableLocales) {
+			String alternateURL = canonicalURL;
+			String alternateURLSuffix = canonicalURLSuffix;
 			String languageId = LocaleUtil.toLanguageId(locale);
 
 			if (replaceFriendlyURL) {
@@ -8277,25 +8279,25 @@ public class PortalImpl implements Portal {
 				}
 
 				if (friendlyURL != null) {
-					canonicalURLSuffix = StringUtil.replaceFirst(
-						canonicalURLSuffix, layout.getFriendlyURL(),
+					alternateURLSuffix = StringUtil.replaceFirst(
+						alternateURLSuffix, layout.getFriendlyURL(),
 						friendlyURL);
 				}
 
-				canonicalURL = canonicalURLPrefix.concat(canonicalURLSuffix);
+				alternateURL = canonicalURLPrefix.concat(alternateURLSuffix);
 			}
 
 			if (siteDefaultLocale.equals(locale) &&
 				(PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE != 2)) {
 
-				alternateURLs.put(locale, canonicalURL);
+				alternateURLs.put(locale, alternateURL);
 			}
 			else {
 				alternateURLs.put(
 					locale,
 					canonicalURLPrefix.concat(
 						_buildI18NPath(languageId, locale)).concat(
-							canonicalURLSuffix));
+							alternateURLSuffix));
 			}
 		}
 

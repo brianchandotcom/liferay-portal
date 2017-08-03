@@ -842,7 +842,7 @@
 			<var name="dmFolderName" value="The Properties of Moon Rocks" />
 		</execute>
 
-		<execute macro="DMFolder#removeMultiplePermissions">
+		<execute macro="DMFolder#removePermissions">
 			<var name="dmFolder" value="Audio Lectures" />
 			<var name="permissionNameList" value="ADD_DOCUMENT,ADD_SHORTCUT,ADD_SUBFOLDER" />
 			<var name="roleTitle" value="Site Member" />

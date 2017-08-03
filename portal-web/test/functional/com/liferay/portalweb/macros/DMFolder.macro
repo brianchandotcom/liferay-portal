@@ -494,7 +494,7 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
-	<command name="removeMultiplePermissions">
+	<command name="removePermissions">
 		<execute macro="DMFolder#viewFolderPermissionsPG">
 			<var name="dmFolder" value="${dmFolder}" />
 			<var name="key_roleTitle" value="${roleTitle}" />

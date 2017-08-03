@@ -75,7 +75,9 @@ public class ChildSitesItemSelectorViewDisplayContext
 
 		groups = _filterGroups(groups, themeDisplay.getPermissionChecker());
 
-		groupSearch.setTotal(groups.size());
+		if (groups.size() < groupSearch.getEnd()) {
+			groupSearch.setTotal(groups.size());
+		}
 
 		groupSearch.setResults(groups);
 

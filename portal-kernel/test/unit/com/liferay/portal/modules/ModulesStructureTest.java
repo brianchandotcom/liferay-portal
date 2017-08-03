@@ -424,61 +424,6 @@ public class ModulesStructureTest {
 		return gradleDependency;
 	}
 
-	private String _getAntPluginLibGitIgnore(Path dirPath) throws IOException {
-		Path liferayLayoutTemplatesXmlPath = dirPath.resolve(
-			"docroot/WEB-INF/liferay-layout-templates.xml");
-		Path liferayPluginPackagePropertiesPath = dirPath.resolve(
-			"docroot/WEB-INF/liferay-plugin-package.properties");
-
-		if (Files.exists(liferayLayoutTemplatesXmlPath) ||
-			Files.notExists(liferayPluginPackagePropertiesPath)) {
-
-			return null;
-		}
-
-		Properties properties = new Properties();
-
-		try (InputStream inputStream = Files.newInputStream(
-				liferayPluginPackagePropertiesPath)) {
-
-			properties.load(inputStream);
-		}
-
-		Set<String> jars = new TreeSet<>();
-
-		jars.add("commons-logging.jar");
-		jars.add("log4j.jar");
-		jars.add("util-bridges.jar");
-		jars.add("util-java.jar");
-		jars.add("util-taglib.jar");
-
-		String[] portalDependencyJars = StringUtil.split(
-			properties.getProperty(
-				"portal-dependency-jars",
-				properties.getProperty("portal.dependency.jars")));
-
-		for (String portalDependencyJar : portalDependencyJars) {
-			jars.add(portalDependencyJar);
-		}
-
-		StringBundler sb = new StringBundler(jars.size() * 3 - 1);
-
-		boolean first = true;
-
-		for (String jar : jars) {
-			if (!first) {
-				sb.append(CharPool.NEW_LINE);
-			}
-
-			first = false;
-
-			sb.append(CharPool.SLASH);
-			sb.append(jar);
-		}
-
-		return sb.toString();
-	}
-
 	private String _getAntPluginsGitIgnore(final Path dirPath, String gitIgnore)
 		throws IOException {
 
@@ -689,10 +634,6 @@ public class ModulesStructureTest {
 	}
 
 	private void _testAntPluginIgnoreFiles(Path dirPath) throws IOException {
-		_testEquals(
-			dirPath.resolve("docroot/WEB-INF/lib/.gitignore"),
-			_getAntPluginLibGitIgnore(dirPath));
-
 		if (_getGitRepoPath(dirPath) == null) {
 			Path parentDirPath = dirPath.getParent();
 

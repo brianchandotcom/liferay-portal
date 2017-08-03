@@ -689,10 +689,6 @@ public class ModulesStructureTest {
 	}
 
 	private void _testAntPluginIgnoreFiles(Path dirPath) throws IOException {
-		if (_isInPrivateModulesDir(dirPath)) {
-			return;
-		}
-
 		_testEquals(
 			dirPath.resolve("docroot/WEB-INF/lib/.gitignore"),
 			_getAntPluginLibGitIgnore(dirPath));
@@ -961,11 +957,7 @@ public class ModulesStructureTest {
 	private void _testGitRepoIgnoreFiles(Path dirPath, String gitIgnoreTemplate)
 		throws IOException {
 
-		if (_isEmptyGitRepo(dirPath)) {
-			return;
-		}
-
-		if (_isInGitRepoReadOnly(dirPath) || _isInPrivateModulesDir(dirPath)) {
+		if (_isInGitRepoReadOnly(dirPath)) {
 			return;
 		}
 

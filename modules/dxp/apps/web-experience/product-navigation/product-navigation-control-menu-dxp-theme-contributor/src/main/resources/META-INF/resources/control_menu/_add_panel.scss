@@ -6,13 +6,6 @@ body.open-admin-panel {
 		padding-right: $admin-panel-width;
 	}
 
-	.control-menu {
-		@include sm() {
-			padding-right: 0;
-			right: $admin-panel-width;
-		}
-	}
-
 	.control-menu-level-2 {
 		@include sm() {
 			right: $admin-panel-width;

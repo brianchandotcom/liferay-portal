@@ -14,6 +14,7 @@
 
 package com.liferay.asset.publisher.web.display.context;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
@@ -62,23 +63,18 @@ public class SitesThatIAdministerItemSelectorViewDisplayContext
 		GroupSearchTerms groupSearchTerms =
 			(GroupSearchTerms)groupSearch.getSearchTerms();
 
-		int total = GroupLocalServiceUtil.searchCount(
-			themeDisplay.getCompanyId(), _CLASS_NAME_IDS,
-			groupSearchTerms.getKeywords(), _getGroupParams());
-
-		groupSearch.setTotal(total);
-
 		List<Group> groups = GroupLocalServiceUtil.search(
 			themeDisplay.getCompanyId(), _CLASS_NAME_IDS,
 			groupSearchTerms.getKeywords(), _getGroupParams(),
-			groupSearch.getStart(), groupSearch.getEnd(),
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			groupSearch.getOrderByComparator());
 
 		groups = _filterGroups(groups, themeDisplay.getPermissionChecker());
 
-		if (groups.size() < groupSearch.getEnd()) {
-			groupSearch.setTotal(groups.size());
-		}
+		groupSearch.setTotal(groups.size());
+
+		groups = groups.subList(
+			groupSearch.getStart(), groupSearch.getResultEnd());
 
 		groupSearch.setResults(groups);
 

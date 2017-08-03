@@ -76,7 +76,7 @@ name = namespace + name;
 	geolocation: <%= geolocation %>
 
 	<c:if test="<%= Validator.isNotNull(latitude) && Validator.isNotNull(longitude) %>">
-		,position: {
+		, position: {
 			location: {
 				lat: <%= latitude %>,
 				lng: <%= longitude %>
@@ -86,7 +86,7 @@ name = namespace + name;
 	};
 
 	var destroyMap = function(event, map) {
-		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
+		if (event.portletId === '<%= portletDisplay.getId() %>') {
 			map.destroy();
 
 			Liferay.detach('destroyPortlet', destroyMap);
@@ -107,5 +107,4 @@ name = namespace + name;
 	else {
 		Liferay.once('gmapsReady', createMap);
 	}
-
 </aui:script>

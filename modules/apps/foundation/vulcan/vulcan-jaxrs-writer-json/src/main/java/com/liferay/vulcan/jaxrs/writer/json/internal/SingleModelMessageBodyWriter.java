@@ -27,9 +27,10 @@ import com.liferay.vulcan.message.json.SingleModelMessageMapper;
 import com.liferay.vulcan.pagination.SingleModel;
 import com.liferay.vulcan.response.control.Embedded;
 import com.liferay.vulcan.response.control.Fields;
-import com.liferay.vulcan.wiring.osgi.ProviderManager;
-import com.liferay.vulcan.wiring.osgi.RelatedModel;
-import com.liferay.vulcan.wiring.osgi.ResourceManager;
+import com.liferay.vulcan.wiring.osgi.manager.ProviderManager;
+import com.liferay.vulcan.wiring.osgi.manager.ResourceManager;
+import com.liferay.vulcan.wiring.osgi.model.RelatedCollection;
+import com.liferay.vulcan.wiring.osgi.model.RelatedModel;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -190,6 +191,15 @@ public class SingleModelMessageBodyWriter<T>
 						singleModelMessageMapper, jsonObjectBuilder,
 						linkedRelatedModel, model, modelClass,
 						embeddedPathElements, fields, embedded));
+
+				List<RelatedCollection<V, ?>> relatedCollections =
+					_resourceManager.getRelatedCollections(modelClass);
+
+				relatedCollections.forEach(
+					relatedCollection -> _writeRelatedCollection(
+						singleModelMessageMapper, jsonObjectBuilder,
+						relatedCollection, model, modelClass,
+						embeddedPathElements, fields));
 			},
 			(url, embeddedPathElements, isEmbedded) -> {
 				if (isEmbedded) {
@@ -262,8 +272,31 @@ public class SingleModelMessageBodyWriter<T>
 				singleModelMessageMapper, jsonObjectBuilder, linkedRelatedModel,
 				model, modelClass, null, fields, embedded));
 
+		List<RelatedCollection<U, ?>> relatedCollections =
+			_resourceManager.getRelatedCollections(modelClass);
+
+		relatedCollections.forEach(
+			relatedCollection -> _writeRelatedCollection(
+				singleModelMessageMapper, jsonObjectBuilder, relatedCollection,
+				model, modelClass, null, fields));
+
 		singleModelMessageMapper.onFinish(
 			jsonObjectBuilder, model, modelClass, requestInfo);
+	}
+
+	private <U, V> void _writeRelatedCollection(
+		SingleModelMessageMapper<?> singleModelMessageMapper,
+		JSONObjectBuilder jsonObjectBuilder,
+		RelatedCollection<U, V> relatedCollection, U parentModel,
+		Class<U> parentModelClass,
+		FunctionalList<String> parentEmbeddedPathElements, Fields fields) {
+
+		_writerHelper.writeRelatedCollection(
+			relatedCollection, parentModel, parentModelClass,
+			parentEmbeddedPathElements, _uriInfo, fields,
+			(url, embeddedPathElements) ->
+				singleModelMessageMapper.mapLinkedResourceURL(
+					jsonObjectBuilder, embeddedPathElements, url));
 	}
 
 	@Context

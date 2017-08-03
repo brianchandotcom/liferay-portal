@@ -18,7 +18,7 @@ import com.liferay.vulcan.list.FunctionalList;
 import com.liferay.vulcan.message.RequestInfo;
 import com.liferay.vulcan.message.json.JSONObjectBuilder;
 import com.liferay.vulcan.message.json.PageMessageMapper;
-import com.liferay.vulcan.wiring.osgi.ResourceManager;
+import com.liferay.vulcan.wiring.osgi.manager.ResourceManager;
 
 import java.util.List;
 

@@ -16,8 +16,14 @@ package com.liferay.vulcan.endpoint;
 
 import com.liferay.vulcan.pagination.Page;
 import com.liferay.vulcan.pagination.SingleModel;
+import com.liferay.vulcan.resource.Routes;
+
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 
@@ -42,8 +48,19 @@ public interface RootEndpoint {
 	 */
 	@GET
 	@Path("/p/{path}/{id}")
-	public <T> SingleModel<T> getCollectionItemSingleModel(
-		@PathParam("path") String path, @PathParam("id") String id);
+	public default <T> SingleModel<T> getCollectionItemSingleModel(
+		@PathParam("path") String path, @PathParam("id") String id) {
+
+		Routes<T> routes = getRoutes(path);
+
+		Optional<Function<String, SingleModel<T>>> optional =
+			routes.getSingleModelFunctionOptional();
+
+		Function<String, SingleModel<T>> singleModelFunction =
+			optional.orElseThrow(NotFoundException::new);
+
+		return singleModelFunction.apply(id);
+	}
 
 	/**
 	 * Returns the collection {@link Page} for a given path.
@@ -53,6 +70,26 @@ public interface RootEndpoint {
 	 */
 	@GET
 	@Path("/p/{path}")
-	public <T> Page<T> getCollectionPage(@PathParam("path") String path);
+	public default <T> Page<T> getCollectionPage(
+		@PathParam("path") String path) {
+
+		Routes<T> routes = getRoutes(path);
+
+		Optional<Supplier<Page<T>>> optional = routes.getPageSupplierOptional();
+
+		Supplier<Page<T>> pageSupplier = optional.orElseThrow(
+			NotFoundException::new);
+
+		return pageSupplier.get();
+	}
+
+	/**
+	 * Returns the {@link Routes} instance for a given path. The result of this
+	 * method may vary depending on implementation.
+	 *
+	 * @param  path the path from the URL.
+	 * @return the {@link Routes} instance for the path.
+	 */
+	public <T> Routes<T> getRoutes(String path);
 
 }

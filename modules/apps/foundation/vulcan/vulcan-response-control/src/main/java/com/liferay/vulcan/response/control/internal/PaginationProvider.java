@@ -14,7 +14,6 @@
 
 package com.liferay.vulcan.response.control.internal;
 
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.vulcan.pagination.Pagination;
 import com.liferay.vulcan.provider.Provider;
@@ -24,11 +23,10 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * Allows resources to provide {@link Pagination} as a parameter in {@link
- * com.liferay.vulcan.representor.RoutesBuilder} methods.
+ * com.liferay.vulcan.resource.builder.RoutesBuilder} methods.
  *
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
@@ -53,9 +51,6 @@ public class PaginationProvider implements Provider<Pagination> {
 	private static final int _ITEMS_PER_PAGE_DEFAULT = 30;
 
 	private static final int _PAGE_NUMBER_DEFAULT = 1;
-
-	@Reference
-	private Http _http;
 
 	private static class DefaultPagination implements Pagination {
 

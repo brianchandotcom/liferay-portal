@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Vulcan Sample Liferay Portal
+Bundle-SymbolicName: com.liferay.vulcan.sample.liferay.portal
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.vulcan.sample.liferay.portal.rating

@@ -88,7 +88,7 @@ public interface PageMessageMapper<T> {
 	 * @param pageJSONObjectBuilder the json object builder for the whole page.
 	 * @param itemJSONObjectBuilder the json object builder for the actual item.
 	 * @param embeddedPathElements the embedded path elements of the current
-	 *                             resource.
+	 *        resource.
 	 * @param fieldName the field name.
 	 * @param value the value of the field.
 	 */
@@ -105,7 +105,7 @@ public interface PageMessageMapper<T> {
 	 * @param pageJSONObjectBuilder the json object builder for the whole page.
 	 * @param itemJSONObjectBuilder the json object builder for the actual item.
 	 * @param embeddedPathElements the embedded path elements of the current
-	 *                             resource.
+	 *        resource.
 	 * @param fieldName the field name.
 	 * @param url the URL of the link.
 	 */
@@ -122,7 +122,7 @@ public interface PageMessageMapper<T> {
 	 * @param pageJSONObjectBuilder the json object builder for the whole page.
 	 * @param itemJSONObjectBuilder the json object builder for the actual item.
 	 * @param embeddedPathElements the embedded path elements of the current
-	 *                             resource.
+	 *        resource.
 	 * @param types the resource types.
 	 */
 	public default void mapItemEmbeddedResourceTypes(
@@ -137,7 +137,7 @@ public interface PageMessageMapper<T> {
 	 * @param pageJSONObjectBuilder the json object builder for the whole page.
 	 * @param itemJSONObjectBuilder the json object builder for the actual item.
 	 * @param embeddedPathElements the embedded path elements of the current
-	 *                             resource.
+	 *        resource.
 	 * @param url the URL of the resource.
 	 */
 	public default void mapItemEmbeddedResourceURL(
@@ -179,7 +179,7 @@ public interface PageMessageMapper<T> {
 	 * @param pageJSONObjectBuilder the json object builder for the whole page.
 	 * @param itemJSONObjectBuilder the json object builder for the actual item.
 	 * @param embeddedPathElements the embedded path elements of the current
-	 *                             resource.
+	 *        resource.
 	 * @param url the URL of the resource.
 	 */
 	public default void mapItemLinkedResourceURL(
@@ -325,10 +325,11 @@ public interface PageMessageMapper<T> {
 	 * This method is called to check if the mapper supports mapping all things
 	 * related to the current request.
 	 *
-	 * @param page the actual page.
-	 * @param modelClass the model class of the page.
-	 * @param requestInfo the request info for the current request.
-	 * @return true if mapper supports mapping this request; false otherwise.
+	 * @param  page the actual page.
+	 * @param  modelClass the model class of the page.
+	 * @param  requestInfo the request info for the current request.
+	 * @return <code>true</code> if mapper supports mapping this request;
+	 *         <code>false</code> otherwise.
 	 */
 	public default boolean supports(
 		Page<T> page, Class<T> modelClass, RequestInfo requestInfo) {

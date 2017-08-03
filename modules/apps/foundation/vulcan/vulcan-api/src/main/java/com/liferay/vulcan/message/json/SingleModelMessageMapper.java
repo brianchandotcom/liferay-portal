@@ -36,6 +36,7 @@ import java.util.List;
  * {@link #onStart(JSONObjectBuilder, Object, Class, RequestInfo)},
  * {@link #onFinish(JSONObjectBuilder, Object, Class, RequestInfo)} (called when
  * the writer starts and finishes the item).
+ *
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
@@ -55,7 +56,7 @@ public interface SingleModelMessageMapper<T> {
 	 *
 	 * @param jsonObjectBuilder the json object builder for the actual item.
 	 * @param embeddedPathElements the embedded path elements of the current
-	 *                             resource.
+	 *        resource.
 	 * @param fieldName the field name.
 	 * @param value the value of the field.
 	 */
@@ -70,7 +71,7 @@ public interface SingleModelMessageMapper<T> {
 	 *
 	 * @param jsonObjectBuilder the json object builder for the actual item.
 	 * @param embeddedPathElements the embedded path elements of the current
-	 *                             resource.
+	 *        resource.
 	 * @param fieldName the field name.
 	 * @param url the URL of the link.
 	 */
@@ -85,7 +86,7 @@ public interface SingleModelMessageMapper<T> {
 	 *
 	 * @param jsonObjectBuilder the json object builder for the actual item.
 	 * @param embeddedPathElements the embedded path elements of the current
-	 *                             resource.
+	 *        resource.
 	 * @param types the resource types.
 	 */
 	public default void mapEmbeddedResourceTypes(
@@ -98,7 +99,7 @@ public interface SingleModelMessageMapper<T> {
 	 *
 	 * @param jsonObjectBuilder the json object builder for the actual item.
 	 * @param embeddedPathElements the embedded path elements of the current
-	 *                             resource.
+	 *        resource.
 	 * @param url the URL of the resource.
 	 */
 	public default void mapEmbeddedResourceURL(
@@ -133,7 +134,7 @@ public interface SingleModelMessageMapper<T> {
 	 *
 	 * @param jsonObjectBuilder the json object builder for the actual item.
 	 * @param embeddedPathElements the embedded path elements of the current
-	 *                             resource.
+	 *        resource.
 	 * @param url the URL of the resource.
 	 */
 	public default void mapLinkedResourceURL(
@@ -192,10 +193,11 @@ public interface SingleModelMessageMapper<T> {
 	 * This method is called to check if the mapper supports mapping all things
 	 * related to the current request.
 	 *
-	 * @param model the actual model.
-	 * @param modelClass the model class of the model.
-	 * @param requestInfo the request info for the current request.
-	 * @return true if mapper supports mapping this request; false otherwise.
+	 * @param  model the actual model.
+	 * @param  modelClass the model class of the model.
+	 * @param  requestInfo the request info for the current request.
+	 * @return <code>true</code> if mapper supports mapping this request;
+	 *         <code>false</code> otherwise.
 	 */
 	public default boolean supports(
 		T model, Class<T> modelClass, RequestInfo requestInfo) {

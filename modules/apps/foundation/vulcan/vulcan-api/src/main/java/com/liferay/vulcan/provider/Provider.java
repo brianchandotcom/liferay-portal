@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
  * classes that are dependent on the current request.
  *
  * The class of the provider can then be provided as a parameter in {@link
- * com.liferay.vulcan.representor.RoutesBuilder} methods.
+ * com.liferay.vulcan.resource.builder.RoutesBuilder} methods.
  *
  * @author Alejandro Hernández
  */

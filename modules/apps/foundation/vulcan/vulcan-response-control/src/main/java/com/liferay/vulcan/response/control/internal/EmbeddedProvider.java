@@ -20,7 +20,6 @@ import com.liferay.vulcan.response.control.Embedded;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
@@ -30,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * Allows resources to provide {@link Embedded} as a parameter in {@link
- * com.liferay.vulcan.representor.RoutesBuilder} methods.
+ * com.liferay.vulcan.resource.builder.RoutesBuilder} methods.
  *
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
@@ -40,13 +39,10 @@ import org.osgi.service.component.annotations.Component;
 public class EmbeddedProvider implements Provider<Embedded> {
 
 	public Embedded createContext(HttpServletRequest httpServletRequest) {
-		Map<String, String[]> parameterMap =
-			httpServletRequest.getParameterMap();
+		String embedded = httpServletRequest.getParameter("embedded");
 
-		String[] values = parameterMap.get("embedded");
-
-		if ((values != null) && (values.length == 1)) {
-			return new EmbeddedImpl(Arrays.asList(_pattern.split(values[0])));
+		if (embedded != null) {
+			return new EmbeddedImpl(Arrays.asList(_pattern.split(embedded)));
 		}
 
 		return new EmbeddedImpl(new ArrayList<>());
@@ -60,7 +56,7 @@ public class EmbeddedProvider implements Provider<Embedded> {
 
 		@Override
 		public Predicate<String> getEmbeddedPredicate() {
-			return field -> _embedded.contains(field);
+			return _embedded::contains;
 		}
 
 		private final List<String> _embedded;

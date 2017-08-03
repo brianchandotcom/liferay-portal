@@ -18,13 +18,19 @@ import static org.osgi.service.component.annotations.ReferenceCardinality.OPTION
 import static org.osgi.service.component.annotations.ReferencePolicyOption.GREEDY;
 
 import com.liferay.vulcan.error.VulcanDeveloperError;
+import com.liferay.vulcan.error.VulcanDeveloperError.MustHaveFilterProvider;
+import com.liferay.vulcan.filter.FilterProvider;
+import com.liferay.vulcan.filter.QueryParamFilterType;
+import com.liferay.vulcan.function.TriConsumer;
 import com.liferay.vulcan.list.FunctionalList;
-import com.liferay.vulcan.representor.Resource;
+import com.liferay.vulcan.resource.Resource;
 import com.liferay.vulcan.response.control.Embedded;
 import com.liferay.vulcan.response.control.Fields;
 import com.liferay.vulcan.uri.CollectionResourceURITransformer;
-import com.liferay.vulcan.wiring.osgi.RelatedModel;
-import com.liferay.vulcan.wiring.osgi.ResourceManager;
+import com.liferay.vulcan.wiring.osgi.manager.FilterProviderManager;
+import com.liferay.vulcan.wiring.osgi.manager.ResourceManager;
+import com.liferay.vulcan.wiring.osgi.model.RelatedCollection;
+import com.liferay.vulcan.wiring.osgi.model.RelatedModel;
 
 import java.net.URI;
 
@@ -100,6 +106,55 @@ public class WriterHelper {
 					uri, modelClass))
 		).map(
 			uri -> getAbsoluteURL(uriInfo, uri)
+		);
+	}
+
+	/**
+	 * Returns the filtered collection URL of a model class. If a {@link
+	 * Resource} for that model class cannot be found, returns
+	 * <code>Optional#empty()</code>.
+	 *
+	 * @param  modelClass the model class of the {@link Resource}.
+	 * @param  queryParamFilterType the filter type applied to this collection.
+	 * @param  uriInfo uri info of the actual request.
+	 * @return the collection URL if a {@link Resource} for the model class can
+	 *         be found; <code>Optional#empty()</code> otherwise.
+	 */
+	public <T, Q extends QueryParamFilterType> Optional<String>
+		getFilteredCollectionURLOptional(
+			Class<T> modelClass, Q queryParamFilterType, UriInfo uriInfo) {
+
+		Optional<String> optional = getCollectionURLOptional(
+			modelClass, uriInfo);
+
+		return optional.map(
+			url -> {
+				Optional<FilterProvider<Q>> filterProviderOptional =
+					_filterProviderManager.getFilterProviderOptional(
+						queryParamFilterType);
+
+				FilterProvider<Q> filterProvider =
+					filterProviderOptional.orElseThrow(
+						() -> new MustHaveFilterProvider(queryParamFilterType));
+
+				UriBuilder uriBuilder = UriBuilder.fromUri(url);
+
+				Map<String, String> queryParamMap =
+					filterProvider.getQueryParamMap(queryParamFilterType);
+
+				for (String key : queryParamMap.keySet()) {
+					uriBuilder = uriBuilder.queryParam(
+						key, queryParamMap.get(key));
+				}
+
+				String filterName = filterProvider.getFilterName();
+
+				return uriBuilder.queryParam(
+					"filterName", filterName
+				).build();
+			}
+		).map(
+			URI::toString
 		);
 	}
 
@@ -221,6 +276,54 @@ public class WriterHelper {
 				biConsumer.accept(key, links.get(key));
 			}
 		}
+	}
+
+	/**
+	 * Helper method to write a model related collection. It uses a consumer for
+	 * writing the URL.
+	 *
+	 * @param relatedCollection the instance of the related collection.
+	 * @param parentModel the instance of the parent model.
+	 * @param parentModelClass the parent model class.
+	 * @param parentEmbeddedPathElements list of embedded path elements.
+	 * @param uriInfo uri info of the actual request.
+	 * @param fields the requested fields.
+	 * @param biConsumer the consumer that will be called to write the related
+	 *        collection URL.
+	 */
+	public <U, V> void writeRelatedCollection(
+		RelatedCollection<U, V> relatedCollection, U parentModel,
+		Class<U> parentModelClass,
+		FunctionalList<String> parentEmbeddedPathElements, UriInfo uriInfo,
+		Fields fields, BiConsumer<String, FunctionalList<String>> biConsumer) {
+
+		Predicate<String> fieldsPredicate = _getFieldsPredicate(
+			parentModelClass, fields);
+
+		String key = relatedCollection.getKey();
+
+		if (!fieldsPredicate.test(key)) {
+			return;
+		}
+
+		Function<U, QueryParamFilterType> filterFunction =
+			relatedCollection.getFilterFunction();
+
+		QueryParamFilterType queryParamFilterType = filterFunction.apply(
+			parentModel);
+
+		Class<V> modelClass = relatedCollection.getModelClass();
+
+		Optional<String> optional = getFilteredCollectionURLOptional(
+			modelClass, queryParamFilterType, uriInfo);
+
+		optional.ifPresent(
+			url -> {
+				FunctionalList<String> embeddedPathElements =
+					new StringFunctionalList(parentEmbeddedPathElements, key);
+
+				biConsumer.accept(url, embeddedPathElements);
+			});
 	}
 
 	/**
@@ -364,6 +467,9 @@ public class WriterHelper {
 
 	@Reference(cardinality = OPTIONAL, policyOption = GREEDY)
 	private CollectionResourceURITransformer _collectionResourceURITransformer;
+
+	@Reference
+	private FilterProviderManager _filterProviderManager;
 
 	@Reference
 	private ResourceManager _resourceManager;

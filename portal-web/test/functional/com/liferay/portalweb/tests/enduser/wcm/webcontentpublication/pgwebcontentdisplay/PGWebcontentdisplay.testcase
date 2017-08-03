@@ -550,7 +550,7 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="RecycleBin#undoMoveToRecycleBin" />
+		<execute macro="WebContentDisplayPortlet#undoMoveToRecycleBin" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Web Content Display Page" />

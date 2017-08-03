@@ -325,6 +325,10 @@
 		</execute>
 	</command>
 
+	<command name="undoMoveToRecycleBin">
+		<execute function="AssertClick" locator1="Link#UNDO" value1="Undo" />
+	</command>
+
 	<command name="viewAllSettingsEnabledPG">
 		<execute function="AssertTextEquals#assertPartialText" locator1="Icon#PRINT" value1="Print" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Comments#SUBSCRIBE_TO_COMMENTS_LINK" value1="Subscribe to Comments" />

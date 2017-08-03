@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sampledrools.action;
+package com.liferay.portal.rules.engine.sample.web;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

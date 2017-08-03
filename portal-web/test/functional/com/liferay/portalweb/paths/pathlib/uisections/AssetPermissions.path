@@ -129,7 +129,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SELECT_ROLE_ANY</td>
+	<td>ROLE_LINK</td>
 	<td>//div[contains(@class,'edit-permissions')]//td/a[.//text()=' ${key_roleName} ']</td>
 	<td></td>
 </tr>

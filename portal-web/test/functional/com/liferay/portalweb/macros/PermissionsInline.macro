@@ -98,7 +98,7 @@
 	<command name="gotoDefinePermissionsWithinIFrame" >
 		<var name="key_roleName" value="${roleName}" />
 
-		<execute function="Click" locator1="AssetPermissions#SELECT_ROLE_ANY" />
+		<execute function="Click" locator1="AssetPermissions#ROLE_LINK" />
 	</command>
 
 	<command name="gotoDocumentsAndMediaHomeFolderPG">

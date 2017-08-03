@@ -130,7 +130,7 @@
 </tr>
 <tr>
 	<td>ROLE_LINK</td>
-	<td>//div[contains(@class,'edit-permissions')]//td/a[.//text()=' ${key_roleName} ']</td>
+	<td>//div[contains(@class,'edit-permissions')]//td/a[normalize-space(.//text())='${key_roleName}']</td>
 	<td></td>
 </tr>
 <tr>

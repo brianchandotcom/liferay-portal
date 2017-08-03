@@ -7,63 +7,63 @@
 						"categories": [
 							{
 								"images": [
-									"category-women.png"
+									"category_women.png"
 								],
 								"key": "women-clothes-dressers",
 								"title": "Dressers"
 							},
 							{
 								"images": [
-									"category-women.png"
+									"category_women.png"
 								],
 								"key": "women-clothes-jeans",
 								"title": "Jeans"
 							},
 							{
 								"images": [
-									"category-women.png"
+									"category_women.png"
 								],
 								"key": "women-clothes-skirts",
 								"title": "Skirts"
 							},
 							{
 								"images": [
-									"category-women.png"
+									"category_women.png"
 								],
 								"key": "women-clothes-t-shirts",
 								"title": "T-shirts"
 							},
 							{
 								"images": [
-									"category-women.png"
+									"category_women.png"
 								],
 								"key": "women-clothes-shirts",
 								"title": "Shirts"
 							},
 							{
 								"images": [
-									"category-women.png"
+									"category_women.png"
 								],
 								"key": "women-clothes-knitwear",
 								"title": "Knitwear"
 							},
 							{
 								"images": [
-									"category-women.png"
+									"category_women.png"
 								],
 								"key": "women-clothes-outerwear",
 								"title": "Outerwear"
 							},
 							{
 								"images": [
-									"category-women.png"
+									"category_women.png"
 								],
 								"key": "women-clothes-shorts",
 								"title": "Trousers & Shorts"
 							}
 						],
 						"images": [
-							"category-women.png"
+							"category_women.png"
 						],
 						"key": "women-clothes",
 						"title": "Clothes"
@@ -72,49 +72,49 @@
 						"categories": [
 							{
 								"images": [
-									"category-bags.png"
+									"category_bags.png"
 								],
 								"key": "women-accessories-bags",
 								"title": "Bags"
 							},
 							{
 								"images": [
-									"category-accessories.png"
+									"category_accessories.png"
 								],
 								"key": "women-accessories-shoes",
 								"title": "Shoes"
 							},
 							{
 								"images": [
-									"category-accessories.png"
+									"category_accessories.png"
 								],
 								"key": "women-accessories-wallets",
 								"title": "Wallets"
 							},
 							{
 								"images": [
-									"category-accessories.png"
+									"category_accessories.png"
 								],
 								"key": "women-accessories-jewellery",
 								"title": "Watch & Jewellery"
 							},
 							{
 								"images": [
-									"category-accessories.png"
+									"category_accessories.png"
 								],
 								"key": "women-accessories-sunglasses",
 								"title": "Sunglasses"
 							}
 						],
 						"images": [
-							"category-accessories.png"
+							"category_accessories.png"
 						],
 						"key": "women-accessories",
 						"title": "Shoes & Accessories"
 					}
 				],
 				"images": [
-					"category-women.png"
+					"category_women.png"
 				],
 				"key": "women",
 				"title": "Women"
@@ -125,56 +125,56 @@
 						"categories": [
 							{
 								"images": [
-									"category-man.png"
+									"category_man.png"
 								],
 								"key": "men-clothes-jeans",
 								"title": "Jeans"
 							},
 							{
 								"images": [
-									"category-man.png"
+									"category_man.png"
 								],
 								"key": "men-clothes-t-shirts",
 								"title": "T-shirts"
 							},
 							{
 								"images": [
-									"category-man.png"
+									"category_man.png"
 								],
 								"key": "men-clothes-shirts",
 								"title": "Shirts"
 							},
 							{
 								"images": [
-									"category-man.png"
+									"category_man.png"
 								],
 								"key": "men-clothes-knitwear",
 								"title": "Knitwear"
 							},
 							{
 								"images": [
-									"category-man.png"
+									"category_man.png"
 								],
 								"key": "men-clothes-outerwear",
 								"title": "Outerwear"
 							},
 							{
 								"images": [
-									"category-man.png"
+									"category_man.png"
 								],
 								"key": "men-clothes-shorts",
 								"title": "Trousers & Shorts"
 							},
 							{
 								"images": [
-									"category-man.png"
+									"category_man.png"
 								],
 								"key": "men-clothes-blazers",
 								"title": "Blazers"
 							}
 						],
 						"images": [
-							"category-man.png"
+							"category_man.png"
 						],
 						"key": "men-clothes",
 						"title": "Clothes"
@@ -183,70 +183,70 @@
 						"categories": [
 							{
 								"images": [
-									"category-man.png"
+									"category_man.png"
 								],
 								"key": "men-accessories-bags",
 								"title": "Bags"
 							},
 							{
 								"images": [
-									"category-man.png"
+									"category_man.png"
 								],
 								"key": "men-accessories-shoes",
 								"title": "Shoes"
 							},
 							{
 								"images": [
-									"category-man.png"
+									"category_man.png"
 								],
 								"key": "men-accessories-wallets",
 								"title": "Wallets"
 							},
 							{
 								"images": [
-									"category-man.png"
+									"category_man.png"
 								],
 								"key": "men-accessories-belts",
 								"title": "Belts"
 							},
 							{
 								"images": [
-									"category-man.png"
+									"category_man.png"
 								],
 								"key": "men-accessories-hats",
 								"title": "Hats, Scarves, & Gloves"
 							},
 							{
 								"images": [
-									"category-man.png"
+									"category_man.png"
 								],
 								"key": "men-accessories-jewellery",
 								"title": "Watch & Jewellery"
 							},
 							{
 								"images": [
-									"category-man.png"
+									"category_man.png"
 								],
 								"key": "men-accessories-perfumes",
 								"title": "Perfumes"
 							},
 							{
 								"images": [
-									"category-man.png"
+									"category_man.png"
 								],
 								"key": "men-accessories-sunglasses",
 								"title": "Sunglasses"
 							}
 						],
 						"images": [
-							"category-man.png"
+							"category_man.png"
 						],
 						"key": "men-accessories",
 						"title": "Shoes & Accessories"
 					}
 				],
 				"images": [
-					"category-man.png"
+					"category_man.png"
 				],
 				"key": "men",
 				"title": "Men"
@@ -257,56 +257,56 @@
 						"categories": [
 							{
 								"images": [
-									"category-women.png"
+									"category_women.png"
 								],
 								"key": "underwear-women-new-arrival",
 								"title": "New arrivals"
 							},
 							{
 								"images": [
-									"category-women.png"
+									"category_women.png"
 								],
 								"key": "underwear-women-shop-by-set",
 								"title": "Shop by set"
 							},
 							{
 								"images": [
-									"category-women.png"
+									"category_women.png"
 								],
 								"key": "underwear-women-bras",
 								"title": "Bras"
 							},
 							{
 								"images": [
-									"category-women.png"
+									"category_women.png"
 								],
 								"key": "underwear-women-panties",
 								"title": "Panties"
 							},
 							{
 								"images": [
-									"category-women.png"
+									"category_women.png"
 								],
 								"key": "underwear-women-sports",
 								"title": "Sports underwear"
 							},
 							{
 								"images": [
-									"category-women.png"
+									"category_women.png"
 								],
 								"key": "underwear-women-nightwear",
 								"title": "Nightwear & Loungewear"
 							},
 							{
 								"images": [
-									"category-women.png"
+									"category_women.png"
 								],
 								"key": "underwear-women-socks",
 								"title": "Socks & Tights"
 							}
 						],
 						"images": [
-							"category-women.png"
+							"category_women.png"
 						],
 						"key": "underwear-women",
 						"title": "Women"
@@ -315,56 +315,56 @@
 						"categories": [
 							{
 								"images": [
-									"category-man.png"
+									"category_man.png"
 								],
 								"key": "underwear-men-new-arrival",
 								"title": "New arrivals"
 							},
 							{
 								"images": [
-									"category-man.png"
+									"category_man.png"
 								],
 								"key": "underwear-men-trunks",
 								"title": "Trunks"
 							},
 							{
 								"images": [
-									"category-man.png"
+									"category_man.png"
 								],
 								"key": "underwear-men-briefs",
 								"title": "Briefs"
 							},
 							{
 								"images": [
-									"category-man.png"
+									"category_man.png"
 								],
 								"key": "underwear-men-boxers",
 								"title": "Boxers"
 							},
 							{
 								"images": [
-									"category-man.png"
+									"category_man.png"
 								],
 								"key": "underwear-men-socks",
 								"title": "Socks"
 							},
 							{
 								"images": [
-									"category-man.png"
+									"category_man.png"
 								],
 								"key": "underwear-men-nightwear",
 								"title": "Nightwear & Loungewear"
 							},
 							{
 								"images": [
-									"category-man.png"
+									"category_man.png"
 								],
 								"key": "underwear-men-multipacks",
 								"title": "Multipacks"
 							}
 						],
 						"images": [
-							"category-man.png"
+							"category_man.png"
 						],
 						"key": "underwear-men",
 						"title": "Men"
@@ -373,21 +373,21 @@
 						"categories": [
 							{
 								"images": [
-									"category-promo.png"
+									"category_promo.png"
 								],
 								"key": "underwear-girls-underwear",
 								"title": "Underwear"
 							},
 							{
 								"images": [
-									"category-promo.png"
+									"category_promo.png"
 								],
 								"key": "underwear-girls-pyjamas",
 								"title": "Pyjamas"
 							}
 						],
 						"images": [
-							"category-promo.png"
+							"category_promo.png"
 						],
 						"key": "underwear-girls",
 						"title": "Girls"
@@ -396,28 +396,28 @@
 						"categories": [
 							{
 								"images": [
-									"category-promo.png"
+									"category_promo.png"
 								],
 								"key": "underwear-boys-underwear",
 								"title": "Underwear"
 							},
 							{
 								"images": [
-									"category-promo.png"
+									"category_promo.png"
 								],
 								"key": "underwear-boys-pyjamas",
 								"title": "Pyjamas"
 							}
 						],
 						"images": [
-							"category-promo.png"
+							"category_promo.png"
 						],
 						"key": "underwear-boys",
 						"title": "Boys"
 					}
 				],
 				"images": [
-					"category-promo.png"
+					"category_promo.png"
 				],
 				"key": "underwear",
 				"title": "Underwear"
@@ -428,28 +428,28 @@
 						"categories": [
 							{
 								"images": [
-									"category-whatsnews.png"
+									"category_whatsnews.png"
 								],
 								"key": "sale-women-clothes",
 								"title": "Clothes"
 							},
 							{
 								"images": [
-									"category-whatsnews.png"
+									"category_whatsnews.png"
 								],
 								"key": "sale-women-accessories",
 								"title": "Shoes & Accessories"
 							},
 							{
 								"images": [
-									"category-whatsnews.png"
+									"category_whatsnews.png"
 								],
 								"key": "sale-women-underwear",
 								"title": "Underwear"
 							}
 						],
 						"images": [
-							"category-whatsnews.png"
+							"category_whatsnews.png"
 						],
 						"key": "sale-women",
 						"title": "Women"
@@ -458,35 +458,35 @@
 						"categories": [
 							{
 								"images": [
-									"category-man.png"
+									"category_man.png"
 								],
 								"key": "sale-men-clothes",
 								"title": "Clothes"
 							},
 							{
 								"images": [
-									"category-man.png"
+									"category_man.png"
 								],
 								"key": "sale-men-accessories",
 								"title": "Shoes & Accessories"
 							},
 							{
 								"images": [
-									"category-man.png"
+									"category_man.png"
 								],
 								"key": "sale-men-underwear",
 								"title": "Underwear"
 							}
 						],
 						"images": [
-							"category-man.png"
+							"category_man.png"
 						],
 						"key": "sale-men",
 						"title": "Men"
 					}
 				],
 				"images": [
-					"category-whatsnews.png"
+					"category_whatsnews.png"
 				],
 				"key": "sale",
 				"title": "Sale"
@@ -498,7 +498,7 @@
 		"categories": [
 			{
 				"images": [
-					"category-loewe.png"
+					"category_loewe.png"
 				],
 				"key": "loewe",
 				"title": "LOEWE"

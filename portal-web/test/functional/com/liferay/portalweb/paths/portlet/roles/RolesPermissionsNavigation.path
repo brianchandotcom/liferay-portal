@@ -9,7 +9,7 @@
 </thead>
 <tbody>
 <tr>
-	<td>DROPDOWN_ANY</td>
+	<td>PERMISSIONS_NAVITEM</td>
 	<td>//div[contains(@class,'permission-navigation-section')]//span[contains(.,'${key_navItem}')]</td>
 	<td></td>
 </tr>

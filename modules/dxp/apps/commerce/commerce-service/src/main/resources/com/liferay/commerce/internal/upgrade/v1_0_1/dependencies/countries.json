@@ -1,0 +1,1986 @@
+[
+	{
+		"commerceCountryId": 1,
+		"name": "canada",
+		"numericISOCode": 124,
+		"priority": 1,
+		"threeLettersISOCode": "CAN",
+		"twoLettersISOCode": "CA"
+	},
+	{
+		"commerceCountryId": 2,
+		"name": "china",
+		"numericISOCode": 156,
+		"priority": 2,
+		"threeLettersISOCode": "CHN",
+		"twoLettersISOCode": "CN"
+	},
+	{
+		"commerceCountryId": 3,
+		"name": "france",
+		"numericISOCode": 250,
+		"priority": 3,
+		"threeLettersISOCode": "FRA",
+		"twoLettersISOCode": "FR"
+	},
+	{
+		"commerceCountryId": 4,
+		"name": "germany",
+		"numericISOCode": 276,
+		"priority": 4,
+		"threeLettersISOCode": "DEU",
+		"twoLettersISOCode": "DE"
+	},
+	{
+		"commerceCountryId": 6,
+		"name": "hungary",
+		"numericISOCode": 348,
+		"priority": 6,
+		"threeLettersISOCode": "HUN",
+		"twoLettersISOCode": "HU"
+	},
+	{
+		"commerceCountryId": 7,
+		"name": "israel",
+		"numericISOCode": 376,
+		"priority": 7,
+		"threeLettersISOCode": "ISR",
+		"twoLettersISOCode": "IL"
+	},
+	{
+		"commerceCountryId": 8,
+		"name": "italy",
+		"numericISOCode": 380,
+		"priority": 8,
+		"threeLettersISOCode": "ITA",
+		"twoLettersISOCode": "IT"
+	},
+	{
+		"commerceCountryId": 9,
+		"name": "japan",
+		"numericISOCode": 392,
+		"priority": 9,
+		"threeLettersISOCode": "JPN",
+		"twoLettersISOCode": "JP"
+	},
+	{
+		"commerceCountryId": 10,
+		"name": "south-korea",
+		"numericISOCode": 410,
+		"priority": 10,
+		"threeLettersISOCode": "KOR",
+		"twoLettersISOCode": "KR"
+	},
+	{
+		"commerceCountryId": 11,
+		"name": "netherlands",
+		"numericISOCode": 528,
+		"priority": 11,
+		"threeLettersISOCode": "NLD",
+		"twoLettersISOCode": "NL"
+	},
+	{
+		"commerceCountryId": 12,
+		"name": "portugal",
+		"numericISOCode": 620,
+		"priority": 12,
+		"threeLettersISOCode": "PRT",
+		"twoLettersISOCode": "PT"
+	},
+	{
+		"commerceCountryId": 13,
+		"name": "russia",
+		"numericISOCode": 643,
+		"priority": 13,
+		"threeLettersISOCode": "RUS",
+		"twoLettersISOCode": "RU"
+	},
+	{
+		"commerceCountryId": 14,
+		"name": "singapore",
+		"numericISOCode": 702,
+		"priority": 14,
+		"threeLettersISOCode": "SGP",
+		"twoLettersISOCode": "SG"
+	},
+	{
+		"commerceCountryId": 15,
+		"name": "spain",
+		"numericISOCode": 724,
+		"priority": 15,
+		"threeLettersISOCode": "ESP",
+		"twoLettersISOCode": "ES"
+	},
+	{
+		"commerceCountryId": 16,
+		"name": "turkey",
+		"numericISOCode": 792,
+		"priority": 16,
+		"threeLettersISOCode": "TUR",
+		"twoLettersISOCode": "TR"
+	},
+	{
+		"commerceCountryId": 17,
+		"name": "vietnam",
+		"numericISOCode": 704,
+		"priority": 17,
+		"threeLettersISOCode": "VNM",
+		"twoLettersISOCode": "VN"
+	},
+	{
+		"commerceCountryId": 18,
+		"name": "united-kingdom",
+		"numericISOCode": 826,
+		"priority": 18,
+		"threeLettersISOCode": "GBR",
+		"twoLettersISOCode": "GB"
+	},
+	{
+		"commerceCountryId": 19,
+		"name": "united-states",
+		"numericISOCode": 840,
+		"priority": 19,
+		"threeLettersISOCode": "USA",
+		"twoLettersISOCode": "US"
+	},
+	{
+		"commerceCountryId": 20,
+		"name": "afghanistan",
+		"numericISOCode": 4,
+		"priority": 20,
+		"threeLettersISOCode": "AFG",
+		"twoLettersISOCode": "AF"
+	},
+	{
+		"commerceCountryId": 21,
+		"name": "albania",
+		"numericISOCode": 8,
+		"priority": 21,
+		"threeLettersISOCode": "ALB",
+		"twoLettersISOCode": "AL"
+	},
+	{
+		"commerceCountryId": 22,
+		"name": "algeria",
+		"numericISOCode": 12,
+		"priority": 22,
+		"threeLettersISOCode": "DZA",
+		"twoLettersISOCode": "DZ"
+	},
+	{
+		"commerceCountryId": 23,
+		"name": "american-samoa",
+		"numericISOCode": 16,
+		"priority": 23,
+		"threeLettersISOCode": "ASM",
+		"twoLettersISOCode": "AS"
+	},
+	{
+		"commerceCountryId": 24,
+		"name": "andorra",
+		"numericISOCode": 20,
+		"priority": 24,
+		"threeLettersISOCode": "AND",
+		"twoLettersISOCode": "AD"
+	},
+	{
+		"commerceCountryId": 25,
+		"name": "angola",
+		"numericISOCode": 24,
+		"priority": 25,
+		"threeLettersISOCode": "AGO",
+		"twoLettersISOCode": "AO"
+	},
+	{
+		"commerceCountryId": 26,
+		"name": "anguilla",
+		"numericISOCode": 660,
+		"priority": 26,
+		"threeLettersISOCode": "AIA",
+		"twoLettersISOCode": "AI"
+	},
+	{
+		"commerceCountryId": 27,
+		"name": "antarctica",
+		"numericISOCode": 10,
+		"priority": 27,
+		"threeLettersISOCode": "ATA",
+		"twoLettersISOCode": "AQ"
+	},
+	{
+		"commerceCountryId": 28,
+		"name": "antigua-barbuda",
+		"numericISOCode": 28,
+		"priority": 28,
+		"threeLettersISOCode": "ATG",
+		"twoLettersISOCode": "AG"
+	},
+	{
+		"commerceCountryId": 29,
+		"name": "argentina",
+		"numericISOCode": 32,
+		"priority": 29,
+		"threeLettersISOCode": "ARG",
+		"twoLettersISOCode": "AR"
+	},
+	{
+		"commerceCountryId": 30,
+		"name": "armenia",
+		"numericISOCode": 51,
+		"priority": 30,
+		"threeLettersISOCode": "ARM",
+		"twoLettersISOCode": "AM"
+	},
+	{
+		"commerceCountryId": 31,
+		"name": "aruba",
+		"numericISOCode": 533,
+		"priority": 31,
+		"threeLettersISOCode": "ABW",
+		"twoLettersISOCode": "AW"
+	},
+	{
+		"commerceCountryId": 32,
+		"name": "australia",
+		"numericISOCode": 36,
+		"priority": 32,
+		"threeLettersISOCode": "AUS",
+		"twoLettersISOCode": "AU"
+	},
+	{
+		"commerceCountryId": 33,
+		"name": "austria",
+		"numericISOCode": 40,
+		"priority": 33,
+		"threeLettersISOCode": "AUT",
+		"twoLettersISOCode": "AT"
+	},
+	{
+		"commerceCountryId": 34,
+		"name": "azerbaijan",
+		"numericISOCode": 31,
+		"priority": 34,
+		"threeLettersISOCode": "AZE",
+		"twoLettersISOCode": "AZ"
+	},
+	{
+		"commerceCountryId": 35,
+		"name": "bahamas",
+		"numericISOCode": 44,
+		"priority": 35,
+		"threeLettersISOCode": "BHS",
+		"twoLettersISOCode": "BS"
+	},
+	{
+		"commerceCountryId": 36,
+		"name": "bahrain",
+		"numericISOCode": 48,
+		"priority": 36,
+		"threeLettersISOCode": "BHR",
+		"twoLettersISOCode": "BH"
+	},
+	{
+		"commerceCountryId": 37,
+		"name": "bangladesh",
+		"numericISOCode": 50,
+		"priority": 37,
+		"threeLettersISOCode": "BGD",
+		"twoLettersISOCode": "BD"
+	},
+	{
+		"commerceCountryId": 38,
+		"name": "barbados",
+		"numericISOCode": 52,
+		"priority": 38,
+		"threeLettersISOCode": "BRB",
+		"twoLettersISOCode": "BB"
+	},
+	{
+		"commerceCountryId": 39,
+		"name": "belarus",
+		"numericISOCode": 112,
+		"priority": 39,
+		"threeLettersISOCode": "BLR",
+		"twoLettersISOCode": "BY"
+	},
+	{
+		"commerceCountryId": 40,
+		"name": "belgium",
+		"numericISOCode": 56,
+		"priority": 40,
+		"threeLettersISOCode": "BEL",
+		"twoLettersISOCode": "BE"
+	},
+	{
+		"commerceCountryId": 41,
+		"name": "belize",
+		"numericISOCode": 84,
+		"priority": 41,
+		"threeLettersISOCode": "BLZ",
+		"twoLettersISOCode": "BZ"
+	},
+	{
+		"commerceCountryId": 42,
+		"name": "benin",
+		"numericISOCode": 204,
+		"priority": 42,
+		"threeLettersISOCode": "BEN",
+		"twoLettersISOCode": "BJ"
+	},
+	{
+		"commerceCountryId": 43,
+		"name": "bermuda",
+		"numericISOCode": 60,
+		"priority": 43,
+		"threeLettersISOCode": "BMU",
+		"twoLettersISOCode": "BM"
+	},
+	{
+		"commerceCountryId": 44,
+		"name": "bhutan",
+		"numericISOCode": 64,
+		"priority": 44,
+		"threeLettersISOCode": "BTN",
+		"twoLettersISOCode": "BT"
+	},
+	{
+		"commerceCountryId": 45,
+		"name": "bolivia",
+		"numericISOCode": 68,
+		"priority": 45,
+		"threeLettersISOCode": "BOL",
+		"twoLettersISOCode": "BO"
+	},
+	{
+		"commerceCountryId": 46,
+		"name": "bosnia-herzegovina",
+		"numericISOCode": 70,
+		"priority": 46,
+		"threeLettersISOCode": "BIH",
+		"twoLettersISOCode": "BA"
+	},
+	{
+		"commerceCountryId": 47,
+		"name": "botswana",
+		"numericISOCode": 72,
+		"priority": 47,
+		"threeLettersISOCode": "BWA",
+		"twoLettersISOCode": "BW"
+	},
+	{
+		"commerceCountryId": 48,
+		"name": "brazil",
+		"numericISOCode": 76,
+		"priority": 48,
+		"threeLettersISOCode": "BRA",
+		"twoLettersISOCode": "BR"
+	},
+	{
+		"commerceCountryId": 49,
+		"name": "british-virgin-islands",
+		"numericISOCode": 92,
+		"priority": 49,
+		"threeLettersISOCode": "VGB",
+		"twoLettersISOCode": "VG"
+	},
+	{
+		"commerceCountryId": 50,
+		"name": "brunei",
+		"numericISOCode": 96,
+		"priority": 50,
+		"threeLettersISOCode": "BRN",
+		"twoLettersISOCode": "BN"
+	},
+	{
+		"commerceCountryId": 51,
+		"name": "bulgaria",
+		"numericISOCode": 100,
+		"priority": 51,
+		"threeLettersISOCode": "BGR",
+		"twoLettersISOCode": "BG"
+	},
+	{
+		"commerceCountryId": 52,
+		"name": "burkina-faso",
+		"numericISOCode": 854,
+		"priority": 52,
+		"threeLettersISOCode": "BFA",
+		"twoLettersISOCode": "BF"
+	},
+	{
+		"commerceCountryId": 53,
+		"name": "burma-myanmar",
+		"numericISOCode": 104,
+		"priority": 53,
+		"threeLettersISOCode": "MMR",
+		"twoLettersISOCode": "MM"
+	},
+	{
+		"commerceCountryId": 54,
+		"name": "burundi",
+		"numericISOCode": 108,
+		"priority": 54,
+		"threeLettersISOCode": "BDI",
+		"twoLettersISOCode": "BI"
+	},
+	{
+		"commerceCountryId": 55,
+		"name": "cambodia",
+		"numericISOCode": 116,
+		"priority": 55,
+		"threeLettersISOCode": "KHM",
+		"twoLettersISOCode": "KH"
+	},
+	{
+		"commerceCountryId": 56,
+		"name": "cameroon",
+		"numericISOCode": 120,
+		"priority": 56,
+		"threeLettersISOCode": "CMR",
+		"twoLettersISOCode": "CM"
+	},
+	{
+		"commerceCountryId": 57,
+		"name": "cape-verde-island",
+		"numericISOCode": 132,
+		"priority": 57,
+		"threeLettersISOCode": "CPV",
+		"twoLettersISOCode": "CV"
+	},
+	{
+		"commerceCountryId": 58,
+		"name": "cayman-islands",
+		"numericISOCode": 136,
+		"priority": 58,
+		"threeLettersISOCode": "CYM",
+		"twoLettersISOCode": "KY"
+	},
+	{
+		"commerceCountryId": 59,
+		"name": "central-african-republic",
+		"numericISOCode": 140,
+		"priority": 59,
+		"threeLettersISOCode": "CAF",
+		"twoLettersISOCode": "CF"
+	},
+	{
+		"commerceCountryId": 60,
+		"name": "chad",
+		"numericISOCode": 148,
+		"priority": 60,
+		"threeLettersISOCode": "TCD",
+		"twoLettersISOCode": "TD"
+	},
+	{
+		"commerceCountryId": 61,
+		"name": "chile",
+		"numericISOCode": 152,
+		"priority": 61,
+		"threeLettersISOCode": "CHL",
+		"twoLettersISOCode": "CL"
+	},
+	{
+		"commerceCountryId": 62,
+		"name": "christmas-island",
+		"numericISOCode": 162,
+		"priority": 62,
+		"threeLettersISOCode": "CXR",
+		"twoLettersISOCode": "CX"
+	},
+	{
+		"commerceCountryId": 63,
+		"name": "cocos-islands",
+		"numericISOCode": 166,
+		"priority": 63,
+		"threeLettersISOCode": "CCK",
+		"twoLettersISOCode": "CC"
+	},
+	{
+		"commerceCountryId": 64,
+		"name": "colombia",
+		"numericISOCode": 170,
+		"priority": 64,
+		"threeLettersISOCode": "COL",
+		"twoLettersISOCode": "CO"
+	},
+	{
+		"commerceCountryId": 65,
+		"name": "comoros",
+		"numericISOCode": 174,
+		"priority": 65,
+		"threeLettersISOCode": "COM",
+		"twoLettersISOCode": "KM"
+	},
+	{
+		"commerceCountryId": 66,
+		"name": "republic-of-congo",
+		"numericISOCode": 180,
+		"priority": 66,
+		"threeLettersISOCode": "COD",
+		"twoLettersISOCode": "CD"
+	},
+	{
+		"commerceCountryId": 67,
+		"name": "democratic-republic-of-congo",
+		"numericISOCode": 178,
+		"priority": 67,
+		"threeLettersISOCode": "COG",
+		"twoLettersISOCode": "CG"
+	},
+	{
+		"commerceCountryId": 68,
+		"name": "cook-islands",
+		"numericISOCode": 184,
+		"priority": 68,
+		"threeLettersISOCode": "COK",
+		"twoLettersISOCode": "CK"
+	},
+	{
+		"commerceCountryId": 69,
+		"name": "costa-rica",
+		"numericISOCode": 188,
+		"priority": 69,
+		"threeLettersISOCode": "CRI",
+		"twoLettersISOCode": "CR"
+	},
+	{
+		"commerceCountryId": 70,
+		"name": "croatia",
+		"numericISOCode": 191,
+		"priority": 70,
+		"threeLettersISOCode": "HRV",
+		"twoLettersISOCode": "HR"
+	},
+	{
+		"commerceCountryId": 71,
+		"name": "cuba",
+		"numericISOCode": 192,
+		"priority": 71,
+		"threeLettersISOCode": "CUB",
+		"twoLettersISOCode": "CU"
+	},
+	{
+		"commerceCountryId": 72,
+		"name": "cyprus",
+		"numericISOCode": 196,
+		"priority": 72,
+		"threeLettersISOCode": "CYP",
+		"twoLettersISOCode": "CY"
+	},
+	{
+		"commerceCountryId": 73,
+		"name": "czech-republic",
+		"numericISOCode": 203,
+		"priority": 73,
+		"threeLettersISOCode": "CZE",
+		"twoLettersISOCode": "CZ"
+	},
+	{
+		"commerceCountryId": 74,
+		"name": "denmark",
+		"numericISOCode": 208,
+		"priority": 74,
+		"threeLettersISOCode": "DNK",
+		"twoLettersISOCode": "DK"
+	},
+	{
+		"commerceCountryId": 75,
+		"name": "djibouti",
+		"numericISOCode": 262,
+		"priority": 75,
+		"threeLettersISOCode": "DJI",
+		"twoLettersISOCode": "DJ"
+	},
+	{
+		"commerceCountryId": 76,
+		"name": "dominica",
+		"numericISOCode": 212,
+		"priority": 76,
+		"threeLettersISOCode": "DMA",
+		"twoLettersISOCode": "DM"
+	},
+	{
+		"commerceCountryId": 77,
+		"name": "dominican-republic",
+		"numericISOCode": 214,
+		"priority": 77,
+		"threeLettersISOCode": "DOM",
+		"twoLettersISOCode": "DO"
+	},
+	{
+		"commerceCountryId": 78,
+		"name": "ecuador",
+		"numericISOCode": 218,
+		"priority": 78,
+		"threeLettersISOCode": "ECU",
+		"twoLettersISOCode": "EC"
+	},
+	{
+		"commerceCountryId": 79,
+		"name": "egypt",
+		"numericISOCode": 818,
+		"priority": 79,
+		"threeLettersISOCode": "EGY",
+		"twoLettersISOCode": "EG"
+	},
+	{
+		"commerceCountryId": 80,
+		"name": "el-salvador",
+		"numericISOCode": 222,
+		"priority": 80,
+		"threeLettersISOCode": "SLV",
+		"twoLettersISOCode": "SV"
+	},
+	{
+		"commerceCountryId": 81,
+		"name": "equatorial-guinea",
+		"numericISOCode": 226,
+		"priority": 81,
+		"threeLettersISOCode": "GNQ",
+		"twoLettersISOCode": "GQ"
+	},
+	{
+		"commerceCountryId": 82,
+		"name": "eritrea",
+		"numericISOCode": 232,
+		"priority": 82,
+		"threeLettersISOCode": "ERI",
+		"twoLettersISOCode": "ER"
+	},
+	{
+		"commerceCountryId": 83,
+		"name": "estonia",
+		"numericISOCode": 233,
+		"priority": 83,
+		"threeLettersISOCode": "EST",
+		"twoLettersISOCode": "EE"
+	},
+	{
+		"commerceCountryId": 84,
+		"name": "ethiopia",
+		"numericISOCode": 231,
+		"priority": 84,
+		"threeLettersISOCode": "ETH",
+		"twoLettersISOCode": "ET"
+	},
+	{
+		"commerceCountryId": 85,
+		"name": "faeroe-islands",
+		"numericISOCode": 234,
+		"priority": 85,
+		"threeLettersISOCode": "FRO",
+		"twoLettersISOCode": "FO"
+	},
+	{
+		"commerceCountryId": 86,
+		"name": "falkland-islands",
+		"numericISOCode": 238,
+		"priority": 86,
+		"threeLettersISOCode": "FLK",
+		"twoLettersISOCode": "FK"
+	},
+	{
+		"commerceCountryId": 87,
+		"name": "fiji-islands",
+		"numericISOCode": 242,
+		"priority": 87,
+		"threeLettersISOCode": "FJI",
+		"twoLettersISOCode": "FJ"
+	},
+	{
+		"commerceCountryId": 88,
+		"name": "finland",
+		"numericISOCode": 246,
+		"priority": 88,
+		"threeLettersISOCode": "FIN",
+		"twoLettersISOCode": "FI"
+	},
+	{
+		"commerceCountryId": 89,
+		"name": "french-guiana",
+		"numericISOCode": 254,
+		"priority": 89,
+		"threeLettersISOCode": "GUF",
+		"twoLettersISOCode": "GF"
+	},
+	{
+		"commerceCountryId": 90,
+		"name": "french-polynesia",
+		"numericISOCode": 258,
+		"priority": 90,
+		"threeLettersISOCode": "PYF",
+		"twoLettersISOCode": "PF"
+	},
+	{
+		"commerceCountryId": 91,
+		"name": "gabon",
+		"numericISOCode": 266,
+		"priority": 91,
+		"threeLettersISOCode": "GAB",
+		"twoLettersISOCode": "GA"
+	},
+	{
+		"commerceCountryId": 92,
+		"name": "gambia",
+		"numericISOCode": 270,
+		"priority": 92,
+		"threeLettersISOCode": "GMB",
+		"twoLettersISOCode": "GM"
+	},
+	{
+		"commerceCountryId": 93,
+		"name": "georgia",
+		"numericISOCode": 268,
+		"priority": 93,
+		"threeLettersISOCode": "GEO",
+		"twoLettersISOCode": "GE"
+	},
+	{
+		"commerceCountryId": 94,
+		"name": "ghana",
+		"numericISOCode": 288,
+		"priority": 94,
+		"threeLettersISOCode": "GHA",
+		"twoLettersISOCode": "GH"
+	},
+	{
+		"commerceCountryId": 95,
+		"name": "gibraltar",
+		"numericISOCode": 292,
+		"priority": 95,
+		"threeLettersISOCode": "GIB",
+		"twoLettersISOCode": "GI"
+	},
+	{
+		"commerceCountryId": 96,
+		"name": "greece",
+		"numericISOCode": 300,
+		"priority": 96,
+		"threeLettersISOCode": "GRC",
+		"twoLettersISOCode": "GR"
+	},
+	{
+		"commerceCountryId": 97,
+		"name": "greenland",
+		"numericISOCode": 304,
+		"priority": 97,
+		"threeLettersISOCode": "GRL",
+		"twoLettersISOCode": "GL"
+	},
+	{
+		"commerceCountryId": 98,
+		"name": "grenada",
+		"numericISOCode": 308,
+		"priority": 98,
+		"threeLettersISOCode": "GRD",
+		"twoLettersISOCode": "GD"
+	},
+	{
+		"commerceCountryId": 99,
+		"name": "guadeloupe",
+		"numericISOCode": 312,
+		"priority": 99,
+		"threeLettersISOCode": "GLP",
+		"twoLettersISOCode": "GP"
+	},
+	{
+		"commerceCountryId": 100,
+		"name": "guam",
+		"numericISOCode": 316,
+		"priority": 100,
+		"threeLettersISOCode": "GUM",
+		"twoLettersISOCode": "GU"
+	},
+	{
+		"commerceCountryId": 101,
+		"name": "guatemala",
+		"numericISOCode": 320,
+		"priority": 101,
+		"threeLettersISOCode": "GTM",
+		"twoLettersISOCode": "GT"
+	},
+	{
+		"commerceCountryId": 102,
+		"name": "guinea",
+		"numericISOCode": 324,
+		"priority": 102,
+		"threeLettersISOCode": "GIN",
+		"twoLettersISOCode": "GN"
+	},
+	{
+		"commerceCountryId": 103,
+		"name": "guinea-bissau",
+		"numericISOCode": 624,
+		"priority": 103,
+		"threeLettersISOCode": "GNB",
+		"twoLettersISOCode": "GW"
+	},
+	{
+		"commerceCountryId": 104,
+		"name": "guyana",
+		"numericISOCode": 328,
+		"priority": 104,
+		"threeLettersISOCode": "GUY",
+		"twoLettersISOCode": "GY"
+	},
+	{
+		"commerceCountryId": 105,
+		"name": "haiti",
+		"numericISOCode": 332,
+		"priority": 105,
+		"threeLettersISOCode": "HTI",
+		"twoLettersISOCode": "HT"
+	},
+	{
+		"commerceCountryId": 106,
+		"name": "honduras",
+		"numericISOCode": 340,
+		"priority": 106,
+		"threeLettersISOCode": "HND",
+		"twoLettersISOCode": "HN"
+	},
+	{
+		"commerceCountryId": 107,
+		"name": "iceland",
+		"numericISOCode": 352,
+		"priority": 107,
+		"threeLettersISOCode": "ISL",
+		"twoLettersISOCode": "IS"
+	},
+	{
+		"commerceCountryId": 108,
+		"name": "india",
+		"numericISOCode": 356,
+		"priority": 108,
+		"threeLettersISOCode": "IND",
+		"twoLettersISOCode": "IN"
+	},
+	{
+		"commerceCountryId": 109,
+		"name": "indonesia",
+		"numericISOCode": 360,
+		"priority": 109,
+		"threeLettersISOCode": "IDN",
+		"twoLettersISOCode": "ID"
+	},
+	{
+		"commerceCountryId": 110,
+		"name": "iran",
+		"numericISOCode": 364,
+		"priority": 110,
+		"threeLettersISOCode": "IRN",
+		"twoLettersISOCode": "IR"
+	},
+	{
+		"commerceCountryId": 111,
+		"name": "iraq",
+		"numericISOCode": 368,
+		"priority": 111,
+		"threeLettersISOCode": "IRQ",
+		"twoLettersISOCode": "IQ"
+	},
+	{
+		"commerceCountryId": 112,
+		"name": "ireland",
+		"numericISOCode": 372,
+		"priority": 112,
+		"threeLettersISOCode": "IRL",
+		"twoLettersISOCode": "IE"
+	},
+	{
+		"commerceCountryId": 113,
+		"name": "ivory-coast",
+		"numericISOCode": 384,
+		"priority": 113,
+		"threeLettersISOCode": "CIV",
+		"twoLettersISOCode": "CI"
+	},
+	{
+		"commerceCountryId": 114,
+		"name": "jamaica",
+		"numericISOCode": 388,
+		"priority": 114,
+		"threeLettersISOCode": "JAM",
+		"twoLettersISOCode": "JM"
+	},
+	{
+		"commerceCountryId": 115,
+		"name": "jordan",
+		"numericISOCode": 400,
+		"priority": 115,
+		"threeLettersISOCode": "JOR",
+		"twoLettersISOCode": "JO"
+	},
+	{
+		"commerceCountryId": 116,
+		"name": "kazakhstan",
+		"numericISOCode": 398,
+		"priority": 116,
+		"threeLettersISOCode": "KAZ",
+		"twoLettersISOCode": "KZ"
+	},
+	{
+		"commerceCountryId": 117,
+		"name": "kenya",
+		"numericISOCode": 404,
+		"priority": 117,
+		"threeLettersISOCode": "KEN",
+		"twoLettersISOCode": "KE"
+	},
+	{
+		"commerceCountryId": 118,
+		"name": "kiribati",
+		"numericISOCode": 408,
+		"priority": 118,
+		"threeLettersISOCode": "KIR",
+		"twoLettersISOCode": "KI"
+	},
+	{
+		"commerceCountryId": 119,
+		"name": "kuwait",
+		"numericISOCode": 414,
+		"priority": 119,
+		"threeLettersISOCode": "KWT",
+		"twoLettersISOCode": "KW"
+	},
+	{
+		"commerceCountryId": 120,
+		"name": "north-korea",
+		"numericISOCode": 408,
+		"priority": 120,
+		"threeLettersISOCode": "PRK",
+		"twoLettersISOCode": "KP"
+	},
+	{
+		"commerceCountryId": 121,
+		"name": "kyrgyzstan",
+		"numericISOCode": 471,
+		"priority": 121,
+		"threeLettersISOCode": "KGZ",
+		"twoLettersISOCode": "KG"
+	},
+	{
+		"commerceCountryId": 122,
+		"name": "laos",
+		"numericISOCode": 418,
+		"priority": 122,
+		"threeLettersISOCode": "LAO",
+		"twoLettersISOCode": "LA"
+	},
+	{
+		"commerceCountryId": 123,
+		"name": "latvia",
+		"numericISOCode": 428,
+		"priority": 123,
+		"threeLettersISOCode": "LVA",
+		"twoLettersISOCode": "LV"
+	},
+	{
+		"commerceCountryId": 124,
+		"name": "lebanon",
+		"numericISOCode": 422,
+		"priority": 124,
+		"threeLettersISOCode": "LBN",
+		"twoLettersISOCode": "LB"
+	},
+	{
+		"commerceCountryId": 125,
+		"name": "lesotho",
+		"numericISOCode": 426,
+		"priority": 125,
+		"threeLettersISOCode": "LSO",
+		"twoLettersISOCode": "LS"
+	},
+	{
+		"commerceCountryId": 126,
+		"name": "liberia",
+		"numericISOCode": 430,
+		"priority": 126,
+		"threeLettersISOCode": "LBR",
+		"twoLettersISOCode": "LR"
+	},
+	{
+		"commerceCountryId": 127,
+		"name": "libya",
+		"numericISOCode": 434,
+		"priority": 127,
+		"threeLettersISOCode": "LBY",
+		"twoLettersISOCode": "LY"
+	},
+	{
+		"commerceCountryId": 128,
+		"name": "liechtenstein",
+		"numericISOCode": 438,
+		"priority": 128,
+		"threeLettersISOCode": "LIE",
+		"twoLettersISOCode": "LI"
+	},
+	{
+		"commerceCountryId": 129,
+		"name": "lithuania",
+		"numericISOCode": 440,
+		"priority": 129,
+		"threeLettersISOCode": "LTU",
+		"twoLettersISOCode": "LT"
+	},
+	{
+		"commerceCountryId": 130,
+		"name": "luxembourg",
+		"numericISOCode": 442,
+		"priority": 130,
+		"threeLettersISOCode": "LUX",
+		"twoLettersISOCode": "LU"
+	},
+	{
+		"commerceCountryId": 131,
+		"name": "macau",
+		"numericISOCode": 446,
+		"priority": 131,
+		"threeLettersISOCode": "MAC",
+		"twoLettersISOCode": "MO"
+	},
+	{
+		"commerceCountryId": 132,
+		"name": "macedonia",
+		"numericISOCode": 807,
+		"priority": 132,
+		"threeLettersISOCode": "MKD",
+		"twoLettersISOCode": "MK"
+	},
+	{
+		"commerceCountryId": 133,
+		"name": "madagascar",
+		"numericISOCode": 450,
+		"priority": 133,
+		"threeLettersISOCode": "MDG",
+		"twoLettersISOCode": "MG"
+	},
+	{
+		"commerceCountryId": 134,
+		"name": "malawi",
+		"numericISOCode": 454,
+		"priority": 134,
+		"threeLettersISOCode": "MWI",
+		"twoLettersISOCode": "MW"
+	},
+	{
+		"commerceCountryId": 135,
+		"name": "malaysia",
+		"numericISOCode": 458,
+		"priority": 135,
+		"threeLettersISOCode": "MYS",
+		"twoLettersISOCode": "MY"
+	},
+	{
+		"commerceCountryId": 136,
+		"name": "maldives",
+		"numericISOCode": 462,
+		"priority": 136,
+		"threeLettersISOCode": "MDV",
+		"twoLettersISOCode": "MV"
+	},
+	{
+		"commerceCountryId": 137,
+		"name": "mali",
+		"numericISOCode": 466,
+		"priority": 137,
+		"threeLettersISOCode": "MLI",
+		"twoLettersISOCode": "ML"
+	},
+	{
+		"commerceCountryId": 138,
+		"name": "malta",
+		"numericISOCode": 470,
+		"priority": 138,
+		"threeLettersISOCode": "MLT",
+		"twoLettersISOCode": "MT"
+	},
+	{
+		"commerceCountryId": 139,
+		"name": "marshall-islands",
+		"numericISOCode": 584,
+		"priority": 139,
+		"threeLettersISOCode": "MHL",
+		"twoLettersISOCode": "MH"
+	},
+	{
+		"commerceCountryId": 140,
+		"name": "martinique",
+		"numericISOCode": 474,
+		"priority": 140,
+		"threeLettersISOCode": "MTQ",
+		"twoLettersISOCode": "MQ"
+	},
+	{
+		"commerceCountryId": 141,
+		"name": "mauritania",
+		"numericISOCode": 478,
+		"priority": 141,
+		"threeLettersISOCode": "MRT",
+		"twoLettersISOCode": "MR"
+	},
+	{
+		"commerceCountryId": 142,
+		"name": "mauritius",
+		"numericISOCode": 480,
+		"priority": 142,
+		"threeLettersISOCode": "MUS",
+		"twoLettersISOCode": "MU"
+	},
+	{
+		"commerceCountryId": 143,
+		"name": "mayotte-island",
+		"numericISOCode": 175,
+		"priority": 143,
+		"threeLettersISOCode": "MYT",
+		"twoLettersISOCode": "YT"
+	},
+	{
+		"commerceCountryId": 144,
+		"name": "mexico",
+		"numericISOCode": 484,
+		"priority": 144,
+		"threeLettersISOCode": "MEX",
+		"twoLettersISOCode": "MX"
+	},
+	{
+		"commerceCountryId": 145,
+		"name": "micronesia",
+		"numericISOCode": 583,
+		"priority": 145,
+		"threeLettersISOCode": "FSM",
+		"twoLettersISOCode": "FM"
+	},
+	{
+		"commerceCountryId": 146,
+		"name": "moldova",
+		"numericISOCode": 498,
+		"priority": 146,
+		"threeLettersISOCode": "MDA",
+		"twoLettersISOCode": "MD"
+	},
+	{
+		"commerceCountryId": 147,
+		"name": "monaco",
+		"numericISOCode": 492,
+		"priority": 147,
+		"threeLettersISOCode": "MCO",
+		"twoLettersISOCode": "MC"
+	},
+	{
+		"commerceCountryId": 148,
+		"name": "mongolia",
+		"numericISOCode": 496,
+		"priority": 148,
+		"threeLettersISOCode": "MNG",
+		"twoLettersISOCode": "MN"
+	},
+	{
+		"commerceCountryId": 149,
+		"name": "montenegro",
+		"numericISOCode": 499,
+		"priority": 149,
+		"threeLettersISOCode": "MNE",
+		"twoLettersISOCode": "ME"
+	},
+	{
+		"commerceCountryId": 150,
+		"name": "montserrat",
+		"numericISOCode": 500,
+		"priority": 150,
+		"threeLettersISOCode": "MSR",
+		"twoLettersISOCode": "MS"
+	},
+	{
+		"commerceCountryId": 151,
+		"name": "morocco",
+		"numericISOCode": 504,
+		"priority": 151,
+		"threeLettersISOCode": "MAR",
+		"twoLettersISOCode": "MA"
+	},
+	{
+		"commerceCountryId": 152,
+		"name": "mozambique",
+		"numericISOCode": 508,
+		"priority": 152,
+		"threeLettersISOCode": "MOZ",
+		"twoLettersISOCode": "MZ"
+	},
+	{
+		"commerceCountryId": 153,
+		"name": "namibia",
+		"numericISOCode": 516,
+		"priority": 153,
+		"threeLettersISOCode": "NAM",
+		"twoLettersISOCode": "NA"
+	},
+	{
+		"commerceCountryId": 154,
+		"name": "nauru",
+		"numericISOCode": 520,
+		"priority": 154,
+		"threeLettersISOCode": "NRU",
+		"twoLettersISOCode": "NR"
+	},
+	{
+		"commerceCountryId": 155,
+		"name": "nepal",
+		"numericISOCode": 524,
+		"priority": 155,
+		"threeLettersISOCode": "NPL",
+		"twoLettersISOCode": "NP"
+	},
+	{
+		"commerceCountryId": 156,
+		"name": "netherlands-antilles",
+		"numericISOCode": 530,
+		"priority": 156,
+		"threeLettersISOCode": "ANT",
+		"twoLettersISOCode": "AN"
+	},
+	{
+		"commerceCountryId": 157,
+		"name": "new-caledonia",
+		"numericISOCode": 540,
+		"priority": 157,
+		"threeLettersISOCode": "NCL",
+		"twoLettersISOCode": "NC"
+	},
+	{
+		"commerceCountryId": 158,
+		"name": "new-zealand",
+		"numericISOCode": 554,
+		"priority": 158,
+		"threeLettersISOCode": "NZL",
+		"twoLettersISOCode": "NZ"
+	},
+	{
+		"commerceCountryId": 159,
+		"name": "nicaragua",
+		"numericISOCode": 558,
+		"priority": 159,
+		"threeLettersISOCode": "NIC",
+		"twoLettersISOCode": "NI"
+	},
+	{
+		"commerceCountryId": 160,
+		"name": "niger",
+		"numericISOCode": 562,
+		"priority": 160,
+		"threeLettersISOCode": "NER",
+		"twoLettersISOCode": "NE"
+	},
+	{
+		"commerceCountryId": 161,
+		"name": "nigeria",
+		"numericISOCode": 566,
+		"priority": 161,
+		"threeLettersISOCode": "NGA",
+		"twoLettersISOCode": "NG"
+	},
+	{
+		"commerceCountryId": 162,
+		"name": "niue",
+		"numericISOCode": 570,
+		"priority": 162,
+		"threeLettersISOCode": "NIU",
+		"twoLettersISOCode": "NU"
+	},
+	{
+		"commerceCountryId": 163,
+		"name": "norfolk-island",
+		"numericISOCode": 574,
+		"priority": 163,
+		"threeLettersISOCode": "NFK",
+		"twoLettersISOCode": "NF"
+	},
+	{
+		"commerceCountryId": 164,
+		"name": "norway",
+		"numericISOCode": 578,
+		"priority": 164,
+		"threeLettersISOCode": "NOR",
+		"twoLettersISOCode": "NO"
+	},
+	{
+		"commerceCountryId": 165,
+		"name": "oman",
+		"numericISOCode": 512,
+		"priority": 165,
+		"threeLettersISOCode": "OMN",
+		"twoLettersISOCode": "OM"
+	},
+	{
+		"commerceCountryId": 166,
+		"name": "pakistan",
+		"numericISOCode": 586,
+		"priority": 166,
+		"threeLettersISOCode": "PAK",
+		"twoLettersISOCode": "PK"
+	},
+	{
+		"commerceCountryId": 167,
+		"name": "palau",
+		"numericISOCode": 585,
+		"priority": 167,
+		"threeLettersISOCode": "PLW",
+		"twoLettersISOCode": "PW"
+	},
+	{
+		"commerceCountryId": 168,
+		"name": "palestine",
+		"numericISOCode": 275,
+		"priority": 168,
+		"threeLettersISOCode": "PSE",
+		"twoLettersISOCode": "PS"
+	},
+	{
+		"commerceCountryId": 169,
+		"name": "panama",
+		"numericISOCode": 591,
+		"priority": 169,
+		"threeLettersISOCode": "PAN",
+		"twoLettersISOCode": "PA"
+	},
+	{
+		"commerceCountryId": 170,
+		"name": "papua-new-guinea",
+		"numericISOCode": 598,
+		"priority": 170,
+		"threeLettersISOCode": "PNG",
+		"twoLettersISOCode": "PG"
+	},
+	{
+		"commerceCountryId": 171,
+		"name": "paraguay",
+		"numericISOCode": 600,
+		"priority": 171,
+		"threeLettersISOCode": "PRY",
+		"twoLettersISOCode": "PY"
+	},
+	{
+		"commerceCountryId": 172,
+		"name": "peru",
+		"numericISOCode": 604,
+		"priority": 172,
+		"threeLettersISOCode": "PER",
+		"twoLettersISOCode": "PE"
+	},
+	{
+		"commerceCountryId": 173,
+		"name": "philippines",
+		"numericISOCode": 608,
+		"priority": 173,
+		"threeLettersISOCode": "PHL",
+		"twoLettersISOCode": "PH"
+	},
+	{
+		"commerceCountryId": 174,
+		"name": "poland",
+		"numericISOCode": 616,
+		"priority": 174,
+		"threeLettersISOCode": "POL",
+		"twoLettersISOCode": "PL"
+	},
+	{
+		"commerceCountryId": 175,
+		"name": "puerto-rico",
+		"numericISOCode": 630,
+		"priority": 175,
+		"threeLettersISOCode": "PRI",
+		"twoLettersISOCode": "PR"
+	},
+	{
+		"commerceCountryId": 176,
+		"name": "qatar",
+		"numericISOCode": 634,
+		"priority": 176,
+		"threeLettersISOCode": "QAT",
+		"twoLettersISOCode": "QA"
+	},
+	{
+		"commerceCountryId": 177,
+		"name": "reunion-island",
+		"numericISOCode": 638,
+		"priority": 177,
+		"threeLettersISOCode": "REU",
+		"twoLettersISOCode": "RE"
+	},
+	{
+		"commerceCountryId": 178,
+		"name": "romania",
+		"numericISOCode": 642,
+		"priority": 178,
+		"threeLettersISOCode": "ROU",
+		"twoLettersISOCode": "RO"
+	},
+	{
+		"commerceCountryId": 179,
+		"name": "rwanda",
+		"numericISOCode": 646,
+		"priority": 179,
+		"threeLettersISOCode": "RWA",
+		"twoLettersISOCode": "RW"
+	},
+	{
+		"commerceCountryId": 180,
+		"name": "st-helena",
+		"numericISOCode": 654,
+		"priority": 180,
+		"threeLettersISOCode": "SHN",
+		"twoLettersISOCode": "SH"
+	},
+	{
+		"commerceCountryId": 181,
+		"name": "st-kitts",
+		"numericISOCode": 659,
+		"priority": 181,
+		"threeLettersISOCode": "KNA",
+		"twoLettersISOCode": "KN"
+	},
+	{
+		"commerceCountryId": 182,
+		"name": "st-lucia",
+		"numericISOCode": 662,
+		"priority": 182,
+		"threeLettersISOCode": "LCA",
+		"twoLettersISOCode": "LC"
+	},
+	{
+		"commerceCountryId": 183,
+		"name": "st-pierre-miquelon",
+		"numericISOCode": 666,
+		"priority": 183,
+		"threeLettersISOCode": "SPM",
+		"twoLettersISOCode": "PM"
+	},
+	{
+		"commerceCountryId": 184,
+		"name": "st-vincent",
+		"numericISOCode": 670,
+		"priority": 184,
+		"threeLettersISOCode": "VCT",
+		"twoLettersISOCode": "VC"
+	},
+	{
+		"commerceCountryId": 185,
+		"name": "san-marino",
+		"numericISOCode": 674,
+		"priority": 185,
+		"threeLettersISOCode": "SMR",
+		"twoLettersISOCode": "SM"
+	},
+	{
+		"commerceCountryId": 186,
+		"name": "sao-tome-principe",
+		"numericISOCode": 678,
+		"priority": 186,
+		"threeLettersISOCode": "STP",
+		"twoLettersISOCode": "ST"
+	},
+	{
+		"commerceCountryId": 187,
+		"name": "saudi-arabia",
+		"numericISOCode": 682,
+		"priority": 187,
+		"threeLettersISOCode": "SAU",
+		"twoLettersISOCode": "SA"
+	},
+	{
+		"commerceCountryId": 188,
+		"name": "senegal",
+		"numericISOCode": 686,
+		"priority": 188,
+		"threeLettersISOCode": "SEN",
+		"twoLettersISOCode": "SN"
+	},
+	{
+		"commerceCountryId": 189,
+		"name": "serbia",
+		"numericISOCode": 688,
+		"priority": 189,
+		"threeLettersISOCode": "SRB",
+		"twoLettersISOCode": "RS"
+	},
+	{
+		"commerceCountryId": 190,
+		"name": "seychelles",
+		"numericISOCode": 690,
+		"priority": 190,
+		"threeLettersISOCode": "SYC",
+		"twoLettersISOCode": "SC"
+	},
+	{
+		"commerceCountryId": 191,
+		"name": "sierra-leone",
+		"numericISOCode": 694,
+		"priority": 191,
+		"threeLettersISOCode": "SLE",
+		"twoLettersISOCode": "SL"
+	},
+	{
+		"commerceCountryId": 192,
+		"name": "slovakia",
+		"numericISOCode": 703,
+		"priority": 192,
+		"threeLettersISOCode": "SVK",
+		"twoLettersISOCode": "SK"
+	},
+	{
+		"commerceCountryId": 193,
+		"name": "slovenia",
+		"numericISOCode": 705,
+		"priority": 193,
+		"threeLettersISOCode": "SVN",
+		"twoLettersISOCode": "SI"
+	},
+	{
+		"commerceCountryId": 194,
+		"name": "solomon-islands",
+		"numericISOCode": 90,
+		"priority": 194,
+		"threeLettersISOCode": "SLB",
+		"twoLettersISOCode": "SB"
+	},
+	{
+		"commerceCountryId": 195,
+		"name": "somalia",
+		"numericISOCode": 706,
+		"priority": 195,
+		"threeLettersISOCode": "SOM",
+		"twoLettersISOCode": "SO"
+	},
+	{
+		"commerceCountryId": 196,
+		"name": "south-africa",
+		"numericISOCode": 710,
+		"priority": 196,
+		"threeLettersISOCode": "ZAF",
+		"twoLettersISOCode": "ZA"
+	},
+	{
+		"commerceCountryId": 197,
+		"name": "sri-lanka",
+		"numericISOCode": 144,
+		"priority": 197,
+		"threeLettersISOCode": "LKA",
+		"twoLettersISOCode": "LK"
+	},
+	{
+		"commerceCountryId": 198,
+		"name": "sudan",
+		"numericISOCode": 736,
+		"priority": 198,
+		"threeLettersISOCode": "SDN",
+		"twoLettersISOCode": "SD"
+	},
+	{
+		"commerceCountryId": 199,
+		"name": "suriname",
+		"numericISOCode": 740,
+		"priority": 199,
+		"threeLettersISOCode": "SUR",
+		"twoLettersISOCode": "SR"
+	},
+	{
+		"commerceCountryId": 200,
+		"name": "swaziland",
+		"numericISOCode": 748,
+		"priority": 200,
+		"threeLettersISOCode": "SWZ",
+		"twoLettersISOCode": "SZ"
+	},
+	{
+		"commerceCountryId": 201,
+		"name": "sweden",
+		"numericISOCode": 752,
+		"priority": 201,
+		"threeLettersISOCode": "SWE",
+		"twoLettersISOCode": "SE"
+	},
+	{
+		"commerceCountryId": 202,
+		"name": "switzerland",
+		"numericISOCode": 756,
+		"priority": 202,
+		"threeLettersISOCode": "CHE",
+		"twoLettersISOCode": "CH"
+	},
+	{
+		"commerceCountryId": 203,
+		"name": "syria",
+		"numericISOCode": 760,
+		"priority": 203,
+		"threeLettersISOCode": "SYR",
+		"twoLettersISOCode": "SY"
+	},
+	{
+		"commerceCountryId": 204,
+		"name": "taiwan",
+		"numericISOCode": 158,
+		"priority": 204,
+		"threeLettersISOCode": "TWN",
+		"twoLettersISOCode": "TW"
+	},
+	{
+		"commerceCountryId": 205,
+		"name": "tajikistan",
+		"numericISOCode": 762,
+		"priority": 205,
+		"threeLettersISOCode": "TJK",
+		"twoLettersISOCode": "TJ"
+	},
+	{
+		"commerceCountryId": 206,
+		"name": "tanzania",
+		"numericISOCode": 834,
+		"priority": 206,
+		"threeLettersISOCode": "TZA",
+		"twoLettersISOCode": "TZ"
+	},
+	{
+		"commerceCountryId": 207,
+		"name": "thailand",
+		"numericISOCode": 764,
+		"priority": 207,
+		"threeLettersISOCode": "THA",
+		"twoLettersISOCode": "TH"
+	},
+	{
+		"commerceCountryId": 208,
+		"name": "togo",
+		"numericISOCode": 768,
+		"priority": 208,
+		"threeLettersISOCode": "TGO",
+		"twoLettersISOCode": "TG"
+	},
+	{
+		"commerceCountryId": 209,
+		"name": "tonga",
+		"numericISOCode": 776,
+		"priority": 209,
+		"threeLettersISOCode": "TON",
+		"twoLettersISOCode": "TO"
+	},
+	{
+		"commerceCountryId": 210,
+		"name": "trinidad-tobago",
+		"numericISOCode": 780,
+		"priority": 210,
+		"threeLettersISOCode": "TTO",
+		"twoLettersISOCode": "TT"
+	},
+	{
+		"commerceCountryId": 211,
+		"name": "tunisia",
+		"numericISOCode": 788,
+		"priority": 211,
+		"threeLettersISOCode": "TUN",
+		"twoLettersISOCode": "TN"
+	},
+	{
+		"commerceCountryId": 212,
+		"name": "turkmenistan",
+		"numericISOCode": 795,
+		"priority": 212,
+		"threeLettersISOCode": "TKM",
+		"twoLettersISOCode": "TM"
+	},
+	{
+		"commerceCountryId": 213,
+		"name": "turks-caicos",
+		"numericISOCode": 796,
+		"priority": 213,
+		"threeLettersISOCode": "TCA",
+		"twoLettersISOCode": "TC"
+	},
+	{
+		"commerceCountryId": 214,
+		"name": "tuvalu",
+		"numericISOCode": 798,
+		"priority": 214,
+		"threeLettersISOCode": "TUV",
+		"twoLettersISOCode": "TV"
+	},
+	{
+		"commerceCountryId": 215,
+		"name": "uganda",
+		"numericISOCode": 800,
+		"priority": 215,
+		"threeLettersISOCode": "UGA",
+		"twoLettersISOCode": "UG"
+	},
+	{
+		"commerceCountryId": 216,
+		"name": "ukraine",
+		"numericISOCode": 804,
+		"priority": 216,
+		"threeLettersISOCode": "UKR",
+		"twoLettersISOCode": "UA"
+	},
+	{
+		"commerceCountryId": 217,
+		"name": "united-arab-emirates",
+		"numericISOCode": 784,
+		"priority": 217,
+		"threeLettersISOCode": "ARE",
+		"twoLettersISOCode": "AE"
+	},
+	{
+		"commerceCountryId": 218,
+		"name": "uruguay",
+		"numericISOCode": 858,
+		"priority": 218,
+		"threeLettersISOCode": "URY",
+		"twoLettersISOCode": "UY"
+	},
+	{
+		"commerceCountryId": 219,
+		"name": "uzbekistan",
+		"numericISOCode": 860,
+		"priority": 219,
+		"threeLettersISOCode": "UZB",
+		"twoLettersISOCode": "UZ"
+	},
+	{
+		"commerceCountryId": 220,
+		"name": "vanuatu",
+		"numericISOCode": 548,
+		"priority": 220,
+		"threeLettersISOCode": "VUT",
+		"twoLettersISOCode": "VU"
+	},
+	{
+		"commerceCountryId": 221,
+		"name": "vatican-city",
+		"numericISOCode": 336,
+		"priority": 221,
+		"threeLettersISOCode": "VAT",
+		"twoLettersISOCode": "VA"
+	},
+	{
+		"commerceCountryId": 222,
+		"name": "venezuela",
+		"numericISOCode": 862,
+		"priority": 222,
+		"threeLettersISOCode": "VEN",
+		"twoLettersISOCode": "VE"
+	},
+	{
+		"commerceCountryId": 223,
+		"name": "wallis-futuna",
+		"numericISOCode": 876,
+		"priority": 223,
+		"threeLettersISOCode": "WLF",
+		"twoLettersISOCode": "WF"
+	},
+	{
+		"commerceCountryId": 224,
+		"name": "western-samoa",
+		"numericISOCode": 882,
+		"priority": 224,
+		"threeLettersISOCode": "WSM",
+		"twoLettersISOCode": "WS"
+	},
+	{
+		"commerceCountryId": 225,
+		"name": "yemen",
+		"numericISOCode": 887,
+		"priority": 225,
+		"threeLettersISOCode": "YEM",
+		"twoLettersISOCode": "YE"
+	},
+	{
+		"commerceCountryId": 226,
+		"name": "zambia",
+		"numericISOCode": 894,
+		"priority": 226,
+		"threeLettersISOCode": "ZMB",
+		"twoLettersISOCode": "ZM"
+	},
+	{
+		"commerceCountryId": 227,
+		"name": "zimbabwe",
+		"numericISOCode": 716,
+		"priority": 227,
+		"threeLettersISOCode": "ZWE",
+		"twoLettersISOCode": "ZW"
+	},
+	{
+		"commerceCountryId": 228,
+		"name": "aland-islands",
+		"numericISOCode": 248,
+		"priority": 228,
+		"threeLettersISOCode": "ALA",
+		"twoLettersISOCode": "AX"
+	},
+	{
+		"commerceCountryId": 229,
+		"name": "bonaire-st-eustatius-saba",
+		"numericISOCode": 535,
+		"priority": 229,
+		"threeLettersISOCode": "BES",
+		"twoLettersISOCode": "BQ"
+	},
+	{
+		"commerceCountryId": 230,
+		"name": "bouvet-island",
+		"numericISOCode": 74,
+		"priority": 230,
+		"threeLettersISOCode": "BVT",
+		"twoLettersISOCode": "BV"
+	},
+	{
+		"commerceCountryId": 231,
+		"name": "british-indian-ocean-territory",
+		"numericISOCode": 86,
+		"priority": 231,
+		"threeLettersISOCode": "IOT",
+		"twoLettersISOCode": "IO"
+	},
+	{
+		"commerceCountryId": 232,
+		"name": "curacao",
+		"numericISOCode": 531,
+		"priority": 232,
+		"threeLettersISOCode": "CUW",
+		"twoLettersISOCode": "CW"
+	},
+	{
+		"commerceCountryId": 233,
+		"name": "french-southern-territories",
+		"numericISOCode": 260,
+		"priority": 233,
+		"threeLettersISOCode": "ATF",
+		"twoLettersISOCode": "TF"
+	},
+	{
+		"commerceCountryId": 234,
+		"name": "guernsey",
+		"numericISOCode": 831,
+		"priority": 234,
+		"threeLettersISOCode": "GGY",
+		"twoLettersISOCode": "GG"
+	},
+	{
+		"commerceCountryId": 235,
+		"name": "heard-island-mcdonald-islands",
+		"numericISOCode": 334,
+		"priority": 235,
+		"threeLettersISOCode": "HMD",
+		"twoLettersISOCode": "HM"
+	},
+	{
+		"commerceCountryId": 236,
+		"name": "isle-of-man",
+		"numericISOCode": 833,
+		"priority": 236,
+		"threeLettersISOCode": "IMN",
+		"twoLettersISOCode": "IM"
+	},
+	{
+		"commerceCountryId": 237,
+		"name": "jersey",
+		"numericISOCode": 832,
+		"priority": 237,
+		"threeLettersISOCode": "JEY",
+		"twoLettersISOCode": "JE"
+	},
+	{
+		"commerceCountryId": 238,
+		"name": "northern-mariana-islands",
+		"numericISOCode": 580,
+		"priority": 238,
+		"threeLettersISOCode": "MNP",
+		"twoLettersISOCode": "MP"
+	},
+	{
+		"commerceCountryId": 239,
+		"name": "pitcairn",
+		"numericISOCode": 612,
+		"priority": 239,
+		"threeLettersISOCode": "PCN",
+		"twoLettersISOCode": "PN"
+	},
+	{
+		"commerceCountryId": 240,
+		"name": "south-georgia-south-sandwich-islands",
+		"numericISOCode": 239,
+		"priority": 240,
+		"threeLettersISOCode": "SGS",
+		"twoLettersISOCode": "GS"
+	},
+	{
+		"commerceCountryId": 241,
+		"name": "south-sudan",
+		"numericISOCode": 728,
+		"priority": 241,
+		"threeLettersISOCode": "SSD",
+		"twoLettersISOCode": "SS"
+	},
+	{
+		"commerceCountryId": 242,
+		"name": "sint-maarten",
+		"numericISOCode": 534,
+		"priority": 242,
+		"threeLettersISOCode": "SXM",
+		"twoLettersISOCode": "SX"
+	},
+	{
+		"commerceCountryId": 243,
+		"name": "st-barthelemy",
+		"numericISOCode": 652,
+		"priority": 243,
+		"threeLettersISOCode": "BLM",
+		"twoLettersISOCode": "BL"
+	},
+	{
+		"commerceCountryId": 244,
+		"name": "st-martin",
+		"numericISOCode": 663,
+		"priority": 244,
+		"threeLettersISOCode": "MAF",
+		"twoLettersISOCode": "MF"
+	},
+	{
+		"commerceCountryId": 245,
+		"name": "tokelau",
+		"numericISOCode": 772,
+		"priority": 245,
+		"threeLettersISOCode": "TKL",
+		"twoLettersISOCode": "TK"
+	},
+	{
+		"commerceCountryId": 246,
+		"name": "timor-leste",
+		"numericISOCode": 626,
+		"priority": 246,
+		"threeLettersISOCode": "TLS",
+		"twoLettersISOCode": "TL"
+	},
+	{
+		"commerceCountryId": 247,
+		"name": "united-states-minor-outlying-islands",
+		"numericISOCode": 581,
+		"priority": 247,
+		"threeLettersISOCode": "UMI",
+		"twoLettersISOCode": "UM"
+	},
+	{
+		"commerceCountryId": 248,
+		"name": "united-states-virgin-islands",
+		"numericISOCode": 850,
+		"priority": 248,
+		"threeLettersISOCode": "VIR",
+		"twoLettersISOCode": "VI"
+	},
+	{
+		"commerceCountryId": 249,
+		"name": "western-sahara",
+		"numericISOCode": 732,
+		"priority": 249,
+		"threeLettersISOCode": "ESH",
+		"twoLettersISOCode": "EH"
+	}
+]

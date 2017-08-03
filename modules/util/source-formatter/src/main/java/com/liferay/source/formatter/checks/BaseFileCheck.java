@@ -136,7 +136,8 @@ public abstract class BaseFileCheck
 			File file = new File(bndFileLocation + "bnd.bnd");
 
 			if (file.exists()) {
-				return new BNDSettings(bndFileLocation, FileUtil.read(file));
+				return new BNDSettings(
+					bndFileLocation + "bnd.bnd", FileUtil.read(file));
 			}
 
 			bndFileLocation = StringUtil.replaceLast(

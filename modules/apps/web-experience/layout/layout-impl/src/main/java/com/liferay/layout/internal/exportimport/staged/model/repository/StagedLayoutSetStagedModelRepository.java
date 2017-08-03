@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.set.internal.exportimport.staged.model.repository;
+package com.liferay.layout.internal.exportimport.staged.model.repository;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;

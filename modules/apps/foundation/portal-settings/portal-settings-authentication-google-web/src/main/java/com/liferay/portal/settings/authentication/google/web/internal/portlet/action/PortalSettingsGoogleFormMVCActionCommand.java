@@ -19,11 +19,15 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.google.constants.GoogleConstants;
 import com.liferay.portal.settings.authentication.google.web.internal.constants.PortalSettingsGoogleConstants;
-import com.liferay.portal.settings.portlet.action.BasePortalSettingsFormMVCActionCommand;
 import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
+import com.liferay.portal.settings.web.portlet.action.PortalSettingsFormContributor;
+import com.liferay.portal.settings.web.portlet.action.PortalSettingsParameterUtil;
+
+import java.util.Optional;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -39,20 +43,44 @@ import org.osgi.service.component.annotations.Component;
 	service = MVCActionCommand.class
 )
 public class PortalSettingsGoogleFormMVCActionCommand
-	extends BasePortalSettingsFormMVCActionCommand {
+	implements PortalSettingsFormContributor {
 
 	@Override
-	protected void doValidateForm(
-		ActionRequest actionRequest, ActionResponse actionResponse) {
+	public Optional<String> getDeleteMVCActionCommandNameOptional() {
+		return Optional.of("/portal_settings/google_delete");
+	}
 
-		boolean googleEnabled = getBoolean(actionRequest, "enabled");
+	@Override
+	public String getParameterNamespace() {
+		return PortalSettingsGoogleConstants.FORM_PARAMETER_NAMESPACE;
+	}
+
+	@Override
+	public Optional<String> getSaveMVCActionCommandNameOptional() {
+		return Optional.of("/portal_settings/google");
+	}
+
+	@Override
+	public String getSettingsId() {
+		return GoogleConstants.SERVICE_NAME;
+	}
+
+	@Override
+	public void validateForm(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortletException {
+
+		boolean googleEnabled = PortalSettingsParameterUtil.getBoolean(
+			actionRequest, this, "enabled");
 
 		if (!googleEnabled) {
 			return;
 		}
 
-		String googleClientId = getString(actionRequest, "clientId");
-		String googleClientSecret = getString(actionRequest, "clientSecret");
+		String googleClientId = PortalSettingsParameterUtil.getString(
+			actionRequest, this, "clientId");
+		String googleClientSecret = PortalSettingsParameterUtil.getString(
+			actionRequest, this, "clientSecret");
 
 		if (Validator.isNull(googleClientId)) {
 			SessionErrors.add(actionRequest, "googleClientIdInvalid");
@@ -61,16 +89,6 @@ public class PortalSettingsGoogleFormMVCActionCommand
 		if (Validator.isNull(googleClientSecret)) {
 			SessionErrors.add(actionRequest, "googleClientSecretInvalid");
 		}
-	}
-
-	@Override
-	protected String getParameterNamespace() {
-		return PortalSettingsGoogleConstants.FORM_PARAMETER_NAMESPACE;
-	}
-
-	@Override
-	protected String getSettingsId() {
-		return GoogleConstants.SERVICE_NAME;
 	}
 
 }

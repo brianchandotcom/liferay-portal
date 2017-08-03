@@ -14,13 +14,14 @@
 
 package com.liferay.portal.settings.authentication.cas.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.cas.constants.CASConstants;
 import com.liferay.portal.settings.authentication.cas.web.internal.constants.PortalSettingsCASConstants;
-import com.liferay.portal.settings.portlet.action.BasePortalSettingsFormMVCActionCommand;
-import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
+import com.liferay.portal.settings.web.portlet.action.PortalSettingsFormContributor;
+import com.liferay.portal.settings.web.portlet.action.PortalSettingsParameterUtil;
+
+import java.util.Optional;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -30,34 +31,53 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Tomas Polesovsky
  */
-@Component(
-	immediate = true,
-	property = {
-		"javax.portlet.name=" + PortalSettingsPortletKeys.PORTAL_SETTINGS,
-		"mvc.command.name=/portal_settings/cas"
-	},
-	service = MVCActionCommand.class
-)
+@Component(immediate = true, service = PortalSettingsFormContributor.class)
 public class PortalSettingsCASFormMVCActionCommand
-	extends BasePortalSettingsFormMVCActionCommand {
+	implements PortalSettingsFormContributor {
 
 	@Override
-	protected void doValidateForm(
+	public Optional<String> getDeleteMVCActionCommandNameOptional() {
+		return Optional.of("/portal_settings/cas_delete");
+	}
+
+	@Override
+	public String getParameterNamespace() {
+		return PortalSettingsCASConstants.FORM_PARAMETER_NAMESPACE;
+	}
+
+	@Override
+	public Optional<String> getSaveMVCActionCommandNameOptional() {
+		return Optional.of("/portal_settings/cas");
+	}
+
+	@Override
+	public String getSettingsId() {
+		return CASConstants.SERVICE_NAME;
+	}
+
+	@Override
+	public void validateForm(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
-		boolean casEnabled = getBoolean(actionRequest, "enabled");
+		boolean casEnabled = PortalSettingsParameterUtil.getBoolean(
+			actionRequest, this, "enabled");
 
 		if (!casEnabled) {
 			return;
 		}
 
-		String casLoginURL = getString(actionRequest, "loginURL");
-		String casLogoutURL = getString(actionRequest, "logoutURL");
-		String casServerName = getString(actionRequest, "serverName");
-		String casServerURL = getString(actionRequest, "serverURL");
-		String casServiceURL = getString(actionRequest, "serviceURL");
-		String casNoSuchUserRedirectURL = getString(
-			actionRequest, "noSuchUserRedirectURL");
+		String casLoginURL = PortalSettingsParameterUtil.getString(
+			actionRequest, this, "loginURL");
+		String casLogoutURL = PortalSettingsParameterUtil.getString(
+			actionRequest, this, "logoutURL");
+		String casServerName = PortalSettingsParameterUtil.getString(
+			actionRequest, this, "serverName");
+		String casServerURL = PortalSettingsParameterUtil.getString(
+			actionRequest, this, "serverURL");
+		String casServiceURL = PortalSettingsParameterUtil.getString(
+			actionRequest, this, "serviceURL");
+		String casNoSuchUserRedirectURL = PortalSettingsParameterUtil.getString(
+			actionRequest, this, "noSuchUserRedirectURL");
 
 		if (!Validator.isUrl(casLoginURL)) {
 			SessionErrors.add(actionRequest, "casLoginURLInvalid");
@@ -86,16 +106,6 @@ public class PortalSettingsCASFormMVCActionCommand
 
 			SessionErrors.add(actionRequest, "casNoSuchUserURLInvalid");
 		}
-	}
-
-	@Override
-	protected String getParameterNamespace() {
-		return PortalSettingsCASConstants.FORM_PARAMETER_NAMESPACE;
-	}
-
-	@Override
-	protected String getSettingsId() {
-		return CASConstants.SERVICE_NAME;
 	}
 
 }

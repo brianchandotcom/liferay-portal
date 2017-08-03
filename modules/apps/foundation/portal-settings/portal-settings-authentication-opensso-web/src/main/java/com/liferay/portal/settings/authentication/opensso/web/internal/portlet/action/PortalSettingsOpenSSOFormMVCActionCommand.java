@@ -17,11 +17,14 @@ package com.liferay.portal.settings.authentication.opensso.web.internal.portlet.
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.security.sso.opensso.constants.OpenSSOConstants;
 import com.liferay.portal.settings.authentication.opensso.web.internal.constants.PortalSettingsOpenSSOConstants;
-import com.liferay.portal.settings.portlet.action.BasePortalSettingsFormMVCActionCommand;
 import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
+import com.liferay.portal.settings.web.portlet.action.PortalSettingsFormContributor;
+
+import java.util.Optional;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -37,21 +40,32 @@ import org.osgi.service.component.annotations.Component;
 	service = MVCActionCommand.class
 )
 public class PortalSettingsOpenSSOFormMVCActionCommand
-	extends BasePortalSettingsFormMVCActionCommand {
+	implements PortalSettingsFormContributor {
 
 	@Override
-	protected void doValidateForm(
-		ActionRequest actionRequest, ActionResponse actionResponse) {
+	public Optional<String> getDeleteMVCActionCommandNameOptional() {
+		return Optional.of("/portal_settings/opensso_delete");
 	}
 
 	@Override
-	protected String getParameterNamespace() {
+	public String getParameterNamespace() {
 		return PortalSettingsOpenSSOConstants.FORM_PARAMETER_NAMESPACE;
 	}
 
 	@Override
-	protected String getSettingsId() {
+	public Optional<String> getSaveMVCActionCommandNameOptional() {
+		return Optional.of("/portal_settings/opensso");
+	}
+
+	@Override
+	public String getSettingsId() {
 		return OpenSSOConstants.SERVICE_NAME;
+	}
+
+	@Override
+	public void validateForm(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortletException {
 	}
 
 }

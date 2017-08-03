@@ -17,11 +17,14 @@ package com.liferay.portal.settings.authentication.ntlm.web.internal.portlet.act
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.security.sso.ntlm.constants.NtlmConstants;
 import com.liferay.portal.settings.authentication.ntlm.web.internal.constants.PortalSettingsNtlmConstants;
-import com.liferay.portal.settings.portlet.action.BasePortalSettingsFormMVCActionCommand;
 import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
+import com.liferay.portal.settings.web.portlet.action.PortalSettingsFormContributor;
+
+import java.util.Optional;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -36,21 +39,32 @@ import org.osgi.service.component.annotations.Component;
 	service = MVCActionCommand.class
 )
 public class PortalSettingsNtlmFormMVCActionCommand
-	extends BasePortalSettingsFormMVCActionCommand {
+	implements PortalSettingsFormContributor {
 
 	@Override
-	protected void doValidateForm(
-		ActionRequest actionRequest, ActionResponse actionResponse) {
+	public Optional<String> getDeleteMVCActionCommandNameOptional() {
+		return Optional.of("/portal_settings/ntlm_delete");
 	}
 
 	@Override
-	protected String getParameterNamespace() {
+	public String getParameterNamespace() {
 		return PortalSettingsNtlmConstants.FORM_PARAMETER_NAMESPACE;
 	}
 
 	@Override
-	protected String getSettingsId() {
+	public Optional<String> getSaveMVCActionCommandNameOptional() {
+		return Optional.of("/portal_settings/ntlm");
+	}
+
+	@Override
+	public String getSettingsId() {
 		return NtlmConstants.SERVICE_NAME;
+	}
+
+	@Override
+	public void validateForm(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortletException {
 	}
 
 }

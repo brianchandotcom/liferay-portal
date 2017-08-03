@@ -19,11 +19,15 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectConstants;
 import com.liferay.portal.settings.authentication.facebook.connect.web.internal.constants.PortalSettingsFacebookConnectConstants;
-import com.liferay.portal.settings.portlet.action.BasePortalSettingsFormMVCActionCommand;
 import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
+import com.liferay.portal.settings.web.portlet.action.PortalSettingsFormContributor;
+import com.liferay.portal.settings.web.portlet.action.PortalSettingsParameterUtil;
+
+import java.util.Optional;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -40,24 +44,48 @@ import org.osgi.service.component.annotations.Component;
 	service = MVCActionCommand.class
 )
 public class PortalSettingsFacebookConnectFormMVCActionCommand
-	extends BasePortalSettingsFormMVCActionCommand {
+	implements PortalSettingsFormContributor {
 
 	@Override
-	protected void doValidateForm(
-		ActionRequest actionRequest, ActionResponse actionResponse) {
+	public Optional<String> getDeleteMVCActionCommandNameOptional() {
+		return Optional.of("/portal_settings/facebook_connect_delete");
+	}
 
-		boolean facebookEnabled = getBoolean(actionRequest, "enabled");
+	@Override
+	public String getParameterNamespace() {
+		return PortalSettingsFacebookConnectConstants.FORM_PARAMETER_NAMESPACE;
+	}
+
+	@Override
+	public Optional<String> getSaveMVCActionCommandNameOptional() {
+		return Optional.of("/portal_settings/facebook_connect");
+	}
+
+	@Override
+	public String getSettingsId() {
+		return FacebookConnectConstants.SERVICE_NAME;
+	}
+
+	@Override
+	public void validateForm(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortletException {
+
+		boolean facebookEnabled = PortalSettingsParameterUtil.getBoolean(
+			actionRequest, this, "enabled");
 
 		if (!facebookEnabled) {
 			return;
 		}
 
-		String facebookGraphURL = getString(actionRequest, "graphURL");
-		String facebookOauthAuthURL = getString(actionRequest, "oauthAuthURL");
-		String facebookOauthRedirectURL = getString(
-			actionRequest, "oauthRedirectURL");
-		String facebookOauthTokenURL = getString(
-			actionRequest, "oauthTokenURL");
+		String facebookGraphURL = PortalSettingsParameterUtil.getString(
+			actionRequest, this, "graphURL");
+		String facebookOauthAuthURL = PortalSettingsParameterUtil.getString(
+			actionRequest, this, "oauthAuthURL");
+		String facebookOauthRedirectURL = PortalSettingsParameterUtil.getString(
+			actionRequest, this, "oauthRedirectURL");
+		String facebookOauthTokenURL = PortalSettingsParameterUtil.getString(
+			actionRequest, this, "oauthTokenURL");
 
 		if (Validator.isNotNull(facebookGraphURL) &&
 			!Validator.isUrl(facebookGraphURL)) {
@@ -85,16 +113,6 @@ public class PortalSettingsFacebookConnectFormMVCActionCommand
 			SessionErrors.add(
 				actionRequest, "facebookConnectOauthTokenURLInvalid");
 		}
-	}
-
-	@Override
-	protected String getParameterNamespace() {
-		return PortalSettingsFacebookConnectConstants.FORM_PARAMETER_NAMESPACE;
-	}
-
-	@Override
-	protected String getSettingsId() {
-		return FacebookConnectConstants.SERVICE_NAME;
 	}
 
 }

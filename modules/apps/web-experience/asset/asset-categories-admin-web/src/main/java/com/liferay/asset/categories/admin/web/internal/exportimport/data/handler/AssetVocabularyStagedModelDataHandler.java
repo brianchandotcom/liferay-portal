@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.xml.Element;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -313,7 +314,7 @@ public class AssetVocabularyStagedModelDataHandler
 
 		Locale locale = _portal.getSiteDefaultLocale(groupId);
 
-		if (titleMap.isEmpty() || !vocabulary.getName().equals(name) ||
+		if (titleMap.isEmpty() || !Objects.equals(vocabulary.getName(), name) ||
 			!titleMap.containsKey(locale)) {
 
 			titleMap.put(locale, name);

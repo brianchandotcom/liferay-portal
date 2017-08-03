@@ -154,11 +154,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>VIEW_IN_CONTEXT</td>
-	<td>//a[contains(.,'View in Context')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>UNSUBSCRIBE</td>
 	<td>//a/span[contains(@class,'taglib-text') and contains(.,'Unsubscribe')]</td>
 	<td></td>
@@ -166,6 +161,11 @@
 <tr>
 	<td>URL</td>
 	<td>//a[contains(@class,'show-url-file')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_IN_CONTEXT</td>
+	<td>//a[contains(.,'View in Context')]</td>
 	<td></td>
 </tr>
 <tr>

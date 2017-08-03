@@ -521,6 +521,7 @@ AUI.add(
 							ratingThumbUp.attr('title', thumbUpMessage);
 							ratingThumbDown.attr('title', thumbDownMessage);
 
+							ratingThumbUp.html(thumbScore.positiveVotes);
 							ratingThumbDown.html(thumbScore.negativeVotes);
 						}
 						else {

@@ -136,18 +136,18 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 		String value = StringPool.BLANK;
 
 		if (useDefaultThemeSettings) {
-			value = selTheme.getSetting(name);
+			value = selTheme.getSetting(entry.getKey());
 		}
 		else {
 			if (selLayout != null) {
-				value = selLayout.getThemeSetting(name, "regular");
+				value = selLayout.getThemeSetting(entry.getKey(), "regular");
 			}
 			else {
-				value = selLayoutSet.getThemeSetting(name, "regular");
+				value = selLayoutSet.getThemeSetting(entry.getKey(), "regular");
 			}
 		}
 
-		String propertyName = HtmlUtil.escapeAttribute("regularThemeSettingsProperties--" + name + StringPool.DOUBLE_DASH);
+		String propertyName = HtmlUtil.escapeAttribute("regularThemeSettingsProperties--" + entry.getKey() + StringPool.DOUBLE_DASH);
 	%>
 
 		<c:choose>

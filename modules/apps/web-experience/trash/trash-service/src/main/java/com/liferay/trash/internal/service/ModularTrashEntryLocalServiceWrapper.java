@@ -15,6 +15,7 @@
 package com.liferay.trash.internal.service;
 
 import com.liferay.petra.model.adapter.util.ModelAdapterUtil;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Hits;
@@ -145,6 +146,11 @@ public class ModularTrashEntryLocalServiceWrapper
 		}
 
 		return ModelAdapterUtil.adapt(TrashEntry.class, deleteTrashEntry);
+	}
+
+	@Override
+	public DynamicQuery dynamicQuery() {
+		return _trashEntryLocalService.dynamicQuery();
 	}
 
 	@Override

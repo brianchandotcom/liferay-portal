@@ -168,6 +168,28 @@ public class ModulesStructureTest {
 	}
 
 	@Test
+	public void testScanGitHub() throws IOException {
+		Files.walkFileTree(
+			_modulesDirPath,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult visitFile(
+					Path path, BasicFileAttributes basicFileAttributes) {
+
+					String fileName = String.valueOf(path.getFileName());
+
+					if (fileName.equals("CODEOWNERS")) {
+						_testGitHubCodeOwners(path);
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+	}
+
+	@Test
 	public void testScanGradleFiles() throws IOException {
 		Files.walkFileTree(
 			_modulesDirPath,
@@ -702,6 +724,20 @@ public class ModulesStructureTest {
 		else {
 			Assert.assertFalse("Forbidden " + path, Files.exists(path));
 		}
+	}
+
+	private void _testGitHubCodeOwners(Path path) {
+		Path dirPath = path.getParent();
+
+		Assert.assertEquals(
+			"Forbidden " + path, ".github",
+			String.valueOf(dirPath.getFileName()));
+
+		Path rootDirPath = dirPath.getParent();
+
+		Assert.assertTrue(
+			"Forbidden " + path,
+			Files.exists(rootDirPath.resolve(_GIT_REPO_FILE_NAME)));
 	}
 
 	private void _testGitIgnoreFile(Path path) throws IOException {

@@ -1,0 +1,69 @@
+import com.liferay.gradle.util.FileUtil
+import com.liferay.gradle.util.copy.StripPathSegmentsAction
+
+configurations {
+	alloyUI
+}
+
+task buildAlloyUI(type: Copy)
+
+String alloyUIVersion = "3.1.0-deprecated.21"
+
+File jsDestinationDir = file("tmp/META-INF/resources")
+
+buildAlloyUI {
+	File alloyDestinationDir = new File(jsDestinationDir, "aui")
+
+	doFirst {
+		delete alloyDestinationDir
+	}
+
+	doLast {
+		File auiDeprecatedCssFile = new File(alloyDestinationDir, "aui_deprecated.css")
+
+		File auiSkinDeprecatedCssFile = new File(alloyDestinationDir, "aui-skin-deprecated/css/aui-skin-deprecated.css")
+		FileTree cssFileTree = fileTree(dir: alloyDestinationDir, include: "*-deprecated/assets/skins/sam/*-deprecated.css")
+
+		FileUtil.concatenate(auiDeprecatedCssFile, files(auiSkinDeprecatedCssFile, cssFileTree))
+
+		ant.replaceregexp(file: auiDeprecatedCssFile, flags: "g", match: "url\\(([^)]+)\\)", replace: "url(@theme_image_path@/aui/\\1)")
+
+		ant.replace(file: auiDeprecatedCssFile) {
+			replacefilter token: "../images/", value: ""
+			replacefilter token: "../../../../../build/aui-skin-base/images/", value: ""
+			replacefilter token: "../../../../../build/aui-skin-classic/images/", value: ""
+			replacefilter token: "../../../../../build/aui-skin-deprecated/images/", value: ""
+		}
+	}
+
+	eachFile new StripPathSegmentsAction(6)
+
+	from {
+		zipTree(configurations.alloyUI.singleFile)
+	}
+
+	include "META-INF/resources/webjars/alloy-ui/${alloyUIVersion}/build/"
+	includeEmptyDirs = false
+	into alloyDestinationDir
+}
+
+classes {
+	dependsOn buildAlloyUI
+}
+
+clean {
+	delete "tmp"
+}
+
+dependencies {
+	alloyUI group: "com.liferay.webjars", name: "com.liferay.webjars.alloy-ui", transitive: false, version: alloyUIVersion
+
+	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.11.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.20.0"
+	provided group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "2.6.0"
+	provided group: "javax.portlet", name: "portlet-api", version: "2.0"
+	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
+	provided group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", version: "2.3.1"
+	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	provided group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
+}

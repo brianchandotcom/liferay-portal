@@ -4,13 +4,11 @@ import com.liferay.gradle.util.copy.StripPathSegmentsAction
 apply plugin: "com.liferay.gulp"
 
 configurations {
-	alloyUI
 	jQuery
 	lexicon
 	lodash
 }
 
-task buildAlloyUI(type: Copy)
 task buildJQuery(type: Copy)
 task buildJQueryPluginsForm
 task buildLexicon(type: Copy)
@@ -19,49 +17,12 @@ task buildLodash(type: Copy)
 task buildSvg4everybody(type: Copy)
 task testJS
 
-String alloyUIVersion = "3.1.0-deprecated.21"
 String jqueryPluginsFormVersion = "3.51"
 String jQueryVersion = "2.1.4"
 String lexiconVersion = "1.0.23"
 String lodashVersion = "3.10.1"
 
 File jsDestinationDir = file("tmp/META-INF/resources")
-
-buildAlloyUI {
-	File alloyDestinationDir = new File(jsDestinationDir, "aui")
-
-	doFirst {
-		delete alloyDestinationDir
-	}
-
-	doLast {
-		File auiDeprecatedCssFile = new File(alloyDestinationDir, "aui_deprecated.css")
-
-		File auiSkinDeprecatedCssFile = new File(alloyDestinationDir, "aui-skin-deprecated/css/aui-skin-deprecated.css")
-		FileTree cssFileTree = fileTree(dir: alloyDestinationDir, include: "*-deprecated/assets/skins/sam/*-deprecated.css")
-
-		FileUtil.concatenate(auiDeprecatedCssFile, files(auiSkinDeprecatedCssFile, cssFileTree))
-
-		ant.replaceregexp(file: auiDeprecatedCssFile, flags: "g", match: "url\\(([^)]+)\\)", replace: "url(@theme_image_path@/aui/\\1)")
-
-		ant.replace(file: auiDeprecatedCssFile) {
-			replacefilter token: "../images/", value: ""
-			replacefilter token: "../../../../../build/aui-skin-base/images/", value: ""
-			replacefilter token: "../../../../../build/aui-skin-classic/images/", value: ""
-			replacefilter token: "../../../../../build/aui-skin-deprecated/images/", value: ""
-		}
-	}
-
-	eachFile new StripPathSegmentsAction(6)
-
-	from {
-		zipTree(configurations.alloyUI.singleFile)
-	}
-
-	include "META-INF/resources/webjars/alloy-ui/${alloyUIVersion}/build/"
-	includeEmptyDirs = false
-	into alloyDestinationDir
-}
 
 buildJQuery {
 	eachFile new StripPathSegmentsAction(6)
@@ -164,7 +125,6 @@ buildSvg4everybody {
 }
 
 classes {
-	dependsOn buildAlloyUI
 	dependsOn buildJQuery
 	dependsOn buildJQueryPluginsForm
 	dependsOn buildLexicon
@@ -178,8 +138,6 @@ clean {
 }
 
 dependencies {
-	alloyUI group: "com.liferay.webjars", name: "com.liferay.webjars.alloy-ui", transitive: false, version: alloyUIVersion
-
 	jQuery group: "org.webjars.npm", name: "jquery", transitive: false, version: jQueryVersion
 
 	lexicon group: "com.liferay.webjars", name: "com.liferay.webjars.lexicon", transitive: false, version: lexiconVersion

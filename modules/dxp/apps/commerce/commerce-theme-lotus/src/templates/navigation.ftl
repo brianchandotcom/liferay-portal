@@ -60,7 +60,7 @@
 					<#else>
 						<svg class="lexicon-icon">
 							<use xlink:href="${images_folder}/theme-icons.svg#icon-bag" />
-						</svg>s
+						</svg>
 					</#if>
 				</a>
 

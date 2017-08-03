@@ -79,6 +79,95 @@
 		</if>
 	</tear-down>
 
+	<command name="FilterByReadAndUnread" priority="5">
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="MessageboardsPortlet#subscribePG" />
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject1" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject2" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Notifications#viewBadgeCount">
+			<var name="activePanel" value="Notifications" />
+			<var name="notificationCount" value="2" />
+		</execute>
+
+		<execute macro="Notifications#gotoNotifications" />
+
+		<execute macro="Notifications#goToReadFilter" />
+
+		<execute macro="Notifications#viewDefaultContent" />
+
+		<execute macro="Notifications#goToUnreadFilter" />
+
+		<execute macro="Notifications#viewNewContent">
+			<var name="assetType" value="message boards message" />
+			<var name="contentBody" value="MB Thread Message Subject1" />
+			<var name="user" value="userfn userln" />
+		</execute>
+
+		<execute macro="Notifications#viewNewContent">
+			<var name="assetType" value="message boards message" />
+			<var name="contentBody" value="MB Thread Message Subject2" />
+			<var name="user" value="userfn userln" />
+		</execute>
+
+		<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
+
+		<execute function="Click" locator1="Icon#MARK_AS_READ" />
+
+		<execute macro="Notifications#viewDefaultContent" />
+
+		<execute macro="Notifications#viewNoNotifications">
+			<var name="activePanel" value="Notifications" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="Notifications" />
+		</execute>
+
+		<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
+
+		<execute function="Click" locator1="Icon#MARK_AS_UNREAD" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="Notifications#viewBadgeCount">
+			<var name="notificationCount" value="2" />
+		</execute>
+	</command>
+
 	<command name="ViewNoWebsiteNotificationForNewThreadInCategory" priority="4">
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Message Boards Page" />

@@ -7,6 +7,18 @@
 		<execute function="AssertClick" locator1="Button#CONFIRM" value1="Confirm" />
 	</command>
 
+	<command name="deleteNotification">
+		<var name="key_contentBody" value="${contentBody}" />
+
+		<execute function="Click" locator1="Notifications#NOTIFICATIONS_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
+			<var name="key_menuItem" value="Delete" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="Notifications#NOTIFICATIONS_CONTENT" value1="${contentBody}" />
+	</command>
+
 	<command name="gotoNotifications">
 		<if>
 			<condition function="IsElementPresent" locator1="Notifications#USER_BAR_BADGE_COUNT" />
@@ -44,10 +56,28 @@
 		</if>
 	</command>
 
-	<command name="markAllAsRead">
-		<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL_NOTIFICATIONS" />
+	<command name="goToReadFilter">
+		<execute function="Click" locator1="Dropdown#FILTER" />
 
-		<execute function="Click" locator1="Notifications#MARK_AS_READ" />
+		<var name="key_filterValue" value="Read" />
+
+		<execute function="AssertClick" locator1="Dropdown#FILTER_VALUES" value1="Read" />
+	</command>
+
+	<command name="goToUnreadFilter">
+		<execute function="Click" locator1="Dropdown#FILTER" />
+
+		<var name="key_filterValue" value="Unread" />
+
+		<execute function="AssertClick" locator1="Dropdown#FILTER_VALUES" value1="Unread" />
+	</command>
+
+	<command name="markAllAsRead">
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Mark All Notifications as Read">
+			<var name="key_menuItem" value="Mark All Notifications as Read" />
+		</execute>
 	</command>
 
 	<command name="navigateToContent">

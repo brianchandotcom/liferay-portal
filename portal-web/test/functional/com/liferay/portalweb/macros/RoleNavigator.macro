@@ -27,7 +27,7 @@
 
 			<then>
 				<var name="key_navItem" value="${sectionTitle}" />
-				<execute function="Click" locator1="RolesPermissionsNavigation#PERMISSIONS_NAVITEM" />
+				<execute function="AssertClick" locator1="RolesPermissionsNavigation#PERMISSIONS_NAVITEM" value1="${sectionTitle}" />
 			</then>
 		</if>
 
@@ -36,7 +36,7 @@
 
 			<then>
 				<var name="key_navItem" value="${contentTitle}" />
-				<execute function="Click" locator1="RolesPermissionsNavigation#PERMISSIONS_NAVITEM" />
+				<execute function="AssertClick" locator1="RolesPermissionsNavigation#PERMISSIONS_NAVITEM" value1="${contentTitle}" />
 			</then>
 		</if>
 

@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = MVCActionCommand.class
 )
-public class PortalSettingsOpenSSOFormMVCActionCommand
+public class OpenSSOPortalSettingsFormContributor
 	implements PortalSettingsFormContributor {
 
 	@Override

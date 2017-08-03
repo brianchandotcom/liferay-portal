@@ -12,16 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.settings.authentication.google.web.internal.portlet.action;
+package com.liferay.portal.settings.authentication.ntlm.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.sso.google.constants.GoogleConstants;
-import com.liferay.portal.settings.authentication.google.web.internal.constants.PortalSettingsGoogleConstants;
+import com.liferay.portal.security.sso.ntlm.constants.NtlmConstants;
+import com.liferay.portal.settings.authentication.ntlm.web.internal.constants.PortalSettingsNtlmConstants;
 import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
 import com.liferay.portal.settings.web.portlet.action.PortalSettingsFormContributor;
-import com.liferay.portal.settings.web.portlet.action.PortalSettingsParameterUtil;
 
 import java.util.Optional;
 
@@ -32,63 +29,42 @@ import javax.portlet.PortletException;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Stian Sigvartsen
+ * @author Philip Jones
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + PortalSettingsPortletKeys.PORTAL_SETTINGS,
-		"mvc.command.name=/portal_settings/google"
+		"mvc.command.name=/portal_settings/ntlm"
 	},
 	service = MVCActionCommand.class
 )
-public class PortalSettingsGoogleFormMVCActionCommand
+public class NtlmPortalSettingsFormContributor
 	implements PortalSettingsFormContributor {
 
 	@Override
 	public Optional<String> getDeleteMVCActionCommandNameOptional() {
-		return Optional.of("/portal_settings/google_delete");
+		return Optional.of("/portal_settings/ntlm_delete");
 	}
 
 	@Override
 	public String getParameterNamespace() {
-		return PortalSettingsGoogleConstants.FORM_PARAMETER_NAMESPACE;
+		return PortalSettingsNtlmConstants.FORM_PARAMETER_NAMESPACE;
 	}
 
 	@Override
 	public Optional<String> getSaveMVCActionCommandNameOptional() {
-		return Optional.of("/portal_settings/google");
+		return Optional.of("/portal_settings/ntlm");
 	}
 
 	@Override
 	public String getSettingsId() {
-		return GoogleConstants.SERVICE_NAME;
+		return NtlmConstants.SERVICE_NAME;
 	}
 
 	@Override
 	public void validateForm(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortletException {
-
-		boolean googleEnabled = PortalSettingsParameterUtil.getBoolean(
-			actionRequest, this, "enabled");
-
-		if (!googleEnabled) {
-			return;
-		}
-
-		String googleClientId = PortalSettingsParameterUtil.getString(
-			actionRequest, this, "clientId");
-		String googleClientSecret = PortalSettingsParameterUtil.getString(
-			actionRequest, this, "clientSecret");
-
-		if (Validator.isNull(googleClientId)) {
-			SessionErrors.add(actionRequest, "googleClientIdInvalid");
-		}
-
-		if (Validator.isNull(googleClientSecret)) {
-			SessionErrors.add(actionRequest, "googleClientSecretInvalid");
-		}
 	}
 
 }

@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = MVCActionCommand.class
 )
-public class PortalSettingsFacebookConnectFormMVCActionCommand
+public class FacebookConnectPortalSettingsFormContributor
 	implements PortalSettingsFormContributor {
 
 	@Override

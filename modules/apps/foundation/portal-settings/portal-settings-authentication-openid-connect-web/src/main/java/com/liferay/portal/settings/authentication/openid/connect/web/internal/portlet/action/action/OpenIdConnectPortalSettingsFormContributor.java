@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = MVCActionCommand.class
 )
-public class PortalSettingsOpenIdConnectFormMVCActionCommand
+public class OpenIdConnectPortalSettingsFormContributor
 	implements PortalSettingsFormContributor {
 
 	@Override

@@ -193,7 +193,7 @@ public class CommerceCountryLocalServiceImpl
 		}
 
 		if (Validator.isNotNull(threeLettersISOCode) &&
-			(threeLettersISOCode.length() != 2)) {
+			(threeLettersISOCode.length() != 3)) {
 
 			throw new CommerceCountryThreeLettersISOCodeException();
 		}

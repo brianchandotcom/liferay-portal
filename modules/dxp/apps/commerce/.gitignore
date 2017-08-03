@@ -10,6 +10,7 @@
 bin/
 build/
 classes/
+ivy.xml.MD5
 lib/
 liferay-hook.xml.processed
 node_modules/

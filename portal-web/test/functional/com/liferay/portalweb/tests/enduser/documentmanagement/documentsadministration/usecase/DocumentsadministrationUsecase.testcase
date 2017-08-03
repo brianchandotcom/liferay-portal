@@ -781,9 +781,9 @@
 		</execute>
 
 		<execute macro="RoleNavigator#gotoPermissionSectionViaDropdown">
+			<var name="contentTitle" value="Content" />
 			<var name="permissionName" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA" />
-			<var name="step1" value="Site Administration" />
-			<var name="step2" value="Content" />
+			<var name="sectionTitle" value="Site Administration" />
 		</execute>
 
 		<execute macro="Role#addPermissions">

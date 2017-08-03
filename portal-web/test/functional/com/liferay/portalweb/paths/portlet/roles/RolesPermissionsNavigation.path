@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>DROPDOWN_ANY</td>
-	<td>//div[contains(@class,'permission-navigation-section')]//span[contains(.,'${key_permissionName}')]</td>
+	<td>//div[contains(@class,'permission-navigation-section')]//span[contains(.,'${key_navItem}')]</td>
 	<td></td>
 </tr>
 <tr>

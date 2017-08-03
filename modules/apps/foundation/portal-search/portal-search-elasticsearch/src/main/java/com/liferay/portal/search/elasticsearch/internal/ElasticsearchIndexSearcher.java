@@ -280,7 +280,8 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 	}
 
 	protected void addHighlights(
-		SearchRequestBuilder searchRequestBuilder, QueryConfig queryConfig) {
+		SearchRequestBuilder searchRequestBuilder, SearchContext searchContext,
+		QueryConfig queryConfig) {
 
 		if (!queryConfig.isHighlightEnabled()) {
 			return;
@@ -295,8 +296,19 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			HighlightUtil.HIGHLIGHT_TAG_CLOSE);
 		searchRequestBuilder.setHighlighterPreTags(
 			HighlightUtil.HIGHLIGHT_TAG_OPEN);
+
+		boolean highlighterRequireFieldMatch =
+			queryConfig.isHighlightRequireFieldMatch();
+
+		boolean luceneSyntax = GetterUtil.getBoolean(
+			searchContext.getAttribute("luceneSyntax"));
+
+		if (luceneSyntax) {
+			highlighterRequireFieldMatch = false;
+		}
+
 		searchRequestBuilder.setHighlighterRequireFieldMatch(
-			queryConfig.isHighlightRequireFieldMatch());
+			highlighterRequireFieldMatch);
 	}
 
 	protected void addPagination(
@@ -478,7 +490,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		if (!count) {
 			addFacets(searchRequestBuilder, searchContext);
 			addGroupBy(searchRequestBuilder, searchContext, start, end);
-			addHighlights(searchRequestBuilder, queryConfig);
+			addHighlights(searchRequestBuilder, searchContext, queryConfig);
 			addPagination(searchRequestBuilder, start, end);
 			addSelectedFields(searchRequestBuilder, queryConfig);
 			addSort(searchRequestBuilder, searchContext.getSorts());

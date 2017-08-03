@@ -56,8 +56,8 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 <aui:form action="<%= portletURL %>" cssClass="container-fluid-1280" method="post" name="selectGroupFm">
 	<liferay-ui:search-container
 		emptyResultsMessage="<%= emptyResultsMessage %>"
-		total="<%= groupsCount %>"
 		iteratorURL="<%= portletURL %>"
+		total="<%= groupsCount %>"
 	>
 		<liferay-ui:search-container-results
 			results="<%= groups %>"

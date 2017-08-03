@@ -16,22 +16,26 @@ package com.liferay.asset.display.template.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.ClassName;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+
+import java.util.Locale;
+
 /**
- * The extended model implementation for the AssetDisplayTemplate service. Represents a row in the &quot;AssetDisplayTemplate&quot; database table, with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.asset.display.template.model.AssetDisplayTemplate} interface.
- * </p>
- *
- * @author Brian Wing Shun Chan
+ * @author Pavel Savinov
  */
 @ProviderType
 public class AssetDisplayTemplateImpl extends AssetDisplayTemplateBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a asset display template model instance should use the {@link com.liferay.asset.display.template.model.AssetDisplayTemplate} interface instead.
-	 */
-	public AssetDisplayTemplateImpl() {
+
+	@Override
+	public String getAssetTypeName(Locale locale) throws PortalException {
+		ClassName className = ClassNameLocalServiceUtil.getClassName(
+			getClassNameId());
+
+		return ResourceActionsUtil.getModelResource(
+			locale, className.getValue());
 	}
+
 }

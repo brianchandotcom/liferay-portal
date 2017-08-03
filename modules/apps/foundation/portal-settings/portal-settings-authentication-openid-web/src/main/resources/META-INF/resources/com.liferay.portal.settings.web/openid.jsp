@@ -26,4 +26,16 @@ boolean enabled = openIdConfiguration.enabled();
 
 <aui:fieldset>
 	<aui:input label="enabled" name='<%= PortalSettingsOpenIdConstants.FORM_PARAMETER_NAMESPACE + "enabled" %>' type="checkbox" value="<%= enabled %>" />
+
+	<aui:button-row>
+		<portlet:actionURL name="/portal_settings/openid_delete" var="resetValuesURL">
+			<portlet:param name="tabs1" value="openid" />
+		</portlet:actionURL>
+
+		<%
+		String resetValuesOnClick = "if (confirm('" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-reset-the-configured-values") + "')) { submitForm(document.hrefFm, '" + resetValuesURL.toString() + "'); }";
+		%>
+
+		<aui:button cssClass="btn-lg" onClick="<%= resetValuesOnClick %>" value="reset-values" />
+	</aui:button-row>
 </aui:fieldset>

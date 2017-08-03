@@ -60,6 +60,16 @@ String noSuchUserRedirectURL = casConfiguration.noSuchUserRedirectURL();
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" onClick='<%= renderResponse.getNamespace() + "testCasSettings();" %>' value="test-cas-configuration" />
+
+		<portlet:actionURL name="/portal_settings/cas_delete" var="resetValuesURL">
+			<portlet:param name="tabs1" value="cas" />
+		</portlet:actionURL>
+
+		<%
+		String resetValuesOnClick = "if (confirm('" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-reset-the-configured-values") + "')) { submitForm(document.hrefFm, '" + resetValuesURL.toString() + "'); }";
+		%>
+
+		<aui:button cssClass="btn-lg" onClick="<%= resetValuesOnClick %>" value="reset-values" />
 	</aui:button-row>
 </aui:fieldset>
 

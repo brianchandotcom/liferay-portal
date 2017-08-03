@@ -35,4 +35,16 @@ String googleClientSecret = googleAuthorizationConfiguration.clientSecret();
 	<aui:input label="google-client-id" name='<%= PortalSettingsGoogleConstants.FORM_PARAMETER_NAMESPACE + "clientId" %>' type="text" value="<%= googleClientId %>" wrapperCssClass="lfr-input-text-container" />
 
 	<aui:input label="google-client-secret" name='<%= PortalSettingsGoogleConstants.FORM_PARAMETER_NAMESPACE + "clientSecret" %>' type="text" value="<%= googleClientSecret %>" wrapperCssClass="lfr-input-text-container" />
+
+	<aui:button-row>
+		<portlet:actionURL name="/portal_settings/google_delete" var="resetValuesURL">
+			<portlet:param name="tabs1" value="google" />
+		</portlet:actionURL>
+
+		<%
+		String resetValuesOnClick = "if (confirm('" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-reset-the-configured-values") + "')) { submitForm(document.hrefFm, '" + resetValuesURL.toString() + "'); }";
+		%>
+
+		<aui:button cssClass="btn-lg" onClick="<%= resetValuesOnClick %>" value="reset-values" />
+	</aui:button-row>
 </aui:fieldset>

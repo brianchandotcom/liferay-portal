@@ -24,4 +24,16 @@ OpenIdConnectConfiguration openIdConnectConfiguration = ConfigurationProviderUti
 
 <aui:fieldset>
 	<aui:input label="enabled" name='<%= PortalSettingsOpenIdConnectConstants.FORM_PARAMETER_NAMESPACE + "enabled" %>' type="checkbox" value="<%= openIdConnectConfiguration.enabled() %>" />
+
+	<aui:button-row>
+		<portlet:actionURL name="/portal_settings/openid_connect_delete" var="resetValuesURL">
+			<portlet:param name="tabs1" value="openid-connect" />
+		</portlet:actionURL>
+
+		<%
+		String resetValuesOnClick = "if (confirm('" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-reset-the-configured-values") + "')) { submitForm(document.hrefFm, '" + resetValuesURL.toString() + "'); }";
+		%>
+
+		<aui:button cssClass="btn-lg" onClick="<%= resetValuesOnClick %>" value="reset-values" />
+	</aui:button-row>
 </aui:fieldset>

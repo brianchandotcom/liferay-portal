@@ -18,4 +18,6 @@ dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":apps:collaboration:blogs:blogs-api")
 	testIntegrationCompile project(":apps:foundation:portal-search:portal-search-test-util")
+	testIntegrationCompile project(":apps:web-experience:asset:asset-test-util")
+	testIntegrationCompile project(":apps:web-experience:export-import:export-import-test-util")
 }

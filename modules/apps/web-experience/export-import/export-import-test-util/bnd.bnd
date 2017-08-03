@@ -5,6 +5,7 @@ Export-Package:\
 	com.liferay.exportimport.test.util,\
 	com.liferay.exportimport.test.util.constants,\
 	com.liferay.exportimport.test.util.exportimport.data.handler,\
+	com.liferay.exportimport.test.util.lar,\
 	com.liferay.exportimport.test.util.model,\
 	com.liferay.exportimport.test.util.model.util
 Liferay-Releng-Module-Group-Description:

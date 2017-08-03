@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.passwordpoliciesadmin.lar;
+package com.liferay.password.poclicies.admin.internal.exportimport.data.handler.test;
 
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.PasswordPolicy;

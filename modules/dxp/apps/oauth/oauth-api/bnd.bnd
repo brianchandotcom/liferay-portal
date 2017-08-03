@@ -1,0 +1,15 @@
+Bundle-Name: Liferay OAuth API
+Bundle-SymbolicName: com.liferay.oauth.api
+Bundle-Version: 1.0.3
+Export-Package:\
+	com.liferay.oauth.configuration,\
+	com.liferay.oauth.constants,\
+	com.liferay.oauth.exception,\
+	com.liferay.oauth.model,\
+	com.liferay.oauth.service,\
+	com.liferay.oauth.service.persistence,\
+	com.liferay.oauth.util,\
+	\
+	net.oauth.*
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: OAuth Provider

@@ -1,0 +1,65 @@
+// Icon paths
+
+$FontAwesomePath: "aui/lexicon/fonts/alloy-font-awesome/font";
+$font-awesome-path: "aui/lexicon/fonts/alloy-font-awesome/font";
+$icon-font-path: "aui/lexicon/fonts/";
+
+// Font size
+
+$font-size-base: 16px !default;
+$font-size-desktop-base: 18px !default;
+
+// Skin DXP
+
+$font-family-sans-serif: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+
+$brand-default: #6A708B !default;
+
+$brand-primary: #44A5AA !default;
+
+$brand-success: #34B88B !default;
+
+$brand-info: #365D9E !default;
+
+$brand-warning: #E7773F !default;
+
+$brand-danger: #DF584C !default;
+
+$link-color: $brand-default !default;
+
+// Buttons
+
+$btn-font-size: 16px !default;
+
+$btn-lg-font-size: 18px !default;
+$btn-sm-font-size: 15px !default;
+$btn-xs-font-size: 12px !default;
+
+$btn-desktop-font-size: $btn-font-size !default;
+$btn-desktop-xs-font-size: $btn-xs-font-size !default;
+
+$btn-action-border-radius: 20px !default;
+$btn-border-radius: 8px !default;
+
+// Forms
+
+$input-desktop-font-size: 18px !default;
+$input-font-size: 16px !default;
+
+$input-label-desktop-font-size: 16px !default;
+$input-label-font-size: 14px !default;
+
+$input-font-size-base: 18px !default;
+$input-font-size-large: 20px !default;
+$input-font-size-small: 14px !default;
+
+// Toggle Switch
+
+$toggle-switch-bar-on-bg: $brand-primary !default;
+$toggle-switch-bar-on-border-color: darken($brand-primary, 5%) !default;
+
+// Management bar
+
+$management-bar-default-bg: #FFF !default;
+$management-bar-default-btn-default-border: #EBEFF6;
+$management-bar-default-btn-default-color: $brand-info !default;

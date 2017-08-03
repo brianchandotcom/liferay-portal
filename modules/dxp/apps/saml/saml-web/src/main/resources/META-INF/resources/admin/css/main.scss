@@ -1,0 +1,31 @@
+.saml-portlet-admin {
+	dl.property-list, dd.property-list {
+		margin-left: 0;
+		overflow: hidden;
+		padding: 0;
+
+		dd {
+			padding-left: 5px;
+		}
+
+		dt, dd {
+			float: left;
+			line-height: 1.5;
+			margin: 3px 0 0;
+		}
+
+		dt {
+			clear: left;
+			font-weight: bold;
+			min-width: 5em;
+		}
+	}
+
+	dd.property-list {
+		clear: both;
+
+		dl {
+			margin-top: 0;
+		}
+	}
+}

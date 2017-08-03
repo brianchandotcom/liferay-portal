@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.portal.workflow.kaleo.forms.service.persistence.KaleoProcessFinder.countByG_N_D">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT KaleoProcess.kaleoProcessId) AS COUNT_VALUE
+			FROM
+				KaleoProcess
+			INNER JOIN
+				DDLRecordSet ON
+					(DDLRecordSet.recordSetId = KaleoProcess.DDLRecordSetId)
+			WHERE
+				(KaleoProcess.groupId = ?) AND
+				(
+					(lower(DDLRecordSet.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(DDLRecordSet.description LIKE ? [$AND_OR_NULL_CHECK$])
+				)
+		]]>
+	</sql>
+	<sql id="com.liferay.portal.workflow.kaleo.forms.service.persistence.KaleoProcessFinder.findByG_N_D">
+		<![CDATA[
+			SELECT
+				{KaleoProcess.*}
+			FROM
+				KaleoProcess
+			INNER JOIN
+				DDLRecordSet ON
+					(DDLRecordSet.recordSetId = KaleoProcess.DDLRecordSetId)
+			WHERE
+				(KaleoProcess.groupId = ?) AND
+				(
+					(lower(DDLRecordSet.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(DDLRecordSet.description LIKE ? [$AND_OR_NULL_CHECK$])
+				)
+			ORDER BY
+				KaleoProcess.kaleoProcessId DESC
+		]]>
+	</sql>
+</custom-sql>

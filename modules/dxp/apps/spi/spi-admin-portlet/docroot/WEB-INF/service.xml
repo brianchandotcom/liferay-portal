@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
+
+<service-builder auto-namespace-tables="false" package-path="com.liferay.portal.resiliency.spi">
+	<author>Michael C. Han</author>
+	<namespace>SPI</namespace>
+	<entity local-service="true" name="SPIDefinition" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="spiDefinitionId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="name" type="String" />
+		<column name="connectorAddress" type="String" />
+		<column name="connectorPort" type="int" />
+		<column name="description" type="String" />
+		<column name="jvmArguments" type="String" />
+		<column name="portletIds" type="String" />
+		<column name="servletContextNames" type="String" />
+		<column name="typeSettings" type="String" />
+		<column name="status" type="int" />
+		<column name="statusMessage" type="String" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="spiDefinitionId" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+		<finder name="C_N" return-type="SPIDefinition">
+			<finder-column name="companyId" />
+			<finder-column name="name" />
+		</finder>
+		<finder name="C_S" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column arrayable-operator="OR" name="status" />
+		</finder>
+		<finder name="CA_CP" return-type="SPIDefinition">
+			<finder-column name="connectorAddress" />
+			<finder-column name="connectorPort" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
+	</entity>
+	<exceptions>
+		<exception>DuplicateSPIDefinition</exception>
+		<exception>DuplicateSPIDefinitionConnector</exception>
+		<exception>InvalidDatabaseConfiguration</exception>
+		<exception>InvalidSPIDefinitionConnector</exception>
+		<exception>SPIDefinitionActive</exception>
+	</exceptions>
+</service-builder>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!DOCTYPE look-and-feel PUBLIC "-//Liferay//DTD Look and Feel 7.0.0//EN" "http://www.liferay.com/dtd/liferay-look-and-feel_7_0_0.dtd">
+
+<look-and-feel>
+	<compatibility>
+		<version>7.0.0+</version>
+	</compatibility>
+	<theme id="admin" name="Admin">
+		<template-extension>ftl</template-extension>
+		<control-panel-theme>true</control-panel-theme>
+		<page-theme>false</page-theme>
+	</theme>
+</look-and-feel>

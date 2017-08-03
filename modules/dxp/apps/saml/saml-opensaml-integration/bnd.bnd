@@ -1,0 +1,38 @@
+Bundle-Name: Liferay SAML OpenSAML Integration
+Bundle-SymbolicName: com.liferay.saml.opensaml.integration
+Bundle-Version: 1.0.0
+Import-Package:\
+	!bsh,\
+	\
+	!com.google.common.*,\
+	\
+	!com.sun.*,\
+	\
+	!com.swabunga.*,\
+	\
+	!com.werken.*,\
+	\
+	!net.fortuna.*,\
+	\
+	!net.jcip.*,\
+	\
+	!nu.xom,\
+	\
+	!org.apache.axis.*,\
+	!org.apache.commons.configuration,\
+	!org.apache.commons.ssl,\
+	!org.apache.log.*,\
+	!org.apache.oro.*,\
+	!org.apache.poi.*,\
+	!org.apache.tools.ant.*,\
+	!org.apache.xml.resolver.*,\
+	\
+	!org.joda.convert,\
+	\
+	!org.owasp.validator.html,\
+	\
+	!sun.io,\
+	\
+	*
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:

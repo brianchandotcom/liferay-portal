@@ -1,0 +1,122 @@
+.kaleo-forms-admin-portlet {
+	.kaleo-process-assign-form-button {
+		width: 122px;
+	}
+
+	.kaleo-process-buttons .btn {
+		margin-left: 5px;
+	}
+
+	.kaleo-process-export-dialog, .kaleo-process-preview-fields-dialog {
+		.modal-content {
+			.modal-body {
+				.checkbox {
+					margin-bottom: 0
+				}
+
+				.property-builder-content {
+					margin: 0;
+					min-height: 320px;
+
+					.property-builder-content-container {
+						padding-right: 0;
+						width: 100%;
+
+						.property-builder-drop-container {
+							min-height: 0;
+						}
+					}
+				}
+			}
+
+			.modal-footer {
+				margin-top: 0;
+			}
+		}
+	}
+
+	.kaleo-process-header {
+		line-height: 10px;
+	}
+
+	.kaleo-process-message {
+		color: #CCC;
+		font-style: italic;
+		margin-bottom: 20px;
+	}
+
+	.separator {
+		border-width: 0;
+		margin-top: 1.5em;
+	}
+
+	ul.kaleo-process-workflow-nav-tabs {
+		margin-bottom: 0px;
+	}
+
+	.form .taglib-form-navigator > .form-steps > ul.form-navigator.nav {
+		margin: 6px 0 20px 0;
+
+		.tab, .tab.section-error {
+			.tab-label {
+				.message {
+					color: #8D8D8D;
+					font-size: 15px;
+				}
+
+				.number {
+					background: #F4F4F4;
+					color: #8D8D8D;
+				}
+			}
+		}
+
+		.tab.active, .tab.active.section-error, .tab.active, .tab.active.section-success {
+			.tab-label {
+				.message {
+					color: #009AE5;
+					font-size: 15px;
+					font-weight: bolder;
+				}
+
+				.number {
+					background: #009AE5;
+					color: #FFF;
+				}
+			}
+		}
+
+		.tab.section-success .tab-label {
+			.message {
+				color: #80CCF2;
+			}
+
+			.number {
+				background: #FFF;
+				color: #80CCF2;
+			}
+		}
+	}
+}
+
+/* ---------- Extras ---------- */
+
+.kaleo-forms-admin-portlet {
+	.form .taglib-form-navigator > .form-steps > ul.form-navigator.nav {
+		.tab, .tab.section-error {
+			.tab-label .number {
+				box-shadow: 0 0 5px 0 #8D8D8D;
+			}
+		}
+
+		.tab.active, .tab.active.section-error, .tab.active, .tab.active.section-success {
+			.tab-label .number {
+				box-shadow: 0 0 5px 0 #009AE5;
+			}
+		}
+
+		.tab.section-success .tab-label .number {
+			box-shadow: 0 0 5px 0 #80CCF2;
+		}
+	}
+}

@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.portal.reports.engine.console.service.persistence.DefinitionFinder.countByG_S_N_D_RN">
+		<![CDATA[
+			SELECT
+				COUNT(Reports_Definition.definitionId) AS COUNT_VALUE
+			FROM
+				Reports_Definition
+			WHERE
+				(Reports_Definition.groupId = ?) AND
+				(Reports_Definition.sourceId = ?) [$AND_OR_CONNECTOR$]
+				(lower(CAST_TEXT(Reports_Definition.name)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+				(lower(CAST_TEXT(Reports_Definition.description)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+				(lower(Reports_Definition.reportName) LIKE ? [$AND_OR_NULL_CHECK$])
+		]]>
+	</sql>
+	<sql id="com.liferay.portal.reports.engine.console.service.persistence.DefinitionFinder.findByG_S_N_D_RN">
+		<![CDATA[
+			SELECT
+				{Reports_Definition.*}
+			FROM
+				Reports_Definition
+			WHERE
+				(Reports_Definition.groupId = ?) AND
+				(Reports_Definition.sourceId = ?) [$AND_OR_CONNECTOR$]
+				(lower(CAST_TEXT(Reports_Definition.name)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+				(lower(CAST_TEXT(Reports_Definition.description)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+				(lower(Reports_Definition.reportName) LIKE ? [$AND_OR_NULL_CHECK$])
+			ORDER BY
+				Reports_Definition.definitionId DESC
+		]]>
+	</sql>
+	<sql id="com.liferay.portal.reports.engine.console.service.persistence.EntryFinder.countByG_CD_N_SN">
+		<![CDATA[
+			SELECT
+				COUNT(Reports_Entry.entryId) AS COUNT_VALUE
+			FROM
+				Reports_Entry
+			INNER JOIN
+				Reports_Definition ON
+					(Reports_Definition.definitionId = Reports_Entry.definitionId)
+			INNER JOIN
+				User_ ON
+					(User_.userId = Reports_Entry.userId)
+			WHERE
+				(Reports_Entry.groupId = ?) AND
+				(Reports_Entry.createDate > ?) AND
+				(Reports_Entry.createDate < ?) AND
+				(lower(CAST_TEXT(Reports_Definition.name)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+				(lower(User_.screenName) LIKE ? [$AND_OR_NULL_CHECK$])
+		]]>
+	</sql>
+	<sql id="com.liferay.portal.reports.engine.console.service.persistence.EntryFinder.findByG_CD_N_SN">
+		<![CDATA[
+			SELECT
+				{Reports_Entry.*}
+			FROM
+				Reports_Entry
+			INNER JOIN
+				Reports_Definition ON
+					(Reports_Definition.definitionId = Reports_Entry.definitionId)
+			INNER JOIN
+				User_ ON
+					(User_.userId = Reports_Entry.userId)
+			WHERE
+				(Reports_Entry.groupId = ?) AND
+				(Reports_Entry.createDate > ?) AND
+				(Reports_Entry.createDate < ?) AND
+				(lower(CAST_TEXT(Reports_Definition.name)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+				(lower(User_.screenName) LIKE ? [$AND_OR_NULL_CHECK$])
+			ORDER BY
+				Reports_Entry.entryId DESC
+		]]>
+	</sql>
+	<sql id="com.liferay.portal.reports.engine.console.service.persistence.SourceFinder.countByG_N_DU">
+		<![CDATA[
+			SELECT
+				COUNT(Reports_Source.sourceId) AS COUNT_VALUE
+			FROM
+				Reports_Source
+			WHERE
+				(Reports_Source.groupId = ?) AND
+				(lower(CAST_TEXT(Reports_Source.name)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+				(lower(Reports_Source.driverUrl) LIKE ? [$AND_OR_NULL_CHECK$])
+		]]>
+	</sql>
+	<sql id="com.liferay.portal.reports.engine.console.service.persistence.SourceFinder.findByG_N_DU">
+		<![CDATA[
+			SELECT
+				{Reports_Source.*}
+			FROM
+				Reports_Source
+			WHERE
+				(Reports_Source.groupId = ?) AND
+				(lower(CAST_TEXT(Reports_Source.name)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+				(lower(Reports_Source.driverUrl) LIKE ? [$AND_OR_NULL_CHECK$])
+			ORDER BY
+				Reports_Source.sourceId DESC
+		]]>
+	</sql>
+</custom-sql>

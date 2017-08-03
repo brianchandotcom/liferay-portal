@@ -1,0 +1,13 @@
+Bundle-Name: Liferay Portal Workflow Kaleo Forms API
+Bundle-SymbolicName: com.liferay.portal.workflow.kaleo.forms.api
+Bundle-Version: 1.1.2
+Export-Package:\
+	com.liferay.portal.workflow.kaleo.forms.constants,\
+	com.liferay.portal.workflow.kaleo.forms.exception,\
+	com.liferay.portal.workflow.kaleo.forms.model,\
+	com.liferay.portal.workflow.kaleo.forms.service,\
+	com.liferay.portal.workflow.kaleo.forms.service.persistence,\
+	com.liferay.portal.workflow.kaleo.forms.util.comparator
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Kaleo Forms
+-include: ../../../../../../modules/apps/forms-and-workflow/app.bnd

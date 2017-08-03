@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<ivy-module
+	version="2.0"
+	xmlns:m2="http://ant.apache.org/ivy/maven"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd"
+>
+	<info module="spi-provider-tomcat-web" organisation="com.liferay">
+		<extends extendType="configurations,description,info" location="${sdk.dir}/ivy.xml" module="com.liferay.sdk" organisation="com.liferay" revision="latest.integration" />
+	</info>
+
+	<dependencies defaultconf="default">
+		<dependency name="ecj" org="org.eclipse.jdt.core.compiler" rev="3.7.2" />
+		<dependency name="tomcat-embed-core" org="org.apache.tomcat.embed" rev="7.0.42" />
+		<dependency name="tomcat-embed-jasper" org="org.apache.tomcat.embed" rev="7.0.42" />
+		<dependency name="tomcat-embed-logging-juli" org="org.apache.tomcat.embed" rev="7.0.42" />
+	</dependencies>
+</ivy-module>

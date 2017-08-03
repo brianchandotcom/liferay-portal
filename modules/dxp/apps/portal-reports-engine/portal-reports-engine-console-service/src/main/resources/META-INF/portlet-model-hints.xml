@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.portal.reports.engine.console.model.Definition">
+		<field name="uuid" type="String" />
+		<field name="definitionId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field localized="true" name="name" type="String" />
+		<field localized="true" name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="sourceId" type="long" />
+		<field name="reportName" type="String" />
+		<field name="reportParameters" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="lastPublishDate" type="Date" />
+	</model>
+	<model name="com.liferay.portal.reports.engine.console.model.Entry">
+		<field name="entryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="definitionId" type="long" />
+		<field name="format" type="String" />
+		<field name="scheduleRequest" type="boolean" />
+		<field name="startDate" type="Date" />
+		<field name="endDate" type="Date" />
+		<field name="repeating" type="boolean" />
+		<field name="recurrence" type="String" />
+		<field name="emailNotifications" type="String">
+			<hint name="max-length">200</hint>
+		</field>
+		<field name="emailDelivery" type="String">
+			<hint name="max-length">200</hint>
+		</field>
+		<field name="portletId" type="String" />
+		<field name="pageURL" type="String">
+			<hint-collection name="URL" />
+		</field>
+		<field name="reportParameters" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="status" type="String" />
+		<field name="errorMessage" type="String">
+			<hint name="max-length">4000</hint>
+		</field>
+	</model>
+	<model name="com.liferay.portal.reports.engine.console.model.Source">
+		<field name="uuid" type="String" />
+		<field name="sourceId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="lastPublishDate" type="Date" />
+		<field localized="true" name="name" type="String" />
+		<field name="driverClassName" type="String" />
+		<field name="driverUrl" type="String">
+			<hint-collection name="URL" />
+		</field>
+		<field name="driverUserName" type="String" />
+		<field name="driverPassword" type="String" />
+	</model>
+</model-hints>

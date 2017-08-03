@@ -1,0 +1,13 @@
+Liferay-Releng-App-Description: Leverage Liferay Reports's easy to use and intuitive UI for creating and scheduling report generation runs. The Liferay Reports app packages a reporting engine with Jasper Reports, an excellent implementation, giving you out-of-the-box ability to upload report definitions (designed in a report designer) into Reports Admin, and run them from the Definitions tab. Generate reports manually or schedule report generation runs. Export reports to HTML, CSV, XLS, PDF, and more. Reports can be viewed in the Reports Admin application in the Control Panel, or on a page with the Reports Display application, and can also be delivered via email.
+Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Reports
+Liferay-Releng-Bundle: false
+Liferay-Releng-Category: Productivity
+Liferay-Releng-Demo-Url:
+Liferay-Releng-Deprecated: false
+Liferay-Releng-Labs: false
+Liferay-Releng-Marketplace: true
+Liferay-Releng-Portal-Required: false
+Liferay-Releng-Public: ${liferay.releng.public}
+Liferay-Releng-Restart-Required: true
+Liferay-Releng-Support-Url: http://www.liferay.com
+Liferay-Releng-Supported: ${liferay.releng.supported}

@@ -1,0 +1,5 @@
+com/liferay/saml/opensaml/integration/internal/credential/BaseKeyStoreManagerImpl.getSamlKeyStorePath()Ljava/lang/String;:SAFE
+com/liferay/saml/opensaml/integration/internal/profile/SamlSloContext.<init>(Lcom/liferay/saml/persistence/model/SamlIdpSsoSession;Lcom/liferay/saml/persistence/service/SamlIdpSpConnectionLocalService;Lcom/liferay/saml/persistence/service/SamlIdpSpSessionLocalService;Lcom/liferay/portal/kernel/service/UserLocalService;)V:SAFE
+com/liferay/saml/opensaml/integration/internal/profile/SamlSloContext.<init>(Lcom/liferay/saml/persistence/model/SamlIdpSsoSession;Lorg/opensaml/common/binding/SAMLMessageContext;Lcom/liferay/saml/persistence/service/SamlIdpSpConnectionLocalService;Lcom/liferay/saml/persistence/service/SamlIdpSpSessionLocalService;Lcom/liferay/portal/kernel/service/UserLocalService;)V:SAFE
+com/liferay/portal/kernel/util/Portal.escapeRedirect(UNKNOWN):SAFE@com/liferay/saml/opensaml/integration/internal/profile/WebSsoProfileImpl
+com/liferay/saml/persistence/model/SamlSpSession.getSamlSpSessionKey()Ljava/lang/String;:SAFE

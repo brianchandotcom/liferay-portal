@@ -1,0 +1,21 @@
+.header-toolbar {
+	left: 0;
+	position: fixed;
+	right: 0;
+	top: 0;
+	z-index: 500;
+}
+
+body {
+	&.open .header-toolbar {
+		@include sm() {
+			left: 320px;
+		}
+	}
+
+	&.sidenav-transition .header-toolbar {
+		@include sm() {
+			@include transition(all 0.5s ease);
+		}
+	}
+}

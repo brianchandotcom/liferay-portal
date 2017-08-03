@@ -1,0 +1,41 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+EntryDisplayTerms displayTerms = (EntryDisplayTerms)searchContainer.getDisplayTerms();
+
+Date startDate = PortalUtil.getDate(displayTerms.getStartDateMonth(), displayTerms.getStartDateDay(), displayTerms.getStartDateYear(), timeZone, null);
+Date endDate = PortalUtil.getDate(displayTerms.getEndDateMonth(), displayTerms.getEndDateDay() + 1, displayTerms.getEndDateYear(), timeZone, null);
+
+if (displayTerms.isAdvancedSearch()) {
+	total = EntryServiceUtil.getEntriesCount(themeDisplay.getSiteGroupId(), displayTerms.getDefinitionName(), null, startDate, endDate, displayTerms.isAndOperator());
+
+	searchContainer.setTotal(total);
+
+	results = EntryServiceUtil.getEntries(themeDisplay.getSiteGroupId(), displayTerms.getDefinitionName(), null, startDate, endDate, displayTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+
+	searchContainer.setResults(results);
+}
+else {
+	total = EntryServiceUtil.getEntriesCount(themeDisplay.getSiteGroupId(), displayTerms.getKeywords(), null, null, null, false);
+
+	searchContainer.setTotal(total);
+
+	results = EntryServiceUtil.getEntries(themeDisplay.getSiteGroupId(), displayTerms.getKeywords(), null, null, null, false, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+
+	searchContainer.setResults(results);
+}
+%>

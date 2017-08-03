@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.sharepoint.oauth2.model.SharepointOAuth2TokenEntry">
+		<field name="sharepointOAuth2TokenEntryId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="accessToken" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="configurationId" type="String" />
+		<field name="expirationDate" type="Date" />
+		<field name="refreshToken" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+	</model>
+</model-hints>

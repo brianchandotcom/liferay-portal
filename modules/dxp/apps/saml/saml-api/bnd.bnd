@@ -1,0 +1,45 @@
+Bundle-Name: Liferay SAML API
+Bundle-SymbolicName: com.liferay.saml.api
+Bundle-Version: 1.1.0
+Export-Package:\
+	com.liferay.saml.constants,\
+	com.liferay.saml.runtime,\
+	com.liferay.saml.runtime.binding,\
+	com.liferay.saml.runtime.certificate,\
+	com.liferay.saml.runtime.configuration,\
+	com.liferay.saml.runtime.credential,\
+	com.liferay.saml.runtime.exception,\
+	com.liferay.saml.runtime.metadata,\
+	com.liferay.saml.runtime.profile,\
+	com.liferay.saml.util
+Import-Package:\
+	!bsh,\
+	\
+	!com.google.common.*,\
+	\
+	!com.sun.*,\
+	\
+	!com.swabunga.*,\
+	\
+	!com.werken.*,\
+	\
+	!net.fortuna.*,\
+	\
+	!net.jcip.*,\
+	\
+	!nu.xom,\
+	\
+	!org.apache.axis.*,\
+	!org.apache.commons.configuration,\
+	!org.apache.commons.ssl,\
+	!org.apache.log.*,\
+	!org.apache.oro.*,\
+	!org.apache.poi.*,\
+	\
+	!org.joda.convert,\
+	\
+	!org.owasp.validator.html,\
+	\
+	*
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:

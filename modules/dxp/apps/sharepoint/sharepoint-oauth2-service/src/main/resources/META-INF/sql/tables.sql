@@ -1,0 +1,10 @@
+create table SharepointOAuth2TokenEntry (
+	sharepointOAuth2TokenEntryId LONG not null primary key,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	accessToken TEXT null,
+	configurationId VARCHAR(75) null,
+	expirationDate DATE null,
+	refreshToken TEXT null
+);

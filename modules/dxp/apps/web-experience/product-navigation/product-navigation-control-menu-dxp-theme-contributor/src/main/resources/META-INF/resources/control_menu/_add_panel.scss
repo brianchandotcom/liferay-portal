@@ -1,0 +1,87 @@
+@import "bourbon";
+@import "mixins";
+
+body.open-admin-panel {
+	@include sm() {
+		padding-right: $admin-panel-width;
+	}
+
+	.control-menu {
+		@include sm() {
+			padding-right: 0;
+			right: $admin-panel-width;
+		}
+	}
+
+	.control-menu-level-2 {
+		@include sm() {
+			right: $admin-panel-width;
+		}
+	}
+}
+
+body.open-admin-panel, body.sidenav-transition {
+	@include sm() {
+		overflow-x: hidden;
+	}
+}
+
+.lfr-admin-panel.sidenav-menu-slider {
+	z-index: $admin-panel-zindex;
+
+	.product-menu {
+		width: $admin-panel-width;
+	}
+}
+
+.lfr-add-panel.open-admin-panel {
+	visibility: visible;
+	width: $admin-panel-width;
+}
+
+.lfr-admin-panel {
+	.product-menu {
+		@include sm() {
+			position: absolute;
+			right: 0;
+		}
+	}
+
+	.sidebar-body {
+		border-left: 1px solid $product-menu-panel-title-active-bg;
+		border-right-width: 0;
+		padding: 0;
+	}
+}
+
+.lfr-add-panel, .lfr-simulation-panel {
+	.add-content-menu .add-portlet-message {
+		background-color: $product-menu-panel-title-active-bg;
+	}
+
+	.lfr-device-item.selected {
+		color: $control-menu-level-2-bg;
+
+		.icon {
+			background-color: $control-menu-level-2-bg;
+			color: $control-menu-level-2-color;
+		}
+	}
+
+	.product-menu .sidebar-header {
+		background-color: $control-menu-level-2-bg;
+		padding: 16px 24px;
+	}
+
+	.sidebar-inverse {
+		.nav > li > a:hover {
+			color: $control-menu-level-1-bg;
+		}
+	}
+}
+
+.lfr-simulation-panel {
+	.custom-devices {
+		background-color: $control-menu-level-2-color;
+	}
+}

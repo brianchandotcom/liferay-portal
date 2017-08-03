@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+
+<EntitiesDescriptor xmlns="urn:oasis:names:tc:SAML:2.0:metadata" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:shibmd="urn:mace:shibboleth:metadata:1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<EntityDescriptor entityID="https://saml.liferay.com/shibboleth">
+		<SPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol urn:oasis:names:tc:SAML:1.1:protocol urn:oasis:names:tc:SAML:1.0:protocol">
+			<KeyDescriptor>
+				<ds:KeyInfo>
+					<ds:X509Data>
+						<ds:X509Certificate>
+							<![CDATA[
+								MIIFvjCCA6YCCQC5YeW4p3BcpDANBgkqhkiG9w0BAQUFADCBoDELMAkGA1UEBhMC
+								VVMxCzAJBgNVBAgTAkNBMREwDwYDVQQHEwhTYW4gSm9zZTEWMBQGA1UEChMNQ2lz
+								Y28gU3lzdGVtczENMAsGA1UECxMESFJJVDEgMB4GA1UEAxMXbWV0cmljcy1zdGcu
+								bmV0YWNhZC5uZXQxKDAmBgkqhkiG9w0BCQEWGW5ldGFjYWQtb24tY2FsbEBjaXNj
+								by5jb20wHhcNMTEwMjA0MjI0ODM4WhcNMTMwMjAzMjI0ODM4WjCBoDELMAkGA1UE
+								BhMCVVMxCzAJBgNVBAgTAkNBMREwDwYDVQQHEwhTYW4gSm9zZTEWMBQGA1UEChMN
+								Q2lzY28gU3lzdGVtczENMAsGA1UECxMESFJJVDEgMB4GA1UEAxMXbWV0cmljcy1z
+								dGcubmV0YWNhZC5uZXQxKDAmBgkqhkiG9w0BCQEWGW5ldGFjYWQtb24tY2FsbEBj
+								aXNjby5jb20wggIiMA0GCSqGSIb3DQEBAQUAA4ICDwAwggIKAoICAQDTHr+FWz4m
+								IJeLxyZ0mXEY+rivbM3l11+I0HDVa71jfhlrdT4P/w2/hMLPGMu5dr8pDglc8FMb
+								K/x92biN4kCHwZF6FNO9vtqBPgXbXfESYb6clNmVMhKK54C+q29U0lZLRvqW6B5V
+								n48rXAAbAMhjWoW06W+6XrPHr6UD5qPIAh7sYjJXFdyYBcJUCi4JLDXp5FNOLAfd
+								NQCcq/5IGj8KifFu2THtC8l3sh18PeX0qSJRh3zW+CxELid4WM34qcvLuFokyRfO
+								aBEoC+ywUJeXLG93f00a/PySRqPc3a/ELH5bbgcGuNGEioLH0lqNIKU25dBsxGVz
+								TurK1cX6gKSmxQBnu+VUcm4WYgMEacA9EeAfIZ39s4D0An3sxYyC6ekY/1xB8knJ
+								9bKqZCUNYTBYXApo6klQCwBlEYnXK6QkFe3B0oxmvd5faZcWeJLa2iTbjDCaEstm
+								hAhGPvHm5Y8PhznBDT3IYlWIT6R4BCn5EnzQzoLAIjsPmaiKCwiZ4jC8pW9WlU26
+								9E/LU4b8Uhq+zPnX0N3Hbt1EkpIWNmye2Hjq9vhp0ormU6wNYwQ+eZl/Wa7xQwWi
+								z6VGFQ2EG2X+368oX63K7eJC0UFa3YN/Rc7+CXKgKeCR5S2EI9qEG//0IHANtYli
+								faer8PTVNjZVPMwFgoq/qIXTGHBhJOjR0QIDAQABMA0GCSqGSIb3DQEBBQUAA4IC
+								AQB6lYReecwrFeiLj+7B3MLqdfOdKVR61pOm9+vXzI9krcoIfkeqHN9THIf7Wn2I
+								Dxwd8L3USSvH4b1OQ5w+tXCJRodVrp2ueVz901KVrEb8ECxDgAXZrPBX8ig6qhYy
+								ikWESvTOReYPmmqKS40ktUVP4/Ug2wT9ntmLAeZNQTJ3i87cQQTTffiaUabHgO6f
+								GEuUPIicm8RRw4HjvYj4W6oDMLygguHISssyguQ3f5sXLw/ul0Ll/aDuKfhj1JbX
+								dMa9dSWJZgUditdhHkNBN0hXIIBp6ErRAyoyB0Ptw0P1hSBEGjGV1ejJrGPWGKtM
+								qJ4U9MtCU/Iz/COSDYBiz7VAE7VmSQixHiKrU2ajCvqac8k/XIO1EdZzcnxjRVhU
+								NbYRakk/9J+vuCQLeMRl/VXxN1hi/0ln5ho5P/OWxmHhCBPh2YMZ2aUhvXxNYNmi
+								Lia9VEk3X3nnd8S5a/as2ymARMbm3Xcz6TTo/q23RhU4yDF4ElohnFGpB5eF7i8q
+								xfZ5I33F9wgWCnqw3maYYu3sqwhFq3vUA0fQVgN/nirOhMu05Eci8M9MhTXCU6MP
+								t3iAznW6KtgrCmQzBbVY3v5YYbYAFbH0bznu5aU6ODPghTwY0Y0Sw8ckmsFLGx/1
+								/n1YHtjEEe8/LeISnttxMT9Z/tY8PvmXUpsiIa95vhgcXA==
+							]]>
+						</ds:X509Certificate>
+					</ds:X509Data>
+				</ds:KeyInfo>
+			</KeyDescriptor>
+			<SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="https://saml.liferay.com/Shibboleth.sso/SLO/SOAP" />
+			<NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
+			<NameIDFormat>urn:mace:shibboleth:1.0:nameIdentifier</NameIDFormat>
+			<AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://saml.liferay.com/Shibboleth.sso/SAML2/POST" index="1" isDefault="true" />
+			<AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign" Location="https://saml.liferay.com/Shibboleth.sso/SAML2/POST-SimpleSign" index="2" />
+			<AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact" Location="https://saml.liferay.com/Shibboleth.sso/SAML2/Artifact" index="3" />
+			<AssertionConsumerService Binding="urn:oasis:names:tc:SAML:1.0:profiles:browser-post" Location="https://saml.liferay.com/Shibboleth.sso/SAML/POST" index="4" />
+			<AssertionConsumerService Binding="urn:oasis:names:tc:SAML:1.0:profiles:artifact-01" Location="https://saml.liferay.com/Shibboleth.sso/SAML/Artifact" index="5" />
+			<AssertionConsumerService Binding="http://schemas.xmlsoap.org/ws/2003/07/secext" Location="https://saml.liferay.com/Shibboleth.sso/ADFS" index="6" />
+		</SPSSODescriptor>
+	</EntityDescriptor>
+</EntitiesDescriptor>

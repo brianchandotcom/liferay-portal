@@ -1,0 +1,38 @@
+<FindBugsFilter>
+	<Match>
+		<Class name="com.liferay.saml.opensaml.integration.internal.certificate.CertificateToolImpl" />
+		<Method name="generateCertificate" />
+		<Bug pattern="OBJECT_DESERIALIZATION" />
+	</Match>
+	<Match>
+		<Class name="com.liferay.saml.opensaml.integration.internal.profile.BaseProfile" />
+		<Or>
+			<Method name="addCookie" />
+			<Method name="logout" />
+		</Or>
+		<Or>
+			<Bug pattern="HTTPONLY_COOKIE" />
+			<Bug pattern="INSECURE_COOKIE" />
+		</Or>
+	</Match>
+	<Match>
+		<Class name="com.liferay.saml.opensaml.integration.internal.profile.BaseProfile" />
+		<Method name="addCookie" />
+		<Bug pattern="HTTP_RESPONSE_SPLITTING" />
+	</Match>
+	<Match>
+		<Class name="com.liferay.saml.opensaml.integration.internal.profile.WebSsoProfileImpl" />
+		<Method name="redirectToLogin" />
+		<Bug pattern="TRUST_BOUNDARY_VIOLATION" />
+	</Match>
+	<Match>
+		<Class name="com.liferay.saml.opensaml.integration.internal.transport.ProxyPathRequestWrapper" />
+		<Method name="getRemoteAddr" />
+		<Bug pattern="SERVLET_HEADER" />
+	</Match>
+	<Match>
+		<Class name="com.liferay.saml.opensaml.integration.internal.util.MetadataUtilImpl" />
+		<Method name="getMetadata" />
+		<Bug pattern="HTTP_PARAMETER_POLLUTION" />
+	</Match>
+</FindBugsFilter>

@@ -1,0 +1,3 @@
+dependencies {
+	provided fileTree(dir: "lib-ee", include: "*.jar")
+}

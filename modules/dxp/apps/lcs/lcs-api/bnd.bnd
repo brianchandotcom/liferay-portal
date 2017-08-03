@@ -1,0 +1,12 @@
+Bundle-Name: Liferay LCS API
+Bundle-SymbolicName: com.liferay.lcs.api
+Bundle-Version: 8.0.3
+Export-Package:\
+	com.liferay.lcs.activation,\
+	com.liferay.lcs.notification,\
+	com.liferay.lcs.portal,\
+	com.liferay.lcs.rest,\
+	com.liferay.lcs.subscription,\
+	com.liferay.lcs.util
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: LCS

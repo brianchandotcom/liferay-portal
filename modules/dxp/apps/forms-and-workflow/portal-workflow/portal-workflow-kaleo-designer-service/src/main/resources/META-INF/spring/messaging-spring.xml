@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+>
+
+	<!-- Destinations -->
+
+	<bean class="com.liferay.portal.kernel.messaging.SynchronousDestination" id="destination.kaleo_definition">
+		<property name="name" value="liferay/kaleo_definition" />
+	</bean>
+
+	<!-- Listeners -->
+
+	<bean class="com.liferay.portal.workflow.kaleo.designer.internal.messaging.KaleoDefinitionMessageListener" id="messageListener.kaleo_definition" />
+
+	<!-- Configurator -->
+
+	<bean class="com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator" id="messagingConfigurator">
+		<property name="destinations">
+			<list>
+				<ref bean="destination.kaleo_definition" />
+			</list>
+		</property>
+		<property name="messageListeners">
+			<map key-type="java.lang.String" value-type="java.util.List">
+				<entry key="liferay/kaleo_definition">
+					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
+						<ref bean="messageListener.kaleo_definition" />
+					</list>
+				</entry>
+			</map>
+		</property>
+	</bean>
+</beans>

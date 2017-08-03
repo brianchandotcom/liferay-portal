@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping auto-import="false" default-lazy="false">
+	<import class="com.liferay.oauth.model.OAuthApplication" />
+	<import class="com.liferay.oauth.model.OAuthUser" />
+	<class name="com.liferay.oauth.model.impl.OAuthApplicationImpl" table="OAuth_OAuthApplication">
+		<id access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor" name="oAuthApplicationId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="consumerKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="consumerSecret" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="accessLevel" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="logoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="shareableAccessToken" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="callbackURI" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="websiteURL" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="com.liferay.oauth.model.impl.OAuthUserImpl" table="OAuth_OAuthUser">
+		<id access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor" name="oAuthUserId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor" name="oAuthApplicationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="accessToken" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="accessSecret" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+</hibernate-mapping>

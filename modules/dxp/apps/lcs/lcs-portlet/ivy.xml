@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+
+<ivy-module
+	version="2.0"
+	xmlns:m2="http://ant.apache.org/ivy/maven"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd"
+>
+	<info module="lcs-portlet" organisation="com.liferay">
+		<extends extendType="configurations,description,info" location="${sdk.dir}/ivy.xml" module="com.liferay.sdk" organisation="com.liferay" revision="latest.integration" />
+	</info>
+
+	<dependencies defaultconf="default">
+		<dependency name="com.liferay.lcs.api" org="com.liferay" rev="6.3.0" />
+		<dependency name="com.liferay.petra.json.web.service.client" org="com.liferay" rev="1.5.0" />
+		<dependency name="jackson-annotations" org="com.fasterxml.jackson.core" rev="2.4.2" />
+		<dependency name="jackson-core" org="com.fasterxml.jackson.core" rev="2.4.2" />
+		<dependency name="jackson-databind" org="com.fasterxml.jackson.core" rev="2.4.2" />
+
+		<dependency name="jcifs" org="jcifs" rev="1.3.17">
+			<exclude module="servlet-api" />
+		</dependency>
+
+		<dependency name="metrics-core" org="com.yammer.metrics" rev="2.2.0" />
+		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
+		<dependency name="org.osgi.service.cm" org="org.osgi" rev="1.5.0" />
+		<dependency name="signpost-core" org="oauth.signpost" rev="1.2.1.2" />
+		<dependency name="signpost-commonshttp4" org="oauth.signpost" rev="1.2.1.2" />
+		<dependency name="slf4j-api" org="org.slf4j" rev="1.7.2" />
+		<dependency name="httpclient" org="org.apache.httpcomponents" rev="4.5.2" />
+		<dependency name="sigar" org="org.fusesource" rev="1.6.4" />
+	</dependencies>
+</ivy-module>

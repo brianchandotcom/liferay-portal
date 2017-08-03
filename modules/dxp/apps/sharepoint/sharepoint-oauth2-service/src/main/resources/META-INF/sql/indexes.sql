@@ -1,0 +1,1 @@
+create unique index IX_17EC8C7C on SharepointOAuth2TokenEntry (userId, configurationId[$COLUMN_LENGTH:75$]);

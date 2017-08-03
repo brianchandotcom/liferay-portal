@@ -1,0 +1,12 @@
+Bundle-Activator: com.liferay.oauth.service.activator.OAuthServiceBundleActivator
+Bundle-Name: Liferay OAuth Service
+Bundle-SymbolicName: com.liferay.oauth.service
+Bundle-Version: 1.0.9
+Export-Package:\
+	com.liferay.oauth.model.impl,\
+	com.liferay.oauth.service.permission,\
+	com.liferay.oauth.service.util
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: OAuth Provider
+Liferay-Require-SchemaVersion: 1.0.0
+Liferay-Service: true

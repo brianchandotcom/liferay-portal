@@ -1,0 +1,17 @@
+Bundle-Name: Liferay Portal Reports Engine Console Service
+Bundle-SymbolicName: com.liferay.portal.reports.engine.console.service
+Bundle-Version: 1.0.2
+DynamicImport-Package: *
+Export-Package:\
+	com.liferay.portal.reports.engine.console.configuration,\
+	com.liferay.portal.reports.engine.console.service.permission,\
+	com.liferay.portal.reports.engine.console.util
+Import-Package:\
+	!net.sf.cglib.proxy.*,\
+	\
+	*
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Reports Engine Console
+Liferay-Require-SchemaVersion: 1.0.1
+Liferay-Service: true
+-includeresource: @com.liferay.util.java-*.jar!/com/liferay/util/portlet/PortletProps.class

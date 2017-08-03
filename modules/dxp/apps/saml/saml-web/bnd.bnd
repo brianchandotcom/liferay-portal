@@ -1,0 +1,16 @@
+Bundle-Name: Liferay SAML Web
+Bundle-SymbolicName: com.liferay.saml.web
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+Provide-Capability:\
+	liferay.resource.bundle;\
+		aggregate=saml-web;\
+		bundle.symbolic.name=com.liferay.saml.web;\
+		resource.bundle.aggregate:String="(&(bundle.symbolic.name=com.liferay.saml.web)(!(aggregate=*))),(bundle.symbolic.name=com.liferay.saml.api)";\
+		resource.bundle.base.name="content.Language";\
+		service.ranking="0"
+Require-Capability:\
+	liferay.resource.bundle;\
+		filter:="(bundle.symbolic.name=com.liferay.saml.api)"
+Web-ContextPath: /saml-web

@@ -1,0 +1,2 @@
+com.liferay.portal.plugin.deployment.extension.WebLogicDeploymentExtension
+com.liferay.portal.plugin.deployment.extension.WebSphereDeploymentExtension

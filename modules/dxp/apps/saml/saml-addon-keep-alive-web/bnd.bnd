@@ -1,0 +1,17 @@
+Bundle-Name: Liferay SAML Addon Keep Alive Web
+Bundle-SymbolicName: com.liferay.saml.addon.keep.alive.web
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+Provide-Capability:\
+	liferay.resource.bundle;\
+		aggregate=saml-addon-keep-alive-web;\
+		bundle.symbolic.name=com.liferay.saml.web;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.saml.addon.keep.alive.web),(&(bundle.symbolic.name=com.liferay.saml.web)(!(aggregate=saml-addon-keep-alive-web)))";\
+		resource.bundle.base.name="content.Language";\
+		service.ranking="1";\
+		servlet.context.name=saml-web,\
+	liferay.resource.bundle;\
+		bundle.symbolic.name=com.liferay.saml.addon.keep.alive.web;\
+		resource.bundle.base.name:String="content.Language"
+Web-ContextPath: /saml-addon-keep-alive-web

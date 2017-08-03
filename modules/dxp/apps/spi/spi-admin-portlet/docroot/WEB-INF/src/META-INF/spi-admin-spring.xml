@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+>
+	<bean class="com.liferay.portal.resiliency.spi.monitor.SPIDefinitionMonitorImpl" id="com.liferay.portal.resiliency.spi.monitor.SPIDefinitionMonitor">
+		<property name="interval" value="30000" />
+	</bean>
+	<bean class="com.liferay.portal.resiliency.spi.monitor.SPIDefinitionMonitorUtil" id="com.liferay.portal.resiliency.spi.monitor.SPIDefinitionMonitorUtil">
+		<property name="SPIDefinitionMonitor" ref="com.liferay.portal.resiliency.spi.monitor.SPIDefinitionMonitor" />
+	</bean>
+	<bean class="com.liferay.portal.resiliency.spi.service.permission.SPIDefinitionPermissionUtil" id="com.liferay.portal.resiliency.spi.service.permission.SPIDefinitionPermissionUtil">
+		<property name="SPIDefinitionPermission">
+			<bean class="com.liferay.portal.resiliency.spi.service.permission.SPIDefinitionPermissionImpl" />
+		</property>
+	</bean>
+	<bean class="com.liferay.portal.resiliency.spi.util.SPIConfigurationTemplate" id="com.liferay.portal.resiliency.spi.util.SPIConfigurationTemplate">
+		<property name="connectorPortMin" value="9000" />
+		<property name="connectorPortMax" value="9100" />
+		<property name="javaExecutable" value="java" />
+		<property name="JVMArguments" value="-Xmx512m -XX:PermSize=200m" />
+		<property name="minThreads" value="20" />
+		<property name="maxThreads" value="100" />
+		<property name="SPIAgentClassName" value="com.liferay.portal.resiliency.spi.agent.HttpClientSPIAgent" />
+		<property name="SPIPingInterval" value="5000" />
+		<property name="SPIPortalProperties" value="layout.parallel.render.enable=false,portal.resiliency.enabled=false" />
+		<property name="SPIProviderName" value="Tomcat SPI Provider" />
+		<property name="SPIRegisterTimeout" value="300000" />
+		<property name="SPIShutdownTimeout" value="300000" />
+	</bean>
+</beans>

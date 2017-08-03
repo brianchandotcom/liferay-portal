@@ -1,0 +1,260 @@
+@import "portlet_hello_world";
+
+@import "fonts";
+
+body {
+	background-color: $bg-color;
+}
+
+.container-fluid-1280 .row {
+	margin-left: 15px;
+	margin-right: 15px;
+}
+
+#wrapper {
+	padding: 0;
+}
+
+#banner {
+	padding: 20px 0;
+	position: relative;
+
+	a:active, a:hover, a:focus {
+		text-decoration: none;
+	}
+
+	.portlet-topper {
+		z-index: 1;
+	}
+
+	.navbar-collapse {
+		@include sm {
+			padding-right: 4px;
+		}
+	}
+
+	.navbar-toggle {
+		margin: 12px 0 12px 6px;
+	}
+
+	#heading .site-name {
+		color: $solid-color;
+		font-size: 180%;
+		vertical-align: middle;
+	}
+
+	#navigationCollapse {
+		@include media-query(null, $screen-xs-max) {
+			font-size: 125%;
+			margin-left: -15px;
+			margin-right: -15px;
+		}
+
+		#navigation {
+			.input-container {
+				position: relative;
+			}
+
+			.portlet {
+				&, .portlet-body > .navbar {
+					margin-bottom: 0;
+				}
+			}
+
+			li.open > a:focus {
+				@include tab-focus;
+			}
+		}
+
+		.navbar-blank > li {
+			& > a {
+				color: $solid-color;
+			}
+
+			&:hover, &.hover, &.active, .dropdown-menu .active {
+				& > a {
+					color: #000;
+				}
+			}
+		}
+
+		@include media-query(null, $screen-xs-max) {
+			.nav > li {
+				> a {
+					border-bottom: 1px solid #E1E1E1;
+				}
+
+				&:last-child > a {
+					border-bottom-width: 0;
+				}
+			}
+		}
+	}
+
+	.navbar-form {
+		@include sm {
+			margin-left: 30px;
+		}
+
+		.input-text-wrapper {
+			@include media-query(null, $screen-xs-max) {
+				display: block;
+			}
+		}
+
+		.form-control {
+			background-color: transparent;
+			border-bottom-width: 1px;
+			border-color: #D6DCE2;
+			margin-top: 2px;
+
+			@include media-query(null, $screen-xs-max) {
+				border-width: 0;
+			}
+		}
+
+		.search-select {
+			margin-right: 40px;
+			padding-right: 20px;
+		}
+
+		.search-input {
+			padding-right: 32px;
+
+			@include sm {
+				height: auto;
+				max-width: 200px;
+			}
+		}
+
+		.field-wrapper {
+			position: absolute;
+			right: 0;
+			top: 0;
+
+			a {
+				color: $complementary-color;
+			}
+		}
+	}
+
+	.user-personal-bar {
+		@include sm {
+			position: absolute;
+			right: 20px;
+			top: 0;
+		}
+
+		.panel-notifications-count {
+			top: 50%;
+
+			@include transform(translateY(-50%));
+
+			@include sm {
+				right: -15px;
+			}
+		}
+
+		.sign-in > a, .user-avatar-link {
+			display: block;
+		}
+
+		.sign-in > a {
+			line-height: 28px;
+			padding: 15px 4px;
+		}
+
+		.user-avatar-image {
+			display: inline-block;
+			vertical-align: text-bottom;
+			width: 32px;
+		}
+
+		.user-avatar-link {
+			line-height: 0;
+			padding: 18px 4px;
+
+			@include sm {
+				padding: 8px 0 8px 14px;
+			}
+		}
+
+		.panel-notifications-count {
+			@include media-query(null, $breakpoint_tablet - 1) {
+				left: 2px;
+				position: relative;
+				top: 6px;
+			}
+		}
+
+		.icon-user, .user-full-name {
+			display: none;
+		}
+	}
+
+	.navbar-nav {
+		@include media-query(null, $screen-xs-max) {
+			margin: 0 0;
+		}
+	}
+
+	.lfr-nav-item .lfr-nav-child-toggle {
+		line-height: 28px;
+		margin-top: -14px;
+		padding-left: 15px;
+		padding-right: 15px;
+		position: absolute;
+		right: 4px;
+		top: 50%;
+
+		@include media-query(sm, null) {
+			position: relative;
+		}
+
+		@include md {
+			padding: 0 0 0 8px;
+
+			.lexicon-icon {
+				width: 8px;
+			}
+		}
+	}
+
+	@include sm {
+		padding: 40px 0 30px;
+	}
+}
+
+#content .row {
+	margin-left: -15px;
+	margin-right: -15px;
+}
+
+#footer {
+	background-color: $solid-color;
+	color: #FFF;
+	margin-bottom: 60px;
+	padding: 40px 20px;
+
+	a {
+		color: #FFF;
+	}
+}
+
+.modify-pages .delete-tab {
+	top: 22px;
+}
+
+.display-style-buttons > .dropdown > .dropdown-menu {
+	&:after, &:before {
+		@include media-query(null, $screen-xs-max) {
+			border-width: 0;
+		}
+	}
+}
+
+@include media-query(null, $screen-sm-max) {
+	.overlay-focused:focus {
+		outline: 0;
+	}
+}

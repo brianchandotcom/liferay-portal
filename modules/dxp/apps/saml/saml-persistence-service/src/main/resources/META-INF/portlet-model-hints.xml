@@ -1,0 +1,145 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<hint-collection name="ENTITY-ID">
+		<hint name="max-length">1024</hint>
+	</hint-collection>
+	<model name="com.liferay.saml.persistence.model.SamlIdpSpConnection">
+		<field name="samlIdpSpConnectionId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="samlSpEntityId" type="String">
+			<hint-collection name="ENTITY-ID" />
+		</field>
+		<field name="assertionLifetime" type="int" />
+		<field name="attributeNames" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="attributesEnabled" type="boolean" />
+		<field name="attributesNamespaceEnabled" type="boolean" />
+		<field name="enabled" type="boolean" />
+		<field name="metadataUrl" type="String">
+			<hint-collection name="ENTITY-ID" />
+		</field>
+		<field name="metadataXml" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="metadataUpdatedDate" type="Date" />
+		<field name="name" type="String" />
+		<field name="nameIdAttribute" type="String">
+			<hint-collection name="ENTITY-ID" />
+		</field>
+		<field name="nameIdFormat" type="String">
+			<hint-collection name="ENTITY-ID" />
+		</field>
+	</model>
+	<model name="com.liferay.saml.persistence.model.SamlIdpSpSession">
+		<field name="samlIdpSpSessionId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="samlIdpSsoSessionId" type="long" />
+		<field name="samlSpEntityId" type="String">
+			<hint-collection name="ENTITY-ID" />
+		</field>
+		<field name="nameIdFormat" type="String">
+			<hint-collection name="ENTITY-ID" />
+		</field>
+		<field name="nameIdValue" type="String">
+			<hint-collection name="ENTITY-ID" />
+		</field>
+	</model>
+	<model name="com.liferay.saml.persistence.model.SamlIdpSsoSession">
+		<field name="samlIdpSsoSessionId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="samlIdpSsoSessionKey" type="String" />
+	</model>
+	<model name="com.liferay.saml.persistence.model.SamlSpAuthRequest">
+		<field name="samlSpAuthnRequestId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="samlIdpEntityId" type="String">
+			<hint-collection name="ENTITY-ID" />
+		</field>
+		<field name="samlSpAuthRequestKey" type="String" />
+	</model>
+	<model name="com.liferay.saml.persistence.model.SamlSpIdpConnection">
+		<field name="samlSpIdpConnectionId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="samlIdpEntityId" type="String">
+			<hint-collection name="ENTITY-ID" />
+		</field>
+		<field name="assertionSignatureRequired" type="boolean" />
+		<field name="clockSkew" type="long" />
+		<field name="enabled" type="boolean" />
+		<field name="forceAuthn" type="boolean" />
+		<field name="ldapImportEnabled" type="boolean" />
+		<field name="metadataUrl" type="String">
+			<hint-collection name="ENTITY-ID" />
+		</field>
+		<field name="metadataXml" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="metadataUpdatedDate" type="Date" />
+		<field name="name" type="String" />
+		<field name="nameIdFormat" type="String">
+			<hint-collection name="ENTITY-ID" />
+		</field>
+		<field name="signAuthnRequest" type="boolean" />
+		<field name="userAttributeMappings" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+	</model>
+	<model name="com.liferay.saml.persistence.model.SamlSpMessage">
+		<field name="samlSpMessageId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="samlIdpEntityId" type="String">
+			<hint-collection name="ENTITY-ID" />
+		</field>
+		<field name="samlIdpResponseKey" type="String" />
+		<field name="expirationDate" type="Date" />
+	</model>
+	<model name="com.liferay.saml.persistence.model.SamlSpSession">
+		<field name="samlSpSessionId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="samlSpSessionKey" type="String" />
+		<field name="assertionXml" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="jSessionId" type="String">
+			<hint name="max-length">200</hint>
+		</field>
+		<field name="nameIdFormat" type="String">
+			<hint-collection name="ENTITY-ID" />
+		</field>
+		<field name="nameIdNameQualifier" type="String">
+			<hint-collection name="ENTITY-ID" />
+		</field>
+		<field name="nameIdSPNameQualifier" type="String">
+			<hint-collection name="ENTITY-ID" />
+		</field>
+		<field name="nameIdValue" type="String">
+			<hint-collection name="ENTITY-ID" />
+		</field>
+		<field name="sessionIndex" type="String" />
+		<field name="terminated" type="boolean" />
+	</model>
+</model-hints>

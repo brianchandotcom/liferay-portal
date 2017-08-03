@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping auto-import="false" default-lazy="false">
+	<import class="com.liferay.sharepoint.oauth2.model.SharepointOAuth2TokenEntry" />
+	<class name="com.liferay.sharepoint.oauth2.model.impl.SharepointOAuth2TokenEntryImpl" table="SharepointOAuth2TokenEntry">
+		<id name="sharepointOAuth2TokenEntryId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="accessToken" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property name="configurationId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="expirationDate" type="org.hibernate.type.TimestampType" />
+		<property name="refreshToken" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,5 @@
+Bundle-Name: Liferay LCS Messaging OSGi
+Bundle-SymbolicName: com.liferay.lcs.messaging.osgi
+Bundle-Version: 1.0.2
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: LCS

@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
+
+<service-builder auto-namespace-tables="false" package-path="com.liferay.portal.workflow.kaleo.forms">
+	<author>Marcellus Tavares</author>
+	<namespace>KaleoForms</namespace>
+	<entity local-service="true" name="KaleoProcess" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="kaleoProcessId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="DDLRecordSetId" type="long" />
+		<column name="DDMTemplateId" type="long" />
+		<column name="workflowDefinitionName" type="String" />
+		<column name="workflowDefinitionVersion" type="int" />
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="DDLRecordSetId" return-type="KaleoProcess">
+			<finder-column name="DDLRecordSetId" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="DDLRecord" package-path="com.liferay.dynamic.data.lists" />
+		<reference entity="DDLRecordSet" package-path="com.liferay.dynamic.data.lists" />
+		<reference entity="WorkflowDefinitionLink" package-path="com.liferay.portal" />
+		<reference entity="WorkflowInstanceLink" package-path="com.liferay.portal" />
+	</entity>
+	<entity local-service="true" name="KaleoProcessLink" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="kaleoProcessLinkId" primary="true" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="kaleoProcessId" type="long" />
+		<column name="workflowTaskName" type="String" />
+		<column name="DDMTemplateId" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="KaleoProcessId" return-type="Collection">
+			<finder-column name="kaleoProcessId" />
+		</finder>
+		<finder name="KPI_WTN" return-type="KaleoProcessLink" unique="true">
+			<finder-column name="kaleoProcessId" />
+			<finder-column name="workflowTaskName" />
+		</finder>
+	</entity>
+	<exceptions>
+		<exception>KaleoProcessDDMTemplateId</exception>
+	</exceptions>
+</service-builder>

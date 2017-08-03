@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Product Navigation Product Menu DXP Theme Contributor
+Bundle-SymbolicName: com.liferay.product.navigation.product.menu.dxp.theme.contributor
+Bundle-Version: 1.0.8
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Product Navigation
+Liferay-Theme-Contributor-Type: product-navigation-product-menu
+Liferay-Theme-Contributor-Weight: 500
+Web-ContextPath: /product-navigation-product-menu-dxp-theme-contributor

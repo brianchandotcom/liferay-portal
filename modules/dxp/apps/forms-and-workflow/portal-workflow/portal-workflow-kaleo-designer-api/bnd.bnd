@@ -1,0 +1,13 @@
+Bundle-Name: Liferay Portal Workflow Kaleo Designer API
+Bundle-SymbolicName: com.liferay.portal.workflow.kaleo.designer.api
+Bundle-Version: 1.0.4
+Export-Package:\
+	com.liferay.portal.workflow.kaleo.designer.constants,\
+	com.liferay.portal.workflow.kaleo.designer.exception,\
+	com.liferay.portal.workflow.kaleo.designer.model,\
+	com.liferay.portal.workflow.kaleo.designer.service,\
+	com.liferay.portal.workflow.kaleo.designer.service.persistence,\
+	com.liferay.portal.workflow.kaleo.designer.util.comparator
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Kaleo Designer
+-include: ../../../../../../modules/apps/forms-and-workflow/app.bnd

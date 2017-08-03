@@ -1,0 +1,33 @@
+apply plugin: "com.liferay.lang.merger"
+
+dependencies {
+	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	provided group: "com.liferay", name: "com.liferay.application.list.api", version: "2.0.0"
+	provided group: "com.liferay", name: "com.liferay.dynamic.data.lists.api", version: "2.0.0"
+	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "3.2.0"
+	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.io", version: "2.0.0"
+	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.service", version: "2.0.0"
+	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.taglib", version: "2.0.0"
+	provided group: "com.liferay", name: "com.liferay.frontend.taglib", version: "2.0.0"
+	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"
+	provided group: "com.liferay", name: "com.liferay.portal.upgrade", version: "2.0.0"
+	provided group: "com.liferay", name: "com.liferay.portal.workflow.kaleo.designer.api", version: "1.0.0"
+	provided group: "com.liferay", name: "com.liferay.portal.workflow.kaleo.designer.web", version: "1.0.0"
+	provided group: "com.liferay", name: "com.liferay.portal.workflow.kaleo.forms.api", version: "1.1.0"
+	provided group: "com.liferay", name: "com.liferay.portal.workflow.kaleo.forms.service", version: "1.0.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.6.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.4.0"
+	provided group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "2.0.0"
+	provided group: "javax.portlet", name: "portlet-api", version: "2.0"
+	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
+	provided group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
+}
+
+mergeLang {
+	sourceDirs = [
+		"../../../../../apps/forms-and-workflow/dynamic-data-lists/dynamic-data-lists-form-web/src/main/resources/content",
+		"../../../../../apps/forms-and-workflow/portal-workflow/portal-workflow-lang/src/main/resources/content",
+		"../../../../../apps/web-experience/staging/staging-lang/src/main/resources/content",
+		"src/main/resources/content"
+	]
+}

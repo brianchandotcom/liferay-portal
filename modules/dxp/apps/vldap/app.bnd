@@ -1,0 +1,13 @@
+Liferay-Releng-App-Description: Lightweight Directory Access Protocol (LDAP) is an application protocol for accessing and maintaining distributed directory information services over an Internet Protocol (IP) network.<br /><br />This app exposes Liferay's user data store via the LDAP protocols. This allows third party tools to access Liferay user information (profile, roles, groups, etc) as if accessing an LDAP server.<br /><br />This app installs as a Liferay service.
+Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Virtual LDAP Server
+Liferay-Releng-Bundle: false
+Liferay-Releng-Category: Security
+Liferay-Releng-Demo-Url:
+Liferay-Releng-Deprecated: false
+Liferay-Releng-Labs: false
+Liferay-Releng-Marketplace: false
+Liferay-Releng-Portal-Required: false
+Liferay-Releng-Public: ${liferay.releng.public}
+Liferay-Releng-Restart-Required: true
+Liferay-Releng-Support-Url: http://www.liferay.com
+Liferay-Releng-Supported: ${liferay.releng.supported}

@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Portal Workflow Kaleo Designer Web
+Bundle-SymbolicName: com.liferay.portal.workflow.kaleo.designer.web
+Bundle-Version: 1.0.19
+Export-Package: com.liferay.portal.workflow.kaleo.designer.web.constants
+Liferay-JS-Config: /META-INF/resources/designer/js/config.js
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Kaleo Designer
+-include: ../../../../../../modules/apps/forms-and-workflow/app.bnd

@@ -121,7 +121,7 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 		return commerceCountryLocalService.updateCommerceCountry(
 			commerceCountry.getCommerceCountryId(), nameMap, billingAllowed,
 			shippingAllowed, twoLettersISOCode, threeLettersISOCode,
-			numericISOCode, subjectToVAT, priority, active);
+			numericISOCode, subjectToVAT, priority, active, serviceContext);
 	}
 
 }

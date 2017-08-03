@@ -114,7 +114,8 @@ public class CommerceRegionServiceImpl extends CommerceRegionServiceBaseImpl {
 			CommerceAddressActionKeys.MANAGE_COMMERCE_COUNTRIES);
 
 		return commerceRegionLocalService.updateCommerceRegion(
-			commerceRegion.getCommerceRegionId(), name, code, priority, active);
+			commerceRegion.getCommerceRegionId(), name, code, priority, active,
+			serviceContext);
 	}
 
 }

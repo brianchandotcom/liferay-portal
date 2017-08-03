@@ -137,7 +137,7 @@ public class EditCommerceRegionMVCActionCommand extends BaseMVCActionCommand {
 		}
 		else {
 			commerceRegion = _commerceRegionService.updateCommerceRegion(
-				commerceRegionId, name, code, priority, active);
+				commerceRegionId, name, code, priority, active, serviceContext);
 		}
 
 		return commerceRegion;

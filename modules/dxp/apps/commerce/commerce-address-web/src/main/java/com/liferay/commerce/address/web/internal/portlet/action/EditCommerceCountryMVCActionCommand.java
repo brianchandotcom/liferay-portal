@@ -186,7 +186,7 @@ public class EditCommerceCountryMVCActionCommand extends BaseMVCActionCommand {
 			commerceCountry = _commerceCountryService.updateCommerceCountry(
 				commerceCountryId, nameMap, billingAllowed, shippingAllowed,
 				twoLettersISOCode, threeLettersISOCode, numericISOCode,
-				subjectToVAT, priority, active);
+				subjectToVAT, priority, active, serviceContext);
 		}
 
 		return commerceCountry;

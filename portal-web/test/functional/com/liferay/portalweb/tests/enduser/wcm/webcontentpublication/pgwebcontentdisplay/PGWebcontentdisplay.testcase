@@ -511,7 +511,7 @@
 			<var name="webContentContent" value="WC WebContent Content" />
 		</execute>
 
-		<execute macro="WebContentDisplayPortlet#RemoveContentViaWCD" />
+		<execute macro="WebContentDisplayPortlet#removeWebContent" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Web Content Display Page" />

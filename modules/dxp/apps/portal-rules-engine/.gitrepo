@@ -1,0 +1,11 @@
+;
+; Do not manually edit this file.
+;
+[subrepo]
+	autopull = false
+	cmdver = liferay
+	commit = 0000000000000000000000000000000000000000
+	mergebuttonmergecommits = false
+	mode = push
+	parent = 0000000000000000000000000000000000000000
+	remote = git@github.com:liferay/com-liferay-portal-rules-engine-private.git

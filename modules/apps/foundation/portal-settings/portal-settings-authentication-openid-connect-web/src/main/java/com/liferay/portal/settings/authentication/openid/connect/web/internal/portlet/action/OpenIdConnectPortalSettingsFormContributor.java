@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.settings.authentication.openid.connect.web.internal.portlet.action.action;
+package com.liferay.portal.settings.authentication.openid.connect.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectConstants;
-import com.liferay.portal.settings.authentication.openid.connect.web.internal.constants.constants.PortalSettingsOpenIdConnectConstants;
+import com.liferay.portal.settings.authentication.openid.connect.web.internal.constants.PortalSettingsOpenIdConnectConstants;
 import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
 import com.liferay.portal.settings.web.portlet.action.PortalSettingsFormContributor;
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.settings.authentication.openid.connect.web.internal.constants.constants;
+package com.liferay.portal.settings.authentication.openid.connect.web.internal.constants;
 
 /**
  * @author Edward C. Han

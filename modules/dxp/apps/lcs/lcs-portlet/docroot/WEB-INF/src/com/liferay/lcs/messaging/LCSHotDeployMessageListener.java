@@ -14,6 +14,7 @@
 
 package com.liferay.lcs.messaging;
 
+import com.liferay.lcs.sigar.SigarNativeLoader;
 import com.liferay.lcs.util.LCSConnectionManager;
 import com.liferay.lcs.util.LCSUtil;
 import com.liferay.portal.kernel.license.messaging.LCSPortletState;
@@ -38,7 +39,9 @@ public class LCSHotDeployMessageListener extends HotDeployMessageListener {
 	}
 
 	@Override
-	protected void onDeploy(Message message) {
+	protected void onDeploy(Message message) throws Exception {
+		SigarNativeLoader.load();
+
 		_lcsConnectionManager.onPortletDeployed();
 
 		if (_log.isTraceEnabled()) {
@@ -49,6 +52,8 @@ public class LCSHotDeployMessageListener extends HotDeployMessageListener {
 	@Override
 	protected void onUndeploy(Message message) throws Exception {
 		LCSUtil.processLCSPortletState(LCSPortletState.PLUGIN_ABSENT);
+
+		SigarNativeLoader.unload();
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

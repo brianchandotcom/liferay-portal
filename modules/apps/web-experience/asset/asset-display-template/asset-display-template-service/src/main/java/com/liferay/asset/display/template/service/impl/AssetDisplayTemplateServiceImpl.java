@@ -14,27 +14,62 @@
 
 package com.liferay.asset.display.template.service.impl;
 
+import com.liferay.asset.display.template.constants.AssetDisplayTemplateActionKeys;
+import com.liferay.asset.display.template.model.AssetDisplayTemplate;
 import com.liferay.asset.display.template.service.base.AssetDisplayTemplateServiceBaseImpl;
+import com.liferay.asset.display.template.service.permission.AssetDisplayPermission;
+import com.liferay.asset.display.template.service.permission.AssetDisplayTemplatePermission;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 /**
- * The implementation of the asset display template remote service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.asset.display.template.service.AssetDisplayTemplateService} interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see AssetDisplayTemplateServiceBaseImpl
- * @see com.liferay.asset.display.template.service.AssetDisplayTemplateServiceUtil
+ * @author Pavel Savinov
  */
 public class AssetDisplayTemplateServiceImpl
 	extends AssetDisplayTemplateServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.asset.display.template.service.AssetDisplayTemplateServiceUtil} to access the asset display template remote service.
-	 */
+
+	@Override
+	public AssetDisplayTemplate addAssetDisplayTemplate(
+			long groupId, long userId, String name, long classNameId,
+			String language, String scriptContent, boolean main,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		AssetDisplayPermission.check(
+			getPermissionChecker(), groupId,
+			AssetDisplayTemplateActionKeys.ADD_ASSET_DISPLAY_TEMPLATE);
+
+		return assetDisplayTemplateLocalService.addAssetDisplayTemplate(
+			groupId, userId, name, classNameId, language, scriptContent, main,
+			serviceContext);
+	}
+
+	@Override
+	public AssetDisplayTemplate deleteAssetDisplayTemplate(
+			long assetDisplayTemplateId)
+		throws PortalException {
+
+		AssetDisplayTemplatePermission.check(
+			getPermissionChecker(), assetDisplayTemplateId, ActionKeys.DELETE);
+
+		return assetDisplayTemplateLocalService.deleteAssetDisplayTemplate(
+			assetDisplayTemplateId);
+	}
+
+	@Override
+	public AssetDisplayTemplate updateAssetDisplayTemplate(
+			long assetDisplayTemplateId, String name, long classNameId,
+			String language, String scriptContent, boolean main,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		AssetDisplayTemplatePermission.check(
+			getPermissionChecker(), assetDisplayTemplateId, ActionKeys.UPDATE);
+
+		return assetDisplayTemplateLocalService.updateAssetDisplayTemplate(
+			assetDisplayTemplateId, name, classNameId, language, scriptContent,
+			main, serviceContext);
+	}
+
 }

@@ -46,4 +46,16 @@ if (Validator.isNotNull(servicePassword)) {
 	<aui:input cssClass="lfr-input-text-container" label="service-account" name='<%= PortalSettingsNtlmConstants.FORM_PARAMETER_NAMESPACE + "serviceAccount" %>' type="text" value="<%= serviceAccount %>" />
 
 	<aui:input cssClass="lfr-input-text-container" label="service-password" name='<%= PortalSettingsNtlmConstants.FORM_PARAMETER_NAMESPACE + "servicePassword" %>' type="password" value="<%= servicePassword %>" />
+
+	<aui:button-row>
+		<portlet:actionURL name="/portal_settings/ntlm_delete" var="resetValuesURL">
+			<portlet:param name="tabs1" value="ntlm" />
+		</portlet:actionURL>
+
+		<%
+		String resetValuesOnClick = "if (confirm('" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-reset-the-configured-values") + "')) { submitForm(document.hrefFm, '" + resetValuesURL.toString() + "'); }";
+		%>
+
+		<aui:button cssClass="btn-lg" onClick="<%= resetValuesOnClick %>" value="reset-values" />
+	</aui:button-row>
 </aui:fieldset>

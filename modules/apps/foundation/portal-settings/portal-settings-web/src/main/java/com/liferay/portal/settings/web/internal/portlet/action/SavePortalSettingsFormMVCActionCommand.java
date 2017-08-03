@@ -12,15 +12,8 @@
  * details.
  */
 
-package com.liferay.portal.settings.portlet.action;
+package com.liferay.portal.settings.web.internal.portlet.action;
 
-import aQute.bnd.annotation.ProviderType;
-
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseFormMVCActionCommand;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
@@ -31,6 +24,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.settings.web.portlet.action.PortalSettingsFormContributor;
 
 import java.io.IOException;
 
@@ -39,16 +33,16 @@ import javax.portlet.ActionResponse;
 import javax.portlet.ValidatorException;
 
 /**
- * @author Tomas Polesovsky
- * @author Philip Jones
- * @deprecated As of 2.0.0, since 2.1.0 replaced by
- *             {@link com.liferay.portal.settings.web.portlet.action.
- *              PortalSettingsContributor}
+ * @author Michael C. Han
  */
-@Deprecated
-@ProviderType
-public abstract class BasePortalSettingsFormMVCActionCommand
-	extends BaseFormMVCActionCommand {
+public class SavePortalSettingsFormMVCActionCommand
+	extends BasePortalSettingsFormMVCActionCommand {
+
+	public SavePortalSettingsFormMVCActionCommand(
+		PortalSettingsFormContributor portalSettingsFormContributor) {
+
+		super(portalSettingsFormContributor);
+	}
 
 	@Override
 	protected void doProcessAction(
@@ -65,36 +59,22 @@ public abstract class BasePortalSettingsFormMVCActionCommand
 		storeSettings(actionRequest, themeDisplay);
 	}
 
-	protected boolean getBoolean(ActionRequest actionRequest, String name) {
-		return ParamUtil.getBoolean(
-			actionRequest, getParameterNamespace() + name);
+	@Override
+	protected void doValidateForm(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		portalSettingsFormContributor.validateForm(
+			actionRequest, actionResponse);
 	}
 
-	protected abstract String getParameterNamespace();
-
-	protected abstract String getSettingsId();
+	protected String getParameterNamespace() {
+		return portalSettingsFormContributor.getParameterNamespace();
+	}
 
 	protected String getString(ActionRequest actionRequest, String name) {
 		return ParamUtil.getString(
 			actionRequest, getParameterNamespace() + name);
-	}
-
-	protected boolean hasPermissions(
-		ActionRequest actionRequest, ActionResponse actionResponse,
-		ThemeDisplay themeDisplay) {
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		if (!permissionChecker.isCompanyAdmin(themeDisplay.getCompanyId())) {
-			SessionErrors.add(actionRequest, PrincipalException.class);
-
-			actionResponse.setRenderParameter("mvcPath", "/error.jsp");
-
-			return false;
-		}
-
-		return true;
 	}
 
 	protected void storeSettings(

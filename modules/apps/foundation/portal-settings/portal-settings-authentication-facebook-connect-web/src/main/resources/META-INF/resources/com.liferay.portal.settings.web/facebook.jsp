@@ -58,4 +58,16 @@ String oauthRedirectURL = facebookConnectConfiguration.oauthRedirectURL();
 	<aui:input cssClass="lfr-input-text-container" label="oauth-token-url" name='<%= PortalSettingsFacebookConnectConstants.FORM_PARAMETER_NAMESPACE + "oauthTokenURL" %>' type="text" value="<%= oauthTokenURL %>" />
 
 	<aui:input cssClass="lfr-input-text-container" label="oauth-redirect-url" name='<%= PortalSettingsFacebookConnectConstants.FORM_PARAMETER_NAMESPACE + "oauthRedirectURL" %>' type="text" value="<%= oauthRedirectURL %>" />
+
+	<aui:button-row>
+		<portlet:actionURL name="/portal_settings/facebook_connect_delete" var="resetValuesURL">
+			<portlet:param name="tabs1" value="facebook_connect" />
+		</portlet:actionURL>
+
+		<%
+		String resetValuesOnClick = "if (confirm('" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-reset-the-configured-values") + "')) { submitForm(document.hrefFm, '" + resetValuesURL.toString() + "'); }";
+		%>
+
+		<aui:button cssClass="btn-lg" onClick="<%= resetValuesOnClick %>" value="reset-values" />
+	</aui:button-row>
 </aui:fieldset>

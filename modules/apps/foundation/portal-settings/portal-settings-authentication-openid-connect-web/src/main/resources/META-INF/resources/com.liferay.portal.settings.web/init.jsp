@@ -19,12 +19,13 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil" %><%@
+<%@ page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
+page import="com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil" %><%@
 page import="com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator" %><%@
 page import="com.liferay.portal.kernel.settings.ParameterMapSettingsLocator" %><%@
 page import="com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration" %><%@
 page import="com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectConstants" %><%@
-page import="com.liferay.portal.settings.authentication.openid.connect.web.internal.constants.constants.PortalSettingsOpenIdConnectConstants" %>
+page import="com.liferay.portal.settings.authentication.openid.connect.web.internal.constants.PortalSettingsOpenIdConnectConstants" %>
 
 <%@ page import="javax.portlet.ActionRequest" %>
 

@@ -852,7 +852,7 @@
 
 		<execute function="Refresh" />
 
-		<execute macro="ProductMenu#gotoSiteViaMySites">
+		<execute macro="ProductMenu#gotoSite">
 			<var name="siteName" value="Moon Rocks 101" />
 		</execute>
 

@@ -70,8 +70,8 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			baseSKU, titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
 			metaTitleMap, metaKeywordsMap, metaDescriptionMap, layoutUuid,
 			productTypeName, gtin, manufacturerPartNumber, minCartQuantity,
-			maxCartQuantity, allowedCartQuantities, multipleCartQuantity,
-			width, height, depth, weight, ddmStructureKey, displayDateMonth,
+			maxCartQuantity, allowedCartQuantities, multipleCartQuantity, width,
+			height, depth, weight, ddmStructureKey, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
@@ -281,39 +281,6 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			Map<Locale, String> metaDescriptionMap, String layoutUuid,
 			String gtin, String manufacturerPartNumber, int minCartQuantity,
 			int maxCartQuantity, String allowedCartQuantities,
-			int multipleCartQuantity, String ddmStructureKey,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, ServiceContext serviceContext)
-		throws PortalException {
-
-		CPDefinitionPermission.check(
-			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
-
-		return cpDefinitionLocalService.updateCPDefinition(
-			cpDefinitionId, baseSKU, titleMap, shortDescriptionMap,
-			descriptionMap, urlTitleMap, metaTitleMap, metaKeywordsMap,
-			metaDescriptionMap, layoutUuid, gtin, manufacturerPartNumber,
-			minCartQuantity, maxCartQuantity, allowedCartQuantities,
-			multipleCartQuantity, ddmStructureKey, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
-	}
-
-	@Override
-	public CPDefinition updateCPDefinition(
-			long cpDefinitionId, String baseSKU, Map<Locale, String> titleMap,
-			Map<Locale, String> shortDescriptionMap,
-			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
-			Map<Locale, String> metaTitleMap,
-			Map<Locale, String> metaKeywordsMap,
-			Map<Locale, String> metaDescriptionMap, String layoutUuid,
-			String gtin, String manufacturerPartNumber, int minCartQuantity,
-			int maxCartQuantity, String allowedCartQuantities,
 			int multipleCartQuantity, double width, double height, double depth,
 			double weight, String ddmStructureKey, int displayDateMonth,
 			int displayDateDay, int displayDateYear, int displayDateHour,
@@ -336,6 +303,39 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
 			neverExpire, serviceContext);
+	}
+
+	@Override
+	public CPDefinition updateCPDefinition(
+			long cpDefinitionId, String baseSKU, Map<Locale, String> titleMap,
+			Map<Locale, String> shortDescriptionMap,
+			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
+			Map<Locale, String> metaTitleMap,
+			Map<Locale, String> metaKeywordsMap,
+			Map<Locale, String> metaDescriptionMap, String layoutUuid,
+			String gtin, String manufacturerPartNumber, int minCartQuantity,
+			int maxCartQuantity, String allowedCartQuantities,
+			int multipleCartQuantity, String ddmStructureKey,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, ServiceContext serviceContext)
+		throws PortalException {
+
+		CPDefinitionPermission.check(
+			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
+
+		return cpDefinitionLocalService.updateCPDefinition(
+			cpDefinitionId, baseSKU, titleMap, shortDescriptionMap,
+			descriptionMap, urlTitleMap, metaTitleMap, metaKeywordsMap,
+			metaDescriptionMap, layoutUuid, gtin, manufacturerPartNumber,
+			minCartQuantity, maxCartQuantity, allowedCartQuantities,
+			multipleCartQuantity, ddmStructureKey, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
 	}
 
 	@Override

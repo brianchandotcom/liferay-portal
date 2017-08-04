@@ -25,13 +25,15 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
 import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -44,7 +46,8 @@ import javax.servlet.http.HttpServletRequest;
 	},
 	service = MVCRenderCommand.class
 )
-public class EditCPDefinitionShippingInfoMVCRenderCommand implements MVCRenderCommand {
+public class EditCPDefinitionShippingInfoMVCRenderCommand
+	implements MVCRenderCommand {
 
 	@Override
 	public String render(

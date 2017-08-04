@@ -1,6 +1,6 @@
 Bundle-Name: ${manifest.bundle.name}
 Bundle-SymbolicName: ${manifest.bundle.symbolic.name}
-Bundle-Version: 3.0.1
+Bundle-Version: 3.1.0
 Export-Package:\
 	com.liferay.portal.kernel.test,\
 	com.liferay.portal.kernel.test.context,\
@@ -14,6 +14,7 @@ Export-Package:\
 	com.liferay.portlet.dynamicdatamapping.util.test,\
 	com.liferay.portlet.expando.util.test,\
 	com.liferay.portlet.messageboards.util.test,\
+	com.liferay.portlet.passwordpoliciesadmin.util.test,\
 	com.liferay.portlet.ratings.test,\
 	com.liferay.portlet.ratings.util.test,\
 	\

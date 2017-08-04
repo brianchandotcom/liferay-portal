@@ -67,12 +67,15 @@
 			</bean>
 		</property>
 		<property name="protocol" value="#{T(com.liferay.lcs.util.SystemEnvironmentUtil).getValue(T(com.liferay.lcs.util.SystemEnvironmentUtil).OSB_LCS_PORTLET_PROTOCOL, T(com.liferay.lcs.util.PortletPropsValues).OSB_LCS_PORTLET_PROTOCOL)}" />
+		<property name="proxyHostName" value="#{T(com.liferay.lcs.util.ProxyHostUtil).getProxyHostName()}" />
+		<property name="proxyHostPort" value="#{T(com.liferay.lcs.util.ProxyHostUtil).getProxyHostPort()}" />
+		<property name="proxyLogin" value="#{T(com.liferay.lcs.util.ProxyHostUtil).getProxyHostLogin()}" />
+		<property name="proxyPassword" value="#{T(com.liferay.lcs.util.ProxyHostUtil).getProxyHostPassword()}" />
 		<property name="proxyAuthType" value="#{T(com.liferay.lcs.util.PortletPropsValues).PROXY_AUTH_TYPE}" />
 		<property name="proxyDomain" value="#{T(com.liferay.lcs.util.PortletPropsValues).PROXY_DOMAIN}" />
-		<property name="proxySelector" ref="com.liferay.lcs.util.LCSProxySelector" />
 		<property name="proxyWorkstation" value="#{T(com.liferay.lcs.util.PortletPropsValues).PROXY_WORKSTATION}" />
 	</bean>
-	<bean class="com.liferay.petra.json.web.service.client.JSONWebServiceClientImpl" id="osbLCSGatewayWebJSONWebServiceClient">
+	<bean class="com.liferay.petra.json.web.service.client.internal.JSONWebServiceClientImpl" id="osbLCSGatewayWebJSONWebServiceClient">
 		<property name="headers">
 			<map>
 				<entry key="OSB_LCS_API_Token" value="#{T(com.liferay.lcs.util.PortletPropsValues).OSB_LCS_GATEWAY_WEB_SECURE_API_TOKEN}" />
@@ -87,9 +90,12 @@
 			</bean>
 		</property>
 		<property name="protocol" value="#{T(com.liferay.lcs.util.SystemEnvironmentUtil).getValue(T(com.liferay.lcs.util.SystemEnvironmentUtil).OSB_LCS_GATEWAY_WEB_PROTOCOL, T(com.liferay.lcs.util.PortletPropsValues).OSB_LCS_GATEWAY_WEB_PROTOCOL)}" />
+		<property name="proxyHostName" value="#{T(com.liferay.lcs.util.ProxyHostUtil).getProxyHostName()}" />
+		<property name="proxyHostPort" value="#{T(com.liferay.lcs.util.ProxyHostUtil).getProxyHostPort()}" />
+		<property name="proxyLogin" value="#{T(com.liferay.lcs.util.ProxyHostUtil).getProxyHostLogin()}" />
+		<property name="proxyPassword" value="#{T(com.liferay.lcs.util.ProxyHostUtil).getProxyHostPassword()}" />
 		<property name="proxyAuthType" value="#{T(com.liferay.lcs.util.PortletPropsValues).PROXY_AUTH_TYPE}" />
 		<property name="proxyDomain" value="#{T(com.liferay.lcs.util.PortletPropsValues).PROXY_DOMAIN}" />
-		<property name="proxySelector" ref="com.liferay.lcs.util.LCSProxySelector" />
 		<property name="proxyWorkstation" value="#{T(com.liferay.lcs.util.PortletPropsValues).PROXY_WORKSTATION}" />
 	</bean>
 
@@ -251,7 +257,6 @@
 	<bean class="com.liferay.lcs.util.LCSConnectionManagerUtil" id="com.liferay.lcs.util.LCSConnectionManagerUtil">
 		<property name="LCSConnectionManager" ref="com.liferay.lcs.util.LCSConnectionManager" />
 	</bean>
-	<bean class="com.liferay.lcs.util.LCSProxySelector" id="com.liferay.lcs.util.LCSProxySelector" />
 	<bean class="com.liferay.lcs.util.LCSUtil" id="com.liferay.lcs.util.LCSUtil">
 		<property name="JSONWebServiceClient" ref="osbLCSPortletJSONWebServiceClient" />
 		<property name="keyGenerator" ref="com.liferay.lcs.util.KeyGenerator" />

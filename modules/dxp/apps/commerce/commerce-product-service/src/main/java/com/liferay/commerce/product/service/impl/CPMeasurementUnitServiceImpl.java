@@ -94,4 +94,5 @@ public class CPMeasurementUnitServiceImpl
 		return cpMeasurementUnitLocalService.updateCPMeasurementUnit(
 			cpMeasurementUnitId, nameMap, key, rate, primary, priority, type);
 	}
+
 }

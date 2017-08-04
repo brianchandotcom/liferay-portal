@@ -27,11 +27,13 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public class CPMeasurementUnitImpl extends CPMeasurementUnitBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a cp measurement unit model instance should use the {@link com.liferay.commerce.product.model.CPMeasurementUnit} interface instead.
 	 */
 	public CPMeasurementUnitImpl() {
 	}
+
 }

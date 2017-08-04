@@ -80,7 +80,7 @@
 			<var name="portlet" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#subscribeCP" />
+		<execute macro="WebContent#subscribeToCurrentFolderCP" />
 
 		<execute macro="User#logoutPG" />
 

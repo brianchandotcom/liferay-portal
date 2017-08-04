@@ -1305,7 +1305,7 @@
 		<execute function="AssertTextEquals" locator1="WCEditWebContent#SELECTED_TEMPLATE" value1="${templateName}" />
 	</command>
 
-	<command name="subscribeCP">
+	<command name="subscribeToCurrentFolderCP">
 		<execute function="Click#clickAt" locator1="Icon#INFO" />
 
 		<execute function="Pause" locator1="1000" />

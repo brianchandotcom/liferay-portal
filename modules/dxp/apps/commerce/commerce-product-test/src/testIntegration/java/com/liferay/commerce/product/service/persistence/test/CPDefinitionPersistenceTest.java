@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -157,6 +158,14 @@ public class CPDefinitionPersistenceTest {
 
 		newCPDefinition.setMultipleCartQuantity(RandomTestUtil.nextInt());
 
+		newCPDefinition.setWidth(RandomTestUtil.nextDouble());
+
+		newCPDefinition.setHeight(RandomTestUtil.nextDouble());
+
+		newCPDefinition.setDepth(RandomTestUtil.nextDouble());
+
+		newCPDefinition.setWeight(RandomTestUtil.nextDouble());
+
 		newCPDefinition.setDDMStructureKey(RandomTestUtil.randomString());
 
 		newCPDefinition.setDisplayDate(RandomTestUtil.nextDate());
@@ -215,6 +224,14 @@ public class CPDefinitionPersistenceTest {
 			newCPDefinition.getAllowedCartQuantities());
 		Assert.assertEquals(existingCPDefinition.getMultipleCartQuantity(),
 			newCPDefinition.getMultipleCartQuantity());
+		AssertUtils.assertEquals(existingCPDefinition.getWidth(),
+			newCPDefinition.getWidth());
+		AssertUtils.assertEquals(existingCPDefinition.getHeight(),
+			newCPDefinition.getHeight());
+		AssertUtils.assertEquals(existingCPDefinition.getDepth(),
+			newCPDefinition.getDepth());
+		AssertUtils.assertEquals(existingCPDefinition.getWeight(),
+			newCPDefinition.getWeight());
 		Assert.assertEquals(existingCPDefinition.getDDMStructureKey(),
 			newCPDefinition.getDDMStructureKey());
 		Assert.assertEquals(Time.getShortTimestamp(
@@ -340,7 +357,8 @@ public class CPDefinitionPersistenceTest {
 			"gtin", true, "manufacturerPartNumber", true,
 			"availableIndividually", true, "minCartQuantity", true,
 			"maxCartQuantity", true, "allowedCartQuantities", true,
-			"multipleCartQuantity", true, "DDMStructureKey", true,
+			"multipleCartQuantity", true, "width", true, "height", true,
+			"depth", true, "weight", true, "DDMStructureKey", true,
 			"displayDate", true, "expirationDate", true, "lastPublishDate",
 			true, "status", true, "statusByUserId", true, "statusByUserName",
 			true, "statusDate", true, "defaultLanguageId", true);
@@ -592,6 +610,14 @@ public class CPDefinitionPersistenceTest {
 		cpDefinition.setAllowedCartQuantities(RandomTestUtil.randomString());
 
 		cpDefinition.setMultipleCartQuantity(RandomTestUtil.nextInt());
+
+		cpDefinition.setWidth(RandomTestUtil.nextDouble());
+
+		cpDefinition.setHeight(RandomTestUtil.nextDouble());
+
+		cpDefinition.setDepth(RandomTestUtil.nextDouble());
+
+		cpDefinition.setWeight(RandomTestUtil.nextDouble());
 
 		cpDefinition.setDDMStructureKey(RandomTestUtil.randomString());
 

@@ -66,7 +66,7 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(53);
+		StringBundler sb = new StringBundler(61);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -102,6 +102,14 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		sb.append(allowedCartQuantities);
 		sb.append(", multipleCartQuantity=");
 		sb.append(multipleCartQuantity);
+		sb.append(", width=");
+		sb.append(width);
+		sb.append(", height=");
+		sb.append(height);
+		sb.append(", depth=");
+		sb.append(depth);
+		sb.append(", weight=");
+		sb.append(weight);
 		sb.append(", DDMStructureKey=");
 		sb.append(DDMStructureKey);
 		sb.append(", displayDate=");
@@ -202,6 +210,10 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		}
 
 		cpDefinitionImpl.setMultipleCartQuantity(multipleCartQuantity);
+		cpDefinitionImpl.setWidth(width);
+		cpDefinitionImpl.setHeight(height);
+		cpDefinitionImpl.setDepth(depth);
+		cpDefinitionImpl.setWeight(weight);
 
 		if (DDMStructureKey == null) {
 			cpDefinitionImpl.setDDMStructureKey(StringPool.BLANK);
@@ -287,6 +299,14 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		allowedCartQuantities = objectInput.readUTF();
 
 		multipleCartQuantity = objectInput.readInt();
+
+		width = objectInput.readDouble();
+
+		height = objectInput.readDouble();
+
+		depth = objectInput.readDouble();
+
+		weight = objectInput.readDouble();
 		DDMStructureKey = objectInput.readUTF();
 		displayDate = objectInput.readLong();
 		expirationDate = objectInput.readLong();
@@ -371,6 +391,14 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 
 		objectOutput.writeInt(multipleCartQuantity);
 
+		objectOutput.writeDouble(width);
+
+		objectOutput.writeDouble(height);
+
+		objectOutput.writeDouble(depth);
+
+		objectOutput.writeDouble(weight);
+
 		if (DDMStructureKey == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -420,6 +448,10 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 	public int maxCartQuantity;
 	public String allowedCartQuantities;
 	public int multipleCartQuantity;
+	public double width;
+	public double height;
+	public double depth;
+	public double weight;
 	public String DDMStructureKey;
 	public long displayDate;
 	public long expirationDate;

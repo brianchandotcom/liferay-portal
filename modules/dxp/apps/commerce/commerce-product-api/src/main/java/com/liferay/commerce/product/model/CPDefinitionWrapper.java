@@ -77,6 +77,10 @@ public class CPDefinitionWrapper implements CPDefinition,
 		attributes.put("maxCartQuantity", getMaxCartQuantity());
 		attributes.put("allowedCartQuantities", getAllowedCartQuantities());
 		attributes.put("multipleCartQuantity", getMultipleCartQuantity());
+		attributes.put("width", getWidth());
+		attributes.put("height", getHeight());
+		attributes.put("depth", getDepth());
+		attributes.put("weight", getWeight());
 		attributes.put("DDMStructureKey", getDDMStructureKey());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
@@ -196,6 +200,30 @@ public class CPDefinitionWrapper implements CPDefinition,
 
 		if (multipleCartQuantity != null) {
 			setMultipleCartQuantity(multipleCartQuantity);
+		}
+
+		Double width = (Double)attributes.get("width");
+
+		if (width != null) {
+			setWidth(width);
+		}
+
+		Double height = (Double)attributes.get("height");
+
+		if (height != null) {
+			setHeight(height);
+		}
+
+		Double depth = (Double)attributes.get("depth");
+
+		if (depth != null) {
+			setDepth(depth);
+		}
+
+		Double weight = (Double)attributes.get("weight");
+
+		if (weight != null) {
+			setWeight(weight);
 		}
 
 		String DDMStructureKey = (String)attributes.get("DDMStructureKey");
@@ -439,6 +467,46 @@ public class CPDefinitionWrapper implements CPDefinition,
 	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinition.getTrashEntry();
+	}
+
+	/**
+	* Returns the depth of this cp definition.
+	*
+	* @return the depth of this cp definition
+	*/
+	@Override
+	public double getDepth() {
+		return _cpDefinition.getDepth();
+	}
+
+	/**
+	* Returns the height of this cp definition.
+	*
+	* @return the height of this cp definition
+	*/
+	@Override
+	public double getHeight() {
+		return _cpDefinition.getHeight();
+	}
+
+	/**
+	* Returns the weight of this cp definition.
+	*
+	* @return the weight of this cp definition
+	*/
+	@Override
+	public double getWeight() {
+		return _cpDefinition.getWeight();
+	}
+
+	/**
+	* Returns the width of this cp definition.
+	*
+	* @return the width of this cp definition
+	*/
+	@Override
+	public double getWidth() {
+		return _cpDefinition.getWidth();
 	}
 
 	@Override
@@ -1074,6 +1142,16 @@ public class CPDefinitionWrapper implements CPDefinition,
 		_cpDefinition.setDefaultLanguageId(defaultLanguageId);
 	}
 
+	/**
+	* Sets the depth of this cp definition.
+	*
+	* @param depth the depth of this cp definition
+	*/
+	@Override
+	public void setDepth(double depth) {
+		_cpDefinition.setDepth(depth);
+	}
+
 	@Override
 	public void setDescriptionMap(
 		Map<java.util.Locale, java.lang.String> descriptionMap) {
@@ -1134,6 +1212,16 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public void setGtin(java.lang.String gtin) {
 		_cpDefinition.setGtin(gtin);
+	}
+
+	/**
+	* Sets the height of this cp definition.
+	*
+	* @param height the height of this cp definition
+	*/
+	@Override
+	public void setHeight(double height) {
+		_cpDefinition.setHeight(height);
 	}
 
 	/**
@@ -1337,6 +1425,26 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_cpDefinition.setUuid(uuid);
+	}
+
+	/**
+	* Sets the weight of this cp definition.
+	*
+	* @param weight the weight of this cp definition
+	*/
+	@Override
+	public void setWeight(double weight) {
+		_cpDefinition.setWeight(weight);
+	}
+
+	/**
+	* Sets the width of this cp definition.
+	*
+	* @param width the width of this cp definition
+	*/
+	@Override
+	public void setWidth(double width) {
+		_cpDefinition.setWidth(width);
 	}
 
 	@Override

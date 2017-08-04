@@ -352,6 +352,62 @@ public interface CPDefinitionModel extends BaseModel<CPDefinition>, ShardedModel
 	public void setMultipleCartQuantity(int multipleCartQuantity);
 
 	/**
+	 * Returns the width of this cp definition.
+	 *
+	 * @return the width of this cp definition
+	 */
+	public double getWidth();
+
+	/**
+	 * Sets the width of this cp definition.
+	 *
+	 * @param width the width of this cp definition
+	 */
+	public void setWidth(double width);
+
+	/**
+	 * Returns the height of this cp definition.
+	 *
+	 * @return the height of this cp definition
+	 */
+	public double getHeight();
+
+	/**
+	 * Sets the height of this cp definition.
+	 *
+	 * @param height the height of this cp definition
+	 */
+	public void setHeight(double height);
+
+	/**
+	 * Returns the depth of this cp definition.
+	 *
+	 * @return the depth of this cp definition
+	 */
+	public double getDepth();
+
+	/**
+	 * Sets the depth of this cp definition.
+	 *
+	 * @param depth the depth of this cp definition
+	 */
+	public void setDepth(double depth);
+
+	/**
+	 * Returns the weight of this cp definition.
+	 *
+	 * @return the weight of this cp definition
+	 */
+	public double getWeight();
+
+	/**
+	 * Sets the weight of this cp definition.
+	 *
+	 * @param weight the weight of this cp definition
+	 */
+	public void setWeight(double weight);
+
+	/**
 	 * Returns the ddm structure key of this cp definition.
 	 *
 	 * @return the ddm structure key of this cp definition

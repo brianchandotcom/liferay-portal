@@ -63,6 +63,10 @@
 		<property name="maxCartQuantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="allowedCartQuantities" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="multipleCartQuantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="width" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="height" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="depth" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="weight" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="DDMStructureKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="displayDate" type="org.hibernate.type.TimestampType" />
 		<property name="expirationDate" type="org.hibernate.type.TimestampType" />

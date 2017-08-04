@@ -103,10 +103,11 @@ public class CPMeasurementUnitServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.product.model.CPMeasurementUnitSoap getCPMeasurementUnit(
-		long cpMeasurementUnitId) throws RemoteException {
+	public static com.liferay.commerce.product.model.CPMeasurementUnitSoap fetchPrimaryCPMeasurementUnit(
+		long groupId, int type) throws RemoteException {
 		try {
-			com.liferay.commerce.product.model.CPMeasurementUnit returnValue = CPMeasurementUnitServiceUtil.getCPMeasurementUnit(cpMeasurementUnitId);
+			com.liferay.commerce.product.model.CPMeasurementUnit returnValue = CPMeasurementUnitServiceUtil.fetchPrimaryCPMeasurementUnit(groupId,
+					type);
 
 			return com.liferay.commerce.product.model.CPMeasurementUnitSoap.toSoapModel(returnValue);
 		}
@@ -117,11 +118,10 @@ public class CPMeasurementUnitServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.product.model.CPMeasurementUnitSoap fetchPrimaryCPMeasurementUnit(
-		long groupId, int type) throws RemoteException {
+	public static com.liferay.commerce.product.model.CPMeasurementUnitSoap getCPMeasurementUnit(
+		long cpMeasurementUnitId) throws RemoteException {
 		try {
-			com.liferay.commerce.product.model.CPMeasurementUnit returnValue = CPMeasurementUnitServiceUtil.fetchPrimaryCPMeasurementUnit(groupId,
-					type);
+			com.liferay.commerce.product.model.CPMeasurementUnit returnValue = CPMeasurementUnitServiceUtil.getCPMeasurementUnit(cpMeasurementUnitId);
 
 			return com.liferay.commerce.product.model.CPMeasurementUnitSoap.toSoapModel(returnValue);
 		}

@@ -51,6 +51,10 @@ public class CPDefinitionSoap implements Serializable {
 		soapModel.setMaxCartQuantity(model.getMaxCartQuantity());
 		soapModel.setAllowedCartQuantities(model.getAllowedCartQuantities());
 		soapModel.setMultipleCartQuantity(model.getMultipleCartQuantity());
+		soapModel.setWidth(model.getWidth());
+		soapModel.setHeight(model.getHeight());
+		soapModel.setDepth(model.getDepth());
+		soapModel.setWeight(model.getWeight());
 		soapModel.setDDMStructureKey(model.getDDMStructureKey());
 		soapModel.setDisplayDate(model.getDisplayDate());
 		soapModel.setExpirationDate(model.getExpirationDate());
@@ -252,6 +256,38 @@ public class CPDefinitionSoap implements Serializable {
 		_multipleCartQuantity = multipleCartQuantity;
 	}
 
+	public double getWidth() {
+		return _width;
+	}
+
+	public void setWidth(double width) {
+		_width = width;
+	}
+
+	public double getHeight() {
+		return _height;
+	}
+
+	public void setHeight(double height) {
+		_height = height;
+	}
+
+	public double getDepth() {
+		return _depth;
+	}
+
+	public void setDepth(double depth) {
+		_depth = depth;
+	}
+
+	public double getWeight() {
+		return _weight;
+	}
+
+	public void setWeight(double weight) {
+		_weight = weight;
+	}
+
 	public String getDDMStructureKey() {
 		return _DDMStructureKey;
 	}
@@ -341,6 +377,10 @@ public class CPDefinitionSoap implements Serializable {
 	private int _maxCartQuantity;
 	private String _allowedCartQuantities;
 	private int _multipleCartQuantity;
+	private double _width;
+	private double _height;
+	private double _depth;
+	private double _weight;
 	private String _DDMStructureKey;
 	private Date _displayDate;
 	private Date _expirationDate;

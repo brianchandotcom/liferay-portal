@@ -22,6 +22,9 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.registry.BasicRegistryImpl;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 
 import java.util.Locale;
 
@@ -53,6 +56,7 @@ public class BaseIndexerGetSiteGroupIdTest extends PowerMockito {
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 
+		setUpRegistryUtil();
 		setUpGroupLocalServiceUtil();
 		setUpPropsUtil();
 
@@ -215,6 +219,12 @@ public class BaseIndexerGetSiteGroupIdTest extends PowerMockito {
 		Props props = mock(Props.class);
 
 		PropsUtil.setProps(props);
+	}
+
+	protected void setUpRegistryUtil() throws Exception {
+		Registry registry = new BasicRegistryImpl();
+
+		RegistryUtil.setRegistry(registry);
 	}
 
 	@Mock

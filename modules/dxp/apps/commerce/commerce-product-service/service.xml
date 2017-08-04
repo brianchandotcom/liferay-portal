@@ -102,6 +102,10 @@
 		<column name="maxCartQuantity" type="int" />
 		<column name="allowedCartQuantities" type="String" />
 		<column name="multipleCartQuantity" type="int" />
+		<column name="width" type="double" />
+		<column name="height" type="double" />
+		<column name="depth" type="double" />
+		<column name="weight" type="double" />
 		<column name="DDMStructureKey" type="String" />
 		<column name="displayDate" type="Date" />
 		<column name="expirationDate" type="Date" />

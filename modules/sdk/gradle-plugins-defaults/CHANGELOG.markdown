@@ -1840,6 +1840,12 @@ attribute in Ivy `<dependency>` elements.
 ### Changed
 - [LPS-73935]: Update the [Liferay Gradle Plugins] dependency to version 3.4.19.
 
+## 5.0.3 - 2017-08-04
+
+### Added
+- [LPS-74054]: Fail snapshot release task if the project is being published from
+a release branch.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
@@ -2036,6 +2042,7 @@ attribute in Ivy `<dependency>` elements.
 [LPS-73818]: https://issues.liferay.com/browse/LPS-73818
 [LPS-73855]: https://issues.liferay.com/browse/LPS-73855
 [LPS-73935]: https://issues.liferay.com/browse/LPS-73935
+[LPS-74054]: https://issues.liferay.com/browse/LPS-74054
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

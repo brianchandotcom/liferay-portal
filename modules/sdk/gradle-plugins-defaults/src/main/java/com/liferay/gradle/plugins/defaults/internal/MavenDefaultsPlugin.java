@@ -53,9 +53,27 @@ public class MavenDefaultsPlugin extends BaseDefaultsPlugin<MavenPlugin> {
 			public void execute(Task task) {
 				Project project = task.getProject();
 
-				if (GradleUtil.isSnapshot(project) ||
-					FileUtil.exists(
+				if (FileUtil.exists(
 						project, LiferayRelengPlugin.RELENG_IGNORE_FILE_NAME)) {
+
+					return;
+				}
+
+				File portalRootDir = GradleUtil.getRootDir(
+					project.getRootProject(), "portal-impl");
+
+				if (portalRootDir == null) {
+					return;
+				}
+
+				if (GradleUtil.isSnapshot(project)) {
+					File relengDir = new File(portalRootDir, "modules/.releng");
+
+					if (relengDir.exists()) {
+						throw new GradleException(
+							"Please run this task from a master branch " +
+								"instead.");
+					}
 
 					return;
 				}
@@ -71,13 +89,6 @@ public class MavenDefaultsPlugin extends BaseDefaultsPlugin<MavenPlugin> {
 						"Please set the property \"" +
 							LiferayOSGiDefaultsPlugin.
 								RELEASE_PORTAL_ROOT_DIR_PROPERTY_NAME + "\".");
-				}
-
-				File portalRootDir = GradleUtil.getRootDir(
-					project.getRootProject(), "portal-impl");
-
-				if (portalRootDir == null) {
-					return;
 				}
 
 				String relativePath = FileUtil.relativize(

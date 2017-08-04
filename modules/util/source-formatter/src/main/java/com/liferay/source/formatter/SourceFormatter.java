@@ -208,6 +208,7 @@ public class SourceFormatter {
 		List<SourceProcessor> sourceProcessors = new ArrayList<>();
 
 		sourceProcessors.add(new BNDSourceProcessor());
+		sourceProcessors.add(new CodeownersSourceProcessor());
 		sourceProcessors.add(new CQLSourceProcessor());
 		sourceProcessors.add(new CSSSourceProcessor());
 		sourceProcessors.add(new DockerfileSourceProcessor());
@@ -348,7 +349,7 @@ public class SourceFormatter {
 		_allFileNames = SourceFormatterUtil.scanForFiles(
 			_sourceFormatterArgs.getBaseDirName(),
 			excludesList.toArray(new String[excludesList.size()]),
-			new String[] {"**/*.*", "**/Dockerfile"},
+			new String[] {"**/*.*", "**/CODEOWNERS", "**/Dockerfile"},
 			_sourceFormatterArgs.isIncludeSubrepositories());
 	}
 

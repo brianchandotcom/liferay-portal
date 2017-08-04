@@ -65,7 +65,7 @@ public class CommerceCartContentDisplayContext {
 			return _commerceCart;
 		}
 
-		_commerceCart = _commerceCartHelper.getCurrentCart(
+		_commerceCart = _commerceCartHelper.getCurrentCommerceCart(
 			httpServletRequest, getCommerceCartType());
 
 		return _commerceCart;

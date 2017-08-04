@@ -48,8 +48,9 @@ public class CommerceCartTemplateContextContributor
 		int wishListItemsCount = 0;
 
 		try {
-			CommerceCart currentCart = _commerceCartHelper.getCurrentCart(
-				request, CommerceCartConstants.COMMERCE_CART_TYPE_CART);
+			CommerceCart currentCart =
+				_commerceCartHelper.getCurrentCommerceCart(
+					request, CommerceCartConstants.COMMERCE_CART_TYPE_CART);
 
 			if (currentCart != null) {
 				cartItemsCount =
@@ -57,8 +58,10 @@ public class CommerceCartTemplateContextContributor
 						currentCart.getCommerceCartId());
 			}
 
-			CommerceCart currentWishList = _commerceCartHelper.getCurrentCart(
-				request, CommerceCartConstants.COMMERCE_CART_TYPE_WISH_LIST);
+			CommerceCart currentWishList =
+				_commerceCartHelper.getCurrentCommerceCart(
+					request,
+					CommerceCartConstants.COMMERCE_CART_TYPE_WISH_LIST);
 
 			if (currentWishList != null) {
 				wishListItemsCount =

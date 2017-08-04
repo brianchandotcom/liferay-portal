@@ -94,8 +94,9 @@ public class AddCommerceCartItemMVCActionCommand extends BaseMVCActionCommand {
 			cpDefinitionId, locale, ddmFormValues);
 
 		try {
-			CommerceCart commerceCart = _commerceCartHelper.getCurrentCart(
-				httpServletRequest, type);
+			CommerceCart commerceCart =
+				_commerceCartHelper.getCurrentCommerceCart(
+					httpServletRequest, type);
 
 			if (commerceCart == null) {
 				ServiceContext serviceContext =
@@ -106,7 +107,7 @@ public class AddCommerceCartItemMVCActionCommand extends BaseMVCActionCommand {
 					CommerceCartConstants.COMMERCE_CART_DEFAULT_TITLE, type,
 					serviceContext);
 
-				_commerceCartHelper.updateCurrentCart(
+				_commerceCartHelper.updateCurrentCommerceCart(
 					httpServletRequest, httpServletResponse, commerceCart);
 			}
 

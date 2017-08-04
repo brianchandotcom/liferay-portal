@@ -28,14 +28,15 @@ import javax.servlet.http.HttpServletResponse;
 @ProviderType
 public interface CommerceCartHelper {
 
-	public CommerceCart getCurrentCart(HttpServletRequest httpServletRequest)
+	public CommerceCart getCurrentCommerceCart(
+			HttpServletRequest httpServletRequest)
 		throws PortalException;
 
-	public CommerceCart getCurrentCart(
+	public CommerceCart getCurrentCommerceCart(
 			HttpServletRequest httpServletRequest, int type)
 		throws PortalException;
 
-	public void updateCurrentCart(
+	public void updateCurrentCommerceCart(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, CommerceCart commerceCart);
 

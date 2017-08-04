@@ -42,38 +42,38 @@ import org.osgi.service.component.annotations.Reference;
 public class CommerceCartHelperImpl implements CommerceCartHelper {
 
 	@Override
-	public CommerceCart getCurrentCart(HttpServletRequest httpServletRequest)
+	public CommerceCart getCurrentCommerceCart(
+			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		int type = ParamUtil.getInteger(
 			httpServletRequest, "type",
 			CommerceCartConstants.COMMERCE_CART_TYPE_CART);
 
-		return getCurrentCart(httpServletRequest, type);
+		return getCurrentCommerceCart(httpServletRequest, type);
 	}
 
 	@Override
-	public CommerceCart getCurrentCart(
+	public CommerceCart getCurrentCommerceCart(
 			HttpServletRequest httpServletRequest, int type)
 		throws PortalException {
 
-		String commerceCartUuid = _getCurrentCommerceCartUuid(
-			httpServletRequest, type);
+		String uuid = _getCurrentCommerceCartUuid(httpServletRequest, type);
 
-		if (Validator.isNull(commerceCartUuid)) {
+		if (Validator.isNull(uuid)) {
 			return null;
 		}
 
 		long groupId = _portal.getScopeGroupId(httpServletRequest);
 
 		CommerceCart commerceCart = _commerceCartService.fetchCommerceCart(
-			commerceCartUuid, groupId);
+			uuid, groupId);
 
 		return commerceCart;
 	}
 
 	@Override
-	public void updateCurrentCart(
+	public void updateCurrentCommerceCart(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, CommerceCart commerceCart) {
 

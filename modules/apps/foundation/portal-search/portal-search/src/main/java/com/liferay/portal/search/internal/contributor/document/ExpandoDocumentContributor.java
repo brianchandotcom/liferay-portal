@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentContributor;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -33,6 +34,7 @@ public class ExpandoDocumentContributor implements DocumentContributor {
 			document, baseModel.getExpandoBridge());
 	}
 
+	@Reference
 	protected ExpandoBridgeIndexer expandoBridgeIndexer;
 
 }

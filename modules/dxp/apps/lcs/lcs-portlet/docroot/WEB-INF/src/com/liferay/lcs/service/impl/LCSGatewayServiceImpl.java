@@ -19,6 +19,7 @@ import com.liferay.lcs.service.LCSGatewayService;
 import com.liferay.lcs.util.CompressionUtil;
 import com.liferay.lcs.util.LCSConstants;
 import com.liferay.lcs.util.LCSUtil;
+import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -97,6 +98,9 @@ public class LCSGatewayServiceImpl
 			doGet(_URL_LCS_GATEWAY_HEALTH);
 		}
 		catch (JSONWebServiceTransportException jsonwste) {
+			return false;
+		}
+		catch (JSONWebServiceInvocationException jsonwsie) {
 			return false;
 		}
 

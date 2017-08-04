@@ -15,9 +15,9 @@
 package com.liferay.lcs.jsonwebserviceclient;
 
 import com.liferay.lcs.oauth.OAuthUtil;
-import com.liferay.petra.json.web.service.client.JSONWebServiceClientImpl;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
+import com.liferay.petra.json.web.service.client.internal.JSONWebServiceClientImpl;
 
 import java.net.URI;
 

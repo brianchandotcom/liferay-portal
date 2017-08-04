@@ -22,7 +22,6 @@ import com.liferay.commerce.cart.util.CommerceCartHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.CookieKeys;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
@@ -58,15 +57,17 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 			HttpServletRequest httpServletRequest, int type)
 		throws PortalException {
 
-		long commerceCartId = _getCurrentCommerceCartId(
+		String commerceCartUuid = _getCurrentCommerceCartUuid(
 			httpServletRequest, type);
 
-		if (commerceCartId <= 0) {
+		if (Validator.isNull(commerceCartUuid)) {
 			return null;
 		}
 
+		long groupId = _portal.getScopeGroupId(httpServletRequest);
+
 		CommerceCart commerceCart = _commerceCartService.fetchCommerceCart(
-			commerceCartId);
+			groupId, commerceCartUuid);
 
 		return commerceCart;
 	}
@@ -74,22 +75,21 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 	@Override
 	public void updateCurrentCart(
 		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, long commerceCartId) {
+		HttpServletResponse httpServletResponse, CommerceCart commerceCart) {
 
-		CommerceCart commerceCart = _commerceCartService.fetchCommerceCart(
-			commerceCartId);
-
-		String commerceCartIdWebKey = _getCommerceCartIdWebKey(
+		String commerceCartUuidWebKey = _getCommerceCartIdWebKey(
 			commerceCart.getType());
 
 		HttpSession httpSession = httpServletRequest.getSession();
 
-		httpSession.setAttribute(commerceCartIdWebKey, commerceCartId);
+		httpSession.setAttribute(
+			commerceCartUuidWebKey, commerceCart.getUuid());
 
-		httpServletRequest.setAttribute(commerceCartIdWebKey, commerceCartId);
+		httpServletRequest.setAttribute(
+			commerceCartUuidWebKey, commerceCart.getUuid());
 
 		Cookie commerceCartIdCookie = new Cookie(
-			commerceCartIdWebKey, String.valueOf(commerceCartId));
+			commerceCartUuidWebKey, commerceCart.getUuid());
 
 		String domain = CookieKeys.getDomain(httpServletRequest);
 
@@ -105,74 +105,69 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 	}
 
 	private String _getCommerceCartIdWebKey(int type) {
-		return CommerceCartWebKeys.COMMERCE_CART_ID + StringPool.UNDERLINE +
+		return CommerceCartWebKeys.COMMERCE_CART_UUID + StringPool.UNDERLINE +
 			type;
 	}
 
-	private long _getCurrentCommerceCartId(
+	private String _getCurrentCommerceCartUuid(
 			HttpServletRequest httpServletRequest, int type)
 		throws PortalException {
 
-		String commerceCartIdWebKey = _getCommerceCartIdWebKey(type);
+		String commerceCartUuidWebKey = _getCommerceCartIdWebKey(type);
 
-		Long commerceCartId = (Long)httpServletRequest.getAttribute(
-			commerceCartIdWebKey);
+		String commerceCartUuid = (String)httpServletRequest.getAttribute(
+			commerceCartUuidWebKey);
 
-		if (commerceCartId != null) {
-			return commerceCartId.longValue();
+		if (Validator.isNotNull(commerceCartUuid)) {
+			return commerceCartUuid;
 		}
 
 		HttpSession httpSession = httpServletRequest.getSession();
 
-		commerceCartId = (Long)httpSession.getAttribute(commerceCartIdWebKey);
+		commerceCartUuid = (String)httpSession.getAttribute(commerceCartUuidWebKey);
 
-		if (commerceCartId != null) {
+		if (Validator.isNotNull(commerceCartUuid)) {
 			httpServletRequest.setAttribute(
-				commerceCartIdWebKey, commerceCartId);
+				commerceCartUuidWebKey, commerceCartUuid);
 
-			return commerceCartId.longValue();
-		}
-
-		String cookieCommerceCartId = CookieKeys.getCookie(
-			httpServletRequest, commerceCartIdWebKey, false);
-
-		if (Validator.isNotNull(cookieCommerceCartId)) {
-			commerceCartId = GetterUtil.getLong(cookieCommerceCartId);
-
-			httpSession.setAttribute(commerceCartIdWebKey, commerceCartId);
-
-			httpServletRequest.setAttribute(
-				commerceCartIdWebKey, commerceCartId);
-
-			return commerceCartId;
+			return commerceCartUuid;
 		}
 
 		User user = _portal.getUser(httpServletRequest);
 
-		if (user == null) {
-			return 0;
+		if (user != null && !user.isDefaultUser()) {
+
+			long groupId = _portal.getScopeGroupId(httpServletRequest);
+
+			CommerceCart commerceCart = _commerceCartService.
+				fetchDefaultCommerceCart(
+					groupId, user.getUserId(), type,
+					CommerceCartConstants.COMMERCE_CART_DEFAULT_TITLE);
+
+			if (commerceCart != null) {
+				httpSession.setAttribute(commerceCartUuidWebKey, commerceCartUuid);
+
+				httpServletRequest.setAttribute(
+					commerceCartUuidWebKey, commerceCart.getUuid());
+
+				return commerceCart.getUuid();
+			}
 		}
 
-		if (user.isDefaultUser()) {
-			return 0;
-		}
+		commerceCartUuid = CookieKeys.getCookie(
+			httpServletRequest, commerceCartUuidWebKey, false);
 
-		long groupId = _portal.getScopeGroupId(httpServletRequest);
+		if (Validator.isNotNull(commerceCartUuid)) {
 
-		CommerceCart commerceCart = _commerceCartService.fetchCommerceCart(
-			groupId, user.getUserId(), type,
-			CommerceCartConstants.COMMERCE_CART_DEFAULT_TITLE);
-
-		if (commerceCart != null) {
-			httpSession.setAttribute(commerceCartIdWebKey, commerceCartId);
+			httpSession.setAttribute(commerceCartUuidWebKey, commerceCartUuid);
 
 			httpServletRequest.setAttribute(
-				commerceCartIdWebKey, commerceCartId);
+				commerceCartUuidWebKey, commerceCartUuid);
 
-			return commerceCart.getCommerceCartId();
+			return commerceCartUuid;
 		}
 
-		return 0;
+		return null;
 	}
 
 	@Reference

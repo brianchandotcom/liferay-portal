@@ -37,6 +37,6 @@ public interface CommerceCartHelper {
 
 	public void updateCurrentCart(
 		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, long commerceCartId);
+		HttpServletResponse httpServletResponse, CommerceCart commerceCart);
 
 }

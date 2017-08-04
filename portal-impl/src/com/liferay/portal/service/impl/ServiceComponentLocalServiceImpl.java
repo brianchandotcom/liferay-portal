@@ -412,69 +412,6 @@ public class ServiceComponentLocalServiceImpl
 			tablesSQL, sequencesSQL, indexesSQL);
 	}
 
-	private void _doUpgradeDB(
-			ClassLoader classLoader, String buildNamespace, long buildNumber,
-			ServiceComponent previousServiceComponent, String tablesSQL,
-			String sequencesSQL, String indexesSQL)
-		throws Exception {
-
-		DB db = DBManagerUtil.getDB();
-
-		if (previousServiceComponent == null) {
-			if (_log.isInfoEnabled()) {
-				_log.info("Running " + buildNamespace + " SQL scripts");
-			}
-
-			db.runSQLTemplateString(tablesSQL, true, false);
-			db.runSQLTemplateString(sequencesSQL, true, false);
-			db.runSQLTemplateString(indexesSQL, true, false);
-		}
-		else if (PropsValues.DATABASE_SCHEMA_DEVELOPMENT_MODE) {
-			if (_log.isWarnEnabled()) {
-				StringBundler sb = new StringBundler(6);
-
-				sb.append("Auto upgrading ");
-				sb.append(buildNamespace);
-				sb.append(" database to build number ");
-				sb.append(buildNumber);
-				sb.append(" this is not supported for production, write a ");
-				sb.append("UpgradeStep to ensure data is upgraded correctly");
-
-				_log.warn(sb.toString());
-			}
-
-			if (!tablesSQL.equals(previousServiceComponent.getTablesSQL())) {
-				if (_log.isInfoEnabled()) {
-					_log.info("Upgrading database with tables.sql");
-				}
-
-				db.runSQLTemplateString(tablesSQL, true, false);
-
-				upgradeModels(classLoader, previousServiceComponent, tablesSQL);
-			}
-
-			if (!sequencesSQL.equals(
-					previousServiceComponent.getSequencesSQL())) {
-
-				if (_log.isInfoEnabled()) {
-					_log.info("Upgrading database with sequences.sql");
-				}
-
-				db.runSQLTemplateString(sequencesSQL, true, false);
-			}
-
-			if (!indexesSQL.equals(previousServiceComponent.getIndexesSQL()) ||
-				!tablesSQL.equals(previousServiceComponent.getTablesSQL())) {
-
-				if (_log.isInfoEnabled()) {
-					_log.info("Upgrading database with indexes.sql");
-				}
-
-				db.runSQLTemplateString(indexesSQL, true, false);
-			}
-		}
-	}
-
 	protected List<String> getModelNames(ClassLoader classLoader)
 		throws DocumentException, IOException {
 
@@ -655,6 +592,69 @@ public class ServiceComponentLocalServiceImpl
 			if (upgradeTableListener != null) {
 				upgradeTableListener.onAfterUpdateTable(
 					previousServiceComponent, upgradeTable);
+			}
+		}
+	}
+
+	private void _doUpgradeDB(
+			ClassLoader classLoader, String buildNamespace, long buildNumber,
+			ServiceComponent previousServiceComponent, String tablesSQL,
+			String sequencesSQL, String indexesSQL)
+		throws Exception {
+
+		DB db = DBManagerUtil.getDB();
+
+		if (previousServiceComponent == null) {
+			if (_log.isInfoEnabled()) {
+				_log.info("Running " + buildNamespace + " SQL scripts");
+			}
+
+			db.runSQLTemplateString(tablesSQL, true, false);
+			db.runSQLTemplateString(sequencesSQL, true, false);
+			db.runSQLTemplateString(indexesSQL, true, false);
+		}
+		else if (PropsValues.DATABASE_SCHEMA_DEVELOPMENT_MODE) {
+			if (_log.isWarnEnabled()) {
+				StringBundler sb = new StringBundler(6);
+
+				sb.append("Auto upgrading ");
+				sb.append(buildNamespace);
+				sb.append(" database to build number ");
+				sb.append(buildNumber);
+				sb.append(" this is not supported for production, write a ");
+				sb.append("UpgradeStep to ensure data is upgraded correctly");
+
+				_log.warn(sb.toString());
+			}
+
+			if (!tablesSQL.equals(previousServiceComponent.getTablesSQL())) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Upgrading database with tables.sql");
+				}
+
+				db.runSQLTemplateString(tablesSQL, true, false);
+
+				upgradeModels(classLoader, previousServiceComponent, tablesSQL);
+			}
+
+			if (!sequencesSQL.equals(
+					previousServiceComponent.getSequencesSQL())) {
+
+				if (_log.isInfoEnabled()) {
+					_log.info("Upgrading database with sequences.sql");
+				}
+
+				db.runSQLTemplateString(sequencesSQL, true, false);
+			}
+
+			if (!indexesSQL.equals(previousServiceComponent.getIndexesSQL()) ||
+				!tablesSQL.equals(previousServiceComponent.getTablesSQL())) {
+
+				if (_log.isInfoEnabled()) {
+					_log.info("Upgrading database with indexes.sql");
+				}
+
+				db.runSQLTemplateString(indexesSQL, true, false);
 			}
 		}
 	}

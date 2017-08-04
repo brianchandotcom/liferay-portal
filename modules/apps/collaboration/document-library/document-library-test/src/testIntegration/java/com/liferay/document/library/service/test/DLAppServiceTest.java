@@ -1884,12 +1884,10 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		searchContext.setGroupIds(new long[] {fileEntry.getRepositoryId()});
 		searchContext.setKeywords(keywords);
 
-		QueryConfig queryConfig = new QueryConfig();
+		QueryConfig queryConfig = searchContext.getQueryConfig();
 
 		queryConfig.setHighlightEnabled(false);
 		queryConfig.setScoreEnabled(false);
-
-		searchContext.setQueryConfig(queryConfig);
 
 		Indexer<DLFileEntry> indexer = IndexerRegistryUtil.getIndexer(
 			DLFileEntryConstants.getClassName());

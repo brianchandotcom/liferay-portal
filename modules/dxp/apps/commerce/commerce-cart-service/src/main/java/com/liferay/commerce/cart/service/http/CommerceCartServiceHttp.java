@@ -143,16 +143,14 @@ public class CommerceCartServiceHttp {
 		}
 	}
 
-	public static com.liferay.commerce.cart.model.CommerceCart fetchDefaultCommerceCart(
-		HttpPrincipal httpPrincipal, long groupId, long userId, int type,
-		java.lang.String name) {
+	public static com.liferay.commerce.cart.model.CommerceCart fetchCommerceCart(
+		HttpPrincipal httpPrincipal, java.lang.String uuid, long groupId) {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceCartServiceUtil.class,
-					"fetchDefaultCommerceCart",
-					_fetchDefaultCommerceCartParameterTypes3);
+					"fetchCommerceCart", _fetchCommerceCartParameterTypes3);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					userId, type, name);
+			MethodHandler methodHandler = new MethodHandler(methodKey, uuid,
+					groupId);
 
 			Object returnObj = null;
 
@@ -172,14 +170,16 @@ public class CommerceCartServiceHttp {
 		}
 	}
 
-	public static com.liferay.commerce.cart.model.CommerceCart fetchCommerceCart(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String uuid) {
+	public static com.liferay.commerce.cart.model.CommerceCart fetchDefaultCommerceCart(
+		HttpPrincipal httpPrincipal, long groupId, long userId, int type,
+		java.lang.String name) {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceCartServiceUtil.class,
-					"fetchCommerceCart", _fetchCommerceCartParameterTypes4);
+					"fetchDefaultCommerceCart",
+					_fetchDefaultCommerceCartParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					uuid);
+					userId, type, name);
 
 			Object returnObj = null;
 
@@ -299,11 +299,11 @@ public class CommerceCartServiceHttp {
 	private static final Class<?>[] _fetchCommerceCartParameterTypes2 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _fetchDefaultCommerceCartParameterTypes3 = new Class[] {
-			long.class, long.class, int.class, java.lang.String.class
+	private static final Class<?>[] _fetchCommerceCartParameterTypes3 = new Class[] {
+			java.lang.String.class, long.class
 		};
-	private static final Class<?>[] _fetchCommerceCartParameterTypes4 = new Class[] {
-			long.class, java.lang.String.class
+	private static final Class<?>[] _fetchDefaultCommerceCartParameterTypes4 = new Class[] {
+			long.class, long.class, int.class, java.lang.String.class
 		};
 	private static final Class<?>[] _getCommerceCartParameterTypes5 = new Class[] {
 			long.class

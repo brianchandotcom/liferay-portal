@@ -42,14 +42,14 @@ public class CommerceCartServiceWrapper implements CommerceCartService,
 
 	@Override
 	public com.liferay.commerce.cart.model.CommerceCart fetchCommerceCart(
-		long commerceCartId) {
-		return _commerceCartService.fetchCommerceCart(commerceCartId);
+		java.lang.String uuid, long groupId) {
+		return _commerceCartService.fetchCommerceCart(uuid, groupId);
 	}
 
 	@Override
 	public com.liferay.commerce.cart.model.CommerceCart fetchCommerceCart(
-		long groupId, java.lang.String uuid) {
-		return _commerceCartService.fetchCommerceCart(groupId, uuid);
+		long commerceCartId) {
+		return _commerceCartService.fetchCommerceCart(commerceCartId);
 	}
 
 	@Override

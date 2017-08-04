@@ -60,10 +60,10 @@ public interface CommerceCartService extends BaseService {
 		ServiceContext serviceContext) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceCart fetchCommerceCart(long commerceCartId);
+	public CommerceCart fetchCommerceCart(java.lang.String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceCart fetchCommerceCart(long groupId, java.lang.String uuid);
+	public CommerceCart fetchCommerceCart(long commerceCartId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceCart fetchDefaultCommerceCart(long groupId, long userId,

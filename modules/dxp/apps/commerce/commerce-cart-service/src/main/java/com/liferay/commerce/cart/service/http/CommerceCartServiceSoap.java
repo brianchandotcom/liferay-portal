@@ -108,12 +108,11 @@ public class CommerceCartServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.cart.model.CommerceCartSoap fetchDefaultCommerceCart(
-		long groupId, long userId, int type, java.lang.String name)
-		throws RemoteException {
+	public static com.liferay.commerce.cart.model.CommerceCartSoap fetchCommerceCart(
+		java.lang.String uuid, long groupId) throws RemoteException {
 		try {
-			com.liferay.commerce.cart.model.CommerceCart returnValue = CommerceCartServiceUtil.fetchDefaultCommerceCart(groupId,
-					userId, type, name);
+			com.liferay.commerce.cart.model.CommerceCart returnValue = CommerceCartServiceUtil.fetchCommerceCart(uuid,
+					groupId);
 
 			return com.liferay.commerce.cart.model.CommerceCartSoap.toSoapModel(returnValue);
 		}
@@ -124,11 +123,12 @@ public class CommerceCartServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.cart.model.CommerceCartSoap fetchCommerceCart(
-		long groupId, java.lang.String uuid) throws RemoteException {
+	public static com.liferay.commerce.cart.model.CommerceCartSoap fetchDefaultCommerceCart(
+		long groupId, long userId, int type, java.lang.String name)
+		throws RemoteException {
 		try {
-			com.liferay.commerce.cart.model.CommerceCart returnValue = CommerceCartServiceUtil.fetchCommerceCart(groupId,
-					uuid);
+			com.liferay.commerce.cart.model.CommerceCart returnValue = CommerceCartServiceUtil.fetchDefaultCommerceCart(groupId,
+					userId, type, name);
 
 			return com.liferay.commerce.cart.model.CommerceCartSoap.toSoapModel(returnValue);
 		}

@@ -21,6 +21,7 @@ import com.liferay.commerce.product.exception.CPFriendlyURLEntryException;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -40,19 +41,17 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.kernel.service.TrashEntryService;
 import com.liferay.trash.kernel.util.TrashUtil;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletURL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.PortletURL;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -131,6 +130,14 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 					 cmd.equals(Constants.UPDATE)) {
 
 				cpDefinition = updateCPDefinition(actionRequest);
+
+				String redirect = getSaveAndContinueRedirect(
+					actionRequest, cpDefinition);
+
+				sendRedirect(actionRequest, actionResponse, redirect);
+			}
+			else if (cmd.equals("updateShippingInfo")) {
+				cpDefinition = updateShippingInfo(actionRequest);
 
 				String redirect = getSaveAndContinueRedirect(
 					actionRequest, cpDefinition);
@@ -323,6 +330,21 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		return cpDefinition;
+	}
+
+	protected CPDefinition updateShippingInfo(ActionRequest actionRequest)
+		throws PortalException {
+
+		long cpDefinitionId = ParamUtil.getLong(
+			actionRequest, "cpDefinitionId");
+
+		double width = ParamUtil.getDouble(actionRequest, "width");
+		double height = ParamUtil.getDouble(actionRequest, "height");
+		double depth = ParamUtil.getDouble(actionRequest, "depth");
+		double weight = ParamUtil.getDouble(actionRequest, "weight");
+
+		return _cpDefinitionService.updateShippingInfo(
+			cpDefinitionId, width, height, depth, weight);
 	}
 
 	@Reference

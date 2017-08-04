@@ -139,6 +139,34 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="replace-regex">
+		<attribute name="replace.regex.file" />
+		<attribute name="replace.regex.pattern" />
+		<attribute name="replace.regex.replacement" />
+		<attribute name="replace.regex.tmp.file" />
+
+		<sequential>
+			<local name="replace.regex.changed" />
+
+			<replaceregexp
+				file="@{replace.regex.file}"
+				match="@{replace.regex.pattern}"
+				replace="@{replace.regex.replacement}"
+			/>
+
+			<uptodate
+				property="replace.regex.changed"
+				srcfile="@{replace.regex.tmp.file}"
+				targetfile="@{replace.regex.file}"
+			/>
+
+			<fail
+				message="Unable to replace pattern &quot;@{replace.regex.pattern}&quot; with &quot;@{replace.regex.replacement}&quot; in @{replace.regex.file}."
+				unless="replace.regex.changed"
+			/>
+		</sequential>
+	</macrodef>
+
 	<target name="checkout-portal" unless="prepare.working.dir.private">
 		<loadfile property="portal.git.commit" srcFile="git-commit-portal">
 			<filterchain>

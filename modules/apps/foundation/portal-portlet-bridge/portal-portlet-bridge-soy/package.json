@@ -1,0 +1,42 @@
+{
+	"dependencies": {
+		"metal": "^2.6.4",
+		"metal-alert": "^2.1.0",
+		"metal-component": "^2.9.0",
+		"metal-router": "^3.6.2",
+		"metal-soy": "^2.8.0",
+		"senna": "^2.4.0"
+	},
+	"devDependencies": {
+		"babel-preset-metal": "^4.1.0",
+		"eslint": "^4.1.1",
+		"eslint-config-liferay": "^1.0.2",
+		"gulp-metal": "^2.0.1",
+		"husky": "^0.14.2",
+		"karma": "^1.7.0",
+		"liferay-module-config-generator": "^1.2.1",
+		"lint-staged": "^4.0.0",
+		"metal-cli": "4.2.0",
+		"metal-karma-config": "^2.2.0",
+		"metal-soy-critic": "^2.1.0",
+		"prettier": "^1.5.2"
+	},
+	"lint-staged": {
+		"*.js": [
+			"prettier --use-tabs true --tab-width 4 --single-quote --trailing-comma all --write",
+			"eslint",
+			"git add"
+		],
+		"*.soy": [
+			"mcritic",
+			"git add"
+		],
+		"gitDir": "../"
+	},
+	"name": "portal-portlet-bridge-soy",
+	"scripts": {
+		"format": "prettier --use-tabs true --tab-width 4 --single-quote --trailing-comma all --write src/**/*.js",
+		"lint": "eslint src/**/*.js && mcritic src"
+	},
+	"version": "3.2.0"
+}

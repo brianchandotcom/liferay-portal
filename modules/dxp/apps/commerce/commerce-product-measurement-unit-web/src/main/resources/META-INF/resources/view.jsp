@@ -54,61 +54,63 @@ int type = cpMeasurementUnitsDisplayContext.getType();
 	</liferay-frontend:management-bar-buttons>
 </liferay-frontend:management-bar>
 
-<liferay-ui:search-container
-	id="cpMeasurementUnits"
-	searchContainer="<%= cpMeasurementUnitSearchContainer %>"
->
-	<liferay-ui:search-container-row
-		className="com.liferay.commerce.product.model.CPMeasurementUnit"
-		keyProperty="CPMeasurementUnitId"
-		modelVar="cpMeasurementUnit"
+<div class="container-fluid-1280">
+	<liferay-ui:search-container
+		id="cpMeasurementUnits"
+		searchContainer="<%= cpMeasurementUnitSearchContainer %>"
 	>
+		<liferay-ui:search-container-row
+			className="com.liferay.commerce.product.model.CPMeasurementUnit"
+			keyProperty="CPMeasurementUnitId"
+			modelVar="cpMeasurementUnit"
+		>
 
-		<%
-		PortletURL rowURL = renderResponse.createRenderURL();
+			<%
+			PortletURL rowURL = renderResponse.createRenderURL();
 
-		rowURL.setParameter("mvcRenderCommandName", "editCPMeasurementUnit");
-		rowURL.setParameter("redirect", currentURL);
-		rowURL.setParameter("cpMeasurementUnitId", String.valueOf(cpMeasurementUnit.getCPMeasurementUnitId()));
-		rowURL.setParameter("type", String.valueOf(type));
-		%>
+			rowURL.setParameter("mvcRenderCommandName", "editCPMeasurementUnit");
+			rowURL.setParameter("redirect", currentURL);
+			rowURL.setParameter("cpMeasurementUnitId", String.valueOf(cpMeasurementUnit.getCPMeasurementUnitId()));
+			rowURL.setParameter("type", String.valueOf(type));
+			%>
 
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
-			href="<%= rowURL %>"
-			property="name"
-		/>
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
+				href="<%= rowURL %>"
+				property="name"
+			/>
 
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
-			property="key"
-		/>
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
+				property="key"
+			/>
 
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
-			name="ratio-to-primary"
-			property="rate"
-		/>
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
+				name="ratio-to-primary"
+				property="rate"
+			/>
 
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
-			name="primary"
-			value='<%= LanguageUtil.get(request, cpMeasurementUnit.isPrimary() ? "yes" : "no") %>'
-		/>
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
+				name="primary"
+				value='<%= LanguageUtil.get(request, cpMeasurementUnit.isPrimary() ? "yes" : "no") %>'
+			/>
 
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
-			property="priority"
-		/>
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
+				property="priority"
+			/>
 
-		<liferay-ui:search-container-column-jsp
-			cssClass="entry-action-column"
-			path="/measurement_unit_action.jsp"
-		/>
-	</liferay-ui:search-container-row>
+			<liferay-ui:search-container-column-jsp
+				cssClass="entry-action-column"
+				path="/measurement_unit_action.jsp"
+			/>
+		</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator markupView="lexicon" />
-</liferay-ui:search-container>
+		<liferay-ui:search-iterator markupView="lexicon" />
+	</liferay-ui:search-container>
+</div>
 
 <c:if test="<%= CPMeasurementUnitPermission.contains(permissionChecker, scopeGroupId, CPActionKeys.MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNIT) %>">
 	<portlet:renderURL var="addCPMeasurementUnitURL">

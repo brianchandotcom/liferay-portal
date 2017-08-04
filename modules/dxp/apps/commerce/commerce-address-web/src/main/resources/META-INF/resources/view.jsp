@@ -57,81 +57,83 @@ boolean hasManageCommerceCountriesPermission = CommerceAddressPermission.contain
 	</c:if>
 </liferay-frontend:management-bar>
 
-<portlet:actionURL name="editCommerceCountry" var="editCommerceCountryActionURL" />
+<div class="container-fluid-1280">
+	<portlet:actionURL name="editCommerceCountry" var="editCommerceCountryActionURL" />
 
-<aui:form action="<%= editCommerceCountryActionURL %>" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.DELETE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="deleteCommerceCountryIds" type="hidden" />
+	<aui:form action="<%= editCommerceCountryActionURL %>" method="post" name="fm">
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.DELETE %>" />
+		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<aui:input name="deleteCommerceCountryIds" type="hidden" />
 
-	<liferay-ui:search-container
-		id="commerceCountries"
-		searchContainer="<%= commerceCountrySearchContainer %>"
-	>
-		<liferay-ui:search-container-row
-			className="com.liferay.commerce.address.model.CommerceCountry"
-			keyProperty="commerceCountryId"
-			modelVar="commerceCountry"
+		<liferay-ui:search-container
+			id="commerceCountries"
+			searchContainer="<%= commerceCountrySearchContainer %>"
 		>
+			<liferay-ui:search-container-row
+				className="com.liferay.commerce.address.model.CommerceCountry"
+				keyProperty="commerceCountryId"
+				modelVar="commerceCountry"
+			>
 
-			<%
-			PortletURL rowURL = renderResponse.createRenderURL();
+				<%
+				PortletURL rowURL = renderResponse.createRenderURL();
 
-			rowURL.setParameter("mvcRenderCommandName", "editCommerceCountry");
-			rowURL.setParameter("redirect", currentURL);
-			rowURL.setParameter("commerceCountryId", String.valueOf(commerceCountry.getCommerceCountryId()));
-			%>
+				rowURL.setParameter("mvcRenderCommandName", "editCommerceCountry");
+				rowURL.setParameter("redirect", currentURL);
+				rowURL.setParameter("commerceCountryId", String.valueOf(commerceCountry.getCommerceCountryId()));
+				%>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				href="<%= rowURL %>"
-				property="name"
-			/>
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-content"
+					href="<%= rowURL %>"
+					property="name"
+				/>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="billing-allowed"
-				value='<%= LanguageUtil.get(request, commerceCountry.isBillingAllowed() ? "yes" : "no") %>'
-			/>
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-content"
+					name="billing-allowed"
+					value='<%= LanguageUtil.get(request, commerceCountry.isBillingAllowed() ? "yes" : "no") %>'
+				/>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="shipping-allowed"
-				value='<%= LanguageUtil.get(request, commerceCountry.isShippingAllowed() ? "yes" : "no") %>'
-			/>
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-content"
+					name="shipping-allowed"
+					value='<%= LanguageUtil.get(request, commerceCountry.isShippingAllowed() ? "yes" : "no") %>'
+				/>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="two-letters-iso-code"
-				property="twoLettersISOCode"
-			/>
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-content"
+					name="two-letters-iso-code"
+					property="twoLettersISOCode"
+				/>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="subject-to-vat"
-				value='<%= LanguageUtil.get(request, commerceCountry.isSubjectToVAT() ? "yes" : "no") %>'
-			/>
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-content"
+					name="subject-to-vat"
+					value='<%= LanguageUtil.get(request, commerceCountry.isSubjectToVAT() ? "yes" : "no") %>'
+				/>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="active"
-				value='<%= LanguageUtil.get(request, commerceCountry.isActive() ? "yes" : "no") %>'
-			/>
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-content"
+					name="active"
+					value='<%= LanguageUtil.get(request, commerceCountry.isActive() ? "yes" : "no") %>'
+				/>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				property="priority"
-			/>
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-content"
+					property="priority"
+				/>
 
-			<liferay-ui:search-container-column-jsp
-				cssClass="entry-action-column"
-				path="/country_action.jsp"
-			/>
-		</liferay-ui:search-container-row>
+				<liferay-ui:search-container-column-jsp
+					cssClass="entry-action-column"
+					path="/country_action.jsp"
+				/>
+			</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
-	</liferay-ui:search-container>
-</aui:form>
+			<liferay-ui:search-iterator markupView="lexicon" />
+		</liferay-ui:search-container>
+	</aui:form>
+</div>
 
 <c:if test="<%= hasManageCommerceCountriesPermission %>">
 	<portlet:renderURL var="addCommerceCountryURL">

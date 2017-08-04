@@ -58,62 +58,64 @@ boolean hasManageCommerceCountriesPermission = CommerceAddressPermission.contain
 	</c:if>
 </liferay-frontend:management-bar>
 
-<portlet:actionURL name="editCommerceRegion" var="editCommerceRegionActionURL" />
+<div class="container-fluid-1280">
+	<portlet:actionURL name="editCommerceRegion" var="editCommerceRegionActionURL" />
 
-<aui:form action="<%= editCommerceRegionActionURL %>" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.DELETE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="deleteCommerceRegionIds" type="hidden" />
+	<aui:form action="<%= editCommerceRegionActionURL %>" method="post" name="fm">
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.DELETE %>" />
+		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<aui:input name="deleteCommerceRegionIds" type="hidden" />
 
-	<liferay-ui:search-container
-		id="commerceRegions"
-		searchContainer="<%= commerceRegionSearchContainer %>"
-	>
-		<liferay-ui:search-container-row
-			className="com.liferay.commerce.address.model.CommerceRegion"
-			keyProperty="commerceRegionId"
-			modelVar="commerceRegion"
+		<liferay-ui:search-container
+			id="commerceRegions"
+			searchContainer="<%= commerceRegionSearchContainer %>"
 		>
+			<liferay-ui:search-container-row
+				className="com.liferay.commerce.address.model.CommerceRegion"
+				keyProperty="commerceRegionId"
+				modelVar="commerceRegion"
+			>
 
-			<%
-			PortletURL rowURL = renderResponse.createRenderURL();
+				<%
+				PortletURL rowURL = renderResponse.createRenderURL();
 
-			rowURL.setParameter("mvcRenderCommandName", "editCommerceRegion");
-			rowURL.setParameter("redirect", currentURL);
-			rowURL.setParameter("commerceRegionId", String.valueOf(commerceRegion.getCommerceRegionId()));
-			%>
+				rowURL.setParameter("mvcRenderCommandName", "editCommerceRegion");
+				rowURL.setParameter("redirect", currentURL);
+				rowURL.setParameter("commerceRegionId", String.valueOf(commerceRegion.getCommerceRegionId()));
+				%>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				href="<%= rowURL %>"
-				property="name"
-			/>
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-content"
+					href="<%= rowURL %>"
+					property="name"
+				/>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				property="code"
-			/>
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-content"
+					property="code"
+				/>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="active"
-				value='<%= LanguageUtil.get(request, commerceRegion.isActive() ? "yes" : "no") %>'
-			/>
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-content"
+					name="active"
+					value='<%= LanguageUtil.get(request, commerceRegion.isActive() ? "yes" : "no") %>'
+				/>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				property="priority"
-			/>
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-content"
+					property="priority"
+				/>
 
-			<liferay-ui:search-container-column-jsp
-				cssClass="entry-action-column"
-				path="/region_action.jsp"
-			/>
-		</liferay-ui:search-container-row>
+				<liferay-ui:search-container-column-jsp
+					cssClass="entry-action-column"
+					path="/region_action.jsp"
+				/>
+			</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
-	</liferay-ui:search-container>
-</aui:form>
+			<liferay-ui:search-iterator markupView="lexicon" />
+		</liferay-ui:search-container>
+	</aui:form>
+</div>
 
 <c:if test="<%= hasManageCommerceCountriesPermission %>">
 	<portlet:renderURL var="addCommerceRegionURL">

@@ -48,66 +48,68 @@ SearchContainer<CommerceCurrency> commerceCurrencySearchContainer = commerceCurr
 	</liferay-frontend:management-bar-buttons>
 </liferay-frontend:management-bar>
 
-<liferay-ui:search-container
-	id="commerceCurrencies"
-	searchContainer="<%= commerceCurrencySearchContainer %>"
->
-	<liferay-ui:search-container-row
-		className="com.liferay.commerce.currency.model.CommerceCurrency"
-		keyProperty="commerceCurrencyId"
-		modelVar="commerceCurrency"
+<div class="container-fluid-1280">
+	<liferay-ui:search-container
+		id="commerceCurrencies"
+		searchContainer="<%= commerceCurrencySearchContainer %>"
 	>
+		<liferay-ui:search-container-row
+			className="com.liferay.commerce.currency.model.CommerceCurrency"
+			keyProperty="commerceCurrencyId"
+			modelVar="commerceCurrency"
+		>
 
-		<%
-		PortletURL rowURL = renderResponse.createRenderURL();
+			<%
+			PortletURL rowURL = renderResponse.createRenderURL();
 
-		rowURL.setParameter("mvcRenderCommandName", "editCommerceCurrency");
-		rowURL.setParameter("redirect", currentURL);
-		rowURL.setParameter("commerceCurrencyId", String.valueOf(commerceCurrency.getCommerceCurrencyId()));
-		%>
+			rowURL.setParameter("mvcRenderCommandName", "editCommerceCurrency");
+			rowURL.setParameter("redirect", currentURL);
+			rowURL.setParameter("commerceCurrencyId", String.valueOf(commerceCurrency.getCommerceCurrencyId()));
+			%>
 
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
-			href="<%= rowURL %>"
-			property="name"
-		/>
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
+				href="<%= rowURL %>"
+				property="name"
+			/>
 
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
-			property="code"
-		/>
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
+				property="code"
+			/>
 
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
-			name="exchange-rate"
-			property="rate"
-		/>
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
+				name="exchange-rate"
+				property="rate"
+			/>
 
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
-			name="primary"
-			value='<%= LanguageUtil.get(request, commerceCurrency.isPrimary() ? "yes" : "no") %>'
-		/>
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
+				name="primary"
+				value='<%= LanguageUtil.get(request, commerceCurrency.isPrimary() ? "yes" : "no") %>'
+			/>
 
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
-			name="active"
-			value='<%= LanguageUtil.get(request, commerceCurrency.isActive() ? "yes" : "no") %>'
-		/>
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
+				name="active"
+				value='<%= LanguageUtil.get(request, commerceCurrency.isActive() ? "yes" : "no") %>'
+			/>
 
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
-			property="priority"
-		/>
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
+				property="priority"
+			/>
 
-		<liferay-ui:search-container-column-jsp
-			cssClass="entry-action-column"
-			path="/currency_action.jsp"
-		/>
-	</liferay-ui:search-container-row>
+			<liferay-ui:search-container-column-jsp
+				cssClass="entry-action-column"
+				path="/currency_action.jsp"
+			/>
+		</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator markupView="lexicon" />
-</liferay-ui:search-container>
+		<liferay-ui:search-iterator markupView="lexicon" />
+	</liferay-ui:search-container>
+</div>
 
 <c:if test="<%= CommerceCurrencyPermission.contains(permissionChecker, scopeGroupId, CommerceCurrencyActionKeys.MANAGE_COMMERCE_CURRENCIES) %>">
 	<portlet:renderURL var="addCommerceCurrencyURL">

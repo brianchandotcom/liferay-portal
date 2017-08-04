@@ -138,6 +138,22 @@ public class ServiceComponentLocalServiceWrapper
 	public com.liferay.portal.kernel.model.ServiceComponent initServiceComponent(
 		com.liferay.portal.kernel.service.configuration.ServiceComponentConfiguration serviceComponentConfiguration,
 		java.lang.ClassLoader classLoader, java.lang.String buildNamespace,
+		long buildNumber, long buildDate)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _serviceComponentLocalService.initServiceComponent(serviceComponentConfiguration,
+			classLoader, buildNamespace, buildNumber, buildDate);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #initServiceComponent(
+	ServiceComponentConfiguration, ClassLoader, String, long,
+	long)}
+	*/
+	@Deprecated
+	@Override
+	public com.liferay.portal.kernel.model.ServiceComponent initServiceComponent(
+		com.liferay.portal.kernel.service.configuration.ServiceComponentConfiguration serviceComponentConfiguration,
+		java.lang.ClassLoader classLoader, java.lang.String buildNamespace,
 		long buildNumber, long buildDate, boolean buildAutoUpgrade)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _serviceComponentLocalService.initServiceComponent(serviceComponentConfiguration,
@@ -288,6 +304,11 @@ public class ServiceComponentLocalServiceWrapper
 			classLoader);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #upgradeDB(ClassLoader,
+	String, long, ServiceComponent, String, String, String)}
+	*/
+	@Deprecated
 	@Override
 	public void upgradeDB(java.lang.ClassLoader classLoader,
 		java.lang.String buildNamespace, long buildNumber,
@@ -298,6 +319,17 @@ public class ServiceComponentLocalServiceWrapper
 		_serviceComponentLocalService.upgradeDB(classLoader, buildNamespace,
 			buildNumber, buildAutoUpgrade, previousServiceComponent, tablesSQL,
 			sequencesSQL, indexesSQL);
+	}
+
+	@Override
+	public void upgradeDB(java.lang.ClassLoader classLoader,
+		java.lang.String buildNamespace, long buildNumber,
+		com.liferay.portal.kernel.model.ServiceComponent previousServiceComponent,
+		java.lang.String tablesSQL, java.lang.String sequencesSQL,
+		java.lang.String indexesSQL) throws java.lang.Exception {
+		_serviceComponentLocalService.upgradeDB(classLoader, buildNamespace,
+			buildNumber, previousServiceComponent, tablesSQL, sequencesSQL,
+			indexesSQL);
 	}
 
 	@Override

@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
@@ -41,7 +42,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.asset.util.test.AssetTestUtil;
 
 import java.util.HashMap;
 import java.util.Locale;

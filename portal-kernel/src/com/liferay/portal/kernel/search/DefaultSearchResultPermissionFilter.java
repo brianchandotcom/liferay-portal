@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.search;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.facet.Facet;
@@ -33,14 +35,34 @@ import java.util.Map;
 /**
  * @author Tina Tian
  */
+@ProviderType
 public class DefaultSearchResultPermissionFilter
 	extends BaseSearchResultPermissionFilter {
 
+	/**
+	 * @deprecated As of 7.1.0 replace with
+	 *             {@link #DefaultSearchResultPermissionFilter(
+	 *                  SearchExecutor, PermissionChecker)}
+	 * @param baseIndexer
+	 * @param permissionChecker
+	 */
+	@Deprecated
 	public DefaultSearchResultPermissionFilter(
 		BaseIndexer<?> baseIndexer, PermissionChecker permissionChecker) {
 
-		_baseIndexer = baseIndexer;
+		this(baseIndexer::doSearch, permissionChecker);
+	}
+
+	public DefaultSearchResultPermissionFilter(
+		SearchExecutor searchExecutor, PermissionChecker permissionChecker) {
+
+		_searchExecutor = searchExecutor;
 		_permissionChecker = permissionChecker;
+	}
+
+	public interface SearchExecutor {
+
+		public Hits search(SearchContext searchContext) throws SearchException;
 	}
 
 	@Override
@@ -92,7 +114,7 @@ public class DefaultSearchResultPermissionFilter
 
 	@Override
 	protected Hits getHits(SearchContext searchContext) throws SearchException {
-		return _baseIndexer.doSearch(searchContext);
+		return _searchExecutor.search(searchContext);
 	}
 
 	@Override
@@ -166,7 +188,7 @@ public class DefaultSearchResultPermissionFilter
 			FacetPostProcessor.class, DefaultSearchResultPermissionFilter.class,
 			"_facetPostProcessor", false, true);
 
-	private final BaseIndexer<?> _baseIndexer;
 	private final PermissionChecker _permissionChecker;
+	private final SearchExecutor _searchExecutor;
 
 }

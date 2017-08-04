@@ -29,6 +29,10 @@ public class CPConstants {
 
 	public static final int DEFINITION_LINK_TYPE_UP_SELL = 1;
 
+	public static final int MEASUREMENT_UNIT_TYPE_DIMENSION = 0;
+
+	public static final int MEASUREMENT_UNIT_TYPE_WEIGHT = 1;
+
 	public static final String SEPARATOR_ASSET_CATEGORY_URL = "/g/";
 
 	public static final String SEPARATOR_PRODUCT_URL = "/p/";

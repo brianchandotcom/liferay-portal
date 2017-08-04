@@ -186,6 +186,24 @@ create table CPInstance (
 	statusDate DATE null
 );
 
+create table CPMeasurementUnit (
+	uuid_ VARCHAR(75) null,
+	CPMeasurementUnitId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	name STRING null,
+	key_ VARCHAR(75) null,
+	rate DOUBLE,
+	primary_ BOOLEAN,
+	priority DOUBLE,
+	type_ INTEGER,
+	lastPublishDate DATE null
+);
+
 create table CPOption (
 	uuid_ VARCHAR(75) null,
 	CPOptionId LONG not null primary key,

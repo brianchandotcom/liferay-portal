@@ -32,6 +32,9 @@
 	<bean class="com.liferay.commerce.product.service.impl.CPInstanceServiceImpl" id="com.liferay.commerce.product.service.CPInstanceService" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPInstancePersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPInstancePersistence" parent="basePersistence" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPInstanceFinderImpl" id="com.liferay.commerce.product.service.persistence.CPInstanceFinder" parent="basePersistence" />
+	<bean class="com.liferay.commerce.product.service.impl.CPMeasurementUnitLocalServiceImpl" id="com.liferay.commerce.product.service.CPMeasurementUnitLocalService" />
+	<bean class="com.liferay.commerce.product.service.impl.CPMeasurementUnitServiceImpl" id="com.liferay.commerce.product.service.CPMeasurementUnitService" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CPMeasurementUnitPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPMeasurementUnitPersistence" parent="basePersistence" />
 	<bean class="com.liferay.commerce.product.service.impl.CPOptionLocalServiceImpl" id="com.liferay.commerce.product.service.CPOptionLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPOptionServiceImpl" id="com.liferay.commerce.product.service.CPOptionService" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPOptionPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPOptionPersistence" parent="basePersistence" />

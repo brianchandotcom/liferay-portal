@@ -32,6 +32,7 @@ import com.liferay.commerce.product.service.persistence.CPDisplayLayoutPersisten
 import com.liferay.commerce.product.service.persistence.CPFriendlyURLEntryPersistence;
 import com.liferay.commerce.product.service.persistence.CPInstanceFinder;
 import com.liferay.commerce.product.service.persistence.CPInstancePersistence;
+import com.liferay.commerce.product.service.persistence.CPMeasurementUnitPersistence;
 import com.liferay.commerce.product.service.persistence.CPOptionCategoryPersistence;
 import com.liferay.commerce.product.service.persistence.CPOptionPersistence;
 import com.liferay.commerce.product.service.persistence.CPOptionValuePersistence;
@@ -663,6 +664,63 @@ public abstract class CPDefinitionServiceBaseImpl extends BaseServiceImpl
 	 */
 	public void setCPInstanceFinder(CPInstanceFinder cpInstanceFinder) {
 		this.cpInstanceFinder = cpInstanceFinder;
+	}
+
+	/**
+	 * Returns the cp measurement unit local service.
+	 *
+	 * @return the cp measurement unit local service
+	 */
+	public com.liferay.commerce.product.service.CPMeasurementUnitLocalService getCPMeasurementUnitLocalService() {
+		return cpMeasurementUnitLocalService;
+	}
+
+	/**
+	 * Sets the cp measurement unit local service.
+	 *
+	 * @param cpMeasurementUnitLocalService the cp measurement unit local service
+	 */
+	public void setCPMeasurementUnitLocalService(
+		com.liferay.commerce.product.service.CPMeasurementUnitLocalService cpMeasurementUnitLocalService) {
+		this.cpMeasurementUnitLocalService = cpMeasurementUnitLocalService;
+	}
+
+	/**
+	 * Returns the cp measurement unit remote service.
+	 *
+	 * @return the cp measurement unit remote service
+	 */
+	public com.liferay.commerce.product.service.CPMeasurementUnitService getCPMeasurementUnitService() {
+		return cpMeasurementUnitService;
+	}
+
+	/**
+	 * Sets the cp measurement unit remote service.
+	 *
+	 * @param cpMeasurementUnitService the cp measurement unit remote service
+	 */
+	public void setCPMeasurementUnitService(
+		com.liferay.commerce.product.service.CPMeasurementUnitService cpMeasurementUnitService) {
+		this.cpMeasurementUnitService = cpMeasurementUnitService;
+	}
+
+	/**
+	 * Returns the cp measurement unit persistence.
+	 *
+	 * @return the cp measurement unit persistence
+	 */
+	public CPMeasurementUnitPersistence getCPMeasurementUnitPersistence() {
+		return cpMeasurementUnitPersistence;
+	}
+
+	/**
+	 * Sets the cp measurement unit persistence.
+	 *
+	 * @param cpMeasurementUnitPersistence the cp measurement unit persistence
+	 */
+	public void setCPMeasurementUnitPersistence(
+		CPMeasurementUnitPersistence cpMeasurementUnitPersistence) {
+		this.cpMeasurementUnitPersistence = cpMeasurementUnitPersistence;
 	}
 
 	/**
@@ -1493,6 +1551,12 @@ public abstract class CPDefinitionServiceBaseImpl extends BaseServiceImpl
 	protected CPInstancePersistence cpInstancePersistence;
 	@BeanReference(type = CPInstanceFinder.class)
 	protected CPInstanceFinder cpInstanceFinder;
+	@BeanReference(type = com.liferay.commerce.product.service.CPMeasurementUnitLocalService.class)
+	protected com.liferay.commerce.product.service.CPMeasurementUnitLocalService cpMeasurementUnitLocalService;
+	@BeanReference(type = com.liferay.commerce.product.service.CPMeasurementUnitService.class)
+	protected com.liferay.commerce.product.service.CPMeasurementUnitService cpMeasurementUnitService;
+	@BeanReference(type = CPMeasurementUnitPersistence.class)
+	protected CPMeasurementUnitPersistence cpMeasurementUnitPersistence;
 	@BeanReference(type = com.liferay.commerce.product.service.CPOptionLocalService.class)
 	protected com.liferay.commerce.product.service.CPOptionLocalService cpOptionLocalService;
 	@BeanReference(type = com.liferay.commerce.product.service.CPOptionService.class)

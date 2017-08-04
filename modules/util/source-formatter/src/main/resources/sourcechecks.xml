@@ -24,6 +24,7 @@
 		<check name="BNDWebContextPathCheck" />
 	</source-processor>
 	<source-processor name="CodeownersSourceProcessor">
+		<check name="CodeownersFileLocationCheck" />
 		<check name="CodeownersWhitespaceCheck">
 			<property name="allowLeadingSpaces" value="true" />
 		</check>

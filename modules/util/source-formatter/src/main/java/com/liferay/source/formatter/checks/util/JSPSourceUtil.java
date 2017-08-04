@@ -215,7 +215,8 @@ public class JSPSourceUtil {
 				fileName, includeFileName, contentsMap);
 
 			if ((includeFileName.endsWith("jsp") ||
-				 includeFileName.endsWith("jspf")) &&
+				 includeFileName.endsWith("jspf") ||
+				 includeFileName.endsWith("tag")) &&
 				!includeFileName.endsWith("html/common/init.jsp") &&
 				!includeFileName.endsWith("html/portlet/init.jsp") &&
 				!includeFileName.endsWith("html/taglib/init.jsp") &&
@@ -237,6 +238,7 @@ public class JSPSourceUtil {
 		Set<String> referenceFileNames = new HashSet<>();
 
 		if (!fileName.endsWith("init.jsp") && !fileName.endsWith("init.jspf") &&
+			!fileName.endsWith("init.tag") &&
 			!fileName.contains("init-ext.jsp")) {
 
 			return referenceFileNames;
@@ -346,6 +348,6 @@ public class JSPSourceUtil {
 	private static final Pattern _javaStartTagPattern = Pattern.compile(
 		"[\n\t]<%\\!?\n");
 	private static final Pattern _jspIncludeFilePattern = Pattern.compile(
-		"/.*\\.(jsp[f]?|svg)");
+		"/.*\\.(jsp[f]?|svg|tag)");
 
 }

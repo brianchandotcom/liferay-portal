@@ -43,7 +43,7 @@ public class JSPImportsCheck extends BaseFileCheck {
 
 		if ((isPortalSource() || isSubrepository()) &&
 			content.contains("page import=") &&
-			!fileName.contains("init.jsp") &&
+			!fileName.contains("init.jsp") && !fileName.contains("init.tag") &&
 			!fileName.contains("init-ext.jsp") &&
 			!fileName.contains("/taglib/aui/") &&
 			!fileName.endsWith("touch.jsp") &&
@@ -54,6 +54,8 @@ public class JSPImportsCheck extends BaseFileCheck {
 
 		content = JSPSourceUtil.compressImportsOrTaglibs(
 			fileName, content, "<%@ page import=");
+		content = JSPSourceUtil.compressImportsOrTaglibs(
+			fileName, content, "<%@ tag import=");
 		content = JSPSourceUtil.compressImportsOrTaglibs(
 			fileName, content, "<%@ taglib uri=");
 
@@ -104,13 +106,13 @@ public class JSPImportsCheck extends BaseFileCheck {
 	}
 
 	private final Pattern _compressedJSPImportPattern = Pattern.compile(
-		"(<.*\n*page import=\".*>\n*)+", Pattern.MULTILINE);
+		"(<.*\n*(?:page|tag) import=\".*>\n*)+", Pattern.MULTILINE);
 	private final Pattern _compressedJSPTaglibPattern = Pattern.compile(
 		"(<.*\n*taglib uri=\".*>\n*)+", Pattern.MULTILINE);
 	private final Pattern _incorrectTaglibPattern = Pattern.compile(
 		"(taglib )(prefix=\".+\") (uri=\".*\")");
 	private final Pattern _uncompressedJSPImportPattern = Pattern.compile(
-		"(<.*page import=\".*>\n*)+", Pattern.MULTILINE);
+		"(<.*(?:page|tag) import=\".*>\n*)+", Pattern.MULTILINE);
 	private final Pattern _uncompressedJSPTaglibPattern = Pattern.compile(
 		"(<.*taglib uri=\".*>\n*)+", Pattern.MULTILINE);
 

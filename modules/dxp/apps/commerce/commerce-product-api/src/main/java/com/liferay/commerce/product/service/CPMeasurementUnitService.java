@@ -63,6 +63,14 @@ public interface CPMeasurementUnitService extends BaseService {
 		double rate, boolean primary, double priority, int type,
 		ServiceContext serviceContext) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPMeasurementUnit fetchPrimaryCPMeasurementUnit(long groupId,
+		int type);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPMeasurementUnit getCPMeasurementUnit(long cpMeasurementUnitId)
+		throws PortalException;
+
 	public CPMeasurementUnit updateCPMeasurementUnit(long cpMeasurementUnitId,
 		Map<Locale, java.lang.String> nameMap, java.lang.String key,
 		double rate, boolean primary, double priority, int type)

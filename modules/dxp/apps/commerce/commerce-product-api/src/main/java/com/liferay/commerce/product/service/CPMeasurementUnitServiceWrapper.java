@@ -45,6 +45,20 @@ public class CPMeasurementUnitServiceWrapper implements CPMeasurementUnitService
 	}
 
 	@Override
+	public com.liferay.commerce.product.model.CPMeasurementUnit fetchPrimaryCPMeasurementUnit(
+		long groupId, int type) {
+		return _cpMeasurementUnitService.fetchPrimaryCPMeasurementUnit(groupId,
+			type);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPMeasurementUnit getCPMeasurementUnit(
+		long cpMeasurementUnitId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpMeasurementUnitService.getCPMeasurementUnit(cpMeasurementUnitId);
+	}
+
+	@Override
 	public com.liferay.commerce.product.model.CPMeasurementUnit updateCPMeasurementUnit(
 		long cpMeasurementUnitId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,

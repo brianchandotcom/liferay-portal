@@ -128,6 +128,10 @@ public interface CPMeasurementUnitLocalService extends BaseLocalService,
 	public CPMeasurementUnit fetchCPMeasurementUnitByUuidAndGroupId(
 		java.lang.String uuid, long groupId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPMeasurementUnit fetchPrimaryCPMeasurementUnit(long groupId,
+		int type);
+
 	/**
 	* Returns the cp measurement unit with the primary key.
 	*
@@ -309,4 +313,6 @@ public interface CPMeasurementUnitLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	public void deleteCPMeasurementUnits(long groupId);
 }

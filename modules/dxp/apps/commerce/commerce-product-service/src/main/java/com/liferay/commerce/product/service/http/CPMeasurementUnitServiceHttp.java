@@ -120,6 +120,66 @@ public class CPMeasurementUnitServiceHttp {
 		}
 	}
 
+	public static com.liferay.commerce.product.model.CPMeasurementUnit getCPMeasurementUnit(
+		HttpPrincipal httpPrincipal, long cpMeasurementUnitId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CPMeasurementUnitServiceUtil.class,
+					"getCPMeasurementUnit", _getCPMeasurementUnitParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					cpMeasurementUnitId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.product.model.CPMeasurementUnit)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPMeasurementUnit fetchPrimaryCPMeasurementUnit(
+		HttpPrincipal httpPrincipal, long groupId, int type) {
+		try {
+			MethodKey methodKey = new MethodKey(CPMeasurementUnitServiceUtil.class,
+					"fetchPrimaryCPMeasurementUnit",
+					_fetchPrimaryCPMeasurementUnitParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					type);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.product.model.CPMeasurementUnit)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static java.util.List<com.liferay.commerce.product.model.CPMeasurementUnit> getCPMeasurementUnits(
 		HttpPrincipal httpPrincipal, long groupId, int type, int start,
 		int end,
@@ -127,7 +187,7 @@ public class CPMeasurementUnitServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CPMeasurementUnitServiceUtil.class,
 					"getCPMeasurementUnits",
-					_getCPMeasurementUnitsParameterTypes2);
+					_getCPMeasurementUnitsParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					type, start, end, orderByComparator);
@@ -155,7 +215,7 @@ public class CPMeasurementUnitServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CPMeasurementUnitServiceUtil.class,
 					"getCPMeasurementUnitsCount",
-					_getCPMeasurementUnitsCountParameterTypes3);
+					_getCPMeasurementUnitsCountParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					type);
@@ -186,7 +246,7 @@ public class CPMeasurementUnitServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CPMeasurementUnitServiceUtil.class,
 					"updateCPMeasurementUnit",
-					_updateCPMeasurementUnitParameterTypes4);
+					_updateCPMeasurementUnitParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpMeasurementUnitId, nameMap, key, rate, primary, priority,
@@ -223,14 +283,19 @@ public class CPMeasurementUnitServiceHttp {
 	private static final Class<?>[] _deleteCPMeasurementUnitParameterTypes1 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getCPMeasurementUnitsParameterTypes2 = new Class[] {
+	private static final Class<?>[] _getCPMeasurementUnitParameterTypes2 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _fetchPrimaryCPMeasurementUnitParameterTypes3 =
+		new Class[] { long.class, int.class };
+	private static final Class<?>[] _getCPMeasurementUnitsParameterTypes4 = new Class[] {
 			long.class, int.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getCPMeasurementUnitsCountParameterTypes3 = new Class[] {
+	private static final Class<?>[] _getCPMeasurementUnitsCountParameterTypes5 = new Class[] {
 			long.class, int.class
 		};
-	private static final Class<?>[] _updateCPMeasurementUnitParameterTypes4 = new Class[] {
+	private static final Class<?>[] _updateCPMeasurementUnitParameterTypes6 = new Class[] {
 			long.class, java.util.Map.class, java.lang.String.class,
 			double.class, boolean.class, double.class, int.class
 		};

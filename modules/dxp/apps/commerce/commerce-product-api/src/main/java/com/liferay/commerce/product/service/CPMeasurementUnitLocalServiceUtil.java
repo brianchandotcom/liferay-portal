@@ -116,6 +116,11 @@ public class CPMeasurementUnitLocalServiceUtil {
 		return getService().fetchCPMeasurementUnitByUuidAndGroupId(uuid, groupId);
 	}
 
+	public static com.liferay.commerce.product.model.CPMeasurementUnit fetchPrimaryCPMeasurementUnit(
+		long groupId, int type) {
+		return getService().fetchPrimaryCPMeasurementUnit(groupId, type);
+	}
+
 	/**
 	* Returns the cp measurement unit with the primary key.
 	*
@@ -345,6 +350,10 @@ public class CPMeasurementUnitLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static void deleteCPMeasurementUnits(long groupId) {
+		getService().deleteCPMeasurementUnits(groupId);
 	}
 
 	public static CPMeasurementUnitLocalService getService() {

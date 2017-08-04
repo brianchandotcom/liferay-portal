@@ -52,6 +52,17 @@ public class CPMeasurementUnitServiceUtil {
 			type, serviceContext);
 	}
 
+	public static com.liferay.commerce.product.model.CPMeasurementUnit fetchPrimaryCPMeasurementUnit(
+		long groupId, int type) {
+		return getService().fetchPrimaryCPMeasurementUnit(groupId, type);
+	}
+
+	public static com.liferay.commerce.product.model.CPMeasurementUnit getCPMeasurementUnit(
+		long cpMeasurementUnitId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCPMeasurementUnit(cpMeasurementUnitId);
+	}
+
 	public static com.liferay.commerce.product.model.CPMeasurementUnit updateCPMeasurementUnit(
 		long cpMeasurementUnitId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,

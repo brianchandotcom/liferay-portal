@@ -372,6 +372,138 @@ public interface CPMeasurementUnitPersistence extends BasePersistence<CPMeasurem
 	public int countByUuid_C(java.lang.String uuid, long companyId);
 
 	/**
+	* Returns all the cp measurement units where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @return the matching cp measurement units
+	*/
+	public java.util.List<CPMeasurementUnit> findByGroupId(long groupId);
+
+	/**
+	* Returns a range of all the cp measurement units where groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPMeasurementUnitModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param start the lower bound of the range of cp measurement units
+	* @param end the upper bound of the range of cp measurement units (not inclusive)
+	* @return the range of matching cp measurement units
+	*/
+	public java.util.List<CPMeasurementUnit> findByGroupId(long groupId,
+		int start, int end);
+
+	/**
+	* Returns an ordered range of all the cp measurement units where groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPMeasurementUnitModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param start the lower bound of the range of cp measurement units
+	* @param end the upper bound of the range of cp measurement units (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching cp measurement units
+	*/
+	public java.util.List<CPMeasurementUnit> findByGroupId(long groupId,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CPMeasurementUnit> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the cp measurement units where groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPMeasurementUnitModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param start the lower bound of the range of cp measurement units
+	* @param end the upper bound of the range of cp measurement units (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching cp measurement units
+	*/
+	public java.util.List<CPMeasurementUnit> findByGroupId(long groupId,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CPMeasurementUnit> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first cp measurement unit in the ordered set where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cp measurement unit
+	* @throws NoSuchCPMeasurementUnitException if a matching cp measurement unit could not be found
+	*/
+	public CPMeasurementUnit findByGroupId_First(long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<CPMeasurementUnit> orderByComparator)
+		throws NoSuchCPMeasurementUnitException;
+
+	/**
+	* Returns the first cp measurement unit in the ordered set where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
+	*/
+	public CPMeasurementUnit fetchByGroupId_First(long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<CPMeasurementUnit> orderByComparator);
+
+	/**
+	* Returns the last cp measurement unit in the ordered set where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cp measurement unit
+	* @throws NoSuchCPMeasurementUnitException if a matching cp measurement unit could not be found
+	*/
+	public CPMeasurementUnit findByGroupId_Last(long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<CPMeasurementUnit> orderByComparator)
+		throws NoSuchCPMeasurementUnitException;
+
+	/**
+	* Returns the last cp measurement unit in the ordered set where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
+	*/
+	public CPMeasurementUnit fetchByGroupId_Last(long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<CPMeasurementUnit> orderByComparator);
+
+	/**
+	* Returns the cp measurement units before and after the current cp measurement unit in the ordered set where groupId = &#63;.
+	*
+	* @param CPMeasurementUnitId the primary key of the current cp measurement unit
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next cp measurement unit
+	* @throws NoSuchCPMeasurementUnitException if a cp measurement unit with the primary key could not be found
+	*/
+	public CPMeasurementUnit[] findByGroupId_PrevAndNext(
+		long CPMeasurementUnitId, long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<CPMeasurementUnit> orderByComparator)
+		throws NoSuchCPMeasurementUnitException;
+
+	/**
+	* Removes all the cp measurement units where groupId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	*/
+	public void removeByGroupId(long groupId);
+
+	/**
+	* Returns the number of cp measurement units where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @return the number of matching cp measurement units
+	*/
+	public int countByGroupId(long groupId);
+
+	/**
 	* Returns all the cp measurement units where groupId = &#63; and type = &#63;.
 	*
 	* @param groupId the group ID

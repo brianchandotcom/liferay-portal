@@ -73,7 +73,7 @@ PortletURL portletURL = cpDefinitionItemSelectorViewDisplayContext.getPortletURL
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
-				name="product-name"
+				name="title"
 			>
 				<div class="commerce-product-definition-title"
 					data-id="<%= cpDefinition.getCPDefinitionId() %>">

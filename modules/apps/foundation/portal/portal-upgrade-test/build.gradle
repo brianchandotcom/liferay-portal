@@ -4,6 +4,7 @@ targetCompatibility = "1.8"
 dependencies {
 	testCompile group: "com.liferay", name: "com.liferay.osgi.felix.util", version: "1.0.0"
 	testCompile group: "com.liferay", name: "com.liferay.osgi.util", version: "3.0.0"
+	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testCompile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 

@@ -110,7 +110,7 @@ public class ServiceComponentLocalServiceImpl
 	public ServiceComponent initServiceComponent(
 			ServiceComponentConfiguration serviceComponentConfiguration,
 			ClassLoader classLoader, String buildNamespace, long buildNumber,
-			long buildDate, boolean buildAutoUpgrade)
+			long buildDate)
 		throws PortalException {
 
 		try {
@@ -232,7 +232,7 @@ public class ServiceComponentLocalServiceImpl
 				 (previousServiceComponent != null))) {
 
 				serviceComponentLocalService.upgradeDB(
-					classLoader, buildNamespace, buildNumber, buildAutoUpgrade,
+					classLoader, buildNamespace, buildNumber,
 					previousServiceComponent, tablesSQL, sequencesSQL,
 					indexesSQL);
 			}
@@ -246,6 +246,29 @@ public class ServiceComponentLocalServiceImpl
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #initServiceComponent(
+	 *             ServiceComponentConfiguration, ClassLoader, String, long,
+	 *             long)}
+	 */
+	@Deprecated
+	@Override
+	public ServiceComponent initServiceComponent(
+			ServiceComponentConfiguration serviceComponentConfiguration,
+			ClassLoader classLoader, String buildNamespace, long buildNumber,
+			long buildDate, boolean buildAutoUpgrade)
+		throws PortalException {
+
+		return initServiceComponent(
+			serviceComponentConfiguration, classLoader, buildNamespace,
+			buildNumber, buildDate);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #upgradeDB(ClassLoader,
+	 *             String, long, ServiceComponent, String, String, String)}
+	 */
+	@Deprecated
 	@Override
 	public void upgradeDB(
 			final ClassLoader classLoader, final String buildNamespace,
@@ -255,9 +278,23 @@ public class ServiceComponentLocalServiceImpl
 			final String indexesSQL)
 		throws Exception {
 
+		upgradeDB(
+			classLoader, buildNamespace, buildNumber, previousServiceComponent,
+			tablesSQL, sequencesSQL, indexesSQL);
+	}
+
+	@Override
+	public void upgradeDB(
+			final ClassLoader classLoader, final String buildNamespace,
+			final long buildNumber,
+			final ServiceComponent previousServiceComponent,
+			final String tablesSQL, final String sequencesSQL,
+			final String indexesSQL)
+		throws Exception {
+
 		_pacl.doUpgradeDB(
 			new DoUpgradeDBPrivilegedExceptionAction(
-				classLoader, buildNamespace, buildNumber, buildAutoUpgrade,
+				classLoader, buildNamespace, buildNumber,
 				previousServiceComponent, tablesSQL, sequencesSQL, indexesSQL));
 	}
 
@@ -315,13 +352,12 @@ public class ServiceComponentLocalServiceImpl
 
 		public DoUpgradeDBPrivilegedExceptionAction(
 			ClassLoader classLoader, String buildNamespace, long buildNumber,
-			boolean buildAutoUpgrade, ServiceComponent previousServiceComponent,
-			String tablesSQL, String sequencesSQL, String indexesSQL) {
+			ServiceComponent previousServiceComponent, String tablesSQL,
+			String sequencesSQL, String indexesSQL) {
 
 			_classLoader = classLoader;
 			_buildNamespace = buildNamespace;
 			_buildNumber = buildNumber;
-			_buildAutoUpgrade = buildAutoUpgrade;
 			_previousServiceComponent = previousServiceComponent;
 			_tablesSQL = tablesSQL;
 			_sequencesSQL = sequencesSQL;
@@ -334,15 +370,14 @@ public class ServiceComponentLocalServiceImpl
 
 		@Override
 		public Void run() throws Exception {
-			doUpgradeDB(
-				_classLoader, _buildNamespace, _buildNumber, _buildAutoUpgrade,
+			_doUpgradeDB(
+				_classLoader, _buildNamespace, _buildNumber,
 				_previousServiceComponent, _tablesSQL, _sequencesSQL,
 				_indexesSQL);
 
 			return null;
 		}
 
-		private final boolean _buildAutoUpgrade;
 		private final String _buildNamespace;
 		private final long _buildNumber;
 		private final ClassLoader _classLoader;
@@ -362,10 +397,25 @@ public class ServiceComponentLocalServiceImpl
 
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected void doUpgradeDB(
 			ClassLoader classLoader, String buildNamespace, long buildNumber,
 			boolean buildAutoUpgrade, ServiceComponent previousServiceComponent,
 			String tablesSQL, String sequencesSQL, String indexesSQL)
+		throws Exception {
+
+		_doUpgradeDB(
+			classLoader, buildNamespace, buildNumber, previousServiceComponent,
+			tablesSQL, sequencesSQL, indexesSQL);
+	}
+
+	private void _doUpgradeDB(
+			ClassLoader classLoader, String buildNamespace, long buildNumber,
+			ServiceComponent previousServiceComponent, String tablesSQL,
+			String sequencesSQL, String indexesSQL)
 		throws Exception {
 
 		DB db = DBManagerUtil.getDB();
@@ -379,7 +429,7 @@ public class ServiceComponentLocalServiceImpl
 			db.runSQLTemplateString(sequencesSQL, true, false);
 			db.runSQLTemplateString(indexesSQL, true, false);
 		}
-		else if (buildAutoUpgrade) {
+		else if (PropsValues.DATABASE_SCHEMA_DEVELOPMENT_MODE) {
 			if (_log.isWarnEnabled()) {
 				StringBundler sb = new StringBundler(6);
 

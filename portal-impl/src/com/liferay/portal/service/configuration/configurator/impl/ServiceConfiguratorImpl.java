@@ -141,14 +141,11 @@ public class ServiceConfiguratorImpl implements ServiceConfigurator {
 			properties.getProperty("build.number"));
 		long buildDate = GetterUtil.getLong(
 			properties.getProperty("build.date"));
-		boolean buildAutoUpgrade = GetterUtil.getBoolean(
-			properties.getProperty("build.auto.upgrade"), true);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Build namespace " + buildNamespace);
 			_log.debug("Build number " + buildNumber);
 			_log.debug("Build date " + buildDate);
-			_log.debug("Build auto upgrade " + buildAutoUpgrade);
 		}
 
 		if (Validator.isNull(buildNamespace)) {
@@ -158,7 +155,7 @@ public class ServiceConfiguratorImpl implements ServiceConfigurator {
 		try {
 			_serviceComponentLocalService.initServiceComponent(
 				serviceComponentConfiguration, classLoader, buildNamespace,
-				buildNumber, buildDate, buildAutoUpgrade);
+				buildNumber, buildDate);
 		}
 		catch (PortalException pe) {
 			_log.error("Unable to initialize service component", pe);

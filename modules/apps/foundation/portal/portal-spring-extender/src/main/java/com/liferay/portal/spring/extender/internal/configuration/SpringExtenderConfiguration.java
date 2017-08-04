@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.portal.spring.extender.internal.configuration.SpringExtenderConfiguration",
 	localization = "content/Language",
-	name = "spring.extender.configuration.name"
+	name = "spring-extender-configuration-name"
 )
 public interface SpringExtenderConfiguration {
 

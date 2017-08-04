@@ -24,6 +24,9 @@
 		<attribute name="public.branch.name" />
 
 		<sequential>
+			<local name="replace.regex.tmp.file" />
+
+			<tempfile createfile="true" deleteonexit="true" property="replace.regex.tmp.file" />
 
 			<!-- build.properties -->
 
@@ -90,17 +93,17 @@
 
 			<!-- portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java -->
 
-			<replace
-				failOnNoReplacements="true"
-				file="portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java"
-				token="${release.info.build[@{public.branch.name}]}"
-				value="${release.info.build[@{private.branch.name}]}"
+			<replace-regex
+				replace.regex.file="portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java"
+				replace.regex.pattern="${release.info.build[@{public.branch.name}]}"
+				replace.regex.replacement="${release.info.build[@{private.branch.name}]}"
+				replace.regex.tmp.file="${replace.regex.tmp.file}"
 			/>
-			<replace
-				failOnNoReplacements="true"
-				file="portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java"
-				token="${release.info.date[@{public.branch.name}]}"
-				value="${release.info.date[@{private.branch.name}]}"
+			<replace-regex
+				replace.regex.file="portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java"
+				replace.regex.pattern="${release.info.date[@{public.branch.name}]}"
+				replace.regex.replacement="${release.info.date[@{private.branch.name}]}"
+				replace.regex.tmp.file="${replace.regex.tmp.file}"
 			/>
 			<replace
 				failOnNoReplacements="true"
@@ -108,26 +111,26 @@
 				token="${release.info.name[@{public.branch.name}]}"
 				value="${release.info.name[@{private.branch.name}]}"
 			/>
-			<replace
-				failOnNoReplacements="true"
-				file="portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java"
-				token="${release.info.version[@{public.branch.name}]}"
-				value="${release.info.version[@{private.branch.name}]}"
+			<replace-regex
+				replace.regex.file="portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java"
+				replace.regex.pattern="${release.info.version[@{public.branch.name}]}"
+				replace.regex.replacement="${release.info.version[@{private.branch.name}]}"
+				replace.regex.tmp.file="${replace.regex.tmp.file}"
 			/>
-			<replace
-				failOnNoReplacements="true"
-				file="portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java"
-				token="${release.info.version.display.name[@{public.branch.name}]}"
-				value="${release.info.version.display.name[@{private.branch.name}]}"
+			<replace-regex
+				replace.regex.file="portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java"
+				replace.regex.pattern="${release.info.version.display.name[@{public.branch.name}]}"
+				replace.regex.replacement="${release.info.version.display.name[@{private.branch.name}]}"
+				replace.regex.tmp.file="${replace.regex.tmp.file}"
 			/>
 
 			<!-- sql/portal-data-release.sql -->
 
-			<replace
-				failOnNoReplacements="true"
-				file="sql/portal-data-release.sql"
-				token="${portal.data.release[@{public.branch.name}]}"
-				value="${portal.data.release[@{private.branch.name}]}"
+			<replace-regex
+				replace.regex.file="sql/portal-data-release.sql"
+				replace.regex.pattern="${portal.data.release[@{public.branch.name}]}"
+				replace.regex.replacement="${portal.data.release[@{private.branch.name}]}"
+				replace.regex.tmp.file="${replace.regex.tmp.file}"
 			/>
 
 			<!-- sql/sql.properties -->

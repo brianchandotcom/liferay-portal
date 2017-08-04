@@ -22,11 +22,13 @@
 
 	<command name="gotoPermissionSectionViaDropdown">
 		<var name="key_navItem" value="${contentTitle}" />
+
 		<if>
 			<condition function="IsNotVisible" locator1="RolesPermissionsNavigation#PERMISSIONS_NAVITEM" />
 
 			<then>
 				<var name="key_navItem" value="${sectionTitle}" />
+
 				<execute function="AssertClick" locator1="RolesPermissionsNavigation#PERMISSIONS_NAVITEM" value1="${sectionTitle}" />
 			</then>
 		</if>
@@ -36,6 +38,7 @@
 
 			<then>
 				<var name="key_navItem" value="${contentTitle}" />
+
 				<execute function="AssertClick" locator1="RolesPermissionsNavigation#PERMISSIONS_NAVITEM" value1="${contentTitle}" />
 			</then>
 		</if>

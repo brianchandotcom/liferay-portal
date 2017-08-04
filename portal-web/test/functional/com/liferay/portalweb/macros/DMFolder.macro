@@ -620,6 +620,7 @@
 
 	<command name="viewFolderPermissionsPG">
 		<var name="key_dmFolderName" value="${dmFolder}" />
+
 		<var method="StringUtil#lowerCase('${key_roleTitle}')" name="key_roleTitle" />
 
 		<execute function="Check" locator1="DocumentsAndMedia#ICON_FOLDER_CHECKBOX" />

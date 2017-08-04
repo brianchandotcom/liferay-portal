@@ -40,7 +40,7 @@ public class DefaultSearchResultPermissionFilter
 	extends BaseSearchResultPermissionFilter {
 
 	/**
-	 * @deprecated As of 7.1.0 replace with
+	 * @deprecated As of 7.0.0, replace with
 	 *             {@link #DefaultSearchResultPermissionFilter(
 	 *                  SearchExecutor, PermissionChecker)}
 	 * @param baseIndexer
@@ -63,6 +63,7 @@ public class DefaultSearchResultPermissionFilter
 	public interface SearchExecutor {
 
 		public Hits search(SearchContext searchContext) throws SearchException;
+
 	}
 
 	@Override

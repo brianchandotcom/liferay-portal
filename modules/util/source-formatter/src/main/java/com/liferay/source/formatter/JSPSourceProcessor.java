@@ -54,6 +54,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	}
 
 	private static final String[] _INCLUDES =
-		{"**/*.jsp", "**/*.jspf", "**/*.tpl", "**/*.vm"};
+		{"**/*.jsp", "**/*.jspf", "**/*.tag", "**/*.tpl", "**/*.vm"};
 
 }

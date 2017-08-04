@@ -68,7 +68,9 @@ public class CopyrightCheck extends BaseFileCheck {
 			addMessage(fileName, "File must start with copyright");
 		}
 
-		if (fileName.endsWith(".jsp") || fileName.endsWith(".jspf")) {
+		if (fileName.endsWith(".jsp") || fileName.endsWith(".jspf") ||
+			fileName.endsWith(".tag")) {
+
 			content = StringUtil.replace(
 				content, "<%\n" + _copyright + "\n%>",
 				"<%--\n" + _copyright + "\n--%>");

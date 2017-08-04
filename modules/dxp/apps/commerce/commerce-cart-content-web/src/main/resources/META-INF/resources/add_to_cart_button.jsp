@@ -39,12 +39,12 @@
 					data: data,
 					on: {
 						success: function(event, id, obj) {
-
 							var response = JSON.parse(obj.response);
 
 							if (response.success) {
 								Liferay.fire('commerce:productAddedToCart', response);
-							}else{
+							}
+							else {
 								new Liferay.Notification(
 									{
 										message: '<liferay-ui:message key="an-unexpected-error-occurred" />',

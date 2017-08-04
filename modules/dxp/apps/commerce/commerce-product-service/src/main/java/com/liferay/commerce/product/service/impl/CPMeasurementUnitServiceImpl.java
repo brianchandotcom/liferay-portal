@@ -18,6 +18,7 @@ import com.liferay.commerce.product.constants.CPActionKeys;
 import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.commerce.product.service.base.CPMeasurementUnitServiceBaseImpl;
 import com.liferay.commerce.product.service.permission.CPMeasurementUnitPermission;
+import com.liferay.commerce.product.util.comparator.CPMeasurementUnitPriorityComparator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -61,6 +62,22 @@ public class CPMeasurementUnitServiceImpl
 
 		cpMeasurementUnitLocalService.deleteCPMeasurementUnit(
 			cpMeasurementUnit);
+	}
+
+	@Override
+	public CPMeasurementUnit getCPMeasurementUnit(long cpMeasurementUnitId)
+		throws PortalException {
+
+		return cpMeasurementUnitLocalService.getCPMeasurementUnit(
+			cpMeasurementUnitId);
+	}
+
+	@Override
+	public CPMeasurementUnit fetchPrimaryCPMeasurementUnit(
+		long groupId, int type) {
+
+		return cpMeasurementUnitLocalService.fetchPrimaryCPMeasurementUnit(
+			groupId, type);
 	}
 
 	@Override

@@ -17,6 +17,7 @@ package com.liferay.commerce.product.service.impl;
 import com.liferay.commerce.product.exception.CPMeasurementUnitKeyException;
 import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.commerce.product.service.base.CPMeasurementUnitLocalServiceBaseImpl;
+import com.liferay.commerce.product.util.comparator.CPMeasurementUnitPriorityComparator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -82,6 +83,11 @@ public class CPMeasurementUnitLocalServiceImpl
 	}
 
 	@Override
+	public void deleteCPMeasurementUnits(long groupId) {
+		cpMeasurementUnitPersistence.removeByGroupId(groupId);
+	}
+
+	@Override
 	public CPMeasurementUnit deleteCPMeasurementUnit(long cpMeasurementUnitId)
 		throws PortalException {
 
@@ -90,6 +96,14 @@ public class CPMeasurementUnitLocalServiceImpl
 
 		return cpMeasurementUnitLocalService.deleteCPMeasurementUnit(
 			cpMeasurementUnit);
+	}
+
+	@Override
+	public CPMeasurementUnit fetchPrimaryCPMeasurementUnit(
+		long groupId, int type) {
+
+		return cpMeasurementUnitPersistence.fetchByG_P_T_First(
+			groupId, true, type, new CPMeasurementUnitPriorityComparator());
 	}
 
 	@Override

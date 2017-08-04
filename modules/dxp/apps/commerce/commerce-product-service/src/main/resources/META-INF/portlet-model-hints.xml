@@ -220,6 +220,27 @@
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
 	</model>
+	<model name="com.liferay.commerce.product.model.CPMeasurementUnit">
+		<field name="uuid" type="String" />
+		<field name="CPMeasurementUnitId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field localized="true" name="name" type="String">
+			<validator name="required" />
+		</field>
+		<field name="key" type="String">
+			<validator name="required" />
+		</field>
+		<field name="rate" type="double" />
+		<field name="primary" type="boolean" />
+		<field name="priority" type="double" />
+		<field name="type" type="int" />
+		<field name="lastPublishDate" type="Date" />
+	</model>
 	<model name="com.liferay.commerce.product.model.CPOption">
 		<field name="uuid" type="String" />
 		<field name="CPOptionId" type="long" />

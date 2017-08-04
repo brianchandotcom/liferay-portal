@@ -4,11 +4,7 @@ import Header from './Header.es';
 import Soy from 'metal-soy/src/Soy';
 import templates from './View.soy';
 
-class View extends Component {
-	constructor(opt_config) {
-		super(opt_config);
-	}
-}
+class View extends Component {}
 
 // Register component
 Soy.register(View, templates);

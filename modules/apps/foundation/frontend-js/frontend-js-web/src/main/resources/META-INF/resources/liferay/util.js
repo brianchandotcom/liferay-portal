@@ -313,7 +313,7 @@
 			if (!interacting && Util.inBrowserView(el)) {
 				var form = el.closest('form');
 
-				var focusable = !el.is(':disabled') && !el.is(':hidden');
+				var focusable = !el.is(':disabled') && !el.is(':hidden') && !el.parents(":disabled").length;
 
 				if (!form.length || focusable) {
 					el.focus();

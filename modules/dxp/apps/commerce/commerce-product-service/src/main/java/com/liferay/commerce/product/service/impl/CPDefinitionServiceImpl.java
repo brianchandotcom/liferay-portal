@@ -53,6 +53,42 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			String productTypeName, String gtin, String manufacturerPartNumber,
 			int minCartQuantity, int maxCartQuantity,
 			String allowedCartQuantities, int multipleCartQuantity,
+			double width, double height, double depth, double weight,
+			String ddmStructureKey, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		CPPermission.check(
+			getPermissionChecker(), serviceContext.getScopeGroupId(),
+			CPActionKeys.ADD_COMMERCE_PRODUCT_DEFINITION);
+
+		return cpDefinitionLocalService.addCPDefinition(
+			baseSKU, titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
+			metaTitleMap, metaKeywordsMap, metaDescriptionMap, layoutUuid,
+			productTypeName, gtin, manufacturerPartNumber, minCartQuantity,
+			maxCartQuantity, allowedCartQuantities, multipleCartQuantity,
+			width, height, depth, weight, ddmStructureKey, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
+	}
+
+	@Override
+	public CPDefinition addCPDefinition(
+			String baseSKU, Map<Locale, String> titleMap,
+			Map<Locale, String> shortDescriptionMap,
+			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
+			Map<Locale, String> metaTitleMap,
+			Map<Locale, String> metaKeywordsMap,
+			Map<Locale, String> metaDescriptionMap, String layoutUuid,
+			String productTypeName, String gtin, String manufacturerPartNumber,
+			int minCartQuantity, int maxCartQuantity,
+			String allowedCartQuantities, int multipleCartQuantity,
 			String ddmStructureKey, int displayDateMonth, int displayDateDay,
 			int displayDateYear, int displayDateHour, int displayDateMinute,
 			int expirationDateMonth, int expirationDateDay,
@@ -266,6 +302,53 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
 			serviceContext);
+	}
+
+	@Override
+	public CPDefinition updateCPDefinition(
+			long cpDefinitionId, String baseSKU, Map<Locale, String> titleMap,
+			Map<Locale, String> shortDescriptionMap,
+			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
+			Map<Locale, String> metaTitleMap,
+			Map<Locale, String> metaKeywordsMap,
+			Map<Locale, String> metaDescriptionMap, String layoutUuid,
+			String gtin, String manufacturerPartNumber, int minCartQuantity,
+			int maxCartQuantity, String allowedCartQuantities,
+			int multipleCartQuantity, double width, double height, double depth,
+			double weight, String ddmStructureKey, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, ServiceContext serviceContext)
+		throws PortalException {
+
+		CPDefinitionPermission.check(
+			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
+
+		return cpDefinitionLocalService.updateCPDefinition(
+			cpDefinitionId, baseSKU, titleMap, shortDescriptionMap,
+			descriptionMap, urlTitleMap, metaTitleMap, metaKeywordsMap,
+			metaDescriptionMap, layoutUuid, gtin, manufacturerPartNumber,
+			minCartQuantity, maxCartQuantity, allowedCartQuantities,
+			multipleCartQuantity, width, height, depth, weight, ddmStructureKey,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
+	}
+
+	@Override
+	public CPDefinition updateShippingInfo(
+			long cpDefinitionId, double width, double height, double depth,
+			double weight)
+		throws PortalException {
+
+		CPDefinitionPermission.check(
+			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
+
+		return cpDefinitionLocalService.updateShippingInfo(
+			cpDefinitionId, width, height, depth, weight);
 	}
 
 	@Override

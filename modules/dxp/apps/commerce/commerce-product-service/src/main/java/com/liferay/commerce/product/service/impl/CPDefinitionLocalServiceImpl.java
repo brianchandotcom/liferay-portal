@@ -86,6 +86,37 @@ import java.util.Set;
 public class CPDefinitionLocalServiceImpl
 	extends CPDefinitionLocalServiceBaseImpl {
 
+	@Override
+	public CPDefinition addCPDefinition(
+			String baseSKU, Map<Locale, String> titleMap,
+			Map<Locale, String> shortDescriptionMap,
+			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
+			Map<Locale, String> metaTitleMap,
+			Map<Locale, String> metaKeywordsMap,
+			Map<Locale, String> metaDescriptionMap, String layoutUuid,
+			String productTypeName, String gtin, String manufacturerPartNumber,
+			int minCartQuantity, int maxCartQuantity,
+			String allowedCartQuantities, int multipleCartQuantity,
+			String ddmStructureKey, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addCPDefinition(
+			baseSKU, titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
+			metaTitleMap, metaKeywordsMap, metaDescriptionMap, layoutUuid,
+			productTypeName, gtin, manufacturerPartNumber, minCartQuantity,
+			maxCartQuantity, allowedCartQuantities, multipleCartQuantity, 0, 0,
+			0, 0, ddmStructureKey, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
+	}
+
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPDefinition addCPDefinition(
@@ -98,6 +129,7 @@ public class CPDefinitionLocalServiceImpl
 			String productTypeName, String gtin, String manufacturerPartNumber,
 			int minCartQuantity, int maxCartQuantity,
 			String allowedCartQuantities, int multipleCartQuantity,
+			double width, double height, double depth, double weight,
 			String ddmStructureKey, int displayDateMonth, int displayDateDay,
 			int displayDateYear, int displayDateHour, int displayDateMinute,
 			int expirationDateMonth, int expirationDateDay,
@@ -149,6 +181,10 @@ public class CPDefinitionLocalServiceImpl
 		cpDefinition.setMaxCartQuantity(maxCartQuantity);
 		cpDefinition.setAllowedCartQuantities(allowedCartQuantities);
 		cpDefinition.setMultipleCartQuantity(multipleCartQuantity);
+		cpDefinition.setWidth(width);
+		cpDefinition.setHeight(height);
+		cpDefinition.setDepth(depth);
+		cpDefinition.setWeight(weight);
 		cpDefinition.setDDMStructureKey(ddmStructureKey);
 		cpDefinition.setDefaultLanguageId(LocaleUtil.toLanguageId(locale));
 		cpDefinition.setDisplayDate(displayDate);
@@ -747,7 +783,6 @@ public class CPDefinitionLocalServiceImpl
 			AssetLinkConstants.TYPE_RELATED);
 	}
 
-	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPDefinition updateCPDefinition(
 			long cpDefinitionId, String baseSKU, Map<Locale, String> titleMap,
@@ -761,6 +796,38 @@ public class CPDefinitionLocalServiceImpl
 			int multipleCartQuantity, String ddmStructureKey,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, ServiceContext serviceContext)
+		throws PortalException {
+
+		return updateCPDefinition(
+			cpDefinitionId, baseSKU, titleMap, shortDescriptionMap,
+			descriptionMap, urlTitleMap, metaTitleMap, metaKeywordsMap,
+			metaDescriptionMap, layoutUuid, gtin, manufacturerPartNumber,
+			minCartQuantity, maxCartQuantity, allowedCartQuantities,
+			multipleCartQuantity, 0, 0, 0, 0, ddmStructureKey, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CPDefinition updateCPDefinition(
+			long cpDefinitionId, String baseSKU, Map<Locale, String> titleMap,
+			Map<Locale, String> shortDescriptionMap,
+			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
+			Map<Locale, String> metaTitleMap,
+			Map<Locale, String> metaKeywordsMap,
+			Map<Locale, String> metaDescriptionMap, String layoutUuid,
+			String gtin, String manufacturerPartNumber, int minCartQuantity,
+			int maxCartQuantity, String allowedCartQuantities,
+			int multipleCartQuantity, double width, double height, double depth,
+			double weight, String ddmStructureKey, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, ServiceContext serviceContext)
@@ -798,6 +865,10 @@ public class CPDefinitionLocalServiceImpl
 		cpDefinition.setMaxCartQuantity(maxCartQuantity);
 		cpDefinition.setAllowedCartQuantities(allowedCartQuantities);
 		cpDefinition.setMultipleCartQuantity(multipleCartQuantity);
+		cpDefinition.setWidth(width);
+		cpDefinition.setHeight(height);
+		cpDefinition.setDepth(depth);
+		cpDefinition.setWeight(weight);
 		cpDefinition.setDDMStructureKey(ddmStructureKey);
 		cpDefinition.setDisplayDate(displayDate);
 		cpDefinition.setExpirationDate(expirationDate);
@@ -850,6 +921,25 @@ public class CPDefinitionLocalServiceImpl
 
 		return startWorkflowInstance(
 			user.getUserId(), cpDefinition, serviceContext);
+	}
+
+	@Override
+	public CPDefinition updateShippingInfo(
+			long cpDefinitionId, double width, double height, double depth,
+			double weight)
+		throws PortalException {
+
+		CPDefinition cpDefinition = cpDefinitionPersistence.findByPrimaryKey(
+			cpDefinitionId);
+
+		cpDefinition.setWidth(width);
+		cpDefinition.setHeight(height);
+		cpDefinition.setDepth(depth);
+		cpDefinition.setWeight(weight);
+
+		cpDefinitionPersistence.update(cpDefinition);
+
+		return cpDefinition;
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

@@ -21,6 +21,7 @@ import com.liferay.commerce.product.model.impl.CPDefinitionOptionRelImpl;
 import com.liferay.commerce.product.model.impl.CPDefinitionOptionValueRelImpl;
 import com.liferay.commerce.product.model.impl.CPDefinitionSpecificationOptionValueImpl;
 import com.liferay.commerce.product.model.impl.CPInstanceImpl;
+import com.liferay.commerce.product.model.impl.CPMeasurementUnitImpl;
 import com.liferay.commerce.product.model.impl.CPOptionCategoryImpl;
 import com.liferay.commerce.product.model.impl.CPOptionImpl;
 import com.liferay.commerce.product.model.impl.CPOptionValueImpl;
@@ -30,11 +31,10 @@ import com.liferay.exportimport.kernel.xstream.XStreamConverter;
 import com.liferay.exportimport.kernel.xstream.XStreamType;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.xstream.configurator.XStreamConfigurator;
-
-import java.util.List;
-
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+
+import java.util.List;
 
 /**
  * @author Andrea Di Giorgi
@@ -73,6 +73,7 @@ public class CPXStreamConfigurator implements XStreamConfigurator {
 				CPDefinitionSpecificationOptionValueImpl.class,
 				"CPDefinitionSpecificationOptionValue"),
 			new XStreamAlias(CPInstanceImpl.class, "CPInstance"),
+			new XStreamAlias(CPMeasurementUnitImpl.class, "CPMeasurementUnit"),
 			new XStreamAlias(CPOptionCategoryImpl.class, "CPOptionCategory"),
 			new XStreamAlias(CPOptionImpl.class, "CPOption"),
 			new XStreamAlias(CPOptionValueImpl.class, "CPOptionValue"),

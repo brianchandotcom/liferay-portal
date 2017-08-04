@@ -614,6 +614,22 @@
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 	</command>
 
+	<command name="gotoEditAssetPG">
+		<execute function="MouseOver" locator1="APAsset#ASSET_TITLE">
+			<var name="key_assetTitle" value="${assetTitle}" />
+		</execute>
+
+		<execute function="Click#mouseOverClick" locator1="AP#ASSET_ELLIPSIS_ICON">
+			<var name="key_assetTitle" value="${assetTitle}" />
+		</execute>
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit ${assetTitle}">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
+
+		<execute macro="IFrame#selectEditAssetFrame" />
+	</command>
+
 	<command name="gotoViewInContext">
 		<execute function="AssertClick" locator1="Link#VIEW_IN_CONTEXT" value1="View in Context »" />
 	</command>

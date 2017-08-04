@@ -241,9 +241,9 @@
 	</command>
 
 	<command name="gotoWCArticle">
-		<var name="key_rowEntry" value="${webContentTitle}" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+		<execute macro="WebContentNavigator#gotoArticleMenuPGViaWCD">
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
 
 		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
 			<var name="key_menuItem" value="Permissions" />

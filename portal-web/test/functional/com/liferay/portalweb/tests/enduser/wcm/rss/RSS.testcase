@@ -807,11 +807,16 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="WebContent#editPGViaAP">
+		<execute macro="AssetPublisherPortlet#gotoEditAssetPG">
 			<var name="assetTitle" value="Web Content Title" />
-			<var name="webContentContentEdit" value="This is the updated version of web content test for rss feed" />
-			<var name="webContentTitleEdit" value="Web Content Title Updated Feed" />
 		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="This is the updated version of web content test for rss feed" />
+			<var name="webContentTitle" value="Web Content Title Updated Feed" />
+		</execute>
+
+		<execute macro="Button#clickPublish" />
 
 		<execute macro="RSS#viewUpdateFeedTitle">
 			<var name="feedHeading" value="Web Content Title Updated Feed" />

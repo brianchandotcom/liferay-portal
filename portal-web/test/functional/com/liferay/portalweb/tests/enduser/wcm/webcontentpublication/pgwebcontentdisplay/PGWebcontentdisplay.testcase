@@ -433,7 +433,9 @@
 			<var name="webContentContent" value="WC WebContent Content WC WebContent Content WC WebContent Content" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
+		<execute macro="WebContentNavigator#gotoEditPGViaWCD">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
 
 		<execute macro="WebContent#selectTemplateCP">
 			<var name="structureName" value="Basic Web Content" />
@@ -467,7 +469,9 @@
 			<var name="webContentContent" value="WC WebContent Content" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
+		<execute macro="WebContentNavigator#gotoEditPGViaWCD">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
 
 		<execute macro="WebContent#editPGViaWCD">
 			<var name="webContentContentEdit" value="WC WebContent Content Edit" />
@@ -496,7 +500,9 @@
 			<var name="webContentContent" value="WC WebContent Content" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
+		<execute macro="WebContentNavigator#gotoEditPGViaWCD">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
 
 		<execute macro="WebContent#addLocale">
 			<var name="language" value="Chinese (China)" />
@@ -975,6 +981,7 @@
 			<var name="templateName" value="Template Edit" />
 			<var name="templateScript" value="Template Edited Extra Content" />
 			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 	</command>
 
@@ -994,7 +1001,9 @@
 			<var name="webContentContent" value="WC WebContent Content" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
+		<execute macro="WebContentNavigator#gotoEditPGViaWCD">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
 
 		<execute macro="WebContent#addLocale">
 			<var name="language" value="Chinese (China)" />

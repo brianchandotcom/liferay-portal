@@ -40,9 +40,9 @@
 					on: {
 						success: function(event, id, obj) {
 
-							var	response = JSON.parse(obj.response);
+							var response = JSON.parse(obj.response);
 
-							if(response.success){
+							if (response.success) {
 								Liferay.fire('commerce:productAddedToCart', response);
 							}else{
 								new Liferay.Notification(

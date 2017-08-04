@@ -452,7 +452,7 @@ public class CPDefinitionLocalServiceImpl
 
 		List<CPDefinition> cpDefinitions = new ArrayList<>();
 
-		long[] categoryIds = new long[] {categoryId};
+		long[] categoryIds = {categoryId};
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 

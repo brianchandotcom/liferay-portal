@@ -34,21 +34,19 @@ import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.IOException;
+
 import java.util.Locale;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.liferay.portal.kernel.util.PortalUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -64,8 +62,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCActionCommand.class
 )
-public class AddCommerceCartItemMVCActionCommand
-	extends BaseMVCActionCommand {
+public class AddCommerceCartItemMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -76,8 +73,8 @@ public class AddCommerceCartItemMVCActionCommand
 
 		Locale locale = actionRequest.getLocale();
 
-		HttpServletRequest httpServletRequest =
-			_portal.getHttpServletRequest(actionRequest);
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			actionRequest);
 
 		HttpServletResponse httpServletResponse =
 			_portal.getHttpServletResponse(actionResponse);
@@ -87,8 +84,7 @@ public class AddCommerceCartItemMVCActionCommand
 			CommerceCartConstants.COMMERCE_CART_TYPE_CART);
 		long cpDefinitionId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionId");
-		long cpInstanceId = ParamUtil.getLong(
-			actionRequest, "cpInstanceId");
+		long cpInstanceId = ParamUtil.getLong(actionRequest, "cpInstanceId");
 		int quantity = ParamUtil.getInteger(
 			actionRequest, "quantity",
 			CommerceCartConstants.COMMERCE_CART_TYPE_CART);
@@ -99,7 +95,6 @@ public class AddCommerceCartItemMVCActionCommand
 			cpDefinitionId, locale, ddmFormValues);
 
 		try {
-
 			CommerceCart commerceCart = _commerceCartHelper.getCurrentCart(
 				httpServletRequest, type);
 
@@ -113,8 +108,7 @@ public class AddCommerceCartItemMVCActionCommand
 					serviceContext);
 
 				_commerceCartHelper.updateCurrentCart(
-					httpServletRequest, httpServletResponse,
-					commerceCart);
+					httpServletRequest, httpServletResponse, commerceCart);
 			}
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -125,7 +119,9 @@ public class AddCommerceCartItemMVCActionCommand
 					commerceCart.getCommerceCartId(), cpDefinitionId,
 					cpInstanceId, quantity, json, serviceContext);
 
-			int commerceCartItemsCount = _commerceCartItemService.getCommerceCartItemsCount(commerceCart.getCommerceCartId());
+			int commerceCartItemsCount =
+				_commerceCartItemService.getCommerceCartItemsCount(
+					commerceCart.getCommerceCartId());
 
 			jsonObject.put(
 				"commerceCartItemId", commerceCartItem.getCommerceCartItemId());
@@ -133,7 +129,6 @@ public class AddCommerceCartItemMVCActionCommand
 			jsonObject.put("success", true);
 		}
 		catch (Exception e) {
-
 			_log.error(e, e);
 
 			jsonObject.put("error", e.getMessage());
@@ -143,6 +138,21 @@ public class AddCommerceCartItemMVCActionCommand
 		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
 
 		writeJSON(actionRequest, actionResponse, jsonObject);
+	}
+
+	protected void writeJSON(
+			PortletRequest portletRequest, ActionResponse actionResponse,
+			Object jsonObj)
+		throws IOException {
+
+		HttpServletResponse response = PortalUtil.getHttpServletResponse(
+			actionResponse);
+
+		response.setContentType(ContentTypes.APPLICATION_JSON);
+
+		ServletResponseUtil.write(response, jsonObj.toString());
+
+		response.flushBuffer();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -165,20 +175,5 @@ public class AddCommerceCartItemMVCActionCommand
 
 	@Reference
 	private Portal _portal;
-
-	protected void writeJSON(
-		PortletRequest portletRequest, ActionResponse actionResponse,
-		Object jsonObj)
-		throws IOException {
-
-		HttpServletResponse response = PortalUtil.getHttpServletResponse(
-			actionResponse);
-
-		response.setContentType(ContentTypes.APPLICATION_JSON);
-
-		ServletResponseUtil.write(response, jsonObj.toString());
-
-		response.flushBuffer();
-	}
 
 }

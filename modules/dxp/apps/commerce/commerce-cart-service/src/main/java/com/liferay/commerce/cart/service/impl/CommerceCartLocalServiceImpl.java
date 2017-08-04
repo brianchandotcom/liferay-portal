@@ -95,10 +95,11 @@ public class CommerceCartLocalServiceImpl
 	public CommerceCart fetchDefaultCommerceCart(
 		long groupId, long userId, int type, String name) {
 
-		List<CommerceCart> commerceCarts = commerceCartPersistence.findByG_U_N_T(
-			groupId, userId, name, type, 0, 1);
+		List<CommerceCart> commerceCarts =
+			commerceCartPersistence.findByG_U_N_T(
+				groupId, userId, name, type, 0, 1);
 
-		if(commerceCarts.isEmpty()){
+		if (commerceCarts.isEmpty()) {
 			return null;
 		}
 

@@ -22,9 +22,9 @@ public class CommerceCartWebKeys {
 
 	public static final String COMMERCE_CART = "COMMERCE_CART_CONTENT";
 
-	public static final String COMMERCE_CART_UUID = "COMMERCE_CART_UUID";
-
 	public static final String COMMERCE_CART_ITEMS = "COMMERCE_CART_ITEMS";
+
+	public static final String COMMERCE_CART_UUID = "COMMERCE_CART_UUID";
 
 	public static final String COMMERCE_CARTS = "COMMERCE_CARTS";
 

@@ -124,7 +124,8 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 
 		HttpSession httpSession = httpServletRequest.getSession();
 
-		commerceCartUuid = (String)httpSession.getAttribute(commerceCartUuidWebKey);
+		commerceCartUuid = (String)httpSession.getAttribute(
+			commerceCartUuidWebKey);
 
 		if (Validator.isNotNull(commerceCartUuid)) {
 			httpServletRequest.setAttribute(
@@ -136,7 +137,6 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 		User user = _portal.getUser(httpServletRequest);
 
 		if (user != null && !user.isDefaultUser()) {
-
 			long groupId = _portal.getScopeGroupId(httpServletRequest);
 
 			CommerceCart commerceCart = _commerceCartService.
@@ -145,7 +145,8 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 					CommerceCartConstants.COMMERCE_CART_DEFAULT_TITLE);
 
 			if (commerceCart != null) {
-				httpSession.setAttribute(commerceCartUuidWebKey, commerceCartUuid);
+				httpSession.setAttribute(
+					commerceCartUuidWebKey, commerceCartUuid);
 
 				httpServletRequest.setAttribute(
 					commerceCartUuidWebKey, commerceCart.getUuid());
@@ -158,7 +159,6 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 			httpServletRequest, commerceCartUuidWebKey, false);
 
 		if (Validator.isNotNull(commerceCartUuid)) {
-
 			httpSession.setAttribute(commerceCartUuidWebKey, commerceCartUuid);
 
 			httpServletRequest.setAttribute(

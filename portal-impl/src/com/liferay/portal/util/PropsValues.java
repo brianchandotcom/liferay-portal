@@ -447,6 +447,8 @@ public class PropsValues {
 
 	public static final String DATABASE_MYSQL_ENGINE = PropsUtil.get(PropsKeys.DATABASE_MYSQL_ENGINE);
 
+	public static boolean DATABASE_SCHEMA_DEVELOPMENT_MODE = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.DATABASE_SCHEMA_DEVELOPMENT_MODE));
+
 	public static final String DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX = PropsUtil.get(PropsKeys.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX);
 
 	public static String DEFAULT_ADMIN_FIRST_NAME = PropsUtil.get(PropsKeys.DEFAULT_ADMIN_FIRST_NAME);

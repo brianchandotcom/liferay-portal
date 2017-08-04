@@ -42,6 +42,7 @@ public class CommerceCartLocalServiceImpl
 		CommerceCart commerceCart = commerceCartPersistence.create(
 			commerceCartId);
 
+		commerceCart.setUuid(serviceContext.getUuid());
 		commerceCart.setGroupId(groupId);
 		commerceCart.setCompanyId(user.getCompanyId());
 		commerceCart.setUserId(user.getUserId());

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.search.suggest.NGramHolder;
 import com.liferay.portal.kernel.search.suggest.NGramHolderBuilder;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.solr.suggest.NGramQueryBuilder;
 
 import java.util.Iterator;
@@ -78,9 +79,7 @@ public class NGramQueryBuilderImpl implements NGramQueryBuilder {
 			addOrQuerySeparator(sb);
 		}
 
-		sb.append(Field.SPELL_CHECK_WORD);
-		sb.append(StringPool.COLON);
-		sb.append(QueryParser.escape(input));
+		addQuery(sb, Field.SPELL_CHECK_WORD, input);
 
 		solrQuery.setQuery(sb.toString());
 
@@ -142,7 +141,9 @@ public class NGramQueryBuilderImpl implements NGramQueryBuilder {
 
 		sb.append(fieldName);
 		sb.append(StringPool.COLON);
-		sb.append(QueryParser.escape(fieldValue));
+		sb.append(StringPool.OPEN_PARENTHESIS);
+		sb.append(QueryParser.escape(StringUtil.toLowerCase(fieldValue)));
+		sb.append(StringPool.CLOSE_PARENTHESIS);
 	}
 
 	@Reference(

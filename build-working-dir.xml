@@ -70,16 +70,19 @@
 			<!-- test.properties -->
 
 			<replace
+				failOnNoReplacements="true"
 				file="test.properties"
 				token="liferay.portal.branch=${liferay.portal.branch[@{public.branch.name}]}"
 				value="liferay.portal.branch=${liferay.portal.branch[@{private.branch.name}]}"
 			/>
 			<replace
+				failOnNoReplacements="true"
 				file="test.properties"
 				token="test.run.environment=CE"
 				value="test.run.environment=EE"
 			/>
 			<replace
+				failOnNoReplacements="true"
 				file="test.properties"
 				token="testray.build.type=${testray.build.type[@{public.branch.name}]}"
 				value="testray.build.type=${testray.build.type[@{private.branch.name}]}"

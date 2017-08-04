@@ -58,6 +58,18 @@
 			<hint name="default-value">1</hint>
 			<validator name="number" />
 		</field>
+		<field name="width" type="double">
+			<validator name="number" />
+		</field>
+		<field name="height" type="double">
+			<validator name="number" />
+		</field>
+		<field name="depth" type="double">
+			<validator name="number" />
+		</field>
+		<field name="weight" type="double">
+			<validator name="number" />
+		</field>
 		<field name="DDMStructureKey" type="String" />
 		<field name="displayDate" type="Date" />
 		<field name="expirationDate" type="Date" />

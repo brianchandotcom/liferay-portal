@@ -46,7 +46,7 @@ page import="com.liferay.commerce.product.definitions.web.internal.servlet.tagli
 page import="com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui.CPDefinitionSpecificationOptionValueFormNavigatorConstants" %><%@
 page import="com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui.CPInstanceFormNavigatorConstants" %><%@
 page import="com.liferay.commerce.product.exception.CPAttachmentFileEntryExpirationDateException" %><%@
-page import="com.liferay.commerce.product.exception.CPAttachmentFileEntryFileEntryIdException" %><%@
+page import="com.liferay.commerce.product.exception.CPAttachmentFileEntryFileEntryIdException" %><%@ page import="com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionShippingInfoDisplayContext" %><%@
 page import="com.liferay.commerce.product.exception.CPDefinitionExpirationDateException" %><%@
 page import="com.liferay.commerce.product.exception.CPDefinitionOptionValueRelKeyException" %><%@
 page import="com.liferay.commerce.product.exception.CPDefinitionProductTypeNameException" %><%@

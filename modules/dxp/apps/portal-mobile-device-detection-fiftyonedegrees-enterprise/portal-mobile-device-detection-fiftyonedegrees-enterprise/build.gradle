@@ -21,7 +21,7 @@ downloadDATs {
 
 		FileUtil.get(
 			project,
-			"https://repository.liferay.com/nexus/content/repositories/liferay-private-releases/com/liferay/com.51degrees.dat.enterprise/3.2/com.51degrees.dat.enterprise-3.2.gz",
+			"https://repository.liferay.com/nexus/content/repositories/liferay-private-releases/com/liferay/com.51degrees.dat.enterprise/3.2-20170804/com.51degrees.dat.enterprise-3.2-20170804.gz",
 			repositoryPrivateUsername, repositoryPrivatePassword,
 			new File(dir, "51Degrees-EnterpriseV3_2.dat.gz"), false, false)
 

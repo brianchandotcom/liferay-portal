@@ -176,15 +176,6 @@
 			</filterchain>
 		</loadfile>
 
-		<move todir="${basedir}">
-			<filelist dir="${basedir}">
-				<file name=".gitignore" />
-				<file name="modules/.gitignore" />
-				<file name="README.markdown" />
-			</filelist>
-			<globmapper from="*" to="*.checkout-ignore" />
-		</move>
-
 		<loadresource property="working.dir.checkout.excludes.git">
 			<propertyresource name="working.dir.checkout.excludes" />
 			<filterchain>
@@ -196,7 +187,7 @@
 			<arg value="checkout" />
 			<arg value="${portal.git.commit}" />
 			<arg value="." />
-			<arg line=":(exclude)${working.dir.checkout.excludes.git}" unless:blank="${working.dir.checkout.excludes.git}" />
+			<arg line=":(exclude)${working.dir.checkout.excludes.git}" />
 		</exec>
 
 		<exec executable="git">
@@ -204,11 +195,6 @@
 			<arg value="HEAD" />
 			<arg value="." />
 		</exec>
-
-		<move todir="${basedir}">
-			<fileset dir="${basedir}" includes="**/*.checkout-ignore" />
-			<globmapper from="*.checkout-ignore" to="*" />
-		</move>
 	</target>
 
 	<target if="prepare.working.dir.private" name="checkout-portal-private">

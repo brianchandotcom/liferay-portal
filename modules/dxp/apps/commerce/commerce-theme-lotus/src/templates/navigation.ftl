@@ -3,6 +3,7 @@
 		<@commerce_category_navigation_menu default_preferences=freeMarkerPortletPreferences.getPreferences("portletSetupPortletDecoratorId", "barebone") />
 	</nav>
 
+	<ul class="nav navbar-nav navbar-right navbar-recursive">
 		<#if show_main_search_icon>
 			<li id="mainSearchIcon">
 				<a class="btn btn-xs collapsed hidden-xs" role="button" data-toggle="collapse" href="#collapseSearch" aria-expanded="false" aria-controls="collapseSearch">
@@ -15,8 +16,12 @@
 					</svg>
 				</a>
 
-				<div class="collapse position-anchored" id="collapseSearch">
+				<div class="collapse position-anchored position-anchored-left" id="collapseSearch">
 					<div class="well small">
+						<svg class="lexicon-icon lexicon-icon-search-static">
+							<use xlink:href="${images_folder}/theme-icons.svg#icon-search" />
+						</svg>
+
 						<@liferay.search default_preferences=freeMarkerPortletPreferences.getPreferences("portletSetupPortletDecoratorId", "barebone") />
 					</div>
 				</div>

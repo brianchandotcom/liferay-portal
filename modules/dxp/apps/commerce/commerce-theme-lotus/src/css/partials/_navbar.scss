@@ -120,6 +120,7 @@
 
 .position-anchored {
 	@include sm {
+		min-width: 320px;
 		z-index: 1050;
 
 		@include position(absolute, 60px 0 null null);
@@ -128,6 +129,12 @@
 	@media (max-width: $grid-float-breakpoint-max) {
 		display: block;
 		height: auto;
+	}
+
+	&.position-anchored-left {
+		min-width: 180px;
+		right: 64px;
+		top: -10px;
 	}
 }
 

@@ -19,6 +19,35 @@
 #wrapper {
 	font-family: Montserrat, Helvetica, Arial, sans-serif;
 	padding-top: 0;
+
+	#mainSearchIcon {
+		position: relative;
+
+		.well {
+			border-color: transparent;
+
+			@include sm {
+				padding-right: 0;
+			}
+
+			.lexicon-icon-search-static {
+				z-index: 9;
+
+				@include position(absolute, 30px null null 30px);
+			}
+		}
+
+		.form-group {
+			width: 100%;
+		}
+
+		.form-control {
+			background-color: #F6F8F9;
+			border-color: #F6F8F9;
+			color: #000;
+			padding-left: 40px;
+		}
+	}
 }
 
 .main-wrapper {
@@ -159,9 +188,12 @@
 			display: block;
 		}
 
-		.lexicon-icon {
+		a > .lexicon-icon {
 			fill: $brand-color;
-			transition: fill 0.4s ease-in-out;
 		}
+	}
+
+	.lexicon-icon {
+		transition: fill 0.4s ease-in-out;
 	}
 }

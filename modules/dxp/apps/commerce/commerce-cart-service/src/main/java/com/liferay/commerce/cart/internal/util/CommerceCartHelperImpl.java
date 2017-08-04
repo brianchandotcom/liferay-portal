@@ -67,7 +67,7 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 		long groupId = _portal.getScopeGroupId(httpServletRequest);
 
 		CommerceCart commerceCart = _commerceCartService.fetchCommerceCart(
-			groupId, commerceCartUuid);
+			commerceCartUuid, groupId);
 
 		return commerceCart;
 	}

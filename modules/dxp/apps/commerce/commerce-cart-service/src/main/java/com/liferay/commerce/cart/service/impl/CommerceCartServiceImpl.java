@@ -47,7 +47,7 @@ public class CommerceCartServiceImpl extends CommerceCartServiceBaseImpl {
 	}
 
 	@Override
-	public CommerceCart fetchCommerceCart(long groupId, String uuid) {
+	public CommerceCart fetchCommerceCart(String uuid, long groupId) {
 		return commerceCartLocalService.fetchCommerceCartByUuidAndGroupId(
 			uuid, groupId);
 	}

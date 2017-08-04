@@ -26,19 +26,35 @@ import javax.servlet.ServletContext;
 
 /**
  * @author Leonardo Barros
+ * @author Gregory Amerson
  */
 public class DynamicResourceIncludeUtil {
 
 	public static ServletContext getPathServletContext(String path) {
-		for (ServletContext servletContext : _servletContexts) {
-			if (Validator.isNotNull(servletContext.getContextPath()) &&
-				path.startsWith(servletContext.getContextPath())) {
+		ServletContext pathServletContext = null;
 
-				return servletContext;
+		for (ServletContext servletContext : _servletContexts) {
+			String contextPath = servletContext.getContextPath();
+
+			if (Validator.isNotNull(contextPath) &&
+				path.startsWith(contextPath)) {
+
+				if (pathServletContext == null) {
+					pathServletContext = servletContext;
+				} else {
+					String pathServletContextContextPath =
+						pathServletContext.getContextPath();
+
+					if (contextPath.length() >
+							pathServletContextContextPath.length()) {
+
+						pathServletContext = servletContext;
+					}
+				}
 			}
 		}
 
-		return null;
+		return pathServletContext;
 	}
 
 	public static URL getResource(ServletContext servletContext, String path) {

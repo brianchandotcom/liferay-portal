@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -458,6 +459,13 @@ public class StagedGroupStagedModelDataHandler
 				if (!ArrayUtil.contains(layoutIds, layout.getLayoutId()) ||
 					!layout.isTypePortlet() || !layout.hasScopeGroup()) {
 
+					continue;
+				}
+
+				LayoutTypePortlet layoutTypePortlet =
+					(LayoutTypePortlet)layout.getLayoutType();
+
+				if (!layoutTypePortlet.hasPortletId(portletId)) {
 					continue;
 				}
 

@@ -26,7 +26,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.portal.security.audit.router.configuration.CSVLogMessageFormatterConfiguration",
 	localization = "content/Language",
-	name = "csv.log.message.formatter.configuration.name"
+	name = "csv-log-message-formatter-configuration-name"
 )
 public interface CSVLogMessageFormatterConfiguration {
 

@@ -24,14 +24,14 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @ExtendedObjectClassDefinition(category = "forms-and-workflow")
 @Meta.OCD(
 	id = "com.liferay.portal.workflow.kaleo.forms.web.configuration.KaleoFormsWebConfiguration",
-	localization = "content/Language", name = "kaleo.web.configuration.name"
+	localization = "content/Language", name = "kaleo-web-configuration-name"
 )
 public interface KaleoFormsWebConfiguration {
 
 	@Meta.AD(
 		deflt = "false",
-		description = "changeable.default.language.description",
-		name = "changeable.default.language", required = false
+		description = "changeable-default-language-description",
+		name = "changeable-default-language", required = false
 	)
 	public boolean changeableDefaultLanguage();
 

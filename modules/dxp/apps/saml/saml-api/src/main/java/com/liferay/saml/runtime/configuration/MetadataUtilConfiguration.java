@@ -29,11 +29,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface MetadataUtilConfiguration {
 
 	@Meta.AD(
-		deflt = "60000", name = "connection.manager.timeout", required = false
+		deflt = "60000", name = "connection-manager-timeout", required = false
 	)
 	public int getConnectionManagerTimeout();
 
-	@Meta.AD(deflt = "60000", name = "so.timeout", required = false)
+	@Meta.AD(deflt = "60000", name = "so-timeout", required = false)
 	public int getSoTimeout();
 
 }

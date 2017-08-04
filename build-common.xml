@@ -926,6 +926,15 @@ information.
 		<element implicit="true" name="attach-files" optional="true" />
 
 		<sequential>
+			<fail message="Please run this target from a master branch instead.">
+				<condition>
+					<and>
+						<available file="${project.dir}/modules/.releng" type="dir" />
+						<istrue value="@{snapshot}" />
+					</and>
+				</condition>
+			</fail>
+
 			<fail message="Please run this target from a release branch instead.">
 				<condition>
 					<not>

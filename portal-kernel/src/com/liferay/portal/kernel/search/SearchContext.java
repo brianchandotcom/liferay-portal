@@ -388,7 +388,7 @@ public class SearchContext implements Serializable {
 	}
 
 	/**
-	 * @deprecated As of 7.1.0, replaced by {@link #getQueryConfig()}
+	 * @deprecated As of 7.0.0, replaced by {@link #getQueryConfig()}
 	 * @param queryConfig
 	 */
 	@Deprecated

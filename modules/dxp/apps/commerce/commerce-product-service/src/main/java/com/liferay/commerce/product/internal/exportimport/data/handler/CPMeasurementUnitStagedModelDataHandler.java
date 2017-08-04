@@ -21,10 +21,11 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.xml.Element;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.Map;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -105,8 +106,9 @@ public class CPMeasurementUnitStagedModelDataHandler
 			importedCPMeasurementUnit.setCPMeasurementUnitId(
 				existingCPMeasurementUnit.getCPMeasurementUnitId());
 
-			importedCPMeasurementUnit = _stagedModelRepository.updateStagedModel(
-				portletDataContext, importedCPMeasurementUnit);
+			importedCPMeasurementUnit =
+				_stagedModelRepository.updateStagedModel(
+					portletDataContext, importedCPMeasurementUnit);
 		}
 
 		portletDataContext.importClassedModel(

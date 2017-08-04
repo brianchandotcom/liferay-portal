@@ -30,13 +30,15 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import java.util.Locale;
-import java.util.Map;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -49,7 +51,8 @@ import java.util.Map;
 	},
 	service = MVCActionCommand.class
 )
-public class EditCPMeasurementUnitMVCActionCommand extends BaseMVCActionCommand {
+public class EditCPMeasurementUnitMVCActionCommand
+	extends BaseMVCActionCommand {
 
 	protected void deleteCPMeasurementUnits(ActionRequest actionRequest)
 		throws PortalException {
@@ -100,7 +103,6 @@ public class EditCPMeasurementUnitMVCActionCommand extends BaseMVCActionCommand 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 			else if (e instanceof CPMeasurementUnitKeyException) {
-
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
 

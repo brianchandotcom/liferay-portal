@@ -26,10 +26,11 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.List;
+
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import java.util.List;
 
 /**
  * @author Alessio Antonio Rendina
@@ -59,12 +60,6 @@ public class CPMeasurementUnitsDisplayContext {
 		}
 
 		return _cpMeasurementUnit;
-	}
-
-	public int getType() {
-		return ParamUtil.getInteger(
-			_renderRequest, "type",
-			CPConstants.MEASUREMENT_UNIT_TYPE_DIMENSION);
 	}
 
 	public String getOrderByCol() {
@@ -142,6 +137,12 @@ public class CPMeasurementUnitsDisplayContext {
 		_searchContainer.setResults(results);
 
 		return _searchContainer;
+	}
+
+	public int getType() {
+		return ParamUtil.getInteger(
+			_renderRequest, "type",
+			CPConstants.MEASUREMENT_UNIT_TYPE_DIMENSION);
 	}
 
 	private CPMeasurementUnit _cpMeasurementUnit;

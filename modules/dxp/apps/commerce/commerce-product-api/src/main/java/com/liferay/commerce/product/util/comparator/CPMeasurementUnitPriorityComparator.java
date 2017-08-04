@@ -44,8 +44,7 @@ public class CPMeasurementUnitPriorityComparator
 		CPMeasurementUnit cpMeasurementUnit2) {
 
 		int value = Double.compare(
-			cpMeasurementUnit1.getPriority(),
-			cpMeasurementUnit2.getPriority());
+			cpMeasurementUnit1.getPriority(), cpMeasurementUnit2.getPriority());
 
 		if (_ascending) {
 			return value;

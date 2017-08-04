@@ -31,10 +31,11 @@ import com.liferay.exportimport.kernel.xstream.XStreamConverter;
 import com.liferay.exportimport.kernel.xstream.XStreamType;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.xstream.configurator.XStreamConfigurator;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Andrea Di Giorgi

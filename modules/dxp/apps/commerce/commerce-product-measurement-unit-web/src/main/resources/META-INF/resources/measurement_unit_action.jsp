@@ -19,7 +19,7 @@
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-CPMeasurementUnit cpMeasurementUnit = (CPMeasurementUnit) row.getObject();
+CPMeasurementUnit cpMeasurementUnit = (CPMeasurementUnit)row.getObject();
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">

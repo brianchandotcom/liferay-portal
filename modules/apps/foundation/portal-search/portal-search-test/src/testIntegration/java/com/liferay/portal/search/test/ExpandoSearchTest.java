@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.expando.search.test;
+package com.liferay.portal.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.expando.kernel.model.ExpandoColumn;

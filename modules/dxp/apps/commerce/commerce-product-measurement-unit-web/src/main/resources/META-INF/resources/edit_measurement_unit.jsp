@@ -85,6 +85,24 @@ renderResponse.setTitle((cpMeasurementUnit == null) ? LanguageUtil.get(request, 
 	</aui:button-row>
 </aui:form>
 
+<c:if test="<%= cpMeasurementUnit == null %>">
+	<aui:script sandbox="<%= true %>">
+		var form = $(document.<portlet:namespace />fm);
+
+		var keyInput = form.fm('key');
+		var nameInput = form.fm('name');
+
+		var onNameInput = _.debounce(
+			function(event) {
+				keyInput.val(nameInput.val());
+			},
+			200
+		);
+
+		nameInput.on('input', onNameInput);
+	</aui:script>
+</c:if>
+
 <aui:script>
 	function <portlet:namespace />saveCPMeasurementUnit() {
 		submitForm(document.<portlet:namespace />fm);

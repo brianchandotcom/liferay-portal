@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalService;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -67,8 +68,9 @@ public class KaleoFormsServiceUpgrade implements UpgradeStepRegistrator {
 			"com.liferay.portal.workflow.kaleo.forms.service", "1.0.2", "1.1.0",
 			new UpgradeKaleoProcess(
 				_ddlRecordSetLocalService, _ddmStructureLocalService,
-				_ddmTemplateLocalService, _resourceActionLocalService,
-				_resourceActions, _resourcePermissionLocalService));
+				_ddmTemplateLocalService, _ddmTemplateVersionLocalService,
+				_resourceActionLocalService, _resourceActions,
+				_resourcePermissionLocalService));
 	}
 
 	@Reference(unbind = "-")
@@ -114,6 +116,13 @@ public class KaleoFormsServiceUpgrade implements UpgradeStepRegistrator {
 	}
 
 	@Reference(unbind = "-")
+	public void setDDMTemplateVersionLocalService(
+		DDMTemplateVersionLocalService ddmTemplateLocalService) {
+
+		_ddmTemplateVersionLocalService = ddmTemplateLocalService;
+	}
+
+	@Reference(unbind = "-")
 	public void setResourceActionLocalService(
 		ResourceActionLocalService resourceActionLocalService) {
 
@@ -146,6 +155,7 @@ public class KaleoFormsServiceUpgrade implements UpgradeStepRegistrator {
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private DDMTemplateLinkLocalService _ddmTemplateLinkLocalService;
 	private DDMTemplateLocalService _ddmTemplateLocalService;
+	private DDMTemplateVersionLocalService _ddmTemplateVersionLocalService;
 	private ResourceActionLocalService _resourceActionLocalService;
 	private ResourceActions _resourceActions;
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

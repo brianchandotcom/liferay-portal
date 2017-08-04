@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateVersion;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.permission.DDMStructurePermission;
 import com.liferay.dynamic.data.mapping.service.permission.DDMTemplatePermission;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
@@ -56,6 +57,7 @@ public class UpgradeKaleoProcess extends UpgradeProcess {
 		DDLRecordSetLocalService ddlRecordSetLocalService,
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
+		DDMTemplateVersionLocalService ddmTemplateVersionLocalService,
 		ResourceActionLocalService resourceActionLocalService,
 		ResourceActions resourceActions,
 		ResourcePermissionLocalService resourcePermissionLocalService) {
@@ -63,6 +65,7 @@ public class UpgradeKaleoProcess extends UpgradeProcess {
 		_ddlRecordSetLocalService = ddlRecordSetLocalService;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_ddmTemplateLocalService = ddmTemplateLocalService;
+		_ddmTemplateVersionLocalService = ddmTemplateVersionLocalService;
 		_resourceActionLocalService = resourceActionLocalService;
 		_resourceActions = resourceActions;
 		_resourcePermissionLocalService = resourcePermissionLocalService;
@@ -322,6 +325,8 @@ public class UpgradeKaleoProcess extends UpgradeProcess {
 	private final HashMap<Long, Long> _ddmStructureMap = new HashMap<>();
 	private final DDMTemplateLocalService _ddmTemplateLocalService;
 	private final HashMap<Long, Long> _ddmTemplateMap = new HashMap<>();
+	private final DDMTemplateVersionLocalService
+		_ddmTemplateVersionLocalService;
 	private final ResourceActionLocalService _resourceActionLocalService;
 	private final ResourceActions _resourceActions;
 	private final ResourcePermissionLocalService

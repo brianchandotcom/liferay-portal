@@ -699,7 +699,7 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 				int x = -1;
 
 				while (true) {
-					x = trimmedLine.indexOf(CharPool.COMMA, x + 1);
+					x = trimmedLine.indexOf(StringPool.COMMA_AND_SPACE, x + 1);
 
 					if (x == -1) {
 						break;

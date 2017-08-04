@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.IOException;
 
@@ -145,7 +144,7 @@ public class AddCommerceCartItemMVCActionCommand extends BaseMVCActionCommand {
 			Object jsonObj)
 		throws IOException {
 
-		HttpServletResponse response = PortalUtil.getHttpServletResponse(
+		HttpServletResponse response = _portal.getHttpServletResponse(
 			actionResponse);
 
 		response.setContentType(ContentTypes.APPLICATION_JSON);

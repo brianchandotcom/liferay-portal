@@ -36,10 +36,10 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -309,11 +309,13 @@ public class AssetCategoryStagedModelDataHandler
 
 		Map<Locale, String> titleMap = category.getTitleMap();
 
-		if (titleMap == null) {
-			titleMap = new HashMap<>();
-		}
+		Locale locale = _portal.getSiteDefaultLocale(groupId);
 
-		titleMap.put(_portal.getSiteDefaultLocale(groupId), name);
+		if (titleMap.isEmpty() || !Objects.equals(category.getName(), name) ||
+			!titleMap.containsKey(locale)) {
+
+			titleMap.put(locale, name);
+		}
 
 		return titleMap;
 	}

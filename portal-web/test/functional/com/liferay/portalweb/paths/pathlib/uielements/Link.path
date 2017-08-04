@@ -154,8 +154,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>VIEW_IN_CONTEXT</td>
-	<td>//a[contains(.,'View in Context')]</td>
+	<td>UNDO</td>
+	<td>//a[text()='Undo']</td>
 	<td></td>
 </tr>
 <tr>
@@ -166,6 +166,11 @@
 <tr>
 	<td>URL</td>
 	<td>//a[contains(@class,'show-url-file')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_IN_CONTEXT</td>
+	<td>//a[contains(.,'View in Context')]</td>
 	<td></td>
 </tr>
 <tr>

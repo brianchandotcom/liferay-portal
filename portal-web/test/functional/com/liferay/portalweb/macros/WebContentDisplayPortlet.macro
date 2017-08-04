@@ -153,6 +153,19 @@
 		</if>
 	</command>
 
+	<command name="removeWebContent">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="${portletName}" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute macro="Button#clickRemove" />
+
+		<execute macro="PortletEntry#save" />
+	</command>
+
 	<command name="saveConfiguration">
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
@@ -312,6 +325,10 @@
 		<execute macro="WebContentDisplayPortlet#configureScopePG">
 			<var name="scopeSelection" value="Liferay" />
 		</execute>
+	</command>
+
+	<command name="undoMoveToRecycleBin">
+		<execute function="AssertClick" locator1="Link#UNDO" value1="Undo" />
 	</command>
 
 	<command name="viewAllSettingsEnabledPG">

@@ -95,12 +95,6 @@
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 	</command>
 
-	<command name="gotoDefinePermissionsWithinIFrame" >
-		<var name="key_roleName" value="${roleName}" />
-
-		<execute function="AssertClick" locator1="AssetPermissions#ROLE_LINK" value1="${roleName}" />
-	</command>
-
 	<command name="gotoDocumentsAndMediaHomeFolderPG">
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="${pageName}" />
@@ -190,6 +184,12 @@
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+	</command>
+
+	<command name="gotoRolesAdminFromPortletConfiguration">
+		<var name="key_roleName" value="${roleName}" />
+
+		<execute function="AssertClick" locator1="AssetPermissions#ROLE_LINK" value1="${roleName}" />
 	</command>
 
 	<command name="gotoSitepageCP">

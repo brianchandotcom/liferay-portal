@@ -776,7 +776,7 @@
 			<var name="portletOption" value="Home Folder Permissions" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoDefinePermissionsWithinIFrame">
+		<execute macro="PermissionsInline#gotoRolesAdminFromPortletConfiguration">
 			<var name="roleName" value="User" />
 		</execute>
 

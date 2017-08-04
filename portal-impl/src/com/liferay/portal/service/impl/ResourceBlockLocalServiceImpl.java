@@ -447,59 +447,12 @@ public class ResourceBlockLocalServiceImpl
 	 * @param resourceBlockId the primary key of the resource block
 	 */
 	@Override
-	@Transactional(
-		isolation = Isolation.READ_COMMITTED,
-		propagation = Propagation.REQUIRES_NEW
-	)
 	public void releaseResourceBlock(long resourceBlockId) {
-		Session session = resourceBlockPersistence.openSession();
+		boolean releaseResourceBlock = _releaseResourceBlock(resourceBlockId);
 
-		while (true) {
-			try {
-				String sql = CustomSQLUtil.get(_RELEASE_RESOURCE_BLOCK);
-
-				SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(sqlQuery);
-
-				qPos.add(resourceBlockId);
-
-				if (sqlQuery.executeUpdate() > 0) {
-					ResourceBlock resourceBlock = (ResourceBlock)session.get(
-						ResourceBlockImpl.class, Long.valueOf(resourceBlockId));
-
-					if (resourceBlock.getReferenceCount() == 0) {
-						sql = CustomSQLUtil.get(_DELETE_RESOURCE_BLOCK);
-
-						sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-						qPos = QueryPos.getInstance(sqlQuery);
-
-						qPos.add(resourceBlockId);
-
-						if (sqlQuery.executeUpdate() > 0) {
-							resourceBlockPermissionLocalService.
-								deleteResourceBlockPermissions(resourceBlockId);
-						}
-
-						PermissionCacheUtil.clearResourceBlockCache(
-							resourceBlock.getCompanyId(),
-							resourceBlock.getGroupId(),
-							resourceBlock.getName());
-					}
-				}
-
-				resourceBlockPersistence.closeSession(session);
-
-				break;
-			}
-			catch (ORMException orme) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to decrement reference count for resource " +
-							"block " + resourceBlockId + ". Retrying.");
-				}
-			}
+		if (releaseResourceBlock) {
+			resourceBlockPermissionLocalService.deleteResourceBlockPermissions(
+				resourceBlockId);
 		}
 	}
 
@@ -966,7 +919,8 @@ public class ResourceBlockLocalServiceImpl
 					_log.warn(
 						"Unable to increment reference count for resource " +
 							"block " + resourceBlock.getResourceBlockId() +
-								". Retrying");
+								". Retrying",
+						orme);
 				}
 			}
 			finally {
@@ -1096,6 +1050,67 @@ public class ResourceBlockLocalServiceImpl
 		resourceBlock.setPermissionsHash(permissionsHash);
 
 		updateResourceBlock(resourceBlock);
+	}
+
+	@Transactional(
+		isolation = Isolation.READ_COMMITTED,
+		propagation = Propagation.REQUIRES_NEW
+	)
+	private boolean _releaseResourceBlock(long resourceBlockId) {
+		Session session = resourceBlockPersistence.openSession();
+
+		boolean hasDeleteResourceBlock = false;
+
+		while (true) {
+			try {
+				String sql = CustomSQLUtil.get(_RELEASE_RESOURCE_BLOCK);
+
+				SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(sqlQuery);
+
+				qPos.add(resourceBlockId);
+
+				if (sqlQuery.executeUpdate() > 0) {
+					ResourceBlock resourceBlock = (ResourceBlock)session.get(
+						ResourceBlockImpl.class, Long.valueOf(resourceBlockId));
+
+					if (resourceBlock.getReferenceCount() == 0) {
+						sql = CustomSQLUtil.get(_DELETE_RESOURCE_BLOCK);
+
+						sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+						qPos = QueryPos.getInstance(sqlQuery);
+
+						qPos.add(resourceBlockId);
+
+						if (sqlQuery.executeUpdate() > 0) {
+							hasDeleteResourceBlock = true;
+						}
+
+						PermissionCacheUtil.clearResourceBlockCache(
+							resourceBlock.getCompanyId(),
+							resourceBlock.getGroupId(),
+							resourceBlock.getName());
+					}
+				}
+
+				break;
+			}
+			catch (ORMException orme) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to decrement reference count for resource " +
+							"block " + resourceBlockId + ". Retrying.",
+						orme);
+				}
+			}
+			finally {
+				resourceBlockPersistence.closeSession(session);
+			}
+		}
+
+		return hasDeleteResourceBlock;
 	}
 
 	private static final String _DELETE_RESOURCE_BLOCK =

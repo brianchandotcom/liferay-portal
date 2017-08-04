@@ -32,6 +32,7 @@ import com.liferay.portal.model.impl.BuildAutoUpgradeTestEntityModelImpl;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.InputStream;
 
@@ -119,10 +120,18 @@ public class BuildAutoUpgradeTest {
 		}
 
 		_bundle.start();
+
+		_previousDatabaseSchemaDevelopmentMode =
+			PropsValues.DATABASE_SCHEMA_DEVELOPMENT_MODE;
+
+		PropsValues.DATABASE_SCHEMA_DEVELOPMENT_MODE = true;
 	}
 
 	@After
 	public void tearDown() throws Throwable {
+		PropsValues.DATABASE_SCHEMA_DEVELOPMENT_MODE =
+			_previousDatabaseSchemaDevelopmentMode;
+
 		if (_bundle != null) {
 			_bundle.uninstall();
 		}
@@ -512,5 +521,6 @@ public class BuildAutoUpgradeTest {
 	private byte[] _jarBytesV2;
 	private byte[] _jarBytesV3;
 	private byte[] _jarBytesV4;
+	private boolean _previousDatabaseSchemaDevelopmentMode;
 
 }

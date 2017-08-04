@@ -24,13 +24,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.List;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import java.util.List;
 
 /**
  * @author Alessio Antonio Rendina
@@ -78,9 +78,16 @@ public class CPMeasurementUnitsDisplayContext {
 
 		portletURL.setParameter(
 			"commerceAdminModuleKey", CPMeasurementUnitAdminModule.KEY);
-		portletURL.setParameter("type", String.valueOf(getType()));
 		portletURL.setParameter("orderByCol", getOrderByCol());
 		portletURL.setParameter("orderByType", getOrderByType());
+
+		String toolbarItem = ParamUtil.getString(_renderRequest, "toolbarItem");
+
+		if (Validator.isNotNull(toolbarItem)) {
+			portletURL.setParameter("toolbarItem", toolbarItem);
+		}
+
+		portletURL.setParameter("type", String.valueOf(getType()));
 
 		return portletURL;
 	}

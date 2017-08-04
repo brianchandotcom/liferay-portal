@@ -136,11 +136,11 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 
 		User user = _portal.getUser(httpServletRequest);
 
-		if (user != null && !user.isDefaultUser()) {
+		if ((user != null) && !user.isDefaultUser()) {
 			long groupId = _portal.getScopeGroupId(httpServletRequest);
 
-			CommerceCart commerceCart = _commerceCartService.
-				fetchDefaultCommerceCart(
+			CommerceCart commerceCart =
+				_commerceCartService.fetchDefaultCommerceCart(
 					groupId, user.getUserId(), type,
 					CommerceCartConstants.COMMERCE_CART_DEFAULT_TITLE);
 

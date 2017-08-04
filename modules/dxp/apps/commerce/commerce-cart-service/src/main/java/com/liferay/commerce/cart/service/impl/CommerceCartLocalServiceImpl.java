@@ -95,15 +95,8 @@ public class CommerceCartLocalServiceImpl
 	public CommerceCart fetchDefaultCommerceCart(
 		long groupId, long userId, int type, String name) {
 
-		List<CommerceCart> commerceCarts =
-			commerceCartPersistence.findByG_U_N_T(
-				groupId, userId, name, type, 0, 1);
-
-		if (commerceCarts.isEmpty()) {
-			return null;
-		}
-
-		return commerceCarts.get(0);
+		return commerceCartPersistence.fetchByG_U_N_T_First(
+			groupId, userId, name, type, null);
 	}
 
 	@Override

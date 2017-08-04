@@ -1,5 +1,10 @@
 .taglib-diff-table {
 	border-collapse: separate;
 	border-spacing: 5pt;
+	table-layout: fixed;
 	width: 100%;
+
+	td {
+		word-wrap: break-word;
+	}
 }

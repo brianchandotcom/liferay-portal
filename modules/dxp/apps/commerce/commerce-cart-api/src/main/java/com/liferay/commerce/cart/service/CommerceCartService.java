@@ -63,8 +63,11 @@ public interface CommerceCartService extends BaseService {
 	public CommerceCart fetchCommerceCart(long commerceCartId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceCart fetchCommerceCart(long groupId, long userId, int type,
-		java.lang.String name);
+	public CommerceCart fetchCommerceCart(long groupId, java.lang.String uuid);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceCart fetchDefaultCommerceCart(long groupId, long userId,
+		int type, java.lang.String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceCart getCommerceCart(long commerceCartId)

@@ -34,6 +34,7 @@ public class CommerceCartSoap implements Serializable {
 	public static CommerceCartSoap toSoapModel(CommerceCart model) {
 		CommerceCartSoap soapModel = new CommerceCartSoap();
 
+		soapModel.setUuid(model.getUuid());
 		soapModel.setCommerceCartId(model.getCommerceCartId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -93,6 +94,14 @@ public class CommerceCartSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceCartId(pk);
+	}
+
+	public String getUuid() {
+		return _uuid;
+	}
+
+	public void setUuid(String uuid) {
+		_uuid = uuid;
 	}
 
 	public long getCommerceCartId() {
@@ -167,6 +176,7 @@ public class CommerceCartSoap implements Serializable {
 		_type = type;
 	}
 
+	private String _uuid;
 	private long _commerceCartId;
 	private long _groupId;
 	private long _companyId;

@@ -54,8 +54,13 @@ public class CommerceCartServiceUtil {
 	}
 
 	public static com.liferay.commerce.cart.model.CommerceCart fetchCommerceCart(
+		long groupId, java.lang.String uuid) {
+		return getService().fetchCommerceCart(groupId, uuid);
+	}
+
+	public static com.liferay.commerce.cart.model.CommerceCart fetchDefaultCommerceCart(
 		long groupId, long userId, int type, java.lang.String name) {
-		return getService().fetchCommerceCart(groupId, userId, type, name);
+		return getService().fetchDefaultCommerceCart(groupId, userId, type, name);
 	}
 
 	public static com.liferay.commerce.cart.model.CommerceCart getCommerceCart(

@@ -143,15 +143,43 @@ public class CommerceCartServiceHttp {
 		}
 	}
 
-	public static com.liferay.commerce.cart.model.CommerceCart fetchCommerceCart(
+	public static com.liferay.commerce.cart.model.CommerceCart fetchDefaultCommerceCart(
 		HttpPrincipal httpPrincipal, long groupId, long userId, int type,
 		java.lang.String name) {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceCartServiceUtil.class,
-					"fetchCommerceCart", _fetchCommerceCartParameterTypes3);
+					"fetchDefaultCommerceCart",
+					_fetchDefaultCommerceCartParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					userId, type, name);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.cart.model.CommerceCart)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.commerce.cart.model.CommerceCart fetchCommerceCart(
+		HttpPrincipal httpPrincipal, long groupId, java.lang.String uuid) {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceCartServiceUtil.class,
+					"fetchCommerceCart", _fetchCommerceCartParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					uuid);
 
 			Object returnObj = null;
 
@@ -176,7 +204,7 @@ public class CommerceCartServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceCartServiceUtil.class,
-					"getCommerceCart", _getCommerceCartParameterTypes4);
+					"getCommerceCart", _getCommerceCartParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceCartId);
@@ -209,7 +237,7 @@ public class CommerceCartServiceHttp {
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.cart.model.CommerceCart> orderByComparator) {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceCartServiceUtil.class,
-					"getCommerceCarts", _getCommerceCartsParameterTypes5);
+					"getCommerceCarts", _getCommerceCartsParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					type, start, end, orderByComparator);
@@ -237,7 +265,7 @@ public class CommerceCartServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceCartServiceUtil.class,
 					"getCommerceCartsCount",
-					_getCommerceCartsCountParameterTypes6);
+					_getCommerceCartsCountParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					type);
@@ -271,17 +299,20 @@ public class CommerceCartServiceHttp {
 	private static final Class<?>[] _fetchCommerceCartParameterTypes2 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _fetchCommerceCartParameterTypes3 = new Class[] {
+	private static final Class<?>[] _fetchDefaultCommerceCartParameterTypes3 = new Class[] {
 			long.class, long.class, int.class, java.lang.String.class
 		};
-	private static final Class<?>[] _getCommerceCartParameterTypes4 = new Class[] {
+	private static final Class<?>[] _fetchCommerceCartParameterTypes4 = new Class[] {
+			long.class, java.lang.String.class
+		};
+	private static final Class<?>[] _getCommerceCartParameterTypes5 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getCommerceCartsParameterTypes5 = new Class[] {
+	private static final Class<?>[] _getCommerceCartsParameterTypes6 = new Class[] {
 			long.class, int.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getCommerceCartsCountParameterTypes6 = new Class[] {
+	private static final Class<?>[] _getCommerceCartsCountParameterTypes7 = new Class[] {
 			long.class, int.class
 		};
 }

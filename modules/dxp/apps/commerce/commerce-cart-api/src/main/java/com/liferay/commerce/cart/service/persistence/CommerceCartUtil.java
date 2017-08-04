@@ -112,6 +112,397 @@ public class CommerceCartUtil {
 	}
 
 	/**
+	* Returns all the commerce carts where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @return the matching commerce carts
+	*/
+	public static List<CommerceCart> findByUuid(java.lang.String uuid) {
+		return getPersistence().findByUuid(uuid);
+	}
+
+	/**
+	* Returns a range of all the commerce carts where uuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param start the lower bound of the range of commerce carts
+	* @param end the upper bound of the range of commerce carts (not inclusive)
+	* @return the range of matching commerce carts
+	*/
+	public static List<CommerceCart> findByUuid(java.lang.String uuid,
+		int start, int end) {
+		return getPersistence().findByUuid(uuid, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the commerce carts where uuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param start the lower bound of the range of commerce carts
+	* @param end the upper bound of the range of commerce carts (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching commerce carts
+	*/
+	public static List<CommerceCart> findByUuid(java.lang.String uuid,
+		int start, int end, OrderByComparator<CommerceCart> orderByComparator) {
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the commerce carts where uuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param start the lower bound of the range of commerce carts
+	* @param end the upper bound of the range of commerce carts (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching commerce carts
+	*/
+	public static List<CommerceCart> findByUuid(java.lang.String uuid,
+		int start, int end, OrderByComparator<CommerceCart> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByUuid(uuid, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	* Returns the first commerce cart in the ordered set where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching commerce cart
+	* @throws NoSuchCartException if a matching commerce cart could not be found
+	*/
+	public static CommerceCart findByUuid_First(java.lang.String uuid,
+		OrderByComparator<CommerceCart> orderByComparator)
+		throws com.liferay.commerce.cart.exception.NoSuchCartException {
+		return getPersistence().findByUuid_First(uuid, orderByComparator);
+	}
+
+	/**
+	* Returns the first commerce cart in the ordered set where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching commerce cart, or <code>null</code> if a matching commerce cart could not be found
+	*/
+	public static CommerceCart fetchByUuid_First(java.lang.String uuid,
+		OrderByComparator<CommerceCart> orderByComparator) {
+		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
+	}
+
+	/**
+	* Returns the last commerce cart in the ordered set where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching commerce cart
+	* @throws NoSuchCartException if a matching commerce cart could not be found
+	*/
+	public static CommerceCart findByUuid_Last(java.lang.String uuid,
+		OrderByComparator<CommerceCart> orderByComparator)
+		throws com.liferay.commerce.cart.exception.NoSuchCartException {
+		return getPersistence().findByUuid_Last(uuid, orderByComparator);
+	}
+
+	/**
+	* Returns the last commerce cart in the ordered set where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching commerce cart, or <code>null</code> if a matching commerce cart could not be found
+	*/
+	public static CommerceCart fetchByUuid_Last(java.lang.String uuid,
+		OrderByComparator<CommerceCart> orderByComparator) {
+		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
+	}
+
+	/**
+	* Returns the commerce carts before and after the current commerce cart in the ordered set where uuid = &#63;.
+	*
+	* @param commerceCartId the primary key of the current commerce cart
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next commerce cart
+	* @throws NoSuchCartException if a commerce cart with the primary key could not be found
+	*/
+	public static CommerceCart[] findByUuid_PrevAndNext(long commerceCartId,
+		java.lang.String uuid, OrderByComparator<CommerceCart> orderByComparator)
+		throws com.liferay.commerce.cart.exception.NoSuchCartException {
+		return getPersistence()
+				   .findByUuid_PrevAndNext(commerceCartId, uuid,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the commerce carts where uuid = &#63; from the database.
+	*
+	* @param uuid the uuid
+	*/
+	public static void removeByUuid(java.lang.String uuid) {
+		getPersistence().removeByUuid(uuid);
+	}
+
+	/**
+	* Returns the number of commerce carts where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @return the number of matching commerce carts
+	*/
+	public static int countByUuid(java.lang.String uuid) {
+		return getPersistence().countByUuid(uuid);
+	}
+
+	/**
+	* Returns the commerce cart where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchCartException} if it could not be found.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the matching commerce cart
+	* @throws NoSuchCartException if a matching commerce cart could not be found
+	*/
+	public static CommerceCart findByUUID_G(java.lang.String uuid, long groupId)
+		throws com.liferay.commerce.cart.exception.NoSuchCartException {
+		return getPersistence().findByUUID_G(uuid, groupId);
+	}
+
+	/**
+	* Returns the commerce cart where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the matching commerce cart, or <code>null</code> if a matching commerce cart could not be found
+	*/
+	public static CommerceCart fetchByUUID_G(java.lang.String uuid, long groupId) {
+		return getPersistence().fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
+	* Returns the commerce cart where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching commerce cart, or <code>null</code> if a matching commerce cart could not be found
+	*/
+	public static CommerceCart fetchByUUID_G(java.lang.String uuid,
+		long groupId, boolean retrieveFromCache) {
+		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
+	}
+
+	/**
+	* Removes the commerce cart where uuid = &#63; and groupId = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the commerce cart that was removed
+	*/
+	public static CommerceCart removeByUUID_G(java.lang.String uuid,
+		long groupId)
+		throws com.liferay.commerce.cart.exception.NoSuchCartException {
+		return getPersistence().removeByUUID_G(uuid, groupId);
+	}
+
+	/**
+	* Returns the number of commerce carts where uuid = &#63; and groupId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the number of matching commerce carts
+	*/
+	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+		return getPersistence().countByUUID_G(uuid, groupId);
+	}
+
+	/**
+	* Returns all the commerce carts where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @return the matching commerce carts
+	*/
+	public static List<CommerceCart> findByUuid_C(java.lang.String uuid,
+		long companyId) {
+		return getPersistence().findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	* Returns a range of all the commerce carts where uuid = &#63; and companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param start the lower bound of the range of commerce carts
+	* @param end the upper bound of the range of commerce carts (not inclusive)
+	* @return the range of matching commerce carts
+	*/
+	public static List<CommerceCart> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end) {
+		return getPersistence().findByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the commerce carts where uuid = &#63; and companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param start the lower bound of the range of commerce carts
+	* @param end the upper bound of the range of commerce carts (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching commerce carts
+	*/
+	public static List<CommerceCart> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end,
+		OrderByComparator<CommerceCart> orderByComparator) {
+		return getPersistence()
+				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the commerce carts where uuid = &#63; and companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param start the lower bound of the range of commerce carts
+	* @param end the upper bound of the range of commerce carts (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching commerce carts
+	*/
+	public static List<CommerceCart> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end,
+		OrderByComparator<CommerceCart> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByUuid_C(uuid, companyId, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first commerce cart in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching commerce cart
+	* @throws NoSuchCartException if a matching commerce cart could not be found
+	*/
+	public static CommerceCart findByUuid_C_First(java.lang.String uuid,
+		long companyId, OrderByComparator<CommerceCart> orderByComparator)
+		throws com.liferay.commerce.cart.exception.NoSuchCartException {
+		return getPersistence()
+				   .findByUuid_C_First(uuid, companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the first commerce cart in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching commerce cart, or <code>null</code> if a matching commerce cart could not be found
+	*/
+	public static CommerceCart fetchByUuid_C_First(java.lang.String uuid,
+		long companyId, OrderByComparator<CommerceCart> orderByComparator) {
+		return getPersistence()
+				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last commerce cart in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching commerce cart
+	* @throws NoSuchCartException if a matching commerce cart could not be found
+	*/
+	public static CommerceCart findByUuid_C_Last(java.lang.String uuid,
+		long companyId, OrderByComparator<CommerceCart> orderByComparator)
+		throws com.liferay.commerce.cart.exception.NoSuchCartException {
+		return getPersistence()
+				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last commerce cart in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching commerce cart, or <code>null</code> if a matching commerce cart could not be found
+	*/
+	public static CommerceCart fetchByUuid_C_Last(java.lang.String uuid,
+		long companyId, OrderByComparator<CommerceCart> orderByComparator) {
+		return getPersistence()
+				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the commerce carts before and after the current commerce cart in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param commerceCartId the primary key of the current commerce cart
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next commerce cart
+	* @throws NoSuchCartException if a commerce cart with the primary key could not be found
+	*/
+	public static CommerceCart[] findByUuid_C_PrevAndNext(long commerceCartId,
+		java.lang.String uuid, long companyId,
+		OrderByComparator<CommerceCart> orderByComparator)
+		throws com.liferay.commerce.cart.exception.NoSuchCartException {
+		return getPersistence()
+				   .findByUuid_C_PrevAndNext(commerceCartId, uuid, companyId,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the commerce carts where uuid = &#63; and companyId = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	*/
+	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+		getPersistence().removeByUuid_C(uuid, companyId);
+	}
+
+	/**
+	* Returns the number of commerce carts where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @return the number of matching commerce carts
+	*/
+	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+		return getPersistence().countByUuid_C(uuid, companyId);
+	}
+
+	/**
 	* Returns all the commerce carts where groupId = &#63; and type = &#63;.
 	*
 	* @param groupId the group ID
@@ -281,65 +672,198 @@ public class CommerceCartUtil {
 	}
 
 	/**
-	* Returns the commerce cart where groupId = &#63; and userId = &#63; and name = &#63; and type = &#63; or throws a {@link NoSuchCartException} if it could not be found.
+	* Returns all the commerce carts where groupId = &#63; and userId = &#63; and name = &#63; and type = &#63;.
 	*
 	* @param groupId the group ID
 	* @param userId the user ID
 	* @param name the name
 	* @param type the type
-	* @return the matching commerce cart
-	* @throws NoSuchCartException if a matching commerce cart could not be found
+	* @return the matching commerce carts
 	*/
-	public static CommerceCart findByG_U_N_T(long groupId, long userId,
-		java.lang.String name, int type)
-		throws com.liferay.commerce.cart.exception.NoSuchCartException {
+	public static List<CommerceCart> findByG_U_N_T(long groupId, long userId,
+		java.lang.String name, int type) {
 		return getPersistence().findByG_U_N_T(groupId, userId, name, type);
 	}
 
 	/**
-	* Returns the commerce cart where groupId = &#63; and userId = &#63; and name = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns a range of all the commerce carts where groupId = &#63; and userId = &#63; and name = &#63; and type = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
 	*
 	* @param groupId the group ID
 	* @param userId the user ID
 	* @param name the name
 	* @param type the type
-	* @return the matching commerce cart, or <code>null</code> if a matching commerce cart could not be found
+	* @param start the lower bound of the range of commerce carts
+	* @param end the upper bound of the range of commerce carts (not inclusive)
+	* @return the range of matching commerce carts
 	*/
-	public static CommerceCart fetchByG_U_N_T(long groupId, long userId,
-		java.lang.String name, int type) {
-		return getPersistence().fetchByG_U_N_T(groupId, userId, name, type);
-	}
-
-	/**
-	* Returns the commerce cart where groupId = &#63; and userId = &#63; and name = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param groupId the group ID
-	* @param userId the user ID
-	* @param name the name
-	* @param type the type
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the matching commerce cart, or <code>null</code> if a matching commerce cart could not be found
-	*/
-	public static CommerceCart fetchByG_U_N_T(long groupId, long userId,
-		java.lang.String name, int type, boolean retrieveFromCache) {
+	public static List<CommerceCart> findByG_U_N_T(long groupId, long userId,
+		java.lang.String name, int type, int start, int end) {
 		return getPersistence()
-				   .fetchByG_U_N_T(groupId, userId, name, type,
-			retrieveFromCache);
+				   .findByG_U_N_T(groupId, userId, name, type, start, end);
 	}
 
 	/**
-	* Removes the commerce cart where groupId = &#63; and userId = &#63; and name = &#63; and type = &#63; from the database.
+	* Returns an ordered range of all the commerce carts where groupId = &#63; and userId = &#63; and name = &#63; and type = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
 	*
 	* @param groupId the group ID
 	* @param userId the user ID
 	* @param name the name
 	* @param type the type
-	* @return the commerce cart that was removed
+	* @param start the lower bound of the range of commerce carts
+	* @param end the upper bound of the range of commerce carts (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching commerce carts
 	*/
-	public static CommerceCart removeByG_U_N_T(long groupId, long userId,
-		java.lang.String name, int type)
+	public static List<CommerceCart> findByG_U_N_T(long groupId, long userId,
+		java.lang.String name, int type, int start, int end,
+		OrderByComparator<CommerceCart> orderByComparator) {
+		return getPersistence()
+				   .findByG_U_N_T(groupId, userId, name, type, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the commerce carts where groupId = &#63; and userId = &#63; and name = &#63; and type = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param name the name
+	* @param type the type
+	* @param start the lower bound of the range of commerce carts
+	* @param end the upper bound of the range of commerce carts (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching commerce carts
+	*/
+	public static List<CommerceCart> findByG_U_N_T(long groupId, long userId,
+		java.lang.String name, int type, int start, int end,
+		OrderByComparator<CommerceCart> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByG_U_N_T(groupId, userId, name, type, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first commerce cart in the ordered set where groupId = &#63; and userId = &#63; and name = &#63; and type = &#63;.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param name the name
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching commerce cart
+	* @throws NoSuchCartException if a matching commerce cart could not be found
+	*/
+	public static CommerceCart findByG_U_N_T_First(long groupId, long userId,
+		java.lang.String name, int type,
+		OrderByComparator<CommerceCart> orderByComparator)
 		throws com.liferay.commerce.cart.exception.NoSuchCartException {
-		return getPersistence().removeByG_U_N_T(groupId, userId, name, type);
+		return getPersistence()
+				   .findByG_U_N_T_First(groupId, userId, name, type,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first commerce cart in the ordered set where groupId = &#63; and userId = &#63; and name = &#63; and type = &#63;.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param name the name
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching commerce cart, or <code>null</code> if a matching commerce cart could not be found
+	*/
+	public static CommerceCart fetchByG_U_N_T_First(long groupId, long userId,
+		java.lang.String name, int type,
+		OrderByComparator<CommerceCart> orderByComparator) {
+		return getPersistence()
+				   .fetchByG_U_N_T_First(groupId, userId, name, type,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last commerce cart in the ordered set where groupId = &#63; and userId = &#63; and name = &#63; and type = &#63;.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param name the name
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching commerce cart
+	* @throws NoSuchCartException if a matching commerce cart could not be found
+	*/
+	public static CommerceCart findByG_U_N_T_Last(long groupId, long userId,
+		java.lang.String name, int type,
+		OrderByComparator<CommerceCart> orderByComparator)
+		throws com.liferay.commerce.cart.exception.NoSuchCartException {
+		return getPersistence()
+				   .findByG_U_N_T_Last(groupId, userId, name, type,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last commerce cart in the ordered set where groupId = &#63; and userId = &#63; and name = &#63; and type = &#63;.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param name the name
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching commerce cart, or <code>null</code> if a matching commerce cart could not be found
+	*/
+	public static CommerceCart fetchByG_U_N_T_Last(long groupId, long userId,
+		java.lang.String name, int type,
+		OrderByComparator<CommerceCart> orderByComparator) {
+		return getPersistence()
+				   .fetchByG_U_N_T_Last(groupId, userId, name, type,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the commerce carts before and after the current commerce cart in the ordered set where groupId = &#63; and userId = &#63; and name = &#63; and type = &#63;.
+	*
+	* @param commerceCartId the primary key of the current commerce cart
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param name the name
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next commerce cart
+	* @throws NoSuchCartException if a commerce cart with the primary key could not be found
+	*/
+	public static CommerceCart[] findByG_U_N_T_PrevAndNext(
+		long commerceCartId, long groupId, long userId, java.lang.String name,
+		int type, OrderByComparator<CommerceCart> orderByComparator)
+		throws com.liferay.commerce.cart.exception.NoSuchCartException {
+		return getPersistence()
+				   .findByG_U_N_T_PrevAndNext(commerceCartId, groupId, userId,
+			name, type, orderByComparator);
+	}
+
+	/**
+	* Removes all the commerce carts where groupId = &#63; and userId = &#63; and name = &#63; and type = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param name the name
+	* @param type the type
+	*/
+	public static void removeByG_U_N_T(long groupId, long userId,
+		java.lang.String name, int type) {
+		getPersistence().removeByG_U_N_T(groupId, userId, name, type);
 	}
 
 	/**

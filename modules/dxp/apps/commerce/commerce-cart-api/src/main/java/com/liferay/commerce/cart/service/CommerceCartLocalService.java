@@ -18,8 +18,11 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.cart.model.CommerceCart;
 
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -107,9 +110,20 @@ public interface CommerceCartLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceCart fetchCommerceCart(long commerceCartId);
 
+	/**
+	* Returns the commerce cart matching the UUID and group.
+	*
+	* @param uuid the commerce cart's UUID
+	* @param groupId the primary key of the group
+	* @return the matching commerce cart, or <code>null</code> if a matching commerce cart could not be found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceCart fetchCommerceCart(long groupId, long userId, int type,
-		java.lang.String name);
+	public CommerceCart fetchCommerceCartByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceCart fetchDefaultCommerceCart(long groupId, long userId,
+		int type, java.lang.String name);
 
 	/**
 	* Returns the commerce cart with the primary key.
@@ -121,6 +135,18 @@ public interface CommerceCartLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceCart getCommerceCart(long commerceCartId)
 		throws PortalException;
+
+	/**
+	* Returns the commerce cart matching the UUID and group.
+	*
+	* @param uuid the commerce cart's UUID
+	* @param groupId the primary key of the group
+	* @return the matching commerce cart
+	* @throws PortalException if a matching commerce cart could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceCart getCommerceCartByUuidAndGroupId(java.lang.String uuid,
+		long groupId) throws PortalException;
 
 	/**
 	* Updates the commerce cart in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -135,6 +161,10 @@ public interface CommerceCartLocalService extends BaseLocalService,
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -225,6 +255,32 @@ public interface CommerceCartLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceCart> getCommerceCarts(long groupId, int type,
 		int start, int end, OrderByComparator<CommerceCart> orderByComparator);
+
+	/**
+	* Returns all the commerce carts matching the UUID and company.
+	*
+	* @param uuid the UUID of the commerce carts
+	* @param companyId the primary key of the company
+	* @return the matching commerce carts, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceCart> getCommerceCartsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId);
+
+	/**
+	* Returns a range of commerce carts matching the UUID and company.
+	*
+	* @param uuid the UUID of the commerce carts
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of commerce carts
+	* @param end the upper bound of the range of commerce carts (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching commerce carts, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceCart> getCommerceCartsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		OrderByComparator<CommerceCart> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.

@@ -18,6 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -58,6 +60,7 @@ public class CommerceCartWrapper implements CommerceCart,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("commerceCartId", getCommerceCartId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -73,6 +76,12 @@ public class CommerceCartWrapper implements CommerceCart,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long commerceCartId = (Long)attributes.get("commerceCartId");
 
 		if (commerceCartId != null) {
@@ -221,6 +230,16 @@ public class CommerceCartWrapper implements CommerceCart,
 	@Override
 	public java.lang.String getUserUuid() {
 		return _commerceCart.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this commerce cart.
+	*
+	* @return the uuid of this commerce cart
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _commerceCart.getUuid();
 	}
 
 	@Override
@@ -449,6 +468,16 @@ public class CommerceCartWrapper implements CommerceCart,
 		_commerceCart.setUserUuid(userUuid);
 	}
 
+	/**
+	* Sets the uuid of this commerce cart.
+	*
+	* @param uuid the uuid of this commerce cart
+	*/
+	@Override
+	public void setUuid(java.lang.String uuid) {
+		_commerceCart.setUuid(uuid);
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -466,6 +495,11 @@ public class CommerceCartWrapper implements CommerceCart,
 		}
 
 		return false;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _commerceCart.getStagedModelType();
 	}
 
 	@Override

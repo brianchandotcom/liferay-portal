@@ -1,4 +1,5 @@
 create table CommerceCart (
+	uuid_ VARCHAR(75) null,
 	commerceCartId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,

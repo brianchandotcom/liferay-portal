@@ -125,6 +125,8 @@ public class CommerceCartPersistenceTest {
 
 		CommerceCart newCommerceCart = _persistence.create(pk);
 
+		newCommerceCart.setUuid(RandomTestUtil.randomString());
+
 		newCommerceCart.setGroupId(RandomTestUtil.nextLong());
 
 		newCommerceCart.setCompanyId(RandomTestUtil.nextLong());
@@ -145,6 +147,8 @@ public class CommerceCartPersistenceTest {
 
 		CommerceCart existingCommerceCart = _persistence.findByPrimaryKey(newCommerceCart.getPrimaryKey());
 
+		Assert.assertEquals(existingCommerceCart.getUuid(),
+			newCommerceCart.getUuid());
 		Assert.assertEquals(existingCommerceCart.getCommerceCartId(),
 			newCommerceCart.getCommerceCartId());
 		Assert.assertEquals(existingCommerceCart.getGroupId(),
@@ -165,6 +169,33 @@ public class CommerceCartPersistenceTest {
 			newCommerceCart.getName());
 		Assert.assertEquals(existingCommerceCart.getType(),
 			newCommerceCart.getType());
+	}
+
+	@Test
+	public void testCountByUuid() throws Exception {
+		_persistence.countByUuid(StringPool.BLANK);
+
+		_persistence.countByUuid(StringPool.NULL);
+
+		_persistence.countByUuid((String)null);
+	}
+
+	@Test
+	public void testCountByUUID_G() throws Exception {
+		_persistence.countByUUID_G(StringPool.BLANK, RandomTestUtil.nextLong());
+
+		_persistence.countByUUID_G(StringPool.NULL, 0L);
+
+		_persistence.countByUUID_G((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByUuid_C() throws Exception {
+		_persistence.countByUuid_C(StringPool.BLANK, RandomTestUtil.nextLong());
+
+		_persistence.countByUuid_C(StringPool.NULL, 0L);
+
+		_persistence.countByUuid_C((String)null, 0L);
 	}
 
 	@Test
@@ -209,8 +240,8 @@ public class CommerceCartPersistenceTest {
 	}
 
 	protected OrderByComparator<CommerceCart> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("CommerceCart",
-			"commerceCartId", true, "groupId", true, "companyId", true,
+		return OrderByComparatorFactoryUtil.create("CommerceCart", "uuid",
+			true, "commerceCartId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "name", true, "type", true);
 	}
@@ -417,24 +448,20 @@ public class CommerceCartPersistenceTest {
 
 		CommerceCart existingCommerceCart = _persistence.findByPrimaryKey(newCommerceCart.getPrimaryKey());
 
+		Assert.assertTrue(Objects.equals(existingCommerceCart.getUuid(),
+				ReflectionTestUtil.invoke(existingCommerceCart,
+					"getOriginalUuid", new Class<?>[0])));
 		Assert.assertEquals(Long.valueOf(existingCommerceCart.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(existingCommerceCart,
 				"getOriginalGroupId", new Class<?>[0]));
-		Assert.assertEquals(Long.valueOf(existingCommerceCart.getUserId()),
-			ReflectionTestUtil.<Long>invoke(existingCommerceCart,
-				"getOriginalUserId", new Class<?>[0]));
-		Assert.assertTrue(Objects.equals(existingCommerceCart.getName(),
-				ReflectionTestUtil.invoke(existingCommerceCart,
-					"getOriginalName", new Class<?>[0])));
-		Assert.assertEquals(Integer.valueOf(existingCommerceCart.getType()),
-			ReflectionTestUtil.<Integer>invoke(existingCommerceCart,
-				"getOriginalType", new Class<?>[0]));
 	}
 
 	protected CommerceCart addCommerceCart() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		CommerceCart commerceCart = _persistence.create(pk);
+
+		commerceCart.setUuid(RandomTestUtil.randomString());
 
 		commerceCart.setGroupId(RandomTestUtil.nextLong());
 

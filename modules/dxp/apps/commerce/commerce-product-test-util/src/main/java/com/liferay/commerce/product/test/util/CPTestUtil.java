@@ -56,16 +56,14 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
+import org.junit.Assert;
 
 import java.io.Serializable;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.junit.Assert;
 
 /**
  * @author Andrea Di Giorgi
@@ -428,8 +426,10 @@ public class CPTestUtil {
 			productTypeName, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomInt(),
 			RandomTestUtil.randomInt(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomInt(), null, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
+			RandomTestUtil.randomInt(), RandomTestUtil.randomDouble(),
+			RandomTestUtil.randomDouble(), RandomTestUtil.randomDouble(),
+			RandomTestUtil.randomDouble(), null, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, false, serviceContext);
 	}

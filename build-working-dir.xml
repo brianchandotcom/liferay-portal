@@ -45,7 +45,6 @@
 				token="build.repository.private.username=${build.repository.private.username[@{public.branch.name}]}"
 				value="build.repository.private.username=${build.repository.private.username[@{private.branch.name}]}"
 			/>
-
 			<replace
 				failOnNoReplacements="true"
 				file="build.properties"

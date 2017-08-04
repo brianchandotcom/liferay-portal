@@ -5,6 +5,7 @@
 	<model-resource>
 		<model-name>com.liferay.commerce.product</model-name>
 		<portlet-ref>
+			<portlet-name>com_liferay_commerce_admin_web_internal_portlet_CommerceAdminPortlet</portlet-name>
 			<portlet-name>com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet</portlet-name>
 			<portlet-name>com_liferay_commerce_product_options_web_internal_portlet_CPOptionCategoriesPortlet</portlet-name>
 			<portlet-name>com_liferay_commerce_product_options_web_internal_portlet_CPOptionsPortlet</portlet-name>
@@ -20,6 +21,7 @@
 				<action-key>ADD_COMMERCE_PRODUCT_SPECIFICATION_OPTION</action-key>
 				<action-key>MANAGE_COMMERCE_PRODUCT_ATTACHMENTS</action-key>
 				<action-key>MANAGE_COMMERCE_PRODUCT_IMAGES</action-key>
+				<action-key>MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNIT</action-key>
 				<action-key>PERMISSIONS</action-key>
 			</supports>
 			<site-member-defaults />
@@ -32,6 +34,7 @@
 				<action-key>ADD_COMMERCE_PRODUCT_SPECIFICATION_OPTION</action-key>
 				<action-key>MANAGE_COMMERCE_PRODUCT_ATTACHMENTS</action-key>
 				<action-key>MANAGE_COMMERCE_PRODUCT_IMAGES</action-key>
+				<action-key>MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNIT</action-key>
 				<action-key>PERMISSIONS</action-key>
 			</guest-unsupported>
 		</permissions>

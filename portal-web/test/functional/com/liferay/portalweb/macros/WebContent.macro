@@ -1317,7 +1317,7 @@
 
 	<command name="subscribeToSpecificArticle">
 		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
-			<var name="key_rowEntry" value="${rowEntry}" />
+			<var name="key_rowEntry" value="${webContentTitle}" />
 		</execute>
 
 		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Subscribe">

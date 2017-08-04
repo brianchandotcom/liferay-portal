@@ -142,7 +142,7 @@
 		</execute>
 
 		<execute macro="WebContent#subscribeToSpecificArticle">
-			<var name="rowEntry" value="WC WebContent Title" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
@@ -205,7 +205,7 @@
 		</execute>
 
 		<execute macro="WebContent#subscribeToSpecificArticle">
-			<var name="rowEntry" value="WC WebContent Title" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="User#logoutPG" />

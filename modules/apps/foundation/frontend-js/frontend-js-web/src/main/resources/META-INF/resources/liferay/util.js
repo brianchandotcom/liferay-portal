@@ -313,13 +313,7 @@
 			if (!interacting && Util.inBrowserView(el)) {
 				var form = el.closest('form');
 
-				var focusable = !el.is(':disabled') && !el.is(':hidden');
-
-				// LPS-70650
-
-				if (el.parents(":disabled").length > 0) {
-					focusable = false;
-				}
+				var focusable = !el.is(':disabled') && !el.is(':hidden') && !el.parents(":disabled").length;
 
 				if (!form.length || focusable) {
 					el.focus();

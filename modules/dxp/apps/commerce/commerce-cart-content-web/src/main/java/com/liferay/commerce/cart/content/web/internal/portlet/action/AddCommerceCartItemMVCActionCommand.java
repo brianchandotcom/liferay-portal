@@ -26,8 +26,8 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
@@ -35,15 +35,20 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
+import java.io.IOException;
 import java.util.Locale;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.liferay.portal.kernel.util.PortalUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -55,42 +60,45 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + CommerceCartPortletKeys.COMMERCE_CART_CONTENT,
 		"javax.portlet.name=" + CommerceCartPortletKeys.COMMERCE_CART_CONTENT_MINI,
-		"mvc.command.name=editCommerceCartItem"
+		"mvc.command.name=addCommerceCartItem"
 	},
-	service = MVCResourceCommand.class
+	service = MVCActionCommand.class
 )
-public class EditCommerceCartItemMVCResourceCommand
-	extends BaseMVCResourceCommand {
+public class AddCommerceCartItemMVCActionCommand
+	extends BaseMVCActionCommand {
 
 	@Override
-	public void doServeResource(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws PortletException {
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
+
+		Locale locale = actionRequest.getLocale();
+
+		HttpServletRequest httpServletRequest =
+			_portal.getHttpServletRequest(actionRequest);
+
+		HttpServletResponse httpServletResponse =
+			_portal.getHttpServletResponse(actionResponse);
+
+		int type = ParamUtil.getInteger(
+			actionRequest, "type",
+			CommerceCartConstants.COMMERCE_CART_TYPE_CART);
+		long cpDefinitionId = ParamUtil.getLong(
+			actionRequest, "cpDefinitionId");
+		long cpInstanceId = ParamUtil.getLong(
+			actionRequest, "cpInstanceId");
+		int quantity = ParamUtil.getInteger(
+			actionRequest, "quantity",
+			CommerceCartConstants.COMMERCE_CART_TYPE_CART);
+		String ddmFormValues = ParamUtil.getString(
+			actionRequest, "ddmFormValues");
+
+		String json = _cpInstanceHelper.toJSON(
+			cpDefinitionId, locale, ddmFormValues);
 
 		try {
-			Locale locale = resourceRequest.getLocale();
-
-			HttpServletRequest httpServletRequest =
-				_portal.getHttpServletRequest(resourceRequest);
-
-			HttpServletResponse httpServletResponse =
-				_portal.getHttpServletResponse(resourceResponse);
-
-			int type = ParamUtil.getInteger(
-				resourceRequest, "type",
-				CommerceCartConstants.COMMERCE_CART_TYPE_CART);
-			long cpDefinitionId = ParamUtil.getLong(
-				resourceRequest, "cpDefinitionId");
-			long cpInstanceId = ParamUtil.getLong(
-				resourceRequest, "cpInstanceId");
-			int quantity = ParamUtil.getInteger(
-				resourceRequest, "quantity",
-				CommerceCartConstants.COMMERCE_CART_TYPE_CART);
-			String ddmFormValues = ParamUtil.getString(
-				resourceRequest, "ddmFormValues");
-
-			String json = _cpInstanceHelper.toJSON(
-				cpDefinitionId, locale, ddmFormValues);
 
 			CommerceCart commerceCart = _commerceCartHelper.getCurrentCart(
 				httpServletRequest, type);
@@ -106,7 +114,7 @@ public class EditCommerceCartItemMVCResourceCommand
 
 				_commerceCartHelper.updateCurrentCart(
 					httpServletRequest, httpServletResponse,
-					commerceCart.getCommerceCartId());
+					commerceCart);
 			}
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -117,24 +125,28 @@ public class EditCommerceCartItemMVCResourceCommand
 					commerceCart.getCommerceCartId(), cpDefinitionId,
 					cpInstanceId, quantity, json, serviceContext);
 
-			JSONObject jsonObject = _jsonFactory.createJSONObject();
+			int commerceCartItemsCount = _commerceCartItemService.getCommerceCartItemsCount(commerceCart.getCommerceCartId());
 
 			jsonObject.put(
 				"commerceCartItemId", commerceCartItem.getCommerceCartItemId());
+			jsonObject.put("commerceCartItemsCount", commerceCartItemsCount);
 			jsonObject.put("success", true);
-
-			httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
-
-			ServletResponseUtil.write(
-				httpServletResponse, jsonObject.toString());
 		}
 		catch (Exception e) {
+
 			_log.error(e, e);
+
+			jsonObject.put("error", e.getMessage());
+			jsonObject.put("success", false);
 		}
+
+		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
+
+		writeJSON(actionRequest, actionResponse, jsonObject);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		EditCommerceCartItemMVCResourceCommand.class);
+		AddCommerceCartItemMVCActionCommand.class);
 
 	@Reference
 	private CommerceCartHelper _commerceCartHelper;
@@ -153,5 +165,20 @@ public class EditCommerceCartItemMVCResourceCommand
 
 	@Reference
 	private Portal _portal;
+
+	protected void writeJSON(
+		PortletRequest portletRequest, ActionResponse actionResponse,
+		Object jsonObj)
+		throws IOException {
+
+		HttpServletResponse response = PortalUtil.getHttpServletResponse(
+			actionResponse);
+
+		response.setContentType(ContentTypes.APPLICATION_JSON);
+
+		ServletResponseUtil.write(response, jsonObj.toString());
+
+		response.flushBuffer();
+	}
 
 }

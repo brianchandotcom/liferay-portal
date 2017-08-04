@@ -143,11 +143,9 @@ SearchContainer dlSearchContainer = new SearchContainer(liferayPortletRequest, p
 			searchContext.setIncludeDiscussions(true);
 			searchContext.setKeywords(keywords);
 
-			QueryConfig queryConfig = new QueryConfig();
+			QueryConfig queryConfig = searchContext.getQueryConfig();
 
 			queryConfig.setSearchSubfolders(true);
-
-			searchContext.setQueryConfig(queryConfig);
 
 			searchContext.setStart(dlSearchContainer.getStart());
 

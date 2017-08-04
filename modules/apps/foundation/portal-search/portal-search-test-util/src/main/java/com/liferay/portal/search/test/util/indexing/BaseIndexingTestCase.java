@@ -76,13 +76,11 @@ public abstract class BaseIndexingTestCase {
 		searchContext.setCompanyId(COMPANY_ID);
 		searchContext.setGroupIds(new long[] {GROUP_ID});
 
-		QueryConfig queryConfig = new QueryConfig();
+		QueryConfig queryConfig = searchContext.getQueryConfig();
 
 		queryConfig.setHighlightEnabled(false);
 		queryConfig.setHitsProcessingEnabled(true);
 		queryConfig.setScoreEnabled(false);
-
-		searchContext.setQueryConfig(queryConfig);
 
 		searchContext.setStart(QueryUtil.ALL_POS);
 

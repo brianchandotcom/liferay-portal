@@ -18,7 +18,7 @@
 
 <aui:button cssClass="btn-lg btn-primary" name="add-to-cart" value="add-to-cart" />
 
-<aui:script use="aui-io-request,aui-parse-content">
+<aui:script use="aui-io-request,aui-parse-content,liferay-notification">
 	A.one('#<portlet:namespace />add-to-cart').on(
 		'click',
 		function(event) {
@@ -34,12 +34,26 @@
 			};
 
 			A.io.request(
-				'<liferay-portlet:resourceURL id="editCommerceCartItem" portletName="<%= CommerceCartPortletKeys.COMMERCE_CART_CONTENT %>" ></liferay-portlet:resourceURL>',
+				'<liferay-portlet:actionURL name="addCommerceCartItem" portletName="<%= CommerceCartPortletKeys.COMMERCE_CART_CONTENT %>" ></liferay-portlet:actionURL>',
 				{
 					data: data,
 					on: {
 						success: function(event, id, obj) {
-							Liferay.fire('commerce:productAddedToCart');
+
+							var	response = JSON.parse(obj.response);
+
+							if(response.success){
+								Liferay.fire('commerce:productAddedToCart', response);
+							}else{
+								new Liferay.Notification(
+									{
+										message: '<liferay-ui:message key="an-unexpected-error-occurred" />',
+										render: true,
+										title: '<liferay-ui:message key="danger" />',
+										type: 'danger'
+									}
+								);
+							}
 						}
 					}
 				}

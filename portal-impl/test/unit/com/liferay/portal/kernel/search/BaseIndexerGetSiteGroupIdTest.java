@@ -56,6 +56,7 @@ public class BaseIndexerGetSiteGroupIdTest extends PowerMockito {
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 
+		setUpRegistryUtil();
 		setUpGroupLocalServiceUtil();
 		setUpPropsUtil();
 		setUpRegistryUtil();
@@ -203,6 +204,12 @@ public class BaseIndexerGetSiteGroupIdTest extends PowerMockito {
 		);
 
 		return parentGroup;
+	}
+
+	protected void setUpRegistryUtil() throws Exception {
+		Registry registry = new BasicRegistryImpl();
+
+		RegistryUtil.setRegistry(registry);
 	}
 
 	protected void setUpNonexistentGroup(long groupId) throws PortalException {

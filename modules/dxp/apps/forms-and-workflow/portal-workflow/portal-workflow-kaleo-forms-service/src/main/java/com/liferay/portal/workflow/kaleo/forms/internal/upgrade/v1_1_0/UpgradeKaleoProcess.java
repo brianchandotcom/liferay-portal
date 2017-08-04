@@ -151,7 +151,8 @@ public class UpgradeKaleoProcess extends UpgradeProcess {
 		ServiceContext serviceContext = new ServiceContext();
 
 		DDMTemplateVersion ddmTemplateVersion =
-			oldDDMTemplate.getTemplateVersion();
+			_ddmTemplateVersionLocalService.getTemplateVersion(
+				oldDDMTemplate.getTemplateId(), oldDDMTemplate.getVersion());
 
 		serviceContext.setAttribute("status", ddmTemplateVersion.getStatus());
 

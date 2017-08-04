@@ -39,7 +39,7 @@
 			<finder-column name="groupId" />
 			<finder-column name="type" />
 		</finder>
-		<finder name="G_U_N_T" return-type="CommerceCart" unique="true">
+		<finder name="G_U_N_T" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="userId" />
 			<finder-column name="name" />

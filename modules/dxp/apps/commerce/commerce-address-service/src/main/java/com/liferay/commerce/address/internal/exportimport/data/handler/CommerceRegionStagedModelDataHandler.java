@@ -19,6 +19,7 @@ import com.liferay.commerce.address.model.CommerceRegion;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -53,6 +54,11 @@ public class CommerceRegionStagedModelDataHandler
 			PortletDataContext portletDataContext,
 			CommerceRegion commerceRegion)
 		throws Exception {
+
+		StagedModelDataHandlerUtil.exportReferenceStagedModel(
+			portletDataContext, commerceRegion,
+			commerceRegion.getCommerceCountry(),
+			PortletDataContext.REFERENCE_TYPE_PARENT);
 
 		Element element = portletDataContext.getExportDataElement(
 			commerceRegion);

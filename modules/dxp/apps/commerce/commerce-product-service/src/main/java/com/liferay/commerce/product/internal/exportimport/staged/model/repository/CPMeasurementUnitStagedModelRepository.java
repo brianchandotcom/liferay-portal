@@ -138,7 +138,8 @@ public class CPMeasurementUnitStagedModelRepository
 			cpMeasurementUnit.getCPMeasurementUnitId(),
 			cpMeasurementUnit.getNameMap(), cpMeasurementUnit.getKey(),
 			cpMeasurementUnit.getRate(), cpMeasurementUnit.isPrimary(),
-			cpMeasurementUnit.getPriority(), cpMeasurementUnit.getType());
+			cpMeasurementUnit.getPriority(), cpMeasurementUnit.getType(),
+			serviceContext);
 	}
 
 	@Reference

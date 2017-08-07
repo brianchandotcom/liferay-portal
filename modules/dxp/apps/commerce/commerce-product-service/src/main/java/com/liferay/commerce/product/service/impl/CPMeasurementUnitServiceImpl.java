@@ -97,7 +97,8 @@ public class CPMeasurementUnitServiceImpl
 	@Override
 	public CPMeasurementUnit updateCPMeasurementUnit(
 			long cpMeasurementUnitId, Map<Locale, String> nameMap, String key,
-			double rate, boolean primary, double priority, int type)
+			double rate, boolean primary, double priority, int type,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CPMeasurementUnit cpMeasurementUnit =
@@ -108,7 +109,8 @@ public class CPMeasurementUnitServiceImpl
 			CPActionKeys.MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS);
 
 		return cpMeasurementUnitLocalService.updateCPMeasurementUnit(
-			cpMeasurementUnitId, nameMap, key, rate, primary, priority, type);
+			cpMeasurementUnitId, nameMap, key, rate, primary, priority, type,
+			serviceContext);
 	}
 
 }

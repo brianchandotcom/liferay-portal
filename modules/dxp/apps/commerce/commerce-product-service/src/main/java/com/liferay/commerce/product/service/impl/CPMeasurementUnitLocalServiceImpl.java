@@ -123,7 +123,8 @@ public class CPMeasurementUnitLocalServiceImpl
 	@Override
 	public CPMeasurementUnit updateCPMeasurementUnit(
 			long cpMeasurementUnitId, Map<Locale, String> nameMap, String key,
-			double rate, boolean primary, double priority, int type)
+			double rate, boolean primary, double priority, int type,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CPMeasurementUnit cpMeasurementUnit =

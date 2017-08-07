@@ -147,7 +147,7 @@ public class EditCPMeasurementUnitMVCActionCommand
 			cpMeasurementUnit =
 				_cpMeasurementUnitService.updateCPMeasurementUnit(
 					cpMeasurementUnitId, nameMap, key, rate, primary, priority,
-					type);
+					type, serviceContext);
 		}
 
 		return cpMeasurementUnit;

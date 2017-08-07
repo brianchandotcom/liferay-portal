@@ -17,8 +17,6 @@ package com.liferay.lcs.runnable;
 import com.liferay.lcs.InvalidLCSClusterEntryTokenException;
 import com.liferay.lcs.NoLCSClusterEntryTokenException;
 import com.liferay.lcs.advisor.LCSClusterEntryTokenAdvisor;
-import com.liferay.lcs.exception.LCSExceptionHandler;
-import com.liferay.lcs.exception.LCSHandshakeException;
 import com.liferay.lcs.oauth.OAuthUtil;
 import com.liferay.lcs.rest.LCSClusterEntryToken;
 import com.liferay.lcs.rest.NoSuchLCSSubscriptionEntryException;
@@ -29,8 +27,6 @@ import com.liferay.lcs.util.LCSPortletPreferencesUtil;
 import com.liferay.lcs.util.LCSUtil;
 import com.liferay.lcs.util.PortletPropsValues;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
-import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
-import com.liferay.portal.kernel.cluster.ClusterException;
 import com.liferay.portal.kernel.license.messaging.LCSPortletState;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -38,7 +34,6 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ResourceBundle;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 import javax.servlet.http.HttpServletResponse;
@@ -70,84 +65,52 @@ public class LCSConnectorRunnable implements Runnable {
 				break;
 			}
 			catch (Exception e) {
-				if (e instanceof ClusterException ||
-					e instanceof ExecutionException ||
-					e instanceof InvalidLCSClusterEntryTokenException ||
-					e instanceof JSONWebServiceInvocationException ||
-					e instanceof JSONWebServiceTransportException ||
-					e instanceof NoLCSClusterEntryTokenException ||
-					e instanceof NoSuchLCSSubscriptionEntryException) {
-
-					if (_log.isDebugEnabled()) {
-						_log.debug(e.getMessage(), e);
-					}
-					else {
-						if (_log.isInfoEnabled() &&
-							Validator.isNotNull(e.getMessage())) {
-
-							_log.info(e.getMessage());
-						}
-					}
-
-					if (e instanceof JSONWebServiceInvocationException) {
-						JSONWebServiceInvocationException jsonwsie =
-							(JSONWebServiceInvocationException)e;
-
-						if (jsonwsie.getStatus() ==
-								HttpServletResponse.SC_NOT_ACCEPTABLE) {
-
-							LCSPortletPreferencesUtil.removeCredentials();
-						}
-					}
-					else if (e instanceof NoSuchLCSSubscriptionEntryException) {
-						if (_log.isWarnEnabled()) {
-							ResourceBundle resourceBundle =
-								ResourceBundleUtil.getBundle(
-									"content.Language", getClass());
-
-							_log.warn(
-								ResourceBundleUtil.getString(
-									resourceBundle,
-									"exceeded-subscription-number"));
-						}
-					}
-					else if (OAuthUtil.hasOAuthTokenRejectedException(e)) {
-						LCSPortletPreferencesUtil.removeCredentials();
-
-						LCSUtil.processLCSPortletState(
-							LCSPortletState.NO_CONNECTION);
-
-						if (_log.isWarnEnabled()) {
-							_log.warn("A new OAuth token is required");
-						}
-					}
-
-					if (_log.isInfoEnabled()) {
-						_log.info("LCS portlet is not connected");
-					}
-				}
-				else if (e instanceof ExecutionException) {
-					if (!(LCSExceptionHandler.getRootCause(e) instanceof
-						LCSHandshakeException)) {
-
-						if (_log.isInfoEnabled()) {
-							_log.info(
-								"Terminating thread because of an " +
-									"unrecoverable exception");
-						}
-
-						break;
-					}
+				if (_log.isDebugEnabled()) {
+					_log.debug(e.getMessage(), e);
 				}
 				else {
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							"Terminating thread because LCS portlet is not " +
-								"connected",
-							e);
-					}
+					if (_log.isInfoEnabled() &&
+						Validator.isNotNull(e.getMessage())) {
 
-					break;
+						_log.info(e.getMessage());
+					}
+				}
+
+				if (e instanceof JSONWebServiceInvocationException) {
+					JSONWebServiceInvocationException jsonwsie =
+						(JSONWebServiceInvocationException)e;
+
+					if (jsonwsie.getStatus() ==
+							HttpServletResponse.SC_NOT_ACCEPTABLE) {
+
+						LCSPortletPreferencesUtil.removeCredentials();
+					}
+				}
+				else if (e instanceof NoSuchLCSSubscriptionEntryException) {
+					if (_log.isWarnEnabled()) {
+						ResourceBundle resourceBundle =
+							ResourceBundleUtil.getBundle(
+								"content.Language", getClass());
+
+						_log.warn(
+							ResourceBundleUtil.getString(
+								resourceBundle,
+								"exceeded-subscription-number"));
+					}
+				}
+				else if (OAuthUtil.hasOAuthTokenRejectedException(e)) {
+					LCSPortletPreferencesUtil.removeCredentials();
+
+					LCSUtil.processLCSPortletState(
+						LCSPortletState.NO_CONNECTION);
+
+					if (_log.isWarnEnabled()) {
+						_log.warn("A new OAuth token is required");
+					}
+				}
+
+				if (_log.isInfoEnabled()) {
+					_log.info("LCS portlet is not connected");
 				}
 
 				try {

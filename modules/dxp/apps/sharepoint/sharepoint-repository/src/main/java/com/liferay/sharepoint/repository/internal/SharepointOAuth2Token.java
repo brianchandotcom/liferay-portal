@@ -67,10 +67,11 @@ public class SharepointOAuth2Token implements Token {
 
 		long expiresIn = jsonObject.getLong("expires_in");
 
-		Date expireDate = Date.from(
+		Date expirationDate = Date.from(
 			instant.plus(expiresIn, ChronoUnit.SECONDS));
 
-		return new SharepointOAuth2Token(accessToken, refreshToken, expireDate);
+		return new SharepointOAuth2Token(
+			accessToken, refreshToken, expirationDate);
 	}
 
 	public static final Token fromModel(

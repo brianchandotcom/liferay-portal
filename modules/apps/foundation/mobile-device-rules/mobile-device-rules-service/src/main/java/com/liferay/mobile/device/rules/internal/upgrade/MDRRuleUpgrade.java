@@ -14,6 +14,10 @@
 
 package com.liferay.mobile.device.rules.internal.upgrade;
 
+import com.liferay.mobile.device.rules.rule.group.action.LayoutTemplateModificationActionHandler;
+import com.liferay.mobile.device.rules.rule.group.action.SimpleRedirectActionHandler;
+import com.liferay.mobile.device.rules.rule.group.action.SiteRedirectActionHandler;
+import com.liferay.mobile.device.rules.rule.group.action.ThemeModificationActionHandler;
 import com.liferay.mobile.device.rules.rule.group.rule.SimpleRuleHandler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
@@ -28,6 +32,28 @@ public class MDRRuleUpgrade extends UpgradeProcess {
 			"update MDRRule set type_ = '" + SimpleRuleHandler.class.getName() +
 				"' where type_ = 'com.liferay.portal.mobile.device.rulegroup." +
 					"rule.impl.SimpleRuleHandler'");
+
+		_updateMDRAction(
+			LayoutTemplateModificationActionHandler.class.getSimpleName(),
+			LayoutTemplateModificationActionHandler.class.getName());
+		_updateMDRAction(
+			SimpleRedirectActionHandler.class.getSimpleName(),
+			SimpleRedirectActionHandler.class.getName());
+		_updateMDRAction(
+			SiteRedirectActionHandler.class.getSimpleName(),
+			SiteRedirectActionHandler.class.getName());
+		_updateMDRAction(
+			ThemeModificationActionHandler.class.getSimpleName(),
+			ThemeModificationActionHandler.class.getName());
+	}
+
+	private void _updateMDRAction(String originalSimpleName, String newName)
+		throws Exception {
+
+		runSQL(
+			"update MDRAction set type_ = '" + newName +
+				"' where type_ = 'com.liferay.portal.mobile.device.rulegroup." +
+					"action.impl." + originalSimpleName + "'");
 	}
 
 }

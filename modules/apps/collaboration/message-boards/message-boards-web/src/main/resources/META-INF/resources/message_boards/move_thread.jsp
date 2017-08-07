@@ -67,10 +67,6 @@ if (portletTitleBasedNavigation) {
 		<liferay-ui:error exception="<%= MessageSubjectException.class %>" message="please-enter-a-valid-subject" />
 		<liferay-ui:error exception="<%= NoSuchCategoryException.class %>" message="please-enter-a-valid-category" />
 
-		<%
-		long breadcrumbsMessageId = message.getMessageId();
-		%>
-
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
 				<div class="form-group">

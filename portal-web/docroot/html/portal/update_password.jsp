@@ -28,8 +28,6 @@ String ticketKey = ParamUtil.getString(request, "ticketKey");
 if (referer.startsWith(themeDisplay.getPathMain() + "/portal/update_password") && Validator.isNotNull(ticketKey)) {
 	referer = themeDisplay.getPathMain();
 }
-
-PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 %>
 
 <c:choose>

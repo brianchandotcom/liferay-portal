@@ -44,8 +44,6 @@ PortletURL searchURL = PortletURLUtil.clone(portletURL, renderResponse);
 
 SearchContainer userSearchContainer = new UserSearch(renderRequest, searchURL);
 
-UserSearchTerms searchTerms = (UserSearchTerms)userSearchContainer.getSearchTerms();
-
 LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
 if (filterManageableOrganizations) {

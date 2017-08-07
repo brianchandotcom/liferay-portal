@@ -201,8 +201,6 @@ long orderId = BeanParamUtil.getLong(order, request, "orderId");
 	</c:if>
 
 	<%
-	StringBuilder itemIds = new StringBuilder();
-
 	SearchContainer searchContainer = new SearchContainer();
 
 	List<String> headerNames = new ArrayList<String>();

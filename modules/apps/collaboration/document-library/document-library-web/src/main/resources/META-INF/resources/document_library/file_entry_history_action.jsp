@@ -32,8 +32,6 @@ else {
 	fileVersion = (FileVersion)request.getAttribute("info_panel.jsp-fileVersion");
 }
 
-FileEntry fileEntry = fileVersion.getFileEntry();
-
 DLViewFileEntryHistoryDisplayContext dlViewFileEntryHistoryDisplayContext = dlDisplayContextProvider.getDLViewFileEntryHistoryDisplayContext(request, response, fileVersion);
 %>
 

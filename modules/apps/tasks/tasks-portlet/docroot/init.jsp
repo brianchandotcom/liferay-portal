@@ -42,7 +42,6 @@ page import="com.liferay.portal.kernel.portlet.PortletURLFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.service.GroupLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.UserLocalServiceUtil" %><%@
-page import="com.liferay.portal.kernel.util.CalendarFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.DateUtil" %><%@
 page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
@@ -65,8 +64,7 @@ page import="com.liferay.tasks.util.WebKeys" %>
 
 <%@ page import="java.text.Format" %>
 
-<%@ page import="java.util.Calendar" %><%@
-page import="java.util.Date" %><%@
+<%@ page import="java.util.Date" %><%@
 page import="java.util.LinkedHashMap" %><%@
 page import="java.util.List" %>
 

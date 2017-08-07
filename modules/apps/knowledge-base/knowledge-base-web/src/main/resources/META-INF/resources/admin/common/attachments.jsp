@@ -93,6 +93,11 @@ Ticket ticket = TicketLocalServiceUtil.addTicket(user.getCompanyId(), User.class
 		{
 			boundingBox: '#<portlet:namespace />fileUpload',
 			deleteFile: '<liferay-portlet:actionURL doAsUserId="<%= user.getUserId() %>" name="deleteTempAttachment"><portlet:param name="resourcePrimKey" value="<%= String.valueOf(resourcePrimKey) %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= KBArticle.class.getName() %>" />',
+
+			<%
+			DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfiguration(DLConfiguration.class);
+			%>
+
 			fileDescription: '<%= StringUtil.merge(dlConfiguration.fileExtensions()) %>',
 			maxFileSize: '<%= dlConfiguration.fileMaxSize() %> B',
 			metadataContainer: '#<portlet:namespace />selectedFileNameMetadataContainer',

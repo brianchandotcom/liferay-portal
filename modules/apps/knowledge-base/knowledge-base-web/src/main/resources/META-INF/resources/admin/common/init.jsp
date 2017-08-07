@@ -48,6 +48,4 @@ boolean enableRSS = kbGroupServiceConfiguration.enableRSS();
 int rssDelta = kbGroupServiceConfiguration.rssDelta();
 String rssDisplayStyle = kbGroupServiceConfiguration.rssDisplayStyle();
 String rssFeedType = kbGroupServiceConfiguration.rssFeedType();
-
-DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfiguration(DLConfiguration.class);
 %>

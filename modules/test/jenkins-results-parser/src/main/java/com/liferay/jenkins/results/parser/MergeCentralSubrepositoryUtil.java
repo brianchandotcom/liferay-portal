@@ -59,11 +59,12 @@ public class MergeCentralSubrepositoryUtil {
 				continue;
 			}
 
+			String mergeBranchName = _getMergeBranchName(
+				centralUpstreamBranchName,
+				centralSubrepository.getSubrepositoryName(),
+				centralSubrepository.getSubrepositoryUpstreamCommit());
+
 			if (centralSubrepository.isCentralPullRequestCandidate()) {
-				String mergeBranchName = _getMergeBranchName(
-					centralUpstreamBranchName,
-					centralSubrepository.getSubrepositoryName(),
-					centralSubrepository.getSubrepositoryUpstreamCommit());
 				RemoteConfig upstreamRemoteConfig =
 					centralGitWorkingDirectory.getRemoteConfig("upstream");
 
@@ -71,30 +72,30 @@ public class MergeCentralSubrepositoryUtil {
 						mergeBranchName, upstreamRemoteConfig)) {
 
 					_createMergeBranch(
-						centralGitWorkingDirectory, centralSubrepository,
-						centralUpstreamBranchName, topLevelBranchName);
+						centralGitWorkingDirectory, mergeBranchName,
+						topLevelBranchName);
 
 					_commitCiMergeFile(
 						centralGitWorkingDirectory, centralSubrepository,
 						gitrepoFile);
 
 					_pushMergeBranchToRemote(
-						centralGitWorkingDirectory, centralSubrepository,
-						centralUpstreamBranchName, receiverUserName);
+						centralGitWorkingDirectory, mergeBranchName,
+						receiverUserName);
 				}
 
 				_createMergePullRequest(
 					centralGitWorkingDirectory, centralSubrepository,
-					centralUpstreamBranchName, receiverUserName);
+					mergeBranchName, receiverUserName);
 			}
 
 			_deleteStalePulls(
 				centralGitWorkingDirectory, centralSubrepository,
-				centralUpstreamBranchName, receiverUserName);
+				mergeBranchName, receiverUserName);
 
 			_deleteStaleBranches(
 				centralGitWorkingDirectory, centralSubrepository,
-				centralUpstreamBranchName);
+				mergeBranchName);
 		}
 	}
 
@@ -123,17 +124,8 @@ public class MergeCentralSubrepositoryUtil {
 
 	private static void _createMergeBranch(
 			GitWorkingDirectory centralGitWorkingDirectory,
-			CentralSubrepository centralSubrepository,
-			String centralUpstreamBranchName, String topLevelBranchName)
+			String mergeBranchName, String topLevelBranchName)
 		throws GitAPIException, IOException {
-
-		String subrepositoryName = centralSubrepository.getSubrepositoryName();
-		String subrepositoryUpstreamCommit =
-			centralSubrepository.getSubrepositoryUpstreamCommit();
-
-		String mergeBranchName = _getMergeBranchName(
-			centralUpstreamBranchName, subrepositoryName,
-			subrepositoryUpstreamCommit);
 
 		centralGitWorkingDirectory.reset("head", ResetType.HARD);
 
@@ -148,8 +140,8 @@ public class MergeCentralSubrepositoryUtil {
 
 	private static void _createMergePullRequest(
 			GitWorkingDirectory centralGitWorkingDirectory,
-			CentralSubrepository centralSubrepository,
-			String centralUpstreamBranchName, String receiverUserName)
+			CentralSubrepository centralSubrepository, String mergeBranchName,
+			String receiverUserName)
 		throws IOException {
 
 		String subrepositoryName = centralSubrepository.getSubrepositoryName();
@@ -170,9 +162,6 @@ public class MergeCentralSubrepositoryUtil {
 			"Merging the following commit: [", subrepositoryUpstreamCommit,
 			"](https://github.com/", receiverUserName, "/", subrepositoryName,
 			"/commit/", subrepositoryUpstreamCommit, ")");
-		String mergeBranchName = _getMergeBranchName(
-			centralUpstreamBranchName, subrepositoryName,
-			subrepositoryUpstreamCommit);
 		String title = subrepositoryName + " - Central Merge Pull Request";
 
 		String pullRequestURL = centralGitWorkingDirectory.createPullRequest(
@@ -186,8 +175,7 @@ public class MergeCentralSubrepositoryUtil {
 
 	private static void _deleteStaleBranches(
 			GitWorkingDirectory centralGitWorkingDirectory,
-			CentralSubrepository centralSubrepository,
-			String centralUpstreamBranchName)
+			CentralSubrepository centralSubrepository, String mergeBranchName)
 		throws GitAPIException, IOException {
 
 		RemoteConfig upstreamRemoteConfig =
@@ -198,11 +186,6 @@ public class MergeCentralSubrepositoryUtil {
 				centralGitWorkingDirectory.getRemoteBranchNames(
 					upstreamRemoteConfig);
 		}
-
-		String mergeBranchName = _getMergeBranchName(
-			centralUpstreamBranchName,
-			centralSubrepository.getSubrepositoryName(),
-			centralSubrepository.getSubrepositoryUpstreamCommit());
 
 		String mergeBranchNamePrefix = mergeBranchName.substring(
 			0, mergeBranchName.lastIndexOf("-"));
@@ -225,8 +208,8 @@ public class MergeCentralSubrepositoryUtil {
 
 	private static void _deleteStalePulls(
 			GitWorkingDirectory centralGitWorkingDirectory,
-			CentralSubrepository centralSubrepository,
-			String centralUpstreamBranchName, String receiverUserName)
+			CentralSubrepository centralSubrepository, String mergeBranchName,
+			String receiverUserName)
 		throws IOException {
 
 		if (_pullsJSONArray == null) {
@@ -263,11 +246,6 @@ public class MergeCentralSubrepositoryUtil {
 				page++;
 			}
 		}
-
-		String mergeBranchName = _getMergeBranchName(
-			centralUpstreamBranchName,
-			centralSubrepository.getSubrepositoryName(),
-			centralSubrepository.getSubrepositoryUpstreamCommit());
 
 		String mergeBranchNamePrefix = mergeBranchName.substring(
 			0, mergeBranchName.lastIndexOf("-"));
@@ -336,19 +314,11 @@ public class MergeCentralSubrepositoryUtil {
 
 	private static void _pushMergeBranchToRemote(
 			GitWorkingDirectory centralGitWorkingDirectory,
-			CentralSubrepository centralSubrepository,
-			String centralUpstreamBranchName, String receiverUserName)
+			String mergeBranchName, String receiverUserName)
 		throws GitAPIException, IOException {
 
 		String centralRepositoryName =
 			centralGitWorkingDirectory.getRepositoryName();
-		String subrepositoryName = centralSubrepository.getSubrepositoryName();
-		String subrepositoryUpstreamCommit =
-			centralSubrepository.getSubrepositoryUpstreamCommit();
-
-		String mergeBranchName = _getMergeBranchName(
-			centralUpstreamBranchName, subrepositoryName,
-			subrepositoryUpstreamCommit);
 
 		String originRemoteURL = JenkinsResultsParserUtil.combine(
 			"git@github.com:", receiverUserName, "/", centralRepositoryName,

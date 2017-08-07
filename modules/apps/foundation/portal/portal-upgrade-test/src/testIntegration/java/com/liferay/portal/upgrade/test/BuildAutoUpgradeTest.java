@@ -48,7 +48,6 @@ import java.sql.Types;
 
 import java.util.List;
 import java.util.Set;
-import java.util.function.Consumer;
 import java.util.jar.Attributes;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -73,6 +72,7 @@ import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -102,19 +102,19 @@ public class BuildAutoUpgradeTest {
 		}
 
 		_jarBytesV1 = _createBundleBytes(
-			"serviceV1", null,
+			"serviceV1",
 			new Object[][] {{"id_", Types.BIGINT}, {"data_", Types.VARCHAR}});
 		_jarBytesV2 = _createBundleBytes(
-			"serviceV2", this::_addColumn,
+			"serviceV2",
 			new Object[][] {
 				{"id_", Types.BIGINT}, {"data_", Types.VARCHAR},
 				{"data2", Types.VARCHAR}
 			});
 		_jarBytesV3 = _createBundleBytes(
-			"serviceV3", this::_removeColumn,
+			"serviceV3",
 			new Object[][] {{"id_", Types.BIGINT}, {"data2", Types.VARCHAR}});
 		_jarBytesV4 = _createBundleBytes(
-			"serviceV4", null,
+			"serviceV4",
 			new Object[][] {{"id_", Types.BIGINT}, {"data_", Types.VARCHAR}});
 
 		Bundle testBundle = FrameworkUtil.getBundle(BuildAutoUpgradeTest.class);
@@ -197,8 +197,8 @@ public class BuildAutoUpgradeTest {
 	}
 
 	private void _addClass(
-			JarOutputStream jarOutputStream,
-			Consumer<MethodVisitor> methodVisitorConsumer, String createSQL)
+			JarOutputStream jarOutputStream, Object[][] tableColumns,
+			String createSQL)
 		throws Exception {
 
 		jarOutputStream.putNextEntry(new JarEntry(_ENTITY_PATH));
@@ -239,10 +239,8 @@ public class BuildAutoUpgradeTest {
 						MethodVisitor methodVisitor = super.visitMethod(
 							access, name, desc, signature, exceptions);
 
-						if ((methodVisitorConsumer != null) &&
-							name.equals("<clinit>")) {
-
-							methodVisitorConsumer.accept(methodVisitor);
+						if (name.equals("<clinit>")) {
+							_initTableColumns(methodVisitor, tableColumns);
 
 							return null;
 						}
@@ -258,67 +256,6 @@ public class BuildAutoUpgradeTest {
 		}
 
 		jarOutputStream.closeEntry();
-	}
-
-	private void _addColumn(MethodVisitor methodVisitor) {
-		methodVisitor.visitCode();
-		methodVisitor.visitInsn(Opcodes.ICONST_3);
-		methodVisitor.visitTypeInsn(Opcodes.ANEWARRAY, "[Ljava/lang/Object;");
-		methodVisitor.visitInsn(Opcodes.DUP);
-		methodVisitor.visitInsn(Opcodes.ICONST_0);
-		methodVisitor.visitInsn(Opcodes.ICONST_2);
-		methodVisitor.visitTypeInsn(Opcodes.ANEWARRAY, "java/lang/Object");
-		methodVisitor.visitInsn(Opcodes.DUP);
-		methodVisitor.visitInsn(Opcodes.ICONST_0);
-		methodVisitor.visitLdcInsn("id_");
-		methodVisitor.visitInsn(Opcodes.AASTORE);
-		methodVisitor.visitInsn(Opcodes.DUP);
-		methodVisitor.visitInsn(Opcodes.ICONST_1);
-		methodVisitor.visitIntInsn(Opcodes.BIPUSH, Types.BIGINT);
-		methodVisitor.visitMethodInsn(
-			Opcodes.INVOKESTATIC, "java/lang/Integer", "valueOf",
-			"(I)Ljava/lang/Integer;", false);
-		methodVisitor.visitInsn(Opcodes.AASTORE);
-		methodVisitor.visitInsn(Opcodes.AASTORE);
-		methodVisitor.visitInsn(Opcodes.DUP);
-		methodVisitor.visitInsn(Opcodes.ICONST_1);
-		methodVisitor.visitInsn(Opcodes.ICONST_2);
-		methodVisitor.visitTypeInsn(Opcodes.ANEWARRAY, "java/lang/Object");
-		methodVisitor.visitInsn(Opcodes.DUP);
-		methodVisitor.visitInsn(Opcodes.ICONST_0);
-		methodVisitor.visitLdcInsn("data_");
-		methodVisitor.visitInsn(Opcodes.AASTORE);
-		methodVisitor.visitInsn(Opcodes.DUP);
-		methodVisitor.visitInsn(Opcodes.ICONST_1);
-		methodVisitor.visitIntInsn(Opcodes.BIPUSH, Types.VARCHAR);
-		methodVisitor.visitMethodInsn(
-			Opcodes.INVOKESTATIC, "java/lang/Integer", "valueOf",
-			"(I)Ljava/lang/Integer;", false);
-		methodVisitor.visitInsn(Opcodes.AASTORE);
-		methodVisitor.visitInsn(Opcodes.AASTORE);
-		methodVisitor.visitInsn(Opcodes.DUP);
-		methodVisitor.visitInsn(Opcodes.ICONST_2);
-		methodVisitor.visitInsn(Opcodes.ICONST_2);
-		methodVisitor.visitTypeInsn(Opcodes.ANEWARRAY, "java/lang/Object");
-		methodVisitor.visitInsn(Opcodes.DUP);
-		methodVisitor.visitInsn(Opcodes.ICONST_0);
-		methodVisitor.visitLdcInsn("data2");
-		methodVisitor.visitInsn(Opcodes.AASTORE);
-		methodVisitor.visitInsn(Opcodes.DUP);
-		methodVisitor.visitInsn(Opcodes.ICONST_1);
-		methodVisitor.visitIntInsn(Opcodes.BIPUSH, Types.VARCHAR);
-		methodVisitor.visitMethodInsn(
-			Opcodes.INVOKESTATIC, "java/lang/Integer", "valueOf",
-			"(I)Ljava/lang/Integer;", false);
-		methodVisitor.visitInsn(Opcodes.AASTORE);
-		methodVisitor.visitInsn(Opcodes.AASTORE);
-		methodVisitor.visitFieldInsn(
-			Opcodes.PUTSTATIC,
-			"com/liferay/portal/model/impl/BuildAutoUpgradeTestEntityModelImpl",
-			"TABLE_COLUMNS", "[[Ljava/lang/Object;");
-		methodVisitor.visitInsn(Opcodes.RETURN);
-		methodVisitor.visitMaxs(7, 0);
-		methodVisitor.visitEnd();
 	}
 
 	private void _addResource(
@@ -388,8 +325,7 @@ public class BuildAutoUpgradeTest {
 	}
 
 	private byte[] _createBundleBytes(
-			String resourcePath, Consumer<MethodVisitor> methodVisitorConsumer,
-			Object[][] tableColumns)
+			String resourcePath, Object[][] tableColumns)
 		throws Exception {
 
 		try (UnsyncByteArrayOutputStream unsyncbyteArrayOutputStream =
@@ -420,7 +356,7 @@ public class BuildAutoUpgradeTest {
 
 			String createSQL = _toCreateSQL(tableColumns);
 
-			_addClass(jarOutputStream, methodVisitorConsumer, createSQL);
+			_addClass(jarOutputStream, tableColumns, createSQL);
 
 			_addResource(
 				"dependencies/service/", "META-INF/portlet-model-hints.xml",
@@ -449,48 +385,51 @@ public class BuildAutoUpgradeTest {
 		}
 	}
 
-	private void _removeColumn(MethodVisitor methodVisitor) {
+	private void _initTableColumns(
+		MethodVisitor methodVisitor, Object[][] tableColumns) {
+
 		methodVisitor.visitCode();
-		methodVisitor.visitInsn(Opcodes.ICONST_2);
-		methodVisitor.visitTypeInsn(Opcodes.ANEWARRAY, "[Ljava/lang/Object;");
+
+		methodVisitor.visitInsn(Opcodes.ICONST_0 + tableColumns.length);
+		methodVisitor.visitTypeInsn(
+			Opcodes.ANEWARRAY, Type.getDescriptor(Object[].class));
 		methodVisitor.visitInsn(Opcodes.DUP);
-		methodVisitor.visitInsn(Opcodes.ICONST_0);
-		methodVisitor.visitInsn(Opcodes.ICONST_2);
-		methodVisitor.visitTypeInsn(Opcodes.ANEWARRAY, "java/lang/Object");
-		methodVisitor.visitInsn(Opcodes.DUP);
-		methodVisitor.visitInsn(Opcodes.ICONST_0);
-		methodVisitor.visitLdcInsn("id_");
-		methodVisitor.visitInsn(Opcodes.AASTORE);
-		methodVisitor.visitInsn(Opcodes.DUP);
-		methodVisitor.visitInsn(Opcodes.ICONST_1);
-		methodVisitor.visitIntInsn(Opcodes.BIPUSH, Types.BIGINT);
-		methodVisitor.visitMethodInsn(
-			Opcodes.INVOKESTATIC, "java/lang/Integer", "valueOf",
-			"(I)Ljava/lang/Integer;", false);
-		methodVisitor.visitInsn(Opcodes.AASTORE);
-		methodVisitor.visitInsn(Opcodes.AASTORE);
-		methodVisitor.visitInsn(Opcodes.DUP);
-		methodVisitor.visitInsn(Opcodes.ICONST_1);
-		methodVisitor.visitInsn(Opcodes.ICONST_2);
-		methodVisitor.visitTypeInsn(Opcodes.ANEWARRAY, "java/lang/Object");
-		methodVisitor.visitInsn(Opcodes.DUP);
-		methodVisitor.visitInsn(Opcodes.ICONST_0);
-		methodVisitor.visitLdcInsn("data2");
-		methodVisitor.visitInsn(Opcodes.AASTORE);
-		methodVisitor.visitInsn(Opcodes.DUP);
-		methodVisitor.visitInsn(Opcodes.ICONST_1);
-		methodVisitor.visitIntInsn(Opcodes.BIPUSH, Types.VARCHAR);
-		methodVisitor.visitMethodInsn(
-			Opcodes.INVOKESTATIC, "java/lang/Integer", "valueOf",
-			"(I)Ljava/lang/Integer;", false);
-		methodVisitor.visitInsn(Opcodes.AASTORE);
-		methodVisitor.visitInsn(Opcodes.AASTORE);
+
+		for (int i = 0; i < tableColumns.length; i++) {
+			Object[] tableColumn = tableColumns[i];
+
+			methodVisitor.visitInsn(Opcodes.ICONST_0 + i);
+			methodVisitor.visitInsn(Opcodes.ICONST_2);
+			methodVisitor.visitTypeInsn(
+				Opcodes.ANEWARRAY, Type.getInternalName(Object.class));
+			methodVisitor.visitInsn(Opcodes.DUP);
+			methodVisitor.visitInsn(Opcodes.ICONST_0);
+			methodVisitor.visitLdcInsn(tableColumn[0]);
+			methodVisitor.visitInsn(Opcodes.AASTORE);
+			methodVisitor.visitInsn(Opcodes.DUP);
+			methodVisitor.visitInsn(Opcodes.ICONST_1);
+			methodVisitor.visitIntInsn(Opcodes.BIPUSH, (Integer)tableColumn[1]);
+			methodVisitor.visitMethodInsn(
+				Opcodes.INVOKESTATIC, Type.getInternalName(Integer.class),
+				"valueOf",
+				Type.getMethodDescriptor(
+					Type.getType(Integer.class), Type.INT_TYPE),
+				false);
+
+			methodVisitor.visitInsn(Opcodes.AASTORE);
+			methodVisitor.visitInsn(Opcodes.AASTORE);
+
+			if (i < (tableColumns.length - 1)) {
+				methodVisitor.visitInsn(Opcodes.DUP);
+			}
+		}
+
 		methodVisitor.visitFieldInsn(
 			Opcodes.PUTSTATIC,
-			"com/liferay/portal/model/impl/BuildAutoUpgradeTestEntityModelImpl",
-			"TABLE_COLUMNS", "[[Ljava/lang/Object;");
+			Type.getInternalName(BuildAutoUpgradeTestEntityModelImpl.class),
+			"TABLE_COLUMNS", Type.getDescriptor(Object[][].class));
 		methodVisitor.visitInsn(Opcodes.RETURN);
-		methodVisitor.visitMaxs(7, 0);
+		methodVisitor.visitMaxs(0, 0);
 		methodVisitor.visitEnd();
 	}
 

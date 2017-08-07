@@ -248,9 +248,7 @@ public class BuildAutoUpgradeTest {
 
 			classReader.accept(classVisitor, 0);
 
-			StreamUtil.transfer(
-				new UnsyncByteArrayInputStream(classWriter.toByteArray()),
-				jarOutputStream, false);
+			jarOutputStream.write(classWriter.toByteArray());
 		}
 
 		jarOutputStream.closeEntry();

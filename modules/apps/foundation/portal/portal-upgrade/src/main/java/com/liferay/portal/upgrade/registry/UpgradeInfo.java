@@ -48,10 +48,7 @@ public class UpgradeInfo {
 		String fromSchemaVersionString, String toSchemaVersionString,
 		UpgradeStep upgradeStep) {
 
-		_fromSchemaVersionString = fromSchemaVersionString;
-		_toSchemaVersionString = toSchemaVersionString;
-		_buildNumber = 0;
-		_upgradeStep = upgradeStep;
+		this(fromSchemaVersionString, toSchemaVersionString, 0, upgradeStep);
 	}
 
 	@Override

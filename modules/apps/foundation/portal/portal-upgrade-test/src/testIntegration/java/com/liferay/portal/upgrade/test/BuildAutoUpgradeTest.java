@@ -98,17 +98,10 @@ public class BuildAutoUpgradeTest {
 		catch (SQLException sqle) {
 		}
 
-		_jarBytesV1 = _createBundleBytes("serviceV1", null, null);
-		_jarBytesV2 = _createBundleBytes(
-			"serviceV2", this::_addColumn,
-			"create table BuildAutoUpgradeTestEntity (id_ LONG not null " +
-				"primary key, data_ VARCHAR(75) null, data2 VARCHAR(75) " +
-					"null);");
-		_jarBytesV3 = _createBundleBytes(
-			"serviceV3", this::_removeColumn,
-			"create table BuildAutoUpgradeTestEntity (id_ LONG not null " +
-				"primary key, data2 VARCHAR(75) null);");
-		_jarBytesV4 = _createBundleBytes("serviceV4", null, null);
+		_jarBytesV1 = _createBundleBytes("serviceV1", null);
+		_jarBytesV2 = _createBundleBytes("serviceV2", this::_addColumn);
+		_jarBytesV3 = _createBundleBytes("serviceV3", this::_removeColumn);
+		_jarBytesV4 = _createBundleBytes("serviceV4", null);
 
 		Bundle testBundle = FrameworkUtil.getBundle(BuildAutoUpgradeTest.class);
 
@@ -370,8 +363,7 @@ public class BuildAutoUpgradeTest {
 	}
 
 	private byte[] _createBundleBytes(
-			String resourcePath, Consumer<MethodVisitor> methodVisitorConsumer,
-			String createSQL)
+			String resourcePath, Consumer<MethodVisitor> methodVisitorConsumer)
 		throws Exception {
 
 		try (UnsyncByteArrayOutputStream unsyncbyteArrayOutputStream =
@@ -400,7 +392,15 @@ public class BuildAutoUpgradeTest {
 
 			jarOutputStream.closeEntry();
 
-			_addClass(jarOutputStream, methodVisitorConsumer, createSQL);
+			try (InputStream inputStream =
+					BuildAutoUpgradeTest.class.getResourceAsStream(
+						"dependencies/" + resourcePath +
+							"/META-INF/sql/tables.sql")) {
+
+				_addClass(
+					jarOutputStream, methodVisitorConsumer,
+					StringUtil.read(inputStream));
+			}
 
 			_addResource(
 				"dependencies/service/", "META-INF/portlet-model-hints.xml",

@@ -45,11 +45,11 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 <portlet:actionURL name="editProductDefinition" var="editProductDefinitionShippingInfoActionURL" />
 
 <aui:form action="<%= editProductDefinitionShippingInfoActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:model-context bean="<%= cpDefinition %>" model="<%= CPDefinition.class %>" />
-
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="updateShippingInfo" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinitionId %>" />
+
+	<aui:model-context bean="<%= cpDefinition %>" model="<%= CPDefinition.class %>" />
 
 	<aui:fieldset>
 		<aui:input name="width" suffix="<%= cpDefinitionShippingInfoDisplayContext.getCPMeasurementUnitName(CPConstants.MEASUREMENT_UNIT_TYPE_DIMENSION) %>" />

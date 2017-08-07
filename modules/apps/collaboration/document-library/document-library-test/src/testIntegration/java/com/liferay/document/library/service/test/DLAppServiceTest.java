@@ -1940,13 +1940,12 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			_getConfigurationTemporarySwapper(String key, Object value)
 		throws Exception {
 
-		Dictionary<String, Object> temporaryProperties =
-			new HashMapDictionary<>();
+		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
 
-		temporaryProperties.put(key, value);
+		dictionary.put(key, value);
 
 		return new ConfigurationTemporarySwapper(
-			DLValidator.class, _DL_CONFIGURATION_PID, temporaryProperties);
+			DLValidator.class, _DL_CONFIGURATION_PID, dictionary);
 	}
 
 	private static final String _DL_CONFIGURATION_PID =

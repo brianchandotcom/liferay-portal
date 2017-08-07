@@ -951,14 +951,18 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 		while (itr.hasNext()) {
 			CalendarBooking calendarBooking = itr.next();
 
+			if (isPendingInWorkflow(calendarBooking)) {
+				itr.remove();
+				continue;
+			}
+
 			if (!CalendarPermission.contains(
 					getPermissionChecker(), calendarBooking.getCalendarId(),
 					CalendarActionKeys.VIEW_BOOKING_DETAILS)) {
 
 				if (!CalendarPermission.contains(
 						getPermissionChecker(), calendarBooking.getCalendarId(),
-						actionId) ||
-					isPendingInWorkflow(calendarBooking)) {
+						actionId)) {
 
 					itr.remove();
 				}

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.lpkg.deployer.persistence;
+package com.liferay.portal.lpkg.deployer.controller;
 
 import com.liferay.portal.lpkg.deployer.util.LPKGTestUtil;
 
@@ -26,10 +26,10 @@ import org.junit.Test;
 /**
  * @author Matthew Tambara
  */
-public class LPKGPersistenceTest {
+public class LPKGControllerTest {
 
 	@Test
-	public void testLPKGPersistenceDeploy() throws Exception {
+	public void testLPKGControllerDeploy() throws Exception {
 		String liferayHome = System.getProperty("liferay.home");
 
 		Assert.assertNotNull(
@@ -39,9 +39,9 @@ public class LPKGPersistenceTest {
 
 		Files.createFile(path);
 
-		LPKGTestUtil.createLPKG(path, _SYMBOLIC_NAME, false);
+		LPKGTestUtil.createLPKG(path, _SYMBOLIC_NAME, true);
 	}
 
-	private static final String _SYMBOLIC_NAME = "lpkg.persistence.test";
+	private static final String _SYMBOLIC_NAME = "lpkg.controller.test";
 
 }

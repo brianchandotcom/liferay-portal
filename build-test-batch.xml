@@ -941,6 +941,57 @@ app.server.type=@{app.server.type}]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="run-lpkg-controller-test">
+		<sequential>
+			<run-batch-test tomcat.gc.log="true">
+				<test-action>
+					<database-test-run-test database.type="mysql" stop.app.server="true">
+						<test-action>
+							<setup-lpkg-test database.type="@{database.type}" />
+
+							<gradle-execute dir="modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test" task="test">
+								<arg value="test" />
+								<arg value="--tests" />
+								<arg value="*.LPKGControllerTest" />
+								<arg value="-Dliferay.home=${liferay.home}" />
+							</gradle-execute>
+
+							<trycatch>
+								<try>
+									<antcall inheritall="false" target="start-app-server" />
+
+									<gradle-execute dir="modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test" task="testIntegration">
+										<arg value="testIntegration" />
+										<arg value="--tests" />
+										<arg value="*.LPKGControllerVerifyTest" />
+									</gradle-execute>
+								</try>
+
+								<finally>
+									<ant dir="portal-kernel" inheritAll="false" target="test-class">
+										<property name="test.class" value="PortalLogAssertorTest" />
+									</ant>
+								</finally>
+							</trycatch>
+						</test-action>
+					</database-test-run-test>
+				</test-action>
+
+				<test-set-up>
+					<if>
+						<isset property="env.DIST_PATH" />
+						<then>
+							<prepare-test-environment />
+						</then>
+						<else>
+							<prepare-test-build />
+						</else>
+					</if>
+				</test-set-up>
+			</run-batch-test>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="run-lpkg-override-test">
 		<sequential>
 			<run-batch-test tomcat.gc.log="true">
@@ -1004,6 +1055,7 @@ app.server.type=@{app.server.type}]]></echo>
 										<arg value="*.LPKGOverrideVerifyCleanStartupTest" />
 									</gradle-execute>
 								</try>
+
 								<finally>
 									<ant dir="portal-kernel" inheritAll="false" target="test-class">
 										<property name="test.class" value="PortalLogAssertorTest" />
@@ -2176,6 +2228,10 @@ app.server.type=@{app.server.type}]]></echo>
 
 	<target name="legacy-functional-bundle-tomcat-sybase160-jdk7">
 		<run-legacy-database-dump database.type="sybase" />
+	</target>
+
+	<target name="lpkg-controller-jdk8">
+		<run-lpkg-controller-test />
 	</target>
 
 	<target name="lpkg-override-jdk8">

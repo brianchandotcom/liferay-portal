@@ -35,7 +35,7 @@ public class LPKGURLStreamHandlerService
 
 	@Override
 	public URLConnection openConnection(URL lpkgURL) throws IOException {
-		URL url = _urls.remove(lpkgURL.toExternalForm());
+		URL url = _urls.get(lpkgURL.toExternalForm());
 
 		if (url == null) {
 			throw new IllegalArgumentException("Unknown LPKG URL " + lpkgURL);

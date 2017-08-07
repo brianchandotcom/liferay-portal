@@ -114,6 +114,18 @@
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
+	<command name="addPermissions">
+		<for list="${permissionDefinitionKeys}" param="permissionDefinitionKey">
+			<execute function="Check" locator1="RolesPermissions#${permissionDefinitionKey}" />
+		</for>
+
+		<execute function="ScrollWebElementIntoView" locator1="RolesPermissions#SAVE_BUTTON" />
+
+		<execute function="AssertClick" locator1="RolesPermissions#SAVE_BUTTON" value1="Save" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
 	<command name="addStagingAdminRole">
 		<var name="roleTitle" value="Staging Admin" />
 

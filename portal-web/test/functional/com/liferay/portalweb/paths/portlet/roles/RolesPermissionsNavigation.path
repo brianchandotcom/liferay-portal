@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>PERMISSIONS_NAVITEM</td>
+	<td>//div[contains(@class,'permission-navigation-section')]//span[contains(.,'${key_navItem}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEARCH_FIELD</td>
 	<td>//input[contains(@id,'permissionNavigationSearch')]</td>
 	<td></td>

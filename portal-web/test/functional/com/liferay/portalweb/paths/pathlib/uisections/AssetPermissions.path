@@ -129,6 +129,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ROLE_LINK</td>
+	<td>//div[contains(@class,'edit-permissions')]//td/a[normalize-space(.//text())='${key_roleName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
 	<td>SITE_MEMBER_ACCESS_CHECKBOX</td>
 	<td>//tr[contains(.,'Site Member')]//input[@value='ACCESS']</td>
 	<td></td>

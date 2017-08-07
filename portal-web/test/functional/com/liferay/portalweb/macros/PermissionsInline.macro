@@ -78,9 +78,18 @@
 	</command>
 
 	<command name="gotoConfigurationPG">
+		<if>
+			<isset var="portletOption" />
+			<then>
+				<var name="optionName" value="${portletOption}" />
+			</then>
+			<else>
+				<var name="optionName" value="Permissions" />
+			</else>
+		</if>
+
 		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="${portletName}" />
-			<var name="portletOption" value="Permissions" />
+			<var name="portletOption" value="${optionName}" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
@@ -175,6 +184,12 @@
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+	</command>
+
+	<command name="gotoRolesAdminFromPortletConfiguration">
+		<var name="key_roleName" value="${roleName}" />
+
+		<execute function="AssertClick" locator1="AssetPermissions#ROLE_LINK" value1="${roleName}" />
 	</command>
 
 	<command name="gotoSitepageCP">

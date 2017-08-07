@@ -377,10 +377,10 @@ public class BuildAutoUpgradeTest {
 			String createSQL)
 		throws Exception {
 
-		try (UnsyncByteArrayOutputStream byteArrayOutputStream =
+		try (UnsyncByteArrayOutputStream unsyncbyteArrayOutputStream =
 				new UnsyncByteArrayOutputStream();
 			JarOutputStream jarOutputStream =
-				new JarOutputStream(byteArrayOutputStream)) {
+				new JarOutputStream(unsyncbyteArrayOutputStream)) {
 
 			Manifest manifest = new Manifest();
 
@@ -427,7 +427,7 @@ public class BuildAutoUpgradeTest {
 
 			jarOutputStream.finish();
 
-			return byteArrayOutputStream.toByteArray();
+			return unsyncbyteArrayOutputStream.toByteArray();
 		}
 	}
 

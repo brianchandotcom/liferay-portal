@@ -81,16 +81,17 @@ public class CommerceRegionStagedModelDataHandlerTest
 		List<StagedModel> commerceCountryDependentStagedModels =
 			dependentStagedModelsMap.get(CommerceCountry.class.getSimpleName());
 
-		CommerceCountry cpDefinition =
+		CommerceCountry commerceCountry =
 			(CommerceCountry)commerceCountryDependentStagedModels.get(0);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		return CommerceRegionLocalServiceUtil.addCommerceRegion(
-			cpDefinition.getCommerceCountryId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
-			RandomTestUtil.randomBoolean(), serviceContext);
+			commerceCountry.getCommerceCountryId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomDouble(), RandomTestUtil.randomBoolean(),
+			serviceContext);
 	}
 
 	@Override

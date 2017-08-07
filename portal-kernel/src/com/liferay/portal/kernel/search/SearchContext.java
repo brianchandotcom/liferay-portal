@@ -387,8 +387,12 @@ public class SearchContext implements Serializable {
 		_portletIds = portletIds;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getQueryConfig()}
+	 * @param queryConfig
+	 */
+	@Deprecated
 	public void setQueryConfig(QueryConfig queryConfig) {
-		_queryConfig = queryConfig;
 	}
 
 	public void setScopeStrict(boolean scopeStrict) {

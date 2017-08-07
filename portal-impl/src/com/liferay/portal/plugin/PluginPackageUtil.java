@@ -1320,12 +1320,10 @@ public class PluginPackageUtil {
 		searchContext.setEnd(end);
 		searchContext.setKeywords(keywords);
 
-		QueryConfig queryConfig = new QueryConfig();
+		QueryConfig queryConfig = searchContext.getQueryConfig();
 
 		queryConfig.setHighlightEnabled(false);
 		queryConfig.setScoreEnabled(false);
-
-		searchContext.setQueryConfig(queryConfig);
 
 		searchContext.setStart(start);
 

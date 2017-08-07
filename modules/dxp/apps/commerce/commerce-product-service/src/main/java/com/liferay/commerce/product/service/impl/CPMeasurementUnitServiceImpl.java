@@ -42,7 +42,7 @@ public class CPMeasurementUnitServiceImpl
 
 		CPMeasurementUnitPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			CPActionKeys.MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNIT);
+			CPActionKeys.MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS);
 
 		return cpMeasurementUnitLocalService.addCPMeasurementUnit(
 			nameMap, key, rate, primary, priority, type, serviceContext);
@@ -57,7 +57,7 @@ public class CPMeasurementUnitServiceImpl
 
 		CPMeasurementUnitPermission.check(
 			getPermissionChecker(), cpMeasurementUnit.getGroupId(),
-			CPActionKeys.MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNIT);
+			CPActionKeys.MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS);
 
 		cpMeasurementUnitLocalService.deleteCPMeasurementUnit(
 			cpMeasurementUnit);
@@ -105,7 +105,7 @@ public class CPMeasurementUnitServiceImpl
 
 		CPMeasurementUnitPermission.check(
 			getPermissionChecker(), cpMeasurementUnit.getGroupId(),
-			CPActionKeys.MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNIT);
+			CPActionKeys.MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS);
 
 		return cpMeasurementUnitLocalService.updateCPMeasurementUnit(
 			cpMeasurementUnitId, nameMap, key, rate, primary, priority, type);

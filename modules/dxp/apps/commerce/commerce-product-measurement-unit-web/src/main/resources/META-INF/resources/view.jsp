@@ -112,7 +112,7 @@ int type = cpMeasurementUnitsDisplayContext.getType();
 	</liferay-ui:search-container>
 </div>
 
-<c:if test="<%= CPMeasurementUnitPermission.contains(permissionChecker, scopeGroupId, CPActionKeys.MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNIT) %>">
+<c:if test="<%= CPMeasurementUnitPermission.contains(permissionChecker, scopeGroupId, CPActionKeys.MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS) %>">
 	<portlet:renderURL var="addCPMeasurementUnitURL">
 		<portlet:param name="mvcRenderCommandName" value="editCPMeasurementUnit" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />

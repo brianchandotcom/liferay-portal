@@ -15,53 +15,45 @@
 package com.liferay.text.localizer.taglib.servlet.taglib;
 
 import com.liferay.portal.kernel.model.Address;
-import com.liferay.taglib.util.IncludeTag;
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.taglib.util.ParamAndPropertyAncestorTagImpl;
 import com.liferay.text.localizer.address.util.AddressTextLocalizerHelper;
-import com.liferay.text.localizer.taglib.internal.servlet.ServletContextUtil;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.PageContext;
+import java.io.IOException;
+
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.JspWriter;
+import javax.servlet.jsp.tagext.BodyTag;
 
 /**
  * @author Pei-Jung Lan
  */
-public class AddressDisplayTag extends IncludeTag {
+public class AddressDisplayTag extends ParamAndPropertyAncestorTagImpl {
+
+	@Override
+	public int doEndTag() throws JspException {
+		JspWriter writer = pageContext.getOut();
+
+		try {
+			writer.write(
+				StringUtil.replace(
+					_getFormattedAddress(), CharPool.NEW_LINE, "<br />"));
+		}
+		catch (IOException ioe) {
+			throw new JspException(ioe);
+		}
+
+		return BodyTag.EVAL_BODY_BUFFERED;
+	}
 
 	public void setAddress(Address address) {
 		_address = address;
 	}
 
-	@Override
-	public void setPageContext(PageContext pageContext) {
-		super.setPageContext(pageContext);
-
-		setServletContext(ServletContextUtil.getServletContext());
-	}
-
-	@Override
-	protected void cleanUp() {
-		_address = null;
-	}
-
-	@Override
-	protected String getPage() {
-		return _PAGE;
-	}
-
-	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
-			"liferay-text-localizer:address-display:address", _address);
-		request.setAttribute(
-			"liferay-text-localizer:address-display:formattedAddress",
-			_getFormattedAddress());
-	}
-
 	private String _getFormattedAddress() {
 		return AddressTextLocalizerHelper.format(_address);
 	}
-
-	private static final String _PAGE = "/address_display/page.jsp";
 
 	private Address _address;
 

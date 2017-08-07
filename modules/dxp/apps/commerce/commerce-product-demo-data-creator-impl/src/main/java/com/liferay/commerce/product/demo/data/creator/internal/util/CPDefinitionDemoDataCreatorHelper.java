@@ -189,9 +189,11 @@ public class CPDefinitionDemoDataCreatorHelper
 		Calendar displayCalendar = CalendarFactoryUtil.getCalendar(
 			serviceContext.getTimeZone());
 
+		displayCalendar.add(Calendar.YEAR, -1);
+
 		int displayDateMonth = displayCalendar.get(Calendar.MONTH);
 		int displayDateDay = displayCalendar.get(Calendar.DAY_OF_MONTH);
-		int displayDateYear = displayCalendar.get(Calendar.YEAR) - 1;
+		int displayDateYear = displayCalendar.get(Calendar.YEAR);
 		int displayDateHour = displayCalendar.get(Calendar.HOUR);
 		int displayDateMinute = displayCalendar.get(Calendar.MINUTE);
 		int displayDateAmPm = displayCalendar.get(Calendar.AM_PM);
@@ -203,7 +205,9 @@ public class CPDefinitionDemoDataCreatorHelper
 		Calendar expirationCalendar = CalendarFactoryUtil.getCalendar(
 			serviceContext.getTimeZone());
 
-		int expirationDateMonth = expirationCalendar.get(Calendar.MONTH) + 1;
+		expirationCalendar.add(Calendar.MONTH, 1);
+
+		int expirationDateMonth = expirationCalendar.get(Calendar.MONTH);
 		int expirationDateDay = expirationCalendar.get(Calendar.DAY_OF_MONTH);
 		int expirationDateYear = expirationCalendar.get(Calendar.YEAR);
 		int expirationDateHour = expirationCalendar.get(Calendar.HOUR);

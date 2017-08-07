@@ -54,14 +54,14 @@ if (cpDefinition != null) {
 				/>
 			</c:if>
 
-			<liferay-portlet:renderURL varImpl="editShippingInfoURL">
-				<portlet:param name="mvcRenderCommandName" value="editShippingInfo" />
+			<liferay-portlet:renderURL varImpl="editProductDefinitionShippingInfoURL">
+				<portlet:param name="mvcRenderCommandName" value="editProductDefinitionShippingInfo" />
 				<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />
 				<portlet:param name="toolbarItem" value="edit-product-definition-shipping-info" />
 			</liferay-portlet:renderURL>
 
 			<aui:nav-item
-				href="<%= editShippingInfoURL.toString() %>"
+				href="<%= editProductDefinitionShippingInfoURL.toString() %>"
 				label='<%= LanguageUtil.get(request, "shipping") %>'
 				selected='<%= toolbarItem.equals("edit-product-definition-shipping-info") %>'
 			/>

@@ -269,6 +269,14 @@ public class BuildAutoUpgradeTest {
 		jarOutputStream.closeEntry();
 	}
 
+	private void _addResource(String path, JarOutputStream jarOutputStream)
+		throws IOException {
+
+		jarOutputStream.putNextEntry(new JarEntry(path));
+
+		jarOutputStream.closeEntry();
+	}
+
 	private void _addResource(
 			String resourcePath, String path, JarOutputStream jarOutputStream)
 		throws IOException {
@@ -364,12 +372,8 @@ public class BuildAutoUpgradeTest {
 			_addResource(
 				"dependencies/service/", "META-INF/spring/module-spring.xml",
 				jarOutputStream);
-			_addResource(
-				"dependencies/service/", "META-INF/sql/indexes.sql",
-				jarOutputStream);
-			_addResource(
-				"dependencies/service/", "META-INF/sql/sequences.sql",
-				jarOutputStream);
+			_addResource("META-INF/sql/indexes.sql", jarOutputStream);
+			_addResource("META-INF/sql/sequences.sql", jarOutputStream);
 
 			_addResource(
 				"dependencies/" + resourcePath + "/", "service.properties",

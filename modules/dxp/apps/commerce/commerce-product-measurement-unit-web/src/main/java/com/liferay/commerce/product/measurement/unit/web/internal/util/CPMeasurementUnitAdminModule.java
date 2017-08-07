@@ -59,7 +59,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class CPMeasurementUnitAdminModule implements CommerceAdminModule {
 
-	public static final String KEY = "measures";
+	public static final String KEY = "measurement-units";
 
 	@Override
 	public void deleteData(PortletDataContext portletDataContext)
@@ -77,7 +77,9 @@ public class CPMeasurementUnitAdminModule implements CommerceAdminModule {
 		portletDataContext.addPortletPermissions(
 			CPMeasurementUnitPermission.RESOURCE_NAME);
 
-		if (portletDataContext.getBooleanParameter(namespace, "measures")) {
+		if (portletDataContext.getBooleanParameter(
+				namespace, "measurement-units")) {
+
 			ActionableDynamicQuery actionableDynamicQuery =
 				_cpMeasurementUnitStagedModelRepository.
 					getExportActionableDynamicQuery(portletDataContext);
@@ -96,7 +98,7 @@ public class CPMeasurementUnitAdminModule implements CommerceAdminModule {
 	public List<PortletDataHandlerControl> getExportControls(String namespace) {
 		return Collections.<PortletDataHandlerControl>singletonList(
 			new PortletDataHandlerBoolean(
-				namespace, "measures", true, false, null,
+				namespace, "measurement-units", true, false, null,
 				CPMeasurementUnit.class.getName()));
 	}
 
@@ -105,7 +107,7 @@ public class CPMeasurementUnitAdminModule implements CommerceAdminModule {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "measures");
+		return LanguageUtil.get(resourceBundle, "measurement-units");
 	}
 
 	@Override
@@ -113,7 +115,9 @@ public class CPMeasurementUnitAdminModule implements CommerceAdminModule {
 			String namespace, PortletDataContext portletDataContext)
 		throws Exception {
 
-		if (portletDataContext.getBooleanParameter(namespace, "measures")) {
+		if (portletDataContext.getBooleanParameter(
+				namespace, "measurement-units")) {
+
 			Element modelsElement =
 				portletDataContext.getImportDataGroupElement(
 					CPMeasurementUnit.class);

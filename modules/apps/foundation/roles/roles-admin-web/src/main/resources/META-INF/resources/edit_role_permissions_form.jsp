@@ -17,7 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs2 = "roles";
 String tabs3 = ParamUtil.getString(request, "tabs3", "current");
 
 String redirect = ParamUtil.getString(request, "redirect");

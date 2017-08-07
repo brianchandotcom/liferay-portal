@@ -502,7 +502,7 @@ public class JSPIndentationCheck extends BaseFileCheck {
 	}
 
 	private final Pattern _javaSourcePattern = Pattern.compile(
-		"\n(\t*)(<%\n(.*?))\n\t*%>\n", Pattern.DOTALL);
+		"\n(\t*)(<%\n(\t*[^\t%].*?))\n\t*%>\n", Pattern.DOTALL);
 
 	private class JSPLine {
 

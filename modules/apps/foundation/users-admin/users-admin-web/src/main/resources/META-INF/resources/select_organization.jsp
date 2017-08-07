@@ -77,8 +77,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "organizations"));
 	>
 
 		<%
-		OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)organizationSearchContainer.getSearchTerms();
-
 		long parentOrganizationId = OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
 
 		LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();

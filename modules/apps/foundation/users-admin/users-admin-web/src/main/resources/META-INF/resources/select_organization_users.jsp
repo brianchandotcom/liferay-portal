@@ -93,8 +93,6 @@ SearchContainer userSearchContainer = new UserSearch(renderRequest, portletURL);
 	>
 
 		<%
-		UserSearchTerms searchTerms = (UserSearchTerms)userSearchContainer.getSearchTerms();
-
 		LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
 		if (PropsValues.ORGANIZATIONS_ASSIGNMENT_STRICT && !permissionChecker.isCompanyAdmin() && !permissionChecker.hasPermission(themeDisplay.getScopeGroup(), User.class.getName(), User.class.getName(), ActionKeys.VIEW)) {

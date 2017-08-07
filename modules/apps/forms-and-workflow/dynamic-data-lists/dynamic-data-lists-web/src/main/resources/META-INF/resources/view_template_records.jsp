@@ -21,8 +21,6 @@ DDLRecordSet recordSet = (DDLRecordSet)request.getAttribute(DDLWebKeys.DYNAMIC_D
 
 long displayDDMTemplateId = ParamUtil.getLong(request, "displayDDMTemplateId");
 
-DDMStructure ddmStructure = recordSet.getDDMStructure();
-
 boolean showAddRecordButton = false;
 
 if (ddlDisplayContext.isEditable()) {

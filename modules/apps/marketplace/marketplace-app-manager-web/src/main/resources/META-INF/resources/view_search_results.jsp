@@ -24,8 +24,6 @@ String state = ParamUtil.getString(request, "state", "all-statuses");
 
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
-List<App> apps = AppLocalServiceUtil.getApps(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/view_search_results.jsp");

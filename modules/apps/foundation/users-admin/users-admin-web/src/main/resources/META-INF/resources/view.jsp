@@ -42,8 +42,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 request.setAttribute("view.jsp-usersListView", usersListView);
 
-long organizationGroupId = 0;
-
 int inactiveUsersCount = 0;
 int usersCount = 0;
 

@@ -19,8 +19,6 @@
 <%
 long accountId = ParamUtil.getLong(request, "accountId");
 
-MailManager mailManager = MailManager.getInstance(request);
-
 Account mailAccount = AccountLocalServiceUtil.getAccount(accountId);
 %>
 

@@ -42,7 +42,6 @@ RecordSetSearch recordSetSearch = ddlDisplayContext.getRecordSetSearch(portletUR
 		>
 
 			<%
-			RecordSetDisplayTerms displayTerms = (RecordSetDisplayTerms)searchContainer.getDisplayTerms();
 			RecordSetSearchTerms searchTerms = (RecordSetSearchTerms)searchContainer.getSearchTerms();
 
 			request.setAttribute(WebKeys.SEARCH_CONTAINER, searchContainer);

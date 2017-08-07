@@ -54,8 +54,6 @@ Map<String, Object> contextObjects = new HashMap<String, Object>();
 
 contextObjects.put("dlPortletInstanceSettings", dlPortletInstanceSettings);
 
-DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(igRequestHelper);
-
 String[] mediaGalleryMimeTypes = dlPortletInstanceSettings.getMimeTypes();
 
 List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderId, mediaGalleryMimeTypes, status, 0, SearchContainer.MAX_DELTA, null);

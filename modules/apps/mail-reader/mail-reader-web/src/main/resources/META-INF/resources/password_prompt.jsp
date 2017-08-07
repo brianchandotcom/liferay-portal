@@ -19,8 +19,6 @@
 <%
 long accountId = ParamUtil.getLong(request, "accountId");
 long inboxFolderId = ParamUtil.getLong(request, "inboxFolderId");
-
-MailManager mailManager = MailManager.getInstance(request);
 %>
 
 <div class="mail-status"></div>

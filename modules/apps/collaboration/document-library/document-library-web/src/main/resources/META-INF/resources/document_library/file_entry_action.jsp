@@ -69,8 +69,6 @@ if (fileShortcut == null) {
 else {
 	dlViewFileVersionDisplayContext = dlDisplayContextProvider.getDLViewFileVersionDisplayContext(request, response, fileShortcut);
 }
-
-DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlRequestHelper);
 %>
 
 <liferay-ui:menu menu="<%= dlViewFileVersionDisplayContext.getMenu() %>" />

@@ -29,8 +29,6 @@ if (row != null) {
 else {
 	kbArticle = (KBArticle)request.getAttribute("info_panel.jsp-kbArticle");
 }
-
-KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, renderResponse, templatePath);
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">

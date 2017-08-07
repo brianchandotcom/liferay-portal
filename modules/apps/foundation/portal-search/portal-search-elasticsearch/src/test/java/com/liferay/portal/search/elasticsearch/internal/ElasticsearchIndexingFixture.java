@@ -16,6 +16,8 @@ package com.liferay.portal.search.elasticsearch.internal;
 
 import com.liferay.portal.kernel.search.IndexSearcher;
 import com.liferay.portal.kernel.search.IndexWriter;
+import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch.connection.TestElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch.document.ElasticsearchUpdateDocumentCommand;
@@ -55,6 +57,8 @@ import com.liferay.portal.search.elasticsearch.internal.query.TermRangeQueryTran
 import com.liferay.portal.search.elasticsearch.internal.query.WildcardQueryTranslatorImpl;
 import com.liferay.portal.search.elasticsearch.internal.stats.DefaultStatsTranslator;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
+
+import org.mockito.Mockito;
 
 /**
  * @author André de Oliveira
@@ -183,6 +187,7 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 				filterTranslator = createElasticsearchFilterTranslator();
 				groupByTranslator = new DefaultGroupByTranslator();
 				indexNameBuilder = indexNameBuilder1;
+				props = createProps();
 				queryTranslator = createElasticsearchQueryTranslator();
 				statsTranslator = new DefaultStatsTranslator();
 				searchHitDocumentTranslator =
@@ -222,6 +227,20 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 				indexNameBuilder = indexNameBuilder1;
 			}
 		};
+	}
+
+	protected Props createProps() {
+		Props props = Mockito.mock(Props.class);
+
+		Mockito.doReturn(
+			"20"
+		).when(
+			props
+		).get(
+			PropsKeys.INDEX_SEARCH_LIMIT
+		);
+
+		return props;
 	}
 
 	protected static class TestIndexNameBuilder implements IndexNameBuilder {

@@ -22,8 +22,10 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -51,29 +53,19 @@ public abstract class BaseIndexSearcherTestCase extends BaseIndexingTestCase {
 
 	@Test
 	public void testCountWithoutStartAndEnd() throws Exception {
-		IndexSearcher indexSearcher = getIndexSearcher();
-
 		SearchContext searchContext = createSearchContext();
 
-		long count = indexSearcher.searchCount(
-			searchContext, getDefaultQuery());
-
-		Assert.assertEquals(_TOTAL_DOCUMENTS, count);
+		_assertSearchCountFindsAll(searchContext);
 	}
 
 	@Test
 	public void testCountWithStartAndEnd() throws Exception {
-		IndexSearcher indexSearcher = getIndexSearcher();
-
 		SearchContext searchContext = createSearchContext();
 
 		searchContext.setEnd(QueryUtil.ALL_POS);
 		searchContext.setStart(QueryUtil.ALL_POS);
 
-		long count = indexSearcher.searchCount(
-			searchContext, getDefaultQuery());
-
-		Assert.assertEquals(_TOTAL_DOCUMENTS, count);
+		_assertSearchCountFindsAll(searchContext);
 	}
 
 	@Test
@@ -143,15 +135,39 @@ public abstract class BaseIndexSearcherTestCase extends BaseIndexingTestCase {
 		searchContext.setEnd(end);
 		searchContext.setStart(start);
 
-		Hits hits = indexSearcher.search(searchContext, getDefaultQuery());
+		IdempotentRetryAssert.retryAssert(
+			3, TimeUnit.SECONDS,
+			() -> {
+				Hits hits = indexSearcher.search(
+					searchContext, getDefaultQuery());
 
-		Assert.assertEquals(
-			hits.toString(), _TOTAL_DOCUMENTS, hits.getLength());
+				Assert.assertEquals(
+					hits.toString(), _TOTAL_DOCUMENTS, hits.getLength());
 
-		Document[] documents = hits.getDocs();
+				Document[] documents = hits.getDocs();
 
-		Assert.assertEquals(
-			Arrays.toString(documents), expectedSize, documents.length);
+				Assert.assertEquals(
+					Arrays.toString(documents), expectedSize, documents.length);
+
+				return null;
+			});
+	}
+
+	private void _assertSearchCountFindsAll(SearchContext searchContext)
+		throws Exception {
+
+		IdempotentRetryAssert.retryAssert(
+			3, TimeUnit.SECONDS,
+			() -> {
+				IndexSearcher indexSearcher = getIndexSearcher();
+
+				long count = indexSearcher.searchCount(
+					searchContext, getDefaultQuery());
+
+				Assert.assertEquals(_TOTAL_DOCUMENTS, count);
+
+				return null;
+			});
 	}
 
 	private static final int _TOTAL_DOCUMENTS = 20;

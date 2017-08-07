@@ -16,6 +16,7 @@ package com.liferay.commerce.product.internal.util;
 
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
+import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
 import com.liferay.commerce.product.service.CPInstanceService;
@@ -26,6 +27,7 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
+import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
@@ -44,6 +46,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -88,6 +92,9 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 					getCPDefinitionOptionRelId()),
 				cpDefinitionOptionRel.getDDMFormFieldTypeName());
 
+			ddmFormField.setProperty(
+				"cpOption", cpDefinitionOptionRel.getCPOption());
+
 			if (!cpDefinitionOptionValueRels.isEmpty()) {
 				DDMFormFieldOptions ddmFormFieldOptions =
 					new DDMFormFieldOptions();
@@ -119,6 +126,8 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 			ddmForm.addDDMFormField(ddmFormField);
 		}
+
+		ddmForm.addDDMFormRule(createDDMFormRule(ddmForm, cpDefinitionId));
 
 		return ddmForm;
 	}
@@ -251,6 +260,107 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 			cpDefinitionId, locale, serializedDDMFormValues);
 
 		return _ddmFormValuesHelper.serialize(ddmFormValues);
+	}
+
+	protected DDMFormRule createDDMFormRule(
+		DDMForm ddmForm, long cpDefinitionId) {
+
+		String action = createDDMFormRuleAction(ddmForm, cpDefinitionId);
+		String condition = createDDMFormRuleCondition(ddmForm);
+
+		return new DDMFormRule(condition, action);
+	}
+
+	protected String createDDMFormRuleAction(
+		DDMForm ddmForm, long cpDefinitionId) {
+
+		/*
+		 * The action is a call function. Example:
+		 *
+		 *call(
+		 *	'getCPInstanceOptionsValues',
+		 *	 concat(
+		 *		'cpDefinitionId=56698', ';','56703=', getValue('56703'), ';',
+		 *		'56706=', getValue('56706')),
+		 *	'56703=color;56706=size'
+		 *)
+		 */
+
+		String callFunctionStatement =
+			"call('getCPInstanceOptionsValues', concat(%s), '%s')";
+
+		return String.format(
+			callFunctionStatement,
+			createDDMFormRuleInputMapping(ddmForm, cpDefinitionId),
+			createDDMFormRuleOutputMapping(ddmForm));
+	}
+
+	protected String createDDMFormRuleCondition(DDMForm ddmForm) {
+
+		/*
+		 * The rule action will contains a 'notEmpty' statement for each field
+		 * using 'OR' operator.
+		 * Ex: not(isEmpty(getValue('{sizeFieldName}')))
+		 *  	OR not(isEmpty(getValue('{colorFieldName}')))
+		 */
+
+		String notEmptyStatement = "not(isEmpty(getValue('%s')))";
+
+		Stream<DDMFormField> stream = ddmForm.getDDMFormFields().stream();
+
+		Stream<String> notEmptyStatementStream = stream.map(
+			field -> {
+				return String.format(notEmptyStatement, field.getName());
+			});
+
+		return notEmptyStatementStream.collect(Collectors.joining(" OR "));
+	}
+
+	protected String createDDMFormRuleInputMapping(
+		DDMForm ddmForm, long cpDefinitionId) {
+
+		/*
+		 * The input information will be transformed in parameter request of
+		 *  DDMDataProviderRequest class and it'll be accessible in the data
+		 *  provider implementation
+		 * */
+
+		String inputMappingStatement = "'%s=', getValue('%s')";
+		String delimiter = ", ';',";
+
+		Stream<DDMFormField> stream = ddmForm.getDDMFormFields().stream();
+
+		Stream<String> inputMappingStatementStream = stream.map(
+			field -> {
+				return String.format(
+					inputMappingStatement, field.getName(), field.getName());
+			});
+
+		inputMappingStatementStream = Stream.concat(
+			Stream.of(
+				String.format(
+					"'cpDefinitionId=%s'", String.valueOf(cpDefinitionId))),
+			inputMappingStatementStream);
+
+		return inputMappingStatementStream.collect(
+			Collectors.joining(delimiter));
+	}
+
+	protected String createDDMFormRuleOutputMapping(DDMForm ddmForm) {
+		String outputMappingStatement = "%s=%s";
+
+		Stream<DDMFormField> stream = ddmForm.getDDMFormFields().stream();
+
+		Stream<String> outputMappingStatementStream = stream.map(
+			field -> {
+				CPOption cpOption = (CPOption)field.getProperty("cpOption");
+
+				return String.format(
+					outputMappingStatement, field.getName(), cpOption.getKey());
+			});
+
+		return outputMappingStatementStream.collect(
+			Collectors.joining(StringPool.SEMICOLON));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

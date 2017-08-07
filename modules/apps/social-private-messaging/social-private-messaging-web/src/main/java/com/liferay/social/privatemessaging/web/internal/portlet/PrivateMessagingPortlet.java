@@ -334,11 +334,10 @@ public class PrivateMessagingPortlet extends MVCPortlet {
 				portletRequest,
 				"document-names-must-end-with-one-of-the-following-extensions");
 
-			message +=
-				CharPool.SPACE +
-					StringUtil.merge(
-						_dlConfiguration.fileExtensions(),
-						StringPool.COMMA_AND_SPACE);
+			String fileExtensions = StringUtil.merge(
+				_dlConfiguration.fileExtensions(), StringPool.COMMA_AND_SPACE);
+
+			message += CharPool.SPACE + fileExtensions;
 		}
 		else if (key instanceof FileNameException) {
 			message = translate(

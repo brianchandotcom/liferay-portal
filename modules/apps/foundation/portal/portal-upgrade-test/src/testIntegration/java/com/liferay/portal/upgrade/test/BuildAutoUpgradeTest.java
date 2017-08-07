@@ -47,6 +47,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 
 import java.util.List;
+import java.util.Properties;
 import java.util.Set;
 import java.util.jar.Attributes;
 import java.util.jar.JarEntry;
@@ -101,21 +102,43 @@ public class BuildAutoUpgradeTest {
 		catch (SQLException sqle) {
 		}
 
+		Properties serviceProperties = new Properties();
+
+		serviceProperties.setProperty(
+			"build.namespace", "BuildAutoUpgradeTest");
+		serviceProperties.setProperty("build.number", "1");
+
+		long time = System.currentTimeMillis();
+
+		serviceProperties.setProperty("build.date", String.valueOf(time++));
+
 		_jarBytesV1 = _createBundleBytes(
-			"serviceV1",
-			new Object[][] {{"id_", Types.BIGINT}, {"data_", Types.VARCHAR}});
+			new Object[][] {{"id_", Types.BIGINT}, {"data_", Types.VARCHAR}},
+			serviceProperties);
+
+		serviceProperties.setProperty("build.number", "2");
+		serviceProperties.setProperty("build.date", String.valueOf(time++));
+
 		_jarBytesV2 = _createBundleBytes(
-			"serviceV2",
 			new Object[][] {
 				{"id_", Types.BIGINT}, {"data_", Types.VARCHAR},
 				{"data2", Types.VARCHAR}
-			});
+			},
+			serviceProperties);
+
+		serviceProperties.setProperty("build.number", "3");
+		serviceProperties.setProperty("build.date", String.valueOf(time++));
+
 		_jarBytesV3 = _createBundleBytes(
-			"serviceV3",
-			new Object[][] {{"id_", Types.BIGINT}, {"data2", Types.VARCHAR}});
+			new Object[][] {{"id_", Types.BIGINT}, {"data2", Types.VARCHAR}},
+			serviceProperties);
+
+		serviceProperties.setProperty("build.number", "4");
+		serviceProperties.setProperty("build.date", String.valueOf(time++));
+
 		_jarBytesV4 = _createBundleBytes(
-			"serviceV4",
-			new Object[][] {{"id_", Types.BIGINT}, {"data_", Types.VARCHAR}});
+			new Object[][] {{"id_", Types.BIGINT}, {"data_", Types.VARCHAR}},
+			serviceProperties);
 
 		Bundle testBundle = FrameworkUtil.getBundle(BuildAutoUpgradeTest.class);
 
@@ -199,7 +222,7 @@ public class BuildAutoUpgradeTest {
 	private void _addClass(
 			JarOutputStream jarOutputStream, Object[][] tableColumns,
 			String createSQL)
-		throws Exception {
+		throws IOException {
 
 		jarOutputStream.putNextEntry(new JarEntry(_ENTITY_PATH));
 
@@ -333,8 +356,8 @@ public class BuildAutoUpgradeTest {
 	}
 
 	private byte[] _createBundleBytes(
-			String resourcePath, Object[][] tableColumns)
-		throws Exception {
+			Object[][] tableColumns, Properties serviceProperties)
+		throws IOException {
 
 		try (UnsyncByteArrayOutputStream unsyncbyteArrayOutputStream =
 				new UnsyncByteArrayOutputStream();
@@ -372,16 +395,23 @@ public class BuildAutoUpgradeTest {
 			_addResource(
 				"dependencies/service/", "META-INF/spring/module-spring.xml",
 				jarOutputStream);
+
 			_addResource("META-INF/sql/indexes.sql", jarOutputStream);
 			_addResource("META-INF/sql/sequences.sql", jarOutputStream);
 
 			_addResource(
-				"dependencies/" + resourcePath + "/", "service.properties",
-				jarOutputStream);
-
-			_addResource(
 				"META-INF/sql/tables.sql", createSQL.getBytes(StringPool.UTF8),
 				jarOutputStream);
+
+			try (UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+					new UnsyncByteArrayOutputStream()) {
+
+				serviceProperties.store(unsyncByteArrayOutputStream, null);
+
+				_addResource(
+					"service.properties",
+					unsyncByteArrayOutputStream.toByteArray(), jarOutputStream);
+			}
 
 			jarOutputStream.finish();
 

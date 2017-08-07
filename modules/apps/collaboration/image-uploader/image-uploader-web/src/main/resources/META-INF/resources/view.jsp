@@ -59,12 +59,13 @@ String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 			<aui:input name="tempImageFileName" type="hidden" value="<%= tempImageFileName %>" />
 			<aui:input name="imageUploaded" type="hidden" value='<%= SessionMessages.contains(renderRequest, "imageUploaded") %>' />
 
-			<%
-			DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfiguration(DLConfiguration.class);
-			%>
-
 			<div class="dialog-body">
 				<div class="container-fluid-1280">
+
+					<%
+					DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfiguration(DLConfiguration.class);
+					%>
+
 					<liferay-ui:error exception="<%= FileExtensionException.class %>">
 						<liferay-ui:message arguments="<%= StringUtil.merge(dlConfiguration.fileExtensions()) %>" key="please-enter-a-file-with-a-valid-extension-x" translateArguments="<%= false %>" />
 					</liferay-ui:error>

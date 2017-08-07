@@ -139,15 +139,15 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			CPDefinitionOptionRel cpDefinitionOptionRel)
 		throws PortalException {
 
-		// Commerce product definition option rel
-
-		cpDefinitionOptionRelPersistence.remove(cpDefinitionOptionRel);
-
 		// Commerce product definition option value rels
 
 		cpDefinitionOptionValueRelLocalService.
 			deleteCPDefinitionOptionValueRels(
 				cpDefinitionOptionRel.getCPDefinitionOptionRelId());
+
+		// Commerce product definition option rel
+
+		cpDefinitionOptionRelPersistence.remove(cpDefinitionOptionRel);
 
 		// Expando
 

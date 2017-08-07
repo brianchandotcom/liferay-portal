@@ -55,8 +55,6 @@ MailManager mailManager = MailManager.getInstance(request);
 				Folder folder = FolderLocalServiceUtil.getFolder(folderId);
 
 				long accountId = folder.getAccountId();
-
-				long selectedFolderId = 0;
 				%>
 
 				<%@ include file="/select_folder.jspf" %>

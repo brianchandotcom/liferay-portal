@@ -18,7 +18,6 @@
 
 <%
 MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE);
-AssetRenderer<?> assetRenderer = (AssetRenderer<?>)request.getAttribute(WebKeys.ASSET_RENDERER);
 
 request.setAttribute("edit-message.jsp-showDeletedAttachmentsFileEntries", Boolean.FALSE);
 request.setAttribute("edit-message.jsp-showPermanentLink", Boolean.FALSE);

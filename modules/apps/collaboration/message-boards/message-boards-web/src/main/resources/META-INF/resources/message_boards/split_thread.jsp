@@ -68,10 +68,6 @@ if (portletTitleBasedNavigation) {
 		<liferay-ui:error exception="<%= NoSuchCategoryException.class %>" message="please-enter-a-valid-category" />
 		<liferay-ui:error exception="<%= SplitThreadException.class %>" message="a-thread-cannot-be-split-at-its-root-message" />
 
-		<%
-		long breadcrumbsMessageId = message.getMessageId();
-		%>
-
 		<aui:fieldset-group markupView="lexicon">
 			<div class="alert alert-info">
 				<liferay-ui:message key="click-ok-to-create-a-new-thread-with-the-following-messages" />

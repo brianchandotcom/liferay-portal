@@ -33,8 +33,6 @@ TasksEntry tasksEntry = TasksEntryLocalServiceUtil.fetchTasksEntry(tasksEntryId)
 
 		<%
 		tasksEntry = tasksEntry.toEscapedModel();
-
-		Calendar dueDate = CalendarFactoryUtil.getCalendar(timeZone, locale);
 		%>
 
 		<liferay-ui:header title="<%= HtmlUtil.unescape(tasksEntry.getTitle()) %>" />

@@ -23,8 +23,6 @@ if (referer.equals(themeDisplay.getPathMain() + "/portal/update_email_address"))
 	referer = themeDisplay.getPathMain() + "?doAsUserId=" + themeDisplay.getDoAsUserId();
 }
 
-PasswordPolicy passwordPolicy = user.getPasswordPolicy();
-
 String ticketKey = ParamUtil.getString(request, "ticketKey");
 %>
 

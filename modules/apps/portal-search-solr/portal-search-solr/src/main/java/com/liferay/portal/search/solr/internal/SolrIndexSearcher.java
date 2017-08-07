@@ -462,7 +462,7 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 
 		if (query.getPostFilter() != null) {
 			String filterQuery = _filterTranslator.translate(
-				query.getPreBooleanFilter(), searchContext);
+				query.getPostFilter(), searchContext);
 
 			filterQueries.add(filterQuery);
 		}

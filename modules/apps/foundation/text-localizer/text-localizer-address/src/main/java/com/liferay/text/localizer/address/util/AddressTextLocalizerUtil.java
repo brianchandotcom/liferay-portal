@@ -15,40 +15,60 @@
 package com.liferay.text.localizer.address.util;
 
 import com.liferay.portal.kernel.model.Address;
-import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.CountryServiceUtil;
-import com.liferay.portal.kernel.service.RegionServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Locale;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * @author Pei-Jung Lan
+ * @author Drew Brokke
  */
 public class AddressTextLocalizerUtil {
 
-	public static String getCountryName(Address address) {
-		Country country = address.getCountry();
+	public static Optional<String> getCountryNameOptional(Address address) {
+		Optional<Address> addressOptional = Optional.ofNullable(address);
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
+		return addressOptional.map(
+			Address::getCountry
+		).filter(
+			country -> country.getCountryId() > 0
+		).map(
+			country -> {
+				Optional<ServiceContext> serviceContextOptional =
+					Optional.ofNullable(
+						ServiceContextThreadLocal.getServiceContext());
 
-		return country.getName(serviceContext.getLocale());
+				return serviceContextOptional.map(
+					serviceContext ->
+						country.getName(serviceContext.getLocale())
+				).orElseGet(
+					country::getName
+				);
+			}
+		).filter(
+			Validator::isNotNull
+		);
 	}
 
-	public static String getRegionName(Address address) {
-		Region region = address.getRegion();
+	public static Optional<String> getRegionNameOptional(Address address) {
+		Optional<Address> addressOptional = Optional.ofNullable(address);
 
-		return region.getName();
+		return addressOptional.map(
+			Address::getRegion
+		).filter(
+			region -> region.getRegionId() > 0
+		).map(
+			Region::getName
+		).filter(
+			Validator::isNotNull
+		);
 	}
 
 	/**

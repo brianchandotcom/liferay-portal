@@ -35,7 +35,7 @@ import com.liferay.portal.lar.test.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -65,28 +65,17 @@ public class CPInstanceStagedModelDataHandlerTest
 		throws Exception {
 
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
-			new HashMap<>();
+			new LinkedHashMap<>();
 
 		long groupId = group.getGroupId();
 
 		CPDefinition cpDefinition = CPTestUtil.addCPDefinition(groupId);
-
-		addDependentStagedModel(
-			dependentStagedModelsMap, CPDefinition.class, cpDefinition);
-
 		CPOption cpOption = CPTestUtil.addCPOption(groupId);
-
-		addDependentStagedModel(
-			dependentStagedModelsMap, CPOption.class, cpOption);
 
 		CPDefinitionOptionRel cpDefinitionOptionRel =
 			CPTestUtil.addCPDefinitionOptionRel(
 				groupId, cpDefinition.getCPDefinitionId(),
 				cpOption.getCPOptionId());
-
-		addDependentStagedModel(
-			dependentStagedModelsMap, CPDefinitionOptionRel.class,
-			cpDefinitionOptionRel);
 
 		for (int i = 0; i < CP_DEFINITION_OPTION_VALUE_RELS_COUNT; i++) {
 			CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
@@ -98,6 +87,14 @@ public class CPInstanceStagedModelDataHandlerTest
 				dependentStagedModelsMap, CPDefinitionOptionValueRel.class,
 				cpDefinitionOptionValueRel);
 		}
+
+		addDependentStagedModel(
+			dependentStagedModelsMap, CPDefinitionOptionRel.class,
+			cpDefinitionOptionRel);
+		addDependentStagedModel(
+			dependentStagedModelsMap, CPDefinition.class, cpDefinition);
+		addDependentStagedModel(
+			dependentStagedModelsMap, CPOption.class, cpOption);
 
 		return dependentStagedModelsMap;
 	}

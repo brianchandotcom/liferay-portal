@@ -38,7 +38,7 @@ import com.liferay.portal.lar.test.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -68,33 +68,22 @@ public class CPAttachmentFileEntryStagedModelDataHandlerTest
 		throws Exception {
 
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
-			new HashMap<>();
+			new LinkedHashMap<>();
 
 		long groupId = group.getGroupId();
-
-		CPDefinition cpDefinition = CPTestUtil.addCPDefinition(groupId);
-
-		addDependentStagedModel(
-			dependentStagedModelsMap, CPDefinition.class, cpDefinition);
 
 		FileEntry fileEntry = CPTestUtil.addFileEntry(groupId);
 
 		addDependentStagedModel(
 			dependentStagedModelsMap, FileEntry.class, fileEntry);
 
+		CPDefinition cpDefinition = CPTestUtil.addCPDefinition(groupId);
 		CPOption cpOption = CPTestUtil.addCPOption(groupId);
-
-		addDependentStagedModel(
-			dependentStagedModelsMap, CPOption.class, cpOption);
 
 		CPDefinitionOptionRel cpDefinitionOptionRel =
 			CPTestUtil.addCPDefinitionOptionRel(
 				groupId, cpDefinition.getCPDefinitionId(),
 				cpOption.getCPOptionId());
-
-		addDependentStagedModel(
-			dependentStagedModelsMap, CPDefinitionOptionRel.class,
-			cpDefinitionOptionRel);
 
 		int count =
 			CPInstanceStagedModelDataHandlerTest.
@@ -110,6 +99,14 @@ public class CPAttachmentFileEntryStagedModelDataHandlerTest
 				dependentStagedModelsMap, CPDefinitionOptionValueRel.class,
 				cpDefinitionOptionValueRel);
 		}
+
+		addDependentStagedModel(
+			dependentStagedModelsMap, CPDefinitionOptionRel.class,
+			cpDefinitionOptionRel);
+		addDependentStagedModel(
+			dependentStagedModelsMap, CPDefinition.class, cpDefinition);
+		addDependentStagedModel(
+			dependentStagedModelsMap, CPOption.class, cpOption);
 
 		return dependentStagedModelsMap;
 	}

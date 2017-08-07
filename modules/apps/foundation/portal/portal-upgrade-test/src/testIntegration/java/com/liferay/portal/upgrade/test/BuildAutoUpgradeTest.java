@@ -114,10 +114,9 @@ public class BuildAutoUpgradeTest {
 
 		BundleContext bundleContext = testBundle.getBundleContext();
 
-		try (InputStream is = new UnsyncByteArrayInputStream(_jarBytesV1)) {
-			_bundle = bundleContext.installBundle(
-				BuildAutoUpgradeTest.class.getName(), is);
-		}
+		_bundle = bundleContext.installBundle(
+			BuildAutoUpgradeTest.class.getName(),
+			new UnsyncByteArrayInputStream(_jarBytesV1));
 
 		_bundle.start();
 

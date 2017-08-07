@@ -204,22 +204,21 @@ public class LCSUtil {
 	}
 
 	public static boolean isLCSClusterNodeRegistered() {
-		return isLCSClusterNodeRegistered(null);
+		LCSClusterNode lcsClusterNode =
+			_lcsClusterNodeService.fetchLCSClusterNode(_keyGenerator.getKey());
+
+		if ((lcsClusterNode == null) || lcsClusterNode.isArchived()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	public static boolean isLCSClusterNodeRegistered(
 		PortletRequest portletRequest) {
 
 		try {
-			LCSClusterNode lcsClusterNode =
-				_lcsClusterNodeService.fetchLCSClusterNode(
-					_keyGenerator.getKey());
-
-			if ((lcsClusterNode == null) || lcsClusterNode.isArchived()) {
-				return false;
-			}
-
-			return true;
+			isLCSClusterNodeRegistered();
 		}
 		catch (InitializationException ie) {
 			_log.error("Unable to initialize LCS cluster node", ie);

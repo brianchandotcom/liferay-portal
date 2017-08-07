@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Portal Cache Single
+Bundle-SymbolicName: com.liferay.portal.cache.single
+Bundle-Version: 2.0.3
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:

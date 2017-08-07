@@ -1845,6 +1845,19 @@ attribute in Ivy `<dependency>` elements.
 ### Changed
 - [LPS-74034]: Update the [Liferay Gradle Plugins] dependency to version 3.4.20.
 
+## 5.0.4 - 2017-08-04
+
+### Added
+- [LPS-73955]: Enhance project inclusion logic based on the values of the
+`build.profile` system property and the `liferay.releng.public` project
+property:
+	- if the `liferay.releng.public` project property is `false`, include all
+	projects containing either a `.lfrbuild-[build.profile]` or a
+	`.lfrbuild-[build.profile]-private` marker file
+	- otherwise, include all projects containing either a
+	`.lfrbuild-[build.profile]` or a `.lfrbuild-[build.profile]-public` marker
+	file
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
@@ -2041,6 +2054,7 @@ attribute in Ivy `<dependency>` elements.
 [LPS-73818]: https://issues.liferay.com/browse/LPS-73818
 [LPS-73855]: https://issues.liferay.com/browse/LPS-73855
 [LPS-73935]: https://issues.liferay.com/browse/LPS-73935
+[LPS-73955]: https://issues.liferay.com/browse/LPS-73955
 [LPS-74034]: https://issues.liferay.com/browse/LPS-74034
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841

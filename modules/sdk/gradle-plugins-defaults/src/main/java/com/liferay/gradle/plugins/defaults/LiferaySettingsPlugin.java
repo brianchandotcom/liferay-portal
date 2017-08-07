@@ -76,6 +76,25 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 		}
 	}
 
+	private String[] _getBuildProfileFileNames(Settings settings) {
+		String buildProfile = System.getProperty("build.profile");
+
+		if (Validator.isNull(buildProfile)) {
+			return null;
+		}
+
+		String suffix = "private";
+
+		if (GradleUtil.getProperty(settings, "liferay.releng.public", true)) {
+			suffix = "public";
+		}
+
+		return new String[] {
+			_BUILD_PROFILE_FILE_NAME_PREFIX + buildProfile + "-" + suffix,
+			_BUILD_PROFILE_FILE_NAME_PREFIX + buildProfile
+		};
+	}
+
 	private Set<Path> _getDirPaths(String key, Path rootDirPath) {
 		String dirNamesString = System.getProperty(key);
 
@@ -155,7 +174,8 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 			final Path projectPathRootDirPath, final String projectPathPrefix)
 		throws IOException {
 
-		final String buildProfile = System.getProperty("build.profile");
+		final String[] buildProfileFileNames = _getBuildProfileFileNames(
+			settings);
 		final Set<Path> excludedDirPaths = _getDirPaths(
 			"build.exclude.dirs", rootDirPath);
 		final Set<Path> includedDirPaths = _getDirPaths(
@@ -195,11 +215,20 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 
-					if (Validator.isNotNull(buildProfile) &&
-						Files.notExists(
-							dirPath.resolve(".lfrbuild-" + buildProfile))) {
+					if (buildProfileFileNames != null) {
+						boolean found = false;
 
-						return FileVisitResult.SKIP_SUBTREE;
+						for (String fileName : buildProfileFileNames) {
+							if (Files.exists(dirPath.resolve(fileName))) {
+								found = true;
+
+								break;
+							}
+						}
+
+						if (!found) {
+							return FileVisitResult.SKIP_SUBTREE;
+						}
 					}
 
 					_includeProject(
@@ -221,6 +250,8 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 
 		return false;
 	}
+
+	private static final String _BUILD_PROFILE_FILE_NAME_PREFIX = ".lfrbuild-";
 
 	private static enum ProjectDirType {
 

@@ -15,10 +15,13 @@
 package com.liferay.text.localizer.address;
 
 import com.liferay.portal.kernel.model.Address;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.text.localizer.address.util.AddressTextLocalizerUtil;
+
+import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -34,13 +37,18 @@ public class USAddressTextLocalizer implements AddressTextLocalizer {
 	public String format(Address address) {
 		StringBundler sb = new StringBundler(14);
 
-		String street1 = address.getStreet1();
-		String street2 = address.getStreet2();
-		String street3 = address.getStreet3();
-		String city = address.getCity();
-		String regionName = AddressTextLocalizerUtil.getRegionName(address);
-		String zip = address.getZip();
-		String countryName = AddressTextLocalizerUtil.getCountryName(address);
+		Optional<String> countryNameOptional =
+			AddressTextLocalizerUtil.getCountryNameOptional(address);
+		Optional<String> regionNameOptional =
+			AddressTextLocalizerUtil.getRegionNameOptional(address);
+
+		Address escapedAddress = address.toEscapedModel();
+
+		String street1 = escapedAddress.getStreet1();
+		String street2 = escapedAddress.getStreet2();
+		String street3 = escapedAddress.getStreet3();
+		String city = escapedAddress.getCity();
+		String zip = escapedAddress.getZip();
 
 		if (Validator.isNotNull(street1)) {
 			sb.append(street1);
@@ -57,7 +65,7 @@ public class USAddressTextLocalizer implements AddressTextLocalizer {
 		}
 
 		boolean hasCity = Validator.isNotNull(city);
-		boolean hasRegionName = Validator.isNotNull(regionName);
+		boolean hasRegionName = regionNameOptional.isPresent();
 		boolean hasZip = Validator.isNotNull(zip);
 
 		if (hasCity || hasRegionName || hasZip) {
@@ -72,9 +80,8 @@ public class USAddressTextLocalizer implements AddressTextLocalizer {
 			}
 		}
 
-		if (hasRegionName) {
-			sb.append(regionName);
-		}
+		regionNameOptional.ifPresent(
+			regionName -> sb.append(HtmlUtil.escape(regionName)));
 
 		if (hasZip) {
 			if (hasRegionName) {
@@ -84,12 +91,13 @@ public class USAddressTextLocalizer implements AddressTextLocalizer {
 			sb.append(zip);
 		}
 
-		if (Validator.isNotNull(countryName)) {
-			sb.append(StringPool.NEW_LINE);
-			sb.append(countryName);
-		}
+		countryNameOptional.ifPresent(
+			countryName -> {
+				sb.append(StringPool.NEW_LINE);
+				sb.append(HtmlUtil.escape(countryName));
+			});
 
-		return sb.toString();
+		return sb.toString().trim();
 	}
 
 }

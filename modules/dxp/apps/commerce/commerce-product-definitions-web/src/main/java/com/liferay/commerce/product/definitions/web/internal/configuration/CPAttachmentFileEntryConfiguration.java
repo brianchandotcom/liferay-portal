@@ -27,14 +27,14 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.commerce.product.definitions.web.internal.configuration.CPAttachmentFileEntryConfiguration",
 	localization = "content/Language",
-	name = "commerce.product.attachments.configuration.name"
+	name = "commerce-product-attachments-configuration-name"
 )
 public interface CPAttachmentFileEntryConfiguration {
 
 	@Meta.AD(
 		deflt = "false",
-		description = "changeable.default.language.description",
-		name = "changeable.default.language", required = false
+		description = "changeable-default-language-description",
+		name = "changeable-default-language", required = false
 	)
 	public boolean changeableDefaultLanguage();
 

@@ -29,7 +29,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.commerce.product.content.search.web.internal.configuration.CPSearchResultsPortletInstanceConfiguration",
 	localization = "content/Language",
-	name = "commerce.product.content.search.web.portlet.instance.configuration.name"
+	name = "commerce-product-content-search-web-portlet-instance-configuration-name"
 )
 public interface CPSearchResultsPortletInstanceConfiguration {
 

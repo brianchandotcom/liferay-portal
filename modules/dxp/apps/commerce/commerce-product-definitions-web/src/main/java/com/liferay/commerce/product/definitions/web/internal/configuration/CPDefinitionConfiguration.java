@@ -27,14 +27,14 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.commerce.product.definitions.web.internal.configuration.CPDefinitionConfiguration",
 	localization = "content/Language",
-	name = "commerce.product.definitions.configuration.name"
+	name = "commerce-product-definitions-configuration-name"
 )
 public interface CPDefinitionConfiguration {
 
 	@Meta.AD(
 		deflt = "false",
-		description = "changeable.default.language.description",
-		name = "changeable.default.language", required = false
+		description = "changeable-default-language-description",
+		name = "changeable-default-language", required = false
 	)
 	public boolean changeableDefaultLanguage();
 

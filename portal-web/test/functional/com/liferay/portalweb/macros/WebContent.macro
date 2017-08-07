@@ -1305,12 +1305,24 @@
 		<execute function="AssertTextEquals" locator1="WCEditWebContent#SELECTED_TEMPLATE" value1="${templateName}" />
 	</command>
 
-	<command name="subscribeCP">
+	<command name="subscribeToCurrentFolderCP">
 		<execute function="Click#clickAt" locator1="Icon#INFO" />
 
 		<execute function="Pause" locator1="1000" />
 
 		<execute function="Click" locator1="Icon#SUBSCRIBE" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
+	<command name="subscribeToSpecificArticle">
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
+			<var name="key_rowEntry" value="${webContentTitle}" />
+		</execute>
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Subscribe">
+			<var name="key_menuItem" value="Subscribe" />
+		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>

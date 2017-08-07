@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.impl.BuildAutoUpgradeTestEntityModelImpl;
 import com.liferay.portal.test.log.CaptureAppender;
@@ -34,6 +36,7 @@ import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.sql.Connection;
@@ -98,10 +101,21 @@ public class BuildAutoUpgradeTest {
 		catch (SQLException sqle) {
 		}
 
-		_jarBytesV1 = _createBundleBytes("serviceV1", null);
-		_jarBytesV2 = _createBundleBytes("serviceV2", this::_addColumn);
-		_jarBytesV3 = _createBundleBytes("serviceV3", this::_removeColumn);
-		_jarBytesV4 = _createBundleBytes("serviceV4", null);
+		_jarBytesV1 = _createBundleBytes(
+			"serviceV1", null,
+			new Object[][] {{"id_", Types.BIGINT}, {"data_", Types.VARCHAR}});
+		_jarBytesV2 = _createBundleBytes(
+			"serviceV2", this::_addColumn,
+			new Object[][] {
+				{"id_", Types.BIGINT}, {"data_", Types.VARCHAR},
+				{"data2", Types.VARCHAR}
+			});
+		_jarBytesV3 = _createBundleBytes(
+			"serviceV3", this::_removeColumn,
+			new Object[][] {{"id_", Types.BIGINT}, {"data2", Types.VARCHAR}});
+		_jarBytesV4 = _createBundleBytes(
+			"serviceV4", null,
+			new Object[][] {{"id_", Types.BIGINT}, {"data_", Types.VARCHAR}});
 
 		Bundle testBundle = FrameworkUtil.getBundle(BuildAutoUpgradeTest.class);
 
@@ -308,8 +322,19 @@ public class BuildAutoUpgradeTest {
 	}
 
 	private void _addResource(
+			String path, byte[] data, JarOutputStream jarOutputStream)
+		throws IOException {
+
+		jarOutputStream.putNextEntry(new JarEntry(path));
+
+		jarOutputStream.write(data);
+
+		jarOutputStream.closeEntry();
+	}
+
+	private void _addResource(
 			String resourcePath, String path, JarOutputStream jarOutputStream)
-		throws Exception {
+		throws IOException {
 
 		jarOutputStream.putNextEntry(new JarEntry(path));
 
@@ -363,7 +388,8 @@ public class BuildAutoUpgradeTest {
 	}
 
 	private byte[] _createBundleBytes(
-			String resourcePath, Consumer<MethodVisitor> methodVisitorConsumer)
+			String resourcePath, Consumer<MethodVisitor> methodVisitorConsumer,
+			Object[][] tableColumns)
 		throws Exception {
 
 		try (UnsyncByteArrayOutputStream unsyncbyteArrayOutputStream =
@@ -392,15 +418,9 @@ public class BuildAutoUpgradeTest {
 
 			jarOutputStream.closeEntry();
 
-			try (InputStream inputStream =
-					BuildAutoUpgradeTest.class.getResourceAsStream(
-						"dependencies/" + resourcePath +
-							"/META-INF/sql/tables.sql")) {
+			String createSQL = _toCreateSQL(tableColumns);
 
-				_addClass(
-					jarOutputStream, methodVisitorConsumer,
-					StringUtil.read(inputStream));
-			}
+			_addClass(jarOutputStream, methodVisitorConsumer, createSQL);
 
 			_addResource(
 				"dependencies/service/", "META-INF/portlet-model-hints.xml",
@@ -418,8 +438,9 @@ public class BuildAutoUpgradeTest {
 			_addResource(
 				"dependencies/" + resourcePath + "/", "service.properties",
 				jarOutputStream);
+
 			_addResource(
-				"dependencies/" + resourcePath + "/", "META-INF/sql/tables.sql",
+				"META-INF/sql/tables.sql", createSQL.getBytes(StringPool.UTF8),
 				jarOutputStream);
 
 			jarOutputStream.finish();
@@ -471,6 +492,46 @@ public class BuildAutoUpgradeTest {
 		methodVisitor.visitInsn(Opcodes.RETURN);
 		methodVisitor.visitMaxs(7, 0);
 		methodVisitor.visitEnd();
+	}
+
+	private String _toCreateSQL(Object[][] tableColumns) {
+		StringBundler sb = new StringBundler(tableColumns.length * 5 + 1);
+
+		sb.append("create table BuildAutoUpgradeTestEntity (");
+
+		boolean first = true;
+
+		for (Object[] tableColumn : tableColumns) {
+			sb.append(tableColumn[0]);
+			sb.append(StringPool.SPACE);
+
+			int type = (Integer)tableColumn[1];
+
+			if (Types.BIGINT == type) {
+				sb.append("LONG");
+			}
+			else if (Types.VARCHAR == type) {
+				sb.append("VARCHAR(75)");
+			}
+			else {
+				throw new IllegalArgumentException("Unknown data type " + type);
+			}
+
+			if (first) {
+				first = false;
+
+				sb.append(" not null primary key");
+			}
+			else {
+				sb.append(" null");
+			}
+
+			sb.append(StringPool.COMMA);
+		}
+
+		sb.setStringAt(");", sb.index() - 1);
+
+		return sb.toString();
 	}
 
 	private void _updateBundle(byte[] jarBytes) throws Exception {

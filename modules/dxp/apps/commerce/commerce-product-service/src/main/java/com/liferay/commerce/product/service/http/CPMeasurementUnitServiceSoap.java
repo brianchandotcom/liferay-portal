@@ -168,13 +168,15 @@ public class CPMeasurementUnitServiceSoap {
 	public static com.liferay.commerce.product.model.CPMeasurementUnitSoap updateCPMeasurementUnit(
 		long cpMeasurementUnitId, java.lang.String[] nameMapLanguageIds,
 		java.lang.String[] nameMapValues, java.lang.String key, double rate,
-		boolean primary, double priority, int type) throws RemoteException {
+		boolean primary, double priority, int type,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
 		try {
 			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
 					nameMapValues);
 
 			com.liferay.commerce.product.model.CPMeasurementUnit returnValue = CPMeasurementUnitServiceUtil.updateCPMeasurementUnit(cpMeasurementUnitId,
-					nameMap, key, rate, primary, priority, type);
+					nameMap, key, rate, primary, priority, type, serviceContext);
 
 			return com.liferay.commerce.product.model.CPMeasurementUnitSoap.toSoapModel(returnValue);
 		}

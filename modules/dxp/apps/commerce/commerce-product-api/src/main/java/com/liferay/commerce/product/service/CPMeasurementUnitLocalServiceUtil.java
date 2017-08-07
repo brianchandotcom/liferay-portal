@@ -163,10 +163,12 @@ public class CPMeasurementUnitLocalServiceUtil {
 		long cpMeasurementUnitId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.lang.String key, double rate, boolean primary, double priority,
-		int type) throws com.liferay.portal.kernel.exception.PortalException {
+		int type,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCPMeasurementUnit(cpMeasurementUnitId, nameMap, key,
-			rate, primary, priority, type);
+			rate, primary, priority, type, serviceContext);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {

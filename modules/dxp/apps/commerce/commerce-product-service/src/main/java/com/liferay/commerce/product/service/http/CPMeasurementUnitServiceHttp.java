@@ -242,7 +242,9 @@ public class CPMeasurementUnitServiceHttp {
 		HttpPrincipal httpPrincipal, long cpMeasurementUnitId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.lang.String key, double rate, boolean primary, double priority,
-		int type) throws com.liferay.portal.kernel.exception.PortalException {
+		int type,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPMeasurementUnitServiceUtil.class,
 					"updateCPMeasurementUnit",
@@ -250,7 +252,7 @@ public class CPMeasurementUnitServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpMeasurementUnitId, nameMap, key, rate, primary, priority,
-					type);
+					type, serviceContext);
 
 			Object returnObj = null;
 
@@ -297,6 +299,7 @@ public class CPMeasurementUnitServiceHttp {
 		};
 	private static final Class<?>[] _updateCPMeasurementUnitParameterTypes6 = new Class[] {
 			long.class, java.util.Map.class, java.lang.String.class,
-			double.class, boolean.class, double.class, int.class
+			double.class, boolean.class, double.class, int.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

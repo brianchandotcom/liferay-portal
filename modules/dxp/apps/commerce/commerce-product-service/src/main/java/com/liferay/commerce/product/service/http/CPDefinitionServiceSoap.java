@@ -404,69 +404,6 @@ public class CPDefinitionServiceSoap {
 		java.lang.String layoutUuid, java.lang.String gtin,
 		java.lang.String manufacturerPartNumber, int minCartQuantity,
 		int maxCartQuantity, java.lang.String allowedCartQuantities,
-		int multipleCartQuantity, java.lang.String ddmStructureKey,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-		try {
-			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,
-					titleMapValues);
-			Map<Locale, String> shortDescriptionMap = LocalizationUtil.getLocalizationMap(shortDescriptionMapLanguageIds,
-					shortDescriptionMapValues);
-			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
-					descriptionMapValues);
-			Map<Locale, String> urlTitleMap = LocalizationUtil.getLocalizationMap(urlTitleMapLanguageIds,
-					urlTitleMapValues);
-			Map<Locale, String> metaTitleMap = LocalizationUtil.getLocalizationMap(metaTitleMapLanguageIds,
-					metaTitleMapValues);
-			Map<Locale, String> metaKeywordsMap = LocalizationUtil.getLocalizationMap(metaKeywordsMapLanguageIds,
-					metaKeywordsMapValues);
-			Map<Locale, String> metaDescriptionMap = LocalizationUtil.getLocalizationMap(metaDescriptionMapLanguageIds,
-					metaDescriptionMapValues);
-
-			com.liferay.commerce.product.model.CPDefinition returnValue = CPDefinitionServiceUtil.updateCPDefinition(cpDefinitionId,
-					baseSKU, titleMap, shortDescriptionMap, descriptionMap,
-					urlTitleMap, metaTitleMap, metaKeywordsMap,
-					metaDescriptionMap, layoutUuid, gtin,
-					manufacturerPartNumber, minCartQuantity, maxCartQuantity,
-					allowedCartQuantities, multipleCartQuantity,
-					ddmStructureKey, displayDateMonth, displayDateDay,
-					displayDateYear, displayDateHour, displayDateMinute,
-					expirationDateMonth, expirationDateDay, expirationDateYear,
-					expirationDateHour, expirationDateMinute, neverExpire,
-					serviceContext);
-
-			return com.liferay.commerce.product.model.CPDefinitionSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.commerce.product.model.CPDefinitionSoap updateCPDefinition(
-		long cpDefinitionId, java.lang.String baseSKU,
-		java.lang.String[] titleMapLanguageIds,
-		java.lang.String[] titleMapValues,
-		java.lang.String[] shortDescriptionMapLanguageIds,
-		java.lang.String[] shortDescriptionMapValues,
-		java.lang.String[] descriptionMapLanguageIds,
-		java.lang.String[] descriptionMapValues,
-		java.lang.String[] urlTitleMapLanguageIds,
-		java.lang.String[] urlTitleMapValues,
-		java.lang.String[] metaTitleMapLanguageIds,
-		java.lang.String[] metaTitleMapValues,
-		java.lang.String[] metaKeywordsMapLanguageIds,
-		java.lang.String[] metaKeywordsMapValues,
-		java.lang.String[] metaDescriptionMapLanguageIds,
-		java.lang.String[] metaDescriptionMapValues,
-		java.lang.String layoutUuid, java.lang.String gtin,
-		java.lang.String manufacturerPartNumber, int minCartQuantity,
-		int maxCartQuantity, java.lang.String allowedCartQuantities,
 		int multipleCartQuantity, double width, double height, double depth,
 		double weight, java.lang.String ddmStructureKey, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
@@ -502,6 +439,69 @@ public class CPDefinitionServiceSoap {
 					displayDateMinute, expirationDateMonth, expirationDateDay,
 					expirationDateYear, expirationDateHour,
 					expirationDateMinute, neverExpire, serviceContext);
+
+			return com.liferay.commerce.product.model.CPDefinitionSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPDefinitionSoap updateCPDefinition(
+		long cpDefinitionId, java.lang.String baseSKU,
+		java.lang.String[] titleMapLanguageIds,
+		java.lang.String[] titleMapValues,
+		java.lang.String[] shortDescriptionMapLanguageIds,
+		java.lang.String[] shortDescriptionMapValues,
+		java.lang.String[] descriptionMapLanguageIds,
+		java.lang.String[] descriptionMapValues,
+		java.lang.String[] urlTitleMapLanguageIds,
+		java.lang.String[] urlTitleMapValues,
+		java.lang.String[] metaTitleMapLanguageIds,
+		java.lang.String[] metaTitleMapValues,
+		java.lang.String[] metaKeywordsMapLanguageIds,
+		java.lang.String[] metaKeywordsMapValues,
+		java.lang.String[] metaDescriptionMapLanguageIds,
+		java.lang.String[] metaDescriptionMapValues,
+		java.lang.String layoutUuid, java.lang.String gtin,
+		java.lang.String manufacturerPartNumber, int minCartQuantity,
+		int maxCartQuantity, java.lang.String allowedCartQuantities,
+		int multipleCartQuantity, java.lang.String ddmStructureKey,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,
+					titleMapValues);
+			Map<Locale, String> shortDescriptionMap = LocalizationUtil.getLocalizationMap(shortDescriptionMapLanguageIds,
+					shortDescriptionMapValues);
+			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
+					descriptionMapValues);
+			Map<Locale, String> urlTitleMap = LocalizationUtil.getLocalizationMap(urlTitleMapLanguageIds,
+					urlTitleMapValues);
+			Map<Locale, String> metaTitleMap = LocalizationUtil.getLocalizationMap(metaTitleMapLanguageIds,
+					metaTitleMapValues);
+			Map<Locale, String> metaKeywordsMap = LocalizationUtil.getLocalizationMap(metaKeywordsMapLanguageIds,
+					metaKeywordsMapValues);
+			Map<Locale, String> metaDescriptionMap = LocalizationUtil.getLocalizationMap(metaDescriptionMapLanguageIds,
+					metaDescriptionMapValues);
+
+			com.liferay.commerce.product.model.CPDefinition returnValue = CPDefinitionServiceUtil.updateCPDefinition(cpDefinitionId,
+					baseSKU, titleMap, shortDescriptionMap, descriptionMap,
+					urlTitleMap, metaTitleMap, metaKeywordsMap,
+					metaDescriptionMap, layoutUuid, gtin,
+					manufacturerPartNumber, minCartQuantity, maxCartQuantity,
+					allowedCartQuantities, multipleCartQuantity,
+					ddmStructureKey, displayDateMonth, displayDateDay,
+					displayDateYear, displayDateHour, displayDateMinute,
+					expirationDateMonth, expirationDateDay, expirationDateYear,
+					expirationDateHour, expirationDateMinute, neverExpire,
+					serviceContext);
 
 			return com.liferay.commerce.product.model.CPDefinitionSoap.toSoapModel(returnValue);
 		}

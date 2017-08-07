@@ -110,6 +110,8 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		cpDefinitionOptionValueRelPersistence.update(
 			cpDefinitionOptionValueRel);
 
+		// Commerce product definition
+
 		reindexCPDefinition(
 			cpDefinitionOptionValueRel.getCPDefinitionOptionRel());
 
@@ -132,6 +134,8 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 
 		expandoRowLocalService.deleteRows(
 			cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId());
+
+		// Commerce product definition
 
 		reindexCPDefinition(
 			cpDefinitionOptionValueRel.getCPDefinitionOptionRel());
@@ -278,6 +282,8 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 
 		cpDefinitionOptionValueRelPersistence.update(
 			cpDefinitionOptionValueRel);
+
+		// Commerce product definition
 
 		reindexCPDefinition(
 			cpDefinitionOptionValueRel.getCPDefinitionOptionRel());

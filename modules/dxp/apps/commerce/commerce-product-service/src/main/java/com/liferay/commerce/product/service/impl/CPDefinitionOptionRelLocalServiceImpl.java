@@ -116,6 +116,8 @@ public class CPDefinitionOptionRelLocalServiceImpl
 				cpDefinitionOptionRelId, serviceContext);
 		}
 
+		// Commerce product definition
+
 		reindexCPDefinition(cpDefinitionId);
 
 		return cpDefinitionOptionRel;
@@ -151,6 +153,8 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 		expandoRowLocalService.deleteRows(
 			cpDefinitionOptionRel.getCPDefinitionOptionRelId());
+
+		// Commerce product definition
 
 		reindexCPDefinition(cpDefinitionOptionRel.getCPDefinitionId());
 
@@ -326,6 +330,8 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		cpDefinitionOptionRel.setExpandoBridgeAttributes(serviceContext);
 
 		cpDefinitionOptionRelPersistence.update(cpDefinitionOptionRel);
+
+		// Commerce product definition
 
 		reindexCPDefinition(cpDefinitionOptionRel.getCPDefinitionId());
 

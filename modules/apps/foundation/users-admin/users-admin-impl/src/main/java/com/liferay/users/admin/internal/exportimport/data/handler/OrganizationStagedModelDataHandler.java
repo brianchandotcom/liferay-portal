@@ -17,6 +17,7 @@ package com.liferay.users.admin.internal.exportimport.data.handler;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -481,7 +482,16 @@ public class OrganizationStagedModelDataHandler
 
 	@Override
 	protected void importReferenceStagedModels(
-		PortletDataContext portletDataContext, Organization organization) {
+			PortletDataContext portletDataContext, Organization organization)
+		throws PortletDataException {
+
+		if (organization.getParentOrganizationId() !=
+				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) {
+
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
+				portletDataContext, organization, Organization.class,
+				organization.getParentOrganizationId());
+		}
 	}
 
 	protected void importWebsites(

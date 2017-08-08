@@ -250,16 +250,16 @@ public class VerifyProcessTrackerOSGiCommands {
 
 			if (verifyException == null) {
 				release.setVerified(true);
+				release.setState(ReleaseConstants.STATE_GOOD);
 
 				releaseLocalService.updateRelease(release);
 
 				_registerVerifyProcessCompletionMarker(verifyProcessName);
 			}
 			else {
-				if (release.isVerified()) {
-					release.setVerified(false);
-					releaseLocalService.updateRelease(release);
-				}
+				release.setVerified(false);
+				release.setState(ReleaseConstants.STATE_VERIFY_FAILURE);
+				releaseLocalService.updateRelease(release);
 			}
 		}
 		finally {

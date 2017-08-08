@@ -10,7 +10,7 @@
 	<short-name>liferay-text-localizer</short-name>
 	<uri>http://liferay.com/tld/text-localizer</uri>
 	<tag>
-		<description>Displays an address in proper format.</description>
+		<description>Displays an address in a localized format.</description>
 		<name>address-display</name>
 		<tag-class>com.liferay.text.localizer.taglib.servlet.taglib.AddressDisplayTag</tag-class>
 		<body-content>JSP</body-content>

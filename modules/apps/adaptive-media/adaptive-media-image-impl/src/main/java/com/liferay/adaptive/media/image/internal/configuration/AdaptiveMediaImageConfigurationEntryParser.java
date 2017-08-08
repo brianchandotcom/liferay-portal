@@ -36,40 +36,42 @@ import org.osgi.service.component.annotations.Component;
  * square brackets are optional):
  * </p>
  *
+ * <p>
+ * <pre>
  * <code>
  * name:uuid:key0=val0;key1=val1;...;keyN=valN[:enable=flag]
  * </code>
+ * </pre>
+ * </p>
  *
  * <p>
- * Where ...
+ * Each part of the string is described below:
  * </p>
  *
  * <ul>
  * <li>
- * <code>name</code> is an arbitrary encoded {@link String}
+ * <code>name:</code> an arbitrary encoded {@link String}
  * </li>
  * <li>
- * <code>description</code> is an arbitrary encoded {@link String}
+ * <code>description:</code> an arbitrary encoded {@link String}
  * </li>
  * <li>
- * <code>uuid</code> is a unique identifier. No two configuration entries should
- * have the same UUID.
+ * <code>uuid:</code> a unique identifier. No two configuration entries should
+ * have the same UUID
  * </li>
  * <li>
- * The key and value pairs can be anything, but consumers of
- * the resulting {@link AdaptiveMediaImageConfigurationEntry} might
- * require a particular set of attributes.
+ * The key and value pairs can be anything, but consumers of the resulting
+ * {@link AdaptiveMediaImageConfigurationEntry} may require a particular set of
+ * attributes.
  * </li>
  * <li>
- * <code>enabled</code> is a boolean value (<code>true</code> or
- * <code>false</code>). If not <code>true</code> the configuration will be
- * ignored when processing images. If not specified, the default value is
- * <code>true</code>.
+ * <code>enabled:</code> a boolean value. If <code>false</code>, the
+ * configuration is ignored when processing images. If unspecified, the default
+ * value is <code>true</code>.
  * </li>
  * </ul>
  *
  * @author Adolfo Pérez
- * @review
  */
 @Component(
 	immediate = true, service = AdaptiveMediaImageConfigurationEntryParser.class

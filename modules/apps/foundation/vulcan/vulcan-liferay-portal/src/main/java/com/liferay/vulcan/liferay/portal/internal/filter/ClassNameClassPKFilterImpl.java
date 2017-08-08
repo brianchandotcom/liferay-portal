@@ -22,7 +22,7 @@ import com.liferay.vulcan.liferay.portal.filter.ClassNameClassPKFilter;
 public class ClassNameClassPKFilterImpl implements ClassNameClassPKFilter {
 
 	public ClassNameClassPKFilterImpl(
-		String className, Long classPK, String type) {
+		String className, long classPK, String type) {
 
 		_className = className;
 		_classPK = classPK;
@@ -33,7 +33,7 @@ public class ClassNameClassPKFilterImpl implements ClassNameClassPKFilter {
 		return _className;
 	}
 
-	public Long getClassPK() {
+	public long getClassPK() {
 		return _classPK;
 	}
 
@@ -48,7 +48,7 @@ public class ClassNameClassPKFilterImpl implements ClassNameClassPKFilter {
 	}
 
 	private final String _className;
-	private final Long _classPK;
+	private final long _classPK;
 	private final String _type;
 
 }

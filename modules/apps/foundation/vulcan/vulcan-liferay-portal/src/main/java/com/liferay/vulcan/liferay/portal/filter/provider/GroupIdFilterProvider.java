@@ -71,7 +71,7 @@ public class GroupIdFilterProvider implements FilterProvider<GroupIdFilter> {
 	public GroupIdFilter provide(HttpServletRequest httpServletRequest) {
 		String id = _idFilterProviderHelper.getId(httpServletRequest);
 
-		Long groupId = GetterUtil.getLong(id);
+		long groupId = GetterUtil.getLong(id);
 
 		if (groupId == GetterUtil.DEFAULT_LONG) {
 			throw new BadRequestException();

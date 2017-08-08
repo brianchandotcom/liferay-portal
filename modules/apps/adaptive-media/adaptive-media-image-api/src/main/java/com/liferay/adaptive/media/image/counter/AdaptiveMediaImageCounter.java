@@ -15,39 +15,34 @@
 package com.liferay.adaptive.media.image.counter;
 
 /**
- * This interface provides the number of images that can benefit of Adaptive
- * Media for a particular use case. The number of images must include both the
- * ones that already have adaptive media images and the ones that do not.
+ * Provides an interface that returns the number of images that can use Adaptive
+ * Media for a particular use case. The number of images returned must include
+ * the images that are already adapted and the ones that are not adapted.
  *
  * <p>
- * This interface should be implemented by applications that stores images and
- * want to generate adaptive media images as well. By implementing this
- * interface, the images stored by that application will be considered when
- * showing the number of Adaptive Media images.
+ * This interface should be implemented by applications that store images and
+ * want to generate adaptive media images. The application's images are then
+ * considered when showing the total number of Adaptive Media images.
  * </p>
  *
  * <p>
  * Each use case or application that stores images and uses Adaptive Media
  * should create a new implementation of this class and register it as an OSGi
- * component with the propery adaptive.media.key and a key that represents the
- * use case or application.
+ * component with the property <code>adaptive.media.key</code> and a key that
+ * represents the use case or application.
  * </p>
- *
- * @review
  *
  * @author Sergio González
  */
 public interface AdaptiveMediaImageCounter {
 
 	/**
-	 * Returns the number of images of an application that should have an
-	 * adaptive media image in a particular company, even if the adaptive media
-	 * image is not generated yet.
+	 * Returns the number of images in the application that should have an
+	 * adaptive media image in a particular company, including images that are
+	 * not generated yet.
 	 *
-	 * @return the number of images of an application that should have an
-	 *         adaptive media image in a particular company.
-	 *
-	 * @review
+	 * @return the number of images in the application that should have an
+	 *         adaptive media image in a particular company
 	 */
 	public int countExpectedAdaptiveMediaImageEntries(long companyId);
 

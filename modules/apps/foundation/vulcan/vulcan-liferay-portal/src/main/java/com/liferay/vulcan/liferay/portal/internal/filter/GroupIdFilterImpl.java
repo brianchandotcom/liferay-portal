@@ -21,7 +21,7 @@ import com.liferay.vulcan.liferay.portal.filter.GroupIdFilter;
  */
 public class GroupIdFilterImpl implements GroupIdFilter {
 
-	public GroupIdFilterImpl(Long groupId) {
+	public GroupIdFilterImpl(long groupId) {
 		_groupId = groupId;
 	}
 
@@ -30,6 +30,6 @@ public class GroupIdFilterImpl implements GroupIdFilter {
 		return _groupId;
 	}
 
-	private final Long _groupId;
+	private final long _groupId;
 
 }

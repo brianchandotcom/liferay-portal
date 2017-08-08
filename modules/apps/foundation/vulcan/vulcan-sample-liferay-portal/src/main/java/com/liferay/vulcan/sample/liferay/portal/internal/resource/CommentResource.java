@@ -91,62 +91,65 @@ public class CommentResource implements Resource<Comment> {
 		return _commentManager.fetchComment(id);
 	}
 
-	private PageItems<Comment> _getPageItems(
+	private DiscussionCommentIterator _getDiscussionCommentIterator(
 		ClassNameClassPKFilter classNameClassPKFilter, Pagination pagination,
 		CurrentUser currentUser) {
-
-		String className = classNameClassPKFilter.getClassName();
-		Long classPK = classNameClassPKFilter.getClassPK();
-
-		User user = currentUser.getUser();
-
-		Discussion discussion = null;
 
 		AssetEntry assetEntry = null;
 
 		try {
-			assetEntry = _assetEntryLocalService.getEntry(className, classPK);
+			assetEntry = _assetEntryLocalService.getEntry(
+				classNameClassPKFilter.getClassName(),
+				classNameClassPKFilter.getClassPK());
 		}
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);
 		}
 
-		long groupId = assetEntry.getGroupId();
+		Discussion discussion = null;
 
 		try {
 			discussion = _commentManager.getDiscussion(
-				user.getUserId(), groupId, className, classPK,
+				currentUser.getUserId(), assetEntry.getGroupId(),
+				classNameClassPKFilter.getClassName(),
+				classNameClassPKFilter.getClassPK(),
 				new IdentityServiceContextFunction(new ServiceContext()));
 		}
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);
 		}
 
-		DiscussionComment rootDiscussionComment =
+		DiscussionComment discussionComment =
 			discussion.getRootDiscussionComment();
 
-		int start = pagination.getStartPosition();
+		return discussionComment.getThreadDiscussionCommentIterator(
+			pagination.getStartPosition());
+	}
 
-		int end = pagination.getEndPosition();
-
-		DiscussionCommentIterator threadDiscussionCommentIterator =
-			rootDiscussionComment.getThreadDiscussionCommentIterator(start);
-
-		int itemCount = end - start;
+	private PageItems<Comment> _getPageItems(
+		ClassNameClassPKFilter classNameClassPKFilter, Pagination pagination,
+		CurrentUser currentUser) {
 
 		List<Comment> comments = new ArrayList<>();
 
-		while (threadDiscussionCommentIterator.hasNext() && (itemCount > 0)) {
+		DiscussionCommentIterator discussionCommentIterator =
+			_getDiscussionCommentIterator(
+				classNameClassPKFilter, pagination, currentUser);
+
+		int i = pagination.getEndPosition() - pagination.getStartPosition();
+
+		while (discussionCommentIterator.hasNext() && (i > 0)) {
 			DiscussionComment discussionComment =
-				threadDiscussionCommentIterator.next();
+				discussionCommentIterator.next();
 
 			comments.add(discussionComment);
 
-			itemCount--;
+			i--;
 		}
 
 		int commentsCount = _commentManager.getCommentsCount(
-			className, classPK);
+			classNameClassPKFilter.getClassName(),
+			classNameClassPKFilter.getClassPK());
 
 		return new PageItems<>(comments, commentsCount);
 	}

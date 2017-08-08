@@ -213,8 +213,6 @@ public class AdaptiveMediaImageConfigurationException extends PortalException {
 
 	/**
 	 * This exception is raised when a configuration does not exist.
-	 *
-	 * @review
 	 */
 	public static final class
 		NoSuchAdaptiveMediaImageConfigurationException

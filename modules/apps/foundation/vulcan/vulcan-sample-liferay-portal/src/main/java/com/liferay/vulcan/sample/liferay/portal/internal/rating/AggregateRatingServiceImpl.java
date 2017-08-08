@@ -33,12 +33,15 @@ public class AggregateRatingServiceImpl implements AggregateRatingService {
 
 	@Override
 	public AggregateRating getAggregateRating(
-		ClassNameClassPKIdentifier identifier) {
+		ClassNameClassPKIdentifier classNameClassPKIdentifier) {
 
-		List<RatingsEntry> entries = _ratingsEntryLocalService.getEntries(
-			identifier.getClassName(), identifier.getClassPK());
+		List<RatingsEntry> ratingsEntries =
+			_ratingsEntryLocalService.getEntries(
+				classNameClassPKIdentifier.getClassName(),
+				classNameClassPKIdentifier.getClassPK());
 
-		return new AggregateRatingImpl(identifier, entries);
+		return new AggregateRatingImpl(
+			classNameClassPKIdentifier, ratingsEntries);
 	}
 
 	@Reference

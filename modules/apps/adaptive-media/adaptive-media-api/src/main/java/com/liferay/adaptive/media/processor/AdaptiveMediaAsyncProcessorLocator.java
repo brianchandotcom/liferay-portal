@@ -15,9 +15,7 @@
 package com.liferay.adaptive.media.processor;
 
 /**
- * Responsible to locate the available {@link AdaptiveMediaAsyncProcessor}
- *
- * @review
+ * Locates the available {@link AdaptiveMediaAsyncProcessor}.
  *
  * @author Adolfo Pérez
  */

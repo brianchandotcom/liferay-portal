@@ -36,7 +36,7 @@ public class RepresentorBuilderImpl<T> implements RepresentorBuilder<T> {
 		Class<T> modelClass,
 		Map<String, Function<?, String>> identifierFunctions,
 		TriConsumer<String, Class<?>, Function<?, QueryParamFilterType>>
-			addRelatedCollectionFunction,
+			addRelatedCollectionTriConsumer,
 		Map<String, Function<?, Object>> fieldFunctions,
 		List<RelatedModel<?, ?>> embeddedRelatedModels,
 		List<RelatedModel<?, ?>> linkedRelatedModels, Map<String, String> links,
@@ -44,7 +44,7 @@ public class RepresentorBuilderImpl<T> implements RepresentorBuilder<T> {
 
 		_modelClass = modelClass;
 		_identifierFunctions = identifierFunctions;
-		_addRelatedCollectionFunction = addRelatedCollectionFunction;
+		_addRelatedCollectionTriConsumer = addRelatedCollectionTriConsumer;
 		_fieldFunctions = fieldFunctions;
 		_embeddedRelatedModels = embeddedRelatedModels;
 		_linkedRelatedModels = linkedRelatedModels;
@@ -68,7 +68,7 @@ public class RepresentorBuilderImpl<T> implements RepresentorBuilder<T> {
 				_linkedRelatedModels.add(
 					new RelatedModel<>(key, modelClass, modelFunction));
 
-				_addRelatedCollectionFunction.accept(
+				_addRelatedCollectionTriConsumer.accept(
 					relatedKey, modelClass, filterFunction);
 
 				return this;
@@ -133,8 +133,9 @@ public class RepresentorBuilderImpl<T> implements RepresentorBuilder<T> {
 		};
 	}
 
-	private final TriConsumer<String, Class<?>, Function<?,
-		QueryParamFilterType>> _addRelatedCollectionFunction;
+	private final TriConsumer
+		<String, Class<?>, Function<?, QueryParamFilterType>>
+			_addRelatedCollectionTriConsumer;
 	private final List<RelatedModel<?, ?>> _embeddedRelatedModels;
 	private final Map<String, Function<?, Object>> _fieldFunctions;
 	private final Map<String, Function<?, String>> _identifierFunctions;

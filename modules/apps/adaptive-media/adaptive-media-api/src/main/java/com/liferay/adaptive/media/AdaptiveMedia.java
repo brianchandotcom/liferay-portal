@@ -50,14 +50,12 @@ public interface AdaptiveMedia<T> {
 	public URI getURI();
 
 	/**
-	 * Returns this {@link AdaptiveMedia} instance's value for the attribute.
+	 * Returns the value of this {@link AdaptiveMedia} instance's attribute.
 	 * This method always returns a non-<code>null</code> optional.
 	 *
 	 * @param  adaptiveMediaAttribute the adaptive media attribute
-	 * @return the attribute value wrapped in an {@link Optional}; {@link
-	 *         Optional#EMPTY} otherwise
-	 *
-	 * @review
+	 * @return the attribute value wrapped in an {@link Optional}. If no value
+	 *         exists, an {@link Optional#EMPTY} is returned.
 	 */
 	public <V> Optional<V> getValueOptional(
 		AdaptiveMediaAttribute<T, V> adaptiveMediaAttribute);

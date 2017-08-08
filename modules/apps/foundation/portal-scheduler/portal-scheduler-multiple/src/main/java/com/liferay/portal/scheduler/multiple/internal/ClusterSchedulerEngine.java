@@ -769,11 +769,14 @@ public class ClusterSchedulerEngine
 					}
 				}
 
-				_memoryClusteredJobs.clear();
-
 				if (_log.isInfoEnabled()) {
-					_log.info("MEMORY_CLUSTERED jobs are running on this node");
+					_log.info(
+						_memoryClusteredJobs.size() +
+							" MEMORY_CLUSTERED jobs started running on this " +
+								"node");
 				}
+
+				_memoryClusteredJobs.clear();
 			}
 			finally {
 				ProxyModeThreadLocal.setForceSync(forceSync);
@@ -786,6 +789,8 @@ public class ClusterSchedulerEngine
 		protected void doMasterTokenReleased() throws Exception {
 			_writeLock.lock();
 
+			int counter = 0;
+
 			try {
 				for (SchedulerResponse schedulerResponse :
 						_schedulerEngine.getScheduledJobs()) {
@@ -797,6 +802,8 @@ public class ClusterSchedulerEngine
 							schedulerResponse.getJobName(),
 							schedulerResponse.getGroupName(),
 							schedulerResponse.getStorageType());
+
+						counter++;
 					}
 				}
 
@@ -804,7 +811,8 @@ public class ClusterSchedulerEngine
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"MEMORY_CLUSTERED jobs stopped running on this node");
+						counter + " MEMORY_CLUSTERED jobs stopped running on " +
+							"this node");
 				}
 			}
 			finally {

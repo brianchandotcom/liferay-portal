@@ -391,7 +391,7 @@ public class ClusterSchedulerEngineTest {
 			LogRecord logRecord = logRecords.get(0);
 
 			Assert.assertEquals(
-				"MEMORY_CLUSTERED jobs stopped running on this node",
+				"4 MEMORY_CLUSTERED jobs stopped running on this node",
 				logRecord.getMessage());
 
 			Assert.assertFalse(_mockClusterMasterExecutor.isMaster());
@@ -1032,7 +1032,7 @@ public class ClusterSchedulerEngineTest {
 			LogRecord logRecord = logRecords.get(0);
 
 			Assert.assertEquals(
-				"MEMORY_CLUSTERED jobs are running on this node",
+				"4 MEMORY_CLUSTERED jobs started running on this node",
 				logRecord.getMessage());
 
 			Assert.assertTrue(_mockClusterMasterExecutor.isMaster());

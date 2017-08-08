@@ -526,6 +526,26 @@
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
+	<command name="editPageMetadata">
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="SEO" />
+		</execute>
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="SEO" />
+		</execute>
+
+		<execute function="Type#typeClickAt" locator1="SitePagesEditPage#SEO_HTML_TITLE" value1="${HTMLTitle}" />
+
+		<execute function="Type#typeClickAt" locator1="SitePagesEditPage#SEO_META_TAGS_DESCRIPTION_FIELD" value1="${metaTagsDescription}" />
+
+		<execute function="Type#typeClickAt" locator1="SitePagesEditPage#SEO_META_TAGS_KEYWORDS_FIELD" value1="${metaTagsKeywords}" />
+
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#SAVE" value1="Save" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
 	<command name="editPageTypeLayout">
 		<var name="key_columnName" value="${columnName}" />
 
@@ -1092,6 +1112,22 @@
 		<execute function="Click" locator1="ControlMenu#INFO" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#CUSTOMIZED_PAGE_INFO" value1="This page is linked to a site template which does not allow modifications to it." />
+	</command>
+
+	<command name="viewPageMetadata">
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="SEO" />
+		</execute>
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="SEO" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="SitePagesEditPage#SEO_HTML_TITLE" value1="${HTMLTitle}" />
+
+		<execute function="AssertTextEquals" locator1="SitePagesEditPage#SEO_META_TAGS_DESCRIPTION_FIELD" value1="${metaTagsDescription}" />
+
+		<execute function="AssertTextEquals" locator1="SitePagesEditPage#SEO_META_TAGS_KEYWORDS_FIELD" value1="${metaTagsKeywords}" />
 	</command>
 
 	<command name="viewPageNoLockCheck">

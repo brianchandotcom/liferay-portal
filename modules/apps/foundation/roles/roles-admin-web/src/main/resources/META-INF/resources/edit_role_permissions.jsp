@@ -432,7 +432,7 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 		var selectedPermissions = selectedPermissionsString.split(',');
 		var unselectedPermissions = unselectedPermissionsString.split(',');
 
-		if ((AUI._.intersection(selectedPermissions, oldUnselectedPermissions).length || AUI._.intersection(unselectedPermissions, oldSelectedPermissions).length) && !confirm('<liferay-ui:message key="updating-the-chosen-permissions-will-overwrite-the-respective-individually-defined-permissions-for-the-following-applicable-resource-types-bookmarks-entry-bookmarks-folder-calendar-booking-calendar-calendar-resource" />')) {
+		if ((AUI._.intersection(selectedPermissions, oldUnselectedPermissions).length || AUI._.intersection(unselectedPermissions, oldSelectedPermissions).length) && !confirm('<liferay-ui:message key="updating-the-chosen-permissions-will-overwrite-the-respective-individually-defined-permissions-for-one-or-more-of-these-resource-types" />')) {
 			return;
 		}
 

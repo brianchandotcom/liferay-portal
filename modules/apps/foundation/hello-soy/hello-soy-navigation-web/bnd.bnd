@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Hello Soy Navigation Web
+Bundle-SymbolicName: com.liferay.hello.soy.navigation.web
+Bundle-Version: 1.0.0
+Require-Capability:\
+	soy;\
+		filter:="(type=metal)"

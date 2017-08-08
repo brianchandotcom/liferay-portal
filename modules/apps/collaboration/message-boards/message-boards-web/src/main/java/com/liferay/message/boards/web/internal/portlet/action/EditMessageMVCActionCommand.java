@@ -478,8 +478,8 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 
 				if (formatHandler != null) {
 					body = _addBodyAttachmentTempFiles(
-						themeDisplay, body, message, new ArrayList<String>(),
-						formatHandler);
+						themeDisplay, message.getBody(), message,
+						new ArrayList<String>(), formatHandler);
 
 					message.setBody(body);
 

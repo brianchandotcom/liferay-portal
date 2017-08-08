@@ -96,16 +96,16 @@ public abstract class BaseBuildAutoUpgradeTestCase {
 		catch (SQLException sqle) {
 		}
 
-		_previousDatabaseSchemaDevelopmentMode =
-			PropsValues.DATABASE_SCHEMA_DEVELOPMENT_MODE;
+		_previousSchemaModuleBuildAutoUpgrade =
+			PropsValues.SCHEMA_MODULE_BUILD_AUTO_UPGRADE;
 
-		PropsValues.DATABASE_SCHEMA_DEVELOPMENT_MODE = true;
+		PropsValues.SCHEMA_MODULE_BUILD_AUTO_UPGRADE = true;
 	}
 
 	@After
 	public void tearDown() throws Throwable {
-		PropsValues.DATABASE_SCHEMA_DEVELOPMENT_MODE =
-			_previousDatabaseSchemaDevelopmentMode;
+		PropsValues.SCHEMA_MODULE_BUILD_AUTO_UPGRADE =
+			_previousSchemaModuleBuildAutoUpgrade;
 
 		if (_bundle != null) {
 			_bundle.uninstall();
@@ -525,6 +525,6 @@ public abstract class BaseBuildAutoUpgradeTestCase {
 	}
 
 	private Bundle _bundle;
-	private boolean _previousDatabaseSchemaDevelopmentMode;
+	private boolean _previousSchemaModuleBuildAutoUpgrade;
 
 }

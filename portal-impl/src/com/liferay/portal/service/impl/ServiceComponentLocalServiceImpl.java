@@ -613,7 +613,7 @@ public class ServiceComponentLocalServiceImpl
 			db.runSQLTemplateString(sequencesSQL, true, false);
 			db.runSQLTemplateString(indexesSQL, true, false);
 		}
-		else if (PropsValues.DATABASE_SCHEMA_DEVELOPMENT_MODE) {
+		else if (PropsValues.SCHEMA_MODULE_BUILD_AUTO_UPGRADE) {
 			if (_log.isWarnEnabled()) {
 				StringBundler sb = new StringBundler(6);
 

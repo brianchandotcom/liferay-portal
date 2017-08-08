@@ -78,6 +78,24 @@
 			<var name="columnNumberTo" value="1" />
 			<var name="portletName" value="Hello World" />
 		</execute>
+
+		<task summary="Removes Hello World Portlets on Test Page and Welcome Page">
+			<execute macro="Navigator#gotoPage">
+				<var name="pageName" value="Test Page" />
+			</execute>
+
+			<execute macro="Portlet#deletePG">
+				<var name="portletName" value="Hello World" />
+			</execute>
+
+			<execute macro="Navigator#gotoPage">
+				<var name="pageName" value="Welcome" />
+			</execute>
+
+			<execute macro="Portlet#deletePG">
+				<var name="portletName" value="Hello World" />
+			</execute>
+		</task>
 	</command>
 
 	<command name="ViewNonASCIICharactersWithSPADisabled" priority="4">

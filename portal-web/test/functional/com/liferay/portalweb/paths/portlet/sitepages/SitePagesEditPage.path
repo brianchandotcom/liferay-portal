@@ -192,6 +192,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEO_META_TAGS_DESCRIPTION_FIELD</td>
+	<td>//textarea[contains(@id,'descriptionSEO')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEO_META_TAGS_KEYWORDS_FIELD</td>
+	<td>//textarea[contains(@id,'keywords')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

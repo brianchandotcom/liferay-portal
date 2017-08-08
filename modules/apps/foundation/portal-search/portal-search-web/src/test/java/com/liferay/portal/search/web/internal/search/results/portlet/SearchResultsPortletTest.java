@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -31,6 +30,9 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.search.summary.Summary;
+import com.liferay.portal.search.summary.SummaryBuilder;
+import com.liferay.portal.search.summary.SummaryBuilderFactory;
 import com.liferay.portal.search.web.internal.display.context.PortletURLFactory;
 import com.liferay.portal.search.web.internal.portlet.shared.task.PortletSharedRequestHelper;
 import com.liferay.portal.search.web.internal.result.display.builder.AssetRendererFactoryLookup;
@@ -63,7 +65,7 @@ import org.mockito.MockitoAnnotations;
 /**
  * @author André de Oliveira
  */
-public class SearchResultsPortletTest extends SearchResultsPortlet {
+public class SearchResultsPortletTest {
 
 	@Before
 	public void setUp() throws Exception {
@@ -183,6 +185,7 @@ public class SearchResultsPortletTest extends SearchResultsPortlet {
 					PortletSharedRequestHelper.class);
 				portletSharedSearchRequest = createPortletSharedSearchRequest();
 				resourceActions = Mockito.mock(ResourceActions.class);
+				summaryBuilderFactory = createSummaryBuilderFactory();
 			}
 
 			@Override
@@ -213,6 +216,27 @@ public class SearchResultsPortletTest extends SearchResultsPortlet {
 		searchResultsPortlet.init(Mockito.mock(LiferayPortletConfig.class));
 
 		return searchResultsPortlet;
+	}
+
+	protected SummaryBuilderFactory createSummaryBuilderFactory() {
+		SummaryBuilder summaryBuilder = Mockito.mock(SummaryBuilder.class);
+
+		Mockito.doReturn(
+			Mockito.mock(Summary.class)
+		).when(
+			summaryBuilder
+		).build();
+
+		SummaryBuilderFactory summaryBuilderFactory = Mockito.mock(
+			SummaryBuilderFactory.class);
+
+		Mockito.doReturn(
+			summaryBuilder
+		).when(
+			summaryBuilderFactory
+		).newInstance();
+
+		return summaryBuilderFactory;
 	}
 
 	protected void render() throws IOException, PortletException {
@@ -265,7 +289,7 @@ public class SearchResultsPortletTest extends SearchResultsPortlet {
 		Indexer<?> indexer = Mockito.mock(Indexer.class);
 
 		Mockito.doReturn(
-			new Summary(null, null, null)
+			new com.liferay.portal.kernel.search.Summary(null, null, null)
 		).when(
 			indexer
 		).getSummary(

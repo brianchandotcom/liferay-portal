@@ -462,8 +462,8 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 
 		StringBundler sb = new StringBundler(5);
 
-		sb.append("select distinct primKey from ResourcePermission where ");
-		sb.append("name = '");
+		sb.append("select distinct companyId, primKey from ");
+		sb.append("ResourcePermission where name = '");
 		sb.append(oldRootPortletId);
 		sb.append("' and scope = ");
 		sb.append(ResourceConstants.SCOPE_INDIVIDUAL);
@@ -472,11 +472,12 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 			PreparedStatement ps2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
-					"update ResourcePermission set primKey = ? where primKey " +
-						"= ?");
+					"update ResourcePermission set primKey = ? where " +
+						"companyId = ? and primKey = ?");
 			ResultSet rs = ps1.executeQuery()) {
 
 			while (rs.next()) {
+				long companyId = rs.getLong("companyId");
 				String oldPrimKey = rs.getString("primKey");
 
 				int pos = oldPrimKey.indexOf(PortletConstants.LAYOUT_SEPARATOR);
@@ -500,7 +501,9 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 
 					ps2.setString(1, newPrimKey);
 
-					ps2.setString(2, oldPrimKey);
+					ps2.setLong(2, companyId);
+
+					ps2.setString(3, oldPrimKey);
 
 					ps2.addBatch();
 				}

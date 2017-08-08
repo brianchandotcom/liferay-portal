@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sharepoint.repository.internal;
+package com.liferay.sharepoint.repository.internal.oauth2.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -26,7 +26,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 @Meta.OCD(
 	factory = true,
-	id = "com.liferay.sharepoint.repository.internal.SharepointOAuth2Configuration",
+	id = "com.liferay.sharepoint.repository.internal.oauth2.configuration.SharepointOAuth2Configuration",
 	localization = "content/Language",
 	name = "sharepoint.oauth.configuration.name"
 )

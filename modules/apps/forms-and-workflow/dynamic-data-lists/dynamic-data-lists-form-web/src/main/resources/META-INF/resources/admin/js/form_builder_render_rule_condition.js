@@ -126,11 +126,11 @@ AUI.add(
 								}
 							);
 						}
-						else if (secondOperandTypeValue === 'constant') {
+						else if (instance._isConstant(secondOperandTypeValue)) {
 							if (instance._getSecondOperandValue(index, 'input')) {
 								condition.operands.push(
 									{
-										type: 'constant',
+										type: instance._getFieldDataType(instance._getFirstOperandValue(index)),
 										value: instance._getSecondOperandValue(index, 'input')
 									}
 								);
@@ -139,7 +139,7 @@ AUI.add(
 								condition.operands.push(
 									{
 										label: instance._getOptionsLabel(instance._getSecondOperand(index, 'options'), instance._getSecondOperandValue(index, 'options')),
-										type: 'constant',
+										type: instance._getFieldDataType(instance._getFirstOperandValue(index)),
 										value: instance._getSecondOperandValue(index, 'options')
 									}
 								);
@@ -389,6 +389,12 @@ AUI.add(
 				return value === 'equals-to' || value === 'not-equals-to' || value === 'contains' || value === 'not-contains' || value === 'belongs-to' || value === 'greater-than' || value === 'greater-than-equals' || value === 'less-than' || value === 'less-than-equals';
 			},
 
+			_isConstant: function(operandTypeValue) {
+				var instance = this;
+
+				return operandTypeValue === 'double' || operandTypeValue === 'integer' || operandTypeValue === 'string';
+			},
+
 			_isFieldList: function(field) {
 				var instance = this;
 
@@ -500,9 +506,9 @@ AUI.add(
 
 				var firstOperand = instance._getFirstOperand(index);
 
-				var secondOperandValue = instance._getSecondOperandTypeValue(index);
+				var secondOperandTypeValue = instance._getSecondOperandTypeValue(index);
 
-				var visible = secondOperandValue === 'constant' && !instance._isFieldList(firstOperand);
+				var visible = instance._isConstant(secondOperandTypeValue) && !instance._isFieldList(firstOperand);
 
 				if (condition && instance._isBinaryCondition(index) && visible) {
 					value = condition.operands[1].value;
@@ -557,7 +563,7 @@ AUI.add(
 				var value = [];
 				var options = [];
 
-				var visible = instance._getSecondOperandTypeValue(index) === 'constant' &&
+				var visible = instance._isConstant(instance._getSecondOperandTypeValue(index)) &&
 					instance._isFieldList(instance._getFirstOperand(index));
 
 				if (condition && instance._isBinaryCondition(index) && visible) {
@@ -596,7 +602,7 @@ AUI.add(
 						options: [
 							{
 								label: instance.get('strings').value,
-								value: 'constant'
+								value: instance._getFieldDataType(instance._getFirstOperandValue(index))
 							},
 							{
 								label: instance.get('strings').otherField,
@@ -674,7 +680,7 @@ AUI.add(
 						);
 					}
 				}
-				else if (dataType === 'integer') {
+				else if (dataType === 'double' || dataType === 'integer') {
 					for (var j = 0; j < operatorTypes.number.length; j++) {
 						options.push(
 							A.merge(
@@ -720,7 +726,7 @@ AUI.add(
 						secondOperandFields.set('visible', true);
 						secondOperandOptions.cleanSelect();
 					}
-					else if (secondOperandTypeValue === 'constant') {
+					else if (instance._isConstant(secondOperandTypeValue)) {
 						var options = instance._getFieldOptions(instance._getFirstOperandValue(index));
 
 						if (options.length > 0 && instance._getFieldType(instance._getFirstOperandValue(index)) !== 'text') {
@@ -757,7 +763,7 @@ AUI.add(
 						options = [
 							{
 								label: instance.get('strings').value,
-								value: 'constant'
+								value: instance._getFieldDataType(instance._getFirstOperandValue(index))
 							},
 							{
 								label: instance.get('strings').otherField,

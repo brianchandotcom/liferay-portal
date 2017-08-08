@@ -10,7 +10,7 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "3.6.0-20170620.133954-23"
 	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.data.provider", version: "2.1.0-20170408.062712-10"
 	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.data.provider.web", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.expression", version: "2.1.0-20170310.013734-10"
+	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.expression", version: "2.1.0-20170802.213213-16"
 	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.form.evaluator", version: "2.1.0-20170203.003009-3"
 	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.form.field.type", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.form.renderer", version: "2.2.0-20170418.232433-27"

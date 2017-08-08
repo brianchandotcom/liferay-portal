@@ -32,8 +32,6 @@ import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.apache.commons.lang.math.NumberUtils;
-
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -115,7 +113,7 @@ public class DDLFormRuleToDDMFormRuleConverter {
 
 		String value = operand.getValue();
 
-		if (NumberUtils.isNumber(value)) {
+		if (isNumericConstant(operand.getType())) {
 			return value;
 		}
 
@@ -178,6 +176,14 @@ public class DDLFormRuleToDDMFormRuleConverter {
 		return String.format(
 			_functionCallUnaryExpressionFormat, functionName,
 			convertOperands(operands));
+	}
+
+	protected boolean isNumericConstant(String operandType) {
+		if (operandType.equals("integer") || operandType.equals("double")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final String _comparisonExpressionFormat = "%s %s %s";

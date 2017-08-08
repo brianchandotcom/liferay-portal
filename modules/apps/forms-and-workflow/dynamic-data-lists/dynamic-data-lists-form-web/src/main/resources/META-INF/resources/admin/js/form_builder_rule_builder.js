@@ -36,7 +36,6 @@ AUI.add(
 							'auto-fill': Liferay.Language.get('autofill-x-from-data-provider-x'),
 							'belongs-to': Liferay.Language.get('belongs-to'),
 							'calculate-field': Liferay.Language.get('calculate-field-x-as-x'),
-							constant: Liferay.Language.get('constant'),
 							contains: Liferay.Language.get('contains'),
 							delete: Liferay.Language.get('delete'),
 							edit: Liferay.Language.get('edit'),
@@ -57,7 +56,8 @@ AUI.add(
 							or: Liferay.Language.get('or'),
 							'require-field': Liferay.Language.get('require-x'),
 							ruleBuilder: Liferay.Language.get('rule-builder'),
-							'show-field': Liferay.Language.get('show-x')
+							'show-field': Liferay.Language.get('show-x'),
+							value: Liferay.Language.get('value')
 						}
 					}
 				},

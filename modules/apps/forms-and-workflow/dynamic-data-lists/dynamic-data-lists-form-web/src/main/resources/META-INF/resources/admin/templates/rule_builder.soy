@@ -152,8 +152,12 @@
  * @param strings
  */
 {template .condition autoescape="deprecated-contextual"}
-	{if $operandType != 'user' and $operandType != 'list'}
-		<span>{$strings[$operandType]} </span>
+	{if $operandType == 'double' or $operandType == 'integer' or $operandType == 'string'}
+		<span>{$strings.value} </span>
+		{else}
+		{if $operandType != 'user' and $operandType != 'list'}
+			<span>{$strings[$operandType]} </span>
+		{/if}
 	{/if}
 
 	{call .badge}

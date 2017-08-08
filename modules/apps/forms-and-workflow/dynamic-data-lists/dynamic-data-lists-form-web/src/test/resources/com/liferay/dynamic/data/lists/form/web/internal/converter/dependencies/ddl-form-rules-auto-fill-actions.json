@@ -23,7 +23,7 @@
 						"value": "Field1"
 					},
 					{
-						"type": "constant",
+						"type": "integer",
 						"value": "91765"
 					}
 				],

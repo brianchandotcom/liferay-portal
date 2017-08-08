@@ -26,9 +26,12 @@ import com.liferay.dynamic.data.mapping.expression.model.BinaryExpression;
 import com.liferay.dynamic.data.mapping.expression.model.ComparisonExpression;
 import com.liferay.dynamic.data.mapping.expression.model.Expression;
 import com.liferay.dynamic.data.mapping.expression.model.ExpressionVisitor;
+import com.liferay.dynamic.data.mapping.expression.model.FloatingPointLiteral;
 import com.liferay.dynamic.data.mapping.expression.model.FunctionCallExpression;
+import com.liferay.dynamic.data.mapping.expression.model.IntegerLiteral;
 import com.liferay.dynamic.data.mapping.expression.model.NotExpression;
 import com.liferay.dynamic.data.mapping.expression.model.OrExpression;
+import com.liferay.dynamic.data.mapping.expression.model.StringLiteral;
 import com.liferay.dynamic.data.mapping.expression.model.Term;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.portal.kernel.util.StringPool;
@@ -134,6 +137,11 @@ public class DDMFormRuleToDDLFormRuleConverter {
 		extends ExpressionVisitor<Object> {
 
 		@Override
+		public Object visit(FloatingPointLiteral floatingPointLiteral) {
+			return floatingPointLiteral.getValue();
+		}
+
+		@Override
 		public Object visit(FunctionCallExpression functionCallExpression) {
 			String action = _functionToActionMap.get(
 				functionCallExpression.getFunctionName());
@@ -142,6 +150,16 @@ public class DDMFormRuleToDDLFormRuleConverter {
 				functionCallExpression.getParameterExpressions();
 
 			return DDLFormRuleActionFactory.create(action, parameters, this);
+		}
+
+		@Override
+		public Object visit(IntegerLiteral integerLiteral) {
+			return integerLiteral.getValue();
+		}
+
+		@Override
+		public Object visit(StringLiteral stringLiteral) {
+			return stringLiteral.getValue();
 		}
 
 		@Override
@@ -208,6 +226,12 @@ public class DDMFormRuleToDDLFormRuleConverter {
 		}
 
 		@Override
+		public Object visit(FloatingPointLiteral floatingPointLiteral) {
+			return new DDLFormRuleCondition.Operand(
+				"double", floatingPointLiteral.getValue());
+		}
+
+		@Override
 		public Object visit(FunctionCallExpression functionCallExpression) {
 			String functionName = functionCallExpression.getFunctionName();
 
@@ -236,6 +260,12 @@ public class DDMFormRuleToDDLFormRuleConverter {
 		}
 
 		@Override
+		public Object visit(IntegerLiteral integerLiteral) {
+			return new DDLFormRuleCondition.Operand(
+				"integer", integerLiteral.getValue());
+		}
+
+		@Override
 		public Object visit(NotExpression notExpression) {
 			doVisit(notExpression.getOperandExpression());
 
@@ -256,9 +286,9 @@ public class DDMFormRuleToDDLFormRuleConverter {
 		}
 
 		@Override
-		public Object visit(Term term) {
+		public Object visit(StringLiteral stringLiteral) {
 			return new DDLFormRuleCondition.Operand(
-				"constant", term.getValue());
+				"string", stringLiteral.getValue());
 		}
 
 		protected DDLFormRuleCondition createBelongsToCondition(

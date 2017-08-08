@@ -28,7 +28,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	factory = true,
 	id = "com.liferay.sharepoint.repository.internal.oauth2.configuration.SharepointOAuth2Configuration",
 	localization = "content/Language",
-	name = "sharepoint.oauth.configuration.name"
+	name = "sharepoint-oauth2-configuration-name"
 )
 public interface SharepointOAuth2Configuration {
 

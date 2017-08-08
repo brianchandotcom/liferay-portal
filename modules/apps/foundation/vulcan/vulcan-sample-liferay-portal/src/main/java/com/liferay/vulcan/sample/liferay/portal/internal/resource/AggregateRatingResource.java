@@ -39,7 +39,8 @@ public class AggregateRatingResource implements Resource<AggregateRating> {
 		RepresentorBuilder<AggregateRating> representorBuilder) {
 
 		representorBuilder.identifier(
-			aggregateRating -> String.valueOf(aggregateRating.getId())
+			aggregateRating ->
+				String.valueOf(aggregateRating.getClassNameClassPKIdentifier())
 		).addField(
 			"bestRating", aggregateRating -> 1
 		).addField(

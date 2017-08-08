@@ -149,9 +149,9 @@ public class WriterHelper {
 
 				String filterName = filterProvider.getFilterName();
 
-				return uriBuilder.queryParam(
-					"filterName", filterName
-				).build();
+				uriBuilder = uriBuilder.queryParam("filterName", filterName);
+
+				return uriBuilder.build();
 			}
 		).map(
 			URI::toString

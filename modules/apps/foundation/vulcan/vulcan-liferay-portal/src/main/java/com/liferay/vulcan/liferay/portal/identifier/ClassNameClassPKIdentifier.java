@@ -28,13 +28,13 @@ package com.liferay.vulcan.liferay.portal.identifier;
  */
 public class ClassNameClassPKIdentifier {
 
-	public ClassNameClassPKIdentifier(String className, Long classPK) {
+	public ClassNameClassPKIdentifier(String className, long classPK) {
 		_className = className;
 		_classPK = classPK;
 	}
 
 	/**
-	 * Returns the className.
+	 * Returns the class name.
 	 *
 	 * @return className.
 	 */
@@ -43,15 +43,15 @@ public class ClassNameClassPKIdentifier {
 	}
 
 	/**
-	 * Returns the classPK.
+	 * Returns the class PK.
 	 *
 	 * @return classPK.
 	 */
-	public Long getClassPK() {
+	public long getClassPK() {
 		return _classPK;
 	}
 
 	private final String _className;
-	private final Long _classPK;
+	private final long _classPK;
 
 }

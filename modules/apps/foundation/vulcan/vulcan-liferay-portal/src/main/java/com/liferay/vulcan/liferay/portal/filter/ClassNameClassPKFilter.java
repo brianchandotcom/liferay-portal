@@ -30,17 +30,17 @@ import com.liferay.vulcan.filter.TypeIdFilter;
 public interface ClassNameClassPKFilter extends TypeIdFilter<Long> {
 
 	/**
-	 * Returns the className to filter.
+	 * Returns the class name to filter.
 	 *
-	 * @return className to filter.
+	 * @return class name to filter.
 	 */
 	public String getClassName();
 
 	/**
-	 * Returns the classPK to filter.
+	 * Returns the class PK to filter.
 	 *
-	 * @return classPK to filter.
+	 * @return class PK to filter.
 	 */
-	public Long getClassPK();
+	public long getClassPK();
 
 }

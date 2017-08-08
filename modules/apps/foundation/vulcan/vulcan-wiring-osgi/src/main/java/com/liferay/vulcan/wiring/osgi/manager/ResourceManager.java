@@ -257,7 +257,7 @@ public class ResourceManager extends BaseManager<Resource> {
 				resource.buildRepresentor(
 					new RepresentorBuilderImpl<>(
 						modelClass, _identifierFunctions,
-						_addRelatedCollectionFunction(modelClass),
+						_addRelatedCollectionTriConsumer(modelClass),
 						fieldFunctions, embeddedRelatedModels,
 						linkedRelatedModels, links, relatedCollections, types));
 
@@ -267,7 +267,7 @@ public class ResourceManager extends BaseManager<Resource> {
 	}
 
 	private <T> TriConsumer<String, Class<?>, Function<?, QueryParamFilterType>>
-		_addRelatedCollectionFunction(Class<T> relatedModelClass) {
+		_addRelatedCollectionTriConsumer(Class<T> relatedModelClass) {
 
 		return (key, modelClass, filterFunction) -> {
 			List<RelatedCollection<?, ?>> relatedCollections =

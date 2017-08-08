@@ -55,11 +55,11 @@ public class ClassNameClassPKFilterProvider
 	 * Creates a new {@link ClassNameClassPKFilter} from a given
 	 * <code>className</code> and <code>classPK</code>.
 	 *
-	 * @param  className the className that will be used to filter.
-	 * @param  classPK the classPK that will be used to filter.
+	 * @param  className the class name that will be used to filter.
+	 * @param  classPK the class PK that will be used to filter.
 	 * @return an instance of a {@link ClassNameClassPKFilter}.
 	 */
-	public ClassNameClassPKFilter create(String className, Long classPK) {
+	public ClassNameClassPKFilter create(String className, long classPK) {
 		Optional<Resource<Object>> optional =
 			_resourceManager.getResourceOptional(className);
 
@@ -87,11 +87,12 @@ public class ClassNameClassPKFilterProvider
 		HttpServletRequest httpServletRequest) {
 
 		String id = _typeIdFilterProviderHelper.getId(httpServletRequest);
+
+		long classPK = GetterUtil.getLong(id);
+
 		String type = _typeIdFilterProviderHelper.getType(httpServletRequest);
 
-		Long classPK = GetterUtil.getLong(id);
-
-		if ((type == null) || (classPK == GetterUtil.DEFAULT_LONG)) {
+		if ((classPK == GetterUtil.DEFAULT_LONG) || (type == null)) {
 			throw new BadRequestException();
 		}
 

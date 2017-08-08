@@ -49,7 +49,7 @@ public class TypeIdFilterProviderHelper {
 	 * @return map of query params for the {@link TypeIdFilter}.
 	 */
 	public Map<String, String> getQueryParamMap(TypeIdFilter typeIdFilter) {
-		HashMap<String, String> typeMap = new HashMap<String, String>() {
+		Map<String, String> typeMap = new HashMap<String, String>() {
 			{
 				put("type", typeIdFilter.getType());
 			}

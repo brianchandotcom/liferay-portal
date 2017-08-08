@@ -42,46 +42,42 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 
 /**
- * Provides the local service for accessing, adding, deleting adaptive media
+ * Provides the local service for accessing, adding, and deleting adaptive media
  * image entries.
  *
  * <p>
- * This service is responsible of adding adaptive media images both in the
- * database as adaptive media image entries as well as in the file store. Same
- * applies when deleting adaptive media images, it will remove the adaptive
- * media image entry and the bytes from the file store.
+ * This service adds adaptive media images to both the database as adaptive
+ * media image entries and to the file store as bytes. Deleting adaptive media
+ * images removes the adaptive media image entry from the database and the bytes
+ * from the file store.
  * </p>
  *
  * <p>
- * This service is a low level API and, in general, it should not be used by
- * third party developers as the entry point for adaptive media images.
+ * This service is a low level API and, in general, should not be used by third
+ * party developers as the entry point for adaptive media images.
  * </p>
  *
  * @author Sergio González
- *
- * @review
  */
 public class AdaptiveMediaImageEntryLocalServiceImpl
 	extends AdaptiveMediaImageEntryLocalServiceBaseImpl {
 
 	/**
-	 * Adds an adaptive media image entry in the database and store the image
+	 * Adds an adaptive media image entry in the database and stores the image
 	 * bytes in the file store.
 	 *
 	 * @param  configurationEntry the configuration used to create the adaptive
 	 *         media image
 	 * @param  fileVersion the file version used to create the adaptive media
 	 *         image
-	 * @param  width the width of the adaptive media image
-	 * @param  height the height of the adaptive media image
-	 * @param  inputStream the input stream of the adaptive media image that
-	 *         will be stored in the file store
-	 * @param  size the size of the adaptive media image
+	 * @param  width the adaptive media image's width
+	 * @param  height the adaptive media image's height
+	 * @param  inputStream the adaptive media image's input stream to store in
+	 *         the file store
+	 * @param  size the adaptive media image's size
 	 * @return the adaptive media image
 	 * @throws PortalException if an adaptive media image already exists for the
 	 *         file version and configuration
-	 *
-	 * @review
 	 */
 	@Override
 	public AdaptiveMediaImageEntry addAdaptiveMediaImageEntry(
@@ -133,18 +129,12 @@ public class AdaptiveMediaImageEntryLocalServiceImpl
 
 	/**
 	 * Deletes all the adaptive media images generated for the configuration in
-	 * the company.
-	 *
-	 * <p>
-	 * This method deletes the adaptive media image entry from the database and
-	 * it also deletes the bytes from the file store.
-	 * </p>
+	 * the company. This method deletes both the adaptive media image entry from
+	 * the database and the bytes from the file store.
 	 *
 	 * @param companyId the primary key of the company
 	 * @param configurationEntry the configuration used to create the adaptive
 	 *        media image
-	 *
-	 * @review
 	 */
 	@Override
 	public void deleteAdaptiveMediaImageEntries(
@@ -158,17 +148,12 @@ public class AdaptiveMediaImageEntryLocalServiceImpl
 	}
 
 	/**
-	 * Deletes all the adaptive media images generated for a file version.
+	 * Deletes all the adaptive media images generated for a file version. This
+	 * method deletes both the adaptive media image entry from the database and
+	 * the bytes from the file store.
 	 *
-	 * <p>
-	 * This method deletes the adaptive media image entry from the database and
-	 * it also deletes the bytes from the file store.
-	 * </p>
-	 *
-	 * @param  fileVersion the FileVersion
-	 * @throws PortalException if the file version cannot be found
-	 *
-	 * @review
+	 * @param  fileVersion the file version
+	 * @throws PortalException if the file version was not found
 	 */
 	@Override
 	public void deleteAdaptiveMediaImageEntryFileVersion(
@@ -197,19 +182,13 @@ public class AdaptiveMediaImageEntryLocalServiceImpl
 	}
 
 	/**
-	 * Deletes adaptive media images generated for a file version under a
-	 * particular configuration.
-	 *
-	 * <p>
-	 * This method deletes the adaptive media image entry from the database and
-	 * it also deletes the bytes from the file store.
-	 * </p>
+	 * Deletes adaptive media images generated for a file version under a given
+	 * configuration. This method deletes both the adaptive media image entry
+	 * from the database and the bytes from the file store.
 	 *
 	 * @param  configurationUuid the configuration UUID
 	 * @param  fileVersionId the primary key of the file version
-	 * @throws PortalException if the file version cannot be found
-	 *
-	 * @review
+	 * @throws PortalException if the file version was not found
 	 */
 	@Override
 	public void deleteAdaptiveMediaImageEntryFileVersion(
@@ -240,13 +219,11 @@ public class AdaptiveMediaImageEntryLocalServiceImpl
 	 * Returns the adaptive media image entry generated for the configuration
 	 * and file version.
 	 *
-	 * @param  configurationUuid the uuid of the configuration used to create
+	 * @param  configurationUuid the UUID of the configuration used to create
 	 *         the adaptive media image
 	 * @param  fileVersionId the primary key of the file version
 	 * @return the matching adaptive media image entry, or <code>null</code> if
 	 *         a matching adaptive media image entry could not be found
-	 *
-	 * @review
 	 */
 	@Override
 	public AdaptiveMediaImageEntry fetchAdaptiveMediaImageEntry(
@@ -261,12 +238,10 @@ public class AdaptiveMediaImageEntryLocalServiceImpl
 	 * configuration in the company.
 	 *
 	 * @param  companyId the primary key of the company
-	 * @param  configurationUuid the uuid of the configuration used to create
+	 * @param  configurationUuid the UUID of the configuration used to create
 	 *         the adaptive media image
 	 * @return the number of adaptive media image entries in the company for the
 	 *         configuration
-	 *
-	 * @review
 	 */
 	@Override
 	public int getAdaptiveMediaImageEntriesCount(
@@ -286,8 +261,6 @@ public class AdaptiveMediaImageEntryLocalServiceImpl
 	 *         image
 	 * @return the input stream of the adaptive media image generated for a file
 	 *         version and configuration
-	 *
-	 * @review
 	 */
 	@Override
 	public InputStream getAdaptiveMediaImageEntryContentStream(
@@ -299,19 +272,13 @@ public class AdaptiveMediaImageEntryLocalServiceImpl
 	}
 
 	/**
-	 * Returns the number of adaptive media images that are expected to be in a
-	 * company if all the images that support adaptive media already have an
-	 * adaptive media image generated.
-	 *
-	 * <p>
-	 * The number of the actual adaptive media images could be less if there are
-	 * some images that haven't generated the adaptive media image yet.
-	 * </p>
+	 * Returns the total number of adaptive media images that are expected to be
+	 * in a company once they are generated. The number of adaptive media images
+	 * could be less if there are images that haven't generated the adaptive
+	 * media image yet.
 	 *
 	 * @param  companyId the primary key of the company
 	 * @return the number of expected adaptive media images for a company
-	 *
-	 * @review
 	 */
 	@Override
 	public int getExpectedAdaptiveMediaImageEntriesCount(long companyId) {
@@ -334,12 +301,10 @@ public class AdaptiveMediaImageEntryLocalServiceImpl
 	 * configuration in a company.
 	 *
 	 * @param  companyId the primary key of the company
-	 * @param  configurationUuid the uuid of the configuration used to create
+	 * @param  configurationUuid the UUID of the configuration used to create
 	 *         the adaptive media image
 	 * @return the percentage of images that have an adaptive media image out of
 	 *         the expected adaptive media images
-	 *
-	 * @review
 	 */
 	@Override
 	public int getPercentage(long companyId, String configurationUuid) {

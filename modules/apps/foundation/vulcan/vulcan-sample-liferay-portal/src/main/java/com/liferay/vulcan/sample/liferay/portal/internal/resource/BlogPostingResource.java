@@ -137,11 +137,13 @@ public class BlogPostingResource implements Resource<BlogsEntry> {
 	private Optional<AggregateRating> _getAggregateRatingOptional(
 		BlogsEntry blogsEntry) {
 
-		ClassNameClassPKIdentifier identifier = new ClassNameClassPKIdentifier(
-			BlogsEntry.class.getName(), blogsEntry.getEntryId());
+		ClassNameClassPKIdentifier classNameClassPKIdentifier =
+			new ClassNameClassPKIdentifier(
+				BlogsEntry.class.getName(), blogsEntry.getEntryId());
 
 		return Optional.of(
-			_aggregateRatingService.getAggregateRating(identifier));
+			_aggregateRatingService.getAggregateRating(
+				classNameClassPKIdentifier));
 	}
 
 	private BlogsEntry _getBlogsEntry(Long id) {
@@ -159,10 +161,8 @@ public class BlogPostingResource implements Resource<BlogsEntry> {
 	private QueryParamFilterType _getClassNameClassPKFilter(
 		BlogsEntry blogsEntry) {
 
-		String className = BlogsEntry.class.getName();
-
 		return _classNameClassPKFilterProvider.create(
-			className, blogsEntry.getEntryId());
+			BlogsEntry.class.getName(), blogsEntry.getEntryId());
 	}
 
 	private GroupIdFilter _getGroupIdFilter(Group group) {
@@ -185,12 +185,11 @@ public class BlogPostingResource implements Resource<BlogsEntry> {
 	private PageItems<BlogsEntry> _getPageItems(
 		GroupIdFilter groupIdFilter, Pagination pagination) {
 
-		Long groupId = groupIdFilter.getId();
-
 		List<BlogsEntry> blogsEntries = _blogsService.getGroupEntries(
-			groupId, 0, pagination.getStartPosition(),
+			groupIdFilter.getId(), 0, pagination.getStartPosition(),
 			pagination.getEndPosition());
-		int count = _blogsService.getGroupEntriesCount(groupId, 0);
+		int count = _blogsService.getGroupEntriesCount(
+			groupIdFilter.getId(), 0);
 
 		return new PageItems<>(blogsEntries, count);
 	}

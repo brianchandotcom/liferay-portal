@@ -640,7 +640,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 
 				SearchResultPermissionFilter searchResultPermissionFilter =
 					new DefaultSearchResultPermissionFilter(
-						this, permissionChecker);
+						this::doSearch, permissionChecker);
 
 				hits = searchResultPermissionFilter.search(searchContext);
 			}

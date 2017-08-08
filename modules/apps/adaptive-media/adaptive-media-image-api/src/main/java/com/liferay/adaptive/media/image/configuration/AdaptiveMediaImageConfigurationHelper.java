@@ -27,13 +27,11 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 /**
- * A helper class to manage and fetch {@link
- * AdaptiveMediaImageConfigurationEntry}. Using this interface is the preferred
- * mechanism to interact with image configuration entries.
+ * Manages and fetches an {@link AdaptiveMediaImageConfigurationEntry}. This
+ * interface is the preferred mechanism to interact with image configuration
+ * entries.
  *
  * @author Alejandro Hernández
- *
- * @review
  */
 @ProviderType
 public interface AdaptiveMediaImageConfigurationHelper {
@@ -42,19 +40,16 @@ public interface AdaptiveMediaImageConfigurationHelper {
 	 * Adds a new image configuration entry.
 	 *
 	 * @param  companyId the primary key of the company
-	 * @param  name the not blank and unique name of the image configuration
-	 *         entry.
-	 * @param  description the description of the image configuration entry
+	 * @param  name the image configuration entry's unique name
+	 * @param  description the image configuration entry's description
 	 * @param  uuid the image configuration entry's UUID
 	 * @param  properties a set of properties with additional information about
 	 *         how the adaptive media image will be generated
 	 * @return the image configuration entry
-	 * @throws AdaptiveMediaImageConfigurationException if there is an issue
-	 *         with the values of the new configuration entry.
-	 * @throws IOException if there is an issue when persisting the new image
-	 *         configuration entry in the store.
-	 *
-	 * @review
+	 * @throws AdaptiveMediaImageConfigurationException if there was an issue
+	 *         with the values of the new configuration entry
+	 * @throws IOException if there was an issue when persisting the new image
+	 *         configuration entry in the store
 	 */
 	public AdaptiveMediaImageConfigurationEntry
 			addAdaptiveMediaImageConfigurationEntry(
@@ -63,21 +58,16 @@ public interface AdaptiveMediaImageConfigurationHelper {
 		throws AdaptiveMediaImageConfigurationException, IOException;
 
 	/**
-	 * Deletes an already existing and disabled image configuration entry.
-	 *
-	 * <p>
-	 * If there is no image configuration entry with the specified UUID no
-	 * operation is done.
-	 * </p>
+	 * Deletes an existing and disabled image configuration entry. If no image
+	 * configuration entry matches the specified UUID, no operation is
+	 * performed.
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  uuid the image configuration entry's UUID
 	 * @throws InvalidStateAdaptiveMediaImageConfigurationException if the image
-	 *         configuration entry to be deleted is not disabled.
-	 * @throws IOException if there is an issue when deleting the image
-	 *         configuration entry from the store.
-	 *
-	 * @review
+	 *         configuration entry to delete was not disabled
+	 * @throws IOException if there was an issue when deleting the image
+	 *         configuration entry from the store
 	 */
 	public void deleteAdaptiveMediaImageConfigurationEntry(
 			long companyId, String uuid)
@@ -85,85 +75,65 @@ public interface AdaptiveMediaImageConfigurationHelper {
 			IOException;
 
 	/**
-	 * Disables an already existing and enabled image configuration entry.
-	 *
-	 * <p>
-	 * If there is no image configuration entry with the specified UUID or it is
-	 * already disabled no operation is done.
-	 * </p>
+	 * Disables an existing and enabled image configuration entry. If there is
+	 * no image configuration entry with the specified UUID or it is already
+	 * disabled, no operation is performed.
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  uuid the image configuration entry's UUID
-	 * @throws IOException if there is an issue when updating the image
-	 *         configuration entry from the store.
-	 *
-	 * @review
+	 * @throws IOException if there was an issue when updating the image
+	 *         configuration entry from the store
 	 */
 	public void disableAdaptiveMediaImageConfigurationEntry(
 			long companyId, String uuid)
 		throws IOException;
 
 	/**
-	 * Enables an already existing and disabled image configuration entry.
-	 *
-	 * <p>
-	 * If there is no image configuration entry with the specified UUID or it is
-	 * already enabled no operation is done.
-	 * </p>
+	 * Enables an existing and disabled image configuration entry. If there is
+	 * no image configuration entry with the specified UUID or it is already
+	 * enabled, no operation is performed.
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  uuid the image configuration entry's UUID
-	 * @throws IOException if there is an issue when updating the image
-	 *         configuration entry from the store.
-	 *
-	 * @review
+	 * @throws IOException if there was an issue when updating the image
+	 *         configuration entry from the store
 	 */
 	public void enableAdaptiveMediaImageConfigurationEntry(
 			long companyId, String uuid)
 		throws IOException;
 
 	/**
-	 * Deletes an already existing image configuration entry even if it is
-	 * enabled.
-	 *
-	 * <p>
-	 * If there is no image configuration entry with the specified UUID no
-	 * operation is done.
-	 * </p>
+	 * Deletes an existing image configuration entry, even if it is enabled.
+	 * This should be a last resort. If possible, an image configuration should
+	 * be disabled before deleting. If there is no image configuration entry
+	 * with the specified UUID, no operation is performed.
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  uuid the image configuration entry's UUID
-	 * @throws IOException if there is an issue when deleting the image
-	 *         configuration entry from the store.
-	 *
-	 * @review
+	 * @throws IOException if there was an issue when deleting the image
+	 *         configuration entry from the store
 	 */
 	public void forceDeleteAdaptiveMediaImageConfigurationEntry(
 			long companyId, String uuid)
 		throws IOException;
 
 	/**
-	 * Returns a collection of the enabled image configuration entries in a
-	 * particular company.
+	 * Returns a collection of the enabled image configuration entries for a
+	 * company.
 	 *
 	 * @param  companyId the primary key of the company
 	 * @return the collection of enabled image configuration entries
-	 *
-	 * @review
 	 */
 	public Collection<AdaptiveMediaImageConfigurationEntry>
 		getAdaptiveMediaImageConfigurationEntries(long companyId);
 
 	/**
-	 * Returns a collection of the image configuration entries filtered by a
-	 * particular predicate.
+	 * Returns a collection of image configuration entries filtered by the given
+	 * predicate for a company.
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  predicate the predicate used to filter the collection
-	 * @return the collection filtered by predicate of image configuration
-	 *         entries
-	 *
-	 * @review
+	 * @return the filtered collection of image configuration entries
 	 */
 	public Collection<AdaptiveMediaImageConfigurationEntry>
 		getAdaptiveMediaImageConfigurationEntries(
@@ -171,36 +141,32 @@ public interface AdaptiveMediaImageConfigurationHelper {
 			Predicate<? super AdaptiveMediaImageConfigurationEntry> predicate);
 
 	/**
-	 * Returns an optional image configuration entry for a particular company
-	 * and image configuration entry's UUID.
+	 * Returns an optional image configuration entry for the given company and
+	 * image configuration entry UUID.
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  configurationEntryUUID the image configuration entry's UUID
 	 * @return an optional image configuration entry
-	 *
-	 * @review
 	 */
 	public Optional<AdaptiveMediaImageConfigurationEntry>
 		getAdaptiveMediaImageConfigurationEntry(
 			long companyId, String configurationEntryUUID);
 
 	/**
-	 * Updates an already existing image configuration entry.
+	 * Updates an existing image configuration entry.
 	 *
 	 * @param  companyId the primary key of the company
-	 * @param  oldUuid the image configuration entry's UUID to be updated
-	 * @param  name the name of the new image configuration entry
-	 * @param  description the description of the new image configuration entry
-	 * @param  newUuid the new image configuration entry'ps UUID
+	 * @param  oldUuid the image configuration entry's UUID to update
+	 * @param  name the new image configuration entry's name
+	 * @param  description the new image configuration entry's description
+	 * @param  newUuid the new image configuration entry's UUID
 	 * @param  properties the new set of properties with additional information
 	 *         about how the adaptive media image will be generated
 	 * @return the updated image configuration entry
-	 * @throws AdaptiveMediaImageConfigurationException if there is an issue
-	 *         with the values of the new configuration entry.
-	 * @throws IOException if there is an issue when persisting the new image
-	 *         configuration entry in the store.
-	 *
-	 * @review
+	 * @throws AdaptiveMediaImageConfigurationException if there was an issue
+	 *         with the values of the new configuration entry
+	 * @throws IOException if there was an issue when persisting the new image
+	 *         configuration entry in the store
 	 */
 	public AdaptiveMediaImageConfigurationEntry
 			updateAdaptiveMediaImageConfigurationEntry(

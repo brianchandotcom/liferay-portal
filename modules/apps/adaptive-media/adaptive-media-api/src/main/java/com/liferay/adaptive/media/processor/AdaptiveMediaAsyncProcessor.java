@@ -20,10 +20,10 @@ import com.liferay.adaptive.media.internal.messaging.AdaptiveMediaProcessorComma
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * Generates a particular type of media asynchronously.
+ * Generates a specific type of media asynchronously.
  *
  * <p>
- * This processor will typically delegate the generation of the media in {@link
+ * This processor delegates the generation of the media in {@link
  * AdaptiveMediaProcessor} by invoking it in an asynchronous manner.
  * </p>
  *
@@ -33,46 +33,37 @@ import com.liferay.portal.kernel.exception.PortalException;
  * {@link com.liferay.adaptive.media.AdaptiveMediaAttribute} set available.
  * </p>
  *
- * @review
- *
  * @author Sergio González
  */
 @ProviderType
 public interface AdaptiveMediaAsyncProcessor<M, T> {
 
 	/**
-	 * Removes the model from the queue of models that are pending on a
-	 * particular command.
+	 * Removes the specified model from the given commmand's queue of execution.
 	 *
-	 * @param command the command that is pending to be executed on the model
-	 * @param modelId the model ID to be removed from the queue
-	 *
-	 * @review
+	 * @param command the command that is pending execution on the model
+	 * @param modelId the model ID to remove from the queue
 	 */
 	public void cleanQueue(
 		AdaptiveMediaProcessorCommand command, String modelId);
 
 	/**
-	 * Asynchronously completely removes any generated media for the model.
+	 * Asynchronously removes any generated media from the model.
 	 *
-	 * @param  model the model for which all generated media is deleted
-	 * @param  modelId the model ID for which all generated media is deleted
+	 * @param  model the model from which to remove all generated media
+	 * @param  modelId the model's ID
 	 * @throws PortalException if an error occurred while calling any Liferay
 	 *         services
-	 *
-	 * @review
 	 */
 	public void triggerCleanUp(M model, String modelId) throws PortalException;
 
 	/**
-	 * Asynchronously generates the media for the model
+	 * Asynchronously generates the media for the model.
 	 *
 	 * @param  model the model for which media is generated
-	 * @param  modelId the model ID for which media is generated
+	 * @param  modelId the model's ID
 	 * @throws PortalException if an error occurred while calling any Liferay
 	 *         services
-	 *
-	 * @review
 	 */
 	public void triggerProcess(M model, String modelId) throws PortalException;
 

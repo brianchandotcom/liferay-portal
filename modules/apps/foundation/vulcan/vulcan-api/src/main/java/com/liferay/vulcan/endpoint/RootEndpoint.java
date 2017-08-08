@@ -56,10 +56,10 @@ public interface RootEndpoint {
 		Optional<Function<String, SingleModel<T>>> optional =
 			routes.getSingleModelFunctionOptional();
 
-		Function<String, SingleModel<T>> singleModelFunction =
-			optional.orElseThrow(NotFoundException::new);
+		Function<String, SingleModel<T>> function = optional.orElseThrow(
+			NotFoundException::new);
 
-		return singleModelFunction.apply(id);
+		return function.apply(id);
 	}
 
 	/**
@@ -77,10 +77,10 @@ public interface RootEndpoint {
 
 		Optional<Supplier<Page<T>>> optional = routes.getPageSupplierOptional();
 
-		Supplier<Page<T>> pageSupplier = optional.orElseThrow(
+		Supplier<Page<T>> supplier = optional.orElseThrow(
 			NotFoundException::new);
 
-		return pageSupplier.get();
+		return supplier.get();
 	}
 
 	/**

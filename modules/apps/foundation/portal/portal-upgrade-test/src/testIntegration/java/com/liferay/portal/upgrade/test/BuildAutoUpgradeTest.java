@@ -195,6 +195,12 @@ public class BuildAutoUpgradeTest {
 
 	@Test
 	public void testBuildAutoUpgrade() throws Exception {
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
+			PreparedStatement ps = con.prepareStatement(
+				"insert into BuildAutoUpgradeTestEntity values (1, 'data')")) {
+
+			Assert.assertEquals(1, ps.executeUpdate());
+		}
 
 		// Initial columns
 
@@ -206,17 +212,59 @@ public class BuildAutoUpgradeTest {
 
 		_assertColumns("id_", "data_", "data2");
 
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
+			PreparedStatement ps = con.prepareStatement(
+				"select id_, data_, data2 from BuildAutoUpgradeTestEntity");
+			ResultSet rs = ps.executeQuery()) {
+
+			Assert.assertTrue(rs.next());
+
+			Assert.assertEquals(1, rs.getLong("id_"));
+			Assert.assertEquals("data", rs.getString("data_"));
+			Assert.assertEquals(StringPool.BLANK, rs.getString("data2"));
+		}
+
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
+			PreparedStatement ps = con.prepareStatement(
+				"update BuildAutoUpgradeTestEntity set data2 = 'data2' where " +
+					"id_ = 1")) {
+
+			Assert.assertEquals(1, ps.executeUpdate());
+		}
+
 		// Remove "data_" column
 
 		_updateBundle(_jarBytesV3);
 
 		_assertColumns("id_", "data2");
 
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
+			PreparedStatement ps = con.prepareStatement(
+				"select id_, data2 from BuildAutoUpgradeTestEntity");
+			ResultSet rs = ps.executeQuery()) {
+
+			Assert.assertTrue(rs.next());
+
+			Assert.assertEquals(1, rs.getLong("id_"));
+			Assert.assertEquals("data2", rs.getString("data2"));
+		}
+
 		// Remove "data2" column and add "data_" column
 
 		_updateBundle(_jarBytesV4);
 
 		_assertColumns("id_", "data_");
+
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
+			PreparedStatement ps = con.prepareStatement(
+				"select id_, data_ from BuildAutoUpgradeTestEntity");
+			ResultSet rs = ps.executeQuery()) {
+
+			Assert.assertTrue(rs.next());
+
+			Assert.assertEquals(1, rs.getLong("id_"));
+			Assert.assertEquals(StringPool.BLANK, rs.getString("data_"));
+		}
 	}
 
 	private void _addClass(

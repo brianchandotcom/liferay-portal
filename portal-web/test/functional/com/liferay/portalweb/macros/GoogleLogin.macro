@@ -22,6 +22,8 @@
 				<execute function="KeyPress" locator1="TextInput#ANSWER" value1="\RETURN" />
 			</then>
 		</if>
+
+		<execute function="SelectWindow#selectWindowTopNoSPARefresh" />
 	</command>
 
 	<command name="accountSignIn">

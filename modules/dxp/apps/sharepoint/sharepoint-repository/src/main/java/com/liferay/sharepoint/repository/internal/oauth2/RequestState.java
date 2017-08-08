@@ -19,6 +19,7 @@ import com.liferay.document.library.repository.authorization.oauth2.OAuth2Author
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.sharepoint.repository.internal.oauth2.constants.SharepointOAuth2WebKeys;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -37,7 +38,8 @@ public final class RequestState implements Serializable {
 	public static final RequestState get(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 
-		return (RequestState)session.getAttribute(_SESSION_KEY);
+		return (RequestState)session.getAttribute(
+			SharepointOAuth2WebKeys.REQUEST_STATE);
 	}
 
 	public static final void save(HttpServletRequest request, String state) {
@@ -47,7 +49,7 @@ public final class RequestState implements Serializable {
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		session.setAttribute(
-			_SESSION_KEY,
+			SharepointOAuth2WebKeys.REQUEST_STATE,
 			new RequestState(
 				ParamUtil.getLong(portletRequest, "folderId"),
 				PortalUtil.getCurrentCompleteURL(request), state));
@@ -63,7 +65,7 @@ public final class RequestState implements Serializable {
 
 		HttpSession session = request.getSession();
 
-		session.removeAttribute(_SESSION_KEY);
+		session.removeAttribute(SharepointOAuth2WebKeys.REQUEST_STATE);
 
 		response.sendRedirect(_url);
 	}
@@ -83,9 +85,6 @@ public final class RequestState implements Serializable {
 		_url = url;
 		_state = state;
 	}
-
-	private static final String _SESSION_KEY =
-		"DOCUMENT_LIBRARY_SHAREPOINT_OAUTH2_REQUEST_STATE";
 
 	private final long _folderId;
 	private final String _state;

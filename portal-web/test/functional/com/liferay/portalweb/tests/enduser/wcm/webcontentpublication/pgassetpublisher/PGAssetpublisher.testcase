@@ -1132,6 +1132,7 @@
 
 		<execute macro="AssetPublisherPortlet#configureAssetDisplayOrderPG">
 			<var name="fieldNameOrder" value="Publish Date" />
+			<var name="sortOrder" value="Ascending" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

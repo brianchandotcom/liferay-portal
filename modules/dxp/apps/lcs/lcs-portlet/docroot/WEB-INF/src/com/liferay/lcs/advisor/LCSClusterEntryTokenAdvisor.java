@@ -232,10 +232,7 @@ public class LCSClusterEntryTokenAdvisor {
 		}
 		catch (Exception e) {
 			if (e instanceof IOException) {
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Unable to find the LCS cluster entry token file");
-				}
+				_log.error("Unable to find the LCS cluster entry token file");
 			}
 			else {
 				_log.error(

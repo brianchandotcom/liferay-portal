@@ -56,9 +56,7 @@ public class CommandMessageListener implements MessageListener {
 		else {
 			error = "Unable to verify digital signature";
 
-			if (_log.isWarnEnabled()) {
-				_log.warn(error + ": " + commandMessage);
-			}
+			_log.error(error + ": " + commandMessage);
 		}
 
 		if (error != null) {

@@ -179,6 +179,14 @@
 			</filterchain>
 		</loadfile>
 
+		<exec executable="git" failonerror="true">
+			<arg value="fetch" />
+			<arg value="--force" />
+			<arg value="--no-tags" />
+			<arg value="upstream" />
+			<arg value="${portal.git.commit}:refs/tags/git-commit-portal" />
+		</exec>
+
 		<loadresource property="working.dir.checkout.excludes.git">
 			<propertyresource name="working.dir.checkout.excludes" />
 			<filterchain>
@@ -188,7 +196,7 @@
 
 		<exec executable="git" failonerror="true">
 			<arg value="checkout" />
-			<arg value="${portal.git.commit}" />
+			<arg value="refs/tags/git-commit-portal" />
 			<arg value="." />
 			<arg line=":(exclude)${working.dir.checkout.excludes.git}" />
 		</exec>
@@ -197,6 +205,12 @@
 			<arg value="reset" />
 			<arg value="HEAD" />
 			<arg value="." />
+		</exec>
+
+		<exec executable="git">
+			<arg value="tag" />
+			<arg value="-d" />
+			<arg value="git-commit-portal" />
 		</exec>
 	</target>
 
@@ -222,8 +236,16 @@
 		</fail>
 
 		<exec executable="git" failonerror="true">
+			<arg value="fetch" />
+			<arg value="--force" />
+			<arg value="--no-tags" />
+			<arg value="upstream" />
+			<arg value="${portal.private.git.commit}:refs/tags/git-commit-portal-private" />
+		</exec>
+
+		<exec executable="git" failonerror="true">
 			<arg value="checkout" />
-			<arg value="${portal.private.git.commit}" />
+			<arg value="refs/tags/git-commit-portal-private" />
 			<arg value="modules/private" />
 		</exec>
 
@@ -231,6 +253,12 @@
 			<arg value="reset" />
 			<arg value="HEAD" />
 			<arg value="modules/private" />
+		</exec>
+
+		<exec executable="git">
+			<arg value="tag" />
+			<arg value="-d" />
+			<arg value="git-commit-portal-private" />
 		</exec>
 	</target>
 

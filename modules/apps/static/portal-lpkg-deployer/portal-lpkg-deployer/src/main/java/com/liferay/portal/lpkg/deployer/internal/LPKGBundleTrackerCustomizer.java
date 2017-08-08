@@ -186,20 +186,11 @@ public class LPKGBundleTrackerCustomizer
 					newBundle = _bundleContext.installBundle(
 						location, url.openStream());
 
-					BundleStartLevel bundleStartLevel = newBundle.adapt(
-						BundleStartLevel.class);
-
-					bundleStartLevel.setStartLevel(
+					LPKGStartLevelStartUtil.setStartLevelAndStart(
+						newBundle,
 						PropsValues.
-							MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL);
-
-					Dictionary<String, String> headers = newBundle.getHeaders();
-
-					String fragmentHost = headers.get(Constants.FRAGMENT_HOST);
-
-					if (fragmentHost == null) {
-						newBundle.start();
-					}
+							MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL,
+						_bundleContext);
 
 					bundles.add(newBundle);
 				}
@@ -237,13 +228,10 @@ public class LPKGBundleTrackerCustomizer
 				newBundle = _bundleContext.installBundle(
 					url.getPath(), _toWARWrapperBundle(bundle, url));
 
-				BundleStartLevel bundleStartLevel = newBundle.adapt(
-					BundleStartLevel.class);
-
-				bundleStartLevel.setStartLevel(
-					PropsValues.MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL);
-
-				newBundle.start();
+				LPKGStartLevelStartUtil.setStartLevelAndStart(
+					newBundle,
+					PropsValues.MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL,
+					_bundleContext);
 
 				bundles.add(newBundle);
 			}
@@ -567,8 +555,8 @@ public class LPKGBundleTrackerCustomizer
 					jarOutputStream);
 
 				_writeClasses(
-					jarOutputStream, WABWrapperUtil.class,
-					WARBundleWrapperBundleActivator.class,
+					jarOutputStream, LPKGStartLevelStartUtil.class,
+					WABWrapperUtil.class, WARBundleWrapperBundleActivator.class,
 					URLStreamHandlerServiceServiceTrackerCustomizer.class);
 			}
 

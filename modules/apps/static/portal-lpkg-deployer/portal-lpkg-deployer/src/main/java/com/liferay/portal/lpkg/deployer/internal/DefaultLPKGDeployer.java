@@ -383,13 +383,10 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 			jarBundle = bundleContext.installBundle(
 				location, new FileInputStream(jarFile));
 
-			BundleStartLevel bundleStartLevel = jarBundle.adapt(
-				BundleStartLevel.class);
-
-			bundleStartLevel.setStartLevel(
-				PropsValues.MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL);
-
-			_startBundle(jarBundle);
+			LPKGStartLevelStartUtil.setStartLevelAndStart(
+				jarBundle,
+				PropsValues.MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL,
+				bundleContext);
 
 			if (_log.isInfoEnabled()) {
 				_log.info("Installed override JAR bundle " + location);

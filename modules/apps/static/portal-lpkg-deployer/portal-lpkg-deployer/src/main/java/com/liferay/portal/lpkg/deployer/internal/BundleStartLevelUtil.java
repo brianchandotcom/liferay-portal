@@ -26,7 +26,7 @@ import org.osgi.framework.startlevel.FrameworkStartLevel;
 /**
  * @author Matthew Tambara
  */
-public class LPKGStartLevelStartUtil {
+public class BundleStartLevelUtil {
 
 	public static void setStartLevelAndStart(
 			Bundle bundle, int startLevel, BundleContext bundleContext)

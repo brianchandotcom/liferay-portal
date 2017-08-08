@@ -383,7 +383,7 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 			jarBundle = bundleContext.installBundle(
 				location, new FileInputStream(jarFile));
 
-			LPKGStartLevelStartUtil.setStartLevelAndStart(
+			BundleStartLevelUtil.setStartLevelAndStart(
 				jarBundle,
 				PropsValues.MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL,
 				bundleContext);

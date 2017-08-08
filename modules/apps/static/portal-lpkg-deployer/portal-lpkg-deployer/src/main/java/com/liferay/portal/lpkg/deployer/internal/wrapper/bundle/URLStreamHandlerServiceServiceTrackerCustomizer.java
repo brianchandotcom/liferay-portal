@@ -14,7 +14,7 @@
 
 package com.liferay.portal.lpkg.deployer.internal.wrapper.bundle;
 
-import com.liferay.portal.lpkg.deployer.internal.LPKGStartLevelStartUtil;
+import com.liferay.portal.lpkg.deployer.internal.BundleStartLevelUtil;
 import com.liferay.portal.lpkg.deployer.internal.WABWrapperUtil;
 
 import java.net.URL;
@@ -82,7 +82,7 @@ public class URLStreamHandlerServiceServiceTrackerCustomizer
 				newBundle = _bundleContext.installBundle(
 					location, urlConnection.getInputStream());
 
-				LPKGStartLevelStartUtil.setStartLevelAndStart(
+				BundleStartLevelUtil.setStartLevelAndStart(
 					newBundle, _startLevel, _bundleContext);
 			}
 

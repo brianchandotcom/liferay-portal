@@ -186,7 +186,7 @@ public class LPKGBundleTrackerCustomizer
 					newBundle = _bundleContext.installBundle(
 						location, url.openStream());
 
-					LPKGStartLevelStartUtil.setStartLevelAndStart(
+					BundleStartLevelUtil.setStartLevelAndStart(
 						newBundle,
 						PropsValues.
 							MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL,
@@ -228,7 +228,7 @@ public class LPKGBundleTrackerCustomizer
 				newBundle = _bundleContext.installBundle(
 					url.getPath(), _toWARWrapperBundle(bundle, url));
 
-				LPKGStartLevelStartUtil.setStartLevelAndStart(
+				BundleStartLevelUtil.setStartLevelAndStart(
 					newBundle,
 					PropsValues.MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL,
 					_bundleContext);
@@ -555,7 +555,7 @@ public class LPKGBundleTrackerCustomizer
 					jarOutputStream);
 
 				_writeClasses(
-					jarOutputStream, LPKGStartLevelStartUtil.class,
+					jarOutputStream, BundleStartLevelUtil.class,
 					WABWrapperUtil.class, WARBundleWrapperBundleActivator.class,
 					URLStreamHandlerServiceServiceTrackerCustomizer.class);
 			}

@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.configuration.ServiceComponentConfiguration;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -51,18 +50,23 @@ public class ModuleResourceLoader implements ServiceComponentConfiguration {
 	}
 
 	@Override
+	public String getServletContextName() {
+		return _bundle.getSymbolicName();
+	}
+
+	@Override
 	public InputStream getSQLIndexesInputStream() {
-		return new ByteArrayInputStream(new byte[0]);
+		return getInputStream("/META-INF/sql/indexes.sql");
 	}
 
 	@Override
 	public InputStream getSQLSequencesInputStream() {
-		return new ByteArrayInputStream(new byte[0]);
+		return getInputStream("/META-INF/sql/sequences.sql");
 	}
 
 	@Override
 	public InputStream getSQLTablesInputStream() {
-		return new ByteArrayInputStream(new byte[0]);
+		return getInputStream("/META-INF/sql/tables.sql");
 	}
 
 	protected InputStream getInputStream(String location) {

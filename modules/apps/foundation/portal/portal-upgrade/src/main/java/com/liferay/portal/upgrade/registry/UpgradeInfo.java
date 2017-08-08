@@ -14,6 +14,8 @@
 
 package com.liferay.portal.upgrade.registry;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -24,15 +26,29 @@ import java.util.Objects;
  * @author Miguel Pastor
  * @author Carlos Sierra Andrés
  */
+@ProviderType
 public class UpgradeInfo {
 
 	public UpgradeInfo(
 		String fromSchemaVersionString, String toSchemaVersionString,
-		UpgradeStep upgradeStep) {
+		int buildNumber, UpgradeStep upgradeStep) {
 
 		_fromSchemaVersionString = fromSchemaVersionString;
 		_toSchemaVersionString = toSchemaVersionString;
+		_buildNumber = buildNumber;
 		_upgradeStep = upgradeStep;
+	}
+
+	/**
+	 * @deprecated As of 2.7.0, replace by {@link #UpgradeInfo(String, String,
+	 *             int, UpgradeStep)}
+	 */
+	@Deprecated
+	public UpgradeInfo(
+		String fromSchemaVersionString, String toSchemaVersionString,
+		UpgradeStep upgradeStep) {
+
+		this(fromSchemaVersionString, toSchemaVersionString, 0, upgradeStep);
 	}
 
 	@Override
@@ -58,6 +74,10 @@ public class UpgradeInfo {
 		}
 
 		return false;
+	}
+
+	public int getBuildNumber() {
+		return _buildNumber;
 	}
 
 	public String getFromSchemaVersionString() {
@@ -97,6 +117,7 @@ public class UpgradeInfo {
 		return sb.toString();
 	}
 
+	private final int _buildNumber;
 	private final String _fromSchemaVersionString;
 	private final String _toSchemaVersionString;
 	private final UpgradeStep _upgradeStep;

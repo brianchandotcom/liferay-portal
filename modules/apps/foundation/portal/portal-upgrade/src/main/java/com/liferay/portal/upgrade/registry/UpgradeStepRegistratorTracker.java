@@ -15,9 +15,14 @@
 package com.liferay.portal.upgrade.registry;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator.Registry;
 
 import java.util.ArrayList;
@@ -26,6 +31,7 @@ import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Properties;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -52,7 +58,9 @@ public class UpgradeStepRegistratorTracker {
 			new ArrayList<>();
 
 		List<UpgradeInfo> upgradeInfos = createUpgradeInfos(
-			fromSchemaVersionString, toSchemaVersionString, upgradeSteps);
+			fromSchemaVersionString, toSchemaVersionString,
+			GetterUtil.getInteger(properties.get("build.number")),
+			upgradeSteps);
 
 		for (UpgradeInfo upgradeInfo : upgradeInfos) {
 			ServiceRegistration<UpgradeStep> serviceRegistration = _register(
@@ -77,7 +85,7 @@ public class UpgradeStepRegistratorTracker {
 
 	protected static List<UpgradeInfo> createUpgradeInfos(
 		String fromSchemaVersionString, String toSchemaVersionString,
-		UpgradeStep... upgradeSteps) {
+		int buildNumber, UpgradeStep... upgradeSteps) {
 
 		if (ArrayUtil.isEmpty(upgradeSteps)) {
 			return Collections.emptyList();
@@ -95,7 +103,7 @@ public class UpgradeStepRegistratorTracker {
 
 			UpgradeInfo upgradeInfo = new UpgradeInfo(
 				upgradeInfoFromSchemaVersionString,
-				upgradeInfoToSchemaVersionString, upgradeStep);
+				upgradeInfoToSchemaVersionString, buildNumber, upgradeStep);
 
 			upgradeInfos.add(upgradeInfo);
 
@@ -105,11 +113,24 @@ public class UpgradeStepRegistratorTracker {
 
 		UpgradeInfo upgradeInfo = new UpgradeInfo(
 			upgradeInfoFromSchemaVersionString, toSchemaVersionString,
-			upgradeSteps[upgradeSteps.length - 1]);
+			buildNumber, upgradeSteps[upgradeSteps.length - 1]);
 
 		upgradeInfos.add(upgradeInfo);
 
 		return upgradeInfos;
+	}
+
+	/**
+	 * @deprecated As of 2.8.0, replaced by {@link #createUpgradeInfos(String,
+	 *             String, int, UpgradeStep...)}
+	 */
+	@Deprecated
+	protected static List<UpgradeInfo> createUpgradeInfos(
+		String fromSchemaVersionString, String toSchemaVersionString,
+		UpgradeStep... upgradeSteps) {
+
+		return createUpgradeInfos(
+			fromSchemaVersionString, toSchemaVersionString, 0, upgradeSteps);
 	}
 
 	@Activate
@@ -121,12 +142,16 @@ public class UpgradeStepRegistratorTracker {
 			new UpgradeStepRegistratorServiceTrackerCustomizer());
 	}
 
+	/**
+	 * @deprecated As of 2.8.0, with no direct replacement
+	 */
+	@Deprecated
 	protected List<UpgradeInfo> createUpgradeInfos(
 		String fromSchemaVersionString, String toSchemaVersionString,
 		Collection<UpgradeStep> upgradeSteps) {
 
 		return createUpgradeInfos(
-			fromSchemaVersionString, toSchemaVersionString,
+			fromSchemaVersionString, toSchemaVersionString, 0,
 			upgradeSteps.toArray(new UpgradeStep[upgradeSteps.size()]));
 	}
 
@@ -142,6 +167,7 @@ public class UpgradeStepRegistratorTracker {
 		BundleContext bundleContext, String bundleSymbolicName,
 		UpgradeInfo upgradeInfo, Dictionary<String, Object> properties) {
 
+		properties.put("build.number", upgradeInfo.getBuildNumber());
 		properties.put("upgrade.bundle.symbolic.name", bundleSymbolicName);
 		properties.put("upgrade.db.type", "any");
 		properties.put(
@@ -154,6 +180,9 @@ public class UpgradeStepRegistratorTracker {
 		return bundleContext.registerService(
 			UpgradeStep.class, upgradeInfo.getUpgradeStep(), properties);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpgradeStepRegistratorTracker.class);
 
 	private BundleContext _bundleContext;
 	private ServiceTracker
@@ -180,7 +209,8 @@ public class UpgradeStepRegistratorTracker {
 				new ArrayList<>();
 
 			upgradeStepRegistrator.register(
-				new UpgradeStepRegistry(serviceRegistrations));
+				new UpgradeStepRegistry(
+					upgradeStepRegistrator, serviceRegistrations));
 
 			return serviceRegistrations;
 		}
@@ -210,9 +240,11 @@ public class UpgradeStepRegistratorTracker {
 		private class UpgradeStepRegistry implements Registry {
 
 			public UpgradeStepRegistry(
+				UpgradeStepRegistrator upgradeStepRegistrator,
 				Collection<ServiceRegistration<UpgradeStep>>
 					serviceRegistrations) {
 
+				_upgradeStepRegistrator = upgradeStepRegistrator;
 				_serviceRegistrations = serviceRegistrations;
 			}
 
@@ -221,8 +253,33 @@ public class UpgradeStepRegistratorTracker {
 				final String bundleSymbolicName, String fromSchemaVersionString,
 				String toSchemaVersionString, UpgradeStep... upgradeSteps) {
 
+				int buildNumber = 0;
+
+				try {
+					if (ArrayUtil.isNotEmpty(upgradeSteps)) {
+						Class<? extends UpgradeStepRegistrator> clazz =
+							_upgradeStepRegistrator.getClass();
+
+						Configuration configuration =
+							ConfigurationFactoryUtil.getConfiguration(
+								clazz.getClassLoader(), "service");
+
+						Properties properties = configuration.getProperties();
+
+						buildNumber = GetterUtil.getInteger(
+							properties.getProperty("build.number"));
+					}
+				}
+				catch (Exception e) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Unable to read service.properties for " +
+								bundleSymbolicName);
+					}
+				}
+
 				List<UpgradeInfo> upgradeInfos = createUpgradeInfos(
-					fromSchemaVersionString, toSchemaVersionString,
+					fromSchemaVersionString, toSchemaVersionString, buildNumber,
 					upgradeSteps);
 
 				for (UpgradeInfo upgradeInfo : upgradeInfos) {
@@ -237,6 +294,7 @@ public class UpgradeStepRegistratorTracker {
 
 			private final Collection<ServiceRegistration<UpgradeStep>>
 				_serviceRegistrations;
+			private final UpgradeStepRegistrator _upgradeStepRegistrator;
 
 		}
 

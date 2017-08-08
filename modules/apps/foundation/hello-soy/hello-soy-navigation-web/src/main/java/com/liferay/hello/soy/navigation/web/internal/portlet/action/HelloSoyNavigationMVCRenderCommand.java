@@ -34,8 +34,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = MVCRenderCommand.class
 )
-public class HelloSoyNavigationMVCRenderCommand
-	implements MVCRenderCommand {
+public class HelloSoyNavigationMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(

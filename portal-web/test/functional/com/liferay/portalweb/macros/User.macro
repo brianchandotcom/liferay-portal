@@ -1779,7 +1779,9 @@
 
 		<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
 
-		<execute function="AssertClick" locator1="Icon#FACEBOOK" value1="Facebook" />
+		<execute function="AssertElementPresent" locator1="Icon#FACEBOOK" />
+
+		<execute function="AssertClick" locator1="Link#FACEBOOK" value1="Facebook" />
 
 		<execute function="SelectWindow" locator1="title=Log into Facebook | Facebook" />
 
@@ -1788,45 +1790,53 @@
 
 		<execute function="Click" locator1="FacebookLogin#LOGIN_BUTTON" />
 
-		<if>
-			<condition function="IsElementPresent#pauseIsElementPresent" locator1="Button#I_AGREE" value1="I Agree" />
-			<then>
-				<execute function="AssertClick" locator1="Button#I_AGREE" value1="I Agree" />
-			</then>
-		</if>
+		<execute function="SelectWindow#selectWindowTopNoSPARefresh" />
 
 		<if>
-			<condition function="IsElementPresent#pauseIsElementPresent" locator1="TextInput#PASSWORD" />
+			<condition function="IsElementPresent#pauseIsElementPresent" locator1="TextInput#EMAIL_ADDRESS" />
 			<then>
+				<execute function="SelectWindow#selectWindowNoSPARefresh" locator1="title=Terms of Use" />
 				<if>
-					<and>
-						<isset var="syntaxCheckingEnabled" />
-						<equals arg1="${syntaxCheckingEnabled}" arg2="true" />
-					</and>
+					<condition function="IsElementPresent#pauseIsElementPresent" locator1="Button#I_AGREE" value1="I Agree" />
 					<then>
-						<execute function="Type" locator1="TextInput#PASSWORD" value1="${resetPassword}" />
-						<execute function="Type" locator1="TextInput#ENTER_AGAIN" value1="${resetPassword}" />
+						<execute function="AssertClick" locator1="Button#I_AGREE" value1="I Agree" />
 					</then>
-					<else>
-						<execute function="Type" locator1="TextInput#PASSWORD" value1="test" />
-						<execute function="Type" locator1="TextInput#ENTER_AGAIN" value1="test" />
-					</else>
 				</if>
 
-				<execute macro="Button#clickSave" />
+				<if>
+					<condition function="IsElementPresent#pauseIsElementPresent" locator1="TextInput#PASSWORD" />
+					<then>
+						<if>
+							<and>
+								<isset var="syntaxCheckingEnabled" />
+								<equals arg1="${syntaxCheckingEnabled}" arg2="true" />
+							</and>
+							<then>
+								<execute function="Type" locator1="TextInput#PASSWORD" value1="${resetPassword}" />
+								<execute function="Type" locator1="TextInput#ENTER_AGAIN" value1="${resetPassword}" />
+							</then>
+							<else>
+								<execute function="Type" locator1="TextInput#PASSWORD" value1="test" />
+								<execute function="Type" locator1="TextInput#ENTER_AGAIN" value1="test" />
+							</else>
+						</if>
+
+						<execute macro="Button#clickSave" />
+					</then>
+				</if>
+
+				<if>
+					<condition function="IsElementPresent#pauseIsElementPresent" locator1="TextInput#ANSWER" />
+					<then>
+						<execute function="Type" locator1="TextInput#ANSWER" value1="test" />
+
+						<execute function="KeyPress" locator1="TextInput#ANSWER" value1="\RETURN" />
+					</then>
+				</if>
 			</then>
 		</if>
 
-		<if>
-			<condition function="IsElementPresent#pauseIsElementPresent" locator1="TextInput#ANSWER" />
-			<then>
-				<execute function="Type" locator1="TextInput#ANSWER" value1="test" />
-
-				<execute function="KeyPress" locator1="TextInput#ANSWER" value1="\RETURN" />
-			</then>
-		</if>
-
-		<execute function="SelectWindow" locator1="title=Welcome - ${siteName}" />
+		<execute function="SelectWindow#selectWindowNoSPARefresh" locator1="title=Welcome - ${siteName}" />
 
 		<execute function="AssertElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />
 	</command>

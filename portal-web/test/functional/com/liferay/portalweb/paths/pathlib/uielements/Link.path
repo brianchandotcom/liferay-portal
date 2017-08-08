@@ -64,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FACEBOOK</td>
+	<td>//a/span[contains(@class,'taglib-text') and contains(.,'Facebook')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GUEST</td>
 	<td>//div[@class='navigation']/ul/li/a/span[contains(.,'Guest')]</td>
 	<td></td>

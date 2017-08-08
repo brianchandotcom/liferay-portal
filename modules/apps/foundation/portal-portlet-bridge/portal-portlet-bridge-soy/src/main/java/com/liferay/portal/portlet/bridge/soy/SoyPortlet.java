@@ -81,9 +81,14 @@ public class SoyPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		Template template = getTemplate(renderRequest);
-
-		renderRequest.setAttribute(WebKeys.TEMPLATE, template);
+		if (!_isRequestTemplateCreated(renderRequest)) {
+			try {
+				_createRequestTemplate(renderRequest);
+			}
+			catch (TemplateException te) {
+				throw new PortletException(te);
+			}
+		}
 
 		super.render(renderRequest, renderResponse);
 	}
@@ -112,16 +117,16 @@ public class SoyPortlet extends MVCPortlet {
 	protected Template getTemplate(PortletRequest portletRequest)
 		throws PortletException {
 
-		if (_template == null) {
-			try {
-				_template = _createTemplate();
-			}
-			catch (TemplateException te) {
-				throw new PortletException("Unable to create template", te);
-			}
+		if (_isRequestTemplateCreated(portletRequest)) {
+			return (Template)portletRequest.getAttribute(WebKeys.TEMPLATE);
 		}
 
-		return _template;
+		try {
+			return _createRequestTemplate(portletRequest);
+		}
+		catch (TemplateException te) {
+			throw new PortletException("Unable to create template", te);
+		}
 	}
 
 	@Override
@@ -219,11 +224,17 @@ public class SoyPortlet extends MVCPortlet {
 	@Deprecated
 	protected Template template;
 
-	private Template _createTemplate() throws TemplateException {
+	private Template _createRequestTemplate(PortletRequest portletRequest)
+		throws TemplateException {
+
 		List<TemplateResource> templateResources = _getTemplateResources();
 
-		return TemplateManagerUtil.getTemplate(
+		Template template = TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_SOY, templateResources, false);
+
+		portletRequest.setAttribute(WebKeys.TEMPLATE, template);
+
+		return template;
 	}
 
 	private List<TemplateResource> _getTemplateResources()
@@ -236,6 +247,17 @@ public class SoyPortlet extends MVCPortlet {
 		}
 
 		return _templateResources;
+	}
+
+	private boolean _isRequestTemplateCreated(PortletRequest portletRequest) {
+		Template template = (Template)portletRequest.getAttribute(
+			WebKeys.TEMPLATE);
+
+		if (template != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private void _writePortletJavaScript(
@@ -262,7 +284,6 @@ public class SoyPortlet extends MVCPortlet {
 
 	private Bundle _bundle;
 	private SoyPortletHelper _soyPortletHelper;
-	private Template _template;
 	private List<TemplateResource> _templateResources;
 
 }

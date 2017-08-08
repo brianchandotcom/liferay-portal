@@ -67,6 +67,7 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.portal.verify.extender.internal.configuration.VerifyProcessTrackerConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
+		"osgi.command.function=check", "osgi.command.function=checkAll",
 		"osgi.command.function=execute", "osgi.command.function=executeAll",
 		"osgi.command.function=list", "osgi.command.function=show",
 		"osgi.command.function=showReports", "osgi.command.scope=verify"
@@ -74,6 +75,38 @@ import org.osgi.service.component.annotations.Reference;
 	service = {VerifyProcessTrackerOSGiCommands.class}
 )
 public class VerifyProcessTrackerOSGiCommands {
+
+	public void check(final String verifyProcessName) {
+		Release release = releaseLocalService.fetchRelease(verifyProcessName);
+
+		if ((release == null) ||
+			(!release.isVerified() &&
+			 (release.getState() == ReleaseConstants.STATE_GOOD))) {
+
+			System.out.println(
+				verifyProcessName + " verify process hasn't been executed yet");
+		}
+		else {
+			if (release.isVerified()) {
+				System.out.println(
+					verifyProcessName +
+						" verify process was executed without errors");
+			}
+			else if (release.getState() ==
+						ReleaseConstants.STATE_VERIFY_FAILURE) {
+
+				System.out.println(
+					verifyProcessName +
+						" verify process failed last time it was executed");
+			}
+		}
+	}
+
+	public void checkAll() {
+		for (String verifyProcessName : _verifyProcesses.keySet()) {
+			check(verifyProcessName);
+		}
+	}
 
 	public void execute(final String verifyProcessName) {
 		_execute(verifyProcessName, null, true);

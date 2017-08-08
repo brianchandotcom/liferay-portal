@@ -15,7 +15,10 @@
 package com.liferay.portal.portlet.bridge.soy;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCCommandCache;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
@@ -243,13 +246,36 @@ public class SoyPortlet extends MVCPortlet {
 		return template;
 	}
 
+	private MVCRenderCommand _getMVCRenderCommand(String mvcRenderCommandName) {
+		MVCCommandCache mvcRenderCommandCache = getRenderMVCCommandCache();
+
+		return (MVCRenderCommand)mvcRenderCommandCache.getMVCCommand(
+			mvcRenderCommandName);
+	}
+
 	private List<TemplateResource> _getTemplateResources()
 		throws TemplateException {
 
-		if (_templateResources == null) {
-			_templateResources =
+		if (_templateResources != null) {
+			return _templateResources;
+		}
+
+		_templateResources =
+			SoyTemplateResourcesProvider.getBundleTemplateResources(
+				_bundle, templatePath);
+
+		MVCCommandCache mvcCommandCache = getRenderMVCCommandCache();
+
+		for (String mvcCommandName : mvcCommandCache.getMVCCommandNames()) {
+			MVCCommand mvcCommand = _getMVCRenderCommand(mvcCommandName);
+
+			Bundle bundle = FrameworkUtil.getBundle(mvcCommand.getClass());
+
+			List<TemplateResource> mvcCommandTemplateResources =
 				SoyTemplateResourcesProvider.getBundleTemplateResources(
-					_bundle, templatePath);
+					bundle, templatePath);
+
+			_templateResources.addAll(mvcCommandTemplateResources);
 		}
 
 		return _templateResources;

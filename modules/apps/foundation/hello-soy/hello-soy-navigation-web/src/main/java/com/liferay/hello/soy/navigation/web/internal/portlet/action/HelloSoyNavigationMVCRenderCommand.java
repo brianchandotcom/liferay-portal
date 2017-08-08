@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.hello.soy.web.internal.portlet.action;
+package com.liferay.hello.soy.navigation.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.template.Template;
@@ -34,8 +34,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = MVCRenderCommand.class
 )
-public class HelloSoyNavigationExampleMVCRenderCommand
-	implements MVCRenderCommand {
+public class HelloSoyNavigationMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(

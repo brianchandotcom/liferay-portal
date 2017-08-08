@@ -43,6 +43,7 @@ import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
+import com.liferay.wiki.service.WikiPageServiceUtil;
 import com.liferay.wiki.util.test.WikiTestUtil;
 
 import java.util.ArrayList;
@@ -53,6 +54,7 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -69,6 +71,40 @@ public class WikiPageStagedModelDataHandlerTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
+
+	@Test
+	public void testDeletesAttachments() throws Exception {
+		Map<String, List<StagedModel>> dependentStagedModelsMap =
+			addDependentStagedModelsMap(stagingGroup);
+
+		WikiPage wikiPage = (WikiPage)addStagedModel(
+			stagingGroup, dependentStagedModelsMap);
+
+		exportImportStagedModel(wikiPage);
+
+		WikiPage importedWikiPage = (WikiPage)getStagedModel(
+			wikiPage.getUuid(), liveGroup);
+
+		Assert.assertEquals(
+			1, importedWikiPage.getAttachmentsFileEntriesCount());
+
+		List<FileEntry> attachmentsFileEntries =
+			wikiPage.getAttachmentsFileEntries();
+
+		FileEntry attachment = attachmentsFileEntries.get(0);
+
+		WikiPageServiceUtil.movePageAttachmentToTrash(
+			wikiPage.getNodeId(), wikiPage.getTitle(),
+			attachment.getFileName());
+
+		exportImportStagedModel(wikiPage);
+
+		importedWikiPage = (WikiPage)getStagedModel(
+			wikiPage.getUuid(), liveGroup);
+
+		Assert.assertEquals(
+			0, importedWikiPage.getAttachmentsFileEntriesCount());
+	}
 
 	@Override
 	protected Map<String, List<StagedModel>> addDefaultDependentStagedModelsMap(

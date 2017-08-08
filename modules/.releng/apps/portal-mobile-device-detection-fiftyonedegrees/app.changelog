@@ -1,0 +1,10 @@
+#
+# Liferay App Version 1.0.0
+#
+
+app.artifacts-1.0.0=\
+	com.liferay.portal.mobile.device.detection.fiftyonedegrees-1.0.7.jar
+
+app.change.log-1.0.0=LPS-70728
+
+app.git.id-1.0.0=1a484db6ef0acad1835ec7becc27421b7d788253

@@ -45,6 +45,7 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.UncheckedIOException;
 import org.gradle.api.artifacts.ConfigurablePublishArtifact;
+import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.dsl.ArtifactHandler;
 import org.gradle.api.plugins.BasePlugin;
@@ -85,6 +86,7 @@ public class LiferayThemePlugin implements Plugin<Project> {
 			project, liferayExtension);
 
 		_configureArtifacts(project);
+		_configureConfigurationDefault(project);
 		_configureTaskBuildLang(project);
 		_configureTaskClean(project);
 		_configureTaskDeploy(project);
@@ -196,6 +198,16 @@ public class LiferayThemePlugin implements Plugin<Project> {
 				}
 
 			});
+	}
+
+	private void _configureConfigurationDefault(Project project) {
+		Configuration defaultConfiguration = GradleUtil.getConfiguration(
+			project, Dependency.DEFAULT_CONFIGURATION);
+
+		Configuration archivesConfiguration = GradleUtil.getConfiguration(
+			project, Dependency.ARCHIVES_CONFIGURATION);
+
+		defaultConfiguration.extendsFrom(archivesConfiguration);
 	}
 
 	private void _configureTaskBuildLang(Project project) {

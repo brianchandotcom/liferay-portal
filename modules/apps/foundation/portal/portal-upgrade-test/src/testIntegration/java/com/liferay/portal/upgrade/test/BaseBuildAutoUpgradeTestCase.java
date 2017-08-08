@@ -17,7 +17,6 @@ package com.liferay.portal.upgrade.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;
@@ -49,12 +48,8 @@ import java.sql.Types;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
-import java.util.jar.Attributes;
 import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
-import java.util.jar.Manifest;
-import java.util.zip.ZipEntry;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
@@ -77,14 +72,13 @@ import org.objectweb.asm.Type;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Preston Crary
  */
 @RunWith(Arquillian.class)
-public class BuildAutoUpgradeTest {
+public abstract class BaseBuildAutoUpgradeTestCase {
 
 	@ClassRule
 	@Rule
@@ -101,54 +95,6 @@ public class BuildAutoUpgradeTest {
 		}
 		catch (SQLException sqle) {
 		}
-
-		Properties serviceProperties = new Properties();
-
-		serviceProperties.setProperty(
-			"build.namespace", "BuildAutoUpgradeTest");
-		serviceProperties.setProperty("build.number", "1");
-
-		long time = System.currentTimeMillis();
-
-		serviceProperties.setProperty("build.date", String.valueOf(time++));
-
-		_jarBytesV1 = _createBundleBytes(
-			new Object[][] {{"id_", Types.BIGINT}, {"data_", Types.VARCHAR}},
-			serviceProperties);
-
-		serviceProperties.setProperty("build.number", "2");
-		serviceProperties.setProperty("build.date", String.valueOf(time++));
-
-		_jarBytesV2 = _createBundleBytes(
-			new Object[][] {
-				{"id_", Types.BIGINT}, {"data_", Types.VARCHAR},
-				{"data2", Types.VARCHAR}
-			},
-			serviceProperties);
-
-		serviceProperties.setProperty("build.number", "3");
-		serviceProperties.setProperty("build.date", String.valueOf(time++));
-
-		_jarBytesV3 = _createBundleBytes(
-			new Object[][] {{"id_", Types.BIGINT}, {"data2", Types.VARCHAR}},
-			serviceProperties);
-
-		serviceProperties.setProperty("build.number", "4");
-		serviceProperties.setProperty("build.date", String.valueOf(time++));
-
-		_jarBytesV4 = _createBundleBytes(
-			new Object[][] {{"id_", Types.BIGINT}, {"data_", Types.VARCHAR}},
-			serviceProperties);
-
-		Bundle testBundle = FrameworkUtil.getBundle(BuildAutoUpgradeTest.class);
-
-		BundleContext bundleContext = testBundle.getBundleContext();
-
-		_bundle = bundleContext.installBundle(
-			BuildAutoUpgradeTest.class.getName(),
-			new UnsyncByteArrayInputStream(_jarBytesV1));
-
-		_bundle.start();
 
 		_previousDatabaseSchemaDevelopmentMode =
 			PropsValues.DATABASE_SCHEMA_DEVELOPMENT_MODE;
@@ -175,7 +121,7 @@ public class BuildAutoUpgradeTest {
 		}
 
 		Release release = ReleaseLocalServiceUtil.fetchRelease(
-			_BUNDLE_SYMBOLICNAME);
+			BUNDLE_SYMBOLICNAME);
 
 		if (release != null) {
 			ReleaseLocalServiceUtil.deleteRelease(release);
@@ -195,6 +141,17 @@ public class BuildAutoUpgradeTest {
 
 	@Test
 	public void testBuildAutoUpgrade() throws Exception {
+		Bundle testBundle = FrameworkUtil.getBundle(
+			BaseBuildAutoUpgradeTestCase.class);
+
+		BundleContext bundleContext = testBundle.getBundleContext();
+
+		_bundle = bundleContext.installBundle(
+			BaseBuildAutoUpgradeTestCase.class.getName(),
+			getBundleInputStream(1));
+
+		_bundle.start();
+
 		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
 			PreparedStatement ps = con.prepareStatement(
 				"insert into BuildAutoUpgradeTestEntity values (1, 'data')")) {
@@ -208,7 +165,7 @@ public class BuildAutoUpgradeTest {
 
 		// Add "data2" column
 
-		_updateBundle(_jarBytesV2);
+		_updateBundle(getBundleInputStream(2));
 
 		_assertColumns("id_", "data_", "data2");
 
@@ -234,7 +191,7 @@ public class BuildAutoUpgradeTest {
 
 		// Remove "data_" column
 
-		_updateBundle(_jarBytesV3);
+		_updateBundle(getBundleInputStream(3));
 
 		_assertColumns("id_", "data2");
 
@@ -251,7 +208,7 @@ public class BuildAutoUpgradeTest {
 
 		// Remove "data2" column and add "data_" column
 
-		_updateBundle(_jarBytesV4);
+		_updateBundle(getBundleInputStream(4));
 
 		_assertColumns("id_", "data_");
 
@@ -267,17 +224,18 @@ public class BuildAutoUpgradeTest {
 		}
 	}
 
-	private void _addClass(
-			JarOutputStream jarOutputStream, Object[][] tableColumns,
-			String createSQL)
+	protected void addClass(
+			String path, JarOutputStream jarOutputStream,
+			Object[][] tableColumns, String createSQL)
 		throws IOException {
 
-		jarOutputStream.putNextEntry(new JarEntry(_ENTITY_PATH));
+		jarOutputStream.putNextEntry(new JarEntry(path));
 
-		ClassLoader classLoader = BuildAutoUpgradeTest.class.getClassLoader();
+		ClassLoader classLoader =
+			BaseBuildAutoUpgradeTestCase.class.getClassLoader();
 
 		try (InputStream inputStream = classLoader.getResourceAsStream(
-				_ENTITY_PATH)) {
+				ENTITY_PATH)) {
 
 			ClassReader classReader = new ClassReader(inputStream);
 
@@ -329,7 +287,16 @@ public class BuildAutoUpgradeTest {
 		jarOutputStream.closeEntry();
 	}
 
-	private void _addResource(
+	protected void addEmptyResource(
+			String path, JarOutputStream jarOutputStream)
+		throws IOException {
+
+		jarOutputStream.putNextEntry(new JarEntry(path));
+
+		jarOutputStream.closeEntry();
+	}
+
+	protected void addResource(
 			String path, byte[] data, JarOutputStream jarOutputStream)
 		throws IOException {
 
@@ -340,28 +307,107 @@ public class BuildAutoUpgradeTest {
 		jarOutputStream.closeEntry();
 	}
 
-	private void _addResource(String path, JarOutputStream jarOutputStream)
+	protected void addResource(String path, JarOutputStream jarOutputStream)
 		throws IOException {
 
-		jarOutputStream.putNextEntry(new JarEntry(path));
-
-		jarOutputStream.closeEntry();
+		addResource("dependencies/service/" + path, path, jarOutputStream);
 	}
 
-	private void _addResource(
+	protected void addResource(
 			String resourcePath, String path, JarOutputStream jarOutputStream)
 		throws IOException {
 
 		jarOutputStream.putNextEntry(new JarEntry(path));
 
 		try (InputStream inputStream =
-				BuildAutoUpgradeTest.class.getResourceAsStream(
-					resourcePath + path)) {
+				BaseBuildAutoUpgradeTestCase.class.getResourceAsStream(
+					resourcePath)) {
 
 			StreamUtil.transfer(inputStream, jarOutputStream, false);
 		}
 
 		jarOutputStream.closeEntry();
+	}
+
+	protected void addServiceProperties(
+			int version, String path, JarOutputStream jarOutputStream)
+		throws IOException {
+
+		long time = System.currentTimeMillis();
+
+		Properties serviceProperties = new Properties();
+
+		serviceProperties.setProperty(
+			"build.namespace", "BuildAutoUpgradeTest");
+		serviceProperties.setProperty("build.number", String.valueOf(version));
+		serviceProperties.setProperty(
+			"build.date", String.valueOf(time + version));
+
+		try (UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+				new UnsyncByteArrayOutputStream()) {
+
+			serviceProperties.store(unsyncByteArrayOutputStream, null);
+
+			addResource(
+				path, unsyncByteArrayOutputStream.toByteArray(),
+				jarOutputStream);
+		}
+	}
+
+	protected abstract InputStream getBundleInputStream(int version)
+		throws IOException;
+
+	protected String toCreateSQL(Object[][] tableColumns) {
+		StringBundler sb = new StringBundler(tableColumns.length * 5 + 1);
+
+		sb.append("create table BuildAutoUpgradeTestEntity (");
+
+		boolean first = true;
+
+		for (Object[] tableColumn : tableColumns) {
+			sb.append(tableColumn[0]);
+			sb.append(StringPool.SPACE);
+
+			int type = (Integer)tableColumn[1];
+
+			if (Types.BIGINT == type) {
+				sb.append("LONG");
+			}
+			else if (Types.VARCHAR == type) {
+				sb.append("VARCHAR(75)");
+			}
+			else {
+				throw new IllegalArgumentException("Unknown data type " + type);
+			}
+
+			if (first) {
+				first = false;
+
+				sb.append(" not null primary key");
+			}
+			else {
+				sb.append(" null");
+			}
+
+			sb.append(StringPool.COMMA);
+		}
+
+		sb.setStringAt(");", sb.index() - 1);
+
+		return sb.toString();
+	}
+
+	protected static final String BUNDLE_SYMBOLICNAME =
+		"build.auto.upgrade.test";
+
+	protected static final String ENTITY_PATH;
+
+	static {
+		String path = BuildAutoUpgradeTestEntityModelImpl.class.getName();
+
+		path = path.replace('.', '/');
+
+		ENTITY_PATH = path.concat(".class");
 	}
 
 	private String _assertAndGetFirstLogRecordMessage(
@@ -401,70 +447,6 @@ public class BuildAutoUpgradeTest {
 		}
 
 		Assert.assertEquals(names.toString(), 0, names.size());
-	}
-
-	private byte[] _createBundleBytes(
-			Object[][] tableColumns, Properties serviceProperties)
-		throws IOException {
-
-		try (UnsyncByteArrayOutputStream unsyncbyteArrayOutputStream =
-				new UnsyncByteArrayOutputStream();
-			JarOutputStream jarOutputStream =
-				new JarOutputStream(unsyncbyteArrayOutputStream)) {
-
-			Manifest manifest = new Manifest();
-
-			Attributes attributes = manifest.getMainAttributes();
-
-			attributes.putValue("Manifest-Version", "1.0");
-			attributes.putValue(Constants.BUNDLE_MANIFESTVERSION, "2");
-			attributes.putValue(
-				Constants.BUNDLE_NAME, "Build Auto Upgrade Test");
-			attributes.putValue(
-				Constants.BUNDLE_SYMBOLICNAME, _BUNDLE_SYMBOLICNAME);
-			attributes.putValue(Constants.BUNDLE_VERSION, "1.0.0");
-			attributes.putValue("Liferay-Require-SchemaVersion", "1.0.0");
-			attributes.putValue("Liferay-Service", Boolean.TRUE.toString());
-			attributes.putValue("Liferay-Spring-Context", "META-INF/spring");
-
-			jarOutputStream.putNextEntry(new ZipEntry(JarFile.MANIFEST_NAME));
-
-			manifest.write(jarOutputStream);
-
-			jarOutputStream.closeEntry();
-
-			String createSQL = _toCreateSQL(tableColumns);
-
-			_addClass(jarOutputStream, tableColumns, createSQL);
-
-			_addResource(
-				"dependencies/service/", "META-INF/portlet-model-hints.xml",
-				jarOutputStream);
-			_addResource(
-				"dependencies/service/", "META-INF/spring/module-spring.xml",
-				jarOutputStream);
-
-			_addResource("META-INF/sql/indexes.sql", jarOutputStream);
-			_addResource("META-INF/sql/sequences.sql", jarOutputStream);
-
-			_addResource(
-				"META-INF/sql/tables.sql", createSQL.getBytes(StringPool.UTF8),
-				jarOutputStream);
-
-			try (UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-					new UnsyncByteArrayOutputStream()) {
-
-				serviceProperties.store(unsyncByteArrayOutputStream, null);
-
-				_addResource(
-					"service.properties",
-					unsyncByteArrayOutputStream.toByteArray(), jarOutputStream);
-			}
-
-			jarOutputStream.finish();
-
-			return unsyncbyteArrayOutputStream.toByteArray();
-		}
 	}
 
 	private void _initTableColumns(
@@ -515,47 +497,7 @@ public class BuildAutoUpgradeTest {
 		methodVisitor.visitEnd();
 	}
 
-	private String _toCreateSQL(Object[][] tableColumns) {
-		StringBundler sb = new StringBundler(tableColumns.length * 5 + 1);
-
-		sb.append("create table BuildAutoUpgradeTestEntity (");
-
-		boolean first = true;
-
-		for (Object[] tableColumn : tableColumns) {
-			sb.append(tableColumn[0]);
-			sb.append(StringPool.SPACE);
-
-			int type = (Integer)tableColumn[1];
-
-			if (Types.BIGINT == type) {
-				sb.append("LONG");
-			}
-			else if (Types.VARCHAR == type) {
-				sb.append("VARCHAR(75)");
-			}
-			else {
-				throw new IllegalArgumentException("Unknown data type " + type);
-			}
-
-			if (first) {
-				first = false;
-
-				sb.append(" not null primary key");
-			}
-			else {
-				sb.append(" null");
-			}
-
-			sb.append(StringPool.COMMA);
-		}
-
-		sb.setStringAt(");", sb.index() - 1);
-
-		return sb.toString();
-	}
-
-	private void _updateBundle(byte[] jarBytes) throws Exception {
+	private void _updateBundle(InputStream inputStream) throws Exception {
 		try (CaptureAppender serviceComponentCaptureHandler =
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					"com.liferay.portal.service.impl." +
@@ -565,7 +507,7 @@ public class BuildAutoUpgradeTest {
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					"com.liferay.portal.dao.db.BaseDB", Level.WARN)) {
 
-			_bundle.update(new UnsyncByteArrayInputStream(jarBytes));
+			_bundle.update(inputStream);
 
 			String message = _assertAndGetFirstLogRecordMessage(
 				serviceComponentCaptureHandler);
@@ -582,24 +524,7 @@ public class BuildAutoUpgradeTest {
 		}
 	}
 
-	private static final String _BUNDLE_SYMBOLICNAME =
-		"build.auto.upgrade.test";
-
-	private static final String _ENTITY_PATH;
-
-	static {
-		String path = BuildAutoUpgradeTestEntityModelImpl.class.getName();
-
-		path = path.replace('.', '/');
-
-		_ENTITY_PATH = path.concat(".class");
-	}
-
 	private Bundle _bundle;
-	private byte[] _jarBytesV1;
-	private byte[] _jarBytesV2;
-	private byte[] _jarBytesV3;
-	private byte[] _jarBytesV4;
 	private boolean _previousDatabaseSchemaDevelopmentMode;
 
 }

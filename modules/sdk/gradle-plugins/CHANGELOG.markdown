@@ -2072,6 +2072,11 @@ to version 2.0.47.
 - [LPS-74063]: Update the [Liferay Source Formatter] dependency to version
 1.0.436.
 
+## 3.4.22 - 2017-08-08
+
+### Fixed
+- [LPS-74092]: Add theme WAR file as an artifact of the `default` configuration.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -2255,4 +2260,5 @@ to version 2.0.47.
 [LPS-73935]: https://issues.liferay.com/browse/LPS-73935
 [LPS-74034]: https://issues.liferay.com/browse/LPS-74034
 [LPS-74063]: https://issues.liferay.com/browse/LPS-74063
+[LPS-74092]: https://issues.liferay.com/browse/LPS-74092
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

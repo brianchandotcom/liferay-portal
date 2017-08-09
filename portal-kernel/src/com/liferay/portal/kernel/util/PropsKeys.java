@@ -2008,6 +2008,8 @@ public interface PropsKeys {
 
 	public static final String SCHEDULER_JOB_NAME_MAX_LENGTH = "scheduler.job.name.max.length";
 
+	public static final String SCHEMA_MODULE_BUILD_AUTO_UPGRADE = "schema.module.build.auto.upgrade";
+
 	public static final String SCHEMA_RUN_ENABLED = "schema.run.enabled";
 
 	public static final String SCRIPTING_JRUBY_COMPILE_MODE = "scripting.jruby.compile.mode";

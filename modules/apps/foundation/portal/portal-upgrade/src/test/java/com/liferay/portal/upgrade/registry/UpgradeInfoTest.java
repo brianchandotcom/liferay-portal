@@ -30,37 +30,37 @@ public class UpgradeInfoTest {
 		UpgradeStep upgradeStep = new TestUpgradeStep();
 
 		UpgradeInfo upgradeInfo = new UpgradeInfo(
-			"1.0.0", "2.0.0", upgradeStep);
+			"1.0.0", "2.0.0", 0, upgradeStep);
 
-		Assert.assertFalse(upgradeInfo.equals(new String()));
+		Assert.assertNotEquals(upgradeInfo, "");
 	}
 
 	@Test
 	public void testEqualsReturnsFalseComparingDifferentSchemaVersion() {
 		UpgradeInfo upgradeInfo1 = new UpgradeInfo(
-			"1.0.0", "2.0.0", new TestUpgradeStep());
+			"1.0.0", "2.0.0", 0, new TestUpgradeStep());
 		UpgradeInfo upgradeInfo2 = new UpgradeInfo(
-			"2.0.0", "3.0.0", new TestUpgradeStep());
+			"2.0.0", "3.0.0", 0, new TestUpgradeStep());
 
-		Assert.assertFalse(upgradeInfo1.equals(upgradeInfo2));
+		Assert.assertNotEquals(upgradeInfo1, upgradeInfo2);
 	}
 
 	@Test
 	public void testEqualsReturnsFalseComparingSameSchemaVersion() {
 		UpgradeInfo upgradeInfo1 = new UpgradeInfo(
-			"1.0.0", "2.0.0", new TestUpgradeStep());
+			"1.0.0", "2.0.0", 0, new TestUpgradeStep());
 		UpgradeInfo upgradeInfo2 = new UpgradeInfo(
-			"1.0.0", "2.0.0", new TestUpgradeStep());
+			"1.0.0", "2.0.0", 0, new TestUpgradeStep());
 
-		Assert.assertFalse(upgradeInfo1.equals(upgradeInfo2));
+		Assert.assertNotEquals(upgradeInfo1, upgradeInfo2);
 	}
 
 	@Test
 	public void testEqualsReturnsTrueComparingSameInstance() {
 		UpgradeInfo upgradeInfo = new UpgradeInfo(
-			"1.0.0", "2.0.0", new TestUpgradeStep());
+			"1.0.0", "2.0.0", 0, new TestUpgradeStep());
 
-		Assert.assertTrue(upgradeInfo.equals(upgradeInfo));
+		Assert.assertEquals(upgradeInfo, upgradeInfo);
 	}
 
 	@Test
@@ -68,11 +68,11 @@ public class UpgradeInfoTest {
 		UpgradeStep upgradeStep = new TestUpgradeStep();
 
 		UpgradeInfo upgradeInfo1 = new UpgradeInfo(
-			"1.0.0", "2.0.0", upgradeStep);
+			"1.0.0", "2.0.0", 0, upgradeStep);
 		UpgradeInfo upgradeInfo2 = new UpgradeInfo(
-			"1.0.0", "2.0.0", upgradeStep);
+			"1.0.0", "2.0.0", 0, upgradeStep);
 
-		Assert.assertTrue(upgradeInfo1.equals(upgradeInfo2));
+		Assert.assertEquals(upgradeInfo1, upgradeInfo2);
 	}
 
 	private static class TestUpgradeStep implements UpgradeStep {

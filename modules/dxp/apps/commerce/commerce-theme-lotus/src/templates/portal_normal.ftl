@@ -51,7 +51,7 @@
 				</div>
 			</header>
 
-			<main id="content" role="main">
+			<main class="container-fluid" id="content" role="main">
 				<h3 class="sr-only">${the_title}</h3>
 
 				<#if demo_mode>

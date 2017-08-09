@@ -120,6 +120,8 @@
 			<var name="pageName" value="Site Page Edit" />
 		</execute>
 
+		<execute macro="Navigator#gotoSEOPanel" />
+
 		<execute macro="Page#editPageMetadata">
 			<var name="HTMLTitle" value="S.P.A.C.E.Home" />
 			<var name="metaTagsDescription" value="Welcome to S.P.A.C.E., a graduate-level school for those passionate about expanding their horizons through science, research, and space travel" />
@@ -133,6 +135,8 @@
 		<execute macro="Navigator#gotoEditPageViaControlMenu" >
 			<var name="pageName" value="Site Page Edit" />
 		</execute>
+
+		<execute macro="Navigator#gotoSEOPanel" />
 
 		<execute macro="Page#viewPageMetadata">
 			<var name="HTMLTitle" value="S.P.A.C.E.Home" />

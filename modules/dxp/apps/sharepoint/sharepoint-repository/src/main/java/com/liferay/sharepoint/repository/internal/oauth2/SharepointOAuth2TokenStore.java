@@ -57,12 +57,12 @@ public class SharepointOAuth2TokenStore implements TokenStore {
 					_sharepointOAuth2AuthorizationServerFactory.create(
 						configurationPid);
 
-			Token refreshedToken =
+			Token freshToken =
 				sharepointOAuth2AuthorizationServer.refreshAccessToken(token);
 
-			save(configurationPid, userId, refreshedToken);
+			save(configurationPid, userId, freshToken);
 
-			return refreshedToken;
+			return freshToken;
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
@@ -83,12 +83,12 @@ public class SharepointOAuth2TokenStore implements TokenStore {
 					_sharepointOAuth2AuthorizationServerFactory.create(
 						configurationPid);
 
-			Token refreshedToken =
+			Token freshToken =
 				sharepointOAuth2AuthorizationServer.refreshAccessToken(token);
 
-			save(configurationPid, userId, refreshedToken);
+			save(configurationPid, userId, freshToken);
 
-			return refreshedToken;
+			return freshToken;
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);

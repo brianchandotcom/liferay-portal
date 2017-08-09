@@ -42,10 +42,10 @@ public class SharepointOAuth2AuthorizationServerFactory {
 	}
 
 	public SharepointOAuth2AuthorizationServer create(String pid) {
-		return create(_getConfiguration(pid));
+		return create(_getSharepointOAuth2Configuration(pid));
 	}
 
-	private SharepointOAuth2Configuration _getConfiguration(
+	private SharepointOAuth2Configuration _getSharepointOAuth2Configuration(
 		String pid) {
 
 		try {

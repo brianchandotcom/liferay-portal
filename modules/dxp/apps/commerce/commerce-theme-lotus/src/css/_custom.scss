@@ -180,6 +180,10 @@
 	border-color: $brand-border-color;
 	border-radius: 0;
 	box-shadow: none;
+
+	.table {
+		margin: 0;
+	}
 }
 
 .collapse-hover {

@@ -25,16 +25,17 @@ import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.tools.GitException;
 import com.liferay.portal.tools.GitUtil;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -192,18 +193,12 @@ public class SourceFormatter {
 	}
 
 	public void format() throws Exception {
-		if (_isPortalSource()) {
-			_populatePortalImplProperties();
-		}
-		else {
-			_populateProperties();
-		}
-
-		_addDefaultExcludes();
+		_sourceFormatterExcludes = new SourceFormatterExcludes(
+			_getDefaultExcludes());
 
 		_populateAllFileNames();
 
-		_populateModulesProperties();
+		_readProperties();
 
 		List<SourceProcessor> sourceProcessors = new ArrayList<>();
 
@@ -312,19 +307,40 @@ public class SourceFormatter {
 		return _firstSourceMismatchException;
 	}
 
-	private void _addDefaultExcludes() {
-		String excludesValue = _properties.getProperty(
-			"source.formatter.excludes");
-
-		if (Validator.isNull(excludesValue)) {
-			excludesValue = StringUtil.merge(_defaultExcludes);
-		}
-		else {
-			excludesValue +=
-				StringPool.COMMA + StringUtil.merge(_defaultExcludes);
+	private List<String> _getDefaultExcludes() throws Exception {
+		if (!_isPortalSource()) {
+			return Arrays.asList(_DEFAULT_EXCLUDES);
 		}
 
-		_properties.setProperty("source.formatter.excludes", excludesValue);
+		Properties portalImplProperties = _getPortalImplProperties();
+
+		List<String> defaultExcludes = ListUtil.fromString(
+			GetterUtil.getString(
+				portalImplProperties.getProperty("source.formatter.excludes")),
+			StringPool.COMMA);
+
+		Collections.addAll(defaultExcludes, _DEFAULT_EXCLUDES);
+
+		return defaultExcludes;
+	}
+
+	private Properties _getPortalImplProperties() throws Exception {
+		File propertiesFile = SourceFormatterUtil.getFile(
+			_sourceFormatterArgs.getBaseDirName(),
+			"portal-impl/src/" + _PROPERTIES_FILE_NAME,
+			ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+
+		return _getProperties(propertiesFile);
+	}
+
+	private Properties _getProperties(File file) throws Exception {
+		Properties properties = new Properties();
+
+		if (file.exists()) {
+			properties.load(new FileInputStream(file));
+		}
+
+		return properties;
 	}
 
 	private boolean _isPortalSource() {
@@ -340,40 +356,38 @@ public class SourceFormatter {
 	}
 
 	private void _populateAllFileNames() throws Exception {
-		String excludesValue = _properties.getProperty(
-			"source.formatter.excludes");
-
-		List<String> excludesList = ListUtil.fromString(
-			GetterUtil.getString(excludesValue), StringPool.COMMA);
-
 		_allFileNames = SourceFormatterUtil.scanForFiles(
-			_sourceFormatterArgs.getBaseDirName(),
-			excludesList.toArray(new String[excludesList.size()]),
+			_sourceFormatterArgs.getBaseDirName(), new String[0],
 			new String[] {"**/*.*", "**/CODEOWNERS", "**/Dockerfile"},
+			_sourceFormatterExcludes,
 			_sourceFormatterArgs.isIncludeSubrepositories());
 	}
 
-	private void _populateModulesProperties() throws Exception {
-		List<Properties> propertiesList = new ArrayList<>();
+	private void _readProperties() throws Exception {
+		Map<String, Properties> propertiesMap = new HashMap<>();
 
-		propertiesList.add(_properties);
+		int maxDirLevel = -1;
+
+		if (_isPortalSource()) {
+			propertiesMap.put("portal-impl", _getPortalImplProperties());
+
+			maxDirLevel = ToolsUtil.PORTAL_MAX_DIR_LEVEL;
+		}
+		else {
+			maxDirLevel = ToolsUtil.PLUGINS_MAX_DIR_LEVEL;
+		}
 
 		// Find properties files in any parent directory
 
 		String parentDirName = _sourceFormatterArgs.getBaseDirName();
 
-		for (int i = 0; i < ToolsUtil.PORTAL_MAX_DIR_LEVEL; i++) {
-			try {
-				InputStream inputStream = new FileInputStream(
-					parentDirName + _PROPERTIES_FILE_NAME);
+		for (int i = 0; i < maxDirLevel; i++) {
+			File file = new File(parentDirName + _PROPERTIES_FILE_NAME);
 
-				Properties properties = new Properties();
+			Properties properties = _getProperties(file);
 
-				properties.load(inputStream);
-
-				propertiesList.add(properties);
-			}
-			catch (FileNotFoundException fnfe) {
+			if (!properties.isEmpty()) {
+				propertiesMap.put(SourceUtil.getAbsolutePath(file), properties);
 			}
 
 			parentDirName += "../";
@@ -381,35 +395,28 @@ public class SourceFormatter {
 
 		// Find properties file in any child directory
 
-		String excludesValue = _properties.getProperty(
-			"source.formatter.excludes");
-
-		List<String> excludesList = ListUtil.fromString(
-			GetterUtil.getString(excludesValue), StringPool.COMMA);
-
 		List<String> modulePropertiesFileNames =
 			SourceFormatterUtil.filterFileNames(
-				_allFileNames,
-				excludesList.toArray(new String[excludesList.size()]),
-				new String[] {"**/" + _PROPERTIES_FILE_NAME});
+				_allFileNames, new String[0],
+				new String[] {"**/" + _PROPERTIES_FILE_NAME},
+				_sourceFormatterExcludes);
 
 		for (String modulePropertiesFileName : modulePropertiesFileNames) {
-			InputStream inputStream = new FileInputStream(
-				modulePropertiesFileName);
+			File file = new File(modulePropertiesFileName);
 
-			Properties properties = new Properties();
+			Properties properties = _getProperties(file);
 
-			properties.load(inputStream);
-
-			propertiesList.add(properties);
+			if (!properties.isEmpty()) {
+				propertiesMap.put(SourceUtil.getAbsolutePath(file), properties);
+			}
 		}
 
 		// Merge all properties files
 
 		_properties = new Properties();
 
-		for (int i = 0; i < propertiesList.size(); i++) {
-			Properties properties = propertiesList.get(i);
+		for (Map.Entry<String, Properties> entry : propertiesMap.entrySet()) {
+			Properties properties = entry.getValue();
 
 			Enumeration<String> enu =
 				(Enumeration<String>)properties.propertyNames();
@@ -421,6 +428,16 @@ public class SourceFormatter {
 
 				if (Validator.isNull(value)) {
 					continue;
+				}
+
+				if (key.equals("source.formatter.excludes")) {
+					String propertiesFileLocation = entry.getKey();
+
+					if (!propertiesFileLocation.equals("portal-impl")) {
+						_sourceFormatterExcludes.addExcludes(
+							propertiesFileLocation,
+							ListUtil.fromString(value, StringPool.COMMA));
+					}
 				}
 
 				if (key.contains("excludes")) {
@@ -439,44 +456,13 @@ public class SourceFormatter {
 		}
 	}
 
-	private void _populatePortalImplProperties() throws Exception {
-		File propertiesFile = SourceFormatterUtil.getFile(
-			_sourceFormatterArgs.getBaseDirName(),
-			"portal-impl/src/" + _PROPERTIES_FILE_NAME,
-			ToolsUtil.PORTAL_MAX_DIR_LEVEL);
-
-		if (propertiesFile != null) {
-			InputStream inputStream = new FileInputStream(propertiesFile);
-
-			_properties.load(inputStream);
-		}
-	}
-
-	private void _populateProperties() throws Exception {
-		String fileName = _PROPERTIES_FILE_NAME;
-
-		for (int i = 0; i <= ToolsUtil.PLUGINS_MAX_DIR_LEVEL; i++) {
-			try {
-				InputStream inputStream = new FileInputStream(
-					_sourceFormatterArgs.getBaseDirName() + fileName);
-
-				_properties.load(inputStream);
-
-				return;
-			}
-			catch (FileNotFoundException fnfe) {
-			}
-
-			fileName = "../" + fileName;
-		}
-	}
-
 	private void _runSourceProcessor(SourceProcessor sourceProcessor)
 		throws Exception {
 
 		sourceProcessor.setAllFileNames(_allFileNames);
 		sourceProcessor.setProperties(_properties);
 		sourceProcessor.setSourceFormatterArgs(_sourceFormatterArgs);
+		sourceProcessor.setSourceFormatterExcludes(_sourceFormatterExcludes);
 
 		sourceProcessor.format();
 
@@ -490,14 +476,15 @@ public class SourceFormatter {
 		}
 	}
 
-	private static final String _PROPERTIES_FILE_NAME =
-		"source-formatter.properties";
-
-	private static final List<String> _defaultExcludes = Arrays.asList(
+	private static final String[] _DEFAULT_EXCLUDES = {
 		"**/.git/**", "**/.gradle/**", "**/bin/**", "**/build/**",
 		"**/classes/**", "**/node_modules/**", "**/npm-shrinkwrap.json",
 		"**/package-lock.json", "**/test-classes/**", "**/test-coverage/**",
-		"**/test-results/**", "**/tmp/**");
+		"**/test-results/**", "**/tmp/**"
+	};
+
+	private static final String _PROPERTIES_FILE_NAME =
+		"source-formatter.properties";
 
 	private List<String> _allFileNames;
 	private volatile SourceMismatchException _firstSourceMismatchException;
@@ -505,6 +492,7 @@ public class SourceFormatter {
 		new CopyOnWriteArrayList<>();
 	private Properties _properties = new Properties();
 	private final SourceFormatterArgs _sourceFormatterArgs;
+	private SourceFormatterExcludes _sourceFormatterExcludes;
 	private final Set<SourceFormatterMessage> _sourceFormatterMessages =
 		new ConcurrentSkipListSet<>();
 

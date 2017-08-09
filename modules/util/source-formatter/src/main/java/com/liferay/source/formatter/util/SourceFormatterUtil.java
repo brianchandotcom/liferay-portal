@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.SourceFormatterExcludes;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
 import java.io.File;
@@ -35,7 +36,9 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Igor Spasic
@@ -45,20 +48,43 @@ import java.util.List;
 public class SourceFormatterUtil {
 
 	public static List<String> filterFileNames(
-		List<String> allFileNames, String[] excludes, String[] includes) {
+		List<String> allFileNames, String[] excludes, String[] includes,
+		SourceFormatterExcludes sourceFormatterExcludes) {
 
-		List<String> excludesRegex = new ArrayList<>();
-		List<String> includesRegex = new ArrayList<>();
+		List<String> excludeRegexList = new ArrayList<>();
+		Map<String, List<String>> excludeRegexMap = new HashMap<>();
+		List<String> includeRegexList = new ArrayList<>();
 
 		for (String exclude : excludes) {
 			if (!exclude.contains(StringPool.DOLLAR)) {
-				excludesRegex.add(_createRegex(exclude));
+				excludeRegexList.add(_createRegex(exclude));
 			}
+		}
+
+		for (String exclude : sourceFormatterExcludes.getDefaultExcludes()) {
+			if (!exclude.contains(StringPool.DOLLAR)) {
+				excludeRegexList.add(_createRegex(exclude));
+			}
+		}
+
+		Map<String, List<String>> excludesMap =
+			sourceFormatterExcludes.getExcludesMap();
+
+		for (Map.Entry<String, List<String>> entry : excludesMap.entrySet()) {
+			List<String> excludesList = entry.getValue();
+
+			List<String> regexList = new ArrayList<>();
+
+			for (String exclude : excludesList) {
+				regexList.add(_createRegex(exclude));
+			}
+
+			excludeRegexMap.put(entry.getKey(), regexList);
 		}
 
 		for (String include : includes) {
 			if (!include.contains(StringPool.DOLLAR)) {
-				includesRegex.add(_createRegex(include));
+				includeRegexList.add(_createRegex(include));
 			}
 		}
 
@@ -68,14 +94,27 @@ public class SourceFormatterUtil {
 		for (String fileName : allFileNames) {
 			String encodedFileName = SourceUtil.getAbsolutePath(fileName);
 
-			encodedFileName = StringUtil.replace(
-				encodedFileName, CharPool.BACK_SLASH, CharPool.SLASH);
-
-			for (String includeRegex : includesRegex) {
+			for (String includeRegex : includeRegexList) {
 				if (encodedFileName.matches(includeRegex)) {
-					for (String excludeRegex : excludesRegex) {
+					for (String excludeRegex : excludeRegexList) {
 						if (encodedFileName.matches(excludeRegex)) {
 							continue outerLoop;
+						}
+					}
+
+					for (Map.Entry<String, List<String>> entry :
+							excludeRegexMap.entrySet()) {
+
+						String propertiesFileLocation = entry.getKey();
+
+						if (encodedFileName.startsWith(
+								propertiesFileLocation)) {
+
+							for (String excludeRegex : entry.getValue()) {
+								if (encodedFileName.matches(excludeRegex)) {
+									continue outerLoop;
+								}
+							}
 						}
 					}
 
@@ -92,6 +131,7 @@ public class SourceFormatterUtil {
 	public static List<String> filterRecentChangesFileNames(
 			String baseDir, List<String> recentChangesFileNames,
 			String[] excludes, String[] includes,
+			SourceFormatterExcludes sourceFormatterExcludes,
 			boolean includeSubrepositories)
 		throws Exception {
 
@@ -99,37 +139,11 @@ public class SourceFormatterUtil {
 			return new ArrayList<>();
 		}
 
-		List<PathMatcher> excludeDirPathMatchers = new ArrayList<>();
-		List<PathMatcher> excludeFilePathMatchers = new ArrayList<>();
-		List<PathMatcher> includeFilePathMatchers = new ArrayList<>();
-
-		FileSystem fileSystem = FileSystems.getDefault();
-
-		for (String exclude : excludes) {
-			if (!exclude.startsWith("**/")) {
-				exclude = "**/" + exclude;
-			}
-
-			if (exclude.endsWith("/**")) {
-				exclude = exclude.substring(0, exclude.length() - 3);
-
-				excludeDirPathMatchers.add(
-					fileSystem.getPathMatcher("glob:" + exclude));
-			}
-			else {
-				excludeFilePathMatchers.add(
-					fileSystem.getPathMatcher("glob:" + exclude));
-			}
-		}
-
-		for (String include : includes) {
-			includeFilePathMatchers.add(
-				fileSystem.getPathMatcher("glob:" + include));
-		}
+		PathMatchers pathMatchers = _getPathMatchers(
+			excludes, includes, sourceFormatterExcludes);
 
 		return _filterRecentChangesFileNames(
-			baseDir, recentChangesFileNames, excludeDirPathMatchers,
-			excludeFilePathMatchers, includeFilePathMatchers);
+			baseDir, recentChangesFileNames, pathMatchers);
 	}
 
 	public static File getFile(String baseDir, String fileName, int level) {
@@ -156,6 +170,7 @@ public class SourceFormatterUtil {
 
 	public static List<String> scanForFiles(
 			String baseDir, String[] excludes, String[] includes,
+			SourceFormatterExcludes sourceFormatterExcludes,
 			boolean includeSubrepositories)
 		throws Exception {
 
@@ -163,37 +178,10 @@ public class SourceFormatterUtil {
 			return new ArrayList<>();
 		}
 
-		List<PathMatcher> excludeDirPathMatchers = new ArrayList<>();
-		List<PathMatcher> excludeFilePathMatchers = new ArrayList<>();
-		List<PathMatcher> includeFilePathMatchers = new ArrayList<>();
+		PathMatchers pathMatchers = _getPathMatchers(
+			excludes, includes, sourceFormatterExcludes);
 
-		FileSystem fileSystem = FileSystems.getDefault();
-
-		for (String exclude : excludes) {
-			if (!exclude.startsWith("**/")) {
-				exclude = "**/" + exclude;
-			}
-
-			if (exclude.endsWith("/**")) {
-				exclude = exclude.substring(0, exclude.length() - 3);
-
-				excludeDirPathMatchers.add(
-					fileSystem.getPathMatcher("glob:" + exclude));
-			}
-			else {
-				excludeFilePathMatchers.add(
-					fileSystem.getPathMatcher("glob:" + exclude));
-			}
-		}
-
-		for (String include : includes) {
-			includeFilePathMatchers.add(
-				fileSystem.getPathMatcher("glob:" + include));
-		}
-
-		return _scanForFiles(
-			baseDir, excludeDirPathMatchers, excludeFilePathMatchers,
-			includeFilePathMatchers, includeSubrepositories);
+		return _scanForFiles(baseDir, pathMatchers, includeSubrepositories);
 	}
 
 	private static String _createRegex(String s) {
@@ -238,9 +226,7 @@ public class SourceFormatterUtil {
 
 	private static List<String> _filterRecentChangesFileNames(
 			String baseDir, List<String> recentChangesFileNames,
-			List<PathMatcher> excludeDirPathMatchers,
-			List<PathMatcher> excludeFilePathMatchers,
-			List<PathMatcher> includeFilePathMatchers)
+			PathMatchers pathMatchers)
 		throws Exception {
 
 		List<String> fileNames = new ArrayList<>();
@@ -255,9 +241,30 @@ public class SourceFormatterUtil {
 
 			Path filePath = canonicalFile.toPath();
 
-			for (PathMatcher pathMatcher : excludeFilePathMatchers) {
+			for (PathMatcher pathMatcher :
+					pathMatchers.getExcludeFilePathMatchers()) {
+
 				if (pathMatcher.matches(filePath)) {
 					continue recentChangesFileNamesLoop;
+				}
+			}
+
+			String currentFilePath = SourceUtil.getAbsolutePath(filePath);
+
+			Map<String, List<PathMatcher>> excludeFilePathMatchersMap =
+				pathMatchers.getExcludeFilePathMatchersMap();
+
+			for (Map.Entry<String, List<PathMatcher>> entry :
+					excludeFilePathMatchersMap.entrySet()) {
+
+				String propertiesFileLocation = entry.getKey();
+
+				if (currentFilePath.startsWith(propertiesFileLocation)) {
+					for (PathMatcher pathMatcher : entry.getValue()) {
+						if (pathMatcher.matches(filePath)) {
+							continue recentChangesFileNamesLoop;
+						}
+					}
 				}
 			}
 
@@ -268,9 +275,30 @@ public class SourceFormatterUtil {
 
 				Path dirPath = canonicalDir.toPath();
 
-				for (PathMatcher pathMatcher : excludeDirPathMatchers) {
+				for (PathMatcher pathMatcher :
+						pathMatchers.getExcludeDirPathMatchers()) {
+
 					if (pathMatcher.matches(dirPath)) {
 						continue recentChangesFileNamesLoop;
+					}
+				}
+
+				String currentDirPath = SourceUtil.getAbsolutePath(dirPath);
+
+				Map<String, List<PathMatcher>> excludeDirPathMatchersMap =
+					pathMatchers.getExcludeDirPathMatchersMap();
+
+				for (Map.Entry<String, List<PathMatcher>> entry :
+						excludeDirPathMatchersMap.entrySet()) {
+
+					String propertiesFileLocation = entry.getKey();
+
+					if (currentDirPath.startsWith(propertiesFileLocation)) {
+						for (PathMatcher pathMatcher : entry.getValue()) {
+							if (pathMatcher.matches(dirPath)) {
+								continue recentChangesFileNamesLoop;
+							}
+						}
 					}
 				}
 
@@ -285,7 +313,9 @@ public class SourceFormatterUtil {
 				}
 			}
 
-			for (PathMatcher pathMatcher : includeFilePathMatchers) {
+			for (PathMatcher pathMatcher :
+					pathMatchers.getIncludeFilePathMatchers()) {
+
 				if (pathMatcher.matches(filePath)) {
 					fileName = StringUtil.replace(
 						fileName, CharPool.SLASH, CharPool.BACK_SLASH);
@@ -313,11 +343,36 @@ public class SourceFormatterUtil {
 		}
 	}
 
+	private static PathMatchers _getPathMatchers(
+		String[] excludes, String[] includes,
+		SourceFormatterExcludes sourceFormatterExcludes) {
+
+		PathMatchers pathMatchers = new PathMatchers(FileSystems.getDefault());
+
+		for (String exclude : excludes) {
+			pathMatchers.addExclude(exclude);
+		}
+
+		for (String exclude : sourceFormatterExcludes.getDefaultExcludes()) {
+			pathMatchers.addExclude(exclude);
+		}
+
+		Map<String, List<String>> excludesMap =
+			sourceFormatterExcludes.getExcludesMap();
+
+		for (Map.Entry<String, List<String>> entry : excludesMap.entrySet()) {
+			pathMatchers.addExcludes(entry.getKey(), entry.getValue());
+		}
+
+		for (String include : includes) {
+			pathMatchers.addInclude(include);
+		}
+
+		return pathMatchers;
+	}
+
 	private static List<String> _scanForFiles(
-			final String baseDir,
-			final List<PathMatcher> excludeDirPathMatchers,
-			final List<PathMatcher> excludeFilePathMatchers,
-			final List<PathMatcher> includeFilePathMatchers,
+			final String baseDir, final PathMatchers pathMatchers,
 			final boolean includeSubrepositories)
 		throws Exception {
 
@@ -337,11 +392,11 @@ public class SourceFormatterUtil {
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 
+					String currentDirPath = SourceUtil.getAbsolutePath(dirPath);
+
 					if (!includeSubrepositories) {
 						String baseDirPath = SourceUtil.getAbsolutePath(
 							baseDir);
-						String currentDirPath = SourceUtil.getAbsolutePath(
-							dirPath);
 
 						if (!baseDirPath.equals(currentDirPath)) {
 							Path gitRepoPath = dirPath.resolve(".gitrepo");
@@ -363,9 +418,28 @@ public class SourceFormatterUtil {
 
 					dirPath = _getCanonicalPath(dirPath);
 
-					for (PathMatcher pathMatcher : excludeDirPathMatchers) {
+					for (PathMatcher pathMatcher :
+							pathMatchers.getExcludeDirPathMatchers()) {
+
 						if (pathMatcher.matches(dirPath)) {
 							return FileVisitResult.SKIP_SUBTREE;
+						}
+					}
+
+					Map<String, List<PathMatcher>> excludeDirPathMatchersMap =
+						pathMatchers.getExcludeDirPathMatchersMap();
+
+					for (Map.Entry<String, List<PathMatcher>> entry :
+							excludeDirPathMatchersMap.entrySet()) {
+
+						String propertiesFileLocation = entry.getKey();
+
+						if (currentDirPath.startsWith(propertiesFileLocation)) {
+							for (PathMatcher pathMatcher : entry.getValue()) {
+								if (pathMatcher.matches(dirPath)) {
+									return FileVisitResult.SKIP_SUBTREE;
+								}
+							}
 						}
 					}
 
@@ -378,13 +452,39 @@ public class SourceFormatterUtil {
 
 					Path canonicalPath = _getCanonicalPath(filePath);
 
-					for (PathMatcher pathMatcher : excludeFilePathMatchers) {
+					for (PathMatcher pathMatcher :
+							pathMatchers.getExcludeFilePathMatchers()) {
+
 						if (pathMatcher.matches(canonicalPath)) {
 							return FileVisitResult.CONTINUE;
 						}
 					}
 
-					for (PathMatcher pathMatcher : includeFilePathMatchers) {
+					String currentFilePath = SourceUtil.getAbsolutePath(
+						filePath);
+
+					Map<String, List<PathMatcher>> excludeFilePathMatchersMap =
+						pathMatchers.getExcludeFilePathMatchersMap();
+
+					for (Map.Entry<String, List<PathMatcher>> entry :
+							excludeFilePathMatchersMap.entrySet()) {
+
+						String propertiesFileLocation = entry.getKey();
+
+						if (currentFilePath.startsWith(
+								propertiesFileLocation)) {
+
+							for (PathMatcher pathMatcher : entry.getValue()) {
+								if (pathMatcher.matches(canonicalPath)) {
+									return FileVisitResult.CONTINUE;
+								}
+							}
+						}
+					}
+
+					for (PathMatcher pathMatcher :
+							pathMatchers.getIncludeFilePathMatchers()) {
+
 						if (!pathMatcher.matches(canonicalPath)) {
 							continue;
 						}
@@ -400,6 +500,94 @@ public class SourceFormatterUtil {
 			});
 
 		return fileNames;
+	}
+
+	private static class PathMatchers {
+
+		public PathMatchers(FileSystem fileSystem) {
+			_fileSystem = fileSystem;
+		}
+
+		public void addExclude(String exclude) {
+			if (!exclude.startsWith("**/")) {
+				exclude = "**/" + exclude;
+			}
+
+			if (exclude.endsWith("/**")) {
+				exclude = exclude.substring(0, exclude.length() - 3);
+
+				_excludeDirPathMatchers.add(
+					_fileSystem.getPathMatcher("glob:" + exclude));
+			}
+			else {
+				_excludeFilePathMatchers.add(
+					_fileSystem.getPathMatcher("glob:" + exclude));
+			}
+		}
+
+		public void addExcludes(
+			String propertiesFileLocation, List<String> excludes) {
+
+			List<PathMatcher> excludeDirPathMatcherList = new ArrayList<>();
+			List<PathMatcher> excludeFilePathMatcherList = new ArrayList<>();
+
+			for (String exclude : excludes) {
+				if (!exclude.startsWith("**/")) {
+					exclude = "**/" + exclude;
+				}
+
+				if (exclude.endsWith("/**")) {
+					exclude = exclude.substring(0, exclude.length() - 3);
+
+					excludeDirPathMatcherList.add(
+						_fileSystem.getPathMatcher("glob:" + exclude));
+				}
+				else {
+					excludeFilePathMatcherList.add(
+						_fileSystem.getPathMatcher("glob:" + exclude));
+				}
+			}
+
+			_excludeDirPathMatchersMap.put(
+				propertiesFileLocation, excludeDirPathMatcherList);
+			_excludeFilePathMatchersMap.put(
+				propertiesFileLocation, excludeFilePathMatcherList);
+		}
+
+		public void addInclude(String include) {
+			_includeFilePathMatchers.add(
+				_fileSystem.getPathMatcher("glob:" + include));
+		}
+
+		public List<PathMatcher> getExcludeDirPathMatchers() {
+			return _excludeDirPathMatchers;
+		}
+
+		public Map<String, List<PathMatcher>> getExcludeDirPathMatchersMap() {
+			return _excludeDirPathMatchersMap;
+		}
+
+		public List<PathMatcher> getExcludeFilePathMatchers() {
+			return _excludeFilePathMatchers;
+		}
+
+		public Map<String, List<PathMatcher>> getExcludeFilePathMatchersMap() {
+			return _excludeFilePathMatchersMap;
+		}
+
+		public List<PathMatcher> getIncludeFilePathMatchers() {
+			return _includeFilePathMatchers;
+		}
+
+		private List<PathMatcher> _excludeDirPathMatchers = new ArrayList<>();
+		private Map<String, List<PathMatcher>> _excludeDirPathMatchersMap =
+			new HashMap<>();
+		private List<PathMatcher> _excludeFilePathMatchers = new ArrayList<>();
+		private Map<String, List<PathMatcher>> _excludeFilePathMatchersMap =
+			new HashMap<>();
+		private final FileSystem _fileSystem;
+		private List<PathMatcher> _includeFilePathMatchers = new ArrayList<>();
+
 	}
 
 }

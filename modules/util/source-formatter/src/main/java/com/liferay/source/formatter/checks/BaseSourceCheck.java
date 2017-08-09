@@ -14,7 +14,6 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -23,6 +22,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.SourceFormatterExcludes;
 import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.util.FileUtil;
@@ -82,11 +82,6 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	@Override
-	public void setExcludes(String[] excludes) {
-		_excludes = excludes;
-	}
-
-	@Override
 	public void setMaxLineLength(int maxLineLength) {
 		_maxLineLength = maxLineLength;
 	}
@@ -107,6 +102,13 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	@Override
 	public void setProperties(Properties properties) {
 		_properties = properties;
+	}
+
+	@Override
+	public void setSourceFormatterExcludes(
+		SourceFormatterExcludes sourceFormatterExcludes) {
+
+		_sourceFormatterExcludes = sourceFormatterExcludes;
 	}
 
 	@Override
@@ -219,10 +221,6 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return StringPool.BLANK;
 	}
 
-	protected String[] getExcludes() {
-		return _excludes;
-	}
-
 	protected File getFile(String fileName, int level) {
 		for (int i = 0; i < level; i++) {
 			File file = new File(_baseDirName + fileName);
@@ -241,12 +239,8 @@ public abstract class BaseSourceCheck implements SourceCheck {
 			String basedir, String[] excludes, String[] includes)
 		throws Exception {
 
-		if (_excludes != null) {
-			excludes = ArrayUtil.append(excludes, _excludes);
-		}
-
 		return SourceFormatterUtil.scanForFiles(
-			basedir, excludes, includes, true);
+			basedir, excludes, includes, _sourceFormatterExcludes, true);
 	}
 
 	protected int getLeadingTabCount(String line) {
@@ -343,6 +337,10 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return ListUtil.fromString(
 			GetterUtil.getString(_properties.getProperty(key)),
 			StringPool.COMMA);
+	}
+
+	protected SourceFormatterExcludes getSourceFormatterExcludes() {
+		return _sourceFormatterExcludes;
 	}
 
 	protected boolean isExcludedPath(String key, String path) {
@@ -518,11 +516,11 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	private String _baseDirName;
-	private String[] _excludes;
 	private int _maxLineLength;
 	private List<String> _pluginsInsideModulesDirectoryNames;
 	private boolean _portalSource;
 	private Properties _properties;
+	private SourceFormatterExcludes _sourceFormatterExcludes;
 	private final Map<String, Set<SourceFormatterMessage>>
 		_sourceFormatterMessagesMap = new ConcurrentHashMap<>();
 	private boolean _subrepository;

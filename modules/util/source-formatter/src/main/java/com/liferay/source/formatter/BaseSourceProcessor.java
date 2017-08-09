@@ -182,6 +182,13 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		_init();
 	}
 
+	@Override
+	public void setSourceFormatterExcludes(
+		SourceFormatterExcludes sourceFormatterExcludes) {
+
+		_sourceFormatterExcludes = sourceFormatterExcludes;
+	}
+
 	protected abstract List<String> doGetFileNames() throws Exception;
 
 	protected abstract String[] doGetIncludes();
@@ -222,21 +229,18 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			String[] excludes, String[] includes, boolean forceIncludeAllFiles)
 		throws Exception {
 
-		if (_excludes != null) {
-			excludes = ArrayUtil.append(excludes, _excludes);
-		}
-
 		if (!forceIncludeAllFiles &&
 			(sourceFormatterArgs.getRecentChangesFileNames() != null)) {
 
 			return SourceFormatterUtil.filterRecentChangesFileNames(
 				sourceFormatterArgs.getBaseDirName(),
 				sourceFormatterArgs.getRecentChangesFileNames(), excludes,
-				includes, sourceFormatterArgs.isIncludeSubrepositories());
+				includes, _sourceFormatterExcludes,
+				sourceFormatterArgs.isIncludeSubrepositories());
 		}
 
 		return SourceFormatterUtil.filterFileNames(
-			_allFileNames, excludes, includes);
+			_allFileNames, excludes, includes, _sourceFormatterExcludes);
 	}
 
 	protected List<String> getPluginsInsideModulesDirectoryNames()
@@ -516,17 +520,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		processFormattedFile(file, fileName, content, newContent);
 	}
 
-	private String[] _getExcludes() {
-		if (sourceFormatterArgs.getFileNames() != null) {
-			return new String[0];
-		}
-
-		List<String> excludesList = getPropertyList(
-			"source.formatter.excludes");
-
-		return excludesList.toArray(new String[excludesList.size()]);
-	}
-
 	private List<SourceCheck> _getSourceChecks(boolean includeModuleChecks)
 		throws Exception {
 
@@ -553,19 +546,17 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		catch (Exception e) {
 			ReflectionUtil.throwException(e);
 		}
-
-		_excludes = _getExcludes();
 	}
 
 	private void _initSourceCheck(SourceCheck sourceCheck) throws Exception {
 		sourceCheck.setAllFileNames(_allFileNames);
 		sourceCheck.setBaseDirName(sourceFormatterArgs.getBaseDirName());
-		sourceCheck.setExcludes(_excludes);
 		sourceCheck.setMaxLineLength(sourceFormatterArgs.getMaxLineLength());
 		sourceCheck.setPluginsInsideModulesDirectoryNames(
 			_pluginsInsideModulesDirectoryNames);
 		sourceCheck.setPortalSource(portalSource);
 		sourceCheck.setProperties(_properties);
+		sourceCheck.setSourceFormatterExcludes(_sourceFormatterExcludes);
 		sourceCheck.setSubrepository(subrepository);
 
 		sourceCheck.init();
@@ -659,7 +650,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	private List<String> _allFileNames;
 	private boolean _browserStarted;
-	private String[] _excludes;
 	private SourceMismatchException _firstSourceMismatchException;
 	private final List<String> _modifiedFileNames =
 		new CopyOnWriteArrayList<>();
@@ -667,6 +657,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private Properties _properties;
 	private List<SourceCheck> _sourceChecks = new ArrayList<>();
 	private SourceChecksSuppressions _sourceChecksSuppressions;
+	private SourceFormatterExcludes _sourceFormatterExcludes;
 	private Map<String, Set<SourceFormatterMessage>>
 		_sourceFormatterMessagesMap = new ConcurrentHashMap<>();
 

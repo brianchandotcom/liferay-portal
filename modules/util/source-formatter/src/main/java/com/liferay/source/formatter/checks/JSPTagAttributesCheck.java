@@ -16,7 +16,6 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -426,12 +425,9 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 		String[] excludes =
 			{"**/dependencies/**", "**/util-taglib/**", "**/portal-web/**"};
 
-		if (getExcludes() != null) {
-			excludes = ArrayUtil.append(excludes, getExcludes());
-		}
-
 		List<String> tldFileNames = SourceFormatterUtil.filterFileNames(
-			_allFileNames, excludes, new String[] {"**/*.tld"});
+			_allFileNames, excludes, new String[] {"**/*.tld"},
+			getSourceFormatterExcludes());
 
 		if (!isPortalSource()) {
 			return tldFileNames;

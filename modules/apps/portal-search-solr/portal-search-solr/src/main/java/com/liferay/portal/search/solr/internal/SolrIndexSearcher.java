@@ -472,6 +472,10 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		if (!filterQueries.isEmpty()) {
 			solrQuery.setFilterQueries(
 				filterQueries.toArray(new String[filterQueries.size()]));
+
+			if (Validator.isBlank(solrQuery.getQuery())) {
+				solrQuery.setQuery("*:*");
+			}
 		}
 
 		String solrQueryString = solrQuery.toString();

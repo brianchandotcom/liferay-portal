@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.impl.BuildAutoUpgradeTestEntityModelImpl;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
@@ -178,7 +179,10 @@ public abstract class BaseBuildAutoUpgradeTestCase {
 
 			Assert.assertEquals(1, rs.getLong("id_"));
 			Assert.assertEquals("data", rs.getString("data_"));
-			Assert.assertEquals(StringPool.BLANK, rs.getString("data2"));
+
+			String data2 = rs.getString("data2");
+
+			Assert.assertTrue(data2, Validator.isNull(data2));
 		}
 
 		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
@@ -220,7 +224,10 @@ public abstract class BaseBuildAutoUpgradeTestCase {
 			Assert.assertTrue(rs.next());
 
 			Assert.assertEquals(1, rs.getLong("id_"));
-			Assert.assertEquals(StringPool.BLANK, rs.getString("data_"));
+
+			String data = rs.getString("data_");
+
+			Assert.assertTrue(data, Validator.isNull(data));
 		}
 	}
 

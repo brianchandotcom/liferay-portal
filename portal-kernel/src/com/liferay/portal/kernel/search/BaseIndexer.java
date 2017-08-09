@@ -1539,7 +1539,9 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 			document.addKeyword(Field.STATUS, workflowedModel.getStatus());
 		}
 
-		for (DocumentContributor documentContributor : _documentContributors) {
+		for (DocumentContributor documentContributor :
+				getDocumentContributors()) {
+
 			documentContributor.contribute(document, baseModel);
 		}
 
@@ -1558,12 +1560,14 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		return _defaultSelectedLocalizedFieldNames;
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, no direct replacement
-	 * @return
-	 */
-	@Deprecated
 	protected List<DocumentContributor> getDocumentContributors() {
+		if (_documentContributors != null) {
+			return _documentContributors;
+		}
+
+		_documentContributors = ServiceTrackerCollections.openList(
+			DocumentContributor.class);
+
 		return _documentContributors;
 	}
 
@@ -1842,8 +1846,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	private String[] _defaultSelectedFieldNames;
 	private String[] _defaultSelectedLocalizedFieldNames;
 	private final Document _document = new DocumentImpl();
-	private final List<DocumentContributor> _documentContributors =
-		ServiceTrackerCollections.openList(DocumentContributor.class);
+	private List<DocumentContributor> _documentContributors;
 	private boolean _filterSearch;
 	private Boolean _indexerEnabled;
 	private IndexerPostProcessor[] _indexerPostProcessors =

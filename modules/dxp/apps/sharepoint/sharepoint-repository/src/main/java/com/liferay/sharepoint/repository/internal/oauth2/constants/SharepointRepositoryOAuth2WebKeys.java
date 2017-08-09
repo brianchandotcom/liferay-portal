@@ -17,7 +17,7 @@ package com.liferay.sharepoint.repository.internal.oauth2.constants;
 /**
  * @author Sergio González
  */
-public class SharepointOAuth2WebKeys {
+public class SharepointRepositoryOAuth2WebKeys {
 
 	public static final String REQUEST_STATE =
 		"DOCUMENT_LIBRARY_SHAREPOINT_OAUTH2_REQUEST_STATE";

@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -502,6 +503,11 @@ public class SoyPortlet extends MVCPortlet {
 		template.put(
 			"javaScriptLoaderModule",
 			_soyPortletHelper.getJavaScriptLoaderModule(path));
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		template.put("locale", themeDisplay.getLocale());
 
 		String templateNamespace = path.concat(".render");
 

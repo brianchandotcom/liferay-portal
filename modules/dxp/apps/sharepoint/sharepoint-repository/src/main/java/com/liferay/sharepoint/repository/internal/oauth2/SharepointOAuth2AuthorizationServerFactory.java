@@ -41,12 +41,12 @@ public class SharepointOAuth2AuthorizationServerFactory {
 			sharepointOAuth2Configuration);
 	}
 
-	public SharepointOAuth2AuthorizationServer create(String pid) {
-		return create(_getSharepointOAuth2Configuration(pid));
+	public SharepointOAuth2AuthorizationServer create(String configurationPid) {
+		return create(_getSharepointOAuth2Configuration(configurationPid));
 	}
 
 	private SharepointOAuth2Configuration _getSharepointOAuth2Configuration(
-		String pid) {
+		String configurationPid) {
 
 		try {
 			Configuration[] configurations =
@@ -59,14 +59,14 @@ public class SharepointOAuth2AuthorizationServerFactory {
 
 				String name = (String)properties.get("name");
 
-				if ((name != null) && name.equals(pid)) {
+				if ((name != null) && name.equals(configurationPid)) {
 					return ConfigurableUtil.createConfigurable(
 						SharepointOAuth2Configuration.class, properties);
 				}
 			}
 
 			throw new NoSuchElementException(
-				"No configuration found with name " + pid);
+				"No configuration found with name " + configurationPid);
 		}
 		catch (InvalidSyntaxException | IOException e) {
 			throw new SystemException(e);

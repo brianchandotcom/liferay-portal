@@ -32,21 +32,21 @@ import org.osgi.service.component.annotations.Reference;
 public class SharepointOAuth2TokenStore implements TokenStore {
 
 	@Override
-	public void delete(String configurationId, long userId)
+	public void delete(String configurationPid, long userId)
 		throws PortalException {
 
 		_sharepointOAuth2TokenEntryLocalService.
-			deleteSharepointOAuth2TokenEntry(userId, configurationId);
+			deleteSharepointOAuth2TokenEntry(userId, configurationPid);
 	}
 
 	@Override
-	public Token get(String configurationId, long userId)
+	public Token get(String configurationPid, long userId)
 		throws PortalException {
 
 		try {
 			Token token = SharepointOAuth2Token.newInstance(
 				_sharepointOAuth2TokenEntryLocalService.
-					fetchSharepointOAuth2TokenEntry(userId, configurationId));
+					fetchSharepointOAuth2TokenEntry(userId, configurationPid));
 
 			if ((token == null) || !token.isExpired()) {
 				return token;
@@ -55,12 +55,12 @@ public class SharepointOAuth2TokenStore implements TokenStore {
 			SharepointOAuth2AuthorizationServer
 				sharepointOAuth2AuthorizationServer =
 					_sharepointOAuth2AuthorizationServerFactory.create(
-						configurationId);
+						configurationPid);
 
 			Token refreshedToken =
 				sharepointOAuth2AuthorizationServer.refreshAccessToken(token);
 
-			save(configurationId, userId, refreshedToken);
+			save(configurationPid, userId, refreshedToken);
 
 			return refreshedToken;
 		}
@@ -70,23 +70,23 @@ public class SharepointOAuth2TokenStore implements TokenStore {
 	}
 
 	@Override
-	public Token getFresh(String configurationId, long userId)
+	public Token getFresh(String configurationPid, long userId)
 		throws PortalException {
 
 		try {
 			Token token = SharepointOAuth2Token.newInstance(
 				_sharepointOAuth2TokenEntryLocalService.
-					fetchSharepointOAuth2TokenEntry(userId, configurationId));
+					fetchSharepointOAuth2TokenEntry(userId, configurationPid));
 
 			SharepointOAuth2AuthorizationServer
 				sharepointOAuth2AuthorizationServer =
 					_sharepointOAuth2AuthorizationServerFactory.create(
-						configurationId);
+						configurationPid);
 
 			Token refreshedToken =
 				sharepointOAuth2AuthorizationServer.refreshAccessToken(token);
 
-			save(configurationId, userId, refreshedToken);
+			save(configurationPid, userId, refreshedToken);
 
 			return refreshedToken;
 		}
@@ -96,11 +96,11 @@ public class SharepointOAuth2TokenStore implements TokenStore {
 	}
 
 	@Override
-	public void save(String configurationId, long userId, Token token)
+	public void save(String configurationPid, long userId, Token token)
 		throws PortalException {
 
 		_sharepointOAuth2TokenEntryLocalService.addSharepointOAuth2TokenEntry(
-			userId, configurationId, token.getAccessToken(),
+			userId, configurationPid, token.getAccessToken(),
 			token.getRefreshToken(), token.getExpirationDate());
 	}
 

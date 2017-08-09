@@ -40,8 +40,8 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.portal.cache.ehcache.multiple.configuration.EhcacheMultipleConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL, enabled = false,
-	immediate = true, service = PortalCacheReplicatorFactory.class
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	service = PortalCacheReplicatorFactory.class
 )
 public class EhcachePortalCacheReplicatorFactory
 	implements PortalCacheReplicatorFactory {

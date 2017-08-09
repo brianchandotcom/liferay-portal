@@ -79,14 +79,14 @@ renderResponse.setTitle(configurationModelName);
 		<aui:button-row>
 			<c:choose>
 				<c:when test="<%= configurationModel.hasConfiguration() %>">
-					<aui:button cssClass="btn-lg" type="submit" value="update" />
+					<aui:button cssClass="btn-lg" name="update" type="submit" value="update" />
 				</c:when>
 				<c:otherwise>
-					<aui:button cssClass="btn-lg" type="submit" value="save" />
+					<aui:button cssClass="btn-lg" name="save" type="submit" value="save" />
 				</c:otherwise>
 			</c:choose>
 
-			<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+			<aui:button cssClass="btn-lg" href="<%= redirect %>" name="cancel" type="cancel" />
 		</aui:button-row>
 	</aui:form>
 </div>

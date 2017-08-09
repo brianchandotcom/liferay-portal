@@ -521,11 +521,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return new String[0];
 		}
 
-		List<String> excludesList = ListUtil.fromString(
-			GetterUtil.getString(
-				System.getProperty("source.formatter.excludes")));
-
-		excludesList.addAll(getPropertyList("source.formatter.excludes"));
+		List<String> excludesList = getPropertyList(
+			"source.formatter.excludes");
 
 		return excludesList.toArray(new String[excludesList.size()]);
 	}

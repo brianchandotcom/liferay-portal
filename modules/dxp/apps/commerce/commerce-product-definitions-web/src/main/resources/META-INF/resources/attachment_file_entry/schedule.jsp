@@ -21,8 +21,6 @@ CPAttachmentFileEntriesDisplayContext cpAttachmentFileEntriesDisplayContext = (C
 
 CPAttachmentFileEntry cpAttachmentFileEntry = cpAttachmentFileEntriesDisplayContext.getCPAttachmentFileEntry();
 
-long cpDefinitionId = cpAttachmentFileEntriesDisplayContext.getCPDefinitionId();
-
 boolean neverExpire = ParamUtil.getBoolean(request, "neverExpire", true);
 
 if ((cpAttachmentFileEntry != null) && (cpAttachmentFileEntry.getExpirationDate() != null)) {

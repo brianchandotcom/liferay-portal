@@ -18,25 +18,14 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessorRegistryUtil;
-import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
-import com.liferay.exportimport.kernel.lar.ExportImportProcessCallbackRegistryUtil;
-import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
-import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.model.StagedModel;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.util.DateRange;
-import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 /**
  * @author Daniel Kocsis
@@ -79,20 +68,6 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		throws PortletDataException {
 
 		super.exportStagedModel(portletDataContext, stagedModel);
-
-		boolean updateLastPublishDate = MapUtil.getBoolean(
-			portletDataContext.getParameterMap(),
-			PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE);
-
-		if (ExportImportThreadLocal.isStagingInProcess() &&
-			updateLastPublishDate &&
-			(stagedModel instanceof StagedGroupedModel)) {
-
-			ExportImportProcessCallbackRegistryUtil.registerCallback(
-				portletDataContext.getExportImportProcessId(),
-				new UpdateStagedModelLastPublishDateCallable(
-					stagedModel, portletDataContext.getDateRange()));
-		}
 	}
 
 	@Override
@@ -165,67 +140,6 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 	protected StagedModelRepository<T> getStagedModelRepository() {
 		return null;
-	}
-
-	private class UpdateStagedModelLastPublishDateCallable
-		implements Callable<Void> {
-
-		public UpdateStagedModelLastPublishDateCallable(
-			T stagedModel, DateRange dateRange) {
-
-			_companyId = stagedModel.getCompanyId();
-			_dateRange = dateRange;
-			_groupId = ((StagedGroupedModel)stagedModel).getGroupId();
-			_uuid = stagedModel.getUuid();
-		}
-
-		@Override
-		public Void call() throws PortalException {
-			StagedModelRepository<T> stagedModelRepository =
-				getStagedModelRepository();
-
-			if (stagedModelRepository == null) {
-				return null;
-			}
-
-			T stagedModel =
-				stagedModelRepository.fetchStagedModelByUuidAndGroupId(
-					_uuid, _groupId);
-
-			if (stagedModel == null) {
-				return null;
-			}
-
-			Date endDate = null;
-
-			if (_dateRange != null) {
-				endDate = _dateRange.getEndDate();
-			}
-
-			ExportImportDateUtil.updateLastPublishDate(
-				(StagedGroupedModel)stagedModel, _dateRange, endDate);
-
-			ServiceContext serviceContext = new ServiceContext();
-
-			serviceContext.setModifiedDate(stagedModel.getModifiedDate());
-
-			ServiceContextThreadLocal.pushServiceContext(serviceContext);
-
-			try {
-				stagedModelRepository.saveStagedModel(stagedModel);
-			}
-			finally {
-				ServiceContextThreadLocal.popServiceContext();
-			}
-
-			return null;
-		}
-
-		private final long _companyId;
-		private final DateRange _dateRange;
-		private final long _groupId;
-		private final String _uuid;
-
 	}
 
 }

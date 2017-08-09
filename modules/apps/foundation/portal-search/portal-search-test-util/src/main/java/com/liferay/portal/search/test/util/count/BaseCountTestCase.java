@@ -14,8 +14,12 @@
 
 package com.liferay.portal.search.test.util.count;
 
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexSearcher;
+import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
@@ -31,6 +35,7 @@ import org.junit.Test;
 /**
  * @author Preston Crary
  * @author André de Oliveira
+ * @author Tibor Lipusz
  */
 public abstract class BaseCountTestCase extends BaseIndexingTestCase {
 
@@ -65,19 +70,52 @@ public abstract class BaseCountTestCase extends BaseIndexingTestCase {
 		_assertCount(searchContext);
 	}
 
-	private void _assertCount(SearchContext searchContext) throws Exception {
+	@Test
+	public void testPostFilterWithoutMainQuery() throws Exception {
+		Query query = new BooleanQueryImpl();
+
+		query.setPostFilter(_createBooleanFilter());
+
+		_assertCount(query, createSearchContext());
+	}
+
+	@Test
+	public void testPreFilterWithoutMainQuery() throws Exception {
+		Query query = new BooleanQueryImpl();
+
+		query.setPreBooleanFilter(_createBooleanFilter());
+
+		_assertCount(query, createSearchContext());
+	}
+
+	private void _assertCount(Query query, SearchContext searchContext)
+		throws Exception {
+
 		IdempotentRetryAssert.retryAssert(
 			3, TimeUnit.SECONDS,
 			() -> {
 				IndexSearcher indexSearcher = getIndexSearcher();
 
-				long count = indexSearcher.searchCount(
-					searchContext, getDefaultQuery());
+				long count = indexSearcher.searchCount(searchContext, query);
 
 				Assert.assertEquals(_TOTAL_DOCUMENTS, count);
 
 				return null;
 			});
+	}
+
+	private void _assertCount(SearchContext searchContext) throws Exception {
+		Query query = getDefaultQuery();
+
+		_assertCount(query, searchContext);
+	}
+
+	private BooleanFilter _createBooleanFilter() {
+		BooleanFilter booleanFilter = new BooleanFilter();
+
+		booleanFilter.addRequiredTerm(Field.GROUP_ID, GROUP_ID);
+
+		return booleanFilter;
 	}
 
 	private static final int _TOTAL_DOCUMENTS = 20;

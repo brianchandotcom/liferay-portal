@@ -39,4 +39,7 @@ public interface SourceProcessor {
 
 	public void setSourceFormatterArgs(SourceFormatterArgs sourceFormatterArgs);
 
+	public void setSourceFormatterExcludes(
+		SourceFormatterExcludes sourceFormatterExcludes);
+
 }

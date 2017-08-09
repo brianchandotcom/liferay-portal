@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.source.formatter.SourceFormatterExcludes;
 import com.liferay.source.formatter.SourceFormatterMessage;
 
 import java.util.List;
@@ -38,8 +39,6 @@ public interface SourceCheck {
 
 	public void setBaseDirName(String baseDirName);
 
-	public void setExcludes(String[] excludes);
-
 	public void setMaxLineLength(int maxLineLength);
 
 	public void setPluginsInsideModulesDirectoryNames(
@@ -48,6 +47,9 @@ public interface SourceCheck {
 	public void setPortalSource(boolean portalSource);
 
 	public void setProperties(Properties properties);
+
+	public void setSourceFormatterExcludes(
+		SourceFormatterExcludes sourceFormatterExcludes);
 
 	public void setSubrepository(boolean subrepository);
 

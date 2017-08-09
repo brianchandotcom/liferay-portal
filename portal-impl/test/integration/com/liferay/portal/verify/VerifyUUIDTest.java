@@ -59,6 +59,11 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(
+				expectedDBType = ExpectedDBType.MARIADB,
+				expectedLog = "Unable to process runnable: Unknown column 'Unknown' in 'field list'",
+				expectedType = ExpectedType.EXACT
+			),
+			@ExpectedLog(
 				expectedDBType = ExpectedDBType.MYSQL,
 				expectedLog = "Unable to process runnable: Unknown column 'Unknown' in 'field list'",
 				expectedType = ExpectedType.EXACT
@@ -109,6 +114,11 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 			@ExpectedLog(
 				expectedDBType = ExpectedDBType.HYPERSONIC,
 				expectedLog = "Unable to process runnable: user lacks privilege or object not found:",
+				expectedType = ExpectedType.PREFIX
+			),
+			@ExpectedLog(
+				expectedDBType = ExpectedDBType.MARIADB,
+				expectedLog = "Unable to process runnable: Table ",
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(
@@ -173,6 +183,11 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 			@ExpectedLog(
 				expectedDBType = ExpectedDBType.HYPERSONIC,
 				expectedLog = "Unable to process runnable: user lacks privilege or object not found:",
+				expectedType = ExpectedType.PREFIX
+			),
+			@ExpectedLog(
+				expectedDBType = ExpectedDBType.MARIADB,
+				expectedLog = "Unable to process runnable: Table ",
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.spring.hibernate.dialect.MariaDBDialect;
 import com.liferay.portal.util.PropsValues;
 
 import java.sql.Connection;
@@ -32,7 +33,9 @@ import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 
 import java.util.EnumMap;
+import java.util.LinkedHashSet;
 import java.util.ServiceLoader;
+import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -133,6 +136,10 @@ public class DBManagerImpl implements DBManager {
 			return DBType.HYPERSONIC;
 		}
 
+		if (dialect instanceof MariaDBDialect) {
+			return DBType.MARIADB;
+		}
+
 		if (dialect instanceof MySQLDialect) {
 			return DBType.MYSQL;
 		}
@@ -160,6 +167,11 @@ public class DBManagerImpl implements DBManager {
 		}
 
 		throw new IllegalArgumentException("Unknown dialect type " + dialect);
+	}
+
+	@Override
+	public Set<DBType> getDBTypes() {
+		return new LinkedHashSet<>(_dbFactories.keySet());
 	}
 
 	@Override

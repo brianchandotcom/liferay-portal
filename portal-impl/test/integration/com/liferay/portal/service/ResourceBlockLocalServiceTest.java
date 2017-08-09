@@ -93,6 +93,16 @@ public class ResourceBlockLocalServiceTest {
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(
+				expectedDBType = ExpectedDBType.MARIADB,
+				expectedLog = "Deadlock found when trying to get lock; try restarting transaction",
+				expectedType = ExpectedType.EXACT
+			),
+			@ExpectedLog(
+				expectedDBType = ExpectedDBType.MARIADB,
+				expectedLog = "Duplicate entry ",
+				expectedType = ExpectedType.PREFIX
+			),
+			@ExpectedLog(
 				expectedDBType = ExpectedDBType.MYSQL,
 				expectedLog = "Deadlock found when trying to get lock; try restarting transaction",
 				expectedType = ExpectedType.EXACT
@@ -215,6 +225,16 @@ public class ResourceBlockLocalServiceTest {
 			@ExpectedLog(
 				expectedDBType = ExpectedDBType.HYPERSONIC,
 				expectedLog = "integrity constraint violation: unique constraint or index violation:",
+				expectedType = ExpectedType.PREFIX
+			),
+			@ExpectedLog(
+				expectedDBType = ExpectedDBType.MARIADB,
+				expectedLog = "Deadlock found when trying to get lock; try restarting transaction",
+				expectedType = ExpectedType.EXACT
+			),
+			@ExpectedLog(
+				expectedDBType = ExpectedDBType.MARIADB,
+				expectedLog = "Duplicate entry ",
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(

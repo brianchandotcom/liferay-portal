@@ -208,7 +208,7 @@ public class SampleSQLBuilder {
 	protected void compressSQL(Reader reader, File dir) throws Exception {
 		DB db = DBManagerUtil.getDB(_dbType, null);
 
-		if (_dbType == DBType.MYSQL) {
+		if ((_dbType == DBType.MARIADB) || (_dbType == DBType.MYSQL)) {
 			db = new SampleMySQLDB(db.getMajorVersion(), db.getMinorVersion());
 		}
 

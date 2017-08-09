@@ -163,6 +163,11 @@ public class ResourcePermissionLocalServiceConcurrentTest {
 						expectedType = ExpectedType.PREFIX
 					),
 					@ExpectedLog(
+						expectedDBType = ExpectedDBType.MARIADB,
+						expectedLog = "Duplicate entry '",
+						expectedType = ExpectedType.PREFIX
+					),
+					@ExpectedLog(
 						expectedDBType = ExpectedDBType.MYSQL,
 						expectedLog = "Duplicate entry '",
 						expectedType = ExpectedType.PREFIX

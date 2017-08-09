@@ -241,7 +241,7 @@ public class SQLTest {
 
 	@Test
 	public void testReplace1() throws Exception {
-		if (!isMySQL()) {
+		if (!isMariaDBOrMySQL()) {
 			return;
 		}
 
@@ -261,7 +261,7 @@ public class SQLTest {
 
 	@Test
 	public void testReplace2() throws Exception {
-		if (!isMySQL()) {
+		if (!isMariaDBOrMySQL()) {
 			return;
 		}
 
@@ -281,7 +281,7 @@ public class SQLTest {
 
 	@Test
 	public void testReplace3() throws Exception {
-		if (!isMySQL()) {
+		if (!isMariaDBOrMySQL()) {
 			return;
 		}
 
@@ -296,7 +296,7 @@ public class SQLTest {
 
 	@Test
 	public void testReplace4() throws Exception {
-		if (!isMySQL()) {
+		if (!isMariaDBOrMySQL()) {
 			return;
 		}
 
@@ -394,7 +394,7 @@ public class SQLTest {
 
 	@Test
 	public void testTruncate1() throws Exception {
-		if (!isMySQL()) {
+		if (!isMariaDBOrMySQL()) {
 			return;
 		}
 
@@ -413,7 +413,7 @@ public class SQLTest {
 
 	@Test
 	public void testTruncate2() throws Exception {
-		if (!isMySQL()) {
+		if (!isMariaDBOrMySQL()) {
 			return;
 		}
 
@@ -432,7 +432,7 @@ public class SQLTest {
 
 	@Test
 	public void testTruncate3() throws Exception {
-		if (!isMySQL()) {
+		if (!isMariaDBOrMySQL()) {
 			return;
 		}
 
@@ -446,7 +446,7 @@ public class SQLTest {
 
 	@Test
 	public void testTruncate4() throws Exception {
-		if (!isMySQL()) {
+		if (!isMariaDBOrMySQL()) {
 			return;
 		}
 
@@ -617,10 +617,12 @@ public class SQLTest {
 		}
 	}
 
-	protected boolean isMySQL() {
+	protected boolean isMariaDBOrMySQL() {
 		DB db = DBManagerUtil.getDB();
 
-		if (db.getDBType() == DBType.MYSQL) {
+		DBType dbType = db.getDBType();
+
+		if ((dbType == DBType.MARIADB) || (dbType == DBType.MYSQL)) {
 			return true;
 		}
 

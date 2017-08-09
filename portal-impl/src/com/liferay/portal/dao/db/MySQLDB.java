@@ -97,6 +97,10 @@ public class MySQLDB extends BaseDB {
 		return _SUPPORTS_UPDATE_WITH_INNER_JOIN;
 	}
 
+	protected MySQLDB(DBType dbType, int majorVersion, int minorVersion) {
+		super(dbType, majorVersion, minorVersion);
+	}
+
 	@Override
 	protected String buildCreateFileContent(
 			String sqlDir, String databaseName, int population)

@@ -21,9 +21,10 @@ import com.liferay.portal.kernel.dao.db.DBType;
  */
 public enum ExpectedDBType {
 
-	DB2(DBType.DB2), HYPERSONIC(DBType.HYPERSONIC), MYSQL(DBType.MYSQL),
-	NONE(null), ORACLE(DBType.ORACLE), POSTGRESQL(DBType.POSTGRESQL),
-	SQLSERVER(DBType.SQLSERVER), SYBASE(DBType.SYBASE);
+	DB2(DBType.DB2), HYPERSONIC(DBType.HYPERSONIC), MARIADB(DBType.MARIADB),
+	MYSQL(DBType.MYSQL), NONE(null), ORACLE(DBType.ORACLE),
+	POSTGRESQL(DBType.POSTGRESQL), SQLSERVER(DBType.SQLSERVER),
+	SYBASE(DBType.SYBASE);
 
 	public DBType getDBType() {
 		return _dbType;

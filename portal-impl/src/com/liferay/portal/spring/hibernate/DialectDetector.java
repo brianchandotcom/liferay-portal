@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.spring.hibernate.dialect.MariaDBDialect;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -52,6 +53,7 @@ public class DialectDetector {
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
 
 			String dbName = databaseMetaData.getDatabaseProductName();
+			String driverName = databaseMetaData.getDriverName();
 			int dbMajorVersion = databaseMetaData.getDatabaseMajorVersion();
 			int dbMinorVersion = databaseMetaData.getDatabaseMinorVersion();
 
@@ -105,6 +107,9 @@ public class DialectDetector {
 			}
 			else if (dbName.startsWith("DB2") && (dbMajorVersion >= 9)) {
 				dialect = new DB2Dialect();
+			}
+			else if (driverName.startsWith("mariadb")) {
+				dialect = new MariaDBDialect();
 			}
 			else if (dbName.startsWith("Microsoft") && (dbMajorVersion == 9)) {
 				dialect = new SQLServer2005Dialect();

@@ -333,7 +333,7 @@ public class VerifyPermission extends VerifyProcess {
 
 			long[] companyIds = PortalInstances.getCompanyIdsBySQL();
 
-			if (dbType == DBType.MYSQL) {
+			if ((dbType == DBType.MARIADB) || (dbType == DBType.MYSQL)) {
 				fixUserDefaultRolePermissionsMySQL(
 					userClassNameId, userGroupClassNameId, companyIds);
 

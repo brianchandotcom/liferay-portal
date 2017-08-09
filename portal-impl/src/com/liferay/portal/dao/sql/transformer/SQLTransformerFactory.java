@@ -34,7 +34,7 @@ public class SQLTransformerFactory {
 		else if (dbType == DBType.HYPERSONIC) {
 			sqlTransformerLogic = new HypersonicSQLTransformerLogic(db);
 		}
-		else if (dbType == DBType.MYSQL) {
+		else if ((dbType == DBType.MARIADB) || (dbType == DBType.MYSQL)) {
 			sqlTransformerLogic = new MySQLSQLTransformerLogic(db);
 		}
 		else if (dbType == DBType.ORACLE) {

@@ -12,28 +12,25 @@
  * details.
  */
 
-package com.liferay.portal.kernel.dao.db;
+package com.liferay.portal.dao.db;
 
-import aQute.bnd.annotation.ProviderType;
-
-import java.util.Set;
-
-import javax.sql.DataSource;
+import com.liferay.portal.kernel.dao.db.BaseDBFactory;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBType;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Preston Crary
  */
-@ProviderType
-public interface DBManager {
+public class MariaDBDBFactory extends BaseDBFactory {
 
-	public DB getDB();
+	@Override
+	public DB doCreate(int dbMajorVersion, int dbMinorVersion) {
+		return new MariaDBDB(dbMajorVersion, dbMinorVersion);
+	}
 
-	public DB getDB(DBType dbType, DataSource dataSource);
-
-	public DBType getDBType(Object dialect);
-
-	public Set<DBType> getDBTypes();
-
-	public void setDB(DB db);
+	@Override
+	public DBType getDBType() {
+		return DBType.MARIADB;
+	}
 
 }

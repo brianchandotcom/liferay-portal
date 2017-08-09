@@ -131,7 +131,10 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 		sb.append("and AssetEntry.classNameId = ");
 		sb.append(classNameId);
 
-		dbTypeToSQLMap.add(DBType.MYSQL, sb.toString());
+		String sql = sb.toString();
+
+		dbTypeToSQLMap.add(DBType.MARIADB, sql);
+		dbTypeToSQLMap.add(DBType.MYSQL, sql);
 
 		runSQL(dbTypeToSQLMap);
 	}
@@ -163,7 +166,10 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 		sb.append(tempTableName);
 		sb.append(".threadId");
 
-		dbTypeToSQLMap.add(DBType.MYSQL, sb.toString());
+		String sql = sb.toString();
+
+		dbTypeToSQLMap.add(DBType.MARIADB, sql);
+		dbTypeToSQLMap.add(DBType.MYSQL, sql);
 
 		runSQL(dbTypeToSQLMap);
 	}

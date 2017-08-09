@@ -60,7 +60,9 @@ public class VerifyUser extends VerifyProcess {
 
 			DB db = DBManagerUtil.getDB();
 
-			if (db.getDBType() == DBType.MYSQL) {
+			if ((db.getDBType() == DBType.MARIADB) ||
+				(db.getDBType() == DBType.MYSQL)) {
+
 				sb = new StringBundler(7);
 
 				sb.append("update Group_ inner join User_ on ");

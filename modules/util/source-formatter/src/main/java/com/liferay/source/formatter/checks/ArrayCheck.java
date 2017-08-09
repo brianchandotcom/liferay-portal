@@ -74,8 +74,6 @@ public class ArrayCheck extends BaseFileCheck {
 				String whitespace2 = matcher.group(3);
 
 				if (whitespace2.contains(StringPool.NEW_LINE)) {
-					System.out.println(matcher.group());
-
 					return content;
 				}
 

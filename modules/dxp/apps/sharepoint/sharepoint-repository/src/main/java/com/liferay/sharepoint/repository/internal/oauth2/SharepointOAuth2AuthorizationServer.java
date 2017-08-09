@@ -41,10 +41,8 @@ public class SharepointOAuth2AuthorizationServer {
 		throws AuthorizationException, IOException {
 
 		try {
-			String url =
-				_sharepointOAuth2Configuration.authorizationTokenEndpoint();
-
-			HttpRequestWithBody httpRequestWithBody = Unirest.post(url);
+			HttpRequestWithBody httpRequestWithBody = Unirest.post(
+				_sharepointOAuth2Configuration.authorizationTokenEndpoint());
 
 			httpRequestWithBody.field("grant_type", "refresh_token");
 			httpRequestWithBody.field(
@@ -72,10 +70,8 @@ public class SharepointOAuth2AuthorizationServer {
 		throws AuthorizationException, IOException {
 
 		try {
-			String url =
-				_sharepointOAuth2Configuration.authorizationTokenEndpoint();
-
-			HttpRequestWithBody httpRequestWithBody = Unirest.post(url);
+			HttpRequestWithBody httpRequestWithBody = Unirest.post(
+				_sharepointOAuth2Configuration.authorizationTokenEndpoint());
 
 			httpRequestWithBody.field("grant_type", "authorization_code");
 			httpRequestWithBody.field(

@@ -26,7 +26,13 @@ String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 
 SearchContainer notificationsSearchContainer = new SearchContainer(renderRequest, currentURLObj, null, actionRequired ? "you-do-not-have-any-requests" : "you-do-not-have-any-notifications");
 
-notificationsSearchContainer.setId("userNotificationEvents");
+String searchContainerId = "userNotificationEvents";
+
+if (actionRequired) {
+	searchContainerId = "actionableUserNotificationEvents";
+}
+
+notificationsSearchContainer.setId(searchContainerId);
 
 NotificationsUtil.populateResults(themeDisplay.getUserId(), actionRequired, navigation, orderByType, notificationsSearchContainer);
 
@@ -64,7 +70,7 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 <liferay-frontend:management-bar
 	disabled="<%= NotificationsUtil.getAllNotificationsCount(themeDisplay.getUserId(), actionRequired) == 0 %>"
 	includeCheckBox="<%= true %>"
-	searchContainerId="userNotificationEvents"
+	searchContainerId="<%= searchContainerId %>"
 >
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons

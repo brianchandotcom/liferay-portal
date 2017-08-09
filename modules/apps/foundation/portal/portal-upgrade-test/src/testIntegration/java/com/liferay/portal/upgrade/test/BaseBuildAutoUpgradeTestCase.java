@@ -183,6 +183,8 @@ public abstract class BaseBuildAutoUpgradeTestCase {
 			String data2 = rs.getString("data2");
 
 			Assert.assertTrue(data2, Validator.isNull(data2));
+
+			Assert.assertFalse(rs.next());
 		}
 
 		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
@@ -208,6 +210,8 @@ public abstract class BaseBuildAutoUpgradeTestCase {
 
 			Assert.assertEquals(1, rs.getLong("id_"));
 			Assert.assertEquals("data2", rs.getString("data2"));
+
+			Assert.assertFalse(rs.next());
 		}
 
 		// Remove "data2" column and add "data_" column
@@ -228,6 +232,8 @@ public abstract class BaseBuildAutoUpgradeTestCase {
 			String data = rs.getString("data_");
 
 			Assert.assertTrue(data, Validator.isNull(data));
+
+			Assert.assertFalse(rs.next());
 		}
 	}
 

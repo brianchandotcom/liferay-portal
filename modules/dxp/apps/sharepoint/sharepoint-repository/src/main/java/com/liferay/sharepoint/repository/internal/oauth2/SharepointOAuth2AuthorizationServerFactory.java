@@ -41,17 +41,17 @@ public class SharepointOAuth2AuthorizationServerFactory {
 			sharepointOAuth2Configuration);
 	}
 
-	public SharepointOAuth2AuthorizationServer create(String configurationId) {
-		return create(_getConfiguration(configurationId));
+	public SharepointOAuth2AuthorizationServer create(String pid) {
+		return create(_getConfiguration(pid));
 	}
 
 	private SharepointOAuth2Configuration _getConfiguration(
-		String configurationId) {
+		String pid) {
 
 		try {
 			Configuration[] configurations =
 				_configurationAdmin.listConfigurations(
-					"(service.factoryPID=" + _FACTORY_PID + ")");
+					"(service.factoryPID=" + _PID + ")");
 
 			for (Configuration configuration : configurations) {
 				Dictionary<String, Object> properties =
@@ -59,21 +59,21 @@ public class SharepointOAuth2AuthorizationServerFactory {
 
 				String name = (String)properties.get("name");
 
-				if ((name != null) && name.equals(configurationId)) {
+				if ((name != null) && name.equals(pid)) {
 					return ConfigurableUtil.createConfigurable(
 						SharepointOAuth2Configuration.class, properties);
 				}
 			}
 
 			throw new NoSuchElementException(
-				"No configuration found with name " + configurationId);
+				"No configuration found with name " + pid);
 		}
 		catch (InvalidSyntaxException | IOException e) {
 			throw new SystemException(e);
 		}
 	}
 
-	private static final String _FACTORY_PID =
+	private static final String _PID =
 		"com.liferay.sharepoint.repository.internal." +
 			"SharepointOAuth2Configuration";
 

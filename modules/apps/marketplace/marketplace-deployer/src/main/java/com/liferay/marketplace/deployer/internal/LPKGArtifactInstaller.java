@@ -14,6 +14,7 @@
 
 package com.liferay.marketplace.deployer.internal;
 
+import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -24,7 +25,11 @@ import java.io.File;
 import java.io.InputStream;
 
 import java.util.Dictionary;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -34,10 +39,15 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
 import org.osgi.framework.Constants;
+import org.osgi.framework.FrameworkEvent;
+import org.osgi.framework.FrameworkListener;
 import org.osgi.framework.Version;
+import org.osgi.framework.wiring.FrameworkWiring;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.url.URLConstants;
+import org.osgi.service.url.URLStreamHandlerService;
 
 /**
  * @author Shuyang Zhou
@@ -59,6 +69,13 @@ public class LPKGArtifactInstaller implements ArtifactInstaller {
 
 	@Override
 	public void install(File file) throws Exception {
+		Bundle existingBundle = _bundleContext.getBundle(
+			file.getCanonicalPath());
+
+		if (existingBundle != null) {
+			update(file);
+		}
+
 		Properties properties = _readMarketplaceProperties(file);
 
 		if (GetterUtil.getBoolean(
@@ -117,6 +134,41 @@ public class LPKGArtifactInstaller implements ArtifactInstaller {
 					return;
 				}
 
+				Map<Bundle, List<Bundle>> deployedLPKGBundles =
+					_lpkgDeployer.getDeployedLPKGBundles();
+
+				List<Bundle> installedBundles = deployedLPKGBundles.get(bundle);
+
+				Set<Bundle> wrapperBundles = new HashSet<>();
+
+				for (Bundle installedBundle : installedBundles) {
+					Dictionary<String, String> headers = bundle.getHeaders();
+
+					if (Boolean.getBoolean(headers.get("Wrapper-Bundle"))) {
+						wrapperBundles.add(installedBundle);
+					}
+				}
+
+				if (!wrapperBundles.isEmpty()) {
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							"Refreshing " + wrapperBundles + " to update " +
+								bundle);
+					}
+
+					FrameworkEvent frameworkEvent = _refreshBundles(
+						wrapperBundles);
+
+					if (frameworkEvent.getType() !=
+							FrameworkEvent.PACKAGES_REFRESHED) {
+
+						_log.error(
+							"Unable to refresh " + wrapperBundles +
+								" because of framework event " + frameworkEvent,
+							frameworkEvent.getThrowable());
+					}
+				}
+
 				bundle.update(_lpkgDeployer.toBundle(file));
 			}
 		}
@@ -159,6 +211,31 @@ public class LPKGArtifactInstaller implements ArtifactInstaller {
 		return null;
 	}
 
+	private FrameworkEvent _refreshBundles(Set<Bundle> bundles)
+		throws Exception {
+
+		Bundle systemBundle = _bundleContext.getBundle(0);
+
+		FrameworkWiring frameworkWiring = systemBundle.adapt(
+			FrameworkWiring.class);
+
+		final DefaultNoticeableFuture<FrameworkEvent> defaultNoticeableFuture =
+			new DefaultNoticeableFuture<>();
+
+		frameworkWiring.refreshBundles(
+			bundles,
+			new FrameworkListener() {
+
+				@Override
+				public void frameworkEvent(FrameworkEvent frameworkEvent) {
+					defaultNoticeableFuture.set(frameworkEvent);
+				}
+
+			});
+
+		return defaultNoticeableFuture.get();
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		LPKGArtifactInstaller.class);
 
@@ -166,5 +243,8 @@ public class LPKGArtifactInstaller implements ArtifactInstaller {
 
 	@Reference
 	private LPKGDeployer _lpkgDeployer;
+
+	@Reference(target = "(" + URLConstants.URL_HANDLER_PROTOCOL + "=webbundle)")
+	private URLStreamHandlerService _urlStreamHandlerService;
 
 }

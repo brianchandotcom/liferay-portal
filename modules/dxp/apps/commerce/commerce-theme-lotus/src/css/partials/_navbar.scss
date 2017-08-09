@@ -87,7 +87,6 @@
 
 	.navbar {
 		margin-bottom: 0;
-		position: static;
 
 		.custom-logo {
 			color: $brand-dark;
@@ -97,6 +96,10 @@
 				margin-left: 16px;
 			}
 		}
+	}
+
+	.dropdown-full .navbar {
+		position: static;
 	}
 
 	.navbar-nav {
@@ -123,7 +126,7 @@
 		min-width: 320px;
 		z-index: 1050;
 
-		@include position(absolute, 60px 0 null null);
+		@include position(absolute, null 0 null null);
 	}
 
 	@media (max-width: $grid-float-breakpoint-max) {

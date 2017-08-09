@@ -1804,9 +1804,9 @@ a theme project.
 ## 4.1.4 - 2017-07-26
 
 ### Added
-- [LPS-73655]: Add new task type called `CopyIvyDependenciesTask` which allows
-to download dependencies declared in an `ivy.xml` file via Gradle.
-- [LPS-73655]: Download Ivy dependencies of Ant plugins via Gradle.
+- [LPS-73655]: Add new task type called `CopyIvyDependenciesTask`, which allows
+dependencies declared in an `ivy.xml` file to be downloaded via Gradle.
+- [LPS-73655]: Download Ant plugins' Ivy dependencies via Gradle.
 
 ## 4.1.5 - 2017-07-26
 
@@ -1864,10 +1864,10 @@ a release branch.
 property:
 	- if the `liferay.releng.public` project property is `false`, include all
 	projects containing either a `.lfrbuild-[build.profile]` or a
-	`.lfrbuild-[build.profile]-private` marker file
+	`.lfrbuild-[build.profile]-private` marker file.
 	- otherwise, include all projects containing either a
 	`.lfrbuild-[build.profile]` or a `.lfrbuild-[build.profile]-public` marker
-	file
+	file.
 
 ## 5.0.7 - 2017-08-08
 

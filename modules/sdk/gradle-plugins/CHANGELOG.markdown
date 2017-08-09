@@ -2075,7 +2075,8 @@ to version 2.0.47.
 ## 3.4.22 - 2017-08-08
 
 ### Fixed
-- [LPS-74092]: Add theme WAR file as an artifact of the `default` configuration.
+- [LPS-74092]: Add the theme WAR file as an artifact of the `default`
+configuration.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs

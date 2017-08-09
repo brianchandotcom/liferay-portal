@@ -14,11 +14,11 @@
 
 package com.liferay.commerce.address.web.internal.util;
 
-import com.liferay.commerce.address.model.CommerceCountry;
-import com.liferay.commerce.address.model.CommerceRegion;
-import com.liferay.commerce.address.util.comparator.CommerceCountryPriorityComparator;
-import com.liferay.commerce.address.util.comparator.CommerceRegionNameComparator;
-import com.liferay.commerce.address.util.comparator.CommerceRegionPriorityComparator;
+import com.liferay.commerce.model.CommerceCountry;
+import com.liferay.commerce.model.CommerceRegion;
+import com.liferay.commerce.util.comparator.CommerceCountryPriorityComparator;
+import com.liferay.commerce.util.comparator.CommerceRegionNameComparator;
+import com.liferay.commerce.util.comparator.CommerceRegionPriorityComparator;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**

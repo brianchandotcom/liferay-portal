@@ -23,17 +23,17 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.commerce.address.constants.CommerceAddressActionKeys" %><%@
-page import="com.liferay.commerce.address.exception.CommerceCountryNameException" %><%@
-page import="com.liferay.commerce.address.exception.CommerceCountryThreeLettersISOCodeException" %><%@
-page import="com.liferay.commerce.address.exception.CommerceCountryTwoLettersISOCodeException" %><%@
-page import="com.liferay.commerce.address.exception.CommerceRegionNameException" %><%@
-page import="com.liferay.commerce.address.model.CommerceCountry" %><%@
-page import="com.liferay.commerce.address.model.CommerceRegion" %><%@
-page import="com.liferay.commerce.address.service.permission.CommerceAddressPermission" %><%@
-page import="com.liferay.commerce.address.web.internal.display.context.CommerceCountriesDisplayContext" %><%@
+<%@ page import="com.liferay.commerce.address.web.internal.display.context.CommerceCountriesDisplayContext" %><%@
 page import="com.liferay.commerce.address.web.internal.display.context.CommerceRegionsDisplayContext" %><%@
 page import="com.liferay.commerce.address.web.internal.servlet.taglib.ui.CommerceCountryScreenNavigationConstants" %><%@
+page import="com.liferay.commerce.constants.CommerceActionKeys" %><%@
+page import="com.liferay.commerce.exception.CommerceCountryNameException" %><%@
+page import="com.liferay.commerce.exception.CommerceCountryThreeLettersISOCodeException" %><%@
+page import="com.liferay.commerce.exception.CommerceCountryTwoLettersISOCodeException" %><%@
+page import="com.liferay.commerce.exception.CommerceRegionNameException" %><%@
+page import="com.liferay.commerce.model.CommerceCountry" %><%@
+page import="com.liferay.commerce.model.CommerceRegion" %><%@
+page import="com.liferay.commerce.service.permission.CommercePermission" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@

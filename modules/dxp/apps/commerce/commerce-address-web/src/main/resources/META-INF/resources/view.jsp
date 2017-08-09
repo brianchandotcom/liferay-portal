@@ -21,7 +21,7 @@ CommerceCountriesDisplayContext commerceCountriesDisplayContext = (CommerceCount
 
 SearchContainer<CommerceCountry> commerceCountrySearchContainer = commerceCountriesDisplayContext.getSearchContainer();
 
-boolean hasManageCommerceCountriesPermission = CommerceAddressPermission.contains(permissionChecker, scopeGroupId, CommerceAddressActionKeys.MANAGE_COMMERCE_COUNTRIES);
+boolean hasManageCommerceCountriesPermission = CommercePermission.contains(permissionChecker, scopeGroupId, CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES);
 %>
 
 <liferay-frontend:management-bar
@@ -70,7 +70,7 @@ boolean hasManageCommerceCountriesPermission = CommerceAddressPermission.contain
 			searchContainer="<%= commerceCountrySearchContainer %>"
 		>
 			<liferay-ui:search-container-row
-				className="com.liferay.commerce.address.model.CommerceCountry"
+				className="com.liferay.commerce.model.CommerceCountry"
 				keyProperty="commerceCountryId"
 				modelVar="commerceCountry"
 			>

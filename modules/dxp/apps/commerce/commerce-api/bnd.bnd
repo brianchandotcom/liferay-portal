@@ -1,0 +1,10 @@
+Bundle-Name: Liferay Commerce API
+Bundle-SymbolicName: com.liferay.commerce.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.commerce.constants,\
+	com.liferay.commerce.exception,\
+	com.liferay.commerce.model,\
+	com.liferay.commerce.service,\
+	com.liferay.commerce.service.persistence,\
+	com.liferay.commerce.util.comparator

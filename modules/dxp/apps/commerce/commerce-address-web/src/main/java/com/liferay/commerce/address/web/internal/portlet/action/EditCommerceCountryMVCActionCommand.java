@@ -14,13 +14,13 @@
 
 package com.liferay.commerce.address.web.internal.portlet.action;
 
-import com.liferay.commerce.address.exception.CommerceCountryNameException;
-import com.liferay.commerce.address.exception.CommerceCountryThreeLettersISOCodeException;
-import com.liferay.commerce.address.exception.CommerceCountryTwoLettersISOCodeException;
-import com.liferay.commerce.address.exception.NoSuchCountryException;
-import com.liferay.commerce.address.model.CommerceCountry;
-import com.liferay.commerce.address.service.CommerceCountryService;
 import com.liferay.commerce.admin.web.constants.CommerceAdminPortletKeys;
+import com.liferay.commerce.exception.CommerceCountryNameException;
+import com.liferay.commerce.exception.CommerceCountryThreeLettersISOCodeException;
+import com.liferay.commerce.exception.CommerceCountryTwoLettersISOCodeException;
+import com.liferay.commerce.exception.NoSuchCountryException;
+import com.liferay.commerce.model.CommerceCountry;
+import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;

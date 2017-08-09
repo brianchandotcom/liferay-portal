@@ -14,10 +14,10 @@
 
 package com.liferay.commerce.address.web.internal.portlet.action;
 
-import com.liferay.commerce.address.model.CommerceCountry;
-import com.liferay.commerce.address.model.CommerceRegion;
-import com.liferay.commerce.address.service.CommerceCountryService;
-import com.liferay.commerce.address.service.CommerceRegionService;
+import com.liferay.commerce.model.CommerceCountry;
+import com.liferay.commerce.model.CommerceRegion;
+import com.liferay.commerce.service.CommerceCountryService;
+import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
 

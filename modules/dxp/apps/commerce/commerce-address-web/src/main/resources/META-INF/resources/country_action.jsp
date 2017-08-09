@@ -23,7 +23,7 @@ CommerceCountry commerceCountry = (CommerceCountry)row.getObject();
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
-	<c:if test="<%= CommerceAddressPermission.contains(permissionChecker, commerceCountry.getGroupId(), CommerceAddressActionKeys.MANAGE_COMMERCE_COUNTRIES) %>">
+	<c:if test="<%= CommercePermission.contains(permissionChecker, commerceCountry.getGroupId(), CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcRenderCommandName" value="editCommerceCountry" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

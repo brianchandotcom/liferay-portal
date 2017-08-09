@@ -14,11 +14,11 @@
 
 package com.liferay.commerce.address.web.internal.portlet.action;
 
-import com.liferay.commerce.address.exception.CommerceRegionNameException;
-import com.liferay.commerce.address.exception.NoSuchRegionException;
-import com.liferay.commerce.address.model.CommerceRegion;
-import com.liferay.commerce.address.service.CommerceRegionService;
 import com.liferay.commerce.admin.web.constants.CommerceAdminPortletKeys;
+import com.liferay.commerce.exception.CommerceRegionNameException;
+import com.liferay.commerce.exception.NoSuchRegionException;
+import com.liferay.commerce.model.CommerceRegion;
+import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;

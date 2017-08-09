@@ -14,14 +14,14 @@
 
 package com.liferay.commerce.address.web.internal.util;
 
-import com.liferay.commerce.address.model.CommerceCountry;
-import com.liferay.commerce.address.model.CommerceRegion;
-import com.liferay.commerce.address.service.CommerceCountryService;
-import com.liferay.commerce.address.service.permission.CommerceAddressPermission;
 import com.liferay.commerce.address.web.internal.display.context.CommerceCountriesDisplayContext;
 import com.liferay.commerce.address.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.admin.web.util.CommerceAdminModule;
+import com.liferay.commerce.model.CommerceCountry;
+import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.product.util.JSPRenderer;
+import com.liferay.commerce.service.CommerceCountryService;
+import com.liferay.commerce.service.permission.CommercePermission;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
@@ -79,7 +79,7 @@ public class CountriesCommerceAdminModule implements CommerceAdminModule {
 		throws Exception {
 
 		portletDataContext.addPortletPermissions(
-			CommerceAddressPermission.RESOURCE_NAME);
+			CommercePermission.RESOURCE_NAME);
 
 		if (portletDataContext.getBooleanParameter(namespace, "countries")) {
 			ActionableDynamicQuery actionableDynamicQuery =
@@ -203,13 +203,13 @@ public class CountriesCommerceAdminModule implements CommerceAdminModule {
 	private CommerceCountryService _commerceCountryService;
 
 	@Reference(
-		target = "(model.class.name=com.liferay.commerce.address.model.CommerceCountry)"
+		target = "(model.class.name=com.liferay.commerce.model.CommerceCountry)"
 	)
 	private StagedModelRepository<CommerceCountry>
 		_commerceCountryStagedModelRepository;
 
 	@Reference(
-		target = "(model.class.name=com.liferay.commerce.address.model.CommerceRegion)"
+		target = "(model.class.name=com.liferay.commerce.model.CommerceRegion)"
 	)
 	private StagedModelRepository<CommerceRegion>
 		_commerceRegionStagedModelRepository;

@@ -14,10 +14,10 @@
 
 package com.liferay.commerce.address.web.internal.servlet.taglib.ui;
 
-import com.liferay.commerce.address.model.CommerceCountry;
-import com.liferay.commerce.address.service.CommerceRegionService;
 import com.liferay.commerce.address.web.internal.display.context.CommerceRegionsDisplayContext;
 import com.liferay.commerce.address.web.internal.portlet.action.ActionHelper;
+import com.liferay.commerce.model.CommerceCountry;
+import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;

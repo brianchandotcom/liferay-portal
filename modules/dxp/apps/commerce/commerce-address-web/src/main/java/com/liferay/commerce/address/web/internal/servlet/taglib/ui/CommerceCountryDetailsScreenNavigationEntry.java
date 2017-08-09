@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.address.web.internal.servlet.taglib.ui;
 
-import com.liferay.commerce.address.model.CommerceCountry;
+import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;

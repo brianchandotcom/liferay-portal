@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
+
+<service-builder auto-namespace-tables="false" package-path="com.liferay.commerce">
+	<author>Alessio Antonio Rendina</author>
+	<namespace>Commerce</namespace>
+	<entity local-service="true" name="CommerceCountry" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceCountryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column localized="true" name="name" type="String" />
+		<column name="billingAllowed" type="boolean" />
+		<column name="shippingAllowed" type="boolean" />
+		<column name="twoLettersISOCode" type="String" />
+		<column name="threeLettersISOCode" type="String" />
+		<column name="numericISOCode" type="int" />
+		<column name="subjectToVAT" type="boolean" />
+		<column name="priority" type="double" />
+		<column name="active" type="boolean" />
+		<column name="lastPublishDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="priority" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="G_A" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="active" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="CommerceRegion" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceRegionId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="commerceCountryId" type="long" />
+		<column name="name" type="String" />
+		<column name="code" type="String" />
+		<column name="priority" type="double" />
+		<column name="active" type="boolean" />
+		<column name="lastPublishDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="priority" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CommerceCountryId" return-type="Collection">
+			<finder-column name="commerceCountryId" />
+		</finder>
+		<finder name="C_A" return-type="Collection">
+			<finder-column name="commerceCountryId" />
+			<finder-column name="active" />
+		</finder>
+	</entity>
+	<exceptions>
+		<exception>CommerceCountryName</exception>
+		<exception>CommerceCountryThreeLettersISOCode</exception>
+		<exception>CommerceCountryTwoLettersISOCode</exception>
+		<exception>CommerceRegionName</exception>
+	</exceptions>
+</service-builder>

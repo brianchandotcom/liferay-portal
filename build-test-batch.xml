@@ -2882,17 +2882,6 @@ information. Make sure to commit in all build services results.
 					</then>
 				</if>
 
-				<local name="source.formatter.excludes" />
-
-				<if>
-					<not>
-						<resourcecontains resource="${project.dir}/portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java" substring=" DXP " />
-					</not>
-					<then>
-						<property name="source.formatter.excludes" value="modules/private/**" />
-					</then>
-				</if>
-
 				<loadproperties>
 					<zipentry name="META-INF/MANIFEST.MF" zipfile="tools/sdk/dependencies/com.liferay.source.formatter/lib/com.liferay.source.formatter.jar" />
 				</loadproperties>
@@ -2903,7 +2892,7 @@ information. Make sure to commit in all build services results.
 					<property name="show.documentation" value="false" />
 					<property name="source.auto.fix" value="false" />
 					<property name="source.fail.on.error" value="true" />
-					<property name="source.formatter.excludes" value="${source.formatter.excludes}" />
+					<property if:true="${liferay.releng.public}" name="source.formatter.excludes" value="modules/private/**" />
 					<property name="source.print.errors" value="true" />
 					<property name="source.throw.exception" value="true" />
 					<property name="source.use.properties" value="false" />

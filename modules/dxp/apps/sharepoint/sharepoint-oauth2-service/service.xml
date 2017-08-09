@@ -19,7 +19,7 @@
 		<!-- Other fields -->
 
 		<column name="accessToken" type="String" />
-		<column name="configurationId" type="String" />
+		<column name="configurationPid" type="String" />
 		<column name="expirationDate" type="Date" />
 		<column name="refreshToken" type="String" />
 
@@ -27,7 +27,7 @@
 
 		<finder name="U_C" return-type="SharepointOAuth2TokenEntry" unique="true">
 			<finder-column name="userId" />
-			<finder-column name="configurationId" />
+			<finder-column name="configurationPid" />
 		</finder>
 	</entity>
 </service-builder>

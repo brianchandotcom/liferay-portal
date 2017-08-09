@@ -29,13 +29,13 @@ public class SharepointOAuth2TokenEntryLocalServiceImpl
 
 	@Override
 	public SharepointOAuth2TokenEntry addSharepointOAuth2TokenEntry(
-			long userId, String configurationId, String accessToken,
+			long userId, String configurationPid, String accessToken,
 			String refreshToken, Date expirationDate)
 		throws PortalException {
 
 		SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry =
 			sharepointOAuth2TokenEntryPersistence.fetchByU_C(
-				userId, configurationId);
+				userId, configurationPid);
 
 		if (sharepointOAuth2TokenEntry != null) {
 			sharepointOAuth2TokenEntry.setAccessToken(accessToken);
@@ -65,7 +65,7 @@ public class SharepointOAuth2TokenEntryLocalServiceImpl
 		sharepointOAuth2TokenEntry.setCreateDate(now);
 
 		sharepointOAuth2TokenEntry.setAccessToken(accessToken);
-		sharepointOAuth2TokenEntry.setConfigurationId(configurationId);
+		sharepointOAuth2TokenEntry.setConfigurationPid(configurationPid);
 		sharepointOAuth2TokenEntry.setExpirationDate(expirationDate);
 		sharepointOAuth2TokenEntry.setRefreshToken(refreshToken);
 
@@ -75,28 +75,28 @@ public class SharepointOAuth2TokenEntryLocalServiceImpl
 
 	@Override
 	public void deleteSharepointOAuth2TokenEntry(
-			long userId, String configurationId)
+			long userId, String configurationPid)
 		throws PortalException {
 
 		sharepointOAuth2TokenEntryPersistence.removeByU_C(
-			userId, configurationId);
+			userId, configurationPid);
 	}
 
 	@Override
 	public SharepointOAuth2TokenEntry fetchSharepointOAuth2TokenEntry(
-		long userId, String configurationId) {
+		long userId, String configurationPid) {
 
 		return sharepointOAuth2TokenEntryPersistence.fetchByU_C(
-			userId, configurationId);
+			userId, configurationPid);
 	}
 
 	@Override
 	public SharepointOAuth2TokenEntry getSharepointOAuth2TokenEntry(
-			long userId, String configurationId)
+			long userId, String configurationPid)
 		throws PortalException {
 
 		return sharepointOAuth2TokenEntryPersistence.findByU_C(
-			userId, configurationId);
+			userId, configurationPid);
 	}
 
 }

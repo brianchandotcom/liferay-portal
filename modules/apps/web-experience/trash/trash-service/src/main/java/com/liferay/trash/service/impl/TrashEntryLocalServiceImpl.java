@@ -112,7 +112,10 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 		trashEntry.setCreateDate(new Date());
 		trashEntry.setClassNameId(classNameId);
 		trashEntry.setClassPK(classPK);
-		trashEntry.setSystemEventSetKey(systemEvent.getSystemEventSetKey());
+
+		if (systemEvent != null) {
+			trashEntry.setSystemEventSetKey(systemEvent.getSystemEventSetKey());
+		}
 
 		if (typeSettingsProperties != null) {
 			trashEntry.setTypeSettingsProperties(typeSettingsProperties);

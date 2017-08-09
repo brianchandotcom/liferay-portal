@@ -2183,6 +2183,11 @@ running the `uploadArchives` task with `-Psnapshot`.
 
 ## 5.1.4 - 2017-10-02
 
+### Changed
+- [LPS-74110]: Update the [Liferay Gradle Plugins Baseline] dependency to
+version 1.1.8.
+- [LPS-74110]: Update the [Liferay Gradle Plugins] dependency to version 3.4.75.
+
 ### Fixed
 - [LPS-63943]: Always print the status message after executing the
 `mergeArtifactsPublishCommands` task.
@@ -2397,6 +2402,7 @@ running the `uploadArchives` task with `-Psnapshot`.
 [LPS-74088]: https://issues.liferay.com/browse/LPS-74088
 [LPS-74092]: https://issues.liferay.com/browse/LPS-74092
 [LPS-74104]: https://issues.liferay.com/browse/LPS-74104
+[LPS-74110]: https://issues.liferay.com/browse/LPS-74110
 [LPS-74126]: https://issues.liferay.com/browse/LPS-74126
 [LPS-74155]: https://issues.liferay.com/browse/LPS-74155
 [LPS-74207]: https://issues.liferay.com/browse/LPS-74207

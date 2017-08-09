@@ -100,11 +100,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_TYPE_PANEL_DESCRIPTION_FIELD</td>
-	<td>//textarea[contains(@id,'descriptionPanel')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PAGE_TYPE_PANEL_COMPONENT_TREE_ARROW</td>
 	<td>//span[contains(.,'${key_componentName}')]/../i[contains(@class,'tree-hitarea')]</td>
 	<td></td>
@@ -177,11 +172,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SEO_HTML_TITLE</td>
-	<td>//div[contains(.,'HTML')]/span/input</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SEO_HTML_TITLE_META_TAGS</td>
 	<td>//div[contains(.,'HTML')]/span//ul/li[@data-value='${key_defaultSiteLanguageKey}']</td>
 	<td></td>
@@ -189,16 +179,6 @@
 <tr>
 	<td>SEO_META_TAGS_DESCRIPTION</td>
 	<td>//div[contains(@id,'descriptionSEOContentBox')]//li[contains(@data-value,'${key_defaultSiteLanguageKey}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEO_META_TAGS_DESCRIPTION_FIELD</td>
-	<td>//textarea[contains(@id,'descriptionSEO')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEO_META_TAGS_KEYWORDS_FIELD</td>
-	<td>//textarea[contains(@id,'keywords')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -111,7 +111,6 @@ public class DestinationResolverImpl implements DestinationResolver {
 			destination.getName(), serviceRegistration);
 	}
 
-	@Reference
 	private BundleContext _bundleContext;
 
 	private final Map<String, ServiceRegistration<Destination>>

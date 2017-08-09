@@ -477,13 +477,7 @@ app.server.type=@{app.server.type}]]></echo>
 			<if>
 				<contains string="@{app.server.type}" substring="tomcat" />
 				<then>
-					<execute>
-						<![CDATA[
-							git add -A
-
-							git diff --cached --name-only -z | grep -E -v -z '^\.gitignore|bundles/|^modules/\.gitignore' | xargs -0 -n 1000 zip -v liferay-portal-source.zip
-						]]>
-					</execute>
+					<zip basedir="${project.dir}" destfile="liferay-portal-source.zip" includes="**/*.class" />
 
 					<prepare-liferay-classes if:true="${test.batch.code.coverage}" merged.jar="${project.dir}/jacoco/merged.jar" portal.bundle.dir="bundles" />
 				</then>
@@ -520,10 +514,10 @@ app.server.type=@{app.server.type}]]></echo>
 		<attribute default="tomcat" name="app.server.type" />
 
 		<sequential>
+			<unzip dest="." src="liferay-portal-source.zip" />
+
 			<execute>
 				<![CDATA[
-					unzip -oq liferay-portal-source.zip
-
 					unzip -oq liferay-portal-bundle-@{app.server.type}.zip
 
 					chmod -R a+x bundles

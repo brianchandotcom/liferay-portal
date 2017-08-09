@@ -913,6 +913,12 @@ public class JavadocFormatter {
 
 		String name = exceptionJavaClass.getName();
 
+		int pos = name.lastIndexOf(StringPool.PERIOD);
+
+		if (pos != -1) {
+			name = name.substring(pos + 1);
+		}
+
 		String value = null;
 
 		for (DocletTag throwsDocletTag : throwsDocletTags) {

@@ -403,6 +403,16 @@
 	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//label</td>
 	<td></td>
 </tr>
+<tr>
+	<td>DOCUMENTS_AND_MEDIA_FILE_NAME</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//h4[contains(.,'${key_uploadFileName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENTS_AND_MEDIA_DOWNLOAD_ICON</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//a[@download='${key_uploadFileName}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

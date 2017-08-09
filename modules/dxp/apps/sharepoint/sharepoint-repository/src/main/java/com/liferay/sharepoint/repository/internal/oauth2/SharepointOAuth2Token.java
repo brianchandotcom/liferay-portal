@@ -54,7 +54,7 @@ public class SharepointOAuth2Token implements Token {
 
 		if (Validator.isNull(accessToken)) {
 			throw new IllegalArgumentException(
-				String.format("Invalid JSON token: %s", json));
+				String.format("Invalid access token: %s", json));
 		}
 
 		String refreshToken = jsonObject.getString("refresh_token");

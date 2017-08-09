@@ -315,6 +315,25 @@
 		<execute function="AssertTextNotPresent" locator1="FormFields#SELECT_OPTIONS_OPTION_VALUE_FIELD_VISIBLE" value1="${fieldValue}" />
 	</command>
 
+	<command name="viewDocumentsAndMediaField">
+		<execute macro="FormFields#viewDocumentsAndMediaLabel">
+			<var name="fieldLabel" value="${fieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<var name="key_fieldLabel" value="${fieldLabel}" />
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="AssertElementPresent#assertVisible" locator1="FormFields#DOCUMENTS_AND_MEDIA_FIELD" />
+	</command>
+
+	<command name="viewDocumentsAndMediaLabel">
+		<var name="key_fieldLabel" value="${fieldLabel}" />
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="AssertTextEquals#assertText" locator1="FormFields#DOCUMENTS_AND_MEDIA_LABEL" value1="${fieldLabel}" />
+	</command>
+
 	<command name="viewFieldHelpText">
 		<var name="key_fieldName" value="${fieldName}" />
 

@@ -44,7 +44,6 @@ public class SharepointOAuth2AuthorizationServer {
 			HttpRequestWithBody httpRequestWithBody = Unirest.post(
 				_sharepointOAuth2Configuration.authorizationTokenEndpoint());
 
-			httpRequestWithBody.field("grant_type", "refresh_token");
 			httpRequestWithBody.field(
 				"client_id",
 				_sharepointOAuth2Configuration.clientId() + "@" +
@@ -52,6 +51,7 @@ public class SharepointOAuth2AuthorizationServer {
 			httpRequestWithBody.field(
 				"client_secret", _sharepointOAuth2Configuration.clientSecret());
 			httpRequestWithBody.field("refresh_token", token.getRefreshToken());
+			httpRequestWithBody.field("grant_type", "refresh_token");
 			httpRequestWithBody.field(
 				"resource", _sharepointOAuth2Configuration.resource());
 
@@ -73,7 +73,6 @@ public class SharepointOAuth2AuthorizationServer {
 			HttpRequestWithBody httpRequestWithBody = Unirest.post(
 				_sharepointOAuth2Configuration.authorizationTokenEndpoint());
 
-			httpRequestWithBody.field("grant_type", "authorization_code");
 			httpRequestWithBody.field(
 				"client_id",
 				_sharepointOAuth2Configuration.clientId() + "@" +
@@ -81,6 +80,7 @@ public class SharepointOAuth2AuthorizationServer {
 			httpRequestWithBody.field(
 				"client_secret", _sharepointOAuth2Configuration.clientSecret());
 			httpRequestWithBody.field("code", code);
+			httpRequestWithBody.field("grant_type", "authorization_code");
 			httpRequestWithBody.field("redirect_uri", redirectUrl);
 			httpRequestWithBody.field(
 				"resource", _sharepointOAuth2Configuration.resource());

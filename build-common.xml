@@ -159,6 +159,7 @@
 		<or>
 			<istrue value="${ee.override}" />
 			<matches pattern="ee-.+" string="${liferay.releng.branch}" />
+			<matches pattern=".+-private.*" string="${liferay.releng.branch}" />
 		</or>
 	</condition>
 

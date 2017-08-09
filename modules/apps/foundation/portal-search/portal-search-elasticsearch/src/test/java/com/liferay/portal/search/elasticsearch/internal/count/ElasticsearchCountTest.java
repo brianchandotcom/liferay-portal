@@ -12,23 +12,24 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.internal;
+package com.liferay.portal.search.elasticsearch.internal.count;
 
+import com.liferay.portal.search.elasticsearch.internal.ElasticsearchIndexingFixture;
 import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch.internal.connection.LiferayIndexCreator;
-import com.liferay.portal.search.test.util.indexing.BaseIndexSearcherTestCase;
+import com.liferay.portal.search.test.util.count.BaseCountTestCase;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 
 /**
- * @author Preston Crary
+ * @author André de Oliveira
  */
-public class ElasticsearchIndexSearcherTest extends BaseIndexSearcherTestCase {
+public class ElasticsearchCountTest extends BaseCountTestCase {
 
 	@Override
 	protected IndexingFixture createIndexingFixture() {
 		ElasticsearchFixture elasticsearchFixture = new ElasticsearchFixture(
-			ElasticsearchIndexSearcherTest.class.getSimpleName());
+			ElasticsearchCountTest.class.getSimpleName());
 
 		return new ElasticsearchIndexingFixture(
 			elasticsearchFixture, BaseIndexingTestCase.COMPANY_ID,

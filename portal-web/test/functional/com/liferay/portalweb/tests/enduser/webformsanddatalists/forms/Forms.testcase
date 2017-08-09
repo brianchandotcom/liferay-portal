@@ -3122,6 +3122,75 @@
 		</execute>
 	</command>
 
+	<command name="SubmitFormWithDocumentsAndMediaField" priority="4">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoAddForm" />
+
+		<execute macro="Form#editName" />
+
+		<execute macro="Form#editDescription" />
+
+		<execute macro="Form#gotoAddField">
+			<var name="fieldType" value="Documents and Media" />
+		</execute>
+
+		<execute macro="Form#editFieldLabel">
+			<var name="fieldValue" value="Documents And Media Field" />
+		</execute>
+
+		<execute macro="Form#closeSidebar" />
+
+		<execute macro="Form#save" />
+
+		<execute macro="Form#publishForm" />
+
+		<execute macro="FormsAdminNavigator#gotoPublishCopyURLLink" />
+
+		<execute macro="Form#getPublishedFormPublicURL">
+			<return from="publicURL" name="publishedFormPublicURL" />
+			<var name="publishedFormPublicURL" value="${publishedFormPublicURL}" />
+		</execute>
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${publishedFormPublicURL}" />
+		</execute>
+
+		<execute macro="FormFields#viewDocumentsAndMediaField">
+			<var name="fieldLabel" value="Documents And Media Field" />
+			<var name="fieldName" value="DocumentsAndMediaField" />
+		</execute>
+
+		<execute macro="ItemSelector#gotoItemSelectorViaSelectButton" />
+
+		<execute macro="ItemSelector#uploadFile">
+			<var name="navTab" value="Documents and Media" />
+			<var name="uploadFileName" value="Document_1.jpg" />
+		</execute>
+
+		<execute macro="FormPortlet#submit" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoViewEntries" />
+
+		<execute macro="FormsAdminNavigator#gotoView" />
+
+		<execute macro="FormsAdmin#viewDocumentsAndMediaFile">
+			<var name="fieldLabel" value="Documents And Media Field" />
+			<var name="fieldName" value="DocumentsAndMediaField" />
+			<var name="uploadFileName" value="Document_1.jpg" />
+		</execute>
+	</command>
+
 	<command name="SubmitFormWithGridField" priority="5">
 		<property name="portal.acceptance" value="pending" />
 

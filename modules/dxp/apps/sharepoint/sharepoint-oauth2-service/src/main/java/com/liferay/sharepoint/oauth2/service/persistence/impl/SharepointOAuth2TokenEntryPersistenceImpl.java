@@ -92,7 +92,7 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 			"fetchByU_C",
 			new String[] { Long.class.getName(), String.class.getName() },
 			SharepointOAuth2TokenEntryModelImpl.USERID_COLUMN_BITMASK |
-			SharepointOAuth2TokenEntryModelImpl.CONFIGURATIONID_COLUMN_BITMASK);
+			SharepointOAuth2TokenEntryModelImpl.CONFIGURATIONPID_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_U_C = new FinderPath(SharepointOAuth2TokenEntryModelImpl.ENTITY_CACHE_ENABLED,
 			SharepointOAuth2TokenEntryModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -100,18 +100,18 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 			new String[] { Long.class.getName(), String.class.getName() });
 
 	/**
-	 * Returns the sharepoint o auth2 token entry where userId = &#63; and configurationId = &#63; or throws a {@link NoSuch2TokenEntryException} if it could not be found.
+	 * Returns the sharepoint o auth2 token entry where userId = &#63; and configurationPid = &#63; or throws a {@link NoSuch2TokenEntryException} if it could not be found.
 	 *
 	 * @param userId the user ID
-	 * @param configurationId the configuration ID
+	 * @param configurationPid the configuration pid
 	 * @return the matching sharepoint o auth2 token entry
 	 * @throws NoSuch2TokenEntryException if a matching sharepoint o auth2 token entry could not be found
 	 */
 	@Override
 	public SharepointOAuth2TokenEntry findByU_C(long userId,
-		String configurationId) throws NoSuch2TokenEntryException {
+		String configurationPid) throws NoSuch2TokenEntryException {
 		SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry = fetchByU_C(userId,
-				configurationId);
+				configurationPid);
 
 		if (sharepointOAuth2TokenEntry == null) {
 			StringBundler msg = new StringBundler(6);
@@ -121,8 +121,8 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 			msg.append("userId=");
 			msg.append(userId);
 
-			msg.append(", configurationId=");
-			msg.append(configurationId);
+			msg.append(", configurationPid=");
+			msg.append(configurationPid);
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -137,30 +137,30 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the sharepoint o auth2 token entry where userId = &#63; and configurationId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the sharepoint o auth2 token entry where userId = &#63; and configurationPid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param userId the user ID
-	 * @param configurationId the configuration ID
+	 * @param configurationPid the configuration pid
 	 * @return the matching sharepoint o auth2 token entry, or <code>null</code> if a matching sharepoint o auth2 token entry could not be found
 	 */
 	@Override
 	public SharepointOAuth2TokenEntry fetchByU_C(long userId,
-		String configurationId) {
-		return fetchByU_C(userId, configurationId, true);
+		String configurationPid) {
+		return fetchByU_C(userId, configurationPid, true);
 	}
 
 	/**
-	 * Returns the sharepoint o auth2 token entry where userId = &#63; and configurationId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the sharepoint o auth2 token entry where userId = &#63; and configurationPid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param userId the user ID
-	 * @param configurationId the configuration ID
+	 * @param configurationPid the configuration pid
 	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching sharepoint o auth2 token entry, or <code>null</code> if a matching sharepoint o auth2 token entry could not be found
 	 */
 	@Override
 	public SharepointOAuth2TokenEntry fetchByU_C(long userId,
-		String configurationId, boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] { userId, configurationId };
+		String configurationPid, boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { userId, configurationPid };
 
 		Object result = null;
 
@@ -173,8 +173,8 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 			SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry = (SharepointOAuth2TokenEntry)result;
 
 			if ((userId != sharepointOAuth2TokenEntry.getUserId()) ||
-					!Objects.equals(configurationId,
-						sharepointOAuth2TokenEntry.getConfigurationId())) {
+					!Objects.equals(configurationPid,
+						sharepointOAuth2TokenEntry.getConfigurationPid())) {
 				result = null;
 			}
 		}
@@ -186,18 +186,18 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 
 			query.append(_FINDER_COLUMN_U_C_USERID_2);
 
-			boolean bindConfigurationId = false;
+			boolean bindConfigurationPid = false;
 
-			if (configurationId == null) {
-				query.append(_FINDER_COLUMN_U_C_CONFIGURATIONID_1);
+			if (configurationPid == null) {
+				query.append(_FINDER_COLUMN_U_C_CONFIGURATIONPID_1);
 			}
-			else if (configurationId.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_U_C_CONFIGURATIONID_3);
+			else if (configurationPid.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_U_C_CONFIGURATIONPID_3);
 			}
 			else {
-				bindConfigurationId = true;
+				bindConfigurationPid = true;
 
-				query.append(_FINDER_COLUMN_U_C_CONFIGURATIONID_2);
+				query.append(_FINDER_COLUMN_U_C_CONFIGURATIONPID_2);
 			}
 
 			String sql = query.toString();
@@ -213,8 +213,8 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 
 				qPos.add(userId);
 
-				if (bindConfigurationId) {
-					qPos.add(configurationId);
+				if (bindConfigurationPid) {
+					qPos.add(configurationPid);
 				}
 
 				List<SharepointOAuth2TokenEntry> list = q.list();
@@ -231,9 +231,9 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 					cacheResult(sharepointOAuth2TokenEntry);
 
 					if ((sharepointOAuth2TokenEntry.getUserId() != userId) ||
-							(sharepointOAuth2TokenEntry.getConfigurationId() == null) ||
-							!sharepointOAuth2TokenEntry.getConfigurationId()
-														   .equals(configurationId)) {
+							(sharepointOAuth2TokenEntry.getConfigurationPid() == null) ||
+							!sharepointOAuth2TokenEntry.getConfigurationPid()
+														   .equals(configurationPid)) {
 						finderCache.putResult(FINDER_PATH_FETCH_BY_U_C,
 							finderArgs, sharepointOAuth2TokenEntry);
 					}
@@ -258,33 +258,33 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 	}
 
 	/**
-	 * Removes the sharepoint o auth2 token entry where userId = &#63; and configurationId = &#63; from the database.
+	 * Removes the sharepoint o auth2 token entry where userId = &#63; and configurationPid = &#63; from the database.
 	 *
 	 * @param userId the user ID
-	 * @param configurationId the configuration ID
+	 * @param configurationPid the configuration pid
 	 * @return the sharepoint o auth2 token entry that was removed
 	 */
 	@Override
 	public SharepointOAuth2TokenEntry removeByU_C(long userId,
-		String configurationId) throws NoSuch2TokenEntryException {
+		String configurationPid) throws NoSuch2TokenEntryException {
 		SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry = findByU_C(userId,
-				configurationId);
+				configurationPid);
 
 		return remove(sharepointOAuth2TokenEntry);
 	}
 
 	/**
-	 * Returns the number of sharepoint o auth2 token entries where userId = &#63; and configurationId = &#63;.
+	 * Returns the number of sharepoint o auth2 token entries where userId = &#63; and configurationPid = &#63;.
 	 *
 	 * @param userId the user ID
-	 * @param configurationId the configuration ID
+	 * @param configurationPid the configuration pid
 	 * @return the number of matching sharepoint o auth2 token entries
 	 */
 	@Override
-	public int countByU_C(long userId, String configurationId) {
+	public int countByU_C(long userId, String configurationPid) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_U_C;
 
-		Object[] finderArgs = new Object[] { userId, configurationId };
+		Object[] finderArgs = new Object[] { userId, configurationPid };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -295,18 +295,18 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 
 			query.append(_FINDER_COLUMN_U_C_USERID_2);
 
-			boolean bindConfigurationId = false;
+			boolean bindConfigurationPid = false;
 
-			if (configurationId == null) {
-				query.append(_FINDER_COLUMN_U_C_CONFIGURATIONID_1);
+			if (configurationPid == null) {
+				query.append(_FINDER_COLUMN_U_C_CONFIGURATIONPID_1);
 			}
-			else if (configurationId.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_U_C_CONFIGURATIONID_3);
+			else if (configurationPid.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_U_C_CONFIGURATIONPID_3);
 			}
 			else {
-				bindConfigurationId = true;
+				bindConfigurationPid = true;
 
-				query.append(_FINDER_COLUMN_U_C_CONFIGURATIONID_2);
+				query.append(_FINDER_COLUMN_U_C_CONFIGURATIONPID_2);
 			}
 
 			String sql = query.toString();
@@ -322,8 +322,8 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 
 				qPos.add(userId);
 
-				if (bindConfigurationId) {
-					qPos.add(configurationId);
+				if (bindConfigurationPid) {
+					qPos.add(configurationPid);
 				}
 
 				count = (Long)q.uniqueResult();
@@ -344,9 +344,9 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 	}
 
 	private static final String _FINDER_COLUMN_U_C_USERID_2 = "sharepointOAuth2TokenEntry.userId = ? AND ";
-	private static final String _FINDER_COLUMN_U_C_CONFIGURATIONID_1 = "sharepointOAuth2TokenEntry.configurationId IS NULL";
-	private static final String _FINDER_COLUMN_U_C_CONFIGURATIONID_2 = "sharepointOAuth2TokenEntry.configurationId = ?";
-	private static final String _FINDER_COLUMN_U_C_CONFIGURATIONID_3 = "(sharepointOAuth2TokenEntry.configurationId IS NULL OR sharepointOAuth2TokenEntry.configurationId = '')";
+	private static final String _FINDER_COLUMN_U_C_CONFIGURATIONPID_1 = "sharepointOAuth2TokenEntry.configurationPid IS NULL";
+	private static final String _FINDER_COLUMN_U_C_CONFIGURATIONPID_2 = "sharepointOAuth2TokenEntry.configurationPid = ?";
+	private static final String _FINDER_COLUMN_U_C_CONFIGURATIONPID_3 = "(sharepointOAuth2TokenEntry.configurationPid IS NULL OR sharepointOAuth2TokenEntry.configurationPid = '')";
 
 	public SharepointOAuth2TokenEntryPersistenceImpl() {
 		setModelClass(SharepointOAuth2TokenEntry.class);
@@ -368,7 +368,7 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 		finderCache.putResult(FINDER_PATH_FETCH_BY_U_C,
 			new Object[] {
 				sharepointOAuth2TokenEntry.getUserId(),
-				sharepointOAuth2TokenEntry.getConfigurationId()
+				sharepointOAuth2TokenEntry.getConfigurationPid()
 			}, sharepointOAuth2TokenEntry);
 
 		sharepointOAuth2TokenEntry.resetOriginalValues();
@@ -452,7 +452,7 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 		SharepointOAuth2TokenEntryModelImpl sharepointOAuth2TokenEntryModelImpl) {
 		Object[] args = new Object[] {
 				sharepointOAuth2TokenEntryModelImpl.getUserId(),
-				sharepointOAuth2TokenEntryModelImpl.getConfigurationId()
+				sharepointOAuth2TokenEntryModelImpl.getConfigurationPid()
 			};
 
 		finderCache.putResult(FINDER_PATH_COUNT_BY_U_C, args, Long.valueOf(1),
@@ -467,7 +467,7 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 		if (clearCurrent) {
 			Object[] args = new Object[] {
 					sharepointOAuth2TokenEntryModelImpl.getUserId(),
-					sharepointOAuth2TokenEntryModelImpl.getConfigurationId()
+					sharepointOAuth2TokenEntryModelImpl.getConfigurationPid()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_U_C, args);
@@ -478,7 +478,7 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 				FINDER_PATH_FETCH_BY_U_C.getColumnBitmask()) != 0) {
 			Object[] args = new Object[] {
 					sharepointOAuth2TokenEntryModelImpl.getOriginalUserId(),
-					sharepointOAuth2TokenEntryModelImpl.getOriginalConfigurationId()
+					sharepointOAuth2TokenEntryModelImpl.getOriginalConfigurationPid()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_U_C, args);
@@ -659,7 +659,7 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 		sharepointOAuth2TokenEntryImpl.setUserName(sharepointOAuth2TokenEntry.getUserName());
 		sharepointOAuth2TokenEntryImpl.setCreateDate(sharepointOAuth2TokenEntry.getCreateDate());
 		sharepointOAuth2TokenEntryImpl.setAccessToken(sharepointOAuth2TokenEntry.getAccessToken());
-		sharepointOAuth2TokenEntryImpl.setConfigurationId(sharepointOAuth2TokenEntry.getConfigurationId());
+		sharepointOAuth2TokenEntryImpl.setConfigurationPid(sharepointOAuth2TokenEntry.getConfigurationPid());
 		sharepointOAuth2TokenEntryImpl.setExpirationDate(sharepointOAuth2TokenEntry.getExpirationDate());
 		sharepointOAuth2TokenEntryImpl.setRefreshToken(sharepointOAuth2TokenEntry.getRefreshToken());
 

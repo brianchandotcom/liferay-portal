@@ -79,8 +79,8 @@ public class SharepointOAuth2TokenEntryCacheModel implements CacheModel<Sharepoi
 		sb.append(createDate);
 		sb.append(", accessToken=");
 		sb.append(accessToken);
-		sb.append(", configurationId=");
-		sb.append(configurationId);
+		sb.append(", configurationPid=");
+		sb.append(configurationPid);
 		sb.append(", expirationDate=");
 		sb.append(expirationDate);
 		sb.append(", refreshToken=");
@@ -118,11 +118,11 @@ public class SharepointOAuth2TokenEntryCacheModel implements CacheModel<Sharepoi
 			sharepointOAuth2TokenEntryImpl.setAccessToken(accessToken);
 		}
 
-		if (configurationId == null) {
-			sharepointOAuth2TokenEntryImpl.setConfigurationId(StringPool.BLANK);
+		if (configurationPid == null) {
+			sharepointOAuth2TokenEntryImpl.setConfigurationPid(StringPool.BLANK);
 		}
 		else {
-			sharepointOAuth2TokenEntryImpl.setConfigurationId(configurationId);
+			sharepointOAuth2TokenEntryImpl.setConfigurationPid(configurationPid);
 		}
 
 		if (expirationDate == Long.MIN_VALUE) {
@@ -153,7 +153,7 @@ public class SharepointOAuth2TokenEntryCacheModel implements CacheModel<Sharepoi
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		accessToken = objectInput.readUTF();
-		configurationId = objectInput.readUTF();
+		configurationPid = objectInput.readUTF();
 		expirationDate = objectInput.readLong();
 		refreshToken = objectInput.readUTF();
 	}
@@ -181,11 +181,11 @@ public class SharepointOAuth2TokenEntryCacheModel implements CacheModel<Sharepoi
 			objectOutput.writeUTF(accessToken);
 		}
 
-		if (configurationId == null) {
+		if (configurationPid == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
-			objectOutput.writeUTF(configurationId);
+			objectOutput.writeUTF(configurationPid);
 		}
 
 		objectOutput.writeLong(expirationDate);
@@ -203,7 +203,7 @@ public class SharepointOAuth2TokenEntryCacheModel implements CacheModel<Sharepoi
 	public String userName;
 	public long createDate;
 	public String accessToken;
-	public String configurationId;
+	public String configurationPid;
 	public long expirationDate;
 	public String refreshToken;
 }

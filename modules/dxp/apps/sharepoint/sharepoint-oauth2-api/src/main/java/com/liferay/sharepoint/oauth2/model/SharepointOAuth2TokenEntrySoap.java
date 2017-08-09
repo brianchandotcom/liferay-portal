@@ -39,7 +39,7 @@ public class SharepointOAuth2TokenEntrySoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setAccessToken(model.getAccessToken());
-		soapModel.setConfigurationId(model.getConfigurationId());
+		soapModel.setConfigurationPid(model.getConfigurationPid());
 		soapModel.setExpirationDate(model.getExpirationDate());
 		soapModel.setRefreshToken(model.getRefreshToken());
 
@@ -138,12 +138,12 @@ public class SharepointOAuth2TokenEntrySoap implements Serializable {
 		_accessToken = accessToken;
 	}
 
-	public String getConfigurationId() {
-		return _configurationId;
+	public String getConfigurationPid() {
+		return _configurationPid;
 	}
 
-	public void setConfigurationId(String configurationId) {
-		_configurationId = configurationId;
+	public void setConfigurationPid(String configurationPid) {
+		_configurationPid = configurationPid;
 	}
 
 	public Date getExpirationDate() {
@@ -167,7 +167,7 @@ public class SharepointOAuth2TokenEntrySoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private String _accessToken;
-	private String _configurationId;
+	private String _configurationPid;
 	private Date _expirationDate;
 	private String _refreshToken;
 }

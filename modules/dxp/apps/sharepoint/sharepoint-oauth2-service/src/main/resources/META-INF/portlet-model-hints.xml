@@ -9,7 +9,7 @@
 		<field name="accessToken" type="String">
 			<hint-collection name="CLOB" />
 		</field>
-		<field name="configurationId" type="String" />
+		<field name="configurationPid" type="String" />
 		<field name="expirationDate" type="Date" />
 		<field name="refreshToken" type="String">
 			<hint-collection name="CLOB" />

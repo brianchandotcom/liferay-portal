@@ -80,12 +80,12 @@ public class SharepointOAuth2TokenEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.sharepoint.oauth2.model.SharepointOAuth2TokenEntry addSharepointOAuth2TokenEntry(
-		long userId, java.lang.String configurationId,
+		long userId, java.lang.String configurationPid,
 		java.lang.String accessToken, java.lang.String refreshToken,
 		java.util.Date expirationDate)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sharepointOAuth2TokenEntryLocalService.addSharepointOAuth2TokenEntry(userId,
-			configurationId, accessToken, refreshToken, expirationDate);
+			configurationPid, accessToken, refreshToken, expirationDate);
 	}
 
 	/**
@@ -134,9 +134,9 @@ public class SharepointOAuth2TokenEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.sharepoint.oauth2.model.SharepointOAuth2TokenEntry fetchSharepointOAuth2TokenEntry(
-		long userId, java.lang.String configurationId) {
+		long userId, java.lang.String configurationPid) {
 		return _sharepointOAuth2TokenEntryLocalService.fetchSharepointOAuth2TokenEntry(userId,
-			configurationId);
+			configurationPid);
 	}
 
 	/**
@@ -155,10 +155,10 @@ public class SharepointOAuth2TokenEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.sharepoint.oauth2.model.SharepointOAuth2TokenEntry getSharepointOAuth2TokenEntry(
-		long userId, java.lang.String configurationId)
+		long userId, java.lang.String configurationPid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sharepointOAuth2TokenEntryLocalService.getSharepointOAuth2TokenEntry(userId,
-			configurationId);
+			configurationPid);
 	}
 
 	/**
@@ -294,10 +294,10 @@ public class SharepointOAuth2TokenEntryLocalServiceWrapper
 
 	@Override
 	public void deleteSharepointOAuth2TokenEntry(long userId,
-		java.lang.String configurationId)
+		java.lang.String configurationPid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_sharepointOAuth2TokenEntryLocalService.deleteSharepointOAuth2TokenEntry(userId,
-			configurationId);
+			configurationPid);
 	}
 
 	@Override

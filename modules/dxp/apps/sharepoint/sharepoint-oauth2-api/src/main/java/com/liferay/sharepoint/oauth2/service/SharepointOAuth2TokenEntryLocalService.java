@@ -92,7 +92,7 @@ public interface SharepointOAuth2TokenEntryLocalService extends BaseLocalService
 		SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry);
 
 	public SharepointOAuth2TokenEntry addSharepointOAuth2TokenEntry(
-		long userId, java.lang.String configurationId,
+		long userId, java.lang.String configurationPid,
 		java.lang.String accessToken, java.lang.String refreshToken,
 		Date expirationDate) throws PortalException;
 
@@ -132,7 +132,7 @@ public interface SharepointOAuth2TokenEntryLocalService extends BaseLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SharepointOAuth2TokenEntry fetchSharepointOAuth2TokenEntry(
-		long userId, java.lang.String configurationId);
+		long userId, java.lang.String configurationPid);
 
 	/**
 	* Returns the sharepoint o auth2 token entry with the primary key.
@@ -147,7 +147,7 @@ public interface SharepointOAuth2TokenEntryLocalService extends BaseLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SharepointOAuth2TokenEntry getSharepointOAuth2TokenEntry(
-		long userId, java.lang.String configurationId)
+		long userId, java.lang.String configurationPid)
 		throws PortalException;
 
 	/**
@@ -248,5 +248,5 @@ public interface SharepointOAuth2TokenEntryLocalService extends BaseLocalService
 		Projection projection);
 
 	public void deleteSharepointOAuth2TokenEntry(long userId,
-		java.lang.String configurationId) throws PortalException;
+		java.lang.String configurationPid) throws PortalException;
 }

@@ -11,7 +11,7 @@
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="accessToken" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
-		<property name="configurationId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="configurationPid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="expirationDate" type="org.hibernate.type.TimestampType" />
 		<property name="refreshToken" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 	</class>

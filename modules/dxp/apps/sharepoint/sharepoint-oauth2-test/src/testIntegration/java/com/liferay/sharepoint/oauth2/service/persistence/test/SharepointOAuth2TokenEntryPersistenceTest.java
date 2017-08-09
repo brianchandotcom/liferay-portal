@@ -133,7 +133,7 @@ public class SharepointOAuth2TokenEntryPersistenceTest {
 
 		newSharepointOAuth2TokenEntry.setAccessToken(RandomTestUtil.randomString());
 
-		newSharepointOAuth2TokenEntry.setConfigurationId(RandomTestUtil.randomString());
+		newSharepointOAuth2TokenEntry.setConfigurationPid(RandomTestUtil.randomString());
 
 		newSharepointOAuth2TokenEntry.setExpirationDate(RandomTestUtil.nextDate());
 
@@ -156,8 +156,8 @@ public class SharepointOAuth2TokenEntryPersistenceTest {
 				newSharepointOAuth2TokenEntry.getCreateDate()));
 		Assert.assertEquals(existingSharepointOAuth2TokenEntry.getAccessToken(),
 			newSharepointOAuth2TokenEntry.getAccessToken());
-		Assert.assertEquals(existingSharepointOAuth2TokenEntry.getConfigurationId(),
-			newSharepointOAuth2TokenEntry.getConfigurationId());
+		Assert.assertEquals(existingSharepointOAuth2TokenEntry.getConfigurationPid(),
+			newSharepointOAuth2TokenEntry.getConfigurationPid());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingSharepointOAuth2TokenEntry.getExpirationDate()),
 			Time.getShortTimestamp(
@@ -201,7 +201,7 @@ public class SharepointOAuth2TokenEntryPersistenceTest {
 	protected OrderByComparator<SharepointOAuth2TokenEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("SharepointOAuth2TokenEntry",
 			"sharepointOAuth2TokenEntryId", true, "userId", true, "userName",
-			true, "createDate", true, "configurationId", true,
+			true, "createDate", true, "configurationPid", true,
 			"expirationDate", true);
 	}
 
@@ -429,9 +429,9 @@ public class SharepointOAuth2TokenEntryPersistenceTest {
 				existingSharepointOAuth2TokenEntry, "getOriginalUserId",
 				new Class<?>[0]));
 		Assert.assertTrue(Objects.equals(
-				existingSharepointOAuth2TokenEntry.getConfigurationId(),
+				existingSharepointOAuth2TokenEntry.getConfigurationPid(),
 				ReflectionTestUtil.invoke(existingSharepointOAuth2TokenEntry,
-					"getOriginalConfigurationId", new Class<?>[0])));
+					"getOriginalConfigurationPid", new Class<?>[0])));
 	}
 
 	protected SharepointOAuth2TokenEntry addSharepointOAuth2TokenEntry()
@@ -448,7 +448,7 @@ public class SharepointOAuth2TokenEntryPersistenceTest {
 
 		sharepointOAuth2TokenEntry.setAccessToken(RandomTestUtil.randomString());
 
-		sharepointOAuth2TokenEntry.setConfigurationId(RandomTestUtil.randomString());
+		sharepointOAuth2TokenEntry.setConfigurationPid(RandomTestUtil.randomString());
 
 		sharepointOAuth2TokenEntry.setExpirationDate(RandomTestUtil.nextDate());
 

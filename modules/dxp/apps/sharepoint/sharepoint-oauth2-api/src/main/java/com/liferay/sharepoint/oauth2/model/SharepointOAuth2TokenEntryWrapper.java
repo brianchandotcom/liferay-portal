@@ -66,7 +66,7 @@ public class SharepointOAuth2TokenEntryWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("accessToken", getAccessToken());
-		attributes.put("configurationId", getConfigurationId());
+		attributes.put("configurationPid", getConfigurationPid());
 		attributes.put("expirationDate", getExpirationDate());
 		attributes.put("refreshToken", getRefreshToken());
 
@@ -106,10 +106,10 @@ public class SharepointOAuth2TokenEntryWrapper
 			setAccessToken(accessToken);
 		}
 
-		String configurationId = (String)attributes.get("configurationId");
+		String configurationPid = (String)attributes.get("configurationPid");
 
-		if (configurationId != null) {
-			setConfigurationId(configurationId);
+		if (configurationPid != null) {
+			setConfigurationPid(configurationPid);
 		}
 
 		Date expirationDate = (Date)attributes.get("expirationDate");
@@ -191,13 +191,13 @@ public class SharepointOAuth2TokenEntryWrapper
 	}
 
 	/**
-	* Returns the configuration ID of this sharepoint o auth2 token entry.
+	* Returns the configuration pid of this sharepoint o auth2 token entry.
 	*
-	* @return the configuration ID of this sharepoint o auth2 token entry
+	* @return the configuration pid of this sharepoint o auth2 token entry
 	*/
 	@Override
-	public java.lang.String getConfigurationId() {
-		return _sharepointOAuth2TokenEntry.getConfigurationId();
+	public java.lang.String getConfigurationPid() {
+		return _sharepointOAuth2TokenEntry.getConfigurationPid();
 	}
 
 	/**
@@ -311,13 +311,13 @@ public class SharepointOAuth2TokenEntryWrapper
 	}
 
 	/**
-	* Sets the configuration ID of this sharepoint o auth2 token entry.
+	* Sets the configuration pid of this sharepoint o auth2 token entry.
 	*
-	* @param configurationId the configuration ID of this sharepoint o auth2 token entry
+	* @param configurationPid the configuration pid of this sharepoint o auth2 token entry
 	*/
 	@Override
-	public void setConfigurationId(java.lang.String configurationId) {
-		_sharepointOAuth2TokenEntry.setConfigurationId(configurationId);
+	public void setConfigurationPid(java.lang.String configurationPid) {
+		_sharepointOAuth2TokenEntry.setConfigurationPid(configurationPid);
 	}
 
 	/**

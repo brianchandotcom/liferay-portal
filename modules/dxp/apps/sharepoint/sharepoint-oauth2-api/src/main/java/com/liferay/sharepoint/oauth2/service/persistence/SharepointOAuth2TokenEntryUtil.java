@@ -116,67 +116,67 @@ public class SharepointOAuth2TokenEntryUtil {
 	}
 
 	/**
-	* Returns the sharepoint o auth2 token entry where userId = &#63; and configurationId = &#63; or throws a {@link NoSuch2TokenEntryException} if it could not be found.
+	* Returns the sharepoint o auth2 token entry where userId = &#63; and configurationPid = &#63; or throws a {@link NoSuch2TokenEntryException} if it could not be found.
 	*
 	* @param userId the user ID
-	* @param configurationId the configuration ID
+	* @param configurationPid the configuration pid
 	* @return the matching sharepoint o auth2 token entry
 	* @throws NoSuch2TokenEntryException if a matching sharepoint o auth2 token entry could not be found
 	*/
 	public static SharepointOAuth2TokenEntry findByU_C(long userId,
-		java.lang.String configurationId)
+		java.lang.String configurationPid)
 		throws com.liferay.sharepoint.oauth2.exception.NoSuch2TokenEntryException {
-		return getPersistence().findByU_C(userId, configurationId);
+		return getPersistence().findByU_C(userId, configurationPid);
 	}
 
 	/**
-	* Returns the sharepoint o auth2 token entry where userId = &#63; and configurationId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the sharepoint o auth2 token entry where userId = &#63; and configurationPid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param userId the user ID
-	* @param configurationId the configuration ID
+	* @param configurationPid the configuration pid
 	* @return the matching sharepoint o auth2 token entry, or <code>null</code> if a matching sharepoint o auth2 token entry could not be found
 	*/
 	public static SharepointOAuth2TokenEntry fetchByU_C(long userId,
-		java.lang.String configurationId) {
-		return getPersistence().fetchByU_C(userId, configurationId);
+		java.lang.String configurationPid) {
+		return getPersistence().fetchByU_C(userId, configurationPid);
 	}
 
 	/**
-	* Returns the sharepoint o auth2 token entry where userId = &#63; and configurationId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the sharepoint o auth2 token entry where userId = &#63; and configurationPid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param userId the user ID
-	* @param configurationId the configuration ID
+	* @param configurationPid the configuration pid
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching sharepoint o auth2 token entry, or <code>null</code> if a matching sharepoint o auth2 token entry could not be found
 	*/
 	public static SharepointOAuth2TokenEntry fetchByU_C(long userId,
-		java.lang.String configurationId, boolean retrieveFromCache) {
+		java.lang.String configurationPid, boolean retrieveFromCache) {
 		return getPersistence()
-				   .fetchByU_C(userId, configurationId, retrieveFromCache);
+				   .fetchByU_C(userId, configurationPid, retrieveFromCache);
 	}
 
 	/**
-	* Removes the sharepoint o auth2 token entry where userId = &#63; and configurationId = &#63; from the database.
+	* Removes the sharepoint o auth2 token entry where userId = &#63; and configurationPid = &#63; from the database.
 	*
 	* @param userId the user ID
-	* @param configurationId the configuration ID
+	* @param configurationPid the configuration pid
 	* @return the sharepoint o auth2 token entry that was removed
 	*/
 	public static SharepointOAuth2TokenEntry removeByU_C(long userId,
-		java.lang.String configurationId)
+		java.lang.String configurationPid)
 		throws com.liferay.sharepoint.oauth2.exception.NoSuch2TokenEntryException {
-		return getPersistence().removeByU_C(userId, configurationId);
+		return getPersistence().removeByU_C(userId, configurationPid);
 	}
 
 	/**
-	* Returns the number of sharepoint o auth2 token entries where userId = &#63; and configurationId = &#63;.
+	* Returns the number of sharepoint o auth2 token entries where userId = &#63; and configurationPid = &#63;.
 	*
 	* @param userId the user ID
-	* @param configurationId the configuration ID
+	* @param configurationPid the configuration pid
 	* @return the number of matching sharepoint o auth2 token entries
 	*/
-	public static int countByU_C(long userId, java.lang.String configurationId) {
-		return getPersistence().countByU_C(userId, configurationId);
+	public static int countByU_C(long userId, java.lang.String configurationPid) {
+		return getPersistence().countByU_C(userId, configurationPid);
 	}
 
 	/**

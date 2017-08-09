@@ -70,7 +70,7 @@ public class SharepointOAuth2TokenEntryModelImpl extends BaseModelImpl<Sharepoin
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "accessToken", Types.CLOB },
-			{ "configurationId", Types.VARCHAR },
+			{ "configurationPid", Types.VARCHAR },
 			{ "expirationDate", Types.TIMESTAMP },
 			{ "refreshToken", Types.CLOB }
 		};
@@ -82,12 +82,12 @@ public class SharepointOAuth2TokenEntryModelImpl extends BaseModelImpl<Sharepoin
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("accessToken", Types.CLOB);
-		TABLE_COLUMNS_MAP.put("configurationId", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("configurationPid", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("refreshToken", Types.CLOB);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table SharepointOAuth2TokenEntry (sharepointOAuth2TokenEntryId LONG not null primary key,userId LONG,userName VARCHAR(75) null,createDate DATE null,accessToken TEXT null,configurationId VARCHAR(75) null,expirationDate DATE null,refreshToken TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table SharepointOAuth2TokenEntry (sharepointOAuth2TokenEntryId LONG not null primary key,userId LONG,userName VARCHAR(75) null,createDate DATE null,accessToken TEXT null,configurationPid VARCHAR(75) null,expirationDate DATE null,refreshToken TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table SharepointOAuth2TokenEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY sharepointOAuth2TokenEntry.sharepointOAuth2TokenEntryId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY SharepointOAuth2TokenEntry.sharepointOAuth2TokenEntryId ASC";
@@ -103,7 +103,7 @@ public class SharepointOAuth2TokenEntryModelImpl extends BaseModelImpl<Sharepoin
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.sharepoint.oauth2.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.sharepoint.oauth2.model.SharepointOAuth2TokenEntry"),
 			true);
-	public static final long CONFIGURATIONID_COLUMN_BITMASK = 1L;
+	public static final long CONFIGURATIONPID_COLUMN_BITMASK = 1L;
 	public static final long USERID_COLUMN_BITMASK = 2L;
 	public static final long SHAREPOINTOAUTH2TOKENENTRYID_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.sharepoint.oauth2.service.util.ServiceProps.get(
@@ -152,7 +152,7 @@ public class SharepointOAuth2TokenEntryModelImpl extends BaseModelImpl<Sharepoin
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("accessToken", getAccessToken());
-		attributes.put("configurationId", getConfigurationId());
+		attributes.put("configurationPid", getConfigurationPid());
 		attributes.put("expirationDate", getExpirationDate());
 		attributes.put("refreshToken", getRefreshToken());
 
@@ -195,10 +195,10 @@ public class SharepointOAuth2TokenEntryModelImpl extends BaseModelImpl<Sharepoin
 			setAccessToken(accessToken);
 		}
 
-		String configurationId = (String)attributes.get("configurationId");
+		String configurationPid = (String)attributes.get("configurationPid");
 
-		if (configurationId != null) {
-			setConfigurationId(configurationId);
+		if (configurationPid != null) {
+			setConfigurationPid(configurationPid);
 		}
 
 		Date expirationDate = (Date)attributes.get("expirationDate");
@@ -304,28 +304,28 @@ public class SharepointOAuth2TokenEntryModelImpl extends BaseModelImpl<Sharepoin
 	}
 
 	@Override
-	public String getConfigurationId() {
-		if (_configurationId == null) {
+	public String getConfigurationPid() {
+		if (_configurationPid == null) {
 			return StringPool.BLANK;
 		}
 		else {
-			return _configurationId;
+			return _configurationPid;
 		}
 	}
 
 	@Override
-	public void setConfigurationId(String configurationId) {
-		_columnBitmask |= CONFIGURATIONID_COLUMN_BITMASK;
+	public void setConfigurationPid(String configurationPid) {
+		_columnBitmask |= CONFIGURATIONPID_COLUMN_BITMASK;
 
-		if (_originalConfigurationId == null) {
-			_originalConfigurationId = _configurationId;
+		if (_originalConfigurationPid == null) {
+			_originalConfigurationPid = _configurationPid;
 		}
 
-		_configurationId = configurationId;
+		_configurationPid = configurationPid;
 	}
 
-	public String getOriginalConfigurationId() {
-		return GetterUtil.getString(_originalConfigurationId);
+	public String getOriginalConfigurationPid() {
+		return GetterUtil.getString(_originalConfigurationPid);
 	}
 
 	@Override
@@ -389,7 +389,7 @@ public class SharepointOAuth2TokenEntryModelImpl extends BaseModelImpl<Sharepoin
 		sharepointOAuth2TokenEntryImpl.setUserName(getUserName());
 		sharepointOAuth2TokenEntryImpl.setCreateDate(getCreateDate());
 		sharepointOAuth2TokenEntryImpl.setAccessToken(getAccessToken());
-		sharepointOAuth2TokenEntryImpl.setConfigurationId(getConfigurationId());
+		sharepointOAuth2TokenEntryImpl.setConfigurationPid(getConfigurationPid());
 		sharepointOAuth2TokenEntryImpl.setExpirationDate(getExpirationDate());
 		sharepointOAuth2TokenEntryImpl.setRefreshToken(getRefreshToken());
 
@@ -458,7 +458,7 @@ public class SharepointOAuth2TokenEntryModelImpl extends BaseModelImpl<Sharepoin
 
 		sharepointOAuth2TokenEntryModelImpl._setOriginalUserId = false;
 
-		sharepointOAuth2TokenEntryModelImpl._originalConfigurationId = sharepointOAuth2TokenEntryModelImpl._configurationId;
+		sharepointOAuth2TokenEntryModelImpl._originalConfigurationPid = sharepointOAuth2TokenEntryModelImpl._configurationPid;
 
 		sharepointOAuth2TokenEntryModelImpl._columnBitmask = 0;
 	}
@@ -497,12 +497,12 @@ public class SharepointOAuth2TokenEntryModelImpl extends BaseModelImpl<Sharepoin
 			sharepointOAuth2TokenEntryCacheModel.accessToken = null;
 		}
 
-		sharepointOAuth2TokenEntryCacheModel.configurationId = getConfigurationId();
+		sharepointOAuth2TokenEntryCacheModel.configurationPid = getConfigurationPid();
 
-		String configurationId = sharepointOAuth2TokenEntryCacheModel.configurationId;
+		String configurationPid = sharepointOAuth2TokenEntryCacheModel.configurationPid;
 
-		if ((configurationId != null) && (configurationId.length() == 0)) {
-			sharepointOAuth2TokenEntryCacheModel.configurationId = null;
+		if ((configurationPid != null) && (configurationPid.length() == 0)) {
+			sharepointOAuth2TokenEntryCacheModel.configurationPid = null;
 		}
 
 		Date expirationDate = getExpirationDate();
@@ -539,8 +539,8 @@ public class SharepointOAuth2TokenEntryModelImpl extends BaseModelImpl<Sharepoin
 		sb.append(getCreateDate());
 		sb.append(", accessToken=");
 		sb.append(getAccessToken());
-		sb.append(", configurationId=");
-		sb.append(getConfigurationId());
+		sb.append(", configurationPid=");
+		sb.append(getConfigurationPid());
 		sb.append(", expirationDate=");
 		sb.append(getExpirationDate());
 		sb.append(", refreshToken=");
@@ -580,8 +580,8 @@ public class SharepointOAuth2TokenEntryModelImpl extends BaseModelImpl<Sharepoin
 		sb.append(getAccessToken());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>configurationId</column-name><column-value><![CDATA[");
-		sb.append(getConfigurationId());
+			"<column><column-name>configurationPid</column-name><column-value><![CDATA[");
+		sb.append(getConfigurationPid());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>expirationDate</column-name><column-value><![CDATA[");
@@ -608,8 +608,8 @@ public class SharepointOAuth2TokenEntryModelImpl extends BaseModelImpl<Sharepoin
 	private String _userName;
 	private Date _createDate;
 	private String _accessToken;
-	private String _configurationId;
-	private String _originalConfigurationId;
+	private String _configurationPid;
+	private String _originalConfigurationPid;
 	private Date _expirationDate;
 	private String _refreshToken;
 	private long _columnBitmask;

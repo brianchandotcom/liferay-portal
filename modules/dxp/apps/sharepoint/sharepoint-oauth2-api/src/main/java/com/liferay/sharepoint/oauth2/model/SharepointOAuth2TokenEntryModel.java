@@ -150,19 +150,19 @@ public interface SharepointOAuth2TokenEntryModel extends BaseModel<SharepointOAu
 	public void setAccessToken(String accessToken);
 
 	/**
-	 * Returns the configuration ID of this sharepoint o auth2 token entry.
+	 * Returns the configuration pid of this sharepoint o auth2 token entry.
 	 *
-	 * @return the configuration ID of this sharepoint o auth2 token entry
+	 * @return the configuration pid of this sharepoint o auth2 token entry
 	 */
 	@AutoEscape
-	public String getConfigurationId();
+	public String getConfigurationPid();
 
 	/**
-	 * Sets the configuration ID of this sharepoint o auth2 token entry.
+	 * Sets the configuration pid of this sharepoint o auth2 token entry.
 	 *
-	 * @param configurationId the configuration ID of this sharepoint o auth2 token entry
+	 * @param configurationPid the configuration pid of this sharepoint o auth2 token entry
 	 */
-	public void setConfigurationId(String configurationId);
+	public void setConfigurationPid(String configurationPid);
 
 	/**
 	 * Returns the expiration date of this sharepoint o auth2 token entry.

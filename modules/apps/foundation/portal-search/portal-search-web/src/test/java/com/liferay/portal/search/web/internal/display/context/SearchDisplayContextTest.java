@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.summary.SummaryBuilderFactory;
 import com.liferay.portal.search.web.constants.SearchPortletParameterNames;
 import com.liferay.portlet.portletconfiguration.util.ConfigurationRenderRequest;
 
@@ -230,7 +231,8 @@ public class SearchDisplayContextTest {
 			renderRequest, portletPreferences,
 			createPortal(themeDisplay, renderRequest), Mockito.mock(Html.class),
 			Mockito.mock(Language.class), facetedSearcherManager,
-			Mockito.mock(IndexSearchPropsValues.class), portletURLFactory);
+			Mockito.mock(IndexSearchPropsValues.class), portletURLFactory,
+			Mockito.mock(SummaryBuilderFactory.class));
 	}
 
 	protected ThemeDisplay createThemeDisplay() throws Exception {

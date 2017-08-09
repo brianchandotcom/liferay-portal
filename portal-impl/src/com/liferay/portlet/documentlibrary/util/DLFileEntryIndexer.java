@@ -343,6 +343,19 @@ public class DLFileEntryIndexer
 		}
 	}
 
+	protected Summary createSummary(
+		Locale locale, Document document, String titleField,
+		String contentField) {
+
+		String prefix = Field.SNIPPET + StringPool.UNDERLINE;
+
+		String title = document.get(prefix + titleField, titleField);
+		String content = document.get(
+			locale, prefix + contentField, contentField);
+
+		return new Summary(title, content);
+	}
+
 	@Override
 	protected void doDelete(DLFileEntry dlFileEntry) throws Exception {
 		deleteDocument(
@@ -504,7 +517,8 @@ public class DLFileEntryIndexer
 		Document document, Locale locale, String snippet,
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		Summary summary = createSummary(document, Field.TITLE, Field.CONTENT);
+		Summary summary = createSummary(
+			locale, document, Field.TITLE, Field.CONTENT);
 
 		if (Validator.isNull(summary.getContent())) {
 			summary = createSummary(document, Field.TITLE, Field.DESCRIPTION);

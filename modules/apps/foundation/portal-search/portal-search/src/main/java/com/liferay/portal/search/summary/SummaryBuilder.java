@@ -12,41 +12,33 @@
  * details.
  */
 
-package com.liferay.portal.search.web.search.request;
+package com.liferay.portal.search.summary;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.facet.Facet;
-
-import java.util.List;
-import java.util.Optional;
+import java.util.Locale;
 
 /**
- * @author Rodrigo Paulino
  * @author André de Oliveira
+ * @author Bryan Engler
+ * @author Ryan Park
+ * @author Tibor Lipusz
  */
 @ProviderType
-public interface SearchResponse {
+public interface SummaryBuilder {
 
-	public List<Document> getDocuments();
+	public Summary build();
 
-	public Facet getFacet(String fieldName);
+	public void setContent(String content);
 
-	/**
-	 * @deprecated As of 1.3.0
-	 */
-	@Deprecated
-	public String[] getHighlights();
+	public void setEscape(boolean escape);
 
-	public Optional<String> getKeywords();
+	public void setHighlight(boolean highlight);
 
-	public int getPaginationDelta();
+	public void setLocale(Locale locale);
 
-	public int getPaginationStart();
+	public void setMaxContentLength(int maxContentLength);
 
-	public String getQueryString();
-
-	public int getTotalHits();
+	public void setTitle(String title);
 
 }

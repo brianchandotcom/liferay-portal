@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 import java.net.URI;
 import java.net.URL;
@@ -102,9 +103,9 @@ public class WabBuildAutoUpgradeTest extends BaseBuildAutoUpgradeTestCase {
 
 		File file = FileUtil.createTempFile("war");
 
-		try (FileOutputStream fileOutputStream = new FileOutputStream(file);
+		try (OutputStream outputStream = new FileOutputStream(file);
 			JarOutputStream jarOutputStream =
-				new JarOutputStream(fileOutputStream)) {
+				new JarOutputStream(outputStream)) {
 
 			String createSQL = toCreateSQL(tableColumns);
 

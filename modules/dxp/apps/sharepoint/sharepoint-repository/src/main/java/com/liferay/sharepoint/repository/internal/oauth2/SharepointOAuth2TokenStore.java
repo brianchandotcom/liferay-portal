@@ -44,7 +44,7 @@ public class SharepointOAuth2TokenStore implements TokenStore {
 		throws PortalException {
 
 		try {
-			Token token = SharepointOAuth2Token.fromModel(
+			Token token = SharepointOAuth2Token.newInstance(
 				_sharepointOAuth2TokenEntryLocalService.
 					fetchSharepointOAuth2TokenEntry(userId, configurationId));
 
@@ -74,7 +74,7 @@ public class SharepointOAuth2TokenStore implements TokenStore {
 		throws PortalException {
 
 		try {
-			Token token = SharepointOAuth2Token.fromModel(
+			Token token = SharepointOAuth2Token.newInstance(
 				_sharepointOAuth2TokenEntryLocalService.
 					fetchSharepointOAuth2TokenEntry(userId, configurationId));
 

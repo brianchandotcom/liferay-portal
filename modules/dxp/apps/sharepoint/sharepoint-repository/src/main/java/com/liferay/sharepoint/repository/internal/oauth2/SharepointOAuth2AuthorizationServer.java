@@ -58,7 +58,7 @@ public class SharepointOAuth2AuthorizationServer {
 			HttpResponse<String> httpResponse =
 				httpRequestWithBody.asString();
 
-			return SharepointOAuth2Token.fromJSONString(
+			return SharepointOAuth2Token.newInstance(
 				httpResponse.getBody(), token);
 		}
 		catch (JSONException | UnirestException e) {
@@ -88,7 +88,7 @@ public class SharepointOAuth2AuthorizationServer {
 			HttpResponse<String> httpResponse =
 				httpRequestWithBody.asString();
 
-			return SharepointOAuth2Token.fromJSONString(
+			return SharepointOAuth2Token.newInstance(
 				httpResponse.getBody());
 		}
 		catch (JSONException | UnirestException e) {

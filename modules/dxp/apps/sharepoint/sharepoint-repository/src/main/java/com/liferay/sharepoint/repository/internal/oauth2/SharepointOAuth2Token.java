@@ -33,13 +33,13 @@ import java.util.Date;
  */
 public class SharepointOAuth2Token implements Token {
 
-	public static final Token fromJSONString(String json)
+	public static final Token newInstance(String json)
 		throws JSONException, OAuth2AuthorizationException {
 
-		return fromJSONString(json, null);
+		return newInstance(json, null);
 	}
 
-	public static final Token fromJSONString(String json, Token token)
+	public static final Token newInstance(String json, Token token)
 		throws JSONException, OAuth2AuthorizationException {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
@@ -72,7 +72,7 @@ public class SharepointOAuth2Token implements Token {
 			accessToken, refreshToken, expirationDate);
 	}
 
-	public static final Token fromModel(
+	public static final Token newInstance(
 		SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry) {
 
 		if (sharepointOAuth2TokenEntry == null) {

@@ -14,10 +14,10 @@
 
 package com.liferay.commerce.cart.web.internal.display.context;
 
-import com.liferay.commerce.cart.model.CommerceCartItem;
-import com.liferay.commerce.cart.service.CommerceCartItemService;
 import com.liferay.commerce.cart.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.cart.web.internal.util.CommerceCartPortletUtil;
+import com.liferay.commerce.model.CommerceCartItem;
+import com.liferay.commerce.service.CommerceCartItemService;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.OrderByComparator;

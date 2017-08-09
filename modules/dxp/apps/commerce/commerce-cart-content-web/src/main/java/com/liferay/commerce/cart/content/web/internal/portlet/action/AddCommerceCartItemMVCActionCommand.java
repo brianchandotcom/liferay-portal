@@ -14,14 +14,14 @@
 
 package com.liferay.commerce.cart.content.web.internal.portlet.action;
 
-import com.liferay.commerce.cart.constants.CommerceCartConstants;
-import com.liferay.commerce.cart.constants.CommerceCartPortletKeys;
-import com.liferay.commerce.cart.model.CommerceCart;
-import com.liferay.commerce.cart.model.CommerceCartItem;
-import com.liferay.commerce.cart.service.CommerceCartItemService;
-import com.liferay.commerce.cart.service.CommerceCartService;
-import com.liferay.commerce.cart.util.CommerceCartHelper;
+import com.liferay.commerce.constants.CommerceCartConstants;
+import com.liferay.commerce.constants.CommerceCartPortletKeys;
+import com.liferay.commerce.model.CommerceCart;
+import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.product.util.CPInstanceHelper;
+import com.liferay.commerce.service.CommerceCartItemService;
+import com.liferay.commerce.service.CommerceCartService;
+import com.liferay.commerce.util.CommerceCartHelper;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;

@@ -16,6 +16,8 @@ package com.liferay.commerce.service.base;
 
 import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.service.CommerceRegionService;
+import com.liferay.commerce.service.persistence.CommerceCartItemPersistence;
+import com.liferay.commerce.service.persistence.CommerceCartPersistence;
 import com.liferay.commerce.service.persistence.CommerceCountryPersistence;
 import com.liferay.commerce.service.persistence.CommerceRegionPersistence;
 
@@ -53,6 +55,120 @@ public abstract class CommerceRegionServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * Never modify or reference this class directly. Always use {@link com.liferay.commerce.service.CommerceRegionServiceUtil} to access the commerce region remote service.
 	 */
+
+	/**
+	 * Returns the commerce cart local service.
+	 *
+	 * @return the commerce cart local service
+	 */
+	public com.liferay.commerce.service.CommerceCartLocalService getCommerceCartLocalService() {
+		return commerceCartLocalService;
+	}
+
+	/**
+	 * Sets the commerce cart local service.
+	 *
+	 * @param commerceCartLocalService the commerce cart local service
+	 */
+	public void setCommerceCartLocalService(
+		com.liferay.commerce.service.CommerceCartLocalService commerceCartLocalService) {
+		this.commerceCartLocalService = commerceCartLocalService;
+	}
+
+	/**
+	 * Returns the commerce cart remote service.
+	 *
+	 * @return the commerce cart remote service
+	 */
+	public com.liferay.commerce.service.CommerceCartService getCommerceCartService() {
+		return commerceCartService;
+	}
+
+	/**
+	 * Sets the commerce cart remote service.
+	 *
+	 * @param commerceCartService the commerce cart remote service
+	 */
+	public void setCommerceCartService(
+		com.liferay.commerce.service.CommerceCartService commerceCartService) {
+		this.commerceCartService = commerceCartService;
+	}
+
+	/**
+	 * Returns the commerce cart persistence.
+	 *
+	 * @return the commerce cart persistence
+	 */
+	public CommerceCartPersistence getCommerceCartPersistence() {
+		return commerceCartPersistence;
+	}
+
+	/**
+	 * Sets the commerce cart persistence.
+	 *
+	 * @param commerceCartPersistence the commerce cart persistence
+	 */
+	public void setCommerceCartPersistence(
+		CommerceCartPersistence commerceCartPersistence) {
+		this.commerceCartPersistence = commerceCartPersistence;
+	}
+
+	/**
+	 * Returns the commerce cart item local service.
+	 *
+	 * @return the commerce cart item local service
+	 */
+	public com.liferay.commerce.service.CommerceCartItemLocalService getCommerceCartItemLocalService() {
+		return commerceCartItemLocalService;
+	}
+
+	/**
+	 * Sets the commerce cart item local service.
+	 *
+	 * @param commerceCartItemLocalService the commerce cart item local service
+	 */
+	public void setCommerceCartItemLocalService(
+		com.liferay.commerce.service.CommerceCartItemLocalService commerceCartItemLocalService) {
+		this.commerceCartItemLocalService = commerceCartItemLocalService;
+	}
+
+	/**
+	 * Returns the commerce cart item remote service.
+	 *
+	 * @return the commerce cart item remote service
+	 */
+	public com.liferay.commerce.service.CommerceCartItemService getCommerceCartItemService() {
+		return commerceCartItemService;
+	}
+
+	/**
+	 * Sets the commerce cart item remote service.
+	 *
+	 * @param commerceCartItemService the commerce cart item remote service
+	 */
+	public void setCommerceCartItemService(
+		com.liferay.commerce.service.CommerceCartItemService commerceCartItemService) {
+		this.commerceCartItemService = commerceCartItemService;
+	}
+
+	/**
+	 * Returns the commerce cart item persistence.
+	 *
+	 * @return the commerce cart item persistence
+	 */
+	public CommerceCartItemPersistence getCommerceCartItemPersistence() {
+		return commerceCartItemPersistence;
+	}
+
+	/**
+	 * Sets the commerce cart item persistence.
+	 *
+	 * @param commerceCartItemPersistence the commerce cart item persistence
+	 */
+	public void setCommerceCartItemPersistence(
+		CommerceCartItemPersistence commerceCartItemPersistence) {
+		this.commerceCartItemPersistence = commerceCartItemPersistence;
+	}
 
 	/**
 	 * Returns the commerce country local service.
@@ -367,6 +483,18 @@ public abstract class CommerceRegionServiceBaseImpl extends BaseServiceImpl
 		}
 	}
 
+	@BeanReference(type = com.liferay.commerce.service.CommerceCartLocalService.class)
+	protected com.liferay.commerce.service.CommerceCartLocalService commerceCartLocalService;
+	@BeanReference(type = com.liferay.commerce.service.CommerceCartService.class)
+	protected com.liferay.commerce.service.CommerceCartService commerceCartService;
+	@BeanReference(type = CommerceCartPersistence.class)
+	protected CommerceCartPersistence commerceCartPersistence;
+	@BeanReference(type = com.liferay.commerce.service.CommerceCartItemLocalService.class)
+	protected com.liferay.commerce.service.CommerceCartItemLocalService commerceCartItemLocalService;
+	@BeanReference(type = com.liferay.commerce.service.CommerceCartItemService.class)
+	protected com.liferay.commerce.service.CommerceCartItemService commerceCartItemService;
+	@BeanReference(type = CommerceCartItemPersistence.class)
+	protected CommerceCartItemPersistence commerceCartItemPersistence;
 	@BeanReference(type = com.liferay.commerce.service.CommerceCountryLocalService.class)
 	protected com.liferay.commerce.service.CommerceCountryLocalService commerceCountryLocalService;
 	@BeanReference(type = com.liferay.commerce.service.CommerceCountryService.class)

@@ -1,6 +1,12 @@
 <?xml version="1.0"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean class="com.liferay.commerce.service.impl.CommerceCartLocalServiceImpl" id="com.liferay.commerce.service.CommerceCartLocalService" />
+	<bean class="com.liferay.commerce.service.impl.CommerceCartServiceImpl" id="com.liferay.commerce.service.CommerceCartService" />
+	<bean class="com.liferay.commerce.service.persistence.impl.CommerceCartPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceCartPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.service.impl.CommerceCartItemLocalServiceImpl" id="com.liferay.commerce.service.CommerceCartItemLocalService" />
+	<bean class="com.liferay.commerce.service.impl.CommerceCartItemServiceImpl" id="com.liferay.commerce.service.CommerceCartItemService" />
+	<bean class="com.liferay.commerce.service.persistence.impl.CommerceCartItemPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceCartItemPersistence" parent="basePersistence" />
 	<bean class="com.liferay.commerce.service.impl.CommerceCountryLocalServiceImpl" id="com.liferay.commerce.service.CommerceCountryLocalService" />
 	<bean class="com.liferay.commerce.service.impl.CommerceCountryServiceImpl" id="com.liferay.commerce.service.CommerceCountryService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceCountryPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceCountryPersistence" parent="basePersistence" />

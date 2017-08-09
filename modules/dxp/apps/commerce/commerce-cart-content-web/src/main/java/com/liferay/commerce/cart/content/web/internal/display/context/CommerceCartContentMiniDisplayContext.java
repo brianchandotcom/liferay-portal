@@ -15,9 +15,9 @@
 package com.liferay.commerce.cart.content.web.internal.display.context;
 
 import com.liferay.commerce.cart.content.web.internal.portlet.configuration.CommerceCartContentMiniPortletInstanceConfiguration;
-import com.liferay.commerce.cart.service.CommerceCartItemService;
-import com.liferay.commerce.cart.util.CommerceCartHelper;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
+import com.liferay.commerce.service.CommerceCartItemService;
+import com.liferay.commerce.util.CommerceCartHelper;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;

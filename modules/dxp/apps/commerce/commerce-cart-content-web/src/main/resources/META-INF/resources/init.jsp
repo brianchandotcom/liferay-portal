@@ -23,12 +23,12 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.commerce.cart.constants.CommerceCartConstants" %><%@
-page import="com.liferay.commerce.cart.constants.CommerceCartPortletKeys" %><%@
-page import="com.liferay.commerce.cart.content.web.internal.display.context.CommerceCartContentDisplayContext" %><%@
+<%@ page import="com.liferay.commerce.cart.content.web.internal.display.context.CommerceCartContentDisplayContext" %><%@
 page import="com.liferay.commerce.cart.content.web.internal.display.context.CommerceCartContentMiniDisplayContext" %><%@
 page import="com.liferay.commerce.cart.content.web.internal.portlet.CommerceCartContentMiniPortlet" %><%@
-page import="com.liferay.commerce.cart.model.CommerceCartItem" %><%@
+page import="com.liferay.commerce.constants.CommerceCartConstants" %><%@
+page import="com.liferay.commerce.constants.CommerceCartPortletKeys" %><%@
+page import="com.liferay.commerce.model.CommerceCartItem" %><%@
 page import="com.liferay.commerce.product.model.CPDefinition" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@

@@ -14,10 +14,10 @@
 
 package com.liferay.commerce.cart.web.internal.portlet.action;
 
-import com.liferay.commerce.cart.constants.CommerceCartPortletKeys;
-import com.liferay.commerce.cart.service.CommerceCartItemService;
 import com.liferay.commerce.cart.web.internal.display.context.CommerceCartItemDisplayContext;
+import com.liferay.commerce.constants.CommerceCartPortletKeys;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.service.CommerceCartItemService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;

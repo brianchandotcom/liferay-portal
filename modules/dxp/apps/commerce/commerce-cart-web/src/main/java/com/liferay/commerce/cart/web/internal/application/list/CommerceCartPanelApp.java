@@ -17,7 +17,7 @@ package com.liferay.commerce.cart.web.internal.application.list;
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.commerce.application.list.constants.CommercePanelCategoryKeys;
-import com.liferay.commerce.cart.constants.CommerceCartPortletKeys;
+import com.liferay.commerce.constants.CommerceCartPortletKeys;
 import com.liferay.portal.kernel.model.Portlet;
 
 import org.osgi.service.component.annotations.Component;

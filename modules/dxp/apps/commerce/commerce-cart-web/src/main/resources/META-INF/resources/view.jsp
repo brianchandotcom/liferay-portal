@@ -72,7 +72,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 						searchContainer="<%= commerceCartSearchContainer %>"
 					>
 						<liferay-ui:search-container-row
-							className="com.liferay.commerce.cart.model.CommerceCart"
+							className="com.liferay.commerce.model.CommerceCart"
 							cssClass="entry-display-style"
 							keyProperty="commerceCartId"
 							modelVar="commerceCart"

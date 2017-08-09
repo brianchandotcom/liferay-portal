@@ -6,16 +6,19 @@
 		<model-name>com.liferay.commerce</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_commerce_admin_web_internal_portlet_CommerceAdminPortlet</portlet-name>
+			<portlet-name>com_liferay_commerce_cart_web_internal_portlet_CommerceCartPortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<weight>1</weight>
 		<permissions>
 			<supports>
+				<action-key>MANAGE_CARTS</action-key>
 				<action-key>MANAGE_COMMERCE_COUNTRIES</action-key>
 			</supports>
 			<site-member-defaults />
 			<guest-defaults />
 			<guest-unsupported>
+				<action-key>MANAGE_CARTS</action-key>
 				<action-key>MANAGE_COMMERCE_COUNTRIES</action-key>
 			</guest-unsupported>
 		</permissions>

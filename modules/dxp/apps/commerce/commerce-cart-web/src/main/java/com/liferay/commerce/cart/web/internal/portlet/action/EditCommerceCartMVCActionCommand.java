@@ -14,9 +14,9 @@
 
 package com.liferay.commerce.cart.web.internal.portlet.action;
 
-import com.liferay.commerce.cart.constants.CommerceCartPortletKeys;
-import com.liferay.commerce.cart.exception.NoSuchCartException;
-import com.liferay.commerce.cart.service.CommerceCartService;
+import com.liferay.commerce.constants.CommerceCartPortletKeys;
+import com.liferay.commerce.exception.NoSuchCartException;
+import com.liferay.commerce.service.CommerceCartService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;

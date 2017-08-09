@@ -14,10 +14,10 @@
 
 package com.liferay.commerce.cart.content.web.internal.theme.contributor;
 
-import com.liferay.commerce.cart.constants.CommerceCartConstants;
-import com.liferay.commerce.cart.model.CommerceCart;
-import com.liferay.commerce.cart.service.CommerceCartItemService;
-import com.liferay.commerce.cart.util.CommerceCartHelper;
+import com.liferay.commerce.constants.CommerceCartConstants;
+import com.liferay.commerce.model.CommerceCart;
+import com.liferay.commerce.service.CommerceCartItemService;
+import com.liferay.commerce.util.CommerceCartHelper;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateContextContributor;

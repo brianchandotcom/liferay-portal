@@ -14,11 +14,11 @@
 
 package com.liferay.commerce.cart.content.web.internal.portlet;
 
-import com.liferay.commerce.cart.constants.CommerceCartPortletKeys;
 import com.liferay.commerce.cart.content.web.internal.display.context.CommerceCartContentDisplayContext;
-import com.liferay.commerce.cart.service.CommerceCartItemService;
-import com.liferay.commerce.cart.util.CommerceCartHelper;
+import com.liferay.commerce.constants.CommerceCartPortletKeys;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
+import com.liferay.commerce.service.CommerceCartItemService;
+import com.liferay.commerce.util.CommerceCartHelper;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;

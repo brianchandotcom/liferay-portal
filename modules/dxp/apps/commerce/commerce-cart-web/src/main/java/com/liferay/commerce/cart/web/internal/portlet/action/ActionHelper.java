@@ -14,11 +14,11 @@
 
 package com.liferay.commerce.cart.web.internal.portlet.action;
 
-import com.liferay.commerce.cart.constants.CommerceCartWebKeys;
-import com.liferay.commerce.cart.model.CommerceCart;
-import com.liferay.commerce.cart.model.CommerceCartItem;
-import com.liferay.commerce.cart.service.CommerceCartItemService;
-import com.liferay.commerce.cart.service.CommerceCartService;
+import com.liferay.commerce.constants.CommerceCartWebKeys;
+import com.liferay.commerce.model.CommerceCart;
+import com.liferay.commerce.model.CommerceCartItem;
+import com.liferay.commerce.service.CommerceCartItemService;
+import com.liferay.commerce.service.CommerceCartService;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;

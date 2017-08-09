@@ -25,13 +25,13 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.commerce.cart.constants.CommerceCartConstants" %><%@
-page import="com.liferay.commerce.cart.constants.CommerceCartPortletKeys" %><%@
-page import="com.liferay.commerce.cart.constants.CommerceCartWebKeys" %><%@
-page import="com.liferay.commerce.cart.model.CommerceCart" %><%@
-page import="com.liferay.commerce.cart.model.CommerceCartItem" %><%@
-page import="com.liferay.commerce.cart.web.internal.display.context.CommerceCartDisplayContext" %><%@
+<%@ page import="com.liferay.commerce.cart.web.internal.display.context.CommerceCartDisplayContext" %><%@
 page import="com.liferay.commerce.cart.web.internal.display.context.CommerceCartItemDisplayContext" %><%@
+page import="com.liferay.commerce.constants.CommerceCartConstants" %><%@
+page import="com.liferay.commerce.constants.CommerceCartPortletKeys" %><%@
+page import="com.liferay.commerce.constants.CommerceCartWebKeys" %><%@
+page import="com.liferay.commerce.model.CommerceCart" %><%@
+page import="com.liferay.commerce.model.CommerceCartItem" %><%@
 page import="com.liferay.commerce.product.model.CPDefinition" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@

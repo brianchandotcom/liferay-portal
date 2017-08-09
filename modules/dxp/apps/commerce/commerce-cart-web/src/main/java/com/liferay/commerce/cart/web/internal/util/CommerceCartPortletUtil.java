@@ -14,10 +14,10 @@
 
 package com.liferay.commerce.cart.web.internal.util;
 
-import com.liferay.commerce.cart.model.CommerceCart;
-import com.liferay.commerce.cart.model.CommerceCartItem;
-import com.liferay.commerce.cart.util.comparator.CommerceCartItemModifiedDateComparator;
-import com.liferay.commerce.cart.util.comparator.CommerceCartNameComparator;
+import com.liferay.commerce.model.CommerceCart;
+import com.liferay.commerce.model.CommerceCartItem;
+import com.liferay.commerce.util.comparator.CommerceCartItemModifiedDateComparator;
+import com.liferay.commerce.util.comparator.CommerceCartNameComparator;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**

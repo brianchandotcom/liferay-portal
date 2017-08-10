@@ -1,0 +1,13 @@
+Liferay-Releng-App-Description: This app provides integration with WeDeploy.  Specifically, it allows Liferay Portal to serve as an identity provider for solutions running within WeDeploy.
+Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} WeDeploy Identity Provider
+Liferay-Releng-Bundle: false
+Liferay-Releng-Category: Utility
+Liferay-Releng-Demo-Url:
+Liferay-Releng-Deprecated: false
+Liferay-Releng-Labs: true
+Liferay-Releng-Marketplace: true
+Liferay-Releng-Portal-Required: false
+Liferay-Releng-Public: true
+Liferay-Releng-Restart-Required: false
+Liferay-Releng-Support-Url:
+Liferay-Releng-Supported: false

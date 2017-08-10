@@ -25,9 +25,9 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.sharepoint.repository.internal.configuration.SharepointOAuth2Configuration;
 import com.liferay.sharepoint.repository.internal.oauth2.RequestState;
 import com.liferay.sharepoint.repository.internal.oauth2.SharepointOAuth2AuthorizationServer;
-import com.liferay.sharepoint.repository.internal.configuration.SharepointOAuth2Configuration;
 
 import java.io.IOException;
 

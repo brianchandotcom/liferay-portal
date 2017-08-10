@@ -55,8 +55,7 @@ public class SharepointOAuth2AuthorizationServer {
 			httpRequestWithBody.field(
 				"resource", _sharepointOAuth2Configuration.resource());
 
-			HttpResponse<String> httpResponse =
-				httpRequestWithBody.asString();
+			HttpResponse<String> httpResponse = httpRequestWithBody.asString();
 
 			return SharepointOAuth2Token.newInstance(
 				httpResponse.getBody(), token);
@@ -85,11 +84,9 @@ public class SharepointOAuth2AuthorizationServer {
 			httpRequestWithBody.field(
 				"resource", _sharepointOAuth2Configuration.resource());
 
-			HttpResponse<String> httpResponse =
-				httpRequestWithBody.asString();
+			HttpResponse<String> httpResponse = httpRequestWithBody.asString();
 
-			return SharepointOAuth2Token.newInstance(
-				httpResponse.getBody());
+			return SharepointOAuth2Token.newInstance(httpResponse.getBody());
 		}
 		catch (JSONException | UnirestException e) {
 			throw new IOException(e);

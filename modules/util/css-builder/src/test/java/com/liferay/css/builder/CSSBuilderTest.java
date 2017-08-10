@@ -16,23 +16,27 @@ package com.liferay.css.builder;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
+
 import java.net.URL;
+
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+
 import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 /**
  * @author Eduardo Garcia
@@ -173,10 +177,9 @@ public class CSSBuilderTest {
 	private static final String _PORTAL_COMMON_CSS_JAR_FILE_NAME =
 		"build/portal-common-css-jar/com.liferay.frontend.css.common.jar";
 
-	private static String _docrootDirName;
-
 	private static final Pattern _cssImportPattern = Pattern.compile(
 		"@import\\s+url\\s*\\(\\s*\"(.+\\.css\\?t=\\d+)\"\\s*\\)\\s*;",
 		Pattern.DOTALL | Pattern.MULTILINE);
+	private static String _docrootDirName;
 
 }

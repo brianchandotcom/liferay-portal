@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.tools.GitException;
 import com.liferay.portal.tools.GitUtil;
@@ -34,7 +33,6 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -312,7 +310,13 @@ public class SourceFormatter {
 			return Arrays.asList(_DEFAULT_EXCLUDES);
 		}
 
-		Properties portalProperties = _getPortalProperties();
+		File portalPropertiesFile = _getPortalPropertiesFile();
+
+		if (portalPropertiesFile == null) {
+			return Arrays.asList(_DEFAULT_EXCLUDES);
+		}
+
+		Properties portalProperties = _getProperties(portalPropertiesFile);
 
 		List<String> defaultExcludes = ListUtil.fromString(
 			GetterUtil.getString(
@@ -324,13 +328,11 @@ public class SourceFormatter {
 		return defaultExcludes;
 	}
 
-	private Properties _getPortalProperties() throws Exception {
-		File propertiesFile = SourceFormatterUtil.getFile(
+	private File _getPortalPropertiesFile() {
+		return SourceFormatterUtil.getFile(
 			_sourceFormatterArgs.getBaseDirName(),
 			"portal-impl/../" + _PROPERTIES_FILE_NAME,
 			ToolsUtil.PORTAL_MAX_DIR_LEVEL);
-
-		return _getProperties(propertiesFile);
 	}
 
 	private Properties _getProperties(File file) throws Exception {
@@ -363,13 +365,49 @@ public class SourceFormatter {
 			_sourceFormatterArgs.isIncludeSubrepositories());
 	}
 
-	private void _readProperties() throws Exception {
-		Map<String, Properties> propertiesMap = new HashMap<>();
+	private void _readProperties(File propertiesFile, boolean portalProperties)
+		throws Exception {
 
+		Properties properties = _getProperties(propertiesFile);
+
+		if (properties.isEmpty()) {
+			return;
+		}
+
+		String propertiesFileLocation = SourceUtil.getAbsolutePath(
+			propertiesFile);
+
+		int pos = propertiesFileLocation.lastIndexOf(StringPool.SLASH);
+
+		propertiesFileLocation = propertiesFileLocation.substring(0, pos + 1);
+
+		if (!portalProperties) {
+			String value = properties.getProperty("source.formatter.excludes");
+
+			if (value != null) {
+				_sourceFormatterExcludes.addExcludes(
+					propertiesFileLocation,
+					ListUtil.fromString(value, StringPool.COMMA));
+			}
+		}
+
+		properties.remove("source.formatter.excludes");
+
+		_propertiesMap.put(propertiesFileLocation, properties);
+	}
+
+	private void _readProperties() throws Exception {
 		int maxDirLevel = -1;
 
 		if (_isPortalSource()) {
-			propertiesMap.put("portal-impl", _getPortalProperties());
+
+			// Find properties files in portal root folder
+
+			File portalPropertiesFile = _getPortalPropertiesFile();
+
+			if (portalPropertiesFile != null) {
+				_readProperties(portalPropertiesFile, true);
+			}
 
 			maxDirLevel = ToolsUtil.PORTAL_MAX_DIR_LEVEL;
 		}
@@ -382,13 +420,8 @@ public class SourceFormatter {
 		String parentDirName = _sourceFormatterArgs.getBaseDirName();
 
 		for (int i = 0; i < maxDirLevel; i++) {
-			File file = new File(parentDirName + _PROPERTIES_FILE_NAME);
-
-			Properties properties = _getProperties(file);
-
-			if (!properties.isEmpty()) {
-				propertiesMap.put(SourceUtil.getAbsolutePath(file), properties);
-			}
+			_readProperties(
+				new File(parentDirName + _PROPERTIES_FILE_NAME), false);
 
 			parentDirName += "../";
 		}
@@ -402,60 +435,7 @@ public class SourceFormatter {
 				_sourceFormatterExcludes);
 
 		for (String modulePropertiesFileName : modulePropertiesFileNames) {
-			File file = new File(modulePropertiesFileName);
-
-			Properties properties = _getProperties(file);
-
-			if (!properties.isEmpty()) {
-				propertiesMap.put(SourceUtil.getAbsolutePath(file), properties);
-			}
-		}
-
-		// Merge all properties files
-
-		_properties = new Properties();
-
-		for (Map.Entry<String, Properties> entry : propertiesMap.entrySet()) {
-			Properties properties = entry.getValue();
-
-			Enumeration<String> enu =
-				(Enumeration<String>)properties.propertyNames();
-
-			while (enu.hasMoreElements()) {
-				String key = enu.nextElement();
-
-				String value = properties.getProperty(key);
-
-				if (Validator.isNull(value)) {
-					continue;
-				}
-
-				if (key.equals("source.formatter.excludes")) {
-					String propertiesFileLocation = entry.getKey();
-
-					if (!propertiesFileLocation.equals("portal-impl")) {
-						int pos = propertiesFileLocation.lastIndexOf(
-							StringPool.SLASH);
-
-						_sourceFormatterExcludes.addExcludes(
-							propertiesFileLocation.substring(0, pos + 1),
-							ListUtil.fromString(value, StringPool.COMMA));
-					}
-				}
-
-				if (key.contains("excludes")) {
-					String existingValue = _properties.getProperty(key);
-
-					if (Validator.isNotNull(existingValue)) {
-						value = existingValue + StringPool.COMMA + value;
-					}
-
-					_properties.put(key, value);
-				}
-				else if (!_properties.containsKey(key)) {
-					_properties.put(key, value);
-				}
-			}
+			_readProperties(new File(modulePropertiesFileName), false);
 		}
 	}
 
@@ -463,7 +443,7 @@ public class SourceFormatter {
 		throws Exception {
 
 		sourceProcessor.setAllFileNames(_allFileNames);
-		sourceProcessor.setProperties(_properties);
+		sourceProcessor.setPropertiesMap(_propertiesMap);
 		sourceProcessor.setSourceFormatterArgs(_sourceFormatterArgs);
 		sourceProcessor.setSourceFormatterExcludes(_sourceFormatterExcludes);
 
@@ -493,7 +473,7 @@ public class SourceFormatter {
 	private volatile SourceMismatchException _firstSourceMismatchException;
 	private final List<String> _modifiedFileNames =
 		new CopyOnWriteArrayList<>();
-	private Properties _properties = new Properties();
+	private Map<String, Properties> _propertiesMap = new HashMap<>();
 	private final SourceFormatterArgs _sourceFormatterArgs;
 	private SourceFormatterExcludes _sourceFormatterExcludes;
 	private final Set<SourceFormatterMessage> _sourceFormatterMessages =

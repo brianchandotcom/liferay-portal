@@ -282,15 +282,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return pluginsInsideModulesDirectoryNames;
 	}
 
-	protected String getProperty(String key) {
-		return _properties.getProperty(key);
-	}
-
-	protected List<String> getPropertyList(String key) {
-		return ListUtil.fromString(
-			GetterUtil.getString(getProperty(key)), StringPool.COMMA);
-	}
-
 	protected List<File> getSuppressionsFiles(String fileName)
 		throws Exception {
 

@@ -2874,7 +2874,7 @@ information. Make sure to commit in all build services results.
 		<run-batch-test>
 			<test-action>
 				<if>
-					<contains string="${liferay.releng.branch}" substring="master" />
+					<istrue value="${liferay.releng.public}" />
 					<then>
 						<gradle-execute dir="modules/util/source-formatter" task="deploy">
 							<arg value="clean" />

@@ -15,13 +15,12 @@
 package com.liferay.document.library.internal.upgrade.v1_0_1;
 
 import com.liferay.document.library.configuration.DLConfiguration;
+import com.liferay.portal.configuration.upgrade.util.PropertiesToConfigurationUpgradeKey;
+import com.liferay.portal.configuration.upgrade.util.PropertiesToConfigurationUpgradeUtil;
+import com.liferay.portal.configuration.upgrade.util.PropertyDataType;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
-
-import java.util.Dictionary;
 
 import javax.portlet.PortletPreferences;
 
@@ -48,33 +47,18 @@ public class UpgradeDLConfiguration extends UpgradeProcess {
 	private void _upgradeConfiguration() throws Exception {
 		Configuration configuration = _configurationAdmin.getConfiguration(
 			DLConfiguration.class.getName(), StringPool.QUESTION);
-
-		Dictionary properties = configuration.getProperties();
-
-		if (properties == null) {
-			properties = new HashMapDictionary();
-		}
-
 		PortletPreferences portletPreferences = _prefsProps.getPreferences();
 
-		String[][] propertyMethodNamePairs = {
-			{"dl.file.extensions", "fileExtensions"},
-			{"dl.file.max.size", "fileMaxSize"}
+		PropertiesToConfigurationUpgradeKey[] upgradeKeys = {
+			new PropertiesToConfigurationUpgradeKey(
+				"dl.file.extensions", "fileExtensions",
+				PropertyDataType.STRING_ARRAY),
+			new PropertiesToConfigurationUpgradeKey(
+				"dl.file.max.size", "fileMaxSize", PropertyDataType.LONG)
 		};
 
-		for (String[] propertyMethodNamePair : propertyMethodNamePairs) {
-			String oldPropertyKey = propertyMethodNamePair[0];
-
-			String oldPropertyValue = _prefsProps.getString(oldPropertyKey);
-
-			if (Validator.isNotNull(oldPropertyValue)) {
-				properties.put(propertyMethodNamePair[1], oldPropertyValue);
-
-				portletPreferences.reset(oldPropertyKey);
-			}
-		}
-
-		configuration.update(properties);
+		PropertiesToConfigurationUpgradeUtil.upgradePropertiesToConfiguration(
+			portletPreferences, configuration, upgradeKeys);
 	}
 
 	private final ConfigurationAdmin _configurationAdmin;

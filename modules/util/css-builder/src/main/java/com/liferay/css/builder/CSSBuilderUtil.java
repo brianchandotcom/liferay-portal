@@ -108,7 +108,6 @@ public class CSSBuilderUtil {
 	}
 
 	private static final Pattern _cssImportPattern = Pattern.compile(
-		"@import\\s+url\\s*\\(\\s*\"(.+\\.css)",
-		Pattern.DOTALL | Pattern.MULTILINE);
+		"@import\\s+url\\s*\\(\\s*\"(.+\\.css)");
 
 }

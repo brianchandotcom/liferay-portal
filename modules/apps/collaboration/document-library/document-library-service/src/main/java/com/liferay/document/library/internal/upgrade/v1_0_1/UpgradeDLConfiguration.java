@@ -15,6 +15,7 @@
 package com.liferay.document.library.internal.upgrade.v1_0_1;
 
 import com.liferay.document.library.configuration.DLConfiguration;
+import com.liferay.document.library.internal.constants.LegacyDLKeys;
 import com.liferay.portal.configuration.upgrade.util.PropertiesToConfigurationUpgradeKey;
 import com.liferay.portal.configuration.upgrade.util.PropertiesToConfigurationUpgradeUtil;
 import com.liferay.portal.configuration.upgrade.util.PropertyDataType;
@@ -51,10 +52,11 @@ public class UpgradeDLConfiguration extends UpgradeProcess {
 
 		PropertiesToConfigurationUpgradeKey[] upgradeKeys = {
 			new PropertiesToConfigurationUpgradeKey(
-				"dl.file.extensions", "fileExtensions",
+				LegacyDLKeys.DL_FILE_EXTENSIONS, "fileExtensions",
 				PropertyDataType.STRING_ARRAY),
 			new PropertiesToConfigurationUpgradeKey(
-				"dl.file.max.size", "fileMaxSize", PropertyDataType.LONG)
+				LegacyDLKeys.DL_FILE_MAX_SIZE, "fileMaxSize",
+				PropertyDataType.LONG)
 		};
 
 		PropertiesToConfigurationUpgradeUtil.upgradePropertiesToConfiguration(

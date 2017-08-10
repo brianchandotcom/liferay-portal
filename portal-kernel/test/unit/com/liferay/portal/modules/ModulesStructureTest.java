@@ -470,7 +470,7 @@ public class ModulesStructureTest {
 			return gitIgnore;
 		}
 
-		StringBundler sb = new StringBundler(pluginDirNames.size() * 6 + 2);
+		StringBundler sb = new StringBundler(pluginDirNames.size() * 14 + 2);
 
 		if (Validator.isNotNull(gitIgnore)) {
 			sb.append(gitIgnore);
@@ -486,6 +486,18 @@ public class ModulesStructureTest {
 			}
 
 			first = false;
+
+			sb.append("!/");
+			sb.append(pluginDirName);
+			sb.append("/docroot/WEB-INF/lib");
+
+			sb.append(CharPool.NEW_LINE);
+
+			sb.append(CharPool.SLASH);
+			sb.append(pluginDirName);
+			sb.append("/docroot/WEB-INF/lib/*");
+
+			sb.append(CharPool.NEW_LINE);
 
 			sb.append("!/");
 			sb.append(pluginDirName);
@@ -634,6 +646,10 @@ public class ModulesStructureTest {
 	}
 
 	private void _testAntPluginIgnoreFiles(Path dirPath) throws IOException {
+		if (_isInPrivateModulesDir(dirPath)) {
+			return;
+		}
+
 		if (_getGitRepoPath(dirPath) == null) {
 			Path parentDirPath = dirPath.getParent();
 
@@ -898,7 +914,11 @@ public class ModulesStructureTest {
 	private void _testGitRepoIgnoreFiles(Path dirPath, String gitIgnoreTemplate)
 		throws IOException {
 
-		if (_isInGitRepoReadOnly(dirPath)) {
+		if (_isEmptyGitRepo(dirPath)) {
+			return;
+		}
+
+		if (_isInGitRepoReadOnly(dirPath) || _isInPrivateModulesDir(dirPath)) {
 			return;
 		}
 

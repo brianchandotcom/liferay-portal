@@ -46,7 +46,7 @@
 	</command>
 
 	<command name="UploadImageToSimpleProduct" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="quarantine" />
 
 		<execute test-case="CPCommerceCatalog#AddSimpleCatalogEntry" />
 
@@ -68,7 +68,7 @@
 		</execute>
 	</command>
 
-	<command name="UploadImageToVitualProduct" priority="5">
+	<command name="UploadImageToVirtualProduct" priority="5">
 		<property name="portal.acceptance" value="true" />
 
 		<execute test-case="CPCommerceCatalog#AddVirtualCatalogEntry" />

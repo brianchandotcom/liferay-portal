@@ -349,7 +349,7 @@ AUI.add(
 
 						// LPS-71967
 
-						if (UA.edge && parseInt(UA.edge) >= 14) {
+						if (UA.edge && parseInt(UA.edge, 10) >= 14) {
 							A.soon(
 								function() {
 									var nativeEditor = instance.getNativeEditor();
@@ -364,7 +364,7 @@ AUI.add(
 
 						var editorConfig = instance.getNativeEditor().config;
 
-						var removeResizePlugin = editorConfig.removePlugins && editorConfig.removePlugins.indexOf('ae_dragresize') != -1;
+						var removeResizePlugin = editorConfig.removePlugins && editorConfig.removePlugins.indexOf('ae_dragresize') > -1;
 
 						if (CKEDITOR.env.gecko && removeResizePlugin) {
 							var doc = instance.getNativeEditor().document.$;

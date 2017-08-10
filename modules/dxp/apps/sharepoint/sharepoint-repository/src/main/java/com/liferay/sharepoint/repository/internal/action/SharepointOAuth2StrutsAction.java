@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sharepoint.repository.internal.oauth2.struts;
+package com.liferay.sharepoint.repository.internal.action;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.repository.authorization.capability.AuthorizationCapability;

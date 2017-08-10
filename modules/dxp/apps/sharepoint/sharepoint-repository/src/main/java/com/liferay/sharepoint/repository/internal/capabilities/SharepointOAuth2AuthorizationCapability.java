@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sharepoint.repository.internal.capability;
+package com.liferay.sharepoint.repository.internal.capabilities;
 
 import com.liferay.document.library.repository.authorization.capability.AuthorizationCapability;
 import com.liferay.document.library.repository.authorization.capability.AuthorizationException;

@@ -1247,11 +1247,7 @@
 			<var name="portlet" value="Categories" />
 		</execute>
 
-		<execute macro="LAR#_gotoExportImport">
-			<var name="portlet" value="Categories" />
-		</execute>
-
-		<execute macro="LAR#_selectImportFile">
+		<execute macro="LAR#importPortlet">
 			<var name="larFileName" value="Moon-Rocks-Unit-Category-Hierarchy.lar" />
 			<var name="uploadFrom" value="dependencies" />
 		</execute>

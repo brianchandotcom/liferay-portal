@@ -14,8 +14,6 @@
 
 package com.liferay.source.formatter;
 
-import com.liferay.portal.kernel.util.StringPool;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,9 +30,7 @@ public class SourceFormatterExcludes {
 	public void addExcludes(
 		String propertiesFileLocation, List<String> exludes) {
 
-		int pos = propertiesFileLocation.lastIndexOf(StringPool.SLASH);
-
-		_excludesMap.put(propertiesFileLocation.substring(0, pos + 1), exludes);
+		_excludesMap.put(propertiesFileLocation, exludes);
 	}
 
 	public List<String> getDefaultExcludes() {

@@ -15,6 +15,7 @@
 package com.liferay.document.library.internal.upgrade.v1_0_1;
 
 import com.liferay.document.library.configuration.DLFileEntryConfiguration;
+import com.liferay.document.library.internal.constants.LegacyDLKeys;
 import com.liferay.portal.configuration.upgrade.util.PropertiesToConfigurationUpgradeKey;
 import com.liferay.portal.configuration.upgrade.util.PropertiesToConfigurationUpgradeUtil;
 import com.liferay.portal.configuration.upgrade.util.PropertyDataType;
@@ -51,7 +52,7 @@ public class UpgradeDLFileEntryConfiguration extends UpgradeProcess {
 
 		PropertiesToConfigurationUpgradeKey[] upgradeKeys = {
 			new PropertiesToConfigurationUpgradeKey(
-				"dl.file.entry.previewable.processor.max.size",
+				LegacyDLKeys.DL_FILE_ENTRY_PREVIEWABLE_PROCESSOR_MAX_SIZE,
 				"previewableProcessorMaxSize", PropertyDataType.LONG)
 		};
 

@@ -30,7 +30,7 @@ Locale userLocale = user.getLocale();
 	<c:if test="<%= LanguageUtil.isAvailableLocale(userLocale) %>">
 
 		<%
-		String displayPreferredLanguageURLString = themeDisplay.getPathMain() + "/portal/update_language?p_l_id=" + themeDisplay.getPlid() + "&redirect=" + currentURL + "&languageId=" + user.getLanguageId() + "&persistState=false&showUserLocaleOptionsMessage=false";
+		String displayPreferredLanguageURLString = themeDisplay.getPathMain() + "/portal/update_language?p_l_id=" + themeDisplay.getPlid() + "&redirect=" + URLCodec.encodeURL(currentURL) + "&languageId=" + user.getLanguageId() + "&persistState=false&showUserLocaleOptionsMessage=false";
 		%>
 
 		<aui:a href="<%= displayPreferredLanguageURLString %>">
@@ -39,7 +39,7 @@ Locale userLocale = user.getLocale();
 	</c:if>
 
 	<%
-	String changePreferredLanguageURLString = themeDisplay.getPathMain() + "/portal/update_language?p_l_id=" + themeDisplay.getPlid() + "&redirect=" + currentURL + "&languageId=" + themeDisplay.getLanguageId() + "&showUserLocaleOptionsMessage=false";
+	String changePreferredLanguageURLString = themeDisplay.getPathMain() + "/portal/update_language?p_l_id=" + themeDisplay.getPlid() + "&redirect=" + URLCodec.encodeURL(currentURL) + "&languageId=" + themeDisplay.getLanguageId() + "&showUserLocaleOptionsMessage=false";
 	%>
 
 	<aui:a href="<%= changePreferredLanguageURLString %>">

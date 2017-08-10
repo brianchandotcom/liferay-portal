@@ -81,7 +81,7 @@ public class SharepointOAuth2AuthorizationCapability
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 
-		if (_receivedAuthorizationGrant(request)) {
+		if (_hasAuthorizationGrant(request)) {
 			return true;
 		}
 
@@ -111,7 +111,7 @@ public class SharepointOAuth2AuthorizationCapability
 
 		_validateRequest(request);
 
-		if (_receivedAuthorizationGrant(request)) {
+		if (_hasAuthorizationGrant(request)) {
 			_requestAccessToken(request, response);
 		}
 		else {
@@ -156,7 +156,7 @@ public class SharepointOAuth2AuthorizationCapability
 			PortalUtil.getPathMain() + "/document_library/sharepoint/oauth2");
 	}
 
-	private boolean _receivedAuthorizationGrant(HttpServletRequest request) {
+	private boolean _hasAuthorizationGrant(HttpServletRequest request) {
 		String code = ParamUtil.getString(request, "code");
 
 		if (Validator.isNull(code)) {

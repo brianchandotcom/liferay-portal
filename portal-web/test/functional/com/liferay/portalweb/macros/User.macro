@@ -1847,11 +1847,18 @@
 			<var name="userPassword" value="${userPassword}" />
 		</execute>
 
-		<execute macro="GoogleLogin#acceptConditions" />
+		<execute function="SelectWindow#selectWindowTopNoSPARefresh" />
+
+		<if>
+			<condition function="IsElementPresent#pauseIsElementPresent" locator1="TextInput#EMAIL_ADDRESS" />
+			<then>
+				<execute function="SelectWindow#selectWindowNoSPARefresh" locator1="title=Terms of Use" />
+
+				<execute macro="GoogleLogin#acceptConditions" />
+			</then>
+		</if>
 
 		<execute function="Pause" locator1="5000" />
-
-		<execute function="SelectWindow" locator1="title=Welcome - ${siteName}" />
 
 		<execute function="AssertElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />
 	</command>

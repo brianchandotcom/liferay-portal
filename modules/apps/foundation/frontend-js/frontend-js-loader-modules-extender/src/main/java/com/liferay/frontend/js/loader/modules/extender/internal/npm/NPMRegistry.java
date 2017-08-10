@@ -41,6 +41,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.util.tracker.BundleTracker;
 import org.osgi.util.tracker.BundleTrackerCustomizer;
 
@@ -163,28 +164,50 @@ public class NPMRegistry {
 		_bundleTracker.open();
 	}
 
-	protected void bindBundleProcessor(JSBundleProcessor jsBundleProcessor) {
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC, unbind = "unbindBundleProcessor"
+	)
+	protected synchronized void bindBundleProcessor(
+		JSBundleProcessor jsBundleProcessor) {
+
 		_jsBundleProcessors.add(jsBundleProcessor);
+
+		_reopenBundleTracker();
 	}
 
 	@Deactivate
-	protected void deactivate() {
+	protected synchronized void deactivate() {
 		_bundleTracker.close();
 
 		_bundleTracker = null;
 	}
 
-	protected void unbindBundleProcessor(JSBundleProcessor jsBundleProcessor) {
+	protected synchronized void unbindBundleProcessor(
+		JSBundleProcessor jsBundleProcessor) {
+
 		_jsBundleProcessors.remove(jsBundleProcessor);
+
+		_reopenBundleTracker();
 	}
 
-	private void _addBundle(JSBundle jsBundle) {
-		_jsBundles.add(jsBundle);
+	private synchronized JSBundle _processBundle(Bundle bundle) {
+		for (JSBundleProcessor jsBundleProcessor : _jsBundleProcessors) {
+			JSBundle jsBundle = jsBundleProcessor.process(bundle);
 
-		_refreshJSModuleCaches();
+			if (jsBundle != null) {
+				_jsBundles.add(jsBundle);
+
+				_refreshJSModuleCaches();
+
+				return jsBundle;
+			}
+		}
+
+		return null;
 	}
 
-	private void _refreshJSModuleCaches() {
+	private synchronized void _refreshJSModuleCaches() {
 		Map<String, JSModule> jsModules = new HashMap<>();
 		Map<String, JSPackage> jsPackages = new HashMap<>();
 		Map<String, JSModule> resolvedJSModules = new HashMap<>();
@@ -205,7 +228,7 @@ public class NPMRegistry {
 		_resolvedJSModules = resolvedJSModules;
 	}
 
-	private boolean _removeBundle(JSBundle jsBundle) {
+	private synchronized boolean _removeBundle(JSBundle jsBundle) {
 		boolean removed = _jsBundles.remove(jsBundle);
 
 		if (removed) {
@@ -215,15 +238,17 @@ public class NPMRegistry {
 		return removed;
 	}
 
+	private synchronized void _reopenBundleTracker() {
+		if (_bundleTracker != null) {
+			_bundleTracker.close();
+			_bundleTracker.open();
+		}
+	}
+
 	private BundleContext _bundleContext;
 	private BundleTracker<JSBundle> _bundleTracker;
-
-	@Reference(
-		bind = "bindBundleProcessor",
-		cardinality = ReferenceCardinality.AT_LEAST_ONE,
-		unbind = "unbindBundleProcessor"
-	)
-	private List<JSBundleProcessor> _jsBundleProcessors = new ArrayList<>();
+	private final List<JSBundleProcessor> _jsBundleProcessors =
+		new ArrayList<>();
 
 	private final Set<JSBundle> _jsBundles = new ConcurrentSkipListSet<>(
 		new Comparator<JSBundle>() {
@@ -247,17 +272,7 @@ public class NPMRegistry {
 
 		@Override
 		public JSBundle addingBundle(Bundle bundle, BundleEvent bundleEvent) {
-			for (JSBundleProcessor jsBundleProcessor : _jsBundleProcessors) {
-				JSBundle jsBundle = jsBundleProcessor.process(bundle);
-
-				if (jsBundle != null) {
-					_addBundle(jsBundle);
-
-					return jsBundle;
-				}
-			}
-
-			return null;
+			return _processBundle(bundle);
 		}
 
 		@Override

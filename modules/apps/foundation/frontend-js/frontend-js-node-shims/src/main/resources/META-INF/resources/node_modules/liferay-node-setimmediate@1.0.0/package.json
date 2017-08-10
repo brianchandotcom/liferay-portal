@@ -1,0 +1,9 @@
+{
+  "name": "liferay-node-setimmediate",
+  "version": "1.0.0",
+  "description": "Liferay Node.js shim for setimmediate package",
+  "main": "index.js",
+  "dependencies": {
+    "setimmediate": "^1.0.5"
+  }
+}

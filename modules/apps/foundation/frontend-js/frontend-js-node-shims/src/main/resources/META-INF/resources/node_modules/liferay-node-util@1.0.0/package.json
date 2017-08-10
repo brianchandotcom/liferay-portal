@@ -1,0 +1,9 @@
+{
+  "name": "liferay-node-util",
+  "version": "1.0.0",
+  "description": "Liferay Node.js shim for util package",
+  "main": "index.js",
+  "dependencies": {
+    "util": "^0.10.3"
+  }
+}

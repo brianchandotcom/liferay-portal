@@ -1,0 +1,9 @@
+{
+  "name": "liferay-node-buffer",
+  "version": "1.0.0",
+  "description": "Liferay Node.js shim for buffer package",
+  "main": "index.js",
+  "dependencies": {
+    "buffer": "^5.0.6"
+  }
+}

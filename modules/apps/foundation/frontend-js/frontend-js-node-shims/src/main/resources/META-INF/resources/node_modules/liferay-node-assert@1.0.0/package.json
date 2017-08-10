@@ -1,0 +1,9 @@
+{
+  "name": "liferay-node-assert",
+  "version": "1.0.0",
+  "description": "Liferay Node.js shim for assert package",
+  "main": "index.js",
+  "dependencies": {
+    "assert": "^1.4.1"
+  }
+}

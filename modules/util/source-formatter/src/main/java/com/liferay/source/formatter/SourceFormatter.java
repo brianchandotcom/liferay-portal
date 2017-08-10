@@ -306,10 +306,6 @@ public class SourceFormatter {
 	}
 
 	private List<String> _getDefaultExcludes() throws Exception {
-		if (!_isPortalSource()) {
-			return Arrays.asList(_DEFAULT_EXCLUDES);
-		}
-
 		File portalPropertiesFile = _getPortalPropertiesFile();
 
 		if (portalPropertiesFile == null) {
@@ -329,10 +325,15 @@ public class SourceFormatter {
 	}
 
 	private File _getPortalPropertiesFile() {
-		return SourceFormatterUtil.getFile(
-			_sourceFormatterArgs.getBaseDirName(),
-			"portal-impl/../" + _PROPERTIES_FILE_NAME,
+		File portalImplDir = SourceFormatterUtil.getFile(
+			_sourceFormatterArgs.getBaseDirName(), "portal-impl",
 			ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+
+		if (portalImplDir != null) {
+			return new File(portalImplDir, "../" + _PROPERTIES_FILE_NAME);
+		}
+
+		return null;
 	}
 
 	private Properties _getProperties(File file) throws Exception {
@@ -343,18 +344,6 @@ public class SourceFormatter {
 		}
 
 		return properties;
-	}
-
-	private boolean _isPortalSource() {
-		File portalImplDir = SourceFormatterUtil.getFile(
-			_sourceFormatterArgs.getBaseDirName(), "portal-impl",
-			ToolsUtil.PORTAL_MAX_DIR_LEVEL);
-
-		if (portalImplDir != null) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private void _populateAllFileNames() throws Exception {
@@ -399,15 +388,12 @@ public class SourceFormatter {
 	private void _readProperties() throws Exception {
 		int maxDirLevel = -1;
 
-		if (_isPortalSource()) {
+		// Find properties files in portal root folder
 
-			// Find properties files in portal root folder
+		File portalPropertiesFile = _getPortalPropertiesFile();
 
-			File portalPropertiesFile = _getPortalPropertiesFile();
-
-			if (portalPropertiesFile != null) {
-				_readProperties(portalPropertiesFile, true);
-			}
+		if (portalPropertiesFile != null) {
+			_readProperties(portalPropertiesFile, true);
 
 			maxDirLevel = ToolsUtil.PORTAL_MAX_DIR_LEVEL;
 		}

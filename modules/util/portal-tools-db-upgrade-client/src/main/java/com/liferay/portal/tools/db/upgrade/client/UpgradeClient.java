@@ -25,8 +25,16 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
+
+import java.net.URISyntaxException;
+import java.net.URL;
 
 import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import java.security.CodeSource;
+import java.security.ProtectionDomain;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -160,7 +168,7 @@ public class UpgradeClient {
 		}
 
 		commands.add("-cp");
-		commands.add(_getClassPath());
+		commands.add(_getBootstrapClassPath());
 
 		Collections.addAll(commands, _jvmOpts.split(" "));
 
@@ -168,7 +176,7 @@ public class UpgradeClient {
 		commands.add(
 			"-Dserver.detector.server.id=" +
 				_appServer.getServerDetectorServerId());
-		commands.add("com.liferay.portal.tools.DBUpgrader");
+		commands.add(DBUpgraderLauncher.class.getName());
 
 		processBuilder.command(commands);
 
@@ -176,10 +184,16 @@ public class UpgradeClient {
 
 		Process process = processBuilder.start();
 
-		try (InputStreamReader inputStreamReader = new InputStreamReader(
+		try (ObjectOutputStream bootstrapObjectOutputStream =
+				new ObjectOutputStream(process.getOutputStream());
+			InputStreamReader inputStreamReader = new InputStreamReader(
 				process.getInputStream());
 			BufferedReader bufferedReader = new BufferedReader(
 				inputStreamReader)) {
+
+			bootstrapObjectOutputStream.writeObject(_getClassPath());
+
+			bootstrapObjectOutputStream.flush();
 
 			String line = null;
 
@@ -293,6 +307,30 @@ public class UpgradeClient {
 
 	private void _close(Closeable closeable) throws IOException {
 		closeable.close();
+	}
+
+	private String _getBootstrapClassPath() throws IOException {
+		ProtectionDomain protectionDomain =
+			UpgradeClient.class.getProtectionDomain();
+
+		CodeSource codeSource = protectionDomain.getCodeSource();
+
+		URL location = codeSource.getLocation();
+
+		try {
+			Path path = Paths.get(location.toURI());
+
+			File jarFile = path.toFile();
+
+			StringBuilder sb = new StringBuilder();
+
+			_appendClassPath(sb, jarFile.getParentFile());
+
+			return sb.toString();
+		}
+		catch (URISyntaxException urise) {
+			throw new IOException(urise);
+		}
 	}
 
 	private String _getClassPath() throws IOException {

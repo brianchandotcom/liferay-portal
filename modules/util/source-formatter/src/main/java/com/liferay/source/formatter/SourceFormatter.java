@@ -357,37 +357,6 @@ public class SourceFormatter {
 			_sourceFormatterArgs.isIncludeSubrepositories());
 	}
 
-	private void _readProperties(File propertiesFile, boolean portalProperties)
-		throws Exception {
-
-		Properties properties = _getProperties(propertiesFile);
-
-		if (properties.isEmpty()) {
-			return;
-		}
-
-		String propertiesFileLocation = SourceUtil.getAbsolutePath(
-			propertiesFile);
-
-		int pos = propertiesFileLocation.lastIndexOf(StringPool.SLASH);
-
-		propertiesFileLocation = propertiesFileLocation.substring(0, pos + 1);
-
-		if (!portalProperties) {
-			String value = properties.getProperty("source.formatter.excludes");
-
-			if (value != null) {
-				_sourceFormatterExcludes.addExcludes(
-					propertiesFileLocation,
-					ListUtil.fromString(value, StringPool.COMMA));
-			}
-		}
-
-		properties.remove("source.formatter.excludes");
-
-		_propertiesMap.put(propertiesFileLocation, properties);
-	}
-
 	private void _readProperties() throws Exception {
 		int maxDirLevel = -1;
 
@@ -427,6 +396,37 @@ public class SourceFormatter {
 		for (String modulePropertiesFileName : modulePropertiesFileNames) {
 			_readProperties(new File(modulePropertiesFileName), false);
 		}
+	}
+
+	private void _readProperties(File propertiesFile, boolean portalProperties)
+		throws Exception {
+
+		Properties properties = _getProperties(propertiesFile);
+
+		if (properties.isEmpty()) {
+			return;
+		}
+
+		String propertiesFileLocation = SourceUtil.getAbsolutePath(
+			propertiesFile);
+
+		int pos = propertiesFileLocation.lastIndexOf(StringPool.SLASH);
+
+		propertiesFileLocation = propertiesFileLocation.substring(0, pos + 1);
+
+		if (!portalProperties) {
+			String value = properties.getProperty("source.formatter.excludes");
+
+			if (value != null) {
+				_sourceFormatterExcludes.addExcludes(
+					propertiesFileLocation,
+					ListUtil.fromString(value, StringPool.COMMA));
+			}
+		}
+
+		properties.remove("source.formatter.excludes");
+
+		_propertiesMap.put(propertiesFileLocation, properties);
 	}
 
 	private void _runSourceProcessor(SourceProcessor sourceProcessor)

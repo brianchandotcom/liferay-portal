@@ -15,7 +15,7 @@ package com.liferay.sharepoint.repository.internal.oauth2;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.sharepoint.repository.internal.oauth2.configuration.SharepointOAuth2Configuration;
+import com.liferay.sharepoint.repository.internal.configuration.SharepointOAuth2Configuration;
 
 import java.io.IOException;
 

@@ -647,7 +647,7 @@
 
 	<command name="tearDownSpecificWorkflowDefinition">
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Workflow Definition" />
+			<var name="portlet" value="Workflow" />
 		</execute>
 
 		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
@@ -686,7 +686,7 @@
 
 	<command name="tearDownWorkflowDefinitionsViaWorkflowCP">
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Workflow Definition" />
+			<var name="portlet" value="Workflow" />
 		</execute>
 
 		<while>

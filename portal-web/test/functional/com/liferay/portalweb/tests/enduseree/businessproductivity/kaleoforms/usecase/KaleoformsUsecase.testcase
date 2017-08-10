@@ -2573,7 +2573,7 @@
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Workflow Definition" />
+			<var name="portlet" value="Workflow" />
 		</execute>
 
 		<execute macro="Workflow#uploadDefinition">
@@ -3767,7 +3767,7 @@
 
 	<command name="EditProcessWorkflowAfterFormSubmission" priority="4">
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Workflow Definition" />
+			<var name="portlet" value="Workflow" />
 		</execute>
 
 		<execute macro="Workflow#uploadDefinition">
@@ -3960,7 +3960,7 @@
 
 	<command name="EditProcessWorkflowBeforeFormSubmission" priority="4">
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Workflow Definition" />
+			<var name="portlet" value="Workflow" />
 		</execute>
 
 		<execute macro="Workflow#uploadDefinition">

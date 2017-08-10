@@ -346,7 +346,7 @@
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Workflow Definition" />
+			<var name="portlet" value="Workflow" />
 		</execute>
 
 		<execute macro="Workflow#uploadDefinition">
@@ -520,7 +520,7 @@
 
 	<command name="AddWebContentWithCategorySpecificDefinition" priority="4">
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Workflow Definition" />
+			<var name="portlet" value="Workflow" />
 		</execute>
 
 		<execute macro="Workflow#uploadDefinition">
@@ -887,7 +887,7 @@
 
 	<command name="DeactivateAndActivateUploadedDefinition" priority="3">
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Workflow Definition" />
+			<var name="portlet" value="Workflow" />
 		</execute>
 
 		<execute macro="Workflow#uploadDefinition">
@@ -904,7 +904,7 @@
 		<execute macro="Workflow#deactivateAddedWorkflowDefinition" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Workflow Definition" />
+			<var name="portlet" value="Workflow" />
 		</execute>
 
 		<execute macro="Workflow#reactivateInactiveWorkflowDefinition">
@@ -916,7 +916,7 @@
 		<property name="portal.acceptance" value="true" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Workflow Definition" />
+			<var name="portlet" value="Workflow" />
 		</execute>
 
 		<execute macro="Workflow#uploadDefinition">
@@ -933,7 +933,7 @@
 		<execute macro="Workflow#deactivateAddedWorkflowDefinition" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Workflow Definition" />
+			<var name="portlet" value="Workflow" />
 		</execute>
 
 		<execute macro="Workflow#deleteWorkflowDefinition" />
@@ -1030,7 +1030,7 @@
 
 	<command name="ViewInvalidDefinitionAlert" priority="4">
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Workflow Definition" />
+			<var name="portlet" value="Workflow" />
 		</execute>
 
 		<execute function="Click" locator1="Button#PLUS" />
@@ -1092,7 +1092,7 @@
 		</for>
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Workflow Definition" />
+			<var name="portlet" value="Workflow" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">

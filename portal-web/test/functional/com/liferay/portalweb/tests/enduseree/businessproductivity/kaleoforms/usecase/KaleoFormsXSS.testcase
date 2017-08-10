@@ -10,7 +10,7 @@
 		<execute macro="User#firstLoginPG" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Workflow Definition" />
+			<var name="portlet" value="Workflow" />
 		</execute>
 
 		<execute macro="Workflow#uploadDefinition">

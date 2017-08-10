@@ -31,7 +31,11 @@
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Workflow Configuration" />
+			<var name="portlet" value="Workflow" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Schemes" />
 		</execute>
 
 		<execute macro="Workflow#configureWorkflow">
@@ -105,7 +109,11 @@
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Workflow Configuration" />
+			<var name="portlet" value="Workflow" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Schemes" />
 		</execute>
 
 		<execute macro="Workflow#configureWorkflow">

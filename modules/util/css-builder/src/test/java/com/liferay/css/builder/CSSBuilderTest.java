@@ -134,7 +134,13 @@ public class CSSBuilderTest {
 
 		Matcher matcher = _cssImportPattern.matcher(actualTestCssImportContent);
 
-		Assert.assertEquals(3, matcher.groupCount());
+		int cssImportsCount = 0;
+
+		while (matcher.find()) {
+			cssImportsCount++;
+		}
+
+		Assert.assertEquals(3, cssImportsCount);
 
 		Assert.assertEquals(expectedTestContent, actualTestContent);
 

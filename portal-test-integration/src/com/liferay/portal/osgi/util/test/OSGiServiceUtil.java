@@ -33,7 +33,7 @@ public class OSGiServiceUtil {
 			bundleContext.getServiceReference(serviceClass);
 
 		if (serviceReference == null) {
-			unsafeFunction.apply(null);
+			return unsafeFunction.apply(null);
 		}
 
 		S service = bundleContext.getService(serviceReference);

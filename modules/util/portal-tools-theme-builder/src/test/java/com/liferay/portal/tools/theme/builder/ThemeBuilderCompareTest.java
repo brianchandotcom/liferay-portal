@@ -284,6 +284,10 @@ public class ThemeBuilderCompareTest {
 				"Unsupported base theme " + parentName);
 		}
 
+		documentBuilderFactory.setFeature(
+			"http://apache.org/xml/features/nonvalidating/load-external-dtd",
+			false);
+
 		DocumentBuilder documentBuilder =
 			documentBuilderFactory.newDocumentBuilder();
 

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Workflow Kaleo Designer Service
 Bundle-SymbolicName: com.liferay.portal.workflow.kaleo.designer.service
-Bundle-Version: 1.1.5
+Bundle-Version: 1.1.6
 Export-Package:\
 	com.liferay.portal.workflow.kaleo.designer.service.permission,\
 	com.liferay.portal.workflow.kaleo.designer.util

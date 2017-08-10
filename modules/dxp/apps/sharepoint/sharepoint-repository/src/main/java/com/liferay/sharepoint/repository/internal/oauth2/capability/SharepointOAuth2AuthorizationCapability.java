@@ -172,12 +172,11 @@ public class SharepointOAuth2AuthorizationCapability
 		long userId = PortalUtil.getUserId(request);
 
 		try {
-			Token refreshedAccessToken =
+			Token freshToken =
 				_sharepointOAuth2AuthorizationServer.refreshAccessToken(token);
 
 			_tokenStore.save(
-				_sharepointOAuth2Configuration.name(), userId,
-				refreshedAccessToken);
+				_sharepointOAuth2Configuration.name(), userId, freshToken);
 		}
 		catch (AuthorizationException ae) {
 			_tokenStore.delete(_sharepointOAuth2Configuration.name(), userId);

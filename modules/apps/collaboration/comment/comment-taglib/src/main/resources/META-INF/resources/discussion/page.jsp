@@ -46,11 +46,17 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 		</div>
 	</c:if>
 
+	<%
+	String contentURL = PortalUtil.getCanonicalURL(discussionTaglibHelper.getRedirect(), themeDisplay, layout);
+
+	contentURL = HttpUtil.removeParameter(contentURL, namespace + "skipEditorLoading");
+	%>
+
 	<c:if test="<%= commentSectionDisplayContext.isDiscussionVisible() %>">
 		<div class="taglib-discussion" id="<%= namespace %>discussionContainer">
 			<aui:form action="<%= discussionTaglibHelper.getFormAction() %>" method="post" name="<%= discussionTaglibHelper.getFormName() %>">
 				<input name="namespace" type="hidden" value="<%= namespace %>" />
-				<input name="contentURL" type="hidden" value="<%= PortalUtil.getCanonicalURL(discussionTaglibHelper.getRedirect(), themeDisplay, layout) %>" />
+				<input name="contentURL" type="hidden" value="<%= contentURL %>" />
 				<aui:input name="randomNamespace" type="hidden" value="<%= randomNamespace %>" />
 				<aui:input id="<%= randomNamespace + Constants.CMD %>" name="<%= Constants.CMD %>" type="hidden" />
 				<aui:input name="redirect" type="hidden" value="<%= discussionTaglibHelper.getRedirect() %>" />

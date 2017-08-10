@@ -248,7 +248,7 @@
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesConfiguration">
-			<var name="portlet" value="Workflow Configuration" />
+			<var name="portlet" value="Workflow" />
 		</execute>
 
 		<execute macro="Workflow#configureWorkflow">
@@ -706,7 +706,7 @@
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesConfiguration">
-			<var name="portlet" value="Workflow Configuration" />
+			<var name="portlet" value="Workflow" />
 		</execute>
 
 		<execute macro="Workflow#configureWorkflow">
@@ -939,7 +939,7 @@
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesConfiguration">
-			<var name="portlet" value="Workflow Configuration" />
+			<var name="portlet" value="Workflow" />
 		</execute>
 
 		<execute macro="Workflow#configureWorkflow">
@@ -1042,7 +1042,7 @@
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesConfiguration">
-			<var name="portlet" value="Workflow Configuration" />
+			<var name="portlet" value="Workflow" />
 		</execute>
 
 		<execute macro="Workflow#configureWorkflow">
@@ -1170,7 +1170,7 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesConfiguration">
-			<var name="portlet" value="Workflow Configuration" />
+			<var name="portlet" value="Workflow" />
 		</execute>
 
 		<execute macro="Workflow#configureWorkflow">
@@ -1179,7 +1179,7 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesConfiguration">
-			<var name="portlet" value="Workflow Configuration" />
+			<var name="portlet" value="Workflow" />
 		</execute>
 
 		<execute macro="Workflow#viewConfigurationSelected">
@@ -1204,7 +1204,7 @@
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesConfiguration">
-			<var name="portlet" value="Workflow Configuration" />
+			<var name="portlet" value="Workflow" />
 		</execute>
 
 		<execute macro="Workflow#viewConfigurationSelected">
@@ -1213,7 +1213,7 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesConfiguration">
-			<var name="portlet" value="Workflow Configuration" />
+			<var name="portlet" value="Workflow" />
 		</execute>
 
 		<execute macro="Workflow#viewConfigurationSelected">

@@ -15,7 +15,7 @@
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesConfiguration">
-			<var name="portlet" value="Workflow Configuration" />
+			<var name="portlet" value="Workflow" />
 		</execute>
 
 		<execute macro="Workflow#configureWorkflow">

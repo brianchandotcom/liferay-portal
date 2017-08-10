@@ -14,30 +14,31 @@
 
 package com.liferay.source.formatter;
 
-import com.liferay.portal.kernel.util.StringPool;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Hugo Huijser
  */
 public class SourceFormatterExcludes {
 
-	public SourceFormatterExcludes(List<String> defaultExcludes) {
+	public SourceFormatterExcludes(Set<String> defaultExcludes) {
 		_defaultExcludes = defaultExcludes;
+	}
+
+	public void addDefaultExcludes(List<String> defaultExcludes) {
+		_defaultExcludes.addAll(defaultExcludes);
 	}
 
 	public void addExcludes(
 		String propertiesFileLocation, List<String> exludes) {
 
-		int pos = propertiesFileLocation.lastIndexOf(StringPool.SLASH);
-
-		_excludesMap.put(propertiesFileLocation.substring(0, pos + 1), exludes);
+		_excludesMap.put(propertiesFileLocation, exludes);
 	}
 
-	public List<String> getDefaultExcludes() {
+	public Set<String> getDefaultExcludes() {
 		return _defaultExcludes;
 	}
 
@@ -45,7 +46,7 @@ public class SourceFormatterExcludes {
 		return _excludesMap;
 	}
 
-	private final List<String> _defaultExcludes;
+	private final Set<String> _defaultExcludes;
 	private Map<String, List<String>> _excludesMap = new HashMap<>();
 
 }

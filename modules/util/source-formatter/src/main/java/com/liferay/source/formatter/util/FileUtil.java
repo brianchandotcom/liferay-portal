@@ -28,6 +28,12 @@ import org.apache.commons.io.FileUtils;
  */
 public class FileUtil {
 
+	public static boolean exists(String fileName) {
+		File file = new File(fileName);
+
+		return file.exists();
+	}
+
 	public static byte[] getBytes(File file) throws IOException {
 		return FileUtils.readFileToByteArray(file);
 	}

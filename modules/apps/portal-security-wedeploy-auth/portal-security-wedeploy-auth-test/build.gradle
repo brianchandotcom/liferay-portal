@@ -3,8 +3,8 @@ copyLibs {
 }
 
 dependencies {
-	provided project(":apps:foundation:portal-security:portal-security-wedeploy-auth-api")
-	provided project(":apps:foundation:portal-security:portal-security-wedeploy-auth-service")
+	provided project(":apps:portal-security-wedeploy-auth:portal-security-wedeploy-auth-api")
+	provided project(":apps:portal-security-wedeploy-auth:portal-security-wedeploy-auth-service")
 
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 

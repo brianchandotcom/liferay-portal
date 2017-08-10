@@ -377,8 +377,12 @@
 
 		<execute macro="User#deleteCP" />
 
-		<execute macro="ProductMenu#gotoControlPanelApps">
-			<var name="portlet" value="Workflow Submissions" />
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Workflow" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Monitoring" />
 		</execute>
 
 		<execute macro="Workflow#withdrawTaskByActions">

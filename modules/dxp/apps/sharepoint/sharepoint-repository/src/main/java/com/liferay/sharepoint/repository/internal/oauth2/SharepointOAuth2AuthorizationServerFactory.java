@@ -15,7 +15,7 @@ package com.liferay.sharepoint.repository.internal.oauth2;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.sharepoint.repository.internal.configuration.SharepointOAuth2Configuration;
+import com.liferay.sharepoint.repository.internal.configuration.SharepointRepositoryOAuth2Configuration;
 
 import java.io.IOException;
 
@@ -35,17 +35,17 @@ import org.osgi.service.component.annotations.Reference;
 public class SharepointOAuth2AuthorizationServerFactory {
 
 	public SharepointOAuth2AuthorizationServer create(
-		SharepointOAuth2Configuration sharepointOAuth2Configuration) {
+		SharepointRepositoryOAuth2Configuration sharepointRepositoryOAuth2Configuration) {
 
 		return new SharepointOAuth2AuthorizationServer(
-			sharepointOAuth2Configuration);
+			sharepointRepositoryOAuth2Configuration);
 	}
 
 	public SharepointOAuth2AuthorizationServer create(String configurationPid) {
-		return create(_getSharepointOAuth2Configuration(configurationPid));
+		return create(_getSharepointRepositoryOAuth2Configuration(configurationPid));
 	}
 
-	private SharepointOAuth2Configuration _getSharepointOAuth2Configuration(
+	private SharepointRepositoryOAuth2Configuration _getSharepointRepositoryOAuth2Configuration(
 		String configurationPid) {
 
 		try {
@@ -61,7 +61,7 @@ public class SharepointOAuth2AuthorizationServerFactory {
 
 				if ((name != null) && name.equals(configurationPid)) {
 					return ConfigurableUtil.createConfigurable(
-						SharepointOAuth2Configuration.class, properties);
+						SharepointRepositoryOAuth2Configuration.class, properties);
 				}
 			}
 
@@ -75,7 +75,7 @@ public class SharepointOAuth2AuthorizationServerFactory {
 
 	private static final String _PID =
 		"com.liferay.sharepoint.repository.internal." +
-			"SharepointOAuth2Configuration";
+			"SharepointRepositoryOAuth2Configuration";
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;

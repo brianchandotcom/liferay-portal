@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.sharepoint.repository.internal.configuration.SharepointOAuth2Configuration;
+import com.liferay.sharepoint.repository.internal.configuration.SharepointRepositoryOAuth2Configuration;
 import com.liferay.sharepoint.repository.internal.oauth2.RequestState;
 import com.liferay.sharepoint.repository.internal.oauth2.SharepointOAuth2AuthorizationServer;
 
@@ -45,12 +45,12 @@ public class SharepointOAuth2AuthorizationCapability
 
 	public SharepointOAuth2AuthorizationCapability(
 		TokenStore tokenStore,
-		SharepointOAuth2Configuration sharepointOAuth2Configuration,
+		SharepointRepositoryOAuth2Configuration sharepointRepositoryOAuth2Configuration,
 		SharepointOAuth2AuthorizationServer
 			sharepointOAuth2AuthorizationServer) {
 
 		_tokenStore = tokenStore;
-		_sharepointOAuth2Configuration = sharepointOAuth2Configuration;
+		_sharepointRepositoryOAuth2Configuration = sharepointRepositoryOAuth2Configuration;
 		_sharepointOAuth2AuthorizationServer =
 			sharepointOAuth2AuthorizationServer;
 	}
@@ -86,7 +86,7 @@ public class SharepointOAuth2AuthorizationCapability
 		}
 
 		Token token = _tokenStore.get(
-			_sharepointOAuth2Configuration.name(),
+			_sharepointRepositoryOAuth2Configuration.name(),
 			PortalUtil.getUserId(
 				PortalUtil.getHttpServletRequest(portletRequest)));
 
@@ -116,7 +116,7 @@ public class SharepointOAuth2AuthorizationCapability
 		}
 		else {
 			Token token = _tokenStore.get(
-				_sharepointOAuth2Configuration.name(),
+				_sharepointRepositoryOAuth2Configuration.name(),
 				PortalUtil.getUserId(request));
 
 			if (token == null) {
@@ -135,16 +135,16 @@ public class SharepointOAuth2AuthorizationCapability
 
 	private String _getGrantURL(HttpServletRequest request, String state) {
 		String url =
-			_sharepointOAuth2Configuration.authorizationGrantEndpoint();
+			_sharepointRepositoryOAuth2Configuration.authorizationGrantEndpoint();
 
 		url = HttpUtil.addParameter(
-			url, "client_id", _sharepointOAuth2Configuration.clientId());
+			url, "client_id", _sharepointRepositoryOAuth2Configuration.clientId());
 
 		url = HttpUtil.addParameter(
 			url, "redirect_uri", _getRedirectURI(request));
 		url = HttpUtil.addParameter(url, "response_type", "code");
 		url = HttpUtil.addParameter(
-			url, "scope", _sharepointOAuth2Configuration.scope());
+			url, "scope", _sharepointRepositoryOAuth2Configuration.scope());
 		url = HttpUtil.addParameter(url, "state", state);
 
 		return url;
@@ -176,10 +176,10 @@ public class SharepointOAuth2AuthorizationCapability
 				_sharepointOAuth2AuthorizationServer.refreshAccessToken(token);
 
 			_tokenStore.save(
-				_sharepointOAuth2Configuration.name(), userId, freshToken);
+				_sharepointRepositoryOAuth2Configuration.name(), userId, freshToken);
 		}
 		catch (AuthorizationException ae) {
-			_tokenStore.delete(_sharepointOAuth2Configuration.name(), userId);
+			_tokenStore.delete(_sharepointRepositoryOAuth2Configuration.name(), userId);
 
 			throw ae;
 		}
@@ -202,7 +202,7 @@ public class SharepointOAuth2AuthorizationCapability
 				code, _getRedirectURI(request));
 
 		_tokenStore.save(
-			_sharepointOAuth2Configuration.name(), userId, accessToken);
+			_sharepointRepositoryOAuth2Configuration.name(), userId, accessToken);
 
 		requestState.restore(request, response);
 	}
@@ -238,7 +238,7 @@ public class SharepointOAuth2AuthorizationCapability
 
 	private final SharepointOAuth2AuthorizationServer
 		_sharepointOAuth2AuthorizationServer;
-	private final SharepointOAuth2Configuration _sharepointOAuth2Configuration;
+	private final SharepointRepositoryOAuth2Configuration _sharepointRepositoryOAuth2Configuration;
 	private final TokenStore _tokenStore;
 
 }

@@ -15,13 +15,12 @@
 package com.liferay.document.library.internal.upgrade.v1_0_1;
 
 import com.liferay.document.library.configuration.DLFileEntryConfiguration;
+import com.liferay.portal.configuration.upgrade.util.PropertiesToConfigurationUpgradeKey;
+import com.liferay.portal.configuration.upgrade.util.PropertiesToConfigurationUpgradeUtil;
+import com.liferay.portal.configuration.upgrade.util.PropertyDataType;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
-
-import java.util.Dictionary;
 
 import javax.portlet.PortletPreferences;
 
@@ -48,26 +47,16 @@ public class UpgradeDLFileEntryConfiguration extends UpgradeProcess {
 	private void _upgradeConfiguration() throws Exception {
 		Configuration configuration = _configurationAdmin.getConfiguration(
 			DLFileEntryConfiguration.class.getName(), StringPool.QUESTION);
-
-		Dictionary properties = configuration.getProperties();
-
-		if (properties == null) {
-			properties = new HashMapDictionary();
-		}
-
 		PortletPreferences portletPreferences = _prefsProps.getPreferences();
 
-		String oldPropertyKey = "dl.file.entry.previewable.processor.max.size";
+		PropertiesToConfigurationUpgradeKey[] upgradeKeys = {
+			new PropertiesToConfigurationUpgradeKey(
+				"dl.file.entry.previewable.processor.max.size",
+				"previewableProcessorMaxSize", PropertyDataType.LONG)
+		};
 
-		String oldPropertyValue = _prefsProps.getString(oldPropertyKey);
-
-		if (Validator.isNotNull(oldPropertyValue)) {
-			properties.put("previewableProcessorMaxSize", oldPropertyValue);
-
-			portletPreferences.reset(oldPropertyKey);
-		}
-
-		configuration.update(properties);
+		PropertiesToConfigurationUpgradeUtil.upgradePropertiesToConfiguration(
+			portletPreferences, configuration, upgradeKeys);
 	}
 
 	private final ConfigurationAdmin _configurationAdmin;

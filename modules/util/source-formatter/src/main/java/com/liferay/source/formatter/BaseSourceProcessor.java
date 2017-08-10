@@ -17,8 +17,6 @@ package com.liferay.source.formatter;
 import com.liferay.portal.kernel.nio.charset.CharsetDecoderUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -169,8 +167,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	@Override
-	public void setProperties(Properties properties) {
-		_properties = properties;
+	public void setPropertiesMap(Map<String, Properties> propertiesMap) {
+		_propertiesMap = propertiesMap;
 	}
 
 	@Override
@@ -546,7 +544,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		sourceCheck.setPluginsInsideModulesDirectoryNames(
 			_pluginsInsideModulesDirectoryNames);
 		sourceCheck.setPortalSource(portalSource);
-		sourceCheck.setProperties(_properties);
+		sourceCheck.setPropertiesMap(_propertiesMap);
 		sourceCheck.setSourceFormatterExcludes(_sourceFormatterExcludes);
 		sourceCheck.setSubrepository(subrepository);
 
@@ -645,7 +643,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private final List<String> _modifiedFileNames =
 		new CopyOnWriteArrayList<>();
 	private List<String> _pluginsInsideModulesDirectoryNames;
-	private Properties _properties;
+	private Map<String, Properties> _propertiesMap;
 	private List<SourceCheck> _sourceChecks = new ArrayList<>();
 	private SourceChecksSuppressions _sourceChecksSuppressions;
 	private SourceFormatterExcludes _sourceFormatterExcludes;

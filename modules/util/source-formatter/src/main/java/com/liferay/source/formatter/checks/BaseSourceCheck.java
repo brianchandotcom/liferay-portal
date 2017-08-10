@@ -100,8 +100,8 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	@Override
-	public void setProperties(Properties properties) {
-		_properties = properties;
+	public void setPropertiesMap(Map<String, Properties> propertiesMap) {
+		_propertiesMap = propertiesMap;
 	}
 
 	@Override
@@ -329,28 +329,17 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return properties.getProperty("project.path.prefix");
 	}
 
-	protected List<String> getPropertyList(String key) {
-		return ListUtil.fromString(
-			GetterUtil.getString(_properties.getProperty(key)),
-			StringPool.COMMA);
-	}
-
 	protected SourceFormatterExcludes getSourceFormatterExcludes() {
 		return _sourceFormatterExcludes;
 	}
 
-	protected boolean isExcludedPath(String key, String path) {
-		return isExcludedPath(key, path, -1);
-	}
-
-	protected boolean isExcludedPath(String key, String path, int lineCount) {
-		return isExcludedPath(key, path, lineCount, null);
-	}
-
 	protected boolean isExcludedPath(
-		String key, String path, int lineCount, String parameter) {
+		Properties properties, String key, String path, int lineCount,
+		String parameter) {
 
-		List<String> excludes = getPropertyList(key);
+		List<String> excludes = ListUtil.fromString(
+			GetterUtil.getString(properties.getProperty(key)),
+			StringPool.COMMA);
 
 		if (ListUtil.isEmpty(excludes)) {
 			return false;
@@ -392,6 +381,31 @@ public abstract class BaseSourceCheck implements SourceCheck {
 				 pathWithParameter.endsWith(exclude)) ||
 				((pathWithLineCount != null) &&
 				 pathWithLineCount.endsWith(exclude))) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	protected boolean isExcludedPath(String key, String path) {
+		return isExcludedPath(key, path, -1);
+	}
+
+	protected boolean isExcludedPath(String key, String path, int lineCount) {
+		return isExcludedPath(key, path, lineCount, null);
+	}
+
+	protected boolean isExcludedPath(
+		String key, String path, int lineCount, String parameter) {
+
+		for (Map.Entry<String, Properties> entry : _propertiesMap.entrySet()) {
+			String propertiesFileLocation = entry.getKey();
+
+			if (path.startsWith(propertiesFileLocation) &&
+				isExcludedPath(
+					entry.getValue(), key, path, lineCount, parameter)) {
 
 				return true;
 			}
@@ -515,7 +529,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	private int _maxLineLength;
 	private List<String> _pluginsInsideModulesDirectoryNames;
 	private boolean _portalSource;
-	private Properties _properties;
+	private Map<String, Properties> _propertiesMap;
 	private SourceFormatterExcludes _sourceFormatterExcludes;
 	private final Map<String, Set<SourceFormatterMessage>>
 		_sourceFormatterMessagesMap = new ConcurrentHashMap<>();

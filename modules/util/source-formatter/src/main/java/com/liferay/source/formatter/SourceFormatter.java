@@ -306,17 +306,20 @@ public class SourceFormatter {
 	}
 
 	private List<String> _getDefaultExcludes() throws Exception {
-		File portalPropertiesFile = _getPortalPropertiesFile();
+		File portalSourceFormatterPropertiesFile =
+			_getPortalSourceFormatterPropertiesFile();
 
-		if (portalPropertiesFile == null) {
+		if (portalSourceFormatterPropertiesFile == null) {
 			return Arrays.asList(_DEFAULT_EXCLUDES);
 		}
 
-		Properties portalProperties = _getProperties(portalPropertiesFile);
+		Properties portalSourceFormatterProperties = _getProperties(
+			portalSourceFormatterPropertiesFile);
 
 		List<String> defaultExcludes = ListUtil.fromString(
 			GetterUtil.getString(
-				portalProperties.getProperty("source.formatter.excludes")),
+				portalSourceFormatterProperties.getProperty(
+					"source.formatter.excludes")),
 			StringPool.COMMA);
 
 		Collections.addAll(defaultExcludes, _DEFAULT_EXCLUDES);
@@ -324,7 +327,7 @@ public class SourceFormatter {
 		return defaultExcludes;
 	}
 
-	private File _getPortalPropertiesFile() {
+	private File _getPortalSourceFormatterPropertiesFile() {
 		File portalImplDir = SourceFormatterUtil.getFile(
 			_sourceFormatterArgs.getBaseDirName(), "portal-impl",
 			ToolsUtil.PORTAL_MAX_DIR_LEVEL);
@@ -390,10 +393,11 @@ public class SourceFormatter {
 
 		// Find properties files in portal root folder
 
-		File portalPropertiesFile = _getPortalPropertiesFile();
+		File portalSourceFormatterPropertiesFile =
+			_getPortalSourceFormatterPropertiesFile();
 
-		if (portalPropertiesFile != null) {
-			_readProperties(portalPropertiesFile, true);
+		if (portalSourceFormatterPropertiesFile != null) {
+			_readProperties(portalSourceFormatterPropertiesFile, true);
 
 			maxDirLevel = ToolsUtil.PORTAL_MAX_DIR_LEVEL;
 		}

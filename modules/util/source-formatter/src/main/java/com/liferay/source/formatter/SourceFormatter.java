@@ -312,11 +312,11 @@ public class SourceFormatter {
 			return Arrays.asList(_DEFAULT_EXCLUDES);
 		}
 
-		Properties portalImplProperties = _getPortalImplProperties();
+		Properties portalProperties = _getPortalProperties();
 
 		List<String> defaultExcludes = ListUtil.fromString(
 			GetterUtil.getString(
-				portalImplProperties.getProperty("source.formatter.excludes")),
+				portalProperties.getProperty("source.formatter.excludes")),
 			StringPool.COMMA);
 
 		Collections.addAll(defaultExcludes, _DEFAULT_EXCLUDES);
@@ -324,10 +324,10 @@ public class SourceFormatter {
 		return defaultExcludes;
 	}
 
-	private Properties _getPortalImplProperties() throws Exception {
+	private Properties _getPortalProperties() throws Exception {
 		File propertiesFile = SourceFormatterUtil.getFile(
 			_sourceFormatterArgs.getBaseDirName(),
-			"portal-impl/src/" + _PROPERTIES_FILE_NAME,
+			"portal-impl/../" + _PROPERTIES_FILE_NAME,
 			ToolsUtil.PORTAL_MAX_DIR_LEVEL);
 
 		return _getProperties(propertiesFile);
@@ -369,7 +369,7 @@ public class SourceFormatter {
 		int maxDirLevel = -1;
 
 		if (_isPortalSource()) {
-			propertiesMap.put("portal-impl", _getPortalImplProperties());
+			propertiesMap.put("portal-impl", _getPortalProperties());
 
 			maxDirLevel = ToolsUtil.PORTAL_MAX_DIR_LEVEL;
 		}

@@ -22,6 +22,7 @@ dependencies {
 	provided group: "org.springframework", name: "spring-context", version: "4.1.9.RELEASE"
 	provided project(":apps:collaboration:document-library:document-library-api")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-service")
+	provided project(":apps:foundation:portal-configuration:portal-configuration-upgrade-util")
 	provided project(":apps:foundation:portal:portal-verify-extender")
 	provided project(":apps:web-experience:export-import:export-import-api")
 	provided project(":apps:web-experience:export-import:export-import-service")

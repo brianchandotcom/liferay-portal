@@ -20,6 +20,11 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Brian Wing Shun Chan
@@ -80,4 +85,29 @@ public class CSSBuilderUtil {
 			});
 	}
 
+	public static String parseCSSImports(String content) {
+		Matcher matcher = _cssImportPattern.matcher(content);
+
+		Date date = new Date();
+
+		List<String> cssImports = new ArrayList<String>();
+		List<String> cssImportReplacements = new ArrayList<String>();
+
+		while (matcher.find()) {
+			String cssImport = matcher.group();
+
+			cssImports.add(cssImport);
+
+			cssImportReplacements.add(cssImport + "?t=" + date.getTime());
+		}
+
+		return StringUtil.replace(
+			content,
+			cssImports.toArray(new String[0]),
+			cssImportReplacements.toArray(new String[0]));
+	}
+
+	private static final Pattern _cssImportPattern = Pattern.compile(
+		"@import\\s+url\\s*\\(\\s*\"(.+\\.css)",
+		Pattern.DOTALL | Pattern.MULTILINE);
 }

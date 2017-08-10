@@ -16,25 +16,23 @@ package com.liferay.css.builder;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
-
 import java.net.URL;
-
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
-
 import java.util.Arrays;
-
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Eduardo Garcia
@@ -97,7 +95,7 @@ public class CSSBuilderTest {
 
 	@Test
 	public void testCssBuilderWithRubyAndPortalCommonJar() throws Exception {
-		_testCssBuilder("ruby", _PORTAL_COMMON_CSS_JAR_FILE_NAME);
+		_testCssBuilder("ruby", _PORTAL_COMMON_CSS_DIR_NAME);
 	}
 
 	private String _read(String fileName) throws Exception {
@@ -124,6 +122,15 @@ public class CSSBuilderTest {
 
 		String actualTestContent = _read(
 			_docrootDirName + "/css/.sass-cache/test.css");
+
+		Assert.assertEquals(expectedTestContent, actualTestContent);
+
+		String actualTestCssImportContent = _read(
+			_docrootDirName + "/css/.sass-cache/test_css_import.css");
+
+		Matcher matcher = _cssImportPattern.matcher(actualTestCssImportContent);
+
+		Assert.assertEquals(3, matcher.groupCount());
 
 		Assert.assertEquals(expectedTestContent, actualTestContent);
 
@@ -167,5 +174,9 @@ public class CSSBuilderTest {
 		"build/portal-common-css-jar/com.liferay.frontend.css.common.jar";
 
 	private static String _docrootDirName;
+
+	private static final Pattern _cssImportPattern = Pattern.compile(
+		"@import\\s+url\\s*\\(\\s*\"(.+\\.css\\?t=\\d+)\"\\s*\\)\\s*;",
+		Pattern.DOTALL | Pattern.MULTILINE);
 
 }

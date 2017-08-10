@@ -434,8 +434,11 @@ public class SourceFormatter {
 					String propertiesFileLocation = entry.getKey();
 
 					if (!propertiesFileLocation.equals("portal-impl")) {
+						int pos = propertiesFileLocation.lastIndexOf(
+							StringPool.SLASH);
+
 						_sourceFormatterExcludes.addExcludes(
-							propertiesFileLocation,
+							propertiesFileLocation.substring(0, pos + 1),
 							ListUtil.fromString(value, StringPool.COMMA));
 					}
 				}

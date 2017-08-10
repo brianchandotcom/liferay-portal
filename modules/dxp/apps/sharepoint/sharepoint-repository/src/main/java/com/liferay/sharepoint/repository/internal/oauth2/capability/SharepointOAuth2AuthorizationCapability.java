@@ -193,13 +193,13 @@ public class SharepointOAuth2AuthorizationCapability
 
 		requestState.validate(ParamUtil.getString(request, "state"));
 
+		long userId = PortalUtil.getUserId(request);
+
 		String code = ParamUtil.getString(request, "code");
 
 		Token accessToken =
 			_sharepointOAuth2AuthorizationServer.requestAccessToken(
 				code, _getRedirectURI(request));
-
-		long userId = PortalUtil.getUserId(request);
 
 		_tokenStore.save(
 			_sharepointOAuth2Configuration.name(), userId, accessToken);

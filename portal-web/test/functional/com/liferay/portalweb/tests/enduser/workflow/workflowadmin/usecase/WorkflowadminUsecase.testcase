@@ -48,13 +48,23 @@
 	</tear-down>
 
 	<command name="AddBlogsEntriesWithPortalScopeWorkflowAndAssertWorkflowScope" priority="4">
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Workflow" />
-		</execute>
+		<toggle name="LPS-73924">
+			<on>
+				<execute macro="ProductMenu#gotoControlPanelConfiguration">
+					<var name="portlet" value="Workflow" />
+				</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Schemes" />
-		</execute>
+				<execute macro="Navigator#gotoNavItem">
+					<var name="navItem" value="Schemes" />
+				</execute>
+			</on>
+
+			<off>
+				<execute macro="ProductMenu#gotoControlPanelConfiguration">
+					<var name="portlet" value="Workflow Configuration" />
+				</execute>
+			</off>
+		</toggle>
 
 		<execute macro="Workflow#configureWorkflow">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
@@ -251,9 +261,19 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoSitesConfiguration">
-			<var name="portlet" value="Workflow" />
-		</execute>
+		<toggle name="LPS-73924">
+			<on>
+				<execute macro="ProductMenu#gotoSitesConfiguration">
+					<var name="portlet" value="Workflow" />
+				</execute>
+			</on>
+
+			<off>
+				<execute macro="ProductMenu#gotoSitesConfiguration">
+					<var name="portlet" value="Workflow Configuration" />
+				</execute>
+			</off>
+		</toggle>
 
 		<execute macro="Workflow#configureWorkflow">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
@@ -345,9 +365,19 @@
 		<property name="portal.acceptance" value="true" />
 		<property name="testray.component.names" value="Training" />
 
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Workflow" />
-		</execute>
+		<toggle name="LPS-73924">
+			<on>
+				<execute macro="ProductMenu#gotoControlPanelConfiguration">
+					<var name="portlet" value="Workflow" />
+				</execute>
+			</on>
+
+			<off>
+				<execute macro="ProductMenu#gotoControlPanelConfiguration">
+					<var name="portlet" value="Workflow Definition" />
+				</execute>
+			</off>
+		</toggle>
 
 		<execute macro="Workflow#uploadDefinition">
 			<var name="workflowDefinitionFile" value="workflow_definition_legal_marketing.xml" />
@@ -519,9 +549,19 @@
 	</command>
 
 	<command name="AddWebContentWithCategorySpecificDefinition" priority="4">
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Workflow" />
-		</execute>
+		<toggle name="LPS-73924">
+			<on>
+				<execute macro="ProductMenu#gotoControlPanelConfiguration">
+					<var name="portlet" value="Workflow" />
+				</execute>
+			</on>
+
+			<off>
+				<execute macro="ProductMenu#gotoControlPanelConfiguration">
+					<var name="portlet" value="Workflow Definition" />
+				</execute>
+			</off>
+		</toggle>
 
 		<execute macro="Workflow#uploadDefinition">
 			<var name="workflowDefinitionFile" value="workflow_definition_category_specific.xml" />
@@ -709,9 +749,19 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoSitesConfiguration">
-			<var name="portlet" value="Workflow" />
-		</execute>
+		<toggle name="LPS-73924">
+			<on>
+				<execute macro="ProductMenu#gotoSitesConfiguration">
+					<var name="portlet" value="Workflow" />
+				</execute>
+			</on>
+
+			<off>
+				<execute macro="ProductMenu#gotoSitesConfiguration">
+					<var name="portlet" value="Workflow Configuration" />
+				</execute>
+			</off>
+		</toggle>
 
 		<execute macro="Workflow#configureWorkflow">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
@@ -886,9 +936,19 @@
 	</command>
 
 	<command name="DeactivateAndActivateUploadedDefinition" priority="3">
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Workflow" />
-		</execute>
+		<toggle name="LPS-73924">
+			<on>
+				<execute macro="ProductMenu#gotoControlPanelConfiguration">
+					<var name="portlet" value="Workflow" />
+				</execute>
+			</on>
+
+			<off>
+				<execute macro="ProductMenu#gotoControlPanelConfiguration">
+					<var name="portlet" value="Workflow Definition" />
+				</execute>
+			</off>
+		</toggle>
 
 		<execute macro="Workflow#uploadDefinition">
 			<var name="workflowDefinitionFile" value="workflow_definition_1.xml" />
@@ -903,9 +963,19 @@
 
 		<execute macro="Workflow#deactivateAddedWorkflowDefinition" />
 
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Workflow" />
-		</execute>
+		<toggle name="LPS-73924">
+			<on>
+				<execute macro="ProductMenu#gotoControlPanelConfiguration">
+					<var name="portlet" value="Workflow" />
+				</execute>
+			</on>
+
+			<off>
+				<execute macro="ProductMenu#gotoControlPanelConfiguration">
+					<var name="portlet" value="Workflow Definition" />
+				</execute>
+			</off>
+		</toggle>
 
 		<execute macro="Workflow#reactivateInactiveWorkflowDefinition">
 			<var name="workflowDefinitionName" value="Uploaded Definition" />
@@ -915,9 +985,19 @@
 	<command name="DeactivateAndDeleteUploadedDefinition" priority="5">
 		<property name="portal.acceptance" value="true" />
 
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Workflow" />
-		</execute>
+		<toggle name="LPS-73924">
+			<on>
+				<execute macro="ProductMenu#gotoControlPanelConfiguration">
+					<var name="portlet" value="Workflow" />
+				</execute>
+			</on>
+
+			<off>
+				<execute macro="ProductMenu#gotoControlPanelConfiguration">
+					<var name="portlet" value="Workflow Definition" />
+				</execute>
+			</off>
+		</toggle>
 
 		<execute macro="Workflow#uploadDefinition">
 			<var name="workflowDefinitionFile" value="workflow_definition_1.xml" />
@@ -932,9 +1012,19 @@
 
 		<execute macro="Workflow#deactivateAddedWorkflowDefinition" />
 
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Workflow" />
-		</execute>
+		<toggle name="LPS-73924">
+			<on>
+				<execute macro="ProductMenu#gotoControlPanelConfiguration">
+					<var name="portlet" value="Workflow" />
+				</execute>
+			</on>
+
+			<off>
+				<execute macro="ProductMenu#gotoControlPanelConfiguration">
+					<var name="portlet" value="Workflow Definition" />
+				</execute>
+			</off>
+		</toggle>
 
 		<execute macro="Workflow#deleteWorkflowDefinition" />
 	</command>
@@ -942,9 +1032,19 @@
 	<command name="ViewBlogsEntryWorkflowViaNotifications" priority="3">
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoSitesConfiguration">
-			<var name="portlet" value="Workflow" />
-		</execute>
+		<toggle name="LPS-73924">
+			<on>
+				<execute macro="ProductMenu#gotoSitesConfiguration">
+					<var name="portlet" value="Workflow" />
+				</execute>
+			</on>
+
+			<off>
+				<execute macro="ProductMenu#gotoSitesConfiguration">
+					<var name="portlet" value="Workflow Configuration" />
+				</execute>
+			</off>
+		</toggle>
 
 		<execute macro="Workflow#configureWorkflow">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
@@ -1029,9 +1129,19 @@
 	</command>
 
 	<command name="ViewInvalidDefinitionAlert" priority="4">
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Workflow" />
-		</execute>
+		<toggle name="LPS-73924">
+			<on>
+				<execute macro="ProductMenu#gotoControlPanelConfiguration">
+					<var name="portlet" value="Workflow" />
+				</execute>
+			</on>
+
+			<off>
+				<execute macro="ProductMenu#gotoControlPanelConfiguration">
+					<var name="portlet" value="Workflow Definition" />
+				</execute>
+			</off>
+		</toggle>
 
 		<execute function="Click" locator1="Button#PLUS" />
 
@@ -1045,9 +1155,19 @@
 	<command name="ViewTaskCount" priority="3">
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoSitesConfiguration">
-			<var name="portlet" value="Workflow" />
-		</execute>
+		<toggle name="LPS-73924">
+			<on>
+				<execute macro="ProductMenu#gotoSitesConfiguration">
+					<var name="portlet" value="Workflow" />
+				</execute>
+			</on>
+
+			<off>
+				<execute macro="ProductMenu#gotoSitesConfiguration">
+					<var name="portlet" value="Workflow Configuration" />
+				</execute>
+			</off>
+		</toggle>
 
 		<execute macro="Workflow#configureWorkflow">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
@@ -1091,9 +1211,19 @@
 			</execute>
 		</for>
 
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Workflow" />
-		</execute>
+		<toggle name="LPS-73924">
+			<on>
+				<execute macro="ProductMenu#gotoControlPanelConfiguration">
+					<var name="portlet" value="Workflow" />
+				</execute>
+			</on>
+
+			<off>
+				<execute macro="ProductMenu#gotoControlPanelConfiguration">
+					<var name="portlet" value="Workflow Definition" />
+				</execute>
+			</off>
+		</toggle>
 
 		<execute macro="Page#gotoMyAccount">
 			<var name="portletName" value="My Workflow Tasks" />
@@ -1173,31 +1303,61 @@
 			<var name="siteName" value="New Site" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSitesConfiguration">
-			<var name="portlet" value="Workflow" />
-		</execute>
+		<toggle name="LPS-73924">
+			<on>
+				<execute macro="ProductMenu#gotoSitesConfiguration">
+					<var name="portlet" value="Workflow" />
+				</execute>
+			</on>
+
+			<off>
+				<execute macro="ProductMenu#gotoSitesConfiguration">
+					<var name="portlet" value="Workflow Configuration" />
+				</execute>
+			</off>
+		</toggle>
 
 		<execute macro="Workflow#configureWorkflow">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 			<var name="workflowResourceValue" value="Calendar Event" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSitesConfiguration">
-			<var name="portlet" value="Workflow" />
-		</execute>
+		<toggle name="LPS-73924">
+			<on>
+				<execute macro="ProductMenu#gotoSitesConfiguration">
+					<var name="portlet" value="Workflow" />
+				</execute>
+			</on>
+
+			<off>
+				<execute macro="ProductMenu#gotoSitesConfiguration">
+					<var name="portlet" value="Workflow Configuration" />
+				</execute>
+			</off>
+		</toggle>
 
 		<execute macro="Workflow#viewConfigurationSelected">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 			<var name="workflowResourceValue" value="Calendar Event" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Workflow" />
-		</execute>
+		<toggle name="LPS-73924">
+			<on>
+				<execute macro="ProductMenu#gotoControlPanelConfiguration">
+					<var name="portlet" value="Workflow" />
+				</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Schemes" />
-		</execute>
+				<execute macro="Navigator#gotoNavItem">
+					<var name="navItem" value="Schemes" />
+				</execute>
+			</on>
+
+			<off>
+				<execute macro="ProductMenu#gotoControlPanelConfiguration">
+					<var name="portlet" value="Workflow Configuration" />
+				</execute>
+			</off>
+		</toggle>
 
 		<execute macro="Workflow#viewConfigurationSelected">
 			<var name="workflowDefinition" value="No Workflow" />
@@ -1211,18 +1371,38 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoSitesConfiguration">
-			<var name="portlet" value="Workflow" />
-		</execute>
+		<toggle name="LPS-73924">
+			<on>
+				<execute macro="ProductMenu#gotoSitesConfiguration">
+					<var name="portlet" value="Workflow" />
+				</execute>
+			</on>
+
+			<off>
+				<execute macro="ProductMenu#gotoSitesConfiguration">
+					<var name="portlet" value="Workflow Configuration" />
+				</execute>
+			</off>
+		</toggle>
 
 		<execute macro="Workflow#viewConfigurationSelected">
 			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowResourceValue" value="Blogs Entry" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSitesConfiguration">
-			<var name="portlet" value="Workflow" />
-		</execute>
+		<toggle name="LPS-73924">
+			<on>
+				<execute macro="ProductMenu#gotoSitesConfiguration">
+					<var name="portlet" value="Workflow" />
+				</execute>
+			</on>
+
+			<off>
+				<execute macro="ProductMenu#gotoSitesConfiguration">
+					<var name="portlet" value="Workflow Configuration" />
+				</execute>
+			</off>
+		</toggle>
 
 		<execute macro="Workflow#viewConfigurationSelected">
 			<var name="workflowDefinition" value="Single Approver" />
@@ -1239,13 +1419,23 @@
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Workflow" />
-		</execute>
+		<toggle name="LPS-73924">
+			<on>
+				<execute macro="ProductMenu#gotoControlPanelConfiguration">
+					<var name="portlet" value="Workflow" />
+				</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Schemes" />
-		</execute>
+				<execute macro="Navigator#gotoNavItem">
+					<var name="navItem" value="Schemes" />
+				</execute>
+			</on>
+
+			<off>
+				<execute macro="ProductMenu#gotoControlPanelConfiguration">
+					<var name="portlet" value="Workflow Configuration" />
+				</execute>
+			</off>
+		</toggle>
 
 		<execute macro="Workflow#configureWorkflow">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />

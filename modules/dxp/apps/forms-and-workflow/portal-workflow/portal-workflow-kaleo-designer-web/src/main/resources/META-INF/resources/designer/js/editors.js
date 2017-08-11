@@ -67,6 +67,8 @@ AUI.add(
 						instance.after('valueChange', instance._onValueChange);
 
 						instance.after('visibleChange', instance._afterEditorVisibleChange);
+
+						instance.destroyPortletHandler = Liferay.on('destroyPortlet', A.bind(instance._onDestroyPortlet, instance));
 					},
 
 					destructor: function() {
@@ -147,6 +149,12 @@ AUI.add(
 						}
 
 						event.halt();
+					},
+
+					_onDestroyPortlet: function() {
+						var instance = this;
+
+						instance.destroy(true);
 					},
 
 					_onValueChange: function(event) {

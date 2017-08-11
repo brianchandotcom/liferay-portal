@@ -236,6 +236,12 @@ AUI.add(
 						instance.after('render', instance._afterRender);
 					},
 
+					destructor: function() {
+						var instance = this;
+
+						instance.bodyNode.remove(true);
+					},
+
 					addDynamicViews: emptyFn,
 
 					addStaticViews: emptyFn,

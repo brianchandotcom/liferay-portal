@@ -63,8 +63,6 @@ public class RetryJDBCConnectionFunction
 				if (_delaySeconds > 0) {
 					Thread.sleep(_delaySeconds * 1000);
 				}
-
-				continue;
 			}
 			catch (InterruptedException ie) {
 				throw new RuntimeException(

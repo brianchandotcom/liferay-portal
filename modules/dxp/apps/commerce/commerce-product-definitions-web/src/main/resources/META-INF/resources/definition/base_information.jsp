@@ -102,9 +102,9 @@ if (Validator.isNotNull(layoutUuid)) {
 							var selectedItem = event.newVal;
 
 							if (selectedItem) {
-								pagesContainerInput.val(selectedItem.value);
+								pagesContainerInput.val(selectedItem.id);
 
-								displayPageNameInput.html(selectedItem.layoutpath);
+								displayPageNameInput.html(selectedItem.name);
 
 								displayPageItemRemove.removeClass('hide');
 							}

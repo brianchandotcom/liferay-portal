@@ -112,7 +112,6 @@ public class DestinationResolverImpl implements DestinationResolver {
 	}
 
 	private BundleContext _bundleContext;
-
 	private final Map<String, ServiceRegistration<Destination>>
 		_destinationNamesServiceRegistrations = new HashMap<>();
 

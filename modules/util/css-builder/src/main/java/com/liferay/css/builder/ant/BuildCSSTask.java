@@ -48,6 +48,12 @@ public class BuildCSSTask extends Task {
 		}
 	}
 
+	public void setAppendCssImportTimestamps(
+		boolean appendCssImportTimestamps) {
+
+		_cssBuilderArgs.setAppendCssImportTimestamps(appendCssImportTimestamps);
+	}
+
 	public void setDirNames(String dirNames) {
 		_cssBuilderArgs.setDirNames(dirNames);
 	}

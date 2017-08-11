@@ -21,6 +21,10 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
 
+import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
@@ -63,6 +67,24 @@ public class CSSBuilderUtil {
 		return fileName.substring(0, pos) + "_rtl" + fileName.substring(pos);
 	}
 
+	public static String parseCSSImports(String content) {
+		StringBuffer sb = new StringBuffer();
+
+		Matcher matcher = _cssImportPattern.matcher(content);
+
+		Date date = new Date();
+
+		while (matcher.find()) {
+			String cssImport = matcher.group();
+
+			matcher.appendReplacement(sb, cssImport + "?t=" + date.getTime());
+		}
+
+		matcher.appendTail(sb);
+
+		return sb.toString();
+	}
+
 	public static String parseStaticTokens(String content) {
 		return StringUtil.replace(
 			content,
@@ -79,5 +101,8 @@ public class CSSBuilderUtil {
 				ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH
 			});
 	}
+
+	private static final Pattern _cssImportPattern = Pattern.compile(
+		"@import\\s+url\\s*\\(\\s*\"(.+\\.css)");
 
 }

@@ -206,6 +206,11 @@ public class BuildCSSTask extends JavaExec {
 	}
 
 	@Input
+	public boolean isAppendCssImportTimestamps() {
+		return _appendCssImportTimestamps;
+	}
+
+	@Input
 	public boolean isGenerateSourceMap() {
 		return _generateSourceMap;
 	}
@@ -222,6 +227,12 @@ public class BuildCSSTask extends JavaExec {
 		Object... rtlExcludedPathRegexps) {
 
 		return rtlExcludedPathRegexps(Arrays.asList(rtlExcludedPathRegexps));
+	}
+
+	public void setAppendCssImportTimestamps(
+		boolean appendCssImportTimestamps) {
+
+		_appendCssImportTimestamps = appendCssImportTimestamps;
 	}
 
 	public void setDirNames(Iterable<Object> dirNames) {
@@ -290,6 +301,10 @@ public class BuildCSSTask extends JavaExec {
 
 	private List<String> _getCompleteArgs() {
 		List<String> args = new ArrayList<>(getArgs());
+
+		args.add(
+			"sass.append.css.import.timestamps=" +
+				isAppendCssImportTimestamps());
 
 		List<String> dirNames = getDirNames();
 
@@ -361,6 +376,8 @@ public class BuildCSSTask extends JavaExec {
 		return path;
 	}
 
+	private boolean _appendCssImportTimestamps =
+		CSSBuilderArgs.APPEND_CSS_IMPORT_TIMESTAMPS;
 	private final Set<Object> _dirNames = new LinkedHashSet<>();
 	private Object _docrootDir;
 	private boolean _generateSourceMap;

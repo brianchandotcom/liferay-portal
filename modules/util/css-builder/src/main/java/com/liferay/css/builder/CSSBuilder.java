@@ -81,6 +81,9 @@ public class CSSBuilder implements AutoCloseable {
 			}
 		}
 
+		boolean appendCssImportTimestamps = GetterUtil.getBoolean(
+			arguments.get("sass.append.css.import.timestamps"),
+			CSSBuilderArgs.APPEND_CSS_IMPORT_TIMESTAMPS);
 		String docrootDirName = GetterUtil.getString(
 			arguments.get("sass.docroot.dir"), CSSBuilderArgs.DOCROOT_DIR_NAME);
 		boolean generateSourceMap = GetterUtil.getBoolean(
@@ -102,9 +105,9 @@ public class CSSBuilder implements AutoCloseable {
 			"sass.compiler.class.name");
 
 		try (CSSBuilder cssBuilder = new CSSBuilder(
-				docrootDirName, generateSourceMap, outputDirName,
-				portalCommonPath, precision, rtlExcludedPathRegexps,
-				sassCompilerClassName)) {
+				appendCssImportTimestamps, docrootDirName, generateSourceMap,
+				outputDirName, portalCommonPath, precision,
+				rtlExcludedPathRegexps, sassCompilerClassName)) {
 
 			cssBuilder.execute(dirNames);
 		}
@@ -114,8 +117,9 @@ public class CSSBuilder implements AutoCloseable {
 	}
 
 	public CSSBuilder(
-			String docrootDirName, boolean generateSourceMap,
-			String outputDirName, String portalCommonPath, int precision,
+			boolean appendCssImportTimestamps, String docrootDirName,
+			boolean generateSourceMap, String outputDirName,
+			String portalCommonPath, int precision,
 			String[] rtlExcludedPathRegexps, String sassCompilerClassName)
 		throws Exception {
 
@@ -130,6 +134,7 @@ public class CSSBuilder implements AutoCloseable {
 			_cleanPortalCommonDir = false;
 		}
 
+		_appendCssImportTimestamps = appendCssImportTimestamps;
 		_docrootDirName = docrootDirName;
 		_generateSourceMap = generateSourceMap;
 		_outputDirName = outputDirName;
@@ -139,6 +144,18 @@ public class CSSBuilder implements AutoCloseable {
 			rtlExcludedPathRegexps);
 
 		_initSassCompiler(sassCompilerClassName);
+	}
+
+	public CSSBuilder(
+			String docrootDirName, boolean generateSourceMap,
+			String outputDirName, String portalCommonPath, int precision,
+			String[] rtlExcludedPathRegexps, String sassCompilerClassName)
+		throws Exception {
+
+		this(
+			true, docrootDirName, generateSourceMap, outputDirName,
+			portalCommonPath, precision, rtlExcludedPathRegexps,
+			sassCompilerClassName);
 	}
 
 	@Override
@@ -433,6 +450,10 @@ public class CSSBuilder implements AutoCloseable {
 	private void _writeOutputFile(String fileName, String content, boolean rtl)
 		throws Exception {
 
+		if (_appendCssImportTimestamps) {
+			content = CSSBuilderUtil.parseCSSImports(content);
+		}
+
 		String outputFileName;
 
 		if (rtl) {
@@ -457,6 +478,7 @@ public class CSSBuilder implements AutoCloseable {
 
 	private static RTLCSSConverter _rtlCSSConverter;
 
+	private final boolean _appendCssImportTimestamps;
 	private final boolean _cleanPortalCommonDir;
 	private final String _docrootDirName;
 	private final boolean _generateSourceMap;

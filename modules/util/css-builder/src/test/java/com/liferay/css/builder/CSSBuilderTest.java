@@ -30,6 +30,8 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -97,7 +99,7 @@ public class CSSBuilderTest {
 
 	@Test
 	public void testCssBuilderWithRubyAndPortalCommonJar() throws Exception {
-		_testCssBuilder("ruby", _PORTAL_COMMON_CSS_JAR_FILE_NAME);
+		_testCssBuilder("ruby", _PORTAL_COMMON_CSS_DIR_NAME);
 	}
 
 	private String _read(String fileName) throws Exception {
@@ -124,6 +126,21 @@ public class CSSBuilderTest {
 
 		String actualTestContent = _read(
 			_docrootDirName + "/css/.sass-cache/test.css");
+
+		Assert.assertEquals(expectedTestContent, actualTestContent);
+
+		String actualTestCssImportContent = _read(
+			_docrootDirName + "/css/.sass-cache/test_css_import.css");
+
+		Matcher matcher = _cssImportPattern.matcher(actualTestCssImportContent);
+
+		int cssImportsCount = 0;
+
+		while (matcher.find()) {
+			cssImportsCount++;
+		}
+
+		Assert.assertEquals(3, cssImportsCount);
 
 		Assert.assertEquals(expectedTestContent, actualTestContent);
 
@@ -166,6 +183,8 @@ public class CSSBuilderTest {
 	private static final String _PORTAL_COMMON_CSS_JAR_FILE_NAME =
 		"build/portal-common-css-jar/com.liferay.frontend.css.common.jar";
 
+	private static final Pattern _cssImportPattern = Pattern.compile(
+		"@import\\s+url\\s*\\(\\s*\"(.+\\.css\\?t=\\d+)\"\\s*\\)\\s*;");
 	private static String _docrootDirName;
 
 }

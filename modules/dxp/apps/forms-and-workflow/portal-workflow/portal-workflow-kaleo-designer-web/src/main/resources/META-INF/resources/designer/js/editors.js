@@ -69,6 +69,16 @@ AUI.add(
 						instance.after('visibleChange', instance._afterEditorVisibleChange);
 					},
 
+					destructor: function() {
+						var instance = this;
+
+						var editorForm = instance.get('editorForm');
+
+						if (editorForm) {
+							editorForm.destroy(true);
+						}
+					},
+
 					customizeToolbar: function() {
 						var instance = this;
 

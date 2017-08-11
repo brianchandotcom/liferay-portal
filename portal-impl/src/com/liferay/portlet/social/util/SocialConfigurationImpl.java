@@ -175,7 +175,8 @@ public class SocialConfigurationImpl implements SocialConfiguration {
 
 		if (!publicId.equals("-//Liferay//DTD Social 6.1.0//EN") &&
 			!publicId.equals("-//Liferay//DTD Social 6.2.0//EN") &&
-			!publicId.equals("-//Liferay//DTD Social 7.0.0//EN")) {
+			!publicId.equals("-//Liferay//DTD Social 7.0.0//EN") &&
+			!publicId.equals("-//Liferay//DTD Social 7.1.0//EN")) {
 
 			throw new DocumentException(
 				"Unsupported document type " + publicId);

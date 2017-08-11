@@ -58,7 +58,6 @@ public class SourceFormatter {
 			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/bin/**"),
 			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/build/**"),
 			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/classes/**"),
-			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/node_modules/**"),
 			new ExcludeSyntaxPattern(
 				ExcludeSyntax.GLOB, "**/npm-shrinkwrap.json"),
 			new ExcludeSyntaxPattern(
@@ -66,7 +65,10 @@ public class SourceFormatter {
 			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/test-classes/**"),
 			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/test-coverage/**"),
 			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/test-results/**"),
-			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/tmp/**")
+			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/tmp/**"),
+			new ExcludeSyntaxPattern(
+				ExcludeSyntax.REGEX,
+				"^((?!\\/frontend-js-node-shims\\/src\\/).)*\\/node_modules\\/.*")
 	};
 
 	public static void main(String[] args) throws Exception {

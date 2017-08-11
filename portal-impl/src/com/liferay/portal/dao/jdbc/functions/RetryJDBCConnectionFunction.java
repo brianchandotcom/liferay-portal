@@ -64,8 +64,11 @@ public class RetryJDBCConnectionFunction
 					Thread.sleep(_delaySeconds * 1000);
 				}
 				catch (InterruptedException ie) {
-					throw new RuntimeException(
-						"JDBC connection could not be retried", ie);
+					if (_log.isWarnEnabled()) {
+						_log.warn("Interruptted JDBC retry waiting", ie);
+					}
+
+					break;
 				}
 			}
 		}

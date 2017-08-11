@@ -656,12 +656,14 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 					_log.info("JDBC connection successfully retried.");
 				}
 			}
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
+			else if (_log.isWarnEnabled()) {
 				_log.warn(
-					"JDBC connection could not be retried. Trying datasource.");
+					"Unable to acquired a JDBC connection, proceed to try on " +
+						"DataSource");
 			}
+		}
+		catch (SQLException sqle) {
+			_log.error("Unable to close JDBC connection", sqle);
 		}
 	}
 

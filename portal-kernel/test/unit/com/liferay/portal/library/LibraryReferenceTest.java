@@ -171,7 +171,9 @@ public class LibraryReferenceTest {
 		}
 
 		for (String jar : libJars) {
-			if (fileName.equals(_VERSIONS_FILE_NAME) &&
+			if ((fileName.equals(_ECLIPSE_FILE_NAME) ||
+				 fileName.equals(_NETBEANS_FILE_NAME) ||
+				 fileName.equals(_VERSIONS_FILE_NAME)) &&
 				(_excludeJars.contains(jar) ||
 				 _libDependencyJars.contains(jar))) {
 

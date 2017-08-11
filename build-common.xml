@@ -1204,7 +1204,7 @@ information.
 				<fileset dir="${project.dir}/lib/development" excludes="jalopy.jar,jetty*.jar,tomcat*.jar" includes="*.jar" />
 				<fileset dir="${project.dir}/lib/global" includes="*.jar" />
 				<fileset dir="${project.dir}/lib/portal" excludes="ant.jar" includes="*.jar" />
-				<fileset dir="${sdk.dir}/dist" includes="com.liferay.portal.dao.db-*.jar" />
+				<fileset dir="${sdk.dir}/dist" erroronmissingdir="false" includes="com.liferay.portal.dao.db-*.jar" />
 			</path>
 		</sequential>
 	</macrodef>

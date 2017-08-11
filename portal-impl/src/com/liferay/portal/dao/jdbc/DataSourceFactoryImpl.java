@@ -625,18 +625,18 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 	}
 
 	private void _waitForJDBCConnection(Properties properties) {
-		int delaySeconds = PropsValues.RETRY_JDBC_ON_STARTUP_DELAY;
-		int times = PropsValues.RETRY_JDBC_ON_STARTUP_MAX_RETRIES;
+		int deplay = PropsValues.RETRY_JDBC_ON_STARTUP_DELAY;
+		int maxRetries = PropsValues.RETRY_JDBC_ON_STARTUP_MAX_RETRIES;
 
-		String databaseURL = properties.getProperty("url");
-		String user = properties.getProperty("username");
+		String url = properties.getProperty("url");
+		String username = properties.getProperty("username");
 		String password = properties.getProperty("password");
 
-		int retryCount = times;
+		int count = maxRetries;
 
-		while (retryCount-- > 0) {
+		while (count-- > 0) {
 			try (Connection connection = DriverManager.getConnection(
-					databaseURL, user, password)) {
+					url, username, password)) {
 
 				if (connection != null) {
 					if (_log.isInfoEnabled()) {
@@ -653,16 +653,14 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 			}
 
 			if (_log.isWarnEnabled()) {
-				int current = times - retryCount;
-
 				_log.warn(
-					"Retrying JDBC connection in " + delaySeconds +
-						" seconds. (Currently " + current + ")");
+					"Retrying JDBC connection in " + deplay +
+						" seconds. (Currently " + (maxRetries - count) + ")");
 			}
 
-			if (delaySeconds > 0) {
+			if (deplay > 0) {
 				try {
-					Thread.sleep(delaySeconds * 1000);
+					Thread.sleep(deplay * 1000);
 				}
 				catch (InterruptedException ie) {
 					if (_log.isWarnEnabled()) {

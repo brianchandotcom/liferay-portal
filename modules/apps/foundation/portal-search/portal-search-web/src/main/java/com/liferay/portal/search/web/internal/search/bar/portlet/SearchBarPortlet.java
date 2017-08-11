@@ -20,9 +20,9 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.generic.BooleanClauseImpl;
 import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.display.context.SearchScope;
 import com.liferay.portal.search.web.internal.search.bar.constants.SearchBarPortletKeys;
-import com.liferay.portal.search.web.internal.search.bar.constants.SearchBarWebKeys;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
@@ -104,7 +104,7 @@ public class SearchBarPortlet
 				renderRequest);
 
 		renderRequest.setAttribute(
-			SearchBarWebKeys.DISPLAY_CONTEXT, searchBarPortletDisplayContext);
+			WebKeys.PORTLET_DISPLAY_CONTEXT, searchBarPortletDisplayContext);
 
 		super.render(renderRequest, renderResponse);
 	}

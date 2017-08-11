@@ -465,8 +465,25 @@
 		<fieldType class="solr.PointType" dimension="2" name="point" subFieldSuffix="_d" />
 	</types>
 	<fields>
+		<copyField dest="all" source="assetTagNames" />
+		<copyField dest="all" source="assetCategoryTitle" />
+		<copyField dest="all" source="comments" />
+		<copyField dest="all" source="content*" />
+		<copyField dest="all" source="description*" />
+		<copyField dest="all" source="ddmContent" />
+		<copyField dest="all" source="firstName" />
+		<copyField dest="all" source="lastName" />
+		<copyField dest="all" source="middleName" />
+		<copyField dest="all" source="mimeType" />
+		<copyField dest="all" source="name" />
+		<copyField dest="all" source="screenName" />
+		<copyField dest="all" source="subtitle" />
+		<copyField dest="all" source="title*" />
+		<copyField dest="all" source="type" />
+		<copyField dest="all" source="userName" />
 		<copyField dest="assetTagNames.raw" source="assetTagNames" />
 		<field indexed="true" multiValued="false" name="_version_" stored="true" type="long" />
+		<field indexed="true" multiValued="true" name="all" stored="false" type="text" />
 		<field indexed="true" multiValued="true" name="ancestorOrganizationIds" stored="true" type="string" />
 		<field indexed="true" name="articleId" stored="true" type="string_keyword_lowercase" />
 		<field docValues="true" indexed="true" name="assetCategoryId" stored="true" type="string" />
@@ -662,6 +679,5 @@
 		<dynamicField docValues="true" indexed="true" multiValued="true" name="*" stored="true" type="string" />
 	</fields>
 	<uniqueKey>uid</uniqueKey>
-	<defaultSearchField>content</defaultSearchField>
 	<solrQueryParser defaultOperator="OR" />
 </schema>

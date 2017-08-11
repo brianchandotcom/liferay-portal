@@ -114,9 +114,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 	public DataSource initDataSource(Properties properties) throws Exception {
 		testDatabaseClass(properties);
 
-		if (PropsValues.RETRY_JDBC_ON_STARTUP_MAX_RETRIES > 0) {
-			_waitForJDBCConnection(properties);
-		}
+		_waitForJDBCConnection(properties);
 
 		Properties defaultProperties = PropsUtil.getProperties(
 			"jdbc.default.", true);
@@ -625,13 +623,17 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 	}
 
 	private void _waitForJDBCConnection(Properties properties) {
+		int maxRetries = PropsValues.RETRY_JDBC_ON_STARTUP_MAX_RETRIES;
+
+		if (maxRetries <= 0) {
+			return;
+		}
+
 		int deplay = PropsValues.RETRY_JDBC_ON_STARTUP_DELAY;
 
 		if (deplay < 0) {
 			deplay = 0;
 		}
-
-		int maxRetries = PropsValues.RETRY_JDBC_ON_STARTUP_MAX_RETRIES;
 
 		String url = properties.getProperty("url");
 		String username = properties.getProperty("username");

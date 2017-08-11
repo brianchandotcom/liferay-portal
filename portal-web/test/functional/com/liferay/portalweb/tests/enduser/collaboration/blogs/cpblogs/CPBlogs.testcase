@@ -880,4 +880,41 @@
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="BlogsEntry#CONTENT_FIELD_HELPER" value1="This field is required." />
 	</command>
+
+	<command name="addBlogWithFormatting" priority="5">
+		<property name="portal.acceptance" value="pending" />
+		<property name="testray.component.names" value="Training" />
+		<property name="portal.acceptance" value="true" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute function="Click" locator1="Button#PLUS" />
+
+ 		<execute function="AssertClick" locator1="BlogsEntry#ENTRY_COVER_IMAGE_SELECT_FILE" value1="Select File" />
+
+		<execute macro="ItemSelector#uploadFile">
+			<var name="navTab" value="Upload Image" />
+			<var name="uploadFileName" value="Document_1.jpg" />
+		</execute>
+
+		<execute macro="BlogsEntry#addEntryContent" >
+			<var name="entryTitle" value="Is the Lima Bean Really the Answer to Our Life on Other Planets?" />
+			<var name="entrySubtitle" value="A conversation with Dr. Von Richter" />
+			<var name="entryContent"><![CDATA[A World-Renowned Professor<br />It's no secret that Agricultural Science Department professor Dr. Wolfgang von Richter has built his entire career on solving the problem of sustainable living on other planets. For Dr. von Richter, the humble lima bean, which comes from the aptly-named phaseolus lunatus plant of the legume family, is the solution. For years, Dr. von Richter has cultivated variety after variety of lima bean. He's turned lima beans cobalt blue by adding the hardiness of a violet gene; he's grown lima beans the size of fists with his nutrient-rich, hyper-growth soil. But how realistic is his dream of getting lima beans to grow in the harsh, unpredictable, and, frankly, otherworldly conditions of different planets?]]></var>
+		</execute>
+
+		<execute function="SelectFieldText" locator1="AlloyEditor#CONTENT_FIELD" />
+
+		<execute function="Click" locator1="AlloyEditor#TEXT_FORMATTING_STYLE" /> 
+
+		<execute function="Click" locator1="AlloyEditor#TEXT_FORMATTING_STYLE_DROPDOWN">
+			<var name="key_styleFormat" value="Heading 2" />
+		</execute>
+			
+		<execute function="ScrollWebElementIntoView" locator1="Button#PUBLISH" />
+
+		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
+	</command>
 </definition>

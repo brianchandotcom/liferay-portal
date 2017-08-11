@@ -17,7 +17,6 @@ package com.liferay.users.admin;
 import com.liferay.portal.kernel.language.LanguageConstants;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.users.admin.kernel.util.UserInitialsGenerator;
@@ -25,6 +24,8 @@ import com.liferay.users.admin.kernel.util.UserInitialsGenerator;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -38,22 +39,22 @@ public class UserInitialsGeneratorImpl implements UserInitialsGenerator {
 	public String getInitials(
 		Locale locale, String firstName, String middleName, String lastName) {
 
-		String[] fields = _getNameIntialsFields(locale);
-
 		Map<String, String> nameInitialsMap = _getNameIntialsMap(
 			firstName, middleName, lastName);
 
-		String initials = StringPool.BLANK;
+		Stream<String> fieldsStream = Stream.of(_getNameIntialsFields(locale));
 
-		for (int i = 0; (i < fields.length) && (i < 2); i++) {
-			String nameInitial = nameInitialsMap.get(fields[i]);
-
-			if (Validator.isNotNull(nameInitial)) {
-				initials = initials.concat(nameInitial);
-			}
-		}
-
-		return StringUtil.toUpperCase(initials);
+		return fieldsStream.map(
+			nameInitialsMap::get
+		).filter(
+			Validator::isNotNull
+		).map(
+			StringUtil::toUpperCase
+		).limit(
+			2
+		).collect(
+			Collectors.joining()
+		);
 	}
 
 	@Override

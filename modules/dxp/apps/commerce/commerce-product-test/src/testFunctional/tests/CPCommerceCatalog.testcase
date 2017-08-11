@@ -70,7 +70,7 @@
 	</command>
 
 	<command name="AddSimpleCatalogEntry" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="quarantine" />
 
 		<execute macro="CommerceCatalog#addEntry">
 			<var name="baseSku" value="Simple Product 1 SKU" />

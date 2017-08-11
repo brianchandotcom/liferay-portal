@@ -59,7 +59,8 @@ public class SharepointOAuth2StrutsAction extends BaseStrutsAction {
 	private Repository _getRepository(HttpServletRequest request)
 		throws PortalException {
 
-		SharepointRepositoryRequestState requestState = SharepointRepositoryRequestState.get(request);
+		SharepointRepositoryRequestState requestState =
+			SharepointRepositoryRequestState.get(request);
 
 		Folder folder = _dlAppLocalService.getFolder(
 			requestState.getFolderId());

@@ -34,10 +34,13 @@ import javax.servlet.http.HttpSession;
  */
 public final class SharepointRepositoryRequestState implements Serializable {
 
-	public static final SharepointRepositoryRequestState get(HttpServletRequest request) {
+	public static final SharepointRepositoryRequestState get(
+		HttpServletRequest request) {
+
 		HttpSession session = request.getSession();
 
-		return (SharepointRepositoryRequestState)session.getAttribute(SharepointRepositoryRequestState.class.getName());
+		return (SharepointRepositoryRequestState)session.getAttribute(
+			SharepointRepositoryRequestState.class.getName());
 	}
 
 	public static final void save(HttpServletRequest request, String state) {
@@ -63,7 +66,8 @@ public final class SharepointRepositoryRequestState implements Serializable {
 
 		HttpSession session = request.getSession();
 
-		session.removeAttribute(SharepointRepositoryRequestState.class.getName());
+		session.removeAttribute(
+			SharepointRepositoryRequestState.class.getName());
 
 		response.sendRedirect(_url);
 	}
@@ -78,7 +82,9 @@ public final class SharepointRepositoryRequestState implements Serializable {
 		}
 	}
 
-	private SharepointRepositoryRequestState(long folderId, String url, String state) {
+	private SharepointRepositoryRequestState(
+		long folderId, String url, String state) {
+
 		_folderId = folderId;
 		_url = url;
 		_state = state;

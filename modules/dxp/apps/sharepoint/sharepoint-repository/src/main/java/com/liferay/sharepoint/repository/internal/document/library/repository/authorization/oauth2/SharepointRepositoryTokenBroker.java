@@ -42,7 +42,8 @@ public class SharepointRepositoryTokenBroker {
 
 		try {
 			HttpRequestWithBody httpRequestWithBody = Unirest.post(
-				_sharepointRepositoryConfiguration.authorizationTokenEndpoint());
+				_sharepointRepositoryConfiguration.
+					authorizationTokenEndpoint());
 
 			httpRequestWithBody.field(
 				"client_id",
@@ -71,7 +72,8 @@ public class SharepointRepositoryTokenBroker {
 
 		try {
 			HttpRequestWithBody httpRequestWithBody = Unirest.post(
-				_sharepointRepositoryConfiguration.authorizationTokenEndpoint());
+				_sharepointRepositoryConfiguration.
+					authorizationTokenEndpoint());
 
 			httpRequestWithBody.field(
 				"client_id",
@@ -88,7 +90,8 @@ public class SharepointRepositoryTokenBroker {
 
 			HttpResponse<String> httpResponse = httpRequestWithBody.asString();
 
-			return SharepointRepositoryToken.newInstance(httpResponse.getBody());
+			return SharepointRepositoryToken.newInstance(
+				httpResponse.getBody());
 		}
 		catch (JSONException | UnirestException e) {
 			throw new IOException(e);

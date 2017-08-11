@@ -136,7 +136,8 @@ public class SharepointRepositoryAuthorizationCapability
 
 	private String _getGrantURL(HttpServletRequest request, String state) {
 		String url =
-			_sharepointRepositoryOAuth2Configuration.authorizationGrantEndpoint();
+			_sharepointRepositoryOAuth2Configuration.
+				authorizationGrantEndpoint();
 
 		url = HttpUtil.addParameter(
 			url, "client_id",
@@ -193,7 +194,8 @@ public class SharepointRepositoryAuthorizationCapability
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, PortalException {
 
-		SharepointRepositoryRequestState requestState = SharepointRepositoryRequestState.get(request);
+		SharepointRepositoryRequestState requestState =
+			SharepointRepositoryRequestState.get(request);
 
 		requestState.validate(ParamUtil.getString(request, "state"));
 

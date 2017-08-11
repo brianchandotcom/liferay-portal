@@ -42,12 +42,11 @@ public class SharepointRepositoryTokenBrokerFactory {
 	}
 
 	public SharepointRepositoryTokenBroker create(String configurationPid) {
-		return create(
-			_getSharepointRepositoryConfiguration(configurationPid));
+		return create(_getSharepointRepositoryConfiguration(configurationPid));
 	}
 
-	private SharepointRepositoryConfiguration _getSharepointRepositoryConfiguration(
-		String configurationPid) {
+	private SharepointRepositoryConfiguration
+		_getSharepointRepositoryConfiguration(String configurationPid) {
 
 		try {
 			Configuration[] configurations =

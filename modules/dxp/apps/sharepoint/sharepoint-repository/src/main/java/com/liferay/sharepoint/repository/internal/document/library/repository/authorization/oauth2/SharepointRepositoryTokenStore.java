@@ -103,11 +103,11 @@ public class SharepointRepositoryTokenStore implements TokenStore {
 	}
 
 	@Reference
-	private SharepointRepositoryTokenBrokerFactory
-		_sharepointRepositoryTokenBrokerFactory;
-
-	@Reference
 	private SharepointOAuth2TokenEntryLocalService
 		_sharepointOAuth2TokenEntryLocalService;
+
+	@Reference
+	private SharepointRepositoryTokenBrokerFactory
+		_sharepointRepositoryTokenBrokerFactory;
 
 }

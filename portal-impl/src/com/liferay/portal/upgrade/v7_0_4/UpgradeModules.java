@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_0_3;
+package com.liferay.portal.upgrade.v7_0_4;
 
 /**
  * @author Shuyang Zhou
@@ -30,16 +30,9 @@ public class UpgradeModules
 		return _CONVERTED_LEGACY_MODULES;
 	}
 
-	private static final String[] _BUNDLE_SYMBOLIC_NAMES = {
-		"com.liferay.portal.reports.engine.console.web",
-		"com.liferay.portal.workflow.kaleo.forms.web"
-	};
+	private static final String[] _BUNDLE_SYMBOLIC_NAMES =
+		{"com.liferay.blogs.service"};
 
-	private static final String[][] _CONVERTED_LEGACY_MODULES = {
-		{
-			"reports-portlet",
-			"com.liferay.portal.reports.engine.console.service", "Reports"
-		}
-	};
+	private static final String[][] _CONVERTED_LEGACY_MODULES = {};
 
 }

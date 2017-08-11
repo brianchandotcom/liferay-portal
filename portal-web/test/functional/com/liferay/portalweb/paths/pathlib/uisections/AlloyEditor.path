@@ -98,12 +98,12 @@
 <!--TEXT_FORMATTING-->
 <tr>
 	<td>TEXT_FORMATTING_STYLE</td>
-	<td>//button[contains(@class,'alloy-editor-toolbar-element')]//span[contains(@class,'icon-arrow')]</td>
+	<td>//button[contains(@class,'ae-toolbar-element')]//span[contains(@class,'icon-arrow')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TEXT_FORMATTING_STYLE_DROPDOWN</td>
-	<td>//button[contains(@class,'alloy-editor-toolbar-element') and contains(.,'${key_styleFormat}')]</td>
+	<td>//button[contains(@class,'ae-toolbar-element') and contains(.,'${key_styleFormat}')]</td>
 	<td></td>
 </tr>
 <tr>

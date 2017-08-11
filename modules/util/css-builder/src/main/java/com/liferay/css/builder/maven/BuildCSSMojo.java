@@ -95,6 +95,15 @@ public class BuildCSSMojo extends AbstractMojo {
 	}
 
 	/**
+	 * @parameter default-value="true"
+	 */
+	public void setAppendCssImportTimestamps(
+		boolean appendCssImportTimestamps) {
+
+		_cssBuilderArgs.setAppendCssImportTimestamps(appendCssImportTimestamps);
+	}
+
+	/**
 	 * @parameter
 	 */
 	public void setDirNames(String dirNames) {

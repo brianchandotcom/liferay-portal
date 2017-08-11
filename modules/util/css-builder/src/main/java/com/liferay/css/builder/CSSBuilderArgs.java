@@ -19,6 +19,8 @@ package com.liferay.css.builder;
  */
 public class CSSBuilderArgs {
 
+	public static final boolean APPEND_CSS_IMPORT_TIMESTAMPS = true;
+
 	public static final String DIR_NAME = "/";
 
 	public static final String DOCROOT_DIR_NAME = "src/META-INF/resources";
@@ -55,8 +57,18 @@ public class CSSBuilderArgs {
 		return _sassCompilerClassName;
 	}
 
+	public boolean isAppendCssImportTimestamps() {
+		return _appendCssImportTimestamps;
+	}
+
 	public boolean isGenerateSourceMap() {
 		return _generateSourceMap;
+	}
+
+	public void setAppendCssImportTimestamps(
+		boolean appendCssImportTimestamps) {
+
+		_appendCssImportTimestamps = appendCssImportTimestamps;
 	}
 
 	public void setDirNames(String dirNames) {
@@ -103,6 +115,7 @@ public class CSSBuilderArgs {
 		return s.split(",");
 	}
 
+	private boolean _appendCssImportTimestamps = APPEND_CSS_IMPORT_TIMESTAMPS;
 	private String[] _dirNames = {DIR_NAME};
 	private String _docrootDirName = DOCROOT_DIR_NAME;
 	private boolean _generateSourceMap;

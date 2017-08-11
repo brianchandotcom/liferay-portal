@@ -44,6 +44,9 @@ public class CSSBuilderInvoker {
 		}
 
 		args.add(
+			"sass.append.css.import.timestamps=" +
+				cssBuilderArgs.isAppendCssImportTimestamps());
+		args.add(
 			"sass.docroot.dir=" +
 				_getAbsolutePath(baseDir, cssBuilderArgs.getDocrootDirName()));
 		args.add(

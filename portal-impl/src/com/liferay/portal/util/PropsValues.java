@@ -1438,6 +1438,10 @@ public class PropsValues {
 
 	public static final int RETRY_DATA_SOURCE_MAX_RETRIES = GetterUtil.getInteger(PropsUtil.get(PropsKeys.RETRY_DATA_SOURCE_MAX_RETRIES));
 
+	public static final int RETRY_JDBC_ON_STARTUP_DELAY = GetterUtil.getInteger(PropsUtil.get(PropsKeys.RETRY_JDBC_ON_STARTUP_DELAY));
+
+	public static final int RETRY_JDBC_ON_STARTUP_MAX_RETRIES = GetterUtil.getInteger(PropsUtil.get(PropsKeys.RETRY_JDBC_ON_STARTUP_MAX_RETRIES));
+
 	public static final String ROBOTS_TXT_WITH_SITEMAP = PropsUtil.get(PropsKeys.ROBOTS_TXT_WITH_SITEMAP);
 
 	public static final String ROBOTS_TXT_WITHOUT_SITEMAP = PropsUtil.get(PropsKeys.ROBOTS_TXT_WITHOUT_SITEMAP);

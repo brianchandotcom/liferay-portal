@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Portal Bundle Blacklist
+Bundle-SymbolicName: com.liferay.portal.bundle.blacklist
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.bundle.blacklist

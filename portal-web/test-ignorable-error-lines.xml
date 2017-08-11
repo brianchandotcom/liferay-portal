@@ -200,6 +200,10 @@
 			<contains>Unable to add folder menu item</contains>
 			<matches></matches>
 		</ignore-error>
+		<ignore-error description="LRQA-34199, temporarily ignore SAMLBootstrap error">
+			<contains>The activate method has thrown an exception</contains>
+			<matches></matches>
+		</ignore-error>
 		<ignore-error description="WCM-202">
 			<contains>No score point assigners available</contains>
 			<matches></matches>

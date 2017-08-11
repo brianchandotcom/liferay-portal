@@ -75,7 +75,7 @@ public class RetryJDBCConnectionFunction
 			}
 		}
 
-		return function.apply(_properties);
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

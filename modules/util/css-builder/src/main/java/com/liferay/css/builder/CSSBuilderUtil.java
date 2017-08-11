@@ -21,9 +21,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -70,25 +68,21 @@ public class CSSBuilderUtil {
 	}
 
 	public static String parseCSSImports(String content) {
+		StringBuffer sb = new StringBuffer();
+
 		Matcher matcher = _cssImportPattern.matcher(content);
 
 		Date date = new Date();
 
-		List<String> cssImports = new ArrayList<>();
-		List<String> cssImportReplacements = new ArrayList<>();
-
 		while (matcher.find()) {
 			String cssImport = matcher.group();
 
-			cssImports.add(cssImport);
-
-			cssImportReplacements.add(cssImport + "?t=" + date.getTime());
+			matcher.appendReplacement(sb, cssImport + "?t=" + date.getTime());
 		}
 
-		return StringUtil.replace(
-			content, cssImports.toArray(new String[cssImports.size()]),
-			cssImportReplacements.toArray(
-				new String[cssImportReplacements.size()]));
+		matcher.appendTail(sb);
+
+		return sb.toString();
 	}
 
 	public static String parseStaticTokens(String content) {

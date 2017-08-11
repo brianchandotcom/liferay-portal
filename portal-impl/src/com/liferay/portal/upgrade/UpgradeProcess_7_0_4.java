@@ -17,10 +17,11 @@ package com.liferay.portal.upgrade;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.upgrade.v7_0_4.UpgradeContact;
-import com.liferay.portal.upgrade.v7_0_4.UpgradeGroup;
 import com.liferay.portal.upgrade.v7_0_4.UpgradeEmailAddress;
 import com.liferay.portal.upgrade.v7_0_4.UpgradeExpando;
+import com.liferay.portal.upgrade.v7_0_4.UpgradeGroup;
 import com.liferay.portal.upgrade.v7_0_4.UpgradeMBMailingList;
+import com.liferay.portal.upgrade.v7_0_4.UpgradeModules;
 import com.liferay.portal.upgrade.v7_0_4.UpgradeUser;
 
 /**
@@ -41,6 +42,7 @@ public class UpgradeProcess_7_0_4 extends UpgradeProcess {
 		upgrade(UpgradeEmailAddress.class);
 		upgrade(UpgradeExpando.class);
 		upgrade(UpgradeMBMailingList.class);
+		upgrade(UpgradeModules.class);
 		upgrade(UpgradeUser.class);
 
 		clearIndexesCache();

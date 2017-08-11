@@ -516,7 +516,16 @@ public class UserImpl extends UserBaseImpl {
 
 	@Override
 	public String getInitials() {
-		return _userInitialsGenerator.getInitials(this);
+		String initials = _userInitialsGenerator.getInitials(this);
+
+		if (initials == null) {
+			String firstInitial = StringUtil.shorten(getFirstName(), 1);
+			String lastInitial = StringUtil.shorten(getLastName(), 1);
+
+			initials = StringUtil.toUpperCase(firstInitial.concat(lastInitial));
+		}
+
+		return initials;
 	}
 
 	@Override

@@ -626,6 +626,11 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 
 	private void _waitForJDBCConnection(Properties properties) {
 		int deplay = PropsValues.RETRY_JDBC_ON_STARTUP_DELAY;
+
+		if (deplay < 0) {
+			deplay = 0;
+		}
+
 		int maxRetries = PropsValues.RETRY_JDBC_ON_STARTUP_MAX_RETRIES;
 
 		String url = properties.getProperty("url");
@@ -658,17 +663,15 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 						" seconds. (Currently " + (maxRetries - count) + ")");
 			}
 
-			if (deplay > 0) {
-				try {
-					Thread.sleep(deplay * 1000);
+			try {
+				Thread.sleep(deplay * 1000);
+			}
+			catch (InterruptedException ie) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Interruptted JDBC retry waiting", ie);
 				}
-				catch (InterruptedException ie) {
-					if (_log.isWarnEnabled()) {
-						_log.warn("Interruptted JDBC retry waiting", ie);
-					}
 
-					break;
-				}
+				break;
 			}
 		}
 

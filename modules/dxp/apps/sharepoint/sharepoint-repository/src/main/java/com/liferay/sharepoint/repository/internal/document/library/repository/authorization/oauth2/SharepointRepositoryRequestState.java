@@ -77,7 +77,7 @@ public final class SharepointRepositoryRequestState implements Serializable {
 			throw new OAuth2AuthorizationException.InvalidState(
 				String.format(
 					"The Sharepoint server returned an invalid state " +
-						"identifier; expected %s, got %s",
+						"%s that does not match the expected state %s",
 					_state, state));
 		}
 	}

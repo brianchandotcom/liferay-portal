@@ -22,13 +22,35 @@ String itemSelectorURL = (String)request.getAttribute("itemSelectorURL");
 String layoutBreadcrumb = (String)request.getAttribute("layoutBreadcrumb");
 String layoutUuid = (String)request.getAttribute("layoutUuid");
 String titleMapAsXML = (String)request.getAttribute("titleMapAsXML");
+long vocabularyId = ParamUtil.getLong(request, "vocabularyId");
 
 String friendlyURLBase = themeDisplay.getPortalURL() + CPConstants.SEPARATOR_ASSET_CATEGORY_URL;
+
+if (Validator.isNull(redirect)) {
+	PortletURL categoryRedirectURL = renderResponse.createRenderURL();
+
+	long parentCategoryId = BeanParamUtil.getLong(
+			category, request, "parentCategoryId");
+
+	categoryRedirectURL.setParameter("mvcPath", "/view_categories.jsp");
+
+	if (parentCategoryId > 0) {
+		categoryRedirectURL.setParameter(
+				"categoryId", String.valueOf(parentCategoryId));
+	}
+
+	if (vocabularyId > 0) {
+		categoryRedirectURL.setParameter(
+				"vocabularyId", String.valueOf(vocabularyId));
+	}
+
+	redirect = categoryRedirectURL.toString();
+}
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle(((category == null) ? LanguageUtil.get(request, "add-new-category") : category.getTitle(locale)));
+renderResponse.setTitle(category.getTitle(locale));
 %>
 
 <portlet:actionURL name="editCategory" var="editCategoryURL">

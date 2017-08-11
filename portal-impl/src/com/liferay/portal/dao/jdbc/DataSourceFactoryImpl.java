@@ -60,7 +60,6 @@ import java.sql.DriverManager;
 import java.util.Enumeration;
 import java.util.Map;
 import java.util.Properties;
-import java.util.function.Function;
 
 import javax.management.MBeanServer;
 import javax.management.MalformedObjectNameException;
@@ -625,6 +624,19 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 		}
 	}
 
+	private static Connection _getJDBCConnection(Properties properties) {
+		try {
+			String databaseURL = properties.getProperty("url");
+			String user = properties.getProperty("username");
+			String password = properties.getProperty("password");
+
+			return DriverManager.getConnection(databaseURL, user, password);
+		}
+		catch (Exception e) {
+			throw new RuntimeException("No JDBC connection found", e);
+		}
+	}
+
 	private void _waitForJDBCConnection(Properties properties) {
 		RetryJDBCConnectionFunction retryJDBCConnectionFunction =
 			new RetryJDBCConnectionFunction(
@@ -632,7 +644,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 				PropsValues.RETRY_JDBC_ON_STARTUP_MAX_RETRIES);
 
 		try (Connection jdbcConnection = retryJDBCConnectionFunction.apply(
-				_getJDBCConnectionFunction)) {
+				DataSourceFactoryImpl::_getJDBCConnection)) {
 
 			if (jdbcConnection != null) {
 				if (_log.isInfoEnabled()) {
@@ -658,20 +670,6 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 		DataSourceFactoryImpl.class);
 
 	private static final PACL _pacl = new NoPACL();
-
-	private final Function<Properties, Connection> _getJDBCConnectionFunction =
-		(Properties properties) -> {
-			try {
-				String databaseURL = properties.getProperty("url");
-				String user = properties.getProperty("username");
-				String password = properties.getProperty("password");
-
-				return DriverManager.getConnection(databaseURL, user, password);
-			}
-			catch (Exception e) {
-				throw new RuntimeException("No JDBC connection found", e);
-			}
-		};
 
 	private ServiceTracker<MBeanServer, MBeanServer> _serviceTracker;
 

@@ -514,6 +514,8 @@ app.server.type=@{app.server.type}]]></echo>
 		<attribute default="tomcat" name="app.server.type" />
 
 		<sequential>
+			<antcall inheritAll="false" target="setup-sdk" />
+
 			<unzip dest="." src="liferay-portal-source.zip" />
 
 			<execute>

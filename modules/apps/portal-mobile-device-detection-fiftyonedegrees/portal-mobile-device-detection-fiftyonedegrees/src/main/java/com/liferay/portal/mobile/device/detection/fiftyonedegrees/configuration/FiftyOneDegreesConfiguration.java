@@ -30,9 +30,6 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface FiftyOneDegreesConfiguration {
 
-	@Meta.AD(deflt = "5000", required = false)
-	public int cacheSize();
-
 	@Meta.AD(deflt = "META-INF/51Degrees-LiteV3.2.dat", required = false)
 	public String fiftyOneDegreesDataFileName();
 

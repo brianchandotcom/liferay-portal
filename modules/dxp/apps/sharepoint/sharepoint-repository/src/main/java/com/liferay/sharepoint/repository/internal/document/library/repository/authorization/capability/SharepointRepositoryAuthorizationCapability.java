@@ -194,10 +194,11 @@ public class SharepointRepositoryAuthorizationCapability
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, PortalException {
 
-		SharepointRepositoryRequestState requestState =
+		SharepointRepositoryRequestState sharepointRepositoryRequestState =
 			SharepointRepositoryRequestState.get(request);
 
-		requestState.validate(ParamUtil.getString(request, "state"));
+		sharepointRepositoryRequestState.validate(
+			ParamUtil.getString(request, "state"));
 
 		long userId = PortalUtil.getUserId(request);
 
@@ -211,7 +212,7 @@ public class SharepointRepositoryAuthorizationCapability
 			_sharepointRepositoryOAuth2Configuration.name(), userId,
 			accessToken);
 
-		requestState.restore(request, response);
+		sharepointRepositoryRequestState.restore(request, response);
 	}
 
 	private void _requestAuthorizationGrant(

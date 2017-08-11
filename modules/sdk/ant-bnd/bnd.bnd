@@ -5,4 +5,5 @@ Export-Package: com.liferay.ant.bnd
 -includeresource:\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/definitions/liferay-social_6_1_0.dtd,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/definitions/liferay-social_6_2_0.dtd,\
-	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/definitions/liferay-social_7_0_0.dtd
+	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/definitions/liferay-social_7_0_0.dtd,\
+	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/definitions/liferay-social_7_1_0.dtd

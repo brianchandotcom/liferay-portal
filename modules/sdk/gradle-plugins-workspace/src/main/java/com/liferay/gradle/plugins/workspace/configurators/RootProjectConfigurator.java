@@ -327,13 +327,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		final Download download = GradleUtil.addTask(
 			project, DOWNLOAD_BUNDLE_TASK_NAME, Download.class);
 
-		File destinationDir = new File(
-			System.getProperty("user.home"), ".liferay/bundles");
-
-		destinationDir.mkdirs();
-
-		download.dest(destinationDir);
-
 		download.doFirst(
 			new Action<Task>() {
 
@@ -363,6 +356,13 @@ public class RootProjectConfigurator implements Plugin<Project> {
 					if (workspaceExtension.isBundleTokenDownload()) {
 						download.dependsOn(createTokenTask);
 					}
+
+					File destinationDir =
+						workspaceExtension.getBundleCacheDir();
+
+					destinationDir.mkdirs();
+
+					download.dest(destinationDir);
 
 					Object src = download.getSrc();
 

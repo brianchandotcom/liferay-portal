@@ -20,6 +20,7 @@ import com.liferay.gradle.plugins.workspace.configurators.RootProjectConfigurato
 import com.liferay.gradle.plugins.workspace.configurators.ThemesProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.configurators.WarsProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
+import com.liferay.gradle.util.Validator;
 import com.liferay.portal.tools.bundle.support.constants.BundleSupportConstants;
 
 import groovy.lang.MissingPropertyException;
@@ -49,6 +50,8 @@ public class WorkspaceExtension {
 		_projectConfigurators.add(new ThemesProjectConfigurator(settings));
 		_projectConfigurators.add(new WarsProjectConfigurator(settings));
 
+		_bundleCacheDir = _getProperty(
+			settings, "bundle.cache.dir", _BUNDLE_CACHE_DIR);
 		_bundleDistRootDirName = _getProperty(
 			settings, "bundle.dist.root.dir", _BUNDLE_DIST_ROOT_DIR_NAME);
 		_bundleTokenDownload = _getProperty(
@@ -75,6 +78,10 @@ public class WorkspaceExtension {
 			settings, "home.dir",
 			BundleSupportConstants.DEFAULT_LIFERAY_HOME_DIR_NAME);
 		_rootProjectConfigurator = new RootProjectConfigurator(settings);
+	}
+
+	public File getBundleCacheDir() {
+		return GradleUtil.toFile(_gradle.getRootProject(), _bundleCacheDir);
 	}
 
 	public String getBundleDistRootDirName() {
@@ -136,6 +143,10 @@ public class WorkspaceExtension {
 		throw new MissingPropertyException(name, ProjectConfigurator.class);
 	}
 
+	public void setBundleCacheDir(Object bundleCacheDir) {
+		_bundleCacheDir = bundleCacheDir;
+	}
+
 	public void setBundleDistRootDirName(Object bundleDistRootDirName) {
 		_bundleDistRootDirName = bundleDistRootDirName;
 	}
@@ -183,12 +194,33 @@ public class WorkspaceExtension {
 			object, WorkspacePlugin.PROPERTY_PREFIX + keySuffix, defaultValue);
 	}
 
+	private Object _getProperty(
+		Object object, String keySuffix, File defaultValue) {
+
+		Object value = GradleUtil.getProperty(
+			object, WorkspacePlugin.PROPERTY_PREFIX + keySuffix);
+
+		if ((value instanceof String) && Validator.isNull((String)value)) {
+			value = null;
+		}
+
+		if (value == null) {
+			return defaultValue;
+		}
+
+		return value;
+	}
+
 	private String _getProperty(
 		Object object, String keySuffix, String defaultValue) {
 
 		return GradleUtil.getProperty(
 			object, WorkspacePlugin.PROPERTY_PREFIX + keySuffix, defaultValue);
 	}
+
+	private static final File _BUNDLE_CACHE_DIR = new File(
+		System.getProperty("user.home"),
+		BundleSupportConstants.DEFAULT_BUNDLE_CACHE_DIR_NAME);
 
 	private static final String _BUNDLE_DIST_ROOT_DIR_NAME = null;
 
@@ -202,6 +234,7 @@ public class WorkspaceExtension {
 
 	private static final String _BUNDLE_TOKEN_PASSWORD_FILE = null;
 
+	private Object _bundleCacheDir;
 	private Object _bundleDistRootDirName;
 	private Object _bundleTokenDownload;
 	private Object _bundleTokenEmailAddress;

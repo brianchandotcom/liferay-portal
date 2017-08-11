@@ -14,11 +14,7 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Peter Shin
@@ -34,25 +30,10 @@ public class PropertiesServiceKeysCheck extends BaseFileCheck {
 			return content;
 		}
 
-		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
-
-			String line = null;
-
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				String[] array = line.split("=", 2);
-
-				if (array.length < 2) {
-					continue;
-				}
-
-				String key = array[0].trim();
-
-				if (ArrayUtil.contains(_LEGACY_SERVICE_KEYS, key)) {
-					content = StringUtil.replaceFirst(
-						content, line, StringPool.BLANK);
-				}
-			}
+		for (String legacyServiceKey : _LEGACY_SERVICE_KEYS) {
+			content = content.replaceAll(
+				"(\\A|\n)\\s*" + legacyServiceKey + "=.*(\\Z|\n)",
+				StringPool.NEW_LINE);
 		}
 
 		return content;

@@ -30,9 +30,23 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Workflow Configuration" />
-		</execute>
+		<toggle name="LPS-73924">
+			<on>
+				<execute macro="ProductMenu#gotoControlPanelConfiguration">
+					<var name="portlet" value="Workflow" />
+				</execute>
+
+				<execute macro="Navigator#gotoNavItem">
+					<var name="navItem" value="Schemes" />
+				</execute>
+			</on>
+
+			<off>
+				<execute macro="ProductMenu#gotoControlPanelConfiguration">
+					<var name="portlet" value="Workflow Configuration" />
+				</execute>
+			</off>
+		</toggle>
 
 		<execute macro="Workflow#configureWorkflow">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
@@ -104,9 +118,23 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Workflow Configuration" />
-		</execute>
+		<toggle name="LPS-73924">
+			<on>
+				<execute macro="ProductMenu#gotoControlPanelConfiguration">
+					<var name="portlet" value="Workflow" />
+				</execute>
+
+				<execute macro="Navigator#gotoNavItem">
+					<var name="navItem" value="Schemes" />
+				</execute>
+			</on>
+
+			<off>
+				<execute macro="ProductMenu#gotoControlPanelConfiguration">
+					<var name="portlet" value="Workflow Configuration" />
+				</execute>
+			</off>
+		</toggle>
 
 		<execute macro="Workflow#configureWorkflow">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />

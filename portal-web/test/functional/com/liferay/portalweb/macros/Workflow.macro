@@ -599,9 +599,23 @@
 	</command>
 
 	<command name="tearDownPortalWorkflow">
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Workflow Configuration" />
-		</execute>
+		<toggle name="LPS-73924">
+			<on>
+				<execute macro="ProductMenu#gotoControlPanelConfiguration">
+					<var name="portlet" value="Workflow" />
+				</execute>
+
+				<execute macro="Navigator#gotoNavItem">
+					<var name="navItem" value="Schemes" />
+				</execute>
+			</on>
+
+			<off>
+				<execute macro="ProductMenu#gotoControlPanelConfiguration">
+					<var name="portlet" value="Workflow Configuration" />
+				</execute>
+			</off>
+		</toggle>
 
 		<execute macro="Workflow#_tearDownWorkflow" />
 
@@ -624,9 +638,19 @@
 	<command name="tearDownSiteWorkflow">
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoSitesConfiguration">
-			<var name="portlet" value="Workflow Configuration" />
-		</execute>
+		<toggle name="LPS-73924">
+			<on>
+				<execute macro="ProductMenu#gotoSitesConfiguration">
+					<var name="portlet" value="Workflow" />
+				</execute>
+			</on>
+
+			<off>
+				<execute macro="ProductMenu#gotoSitesConfiguration">
+					<var name="portlet" value="Workflow Configuration" />
+				</execute>
+			</off>
+		</toggle>
 
 		<execute macro="Workflow#_tearDownWorkflow" />
 
@@ -643,7 +667,7 @@
 
 	<command name="tearDownSpecificWorkflowDefinition">
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Workflow Definition" />
+			<var name="portlet" value="Workflow" />
 		</execute>
 
 		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
@@ -682,7 +706,7 @@
 
 	<command name="tearDownWorkflowDefinitionsViaWorkflowCP">
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Workflow Definition" />
+			<var name="portlet" value="Workflow" />
 		</execute>
 
 		<while>

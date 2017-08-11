@@ -14,24 +14,19 @@
 
 package com.liferay.portal.mobile.device.detection.fiftyonedegrees.internal;
 
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mobile.device.Device;
 import com.liferay.portal.kernel.mobile.device.UnknownDevice;
-import com.liferay.portal.mobile.device.detection.fiftyonedegrees.configuration.FiftyOneDegreesConfiguration;
 import com.liferay.portal.mobile.device.detection.fiftyonedegrees.data.DataFileProvider;
 
 import fiftyone.mobile.detection.Dataset;
-import fiftyone.mobile.detection.DatasetBuilder;
 import fiftyone.mobile.detection.Match;
 import fiftyone.mobile.detection.Provider;
+import fiftyone.mobile.detection.factories.StreamFactory;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 
 import java.util.Map;
 
@@ -81,34 +76,12 @@ public class FiftyOneDegreesEngineProxy {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_fiftyOneDegreesConfiguration = ConfigurableUtil.createConfigurable(
-			FiftyOneDegreesConfiguration.class, properties);
-
 		try (InputStream inputStream =
 				_dataFileProvider.getDataFileInputStream()) {
 
-			File tempFile = File.createTempFile(
-				"51degrees", String.valueOf(System.currentTimeMillis()));
+			_dataset = StreamFactory.create(IOUtils.toByteArray(inputStream));
 
-			tempFile.deleteOnExit();
-
-			try (OutputStream outputStream = new FileOutputStream(tempFile)) {
-				IOUtils.copy(inputStream, outputStream);
-
-				outputStream.flush();
-			}
-
-			DatasetBuilder.BuildFromFile buildFromFile = DatasetBuilder.file();
-
-			buildFromFile.configureCachesFromCacheSet(
-				DatasetBuilder.CacheTemplate.Default);
-
-			buildFromFile.setTempFile();
-
-			_dataset = buildFromFile.build(tempFile.getAbsolutePath());
-
-			_provider = new Provider(
-				_dataset, _fiftyOneDegreesConfiguration.cacheSize());
+			_provider = new Provider(_dataset);
 		}
 		catch (IOException ioe) {
 			if (_log.isWarnEnabled()) {
@@ -121,7 +94,6 @@ public class FiftyOneDegreesEngineProxy {
 
 	@Deactivate
 	protected void deactivate() throws IOException {
-		_fiftyOneDegreesConfiguration = null;
 		_provider = null;
 
 		if (_dataset != null) {
@@ -136,7 +108,6 @@ public class FiftyOneDegreesEngineProxy {
 	private DataFileProvider _dataFileProvider;
 
 	private Dataset _dataset;
-	private volatile FiftyOneDegreesConfiguration _fiftyOneDegreesConfiguration;
 	private Provider _provider;
 
 }

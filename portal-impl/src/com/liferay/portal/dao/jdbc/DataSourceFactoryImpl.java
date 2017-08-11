@@ -662,7 +662,8 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Retrying JDBC connection in " + deplay +
-						" seconds. (Currently " + (maxRetries - count) + ")");
+						" seconds. (Currently " + (maxRetries - count) + "/" +
+							maxRetries + ")");
 			}
 
 			try {

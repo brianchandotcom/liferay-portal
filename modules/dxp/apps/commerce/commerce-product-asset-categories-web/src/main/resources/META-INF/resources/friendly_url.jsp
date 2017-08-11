@@ -53,8 +53,7 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(category.getTitle(locale));
 %>
 
-<portlet:actionURL name="editCategory" var="editCategoryURL">
-	<portlet:param name="mvcPath" value="/edit_category.jsp" />
+<portlet:actionURL name="editAssetCategoryFriendlyURL" var="editCategoryURL">
 </portlet:actionURL>
 
 <aui:form action="<%= editCategoryURL %>" name="fm">

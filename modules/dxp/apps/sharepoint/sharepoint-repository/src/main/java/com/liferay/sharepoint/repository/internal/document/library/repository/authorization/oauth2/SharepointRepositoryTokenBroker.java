@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.sharepoint.repository.internal.oauth2;
+package com.liferay.sharepoint.repository.internal.document.library.repository.authorization.oauth2;
 
 import com.liferay.document.library.repository.authorization.capability.AuthorizationException;
 import com.liferay.document.library.repository.authorization.oauth2.Token;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.sharepoint.repository.internal.configuration.SharepointRepositoryOAuth2Configuration;
+import com.liferay.sharepoint.repository.internal.configuration.SharepointRepositoryConfiguration;
 
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
@@ -29,12 +29,12 @@ import java.io.IOException;
 /**
  * @author Adolfo Pérez
  */
-public class SharepointOAuth2AuthorizationServer {
+public class SharepointRepositoryTokenBroker {
 
-	public SharepointOAuth2AuthorizationServer(
-		SharepointRepositoryOAuth2Configuration sharepointRepositoryOAuth2Configuration) {
+	public SharepointRepositoryTokenBroker(
+		SharepointRepositoryConfiguration sharepointRepositoryConfiguration) {
 
-		_sharepointRepositoryOAuth2Configuration = sharepointRepositoryOAuth2Configuration;
+		_sharepointRepositoryConfiguration = sharepointRepositoryConfiguration;
 	}
 
 	public Token refreshAccessToken(Token token)
@@ -42,22 +42,23 @@ public class SharepointOAuth2AuthorizationServer {
 
 		try {
 			HttpRequestWithBody httpRequestWithBody = Unirest.post(
-				_sharepointRepositoryOAuth2Configuration.authorizationTokenEndpoint());
+				_sharepointRepositoryConfiguration.authorizationTokenEndpoint());
 
 			httpRequestWithBody.field(
 				"client_id",
-				_sharepointRepositoryOAuth2Configuration.clientId() + "@" +
-					_sharepointRepositoryOAuth2Configuration.tenantId());
+				_sharepointRepositoryConfiguration.clientId() + "@" +
+					_sharepointRepositoryConfiguration.tenantId());
 			httpRequestWithBody.field(
-				"client_secret", _sharepointRepositoryOAuth2Configuration.clientSecret());
+				"client_secret",
+				_sharepointRepositoryConfiguration.clientSecret());
 			httpRequestWithBody.field("refresh_token", token.getRefreshToken());
 			httpRequestWithBody.field("grant_type", "refresh_token");
 			httpRequestWithBody.field(
-				"resource", _sharepointRepositoryOAuth2Configuration.resource());
+				"resource", _sharepointRepositoryConfiguration.resource());
 
 			HttpResponse<String> httpResponse = httpRequestWithBody.asString();
 
-			return SharepointOAuth2Token.newInstance(
+			return SharepointRepositoryToken.newInstance(
 				httpResponse.getBody(), token);
 		}
 		catch (JSONException | UnirestException e) {
@@ -65,34 +66,36 @@ public class SharepointOAuth2AuthorizationServer {
 		}
 	}
 
-	public Token requestAccessToken(String code, String redirectUrl)
+	public Token requestAccessToken(String code, String redirectURL)
 		throws AuthorizationException, IOException {
 
 		try {
 			HttpRequestWithBody httpRequestWithBody = Unirest.post(
-				_sharepointRepositoryOAuth2Configuration.authorizationTokenEndpoint());
+				_sharepointRepositoryConfiguration.authorizationTokenEndpoint());
 
 			httpRequestWithBody.field(
 				"client_id",
-				_sharepointRepositoryOAuth2Configuration.clientId() + "@" +
-					_sharepointRepositoryOAuth2Configuration.tenantId());
+				_sharepointRepositoryConfiguration.clientId() + "@" +
+					_sharepointRepositoryConfiguration.tenantId());
 			httpRequestWithBody.field(
-				"client_secret", _sharepointRepositoryOAuth2Configuration.clientSecret());
+				"client_secret",
+				_sharepointRepositoryConfiguration.clientSecret());
 			httpRequestWithBody.field("code", code);
 			httpRequestWithBody.field("grant_type", "authorization_code");
-			httpRequestWithBody.field("redirect_uri", redirectUrl);
+			httpRequestWithBody.field("redirect_uri", redirectURL);
 			httpRequestWithBody.field(
-				"resource", _sharepointRepositoryOAuth2Configuration.resource());
+				"resource", _sharepointRepositoryConfiguration.resource());
 
 			HttpResponse<String> httpResponse = httpRequestWithBody.asString();
 
-			return SharepointOAuth2Token.newInstance(httpResponse.getBody());
+			return SharepointRepositoryToken.newInstance(httpResponse.getBody());
 		}
 		catch (JSONException | UnirestException e) {
 			throw new IOException(e);
 		}
 	}
 
-	private final SharepointRepositoryOAuth2Configuration _sharepointRepositoryOAuth2Configuration;
+	private final SharepointRepositoryConfiguration
+		_sharepointRepositoryConfiguration;
 
 }

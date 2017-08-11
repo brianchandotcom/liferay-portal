@@ -26,11 +26,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 @Meta.OCD(
 	factory = true,
-	id = "com.liferay.sharepoint.repository.internal.configuration.SharepointRepositoryOAuth2Configuration",
+	id = "com.liferay.sharepoint.repository.internal.configuration.SharepointRepositoryConfiguration",
 	localization = "content/Language",
-	name = "sharepoint-repository-oauth2-configuration-name"
+	name = "sharepoint-repository-configuration-name"
 )
-public interface SharepointRepositoryOAuth2Configuration {
+public interface SharepointRepositoryConfiguration {
 
 	@Meta.AD
 	public String name();

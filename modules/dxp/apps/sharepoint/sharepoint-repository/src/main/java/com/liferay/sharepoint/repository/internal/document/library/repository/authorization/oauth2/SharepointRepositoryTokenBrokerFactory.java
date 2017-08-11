@@ -11,11 +11,11 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-package com.liferay.sharepoint.repository.internal.oauth2;
+package com.liferay.sharepoint.repository.internal.document.library.repository.authorization.oauth2;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.sharepoint.repository.internal.configuration.SharepointRepositoryOAuth2Configuration;
+import com.liferay.sharepoint.repository.internal.configuration.SharepointRepositoryConfiguration;
 
 import java.io.IOException;
 
@@ -31,27 +31,30 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adolfo Pérez
  */
-@Component(service = SharepointOAuth2AuthorizationServerFactory.class)
-public class SharepointOAuth2AuthorizationServerFactory {
+@Component(service = SharepointRepositoryTokenBrokerFactory.class)
+public class SharepointRepositoryTokenBrokerFactory {
 
-	public SharepointOAuth2AuthorizationServer create(
-		SharepointRepositoryOAuth2Configuration sharepointRepositoryOAuth2Configuration) {
+	public SharepointRepositoryTokenBroker create(
+		SharepointRepositoryConfiguration sharepointRepositoryConfiguration) {
 
-		return new SharepointOAuth2AuthorizationServer(
-			sharepointRepositoryOAuth2Configuration);
+		return new SharepointRepositoryTokenBroker(
+			sharepointRepositoryConfiguration);
 	}
 
-	public SharepointOAuth2AuthorizationServer create(String configurationPid) {
-		return create(_getSharepointRepositoryOAuth2Configuration(configurationPid));
+	public SharepointRepositoryTokenBroker create(String configurationPid) {
+		return create(
+			_getSharepointRepositoryConfiguration(configurationPid));
 	}
 
-	private SharepointRepositoryOAuth2Configuration _getSharepointRepositoryOAuth2Configuration(
+	private SharepointRepositoryConfiguration _getSharepointRepositoryConfiguration(
 		String configurationPid) {
 
 		try {
 			Configuration[] configurations =
 				_configurationAdmin.listConfigurations(
-					"(service.factoryPID=" + _PID + ")");
+					"(service.factoryPID=" +
+						SharepointRepositoryConfiguration.class.getName() +
+							")");
 
 			for (Configuration configuration : configurations) {
 				Dictionary<String, Object> properties =
@@ -61,7 +64,7 @@ public class SharepointOAuth2AuthorizationServerFactory {
 
 				if ((name != null) && name.equals(configurationPid)) {
 					return ConfigurableUtil.createConfigurable(
-						SharepointRepositoryOAuth2Configuration.class, properties);
+						SharepointRepositoryConfiguration.class, properties);
 				}
 			}
 
@@ -72,10 +75,6 @@ public class SharepointOAuth2AuthorizationServerFactory {
 			throw new SystemException(e);
 		}
 	}
-
-	private static final String _PID =
-		"com.liferay.sharepoint.repository.internal." +
-			"SharepointRepositoryOAuth2Configuration";
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;

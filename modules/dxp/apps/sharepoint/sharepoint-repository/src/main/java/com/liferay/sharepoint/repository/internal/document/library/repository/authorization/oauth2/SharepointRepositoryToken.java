@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sharepoint.repository.internal.oauth2;
+package com.liferay.sharepoint.repository.internal.document.library.repository.authorization.oauth2;
 
 import com.liferay.document.library.repository.authorization.oauth2.OAuth2AuthorizationException;
 import com.liferay.document.library.repository.authorization.oauth2.Token;
@@ -31,7 +31,7 @@ import java.util.Date;
 /**
  * @author Adolfo Pérez
  */
-public class SharepointOAuth2Token implements Token {
+public class SharepointRepositoryToken implements Token {
 
 	public static final Token newInstance(
 		SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry) {
@@ -40,7 +40,7 @@ public class SharepointOAuth2Token implements Token {
 			return null;
 		}
 
-		return new SharepointOAuth2Token(
+		return new SharepointRepositoryToken(
 			sharepointOAuth2TokenEntry.getAccessToken(),
 			sharepointOAuth2TokenEntry.getRefreshToken(),
 			sharepointOAuth2TokenEntry.getExpirationDate());
@@ -81,7 +81,7 @@ public class SharepointOAuth2Token implements Token {
 		Date expirationDate = Date.from(
 			instant.plus(jsonObject.getLong("expires_in"), ChronoUnit.SECONDS));
 
-		return new SharepointOAuth2Token(
+		return new SharepointRepositoryToken(
 			accessToken, refreshToken, expirationDate);
 	}
 
@@ -105,7 +105,7 @@ public class SharepointOAuth2Token implements Token {
 		return _expirationDate.before(DateUtil.newDate());
 	}
 
-	private SharepointOAuth2Token(
+	private SharepointRepositoryToken(
 		String accessToken, String refreshToken, Date expirationDate) {
 
 		_accessToken = accessToken;

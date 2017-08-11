@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
-import com.liferay.sharepoint.repository.internal.oauth2.RequestState;
+import com.liferay.sharepoint.repository.internal.document.library.repository.authorization.oauth2.SharepointRepositoryRequestState;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -59,7 +59,7 @@ public class SharepointOAuth2StrutsAction extends BaseStrutsAction {
 	private Repository _getRepository(HttpServletRequest request)
 		throws PortalException {
 
-		RequestState requestState = RequestState.get(request);
+		SharepointRepositoryRequestState requestState = SharepointRepositoryRequestState.get(request);
 
 		Folder folder = _dlAppLocalService.getFolder(
 			requestState.getFolderId());

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sharepoint.repository.internal.oauth2;
+package com.liferay.sharepoint.repository.internal.document.library.repository.authorization.oauth2;
 
 import com.liferay.document.library.repository.authorization.oauth2.Token;
 import com.liferay.document.library.repository.authorization.oauth2.TokenStore;
@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(service = TokenStore.class)
-public class SharepointOAuth2TokenStore implements TokenStore {
+public class SharepointRepositoryTokenStore implements TokenStore {
 
 	@Override
 	public void delete(String configurationPid, long userId)
@@ -44,7 +44,7 @@ public class SharepointOAuth2TokenStore implements TokenStore {
 		throws PortalException {
 
 		try {
-			Token token = SharepointOAuth2Token.newInstance(
+			Token token = SharepointRepositoryToken.newInstance(
 				_sharepointOAuth2TokenEntryLocalService.
 					fetchSharepointOAuth2TokenEntry(userId, configurationPid));
 
@@ -52,13 +52,12 @@ public class SharepointOAuth2TokenStore implements TokenStore {
 				return token;
 			}
 
-			SharepointOAuth2AuthorizationServer
-				sharepointOAuth2AuthorizationServer =
-					_sharepointOAuth2AuthorizationServerFactory.create(
-						configurationPid);
+			SharepointRepositoryTokenBroker sharepointRepositoryTokenBroker =
+				_sharepointRepositoryTokenBrokerFactory.create(
+					configurationPid);
 
 			Token freshToken =
-				sharepointOAuth2AuthorizationServer.refreshAccessToken(token);
+				sharepointRepositoryTokenBroker.refreshAccessToken(token);
 
 			save(configurationPid, userId, freshToken);
 
@@ -74,17 +73,16 @@ public class SharepointOAuth2TokenStore implements TokenStore {
 		throws PortalException {
 
 		try {
-			Token token = SharepointOAuth2Token.newInstance(
+			Token token = SharepointRepositoryToken.newInstance(
 				_sharepointOAuth2TokenEntryLocalService.
 					fetchSharepointOAuth2TokenEntry(userId, configurationPid));
 
-			SharepointOAuth2AuthorizationServer
-				sharepointOAuth2AuthorizationServer =
-					_sharepointOAuth2AuthorizationServerFactory.create(
-						configurationPid);
+			SharepointRepositoryTokenBroker sharepointRepositoryTokenBroker =
+				_sharepointRepositoryTokenBrokerFactory.create(
+					configurationPid);
 
 			Token freshToken =
-				sharepointOAuth2AuthorizationServer.refreshAccessToken(token);
+				sharepointRepositoryTokenBroker.refreshAccessToken(token);
 
 			save(configurationPid, userId, freshToken);
 
@@ -105,8 +103,8 @@ public class SharepointOAuth2TokenStore implements TokenStore {
 	}
 
 	@Reference
-	private SharepointOAuth2AuthorizationServerFactory
-		_sharepointOAuth2AuthorizationServerFactory;
+	private SharepointRepositoryTokenBrokerFactory
+		_sharepointRepositoryTokenBrokerFactory;
 
 	@Reference
 	private SharepointOAuth2TokenEntryLocalService

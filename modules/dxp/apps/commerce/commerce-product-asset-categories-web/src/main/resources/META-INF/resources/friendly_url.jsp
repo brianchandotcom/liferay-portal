@@ -17,14 +17,30 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String friendlyURLBase = themeDisplay.getPortalURL() + CPConstants.SEPARATOR_ASSET_CATEGORY_URL;
+AssetCategory category =  (AssetCategory)request.getAttribute("assetCategory");
 String itemSelectorURL = (String)request.getAttribute("itemSelectorURL");
 String layoutBreadcrumb = (String)request.getAttribute("layoutBreadcrumb");
 String layoutUuid = (String)request.getAttribute("layoutUuid");
 String titleMapAsXML = (String)request.getAttribute("titleMapAsXML");
+
+String friendlyURLBase = themeDisplay.getPortalURL() + CPConstants.SEPARATOR_ASSET_CATEGORY_URL;
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(((category == null) ? LanguageUtil.get(request, "add-new-category") : category.getTitle(locale)));
+
 %>
 
-<aui:fieldset>
+<portlet:actionURL name="editCategory" var="editCategoryURL">
+	<portlet:param name="mvcPath" value="/edit_category.jsp" />
+</portlet:actionURL>
+
+<aui:form action="<%= editCategoryURL %>" name="fm">
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="categoryId" type="hidden" value="<%= category.getCategoryId() %>" />
+
+
 	<div class="commerce-product-definition-url-title form-group">
 		<label for="<portlet:namespace />friendlyURL"><liferay-ui:message key="friendly-url" /> <liferay-ui:icon-help message='<%= LanguageUtil.format(request, "for-example-x", "<em>/news</em>", false) %>' /></label>
 
@@ -58,7 +74,13 @@ String titleMapAsXML = (String)request.getAttribute("titleMapAsXML");
 	</aui:field-wrapper>
 
 	<aui:button name="chooseDisplayPage" value="choose" />
-</aui:fieldset>
+
+	<aui:button-row>
+		<aui:button cssClass="btn-lg" type="submit" />
+
+		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+	</aui:button-row>
+</aui:form>
 
 <aui:script use="liferay-item-selector-dialog">
 	var displayPageItemContainer = $('#<portlet:namespace />displayPageItemContainer');

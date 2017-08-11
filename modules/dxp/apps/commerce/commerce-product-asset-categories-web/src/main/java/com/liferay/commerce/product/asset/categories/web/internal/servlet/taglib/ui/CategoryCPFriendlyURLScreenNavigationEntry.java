@@ -163,13 +163,13 @@ public class CategoryCPFriendlyURLScreenNavigationEntry
 			_log.error(e, e);
 		}
 
+		httpServletRequest.setAttribute("assetCategory", assetCategory);
 		httpServletRequest.setAttribute("itemSelectorURL", itemSelectorURL);
 		httpServletRequest.setAttribute("layoutBreadcrumb", layoutBreadcrumb);
 		httpServletRequest.setAttribute("layoutUuid", layoutUuid);
 		httpServletRequest.setAttribute("titleMapAsXML", titleMapAsXML);
 
-
-		_jspRenderer.renderJSP(_setServletContext, httpServletRequest, httpServletResponse, "/details.jsp");
+		_jspRenderer.renderJSP(_setServletContext, httpServletRequest, httpServletResponse, "/friendly_url.jsp");
 	}
 
 	@Reference

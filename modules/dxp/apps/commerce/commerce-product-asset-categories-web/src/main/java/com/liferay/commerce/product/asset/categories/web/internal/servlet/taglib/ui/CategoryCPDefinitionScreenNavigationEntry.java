@@ -17,7 +17,6 @@ package com.liferay.commerce.product.asset.categories.web.internal.servlet.tagli
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.commerce.product.asset.categories.web.internal.util.CPAssetCategoryWebPortletUtil;
-import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
@@ -29,15 +28,18 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import java.io.IOException;
+
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.Locale;
-import java.util.ResourceBundle;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -64,7 +66,6 @@ public class CategoryCPDefinitionScreenNavigationEntry
 
 	@Override
 	public String getLabel(Locale locale) {
-
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
@@ -105,22 +106,13 @@ public class CategoryCPDefinitionScreenNavigationEntry
 		httpServletRequest.setAttribute(WebKeys.ASSET_CATEGORY, assetCategory);
 		httpServletRequest.setAttribute(
 			"cpAssetCategoryWebPortletUtil", cpAssetCategoryWebPortletUtil);
-		httpServletRequest.setAttribute("cpDefinitionService", cpDefinitionService);
+		httpServletRequest.setAttribute(
+			"cpDefinitionService", cpDefinitionService);
 
-
-		_jspRenderer.renderJSP(_setServletContext, httpServletRequest, httpServletResponse, "/products.jsp");
+		_jspRenderer.renderJSP(
+			_setServletContext, httpServletRequest, httpServletResponse,
+			"/products.jsp");
 	}
-
-	@Reference
-	private JSPRenderer _jspRenderer;
-
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.product.asset.categories.web)"
-	)
-	private ServletContext _setServletContext;
-
-
 
 	@Reference
 	protected CPAssetCategoryWebPortletUtil cpAssetCategoryWebPortletUtil;
@@ -133,5 +125,13 @@ public class CategoryCPDefinitionScreenNavigationEntry
 
 	@Reference
 	private AssetCategoryService _assetCategoryService;
+
+	@Reference
+	private JSPRenderer _jspRenderer;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.commerce.product.asset.categories.web)"
+	)
+	private ServletContext _setServletContext;
 
 }

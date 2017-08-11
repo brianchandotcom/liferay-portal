@@ -15,6 +15,7 @@
 package com.liferay.source.formatter;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
@@ -35,7 +36,7 @@ public interface SourceProcessor {
 
 	public void setAllFileNames(List<String> allFileNames);
 
-	public void setProperties(Properties properties);
+	public void setPropertiesMap(Map<String, Properties> propertiesMap);
 
 	public void setSourceFormatterArgs(SourceFormatterArgs sourceFormatterArgs);
 

@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.source.formatter.SourceFormatterExcludes;
@@ -41,7 +42,6 @@ import com.thoughtworks.qdox.model.impl.DefaultJavaParameterizedType;
 import java.io.File;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -171,7 +171,7 @@ public class MissingOverrideCheck extends AbstractCheck {
 
 		List<String> fileNames = SourceFormatterUtil.scanForFiles(
 			absolutePath + "/", new String[0], new String[] {"**/*.java"},
-			new SourceFormatterExcludes(Arrays.asList(_EXCLUDES)), true);
+			new SourceFormatterExcludes(SetUtil.fromArray(_EXCLUDES)), true);
 
 		for (String curFileName : fileNames) {
 			curFileName = StringUtil.replace(

@@ -51,22 +51,22 @@ public class RetryJDBCConnectionFunction
 				return connection;
 			}
 
-			try {
-				if (_log.isWarnEnabled()) {
-					int current = _times - retryCount;
+			if (_log.isWarnEnabled()) {
+				int current = _times - retryCount;
 
-					_log.warn(
-						"Retrying JDBC connection in " + _delaySeconds +
-							" seconds. (Currently " + current + ")");
-				}
+				_log.warn(
+					"Retrying JDBC connection in " + _delaySeconds +
+						" seconds. (Currently " + current + ")");
+			}
 
-				if (_delaySeconds > 0) {
+			if (_delaySeconds > 0) {
+				try {
 					Thread.sleep(_delaySeconds * 1000);
 				}
-			}
-			catch (InterruptedException ie) {
-				throw new RuntimeException(
-					"JDBC connection could not be retried", ie);
+				catch (InterruptedException ie) {
+					throw new RuntimeException(
+						"JDBC connection could not be retried", ie);
+				}
 			}
 		}
 

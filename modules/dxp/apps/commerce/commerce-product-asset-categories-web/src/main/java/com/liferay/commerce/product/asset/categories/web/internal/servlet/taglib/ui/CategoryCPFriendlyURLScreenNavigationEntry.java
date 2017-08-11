@@ -19,6 +19,9 @@ import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.commerce.product.model.CPDisplayLayout;
 import com.liferay.commerce.product.service.CPDisplayLayoutLocalService;
 import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService;
+import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
+import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
+import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
@@ -27,11 +30,10 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -42,124 +44,74 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.io.IOException;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
-
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Marco Leo
  */
 @Component(
-	property = "form.navigator.entry.order:Integer=300",
-	service = FormNavigatorEntry.class
+	property = {
+		"screen.navigation.category.order:Integer=20",
+		"screen.navigation.entry.order:Integer=20"
+	},
+	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
 )
-public class CategoryCPFriendlyURLFormNavigatorEntry
-	extends BaseJSPFormNavigatorEntry<AssetCategory> {
+public class CategoryCPFriendlyURLScreenNavigationEntry
+	implements ScreenNavigationCategory, ScreenNavigationEntry<AssetCategory> {
 
 	@Override
 	public String getCategoryKey() {
-		return "details";
+		return "display.page";
 	}
 
 	@Override
-	public String getFormNavigatorId() {
-		return "edit.category.form";
-	}
-
-	public String getItemSelectorUrl(RenderRequest renderRequest) {
-		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
-			RequestBackedPortletURLFactoryUtil.create(renderRequest);
-
-		LayoutItemSelectorCriterion layoutItemSelectorCriterion =
-			new LayoutItemSelectorCriterion();
-
-		layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			Collections.<ItemSelectorReturnType>singletonList(
-				new UUIDItemSelectorReturnType()));
-
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory, "selectDisplayPage",
-			layoutItemSelectorCriterion);
-
-		return itemSelectorURL.toString();
-	}
-
-	@Override
-	public String getKey() {
-		return "details";
+	public String getEntryKey() {
+		return "display.page";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "details");
-	}
-
-	public String getLayoutBreadcrumb(
-			HttpServletRequest httpServletRequest, Layout layout)
-		throws Exception {
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		Locale locale = themeDisplay.getLocale();
-
-		List<Layout> ancestors = layout.getAncestors();
-
-		StringBundler sb = new StringBundler(4 * ancestors.size() + 5);
-
-		if (layout.isPrivateLayout()) {
-			sb.append(LanguageUtil.get(httpServletRequest, "private-pages"));
-		}
-		else {
-			sb.append(LanguageUtil.get(httpServletRequest, "public-pages"));
-		}
-
-		sb.append(StringPool.SPACE);
-		sb.append(StringPool.GREATER_THAN);
-		sb.append(StringPool.SPACE);
-
-		Collections.reverse(ancestors);
-
-		for (Layout ancestor : ancestors) {
-			sb.append(HtmlUtil.escape(ancestor.getName(locale)));
-			sb.append(StringPool.SPACE);
-			sb.append(StringPool.GREATER_THAN);
-			sb.append(StringPool.SPACE);
-		}
-
-		sb.append(HtmlUtil.escape(layout.getName(locale)));
-
-		return sb.toString();
+		return LanguageUtil.get(locale, "category-display-page");
 	}
 
 	@Override
-	public void include(
-			HttpServletRequest request, HttpServletResponse response)
+	public String getScreenNavigationKey() {
+		return "general";
+	}
+
+	@Override
+	public boolean isVisible(User user, AssetCategory category) {
+		if (category == null) {
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
+	public void render(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		RenderRequest renderRequest = (RenderRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
+		RenderRequest renderRequest = (RenderRequest) httpServletRequest.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay = (ThemeDisplay) httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 		AssetCategory assetCategory = null;
 
-		long categoryId = ParamUtil.getLong(request, "categoryId");
+		long categoryId = ParamUtil.getLong(httpServletRequest, "categoryId");
 		long classNameId = _portal.getClassNameId(AssetCategory.class);
 		String itemSelectorURL = getItemSelectorUrl(renderRequest);
 
@@ -202,7 +154,7 @@ public class CategoryCPFriendlyURLFormNavigatorEntry
 
 					if (selLayout != null) {
 						layoutBreadcrumb = getLayoutBreadcrumb(
-							request, selLayout);
+							httpServletRequest, selLayout);
 					}
 				}
 			}
@@ -211,30 +163,45 @@ public class CategoryCPFriendlyURLFormNavigatorEntry
 			_log.error(e, e);
 		}
 
-		request.setAttribute("itemSelectorURL", itemSelectorURL);
-		request.setAttribute("layoutBreadcrumb", layoutBreadcrumb);
-		request.setAttribute("layoutUuid", layoutUuid);
-		request.setAttribute("titleMapAsXML", titleMapAsXML);
+		httpServletRequest.setAttribute("itemSelectorURL", itemSelectorURL);
+		httpServletRequest.setAttribute("layoutBreadcrumb", layoutBreadcrumb);
+		httpServletRequest.setAttribute("layoutUuid", layoutUuid);
+		httpServletRequest.setAttribute("titleMapAsXML", titleMapAsXML);
 
-		super.include(request, response);
+
+		_jspRenderer.renderJSP(_setServletContext, httpServletRequest, httpServletResponse, "/details.jsp");
 	}
 
-	@Override
+	@Reference
+	private JSPRenderer _jspRenderer;
+
+
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.product.asset.categories.web)",
-		unbind = "-"
+		target = "(osgi.web.symbolicname=com.liferay.commerce.product.asset.categories.web)"
 	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
+	private ServletContext _setServletContext;
 
-	@Override
-	protected String getJspPath() {
-		return "/details.jsp";
+
+	public String getItemSelectorUrl(RenderRequest renderRequest) {
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(renderRequest);
+
+		LayoutItemSelectorCriterion layoutItemSelectorCriterion =
+			new LayoutItemSelectorCriterion();
+
+		layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			Collections.<ItemSelectorReturnType>singletonList(
+				new UUIDItemSelectorReturnType()));
+
+		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
+			requestBackedPortletURLFactory, "selectDisplayPage",
+			layoutItemSelectorCriterion);
+
+		return itemSelectorURL.toString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CategoryCPFriendlyURLFormNavigatorEntry.class);
+		CategoryCPFriendlyURLScreenNavigationEntry.class);
 
 	@Reference
 	private AssetCategoryService _assetCategoryService;
@@ -253,5 +220,44 @@ public class CategoryCPFriendlyURLFormNavigatorEntry
 
 	@Reference
 	private Portal _portal;
+
+	public String getLayoutBreadcrumb(
+		HttpServletRequest httpServletRequest, Layout layout)
+		throws Exception {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Locale locale = themeDisplay.getLocale();
+
+		List<Layout> ancestors = layout.getAncestors();
+
+		StringBundler sb = new StringBundler(4 * ancestors.size() + 5);
+
+		if (layout.isPrivateLayout()) {
+			sb.append(LanguageUtil.get(httpServletRequest, "private-pages"));
+		}
+		else {
+			sb.append(LanguageUtil.get(httpServletRequest, "public-pages"));
+		}
+
+		sb.append(StringPool.SPACE);
+		sb.append(StringPool.GREATER_THAN);
+		sb.append(StringPool.SPACE);
+
+		Collections.reverse(ancestors);
+
+		for (Layout ancestor : ancestors) {
+			sb.append(HtmlUtil.escape(ancestor.getName(locale)));
+			sb.append(StringPool.SPACE);
+			sb.append(StringPool.GREATER_THAN);
+			sb.append(StringPool.SPACE);
+		}
+
+		sb.append(HtmlUtil.escape(layout.getName(locale)));
+
+		return sb.toString();
+	}
 
 }

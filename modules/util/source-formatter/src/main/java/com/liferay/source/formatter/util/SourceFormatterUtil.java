@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.ExcludeSyntax;
+import com.liferay.source.formatter.ExcludeSyntaxPattern;
 import com.liferay.source.formatter.SourceFormatterExcludes;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
@@ -61,22 +63,45 @@ public class SourceFormatterUtil {
 			}
 		}
 
-		for (String exclude : sourceFormatterExcludes.getDefaultExcludes()) {
-			if (!exclude.contains(StringPool.DOLLAR)) {
-				excludeRegexList.add(_createRegex(exclude));
+		for (ExcludeSyntaxPattern excludeSyntaxPattern :
+				sourceFormatterExcludes.getDefaultExcludeSyntaxPatterns()) {
+
+			String excludePattern = excludeSyntaxPattern.getExcludePattern();
+			ExcludeSyntax excludeSyntax =
+				excludeSyntaxPattern.getExcludeSyntax();
+
+			if (excludeSyntax.equals(ExcludeSyntax.REGEX)) {
+				excludeRegexList.add(excludePattern);
+			}
+			else if (!excludePattern.contains(StringPool.DOLLAR)) {
+				excludeRegexList.add(_createRegex(excludePattern));
 			}
 		}
 
-		Map<String, List<String>> excludesMap =
-			sourceFormatterExcludes.getExcludesMap();
+		Map<String, List<ExcludeSyntaxPattern>> excludeSyntaxPatternsMap =
+			sourceFormatterExcludes.getExcludeSyntaxPatternsMap();
 
-		for (Map.Entry<String, List<String>> entry : excludesMap.entrySet()) {
-			List<String> excludesList = entry.getValue();
+		for (Map.Entry<String, List<ExcludeSyntaxPattern>> entry :
+				excludeSyntaxPatternsMap.entrySet()) {
+
+			List<ExcludeSyntaxPattern> excludeSyntaxPatterns = entry.getValue();
 
 			List<String> regexList = new ArrayList<>();
 
-			for (String exclude : excludesList) {
-				regexList.add(_createRegex(exclude));
+			for (ExcludeSyntaxPattern excludeSyntaxPattern :
+					excludeSyntaxPatterns) {
+
+				String excludePattern =
+					excludeSyntaxPattern.getExcludePattern();
+				ExcludeSyntax excludeSyntax =
+					excludeSyntaxPattern.getExcludeSyntax();
+
+				if (excludeSyntax.equals(ExcludeSyntax.REGEX)) {
+					regexList.add(excludePattern);
+				}
+				else {
+					regexList.add(_createRegex(excludePattern));
+				}
 			}
 
 			excludeRegexMap.put(entry.getKey(), regexList);
@@ -350,18 +375,24 @@ public class SourceFormatterUtil {
 		PathMatchers pathMatchers = new PathMatchers(FileSystems.getDefault());
 
 		for (String exclude : excludes) {
-			pathMatchers.addExclude(exclude);
+			pathMatchers.addExcludeSyntaxPattern(
+				new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, exclude));
 		}
 
-		for (String exclude : sourceFormatterExcludes.getDefaultExcludes()) {
-			pathMatchers.addExclude(exclude);
+		for (ExcludeSyntaxPattern excludeSyntaxPattern :
+				sourceFormatterExcludes.getDefaultExcludeSyntaxPatterns()) {
+
+			pathMatchers.addExcludeSyntaxPattern(excludeSyntaxPattern);
 		}
 
-		Map<String, List<String>> excludesMap =
-			sourceFormatterExcludes.getExcludesMap();
+		Map<String, List<ExcludeSyntaxPattern>> excludeSyntaxPatternsMap =
+			sourceFormatterExcludes.getExcludeSyntaxPatternsMap();
 
-		for (Map.Entry<String, List<String>> entry : excludesMap.entrySet()) {
-			pathMatchers.addExcludes(entry.getKey(), entry.getValue());
+		for (Map.Entry<String, List<ExcludeSyntaxPattern>> entry :
+				excludeSyntaxPatternsMap.entrySet()) {
+
+			pathMatchers.addExcludeSyntaxPatterns(
+				entry.getKey(), entry.getValue());
 		}
 
 		for (String include : includes) {
@@ -508,43 +539,71 @@ public class SourceFormatterUtil {
 			_fileSystem = fileSystem;
 		}
 
-		public void addExclude(String exclude) {
-			if (!exclude.startsWith("**/")) {
-				exclude = "**/" + exclude;
+		public void addExcludeSyntaxPattern(
+			ExcludeSyntaxPattern excludeSyntaxPattern) {
+
+			String excludePattern = excludeSyntaxPattern.getExcludePattern();
+			ExcludeSyntax excludeSyntax =
+				excludeSyntaxPattern.getExcludeSyntax();
+
+			if (excludeSyntax.equals(ExcludeSyntax.GLOB) &&
+				!excludePattern.startsWith("**/")) {
+
+				excludePattern = "**/" + excludePattern;
 			}
 
-			if (exclude.endsWith("/**")) {
-				exclude = exclude.substring(0, exclude.length() - 3);
+			if (excludeSyntax.equals(ExcludeSyntax.GLOB) &&
+				excludePattern.endsWith("/**")) {
+
+				excludePattern = excludePattern.substring(
+					0, excludePattern.length() - 3);
 
 				_excludeDirPathMatchers.add(
-					_fileSystem.getPathMatcher("glob:" + exclude));
+					_fileSystem.getPathMatcher(
+						excludeSyntax.getValue() + ":" + excludePattern));
 			}
 			else {
 				_excludeFilePathMatchers.add(
-					_fileSystem.getPathMatcher("glob:" + exclude));
+					_fileSystem.getPathMatcher(
+						excludeSyntax.getValue() + ":" + excludePattern));
 			}
 		}
 
-		public void addExcludes(
-			String propertiesFileLocation, List<String> excludes) {
+		public void addExcludeSyntaxPatterns(
+			String propertiesFileLocation,
+			List<ExcludeSyntaxPattern> excludeSyntaxPatterns) {
 
 			List<PathMatcher> excludeDirPathMatcherList = new ArrayList<>();
 			List<PathMatcher> excludeFilePathMatcherList = new ArrayList<>();
 
-			for (String exclude : excludes) {
-				if (!exclude.startsWith("**/")) {
-					exclude = "**/" + exclude;
+			for (ExcludeSyntaxPattern excludeSyntaxPattern :
+					excludeSyntaxPatterns) {
+
+				String excludePattern =
+					excludeSyntaxPattern.getExcludePattern();
+				ExcludeSyntax excludeSyntax =
+					excludeSyntaxPattern.getExcludeSyntax();
+
+				if (excludeSyntax.equals(ExcludeSyntax.GLOB) &&
+					!excludePattern.startsWith("**/")) {
+
+					excludePattern = "**/" + excludePattern;
 				}
 
-				if (exclude.endsWith("/**")) {
-					exclude = exclude.substring(0, exclude.length() - 3);
+				if (excludeSyntax.equals(ExcludeSyntax.GLOB) &&
+					excludePattern.endsWith("/**")) {
 
-					excludeDirPathMatcherList.add(
-						_fileSystem.getPathMatcher("glob:" + exclude));
+					excludePattern = excludePattern.substring(
+						0, excludePattern.length() - 3);
+
+					_excludeDirPathMatchers.add(
+						_fileSystem.getPathMatcher(
+							excludeSyntax.getValue() + ":" + excludePattern));
 				}
 				else {
-					excludeFilePathMatcherList.add(
-						_fileSystem.getPathMatcher("glob:" + exclude));
+					_excludeFilePathMatchers.add(
+						_fileSystem.getPathMatcher(
+							excludeSyntax.getValue() + ":" + excludePattern));
 				}
 			}
 

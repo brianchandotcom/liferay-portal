@@ -51,6 +51,24 @@ import java.util.concurrent.Future;
  */
 public class SourceFormatter {
 
+	public static final ExcludeSyntaxPattern[]
+		DEFAULT_EXCLUDE_SYNTAX_PATTERNS = {
+			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/.git/**"),
+			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/.gradle/**"),
+			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/bin/**"),
+			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/build/**"),
+			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/classes/**"),
+			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/node_modules/**"),
+			new ExcludeSyntaxPattern(
+				ExcludeSyntax.GLOB, "**/npm-shrinkwrap.json"),
+			new ExcludeSyntaxPattern(
+				ExcludeSyntax.GLOB, "**/package-lock.json"),
+			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/test-classes/**"),
+			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/test-coverage/**"),
+			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/test-results/**"),
+			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/tmp/**")
+	};
+
 	public static void main(String[] args) throws Exception {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
@@ -300,6 +318,23 @@ public class SourceFormatter {
 		return _firstSourceMismatchException;
 	}
 
+	private List<ExcludeSyntaxPattern> _getExcludeSyntaxPatterns(
+		String sourceFormatterExcludes) {
+
+		List<String> excludes = ListUtil.fromString(
+			sourceFormatterExcludes, StringPool.COMMA);
+
+		List<ExcludeSyntaxPattern> excludeSyntaxPatterns =
+			new ArrayList<ExcludeSyntaxPattern>();
+
+		for (String exclude : excludes) {
+			excludeSyntaxPatterns.add(
+				new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, exclude));
+		}
+
+		return excludeSyntaxPatterns;
+	}
+
 	private int _getMaxDirLevel() {
 		File portalImplDir = SourceFormatterUtil.getFile(
 			_sourceFormatterArgs.getBaseDirName(), "portal-impl",
@@ -324,7 +359,7 @@ public class SourceFormatter {
 
 	private void _init() throws Exception {
 		_sourceFormatterExcludes = new SourceFormatterExcludes(
-			SetUtil.fromArray(_DEFAULT_EXCLUDES));
+			SetUtil.fromArray(DEFAULT_EXCLUDE_SYNTAX_PATTERNS));
 
 		// Find properties file in any parent directory
 
@@ -378,13 +413,12 @@ public class SourceFormatter {
 		}
 
 		if (FileUtil.exists(propertiesFileLocation + "portal-impl")) {
-			_sourceFormatterExcludes.addDefaultExcludes(
-				ListUtil.fromString(value, StringPool.COMMA));
+			_sourceFormatterExcludes.addDefaultExcludeSyntaxPatterns(
+				_getExcludeSyntaxPatterns(value));
 		}
 		else {
-			_sourceFormatterExcludes.addExcludes(
-				propertiesFileLocation,
-				ListUtil.fromString(value, StringPool.COMMA));
+			_sourceFormatterExcludes.addExcludeSyntaxPatterns(
+				propertiesFileLocation, _getExcludeSyntaxPatterns(value));
 		}
 
 		properties.remove("source.formatter.excludes");
@@ -411,13 +445,6 @@ public class SourceFormatter {
 				sourceProcessor.getFirstSourceMismatchException();
 		}
 	}
-
-	private static final String[] _DEFAULT_EXCLUDES = {
-		"**/.git/**", "**/.gradle/**", "**/bin/**", "**/build/**",
-		"**/classes/**", "**/node_modules/**", "**/npm-shrinkwrap.json",
-		"**/package-lock.json", "**/test-classes/**", "**/test-coverage/**",
-		"**/test-results/**", "**/tmp/**"
-	};
 
 	private static final String _PROPERTIES_FILE_NAME =
 		"source-formatter.properties";

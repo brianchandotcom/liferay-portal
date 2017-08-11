@@ -495,43 +495,47 @@ AUI.add(
 					_updateScores: function(thumbScore) {
 						var instance = this;
 
+						var cssClasses = instance.ratings.get('cssClasses');
 						var elements = instance.ratings.get('elements');
+
+						var cssClassesOn = cssClasses.on;
 
 						var ratingThumbDown = elements.item(1);
 						var ratingThumbUp = elements.item(0);
 
-						var thumbUpMessage = '';
+						var ratingThumbDownCssClassOn = ratingThumbDown.hasClass(cssClassesOn);
+						var ratingThumbUpCssClassOn = ratingThumbUp.hasClass(cssClassesOn);
+
 						var thumbDownMessage = '';
+						var thumbUpMessage = '';
 
 						if (ratingThumbDown) {
-							if (ratingThumbDown.hasClass('rating-on')) {
+							if (ratingThumbDownCssClassOn) {
 								thumbDownMessage = Liferay.Language.get('you-have-rated-this-as-bad');
 							}
 							else {
 								thumbDownMessage = Liferay.Language.get('rate-this-as-bad');
 							}
 
-							if (ratingThumbUp.hasClass('rating-on')) {
-								thumbUpMessage = Liferay.Language.get('you-have-rated-this-as-good');
-							}
-							else {
-								thumbUpMessage = Liferay.Language.get('rate-this-as-good');
-							}
-
-							ratingThumbUp.attr('title', thumbUpMessage);
 							ratingThumbDown.attr('title', thumbDownMessage);
 
-							ratingThumbUp.html(thumbScore.positiveVotes);
 							ratingThumbDown.html(thumbScore.negativeVotes);
 						}
-						else {
-							if (ratingThumbUp.hasClass('rating-on')) {
-								thumbUpMessage = Liferay.Language.get('unlike-this');
-							}
-							else {
-								thumbUpMessage = Liferay.Language.get('like-this');
-							}
 
+						if (ratingThumbDown && ratingThumbUpCssClassOn) {
+							thumbUpMessage = Liferay.Language.get('you-have-rated-this-as-good');
+						}
+						else if (ratingThumbDown && !ratingThumbUpCssClassOn) {
+							thumbUpMessage = Liferay.Language.get('rate-this-as-good');
+						}
+						else if (!ratingThumbDown && ratingThumbUpCssClassOn) {
+							thumbUpMessage = Liferay.Language.get('unlike-this');
+						}
+						else if (!ratingThumbDown && !ratingThumbUpCssClassOn) {
+							thumbUpMessage = Liferay.Language.get('like-this');
+						}
+
+						if (ratingThumbUp) {
 							ratingThumbUp.attr('title', thumbUpMessage);
 
 							ratingThumbUp.html(thumbScore.positiveVotes);

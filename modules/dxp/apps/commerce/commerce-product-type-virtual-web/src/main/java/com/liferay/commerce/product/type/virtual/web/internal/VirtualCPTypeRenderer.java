@@ -22,8 +22,8 @@ import com.liferay.commerce.product.type.virtual.constants.VirtualCPTypeConstant
 import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingLocalService;
 import com.liferay.commerce.product.type.virtual.web.internal.display.context.VirtualCPTypeDisplayContext;
 import com.liferay.commerce.product.util.CPInstanceHelper;
-import com.liferay.commerce.product.util.JSPRenderer;
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 

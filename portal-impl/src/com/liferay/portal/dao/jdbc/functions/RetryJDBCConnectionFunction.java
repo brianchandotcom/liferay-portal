@@ -45,33 +45,30 @@ public class RetryJDBCConnectionFunction
 		int retryCount = _times;
 
 		while (retryCount-- > 0) {
-			try {
-				return function.apply(_properties);
+			Connection connection = function.apply(_properties);
+
+			if (connection != null) {
+				return connection;
 			}
-			catch (RuntimeException re) {
-				String message = re.getMessage();
 
-				if (message.equals("No JDBC connection found")) {
-					try {
-						if (_log.isWarnEnabled()) {
-							int current = _times - retryCount;
+			try {
+				if (_log.isWarnEnabled()) {
+					int current = _times - retryCount;
 
-							_log.warn(
-								"Retrying JDBC connection in " + _delaySeconds +
-									" seconds. (Currently " + current + ")");
-						}
-
-						if (_delaySeconds > 0) {
-							Thread.sleep(_delaySeconds * 1000);
-						}
-
-						continue;
-					}
-					catch (InterruptedException ie) {
-						throw new RuntimeException(
-							"JDBC connection could not be retried", ie);
-					}
+					_log.warn(
+						"Retrying JDBC connection in " + _delaySeconds +
+							" seconds. (Currently " + current + ")");
 				}
+
+				if (_delaySeconds > 0) {
+					Thread.sleep(_delaySeconds * 1000);
+				}
+
+				continue;
+			}
+			catch (InterruptedException ie) {
+				throw new RuntimeException(
+					"JDBC connection could not be retried", ie);
 			}
 		}
 

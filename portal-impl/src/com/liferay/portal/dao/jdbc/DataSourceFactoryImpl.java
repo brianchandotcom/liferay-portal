@@ -56,6 +56,7 @@ import java.net.URLClassLoader;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 import java.util.Enumeration;
 import java.util.Map;
@@ -632,8 +633,12 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 
 			return DriverManager.getConnection(databaseURL, user, password);
 		}
-		catch (Exception e) {
-			throw new RuntimeException("No JDBC connection found", e);
+		catch (SQLException sqle) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to get jdbc connection", sqle);
+			}
+
+			return null;
 		}
 	}
 

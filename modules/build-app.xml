@@ -410,7 +410,6 @@
 			</path>
 		</pathconvert>
 
-
 		<condition
 			else="${app.module.dirs.public}"
 			property="app.module.dirs"

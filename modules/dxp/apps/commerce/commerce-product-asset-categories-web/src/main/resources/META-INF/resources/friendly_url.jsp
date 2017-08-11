@@ -26,29 +26,25 @@ long vocabularyId = ParamUtil.getLong(request, "vocabularyId");
 
 String friendlyURLBase = themeDisplay.getPortalURL() + CPConstants.SEPARATOR_ASSET_CATEGORY_URL;
 
-if (Validator.isNull(redirect)) {
-	PortletURL categoryRedirectURL = renderResponse.createRenderURL();
+PortletURL categoryRedirectURL = renderResponse.createRenderURL();
 
-	long parentCategoryId = BeanParamUtil.getLong(
-			category, request, "parentCategoryId");
+long parentCategoryId = BeanParamUtil.getLong(
+		category, request, "parentCategoryId");
 
-	categoryRedirectURL.setParameter("mvcPath", "/view_categories.jsp");
+categoryRedirectURL.setParameter("mvcPath", "/view_categories.jsp");
 
-	if (parentCategoryId > 0) {
-		categoryRedirectURL.setParameter(
-				"categoryId", String.valueOf(parentCategoryId));
-	}
+if (parentCategoryId > 0) {
+	categoryRedirectURL.setParameter(
+			"categoryId", String.valueOf(parentCategoryId));
+}
 
-	if (vocabularyId > 0) {
-		categoryRedirectURL.setParameter(
-				"vocabularyId", String.valueOf(vocabularyId));
-	}
-
-	redirect = categoryRedirectURL.toString();
+if (vocabularyId > 0) {
+	categoryRedirectURL.setParameter(
+			"vocabularyId", String.valueOf(vocabularyId));
 }
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBack(categoryRedirectURL.toString());
 
 renderResponse.setTitle(category.getTitle(locale));
 %>
@@ -57,7 +53,7 @@ renderResponse.setTitle(category.getTitle(locale));
 </portlet:actionURL>
 
 <aui:form action="<%= editCategoryURL %>" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="categoryId" type="hidden" value="<%= category.getCategoryId() %>" />
 
 	<div class="commerce-product-definition-url-title form-group">

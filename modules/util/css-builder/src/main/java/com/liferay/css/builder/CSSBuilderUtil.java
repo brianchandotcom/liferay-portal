@@ -86,8 +86,9 @@ public class CSSBuilderUtil {
 		}
 
 		return StringUtil.replace(
-			content, cssImports.toArray(new String[0]),
-			cssImportReplacements.toArray(new String[0]));
+			content, cssImports.toArray(new String[cssImports.size()]),
+			cssImportReplacements.toArray(
+				new String[cssImportReplacements.size()]));
 	}
 
 	public static String parseStaticTokens(String content) {

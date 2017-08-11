@@ -14,7 +14,6 @@
 
 package com.liferay.portal.dao.jdbc;
 
-import com.liferay.portal.dao.jdbc.functions.RetryJDBCConnectionFunction;
 import com.liferay.portal.dao.jdbc.pool.metrics.C3P0ConnectionPoolMetrics;
 import com.liferay.portal.dao.jdbc.pool.metrics.DBCPConnectionPoolMetrics;
 import com.liferay.portal.dao.jdbc.pool.metrics.HikariConnectionPoolMetrics;
@@ -643,27 +642,51 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 	}
 
 	private void _waitForJDBCConnection(Properties properties) {
-		RetryJDBCConnectionFunction retryJDBCConnectionFunction =
-			new RetryJDBCConnectionFunction(
-				properties, PropsValues.RETRY_JDBC_ON_STARTUP_DELAY,
-				PropsValues.RETRY_JDBC_ON_STARTUP_MAX_RETRIES);
+		int delaySeconds = PropsValues.RETRY_JDBC_ON_STARTUP_DELAY;
+		int times = PropsValues.RETRY_JDBC_ON_STARTUP_MAX_RETRIES;
 
-		try (Connection jdbcConnection = retryJDBCConnectionFunction.apply(
-				DataSourceFactoryImpl::_getJDBCConnection)) {
+		int retryCount = times;
 
-			if (jdbcConnection != null) {
-				if (_log.isInfoEnabled()) {
-					_log.info("JDBC connection successfully retried.");
+		while (retryCount-- > 0) {
+			try (Connection connection = _getJDBCConnection(properties)) {
+				if (connection != null) {
+					if (_log.isInfoEnabled()) {
+						_log.info("JDBC connection successfully acquired.");
+					}
+
+					return;
 				}
 			}
-			else if (_log.isWarnEnabled()) {
+			catch (SQLException sqle) {
+				_log.error("Unable to close JDBC connection", sqle);
+			}
+
+			if (_log.isWarnEnabled()) {
+				int current = times - retryCount;
+
 				_log.warn(
-					"Unable to acquired a JDBC connection, proceed to try on " +
-						"DataSource");
+					"Retrying JDBC connection in " + delaySeconds +
+						" seconds. (Currently " + current + ")");
+			}
+
+			if (delaySeconds > 0) {
+				try {
+					Thread.sleep(delaySeconds * 1000);
+				}
+				catch (InterruptedException ie) {
+					if (_log.isWarnEnabled()) {
+						_log.warn("Interruptted JDBC retry waiting", ie);
+					}
+
+					break;
+				}
 			}
 		}
-		catch (SQLException sqle) {
-			_log.error("Unable to close JDBC connection", sqle);
+
+		if (_log.isWarnEnabled()) {
+			_log.warn(
+				"Unable to acquired a JDBC connection, proceed to try on " +
+					"DataSource");
 		}
 	}
 

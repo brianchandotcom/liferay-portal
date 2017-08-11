@@ -624,31 +624,20 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 		}
 	}
 
-	private static Connection _getJDBCConnection(Properties properties) {
-		try {
-			String databaseURL = properties.getProperty("url");
-			String user = properties.getProperty("username");
-			String password = properties.getProperty("password");
-
-			return DriverManager.getConnection(databaseURL, user, password);
-		}
-		catch (SQLException sqle) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to get jdbc connection", sqle);
-			}
-
-			return null;
-		}
-	}
-
 	private void _waitForJDBCConnection(Properties properties) {
 		int delaySeconds = PropsValues.RETRY_JDBC_ON_STARTUP_DELAY;
 		int times = PropsValues.RETRY_JDBC_ON_STARTUP_MAX_RETRIES;
 
+		String databaseURL = properties.getProperty("url");
+		String user = properties.getProperty("username");
+		String password = properties.getProperty("password");
+
 		int retryCount = times;
 
 		while (retryCount-- > 0) {
-			try (Connection connection = _getJDBCConnection(properties)) {
+			try (Connection connection = DriverManager.getConnection(
+					databaseURL, user, password)) {
+
 				if (connection != null) {
 					if (_log.isInfoEnabled()) {
 						_log.info("JDBC connection successfully acquired.");
@@ -658,7 +647,9 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 				}
 			}
 			catch (SQLException sqle) {
-				_log.error("Unable to close JDBC connection", sqle);
+				if (_log.isDebugEnabled()) {
+					_log.error("Unable to get JDBC connection", sqle);
+				}
 			}
 
 			if (_log.isWarnEnabled()) {

@@ -61,6 +61,15 @@ public class ExcludeSyntaxPattern {
 		return _excludeSyntax;
 	}
 
+	@Override
+	public int hashCode() {
+		String s = _excludeSyntax.getValue();
+
+		s = s.concat(_excludePattern);
+
+		return s.hashCode();
+	}
+
 	private final String _excludePattern;
 	private final ExcludeSyntax _excludeSyntax;
 

@@ -109,6 +109,10 @@ public class PortalWebResourcesUtil {
 	}
 
 	public static URL getResource(ServletContext servletContext, String path) {
+		if (servletContext == null) {
+			return null;
+		}
+
 		path = stripContextPath(servletContext, path);
 
 		try {

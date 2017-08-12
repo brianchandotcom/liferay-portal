@@ -48,6 +48,10 @@ public class PortletResourcesUtil {
 	}
 
 	public static URL getResource(ServletContext servletContext, String path) {
+		if (servletContext == null) {
+			return null;
+		}
+
 		path = PortalWebResourcesUtil.stripContextPath(servletContext, path);
 
 		try {

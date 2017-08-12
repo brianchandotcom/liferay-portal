@@ -1,6 +1,7 @@
 **/docroot/WEB-INF/tld/
 *.iml
 .classpath
+.gh.json
 .gradle/
 .idea/
 .project

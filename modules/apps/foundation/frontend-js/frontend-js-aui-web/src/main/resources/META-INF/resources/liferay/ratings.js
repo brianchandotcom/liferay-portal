@@ -495,15 +495,50 @@ AUI.add(
 					_updateScores: function(thumbScore) {
 						var instance = this;
 
+						var cssClasses = instance.ratings.get('cssClasses');
 						var elements = instance.ratings.get('elements');
+
+						var cssClassesOn = cssClasses.on;
 
 						var ratingThumbDown = elements.item(1);
 						var ratingThumbUp = elements.item(0);
 
-						ratingThumbUp.html(thumbScore.positiveVotes);
+						var ratingThumbDownCssClassOn = ratingThumbDown.hasClass(cssClassesOn);
+						var ratingThumbUpCssClassOn = ratingThumbUp.hasClass(cssClassesOn);
+
+						var thumbDownMessage = '';
+						var thumbUpMessage = '';
 
 						if (ratingThumbDown) {
+							if (ratingThumbDownCssClassOn) {
+								thumbDownMessage = Liferay.Language.get('you-have-rated-this-as-bad');
+							}
+							else {
+								thumbDownMessage = Liferay.Language.get('rate-this-as-bad');
+							}
+
+							ratingThumbDown.attr('title', thumbDownMessage);
+
 							ratingThumbDown.html(thumbScore.negativeVotes);
+						}
+
+						if (ratingThumbDown && ratingThumbUpCssClassOn) {
+							thumbUpMessage = Liferay.Language.get('you-have-rated-this-as-good');
+						}
+						else if (ratingThumbDown && !ratingThumbUpCssClassOn) {
+							thumbUpMessage = Liferay.Language.get('rate-this-as-good');
+						}
+						else if (!ratingThumbDown && ratingThumbUpCssClassOn) {
+							thumbUpMessage = Liferay.Language.get('unlike-this');
+						}
+						else if (!ratingThumbDown && !ratingThumbUpCssClassOn) {
+							thumbUpMessage = Liferay.Language.get('like-this');
+						}
+
+						if (ratingThumbUp) {
+							ratingThumbUp.attr('title', thumbUpMessage);
+
+							ratingThumbUp.html(thumbScore.positiveVotes);
 						}
 					}
 				}

@@ -175,28 +175,29 @@ if (ratingsEntry != null) {
 								</c:if>
 							</c:when>
 							<c:otherwise>
-								<a class="glyphicon glyphicon-thumbs-up rating-element rating-thumb-up rating-<%= (thumbUp) ? "on" : "off" %>" href="javascript:;"><%= positiveVotes %></a>
+
+								<%
+								String positiveRatingMessage = null;
+
+								if (type.equals(RatingsType.THUMBS.getValue())) {
+									positiveRatingMessage = (thumbUp) ? "you-have-rated-this-as-good" : "rate-this-as-good";
+								}
+								else {
+									positiveRatingMessage = (thumbUp) ? "unlike-this" : "like-this";
+								}
+								%>
+
+								<a class="glyphicon glyphicon-thumbs-up rating-element rating-thumb-up rating-<%= (thumbUp) ? "on" : "off" %>" href="javascript:;" title="<liferay-ui:message key="<%= positiveRatingMessage %>" />"><%= positiveVotes %></a>
 
 								<c:if test="<%= type.equals(RatingsType.THUMBS.getValue()) %>">
-									<a class="glyphicon glyphicon-thumbs-down rating-element rating-thumb-down rating-<%= (thumbDown) ? "on" : "off" %>" href="javascript:;"><%= negativeVotes %></a>
+									<a class="glyphicon glyphicon-thumbs-down rating-element rating-thumb-down rating-<%= (thumbDown) ? "on" : "off" %>" href="javascript:;" title="<liferay-ui:message key='<%= (thumbDown) ? "you-have-rated-this-as-bad" : "rate-this-as-bad" %>' />"><%= negativeVotes %></a>
 								</c:if>
 
 								<div class="rating-input-container">
 
 									<%
 									String ratingId = PortalUtil.generateRandomKey(request, "taglib_ui_ratings_page_rating");
-
-									String positiveRatingMessage = null;
-
-									if (type.equals(RatingsType.THUMBS.getValue())) {
-										positiveRatingMessage = (thumbUp) ? "you-have-rated-this-as-good" : "rate-this-as-good";
-									}
-									else {
-										positiveRatingMessage = (thumbUp) ? "unlike-this" : "like-this";
-									}
 									%>
-
-									<label for="<%= ratingId %>"><liferay-ui:message key="<%= positiveRatingMessage %>" /></label>
 
 									<input class="rating-input" id="<%= ratingId %>" name="<portlet:namespace /><%= ratingIdPrefix %>" type="radio" value="up">
 
@@ -205,8 +206,6 @@ if (ratingsEntry != null) {
 										<%
 										ratingId = PortalUtil.generateRandomKey(request, "taglib_ui_ratings_page_rating");
 										%>
-
-										<label for="<%= ratingId %>"><liferay-ui:message key='<%= (thumbDown) ? "you-have-rated-this-as-bad" : "rate-this-as-bad" %>' /></label>
 
 										<input class="rating-input" id="<%= ratingId %>" name="<portlet:namespace /><%= ratingIdPrefix %>" type="radio" value="down">
 									</c:if>

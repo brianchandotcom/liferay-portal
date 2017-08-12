@@ -15,6 +15,7 @@
 package com.liferay.source.formatter;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -328,6 +329,18 @@ public class SourceFormatter {
 
 		List<ExcludeSyntaxPattern> excludeSyntaxPatterns =
 			new ArrayList<ExcludeSyntaxPattern>();
+
+		for (String exclude : excludes) {
+			excludeSyntaxPatterns.add(
+				new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, exclude));
+		}
+
+		// See the source-format-jdk8 task in built-test-batch.xml for more
+		// information
+
+		String systemExcludes = System.getProperty("source.formatter.excludes");
+
+		excludes = ListUtil.fromString(GetterUtil.getString(systemExcludes));
 
 		for (String exclude : excludes) {
 			excludeSyntaxPatterns.add(

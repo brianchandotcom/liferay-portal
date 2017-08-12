@@ -22,11 +22,22 @@ import com.liferay.portal.kernel.util.StringPool;
 public class PropertiesServiceKeysCheck extends BaseFileCheck {
 
 	@Override
+	public void init() throws Exception {
+		_projectPathPrefix = getProjectPathPrefix();
+	}
+
+	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
 		if (!fileName.endsWith("/service.properties")) {
+			return content;
+		}
+
+		if (isPortalSource() &&
+			isModulesApp(absolutePath, _projectPathPrefix, true)) {
+
 			return content;
 		}
 
@@ -40,5 +51,7 @@ public class PropertiesServiceKeysCheck extends BaseFileCheck {
 	}
 
 	private static final String[] _LEGACY_SERVICE_KEYS = {"build.auto.upgrade"};
+
+	private String _projectPathPrefix;
 
 }

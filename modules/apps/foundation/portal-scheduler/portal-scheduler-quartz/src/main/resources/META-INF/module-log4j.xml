@@ -5,4 +5,8 @@
 	<category name="com.liferay.portal.scheduler.quartz.internal.PortalJobStore">
 		<priority value="ERROR" />
 	</category>
+
+	<category name="com.liferay.portal.scheduler.quartz.internal.QuartzSchedulerEngine">
+		<priority value="WARN" />
+	</category>
 </log4j:configuration>

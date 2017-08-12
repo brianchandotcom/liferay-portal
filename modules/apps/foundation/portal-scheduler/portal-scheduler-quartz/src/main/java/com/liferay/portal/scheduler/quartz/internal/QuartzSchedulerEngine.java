@@ -61,6 +61,7 @@ import org.quartz.JobBuilder;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
 import org.quartz.JobKey;
+import org.quartz.JobPersistenceException;
 import org.quartz.ObjectAlreadyExistsException;
 import org.quartz.Scheduler;
 import org.quartz.Trigger;
@@ -795,9 +796,15 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 				SchedulerEngine.JOB_STATE,
 				JobStateSerializeUtil.serialize(jobState));
 
-			synchronized (this) {
-				scheduler.deleteJob(trigger.getJobKey());
+			try {
 				scheduler.scheduleJob(jobDetail, trigger);
+			}
+			catch (JobPersistenceException jpe) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Scheduler job " + trigger.getJobKey() +
+							" already exists");
+				}
 			}
 		}
 		catch (ObjectAlreadyExistsException oaee) {

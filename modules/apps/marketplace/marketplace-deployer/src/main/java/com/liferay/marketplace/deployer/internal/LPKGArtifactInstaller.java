@@ -81,7 +81,9 @@ public class LPKGArtifactInstaller implements ArtifactInstaller {
 		if (GetterUtil.getBoolean(
 				properties.getProperty("restart-required"), true)) {
 
-			_logRestartRequired(file.getCanonicalPath());
+			if (existingBundle == null) {
+				_logRestartRequired(file.getCanonicalPath());
+			}
 
 			return;
 		}

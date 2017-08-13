@@ -383,7 +383,23 @@
 			</path>
 		</pathconvert>
 
-		<pathconvert pathsep="," property="app.module.dirs">
+		<pathconvert pathsep="," property="app.module.dirs.private">
+			<globmapper from="${modules.dir}${file.separator}*" to="*" />
+			<path>
+				<dirset dir="${modules.dir}" excludes="**/*-test*,${app.module.dirs.excludes}" includes="apps/${app.name}/**,private/apps/${app.name}/**">
+					<present targetdir="${modules.dir}">
+						<mapper from="*" to="*/.lfrbuild-portal" type="glob" />
+					</present>
+				</dirset>
+				<dirset dir="${modules.dir}" excludes="${app.module.dirs.excludes}" includes="apps/${app.name}/**,private/apps/${app.name}/**">
+					<present targetdir="${modules.dir}">
+						<mapper from="*" to="*/.lfrbuild-portal-private" type="glob" />
+					</present>
+				</dirset>
+			</path>
+		</pathconvert>
+
+		<pathconvert pathsep="," property="app.module.dirs.public">
 			<globmapper from="${modules.dir}${file.separator}*" to="*" />
 			<path>
 				<dirset dir="${modules.dir}" excludes="**/*-test*,${app.module.dirs.excludes}" includes="apps/${app.name}/**,private/apps/${app.name}/**">
@@ -393,6 +409,14 @@
 				</dirset>
 			</path>
 		</pathconvert>
+
+		<condition
+			else="${app.module.dirs.public}"
+			property="app.module.dirs"
+			value="${app.module.dirs.excludes.private}"
+		>
+			<istrue value="${current.private}" />
+		</condition>
 
 		<condition property="module.dirs.null">
 			<or>

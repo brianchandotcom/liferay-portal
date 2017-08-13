@@ -56,14 +56,17 @@
 			<li class="collapse-hover" id="cartIcon">
 				<a class="btn hidden-xs animate" href="/cart">
 					<#if cartItemsCount != 0>
-						<svg class="lexicon-icon">
+						<span class="sticker sticker-outside">${cartItemsCount}</span>
+
+						<svg class="lexicon-icon icon-bag-full">
 							<use xlink:href="${images_folder}/theme-icons.svg#icon-bag-full" />
 						</svg>
-
-						<span class="sticker sticker-outside">${cartItemsCount}</span>
 					<#else>
-						<svg class="lexicon-icon">
+						<svg class="lexicon-icon icon-bag">
 							<use xlink:href="${images_folder}/theme-icons.svg#icon-bag" />
+						</svg>
+						<svg class="lexicon-icon icon-bag-full" style="display: none">
+							<use xlink:href="${images_folder}/theme-icons.svg#icon-bag-full" />
 						</svg>
 					</#if>
 				</a>

@@ -3,8 +3,8 @@
 		function(A) {
 			var animateNodes = A.all('.animate');
 
-			var cartIcon = A.one('#cartIcon a');
-			var wishListIcon = A.one('#wishListIcon a');
+			var cartIcon = A.one('#cartIcon > a');
+			var wishListIcon = A.one('#wishListIcon > a');
 
 			animateNodes.each(
 				function(node) {
@@ -19,8 +19,24 @@
 
 					if (cartIcon) {
 						cartIcon.addClass('animBounce');
-					}
 
+						var cartIconCount = A.one('#cartIcon > a .sticker');
+
+						if (cartIconCount) {
+							var cartItemCount = event.commerceCartItemsCount;
+
+							cartIconCount.html(cartItemCount);
+						}
+						else {
+							var bagFullIcon = A.one('#cartIcon > a .icon-bag-full');
+							var bagIcon = A.one('#cartIcon > a .icon-bag');
+
+							bagFullIcon.show();
+							bagIcon.remove();
+
+							cartIcon.append('<span class="sticker sticker-outside">' + event.commerceCartItemsCount + '</span>');
+						}
+					}
 				}
 			);
 

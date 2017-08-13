@@ -42,6 +42,9 @@ public class StartupFailureMessageGenerator
 
 		int start = consoleOutput.indexOf(_TOKEN_UNRESOLVED_REQUIREMENT);
 
+		start = consoleOutput.lastIndexOf(
+			_TOKEN_COULD_NOT_RESOLVE_MODULE, start);
+
 		start = consoleOutput.lastIndexOf("\n", start);
 
 		int end = consoleOutput.indexOf(_TOKEN_DELETING);
@@ -63,6 +66,8 @@ public class StartupFailureMessageGenerator
 
 		int start = consoleText.indexOf(_TOKEN_UNRESOLVED_REQUIREMENT);
 
+		start = consoleText.lastIndexOf(_TOKEN_COULD_NOT_RESOLVE_MODULE, start);
+
 		start = consoleText.lastIndexOf("\n", start);
 
 		int end = consoleText.indexOf(_TOKEN_DELETING, start);
@@ -77,6 +82,9 @@ public class StartupFailureMessageGenerator
 					"strong", null, "Unresolved Requirement(s)")),
 			getConsoleOutputSnippetElement(consoleText, true, start, end));
 	}
+
+	private static final String _TOKEN_COULD_NOT_RESOLVE_MODULE =
+		"Could not resolve module:";
 
 	private static final String _TOKEN_DELETING = "Deleting:";
 

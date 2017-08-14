@@ -75,7 +75,7 @@ public class SoyPortletHelper {
 		String packageName = getJavaScriptPackageName(mvcCommandName);
 
 		if (packageName == null) {
-			throw new Exception("Could not retrieve package name.");
+			throw new Exception("Unable to get package name");
 		}
 
 		if (!controllerName.startsWith(StringPool.SLASH)) {

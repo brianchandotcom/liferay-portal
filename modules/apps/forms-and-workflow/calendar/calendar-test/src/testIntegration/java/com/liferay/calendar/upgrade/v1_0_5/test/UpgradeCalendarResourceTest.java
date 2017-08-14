@@ -176,7 +176,7 @@ public class UpgradeCalendarResourceTest {
 
 	protected void setUpUpgradeCalendarResource() {
 		_upgradeCalendarResource = CalendarUpgradeTestUtil.getUpgradeStep(
-			"UpgradeCalendarResource");
+			"v1_0_5.UpgradeCalendarResource");
 	}
 
 	@DeleteAfterTestRun

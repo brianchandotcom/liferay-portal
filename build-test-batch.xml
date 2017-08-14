@@ -477,7 +477,12 @@ app.server.type=@{app.server.type}]]></echo>
 			<if>
 				<contains string="@{app.server.type}" substring="tomcat" />
 				<then>
-					<zip basedir="${project.dir}" destfile="liferay-portal-source.zip" includes="**/*.class,modules/core/portal-bootstrap/build/system.packages.extra.mf,sql/**/*.sql,sql/lportal.properties,sql/lportal.script,tmp/**/*.jar,tools/sdk/dist/com.liferay.portal.dao.db-*.jar" />
+					<zip
+						basedir="${project.dir}"
+						destfile="liferay-portal-source.zip"
+						excludes="modules/**/tmp/**/*.class"
+						includes="**/*.class,modules/core/portal-bootstrap/build/system.packages.extra.mf,sql/**/*.sql,sql/lportal.properties,sql/lportal.script,tmp/**/*.jar,tools/sdk/dist/com.liferay.portal.dao.db-*.jar"
+					/>
 
 					<prepare-liferay-classes if:true="${test.batch.code.coverage}" merged.jar="${project.dir}/jacoco/merged.jar" portal.bundle.dir="bundles" />
 				</then>

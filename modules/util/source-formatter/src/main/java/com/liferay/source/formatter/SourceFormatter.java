@@ -324,11 +324,11 @@ public class SourceFormatter {
 	private List<ExcludeSyntaxPattern> _getExcludeSyntaxPatterns(
 		String sourceFormatterExcludes) {
 
-		List<String> excludes = ListUtil.fromString(
-			sourceFormatterExcludes, StringPool.COMMA);
-
 		List<ExcludeSyntaxPattern> excludeSyntaxPatterns =
 			new ArrayList<ExcludeSyntaxPattern>();
+
+		List<String> excludes = ListUtil.fromString(
+			sourceFormatterExcludes, StringPool.COMMA);
 
 		for (String exclude : excludes) {
 			excludeSyntaxPatterns.add(

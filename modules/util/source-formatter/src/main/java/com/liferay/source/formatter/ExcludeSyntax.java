@@ -23,12 +23,14 @@ public enum ExcludeSyntax {
 
 	public static ExcludeSyntax parse(String value) {
 		String globValue = GLOB.getValue();
-		String regexValue = REGEX.getValue();
 
 		if (globValue.equals(value)) {
 			return GLOB;
 		}
-		else if (regexValue.equals(value)) {
+
+		String regexValue = REGEX.getValue();
+
+		if (regexValue.equals(value)) {
 			return REGEX;
 		}
 

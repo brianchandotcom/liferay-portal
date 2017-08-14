@@ -211,7 +211,7 @@ public class SoyPortletHelper {
 		}
 
 		throw new PortletException(
-			"Could not find controller for path '" + mvcCommandName + "'");
+			"Unable to get controller for " + mvcCommandName);
 	}
 
 	protected String getJavaScriptPackageName(String path) throws Exception {
@@ -223,11 +223,11 @@ public class SoyPortletHelper {
 
 		String moduleName = jsonObject.getString("name");
 
-		String moduleVersion = jsonObject.getString("version");
-
 		if (Validator.isNull(moduleName)) {
 			return null;
 		}
+
+		String moduleVersion = jsonObject.getString("version");
 
 		if (Validator.isNull(moduleVersion)) {
 			return moduleName;

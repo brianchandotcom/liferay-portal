@@ -5009,11 +5009,15 @@ public class ServiceBuilder {
 
 			@Override
 			public int compare(JavaMethod javaMethod1, JavaMethod javaMethod2) {
-				String declarationSignature =
-					javaMethod1.getDeclarationSignature(false);
+				JavaClass parentClass1 = javaMethod1.getParentClass();
+				JavaClass parentClass2 = javaMethod2.getParentClass();
 
-				return declarationSignature.compareTo(
-					javaMethod2.getDeclarationSignature(false));
+				String methodSignature1 = _getMethodSignature(
+					javaMethod1, parentClass1.getPackageName());
+				String methodSignature2 = _getMethodSignature(
+					javaMethod2, parentClass2.getPackageName());
+
+				return methodSignature1.compareTo(methodSignature2);
 			}
 
 		};

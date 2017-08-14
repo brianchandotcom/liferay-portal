@@ -65,6 +65,7 @@
 						<svg class="lexicon-icon icon-bag">
 							<use xlink:href="${images_folder}/theme-icons.svg#icon-bag" />
 						</svg>
+
 						<svg class="lexicon-icon icon-bag-full" style="display: none">
 							<use xlink:href="${images_folder}/theme-icons.svg#icon-bag-full" />
 						</svg>

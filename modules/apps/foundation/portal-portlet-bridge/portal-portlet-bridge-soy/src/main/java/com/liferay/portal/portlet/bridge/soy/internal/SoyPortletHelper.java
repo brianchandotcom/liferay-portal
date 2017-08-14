@@ -239,7 +239,7 @@ public class SoyPortletHelper {
 	protected Bundle getMVCCommandBundle(String mvcCommandName)
 		throws PortletException {
 
-		MVCCommand mvcRenderCommand;
+		MVCCommand mvcRenderCommand = null;
 
 		if (Validator.isNull(mvcCommandName)) {
 			mvcRenderCommand = MVCRenderCommand.EMPTY;

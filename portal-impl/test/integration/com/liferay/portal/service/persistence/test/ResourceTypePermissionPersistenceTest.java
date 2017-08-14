@@ -55,8 +55,10 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
+ * @deprecated
  * @generated
  */
+@Deprecated
 public class ResourceTypePermissionPersistenceTest {
 	@ClassRule
 	@Rule

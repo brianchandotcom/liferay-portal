@@ -53,8 +53,10 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * @deprecated
  * @generated
  */
+@Deprecated
 public class ResourceBlockPermissionPersistenceTest {
 	@ClassRule
 	@Rule

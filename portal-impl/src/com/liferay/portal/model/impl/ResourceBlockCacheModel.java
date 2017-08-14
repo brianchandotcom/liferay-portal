@@ -33,8 +33,10 @@ import java.io.ObjectOutput;
  *
  * @author Brian Wing Shun Chan
  * @see ResourceBlock
+ * @deprecated As of 7.0.0, with no direct replacement
  * @generated
  */
+@Deprecated
 @ProviderType
 public class ResourceBlockCacheModel implements CacheModel<ResourceBlock>,
 	Externalizable, MVCCModel {

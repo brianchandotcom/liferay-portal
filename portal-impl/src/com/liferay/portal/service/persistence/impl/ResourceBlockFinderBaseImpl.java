@@ -21,8 +21,10 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, with no direct replacement
  * @generated
  */
+@Deprecated
 public class ResourceBlockFinderBaseImpl extends BasePersistenceImpl<ResourceBlock> {
 	public ResourceBlockFinderBaseImpl() {
 		setModelClass(ResourceBlock.class);

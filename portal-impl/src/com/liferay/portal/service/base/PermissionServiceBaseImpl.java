@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.service.PermissionService;
-import com.liferay.portal.kernel.service.persistence.ResourceBlockFinder;
-import com.liferay.portal.kernel.service.persistence.ResourceBlockPersistence;
 import com.liferay.portal.kernel.service.persistence.ResourcePermissionFinder;
 import com.liferay.portal.kernel.service.persistence.ResourcePermissionPersistence;
 import com.liferay.portal.kernel.service.persistence.RoleFinder;
@@ -93,81 +91,6 @@ public abstract class PermissionServiceBaseImpl extends BaseServiceImpl
 	public void setCounterLocalService(
 		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
-	}
-
-	/**
-	 * Returns the resource block local service.
-	 *
-	 * @return the resource block local service
-	 */
-	public com.liferay.portal.kernel.service.ResourceBlockLocalService getResourceBlockLocalService() {
-		return resourceBlockLocalService;
-	}
-
-	/**
-	 * Sets the resource block local service.
-	 *
-	 * @param resourceBlockLocalService the resource block local service
-	 */
-	public void setResourceBlockLocalService(
-		com.liferay.portal.kernel.service.ResourceBlockLocalService resourceBlockLocalService) {
-		this.resourceBlockLocalService = resourceBlockLocalService;
-	}
-
-	/**
-	 * Returns the resource block remote service.
-	 *
-	 * @return the resource block remote service
-	 */
-	public com.liferay.portal.kernel.service.ResourceBlockService getResourceBlockService() {
-		return resourceBlockService;
-	}
-
-	/**
-	 * Sets the resource block remote service.
-	 *
-	 * @param resourceBlockService the resource block remote service
-	 */
-	public void setResourceBlockService(
-		com.liferay.portal.kernel.service.ResourceBlockService resourceBlockService) {
-		this.resourceBlockService = resourceBlockService;
-	}
-
-	/**
-	 * Returns the resource block persistence.
-	 *
-	 * @return the resource block persistence
-	 */
-	public ResourceBlockPersistence getResourceBlockPersistence() {
-		return resourceBlockPersistence;
-	}
-
-	/**
-	 * Sets the resource block persistence.
-	 *
-	 * @param resourceBlockPersistence the resource block persistence
-	 */
-	public void setResourceBlockPersistence(
-		ResourceBlockPersistence resourceBlockPersistence) {
-		this.resourceBlockPersistence = resourceBlockPersistence;
-	}
-
-	/**
-	 * Returns the resource block finder.
-	 *
-	 * @return the resource block finder
-	 */
-	public ResourceBlockFinder getResourceBlockFinder() {
-		return resourceBlockFinder;
-	}
-
-	/**
-	 * Sets the resource block finder.
-	 *
-	 * @param resourceBlockFinder the resource block finder
-	 */
-	public void setResourceBlockFinder(ResourceBlockFinder resourceBlockFinder) {
-		this.resourceBlockFinder = resourceBlockFinder;
 	}
 
 	/**
@@ -512,14 +435,6 @@ public abstract class PermissionServiceBaseImpl extends BaseServiceImpl
 	protected PermissionService permissionService;
 	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.ResourceBlockLocalService.class)
-	protected com.liferay.portal.kernel.service.ResourceBlockLocalService resourceBlockLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.ResourceBlockService.class)
-	protected com.liferay.portal.kernel.service.ResourceBlockService resourceBlockService;
-	@BeanReference(type = ResourceBlockPersistence.class)
-	protected ResourceBlockPersistence resourceBlockPersistence;
-	@BeanReference(type = ResourceBlockFinder.class)
-	protected ResourceBlockFinder resourceBlockFinder;
 	@BeanReference(type = com.liferay.portal.kernel.service.ResourcePermissionLocalService.class)
 	protected com.liferay.portal.kernel.service.ResourcePermissionLocalService resourcePermissionLocalService;
 	@BeanReference(type = com.liferay.portal.kernel.service.ResourcePermissionService.class)

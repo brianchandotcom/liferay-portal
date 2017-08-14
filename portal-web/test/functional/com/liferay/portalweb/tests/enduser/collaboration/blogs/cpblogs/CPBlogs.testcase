@@ -892,7 +892,7 @@
 
 		<execute function="Click" locator1="Button#PLUS" />
 
- 		<execute function="AssertClick" locator1="BlogsEntry#ENTRY_COVER_IMAGE_SELECT_FILE" value1="Select File" />
+		<execute macro="BlogsNavigator#gotoSelectFile" />
 
 		<execute macro="ItemSelector#uploadFile">
 			<var name="navTab" value="Upload Image" />

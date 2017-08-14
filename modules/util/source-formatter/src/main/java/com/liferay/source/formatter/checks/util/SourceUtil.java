@@ -93,12 +93,24 @@ public class SourceUtil {
 
 		int level = startLevel;
 
+		String increaseLevelText = s;
+
 		for (String increaseLevelString : increaseLevelStrings) {
-			level = _adjustLevel(level, s, increaseLevelString, 1);
+			level = _adjustLevel(
+				level, increaseLevelText, increaseLevelString, 1);
+
+			increaseLevelText = StringUtil.replaceFirst(
+				increaseLevelText, increaseLevelString, StringPool.BLANK);
 		}
 
+		String decreaseLevelText = s;
+
 		for (String decreaseLevelString : decreaseLevelStrings) {
-			level = _adjustLevel(level, s, decreaseLevelString, -1);
+			level = _adjustLevel(
+				level, decreaseLevelText, decreaseLevelString, -1);
+
+			decreaseLevelText = StringUtil.replaceFirst(
+				decreaseLevelText, decreaseLevelString, StringPool.BLANK);
 		}
 
 		return level;

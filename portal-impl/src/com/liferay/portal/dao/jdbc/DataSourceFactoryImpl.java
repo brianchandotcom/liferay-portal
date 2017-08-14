@@ -53,6 +53,10 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 import java.net.URL;
 import java.net.URLClassLoader;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 import java.util.Enumeration;
 import java.util.Map;
 import java.util.Properties;
@@ -115,6 +119,10 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 
 		properties = defaultProperties;
 
+		testDatabaseClass(properties);
+
+		_waitForJDBCConnection(properties);
+
 		String jndiName = properties.getProperty("jndi.name");
 
 		if (Validator.isNotNull(jndiName)) {
@@ -139,8 +147,6 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 
 			_log.debug(PropertiesUtil.toString(sortedProperties));
 		}
-
-		testDatabaseClass(properties);
 
 		DataSource dataSource = null;
 
@@ -613,6 +619,69 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 			JarUtil.downloadAndInstallJar(
 				new URL(url), PropsValues.LIFERAY_LIB_PORTAL_DIR, name,
 				(URLClassLoader)classLoader);
+		}
+	}
+
+	private void _waitForJDBCConnection(Properties properties) {
+		int maxRetries = PropsValues.RETRY_JDBC_ON_STARTUP_MAX_RETRIES;
+
+		if (maxRetries <= 0) {
+			return;
+		}
+
+		int deplay = PropsValues.RETRY_JDBC_ON_STARTUP_DELAY;
+
+		if (deplay < 0) {
+			deplay = 0;
+		}
+
+		String url = properties.getProperty("url");
+		String username = properties.getProperty("username");
+		String password = properties.getProperty("password");
+
+		int count = maxRetries;
+
+		while (count-- > 0) {
+			try (Connection connection = DriverManager.getConnection(
+					url, username, password)) {
+
+				if (connection != null) {
+					if (_log.isInfoEnabled()) {
+						_log.info("JDBC connection successfully acquired.");
+					}
+
+					return;
+				}
+			}
+			catch (SQLException sqle) {
+				if (_log.isDebugEnabled()) {
+					_log.error("Unable to get JDBC connection", sqle);
+				}
+			}
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Retrying JDBC connection in " + deplay +
+						" seconds. (Currently " + (maxRetries - count) + "/" +
+							maxRetries + ")");
+			}
+
+			try {
+				Thread.sleep(deplay * 1000);
+			}
+			catch (InterruptedException ie) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Interruptted JDBC retry waiting", ie);
+				}
+
+				break;
+			}
+		}
+
+		if (_log.isWarnEnabled()) {
+			_log.warn(
+				"Unable to acquired a JDBC connection, proceed to try on " +
+					"DataSource");
 		}
 	}
 

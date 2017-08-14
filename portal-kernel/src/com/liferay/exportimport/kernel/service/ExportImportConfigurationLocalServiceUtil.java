@@ -130,83 +130,8 @@ public class ExportImportConfigurationLocalServiceUtil {
 				   .deleteExportImportConfiguration(exportImportConfigurationId);
 	}
 
-	public static com.liferay.exportimport.kernel.model.ExportImportConfiguration fetchExportImportConfiguration(
-		long exportImportConfigurationId) {
-		return getService()
-				   .fetchExportImportConfiguration(exportImportConfigurationId);
-	}
-
-	/**
-	* Returns the export import configuration with the primary key.
-	*
-	* @param exportImportConfigurationId the primary key of the export import configuration
-	* @return the export import configuration
-	* @throws PortalException if a export import configuration with the primary key could not be found
-	*/
-	public static com.liferay.exportimport.kernel.model.ExportImportConfiguration getExportImportConfiguration(
-		long exportImportConfigurationId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getExportImportConfiguration(exportImportConfigurationId);
-	}
-
-	public static com.liferay.exportimport.kernel.model.ExportImportConfiguration moveExportImportConfigurationToTrash(
-		long userId, long exportImportConfigurationId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .moveExportImportConfigurationToTrash(userId,
-			exportImportConfigurationId);
-	}
-
-	public static com.liferay.exportimport.kernel.model.ExportImportConfiguration restoreExportImportConfigurationFromTrash(
-		long userId, long exportImportConfigurationId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .restoreExportImportConfigurationFromTrash(userId,
-			exportImportConfigurationId);
-	}
-
-	/**
-	* Updates the export import configuration in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param exportImportConfiguration the export import configuration
-	* @return the export import configuration that was updated
-	*/
-	public static com.liferay.exportimport.kernel.model.ExportImportConfiguration updateExportImportConfiguration(
-		com.liferay.exportimport.kernel.model.ExportImportConfiguration exportImportConfiguration) {
-		return getService()
-				   .updateExportImportConfiguration(exportImportConfiguration);
-	}
-
-	public static com.liferay.exportimport.kernel.model.ExportImportConfiguration updateExportImportConfiguration(
-		long userId, long exportImportConfigurationId, java.lang.String name,
-		java.lang.String description,
-		java.util.Map<java.lang.String, java.io.Serializable> settingsMap,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateExportImportConfiguration(userId,
-			exportImportConfigurationId, name, description, settingsMap,
-			serviceContext);
-	}
-
-	public static com.liferay.exportimport.kernel.model.ExportImportConfiguration updateStatus(
-		long userId, long exportImportConfigurationId, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateStatus(userId, exportImportConfigurationId, status);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
+	public static void deleteExportImportConfigurations(long groupId) {
+		getService().deleteExportImportConfigurations(groupId);
 	}
 
 	/**
@@ -218,70 +143,8 @@ public class ExportImportConfigurationLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.exportimport.kernel.model.ExportImportConfiguration> searchExportImportConfigurations(
-		long companyId, long groupId, int type, java.lang.String keywords,
-		int start, int end, com.liferay.portal.kernel.search.Sort sort)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .searchExportImportConfigurations(companyId, groupId, type,
-			keywords, start, end, sort);
-	}
-
-	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.exportimport.kernel.model.ExportImportConfiguration> searchExportImportConfigurations(
-		long companyId, long groupId, int type, java.lang.String name,
-		java.lang.String description, boolean andSearch, int start, int end,
-		com.liferay.portal.kernel.search.Sort sort)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .searchExportImportConfigurations(companyId, groupId, type,
-			name, description, andSearch, start, end, sort);
-	}
-
-	/**
-	* Returns the number of export import configurations.
-	*
-	* @return the number of export import configurations
-	*/
-	public static int getExportImportConfigurationsCount() {
-		return getService().getExportImportConfigurationsCount();
-	}
-
-	public static int getExportImportConfigurationsCount(long companyId,
-		long groupId, java.lang.String keywords, int type) {
-		return getService()
-				   .getExportImportConfigurationsCount(companyId, groupId,
-			keywords, type);
-	}
-
-	public static int getExportImportConfigurationsCount(long companyId,
-		long groupId, java.lang.String name, java.lang.String description,
-		int type, boolean andSearch) {
-		return getService()
-				   .getExportImportConfigurationsCount(companyId, groupId,
-			name, description, type, andSearch);
-	}
-
-	public static int getExportImportConfigurationsCount(long groupId) {
-		return getService().getExportImportConfigurationsCount(groupId);
-	}
-
-	public static int getExportImportConfigurationsCount(long groupId, int type) {
-		return getService().getExportImportConfigurationsCount(groupId, type);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
 	}
 
 	/**
@@ -334,60 +197,6 @@ public class ExportImportConfigurationLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.exportimport.kernel.model.ExportImportConfiguration> getExportImportConfigurations(
-		com.liferay.portal.kernel.search.Hits hits)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getExportImportConfigurations(hits);
-	}
-
-	/**
-	* Returns a range of all the export import configurations.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.exportimport.model.impl.ExportImportConfigurationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of export import configurations
-	* @param end the upper bound of the range of export import configurations (not inclusive)
-	* @return the range of export import configurations
-	*/
-	public static java.util.List<com.liferay.exportimport.kernel.model.ExportImportConfiguration> getExportImportConfigurations(
-		int start, int end) {
-		return getService().getExportImportConfigurations(start, end);
-	}
-
-	public static java.util.List<com.liferay.exportimport.kernel.model.ExportImportConfiguration> getExportImportConfigurations(
-		long companyId, long groupId, java.lang.String keywords, int type,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.exportimport.kernel.model.ExportImportConfiguration> orderByComparator) {
-		return getService()
-				   .getExportImportConfigurations(companyId, groupId, keywords,
-			type, start, end, orderByComparator);
-	}
-
-	public static java.util.List<com.liferay.exportimport.kernel.model.ExportImportConfiguration> getExportImportConfigurations(
-		long companyId, long groupId, java.lang.String name,
-		java.lang.String description, int type, boolean andSearch, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.exportimport.kernel.model.ExportImportConfiguration> orderByComparator) {
-		return getService()
-				   .getExportImportConfigurations(companyId, groupId, name,
-			description, type, andSearch, start, end, orderByComparator);
-	}
-
-	public static java.util.List<com.liferay.exportimport.kernel.model.ExportImportConfiguration> getExportImportConfigurations(
-		long groupId, int type) {
-		return getService().getExportImportConfigurations(groupId, type);
-	}
-
-	public static java.util.List<com.liferay.exportimport.kernel.model.ExportImportConfiguration> getExportImportConfigurations(
-		long groupId, int type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.exportimport.kernel.model.ExportImportConfiguration> orderByComparator) {
-		return getService()
-				   .getExportImportConfigurations(groupId, type, start, end,
-			orderByComparator);
-	}
-
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -412,8 +221,199 @@ public class ExportImportConfigurationLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static void deleteExportImportConfigurations(long groupId) {
-		getService().deleteExportImportConfigurations(groupId);
+	public static com.liferay.exportimport.kernel.model.ExportImportConfiguration fetchExportImportConfiguration(
+		long exportImportConfigurationId) {
+		return getService()
+				   .fetchExportImportConfiguration(exportImportConfigurationId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the export import configuration with the primary key.
+	*
+	* @param exportImportConfigurationId the primary key of the export import configuration
+	* @return the export import configuration
+	* @throws PortalException if a export import configuration with the primary key could not be found
+	*/
+	public static com.liferay.exportimport.kernel.model.ExportImportConfiguration getExportImportConfiguration(
+		long exportImportConfigurationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getExportImportConfiguration(exportImportConfigurationId);
+	}
+
+	public static java.util.List<com.liferay.exportimport.kernel.model.ExportImportConfiguration> getExportImportConfigurations(
+		com.liferay.portal.kernel.search.Hits hits)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getExportImportConfigurations(hits);
+	}
+
+	/**
+	* Returns a range of all the export import configurations.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.exportimport.model.impl.ExportImportConfigurationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of export import configurations
+	* @param end the upper bound of the range of export import configurations (not inclusive)
+	* @return the range of export import configurations
+	*/
+	public static java.util.List<com.liferay.exportimport.kernel.model.ExportImportConfiguration> getExportImportConfigurations(
+		int start, int end) {
+		return getService().getExportImportConfigurations(start, end);
+	}
+
+	public static java.util.List<com.liferay.exportimport.kernel.model.ExportImportConfiguration> getExportImportConfigurations(
+		long groupId, int type) {
+		return getService().getExportImportConfigurations(groupId, type);
+	}
+
+	public static java.util.List<com.liferay.exportimport.kernel.model.ExportImportConfiguration> getExportImportConfigurations(
+		long groupId, int type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.exportimport.kernel.model.ExportImportConfiguration> orderByComparator) {
+		return getService()
+				   .getExportImportConfigurations(groupId, type, start, end,
+			orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.exportimport.kernel.model.ExportImportConfiguration> getExportImportConfigurations(
+		long companyId, long groupId, java.lang.String keywords, int type,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.exportimport.kernel.model.ExportImportConfiguration> orderByComparator) {
+		return getService()
+				   .getExportImportConfigurations(companyId, groupId, keywords,
+			type, start, end, orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.exportimport.kernel.model.ExportImportConfiguration> getExportImportConfigurations(
+		long companyId, long groupId, java.lang.String name,
+		java.lang.String description, int type, boolean andSearch, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.exportimport.kernel.model.ExportImportConfiguration> orderByComparator) {
+		return getService()
+				   .getExportImportConfigurations(companyId, groupId, name,
+			description, type, andSearch, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the number of export import configurations.
+	*
+	* @return the number of export import configurations
+	*/
+	public static int getExportImportConfigurationsCount() {
+		return getService().getExportImportConfigurationsCount();
+	}
+
+	public static int getExportImportConfigurationsCount(long groupId) {
+		return getService().getExportImportConfigurationsCount(groupId);
+	}
+
+	public static int getExportImportConfigurationsCount(long groupId, int type) {
+		return getService().getExportImportConfigurationsCount(groupId, type);
+	}
+
+	public static int getExportImportConfigurationsCount(long companyId,
+		long groupId, java.lang.String keywords, int type) {
+		return getService()
+				   .getExportImportConfigurationsCount(companyId, groupId,
+			keywords, type);
+	}
+
+	public static int getExportImportConfigurationsCount(long companyId,
+		long groupId, java.lang.String name, java.lang.String description,
+		int type, boolean andSearch) {
+		return getService()
+				   .getExportImportConfigurationsCount(companyId, groupId,
+			name, description, type, andSearch);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static com.liferay.exportimport.kernel.model.ExportImportConfiguration moveExportImportConfigurationToTrash(
+		long userId, long exportImportConfigurationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .moveExportImportConfigurationToTrash(userId,
+			exportImportConfigurationId);
+	}
+
+	public static com.liferay.exportimport.kernel.model.ExportImportConfiguration restoreExportImportConfigurationFromTrash(
+		long userId, long exportImportConfigurationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .restoreExportImportConfigurationFromTrash(userId,
+			exportImportConfigurationId);
+	}
+
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.exportimport.kernel.model.ExportImportConfiguration> searchExportImportConfigurations(
+		long companyId, long groupId, int type, java.lang.String keywords,
+		int start, int end, com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .searchExportImportConfigurations(companyId, groupId, type,
+			keywords, start, end, sort);
+	}
+
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.exportimport.kernel.model.ExportImportConfiguration> searchExportImportConfigurations(
+		long companyId, long groupId, int type, java.lang.String name,
+		java.lang.String description, boolean andSearch, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .searchExportImportConfigurations(companyId, groupId, type,
+			name, description, andSearch, start, end, sort);
+	}
+
+	/**
+	* Updates the export import configuration in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param exportImportConfiguration the export import configuration
+	* @return the export import configuration that was updated
+	*/
+	public static com.liferay.exportimport.kernel.model.ExportImportConfiguration updateExportImportConfiguration(
+		com.liferay.exportimport.kernel.model.ExportImportConfiguration exportImportConfiguration) {
+		return getService()
+				   .updateExportImportConfiguration(exportImportConfiguration);
+	}
+
+	public static com.liferay.exportimport.kernel.model.ExportImportConfiguration updateExportImportConfiguration(
+		long userId, long exportImportConfigurationId, java.lang.String name,
+		java.lang.String description,
+		java.util.Map<java.lang.String, java.io.Serializable> settingsMap,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateExportImportConfiguration(userId,
+			exportImportConfigurationId, name, description, settingsMap,
+			serviceContext);
+	}
+
+	public static com.liferay.exportimport.kernel.model.ExportImportConfiguration updateStatus(
+		long userId, long exportImportConfigurationId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateStatus(userId, exportImportConfigurationId, status);
 	}
 
 	public static ExportImportConfigurationLocalService getService() {

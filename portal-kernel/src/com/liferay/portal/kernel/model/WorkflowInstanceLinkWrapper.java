@@ -144,58 +144,13 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	}
 
 	@Override
-	public CacheModel<WorkflowInstanceLink> toCacheModel() {
-		return _workflowInstanceLink.toCacheModel();
-	}
-
-	@Override
-	public WorkflowInstanceLink toEscapedModel() {
-		return new WorkflowInstanceLinkWrapper(_workflowInstanceLink.toEscapedModel());
-	}
-
-	@Override
-	public WorkflowInstanceLink toUnescapedModel() {
-		return new WorkflowInstanceLinkWrapper(_workflowInstanceLink.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _workflowInstanceLink.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _workflowInstanceLink.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _workflowInstanceLink.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _workflowInstanceLink.getExpandoBridge();
+	public java.lang.Object clone() {
+		return new WorkflowInstanceLinkWrapper((WorkflowInstanceLink)_workflowInstanceLink.clone());
 	}
 
 	@Override
 	public int compareTo(WorkflowInstanceLink workflowInstanceLink) {
 		return _workflowInstanceLink.compareTo(workflowInstanceLink);
-	}
-
-	@Override
-	public int hashCode() {
-		return _workflowInstanceLink.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _workflowInstanceLink.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new WorkflowInstanceLinkWrapper((WorkflowInstanceLink)_workflowInstanceLink.clone());
 	}
 
 	/**
@@ -206,56 +161,6 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	@Override
 	public java.lang.String getClassName() {
 		return _workflowInstanceLink.getClassName();
-	}
-
-	/**
-	* Returns the user name of this workflow instance link.
-	*
-	* @return the user name of this workflow instance link
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _workflowInstanceLink.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this workflow instance link.
-	*
-	* @return the user uuid of this workflow instance link
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _workflowInstanceLink.getUserUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _workflowInstanceLink.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _workflowInstanceLink.toXmlString();
-	}
-
-	/**
-	* Returns the create date of this workflow instance link.
-	*
-	* @return the create date of this workflow instance link
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _workflowInstanceLink.getCreateDate();
-	}
-
-	/**
-	* Returns the modified date of this workflow instance link.
-	*
-	* @return the modified date of this workflow instance link
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _workflowInstanceLink.getModifiedDate();
 	}
 
 	/**
@@ -289,6 +194,21 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	}
 
 	/**
+	* Returns the create date of this workflow instance link.
+	*
+	* @return the create date of this workflow instance link
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _workflowInstanceLink.getCreateDate();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _workflowInstanceLink.getExpandoBridge();
+	}
+
+	/**
 	* Returns the group ID of this workflow instance link.
 	*
 	* @return the group ID of this workflow instance link
@@ -296,6 +216,16 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	@Override
 	public long getGroupId() {
 		return _workflowInstanceLink.getGroupId();
+	}
+
+	/**
+	* Returns the modified date of this workflow instance link.
+	*
+	* @return the modified date of this workflow instance link
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _workflowInstanceLink.getModifiedDate();
 	}
 
 	/**
@@ -318,6 +248,11 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 		return _workflowInstanceLink.getPrimaryKey();
 	}
 
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _workflowInstanceLink.getPrimaryKeyObj();
+	}
+
 	/**
 	* Returns the user ID of this workflow instance link.
 	*
@@ -326,6 +261,26 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	@Override
 	public long getUserId() {
 		return _workflowInstanceLink.getUserId();
+	}
+
+	/**
+	* Returns the user name of this workflow instance link.
+	*
+	* @return the user name of this workflow instance link
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _workflowInstanceLink.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this workflow instance link.
+	*
+	* @return the user uuid of this workflow instance link
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _workflowInstanceLink.getUserUuid();
 	}
 
 	/**
@@ -346,6 +301,26 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	@Override
 	public long getWorkflowInstanceLinkId() {
 		return _workflowInstanceLink.getWorkflowInstanceLinkId();
+	}
+
+	@Override
+	public int hashCode() {
+		return _workflowInstanceLink.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _workflowInstanceLink.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _workflowInstanceLink.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _workflowInstanceLink.isNew();
 	}
 
 	@Override
@@ -404,13 +379,13 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_workflowInstanceLink.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_workflowInstanceLink.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_workflowInstanceLink.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
+		_workflowInstanceLink.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -516,6 +491,31 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	@Override
 	public void setWorkflowInstanceLinkId(long workflowInstanceLinkId) {
 		_workflowInstanceLink.setWorkflowInstanceLinkId(workflowInstanceLinkId);
+	}
+
+	@Override
+	public CacheModel<WorkflowInstanceLink> toCacheModel() {
+		return _workflowInstanceLink.toCacheModel();
+	}
+
+	@Override
+	public WorkflowInstanceLink toEscapedModel() {
+		return new WorkflowInstanceLinkWrapper(_workflowInstanceLink.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _workflowInstanceLink.toString();
+	}
+
+	@Override
+	public WorkflowInstanceLink toUnescapedModel() {
+		return new WorkflowInstanceLinkWrapper(_workflowInstanceLink.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _workflowInstanceLink.toXmlString();
 	}
 
 	@Override

@@ -84,114 +84,6 @@ public class DDLRecordVersionLocalServiceWrapper
 		return _ddlRecordVersionLocalService.deleteDDLRecordVersion(recordVersionId);
 	}
 
-	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecordVersion fetchDDLRecordVersion(
-		long recordVersionId) {
-		return _ddlRecordVersionLocalService.fetchDDLRecordVersion(recordVersionId);
-	}
-
-	/**
-	* Returns the latest record version matching the user, the record set, the
-	* record set version and workflow status.
-	*
-	* @param userId the primary key of the user
-	* @param recordSetId the primary key of the record set
-	* @param recordSetVersion the version of the record set
-	* @param status the workflow status
-	* @return the latest matching record version or <code>null</code>
-	*/
-	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecordVersion fetchLatestRecordVersion(
-		long userId, long recordSetId, java.lang.String recordSetVersion,
-		int status) {
-		return _ddlRecordVersionLocalService.fetchLatestRecordVersion(userId,
-			recordSetId, recordSetVersion, status);
-	}
-
-	/**
-	* Returns the ddl record version with the primary key.
-	*
-	* @param recordVersionId the primary key of the ddl record version
-	* @return the ddl record version
-	* @throws PortalException if a ddl record version with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecordVersion getDDLRecordVersion(
-		long recordVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecordVersionLocalService.getDDLRecordVersion(recordVersionId);
-	}
-
-	/**
-	* Returns the record's latest record version.
-	*
-	* @param recordId the primary key of the record
-	* @return the latest record version for the given record
-	* @throws PortalException if a portal exception occurred
-	*/
-	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecordVersion getLatestRecordVersion(
-		long recordId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecordVersionLocalService.getLatestRecordVersion(recordId);
-	}
-
-	/**
-	* Returns the record version matching the record and version.
-	*
-	* @param recordId the primary key of the record
-	* @param version the record version
-	* @return the record version matching the record primary key and version
-	* @throws PortalException if a matching record set could not be found
-	*/
-	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecordVersion getRecordVersion(
-		long recordId, java.lang.String version)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecordVersionLocalService.getRecordVersion(recordId, version);
-	}
-
-	/**
-	* Returns the record version by its ID.
-	*
-	* @param recordVersionId the primary key of the record version
-	* @return the record version with the ID
-	* @throws PortalException if a matching record set could not be found
-	*/
-	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecordVersion getRecordVersion(
-		long recordVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecordVersionLocalService.getRecordVersion(recordVersionId);
-	}
-
-	/**
-	* Updates the ddl record version in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param ddlRecordVersion the ddl record version
-	* @return the ddl record version that was updated
-	*/
-	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecordVersion updateDDLRecordVersion(
-		com.liferay.dynamic.data.lists.model.DDLRecordVersion ddlRecordVersion) {
-		return _ddlRecordVersionLocalService.updateDDLRecordVersion(ddlRecordVersion);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _ddlRecordVersionLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _ddlRecordVersionLocalService.dynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _ddlRecordVersionLocalService.getIndexableActionableDynamicQuery();
-	}
-
 	/**
 	* @throws PortalException
 	*/
@@ -203,41 +95,8 @@ public class DDLRecordVersionLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecordVersionLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the number of ddl record versions.
-	*
-	* @return the number of ddl record versions
-	*/
-	@Override
-	public int getDDLRecordVersionsCount() {
-		return _ddlRecordVersionLocalService.getDDLRecordVersionsCount();
-	}
-
-	/**
-	* Returns the number of record versions matching the record ID.
-	*
-	* @param recordId the primary key of the record
-	* @return the number of matching record versions
-	*/
-	@Override
-	public int getRecordVersionsCount(long recordId) {
-		return _ddlRecordVersionLocalService.getRecordVersionsCount(recordId);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _ddlRecordVersionLocalService.getOSGiServiceIdentifier();
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _ddlRecordVersionLocalService.dynamicQuery();
 	}
 
 	/**
@@ -295,6 +154,76 @@ public class DDLRecordVersionLocalServiceWrapper
 	}
 
 	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _ddlRecordVersionLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _ddlRecordVersionLocalService.dynamicQueryCount(dynamicQuery,
+			projection);
+	}
+
+	@Override
+	public com.liferay.dynamic.data.lists.model.DDLRecordVersion fetchDDLRecordVersion(
+		long recordVersionId) {
+		return _ddlRecordVersionLocalService.fetchDDLRecordVersion(recordVersionId);
+	}
+
+	/**
+	* Returns the latest record version matching the user, the record set, the
+	* record set version and workflow status.
+	*
+	* @param userId the primary key of the user
+	* @param recordSetId the primary key of the record set
+	* @param recordSetVersion the version of the record set
+	* @param status the workflow status
+	* @return the latest matching record version or <code>null</code>
+	*/
+	@Override
+	public com.liferay.dynamic.data.lists.model.DDLRecordVersion fetchLatestRecordVersion(
+		long userId, long recordSetId, java.lang.String recordSetVersion,
+		int status) {
+		return _ddlRecordVersionLocalService.fetchLatestRecordVersion(userId,
+			recordSetId, recordSetVersion, status);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _ddlRecordVersionLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the ddl record version with the primary key.
+	*
+	* @param recordVersionId the primary key of the ddl record version
+	* @return the ddl record version
+	* @throws PortalException if a ddl record version with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.dynamic.data.lists.model.DDLRecordVersion getDDLRecordVersion(
+		long recordVersionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecordVersionLocalService.getDDLRecordVersion(recordVersionId);
+	}
+
+	/**
 	* Returns a range of all the ddl record versions.
 	*
 	* <p>
@@ -309,6 +238,81 @@ public class DDLRecordVersionLocalServiceWrapper
 	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordVersion> getDDLRecordVersions(
 		int start, int end) {
 		return _ddlRecordVersionLocalService.getDDLRecordVersions(start, end);
+	}
+
+	/**
+	* Returns the number of ddl record versions.
+	*
+	* @return the number of ddl record versions
+	*/
+	@Override
+	public int getDDLRecordVersionsCount() {
+		return _ddlRecordVersionLocalService.getDDLRecordVersionsCount();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _ddlRecordVersionLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the record's latest record version.
+	*
+	* @param recordId the primary key of the record
+	* @return the latest record version for the given record
+	* @throws PortalException if a portal exception occurred
+	*/
+	@Override
+	public com.liferay.dynamic.data.lists.model.DDLRecordVersion getLatestRecordVersion(
+		long recordId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecordVersionLocalService.getLatestRecordVersion(recordId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _ddlRecordVersionLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecordVersionLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Returns the record version by its ID.
+	*
+	* @param recordVersionId the primary key of the record version
+	* @return the record version with the ID
+	* @throws PortalException if a matching record set could not be found
+	*/
+	@Override
+	public com.liferay.dynamic.data.lists.model.DDLRecordVersion getRecordVersion(
+		long recordVersionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecordVersionLocalService.getRecordVersion(recordVersionId);
+	}
+
+	/**
+	* Returns the record version matching the record and version.
+	*
+	* @param recordId the primary key of the record
+	* @param version the record version
+	* @return the record version matching the record primary key and version
+	* @throws PortalException if a matching record set could not be found
+	*/
+	@Override
+	public com.liferay.dynamic.data.lists.model.DDLRecordVersion getRecordVersion(
+		long recordId, java.lang.String version)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecordVersionLocalService.getRecordVersion(recordId, version);
 	}
 
 	/**
@@ -340,30 +344,26 @@ public class DDLRecordVersionLocalServiceWrapper
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of record versions matching the record ID.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @param recordId the primary key of the record
+	* @return the number of matching record versions
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _ddlRecordVersionLocalService.dynamicQueryCount(dynamicQuery);
+	public int getRecordVersionsCount(long recordId) {
+		return _ddlRecordVersionLocalService.getRecordVersionsCount(recordId);
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Updates the ddl record version in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @param ddlRecordVersion the ddl record version
+	* @return the ddl record version that was updated
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _ddlRecordVersionLocalService.dynamicQueryCount(dynamicQuery,
-			projection);
+	public com.liferay.dynamic.data.lists.model.DDLRecordVersion updateDDLRecordVersion(
+		com.liferay.dynamic.data.lists.model.DDLRecordVersion ddlRecordVersion) {
+		return _ddlRecordVersionLocalService.updateDDLRecordVersion(ddlRecordVersion);
 	}
 
 	@Override

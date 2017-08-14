@@ -61,16 +61,9 @@ public class MDRRuleGroupInstanceServiceUtil {
 			ruleGroupId, priority, serviceContext);
 	}
 
-	public static com.liferay.mobile.device.rules.model.MDRRuleGroupInstance updateRuleGroupInstance(
-		long ruleGroupInstanceId, int priority)
+	public static void deleteRuleGroupInstance(long ruleGroupInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateRuleGroupInstance(ruleGroupInstanceId, priority);
-	}
-
-	public static int getRuleGroupInstancesCount(java.lang.String className,
-		long classPK) {
-		return getService().getRuleGroupInstancesCount(className, classPK);
+		getService().deleteRuleGroupInstance(ruleGroupInstanceId);
 	}
 
 	/**
@@ -90,9 +83,16 @@ public class MDRRuleGroupInstanceServiceUtil {
 			orderByComparator);
 	}
 
-	public static void deleteRuleGroupInstance(long ruleGroupInstanceId)
+	public static int getRuleGroupInstancesCount(java.lang.String className,
+		long classPK) {
+		return getService().getRuleGroupInstancesCount(className, classPK);
+	}
+
+	public static com.liferay.mobile.device.rules.model.MDRRuleGroupInstance updateRuleGroupInstance(
+		long ruleGroupInstanceId, int priority)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteRuleGroupInstance(ruleGroupInstanceId);
+		return getService()
+				   .updateRuleGroupInstance(ruleGroupInstanceId, priority);
 	}
 
 	public static MDRRuleGroupInstanceService getService() {

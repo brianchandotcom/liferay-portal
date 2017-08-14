@@ -163,141 +163,13 @@ public class SocialActivityWrapper implements SocialActivity,
 	}
 
 	@Override
-	public SocialActivity toEscapedModel() {
-		return new SocialActivityWrapper(_socialActivity.toEscapedModel());
-	}
-
-	@Override
-	public SocialActivity toUnescapedModel() {
-		return new SocialActivityWrapper(_socialActivity.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _socialActivity.isCachedModel();
-	}
-
-	@Override
-	public boolean isClassName(java.lang.String className) {
-		return _socialActivity.isClassName(className);
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _socialActivity.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _socialActivity.isNew();
-	}
-
-	@Override
-	public com.liferay.asset.kernel.model.AssetEntry getAssetEntry() {
-		return _socialActivity.getAssetEntry();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _socialActivity.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<SocialActivity> toCacheModel() {
-		return _socialActivity.toCacheModel();
+	public java.lang.Object clone() {
+		return new SocialActivityWrapper((SocialActivity)_socialActivity.clone());
 	}
 
 	@Override
 	public int compareTo(SocialActivity socialActivity) {
 		return _socialActivity.compareTo(socialActivity);
-	}
-
-	/**
-	* Returns the type of this social activity.
-	*
-	* @return the type of this social activity
-	*/
-	@Override
-	public int getType() {
-		return _socialActivity.getType();
-	}
-
-	@Override
-	public int hashCode() {
-		return _socialActivity.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _socialActivity.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new SocialActivityWrapper((SocialActivity)_socialActivity.clone());
-	}
-
-	/**
-	* Returns the fully qualified class name of this social activity.
-	*
-	* @return the fully qualified class name of this social activity
-	*/
-	@Override
-	public java.lang.String getClassName() {
-		return _socialActivity.getClassName();
-	}
-
-	/**
-	* Returns the extra data of this social activity.
-	*
-	* @return the extra data of this social activity
-	*/
-	@Override
-	public java.lang.String getExtraData() {
-		return _socialActivity.getExtraData();
-	}
-
-	@Override
-	public java.lang.String getExtraDataValue(java.lang.String key)
-		throws com.liferay.portal.kernel.json.JSONException {
-		return _socialActivity.getExtraDataValue(key);
-	}
-
-	@Override
-	public java.lang.String getExtraDataValue(java.lang.String key,
-		java.util.Locale locale)
-		throws com.liferay.portal.kernel.json.JSONException {
-		return _socialActivity.getExtraDataValue(key, locale);
-	}
-
-	/**
-	* Returns the receiver user uuid of this social activity.
-	*
-	* @return the receiver user uuid of this social activity
-	*/
-	@Override
-	public java.lang.String getReceiverUserUuid() {
-		return _socialActivity.getReceiverUserUuid();
-	}
-
-	/**
-	* Returns the user uuid of this social activity.
-	*
-	* @return the user uuid of this social activity
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _socialActivity.getUserUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _socialActivity.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _socialActivity.toXmlString();
 	}
 
 	/**
@@ -318,6 +190,21 @@ public class SocialActivityWrapper implements SocialActivity,
 	@Override
 	public long getActivitySetId() {
 		return _socialActivity.getActivitySetId();
+	}
+
+	@Override
+	public com.liferay.asset.kernel.model.AssetEntry getAssetEntry() {
+		return _socialActivity.getAssetEntry();
+	}
+
+	/**
+	* Returns the fully qualified class name of this social activity.
+	*
+	* @return the fully qualified class name of this social activity
+	*/
+	@Override
+	public java.lang.String getClassName() {
+		return _socialActivity.getClassName();
 	}
 
 	/**
@@ -358,6 +245,34 @@ public class SocialActivityWrapper implements SocialActivity,
 	@Override
 	public long getCreateDate() {
 		return _socialActivity.getCreateDate();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _socialActivity.getExpandoBridge();
+	}
+
+	/**
+	* Returns the extra data of this social activity.
+	*
+	* @return the extra data of this social activity
+	*/
+	@Override
+	public java.lang.String getExtraData() {
+		return _socialActivity.getExtraData();
+	}
+
+	@Override
+	public java.lang.String getExtraDataValue(java.lang.String key)
+		throws com.liferay.portal.kernel.json.JSONException {
+		return _socialActivity.getExtraDataValue(key);
+	}
+
+	@Override
+	public java.lang.String getExtraDataValue(java.lang.String key,
+		java.util.Locale locale)
+		throws com.liferay.portal.kernel.json.JSONException {
+		return _socialActivity.getExtraDataValue(key, locale);
 	}
 
 	/**
@@ -410,6 +325,11 @@ public class SocialActivityWrapper implements SocialActivity,
 		return _socialActivity.getPrimaryKey();
 	}
 
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _socialActivity.getPrimaryKeyObj();
+	}
+
 	/**
 	* Returns the receiver user ID of this social activity.
 	*
@@ -421,6 +341,26 @@ public class SocialActivityWrapper implements SocialActivity,
 	}
 
 	/**
+	* Returns the receiver user uuid of this social activity.
+	*
+	* @return the receiver user uuid of this social activity
+	*/
+	@Override
+	public java.lang.String getReceiverUserUuid() {
+		return _socialActivity.getReceiverUserUuid();
+	}
+
+	/**
+	* Returns the type of this social activity.
+	*
+	* @return the type of this social activity
+	*/
+	@Override
+	public int getType() {
+		return _socialActivity.getType();
+	}
+
+	/**
 	* Returns the user ID of this social activity.
 	*
 	* @return the user ID of this social activity
@@ -428,6 +368,41 @@ public class SocialActivityWrapper implements SocialActivity,
 	@Override
 	public long getUserId() {
 		return _socialActivity.getUserId();
+	}
+
+	/**
+	* Returns the user uuid of this social activity.
+	*
+	* @return the user uuid of this social activity
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _socialActivity.getUserUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _socialActivity.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _socialActivity.isCachedModel();
+	}
+
+	@Override
+	public boolean isClassName(java.lang.String className) {
+		return _socialActivity.isClassName(className);
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _socialActivity.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _socialActivity.isNew();
 	}
 
 	@Override
@@ -651,6 +626,31 @@ public class SocialActivityWrapper implements SocialActivity,
 	@Override
 	public void setUserUuid(java.lang.String userUuid) {
 		_socialActivity.setUserUuid(userUuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<SocialActivity> toCacheModel() {
+		return _socialActivity.toCacheModel();
+	}
+
+	@Override
+	public SocialActivity toEscapedModel() {
+		return new SocialActivityWrapper(_socialActivity.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _socialActivity.toString();
+	}
+
+	@Override
+	public SocialActivity toUnescapedModel() {
+		return new SocialActivityWrapper(_socialActivity.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _socialActivity.toXmlString();
 	}
 
 	@Override

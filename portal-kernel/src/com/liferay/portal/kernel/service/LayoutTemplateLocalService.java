@@ -52,12 +52,18 @@ public interface LayoutTemplateLocalService extends BaseLocalService {
 	 * Never modify or reference this interface directly. Always use {@link LayoutTemplateLocalServiceUtil} to access the layout template local service. Add custom service methods to {@link com.liferay.portal.service.impl.LayoutTemplateLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getContent(java.lang.String layoutTemplateId,
+		boolean standard, java.lang.String themeId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutTemplate getLayoutTemplate(java.lang.String layoutTemplateId,
 		boolean standard, java.lang.String themeId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getContent(java.lang.String layoutTemplateId,
-		boolean standard, java.lang.String themeId);
+	public List<LayoutTemplate> getLayoutTemplates();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutTemplate> getLayoutTemplates(java.lang.String themeId);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -65,12 +71,6 @@ public interface LayoutTemplateLocalService extends BaseLocalService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<LayoutTemplate> getLayoutTemplates();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<LayoutTemplate> getLayoutTemplates(java.lang.String themeId);
 
 	public List<LayoutTemplate> init(java.lang.String servletContextName,
 		ServletContext servletContext, java.lang.String[] xmls,

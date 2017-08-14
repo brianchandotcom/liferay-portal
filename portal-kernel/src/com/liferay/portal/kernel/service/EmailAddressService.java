@@ -53,6 +53,9 @@ public interface EmailAddressService extends BaseService {
 		long classPK, java.lang.String address, long typeId, boolean primary,
 		ServiceContext serviceContext) throws PortalException;
 
+	public void deleteEmailAddress(long emailAddressId)
+		throws PortalException;
+
 	/**
 	* Returns the email address with the primary key.
 	*
@@ -69,9 +72,9 @@ public interface EmailAddressService extends BaseService {
 	public EmailAddress getEmailAddress(long emailAddressId)
 		throws PortalException;
 
-	public EmailAddress updateEmailAddress(long emailAddressId,
-		java.lang.String address, long typeId, boolean primary)
-		throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<EmailAddress> getEmailAddresses(java.lang.String className,
+		long classPK) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -80,10 +83,7 @@ public interface EmailAddressService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<EmailAddress> getEmailAddresses(java.lang.String className,
-		long classPK) throws PortalException;
-
-	public void deleteEmailAddress(long emailAddressId)
+	public EmailAddress updateEmailAddress(long emailAddressId,
+		java.lang.String address, long typeId, boolean primary)
 		throws PortalException;
 }

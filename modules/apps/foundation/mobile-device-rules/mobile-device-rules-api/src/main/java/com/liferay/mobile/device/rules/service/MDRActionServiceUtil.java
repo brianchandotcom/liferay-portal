@@ -66,6 +66,11 @@ public class MDRActionServiceUtil {
 			type, typeSettings, serviceContext);
 	}
 
+	public static void deleteAction(long actionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteAction(actionId);
+	}
+
 	public static com.liferay.mobile.device.rules.model.MDRAction fetchAction(
 		long actionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -76,6 +81,15 @@ public class MDRActionServiceUtil {
 		long actionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getAction(actionId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static com.liferay.mobile.device.rules.model.MDRAction updateAction(
@@ -101,20 +115,6 @@ public class MDRActionServiceUtil {
 		return getService()
 				   .updateAction(actionId, nameMap, descriptionMap, type,
 			typeSettings, serviceContext);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static void deleteAction(long actionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteAction(actionId);
 	}
 
 	public static MDRActionService getService() {

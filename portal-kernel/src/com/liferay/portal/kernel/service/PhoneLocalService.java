@@ -62,29 +62,6 @@ public interface PhoneLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PhoneLocalServiceUtil} to access the phone local service. Add custom service methods to {@link com.liferay.portal.service.impl.PhoneLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
 
 	/**
 	* Adds the phone to the database. Also notifies the appropriate model listeners.
@@ -109,6 +86,13 @@ public interface PhoneLocalService extends BaseLocalService,
 	public Phone createPhone(long phoneId);
 
 	/**
+	* @throws PortalException
+	*/
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
+
+	/**
 	* Deletes the phone from the database. Also notifies the appropriate model listeners.
 	*
 	* @param phone the phone
@@ -128,69 +112,10 @@ public interface PhoneLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public Phone deletePhone(long phoneId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Phone fetchPhone(long phoneId);
+	public void deletePhones(long companyId, java.lang.String className,
+		long classPK);
 
-	/**
-	* Returns the phone with the matching UUID and company.
-	*
-	* @param uuid the phone's UUID
-	* @param companyId the primary key of the company
-	* @return the matching phone, or <code>null</code> if a matching phone could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Phone fetchPhoneByUuidAndCompanyId(java.lang.String uuid,
-		long companyId);
-
-	/**
-	* Returns the phone with the primary key.
-	*
-	* @param phoneId the primary key of the phone
-	* @return the phone
-	* @throws PortalException if a phone with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Phone getPhone(long phoneId) throws PortalException;
-
-	/**
-	* Returns the phone with the matching UUID and company.
-	*
-	* @param uuid the phone's UUID
-	* @param companyId the primary key of the company
-	* @return the matching phone
-	* @throws PortalException if a matching phone could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Phone getPhoneByUuidAndCompanyId(java.lang.String uuid,
-		long companyId) throws PortalException;
-
-	/**
-	* Updates the phone in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param phone the phone
-	* @return the phone that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public Phone updatePhone(Phone phone);
-
-	public Phone updatePhone(long phoneId, java.lang.String number,
-		java.lang.String extension, long typeId, boolean primary)
-		throws PortalException;
-
-	/**
-	* Returns the number of phones.
-	*
-	* @return the number of phones
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getPhonesCount();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -231,6 +156,82 @@ public interface PhoneLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Phone fetchPhone(long phoneId);
+
+	/**
+	* Returns the phone with the matching UUID and company.
+	*
+	* @param uuid the phone's UUID
+	* @param companyId the primary key of the company
+	* @return the matching phone, or <code>null</code> if a matching phone could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Phone fetchPhoneByUuidAndCompanyId(java.lang.String uuid,
+		long companyId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Returns the phone with the primary key.
+	*
+	* @param phoneId the primary key of the phone
+	* @return the phone
+	* @throws PortalException if a phone with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Phone getPhone(long phoneId) throws PortalException;
+
+	/**
+	* Returns the phone with the matching UUID and company.
+	*
+	* @param uuid the phone's UUID
+	* @param companyId the primary key of the company
+	* @return the matching phone
+	* @throws PortalException if a matching phone could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Phone getPhoneByUuidAndCompanyId(java.lang.String uuid,
+		long companyId) throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Phone> getPhones();
 
@@ -253,23 +254,23 @@ public interface PhoneLocalService extends BaseLocalService,
 		long classPK);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of phones.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of phones
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getPhonesCount();
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Updates the phone in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @param phone the phone
+	* @return the phone that was updated
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	@Indexable(type = IndexableType.REINDEX)
+	public Phone updatePhone(Phone phone);
 
-	public void deletePhones(long companyId, java.lang.String className,
-		long classPK);
+	public Phone updatePhone(long phoneId, java.lang.String number,
+		java.lang.String extension, long typeId, boolean primary)
+		throws PortalException;
 }

@@ -60,25 +60,6 @@ public interface MeetupsRegistrationLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MeetupsRegistrationLocalServiceUtil} to access the meetups registration local service. Add custom service methods to {@link com.liferay.social.networking.service.impl.MeetupsRegistrationLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
 
 	/**
 	* Adds the meetups registration to the database. Also notifies the appropriate model listeners.
@@ -120,56 +101,14 @@ public interface MeetupsRegistrationLocalService extends BaseLocalService,
 	public MeetupsRegistration deleteMeetupsRegistration(
 		long meetupsRegistrationId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MeetupsRegistration fetchMeetupsRegistration(
-		long meetupsRegistrationId);
-
 	/**
-	* Returns the meetups registration with the primary key.
-	*
-	* @param meetupsRegistrationId the primary key of the meetups registration
-	* @return the meetups registration
-	* @throws PortalException if a meetups registration with the primary key could not be found
+	* @throws PortalException
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MeetupsRegistration getMeetupsRegistration(
-		long meetupsRegistrationId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MeetupsRegistration getMeetupsRegistration(long userId,
-		long meetupsEntryId) throws PortalException;
-
-	/**
-	* Updates the meetups registration in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param meetupsRegistration the meetups registration
-	* @return the meetups registration that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public MeetupsRegistration updateMeetupsRegistration(
-		MeetupsRegistration meetupsRegistration);
-
-	public MeetupsRegistration updateMeetupsRegistration(long userId,
-		long meetupsEntryId, int status, java.lang.String comments)
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	/**
-	* Returns the number of meetups registrations.
-	*
-	* @return the number of meetups registrations
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getMeetupsRegistrationsCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getMeetupsRegistrationsCount(long meetupsEntryId, int status);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -211,6 +150,49 @@ public interface MeetupsRegistrationLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MeetupsRegistration fetchMeetupsRegistration(
+		long meetupsRegistrationId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* Returns the meetups registration with the primary key.
+	*
+	* @param meetupsRegistrationId the primary key of the meetups registration
+	* @return the meetups registration
+	* @throws PortalException if a meetups registration with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MeetupsRegistration getMeetupsRegistration(
+		long meetupsRegistrationId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MeetupsRegistration getMeetupsRegistration(long userId,
+		long meetupsEntryId) throws PortalException;
+
+	/**
 	* Returns a range of all the meetups registrations.
 	*
 	* <p>
@@ -229,20 +211,39 @@ public interface MeetupsRegistrationLocalService extends BaseLocalService,
 		long meetupsEntryId, int status, int start, int end);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of meetups registrations.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of meetups registrations
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getMeetupsRegistrationsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getMeetupsRegistrationsCount(long meetupsEntryId, int status);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Updates the meetups registration in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param meetupsRegistration the meetups registration
+	* @return the meetups registration that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public MeetupsRegistration updateMeetupsRegistration(
+		MeetupsRegistration meetupsRegistration);
+
+	public MeetupsRegistration updateMeetupsRegistration(long userId,
+		long meetupsEntryId, int status, java.lang.String comments)
+		throws PortalException;
 }

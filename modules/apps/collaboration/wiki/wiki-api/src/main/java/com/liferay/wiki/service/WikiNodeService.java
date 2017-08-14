@@ -63,18 +63,31 @@ public interface WikiNodeService extends BaseService {
 		java.lang.String description, ServiceContext serviceContext)
 		throws PortalException;
 
+	public void deleteNode(long nodeId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WikiNode getNode(long nodeId) throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WikiNode getNode(long groupId, java.lang.String name)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiNode getNode(long nodeId) throws PortalException;
+	public List<WikiNode> getNodes(long groupId) throws PortalException;
 
-	public WikiNode moveNodeToTrash(long nodeId) throws PortalException;
-
-	public WikiNode updateNode(long nodeId, java.lang.String name,
-		java.lang.String description, ServiceContext serviceContext)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<WikiNode> getNodes(long groupId, int status)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<WikiNode> getNodes(long groupId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<WikiNode> getNodes(long groupId, int status, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<WikiNode> getNodes(long groupId, int status, int start,
+		int end, OrderByComparator<WikiNode> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getNodesCount(long groupId);
@@ -89,33 +102,20 @@ public interface WikiNodeService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<WikiNode> getNodes(long groupId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<WikiNode> getNodes(long groupId, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<WikiNode> getNodes(long groupId, int status)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<WikiNode> getNodes(long groupId, int status, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<WikiNode> getNodes(long groupId, int status, int start,
-		int end, OrderByComparator<WikiNode> obc);
-
-	public void deleteNode(long nodeId) throws PortalException;
-
 	public void importPages(long nodeId, java.lang.String importer,
 		InputStream[] inputStreams,
 		Map<java.lang.String, java.lang.String[]> options)
 		throws PortalException;
+
+	public WikiNode moveNodeToTrash(long nodeId) throws PortalException;
 
 	public void restoreNodeFromTrash(long nodeId) throws PortalException;
 
 	public void subscribeNode(long nodeId) throws PortalException;
 
 	public void unsubscribeNode(long nodeId) throws PortalException;
+
+	public WikiNode updateNode(long nodeId, java.lang.String name,
+		java.lang.String description, ServiceContext serviceContext)
+		throws PortalException;
 }

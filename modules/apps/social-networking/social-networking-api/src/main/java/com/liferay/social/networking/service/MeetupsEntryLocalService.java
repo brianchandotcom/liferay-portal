@@ -60,25 +60,6 @@ public interface MeetupsEntryLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MeetupsEntryLocalServiceUtil} to access the meetups entry local service. Add custom service methods to {@link com.liferay.social.networking.service.impl.MeetupsEntryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
 
 	/**
 	* Adds the meetups entry to the database. Also notifies the appropriate model listeners.
@@ -124,51 +105,14 @@ public interface MeetupsEntryLocalService extends BaseLocalService,
 	public MeetupsEntry deleteMeetupsEntry(long meetupsEntryId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MeetupsEntry fetchMeetupsEntry(long meetupsEntryId);
-
 	/**
-	* Returns the meetups entry with the primary key.
-	*
-	* @param meetupsEntryId the primary key of the meetups entry
-	* @return the meetups entry
-	* @throws PortalException if a meetups entry with the primary key could not be found
+	* @throws PortalException
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MeetupsEntry getMeetupsEntry(long meetupsEntryId)
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	/**
-	* Updates the meetups entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param meetupsEntry the meetups entry
-	* @return the meetups entry that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public MeetupsEntry updateMeetupsEntry(MeetupsEntry meetupsEntry);
-
-	public MeetupsEntry updateMeetupsEntry(long userId, long meetupsEntryId,
-		java.lang.String title, java.lang.String description,
-		int startDateMonth, int startDateDay, int startDateYear,
-		int startDateHour, int startDateMinute, int endDateMonth,
-		int endDateDay, int endDateYear, int endDateHour, int endDateMinute,
-		int totalAttendees, int maxAttendees, double price, byte[] thumbnail)
-		throws PortalException;
-
-	/**
-	* Returns the number of meetups entries.
-	*
-	* @return the number of meetups entries
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getMeetupsEntriesCount();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -210,6 +154,33 @@ public interface MeetupsEntryLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MeetupsEntry fetchMeetupsEntry(long meetupsEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
 	* Returns a range of all the meetups entries.
 	*
 	* <p>
@@ -230,20 +201,50 @@ public interface MeetupsEntryLocalService extends BaseLocalService,
 	public List<MeetupsEntry> getMeetupsEntriesByUser(long userId);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of meetups entries.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of meetups entries
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getMeetupsEntriesCount();
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the meetups entry with the primary key.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @param meetupsEntryId the primary key of the meetups entry
+	* @return the meetups entry
+	* @throws PortalException if a meetups entry with the primary key could not be found
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MeetupsEntry getMeetupsEntry(long meetupsEntryId)
+		throws PortalException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Updates the meetups entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param meetupsEntry the meetups entry
+	* @return the meetups entry that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public MeetupsEntry updateMeetupsEntry(MeetupsEntry meetupsEntry);
+
+	public MeetupsEntry updateMeetupsEntry(long userId, long meetupsEntryId,
+		java.lang.String title, java.lang.String description,
+		int startDateMonth, int startDateDay, int startDateYear,
+		int startDateHour, int startDateMinute, int endDateMonth,
+		int endDateDay, int endDateYear, int endDateHour, int endDateMinute,
+		int totalAttendees, int maxAttendees, double price, byte[] thumbnail)
+		throws PortalException;
 }

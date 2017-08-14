@@ -183,38 +183,8 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	}
 
 	@Override
-	public Account toEscapedModel() {
-		return new AccountWrapper(_account.toEscapedModel());
-	}
-
-	@Override
-	public Account toUnescapedModel() {
-		return new AccountWrapper(_account.toUnescapedModel());
-	}
-
-	@Override
-	public CacheModel<Account> toCacheModel() {
-		return _account.toCacheModel();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _account.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _account.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _account.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _account.getExpandoBridge();
+	public java.lang.Object clone() {
+		return new AccountWrapper((Account)_account.clone());
 	}
 
 	@Override
@@ -222,19 +192,39 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 		return _account.compareTo(account);
 	}
 
+	/**
+	* Returns the account ID of this account.
+	*
+	* @return the account ID of this account
+	*/
 	@Override
-	public int hashCode() {
-		return _account.hashCode();
+	public long getAccountId() {
+		return _account.getAccountId();
+	}
+
+	/**
+	* Returns the company ID of this account.
+	*
+	* @return the company ID of this account
+	*/
+	@Override
+	public long getCompanyId() {
+		return _account.getCompanyId();
+	}
+
+	/**
+	* Returns the create date of this account.
+	*
+	* @return the create date of this account
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _account.getCreateDate();
 	}
 
 	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _account.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new AccountWrapper((Account)_account.clone());
+	public ExpandoBridge getExpandoBridge() {
+		return _account.getExpandoBridge();
 	}
 
 	/**
@@ -278,6 +268,26 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	}
 
 	/**
+	* Returns the modified date of this account.
+	*
+	* @return the modified date of this account
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _account.getModifiedDate();
+	}
+
+	/**
+	* Returns the mvcc version of this account.
+	*
+	* @return the mvcc version of this account
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _account.getMvccVersion();
+	}
+
+	/**
 	* Returns the name of this account.
 	*
 	* @return the name of this account
@@ -285,6 +295,31 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	@Override
 	public java.lang.String getName() {
 		return _account.getName();
+	}
+
+	/**
+	* Returns the parent account ID of this account.
+	*
+	* @return the parent account ID of this account
+	*/
+	@Override
+	public long getParentAccountId() {
+		return _account.getParentAccountId();
+	}
+
+	/**
+	* Returns the primary key of this account.
+	*
+	* @return the primary key of this account
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _account.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _account.getPrimaryKeyObj();
 	}
 
 	/**
@@ -328,6 +363,16 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	}
 
 	/**
+	* Returns the user ID of this account.
+	*
+	* @return the user ID of this account
+	*/
+	@Override
+	public long getUserId() {
+		return _account.getUserId();
+	}
+
+	/**
 	* Returns the user name of this account.
 	*
 	* @return the user name of this account
@@ -348,93 +393,23 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	}
 
 	@Override
-	public java.lang.String toString() {
-		return _account.toString();
+	public int hashCode() {
+		return _account.hashCode();
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
-		return _account.toXmlString();
+	public boolean isCachedModel() {
+		return _account.isCachedModel();
 	}
 
-	/**
-	* Returns the create date of this account.
-	*
-	* @return the create date of this account
-	*/
 	@Override
-	public Date getCreateDate() {
-		return _account.getCreateDate();
+	public boolean isEscapedModel() {
+		return _account.isEscapedModel();
 	}
 
-	/**
-	* Returns the modified date of this account.
-	*
-	* @return the modified date of this account
-	*/
 	@Override
-	public Date getModifiedDate() {
-		return _account.getModifiedDate();
-	}
-
-	/**
-	* Returns the account ID of this account.
-	*
-	* @return the account ID of this account
-	*/
-	@Override
-	public long getAccountId() {
-		return _account.getAccountId();
-	}
-
-	/**
-	* Returns the company ID of this account.
-	*
-	* @return the company ID of this account
-	*/
-	@Override
-	public long getCompanyId() {
-		return _account.getCompanyId();
-	}
-
-	/**
-	* Returns the mvcc version of this account.
-	*
-	* @return the mvcc version of this account
-	*/
-	@Override
-	public long getMvccVersion() {
-		return _account.getMvccVersion();
-	}
-
-	/**
-	* Returns the parent account ID of this account.
-	*
-	* @return the parent account ID of this account
-	*/
-	@Override
-	public long getParentAccountId() {
-		return _account.getParentAccountId();
-	}
-
-	/**
-	* Returns the primary key of this account.
-	*
-	* @return the primary key of this account
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _account.getPrimaryKey();
-	}
-
-	/**
-	* Returns the user ID of this account.
-	*
-	* @return the user ID of this account
-	*/
-	@Override
-	public long getUserId() {
-		return _account.getUserId();
+	public boolean isNew() {
+		return _account.isNew();
 	}
 
 	@Override
@@ -478,13 +453,13 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_account.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_account.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_account.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
+		_account.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -660,6 +635,31 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	@Override
 	public void setUserUuid(java.lang.String userUuid) {
 		_account.setUserUuid(userUuid);
+	}
+
+	@Override
+	public CacheModel<Account> toCacheModel() {
+		return _account.toCacheModel();
+	}
+
+	@Override
+	public Account toEscapedModel() {
+		return new AccountWrapper(_account.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _account.toString();
+	}
+
+	@Override
+	public Account toUnescapedModel() {
+		return new AccountWrapper(_account.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _account.toXmlString();
 	}
 
 	@Override

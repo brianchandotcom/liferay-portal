@@ -35,6 +35,53 @@ public class PortalInstancesLocalServiceWrapper
 	}
 
 	@Override
+	public void addCompanyId(long companyId) {
+		_portalInstancesLocalService.addCompanyId(companyId);
+	}
+
+	@Override
+	public long getCompanyId(javax.servlet.http.HttpServletRequest request) {
+		return _portalInstancesLocalService.getCompanyId(request);
+	}
+
+	@Override
+	public long[] getCompanyIds() {
+		return _portalInstancesLocalService.getCompanyIds();
+	}
+
+	@Override
+	public long[] getCompanyIdsBySQL() throws java.sql.SQLException {
+		return _portalInstancesLocalService.getCompanyIdsBySQL();
+	}
+
+	@Override
+	public long getDefaultCompanyId() {
+		return _portalInstancesLocalService.getDefaultCompanyId();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _portalInstancesLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.lang.String[] getWebIds() {
+		return _portalInstancesLocalService.getWebIds();
+	}
+
+	@Override
+	public void initializePortalInstance(
+		javax.servlet.ServletContext servletContext, java.lang.String webId) {
+		_portalInstancesLocalService.initializePortalInstance(servletContext,
+			webId);
+	}
+
+	@Override
 	public boolean isAutoLoginIgnoreHost(java.lang.String host) {
 		return _portalInstancesLocalService.isAutoLoginIgnoreHost(host);
 	}
@@ -57,53 +104,6 @@ public class PortalInstancesLocalServiceWrapper
 	@Override
 	public boolean isVirtualHostsIgnorePath(java.lang.String path) {
 		return _portalInstancesLocalService.isVirtualHostsIgnorePath(path);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _portalInstancesLocalService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public java.lang.String[] getWebIds() {
-		return _portalInstancesLocalService.getWebIds();
-	}
-
-	@Override
-	public long getCompanyId(javax.servlet.http.HttpServletRequest request) {
-		return _portalInstancesLocalService.getCompanyId(request);
-	}
-
-	@Override
-	public long getDefaultCompanyId() {
-		return _portalInstancesLocalService.getDefaultCompanyId();
-	}
-
-	@Override
-	public long[] getCompanyIds() {
-		return _portalInstancesLocalService.getCompanyIds();
-	}
-
-	@Override
-	public long[] getCompanyIdsBySQL() throws java.sql.SQLException {
-		return _portalInstancesLocalService.getCompanyIdsBySQL();
-	}
-
-	@Override
-	public void addCompanyId(long companyId) {
-		_portalInstancesLocalService.addCompanyId(companyId);
-	}
-
-	@Override
-	public void initializePortalInstance(
-		javax.servlet.ServletContext servletContext, java.lang.String webId) {
-		_portalInstancesLocalService.initializePortalInstance(servletContext,
-			webId);
 	}
 
 	@Override

@@ -114,88 +114,13 @@ public class SocialRelationWrapper implements SocialRelation,
 	}
 
 	@Override
-	public SocialRelation toEscapedModel() {
-		return new SocialRelationWrapper(_socialRelation.toEscapedModel());
-	}
-
-	@Override
-	public SocialRelation toUnescapedModel() {
-		return new SocialRelationWrapper(_socialRelation.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _socialRelation.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _socialRelation.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _socialRelation.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _socialRelation.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<SocialRelation> toCacheModel() {
-		return _socialRelation.toCacheModel();
+	public java.lang.Object clone() {
+		return new SocialRelationWrapper((SocialRelation)_socialRelation.clone());
 	}
 
 	@Override
 	public int compareTo(SocialRelation socialRelation) {
 		return _socialRelation.compareTo(socialRelation);
-	}
-
-	/**
-	* Returns the type of this social relation.
-	*
-	* @return the type of this social relation
-	*/
-	@Override
-	public int getType() {
-		return _socialRelation.getType();
-	}
-
-	@Override
-	public int hashCode() {
-		return _socialRelation.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _socialRelation.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new SocialRelationWrapper((SocialRelation)_socialRelation.clone());
-	}
-
-	/**
-	* Returns the uuid of this social relation.
-	*
-	* @return the uuid of this social relation
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _socialRelation.getUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _socialRelation.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _socialRelation.toXmlString();
 	}
 
 	/**
@@ -218,6 +143,11 @@ public class SocialRelationWrapper implements SocialRelation,
 		return _socialRelation.getCreateDate();
 	}
 
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _socialRelation.getExpandoBridge();
+	}
+
 	/**
 	* Returns the primary key of this social relation.
 	*
@@ -228,6 +158,11 @@ public class SocialRelationWrapper implements SocialRelation,
 		return _socialRelation.getPrimaryKey();
 	}
 
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _socialRelation.getPrimaryKeyObj();
+	}
+
 	/**
 	* Returns the relation ID of this social relation.
 	*
@@ -236,6 +171,16 @@ public class SocialRelationWrapper implements SocialRelation,
 	@Override
 	public long getRelationId() {
 		return _socialRelation.getRelationId();
+	}
+
+	/**
+	* Returns the type of this social relation.
+	*
+	* @return the type of this social relation
+	*/
+	@Override
+	public int getType() {
+		return _socialRelation.getType();
 	}
 
 	/**
@@ -256,6 +201,36 @@ public class SocialRelationWrapper implements SocialRelation,
 	@Override
 	public long getUserId2() {
 		return _socialRelation.getUserId2();
+	}
+
+	/**
+	* Returns the uuid of this social relation.
+	*
+	* @return the uuid of this social relation
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _socialRelation.getUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _socialRelation.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _socialRelation.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _socialRelation.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _socialRelation.isNew();
 	}
 
 	@Override
@@ -372,6 +347,31 @@ public class SocialRelationWrapper implements SocialRelation,
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_socialRelation.setUuid(uuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<SocialRelation> toCacheModel() {
+		return _socialRelation.toCacheModel();
+	}
+
+	@Override
+	public SocialRelation toEscapedModel() {
+		return new SocialRelationWrapper(_socialRelation.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _socialRelation.toString();
+	}
+
+	@Override
+	public SocialRelation toUnescapedModel() {
+		return new SocialRelationWrapper(_socialRelation.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _socialRelation.toXmlString();
 	}
 
 	@Override

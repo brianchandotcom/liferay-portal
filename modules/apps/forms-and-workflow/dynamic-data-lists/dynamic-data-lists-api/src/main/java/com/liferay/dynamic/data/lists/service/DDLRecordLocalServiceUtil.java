@@ -175,6 +175,15 @@ public class DDLRecordLocalServiceUtil {
 	}
 
 	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
+
+	/**
 	* Deletes the record and its resources.
 	*
 	* @param record the record to be deleted
@@ -185,6 +194,17 @@ public class DDLRecordLocalServiceUtil {
 		com.liferay.dynamic.data.lists.model.DDLRecord record)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteRecord(record);
+	}
+
+	/**
+	* Deletes the record and its resources.
+	*
+	* @param recordId the primary key of the record to be deleted
+	* @throws PortalException if a portal exception occurred
+	*/
+	public static void deleteRecord(long recordId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteRecord(recordId);
 	}
 
 	/**
@@ -205,6 +225,96 @@ public class DDLRecordLocalServiceUtil {
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteRecordLocale(recordId, locale, serviceContext);
+	}
+
+	/**
+	* Deletes all the record set's records.
+	*
+	* @param recordSetId the primary key of the record set from which to
+	delete records
+	* @throws PortalException if a portal exception occurred
+	*/
+	public static void deleteRecords(long recordSetId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteRecords(recordSetId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	*/
+	public static <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQuery(dynamicQuery);
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns a range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @return the range of matching rows
+	*/
+	public static <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end) {
+		return getService().dynamicQuery(dynamicQuery, start, end);
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching rows
+	*/
+	public static <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+		return getService()
+				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
 	public static com.liferay.dynamic.data.lists.model.DDLRecord fetchDDLRecord(
@@ -236,6 +346,62 @@ public class DDLRecordLocalServiceUtil {
 		return getService().fetchRecord(recordId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns an ordered range of all the records matching the company,
+	* workflow status, and scope.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to <code>QueryUtil.ALL_POS</code> will return the
+	* full result set.
+	* </p>
+	*
+	* @param companyId the primary key of the record's company
+	* @param status the record's workflow status. For more information search
+	the portal kernel's WorkflowConstants class for constants
+	starting with the "STATUS_" prefix.
+	* @param scope the record's scope. For more information search the
+	dynamic-data-lists-api module's DDLRecordSetConstants class for
+	constants starting with the "SCOPE_" prefix.
+	* @param start the lower bound of the range of records to return
+	* @param end the upper bound of the range of records to return (not
+	inclusive)
+	* @param orderByComparator the comparator to order the records
+	* @return the range of matching records ordered by the comparator
+	*/
+	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getCompanyRecords(
+		long companyId, int status, int scope, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> orderByComparator) {
+		return getService()
+				   .getCompanyRecords(companyId, status, scope, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the number of records matching the company, workflow status, and
+	* scope.
+	*
+	* @param companyId the primary key of the record's company
+	* @param status the record's workflow status. For more information search
+	the portal kernel's WorkflowConstants class for constants
+	starting with the "STATUS_" prefix.
+	* @param scope the record's scope. For more information search the
+	dynamic-data-lists-api module's DDLRecordSetConstants class for
+	constants starting with the "SCOPE_" prefix.
+	* @return the number of matching records
+	*/
+	public static int getCompanyRecordsCount(long companyId, int status,
+		int scope) {
+		return getService().getCompanyRecordsCount(companyId, status, scope);
+	}
+
 	/**
 	* Returns the ddl record with the primary key.
 	*
@@ -264,6 +430,124 @@ public class DDLRecordLocalServiceUtil {
 	}
 
 	/**
+	* Returns a range of all the ddl records.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of ddl records
+	* @param end the upper bound of the range of ddl records (not inclusive)
+	* @return the range of ddl records
+	*/
+	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getDDLRecords(
+		int start, int end) {
+		return getService().getDDLRecords(start, end);
+	}
+
+	/**
+	* Returns all the ddl records matching the UUID and company.
+	*
+	* @param uuid the UUID of the ddl records
+	* @param companyId the primary key of the company
+	* @return the matching ddl records, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getDDLRecordsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return getService().getDDLRecordsByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Returns a range of ddl records matching the UUID and company.
+	*
+	* @param uuid the UUID of the ddl records
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of ddl records
+	* @param end the upper bound of the range of ddl records (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching ddl records, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getDDLRecordsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> orderByComparator) {
+		return getService()
+				   .getDDLRecordsByUuidAndCompanyId(uuid, companyId, start,
+			end, orderByComparator);
+	}
+
+	/**
+	* Returns the number of ddl records.
+	*
+	* @return the number of ddl records
+	*/
+	public static int getDDLRecordsCount() {
+		return getService().getDDLRecordsCount();
+	}
+
+	/**
+	* Returns the DDM form values object associated with the record storage ID
+	* See <code>DDLRecord#getDDMFormValues</code> in the
+	* <code>com.liferay.dynamic.data.lists.api</code> module.
+	*
+	* @param ddmStorageId the storage ID associated with the record
+	* @return the DDM form values
+	*/
+	public static com.liferay.dynamic.data.mapping.storage.DDMFormValues getDDMFormValues(
+		long ddmStorageId)
+		throws com.liferay.dynamic.data.mapping.exception.StorageException {
+		return getService().getDDMFormValues(ddmStorageId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* @deprecated As of 1.1.0, replaced by {@link
+	DDLRecordVersionLocalService#getLatestRecordVersion(long)}
+	*/
+	@Deprecated
+	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion getLatestRecordVersion(
+		long recordId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getLatestRecordVersion(recordId);
+	}
+
+	public static java.lang.Long[] getMinAndMaxCompanyRecordIds(
+		long companyId, int status, int scope) {
+		return getService()
+				   .getMinAndMaxCompanyRecordIds(companyId, status, scope);
+	}
+
+	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getMinAndMaxCompanyRecords(
+		long companyId, int status, int scope, long minRecordId,
+		long maxRecordId) {
+		return getService()
+				   .getMinAndMaxCompanyRecords(companyId, status, scope,
+			minRecordId, maxRecordId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
 	* Returns the record with the ID.
 	*
 	* @param recordId the primary key of the record
@@ -274,6 +558,223 @@ public class DDLRecordLocalServiceUtil {
 		long recordId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getRecord(recordId);
+	}
+
+	/**
+	* @deprecated As of 1.1.0, replaced by {@link
+	DDLRecordVersionLocalService#getRecordVersion(
+	long)}
+	*/
+	@Deprecated
+	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion getRecordVersion(
+		long recordVersionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getRecordVersion(recordVersionId);
+	}
+
+	/**
+	* @deprecated As of 1.1.0, replaced by {@link
+	DDLRecordVersionLocalService#getRecordVersion(
+	long, String)}
+	*/
+	@Deprecated
+	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion getRecordVersion(
+		long recordId, java.lang.String version)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getRecordVersion(recordId, version);
+	}
+
+	/**
+	* @deprecated As of 1.1.0, replaced by {@link
+	DDLRecordVersionLocalService#getRecordVersions(
+	long, int, int, OrderByComparator)}
+	*/
+	@Deprecated
+	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordVersion> getRecordVersions(
+		long recordId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordVersion> orderByComparator) {
+		return getService()
+				   .getRecordVersions(recordId, start, end, orderByComparator);
+	}
+
+	/**
+	* @deprecated As of 1.1.0, replaced by {@link
+	DDLRecordVersionLocalService#getRecordVersionsCount(
+	long)}
+	*/
+	@Deprecated
+	public static int getRecordVersionsCount(long recordId) {
+		return getService().getRecordVersionsCount(recordId);
+	}
+
+	/**
+	* Returns all the records matching the record set ID
+	*
+	* @param recordSetId the record's record set ID
+	* @return the matching records
+	*/
+	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getRecords(
+		long recordSetId) {
+		return getService().getRecords(recordSetId);
+	}
+
+	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getRecords(
+		long recordSetId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> obc) {
+		return getService().getRecords(recordSetId, start, end, obc);
+	}
+
+	/**
+	* Returns an ordered range of all the records matching the record set ID
+	* and workflow status.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to <code>QueryUtil.ALL_POS</code> will return the
+	* full result set.
+	* </p>
+	*
+	* @param recordSetId the record's record set ID
+	* @param status the record's workflow status. For more information search
+	the portal kernel's WorkflowConstants class for constants
+	starting with the "STATUS_" prefix.
+	* @param start the lower bound of the range of records to return
+	* @param end the upper bound of the range of records to return (not
+	inclusive)
+	* @param orderByComparator the comparator to order the records
+	* @return the range of matching records ordered by the comparator
+	*/
+	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getRecords(
+		long recordSetId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> orderByComparator) {
+		return getService()
+				   .getRecords(recordSetId, status, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns all the records matching the record set ID and user ID.
+	*
+	* @param recordSetId the record's record set ID
+	* @param userId the user ID the records belong to
+	* @return the list of matching records ordered by the comparator
+	*/
+	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getRecords(
+		long recordSetId, long userId) {
+		return getService().getRecords(recordSetId, userId);
+	}
+
+	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getRecords(
+		long recordSetId, long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> obc) {
+		return getService().getRecords(recordSetId, userId, start, end, obc);
+	}
+
+	public static int getRecordsCount(long recordSetId) {
+		return getService().getRecordsCount(recordSetId);
+	}
+
+	/**
+	* Returns the number of records matching the record set ID and workflow
+	* status.
+	*
+	* @param recordSetId the record's record set ID
+	* @param status the record's workflow status. For more information search
+	the portal kernel's WorkflowConstants class for constants
+	starting with the "STATUS_" prefix.
+	* @return the number of matching records
+	*/
+	public static int getRecordsCount(long recordSetId, int status) {
+		return getService().getRecordsCount(recordSetId, status);
+	}
+
+	public static int getRecordsCount(long recordSetId, long userId) {
+		return getService().getRecordsCount(recordSetId, userId);
+	}
+
+	/**
+	* Reverts the record to the given version.
+	*
+	* @param userId the primary key of the user who is reverting the record
+	* @param recordId the primary key of the record
+	* @param version the version to revert to
+	* @param serviceContext the service context to be applied. This can set
+	the record modified date.
+	* @throws PortalException if a portal exception occurred
+	*/
+	public static void revertRecord(long userId, long recordId,
+		java.lang.String version,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().revertRecord(userId, recordId, version, serviceContext);
+	}
+
+	/**
+	* @deprecated As of 1.1.0, replaced by {@link #revertRecord(long, long,
+	String, ServiceContext)}
+	*/
+	@Deprecated
+	public static void revertRecordVersion(long userId, long recordId,
+		java.lang.String version,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.revertRecordVersion(userId, recordId, version, serviceContext);
+	}
+
+	/**
+	* Returns hits to all the records indexed by the search engine matching the
+	* search context.
+	*
+	* @param searchContext the search context to be applied for searching
+	records. For more information, see <code>SearchContext</code> in
+	the <code>portal-kernel</code> module.
+	* @return the hits of the records that matched the search criteria.
+	*/
+	public static com.liferay.portal.kernel.search.Hits search(
+		com.liferay.portal.kernel.search.SearchContext searchContext) {
+		return getService().search(searchContext);
+	}
+
+	/**
+	* Searches for records documents indexed by the search engine.
+	*
+	* @param searchContext the search context to be applied for searching
+	documents. For more information, see <code>SearchContext</code>
+	in the <code>portal-kernel</code> module.
+	* @return BaseModelSearchResult containing the list of records that matched
+	the search criteria
+	*/
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.dynamic.data.lists.model.DDLRecord> searchDDLRecords(
+		com.liferay.portal.kernel.search.SearchContext searchContext) {
+		return getService().searchDDLRecords(searchContext);
+	}
+
+	/**
+	* Updates the record's asset with new asset categories, tag names, and link
+	* entries, removing and adding them as necessary.
+	*
+	* @param userId the primary key of the user updating the record's asset
+	* @param record the record
+	* @param recordVersion the record version
+	* @param assetCategoryIds the primary keys of the new asset categories
+	* @param assetTagNames the new asset tag names
+	* @param locale the locale to apply to the asset
+	* @param priority the new priority
+	* @throws PortalException if a portal exception occurred
+	*/
+	public static void updateAsset(long userId,
+		com.liferay.dynamic.data.lists.model.DDLRecord record,
+		com.liferay.dynamic.data.lists.model.DDLRecordVersion recordVersion,
+		long[] assetCategoryIds, java.lang.String[] assetTagNames,
+		java.util.Locale locale, java.lang.Double priority)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.updateAsset(userId, record, recordVersion, assetCategoryIds,
+			assetTagNames, locale, priority);
 	}
 
 	/**
@@ -393,507 +894,6 @@ public class DDLRecordLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateStatus(userId, recordVersionId, status, serviceContext);
-	}
-
-	/**
-	* @deprecated As of 1.1.0, replaced by {@link
-	DDLRecordVersionLocalService#getLatestRecordVersion(long)}
-	*/
-	@Deprecated
-	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion getLatestRecordVersion(
-		long recordId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getLatestRecordVersion(recordId);
-	}
-
-	/**
-	* @deprecated As of 1.1.0, replaced by {@link
-	DDLRecordVersionLocalService#getRecordVersion(
-	long, String)}
-	*/
-	@Deprecated
-	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion getRecordVersion(
-		long recordId, java.lang.String version)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getRecordVersion(recordId, version);
-	}
-
-	/**
-	* @deprecated As of 1.1.0, replaced by {@link
-	DDLRecordVersionLocalService#getRecordVersion(
-	long)}
-	*/
-	@Deprecated
-	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion getRecordVersion(
-		long recordVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getRecordVersion(recordVersionId);
-	}
-
-	/**
-	* Returns the DDM form values object associated with the record storage ID
-	* See <code>DDLRecord#getDDMFormValues</code> in the
-	* <code>com.liferay.dynamic.data.lists.api</code> module.
-	*
-	* @param ddmStorageId the storage ID associated with the record
-	* @return the DDM form values
-	*/
-	public static com.liferay.dynamic.data.mapping.storage.DDMFormValues getDDMFormValues(
-		long ddmStorageId)
-		throws com.liferay.dynamic.data.mapping.exception.StorageException {
-		return getService().getDDMFormValues(ddmStorageId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Searches for records documents indexed by the search engine.
-	*
-	* @param searchContext the search context to be applied for searching
-	documents. For more information, see <code>SearchContext</code>
-	in the <code>portal-kernel</code> module.
-	* @return BaseModelSearchResult containing the list of records that matched
-	the search criteria
-	*/
-	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.dynamic.data.lists.model.DDLRecord> searchDDLRecords(
-		com.liferay.portal.kernel.search.SearchContext searchContext) {
-		return getService().searchDDLRecords(searchContext);
-	}
-
-	/**
-	* Returns hits to all the records indexed by the search engine matching the
-	* search context.
-	*
-	* @param searchContext the search context to be applied for searching
-	records. For more information, see <code>SearchContext</code> in
-	the <code>portal-kernel</code> module.
-	* @return the hits of the records that matched the search criteria.
-	*/
-	public static com.liferay.portal.kernel.search.Hits search(
-		com.liferay.portal.kernel.search.SearchContext searchContext) {
-		return getService().search(searchContext);
-	}
-
-	/**
-	* Returns the number of records matching the company, workflow status, and
-	* scope.
-	*
-	* @param companyId the primary key of the record's company
-	* @param status the record's workflow status. For more information search
-	the portal kernel's WorkflowConstants class for constants
-	starting with the "STATUS_" prefix.
-	* @param scope the record's scope. For more information search the
-	dynamic-data-lists-api module's DDLRecordSetConstants class for
-	constants starting with the "SCOPE_" prefix.
-	* @return the number of matching records
-	*/
-	public static int getCompanyRecordsCount(long companyId, int status,
-		int scope) {
-		return getService().getCompanyRecordsCount(companyId, status, scope);
-	}
-
-	/**
-	* Returns the number of ddl records.
-	*
-	* @return the number of ddl records
-	*/
-	public static int getDDLRecordsCount() {
-		return getService().getDDLRecordsCount();
-	}
-
-	/**
-	* @deprecated As of 1.1.0, replaced by {@link
-	DDLRecordVersionLocalService#getRecordVersionsCount(
-	long)}
-	*/
-	@Deprecated
-	public static int getRecordVersionsCount(long recordId) {
-		return getService().getRecordVersionsCount(recordId);
-	}
-
-	public static int getRecordsCount(long recordSetId) {
-		return getService().getRecordsCount(recordSetId);
-	}
-
-	/**
-	* Returns the number of records matching the record set ID and workflow
-	* status.
-	*
-	* @param recordSetId the record's record set ID
-	* @param status the record's workflow status. For more information search
-	the portal kernel's WorkflowConstants class for constants
-	starting with the "STATUS_" prefix.
-	* @return the number of matching records
-	*/
-	public static int getRecordsCount(long recordSetId, int status) {
-		return getService().getRecordsCount(recordSetId, status);
-	}
-
-	public static int getRecordsCount(long recordSetId, long userId) {
-		return getService().getRecordsCount(recordSetId, userId);
-	}
-
-	public static java.lang.Long[] getMinAndMaxCompanyRecordIds(
-		long companyId, int status, int scope) {
-		return getService()
-				   .getMinAndMaxCompanyRecordIds(companyId, status, scope);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	*/
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQuery(dynamicQuery);
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns a range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @return the range of matching rows
-	*/
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
-		return getService().dynamicQuery(dynamicQuery, start, end);
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching rows
-	*/
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
-		return getService()
-				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns an ordered range of all the records matching the company,
-	* workflow status, and scope.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to <code>QueryUtil.ALL_POS</code> will return the
-	* full result set.
-	* </p>
-	*
-	* @param companyId the primary key of the record's company
-	* @param status the record's workflow status. For more information search
-	the portal kernel's WorkflowConstants class for constants
-	starting with the "STATUS_" prefix.
-	* @param scope the record's scope. For more information search the
-	dynamic-data-lists-api module's DDLRecordSetConstants class for
-	constants starting with the "SCOPE_" prefix.
-	* @param start the lower bound of the range of records to return
-	* @param end the upper bound of the range of records to return (not
-	inclusive)
-	* @param orderByComparator the comparator to order the records
-	* @return the range of matching records ordered by the comparator
-	*/
-	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getCompanyRecords(
-		long companyId, int status, int scope, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> orderByComparator) {
-		return getService()
-				   .getCompanyRecords(companyId, status, scope, start, end,
-			orderByComparator);
-	}
-
-	/**
-	* Returns a range of all the ddl records.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of ddl records
-	* @param end the upper bound of the range of ddl records (not inclusive)
-	* @return the range of ddl records
-	*/
-	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getDDLRecords(
-		int start, int end) {
-		return getService().getDDLRecords(start, end);
-	}
-
-	/**
-	* Returns all the ddl records matching the UUID and company.
-	*
-	* @param uuid the UUID of the ddl records
-	* @param companyId the primary key of the company
-	* @return the matching ddl records, or an empty list if no matches were found
-	*/
-	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getDDLRecordsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return getService().getDDLRecordsByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
-	* Returns a range of ddl records matching the UUID and company.
-	*
-	* @param uuid the UUID of the ddl records
-	* @param companyId the primary key of the company
-	* @param start the lower bound of the range of ddl records
-	* @param end the upper bound of the range of ddl records (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the range of matching ddl records, or an empty list if no matches were found
-	*/
-	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getDDLRecordsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> orderByComparator) {
-		return getService()
-				   .getDDLRecordsByUuidAndCompanyId(uuid, companyId, start,
-			end, orderByComparator);
-	}
-
-	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getMinAndMaxCompanyRecords(
-		long companyId, int status, int scope, long minRecordId,
-		long maxRecordId) {
-		return getService()
-				   .getMinAndMaxCompanyRecords(companyId, status, scope,
-			minRecordId, maxRecordId);
-	}
-
-	/**
-	* @deprecated As of 1.1.0, replaced by {@link
-	DDLRecordVersionLocalService#getRecordVersions(
-	long, int, int, OrderByComparator)}
-	*/
-	@Deprecated
-	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordVersion> getRecordVersions(
-		long recordId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordVersion> orderByComparator) {
-		return getService()
-				   .getRecordVersions(recordId, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns all the records matching the record set ID
-	*
-	* @param recordSetId the record's record set ID
-	* @return the matching records
-	*/
-	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getRecords(
-		long recordSetId) {
-		return getService().getRecords(recordSetId);
-	}
-
-	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getRecords(
-		long recordSetId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> obc) {
-		return getService().getRecords(recordSetId, start, end, obc);
-	}
-
-	/**
-	* Returns an ordered range of all the records matching the record set ID
-	* and workflow status.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to <code>QueryUtil.ALL_POS</code> will return the
-	* full result set.
-	* </p>
-	*
-	* @param recordSetId the record's record set ID
-	* @param status the record's workflow status. For more information search
-	the portal kernel's WorkflowConstants class for constants
-	starting with the "STATUS_" prefix.
-	* @param start the lower bound of the range of records to return
-	* @param end the upper bound of the range of records to return (not
-	inclusive)
-	* @param orderByComparator the comparator to order the records
-	* @return the range of matching records ordered by the comparator
-	*/
-	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getRecords(
-		long recordSetId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> orderByComparator) {
-		return getService()
-				   .getRecords(recordSetId, status, start, end,
-			orderByComparator);
-	}
-
-	/**
-	* Returns all the records matching the record set ID and user ID.
-	*
-	* @param recordSetId the record's record set ID
-	* @param userId the user ID the records belong to
-	* @return the list of matching records ordered by the comparator
-	*/
-	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getRecords(
-		long recordSetId, long userId) {
-		return getService().getRecords(recordSetId, userId);
-	}
-
-	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getRecords(
-		long recordSetId, long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> obc) {
-		return getService().getRecords(recordSetId, userId, start, end, obc);
-	}
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
-	}
-
-	/**
-	* Deletes the record and its resources.
-	*
-	* @param recordId the primary key of the record to be deleted
-	* @throws PortalException if a portal exception occurred
-	*/
-	public static void deleteRecord(long recordId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteRecord(recordId);
-	}
-
-	/**
-	* Deletes all the record set's records.
-	*
-	* @param recordSetId the primary key of the record set from which to
-	delete records
-	* @throws PortalException if a portal exception occurred
-	*/
-	public static void deleteRecords(long recordSetId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteRecords(recordSetId);
-	}
-
-	/**
-	* Reverts the record to the given version.
-	*
-	* @param userId the primary key of the user who is reverting the record
-	* @param recordId the primary key of the record
-	* @param version the version to revert to
-	* @param serviceContext the service context to be applied. This can set
-	the record modified date.
-	* @throws PortalException if a portal exception occurred
-	*/
-	public static void revertRecord(long userId, long recordId,
-		java.lang.String version,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().revertRecord(userId, recordId, version, serviceContext);
-	}
-
-	/**
-	* @deprecated As of 1.1.0, replaced by {@link #revertRecord(long, long,
-	String, ServiceContext)}
-	*/
-	@Deprecated
-	public static void revertRecordVersion(long userId, long recordId,
-		java.lang.String version,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.revertRecordVersion(userId, recordId, version, serviceContext);
-	}
-
-	/**
-	* Updates the record's asset with new asset categories, tag names, and link
-	* entries, removing and adding them as necessary.
-	*
-	* @param userId the primary key of the user updating the record's asset
-	* @param record the record
-	* @param recordVersion the record version
-	* @param assetCategoryIds the primary keys of the new asset categories
-	* @param assetTagNames the new asset tag names
-	* @param locale the locale to apply to the asset
-	* @param priority the new priority
-	* @throws PortalException if a portal exception occurred
-	*/
-	public static void updateAsset(long userId,
-		com.liferay.dynamic.data.lists.model.DDLRecord record,
-		com.liferay.dynamic.data.lists.model.DDLRecordVersion recordVersion,
-		long[] assetCategoryIds, java.lang.String[] assetTagNames,
-		java.util.Locale locale, java.lang.Double priority)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.updateAsset(userId, record, recordVersion, assetCategoryIds,
-			assetTagNames, locale, priority);
 	}
 
 	public static DDLRecordLocalService getService() {

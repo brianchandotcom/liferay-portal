@@ -122,78 +122,13 @@ public class RecentLayoutRevisionWrapper implements RecentLayoutRevision,
 	}
 
 	@Override
-	public CacheModel<RecentLayoutRevision> toCacheModel() {
-		return _recentLayoutRevision.toCacheModel();
-	}
-
-	@Override
-	public RecentLayoutRevision toEscapedModel() {
-		return new RecentLayoutRevisionWrapper(_recentLayoutRevision.toEscapedModel());
-	}
-
-	@Override
-	public RecentLayoutRevision toUnescapedModel() {
-		return new RecentLayoutRevisionWrapper(_recentLayoutRevision.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _recentLayoutRevision.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _recentLayoutRevision.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _recentLayoutRevision.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _recentLayoutRevision.getExpandoBridge();
+	public java.lang.Object clone() {
+		return new RecentLayoutRevisionWrapper((RecentLayoutRevision)_recentLayoutRevision.clone());
 	}
 
 	@Override
 	public int compareTo(RecentLayoutRevision recentLayoutRevision) {
 		return _recentLayoutRevision.compareTo(recentLayoutRevision);
-	}
-
-	@Override
-	public int hashCode() {
-		return _recentLayoutRevision.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _recentLayoutRevision.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new RecentLayoutRevisionWrapper((RecentLayoutRevision)_recentLayoutRevision.clone());
-	}
-
-	/**
-	* Returns the user uuid of this recent layout revision.
-	*
-	* @return the user uuid of this recent layout revision
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _recentLayoutRevision.getUserUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _recentLayoutRevision.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _recentLayoutRevision.toXmlString();
 	}
 
 	/**
@@ -204,6 +139,11 @@ public class RecentLayoutRevisionWrapper implements RecentLayoutRevision,
 	@Override
 	public long getCompanyId() {
 		return _recentLayoutRevision.getCompanyId();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _recentLayoutRevision.getExpandoBridge();
 	}
 
 	/**
@@ -266,6 +206,11 @@ public class RecentLayoutRevisionWrapper implements RecentLayoutRevision,
 		return _recentLayoutRevision.getPrimaryKey();
 	}
 
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _recentLayoutRevision.getPrimaryKeyObj();
+	}
+
 	/**
 	* Returns the recent layout revision ID of this recent layout revision.
 	*
@@ -284,6 +229,36 @@ public class RecentLayoutRevisionWrapper implements RecentLayoutRevision,
 	@Override
 	public long getUserId() {
 		return _recentLayoutRevision.getUserId();
+	}
+
+	/**
+	* Returns the user uuid of this recent layout revision.
+	*
+	* @return the user uuid of this recent layout revision
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _recentLayoutRevision.getUserUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _recentLayoutRevision.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _recentLayoutRevision.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _recentLayoutRevision.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _recentLayoutRevision.isNew();
 	}
 
 	@Override
@@ -307,13 +282,13 @@ public class RecentLayoutRevisionWrapper implements RecentLayoutRevision,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_recentLayoutRevision.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_recentLayoutRevision.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_recentLayoutRevision.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
+		_recentLayoutRevision.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -419,6 +394,31 @@ public class RecentLayoutRevisionWrapper implements RecentLayoutRevision,
 	@Override
 	public void setUserUuid(java.lang.String userUuid) {
 		_recentLayoutRevision.setUserUuid(userUuid);
+	}
+
+	@Override
+	public CacheModel<RecentLayoutRevision> toCacheModel() {
+		return _recentLayoutRevision.toCacheModel();
+	}
+
+	@Override
+	public RecentLayoutRevision toEscapedModel() {
+		return new RecentLayoutRevisionWrapper(_recentLayoutRevision.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _recentLayoutRevision.toString();
+	}
+
+	@Override
+	public RecentLayoutRevision toUnescapedModel() {
+		return new RecentLayoutRevisionWrapper(_recentLayoutRevision.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _recentLayoutRevision.toXmlString();
 	}
 
 	@Override

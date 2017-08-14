@@ -40,20 +40,12 @@ public class PortalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.PortalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static boolean testHasClassName() {
-		return getService().testHasClassName();
+	public static java.lang.String getAutoDeployDirectory() {
+		return getService().getAutoDeployDirectory();
 	}
 
 	public static int getBuildNumber() {
 		return getService().getBuildNumber();
-	}
-
-	public static int testGetBuildNumber() {
-		return getService().testGetBuildNumber();
-	}
-
-	public static java.lang.String getAutoDeployDirectory() {
-		return getService().getAutoDeployDirectory();
 	}
 
 	/**
@@ -105,8 +97,16 @@ public class PortalServiceUtil {
 		getService().testDeleteClassName();
 	}
 
+	public static int testGetBuildNumber() {
+		return getService().testGetBuildNumber();
+	}
+
 	public static void testGetUserId() {
 		getService().testGetUserId();
+	}
+
+	public static boolean testHasClassName() {
+		return getService().testHasClassName();
 	}
 
 	public static PortalService getService() {

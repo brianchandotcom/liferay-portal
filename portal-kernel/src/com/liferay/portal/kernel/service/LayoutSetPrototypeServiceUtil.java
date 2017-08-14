@@ -66,6 +66,11 @@ public class LayoutSetPrototypeServiceUtil {
 			layoutsUpdateable, serviceContext);
 	}
 
+	public static void deleteLayoutSetPrototype(long layoutSetPrototypeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteLayoutSetPrototype(layoutSetPrototypeId);
+	}
+
 	public static com.liferay.portal.kernel.model.LayoutSetPrototype fetchLayoutSetPrototype(
 		long layoutSetPrototypeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -76,6 +81,22 @@ public class LayoutSetPrototypeServiceUtil {
 		long layoutSetPrototypeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getLayoutSetPrototype(layoutSetPrototypeId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.LayoutSetPrototype> search(
+		long companyId, java.lang.Boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.LayoutSetPrototype> obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().search(companyId, active, obc);
 	}
 
 	public static com.liferay.portal.kernel.model.LayoutSetPrototype updateLayoutSetPrototype(
@@ -111,27 +132,6 @@ public class LayoutSetPrototypeServiceUtil {
 		return getService()
 				   .updateLayoutSetPrototype(layoutSetPrototypeId, nameMap,
 			descriptionMap, active, layoutsUpdateable, serviceContext);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static java.util.List<com.liferay.portal.kernel.model.LayoutSetPrototype> search(
-		long companyId, java.lang.Boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.LayoutSetPrototype> obc)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().search(companyId, active, obc);
-	}
-
-	public static void deleteLayoutSetPrototype(long layoutSetPrototypeId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteLayoutSetPrototype(layoutSetPrototypeId);
 	}
 
 	public static LayoutSetPrototypeService getService() {

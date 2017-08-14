@@ -41,12 +41,6 @@ public class ScreensCommentServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.screens.service.impl.ScreensCommentServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.json.JSONArray getComments(
-		java.lang.String className, long classPK, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getComments(className, classPK, start, end);
-	}
-
 	public static com.liferay.portal.kernel.json.JSONObject addComment(
 		java.lang.String className, long classPK, java.lang.String body)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -59,10 +53,10 @@ public class ScreensCommentServiceUtil {
 		return getService().getComment(commentId);
 	}
 
-	public static com.liferay.portal.kernel.json.JSONObject updateComment(
-		long commentId, java.lang.String body)
+	public static com.liferay.portal.kernel.json.JSONArray getComments(
+		java.lang.String className, long classPK, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().updateComment(commentId, body);
+		return getService().getComments(className, classPK, start, end);
 	}
 
 	public static int getCommentsCount(java.lang.String className, long classPK)
@@ -77,6 +71,12 @@ public class ScreensCommentServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.json.JSONObject updateComment(
+		long commentId, java.lang.String body)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateComment(commentId, body);
 	}
 
 	public static ScreensCommentService getService() {

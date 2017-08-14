@@ -30,27 +30,6 @@ public class AddressLocalServiceWrapper implements AddressLocalService,
 		_addressLocalService = addressLocalService;
 	}
 
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _addressLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _addressLocalService.dynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return _addressLocalService.getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _addressLocalService.getIndexableActionableDynamicQuery();
-	}
-
 	/**
 	* Adds the address to the database. Also notifies the appropriate model listeners.
 	*
@@ -113,73 +92,9 @@ public class AddressLocalServiceWrapper implements AddressLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Address fetchAddress(long addressId) {
-		return _addressLocalService.fetchAddress(addressId);
-	}
-
-	/**
-	* Returns the address with the matching UUID and company.
-	*
-	* @param uuid the address's UUID
-	* @param companyId the primary key of the company
-	* @return the matching address, or <code>null</code> if a matching address could not be found
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.Address fetchAddressByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return _addressLocalService.fetchAddressByUuidAndCompanyId(uuid,
-			companyId);
-	}
-
-	/**
-	* Returns the address with the primary key.
-	*
-	* @param addressId the primary key of the address
-	* @return the address
-	* @throws PortalException if a address with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.Address getAddress(long addressId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _addressLocalService.getAddress(addressId);
-	}
-
-	/**
-	* Returns the address with the matching UUID and company.
-	*
-	* @param uuid the address's UUID
-	* @param companyId the primary key of the company
-	* @return the matching address
-	* @throws PortalException if a matching address could not be found
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.Address getAddressByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _addressLocalService.getAddressByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
-	* Updates the address in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param address the address
-	* @return the address that was updated
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.Address updateAddress(
-		com.liferay.portal.kernel.model.Address address) {
-		return _addressLocalService.updateAddress(address);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Address updateAddress(
-		long addressId, java.lang.String street1, java.lang.String street2,
-		java.lang.String street3, java.lang.String city, java.lang.String zip,
-		long regionId, long countryId, long typeId, boolean mailing,
-		boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _addressLocalService.updateAddress(addressId, street1, street2,
-			street3, city, zip, regionId, countryId, typeId, mailing, primary);
+	public void deleteAddresses(long companyId, java.lang.String className,
+		long classPK) {
+		_addressLocalService.deleteAddresses(companyId, className, classPK);
 	}
 
 	/**
@@ -193,30 +108,8 @@ public class AddressLocalServiceWrapper implements AddressLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _addressLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the number of addresses.
-	*
-	* @return the number of addresses
-	*/
-	@Override
-	public int getAddressesCount() {
-		return _addressLocalService.getAddressesCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _addressLocalService.getOSGiServiceIdentifier();
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _addressLocalService.dynamicQuery();
 	}
 
 	/**
@@ -272,6 +165,84 @@ public class AddressLocalServiceWrapper implements AddressLocalService,
 			orderByComparator);
 	}
 
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _addressLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _addressLocalService.dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Address fetchAddress(long addressId) {
+		return _addressLocalService.fetchAddress(addressId);
+	}
+
+	/**
+	* Returns the address with the matching UUID and company.
+	*
+	* @param uuid the address's UUID
+	* @param companyId the primary key of the company
+	* @return the matching address, or <code>null</code> if a matching address could not be found
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.Address fetchAddressByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return _addressLocalService.fetchAddressByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _addressLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the address with the primary key.
+	*
+	* @param addressId the primary key of the address
+	* @return the address
+	* @throws PortalException if a address with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.Address getAddress(long addressId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _addressLocalService.getAddress(addressId);
+	}
+
+	/**
+	* Returns the address with the matching UUID and company.
+	*
+	* @param uuid the address's UUID
+	* @param companyId the primary key of the company
+	* @return the matching address
+	* @throws PortalException if a matching address could not be found
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.Address getAddressByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _addressLocalService.getAddressByUuidAndCompanyId(uuid, companyId);
+	}
+
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Address> getAddresses() {
 		return _addressLocalService.getAddresses();
@@ -301,35 +272,64 @@ public class AddressLocalServiceWrapper implements AddressLocalService,
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of addresses.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of addresses
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _addressLocalService.dynamicQueryCount(dynamicQuery);
+	public int getAddressesCount() {
+		return _addressLocalService.getAddressesCount();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return _addressLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _addressLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _addressLocalService.dynamicQueryCount(dynamicQuery, projection);
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _addressLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
-	public void deleteAddresses(long companyId, java.lang.String className,
-		long classPK) {
-		_addressLocalService.deleteAddresses(companyId, className, classPK);
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _addressLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Updates the address in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param address the address
+	* @return the address that was updated
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.Address updateAddress(
+		com.liferay.portal.kernel.model.Address address) {
+		return _addressLocalService.updateAddress(address);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Address updateAddress(
+		long addressId, java.lang.String street1, java.lang.String street2,
+		java.lang.String street3, java.lang.String city, java.lang.String zip,
+		long regionId, long countryId, long typeId, boolean mailing,
+		boolean primary)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _addressLocalService.updateAddress(addressId, street1, street2,
+			street3, city, zip, regionId, countryId, typeId, mailing, primary);
 	}
 
 	@Override

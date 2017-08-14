@@ -59,31 +59,15 @@ public class MDRRuleGroupServiceUtil {
 		return getService().copyRuleGroup(ruleGroupId, groupId, serviceContext);
 	}
 
+	public static void deleteRuleGroup(long ruleGroupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteRuleGroup(ruleGroupId);
+	}
+
 	public static com.liferay.mobile.device.rules.model.MDRRuleGroup fetchRuleGroup(
 		long ruleGroupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().fetchRuleGroup(ruleGroupId);
-	}
-
-	public static com.liferay.mobile.device.rules.model.MDRRuleGroup getRuleGroup(
-		long ruleGroupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getRuleGroup(ruleGroupId);
-	}
-
-	public static com.liferay.mobile.device.rules.model.MDRRuleGroup updateRuleGroup(
-		long ruleGroupId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateRuleGroup(ruleGroupId, nameMap, descriptionMap,
-			serviceContext);
-	}
-
-	public static int getRuleGroupsCount(long[] groupIds) {
-		return getService().getRuleGroupsCount(groupIds);
 	}
 
 	/**
@@ -95,14 +79,30 @@ public class MDRRuleGroupServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static com.liferay.mobile.device.rules.model.MDRRuleGroup getRuleGroup(
+		long ruleGroupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getRuleGroup(ruleGroupId);
+	}
+
 	public static java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> getRuleGroups(
 		long[] groupIds, int start, int end) {
 		return getService().getRuleGroups(groupIds, start, end);
 	}
 
-	public static void deleteRuleGroup(long ruleGroupId)
+	public static int getRuleGroupsCount(long[] groupIds) {
+		return getService().getRuleGroupsCount(groupIds);
+	}
+
+	public static com.liferay.mobile.device.rules.model.MDRRuleGroup updateRuleGroup(
+		long ruleGroupId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteRuleGroup(ruleGroupId);
+		return getService()
+				   .updateRuleGroup(ruleGroupId, nameMap, descriptionMap,
+			serviceContext);
 	}
 
 	public static MDRRuleGroupService getService() {

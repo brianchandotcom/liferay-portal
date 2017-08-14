@@ -79,6 +79,13 @@ public interface CompanyService extends BaseService {
 	public Company deleteCompany(long companyId) throws PortalException;
 
 	/**
+	* Deletes the company's logo.
+	*
+	* @param companyId the primary key of the company
+	*/
+	public void deleteLogo(long companyId) throws PortalException;
+
+	/**
 	* Returns the company with the primary key.
 	*
 	* @param companyId the primary key of the company
@@ -124,6 +131,27 @@ public interface CompanyService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Company getCompanyByWebId(java.lang.String webId)
+		throws PortalException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	/**
+	* Removes the values that match the keys of the company's preferences.
+	*
+	* This method is called by {@link
+	* com.liferay.portlet.portalsettings.action.EditLDAPServerAction} remotely
+	* through {@link CompanyService}.
+	*
+	* @param companyId the primary key of the company
+	* @param keys the company's preferences keys to be remove
+	*/
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	public void removePreferences(long companyId, java.lang.String[] keys)
 		throws PortalException;
 
 	/**
@@ -311,6 +339,16 @@ public interface CompanyService extends BaseService {
 		throws PortalException;
 
 	/**
+	* Update the company's display.
+	*
+	* @param companyId the primary key of the company
+	* @param languageId the ID of the company's default user's language
+	* @param timeZoneId the ID of the company's default user's time zone
+	*/
+	public void updateDisplay(long companyId, java.lang.String languageId,
+		java.lang.String timeZoneId) throws PortalException;
+
+	/**
 	* Updates the company's logo.
 	*
 	* @param companyId the primary key of the company
@@ -330,44 +368,6 @@ public interface CompanyService extends BaseService {
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	public Company updateLogo(long companyId, InputStream inputStream)
 		throws PortalException;
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	/**
-	* Deletes the company's logo.
-	*
-	* @param companyId the primary key of the company
-	*/
-	public void deleteLogo(long companyId) throws PortalException;
-
-	/**
-	* Removes the values that match the keys of the company's preferences.
-	*
-	* This method is called by {@link
-	* com.liferay.portlet.portalsettings.action.EditLDAPServerAction} remotely
-	* through {@link CompanyService}.
-	*
-	* @param companyId the primary key of the company
-	* @param keys the company's preferences keys to be remove
-	*/
-	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
-	public void removePreferences(long companyId, java.lang.String[] keys)
-		throws PortalException;
-
-	/**
-	* Update the company's display.
-	*
-	* @param companyId the primary key of the company
-	* @param languageId the ID of the company's default user's language
-	* @param timeZoneId the ID of the company's default user's time zone
-	*/
-	public void updateDisplay(long companyId, java.lang.String languageId,
-		java.lang.String timeZoneId) throws PortalException;
 
 	/**
 	* Updates the company's preferences. The company's default properties are

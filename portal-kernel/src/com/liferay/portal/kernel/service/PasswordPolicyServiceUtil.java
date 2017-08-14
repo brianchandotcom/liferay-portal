@@ -60,10 +60,34 @@ public class PasswordPolicyServiceUtil {
 			resetFailureCount, resetTicketMaxAge, serviceContext);
 	}
 
+	public static void deletePasswordPolicy(long passwordPolicyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deletePasswordPolicy(passwordPolicyId);
+	}
+
 	public static com.liferay.portal.kernel.model.PasswordPolicy fetchPasswordPolicy(
 		long passwordPolicyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().fetchPasswordPolicy(passwordPolicyId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.PasswordPolicy> search(
+		long companyId, java.lang.String name, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.PasswordPolicy> obc) {
+		return getService().search(companyId, name, start, end, obc);
+	}
+
+	public static int searchCount(long companyId, java.lang.String name) {
+		return getService().searchCount(companyId, name);
 	}
 
 	public static com.liferay.portal.kernel.model.PasswordPolicy updatePasswordPolicy(
@@ -86,30 +110,6 @@ public class PasswordPolicyServiceUtil {
 			expireable, maxAge, warningTime, graceLimit, lockout, maxFailure,
 			lockoutDuration, resetFailureCount, resetTicketMaxAge,
 			serviceContext);
-	}
-
-	public static int searchCount(long companyId, java.lang.String name) {
-		return getService().searchCount(companyId, name);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static java.util.List<com.liferay.portal.kernel.model.PasswordPolicy> search(
-		long companyId, java.lang.String name, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.PasswordPolicy> obc) {
-		return getService().search(companyId, name, start, end, obc);
-	}
-
-	public static void deletePasswordPolicy(long passwordPolicyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deletePasswordPolicy(passwordPolicyId);
 	}
 
 	public static PasswordPolicyService getService() {

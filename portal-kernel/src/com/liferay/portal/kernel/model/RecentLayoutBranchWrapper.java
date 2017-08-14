@@ -120,78 +120,13 @@ public class RecentLayoutBranchWrapper implements RecentLayoutBranch,
 	}
 
 	@Override
-	public CacheModel<RecentLayoutBranch> toCacheModel() {
-		return _recentLayoutBranch.toCacheModel();
-	}
-
-	@Override
-	public RecentLayoutBranch toEscapedModel() {
-		return new RecentLayoutBranchWrapper(_recentLayoutBranch.toEscapedModel());
-	}
-
-	@Override
-	public RecentLayoutBranch toUnescapedModel() {
-		return new RecentLayoutBranchWrapper(_recentLayoutBranch.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _recentLayoutBranch.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _recentLayoutBranch.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _recentLayoutBranch.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _recentLayoutBranch.getExpandoBridge();
+	public java.lang.Object clone() {
+		return new RecentLayoutBranchWrapper((RecentLayoutBranch)_recentLayoutBranch.clone());
 	}
 
 	@Override
 	public int compareTo(RecentLayoutBranch recentLayoutBranch) {
 		return _recentLayoutBranch.compareTo(recentLayoutBranch);
-	}
-
-	@Override
-	public int hashCode() {
-		return _recentLayoutBranch.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _recentLayoutBranch.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new RecentLayoutBranchWrapper((RecentLayoutBranch)_recentLayoutBranch.clone());
-	}
-
-	/**
-	* Returns the user uuid of this recent layout branch.
-	*
-	* @return the user uuid of this recent layout branch
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _recentLayoutBranch.getUserUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _recentLayoutBranch.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _recentLayoutBranch.toXmlString();
 	}
 
 	/**
@@ -202,6 +137,11 @@ public class RecentLayoutBranchWrapper implements RecentLayoutBranch,
 	@Override
 	public long getCompanyId() {
 		return _recentLayoutBranch.getCompanyId();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _recentLayoutBranch.getExpandoBridge();
 	}
 
 	/**
@@ -264,6 +204,11 @@ public class RecentLayoutBranchWrapper implements RecentLayoutBranch,
 		return _recentLayoutBranch.getPrimaryKey();
 	}
 
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _recentLayoutBranch.getPrimaryKeyObj();
+	}
+
 	/**
 	* Returns the recent layout branch ID of this recent layout branch.
 	*
@@ -282,6 +227,36 @@ public class RecentLayoutBranchWrapper implements RecentLayoutBranch,
 	@Override
 	public long getUserId() {
 		return _recentLayoutBranch.getUserId();
+	}
+
+	/**
+	* Returns the user uuid of this recent layout branch.
+	*
+	* @return the user uuid of this recent layout branch
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _recentLayoutBranch.getUserUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _recentLayoutBranch.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _recentLayoutBranch.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _recentLayoutBranch.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _recentLayoutBranch.isNew();
 	}
 
 	@Override
@@ -305,13 +280,13 @@ public class RecentLayoutBranchWrapper implements RecentLayoutBranch,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_recentLayoutBranch.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_recentLayoutBranch.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_recentLayoutBranch.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
+		_recentLayoutBranch.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -417,6 +392,31 @@ public class RecentLayoutBranchWrapper implements RecentLayoutBranch,
 	@Override
 	public void setUserUuid(java.lang.String userUuid) {
 		_recentLayoutBranch.setUserUuid(userUuid);
+	}
+
+	@Override
+	public CacheModel<RecentLayoutBranch> toCacheModel() {
+		return _recentLayoutBranch.toCacheModel();
+	}
+
+	@Override
+	public RecentLayoutBranch toEscapedModel() {
+		return new RecentLayoutBranchWrapper(_recentLayoutBranch.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _recentLayoutBranch.toString();
+	}
+
+	@Override
+	public RecentLayoutBranch toUnescapedModel() {
+		return new RecentLayoutBranchWrapper(_recentLayoutBranch.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _recentLayoutBranch.toXmlString();
 	}
 
 	@Override

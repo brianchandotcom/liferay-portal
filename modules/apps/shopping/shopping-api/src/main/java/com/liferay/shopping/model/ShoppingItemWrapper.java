@@ -305,18 +305,73 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	}
 
 	@Override
+	public java.lang.Object clone() {
+		return new ShoppingItemWrapper((ShoppingItem)_shoppingItem.clone());
+	}
+
+	@Override
+	public int compareTo(ShoppingItem shoppingItem) {
+		return _shoppingItem.compareTo(shoppingItem);
+	}
+
+	@Override
 	public ShoppingCategory getCategory() {
 		return _shoppingItem.getCategory();
 	}
 
+	/**
+	* Returns the category ID of this shopping item.
+	*
+	* @return the category ID of this shopping item
+	*/
 	@Override
-	public ShoppingItem toEscapedModel() {
-		return new ShoppingItemWrapper(_shoppingItem.toEscapedModel());
+	public long getCategoryId() {
+		return _shoppingItem.getCategoryId();
+	}
+
+	/**
+	* Returns the company ID of this shopping item.
+	*
+	* @return the company ID of this shopping item
+	*/
+	@Override
+	public long getCompanyId() {
+		return _shoppingItem.getCompanyId();
+	}
+
+	/**
+	* Returns the create date of this shopping item.
+	*
+	* @return the create date of this shopping item
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _shoppingItem.getCreateDate();
+	}
+
+	/**
+	* Returns the description of this shopping item.
+	*
+	* @return the description of this shopping item
+	*/
+	@Override
+	public java.lang.String getDescription() {
+		return _shoppingItem.getDescription();
+	}
+
+	/**
+	* Returns the discount of this shopping item.
+	*
+	* @return the discount of this shopping item
+	*/
+	@Override
+	public double getDiscount() {
+		return _shoppingItem.getDiscount();
 	}
 
 	@Override
-	public ShoppingItem toUnescapedModel() {
-		return new ShoppingItemWrapper(_shoppingItem.toUnescapedModel());
+	public ExpandoBridge getExpandoBridge() {
+		return _shoppingItem.getExpandoBridge();
 	}
 
 	/**
@@ -340,6 +395,47 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	}
 
 	/**
+	* Returns the fields quantities of this shopping item.
+	*
+	* @return the fields quantities of this shopping item
+	*/
+	@Override
+	public java.lang.String getFieldsQuantities() {
+		return _shoppingItem.getFieldsQuantities();
+	}
+
+	@Override
+	public java.lang.String[] getFieldsQuantitiesArray() {
+		return _shoppingItem.getFieldsQuantitiesArray();
+	}
+
+	/**
+	* Returns the group ID of this shopping item.
+	*
+	* @return the group ID of this shopping item
+	*/
+	@Override
+	public long getGroupId() {
+		return _shoppingItem.getGroupId();
+	}
+
+	/**
+	* Returns the item ID of this shopping item.
+	*
+	* @return the item ID of this shopping item
+	*/
+	@Override
+	public long getItemId() {
+		return _shoppingItem.getItemId();
+	}
+
+	@Override
+	public java.util.List<ShoppingItemPrice> getItemPrices()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingItem.getItemPrices();
+	}
+
+	/**
 	* Returns the large image of this shopping item.
 	*
 	* @return the large image of this shopping item
@@ -350,6 +446,36 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	}
 
 	/**
+	* Returns the large image ID of this shopping item.
+	*
+	* @return the large image ID of this shopping item
+	*/
+	@Override
+	public long getLargeImageId() {
+		return _shoppingItem.getLargeImageId();
+	}
+
+	/**
+	* Returns the large image url of this shopping item.
+	*
+	* @return the large image url of this shopping item
+	*/
+	@Override
+	public java.lang.String getLargeImageURL() {
+		return _shoppingItem.getLargeImageURL();
+	}
+
+	/**
+	* Returns the max quantity of this shopping item.
+	*
+	* @return the max quantity of this shopping item
+	*/
+	@Override
+	public int getMaxQuantity() {
+		return _shoppingItem.getMaxQuantity();
+	}
+
+	/**
 	* Returns the medium image of this shopping item.
 	*
 	* @return the medium image of this shopping item
@@ -357,6 +483,91 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	@Override
 	public boolean getMediumImage() {
 		return _shoppingItem.getMediumImage();
+	}
+
+	/**
+	* Returns the medium image ID of this shopping item.
+	*
+	* @return the medium image ID of this shopping item
+	*/
+	@Override
+	public long getMediumImageId() {
+		return _shoppingItem.getMediumImageId();
+	}
+
+	/**
+	* Returns the medium image url of this shopping item.
+	*
+	* @return the medium image url of this shopping item
+	*/
+	@Override
+	public java.lang.String getMediumImageURL() {
+		return _shoppingItem.getMediumImageURL();
+	}
+
+	/**
+	* Returns the min quantity of this shopping item.
+	*
+	* @return the min quantity of this shopping item
+	*/
+	@Override
+	public int getMinQuantity() {
+		return _shoppingItem.getMinQuantity();
+	}
+
+	/**
+	* Returns the modified date of this shopping item.
+	*
+	* @return the modified date of this shopping item
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _shoppingItem.getModifiedDate();
+	}
+
+	/**
+	* Returns the name of this shopping item.
+	*
+	* @return the name of this shopping item
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _shoppingItem.getName();
+	}
+
+	/**
+	* Returns the price of this shopping item.
+	*
+	* @return the price of this shopping item
+	*/
+	@Override
+	public double getPrice() {
+		return _shoppingItem.getPrice();
+	}
+
+	/**
+	* Returns the primary key of this shopping item.
+	*
+	* @return the primary key of this shopping item
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _shoppingItem.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _shoppingItem.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the properties of this shopping item.
+	*
+	* @return the properties of this shopping item
+	*/
+	@Override
+	public java.lang.String getProperties() {
+		return _shoppingItem.getProperties();
 	}
 
 	/**
@@ -380,6 +591,32 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	}
 
 	/**
+	* Returns the shipping of this shopping item.
+	*
+	* @return the shipping of this shopping item
+	*/
+	@Override
+	public double getShipping() {
+		return _shoppingItem.getShipping();
+	}
+
+	@Override
+	public java.lang.String getShoppingItemImageURL(
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
+		return _shoppingItem.getShoppingItemImageURL(themeDisplay);
+	}
+
+	/**
+	* Returns the sku of this shopping item.
+	*
+	* @return the sku of this shopping item
+	*/
+	@Override
+	public java.lang.String getSku() {
+		return _shoppingItem.getSku();
+	}
+
+	/**
 	* Returns the small image of this shopping item.
 	*
 	* @return the small image of this shopping item
@@ -387,6 +624,36 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	@Override
 	public boolean getSmallImage() {
 		return _shoppingItem.getSmallImage();
+	}
+
+	/**
+	* Returns the small image ID of this shopping item.
+	*
+	* @return the small image ID of this shopping item
+	*/
+	@Override
+	public long getSmallImageId() {
+		return _shoppingItem.getSmallImageId();
+	}
+
+	/**
+	* Returns the small image url of this shopping item.
+	*
+	* @return the small image url of this shopping item
+	*/
+	@Override
+	public java.lang.String getSmallImageURL() {
+		return _shoppingItem.getSmallImageURL();
+	}
+
+	/**
+	* Returns the stock quantity of this shopping item.
+	*
+	* @return the stock quantity of this shopping item
+	*/
+	@Override
+	public int getStockQuantity() {
+		return _shoppingItem.getStockQuantity();
 	}
 
 	/**
@@ -407,6 +674,41 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	@Override
 	public boolean getUseShippingFormula() {
 		return _shoppingItem.getUseShippingFormula();
+	}
+
+	/**
+	* Returns the user ID of this shopping item.
+	*
+	* @return the user ID of this shopping item
+	*/
+	@Override
+	public long getUserId() {
+		return _shoppingItem.getUserId();
+	}
+
+	/**
+	* Returns the user name of this shopping item.
+	*
+	* @return the user name of this shopping item
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _shoppingItem.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this shopping item.
+	*
+	* @return the user uuid of this shopping item
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _shoppingItem.getUserUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _shoppingItem.hashCode();
 	}
 
 	@Override
@@ -517,333 +819,6 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	@Override
 	public boolean isUseShippingFormula() {
 		return _shoppingItem.isUseShippingFormula();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _shoppingItem.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<ShoppingItem> toCacheModel() {
-		return _shoppingItem.toCacheModel();
-	}
-
-	/**
-	* Returns the discount of this shopping item.
-	*
-	* @return the discount of this shopping item
-	*/
-	@Override
-	public double getDiscount() {
-		return _shoppingItem.getDiscount();
-	}
-
-	/**
-	* Returns the price of this shopping item.
-	*
-	* @return the price of this shopping item
-	*/
-	@Override
-	public double getPrice() {
-		return _shoppingItem.getPrice();
-	}
-
-	/**
-	* Returns the shipping of this shopping item.
-	*
-	* @return the shipping of this shopping item
-	*/
-	@Override
-	public double getShipping() {
-		return _shoppingItem.getShipping();
-	}
-
-	@Override
-	public int compareTo(ShoppingItem shoppingItem) {
-		return _shoppingItem.compareTo(shoppingItem);
-	}
-
-	/**
-	* Returns the max quantity of this shopping item.
-	*
-	* @return the max quantity of this shopping item
-	*/
-	@Override
-	public int getMaxQuantity() {
-		return _shoppingItem.getMaxQuantity();
-	}
-
-	/**
-	* Returns the min quantity of this shopping item.
-	*
-	* @return the min quantity of this shopping item
-	*/
-	@Override
-	public int getMinQuantity() {
-		return _shoppingItem.getMinQuantity();
-	}
-
-	/**
-	* Returns the stock quantity of this shopping item.
-	*
-	* @return the stock quantity of this shopping item
-	*/
-	@Override
-	public int getStockQuantity() {
-		return _shoppingItem.getStockQuantity();
-	}
-
-	@Override
-	public int hashCode() {
-		return _shoppingItem.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _shoppingItem.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new ShoppingItemWrapper((ShoppingItem)_shoppingItem.clone());
-	}
-
-	/**
-	* Returns the description of this shopping item.
-	*
-	* @return the description of this shopping item
-	*/
-	@Override
-	public java.lang.String getDescription() {
-		return _shoppingItem.getDescription();
-	}
-
-	/**
-	* Returns the fields quantities of this shopping item.
-	*
-	* @return the fields quantities of this shopping item
-	*/
-	@Override
-	public java.lang.String getFieldsQuantities() {
-		return _shoppingItem.getFieldsQuantities();
-	}
-
-	/**
-	* Returns the large image url of this shopping item.
-	*
-	* @return the large image url of this shopping item
-	*/
-	@Override
-	public java.lang.String getLargeImageURL() {
-		return _shoppingItem.getLargeImageURL();
-	}
-
-	/**
-	* Returns the medium image url of this shopping item.
-	*
-	* @return the medium image url of this shopping item
-	*/
-	@Override
-	public java.lang.String getMediumImageURL() {
-		return _shoppingItem.getMediumImageURL();
-	}
-
-	/**
-	* Returns the name of this shopping item.
-	*
-	* @return the name of this shopping item
-	*/
-	@Override
-	public java.lang.String getName() {
-		return _shoppingItem.getName();
-	}
-
-	/**
-	* Returns the properties of this shopping item.
-	*
-	* @return the properties of this shopping item
-	*/
-	@Override
-	public java.lang.String getProperties() {
-		return _shoppingItem.getProperties();
-	}
-
-	@Override
-	public java.lang.String getShoppingItemImageURL(
-		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
-		return _shoppingItem.getShoppingItemImageURL(themeDisplay);
-	}
-
-	/**
-	* Returns the sku of this shopping item.
-	*
-	* @return the sku of this shopping item
-	*/
-	@Override
-	public java.lang.String getSku() {
-		return _shoppingItem.getSku();
-	}
-
-	/**
-	* Returns the small image url of this shopping item.
-	*
-	* @return the small image url of this shopping item
-	*/
-	@Override
-	public java.lang.String getSmallImageURL() {
-		return _shoppingItem.getSmallImageURL();
-	}
-
-	/**
-	* Returns the user name of this shopping item.
-	*
-	* @return the user name of this shopping item
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _shoppingItem.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this shopping item.
-	*
-	* @return the user uuid of this shopping item
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _shoppingItem.getUserUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _shoppingItem.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _shoppingItem.toXmlString();
-	}
-
-	@Override
-	public java.lang.String[] getFieldsQuantitiesArray() {
-		return _shoppingItem.getFieldsQuantitiesArray();
-	}
-
-	/**
-	* Returns the create date of this shopping item.
-	*
-	* @return the create date of this shopping item
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _shoppingItem.getCreateDate();
-	}
-
-	/**
-	* Returns the modified date of this shopping item.
-	*
-	* @return the modified date of this shopping item
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _shoppingItem.getModifiedDate();
-	}
-
-	@Override
-	public java.util.List<ShoppingItemPrice> getItemPrices()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingItem.getItemPrices();
-	}
-
-	/**
-	* Returns the category ID of this shopping item.
-	*
-	* @return the category ID of this shopping item
-	*/
-	@Override
-	public long getCategoryId() {
-		return _shoppingItem.getCategoryId();
-	}
-
-	/**
-	* Returns the company ID of this shopping item.
-	*
-	* @return the company ID of this shopping item
-	*/
-	@Override
-	public long getCompanyId() {
-		return _shoppingItem.getCompanyId();
-	}
-
-	/**
-	* Returns the group ID of this shopping item.
-	*
-	* @return the group ID of this shopping item
-	*/
-	@Override
-	public long getGroupId() {
-		return _shoppingItem.getGroupId();
-	}
-
-	/**
-	* Returns the item ID of this shopping item.
-	*
-	* @return the item ID of this shopping item
-	*/
-	@Override
-	public long getItemId() {
-		return _shoppingItem.getItemId();
-	}
-
-	/**
-	* Returns the large image ID of this shopping item.
-	*
-	* @return the large image ID of this shopping item
-	*/
-	@Override
-	public long getLargeImageId() {
-		return _shoppingItem.getLargeImageId();
-	}
-
-	/**
-	* Returns the medium image ID of this shopping item.
-	*
-	* @return the medium image ID of this shopping item
-	*/
-	@Override
-	public long getMediumImageId() {
-		return _shoppingItem.getMediumImageId();
-	}
-
-	/**
-	* Returns the primary key of this shopping item.
-	*
-	* @return the primary key of this shopping item
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _shoppingItem.getPrimaryKey();
-	}
-
-	/**
-	* Returns the small image ID of this shopping item.
-	*
-	* @return the small image ID of this shopping item
-	*/
-	@Override
-	public long getSmallImageId() {
-		return _shoppingItem.getSmallImageId();
-	}
-
-	/**
-	* Returns the user ID of this shopping item.
-	*
-	* @return the user ID of this shopping item
-	*/
-	@Override
-	public long getUserId() {
-		return _shoppingItem.getUserId();
 	}
 
 	@Override
@@ -1246,6 +1221,31 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	@Override
 	public void setUserUuid(java.lang.String userUuid) {
 		_shoppingItem.setUserUuid(userUuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<ShoppingItem> toCacheModel() {
+		return _shoppingItem.toCacheModel();
+	}
+
+	@Override
+	public ShoppingItem toEscapedModel() {
+		return new ShoppingItemWrapper(_shoppingItem.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _shoppingItem.toString();
+	}
+
+	@Override
+	public ShoppingItem toUnescapedModel() {
+		return new ShoppingItemWrapper(_shoppingItem.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _shoppingItem.toXmlString();
 	}
 
 	@Override

@@ -31,23 +31,13 @@ public class PortalServiceWrapper implements PortalService,
 	}
 
 	@Override
-	public boolean testHasClassName() {
-		return _portalService.testHasClassName();
+	public java.lang.String getAutoDeployDirectory() {
+		return _portalService.getAutoDeployDirectory();
 	}
 
 	@Override
 	public int getBuildNumber() {
 		return _portalService.getBuildNumber();
-	}
-
-	@Override
-	public int testGetBuildNumber() {
-		return _portalService.testGetBuildNumber();
-	}
-
-	@Override
-	public java.lang.String getAutoDeployDirectory() {
-		return _portalService.getAutoDeployDirectory();
 	}
 
 	/**
@@ -105,8 +95,18 @@ public class PortalServiceWrapper implements PortalService,
 	}
 
 	@Override
+	public int testGetBuildNumber() {
+		return _portalService.testGetBuildNumber();
+	}
+
+	@Override
 	public void testGetUserId() {
 		_portalService.testGetUserId();
+	}
+
+	@Override
+	public boolean testHasClassName() {
+		return _portalService.testHasClassName();
 	}
 
 	@Override

@@ -39,28 +39,28 @@ public class TasksEntryServiceClp implements TasksEntryService {
 
 		_methodParameterTypes1 = new String[] { "long" };
 
-		_methodName2 = "getTasksEntry";
+		_methodName2 = "getOSGiServiceIdentifier";
 
-		_methodParameterTypes2 = new String[] { "long" };
+		_methodParameterTypes2 = new String[] {  };
 
-		_methodName3 = "updateTasksEntry";
+		_methodName3 = "getTasksEntry";
 
-		_methodParameterTypes3 = new String[] {
+		_methodParameterTypes3 = new String[] { "long" };
+
+		_methodName5 = "updateTasksEntry";
+
+		_methodParameterTypes5 = new String[] {
 				"long", "java.lang.String", "int", "long", "long", "int", "int",
 				"int", "int", "int", "boolean", "int",
 				"com.liferay.portal.kernel.service.ServiceContext"
 			};
 
-		_methodName4 = "updateTasksEntryStatus";
+		_methodName6 = "updateTasksEntryStatus";
 
-		_methodParameterTypes4 = new String[] {
+		_methodParameterTypes6 = new String[] {
 				"long", "long", "int",
 				"com.liferay.portal.kernel.service.ServiceContext"
 			};
-
-		_methodName6 = "getOSGiServiceIdentifier";
-
-		_methodParameterTypes6 = new String[] {  };
 	}
 
 	@Override
@@ -146,13 +146,36 @@ public class TasksEntryServiceClp implements TasksEntryService {
 	}
 
 	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName2,
+					_methodParameterTypes2, new Object[] {  });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.String)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public com.liferay.tasks.model.TasksEntry getTasksEntry(long tasksEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableService.invokeMethod(_methodName2,
-					_methodParameterTypes2, new Object[] { tasksEntryId });
+			returnObj = _invokableService.invokeMethod(_methodName3,
+					_methodParameterTypes3, new Object[] { tasksEntryId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -174,6 +197,13 @@ public class TasksEntryServiceClp implements TasksEntryService {
 	}
 
 	@Override
+	public java.lang.Object invokeMethod(java.lang.String name,
+		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
+		throws java.lang.Throwable {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public com.liferay.tasks.model.TasksEntry updateTasksEntry(
 		long tasksEntryId, java.lang.String title, int priority,
 		long assigneeUserId, long resolverUserId, int dueDateMonth,
@@ -184,8 +214,8 @@ public class TasksEntryServiceClp implements TasksEntryService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableService.invokeMethod(_methodName3,
-					_methodParameterTypes3,
+			returnObj = _invokableService.invokeMethod(_methodName5,
+					_methodParameterTypes5,
 					new Object[] {
 						tasksEntryId,
 						
@@ -241,8 +271,8 @@ public class TasksEntryServiceClp implements TasksEntryService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableService.invokeMethod(_methodName4,
-					_methodParameterTypes4,
+			returnObj = _invokableService.invokeMethod(_methodName6,
+					_methodParameterTypes6,
 					new Object[] {
 						tasksEntryId,
 						
@@ -272,36 +302,6 @@ public class TasksEntryServiceClp implements TasksEntryService {
 		return (com.liferay.tasks.model.TasksEntry)ClpSerializer.translateOutput(returnObj);
 	}
 
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableService.invokeMethod(_methodName6,
-					_methodParameterTypes6, new Object[] {  });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (java.lang.String)ClpSerializer.translateOutput(returnObj);
-	}
-
 	private InvokableService _invokableService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -311,8 +311,8 @@ public class TasksEntryServiceClp implements TasksEntryService {
 	private String[] _methodParameterTypes2;
 	private String _methodName3;
 	private String[] _methodParameterTypes3;
-	private String _methodName4;
-	private String[] _methodParameterTypes4;
+	private String _methodName5;
+	private String[] _methodParameterTypes5;
 	private String _methodName6;
 	private String[] _methodParameterTypes6;
 }

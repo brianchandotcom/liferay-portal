@@ -70,27 +70,15 @@ public class SAPEntryServiceUtil {
 		return getService().fetchSAPEntry(companyId, name);
 	}
 
-	public static com.liferay.portal.security.service.access.policy.model.SAPEntry getSAPEntry(
-		long companyId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getSAPEntry(companyId, name);
+	public static java.util.List<com.liferay.portal.security.service.access.policy.model.SAPEntry> getCompanySAPEntries(
+		long companyId, int start, int end) {
+		return getService().getCompanySAPEntries(companyId, start, end);
 	}
 
-	public static com.liferay.portal.security.service.access.policy.model.SAPEntry getSAPEntry(
-		long sapEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getSAPEntry(sapEntryId);
-	}
-
-	public static com.liferay.portal.security.service.access.policy.model.SAPEntry updateSAPEntry(
-		long sapEntryId, java.lang.String allowedServiceSignatures,
-		boolean defaultSAPEntry, boolean enabled, java.lang.String name,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateSAPEntry(sapEntryId, allowedServiceSignatures,
-			defaultSAPEntry, enabled, name, titleMap, serviceContext);
+	public static java.util.List<com.liferay.portal.security.service.access.policy.model.SAPEntry> getCompanySAPEntries(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.security.service.access.policy.model.SAPEntry> obc) {
+		return getService().getCompanySAPEntries(companyId, start, end, obc);
 	}
 
 	public static int getCompanySAPEntriesCount(long companyId) {
@@ -106,15 +94,27 @@ public class SAPEntryServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static java.util.List<com.liferay.portal.security.service.access.policy.model.SAPEntry> getCompanySAPEntries(
-		long companyId, int start, int end) {
-		return getService().getCompanySAPEntries(companyId, start, end);
+	public static com.liferay.portal.security.service.access.policy.model.SAPEntry getSAPEntry(
+		long sapEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getSAPEntry(sapEntryId);
 	}
 
-	public static java.util.List<com.liferay.portal.security.service.access.policy.model.SAPEntry> getCompanySAPEntries(
-		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.security.service.access.policy.model.SAPEntry> obc) {
-		return getService().getCompanySAPEntries(companyId, start, end, obc);
+	public static com.liferay.portal.security.service.access.policy.model.SAPEntry getSAPEntry(
+		long companyId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getSAPEntry(companyId, name);
+	}
+
+	public static com.liferay.portal.security.service.access.policy.model.SAPEntry updateSAPEntry(
+		long sapEntryId, java.lang.String allowedServiceSignatures,
+		boolean defaultSAPEntry, boolean enabled, java.lang.String name,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateSAPEntry(sapEntryId, allowedServiceSignatures,
+			defaultSAPEntry, enabled, name, titleMap, serviceContext);
 	}
 
 	public static SAPEntryService getService() {

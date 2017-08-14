@@ -63,42 +63,34 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ResourceBlockLocalServiceUtil} to access the resource block local service. Add custom service methods to {@link com.liferay.portal.service.impl.ResourceBlockLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasPermission(java.lang.String name,
-		PermissionedModel permissionedModel, java.lang.String actionId,
-		ResourceBlockIdsBag resourceBlockIdsBag) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasPermission(java.lang.String name, long primKey,
-		java.lang.String actionId, ResourceBlockIdsBag resourceBlockIdsBag)
+	public void addCompanyScopePermission(long companyId,
+		java.lang.String name, long roleId, java.lang.String actionId)
 		throws PortalException;
 
-	@Skip
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean isSupported(java.lang.String name);
+	public void addCompanyScopePermissions(long companyId,
+		java.lang.String name, long roleId, long actionIdsLong);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PermissionedModel getPermissionedModel(java.lang.String name,
-		long primKey) throws PortalException;
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+	public void addGroupScopePermission(long companyId, long groupId,
+		java.lang.String name, long roleId, java.lang.String actionId)
 		throws PortalException;
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+	public void addGroupScopePermissions(long companyId, long groupId,
+		java.lang.String name, long roleId, long actionIdsLong);
+
+	public void addIndividualScopePermission(long companyId, long groupId,
+		java.lang.String name, PermissionedModel permissionedModel,
+		long roleId, java.lang.String actionId) throws PortalException;
+
+	public void addIndividualScopePermission(long companyId, long groupId,
+		java.lang.String name, long primKey, long roleId,
+		java.lang.String actionId) throws PortalException;
+
+	public void addIndividualScopePermissions(long companyId, long groupId,
+		java.lang.String name, PermissionedModel permissionedModel,
+		long roleId, long actionIdsLong);
+
+	public void addIndividualScopePermissions(long companyId, long groupId,
+		java.lang.String name, long primKey, long roleId, long actionIdsLong)
 		throws PortalException;
 
 	/**
@@ -136,6 +128,13 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 	public ResourceBlock createResourceBlock(long resourceBlockId);
 
 	/**
+	* @throws PortalException
+	*/
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
+
+	/**
 	* Deletes the resource block from the database. Also notifies the appropriate model listeners.
 	*
 	* @param resourceBlock the resource block
@@ -155,57 +154,7 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 	public ResourceBlock deleteResourceBlock(long resourceBlockId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ResourceBlock fetchResourceBlock(long resourceBlockId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ResourceBlock getResourceBlock(java.lang.String name, long primKey)
-		throws PortalException;
-
-	/**
-	* Returns the resource block with the primary key.
-	*
-	* @param resourceBlockId the primary key of the resource block
-	* @return the resource block
-	* @throws PortalException if a resource block with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ResourceBlock getResourceBlock(long resourceBlockId)
-		throws PortalException;
-
-	/**
-	* Updates the resource block in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param resourceBlock the resource block
-	* @return the resource block that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public ResourceBlock updateResourceBlock(ResourceBlock resourceBlock);
-
-	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRES_NEW)
-	public ResourceBlock updateResourceBlockId(long companyId, long groupId,
-		java.lang.String name, PermissionedModel permissionedModel,
-		java.lang.String permissionsHash,
-		ResourceBlockPermissionsContainer resourceBlockPermissionsContainer);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ResourceBlockIdsBag getResourceBlockIdsBag(long companyId,
-		long groupId, java.lang.String name, long[] roleIds);
-
-	/**
-	* Returns the number of resource blocks.
-	*
-	* @return the number of resource blocks
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getResourceBlocksCount();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -246,45 +195,6 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.String> getActionIds(java.lang.String name,
-		long actionIdsLong);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.String> getCompanyScopePermissions(
-		ResourceBlock resourceBlock, long roleId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.String> getGroupScopePermissions(
-		ResourceBlock resourceBlock, long roleId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.String> getPermissions(ResourceBlock resourceBlock,
-		long roleId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Long> getResourceBlockIds(
-		ResourceBlockIdsBag resourceBlockIdsBag, java.lang.String name,
-		java.lang.String actionId) throws PortalException;
-
-	/**
-	* Returns a range of all the resource blocks.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ResourceBlockModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of resource blocks
-	* @param end the upper bound of the range of resource blocks (not inclusive)
-	* @return the range of resource blocks
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ResourceBlock> getResourceBlocks(int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Role> getRoles(java.lang.String name, long primKey,
-		java.lang.String actionId) throws PortalException;
-
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -304,6 +214,9 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ResourceBlock fetchResourceBlock(long resourceBlockId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getActionId(java.lang.String name, java.lang.String actionId)
 		throws PortalException;
 
@@ -311,35 +224,107 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 	public long getActionIds(java.lang.String name,
 		List<java.lang.String> actionIds) throws PortalException;
 
-	public void addCompanyScopePermission(long companyId,
-		java.lang.String name, long roleId, java.lang.String actionId)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<java.lang.String> getActionIds(java.lang.String name,
+		long actionIdsLong);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<java.lang.String> getCompanyScopePermissions(
+		ResourceBlock resourceBlock, long roleId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<java.lang.String> getGroupScopePermissions(
+		ResourceBlock resourceBlock, long roleId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PermissionedModel getPermissionedModel(java.lang.String name,
+		long primKey) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<java.lang.String> getPermissions(ResourceBlock resourceBlock,
+		long roleId);
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	public void addCompanyScopePermissions(long companyId,
-		java.lang.String name, long roleId, long actionIdsLong);
-
-	public void addGroupScopePermission(long companyId, long groupId,
-		java.lang.String name, long roleId, java.lang.String actionId)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ResourceBlock getResourceBlock(java.lang.String name, long primKey)
 		throws PortalException;
 
-	public void addGroupScopePermissions(long companyId, long groupId,
-		java.lang.String name, long roleId, long actionIdsLong);
+	/**
+	* Returns the resource block with the primary key.
+	*
+	* @param resourceBlockId the primary key of the resource block
+	* @return the resource block
+	* @throws PortalException if a resource block with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ResourceBlock getResourceBlock(long resourceBlockId)
+		throws PortalException;
 
-	public void addIndividualScopePermission(long companyId, long groupId,
-		java.lang.String name, PermissionedModel permissionedModel,
-		long roleId, java.lang.String actionId) throws PortalException;
-
-	public void addIndividualScopePermission(long companyId, long groupId,
-		java.lang.String name, long primKey, long roleId,
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<java.lang.Long> getResourceBlockIds(
+		ResourceBlockIdsBag resourceBlockIdsBag, java.lang.String name,
 		java.lang.String actionId) throws PortalException;
 
-	public void addIndividualScopePermissions(long companyId, long groupId,
-		java.lang.String name, PermissionedModel permissionedModel,
-		long roleId, long actionIdsLong);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ResourceBlockIdsBag getResourceBlockIdsBag(long companyId,
+		long groupId, java.lang.String name, long[] roleIds);
 
-	public void addIndividualScopePermissions(long companyId, long groupId,
-		java.lang.String name, long primKey, long roleId, long actionIdsLong)
+	/**
+	* Returns a range of all the resource blocks.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ResourceBlockModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of resource blocks
+	* @param end the upper bound of the range of resource blocks (not inclusive)
+	* @return the range of resource blocks
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ResourceBlock> getResourceBlocks(int start, int end);
+
+	/**
+	* Returns the number of resource blocks.
+	*
+	* @return the number of resource blocks
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getResourceBlocksCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Role> getRoles(java.lang.String name, long primKey,
+		java.lang.String actionId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasPermission(java.lang.String name,
+		PermissionedModel permissionedModel, java.lang.String actionId,
+		ResourceBlockIdsBag resourceBlockIdsBag) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasPermission(java.lang.String name, long primKey,
+		java.lang.String actionId, ResourceBlockIdsBag resourceBlockIdsBag)
 		throws PortalException;
+
+	@Skip
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean isSupported(java.lang.String name);
 
 	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRES_NEW)
 	public void releasePermissionedModelResourceBlock(
@@ -450,6 +435,21 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 	public void updateIndividualScopePermissions(long companyId, long groupId,
 		java.lang.String name, PermissionedModel permissionedModel,
 		long roleId, long actionIdsLong, int operator);
+
+	/**
+	* Updates the resource block in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param resourceBlock the resource block
+	* @return the resource block that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public ResourceBlock updateResourceBlock(ResourceBlock resourceBlock);
+
+	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRES_NEW)
+	public ResourceBlock updateResourceBlockId(long companyId, long groupId,
+		java.lang.String name, PermissionedModel permissionedModel,
+		java.lang.String permissionsHash,
+		ResourceBlockPermissionsContainer resourceBlockPermissionsContainer);
 
 	public void verifyResourceBlockId(long companyId, java.lang.String name,
 		long primKey) throws PortalException;

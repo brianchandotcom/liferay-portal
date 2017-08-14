@@ -63,6 +63,13 @@ public interface CountryService extends BaseService {
 	public Country fetchCountryByA3(java.lang.String a3);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Country> getCountries();
+
+	@AccessControlled(guestAccessEnabled = true)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Country> getCountries(boolean active);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Country getCountry(long countryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -83,11 +90,4 @@ public interface CountryService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Country> getCountries();
-
-	@AccessControlled(guestAccessEnabled = true)
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Country> getCountries(boolean active);
 }

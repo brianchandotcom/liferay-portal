@@ -32,44 +32,6 @@ public class RepositoryEntryLocalServiceWrapper
 		_repositoryEntryLocalService = repositoryEntryLocalService;
 	}
 
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _repositoryEntryLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _repositoryEntryLocalService.dynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return _repositoryEntryLocalService.getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _repositoryEntryLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _repositoryEntryLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _repositoryEntryLocalService.getPersistedModel(primaryKeyObj);
-	}
-
 	/**
 	* Adds the repository entry to the database. Also notifies the appropriate model listeners.
 	*
@@ -104,6 +66,24 @@ public class RepositoryEntryLocalServiceWrapper
 	}
 
 	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _repositoryEntryLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public void deleteRepositoryEntries(long repositoryId,
+		java.lang.Iterable<java.lang.String> mappedIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_repositoryEntryLocalService.deleteRepositoryEntries(repositoryId,
+			mappedIds);
+	}
+
+	/**
 	* Deletes the repository entry from the database. Also notifies the appropriate model listeners.
 	*
 	* @param repositoryEntry the repository entry
@@ -130,6 +110,100 @@ public class RepositoryEntryLocalServiceWrapper
 	}
 
 	@Override
+	public void deleteRepositoryEntry(long repositoryId,
+		java.lang.String mappedId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_repositoryEntryLocalService.deleteRepositoryEntry(repositoryId,
+			mappedId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _repositoryEntryLocalService.dynamicQuery();
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	*/
+	@Override
+	public <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _repositoryEntryLocalService.dynamicQuery(dynamicQuery);
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns a range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.RepositoryEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @return the range of matching rows
+	*/
+	@Override
+	public <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end) {
+		return _repositoryEntryLocalService.dynamicQuery(dynamicQuery, start,
+			end);
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.RepositoryEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching rows
+	*/
+	@Override
+	public <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+		return _repositoryEntryLocalService.dynamicQuery(dynamicQuery, start,
+			end, orderByComparator);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _repositoryEntryLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _repositoryEntryLocalService.dynamicQueryCount(dynamicQuery,
+			projection);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.model.RepositoryEntry fetchRepositoryEntry(
 		long repositoryEntryId) {
 		return _repositoryEntryLocalService.fetchRepositoryEntry(repositoryEntryId);
@@ -147,6 +221,104 @@ public class RepositoryEntryLocalServiceWrapper
 		java.lang.String uuid, long groupId) {
 		return _repositoryEntryLocalService.fetchRepositoryEntryByUuidAndGroupId(uuid,
 			groupId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _repositoryEntryLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return _repositoryEntryLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _repositoryEntryLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _repositoryEntryLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _repositoryEntryLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Returns a range of all the repository entries.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.RepositoryEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of repository entries
+	* @param end the upper bound of the range of repository entries (not inclusive)
+	* @return the range of repository entries
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.RepositoryEntry> getRepositoryEntries(
+		int start, int end) {
+		return _repositoryEntryLocalService.getRepositoryEntries(start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.RepositoryEntry> getRepositoryEntries(
+		long repositoryId) {
+		return _repositoryEntryLocalService.getRepositoryEntries(repositoryId);
+	}
+
+	/**
+	* Returns all the repository entries matching the UUID and company.
+	*
+	* @param uuid the UUID of the repository entries
+	* @param companyId the primary key of the company
+	* @return the matching repository entries, or an empty list if no matches were found
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.RepositoryEntry> getRepositoryEntriesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return _repositoryEntryLocalService.getRepositoryEntriesByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	/**
+	* Returns a range of repository entries matching the UUID and company.
+	*
+	* @param uuid the UUID of the repository entries
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of repository entries
+	* @param end the upper bound of the range of repository entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching repository entries, or an empty list if no matches were found
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.RepositoryEntry> getRepositoryEntriesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.RepositoryEntry> orderByComparator) {
+		return _repositoryEntryLocalService.getRepositoryEntriesByUuidAndCompanyId(uuid,
+			companyId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the number of repository entries.
+	*
+	* @return the number of repository entries
+	*/
+	@Override
+	public int getRepositoryEntriesCount() {
+		return _repositoryEntryLocalService.getRepositoryEntriesCount();
 	}
 
 	@Override
@@ -211,178 +383,6 @@ public class RepositoryEntryLocalServiceWrapper
 		long repositoryEntryId, java.lang.String mappedId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _repositoryEntryLocalService.updateRepositoryEntry(repositoryEntryId,
-			mappedId);
-	}
-
-	/**
-	* Returns the number of repository entries.
-	*
-	* @return the number of repository entries
-	*/
-	@Override
-	public int getRepositoryEntriesCount() {
-		return _repositoryEntryLocalService.getRepositoryEntriesCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _repositoryEntryLocalService.getOSGiServiceIdentifier();
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	*/
-	@Override
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _repositoryEntryLocalService.dynamicQuery(dynamicQuery);
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns a range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.RepositoryEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @return the range of matching rows
-	*/
-	@Override
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
-		return _repositoryEntryLocalService.dynamicQuery(dynamicQuery, start,
-			end);
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.RepositoryEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching rows
-	*/
-	@Override
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
-		return _repositoryEntryLocalService.dynamicQuery(dynamicQuery, start,
-			end, orderByComparator);
-	}
-
-	/**
-	* Returns a range of all the repository entries.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.RepositoryEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of repository entries
-	* @param end the upper bound of the range of repository entries (not inclusive)
-	* @return the range of repository entries
-	*/
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.RepositoryEntry> getRepositoryEntries(
-		int start, int end) {
-		return _repositoryEntryLocalService.getRepositoryEntries(start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.RepositoryEntry> getRepositoryEntries(
-		long repositoryId) {
-		return _repositoryEntryLocalService.getRepositoryEntries(repositoryId);
-	}
-
-	/**
-	* Returns all the repository entries matching the UUID and company.
-	*
-	* @param uuid the UUID of the repository entries
-	* @param companyId the primary key of the company
-	* @return the matching repository entries, or an empty list if no matches were found
-	*/
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.RepositoryEntry> getRepositoryEntriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return _repositoryEntryLocalService.getRepositoryEntriesByUuidAndCompanyId(uuid,
-			companyId);
-	}
-
-	/**
-	* Returns a range of repository entries matching the UUID and company.
-	*
-	* @param uuid the UUID of the repository entries
-	* @param companyId the primary key of the company
-	* @param start the lower bound of the range of repository entries
-	* @param end the upper bound of the range of repository entries (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the range of matching repository entries, or an empty list if no matches were found
-	*/
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.RepositoryEntry> getRepositoryEntriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.RepositoryEntry> orderByComparator) {
-		return _repositoryEntryLocalService.getRepositoryEntriesByUuidAndCompanyId(uuid,
-			companyId, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _repositoryEntryLocalService.dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _repositoryEntryLocalService.dynamicQueryCount(dynamicQuery,
-			projection);
-	}
-
-	@Override
-	public void deleteRepositoryEntries(long repositoryId,
-		java.lang.Iterable<java.lang.String> mappedIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_repositoryEntryLocalService.deleteRepositoryEntries(repositoryId,
-			mappedIds);
-	}
-
-	@Override
-	public void deleteRepositoryEntry(long repositoryId,
-		java.lang.String mappedId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_repositoryEntryLocalService.deleteRepositoryEntry(repositoryId,
 			mappedId);
 	}
 

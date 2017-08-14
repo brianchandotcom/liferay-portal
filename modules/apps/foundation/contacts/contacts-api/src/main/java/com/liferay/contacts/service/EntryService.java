@@ -51,10 +51,6 @@ public interface EntryService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link EntryServiceUtil} to access the entry remote service. Add custom service methods to {@link com.liferay.contacts.service.impl.EntryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JSONArray searchUsersAndContacts(long companyId,
-		java.lang.String keywords, int start, int end)
-		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -62,4 +58,9 @@ public interface EntryService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JSONArray searchUsersAndContacts(long companyId,
+		java.lang.String keywords, int start, int end)
+		throws PortalException;
 }

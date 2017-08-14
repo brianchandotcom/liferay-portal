@@ -48,9 +48,6 @@ public interface AnnouncementsDeliveryService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AnnouncementsDeliveryServiceUtil} to access the announcements delivery remote service. Add custom service methods to {@link com.liferay.portlet.announcements.service.impl.AnnouncementsDeliveryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public AnnouncementsDelivery updateDelivery(long userId,
-		java.lang.String type, boolean email, boolean sms, boolean website)
-		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -58,4 +55,8 @@ public interface AnnouncementsDeliveryService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	public AnnouncementsDelivery updateDelivery(long userId,
+		java.lang.String type, boolean email, boolean sms, boolean website)
+		throws PortalException;
 }

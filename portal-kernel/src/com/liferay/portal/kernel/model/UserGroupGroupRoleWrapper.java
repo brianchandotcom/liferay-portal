@@ -99,96 +99,13 @@ public class UserGroupGroupRoleWrapper implements UserGroupGroupRole,
 	}
 
 	@Override
-	public CacheModel<UserGroupGroupRole> toCacheModel() {
-		return _userGroupGroupRole.toCacheModel();
-	}
-
-	@Override
-	public Group getGroup()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userGroupGroupRole.getGroup();
-	}
-
-	@Override
-	public Role getRole()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userGroupGroupRole.getRole();
-	}
-
-	@Override
-	public UserGroup getUserGroup()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userGroupGroupRole.getUserGroup();
-	}
-
-	@Override
-	public UserGroupGroupRole toEscapedModel() {
-		return new UserGroupGroupRoleWrapper(_userGroupGroupRole.toEscapedModel());
-	}
-
-	@Override
-	public UserGroupGroupRole toUnescapedModel() {
-		return new UserGroupGroupRoleWrapper(_userGroupGroupRole.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _userGroupGroupRole.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _userGroupGroupRole.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _userGroupGroupRole.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _userGroupGroupRole.getExpandoBridge();
-	}
-
-	/**
-	* Returns the primary key of this user group group role.
-	*
-	* @return the primary key of this user group group role
-	*/
-	@Override
-	public com.liferay.portal.kernel.service.persistence.UserGroupGroupRolePK getPrimaryKey() {
-		return _userGroupGroupRole.getPrimaryKey();
-	}
-
-	@Override
-	public int compareTo(UserGroupGroupRole userGroupGroupRole) {
-		return _userGroupGroupRole.compareTo(userGroupGroupRole);
-	}
-
-	@Override
-	public int hashCode() {
-		return _userGroupGroupRole.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _userGroupGroupRole.getPrimaryKeyObj();
-	}
-
-	@Override
 	public java.lang.Object clone() {
 		return new UserGroupGroupRoleWrapper((UserGroupGroupRole)_userGroupGroupRole.clone());
 	}
 
 	@Override
-	public java.lang.String toString() {
-		return _userGroupGroupRole.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _userGroupGroupRole.toXmlString();
+	public int compareTo(UserGroupGroupRole userGroupGroupRole) {
+		return _userGroupGroupRole.compareTo(userGroupGroupRole);
 	}
 
 	/**
@@ -199,6 +116,17 @@ public class UserGroupGroupRoleWrapper implements UserGroupGroupRole,
 	@Override
 	public long getCompanyId() {
 		return _userGroupGroupRole.getCompanyId();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _userGroupGroupRole.getExpandoBridge();
+	}
+
+	@Override
+	public Group getGroup()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userGroupGroupRole.getGroup();
 	}
 
 	/**
@@ -222,6 +150,27 @@ public class UserGroupGroupRoleWrapper implements UserGroupGroupRole,
 	}
 
 	/**
+	* Returns the primary key of this user group group role.
+	*
+	* @return the primary key of this user group group role
+	*/
+	@Override
+	public com.liferay.portal.kernel.service.persistence.UserGroupGroupRolePK getPrimaryKey() {
+		return _userGroupGroupRole.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _userGroupGroupRole.getPrimaryKeyObj();
+	}
+
+	@Override
+	public Role getRole()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userGroupGroupRole.getRole();
+	}
+
+	/**
 	* Returns the role ID of this user group group role.
 	*
 	* @return the role ID of this user group group role
@@ -229,6 +178,12 @@ public class UserGroupGroupRoleWrapper implements UserGroupGroupRole,
 	@Override
 	public long getRoleId() {
 		return _userGroupGroupRole.getRoleId();
+	}
+
+	@Override
+	public UserGroup getUserGroup()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userGroupGroupRole.getUserGroup();
 	}
 
 	/**
@@ -239,6 +194,26 @@ public class UserGroupGroupRoleWrapper implements UserGroupGroupRole,
 	@Override
 	public long getUserGroupId() {
 		return _userGroupGroupRole.getUserGroupId();
+	}
+
+	@Override
+	public int hashCode() {
+		return _userGroupGroupRole.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _userGroupGroupRole.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _userGroupGroupRole.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _userGroupGroupRole.isNew();
 	}
 
 	@Override
@@ -262,13 +237,13 @@ public class UserGroupGroupRoleWrapper implements UserGroupGroupRole,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_userGroupGroupRole.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_userGroupGroupRole.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_userGroupGroupRole.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
+		_userGroupGroupRole.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -335,6 +310,31 @@ public class UserGroupGroupRoleWrapper implements UserGroupGroupRole,
 	@Override
 	public void setUserGroupId(long userGroupId) {
 		_userGroupGroupRole.setUserGroupId(userGroupId);
+	}
+
+	@Override
+	public CacheModel<UserGroupGroupRole> toCacheModel() {
+		return _userGroupGroupRole.toCacheModel();
+	}
+
+	@Override
+	public UserGroupGroupRole toEscapedModel() {
+		return new UserGroupGroupRoleWrapper(_userGroupGroupRole.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _userGroupGroupRole.toString();
+	}
+
+	@Override
+	public UserGroupGroupRole toUnescapedModel() {
+		return new UserGroupGroupRoleWrapper(_userGroupGroupRole.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _userGroupGroupRole.toXmlString();
 	}
 
 	@Override

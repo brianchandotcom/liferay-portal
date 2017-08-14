@@ -53,11 +53,7 @@ public interface WebsiteService extends BaseService {
 		java.lang.String url, long typeId, boolean primary,
 		ServiceContext serviceContext) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Website getWebsite(long websiteId) throws PortalException;
-
-	public Website updateWebsite(long websiteId, java.lang.String url,
-		long typeId, boolean primary) throws PortalException;
+	public void deleteWebsite(long websiteId) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -67,8 +63,12 @@ public interface WebsiteService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Website getWebsite(long websiteId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Website> getWebsites(java.lang.String className, long classPK)
 		throws PortalException;
 
-	public void deleteWebsite(long websiteId) throws PortalException;
+	public Website updateWebsite(long websiteId, java.lang.String url,
+		long typeId, boolean primary) throws PortalException;
 }

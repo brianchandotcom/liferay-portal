@@ -105,62 +105,50 @@ public class AssetLinkLocalServiceWrapper implements AssetLinkLocalService,
 	}
 
 	@Override
-	public com.liferay.asset.kernel.model.AssetLink fetchAssetLink(long linkId) {
-		return _assetLinkLocalService.fetchAssetLink(linkId);
+	public void deleteGroupLinks(long groupId) {
+		_assetLinkLocalService.deleteGroupLinks(groupId);
 	}
 
 	/**
-	* Returns the asset link with the primary key.
+	* Deletes the asset link.
+	*
+	* @param link the asset link
+	*/
+	@Override
+	public void deleteLink(com.liferay.asset.kernel.model.AssetLink link) {
+		_assetLinkLocalService.deleteLink(link);
+	}
+
+	/**
+	* Deletes the asset link.
 	*
 	* @param linkId the primary key of the asset link
-	* @return the asset link
-	* @throws PortalException if a asset link with the primary key could not be found
 	*/
 	@Override
-	public com.liferay.asset.kernel.model.AssetLink getAssetLink(long linkId)
+	public void deleteLink(long linkId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetLinkLocalService.getAssetLink(linkId);
+		_assetLinkLocalService.deleteLink(linkId);
 	}
 
 	/**
-	* Updates the asset link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Deletes all links associated with the asset entry.
 	*
-	* @param assetLink the asset link
-	* @return the asset link that was updated
+	* @param entryId the primary key of the asset entry
 	*/
 	@Override
-	public com.liferay.asset.kernel.model.AssetLink updateAssetLink(
-		com.liferay.asset.kernel.model.AssetLink assetLink) {
-		return _assetLinkLocalService.updateAssetLink(assetLink);
+	public void deleteLinks(long entryId) {
+		_assetLinkLocalService.deleteLinks(entryId);
 	}
 
+	/**
+	* Delete all links that associate the two asset entries.
+	*
+	* @param entryId1 the primary key of the first asset entry
+	* @param entryId2 the primary key of the second asset entry
+	*/
 	@Override
-	public com.liferay.asset.kernel.model.AssetLink updateLink(long userId,
-		long entryId1, long entryId2, int typeId, int weight)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetLinkLocalService.updateLink(userId, entryId1, entryId2,
-			typeId, weight);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _assetLinkLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _assetLinkLocalService.dynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionbleDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return _assetLinkLocalService.getExportActionbleDynamicQuery(portletDataContext);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _assetLinkLocalService.getIndexableActionableDynamicQuery();
+	public void deleteLinks(long entryId1, long entryId2) {
+		_assetLinkLocalService.deleteLinks(entryId1, entryId2);
 	}
 
 	/**
@@ -174,30 +162,8 @@ public class AssetLinkLocalServiceWrapper implements AssetLinkLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetLinkLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the number of asset links.
-	*
-	* @return the number of asset links
-	*/
-	@Override
-	public int getAssetLinksCount() {
-		return _assetLinkLocalService.getAssetLinksCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _assetLinkLocalService.getOSGiServiceIdentifier();
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _assetLinkLocalService.dynamicQuery();
 	}
 
 	/**
@@ -254,6 +220,55 @@ public class AssetLinkLocalServiceWrapper implements AssetLinkLocalService,
 	}
 
 	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _assetLinkLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _assetLinkLocalService.dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	@Override
+	public com.liferay.asset.kernel.model.AssetLink fetchAssetLink(long linkId) {
+		return _assetLinkLocalService.fetchAssetLink(linkId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _assetLinkLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the asset link with the primary key.
+	*
+	* @param linkId the primary key of the asset link
+	* @return the asset link
+	* @throws PortalException if a asset link with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.asset.kernel.model.AssetLink getAssetLink(long linkId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetLinkLocalService.getAssetLink(linkId);
+	}
+
+	/**
 	* Returns a range of all the asset links.
 	*
 	* <p>
@@ -268,6 +283,16 @@ public class AssetLinkLocalServiceWrapper implements AssetLinkLocalService,
 	public java.util.List<com.liferay.asset.kernel.model.AssetLink> getAssetLinks(
 		int start, int end) {
 		return _assetLinkLocalService.getAssetLinks(start, end);
+	}
+
+	/**
+	* Returns the number of asset links.
+	*
+	* @return the number of asset links
+	*/
+	@Override
+	public int getAssetLinksCount() {
+		return _assetLinkLocalService.getAssetLinksCount();
 	}
 
 	/**
@@ -315,6 +340,17 @@ public class AssetLinkLocalServiceWrapper implements AssetLinkLocalService,
 			excludeInvisibleLinks);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionbleDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return _assetLinkLocalService.getExportActionbleDynamicQuery(portletDataContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _assetLinkLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns all the asset links whose first or second entry ID is the given
 	* entry ID.
@@ -349,6 +385,23 @@ public class AssetLinkLocalServiceWrapper implements AssetLinkLocalService,
 	}
 
 	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _assetLinkLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetLinkLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	/**
 	* Returns all the asset links of the given link type whose second entry ID
 	* is the given entry ID.
 	*
@@ -368,76 +421,23 @@ public class AssetLinkLocalServiceWrapper implements AssetLinkLocalService,
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Updates the asset link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @param assetLink the asset link
+	* @return the asset link that was updated
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _assetLinkLocalService.dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _assetLinkLocalService.dynamicQueryCount(dynamicQuery, projection);
+	public com.liferay.asset.kernel.model.AssetLink updateAssetLink(
+		com.liferay.asset.kernel.model.AssetLink assetLink) {
+		return _assetLinkLocalService.updateAssetLink(assetLink);
 	}
 
 	@Override
-	public void deleteGroupLinks(long groupId) {
-		_assetLinkLocalService.deleteGroupLinks(groupId);
-	}
-
-	/**
-	* Deletes the asset link.
-	*
-	* @param link the asset link
-	*/
-	@Override
-	public void deleteLink(com.liferay.asset.kernel.model.AssetLink link) {
-		_assetLinkLocalService.deleteLink(link);
-	}
-
-	/**
-	* Deletes the asset link.
-	*
-	* @param linkId the primary key of the asset link
-	*/
-	@Override
-	public void deleteLink(long linkId)
+	public com.liferay.asset.kernel.model.AssetLink updateLink(long userId,
+		long entryId1, long entryId2, int typeId, int weight)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_assetLinkLocalService.deleteLink(linkId);
-	}
-
-	/**
-	* Deletes all links associated with the asset entry.
-	*
-	* @param entryId the primary key of the asset entry
-	*/
-	@Override
-	public void deleteLinks(long entryId) {
-		_assetLinkLocalService.deleteLinks(entryId);
-	}
-
-	/**
-	* Delete all links that associate the two asset entries.
-	*
-	* @param entryId1 the primary key of the first asset entry
-	* @param entryId2 the primary key of the second asset entry
-	*/
-	@Override
-	public void deleteLinks(long entryId1, long entryId2) {
-		_assetLinkLocalService.deleteLinks(entryId1, entryId2);
+		return _assetLinkLocalService.updateLink(userId, entryId1, entryId2,
+			typeId, weight);
 	}
 
 	/**

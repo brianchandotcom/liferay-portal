@@ -129,78 +129,13 @@ public class SocialActivityLimitWrapper implements SocialActivityLimit,
 	}
 
 	@Override
-	public SocialActivityLimit toEscapedModel() {
-		return new SocialActivityLimitWrapper(_socialActivityLimit.toEscapedModel());
-	}
-
-	@Override
-	public SocialActivityLimit toUnescapedModel() {
-		return new SocialActivityLimitWrapper(_socialActivityLimit.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _socialActivityLimit.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _socialActivityLimit.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _socialActivityLimit.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _socialActivityLimit.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<SocialActivityLimit> toCacheModel() {
-		return _socialActivityLimit.toCacheModel();
+	public java.lang.Object clone() {
+		return new SocialActivityLimitWrapper((SocialActivityLimit)_socialActivityLimit.clone());
 	}
 
 	@Override
 	public int compareTo(SocialActivityLimit socialActivityLimit) {
 		return _socialActivityLimit.compareTo(socialActivityLimit);
-	}
-
-	/**
-	* Returns the activity type of this social activity limit.
-	*
-	* @return the activity type of this social activity limit
-	*/
-	@Override
-	public int getActivityType() {
-		return _socialActivityLimit.getActivityType();
-	}
-
-	@Override
-	public int getCount() {
-		return _socialActivityLimit.getCount();
-	}
-
-	@Override
-	public int getCount(int limitPeriod) {
-		return _socialActivityLimit.getCount(limitPeriod);
-	}
-
-	@Override
-	public int hashCode() {
-		return _socialActivityLimit.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _socialActivityLimit.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new SocialActivityLimitWrapper((SocialActivityLimit)_socialActivityLimit.clone());
 	}
 
 	/**
@@ -214,46 +149,6 @@ public class SocialActivityLimitWrapper implements SocialActivityLimit,
 	}
 
 	/**
-	* Returns the fully qualified class name of this social activity limit.
-	*
-	* @return the fully qualified class name of this social activity limit
-	*/
-	@Override
-	public java.lang.String getClassName() {
-		return _socialActivityLimit.getClassName();
-	}
-
-	/**
-	* Returns the user uuid of this social activity limit.
-	*
-	* @return the user uuid of this social activity limit
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _socialActivityLimit.getUserUuid();
-	}
-
-	/**
-	* Returns the value of this social activity limit.
-	*
-	* @return the value of this social activity limit
-	*/
-	@Override
-	public java.lang.String getValue() {
-		return _socialActivityLimit.getValue();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _socialActivityLimit.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _socialActivityLimit.toXmlString();
-	}
-
-	/**
 	* Returns the activity limit ID of this social activity limit.
 	*
 	* @return the activity limit ID of this social activity limit
@@ -261,6 +156,26 @@ public class SocialActivityLimitWrapper implements SocialActivityLimit,
 	@Override
 	public long getActivityLimitId() {
 		return _socialActivityLimit.getActivityLimitId();
+	}
+
+	/**
+	* Returns the activity type of this social activity limit.
+	*
+	* @return the activity type of this social activity limit
+	*/
+	@Override
+	public int getActivityType() {
+		return _socialActivityLimit.getActivityType();
+	}
+
+	/**
+	* Returns the fully qualified class name of this social activity limit.
+	*
+	* @return the fully qualified class name of this social activity limit
+	*/
+	@Override
+	public java.lang.String getClassName() {
+		return _socialActivityLimit.getClassName();
 	}
 
 	/**
@@ -293,6 +208,21 @@ public class SocialActivityLimitWrapper implements SocialActivityLimit,
 		return _socialActivityLimit.getCompanyId();
 	}
 
+	@Override
+	public int getCount() {
+		return _socialActivityLimit.getCount();
+	}
+
+	@Override
+	public int getCount(int limitPeriod) {
+		return _socialActivityLimit.getCount(limitPeriod);
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _socialActivityLimit.getExpandoBridge();
+	}
+
 	/**
 	* Returns the group ID of this social activity limit.
 	*
@@ -313,6 +243,11 @@ public class SocialActivityLimitWrapper implements SocialActivityLimit,
 		return _socialActivityLimit.getPrimaryKey();
 	}
 
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _socialActivityLimit.getPrimaryKeyObj();
+	}
+
 	/**
 	* Returns the user ID of this social activity limit.
 	*
@@ -321,6 +256,46 @@ public class SocialActivityLimitWrapper implements SocialActivityLimit,
 	@Override
 	public long getUserId() {
 		return _socialActivityLimit.getUserId();
+	}
+
+	/**
+	* Returns the user uuid of this social activity limit.
+	*
+	* @return the user uuid of this social activity limit
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _socialActivityLimit.getUserUuid();
+	}
+
+	/**
+	* Returns the value of this social activity limit.
+	*
+	* @return the value of this social activity limit
+	*/
+	@Override
+	public java.lang.String getValue() {
+		return _socialActivityLimit.getValue();
+	}
+
+	@Override
+	public int hashCode() {
+		return _socialActivityLimit.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _socialActivityLimit.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _socialActivityLimit.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _socialActivityLimit.isNew();
 	}
 
 	@Override
@@ -477,6 +452,31 @@ public class SocialActivityLimitWrapper implements SocialActivityLimit,
 	@Override
 	public void setValue(java.lang.String value) {
 		_socialActivityLimit.setValue(value);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<SocialActivityLimit> toCacheModel() {
+		return _socialActivityLimit.toCacheModel();
+	}
+
+	@Override
+	public SocialActivityLimit toEscapedModel() {
+		return new SocialActivityLimitWrapper(_socialActivityLimit.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _socialActivityLimit.toString();
+	}
+
+	@Override
+	public SocialActivityLimit toUnescapedModel() {
+		return new SocialActivityLimitWrapper(_socialActivityLimit.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _socialActivityLimit.toXmlString();
 	}
 
 	@Override

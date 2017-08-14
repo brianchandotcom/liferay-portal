@@ -47,17 +47,6 @@ public class DDLRecordSetVersionServiceUtil {
 		return getService().getLatestRecordSetVersion(recordSetId);
 	}
 
-	public static com.liferay.dynamic.data.lists.model.DDLRecordSetVersion getRecordSetVersion(
-		long recordSetVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getRecordSetVersion(recordSetVersionId);
-	}
-
-	public static int getRecordSetVersionsCount(long recordSetId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getRecordSetVersionsCount(recordSetId);
-	}
-
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -67,6 +56,12 @@ public class DDLRecordSetVersionServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static com.liferay.dynamic.data.lists.model.DDLRecordSetVersion getRecordSetVersion(
+		long recordSetVersionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getRecordSetVersion(recordSetVersionId);
+	}
+
 	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordSetVersion> getRecordSetVersions(
 		long recordSetId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordSetVersion> orderByComparator)
@@ -74,6 +69,11 @@ public class DDLRecordSetVersionServiceUtil {
 		return getService()
 				   .getRecordSetVersions(recordSetId, start, end,
 			orderByComparator);
+	}
+
+	public static int getRecordSetVersionsCount(long recordSetId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getRecordSetVersionsCount(recordSetId);
 	}
 
 	public static DDLRecordSetVersionService getService() {

@@ -41,13 +41,6 @@ public class SyncDeviceServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.sync.service.impl.SyncDeviceServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.sync.model.SyncDevice registerSyncDevice(
-		java.lang.String type, long buildNumber, int featureSet,
-		java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .registerSyncDevice(type, buildNumber, featureSet, uuid);
-	}
 
 	/**
 	* Returns the OSGi service identifier.
@@ -56,6 +49,14 @@ public class SyncDeviceServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.sync.model.SyncDevice registerSyncDevice(
+		java.lang.String type, long buildNumber, int featureSet,
+		java.lang.String uuid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .registerSyncDevice(type, buildNumber, featureSet, uuid);
 	}
 
 	public static void unregisterSyncDevice(java.lang.String uuid)

@@ -106,96 +106,7 @@ public interface KBFolderLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public KBFolder deleteKBFolder(long kbFolderId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KBFolder fetchFirstChildKBFolder(long groupId, long kbFolderId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KBFolder fetchFirstChildKBFolder(long groupId, long kbFolderId,
-		OrderByComparator<KBFolder> obc) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KBFolder fetchKBFolder(java.lang.String uuid, long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KBFolder fetchKBFolder(long kbFolderId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KBFolder fetchKBFolderByUrlTitle(long groupId,
-		long parentKbFolderId, java.lang.String urlTitle)
-		throws PortalException;
-
-	/**
-	* Returns the kb folder matching the UUID and group.
-	*
-	* @param uuid the kb folder's UUID
-	* @param groupId the primary key of the group
-	* @return the matching kb folder, or <code>null</code> if a matching kb folder could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KBFolder fetchKBFolderByUuidAndGroupId(java.lang.String uuid,
-		long groupId);
-
-	/**
-	* Returns the kb folder with the primary key.
-	*
-	* @param kbFolderId the primary key of the kb folder
-	* @return the kb folder
-	* @throws PortalException if a kb folder with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KBFolder getKBFolder(long kbFolderId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KBFolder getKBFolderByUrlTitle(long groupId, long parentKbFolderId,
-		java.lang.String urlTitle) throws PortalException;
-
-	/**
-	* Returns the kb folder matching the UUID and group.
-	*
-	* @param uuid the kb folder's UUID
-	* @param groupId the primary key of the group
-	* @return the matching kb folder
-	* @throws PortalException if a matching kb folder could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KBFolder getKBFolderByUuidAndGroupId(java.lang.String uuid,
-		long groupId) throws PortalException;
-
-	/**
-	* Updates the kb folder in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param kbFolder the kb folder
-	* @return the kb folder that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public KBFolder updateKBFolder(KBFolder kbFolder);
-
-	/**
-	* @deprecated As of 1.1.0, replaced by {@link #updateKBFolder(long, long,
-	long, String, String, ServiceContext)}
-	*/
-	@java.lang.Deprecated
-	public KBFolder updateKBFolder(long parentResourceClassNameId,
-		long parentResourcePrimKey, long kbFolderId, java.lang.String name,
-		java.lang.String description) throws PortalException;
-
-	public KBFolder updateKBFolder(long parentResourceClassNameId,
-		long parentResourcePrimKey, long kbFolderId, java.lang.String name,
-		java.lang.String description, ServiceContext serviceContext)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public void deleteKBFolders(long groupId) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -204,33 +115,7 @@ public interface KBFolderLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKBFoldersAndKBArticlesCount(long groupId,
-		long parentResourcePrimKey, int status);
-
-	/**
-	* Returns the number of kb folders.
-	*
-	* @return the number of kb folders
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKBFoldersCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKBFoldersCount(long groupId, long parentKBFolderId)
-		throws PortalException;
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -272,6 +157,90 @@ public interface KBFolderLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KBFolder fetchFirstChildKBFolder(long groupId, long kbFolderId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KBFolder fetchFirstChildKBFolder(long groupId, long kbFolderId,
+		OrderByComparator<KBFolder> obc) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KBFolder fetchKBFolder(java.lang.String uuid, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KBFolder fetchKBFolder(long kbFolderId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KBFolder fetchKBFolderByUrlTitle(long groupId,
+		long parentKbFolderId, java.lang.String urlTitle)
+		throws PortalException;
+
+	/**
+	* Returns the kb folder matching the UUID and group.
+	*
+	* @param uuid the kb folder's UUID
+	* @param groupId the primary key of the group
+	* @return the matching kb folder, or <code>null</code> if a matching kb folder could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KBFolder fetchKBFolderByUuidAndGroupId(java.lang.String uuid,
+		long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* Returns the kb folder with the primary key.
+	*
+	* @param kbFolderId the primary key of the kb folder
+	* @return the kb folder
+	* @throws PortalException if a kb folder with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KBFolder getKBFolder(long kbFolderId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KBFolder getKBFolderByUrlTitle(long groupId, long parentKbFolderId,
+		java.lang.String urlTitle) throws PortalException;
+
+	/**
+	* Returns the kb folder matching the UUID and group.
+	*
+	* @param uuid the kb folder's UUID
+	* @param groupId the primary key of the group
+	* @return the matching kb folder
+	* @throws PortalException if a matching kb folder could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KBFolder getKBFolderByUuidAndGroupId(java.lang.String uuid,
+		long groupId) throws PortalException;
+
+	/**
 	* Returns a range of all the kb folders.
 	*
 	* <p>
@@ -293,6 +262,10 @@ public interface KBFolderLocalService extends BaseLocalService,
 	public List<java.lang.Object> getKBFoldersAndKBArticles(long groupId,
 		long parentResourcePrimKey, int status, int start, int end,
 		OrderByComparator<?> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getKBFoldersAndKBArticlesCount(long groupId,
+		long parentResourcePrimKey, int status);
 
 	/**
 	* Returns all the kb folders matching the UUID and company.
@@ -321,25 +294,52 @@ public interface KBFolderLocalService extends BaseLocalService,
 		OrderByComparator<KBFolder> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of kb folders.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of kb folders
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getKBFoldersCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getKBFoldersCount(long groupId, long parentKBFolderId)
+		throws PortalException;
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public java.lang.String getOSGiServiceIdentifier();
 
-	public void deleteKBFolders(long groupId) throws PortalException;
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	public void moveKBFolder(long kbFolderId, long parentKBFolderId)
+		throws PortalException;
+
+	/**
+	* Updates the kb folder in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param kbFolder the kb folder
+	* @return the kb folder that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public KBFolder updateKBFolder(KBFolder kbFolder);
+
+	/**
+	* @deprecated As of 1.1.0, replaced by {@link #updateKBFolder(long, long,
+	long, String, String, ServiceContext)}
+	*/
+	@java.lang.Deprecated
+	public KBFolder updateKBFolder(long parentResourceClassNameId,
+		long parentResourcePrimKey, long kbFolderId, java.lang.String name,
+		java.lang.String description) throws PortalException;
+
+	public KBFolder updateKBFolder(long parentResourceClassNameId,
+		long parentResourcePrimKey, long kbFolderId, java.lang.String name,
+		java.lang.String description, ServiceContext serviceContext)
 		throws PortalException;
 }

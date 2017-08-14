@@ -105,18 +105,13 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 	}
 
 	@Override
-	public CacheModel<Region> toCacheModel() {
-		return _region.toCacheModel();
+	public java.lang.Object clone() {
+		return new RegionWrapper((Region)_region.clone());
 	}
 
 	@Override
-	public Region toEscapedModel() {
-		return new RegionWrapper(_region.toEscapedModel());
-	}
-
-	@Override
-	public Region toUnescapedModel() {
-		return new RegionWrapper(_region.toUnescapedModel());
+	public int compareTo(Region region) {
+		return _region.compareTo(region);
 	}
 
 	/**
@@ -127,6 +122,81 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 	@Override
 	public boolean getActive() {
 		return _region.getActive();
+	}
+
+	/**
+	* Returns the country ID of this region.
+	*
+	* @return the country ID of this region
+	*/
+	@Override
+	public long getCountryId() {
+		return _region.getCountryId();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _region.getExpandoBridge();
+	}
+
+	/**
+	* Returns the mvcc version of this region.
+	*
+	* @return the mvcc version of this region
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _region.getMvccVersion();
+	}
+
+	/**
+	* Returns the name of this region.
+	*
+	* @return the name of this region
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _region.getName();
+	}
+
+	/**
+	* Returns the primary key of this region.
+	*
+	* @return the primary key of this region
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _region.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _region.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the region code of this region.
+	*
+	* @return the region code of this region
+	*/
+	@Override
+	public java.lang.String getRegionCode() {
+		return _region.getRegionCode();
+	}
+
+	/**
+	* Returns the region ID of this region.
+	*
+	* @return the region ID of this region
+	*/
+	@Override
+	public long getRegionId() {
+		return _region.getRegionId();
+	}
+
+	@Override
+	public int hashCode() {
+		return _region.hashCode();
 	}
 
 	/**
@@ -152,101 +222,6 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 	@Override
 	public boolean isNew() {
 		return _region.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _region.getExpandoBridge();
-	}
-
-	@Override
-	public int compareTo(Region region) {
-		return _region.compareTo(region);
-	}
-
-	@Override
-	public int hashCode() {
-		return _region.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _region.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new RegionWrapper((Region)_region.clone());
-	}
-
-	/**
-	* Returns the name of this region.
-	*
-	* @return the name of this region
-	*/
-	@Override
-	public java.lang.String getName() {
-		return _region.getName();
-	}
-
-	/**
-	* Returns the region code of this region.
-	*
-	* @return the region code of this region
-	*/
-	@Override
-	public java.lang.String getRegionCode() {
-		return _region.getRegionCode();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _region.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _region.toXmlString();
-	}
-
-	/**
-	* Returns the country ID of this region.
-	*
-	* @return the country ID of this region
-	*/
-	@Override
-	public long getCountryId() {
-		return _region.getCountryId();
-	}
-
-	/**
-	* Returns the mvcc version of this region.
-	*
-	* @return the mvcc version of this region
-	*/
-	@Override
-	public long getMvccVersion() {
-		return _region.getMvccVersion();
-	}
-
-	/**
-	* Returns the primary key of this region.
-	*
-	* @return the primary key of this region
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _region.getPrimaryKey();
-	}
-
-	/**
-	* Returns the region ID of this region.
-	*
-	* @return the region ID of this region
-	*/
-	@Override
-	public long getRegionId() {
-		return _region.getRegionId();
 	}
 
 	/**
@@ -275,13 +250,13 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_region.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_region.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_region.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
+		_region.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -347,6 +322,31 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 	@Override
 	public void setRegionId(long regionId) {
 		_region.setRegionId(regionId);
+	}
+
+	@Override
+	public CacheModel<Region> toCacheModel() {
+		return _region.toCacheModel();
+	}
+
+	@Override
+	public Region toEscapedModel() {
+		return new RegionWrapper(_region.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _region.toString();
+	}
+
+	@Override
+	public Region toUnescapedModel() {
+		return new RegionWrapper(_region.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _region.toXmlString();
 	}
 
 	@Override

@@ -41,37 +41,6 @@ public class SAPEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.security.service.access.policy.service.impl.SAPEntryLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
 
 	/**
 	* Adds the sap entry to the database. Also notifies the appropriate model listeners.
@@ -95,6 +64,11 @@ public class SAPEntryLocalServiceUtil {
 			defaultSAPEntry, enabled, name, titleMap, serviceContext);
 	}
 
+	public static void checkSystemSAPEntries(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().checkSystemSAPEntries(companyId);
+	}
+
 	/**
 	* Creates a new sap entry with the primary key. Does not add the sap entry to the database.
 	*
@@ -104,6 +78,15 @@ public class SAPEntryLocalServiceUtil {
 	public static com.liferay.portal.security.service.access.policy.model.SAPEntry createSAPEntry(
 		long sapEntryId) {
 		return getService().createSAPEntry(sapEntryId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
 	}
 
 	/**
@@ -132,104 +115,8 @@ public class SAPEntryLocalServiceUtil {
 		return getService().deleteSAPEntry(sapEntryId);
 	}
 
-	public static com.liferay.portal.security.service.access.policy.model.SAPEntry fetchSAPEntry(
-		long companyId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().fetchSAPEntry(companyId, name);
-	}
-
-	public static com.liferay.portal.security.service.access.policy.model.SAPEntry fetchSAPEntry(
-		long sapEntryId) {
-		return getService().fetchSAPEntry(sapEntryId);
-	}
-
-	/**
-	* Returns the sap entry with the matching UUID and company.
-	*
-	* @param uuid the sap entry's UUID
-	* @param companyId the primary key of the company
-	* @return the matching sap entry, or <code>null</code> if a matching sap entry could not be found
-	*/
-	public static com.liferay.portal.security.service.access.policy.model.SAPEntry fetchSAPEntryByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return getService().fetchSAPEntryByUuidAndCompanyId(uuid, companyId);
-	}
-
-	public static com.liferay.portal.security.service.access.policy.model.SAPEntry getSAPEntry(
-		long companyId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getSAPEntry(companyId, name);
-	}
-
-	/**
-	* Returns the sap entry with the primary key.
-	*
-	* @param sapEntryId the primary key of the sap entry
-	* @return the sap entry
-	* @throws PortalException if a sap entry with the primary key could not be found
-	*/
-	public static com.liferay.portal.security.service.access.policy.model.SAPEntry getSAPEntry(
-		long sapEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getSAPEntry(sapEntryId);
-	}
-
-	/**
-	* Returns the sap entry with the matching UUID and company.
-	*
-	* @param uuid the sap entry's UUID
-	* @param companyId the primary key of the company
-	* @return the matching sap entry
-	* @throws PortalException if a matching sap entry could not be found
-	*/
-	public static com.liferay.portal.security.service.access.policy.model.SAPEntry getSAPEntryByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getSAPEntryByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
-	* Updates the sap entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param sapEntry the sap entry
-	* @return the sap entry that was updated
-	*/
-	public static com.liferay.portal.security.service.access.policy.model.SAPEntry updateSAPEntry(
-		com.liferay.portal.security.service.access.policy.model.SAPEntry sapEntry) {
-		return getService().updateSAPEntry(sapEntry);
-	}
-
-	public static com.liferay.portal.security.service.access.policy.model.SAPEntry updateSAPEntry(
-		long sapEntryId, java.lang.String allowedServiceSignatures,
-		boolean defaultSAPEntry, boolean enabled, java.lang.String name,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateSAPEntry(sapEntryId, allowedServiceSignatures,
-			defaultSAPEntry, enabled, name, titleMap, serviceContext);
-	}
-
-	public static int getCompanySAPEntriesCount(long companyId) {
-		return getService().getCompanySAPEntriesCount(companyId);
-	}
-
-	/**
-	* Returns the number of sap entries.
-	*
-	* @return the number of sap entries
-	*/
-	public static int getSAPEntriesCount() {
-		return getService().getSAPEntriesCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
 	}
 
 	/**
@@ -282,38 +169,6 @@ public class SAPEntryLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.portal.security.service.access.policy.model.SAPEntry> getCompanySAPEntries(
-		long companyId, int start, int end) {
-		return getService().getCompanySAPEntries(companyId, start, end);
-	}
-
-	public static java.util.List<com.liferay.portal.security.service.access.policy.model.SAPEntry> getCompanySAPEntries(
-		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.security.service.access.policy.model.SAPEntry> obc) {
-		return getService().getCompanySAPEntries(companyId, start, end, obc);
-	}
-
-	public static java.util.List<com.liferay.portal.security.service.access.policy.model.SAPEntry> getDefaultSAPEntries(
-		long companyId, boolean defaultSAPEntry) {
-		return getService().getDefaultSAPEntries(companyId, defaultSAPEntry);
-	}
-
-	/**
-	* Returns a range of all the sap entries.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.security.service.access.policy.model.impl.SAPEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of sap entries
-	* @param end the upper bound of the range of sap entries (not inclusive)
-	* @return the range of sap entries
-	*/
-	public static java.util.List<com.liferay.portal.security.service.access.policy.model.SAPEntry> getSAPEntries(
-		int start, int end) {
-		return getService().getSAPEntries(start, end);
-	}
-
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -338,9 +193,155 @@ public class SAPEntryLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static void checkSystemSAPEntries(long companyId)
+	public static com.liferay.portal.security.service.access.policy.model.SAPEntry fetchSAPEntry(
+		long sapEntryId) {
+		return getService().fetchSAPEntry(sapEntryId);
+	}
+
+	public static com.liferay.portal.security.service.access.policy.model.SAPEntry fetchSAPEntry(
+		long companyId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().checkSystemSAPEntries(companyId);
+		return getService().fetchSAPEntry(companyId, name);
+	}
+
+	/**
+	* Returns the sap entry with the matching UUID and company.
+	*
+	* @param uuid the sap entry's UUID
+	* @param companyId the primary key of the company
+	* @return the matching sap entry, or <code>null</code> if a matching sap entry could not be found
+	*/
+	public static com.liferay.portal.security.service.access.policy.model.SAPEntry fetchSAPEntryByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return getService().fetchSAPEntryByUuidAndCompanyId(uuid, companyId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static java.util.List<com.liferay.portal.security.service.access.policy.model.SAPEntry> getCompanySAPEntries(
+		long companyId, int start, int end) {
+		return getService().getCompanySAPEntries(companyId, start, end);
+	}
+
+	public static java.util.List<com.liferay.portal.security.service.access.policy.model.SAPEntry> getCompanySAPEntries(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.security.service.access.policy.model.SAPEntry> obc) {
+		return getService().getCompanySAPEntries(companyId, start, end, obc);
+	}
+
+	public static int getCompanySAPEntriesCount(long companyId) {
+		return getService().getCompanySAPEntriesCount(companyId);
+	}
+
+	public static java.util.List<com.liferay.portal.security.service.access.policy.model.SAPEntry> getDefaultSAPEntries(
+		long companyId, boolean defaultSAPEntry) {
+		return getService().getDefaultSAPEntries(companyId, defaultSAPEntry);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Returns a range of all the sap entries.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.security.service.access.policy.model.impl.SAPEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of sap entries
+	* @param end the upper bound of the range of sap entries (not inclusive)
+	* @return the range of sap entries
+	*/
+	public static java.util.List<com.liferay.portal.security.service.access.policy.model.SAPEntry> getSAPEntries(
+		int start, int end) {
+		return getService().getSAPEntries(start, end);
+	}
+
+	/**
+	* Returns the number of sap entries.
+	*
+	* @return the number of sap entries
+	*/
+	public static int getSAPEntriesCount() {
+		return getService().getSAPEntriesCount();
+	}
+
+	/**
+	* Returns the sap entry with the primary key.
+	*
+	* @param sapEntryId the primary key of the sap entry
+	* @return the sap entry
+	* @throws PortalException if a sap entry with the primary key could not be found
+	*/
+	public static com.liferay.portal.security.service.access.policy.model.SAPEntry getSAPEntry(
+		long sapEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getSAPEntry(sapEntryId);
+	}
+
+	public static com.liferay.portal.security.service.access.policy.model.SAPEntry getSAPEntry(
+		long companyId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getSAPEntry(companyId, name);
+	}
+
+	/**
+	* Returns the sap entry with the matching UUID and company.
+	*
+	* @param uuid the sap entry's UUID
+	* @param companyId the primary key of the company
+	* @return the matching sap entry
+	* @throws PortalException if a matching sap entry could not be found
+	*/
+	public static com.liferay.portal.security.service.access.policy.model.SAPEntry getSAPEntryByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getSAPEntryByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Updates the sap entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param sapEntry the sap entry
+	* @return the sap entry that was updated
+	*/
+	public static com.liferay.portal.security.service.access.policy.model.SAPEntry updateSAPEntry(
+		com.liferay.portal.security.service.access.policy.model.SAPEntry sapEntry) {
+		return getService().updateSAPEntry(sapEntry);
+	}
+
+	public static com.liferay.portal.security.service.access.policy.model.SAPEntry updateSAPEntry(
+		long sapEntryId, java.lang.String allowedServiceSignatures,
+		boolean defaultSAPEntry, boolean enabled, java.lang.String name,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateSAPEntry(sapEntryId, allowedServiceSignatures,
+			defaultSAPEntry, enabled, name, titleMap, serviceContext);
 	}
 
 	public static SAPEntryLocalService getService() {

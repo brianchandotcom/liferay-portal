@@ -34,38 +34,6 @@ public class PushNotificationsDeviceLocalServiceWrapper
 		_pushNotificationsDeviceLocalService = pushNotificationsDeviceLocalService;
 	}
 
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _pushNotificationsDeviceLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _pushNotificationsDeviceLocalService.dynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _pushNotificationsDeviceLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _pushNotificationsDeviceLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _pushNotificationsDeviceLocalService.getPersistedModel(primaryKeyObj);
-	}
-
 	/**
 	* Adds the push notifications device to the database. Also notifies the appropriate model listeners.
 	*
@@ -96,6 +64,16 @@ public class PushNotificationsDeviceLocalServiceWrapper
 	public com.liferay.push.notifications.model.PushNotificationsDevice createPushNotificationsDevice(
 		long pushNotificationsDeviceId) {
 		return _pushNotificationsDeviceLocalService.createPushNotificationsDevice(pushNotificationsDeviceId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _pushNotificationsDeviceLocalService.deletePersistedModel(persistedModel);
 	}
 
 	/**
@@ -132,55 +110,8 @@ public class PushNotificationsDeviceLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.push.notifications.model.PushNotificationsDevice fetchPushNotificationsDevice(
-		long pushNotificationsDeviceId) {
-		return _pushNotificationsDeviceLocalService.fetchPushNotificationsDevice(pushNotificationsDeviceId);
-	}
-
-	/**
-	* Returns the push notifications device with the primary key.
-	*
-	* @param pushNotificationsDeviceId the primary key of the push notifications device
-	* @return the push notifications device
-	* @throws PortalException if a push notifications device with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.push.notifications.model.PushNotificationsDevice getPushNotificationsDevice(
-		long pushNotificationsDeviceId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _pushNotificationsDeviceLocalService.getPushNotificationsDevice(pushNotificationsDeviceId);
-	}
-
-	/**
-	* Updates the push notifications device in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param pushNotificationsDevice the push notifications device
-	* @return the push notifications device that was updated
-	*/
-	@Override
-	public com.liferay.push.notifications.model.PushNotificationsDevice updatePushNotificationsDevice(
-		com.liferay.push.notifications.model.PushNotificationsDevice pushNotificationsDevice) {
-		return _pushNotificationsDeviceLocalService.updatePushNotificationsDevice(pushNotificationsDevice);
-	}
-
-	/**
-	* Returns the number of push notifications devices.
-	*
-	* @return the number of push notifications devices
-	*/
-	@Override
-	public int getPushNotificationsDevicesCount() {
-		return _pushNotificationsDeviceLocalService.getPushNotificationsDevicesCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _pushNotificationsDeviceLocalService.getOSGiServiceIdentifier();
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _pushNotificationsDeviceLocalService.dynamicQuery();
 	}
 
 	/**
@@ -238,32 +169,6 @@ public class PushNotificationsDeviceLocalServiceWrapper
 	}
 
 	/**
-	* Returns a range of all the push notifications devices.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.push.notifications.model.impl.PushNotificationsDeviceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of push notifications devices
-	* @param end the upper bound of the range of push notifications devices (not inclusive)
-	* @return the range of push notifications devices
-	*/
-	@Override
-	public java.util.List<com.liferay.push.notifications.model.PushNotificationsDevice> getPushNotificationsDevices(
-		int start, int end) {
-		return _pushNotificationsDeviceLocalService.getPushNotificationsDevices(start,
-			end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.push.notifications.model.PushNotificationsDevice> getPushNotificationsDevices(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.push.notifications.model.PushNotificationsDevice> orderByComparator) {
-		return _pushNotificationsDeviceLocalService.getPushNotificationsDevices(start,
-			end, orderByComparator);
-	}
-
-	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -291,6 +196,89 @@ public class PushNotificationsDeviceLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.push.notifications.model.PushNotificationsDevice fetchPushNotificationsDevice(
+		long pushNotificationsDeviceId) {
+		return _pushNotificationsDeviceLocalService.fetchPushNotificationsDevice(pushNotificationsDeviceId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _pushNotificationsDeviceLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _pushNotificationsDeviceLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _pushNotificationsDeviceLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _pushNotificationsDeviceLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Returns the push notifications device with the primary key.
+	*
+	* @param pushNotificationsDeviceId the primary key of the push notifications device
+	* @return the push notifications device
+	* @throws PortalException if a push notifications device with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.push.notifications.model.PushNotificationsDevice getPushNotificationsDevice(
+		long pushNotificationsDeviceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _pushNotificationsDeviceLocalService.getPushNotificationsDevice(pushNotificationsDeviceId);
+	}
+
+	/**
+	* Returns a range of all the push notifications devices.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.push.notifications.model.impl.PushNotificationsDeviceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of push notifications devices
+	* @param end the upper bound of the range of push notifications devices (not inclusive)
+	* @return the range of push notifications devices
+	*/
+	@Override
+	public java.util.List<com.liferay.push.notifications.model.PushNotificationsDevice> getPushNotificationsDevices(
+		int start, int end) {
+		return _pushNotificationsDeviceLocalService.getPushNotificationsDevices(start,
+			end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.push.notifications.model.PushNotificationsDevice> getPushNotificationsDevices(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.push.notifications.model.PushNotificationsDevice> orderByComparator) {
+		return _pushNotificationsDeviceLocalService.getPushNotificationsDevices(start,
+			end, orderByComparator);
+	}
+
+	/**
+	* Returns the number of push notifications devices.
+	*
+	* @return the number of push notifications devices
+	*/
+	@Override
+	public int getPushNotificationsDevicesCount() {
+		return _pushNotificationsDeviceLocalService.getPushNotificationsDevicesCount();
+	}
+
+	@Override
 	public void sendPushNotification(java.lang.String platform,
 		java.util.List<java.lang.String> tokens,
 		com.liferay.portal.kernel.json.JSONObject payloadJSONObject)
@@ -305,6 +293,18 @@ public class PushNotificationsDeviceLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_pushNotificationsDeviceLocalService.sendPushNotification(toUserIds,
 			payloadJSONObject);
+	}
+
+	/**
+	* Updates the push notifications device in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param pushNotificationsDevice the push notifications device
+	* @return the push notifications device that was updated
+	*/
+	@Override
+	public com.liferay.push.notifications.model.PushNotificationsDevice updatePushNotificationsDevice(
+		com.liferay.push.notifications.model.PushNotificationsDevice pushNotificationsDevice) {
+		return _pushNotificationsDeviceLocalService.updatePushNotificationsDevice(pushNotificationsDevice);
 	}
 
 	@Override

@@ -59,51 +59,13 @@ public interface BookmarksFolderService extends BaseService {
 		java.lang.String name, java.lang.String description,
 		ServiceContext serviceContext) throws PortalException;
 
+	public void deleteFolder(long folderId) throws PortalException;
+
+	public void deleteFolder(long folderId, boolean includeTrashedEntries)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BookmarksFolder getFolder(long folderId) throws PortalException;
-
-	public BookmarksFolder moveFolder(long folderId, long parentFolderId)
-		throws PortalException;
-
-	public BookmarksFolder moveFolderFromTrash(long folderId,
-		long parentFolderId) throws PortalException;
-
-	public BookmarksFolder moveFolderToTrash(long folderId)
-		throws PortalException;
-
-	/**
-	* @deprecated As of 1.0.0, replaced by {@link #updateFolder(long, long,
-	String, String, ServiceContext)} and {@link
-	#mergeFolders(long, long)}
-	*/
-	@java.lang.Deprecated
-	public BookmarksFolder updateFolder(long folderId, long parentFolderId,
-		java.lang.String name, java.lang.String description,
-		boolean mergeWithParentFolder, ServiceContext serviceContext)
-		throws PortalException;
-
-	public BookmarksFolder updateFolder(long folderId, long parentFolderId,
-		java.lang.String name, java.lang.String description,
-		ServiceContext serviceContext) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFoldersAndEntriesCount(long groupId, long folderId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFoldersAndEntriesCount(long groupId, long folderId, int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFoldersCount(long groupId, long parentFolderId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFoldersCount(long groupId, long parentFolderId, int status);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<java.lang.Long> getFolderIds(long groupId, long folderId)
@@ -136,13 +98,23 @@ public interface BookmarksFolderService extends BaseService {
 		long folderId, int status, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Long> getSubfolderIds(long groupId, long folderId,
-		boolean recurse);
+	public int getFoldersAndEntriesCount(long groupId, long folderId);
 
-	public void deleteFolder(long folderId) throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFoldersAndEntriesCount(long groupId, long folderId, int status);
 
-	public void deleteFolder(long folderId, boolean includeTrashedEntries)
-		throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFoldersCount(long groupId, long parentFolderId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFoldersCount(long groupId, long parentFolderId, int status);
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* @deprecated As of 1.0.0, replaced by {@link #getSubfolderIds(List, long,
@@ -157,7 +129,20 @@ public interface BookmarksFolderService extends BaseService {
 	public void getSubfolderIds(List<java.lang.Long> folderIds, long groupId,
 		long folderId, boolean recurse);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<java.lang.Long> getSubfolderIds(long groupId, long folderId,
+		boolean recurse);
+
 	public void mergeFolders(long folderId, long parentFolderId)
+		throws PortalException;
+
+	public BookmarksFolder moveFolder(long folderId, long parentFolderId)
+		throws PortalException;
+
+	public BookmarksFolder moveFolderFromTrash(long folderId,
+		long parentFolderId) throws PortalException;
+
+	public BookmarksFolder moveFolderToTrash(long folderId)
 		throws PortalException;
 
 	public void restoreFolderFromTrash(long folderId) throws PortalException;
@@ -167,4 +152,19 @@ public interface BookmarksFolderService extends BaseService {
 
 	public void unsubscribeFolder(long groupId, long folderId)
 		throws PortalException;
+
+	/**
+	* @deprecated As of 1.0.0, replaced by {@link #updateFolder(long, long,
+	String, String, ServiceContext)} and {@link
+	#mergeFolders(long, long)}
+	*/
+	@java.lang.Deprecated
+	public BookmarksFolder updateFolder(long folderId, long parentFolderId,
+		java.lang.String name, java.lang.String description,
+		boolean mergeWithParentFolder, ServiceContext serviceContext)
+		throws PortalException;
+
+	public BookmarksFolder updateFolder(long folderId, long parentFolderId,
+		java.lang.String name, java.lang.String description,
+		ServiceContext serviceContext) throws PortalException;
 }

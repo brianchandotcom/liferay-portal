@@ -113,80 +113,18 @@ public interface FriendlyURLEntryLocalService extends BaseLocalService,
 	public FriendlyURLEntry deleteFriendlyURLEntry(long friendlyURLEntryId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public FriendlyURLEntry fetchFriendlyURLEntry(long friendlyURLEntryId);
+	public void deleteFriendlyURLEntry(long groupId, java.lang.Class<?> clazz,
+		long classPK);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public FriendlyURLEntry fetchFriendlyURLEntry(long groupId,
-		java.lang.Class<?> clazz, java.lang.String urlTitle);
+	public void deleteFriendlyURLEntry(long groupId, java.lang.Class<?> clazz,
+		long classPK, java.lang.String urlTitle)
+		throws NoSuchFriendlyURLEntryException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public FriendlyURLEntry fetchFriendlyURLEntry(long groupId,
-		long classNameId, java.lang.String urlTitle);
+	public void deleteFriendlyURLEntry(long groupId, long classNameId,
+		long classPK, java.lang.String urlTitle)
+		throws NoSuchFriendlyURLEntryException;
 
-	/**
-	* Returns the friendly url entry matching the UUID and group.
-	*
-	* @param uuid the friendly url entry's UUID
-	* @param groupId the primary key of the group
-	* @return the matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public FriendlyURLEntry fetchFriendlyURLEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
-
-	/**
-	* Returns the friendly url entry with the primary key.
-	*
-	* @param friendlyURLEntryId the primary key of the friendly url entry
-	* @return the friendly url entry
-	* @throws PortalException if a friendly url entry with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public FriendlyURLEntry getFriendlyURLEntry(long friendlyURLEntryId)
-		throws PortalException;
-
-	/**
-	* Returns the friendly url entry matching the UUID and group.
-	*
-	* @param uuid the friendly url entry's UUID
-	* @param groupId the primary key of the group
-	* @return the matching friendly url entry
-	* @throws PortalException if a matching friendly url entry could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public FriendlyURLEntry getFriendlyURLEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public FriendlyURLEntry getMainFriendlyURLEntry(long groupId,
-		java.lang.Class<?> clazz, long classPK) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public FriendlyURLEntry getMainFriendlyURLEntry(long groupId,
-		long classNameId, long classPK) throws PortalException;
-
-	/**
-	* Updates the friendly url entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param friendlyURLEntry the friendly url entry
-	* @return the friendly url entry that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public FriendlyURLEntry updateFriendlyURLEntry(
-		FriendlyURLEntry friendlyURLEntry);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public void deleteGroupFriendlyURLEntries(long groupId, long classNameId);
 
 	/**
 	* @throws PortalException
@@ -195,29 +133,7 @@ public interface FriendlyURLEntryLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	* Returns the number of friendly url entries.
-	*
-	* @return the number of friendly url entries
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFriendlyURLEntriesCount();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getUniqueUrlTitle(long groupId, long classNameId,
-		long classPK, java.lang.String urlTitle);
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -257,6 +173,53 @@ public interface FriendlyURLEntryLocalService extends BaseLocalService,
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FriendlyURLEntry fetchFriendlyURLEntry(long friendlyURLEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FriendlyURLEntry fetchFriendlyURLEntry(long groupId,
+		java.lang.Class<?> clazz, java.lang.String urlTitle);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FriendlyURLEntry fetchFriendlyURLEntry(long groupId,
+		long classNameId, java.lang.String urlTitle);
+
+	/**
+	* Returns the friendly url entry matching the UUID and group.
+	*
+	* @param uuid the friendly url entry's UUID
+	* @param groupId the primary key of the group
+	* @return the matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FriendlyURLEntry fetchFriendlyURLEntryByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	/**
 	* Returns a range of all the friendly url entries.
@@ -303,35 +266,72 @@ public interface FriendlyURLEntryLocalService extends BaseLocalService,
 		OrderByComparator<FriendlyURLEntry> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of friendly url entries.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of friendly url entries
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFriendlyURLEntriesCount();
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the friendly url entry with the primary key.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @param friendlyURLEntryId the primary key of the friendly url entry
+	* @return the friendly url entry
+	* @throws PortalException if a friendly url entry with the primary key could not be found
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FriendlyURLEntry getFriendlyURLEntry(long friendlyURLEntryId)
+		throws PortalException;
 
-	public void deleteFriendlyURLEntry(long groupId, java.lang.Class<?> clazz,
-		long classPK);
+	/**
+	* Returns the friendly url entry matching the UUID and group.
+	*
+	* @param uuid the friendly url entry's UUID
+	* @param groupId the primary key of the group
+	* @return the matching friendly url entry
+	* @throws PortalException if a matching friendly url entry could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FriendlyURLEntry getFriendlyURLEntryByUuidAndGroupId(
+		java.lang.String uuid, long groupId) throws PortalException;
 
-	public void deleteFriendlyURLEntry(long groupId, java.lang.Class<?> clazz,
-		long classPK, java.lang.String urlTitle)
-		throws NoSuchFriendlyURLEntryException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
-	public void deleteFriendlyURLEntry(long groupId, long classNameId,
-		long classPK, java.lang.String urlTitle)
-		throws NoSuchFriendlyURLEntryException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FriendlyURLEntry getMainFriendlyURLEntry(long groupId,
+		java.lang.Class<?> clazz, long classPK) throws PortalException;
 
-	public void deleteGroupFriendlyURLEntries(long groupId, long classNameId);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FriendlyURLEntry getMainFriendlyURLEntry(long groupId,
+		long classNameId, long classPK) throws PortalException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getUniqueUrlTitle(long groupId, long classNameId,
+		long classPK, java.lang.String urlTitle);
+
+	/**
+	* Updates the friendly url entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param friendlyURLEntry the friendly url entry
+	* @return the friendly url entry that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public FriendlyURLEntry updateFriendlyURLEntry(
+		FriendlyURLEntry friendlyURLEntry);
 
 	public void validate(long groupId, long classNameId,
 		java.lang.String urlTitle) throws PortalException;

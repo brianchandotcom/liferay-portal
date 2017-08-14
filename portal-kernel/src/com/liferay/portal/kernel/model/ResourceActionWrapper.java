@@ -99,18 +99,88 @@ public class ResourceActionWrapper implements ResourceAction,
 	}
 
 	@Override
-	public CacheModel<ResourceAction> toCacheModel() {
-		return _resourceAction.toCacheModel();
+	public java.lang.Object clone() {
+		return new ResourceActionWrapper((ResourceAction)_resourceAction.clone());
 	}
 
 	@Override
-	public ResourceAction toEscapedModel() {
-		return new ResourceActionWrapper(_resourceAction.toEscapedModel());
+	public int compareTo(ResourceAction resourceAction) {
+		return _resourceAction.compareTo(resourceAction);
+	}
+
+	/**
+	* Returns the action ID of this resource action.
+	*
+	* @return the action ID of this resource action
+	*/
+	@Override
+	public java.lang.String getActionId() {
+		return _resourceAction.getActionId();
+	}
+
+	/**
+	* Returns the bitwise value of this resource action.
+	*
+	* @return the bitwise value of this resource action
+	*/
+	@Override
+	public long getBitwiseValue() {
+		return _resourceAction.getBitwiseValue();
 	}
 
 	@Override
-	public ResourceAction toUnescapedModel() {
-		return new ResourceActionWrapper(_resourceAction.toUnescapedModel());
+	public ExpandoBridge getExpandoBridge() {
+		return _resourceAction.getExpandoBridge();
+	}
+
+	/**
+	* Returns the mvcc version of this resource action.
+	*
+	* @return the mvcc version of this resource action
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _resourceAction.getMvccVersion();
+	}
+
+	/**
+	* Returns the name of this resource action.
+	*
+	* @return the name of this resource action
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _resourceAction.getName();
+	}
+
+	/**
+	* Returns the primary key of this resource action.
+	*
+	* @return the primary key of this resource action
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _resourceAction.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _resourceAction.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the resource action ID of this resource action.
+	*
+	* @return the resource action ID of this resource action
+	*/
+	@Override
+	public long getResourceActionId() {
+		return _resourceAction.getResourceActionId();
+	}
+
+	@Override
+	public int hashCode() {
+		return _resourceAction.hashCode();
 	}
 
 	@Override
@@ -126,101 +196,6 @@ public class ResourceActionWrapper implements ResourceAction,
 	@Override
 	public boolean isNew() {
 		return _resourceAction.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _resourceAction.getExpandoBridge();
-	}
-
-	@Override
-	public int compareTo(ResourceAction resourceAction) {
-		return _resourceAction.compareTo(resourceAction);
-	}
-
-	@Override
-	public int hashCode() {
-		return _resourceAction.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _resourceAction.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new ResourceActionWrapper((ResourceAction)_resourceAction.clone());
-	}
-
-	/**
-	* Returns the action ID of this resource action.
-	*
-	* @return the action ID of this resource action
-	*/
-	@Override
-	public java.lang.String getActionId() {
-		return _resourceAction.getActionId();
-	}
-
-	/**
-	* Returns the name of this resource action.
-	*
-	* @return the name of this resource action
-	*/
-	@Override
-	public java.lang.String getName() {
-		return _resourceAction.getName();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _resourceAction.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _resourceAction.toXmlString();
-	}
-
-	/**
-	* Returns the bitwise value of this resource action.
-	*
-	* @return the bitwise value of this resource action
-	*/
-	@Override
-	public long getBitwiseValue() {
-		return _resourceAction.getBitwiseValue();
-	}
-
-	/**
-	* Returns the mvcc version of this resource action.
-	*
-	* @return the mvcc version of this resource action
-	*/
-	@Override
-	public long getMvccVersion() {
-		return _resourceAction.getMvccVersion();
-	}
-
-	/**
-	* Returns the primary key of this resource action.
-	*
-	* @return the primary key of this resource action
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _resourceAction.getPrimaryKey();
-	}
-
-	/**
-	* Returns the resource action ID of this resource action.
-	*
-	* @return the resource action ID of this resource action
-	*/
-	@Override
-	public long getResourceActionId() {
-		return _resourceAction.getResourceActionId();
 	}
 
 	@Override
@@ -254,13 +229,13 @@ public class ResourceActionWrapper implements ResourceAction,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_resourceAction.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_resourceAction.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_resourceAction.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
+		_resourceAction.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -316,6 +291,31 @@ public class ResourceActionWrapper implements ResourceAction,
 	@Override
 	public void setResourceActionId(long resourceActionId) {
 		_resourceAction.setResourceActionId(resourceActionId);
+	}
+
+	@Override
+	public CacheModel<ResourceAction> toCacheModel() {
+		return _resourceAction.toCacheModel();
+	}
+
+	@Override
+	public ResourceAction toEscapedModel() {
+		return new ResourceActionWrapper(_resourceAction.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _resourceAction.toString();
+	}
+
+	@Override
+	public ResourceAction toUnescapedModel() {
+		return new ResourceActionWrapper(_resourceAction.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _resourceAction.toXmlString();
 	}
 
 	@Override

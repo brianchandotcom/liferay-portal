@@ -250,13 +250,13 @@ public class MBMailingListWrapper implements MBMailingList,
 	}
 
 	@Override
-	public MBMailingList toEscapedModel() {
-		return new MBMailingListWrapper(_mbMailingList.toEscapedModel());
+	public java.lang.Object clone() {
+		return new MBMailingListWrapper((MBMailingList)_mbMailingList.clone());
 	}
 
 	@Override
-	public MBMailingList toUnescapedModel() {
-		return new MBMailingListWrapper(_mbMailingList.toUnescapedModel());
+	public int compareTo(MBMailingList mbMailingList) {
+		return _mbMailingList.compareTo(mbMailingList);
 	}
 
 	/**
@@ -280,6 +280,111 @@ public class MBMailingListWrapper implements MBMailingList,
 	}
 
 	/**
+	* Returns the category ID of this message boards mailing list.
+	*
+	* @return the category ID of this message boards mailing list
+	*/
+	@Override
+	public long getCategoryId() {
+		return _mbMailingList.getCategoryId();
+	}
+
+	/**
+	* Returns the company ID of this message boards mailing list.
+	*
+	* @return the company ID of this message boards mailing list
+	*/
+	@Override
+	public long getCompanyId() {
+		return _mbMailingList.getCompanyId();
+	}
+
+	/**
+	* Returns the create date of this message boards mailing list.
+	*
+	* @return the create date of this message boards mailing list
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _mbMailingList.getCreateDate();
+	}
+
+	/**
+	* Returns the email address of this message boards mailing list.
+	*
+	* @return the email address of this message boards mailing list
+	*/
+	@Override
+	public java.lang.String getEmailAddress() {
+		return _mbMailingList.getEmailAddress();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _mbMailingList.getExpandoBridge();
+	}
+
+	/**
+	* Returns the group ID of this message boards mailing list.
+	*
+	* @return the group ID of this message boards mailing list
+	*/
+	@Override
+	public long getGroupId() {
+		return _mbMailingList.getGroupId();
+	}
+
+	/**
+	* Returns the in password of this message boards mailing list.
+	*
+	* @return the in password of this message boards mailing list
+	*/
+	@Override
+	public java.lang.String getInPassword() {
+		return _mbMailingList.getInPassword();
+	}
+
+	/**
+	* Returns the in protocol of this message boards mailing list.
+	*
+	* @return the in protocol of this message boards mailing list
+	*/
+	@Override
+	public java.lang.String getInProtocol() {
+		return _mbMailingList.getInProtocol();
+	}
+
+	/**
+	* Returns the in read interval of this message boards mailing list.
+	*
+	* @return the in read interval of this message boards mailing list
+	*/
+	@Override
+	public int getInReadInterval() {
+		return _mbMailingList.getInReadInterval();
+	}
+
+	/**
+	* Returns the in server name of this message boards mailing list.
+	*
+	* @return the in server name of this message boards mailing list
+	*/
+	@Override
+	public java.lang.String getInServerName() {
+		return _mbMailingList.getInServerName();
+	}
+
+	/**
+	* Returns the in server port of this message boards mailing list.
+	*
+	* @return the in server port of this message boards mailing list
+	*/
+	@Override
+	public int getInServerPort() {
+		return _mbMailingList.getInServerPort();
+	}
+
+	/**
 	* Returns the in use ssl of this message boards mailing list.
 	*
 	* @return the in use ssl of this message boards mailing list
@@ -287,6 +392,36 @@ public class MBMailingListWrapper implements MBMailingList,
 	@Override
 	public boolean getInUseSSL() {
 		return _mbMailingList.getInUseSSL();
+	}
+
+	/**
+	* Returns the in user name of this message boards mailing list.
+	*
+	* @return the in user name of this message boards mailing list
+	*/
+	@Override
+	public java.lang.String getInUserName() {
+		return _mbMailingList.getInUserName();
+	}
+
+	/**
+	* Returns the mailing list ID of this message boards mailing list.
+	*
+	* @return the mailing list ID of this message boards mailing list
+	*/
+	@Override
+	public long getMailingListId() {
+		return _mbMailingList.getMailingListId();
+	}
+
+	/**
+	* Returns the modified date of this message boards mailing list.
+	*
+	* @return the modified date of this message boards mailing list
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _mbMailingList.getModifiedDate();
 	}
 
 	/**
@@ -300,6 +435,46 @@ public class MBMailingListWrapper implements MBMailingList,
 	}
 
 	/**
+	* Returns the out email address of this message boards mailing list.
+	*
+	* @return the out email address of this message boards mailing list
+	*/
+	@Override
+	public java.lang.String getOutEmailAddress() {
+		return _mbMailingList.getOutEmailAddress();
+	}
+
+	/**
+	* Returns the out password of this message boards mailing list.
+	*
+	* @return the out password of this message boards mailing list
+	*/
+	@Override
+	public java.lang.String getOutPassword() {
+		return _mbMailingList.getOutPassword();
+	}
+
+	/**
+	* Returns the out server name of this message boards mailing list.
+	*
+	* @return the out server name of this message boards mailing list
+	*/
+	@Override
+	public java.lang.String getOutServerName() {
+		return _mbMailingList.getOutServerName();
+	}
+
+	/**
+	* Returns the out server port of this message boards mailing list.
+	*
+	* @return the out server port of this message boards mailing list
+	*/
+	@Override
+	public int getOutServerPort() {
+		return _mbMailingList.getOutServerPort();
+	}
+
+	/**
 	* Returns the out use ssl of this message boards mailing list.
 	*
 	* @return the out use ssl of this message boards mailing list
@@ -307,6 +482,76 @@ public class MBMailingListWrapper implements MBMailingList,
 	@Override
 	public boolean getOutUseSSL() {
 		return _mbMailingList.getOutUseSSL();
+	}
+
+	/**
+	* Returns the out user name of this message boards mailing list.
+	*
+	* @return the out user name of this message boards mailing list
+	*/
+	@Override
+	public java.lang.String getOutUserName() {
+		return _mbMailingList.getOutUserName();
+	}
+
+	/**
+	* Returns the primary key of this message boards mailing list.
+	*
+	* @return the primary key of this message boards mailing list
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _mbMailingList.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _mbMailingList.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the user ID of this message boards mailing list.
+	*
+	* @return the user ID of this message boards mailing list
+	*/
+	@Override
+	public long getUserId() {
+		return _mbMailingList.getUserId();
+	}
+
+	/**
+	* Returns the user name of this message boards mailing list.
+	*
+	* @return the user name of this message boards mailing list
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _mbMailingList.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this message boards mailing list.
+	*
+	* @return the user uuid of this message boards mailing list
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _mbMailingList.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this message boards mailing list.
+	*
+	* @return the uuid of this message boards mailing list
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _mbMailingList.getUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _mbMailingList.hashCode();
 	}
 
 	/**
@@ -372,276 +617,6 @@ public class MBMailingListWrapper implements MBMailingList,
 	@Override
 	public boolean isOutUseSSL() {
 		return _mbMailingList.isOutUseSSL();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _mbMailingList.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<MBMailingList> toCacheModel() {
-		return _mbMailingList.toCacheModel();
-	}
-
-	@Override
-	public int compareTo(MBMailingList mbMailingList) {
-		return _mbMailingList.compareTo(mbMailingList);
-	}
-
-	/**
-	* Returns the in read interval of this message boards mailing list.
-	*
-	* @return the in read interval of this message boards mailing list
-	*/
-	@Override
-	public int getInReadInterval() {
-		return _mbMailingList.getInReadInterval();
-	}
-
-	/**
-	* Returns the in server port of this message boards mailing list.
-	*
-	* @return the in server port of this message boards mailing list
-	*/
-	@Override
-	public int getInServerPort() {
-		return _mbMailingList.getInServerPort();
-	}
-
-	/**
-	* Returns the out server port of this message boards mailing list.
-	*
-	* @return the out server port of this message boards mailing list
-	*/
-	@Override
-	public int getOutServerPort() {
-		return _mbMailingList.getOutServerPort();
-	}
-
-	@Override
-	public int hashCode() {
-		return _mbMailingList.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _mbMailingList.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new MBMailingListWrapper((MBMailingList)_mbMailingList.clone());
-	}
-
-	/**
-	* Returns the email address of this message boards mailing list.
-	*
-	* @return the email address of this message boards mailing list
-	*/
-	@Override
-	public java.lang.String getEmailAddress() {
-		return _mbMailingList.getEmailAddress();
-	}
-
-	/**
-	* Returns the in password of this message boards mailing list.
-	*
-	* @return the in password of this message boards mailing list
-	*/
-	@Override
-	public java.lang.String getInPassword() {
-		return _mbMailingList.getInPassword();
-	}
-
-	/**
-	* Returns the in protocol of this message boards mailing list.
-	*
-	* @return the in protocol of this message boards mailing list
-	*/
-	@Override
-	public java.lang.String getInProtocol() {
-		return _mbMailingList.getInProtocol();
-	}
-
-	/**
-	* Returns the in server name of this message boards mailing list.
-	*
-	* @return the in server name of this message boards mailing list
-	*/
-	@Override
-	public java.lang.String getInServerName() {
-		return _mbMailingList.getInServerName();
-	}
-
-	/**
-	* Returns the in user name of this message boards mailing list.
-	*
-	* @return the in user name of this message boards mailing list
-	*/
-	@Override
-	public java.lang.String getInUserName() {
-		return _mbMailingList.getInUserName();
-	}
-
-	/**
-	* Returns the out email address of this message boards mailing list.
-	*
-	* @return the out email address of this message boards mailing list
-	*/
-	@Override
-	public java.lang.String getOutEmailAddress() {
-		return _mbMailingList.getOutEmailAddress();
-	}
-
-	/**
-	* Returns the out password of this message boards mailing list.
-	*
-	* @return the out password of this message boards mailing list
-	*/
-	@Override
-	public java.lang.String getOutPassword() {
-		return _mbMailingList.getOutPassword();
-	}
-
-	/**
-	* Returns the out server name of this message boards mailing list.
-	*
-	* @return the out server name of this message boards mailing list
-	*/
-	@Override
-	public java.lang.String getOutServerName() {
-		return _mbMailingList.getOutServerName();
-	}
-
-	/**
-	* Returns the out user name of this message boards mailing list.
-	*
-	* @return the out user name of this message boards mailing list
-	*/
-	@Override
-	public java.lang.String getOutUserName() {
-		return _mbMailingList.getOutUserName();
-	}
-
-	/**
-	* Returns the user name of this message boards mailing list.
-	*
-	* @return the user name of this message boards mailing list
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _mbMailingList.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this message boards mailing list.
-	*
-	* @return the user uuid of this message boards mailing list
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _mbMailingList.getUserUuid();
-	}
-
-	/**
-	* Returns the uuid of this message boards mailing list.
-	*
-	* @return the uuid of this message boards mailing list
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _mbMailingList.getUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _mbMailingList.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _mbMailingList.toXmlString();
-	}
-
-	/**
-	* Returns the create date of this message boards mailing list.
-	*
-	* @return the create date of this message boards mailing list
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _mbMailingList.getCreateDate();
-	}
-
-	/**
-	* Returns the modified date of this message boards mailing list.
-	*
-	* @return the modified date of this message boards mailing list
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _mbMailingList.getModifiedDate();
-	}
-
-	/**
-	* Returns the category ID of this message boards mailing list.
-	*
-	* @return the category ID of this message boards mailing list
-	*/
-	@Override
-	public long getCategoryId() {
-		return _mbMailingList.getCategoryId();
-	}
-
-	/**
-	* Returns the company ID of this message boards mailing list.
-	*
-	* @return the company ID of this message boards mailing list
-	*/
-	@Override
-	public long getCompanyId() {
-		return _mbMailingList.getCompanyId();
-	}
-
-	/**
-	* Returns the group ID of this message boards mailing list.
-	*
-	* @return the group ID of this message boards mailing list
-	*/
-	@Override
-	public long getGroupId() {
-		return _mbMailingList.getGroupId();
-	}
-
-	/**
-	* Returns the mailing list ID of this message boards mailing list.
-	*
-	* @return the mailing list ID of this message boards mailing list
-	*/
-	@Override
-	public long getMailingListId() {
-		return _mbMailingList.getMailingListId();
-	}
-
-	/**
-	* Returns the primary key of this message boards mailing list.
-	*
-	* @return the primary key of this message boards mailing list
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _mbMailingList.getPrimaryKey();
-	}
-
-	/**
-	* Returns the user ID of this message boards mailing list.
-	*
-	* @return the user ID of this message boards mailing list
-	*/
-	@Override
-	public long getUserId() {
-		return _mbMailingList.getUserId();
 	}
 
 	@Override
@@ -958,6 +933,31 @@ public class MBMailingListWrapper implements MBMailingList,
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_mbMailingList.setUuid(uuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<MBMailingList> toCacheModel() {
+		return _mbMailingList.toCacheModel();
+	}
+
+	@Override
+	public MBMailingList toEscapedModel() {
+		return new MBMailingListWrapper(_mbMailingList.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _mbMailingList.toString();
+	}
+
+	@Override
+	public MBMailingList toUnescapedModel() {
+		return new MBMailingListWrapper(_mbMailingList.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _mbMailingList.toXmlString();
 	}
 
 	@Override

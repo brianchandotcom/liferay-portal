@@ -69,17 +69,20 @@ public interface PowwowMeetingService extends BaseService, InvokableService {
 	public PowwowMeeting deletePowwowMeeting(long powwowMeetingId)
 		throws PortalException;
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PowwowMeeting getPowwowMeeting(long powwowMeetingId)
 		throws PortalException;
 
-	public PowwowMeeting updatePowwowMeeting(long powwowMeetingId,
-		long powwowServerId, java.lang.String name,
-		java.lang.String description, java.lang.String providerType,
-		Map<java.lang.String, Serializable> providerTypeMetadataMap,
-		java.lang.String languageId, long calendarBookingId, int status,
-		List<PowwowParticipant> powwowParticipants,
-		ServiceContext serviceContext) throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<PowwowMeeting> getPowwowMeetings(long groupId, int start,
+		int end, OrderByComparator obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getPowwowMeetingsCount(long groupId);
@@ -89,14 +92,11 @@ public interface PowwowMeetingService extends BaseService, InvokableService {
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<PowwowMeeting> getPowwowMeetings(long groupId, int start,
-		int end, OrderByComparator obc);
+	public PowwowMeeting updatePowwowMeeting(long powwowMeetingId,
+		long powwowServerId, java.lang.String name,
+		java.lang.String description, java.lang.String providerType,
+		Map<java.lang.String, Serializable> providerTypeMetadataMap,
+		java.lang.String languageId, long calendarBookingId, int status,
+		List<PowwowParticipant> powwowParticipants,
+		ServiceContext serviceContext) throws PortalException;
 }

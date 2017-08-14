@@ -100,38 +100,8 @@ public class AssetTagStatsWrapper implements AssetTagStats,
 	}
 
 	@Override
-	public AssetTagStats toEscapedModel() {
-		return new AssetTagStatsWrapper(_assetTagStats.toEscapedModel());
-	}
-
-	@Override
-	public AssetTagStats toUnescapedModel() {
-		return new AssetTagStatsWrapper(_assetTagStats.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _assetTagStats.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _assetTagStats.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _assetTagStats.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _assetTagStats.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<AssetTagStats> toCacheModel() {
-		return _assetTagStats.toCacheModel();
+	public java.lang.Object clone() {
+		return new AssetTagStatsWrapper((AssetTagStats)_assetTagStats.clone());
 	}
 
 	@Override
@@ -149,21 +119,6 @@ public class AssetTagStatsWrapper implements AssetTagStats,
 		return _assetTagStats.getAssetCount();
 	}
 
-	@Override
-	public int hashCode() {
-		return _assetTagStats.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _assetTagStats.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new AssetTagStatsWrapper((AssetTagStats)_assetTagStats.clone());
-	}
-
 	/**
 	* Returns the fully qualified class name of this asset tag stats.
 	*
@@ -172,16 +127,6 @@ public class AssetTagStatsWrapper implements AssetTagStats,
 	@Override
 	public java.lang.String getClassName() {
 		return _assetTagStats.getClassName();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _assetTagStats.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _assetTagStats.toXmlString();
 	}
 
 	/**
@@ -204,6 +149,11 @@ public class AssetTagStatsWrapper implements AssetTagStats,
 		return _assetTagStats.getCompanyId();
 	}
 
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _assetTagStats.getExpandoBridge();
+	}
+
 	/**
 	* Returns the primary key of this asset tag stats.
 	*
@@ -212,6 +162,11 @@ public class AssetTagStatsWrapper implements AssetTagStats,
 	@Override
 	public long getPrimaryKey() {
 		return _assetTagStats.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _assetTagStats.getPrimaryKeyObj();
 	}
 
 	/**
@@ -232,6 +187,26 @@ public class AssetTagStatsWrapper implements AssetTagStats,
 	@Override
 	public long getTagStatsId() {
 		return _assetTagStats.getTagStatsId();
+	}
+
+	@Override
+	public int hashCode() {
+		return _assetTagStats.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _assetTagStats.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _assetTagStats.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _assetTagStats.isNew();
 	}
 
 	@Override
@@ -333,6 +308,31 @@ public class AssetTagStatsWrapper implements AssetTagStats,
 	@Override
 	public void setTagStatsId(long tagStatsId) {
 		_assetTagStats.setTagStatsId(tagStatsId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<AssetTagStats> toCacheModel() {
+		return _assetTagStats.toCacheModel();
+	}
+
+	@Override
+	public AssetTagStats toEscapedModel() {
+		return new AssetTagStatsWrapper(_assetTagStats.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _assetTagStats.toString();
+	}
+
+	@Override
+	public AssetTagStats toUnescapedModel() {
+		return new AssetTagStatsWrapper(_assetTagStats.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _assetTagStats.toXmlString();
 	}
 
 	@Override

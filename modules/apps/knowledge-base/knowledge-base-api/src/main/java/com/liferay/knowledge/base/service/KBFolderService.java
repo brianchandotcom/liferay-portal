@@ -86,19 +86,14 @@ public interface KBFolderService extends BaseService {
 	public KBFolder getKBFolderByUrlTitle(long groupId, long parentKbFolderId,
 		java.lang.String urlTitle) throws PortalException;
 
-	/**
-	* @deprecated As of 1.1.0, replaced by {@link #updateKBFolder(long, long,
-	long, String, String, ServiceContext)}
-	*/
-	@java.lang.Deprecated
-	public KBFolder updateKBFolder(long parentResourceClassNameId,
-		long parentResourcePrimKey, long kbFolderId, java.lang.String name,
-		java.lang.String description) throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KBFolder> getKBFolders(long groupId, long parentKBFolderId,
+		int start, int end) throws PortalException;
 
-	public KBFolder updateKBFolder(long parentResourceClassNameId,
-		long parentResourcePrimKey, long kbFolderId, java.lang.String name,
-		java.lang.String description, ServiceContext serviceContext)
-		throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<java.lang.Object> getKBFoldersAndKBArticles(long groupId,
+		long parentResourcePrimKey, int status, int start, int end,
+		OrderByComparator<?> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getKBFoldersAndKBArticlesCount(long groupId,
@@ -115,15 +110,20 @@ public interface KBFolderService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBFolder> getKBFolders(long groupId, long parentKBFolderId,
-		int start, int end) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object> getKBFoldersAndKBArticles(long groupId,
-		long parentResourcePrimKey, int status, int start, int end,
-		OrderByComparator<?> orderByComparator);
-
 	public void moveKBFolder(long kbFolderId, long parentKBFolderId)
+		throws PortalException;
+
+	/**
+	* @deprecated As of 1.1.0, replaced by {@link #updateKBFolder(long, long,
+	long, String, String, ServiceContext)}
+	*/
+	@java.lang.Deprecated
+	public KBFolder updateKBFolder(long parentResourceClassNameId,
+		long parentResourcePrimKey, long kbFolderId, java.lang.String name,
+		java.lang.String description) throws PortalException;
+
+	public KBFolder updateKBFolder(long parentResourceClassNameId,
+		long parentResourcePrimKey, long kbFolderId, java.lang.String name,
+		java.lang.String description, ServiceContext serviceContext)
 		throws PortalException;
 }

@@ -62,17 +62,6 @@ public interface AddressLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AddressLocalServiceUtil} to access the address local service. Add custom service methods to {@link com.liferay.portal.service.impl.AddressLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Adds the address to the database. Also notifies the appropriate model listeners.
@@ -118,56 +107,8 @@ public interface AddressLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public Address deleteAddress(long addressId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Address fetchAddress(long addressId);
-
-	/**
-	* Returns the address with the matching UUID and company.
-	*
-	* @param uuid the address's UUID
-	* @param companyId the primary key of the company
-	* @return the matching address, or <code>null</code> if a matching address could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Address fetchAddressByUuidAndCompanyId(java.lang.String uuid,
-		long companyId);
-
-	/**
-	* Returns the address with the primary key.
-	*
-	* @param addressId the primary key of the address
-	* @return the address
-	* @throws PortalException if a address with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Address getAddress(long addressId) throws PortalException;
-
-	/**
-	* Returns the address with the matching UUID and company.
-	*
-	* @param uuid the address's UUID
-	* @param companyId the primary key of the company
-	* @return the matching address
-	* @throws PortalException if a matching address could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Address getAddressByUuidAndCompanyId(java.lang.String uuid,
-		long companyId) throws PortalException;
-
-	/**
-	* Updates the address in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param address the address
-	* @return the address that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public Address updateAddress(Address address);
-
-	public Address updateAddress(long addressId, java.lang.String street1,
-		java.lang.String street2, java.lang.String street3,
-		java.lang.String city, java.lang.String zip, long regionId,
-		long countryId, long typeId, boolean mailing, boolean primary)
-		throws PortalException;
+	public void deleteAddresses(long companyId, java.lang.String className,
+		long classPK);
 
 	/**
 	* @throws PortalException
@@ -176,25 +117,7 @@ public interface AddressLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	* Returns the number of addresses.
-	*
-	* @return the number of addresses
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getAddressesCount();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -235,6 +158,63 @@ public interface AddressLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Address fetchAddress(long addressId);
+
+	/**
+	* Returns the address with the matching UUID and company.
+	*
+	* @param uuid the address's UUID
+	* @param companyId the primary key of the company
+	* @return the matching address, or <code>null</code> if a matching address could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Address fetchAddressByUuidAndCompanyId(java.lang.String uuid,
+		long companyId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
+	* Returns the address with the primary key.
+	*
+	* @param addressId the primary key of the address
+	* @return the address
+	* @throws PortalException if a address with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Address getAddress(long addressId) throws PortalException;
+
+	/**
+	* Returns the address with the matching UUID and company.
+	*
+	* @param uuid the address's UUID
+	* @param companyId the primary key of the company
+	* @return the matching address
+	* @throws PortalException if a matching address could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Address getAddressByUuidAndCompanyId(java.lang.String uuid,
+		long companyId) throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Address> getAddresses();
 
@@ -257,23 +237,44 @@ public interface AddressLocalService extends BaseLocalService,
 		java.lang.String className, long classPK);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of addresses.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of addresses
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAddressesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public java.lang.String getOSGiServiceIdentifier();
 
-	public void deleteAddresses(long companyId, java.lang.String className,
-		long classPK);
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Updates the address in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param address the address
+	* @return the address that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public Address updateAddress(Address address);
+
+	public Address updateAddress(long addressId, java.lang.String street1,
+		java.lang.String street2, java.lang.String street3,
+		java.lang.String city, java.lang.String zip, long regionId,
+		long countryId, long typeId, boolean mailing, boolean primary)
+		throws PortalException;
 }

@@ -124,81 +124,6 @@ public interface MDRRuleLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public MDRRule deleteMDRRule(long ruleId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MDRRule fetchMDRRule(long ruleId);
-
-	/**
-	* Returns the mdr rule matching the UUID and group.
-	*
-	* @param uuid the mdr rule's UUID
-	* @param groupId the primary key of the group
-	* @return the matching mdr rule, or <code>null</code> if a matching mdr rule could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MDRRule fetchMDRRuleByUuidAndGroupId(java.lang.String uuid,
-		long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MDRRule fetchRule(long ruleId);
-
-	/**
-	* Returns the mdr rule with the primary key.
-	*
-	* @param ruleId the primary key of the mdr rule
-	* @return the mdr rule
-	* @throws PortalException if a mdr rule with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MDRRule getMDRRule(long ruleId) throws PortalException;
-
-	/**
-	* Returns the mdr rule matching the UUID and group.
-	*
-	* @param uuid the mdr rule's UUID
-	* @param groupId the primary key of the group
-	* @return the matching mdr rule
-	* @throws PortalException if a matching mdr rule could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MDRRule getMDRRuleByUuidAndGroupId(java.lang.String uuid,
-		long groupId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MDRRule getRule(long ruleId) throws PortalException;
-
-	/**
-	* Updates the mdr rule in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param mdrRule the mdr rule
-	* @return the mdr rule that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public MDRRule updateMDRRule(MDRRule mdrRule);
-
-	public MDRRule updateRule(long ruleId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
-		UnicodeProperties typeSettingsProperties, ServiceContext serviceContext)
-		throws PortalException;
-
-	public MDRRule updateRule(long ruleId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
-		java.lang.String typeSettings, ServiceContext serviceContext)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
 	/**
 	* @throws PortalException
 	*/
@@ -206,28 +131,14 @@ public interface MDRRuleLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public void deleteRule(MDRRule rule);
 
-	/**
-	* Returns the number of mdr rules.
-	*
-	* @return the number of mdr rules
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getMDRRulesCount();
+	public void deleteRule(long ruleId);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getRulesCount(long ruleGroupId);
+	public void deleteRules(long ruleGroupId);
 
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -269,6 +180,73 @@ public interface MDRRuleLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MDRRule fetchMDRRule(long ruleId);
+
+	/**
+	* Returns the mdr rule matching the UUID and group.
+	*
+	* @param uuid the mdr rule's UUID
+	* @param groupId the primary key of the group
+	* @return the matching mdr rule, or <code>null</code> if a matching mdr rule could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MDRRule fetchMDRRuleByUuidAndGroupId(java.lang.String uuid,
+		long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MDRRule fetchRule(long ruleId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* Returns the mdr rule with the primary key.
+	*
+	* @param ruleId the primary key of the mdr rule
+	* @return the mdr rule
+	* @throws PortalException if a mdr rule with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MDRRule getMDRRule(long ruleId) throws PortalException;
+
+	/**
+	* Returns the mdr rule matching the UUID and group.
+	*
+	* @param uuid the mdr rule's UUID
+	* @param groupId the primary key of the group
+	* @return the matching mdr rule
+	* @throws PortalException if a matching mdr rule could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MDRRule getMDRRuleByUuidAndGroupId(java.lang.String uuid,
+		long groupId) throws PortalException;
+
+	/**
 	* Returns a range of all the mdr rules.
 	*
 	* <p>
@@ -308,6 +286,29 @@ public interface MDRRuleLocalService extends BaseLocalService,
 		long companyId, int start, int end,
 		OrderByComparator<MDRRule> orderByComparator);
 
+	/**
+	* Returns the number of mdr rules.
+	*
+	* @return the number of mdr rules
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getMDRRulesCount();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MDRRule getRule(long ruleId) throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MDRRule> getRules(long ruleGroupId);
 
@@ -318,28 +319,27 @@ public interface MDRRuleLocalService extends BaseLocalService,
 	public List<MDRRule> getRules(long ruleGroupId, int start, int end,
 		OrderByComparator<MDRRule> obc);
 
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getRulesCount(long ruleGroupId);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Updates the mdr rule in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @param mdrRule the mdr rule
+	* @return the mdr rule that was updated
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	@Indexable(type = IndexableType.REINDEX)
+	public MDRRule updateMDRRule(MDRRule mdrRule);
 
-	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public void deleteRule(MDRRule rule);
+	public MDRRule updateRule(long ruleId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
+		UnicodeProperties typeSettingsProperties, ServiceContext serviceContext)
+		throws PortalException;
 
-	public void deleteRule(long ruleId);
-
-	public void deleteRules(long ruleGroupId);
+	public MDRRule updateRule(long ruleId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
+		java.lang.String typeSettings, ServiceContext serviceContext)
+		throws PortalException;
 }

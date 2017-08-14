@@ -111,89 +111,14 @@ public class FriendlyURLEntryLocalizationWrapper
 	}
 
 	@Override
-	public FriendlyURLEntryLocalization toEscapedModel() {
-		return new FriendlyURLEntryLocalizationWrapper(_friendlyURLEntryLocalization.toEscapedModel());
-	}
-
-	@Override
-	public FriendlyURLEntryLocalization toUnescapedModel() {
-		return new FriendlyURLEntryLocalizationWrapper(_friendlyURLEntryLocalization.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _friendlyURLEntryLocalization.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _friendlyURLEntryLocalization.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _friendlyURLEntryLocalization.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _friendlyURLEntryLocalization.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<FriendlyURLEntryLocalization> toCacheModel() {
-		return _friendlyURLEntryLocalization.toCacheModel();
+	public java.lang.Object clone() {
+		return new FriendlyURLEntryLocalizationWrapper((FriendlyURLEntryLocalization)_friendlyURLEntryLocalization.clone());
 	}
 
 	@Override
 	public int compareTo(
 		FriendlyURLEntryLocalization friendlyURLEntryLocalization) {
 		return _friendlyURLEntryLocalization.compareTo(friendlyURLEntryLocalization);
-	}
-
-	@Override
-	public int hashCode() {
-		return _friendlyURLEntryLocalization.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _friendlyURLEntryLocalization.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new FriendlyURLEntryLocalizationWrapper((FriendlyURLEntryLocalization)_friendlyURLEntryLocalization.clone());
-	}
-
-	/**
-	* Returns the language ID of this friendly url entry localization.
-	*
-	* @return the language ID of this friendly url entry localization
-	*/
-	@Override
-	public java.lang.String getLanguageId() {
-		return _friendlyURLEntryLocalization.getLanguageId();
-	}
-
-	/**
-	* Returns the url title of this friendly url entry localization.
-	*
-	* @return the url title of this friendly url entry localization
-	*/
-	@Override
-	public java.lang.String getUrlTitle() {
-		return _friendlyURLEntryLocalization.getUrlTitle();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _friendlyURLEntryLocalization.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _friendlyURLEntryLocalization.toXmlString();
 	}
 
 	/**
@@ -204,6 +129,11 @@ public class FriendlyURLEntryLocalizationWrapper
 	@Override
 	public long getCompanyId() {
 		return _friendlyURLEntryLocalization.getCompanyId();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _friendlyURLEntryLocalization.getExpandoBridge();
 	}
 
 	/**
@@ -237,6 +167,16 @@ public class FriendlyURLEntryLocalizationWrapper
 	}
 
 	/**
+	* Returns the language ID of this friendly url entry localization.
+	*
+	* @return the language ID of this friendly url entry localization
+	*/
+	@Override
+	public java.lang.String getLanguageId() {
+		return _friendlyURLEntryLocalization.getLanguageId();
+	}
+
+	/**
 	* Returns the primary key of this friendly url entry localization.
 	*
 	* @return the primary key of this friendly url entry localization
@@ -244,6 +184,41 @@ public class FriendlyURLEntryLocalizationWrapper
 	@Override
 	public long getPrimaryKey() {
 		return _friendlyURLEntryLocalization.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _friendlyURLEntryLocalization.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the url title of this friendly url entry localization.
+	*
+	* @return the url title of this friendly url entry localization
+	*/
+	@Override
+	public java.lang.String getUrlTitle() {
+		return _friendlyURLEntryLocalization.getUrlTitle();
+	}
+
+	@Override
+	public int hashCode() {
+		return _friendlyURLEntryLocalization.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _friendlyURLEntryLocalization.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _friendlyURLEntryLocalization.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _friendlyURLEntryLocalization.isNew();
 	}
 
 	@Override
@@ -351,6 +326,31 @@ public class FriendlyURLEntryLocalizationWrapper
 	@Override
 	public void setUrlTitle(java.lang.String urlTitle) {
 		_friendlyURLEntryLocalization.setUrlTitle(urlTitle);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<FriendlyURLEntryLocalization> toCacheModel() {
+		return _friendlyURLEntryLocalization.toCacheModel();
+	}
+
+	@Override
+	public FriendlyURLEntryLocalization toEscapedModel() {
+		return new FriendlyURLEntryLocalizationWrapper(_friendlyURLEntryLocalization.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _friendlyURLEntryLocalization.toString();
+	}
+
+	@Override
+	public FriendlyURLEntryLocalization toUnescapedModel() {
+		return new FriendlyURLEntryLocalizationWrapper(_friendlyURLEntryLocalization.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _friendlyURLEntryLocalization.toXmlString();
 	}
 
 	@Override

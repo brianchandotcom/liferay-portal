@@ -61,23 +61,12 @@ public interface PasswordPolicyService extends BaseService {
 		long resetFailureCount, long resetTicketMaxAge,
 		ServiceContext serviceContext) throws PortalException;
 
+	public void deletePasswordPolicy(long passwordPolicyId)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PasswordPolicy fetchPasswordPolicy(long passwordPolicyId)
 		throws PortalException;
-
-	public PasswordPolicy updatePasswordPolicy(long passwordPolicyId,
-		java.lang.String name, java.lang.String description,
-		boolean changeable, boolean changeRequired, long minAge,
-		boolean checkSyntax, boolean allowDictionaryWords, int minAlphanumeric,
-		int minLength, int minLowerCase, int minNumbers, int minSymbols,
-		int minUpperCase, java.lang.String regex, boolean history,
-		int historyCount, boolean expireable, long maxAge, long warningTime,
-		int graceLimit, boolean lockout, int maxFailure, long lockoutDuration,
-		long resetFailureCount, long resetTicketMaxAge,
-		ServiceContext serviceContext) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, java.lang.String name);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -90,6 +79,17 @@ public interface PasswordPolicyService extends BaseService {
 	public List<PasswordPolicy> search(long companyId, java.lang.String name,
 		int start, int end, OrderByComparator<PasswordPolicy> obc);
 
-	public void deletePasswordPolicy(long passwordPolicyId)
-		throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(long companyId, java.lang.String name);
+
+	public PasswordPolicy updatePasswordPolicy(long passwordPolicyId,
+		java.lang.String name, java.lang.String description,
+		boolean changeable, boolean changeRequired, long minAge,
+		boolean checkSyntax, boolean allowDictionaryWords, int minAlphanumeric,
+		int minLength, int minLowerCase, int minNumbers, int minSymbols,
+		int minUpperCase, java.lang.String regex, boolean history,
+		int historyCount, boolean expireable, long maxAge, long warningTime,
+		int graceLimit, boolean lockout, int maxFailure, long lockoutDuration,
+		long resetFailureCount, long resetTicketMaxAge,
+		ServiceContext serviceContext) throws PortalException;
 }

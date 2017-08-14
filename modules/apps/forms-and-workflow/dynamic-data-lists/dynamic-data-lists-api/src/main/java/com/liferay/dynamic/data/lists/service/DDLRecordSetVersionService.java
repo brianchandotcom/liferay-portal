@@ -59,14 +59,6 @@ public interface DDLRecordSetVersionService extends BaseService {
 	public DDLRecordSetVersion getLatestRecordSetVersion(long recordSetId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DDLRecordSetVersion getRecordSetVersion(long recordSetVersionId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getRecordSetVersionsCount(long recordSetId)
-		throws PortalException;
-
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -75,8 +67,16 @@ public interface DDLRecordSetVersionService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDLRecordSetVersion getRecordSetVersion(long recordSetVersionId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDLRecordSetVersion> getRecordSetVersions(long recordSetId,
 		int start, int end,
 		OrderByComparator<DDLRecordSetVersion> orderByComparator)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getRecordSetVersionsCount(long recordSetId)
 		throws PortalException;
 }

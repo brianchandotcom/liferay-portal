@@ -272,13 +272,13 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	}
 
 	@Override
-	public BlogsEntry toEscapedModel() {
-		return new BlogsEntryWrapper(_blogsEntry.toEscapedModel());
+	public java.lang.Object clone() {
+		return new BlogsEntryWrapper((BlogsEntry)_blogsEntry.clone());
 	}
 
 	@Override
-	public BlogsEntry toUnescapedModel() {
-		return new BlogsEntryWrapper(_blogsEntry.toUnescapedModel());
+	public int compareTo(BlogsEntry blogsEntry) {
+		return _blogsEntry.compareTo(blogsEntry);
 	}
 
 	/**
@@ -302,6 +302,164 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	}
 
 	/**
+	* Returns the company ID of this blogs entry.
+	*
+	* @return the company ID of this blogs entry
+	*/
+	@Override
+	public long getCompanyId() {
+		return _blogsEntry.getCompanyId();
+	}
+
+	/**
+	* Returns the content of this blogs entry.
+	*
+	* @return the content of this blogs entry
+	*/
+	@Override
+	public java.lang.String getContent() {
+		return _blogsEntry.getContent();
+	}
+
+	/**
+	* Returns the cover image caption of this blogs entry.
+	*
+	* @return the cover image caption of this blogs entry
+	*/
+	@Override
+	public java.lang.String getCoverImageCaption() {
+		return _blogsEntry.getCoverImageCaption();
+	}
+
+	/**
+	* Returns the cover image file entry ID of this blogs entry.
+	*
+	* @return the cover image file entry ID of this blogs entry
+	*/
+	@Override
+	public long getCoverImageFileEntryId() {
+		return _blogsEntry.getCoverImageFileEntryId();
+	}
+
+	/**
+	* Returns the cover image url of this blogs entry.
+	*
+	* @return the cover image url of this blogs entry
+	*/
+	@Override
+	public java.lang.String getCoverImageURL() {
+		return _blogsEntry.getCoverImageURL();
+	}
+
+	@Override
+	public java.lang.String getCoverImageURL(
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _blogsEntry.getCoverImageURL(themeDisplay);
+	}
+
+	/**
+	* Returns the create date of this blogs entry.
+	*
+	* @return the create date of this blogs entry
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _blogsEntry.getCreateDate();
+	}
+
+	/**
+	* Returns the description of this blogs entry.
+	*
+	* @return the description of this blogs entry
+	*/
+	@Override
+	public java.lang.String getDescription() {
+		return _blogsEntry.getDescription();
+	}
+
+	/**
+	* Returns the display date of this blogs entry.
+	*
+	* @return the display date of this blogs entry
+	*/
+	@Override
+	public Date getDisplayDate() {
+		return _blogsEntry.getDisplayDate();
+	}
+
+	/**
+	* Returns the entry ID of this blogs entry.
+	*
+	* @return the entry ID of this blogs entry
+	*/
+	@Override
+	public long getEntryId() {
+		return _blogsEntry.getEntryId();
+	}
+
+	/**
+	* @deprecated As of 1.1.0, replaced by {@link
+	#getSmallImageURL(ThemeDisplay)}
+	*/
+	@Deprecated
+	@Override
+	public java.lang.String getEntryImageURL(
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
+		return _blogsEntry.getEntryImageURL(themeDisplay);
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _blogsEntry.getExpandoBridge();
+	}
+
+	/**
+	* Returns the group ID of this blogs entry.
+	*
+	* @return the group ID of this blogs entry
+	*/
+	@Override
+	public long getGroupId() {
+		return _blogsEntry.getGroupId();
+	}
+
+	/**
+	* Returns the last publish date of this blogs entry.
+	*
+	* @return the last publish date of this blogs entry
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _blogsEntry.getLastPublishDate();
+	}
+
+	/**
+	* Returns the modified date of this blogs entry.
+	*
+	* @return the modified date of this blogs entry
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _blogsEntry.getModifiedDate();
+	}
+
+	/**
+	* Returns the primary key of this blogs entry.
+	*
+	* @return the primary key of this blogs entry
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _blogsEntry.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _blogsEntry.getPrimaryKeyObj();
+	}
+
+	/**
 	* Returns the small image of this blogs entry.
 	*
 	* @return the small image of this blogs entry
@@ -309,6 +467,217 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	@Override
 	public boolean getSmallImage() {
 		return _blogsEntry.getSmallImage();
+	}
+
+	/**
+	* Returns the small image file entry ID of this blogs entry.
+	*
+	* @return the small image file entry ID of this blogs entry
+	*/
+	@Override
+	public long getSmallImageFileEntryId() {
+		return _blogsEntry.getSmallImageFileEntryId();
+	}
+
+	/**
+	* Returns the small image ID of this blogs entry.
+	*
+	* @return the small image ID of this blogs entry
+	*/
+	@Override
+	public long getSmallImageId() {
+		return _blogsEntry.getSmallImageId();
+	}
+
+	@Override
+	public java.lang.String getSmallImageType()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _blogsEntry.getSmallImageType();
+	}
+
+	/**
+	* Returns the small image url of this blogs entry.
+	*
+	* @return the small image url of this blogs entry
+	*/
+	@Override
+	public java.lang.String getSmallImageURL() {
+		return _blogsEntry.getSmallImageURL();
+	}
+
+	@Override
+	public java.lang.String getSmallImageURL(
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _blogsEntry.getSmallImageURL(themeDisplay);
+	}
+
+	/**
+	* Returns the status of this blogs entry.
+	*
+	* @return the status of this blogs entry
+	*/
+	@Override
+	public int getStatus() {
+		return _blogsEntry.getStatus();
+	}
+
+	/**
+	* Returns the status by user ID of this blogs entry.
+	*
+	* @return the status by user ID of this blogs entry
+	*/
+	@Override
+	public long getStatusByUserId() {
+		return _blogsEntry.getStatusByUserId();
+	}
+
+	/**
+	* Returns the status by user name of this blogs entry.
+	*
+	* @return the status by user name of this blogs entry
+	*/
+	@Override
+	public java.lang.String getStatusByUserName() {
+		return _blogsEntry.getStatusByUserName();
+	}
+
+	/**
+	* Returns the status by user uuid of this blogs entry.
+	*
+	* @return the status by user uuid of this blogs entry
+	*/
+	@Override
+	public java.lang.String getStatusByUserUuid() {
+		return _blogsEntry.getStatusByUserUuid();
+	}
+
+	/**
+	* Returns the status date of this blogs entry.
+	*
+	* @return the status date of this blogs entry
+	*/
+	@Override
+	public Date getStatusDate() {
+		return _blogsEntry.getStatusDate();
+	}
+
+	/**
+	* Returns the subtitle of this blogs entry.
+	*
+	* @return the subtitle of this blogs entry
+	*/
+	@Override
+	public java.lang.String getSubtitle() {
+		return _blogsEntry.getSubtitle();
+	}
+
+	/**
+	* Returns the title of this blogs entry.
+	*
+	* @return the title of this blogs entry
+	*/
+	@Override
+	public java.lang.String getTitle() {
+		return _blogsEntry.getTitle();
+	}
+
+	/**
+	* Returns the trackbacks of this blogs entry.
+	*
+	* @return the trackbacks of this blogs entry
+	*/
+	@Override
+	public java.lang.String getTrackbacks() {
+		return _blogsEntry.getTrackbacks();
+	}
+
+	/**
+	* Returns the trash entry created when this blogs entry was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this blogs entry.
+	*
+	* @return the trash entry created when this blogs entry was moved to the Recycle Bin
+	*/
+	@Override
+	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _blogsEntry.getTrashEntry();
+	}
+
+	/**
+	* Returns the class primary key of the trash entry for this blogs entry.
+	*
+	* @return the class primary key of the trash entry for this blogs entry
+	*/
+	@Override
+	public long getTrashEntryClassPK() {
+		return _blogsEntry.getTrashEntryClassPK();
+	}
+
+	/**
+	* Returns the trash handler for this blogs entry.
+	*
+	* @return the trash handler for this blogs entry
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@Deprecated
+	@Override
+	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
+		return _blogsEntry.getTrashHandler();
+	}
+
+	/**
+	* Returns the url title of this blogs entry.
+	*
+	* @return the url title of this blogs entry
+	*/
+	@Override
+	public java.lang.String getUrlTitle() {
+		return _blogsEntry.getUrlTitle();
+	}
+
+	/**
+	* Returns the user ID of this blogs entry.
+	*
+	* @return the user ID of this blogs entry
+	*/
+	@Override
+	public long getUserId() {
+		return _blogsEntry.getUserId();
+	}
+
+	/**
+	* Returns the user name of this blogs entry.
+	*
+	* @return the user name of this blogs entry
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _blogsEntry.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this blogs entry.
+	*
+	* @return the user uuid of this blogs entry
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _blogsEntry.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this blogs entry.
+	*
+	* @return the uuid of this blogs entry
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _blogsEntry.getUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _blogsEntry.hashCode();
 	}
 
 	/**
@@ -469,400 +838,6 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	@Override
 	public boolean isVisible() {
 		return _blogsEntry.isVisible();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _blogsEntry.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<BlogsEntry> toCacheModel() {
-		return _blogsEntry.toCacheModel();
-	}
-
-	/**
-	* Returns the trash handler for this blogs entry.
-	*
-	* @return the trash handler for this blogs entry
-	* @deprecated As of 7.0.0, with no direct replacement
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return _blogsEntry.getTrashHandler();
-	}
-
-	/**
-	* Returns the trash entry created when this blogs entry was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this blogs entry.
-	*
-	* @return the trash entry created when this blogs entry was moved to the Recycle Bin
-	*/
-	@Override
-	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _blogsEntry.getTrashEntry();
-	}
-
-	@Override
-	public int compareTo(BlogsEntry blogsEntry) {
-		return _blogsEntry.compareTo(blogsEntry);
-	}
-
-	/**
-	* Returns the status of this blogs entry.
-	*
-	* @return the status of this blogs entry
-	*/
-	@Override
-	public int getStatus() {
-		return _blogsEntry.getStatus();
-	}
-
-	@Override
-	public int hashCode() {
-		return _blogsEntry.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _blogsEntry.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new BlogsEntryWrapper((BlogsEntry)_blogsEntry.clone());
-	}
-
-	/**
-	* Returns the content of this blogs entry.
-	*
-	* @return the content of this blogs entry
-	*/
-	@Override
-	public java.lang.String getContent() {
-		return _blogsEntry.getContent();
-	}
-
-	/**
-	* Returns the cover image caption of this blogs entry.
-	*
-	* @return the cover image caption of this blogs entry
-	*/
-	@Override
-	public java.lang.String getCoverImageCaption() {
-		return _blogsEntry.getCoverImageCaption();
-	}
-
-	/**
-	* Returns the cover image url of this blogs entry.
-	*
-	* @return the cover image url of this blogs entry
-	*/
-	@Override
-	public java.lang.String getCoverImageURL() {
-		return _blogsEntry.getCoverImageURL();
-	}
-
-	@Override
-	public java.lang.String getCoverImageURL(
-		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _blogsEntry.getCoverImageURL(themeDisplay);
-	}
-
-	/**
-	* Returns the description of this blogs entry.
-	*
-	* @return the description of this blogs entry
-	*/
-	@Override
-	public java.lang.String getDescription() {
-		return _blogsEntry.getDescription();
-	}
-
-	/**
-	* @deprecated As of 1.1.0, replaced by {@link
-	#getSmallImageURL(ThemeDisplay)}
-	*/
-	@Deprecated
-	@Override
-	public java.lang.String getEntryImageURL(
-		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
-		return _blogsEntry.getEntryImageURL(themeDisplay);
-	}
-
-	@Override
-	public java.lang.String getSmallImageType()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _blogsEntry.getSmallImageType();
-	}
-
-	/**
-	* Returns the small image url of this blogs entry.
-	*
-	* @return the small image url of this blogs entry
-	*/
-	@Override
-	public java.lang.String getSmallImageURL() {
-		return _blogsEntry.getSmallImageURL();
-	}
-
-	@Override
-	public java.lang.String getSmallImageURL(
-		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _blogsEntry.getSmallImageURL(themeDisplay);
-	}
-
-	/**
-	* Returns the status by user name of this blogs entry.
-	*
-	* @return the status by user name of this blogs entry
-	*/
-	@Override
-	public java.lang.String getStatusByUserName() {
-		return _blogsEntry.getStatusByUserName();
-	}
-
-	/**
-	* Returns the status by user uuid of this blogs entry.
-	*
-	* @return the status by user uuid of this blogs entry
-	*/
-	@Override
-	public java.lang.String getStatusByUserUuid() {
-		return _blogsEntry.getStatusByUserUuid();
-	}
-
-	/**
-	* Returns the subtitle of this blogs entry.
-	*
-	* @return the subtitle of this blogs entry
-	*/
-	@Override
-	public java.lang.String getSubtitle() {
-		return _blogsEntry.getSubtitle();
-	}
-
-	/**
-	* Returns the title of this blogs entry.
-	*
-	* @return the title of this blogs entry
-	*/
-	@Override
-	public java.lang.String getTitle() {
-		return _blogsEntry.getTitle();
-	}
-
-	/**
-	* Returns the trackbacks of this blogs entry.
-	*
-	* @return the trackbacks of this blogs entry
-	*/
-	@Override
-	public java.lang.String getTrackbacks() {
-		return _blogsEntry.getTrackbacks();
-	}
-
-	/**
-	* Returns the url title of this blogs entry.
-	*
-	* @return the url title of this blogs entry
-	*/
-	@Override
-	public java.lang.String getUrlTitle() {
-		return _blogsEntry.getUrlTitle();
-	}
-
-	/**
-	* Returns the user name of this blogs entry.
-	*
-	* @return the user name of this blogs entry
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _blogsEntry.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this blogs entry.
-	*
-	* @return the user uuid of this blogs entry
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _blogsEntry.getUserUuid();
-	}
-
-	/**
-	* Returns the uuid of this blogs entry.
-	*
-	* @return the uuid of this blogs entry
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _blogsEntry.getUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _blogsEntry.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _blogsEntry.toXmlString();
-	}
-
-	/**
-	* Returns the create date of this blogs entry.
-	*
-	* @return the create date of this blogs entry
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _blogsEntry.getCreateDate();
-	}
-
-	/**
-	* Returns the display date of this blogs entry.
-	*
-	* @return the display date of this blogs entry
-	*/
-	@Override
-	public Date getDisplayDate() {
-		return _blogsEntry.getDisplayDate();
-	}
-
-	/**
-	* Returns the last publish date of this blogs entry.
-	*
-	* @return the last publish date of this blogs entry
-	*/
-	@Override
-	public Date getLastPublishDate() {
-		return _blogsEntry.getLastPublishDate();
-	}
-
-	/**
-	* Returns the modified date of this blogs entry.
-	*
-	* @return the modified date of this blogs entry
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _blogsEntry.getModifiedDate();
-	}
-
-	/**
-	* Returns the status date of this blogs entry.
-	*
-	* @return the status date of this blogs entry
-	*/
-	@Override
-	public Date getStatusDate() {
-		return _blogsEntry.getStatusDate();
-	}
-
-	/**
-	* Returns the company ID of this blogs entry.
-	*
-	* @return the company ID of this blogs entry
-	*/
-	@Override
-	public long getCompanyId() {
-		return _blogsEntry.getCompanyId();
-	}
-
-	/**
-	* Returns the cover image file entry ID of this blogs entry.
-	*
-	* @return the cover image file entry ID of this blogs entry
-	*/
-	@Override
-	public long getCoverImageFileEntryId() {
-		return _blogsEntry.getCoverImageFileEntryId();
-	}
-
-	/**
-	* Returns the entry ID of this blogs entry.
-	*
-	* @return the entry ID of this blogs entry
-	*/
-	@Override
-	public long getEntryId() {
-		return _blogsEntry.getEntryId();
-	}
-
-	/**
-	* Returns the group ID of this blogs entry.
-	*
-	* @return the group ID of this blogs entry
-	*/
-	@Override
-	public long getGroupId() {
-		return _blogsEntry.getGroupId();
-	}
-
-	/**
-	* Returns the primary key of this blogs entry.
-	*
-	* @return the primary key of this blogs entry
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _blogsEntry.getPrimaryKey();
-	}
-
-	/**
-	* Returns the small image file entry ID of this blogs entry.
-	*
-	* @return the small image file entry ID of this blogs entry
-	*/
-	@Override
-	public long getSmallImageFileEntryId() {
-		return _blogsEntry.getSmallImageFileEntryId();
-	}
-
-	/**
-	* Returns the small image ID of this blogs entry.
-	*
-	* @return the small image ID of this blogs entry
-	*/
-	@Override
-	public long getSmallImageId() {
-		return _blogsEntry.getSmallImageId();
-	}
-
-	/**
-	* Returns the status by user ID of this blogs entry.
-	*
-	* @return the status by user ID of this blogs entry
-	*/
-	@Override
-	public long getStatusByUserId() {
-		return _blogsEntry.getStatusByUserId();
-	}
-
-	/**
-	* Returns the class primary key of the trash entry for this blogs entry.
-	*
-	* @return the class primary key of the trash entry for this blogs entry
-	*/
-	@Override
-	public long getTrashEntryClassPK() {
-		return _blogsEntry.getTrashEntryClassPK();
-	}
-
-	/**
-	* Returns the user ID of this blogs entry.
-	*
-	* @return the user ID of this blogs entry
-	*/
-	@Override
-	public long getUserId() {
-		return _blogsEntry.getUserId();
 	}
 
 	@Override
@@ -1224,6 +1199,31 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_blogsEntry.setUuid(uuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<BlogsEntry> toCacheModel() {
+		return _blogsEntry.toCacheModel();
+	}
+
+	@Override
+	public BlogsEntry toEscapedModel() {
+		return new BlogsEntryWrapper(_blogsEntry.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _blogsEntry.toString();
+	}
+
+	@Override
+	public BlogsEntry toUnescapedModel() {
+		return new BlogsEntryWrapper(_blogsEntry.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _blogsEntry.toXmlString();
 	}
 
 	@Override

@@ -56,22 +56,18 @@ public interface ThemeLocalService extends BaseLocalService {
 		java.lang.String themeId, java.lang.String colorSchemeId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ColorScheme getColorScheme(long companyId, java.lang.String themeId,
-		java.lang.String colorSchemeId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PortletDecorator fetchPortletDecorator(long companyId,
 		java.lang.String themeId, java.lang.String colorSchemeId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PortletDecorator getPortletDecorator(long companyId,
-		java.lang.String themeId, java.lang.String portletDecoratorId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Theme fetchTheme(long companyId, java.lang.String themeId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Theme getTheme(long companyId, java.lang.String themeId);
+	public ColorScheme getColorScheme(long companyId, java.lang.String themeId,
+		java.lang.String colorSchemeId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Theme> getControlPanelThemes(long companyId, long userId);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -81,10 +77,14 @@ public interface ThemeLocalService extends BaseLocalService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Theme> getControlPanelThemes(long companyId, long userId);
+	public List<Theme> getPageThemes(long companyId, long groupId, long userId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Theme> getPageThemes(long companyId, long groupId, long userId);
+	public PortletDecorator getPortletDecorator(long companyId,
+		java.lang.String themeId, java.lang.String portletDecoratorId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Theme getTheme(long companyId, java.lang.String themeId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Theme> getThemes(long companyId);

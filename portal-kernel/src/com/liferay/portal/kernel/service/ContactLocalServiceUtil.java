@@ -40,17 +40,6 @@ public class ContactLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.ContactLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
 
 	/**
 	* Adds the contact to the database. Also notifies the appropriate model listeners.
@@ -114,51 +103,6 @@ public class ContactLocalServiceUtil {
 		return getService().deleteContact(contactId);
 	}
 
-	public static com.liferay.portal.kernel.model.Contact fetchContact(
-		long contactId) {
-		return getService().fetchContact(contactId);
-	}
-
-	/**
-	* Returns the contact with the primary key.
-	*
-	* @param contactId the primary key of the contact
-	* @return the contact
-	* @throws PortalException if a contact with the primary key could not be found
-	*/
-	public static com.liferay.portal.kernel.model.Contact getContact(
-		long contactId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getContact(contactId);
-	}
-
-	/**
-	* Updates the contact in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param contact the contact
-	* @return the contact that was updated
-	*/
-	public static com.liferay.portal.kernel.model.Contact updateContact(
-		com.liferay.portal.kernel.model.Contact contact) {
-		return getService().updateContact(contact);
-	}
-
-	public static com.liferay.portal.kernel.model.Contact updateContact(
-		long contactId, java.lang.String emailAddress,
-		java.lang.String firstName, java.lang.String middleName,
-		java.lang.String lastName, long prefixId, long suffixId, boolean male,
-		int birthdayMonth, int birthdayDay, int birthdayYear,
-		java.lang.String smsSn, java.lang.String facebookSn,
-		java.lang.String jabberSn, java.lang.String skypeSn,
-		java.lang.String twitterSn, java.lang.String jobTitle)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateContact(contactId, emailAddress, firstName,
-			middleName, lastName, prefixId, suffixId, male, birthdayMonth,
-			birthdayDay, birthdayYear, smsSn, facebookSn, jabberSn, skypeSn,
-			twitterSn, jobTitle);
-	}
-
 	/**
 	* @throws PortalException
 	*/
@@ -168,32 +112,8 @@ public class ContactLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the number of contacts.
-	*
-	* @return the number of contacts
-	*/
-	public static int getContactsCount() {
-		return getService().getContactsCount();
-	}
-
-	public static int getContactsCount(long classNameId, long classPK) {
-		return getService().getContactsCount(classNameId, classPK);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
 	}
 
 	/**
@@ -247,6 +167,52 @@ public class ContactLocalServiceUtil {
 	}
 
 	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static com.liferay.portal.kernel.model.Contact fetchContact(
+		long contactId) {
+		return getService().fetchContact(contactId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the contact with the primary key.
+	*
+	* @param contactId the primary key of the contact
+	* @return the contact
+	* @throws PortalException if a contact with the primary key could not be found
+	*/
+	public static com.liferay.portal.kernel.model.Contact getContact(
+		long contactId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getContact(contactId);
+	}
+
+	/**
 	* Returns a range of all the contacts.
 	*
 	* <p>
@@ -271,27 +237,62 @@ public class ContactLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of contacts.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of contacts
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
+	public static int getContactsCount() {
+		return getService().getContactsCount();
+	}
+
+	public static int getContactsCount(long classNameId, long classPK) {
+		return getService().getContactsCount(classNameId, classPK);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Updates the contact in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param contact the contact
+	* @return the contact that was updated
+	*/
+	public static com.liferay.portal.kernel.model.Contact updateContact(
+		com.liferay.portal.kernel.model.Contact contact) {
+		return getService().updateContact(contact);
+	}
+
+	public static com.liferay.portal.kernel.model.Contact updateContact(
+		long contactId, java.lang.String emailAddress,
+		java.lang.String firstName, java.lang.String middleName,
+		java.lang.String lastName, long prefixId, long suffixId, boolean male,
+		int birthdayMonth, int birthdayDay, int birthdayYear,
+		java.lang.String smsSn, java.lang.String facebookSn,
+		java.lang.String jabberSn, java.lang.String skypeSn,
+		java.lang.String twitterSn, java.lang.String jobTitle)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateContact(contactId, emailAddress, firstName,
+			middleName, lastName, prefixId, suffixId, male, birthdayMonth,
+			birthdayDay, birthdayYear, smsSn, facebookSn, jabberSn, skypeSn,
+			twitterSn, jobTitle);
 	}
 
 	public static ContactLocalService getService() {

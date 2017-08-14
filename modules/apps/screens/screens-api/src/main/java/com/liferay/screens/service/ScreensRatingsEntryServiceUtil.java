@@ -47,6 +47,15 @@ public class ScreensRatingsEntryServiceUtil {
 		return getService().deleteRatingsEntry(classPK, className, ratingsLength);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
 	public static com.liferay.portal.kernel.json.JSONObject getRatingsEntries(
 		long assetEntryId, int ratingsLength)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -65,15 +74,6 @@ public class ScreensRatingsEntryServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateRatingsEntry(classPK, className, score, ratingsLength);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static ScreensRatingsEntryService getService() {

@@ -194,19 +194,19 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	}
 
 	@Override
-	public DLFileShortcut toEscapedModel() {
-		return new DLFileShortcutWrapper(_dlFileShortcut.toEscapedModel());
-	}
-
-	@Override
-	public DLFileShortcut toUnescapedModel() {
-		return new DLFileShortcutWrapper(_dlFileShortcut.toUnescapedModel());
-	}
-
-	@Override
-	public DLFolder getDLFolder()
+	public java.lang.String buildTreePath()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileShortcut.getDLFolder();
+		return _dlFileShortcut.buildTreePath();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new DLFileShortcutWrapper((DLFileShortcut)_dlFileShortcut.clone());
+	}
+
+	@Override
+	public int compareTo(DLFileShortcut dlFileShortcut) {
+		return _dlFileShortcut.compareTo(dlFileShortcut);
 	}
 
 	/**
@@ -217,6 +217,277 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	@Override
 	public boolean getActive() {
 		return _dlFileShortcut.getActive();
+	}
+
+	/**
+	* Returns the company ID of this document library file shortcut.
+	*
+	* @return the company ID of this document library file shortcut
+	*/
+	@Override
+	public long getCompanyId() {
+		return _dlFileShortcut.getCompanyId();
+	}
+
+	/**
+	* Returns the create date of this document library file shortcut.
+	*
+	* @return the create date of this document library file shortcut
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _dlFileShortcut.getCreateDate();
+	}
+
+	@Override
+	public DLFolder getDLFolder()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileShortcut.getDLFolder();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _dlFileShortcut.getExpandoBridge();
+	}
+
+	/**
+	* Returns the file shortcut ID of this document library file shortcut.
+	*
+	* @return the file shortcut ID of this document library file shortcut
+	*/
+	@Override
+	public long getFileShortcutId() {
+		return _dlFileShortcut.getFileShortcutId();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.repository.model.FileVersion getFileVersion()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileShortcut.getFileVersion();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.repository.model.Folder getFolder()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileShortcut.getFolder();
+	}
+
+	/**
+	* Returns the folder ID of this document library file shortcut.
+	*
+	* @return the folder ID of this document library file shortcut
+	*/
+	@Override
+	public long getFolderId() {
+		return _dlFileShortcut.getFolderId();
+	}
+
+	/**
+	* Returns the group ID of this document library file shortcut.
+	*
+	* @return the group ID of this document library file shortcut
+	*/
+	@Override
+	public long getGroupId() {
+		return _dlFileShortcut.getGroupId();
+	}
+
+	/**
+	* Returns the last publish date of this document library file shortcut.
+	*
+	* @return the last publish date of this document library file shortcut
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _dlFileShortcut.getLastPublishDate();
+	}
+
+	/**
+	* Returns the modified date of this document library file shortcut.
+	*
+	* @return the modified date of this document library file shortcut
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _dlFileShortcut.getModifiedDate();
+	}
+
+	/**
+	* Returns the primary key of this document library file shortcut.
+	*
+	* @return the primary key of this document library file shortcut
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _dlFileShortcut.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _dlFileShortcut.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the repository ID of this document library file shortcut.
+	*
+	* @return the repository ID of this document library file shortcut
+	*/
+	@Override
+	public long getRepositoryId() {
+		return _dlFileShortcut.getRepositoryId();
+	}
+
+	/**
+	* Returns the status of this document library file shortcut.
+	*
+	* @return the status of this document library file shortcut
+	*/
+	@Override
+	public int getStatus() {
+		return _dlFileShortcut.getStatus();
+	}
+
+	/**
+	* Returns the status by user ID of this document library file shortcut.
+	*
+	* @return the status by user ID of this document library file shortcut
+	*/
+	@Override
+	public long getStatusByUserId() {
+		return _dlFileShortcut.getStatusByUserId();
+	}
+
+	/**
+	* Returns the status by user name of this document library file shortcut.
+	*
+	* @return the status by user name of this document library file shortcut
+	*/
+	@Override
+	public java.lang.String getStatusByUserName() {
+		return _dlFileShortcut.getStatusByUserName();
+	}
+
+	/**
+	* Returns the status by user uuid of this document library file shortcut.
+	*
+	* @return the status by user uuid of this document library file shortcut
+	*/
+	@Override
+	public java.lang.String getStatusByUserUuid() {
+		return _dlFileShortcut.getStatusByUserUuid();
+	}
+
+	/**
+	* Returns the status date of this document library file shortcut.
+	*
+	* @return the status date of this document library file shortcut
+	*/
+	@Override
+	public Date getStatusDate() {
+		return _dlFileShortcut.getStatusDate();
+	}
+
+	/**
+	* Returns the to file entry ID of this document library file shortcut.
+	*
+	* @return the to file entry ID of this document library file shortcut
+	*/
+	@Override
+	public long getToFileEntryId() {
+		return _dlFileShortcut.getToFileEntryId();
+	}
+
+	@Override
+	public java.lang.String getToTitle() {
+		return _dlFileShortcut.getToTitle();
+	}
+
+	/**
+	* Returns the trash entry created when this document library file shortcut was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this document library file shortcut.
+	*
+	* @return the trash entry created when this document library file shortcut was moved to the Recycle Bin
+	*/
+	@Override
+	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileShortcut.getTrashEntry();
+	}
+
+	/**
+	* Returns the class primary key of the trash entry for this document library file shortcut.
+	*
+	* @return the class primary key of the trash entry for this document library file shortcut
+	*/
+	@Override
+	public long getTrashEntryClassPK() {
+		return _dlFileShortcut.getTrashEntryClassPK();
+	}
+
+	/**
+	* Returns the trash handler for this document library file shortcut.
+	*
+	* @return the trash handler for this document library file shortcut
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@Deprecated
+	@Override
+	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
+		return _dlFileShortcut.getTrashHandler();
+	}
+
+	/**
+	* Returns the tree path of this document library file shortcut.
+	*
+	* @return the tree path of this document library file shortcut
+	*/
+	@Override
+	public java.lang.String getTreePath() {
+		return _dlFileShortcut.getTreePath();
+	}
+
+	/**
+	* Returns the user ID of this document library file shortcut.
+	*
+	* @return the user ID of this document library file shortcut
+	*/
+	@Override
+	public long getUserId() {
+		return _dlFileShortcut.getUserId();
+	}
+
+	/**
+	* Returns the user name of this document library file shortcut.
+	*
+	* @return the user name of this document library file shortcut
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _dlFileShortcut.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this document library file shortcut.
+	*
+	* @return the user uuid of this document library file shortcut
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _dlFileShortcut.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this document library file shortcut.
+	*
+	* @return the uuid of this document library file shortcut
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _dlFileShortcut.getUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _dlFileShortcut.hashCode();
 	}
 
 	/**
@@ -357,302 +628,6 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	@Override
 	public boolean isScheduled() {
 		return _dlFileShortcut.isScheduled();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _dlFileShortcut.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<DLFileShortcut> toCacheModel() {
-		return _dlFileShortcut.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.repository.model.FileVersion getFileVersion()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileShortcut.getFileVersion();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.repository.model.Folder getFolder()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileShortcut.getFolder();
-	}
-
-	/**
-	* Returns the trash handler for this document library file shortcut.
-	*
-	* @return the trash handler for this document library file shortcut
-	* @deprecated As of 7.0.0, with no direct replacement
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return _dlFileShortcut.getTrashHandler();
-	}
-
-	/**
-	* Returns the trash entry created when this document library file shortcut was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this document library file shortcut.
-	*
-	* @return the trash entry created when this document library file shortcut was moved to the Recycle Bin
-	*/
-	@Override
-	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileShortcut.getTrashEntry();
-	}
-
-	@Override
-	public int compareTo(DLFileShortcut dlFileShortcut) {
-		return _dlFileShortcut.compareTo(dlFileShortcut);
-	}
-
-	/**
-	* Returns the status of this document library file shortcut.
-	*
-	* @return the status of this document library file shortcut
-	*/
-	@Override
-	public int getStatus() {
-		return _dlFileShortcut.getStatus();
-	}
-
-	@Override
-	public int hashCode() {
-		return _dlFileShortcut.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _dlFileShortcut.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new DLFileShortcutWrapper((DLFileShortcut)_dlFileShortcut.clone());
-	}
-
-	@Override
-	public java.lang.String buildTreePath()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileShortcut.buildTreePath();
-	}
-
-	/**
-	* Returns the status by user name of this document library file shortcut.
-	*
-	* @return the status by user name of this document library file shortcut
-	*/
-	@Override
-	public java.lang.String getStatusByUserName() {
-		return _dlFileShortcut.getStatusByUserName();
-	}
-
-	/**
-	* Returns the status by user uuid of this document library file shortcut.
-	*
-	* @return the status by user uuid of this document library file shortcut
-	*/
-	@Override
-	public java.lang.String getStatusByUserUuid() {
-		return _dlFileShortcut.getStatusByUserUuid();
-	}
-
-	@Override
-	public java.lang.String getToTitle() {
-		return _dlFileShortcut.getToTitle();
-	}
-
-	/**
-	* Returns the tree path of this document library file shortcut.
-	*
-	* @return the tree path of this document library file shortcut
-	*/
-	@Override
-	public java.lang.String getTreePath() {
-		return _dlFileShortcut.getTreePath();
-	}
-
-	/**
-	* Returns the user name of this document library file shortcut.
-	*
-	* @return the user name of this document library file shortcut
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _dlFileShortcut.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this document library file shortcut.
-	*
-	* @return the user uuid of this document library file shortcut
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _dlFileShortcut.getUserUuid();
-	}
-
-	/**
-	* Returns the uuid of this document library file shortcut.
-	*
-	* @return the uuid of this document library file shortcut
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _dlFileShortcut.getUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _dlFileShortcut.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _dlFileShortcut.toXmlString();
-	}
-
-	/**
-	* Returns the create date of this document library file shortcut.
-	*
-	* @return the create date of this document library file shortcut
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _dlFileShortcut.getCreateDate();
-	}
-
-	/**
-	* Returns the last publish date of this document library file shortcut.
-	*
-	* @return the last publish date of this document library file shortcut
-	*/
-	@Override
-	public Date getLastPublishDate() {
-		return _dlFileShortcut.getLastPublishDate();
-	}
-
-	/**
-	* Returns the modified date of this document library file shortcut.
-	*
-	* @return the modified date of this document library file shortcut
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _dlFileShortcut.getModifiedDate();
-	}
-
-	/**
-	* Returns the status date of this document library file shortcut.
-	*
-	* @return the status date of this document library file shortcut
-	*/
-	@Override
-	public Date getStatusDate() {
-		return _dlFileShortcut.getStatusDate();
-	}
-
-	/**
-	* Returns the company ID of this document library file shortcut.
-	*
-	* @return the company ID of this document library file shortcut
-	*/
-	@Override
-	public long getCompanyId() {
-		return _dlFileShortcut.getCompanyId();
-	}
-
-	/**
-	* Returns the file shortcut ID of this document library file shortcut.
-	*
-	* @return the file shortcut ID of this document library file shortcut
-	*/
-	@Override
-	public long getFileShortcutId() {
-		return _dlFileShortcut.getFileShortcutId();
-	}
-
-	/**
-	* Returns the folder ID of this document library file shortcut.
-	*
-	* @return the folder ID of this document library file shortcut
-	*/
-	@Override
-	public long getFolderId() {
-		return _dlFileShortcut.getFolderId();
-	}
-
-	/**
-	* Returns the group ID of this document library file shortcut.
-	*
-	* @return the group ID of this document library file shortcut
-	*/
-	@Override
-	public long getGroupId() {
-		return _dlFileShortcut.getGroupId();
-	}
-
-	/**
-	* Returns the primary key of this document library file shortcut.
-	*
-	* @return the primary key of this document library file shortcut
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _dlFileShortcut.getPrimaryKey();
-	}
-
-	/**
-	* Returns the repository ID of this document library file shortcut.
-	*
-	* @return the repository ID of this document library file shortcut
-	*/
-	@Override
-	public long getRepositoryId() {
-		return _dlFileShortcut.getRepositoryId();
-	}
-
-	/**
-	* Returns the status by user ID of this document library file shortcut.
-	*
-	* @return the status by user ID of this document library file shortcut
-	*/
-	@Override
-	public long getStatusByUserId() {
-		return _dlFileShortcut.getStatusByUserId();
-	}
-
-	/**
-	* Returns the to file entry ID of this document library file shortcut.
-	*
-	* @return the to file entry ID of this document library file shortcut
-	*/
-	@Override
-	public long getToFileEntryId() {
-		return _dlFileShortcut.getToFileEntryId();
-	}
-
-	/**
-	* Returns the class primary key of the trash entry for this document library file shortcut.
-	*
-	* @return the class primary key of the trash entry for this document library file shortcut
-	*/
-	@Override
-	public long getTrashEntryClassPK() {
-		return _dlFileShortcut.getTrashEntryClassPK();
-	}
-
-	/**
-	* Returns the user ID of this document library file shortcut.
-	*
-	* @return the user ID of this document library file shortcut
-	*/
-	@Override
-	public long getUserId() {
-		return _dlFileShortcut.getUserId();
 	}
 
 	@Override
@@ -899,6 +874,31 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_dlFileShortcut.setUuid(uuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<DLFileShortcut> toCacheModel() {
+		return _dlFileShortcut.toCacheModel();
+	}
+
+	@Override
+	public DLFileShortcut toEscapedModel() {
+		return new DLFileShortcutWrapper(_dlFileShortcut.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _dlFileShortcut.toString();
+	}
+
+	@Override
+	public DLFileShortcut toUnescapedModel() {
+		return new DLFileShortcutWrapper(_dlFileShortcut.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _dlFileShortcut.toXmlString();
 	}
 
 	@Override

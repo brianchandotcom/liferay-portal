@@ -40,16 +40,6 @@ public class ResourceBlockServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.ResourceBlockServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
 	public static void addCompanyScopePermission(long scopeGroupId,
 		long companyId, java.lang.String name, long roleId,
 		java.lang.String actionId)
@@ -75,6 +65,15 @@ public class ResourceBlockServiceUtil {
 		getService()
 			.addIndividualScopePermission(companyId, groupId, name, primKey,
 			roleId, actionId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static void removeAllGroupScopePermissions(long scopeGroupId,

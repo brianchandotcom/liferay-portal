@@ -57,6 +57,12 @@ public class LayoutPrototypeServiceWrapper implements LayoutPrototypeService,
 	}
 
 	@Override
+	public void deleteLayoutPrototype(long layoutPrototypeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_layoutPrototypeService.deleteLayoutPrototype(layoutPrototypeId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.model.LayoutPrototype fetchLayoutPrototype(
 		long layoutPrototypeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -68,6 +74,24 @@ public class LayoutPrototypeServiceWrapper implements LayoutPrototypeService,
 		long layoutPrototypeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutPrototypeService.getLayoutPrototype(layoutPrototypeId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _layoutPrototypeService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.LayoutPrototype> search(
+		long companyId, java.lang.Boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.LayoutPrototype> obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutPrototypeService.search(companyId, active, obc);
 	}
 
 	/**
@@ -95,30 +119,6 @@ public class LayoutPrototypeServiceWrapper implements LayoutPrototypeService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutPrototypeService.updateLayoutPrototype(layoutPrototypeId,
 			nameMap, descriptionMap, active, serviceContext);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _layoutPrototypeService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.LayoutPrototype> search(
-		long companyId, java.lang.Boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.LayoutPrototype> obc)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutPrototypeService.search(companyId, active, obc);
-	}
-
-	@Override
-	public void deleteLayoutPrototype(long layoutPrototypeId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_layoutPrototypeService.deleteLayoutPrototype(layoutPrototypeId);
 	}
 
 	@Override

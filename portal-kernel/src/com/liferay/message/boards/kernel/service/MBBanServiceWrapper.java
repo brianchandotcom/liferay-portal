@@ -40,6 +40,13 @@ public class MBBanServiceWrapper implements MBBanService,
 		return _mbBanService.addBan(banUserId, serviceContext);
 	}
 
+	@Override
+	public void deleteBan(long banUserId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_mbBanService.deleteBan(banUserId, serviceContext);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -48,13 +55,6 @@ public class MBBanServiceWrapper implements MBBanService,
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _mbBanService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public void deleteBan(long banUserId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_mbBanService.deleteBan(banUserId, serviceContext);
 	}
 
 	@Override

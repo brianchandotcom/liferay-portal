@@ -104,49 +104,7 @@ public interface OAuthConsumerLocalService extends BaseLocalService,
 	public OAuthConsumer deleteOAuthConsumer(long oAuthConsumerId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public OAuthConsumer fetchOAuthConsumer(java.lang.String gadgetKey,
-		java.lang.String serviceName);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public OAuthConsumer fetchOAuthConsumer(long oAuthConsumerId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public OAuthConsumer getOAuthConsumer(java.lang.String gadgetKey,
-		java.lang.String serviceName) throws PortalException;
-
-	/**
-	* Returns the o auth consumer with the primary key.
-	*
-	* @param oAuthConsumerId the primary key of the o auth consumer
-	* @return the o auth consumer
-	* @throws PortalException if a o auth consumer with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public OAuthConsumer getOAuthConsumer(long oAuthConsumerId)
-		throws PortalException;
-
-	/**
-	* Updates the o auth consumer in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param oAuthConsumer the o auth consumer
-	* @return the o auth consumer that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public OAuthConsumer updateOAuthConsumer(OAuthConsumer oAuthConsumer);
-
-	public OAuthConsumer updateOAuthConsumer(long oAuthConsumerId,
-		java.lang.String consumerKey, java.lang.String consumerSecret,
-		java.lang.String keyType, java.lang.String keyName,
-		java.lang.String callbackURL) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public void deleteOAuthConsumers(java.lang.String gadgetKey);
 
 	/**
 	* @throws PortalException
@@ -155,33 +113,7 @@ public interface OAuthConsumerLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	* Returns the number of o auth consumers.
-	*
-	* @return the number of o auth consumers
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getOAuthConsumersCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getOAuthConsumersCount(java.lang.String gadgetKey);
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable;
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -223,6 +155,52 @@ public interface OAuthConsumerLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OAuthConsumer fetchOAuthConsumer(java.lang.String gadgetKey,
+		java.lang.String serviceName);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OAuthConsumer fetchOAuthConsumer(long oAuthConsumerId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OAuthConsumer getOAuthConsumer(java.lang.String gadgetKey,
+		java.lang.String serviceName) throws PortalException;
+
+	/**
+	* Returns the o auth consumer with the primary key.
+	*
+	* @param oAuthConsumerId the primary key of the o auth consumer
+	* @return the o auth consumer
+	* @throws PortalException if a o auth consumer with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OAuthConsumer getOAuthConsumer(long oAuthConsumerId)
+		throws PortalException;
+
+	/**
 	* Returns a range of all the o auth consumers.
 	*
 	* <p>
@@ -244,22 +222,44 @@ public interface OAuthConsumerLocalService extends BaseLocalService,
 		int start, int end);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of o auth consumers.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of o auth consumers
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getOAuthConsumersCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getOAuthConsumersCount(java.lang.String gadgetKey);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public java.lang.String getOSGiServiceIdentifier();
 
-	public void deleteOAuthConsumers(java.lang.String gadgetKey);
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	@Override
+	public java.lang.Object invokeMethod(java.lang.String name,
+		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
+		throws java.lang.Throwable;
+
+	/**
+	* Updates the o auth consumer in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param oAuthConsumer the o auth consumer
+	* @return the o auth consumer that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public OAuthConsumer updateOAuthConsumer(OAuthConsumer oAuthConsumer);
+
+	public OAuthConsumer updateOAuthConsumer(long oAuthConsumerId,
+		java.lang.String consumerKey, java.lang.String consumerSecret,
+		java.lang.String keyType, java.lang.String keyName,
+		java.lang.String callbackURL) throws PortalException;
 }

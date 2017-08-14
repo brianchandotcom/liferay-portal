@@ -54,19 +54,36 @@ public class UserThreadLocalServiceWrapper implements UserThreadLocalService,
 			parentMBMessageId, body, inputStreamOVPs, themeDisplay);
 	}
 
+	/**
+	* Adds the user thread to the database. Also notifies the appropriate model listeners.
+	*
+	* @param userThread the user thread
+	* @return the user thread that was added
+	*/
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _userThreadLocalService.getActionableDynamicQuery();
+	public com.liferay.social.privatemessaging.model.UserThread addUserThread(
+		com.liferay.social.privatemessaging.model.UserThread userThread) {
+		return _userThreadLocalService.addUserThread(userThread);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _userThreadLocalService.dynamicQuery();
+	public void addUserThread(long userId, long mbThreadId,
+		long topMBMessageId, boolean read, boolean deleted)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_userThreadLocalService.addUserThread(userId, mbThreadId,
+			topMBMessageId, read, deleted);
 	}
 
+	/**
+	* Creates a new user thread with the primary key. Does not add the user thread to the database.
+	*
+	* @param userThreadId the primary key for the new user thread
+	* @return the new user thread
+	*/
 	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _userThreadLocalService.getIndexableActionableDynamicQuery();
+	public com.liferay.social.privatemessaging.model.UserThread createUserThread(
+		long userThreadId) {
+		return _userThreadLocalService.createUserThread(userThreadId);
 	}
 
 	/**
@@ -80,34 +97,9 @@ public class UserThreadLocalServiceWrapper implements UserThreadLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
+	public void deleteUser(long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userThreadLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Adds the user thread to the database. Also notifies the appropriate model listeners.
-	*
-	* @param userThread the user thread
-	* @return the user thread that was added
-	*/
-	@Override
-	public com.liferay.social.privatemessaging.model.UserThread addUserThread(
-		com.liferay.social.privatemessaging.model.UserThread userThread) {
-		return _userThreadLocalService.addUserThread(userThread);
-	}
-
-	/**
-	* Creates a new user thread with the primary key. Does not add the user thread to the database.
-	*
-	* @param userThreadId the primary key for the new user thread
-	* @return the new user thread
-	*/
-	@Override
-	public com.liferay.social.privatemessaging.model.UserThread createUserThread(
-		long userThreadId) {
-		return _userThreadLocalService.createUserThread(userThreadId);
+		_userThreadLocalService.deleteUser(userId);
 	}
 
 	/**
@@ -137,80 +129,14 @@ public class UserThreadLocalServiceWrapper implements UserThreadLocalService,
 	}
 
 	@Override
-	public com.liferay.social.privatemessaging.model.UserThread fetchUserThread(
-		long userId, long mbThreadId)
+	public void deleteUserThread(long userId, long mbThreadId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userThreadLocalService.fetchUserThread(userId, mbThreadId);
+		_userThreadLocalService.deleteUserThread(userId, mbThreadId);
 	}
 
 	@Override
-	public com.liferay.social.privatemessaging.model.UserThread fetchUserThread(
-		long userThreadId) {
-		return _userThreadLocalService.fetchUserThread(userThreadId);
-	}
-
-	@Override
-	public com.liferay.social.privatemessaging.model.UserThread getUserThread(
-		long userId, long mbThreadId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userThreadLocalService.getUserThread(userId, mbThreadId);
-	}
-
-	/**
-	* Returns the user thread with the primary key.
-	*
-	* @param userThreadId the primary key of the user thread
-	* @return the user thread
-	* @throws PortalException if a user thread with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.social.privatemessaging.model.UserThread getUserThread(
-		long userThreadId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userThreadLocalService.getUserThread(userThreadId);
-	}
-
-	/**
-	* Updates the user thread in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param userThread the user thread
-	* @return the user thread that was updated
-	*/
-	@Override
-	public com.liferay.social.privatemessaging.model.UserThread updateUserThread(
-		com.liferay.social.privatemessaging.model.UserThread userThread) {
-		return _userThreadLocalService.updateUserThread(userThread);
-	}
-
-	/**
-	* Returns the number of user threads.
-	*
-	* @return the number of user threads
-	*/
-	@Override
-	public int getUserThreadsCount() {
-		return _userThreadLocalService.getUserThreadsCount();
-	}
-
-	@Override
-	public int getUserUserThreadCount(long userId, boolean deleted) {
-		return _userThreadLocalService.getUserUserThreadCount(userId, deleted);
-	}
-
-	@Override
-	public int getUserUserThreadCount(long userId, boolean read, boolean deleted) {
-		return _userThreadLocalService.getUserUserThreadCount(userId, read,
-			deleted);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _userThreadLocalService.getOSGiServiceIdentifier();
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _userThreadLocalService.dynamicQuery();
 	}
 
 	/**
@@ -266,48 +192,6 @@ public class UserThreadLocalServiceWrapper implements UserThreadLocalService,
 			orderByComparator);
 	}
 
-	@Override
-	public java.util.List<com.liferay.social.privatemessaging.model.UserThread> getMBThreadUserThreads(
-		long mbThreadId) {
-		return _userThreadLocalService.getMBThreadUserThreads(mbThreadId);
-	}
-
-	/**
-	* Returns a range of all the user threads.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.social.privatemessaging.model.impl.UserThreadModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of user threads
-	* @param end the upper bound of the range of user threads (not inclusive)
-	* @return the range of user threads
-	*/
-	@Override
-	public java.util.List<com.liferay.social.privatemessaging.model.UserThread> getUserThreads(
-		int start, int end) {
-		return _userThreadLocalService.getUserThreads(start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.social.privatemessaging.model.UserThread> getUserUserThreads(
-		long userId, boolean deleted) {
-		return _userThreadLocalService.getUserUserThreads(userId, deleted);
-	}
-
-	@Override
-	public java.util.List<com.liferay.social.privatemessaging.model.UserThread> getUserUserThreads(
-		long userId, boolean deleted, int start, int end) {
-		return _userThreadLocalService.getUserUserThreads(userId, deleted,
-			start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.social.privatemessaging.model.UserThread> getUserUserThreads(
-		long userId, boolean read, boolean deleted) {
-		return _userThreadLocalService.getUserUserThreads(userId, read, deleted);
-	}
-
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -336,23 +220,127 @@ public class UserThreadLocalServiceWrapper implements UserThreadLocalService,
 	}
 
 	@Override
-	public void addUserThread(long userId, long mbThreadId,
-		long topMBMessageId, boolean read, boolean deleted)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_userThreadLocalService.addUserThread(userId, mbThreadId,
-			topMBMessageId, read, deleted);
+	public com.liferay.social.privatemessaging.model.UserThread fetchUserThread(
+		long userThreadId) {
+		return _userThreadLocalService.fetchUserThread(userThreadId);
 	}
 
 	@Override
-	public void deleteUser(long userId)
+	public com.liferay.social.privatemessaging.model.UserThread fetchUserThread(
+		long userId, long mbThreadId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_userThreadLocalService.deleteUser(userId);
+		return _userThreadLocalService.fetchUserThread(userId, mbThreadId);
 	}
 
 	@Override
-	public void deleteUserThread(long userId, long mbThreadId)
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _userThreadLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _userThreadLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	@Override
+	public java.util.List<com.liferay.social.privatemessaging.model.UserThread> getMBThreadUserThreads(
+		long mbThreadId) {
+		return _userThreadLocalService.getMBThreadUserThreads(mbThreadId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _userThreadLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_userThreadLocalService.deleteUserThread(userId, mbThreadId);
+		return _userThreadLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Returns the user thread with the primary key.
+	*
+	* @param userThreadId the primary key of the user thread
+	* @return the user thread
+	* @throws PortalException if a user thread with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.social.privatemessaging.model.UserThread getUserThread(
+		long userThreadId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userThreadLocalService.getUserThread(userThreadId);
+	}
+
+	@Override
+	public com.liferay.social.privatemessaging.model.UserThread getUserThread(
+		long userId, long mbThreadId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userThreadLocalService.getUserThread(userId, mbThreadId);
+	}
+
+	/**
+	* Returns a range of all the user threads.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.social.privatemessaging.model.impl.UserThreadModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of user threads
+	* @param end the upper bound of the range of user threads (not inclusive)
+	* @return the range of user threads
+	*/
+	@Override
+	public java.util.List<com.liferay.social.privatemessaging.model.UserThread> getUserThreads(
+		int start, int end) {
+		return _userThreadLocalService.getUserThreads(start, end);
+	}
+
+	/**
+	* Returns the number of user threads.
+	*
+	* @return the number of user threads
+	*/
+	@Override
+	public int getUserThreadsCount() {
+		return _userThreadLocalService.getUserThreadsCount();
+	}
+
+	@Override
+	public int getUserUserThreadCount(long userId, boolean deleted) {
+		return _userThreadLocalService.getUserUserThreadCount(userId, deleted);
+	}
+
+	@Override
+	public int getUserUserThreadCount(long userId, boolean read, boolean deleted) {
+		return _userThreadLocalService.getUserUserThreadCount(userId, read,
+			deleted);
+	}
+
+	@Override
+	public java.util.List<com.liferay.social.privatemessaging.model.UserThread> getUserUserThreads(
+		long userId, boolean deleted) {
+		return _userThreadLocalService.getUserUserThreads(userId, deleted);
+	}
+
+	@Override
+	public java.util.List<com.liferay.social.privatemessaging.model.UserThread> getUserUserThreads(
+		long userId, boolean read, boolean deleted) {
+		return _userThreadLocalService.getUserUserThreads(userId, read, deleted);
+	}
+
+	@Override
+	public java.util.List<com.liferay.social.privatemessaging.model.UserThread> getUserUserThreads(
+		long userId, boolean deleted, int start, int end) {
+		return _userThreadLocalService.getUserUserThreads(userId, deleted,
+			start, end);
 	}
 
 	@Override
@@ -370,6 +358,18 @@ public class UserThreadLocalServiceWrapper implements UserThreadLocalService,
 	@Override
 	public void updateUserName(com.liferay.portal.kernel.model.User user) {
 		_userThreadLocalService.updateUserName(user);
+	}
+
+	/**
+	* Updates the user thread in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param userThread the user thread
+	* @return the user thread that was updated
+	*/
+	@Override
+	public com.liferay.social.privatemessaging.model.UserThread updateUserThread(
+		com.liferay.social.privatemessaging.model.UserThread userThread) {
+		return _userThreadLocalService.updateUserThread(userThread);
 	}
 
 	@Override

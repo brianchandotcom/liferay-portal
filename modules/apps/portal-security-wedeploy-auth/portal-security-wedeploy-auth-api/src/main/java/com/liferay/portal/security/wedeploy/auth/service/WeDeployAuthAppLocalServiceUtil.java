@@ -41,32 +41,6 @@ public class WeDeployAuthAppLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.security.wedeploy.auth.service.impl.WeDeployAuthAppLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
 
 	/**
 	* Adds the we deploy auth app to the database. Also notifies the appropriate model listeners.
@@ -99,6 +73,15 @@ public class WeDeployAuthAppLocalServiceUtil {
 	}
 
 	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
+
+	/**
 	* Deletes the we deploy auth app from the database. Also notifies the appropriate model listeners.
 	*
 	* @param weDeployAuthApp the we deploy auth app
@@ -122,56 +105,8 @@ public class WeDeployAuthAppLocalServiceUtil {
 		return getService().deleteWeDeployAuthApp(weDeployAuthAppId);
 	}
 
-	public static com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp fetchWeDeployAuthApp(
-		java.lang.String redirectURI, java.lang.String clientId) {
-		return getService().fetchWeDeployAuthApp(redirectURI, clientId);
-	}
-
-	public static com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp fetchWeDeployAuthApp(
-		long weDeployAuthAppId) {
-		return getService().fetchWeDeployAuthApp(weDeployAuthAppId);
-	}
-
-	/**
-	* Returns the we deploy auth app with the primary key.
-	*
-	* @param weDeployAuthAppId the primary key of the we deploy auth app
-	* @return the we deploy auth app
-	* @throws PortalException if a we deploy auth app with the primary key could not be found
-	*/
-	public static com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp getWeDeployAuthApp(
-		long weDeployAuthAppId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getWeDeployAuthApp(weDeployAuthAppId);
-	}
-
-	/**
-	* Updates the we deploy auth app in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param weDeployAuthApp the we deploy auth app
-	* @return the we deploy auth app that was updated
-	*/
-	public static com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp updateWeDeployAuthApp(
-		com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp weDeployAuthApp) {
-		return getService().updateWeDeployAuthApp(weDeployAuthApp);
-	}
-
-	/**
-	* Returns the number of we deploy auth apps.
-	*
-	* @return the number of we deploy auth apps
-	*/
-	public static int getWeDeployAuthAppsCount() {
-		return getService().getWeDeployAuthAppsCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
 	}
 
 	/**
@@ -225,22 +160,6 @@ public class WeDeployAuthAppLocalServiceUtil {
 	}
 
 	/**
-	* Returns a range of all the we deploy auth apps.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.security.wedeploy.auth.model.impl.WeDeployAuthAppModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of we deploy auth apps
-	* @param end the upper bound of the range of we deploy auth apps (not inclusive)
-	* @return the range of we deploy auth apps
-	*/
-	public static java.util.List<com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp> getWeDeployAuthApps(
-		int start, int end) {
-		return getService().getWeDeployAuthApps(start, end);
-	}
-
-	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -262,6 +181,88 @@ public class WeDeployAuthAppLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp fetchWeDeployAuthApp(
+		java.lang.String redirectURI, java.lang.String clientId) {
+		return getService().fetchWeDeployAuthApp(redirectURI, clientId);
+	}
+
+	public static com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp fetchWeDeployAuthApp(
+		long weDeployAuthAppId) {
+		return getService().fetchWeDeployAuthApp(weDeployAuthAppId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Returns the we deploy auth app with the primary key.
+	*
+	* @param weDeployAuthAppId the primary key of the we deploy auth app
+	* @return the we deploy auth app
+	* @throws PortalException if a we deploy auth app with the primary key could not be found
+	*/
+	public static com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp getWeDeployAuthApp(
+		long weDeployAuthAppId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getWeDeployAuthApp(weDeployAuthAppId);
+	}
+
+	/**
+	* Returns a range of all the we deploy auth apps.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.security.wedeploy.auth.model.impl.WeDeployAuthAppModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of we deploy auth apps
+	* @param end the upper bound of the range of we deploy auth apps (not inclusive)
+	* @return the range of we deploy auth apps
+	*/
+	public static java.util.List<com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp> getWeDeployAuthApps(
+		int start, int end) {
+		return getService().getWeDeployAuthApps(start, end);
+	}
+
+	/**
+	* Returns the number of we deploy auth apps.
+	*
+	* @return the number of we deploy auth apps
+	*/
+	public static int getWeDeployAuthAppsCount() {
+		return getService().getWeDeployAuthAppsCount();
+	}
+
+	/**
+	* Updates the we deploy auth app in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param weDeployAuthApp the we deploy auth app
+	* @return the we deploy auth app that was updated
+	*/
+	public static com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp updateWeDeployAuthApp(
+		com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp weDeployAuthApp) {
+		return getService().updateWeDeployAuthApp(weDeployAuthApp);
 	}
 
 	public static WeDeployAuthAppLocalService getService() {

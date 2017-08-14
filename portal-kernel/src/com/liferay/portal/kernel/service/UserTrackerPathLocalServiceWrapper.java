@@ -32,38 +32,6 @@ public class UserTrackerPathLocalServiceWrapper
 		_userTrackerPathLocalService = userTrackerPathLocalService;
 	}
 
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _userTrackerPathLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _userTrackerPathLocalService.dynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _userTrackerPathLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userTrackerPathLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userTrackerPathLocalService.getPersistedModel(primaryKeyObj);
-	}
-
 	/**
 	* Adds the user tracker path to the database. Also notifies the appropriate model listeners.
 	*
@@ -86,6 +54,16 @@ public class UserTrackerPathLocalServiceWrapper
 	public com.liferay.portal.kernel.model.UserTrackerPath createUserTrackerPath(
 		long userTrackerPathId) {
 		return _userTrackerPathLocalService.createUserTrackerPath(userTrackerPathId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userTrackerPathLocalService.deletePersistedModel(persistedModel);
 	}
 
 	/**
@@ -115,55 +93,8 @@ public class UserTrackerPathLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.UserTrackerPath fetchUserTrackerPath(
-		long userTrackerPathId) {
-		return _userTrackerPathLocalService.fetchUserTrackerPath(userTrackerPathId);
-	}
-
-	/**
-	* Returns the user tracker path with the primary key.
-	*
-	* @param userTrackerPathId the primary key of the user tracker path
-	* @return the user tracker path
-	* @throws PortalException if a user tracker path with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.UserTrackerPath getUserTrackerPath(
-		long userTrackerPathId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userTrackerPathLocalService.getUserTrackerPath(userTrackerPathId);
-	}
-
-	/**
-	* Updates the user tracker path in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param userTrackerPath the user tracker path
-	* @return the user tracker path that was updated
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.UserTrackerPath updateUserTrackerPath(
-		com.liferay.portal.kernel.model.UserTrackerPath userTrackerPath) {
-		return _userTrackerPathLocalService.updateUserTrackerPath(userTrackerPath);
-	}
-
-	/**
-	* Returns the number of user tracker paths.
-	*
-	* @return the number of user tracker paths
-	*/
-	@Override
-	public int getUserTrackerPathsCount() {
-		return _userTrackerPathLocalService.getUserTrackerPathsCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _userTrackerPathLocalService.getOSGiServiceIdentifier();
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _userTrackerPathLocalService.dynamicQuery();
 	}
 
 	/**
@@ -221,30 +152,6 @@ public class UserTrackerPathLocalServiceWrapper
 	}
 
 	/**
-	* Returns a range of all the user tracker paths.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.UserTrackerPathModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of user tracker paths
-	* @param end the upper bound of the range of user tracker paths (not inclusive)
-	* @return the range of user tracker paths
-	*/
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.UserTrackerPath> getUserTrackerPaths(
-		int start, int end) {
-		return _userTrackerPathLocalService.getUserTrackerPaths(start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.UserTrackerPath> getUserTrackerPaths(
-		long userTrackerId, int start, int end) {
-		return _userTrackerPathLocalService.getUserTrackerPaths(userTrackerId,
-			start, end);
-	}
-
-	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -269,6 +176,99 @@ public class UserTrackerPathLocalServiceWrapper
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _userTrackerPathLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.UserTrackerPath fetchUserTrackerPath(
+		long userTrackerPathId) {
+		return _userTrackerPathLocalService.fetchUserTrackerPath(userTrackerPathId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _userTrackerPathLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _userTrackerPathLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _userTrackerPathLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userTrackerPathLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Returns the user tracker path with the primary key.
+	*
+	* @param userTrackerPathId the primary key of the user tracker path
+	* @return the user tracker path
+	* @throws PortalException if a user tracker path with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.UserTrackerPath getUserTrackerPath(
+		long userTrackerPathId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userTrackerPathLocalService.getUserTrackerPath(userTrackerPathId);
+	}
+
+	/**
+	* Returns a range of all the user tracker paths.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.UserTrackerPathModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of user tracker paths
+	* @param end the upper bound of the range of user tracker paths (not inclusive)
+	* @return the range of user tracker paths
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.UserTrackerPath> getUserTrackerPaths(
+		int start, int end) {
+		return _userTrackerPathLocalService.getUserTrackerPaths(start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.UserTrackerPath> getUserTrackerPaths(
+		long userTrackerId, int start, int end) {
+		return _userTrackerPathLocalService.getUserTrackerPaths(userTrackerId,
+			start, end);
+	}
+
+	/**
+	* Returns the number of user tracker paths.
+	*
+	* @return the number of user tracker paths
+	*/
+	@Override
+	public int getUserTrackerPathsCount() {
+		return _userTrackerPathLocalService.getUserTrackerPathsCount();
+	}
+
+	/**
+	* Updates the user tracker path in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param userTrackerPath the user tracker path
+	* @return the user tracker path that was updated
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.UserTrackerPath updateUserTrackerPath(
+		com.liferay.portal.kernel.model.UserTrackerPath userTrackerPath) {
+		return _userTrackerPathLocalService.updateUserTrackerPath(userTrackerPath);
 	}
 
 	@Override

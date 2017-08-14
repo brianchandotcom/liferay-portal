@@ -58,6 +58,17 @@ public class CompanyServiceWrapper implements CompanyService,
 	}
 
 	/**
+	* Deletes the company's logo.
+	*
+	* @param companyId the primary key of the company
+	*/
+	@Override
+	public void deleteLogo(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_companyService.deleteLogo(companyId);
+	}
+
+	/**
 	* Returns the company with the primary key.
 	*
 	* @param companyId the primary key of the company
@@ -119,6 +130,32 @@ public class CompanyServiceWrapper implements CompanyService,
 		java.lang.String webId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _companyService.getCompanyByWebId(webId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _companyService.getOSGiServiceIdentifier();
+	}
+
+	/**
+	* Removes the values that match the keys of the company's preferences.
+	*
+	* This method is called by {@link
+	* com.liferay.portlet.portalsettings.action.EditLDAPServerAction} remotely
+	* through {@link CompanyService}.
+	*
+	* @param companyId the primary key of the company
+	* @param keys the company's preferences keys to be remove
+	*/
+	@Override
+	public void removePreferences(long companyId, java.lang.String[] keys)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_companyService.removePreferences(companyId, keys);
 	}
 
 	/**
@@ -342,6 +379,20 @@ public class CompanyServiceWrapper implements CompanyService,
 	}
 
 	/**
+	* Update the company's display.
+	*
+	* @param companyId the primary key of the company
+	* @param languageId the ID of the company's default user's language
+	* @param timeZoneId the ID of the company's default user's time zone
+	*/
+	@Override
+	public void updateDisplay(long companyId, java.lang.String languageId,
+		java.lang.String timeZoneId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_companyService.updateDisplay(companyId, languageId, timeZoneId);
+	}
+
+	/**
 	* Updates the company's logo.
 	*
 	* @param companyId the primary key of the company
@@ -367,57 +418,6 @@ public class CompanyServiceWrapper implements CompanyService,
 		java.io.InputStream inputStream)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _companyService.updateLogo(companyId, inputStream);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _companyService.getOSGiServiceIdentifier();
-	}
-
-	/**
-	* Deletes the company's logo.
-	*
-	* @param companyId the primary key of the company
-	*/
-	@Override
-	public void deleteLogo(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_companyService.deleteLogo(companyId);
-	}
-
-	/**
-	* Removes the values that match the keys of the company's preferences.
-	*
-	* This method is called by {@link
-	* com.liferay.portlet.portalsettings.action.EditLDAPServerAction} remotely
-	* through {@link CompanyService}.
-	*
-	* @param companyId the primary key of the company
-	* @param keys the company's preferences keys to be remove
-	*/
-	@Override
-	public void removePreferences(long companyId, java.lang.String[] keys)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_companyService.removePreferences(companyId, keys);
-	}
-
-	/**
-	* Update the company's display.
-	*
-	* @param companyId the primary key of the company
-	* @param languageId the ID of the company's default user's language
-	* @param timeZoneId the ID of the company's default user's time zone
-	*/
-	@Override
-	public void updateDisplay(long companyId, java.lang.String languageId,
-		java.lang.String timeZoneId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_companyService.updateDisplay(companyId, languageId, timeZoneId);
 	}
 
 	/**

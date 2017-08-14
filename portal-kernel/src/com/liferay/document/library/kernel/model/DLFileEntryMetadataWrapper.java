@@ -114,84 +114,13 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 	}
 
 	@Override
-	public DLFileEntryMetadata toEscapedModel() {
-		return new DLFileEntryMetadataWrapper(_dlFileEntryMetadata.toEscapedModel());
-	}
-
-	@Override
-	public DLFileEntryMetadata toUnescapedModel() {
-		return new DLFileEntryMetadataWrapper(_dlFileEntryMetadata.toUnescapedModel());
-	}
-
-	@Override
-	public DLFileVersion getFileVersion()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileEntryMetadata.getFileVersion();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _dlFileEntryMetadata.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _dlFileEntryMetadata.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _dlFileEntryMetadata.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _dlFileEntryMetadata.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<DLFileEntryMetadata> toCacheModel() {
-		return _dlFileEntryMetadata.toCacheModel();
+	public java.lang.Object clone() {
+		return new DLFileEntryMetadataWrapper((DLFileEntryMetadata)_dlFileEntryMetadata.clone());
 	}
 
 	@Override
 	public int compareTo(DLFileEntryMetadata dlFileEntryMetadata) {
 		return _dlFileEntryMetadata.compareTo(dlFileEntryMetadata);
-	}
-
-	@Override
-	public int hashCode() {
-		return _dlFileEntryMetadata.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _dlFileEntryMetadata.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new DLFileEntryMetadataWrapper((DLFileEntryMetadata)_dlFileEntryMetadata.clone());
-	}
-
-	/**
-	* Returns the uuid of this document library file entry metadata.
-	*
-	* @return the uuid of this document library file entry metadata
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _dlFileEntryMetadata.getUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _dlFileEntryMetadata.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _dlFileEntryMetadata.toXmlString();
 	}
 
 	/**
@@ -224,6 +153,11 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 		return _dlFileEntryMetadata.getDDMStructureId();
 	}
 
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _dlFileEntryMetadata.getExpandoBridge();
+	}
+
 	/**
 	* Returns the file entry ID of this document library file entry metadata.
 	*
@@ -244,6 +178,12 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 		return _dlFileEntryMetadata.getFileEntryMetadataId();
 	}
 
+	@Override
+	public DLFileVersion getFileVersion()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileEntryMetadata.getFileVersion();
+	}
+
 	/**
 	* Returns the file version ID of this document library file entry metadata.
 	*
@@ -262,6 +202,41 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 	@Override
 	public long getPrimaryKey() {
 		return _dlFileEntryMetadata.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _dlFileEntryMetadata.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the uuid of this document library file entry metadata.
+	*
+	* @return the uuid of this document library file entry metadata
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _dlFileEntryMetadata.getUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _dlFileEntryMetadata.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _dlFileEntryMetadata.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _dlFileEntryMetadata.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _dlFileEntryMetadata.isNew();
 	}
 
 	@Override
@@ -378,6 +353,31 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_dlFileEntryMetadata.setUuid(uuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<DLFileEntryMetadata> toCacheModel() {
+		return _dlFileEntryMetadata.toCacheModel();
+	}
+
+	@Override
+	public DLFileEntryMetadata toEscapedModel() {
+		return new DLFileEntryMetadataWrapper(_dlFileEntryMetadata.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _dlFileEntryMetadata.toString();
+	}
+
+	@Override
+	public DLFileEntryMetadata toUnescapedModel() {
+		return new DLFileEntryMetadataWrapper(_dlFileEntryMetadata.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _dlFileEntryMetadata.toXmlString();
 	}
 
 	@Override

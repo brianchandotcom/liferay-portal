@@ -128,58 +128,8 @@ public class UserTrackerWrapper implements UserTracker,
 	}
 
 	@Override
-	public CacheModel<UserTracker> toCacheModel() {
-		return _userTracker.toCacheModel();
-	}
-
-	@Override
-	public UserTracker toEscapedModel() {
-		return new UserTrackerWrapper(_userTracker.toEscapedModel());
-	}
-
-	@Override
-	public UserTracker toUnescapedModel() {
-		return new UserTrackerWrapper(_userTracker.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _userTracker.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _userTracker.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _userTracker.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _userTracker.getExpandoBridge();
-	}
-
-	@Override
-	public int compareTo(UserTracker userTracker) {
-		return _userTracker.compareTo(userTracker);
-	}
-
-	@Override
-	public int getHits() {
-		return _userTracker.getHits();
-	}
-
-	@Override
-	public int hashCode() {
-		return _userTracker.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _userTracker.getPrimaryKeyObj();
+	public void addPath(UserTrackerPath path) {
+		_userTracker.addPath(path);
 	}
 
 	@Override
@@ -188,13 +138,78 @@ public class UserTrackerWrapper implements UserTracker,
 	}
 
 	@Override
+	public int compareTo(UserTracker userTracker) {
+		return _userTracker.compareTo(userTracker);
+	}
+
+	/**
+	* Returns the company ID of this user tracker.
+	*
+	* @return the company ID of this user tracker
+	*/
+	@Override
+	public long getCompanyId() {
+		return _userTracker.getCompanyId();
+	}
+
+	@Override
 	public java.lang.String getEmailAddress() {
 		return _userTracker.getEmailAddress();
 	}
 
 	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _userTracker.getExpandoBridge();
+	}
+
+	@Override
 	public java.lang.String getFullName() {
 		return _userTracker.getFullName();
+	}
+
+	@Override
+	public int getHits() {
+		return _userTracker.getHits();
+	}
+
+	/**
+	* Returns the modified date of this user tracker.
+	*
+	* @return the modified date of this user tracker
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _userTracker.getModifiedDate();
+	}
+
+	/**
+	* Returns the mvcc version of this user tracker.
+	*
+	* @return the mvcc version of this user tracker
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _userTracker.getMvccVersion();
+	}
+
+	@Override
+	public java.util.List<UserTrackerPath> getPaths() {
+		return _userTracker.getPaths();
+	}
+
+	/**
+	* Returns the primary key of this user tracker.
+	*
+	* @return the primary key of this user tracker
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _userTracker.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _userTracker.getPrimaryKeyObj();
 	}
 
 	/**
@@ -238,71 +253,6 @@ public class UserTrackerWrapper implements UserTracker,
 	}
 
 	/**
-	* Returns the user uuid of this user tracker.
-	*
-	* @return the user uuid of this user tracker
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _userTracker.getUserUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _userTracker.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _userTracker.toXmlString();
-	}
-
-	/**
-	* Returns the modified date of this user tracker.
-	*
-	* @return the modified date of this user tracker
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _userTracker.getModifiedDate();
-	}
-
-	@Override
-	public java.util.List<UserTrackerPath> getPaths() {
-		return _userTracker.getPaths();
-	}
-
-	/**
-	* Returns the company ID of this user tracker.
-	*
-	* @return the company ID of this user tracker
-	*/
-	@Override
-	public long getCompanyId() {
-		return _userTracker.getCompanyId();
-	}
-
-	/**
-	* Returns the mvcc version of this user tracker.
-	*
-	* @return the mvcc version of this user tracker
-	*/
-	@Override
-	public long getMvccVersion() {
-		return _userTracker.getMvccVersion();
-	}
-
-	/**
-	* Returns the primary key of this user tracker.
-	*
-	* @return the primary key of this user tracker
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _userTracker.getPrimaryKey();
-	}
-
-	/**
 	* Returns the user ID of this user tracker.
 	*
 	* @return the user ID of this user tracker
@@ -322,9 +272,34 @@ public class UserTrackerWrapper implements UserTracker,
 		return _userTracker.getUserTrackerId();
 	}
 
+	/**
+	* Returns the user uuid of this user tracker.
+	*
+	* @return the user uuid of this user tracker
+	*/
 	@Override
-	public void addPath(UserTrackerPath path) {
-		_userTracker.addPath(path);
+	public java.lang.String getUserUuid() {
+		return _userTracker.getUserUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _userTracker.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _userTracker.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _userTracker.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _userTracker.isNew();
 	}
 
 	@Override
@@ -348,13 +323,13 @@ public class UserTrackerWrapper implements UserTracker,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_userTracker.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_userTracker.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_userTracker.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
+		_userTracker.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -470,6 +445,31 @@ public class UserTrackerWrapper implements UserTracker,
 	@Override
 	public void setUserUuid(java.lang.String userUuid) {
 		_userTracker.setUserUuid(userUuid);
+	}
+
+	@Override
+	public CacheModel<UserTracker> toCacheModel() {
+		return _userTracker.toCacheModel();
+	}
+
+	@Override
+	public UserTracker toEscapedModel() {
+		return new UserTrackerWrapper(_userTracker.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _userTracker.toString();
+	}
+
+	@Override
+	public UserTracker toUnescapedModel() {
+		return new UserTrackerWrapper(_userTracker.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _userTracker.toXmlString();
 	}
 
 	@Override

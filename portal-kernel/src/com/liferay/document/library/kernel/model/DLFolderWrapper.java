@@ -229,13 +229,116 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	}
 
 	@Override
-	public DLFolder toEscapedModel() {
-		return new DLFolderWrapper(_dlFolder.toEscapedModel());
+	public java.lang.String buildTreePath()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFolder.buildTreePath();
 	}
 
 	@Override
-	public DLFolder toUnescapedModel() {
-		return new DLFolderWrapper(_dlFolder.toUnescapedModel());
+	public java.lang.Object clone() {
+		return new DLFolderWrapper((DLFolder)_dlFolder.clone());
+	}
+
+	@Override
+	public int compareTo(DLFolder dlFolder) {
+		return _dlFolder.compareTo(dlFolder);
+	}
+
+	@Override
+	public java.util.List<java.lang.Long> getAncestorFolderIds()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFolder.getAncestorFolderIds();
+	}
+
+	@Override
+	public java.util.List<DLFolder> getAncestors()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFolder.getAncestors();
+	}
+
+	/**
+	* Returns the company ID of this document library folder.
+	*
+	* @return the company ID of this document library folder
+	*/
+	@Override
+	public long getCompanyId() {
+		return _dlFolder.getCompanyId();
+	}
+
+	/**
+	* Returns the container model ID of this document library folder.
+	*
+	* @return the container model ID of this document library folder
+	*/
+	@Override
+	public long getContainerModelId() {
+		return _dlFolder.getContainerModelId();
+	}
+
+	/**
+	* Returns the container name of this document library folder.
+	*
+	* @return the container name of this document library folder
+	*/
+	@Override
+	public java.lang.String getContainerModelName() {
+		return _dlFolder.getContainerModelName();
+	}
+
+	/**
+	* Returns the create date of this document library folder.
+	*
+	* @return the create date of this document library folder
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _dlFolder.getCreateDate();
+	}
+
+	/**
+	* Returns the default file entry type ID of this document library folder.
+	*
+	* @return the default file entry type ID of this document library folder
+	*/
+	@Override
+	public long getDefaultFileEntryTypeId() {
+		return _dlFolder.getDefaultFileEntryTypeId();
+	}
+
+	/**
+	* Returns the description of this document library folder.
+	*
+	* @return the description of this document library folder
+	*/
+	@Override
+	public java.lang.String getDescription() {
+		return _dlFolder.getDescription();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _dlFolder.getExpandoBridge();
+	}
+
+	/**
+	* Returns the folder ID of this document library folder.
+	*
+	* @return the folder ID of this document library folder
+	*/
+	@Override
+	public long getFolderId() {
+		return _dlFolder.getFolderId();
+	}
+
+	/**
+	* Returns the group ID of this document library folder.
+	*
+	* @return the group ID of this document library folder
+	*/
+	@Override
+	public long getGroupId() {
+		return _dlFolder.getGroupId();
 	}
 
 	/**
@@ -249,6 +352,36 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	}
 
 	/**
+	* Returns the last post date of this document library folder.
+	*
+	* @return the last post date of this document library folder
+	*/
+	@Override
+	public Date getLastPostDate() {
+		return _dlFolder.getLastPostDate();
+	}
+
+	/**
+	* Returns the last publish date of this document library folder.
+	*
+	* @return the last publish date of this document library folder
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _dlFolder.getLastPublishDate();
+	}
+
+	/**
+	* Returns the modified date of this document library folder.
+	*
+	* @return the modified date of this document library folder
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _dlFolder.getModifiedDate();
+	}
+
+	/**
 	* Returns the mount point of this document library folder.
 	*
 	* @return the mount point of this document library folder
@@ -256,6 +389,222 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	@Override
 	public boolean getMountPoint() {
 		return _dlFolder.getMountPoint();
+	}
+
+	/**
+	* Returns the name of this document library folder.
+	*
+	* @return the name of this document library folder
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _dlFolder.getName();
+	}
+
+	/**
+	* Returns the parent container model ID of this document library folder.
+	*
+	* @return the parent container model ID of this document library folder
+	*/
+	@Override
+	public long getParentContainerModelId() {
+		return _dlFolder.getParentContainerModelId();
+	}
+
+	@Override
+	public DLFolder getParentFolder()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFolder.getParentFolder();
+	}
+
+	/**
+	* Returns the parent folder ID of this document library folder.
+	*
+	* @return the parent folder ID of this document library folder
+	*/
+	@Override
+	public long getParentFolderId() {
+		return _dlFolder.getParentFolderId();
+	}
+
+	@Override
+	public java.lang.String getPath()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFolder.getPath();
+	}
+
+	@Override
+	public java.lang.String[] getPathArray()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFolder.getPathArray();
+	}
+
+	/**
+	* Returns the primary key of this document library folder.
+	*
+	* @return the primary key of this document library folder
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _dlFolder.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _dlFolder.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the repository ID of this document library folder.
+	*
+	* @return the repository ID of this document library folder
+	*/
+	@Override
+	public long getRepositoryId() {
+		return _dlFolder.getRepositoryId();
+	}
+
+	/**
+	* Returns the restriction type of this document library folder.
+	*
+	* @return the restriction type of this document library folder
+	*/
+	@Override
+	public int getRestrictionType() {
+		return _dlFolder.getRestrictionType();
+	}
+
+	/**
+	* Returns the status of this document library folder.
+	*
+	* @return the status of this document library folder
+	*/
+	@Override
+	public int getStatus() {
+		return _dlFolder.getStatus();
+	}
+
+	/**
+	* Returns the status by user ID of this document library folder.
+	*
+	* @return the status by user ID of this document library folder
+	*/
+	@Override
+	public long getStatusByUserId() {
+		return _dlFolder.getStatusByUserId();
+	}
+
+	/**
+	* Returns the status by user name of this document library folder.
+	*
+	* @return the status by user name of this document library folder
+	*/
+	@Override
+	public java.lang.String getStatusByUserName() {
+		return _dlFolder.getStatusByUserName();
+	}
+
+	/**
+	* Returns the status by user uuid of this document library folder.
+	*
+	* @return the status by user uuid of this document library folder
+	*/
+	@Override
+	public java.lang.String getStatusByUserUuid() {
+		return _dlFolder.getStatusByUserUuid();
+	}
+
+	/**
+	* Returns the status date of this document library folder.
+	*
+	* @return the status date of this document library folder
+	*/
+	@Override
+	public Date getStatusDate() {
+		return _dlFolder.getStatusDate();
+	}
+
+	/**
+	* Returns the trash entry created when this document library folder was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this document library folder.
+	*
+	* @return the trash entry created when this document library folder was moved to the Recycle Bin
+	*/
+	@Override
+	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFolder.getTrashEntry();
+	}
+
+	/**
+	* Returns the class primary key of the trash entry for this document library folder.
+	*
+	* @return the class primary key of the trash entry for this document library folder
+	*/
+	@Override
+	public long getTrashEntryClassPK() {
+		return _dlFolder.getTrashEntryClassPK();
+	}
+
+	/**
+	* Returns the trash handler for this document library folder.
+	*
+	* @return the trash handler for this document library folder
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@Deprecated
+	@Override
+	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
+		return _dlFolder.getTrashHandler();
+	}
+
+	/**
+	* Returns the tree path of this document library folder.
+	*
+	* @return the tree path of this document library folder
+	*/
+	@Override
+	public java.lang.String getTreePath() {
+		return _dlFolder.getTreePath();
+	}
+
+	/**
+	* Returns the user ID of this document library folder.
+	*
+	* @return the user ID of this document library folder
+	*/
+	@Override
+	public long getUserId() {
+		return _dlFolder.getUserId();
+	}
+
+	/**
+	* Returns the user name of this document library folder.
+	*
+	* @return the user name of this document library folder
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _dlFolder.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this document library folder.
+	*
+	* @return the user uuid of this document library folder
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _dlFolder.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this document library folder.
+	*
+	* @return the uuid of this document library folder
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _dlFolder.getUuid();
 	}
 
 	@Override
@@ -266,6 +615,11 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	@Override
 	public boolean hasLock() {
 		return _dlFolder.hasLock();
+	}
+
+	@Override
+	public int hashCode() {
+		return _dlFolder.hashCode();
 	}
 
 	/**
@@ -426,385 +780,6 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	@Override
 	public boolean isScheduled() {
 		return _dlFolder.isScheduled();
-	}
-
-	@Override
-	public DLFolder getParentFolder()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFolder.getParentFolder();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _dlFolder.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<DLFolder> toCacheModel() {
-		return _dlFolder.toCacheModel();
-	}
-
-	/**
-	* Returns the trash handler for this document library folder.
-	*
-	* @return the trash handler for this document library folder
-	* @deprecated As of 7.0.0, with no direct replacement
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return _dlFolder.getTrashHandler();
-	}
-
-	/**
-	* Returns the trash entry created when this document library folder was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this document library folder.
-	*
-	* @return the trash entry created when this document library folder was moved to the Recycle Bin
-	*/
-	@Override
-	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFolder.getTrashEntry();
-	}
-
-	@Override
-	public int compareTo(DLFolder dlFolder) {
-		return _dlFolder.compareTo(dlFolder);
-	}
-
-	/**
-	* Returns the restriction type of this document library folder.
-	*
-	* @return the restriction type of this document library folder
-	*/
-	@Override
-	public int getRestrictionType() {
-		return _dlFolder.getRestrictionType();
-	}
-
-	/**
-	* Returns the status of this document library folder.
-	*
-	* @return the status of this document library folder
-	*/
-	@Override
-	public int getStatus() {
-		return _dlFolder.getStatus();
-	}
-
-	@Override
-	public int hashCode() {
-		return _dlFolder.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _dlFolder.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new DLFolderWrapper((DLFolder)_dlFolder.clone());
-	}
-
-	@Override
-	public java.lang.String buildTreePath()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFolder.buildTreePath();
-	}
-
-	/**
-	* Returns the container name of this document library folder.
-	*
-	* @return the container name of this document library folder
-	*/
-	@Override
-	public java.lang.String getContainerModelName() {
-		return _dlFolder.getContainerModelName();
-	}
-
-	/**
-	* Returns the description of this document library folder.
-	*
-	* @return the description of this document library folder
-	*/
-	@Override
-	public java.lang.String getDescription() {
-		return _dlFolder.getDescription();
-	}
-
-	/**
-	* Returns the name of this document library folder.
-	*
-	* @return the name of this document library folder
-	*/
-	@Override
-	public java.lang.String getName() {
-		return _dlFolder.getName();
-	}
-
-	@Override
-	public java.lang.String getPath()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFolder.getPath();
-	}
-
-	/**
-	* Returns the status by user name of this document library folder.
-	*
-	* @return the status by user name of this document library folder
-	*/
-	@Override
-	public java.lang.String getStatusByUserName() {
-		return _dlFolder.getStatusByUserName();
-	}
-
-	/**
-	* Returns the status by user uuid of this document library folder.
-	*
-	* @return the status by user uuid of this document library folder
-	*/
-	@Override
-	public java.lang.String getStatusByUserUuid() {
-		return _dlFolder.getStatusByUserUuid();
-	}
-
-	/**
-	* Returns the tree path of this document library folder.
-	*
-	* @return the tree path of this document library folder
-	*/
-	@Override
-	public java.lang.String getTreePath() {
-		return _dlFolder.getTreePath();
-	}
-
-	/**
-	* Returns the user name of this document library folder.
-	*
-	* @return the user name of this document library folder
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _dlFolder.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this document library folder.
-	*
-	* @return the user uuid of this document library folder
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _dlFolder.getUserUuid();
-	}
-
-	/**
-	* Returns the uuid of this document library folder.
-	*
-	* @return the uuid of this document library folder
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _dlFolder.getUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _dlFolder.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _dlFolder.toXmlString();
-	}
-
-	@Override
-	public java.lang.String[] getPathArray()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFolder.getPathArray();
-	}
-
-	/**
-	* Returns the create date of this document library folder.
-	*
-	* @return the create date of this document library folder
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _dlFolder.getCreateDate();
-	}
-
-	/**
-	* Returns the last post date of this document library folder.
-	*
-	* @return the last post date of this document library folder
-	*/
-	@Override
-	public Date getLastPostDate() {
-		return _dlFolder.getLastPostDate();
-	}
-
-	/**
-	* Returns the last publish date of this document library folder.
-	*
-	* @return the last publish date of this document library folder
-	*/
-	@Override
-	public Date getLastPublishDate() {
-		return _dlFolder.getLastPublishDate();
-	}
-
-	/**
-	* Returns the modified date of this document library folder.
-	*
-	* @return the modified date of this document library folder
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _dlFolder.getModifiedDate();
-	}
-
-	/**
-	* Returns the status date of this document library folder.
-	*
-	* @return the status date of this document library folder
-	*/
-	@Override
-	public Date getStatusDate() {
-		return _dlFolder.getStatusDate();
-	}
-
-	@Override
-	public java.util.List<java.lang.Long> getAncestorFolderIds()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFolder.getAncestorFolderIds();
-	}
-
-	@Override
-	public java.util.List<DLFolder> getAncestors()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFolder.getAncestors();
-	}
-
-	/**
-	* Returns the company ID of this document library folder.
-	*
-	* @return the company ID of this document library folder
-	*/
-	@Override
-	public long getCompanyId() {
-		return _dlFolder.getCompanyId();
-	}
-
-	/**
-	* Returns the container model ID of this document library folder.
-	*
-	* @return the container model ID of this document library folder
-	*/
-	@Override
-	public long getContainerModelId() {
-		return _dlFolder.getContainerModelId();
-	}
-
-	/**
-	* Returns the default file entry type ID of this document library folder.
-	*
-	* @return the default file entry type ID of this document library folder
-	*/
-	@Override
-	public long getDefaultFileEntryTypeId() {
-		return _dlFolder.getDefaultFileEntryTypeId();
-	}
-
-	/**
-	* Returns the folder ID of this document library folder.
-	*
-	* @return the folder ID of this document library folder
-	*/
-	@Override
-	public long getFolderId() {
-		return _dlFolder.getFolderId();
-	}
-
-	/**
-	* Returns the group ID of this document library folder.
-	*
-	* @return the group ID of this document library folder
-	*/
-	@Override
-	public long getGroupId() {
-		return _dlFolder.getGroupId();
-	}
-
-	/**
-	* Returns the parent container model ID of this document library folder.
-	*
-	* @return the parent container model ID of this document library folder
-	*/
-	@Override
-	public long getParentContainerModelId() {
-		return _dlFolder.getParentContainerModelId();
-	}
-
-	/**
-	* Returns the parent folder ID of this document library folder.
-	*
-	* @return the parent folder ID of this document library folder
-	*/
-	@Override
-	public long getParentFolderId() {
-		return _dlFolder.getParentFolderId();
-	}
-
-	/**
-	* Returns the primary key of this document library folder.
-	*
-	* @return the primary key of this document library folder
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _dlFolder.getPrimaryKey();
-	}
-
-	/**
-	* Returns the repository ID of this document library folder.
-	*
-	* @return the repository ID of this document library folder
-	*/
-	@Override
-	public long getRepositoryId() {
-		return _dlFolder.getRepositoryId();
-	}
-
-	/**
-	* Returns the status by user ID of this document library folder.
-	*
-	* @return the status by user ID of this document library folder
-	*/
-	@Override
-	public long getStatusByUserId() {
-		return _dlFolder.getStatusByUserId();
-	}
-
-	/**
-	* Returns the class primary key of the trash entry for this document library folder.
-	*
-	* @return the class primary key of the trash entry for this document library folder
-	*/
-	@Override
-	public long getTrashEntryClassPK() {
-		return _dlFolder.getTrashEntryClassPK();
-	}
-
-	/**
-	* Returns the user ID of this document library folder.
-	*
-	* @return the user ID of this document library folder
-	*/
-	@Override
-	public long getUserId() {
-		return _dlFolder.getUserId();
 	}
 
 	@Override
@@ -1121,6 +1096,31 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_dlFolder.setUuid(uuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<DLFolder> toCacheModel() {
+		return _dlFolder.toCacheModel();
+	}
+
+	@Override
+	public DLFolder toEscapedModel() {
+		return new DLFolderWrapper(_dlFolder.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _dlFolder.toString();
+	}
+
+	@Override
+	public DLFolder toUnescapedModel() {
+		return new DLFolderWrapper(_dlFolder.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _dlFolder.toXmlString();
 	}
 
 	@Override

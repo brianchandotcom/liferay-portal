@@ -55,6 +55,13 @@ public interface ScreensRatingsEntryService extends BaseService {
 		java.lang.String className, int ratingsLength)
 		throws PortalException;
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JSONObject getRatingsEntries(long assetEntryId, int ratingsLength)
 		throws PortalException;
@@ -67,11 +74,4 @@ public interface ScreensRatingsEntryService extends BaseService {
 	public JSONObject updateRatingsEntry(long classPK,
 		java.lang.String className, double score, int ratingsLength)
 		throws PortalException;
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
 }

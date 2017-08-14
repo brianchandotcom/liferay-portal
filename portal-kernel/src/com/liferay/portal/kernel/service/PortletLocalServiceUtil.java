@@ -40,36 +40,6 @@ public class PortletLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.PortletLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static boolean hasPortlet(long companyId, java.lang.String portletId) {
-		return getService().hasPortlet(companyId, portletId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
 
 	/**
 	* Adds the portlet to the database. Also notifies the appropriate model listeners.
@@ -80,6 +50,38 @@ public class PortletLocalServiceUtil {
 	public static com.liferay.portal.kernel.model.Portlet addPortlet(
 		com.liferay.portal.kernel.model.Portlet portlet) {
 		return getService().addPortlet(portlet);
+	}
+
+	public static void addPortletCategory(long companyId,
+		java.lang.String categoryName) {
+		getService().addPortletCategory(companyId, categoryName);
+	}
+
+	public static void checkPortlet(
+		com.liferay.portal.kernel.model.Portlet portlet)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().checkPortlet(portlet);
+	}
+
+	public static void checkPortlets(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().checkPortlets(companyId);
+	}
+
+	public static void clearCache() {
+		getService().clearCache();
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #clearPortletsMap)}
+	*/
+	@Deprecated
+	public static void clearCompanyPortletsPool() {
+		getService().clearCompanyPortletsPool();
+	}
+
+	public static void clearPortletsMap() {
+		getService().clearPortletsMap();
 	}
 
 	public static com.liferay.portal.kernel.model.Portlet clonePortlet(
@@ -95,6 +97,15 @@ public class PortletLocalServiceUtil {
 	*/
 	public static com.liferay.portal.kernel.model.Portlet createPortlet(long id) {
 		return getService().createPortlet(id);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
 	}
 
 	/**
@@ -120,6 +131,24 @@ public class PortletLocalServiceUtil {
 		return getService().deletePortlet(id);
 	}
 
+	public static void deletePortlet(long companyId,
+		java.lang.String portletId, long plid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deletePortlet(companyId, portletId, plid);
+	}
+
+	public static void deletePortlets(long companyId,
+		java.lang.String[] portletIds, long plid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deletePortlets(companyId, portletIds, plid);
+	}
+
+	public static void deployPortlet(
+		com.liferay.portal.kernel.model.Portlet portlet)
+		throws java.lang.Exception {
+		getService().deployPortlet(portlet);
+	}
+
 	public static com.liferay.portal.kernel.model.Portlet deployRemotePortlet(
 		com.liferay.portal.kernel.model.Portlet portlet,
 		java.lang.String categoryName)
@@ -142,90 +171,18 @@ public class PortletLocalServiceUtil {
 				   .deployRemotePortlet(portlet, categoryNames, eagerDestroy);
 	}
 
-	public static com.liferay.portal.kernel.model.Portlet fetchPortlet(long id) {
-		return getService().fetchPortlet(id);
-	}
-
-	public static com.liferay.portal.kernel.model.Portlet fetchPortletById(
-		long companyId, java.lang.String portletId) {
-		return getService().fetchPortletById(companyId, portletId);
-	}
-
-	/**
-	* Returns the portlet with the primary key.
-	*
-	* @param id the primary key of the portlet
-	* @return the portlet
-	* @throws PortalException if a portlet with the primary key could not be found
-	*/
-	public static com.liferay.portal.kernel.model.Portlet getPortlet(long id)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPortlet(id);
-	}
-
-	public static com.liferay.portal.kernel.model.Portlet getPortletById(
-		java.lang.String portletId) {
-		return getService().getPortletById(portletId);
-	}
-
-	public static com.liferay.portal.kernel.model.Portlet getPortletById(
-		long companyId, java.lang.String portletId) {
-		return getService().getPortletById(companyId, portletId);
-	}
-
-	public static com.liferay.portal.kernel.model.Portlet getPortletByStrutsPath(
-		long companyId, java.lang.String strutsPath) {
-		return getService().getPortletByStrutsPath(companyId, strutsPath);
-	}
-
-	/**
-	* Updates the portlet in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param portlet the portlet
-	* @return the portlet that was updated
-	*/
-	public static com.liferay.portal.kernel.model.Portlet updatePortlet(
+	public static void destroyPortlet(
 		com.liferay.portal.kernel.model.Portlet portlet) {
-		return getService().updatePortlet(portlet);
+		getService().destroyPortlet(portlet);
 	}
 
-	public static com.liferay.portal.kernel.model.Portlet updatePortlet(
-		long companyId, java.lang.String portletId, java.lang.String roles,
-		boolean active) {
-		return getService().updatePortlet(companyId, portletId, roles, active);
+	public static void destroyRemotePortlet(
+		com.liferay.portal.kernel.model.Portlet portlet) {
+		getService().destroyRemotePortlet(portlet);
 	}
 
-	public static com.liferay.portal.kernel.model.PortletApp getPortletApp(
-		java.lang.String servletContextName) {
-		return getService().getPortletApp(servletContextName);
-	}
-
-	public static com.liferay.portal.kernel.model.PortletCategory getEARDisplay(
-		java.lang.String xml) {
-		return getService().getEARDisplay(xml);
-	}
-
-	public static com.liferay.portal.kernel.model.PortletCategory getWARDisplay(
-		java.lang.String servletContextName, java.lang.String xml) {
-		return getService().getWARDisplay(servletContextName, xml);
-	}
-
-	/**
-	* Returns the number of portlets.
-	*
-	* @return the number of portlets
-	*/
-	public static int getPortletsCount() {
-		return getService().getPortletsCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
 	}
 
 	/**
@@ -278,8 +235,50 @@ public class PortletLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static com.liferay.portal.kernel.model.Portlet fetchPortlet(long id) {
+		return getService().fetchPortlet(id);
+	}
+
+	public static com.liferay.portal.kernel.model.Portlet fetchPortletById(
+		long companyId, java.lang.String portletId) {
+		return getService().fetchPortletById(companyId, portletId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
 	public static java.util.List<com.liferay.expando.kernel.model.CustomAttributesDisplay> getCustomAttributesDisplays() {
 		return getService().getCustomAttributesDisplays();
+	}
+
+	public static com.liferay.portal.kernel.model.PortletCategory getEARDisplay(
+		java.lang.String xml) {
+		return getService().getEARDisplay(xml);
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.Portlet> getFriendlyURLMapperPortlets() {
@@ -288,6 +287,57 @@ public class PortletLocalServiceUtil {
 
 	public static java.util.List<com.liferay.portal.kernel.portlet.FriendlyURLMapper> getFriendlyURLMappers() {
 		return getService().getFriendlyURLMappers();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Returns the portlet with the primary key.
+	*
+	* @param id the primary key of the portlet
+	* @return the portlet
+	* @throws PortalException if a portlet with the primary key could not be found
+	*/
+	public static com.liferay.portal.kernel.model.Portlet getPortlet(long id)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPortlet(id);
+	}
+
+	public static com.liferay.portal.kernel.model.PortletApp getPortletApp(
+		java.lang.String servletContextName) {
+		return getService().getPortletApp(servletContextName);
+	}
+
+	public static com.liferay.portal.kernel.model.Portlet getPortletById(
+		java.lang.String portletId) {
+		return getService().getPortletById(portletId);
+	}
+
+	public static com.liferay.portal.kernel.model.Portlet getPortletById(
+		long companyId, java.lang.String portletId) {
+		return getService().getPortletById(companyId, portletId);
+	}
+
+	public static com.liferay.portal.kernel.model.Portlet getPortletByStrutsPath(
+		long companyId, java.lang.String strutsPath) {
+		return getService().getPortletByStrutsPath(companyId, strutsPath);
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.Portlet> getPortlets() {
@@ -320,8 +370,32 @@ public class PortletLocalServiceUtil {
 		return getService().getPortlets(companyId, showSystem, showPortal);
 	}
 
+	/**
+	* Returns the number of portlets.
+	*
+	* @return the number of portlets
+	*/
+	public static int getPortletsCount() {
+		return getService().getPortletsCount();
+	}
+
 	public static java.util.List<com.liferay.portal.kernel.model.Portlet> getScopablePortlets() {
 		return getService().getScopablePortlets();
+	}
+
+	public static com.liferay.portal.kernel.model.PortletCategory getWARDisplay(
+		java.lang.String servletContextName, java.lang.String xml) {
+		return getService().getWARDisplay(servletContextName, xml);
+	}
+
+	public static boolean hasPortlet(long companyId, java.lang.String portletId) {
+		return getService().hasPortlet(companyId, portletId);
+	}
+
+	public static void initEAR(javax.servlet.ServletContext servletContext,
+		java.lang.String[] xmls,
+		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage) {
+		getService().initEAR(servletContext, xmls, pluginPackage);
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.Portlet> initWAR(
@@ -347,98 +421,25 @@ public class PortletLocalServiceUtil {
 		return getService().loadGetPortletsPool(companyId);
 	}
 
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
-	}
-
-	public static void addPortletCategory(long companyId,
-		java.lang.String categoryName) {
-		getService().addPortletCategory(companyId, categoryName);
-	}
-
-	public static void checkPortlet(
-		com.liferay.portal.kernel.model.Portlet portlet)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().checkPortlet(portlet);
-	}
-
-	public static void checkPortlets(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().checkPortlets(companyId);
-	}
-
-	public static void clearCache() {
-		getService().clearCache();
-	}
-
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link #clearPortletsMap)}
-	*/
-	@Deprecated
-	public static void clearCompanyPortletsPool() {
-		getService().clearCompanyPortletsPool();
-	}
-
-	public static void clearPortletsMap() {
-		getService().clearPortletsMap();
-	}
-
-	public static void deletePortlet(long companyId,
-		java.lang.String portletId, long plid)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deletePortlet(companyId, portletId, plid);
-	}
-
-	public static void deletePortlets(long companyId,
-		java.lang.String[] portletIds, long plid)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deletePortlets(companyId, portletIds, plid);
-	}
-
-	public static void deployPortlet(
-		com.liferay.portal.kernel.model.Portlet portlet)
-		throws java.lang.Exception {
-		getService().deployPortlet(portlet);
-	}
-
-	public static void destroyPortlet(
-		com.liferay.portal.kernel.model.Portlet portlet) {
-		getService().destroyPortlet(portlet);
-	}
-
-	public static void destroyRemotePortlet(
-		com.liferay.portal.kernel.model.Portlet portlet) {
-		getService().destroyRemotePortlet(portlet);
-	}
-
-	public static void initEAR(javax.servlet.ServletContext servletContext,
-		java.lang.String[] xmls,
-		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage) {
-		getService().initEAR(servletContext, xmls, pluginPackage);
-	}
-
 	public static void removeCompanyPortletsPool(long companyId) {
 		getService().removeCompanyPortletsPool(companyId);
+	}
+
+	/**
+	* Updates the portlet in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param portlet the portlet
+	* @return the portlet that was updated
+	*/
+	public static com.liferay.portal.kernel.model.Portlet updatePortlet(
+		com.liferay.portal.kernel.model.Portlet portlet) {
+		return getService().updatePortlet(portlet);
+	}
+
+	public static com.liferay.portal.kernel.model.Portlet updatePortlet(
+		long companyId, java.lang.String portletId, java.lang.String roles,
+		boolean active) {
+		return getService().updatePortlet(companyId, portletId, roles, active);
 	}
 
 	public static void visitPortlets(long companyId,

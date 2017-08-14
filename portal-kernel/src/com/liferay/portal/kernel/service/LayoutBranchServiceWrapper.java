@@ -41,12 +41,9 @@ public class LayoutBranchServiceWrapper implements LayoutBranchService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.LayoutBranch updateLayoutBranch(
-		long layoutBranchId, java.lang.String name,
-		java.lang.String description, ServiceContext serviceContext)
+	public void deleteLayoutBranch(long layoutBranchId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutBranchService.updateLayoutBranch(layoutBranchId, name,
-			description, serviceContext);
+		_layoutBranchService.deleteLayoutBranch(layoutBranchId);
 	}
 
 	/**
@@ -60,9 +57,12 @@ public class LayoutBranchServiceWrapper implements LayoutBranchService,
 	}
 
 	@Override
-	public void deleteLayoutBranch(long layoutBranchId)
+	public com.liferay.portal.kernel.model.LayoutBranch updateLayoutBranch(
+		long layoutBranchId, java.lang.String name,
+		java.lang.String description, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_layoutBranchService.deleteLayoutBranch(layoutBranchId);
+		return _layoutBranchService.updateLayoutBranch(layoutBranchId, name,
+			description, serviceContext);
 	}
 
 	@Override

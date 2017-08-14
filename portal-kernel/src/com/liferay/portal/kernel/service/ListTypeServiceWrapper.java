@@ -36,6 +36,12 @@ public class ListTypeServiceWrapper implements ListTypeService,
 		return _listTypeService.getListType(listTypeId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.ListType> getListTypes(
+		java.lang.String type) {
+		return _listTypeService.getListTypes(type);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -44,12 +50,6 @@ public class ListTypeServiceWrapper implements ListTypeService,
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _listTypeService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.ListType> getListTypes(
-		java.lang.String type) {
-		return _listTypeService.getListTypes(type);
 	}
 
 	@Override

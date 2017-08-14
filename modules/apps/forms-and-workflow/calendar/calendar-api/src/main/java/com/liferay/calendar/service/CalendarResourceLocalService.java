@@ -116,76 +116,7 @@ public interface CalendarResourceLocalService extends BaseLocalService,
 	public CalendarResource deleteCalendarResource(long calendarResourceId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CalendarResource fetchCalendarResource(long calendarResourceId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CalendarResource fetchCalendarResource(long classNameId, long classPK);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CalendarResource fetchCalendarResource(long groupId,
-		java.lang.String code);
-
-	/**
-	* Returns the calendar resource matching the UUID and group.
-	*
-	* @param uuid the calendar resource's UUID
-	* @param groupId the primary key of the group
-	* @return the matching calendar resource, or <code>null</code> if a matching calendar resource could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CalendarResource fetchCalendarResourceByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
-
-	/**
-	* Returns the calendar resource with the primary key.
-	*
-	* @param calendarResourceId the primary key of the calendar resource
-	* @return the calendar resource
-	* @throws PortalException if a calendar resource with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CalendarResource getCalendarResource(long calendarResourceId)
-		throws PortalException;
-
-	/**
-	* Returns the calendar resource matching the UUID and group.
-	*
-	* @param uuid the calendar resource's UUID
-	* @param groupId the primary key of the group
-	* @return the matching calendar resource
-	* @throws PortalException if a matching calendar resource could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CalendarResource getCalendarResourceByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
-
-	/**
-	* Updates the calendar resource in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param calendarResource the calendar resource
-	* @return the calendar resource that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public CalendarResource updateCalendarResource(
-		CalendarResource calendarResource);
-
-	public CalendarResource updateCalendarResource(long calendarResourceId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, boolean active,
-		ServiceContext serviceContext) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public void deleteCalendarResources(long groupId) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -194,34 +125,7 @@ public interface CalendarResourceLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	* Returns the number of calendar resources.
-	*
-	* @return the number of calendar resources
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCalendarResourcesCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, long[] groupIds,
-		long[] classNameIds, java.lang.String code, java.lang.String name,
-		java.lang.String description, boolean active, boolean andOperator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, long[] groupIds,
-		long[] classNameIds, java.lang.String keywords, boolean active);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -261,6 +165,71 @@ public interface CalendarResourceLocalService extends BaseLocalService,
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CalendarResource fetchCalendarResource(long calendarResourceId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CalendarResource fetchCalendarResource(long groupId,
+		java.lang.String code);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CalendarResource fetchCalendarResource(long classNameId, long classPK);
+
+	/**
+	* Returns the calendar resource matching the UUID and group.
+	*
+	* @param uuid the calendar resource's UUID
+	* @param groupId the primary key of the group
+	* @return the matching calendar resource, or <code>null</code> if a matching calendar resource could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CalendarResource fetchCalendarResourceByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
+	* Returns the calendar resource with the primary key.
+	*
+	* @param calendarResourceId the primary key of the calendar resource
+	* @return the calendar resource
+	* @throws PortalException if a calendar resource with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CalendarResource getCalendarResource(long calendarResourceId)
+		throws PortalException;
+
+	/**
+	* Returns the calendar resource matching the UUID and group.
+	*
+	* @param uuid the calendar resource's UUID
+	* @param groupId the primary key of the group
+	* @return the matching calendar resource
+	* @throws PortalException if a matching calendar resource could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CalendarResource getCalendarResourceByUuidAndGroupId(
+		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the calendar resources.
@@ -305,6 +274,33 @@ public interface CalendarResourceLocalService extends BaseLocalService,
 		java.lang.String uuid, long companyId, int start, int end,
 		OrderByComparator<CalendarResource> orderByComparator);
 
+	/**
+	* Returns the number of calendar resources.
+	*
+	* @return the number of calendar resources
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCalendarResourcesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CalendarResource> search(long companyId, long[] groupIds,
 		long[] classNameIds, java.lang.String code, java.lang.String name,
@@ -318,27 +314,31 @@ public interface CalendarResourceLocalService extends BaseLocalService,
 		boolean active, boolean andOperator, int start, int end,
 		OrderByComparator<CalendarResource> orderByComparator);
 
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(long companyId, long[] groupIds,
+		long[] classNameIds, java.lang.String keywords, boolean active);
 
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	public void deleteCalendarResources(long groupId) throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(long companyId, long[] groupIds,
+		long[] classNameIds, java.lang.String code, java.lang.String name,
+		java.lang.String description, boolean active, boolean andOperator);
 
 	public void updateAsset(long userId, CalendarResource calendarResource,
 		long[] assetCategoryIds, java.lang.String[] assetTagNames,
 		java.lang.Double priority) throws PortalException;
+
+	/**
+	* Updates the calendar resource in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param calendarResource the calendar resource
+	* @return the calendar resource that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public CalendarResource updateCalendarResource(
+		CalendarResource calendarResource);
+
+	public CalendarResource updateCalendarResource(long calendarResourceId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, boolean active,
+		ServiceContext serviceContext) throws PortalException;
 }

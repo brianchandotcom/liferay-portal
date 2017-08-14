@@ -53,10 +53,38 @@ public class PasswordPolicyServiceWrapper implements PasswordPolicyService,
 	}
 
 	@Override
+	public void deletePasswordPolicy(long passwordPolicyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_passwordPolicyService.deletePasswordPolicy(passwordPolicyId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.model.PasswordPolicy fetchPasswordPolicy(
 		long passwordPolicyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _passwordPolicyService.fetchPasswordPolicy(passwordPolicyId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _passwordPolicyService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.PasswordPolicy> search(
+		long companyId, java.lang.String name, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.PasswordPolicy> obc) {
+		return _passwordPolicyService.search(companyId, name, start, end, obc);
+	}
+
+	@Override
+	public int searchCount(long companyId, java.lang.String name) {
+		return _passwordPolicyService.searchCount(companyId, name);
 	}
 
 	@Override
@@ -79,34 +107,6 @@ public class PasswordPolicyServiceWrapper implements PasswordPolicyService,
 			expireable, maxAge, warningTime, graceLimit, lockout, maxFailure,
 			lockoutDuration, resetFailureCount, resetTicketMaxAge,
 			serviceContext);
-	}
-
-	@Override
-	public int searchCount(long companyId, java.lang.String name) {
-		return _passwordPolicyService.searchCount(companyId, name);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _passwordPolicyService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.PasswordPolicy> search(
-		long companyId, java.lang.String name, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.PasswordPolicy> obc) {
-		return _passwordPolicyService.search(companyId, name, start, end, obc);
-	}
-
-	@Override
-	public void deletePasswordPolicy(long passwordPolicyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_passwordPolicyService.deletePasswordPolicy(passwordPolicyId);
 	}
 
 	@Override

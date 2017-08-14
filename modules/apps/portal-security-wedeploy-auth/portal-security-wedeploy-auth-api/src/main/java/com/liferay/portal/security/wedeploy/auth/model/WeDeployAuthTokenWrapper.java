@@ -129,68 +129,13 @@ public class WeDeployAuthTokenWrapper implements WeDeployAuthToken,
 	}
 
 	@Override
-	public WeDeployAuthToken toEscapedModel() {
-		return new WeDeployAuthTokenWrapper(_weDeployAuthToken.toEscapedModel());
-	}
-
-	@Override
-	public WeDeployAuthToken toUnescapedModel() {
-		return new WeDeployAuthTokenWrapper(_weDeployAuthToken.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _weDeployAuthToken.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _weDeployAuthToken.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _weDeployAuthToken.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _weDeployAuthToken.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<WeDeployAuthToken> toCacheModel() {
-		return _weDeployAuthToken.toCacheModel();
+	public java.lang.Object clone() {
+		return new WeDeployAuthTokenWrapper((WeDeployAuthToken)_weDeployAuthToken.clone());
 	}
 
 	@Override
 	public int compareTo(WeDeployAuthToken weDeployAuthToken) {
 		return _weDeployAuthToken.compareTo(weDeployAuthToken);
-	}
-
-	/**
-	* Returns the type of this we deploy auth token.
-	*
-	* @return the type of this we deploy auth token
-	*/
-	@Override
-	public int getType() {
-		return _weDeployAuthToken.getType();
-	}
-
-	@Override
-	public int hashCode() {
-		return _weDeployAuthToken.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _weDeployAuthToken.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new WeDeployAuthTokenWrapper((WeDeployAuthToken)_weDeployAuthToken.clone());
 	}
 
 	/**
@@ -204,6 +149,56 @@ public class WeDeployAuthTokenWrapper implements WeDeployAuthToken,
 	}
 
 	/**
+	* Returns the company ID of this we deploy auth token.
+	*
+	* @return the company ID of this we deploy auth token
+	*/
+	@Override
+	public long getCompanyId() {
+		return _weDeployAuthToken.getCompanyId();
+	}
+
+	/**
+	* Returns the create date of this we deploy auth token.
+	*
+	* @return the create date of this we deploy auth token
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _weDeployAuthToken.getCreateDate();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _weDeployAuthToken.getExpandoBridge();
+	}
+
+	/**
+	* Returns the modified date of this we deploy auth token.
+	*
+	* @return the modified date of this we deploy auth token
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _weDeployAuthToken.getModifiedDate();
+	}
+
+	/**
+	* Returns the primary key of this we deploy auth token.
+	*
+	* @return the primary key of this we deploy auth token
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _weDeployAuthToken.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _weDeployAuthToken.getPrimaryKeyObj();
+	}
+
+	/**
 	* Returns the token of this we deploy auth token.
 	*
 	* @return the token of this we deploy auth token
@@ -211,6 +206,26 @@ public class WeDeployAuthTokenWrapper implements WeDeployAuthToken,
 	@Override
 	public java.lang.String getToken() {
 		return _weDeployAuthToken.getToken();
+	}
+
+	/**
+	* Returns the type of this we deploy auth token.
+	*
+	* @return the type of this we deploy auth token
+	*/
+	@Override
+	public int getType() {
+		return _weDeployAuthToken.getType();
+	}
+
+	/**
+	* Returns the user ID of this we deploy auth token.
+	*
+	* @return the user ID of this we deploy auth token
+	*/
+	@Override
+	public long getUserId() {
+		return _weDeployAuthToken.getUserId();
 	}
 
 	/**
@@ -233,66 +248,6 @@ public class WeDeployAuthTokenWrapper implements WeDeployAuthToken,
 		return _weDeployAuthToken.getUserUuid();
 	}
 
-	@Override
-	public java.lang.String toString() {
-		return _weDeployAuthToken.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _weDeployAuthToken.toXmlString();
-	}
-
-	/**
-	* Returns the create date of this we deploy auth token.
-	*
-	* @return the create date of this we deploy auth token
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _weDeployAuthToken.getCreateDate();
-	}
-
-	/**
-	* Returns the modified date of this we deploy auth token.
-	*
-	* @return the modified date of this we deploy auth token
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _weDeployAuthToken.getModifiedDate();
-	}
-
-	/**
-	* Returns the company ID of this we deploy auth token.
-	*
-	* @return the company ID of this we deploy auth token
-	*/
-	@Override
-	public long getCompanyId() {
-		return _weDeployAuthToken.getCompanyId();
-	}
-
-	/**
-	* Returns the primary key of this we deploy auth token.
-	*
-	* @return the primary key of this we deploy auth token
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _weDeployAuthToken.getPrimaryKey();
-	}
-
-	/**
-	* Returns the user ID of this we deploy auth token.
-	*
-	* @return the user ID of this we deploy auth token
-	*/
-	@Override
-	public long getUserId() {
-		return _weDeployAuthToken.getUserId();
-	}
-
 	/**
 	* Returns the we deploy auth token ID of this we deploy auth token.
 	*
@@ -301,6 +256,26 @@ public class WeDeployAuthTokenWrapper implements WeDeployAuthToken,
 	@Override
 	public long getWeDeployAuthTokenId() {
 		return _weDeployAuthToken.getWeDeployAuthTokenId();
+	}
+
+	@Override
+	public int hashCode() {
+		return _weDeployAuthToken.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _weDeployAuthToken.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _weDeployAuthToken.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _weDeployAuthToken.isNew();
 	}
 
 	@Override
@@ -447,6 +422,31 @@ public class WeDeployAuthTokenWrapper implements WeDeployAuthToken,
 	@Override
 	public void setWeDeployAuthTokenId(long weDeployAuthTokenId) {
 		_weDeployAuthToken.setWeDeployAuthTokenId(weDeployAuthTokenId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<WeDeployAuthToken> toCacheModel() {
+		return _weDeployAuthToken.toCacheModel();
+	}
+
+	@Override
+	public WeDeployAuthToken toEscapedModel() {
+		return new WeDeployAuthTokenWrapper(_weDeployAuthToken.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _weDeployAuthToken.toString();
+	}
+
+	@Override
+	public WeDeployAuthToken toUnescapedModel() {
+		return new WeDeployAuthTokenWrapper(_weDeployAuthToken.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _weDeployAuthToken.toXmlString();
 	}
 
 	@Override

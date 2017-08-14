@@ -49,13 +49,6 @@ public interface ResourcePermissionService extends BaseService {
 	 */
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	/**
 	* Grants the role permission at the scope to perform the action on
 	* resources of the type. Existing actions are retained.
 	*
@@ -94,6 +87,13 @@ public interface ResourcePermissionService extends BaseService {
 	public void addResourcePermission(long groupId, long companyId,
 		java.lang.String name, int scope, java.lang.String primKey,
 		long roleId, java.lang.String actionId) throws PortalException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Revokes permission at the scope from the role to perform the action on

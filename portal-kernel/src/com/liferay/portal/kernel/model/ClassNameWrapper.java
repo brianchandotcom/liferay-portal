@@ -84,58 +84,13 @@ public class ClassNameWrapper implements ClassName, ModelWrapper<ClassName> {
 	}
 
 	@Override
-	public CacheModel<ClassName> toCacheModel() {
-		return _className.toCacheModel();
-	}
-
-	@Override
-	public ClassName toEscapedModel() {
-		return new ClassNameWrapper(_className.toEscapedModel());
-	}
-
-	@Override
-	public ClassName toUnescapedModel() {
-		return new ClassNameWrapper(_className.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _className.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _className.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _className.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _className.getExpandoBridge();
+	public java.lang.Object clone() {
+		return new ClassNameWrapper((ClassName)_className.clone());
 	}
 
 	@Override
 	public int compareTo(ClassName className) {
 		return _className.compareTo(className);
-	}
-
-	@Override
-	public int hashCode() {
-		return _className.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _className.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new ClassNameWrapper((ClassName)_className.clone());
 	}
 
 	/**
@@ -149,26 +104,6 @@ public class ClassNameWrapper implements ClassName, ModelWrapper<ClassName> {
 	}
 
 	/**
-	* Returns the value of this class name.
-	*
-	* @return the value of this class name
-	*/
-	@Override
-	public java.lang.String getValue() {
-		return _className.getValue();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _className.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _className.toXmlString();
-	}
-
-	/**
 	* Returns the class name ID of this class name.
 	*
 	* @return the class name ID of this class name
@@ -176,6 +111,11 @@ public class ClassNameWrapper implements ClassName, ModelWrapper<ClassName> {
 	@Override
 	public long getClassNameId() {
 		return _className.getClassNameId();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _className.getExpandoBridge();
 	}
 
 	/**
@@ -196,6 +136,41 @@ public class ClassNameWrapper implements ClassName, ModelWrapper<ClassName> {
 	@Override
 	public long getPrimaryKey() {
 		return _className.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _className.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the value of this class name.
+	*
+	* @return the value of this class name
+	*/
+	@Override
+	public java.lang.String getValue() {
+		return _className.getValue();
+	}
+
+	@Override
+	public int hashCode() {
+		return _className.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _className.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _className.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _className.isNew();
 	}
 
 	@Override
@@ -224,13 +199,13 @@ public class ClassNameWrapper implements ClassName, ModelWrapper<ClassName> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_className.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_className.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_className.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
+		_className.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -276,6 +251,31 @@ public class ClassNameWrapper implements ClassName, ModelWrapper<ClassName> {
 	@Override
 	public void setValue(java.lang.String value) {
 		_className.setValue(value);
+	}
+
+	@Override
+	public CacheModel<ClassName> toCacheModel() {
+		return _className.toCacheModel();
+	}
+
+	@Override
+	public ClassName toEscapedModel() {
+		return new ClassNameWrapper(_className.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _className.toString();
+	}
+
+	@Override
+	public ClassName toUnescapedModel() {
+		return new ClassNameWrapper(_className.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _className.toXmlString();
 	}
 
 	@Override

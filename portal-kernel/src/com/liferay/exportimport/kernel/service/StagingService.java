@@ -55,9 +55,26 @@ public interface StagingService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link StagingServiceUtil} to access the staging remote service. Add custom service methods to {@link com.liferay.portlet.exportimport.service.impl.StagingServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public void cleanUpStagingRequest(long stagingRequestId)
+		throws PortalException;
+
+	public long createStagingRequest(long groupId, java.lang.String checksum)
+		throws PortalException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasRemoteLayout(java.lang.String uuid, long groupId,
 		boolean privateLayout) throws PortalException;
+
+	public void propagateExportImportLifecycleEvent(int code, int processFlag,
+		java.lang.String processId, List<Serializable> arguments)
+		throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, with no direct replacement
@@ -72,6 +89,9 @@ public interface StagingService extends BaseService {
 		ExportImportConfiguration exportImportConfiguration)
 		throws PortalException;
 
+	public void updateStagingRequest(long stagingRequestId,
+		java.lang.String fileName, byte[] bytes) throws PortalException;
+
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #publishStagingRequest(long,
 	boolean, Map)}
@@ -81,24 +101,4 @@ public interface StagingService extends BaseService {
 		boolean privateLayout,
 		Map<java.lang.String, java.lang.String[]> parameterMap)
 		throws PortalException;
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	public long createStagingRequest(long groupId, java.lang.String checksum)
-		throws PortalException;
-
-	public void cleanUpStagingRequest(long stagingRequestId)
-		throws PortalException;
-
-	public void propagateExportImportLifecycleEvent(int code, int processFlag,
-		java.lang.String processId, List<Serializable> arguments)
-		throws PortalException;
-
-	public void updateStagingRequest(long stagingRequestId,
-		java.lang.String fileName, byte[] bytes) throws PortalException;
 }

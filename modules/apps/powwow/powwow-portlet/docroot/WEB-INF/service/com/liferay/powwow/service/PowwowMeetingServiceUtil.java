@@ -62,10 +62,35 @@ public class PowwowMeetingServiceUtil {
 		return getService().deletePowwowMeeting(powwowMeetingId);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
 	public static com.liferay.powwow.model.PowwowMeeting getPowwowMeeting(
 		long powwowMeetingId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPowwowMeeting(powwowMeetingId);
+	}
+
+	public static java.util.List<com.liferay.powwow.model.PowwowMeeting> getPowwowMeetings(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc) {
+		return getService().getPowwowMeetings(groupId, start, end, obc);
+	}
+
+	public static int getPowwowMeetingsCount(long groupId) {
+		return getService().getPowwowMeetingsCount(groupId);
+	}
+
+	public static java.lang.Object invokeMethod(java.lang.String name,
+		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
+		throws java.lang.Throwable {
+		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
 	public static com.liferay.powwow.model.PowwowMeeting updatePowwowMeeting(
@@ -80,31 +105,6 @@ public class PowwowMeetingServiceUtil {
 				   .updatePowwowMeeting(powwowMeetingId, powwowServerId, name,
 			description, providerType, providerTypeMetadataMap, languageId,
 			calendarBookingId, status, powwowParticipants, serviceContext);
-	}
-
-	public static int getPowwowMeetingsCount(long groupId) {
-		return getService().getPowwowMeetingsCount(groupId);
-	}
-
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static java.util.List<com.liferay.powwow.model.PowwowMeeting> getPowwowMeetings(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc) {
-		return getService().getPowwowMeetings(groupId, start, end, obc);
 	}
 
 	public static void clearService() {

@@ -35,17 +35,10 @@ public class ExportImportConfigurationServiceWrapper
 	}
 
 	@Override
-	public com.liferay.exportimport.kernel.model.ExportImportConfiguration moveExportImportConfigurationToTrash(
+	public void deleteExportImportConfiguration(
 		long exportImportConfigurationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _exportImportConfigurationService.moveExportImportConfigurationToTrash(exportImportConfigurationId);
-	}
-
-	@Override
-	public com.liferay.exportimport.kernel.model.ExportImportConfiguration restoreExportImportConfigurationFromTrash(
-		long exportImportConfigurationId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _exportImportConfigurationService.restoreExportImportConfigurationFromTrash(exportImportConfigurationId);
+		_exportImportConfigurationService.deleteExportImportConfiguration(exportImportConfigurationId);
 	}
 
 	/**
@@ -59,10 +52,17 @@ public class ExportImportConfigurationServiceWrapper
 	}
 
 	@Override
-	public void deleteExportImportConfiguration(
+	public com.liferay.exportimport.kernel.model.ExportImportConfiguration moveExportImportConfigurationToTrash(
 		long exportImportConfigurationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_exportImportConfigurationService.deleteExportImportConfiguration(exportImportConfigurationId);
+		return _exportImportConfigurationService.moveExportImportConfigurationToTrash(exportImportConfigurationId);
+	}
+
+	@Override
+	public com.liferay.exportimport.kernel.model.ExportImportConfiguration restoreExportImportConfigurationFromTrash(
+		long exportImportConfigurationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _exportImportConfigurationService.restoreExportImportConfigurationFromTrash(exportImportConfigurationId);
 	}
 
 	@Override

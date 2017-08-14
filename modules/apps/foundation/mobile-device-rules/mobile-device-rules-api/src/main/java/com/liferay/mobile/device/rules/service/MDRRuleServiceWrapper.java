@@ -58,9 +58,25 @@ public class MDRRuleServiceWrapper implements MDRRuleService,
 	}
 
 	@Override
+	public void deleteRule(long ruleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_mdrRuleService.deleteRule(ruleId);
+	}
+
+	@Override
 	public com.liferay.mobile.device.rules.model.MDRRule fetchRule(long ruleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrRuleService.fetchRule(ruleId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _mdrRuleService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -90,22 +106,6 @@ public class MDRRuleServiceWrapper implements MDRRuleService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrRuleService.updateRule(ruleId, nameMap, descriptionMap,
 			type, typeSettings, serviceContext);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _mdrRuleService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public void deleteRule(long ruleId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_mdrRuleService.deleteRule(ruleId);
 	}
 
 	@Override

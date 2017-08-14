@@ -66,9 +66,23 @@ public class MDRRuleServiceUtil {
 			typeSettings, serviceContext);
 	}
 
+	public static void deleteRule(long ruleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteRule(ruleId);
+	}
+
 	public static com.liferay.mobile.device.rules.model.MDRRule fetchRule(
 		long ruleId) throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().fetchRule(ruleId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static com.liferay.mobile.device.rules.model.MDRRule getRule(
@@ -97,20 +111,6 @@ public class MDRRuleServiceUtil {
 		return getService()
 				   .updateRule(ruleId, nameMap, descriptionMap, type,
 			typeSettings, serviceContext);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static void deleteRule(long ruleId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteRule(ruleId);
 	}
 
 	public static MDRRuleService getService() {

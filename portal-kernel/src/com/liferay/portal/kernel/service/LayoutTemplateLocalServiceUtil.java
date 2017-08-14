@@ -40,26 +40,17 @@ public class LayoutTemplateLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.LayoutTemplateLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.model.LayoutTemplate getLayoutTemplate(
-		java.lang.String layoutTemplateId, boolean standard,
-		java.lang.String themeId) {
-		return getService()
-				   .getLayoutTemplate(layoutTemplateId, standard, themeId);
-	}
-
 	public static java.lang.String getContent(
 		java.lang.String layoutTemplateId, boolean standard,
 		java.lang.String themeId) {
 		return getService().getContent(layoutTemplateId, standard, themeId);
 	}
 
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+	public static com.liferay.portal.kernel.model.LayoutTemplate getLayoutTemplate(
+		java.lang.String layoutTemplateId, boolean standard,
+		java.lang.String themeId) {
+		return getService()
+				   .getLayoutTemplate(layoutTemplateId, standard, themeId);
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.LayoutTemplate> getLayoutTemplates() {
@@ -69,6 +60,15 @@ public class LayoutTemplateLocalServiceUtil {
 	public static java.util.List<com.liferay.portal.kernel.model.LayoutTemplate> getLayoutTemplates(
 		java.lang.String themeId) {
 		return getService().getLayoutTemplates(themeId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.LayoutTemplate> init(

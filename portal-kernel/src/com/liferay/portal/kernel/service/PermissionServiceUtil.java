@@ -42,15 +42,6 @@ public class PermissionServiceUtil {
 	 */
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	/**
 	* Checks to see if the group has permission to the service.
 	*
 	* @param groupId the primary key of the group
@@ -74,6 +65,15 @@ public class PermissionServiceUtil {
 		long primKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().checkPermission(groupId, name, primKey);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static PermissionService getService() {

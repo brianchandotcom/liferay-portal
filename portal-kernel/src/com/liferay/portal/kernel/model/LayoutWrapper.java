@@ -281,8 +281,93 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	}
 
 	@Override
-	public CacheModel<Layout> toCacheModel() {
-		return _layout.toCacheModel();
+	public java.lang.Object clone() {
+		return new LayoutWrapper((Layout)_layout.clone());
+	}
+
+	@Override
+	public int compareTo(Layout layout) {
+		return _layout.compareTo(layout);
+	}
+
+	/**
+	* Returns all layouts that are direct or indirect children of the current
+	* layout.
+	*
+	* @return the layouts that are direct or indirect children of the current
+	layout
+	*/
+	@Override
+	public java.util.List<Layout> getAllChildren() {
+		return _layout.getAllChildren();
+	}
+
+	/**
+	* Returns the ID of the topmost parent layout (e.g. n-th parent layout) of
+	* the current layout.
+	*
+	* @return the ID of the topmost parent layout of the current layout
+	*/
+	@Override
+	public long getAncestorLayoutId()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layout.getAncestorLayoutId();
+	}
+
+	/**
+	* Returns the plid of the topmost parent layout (e.g. n-th parent layout)
+	* of the current layout.
+	*
+	* @return the plid of the topmost parent layout of the current layout
+	*/
+	@Override
+	public long getAncestorPlid()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layout.getAncestorPlid();
+	}
+
+	/**
+	* Returns all parent layouts of the current layout. The list is retrieved
+	* recursively with the direct parent layout listed first, and most distant
+	* parent listed last.
+	*
+	* @return the current layout's list of parent layouts
+	*/
+	@Override
+	public java.util.List<Layout> getAncestors()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layout.getAncestors();
+	}
+
+	@Override
+	public java.lang.String[] getAvailableLanguageIds() {
+		return _layout.getAvailableLanguageIds();
+	}
+
+	/**
+	* Returns all child layouts of the current layout, independent of user
+	* access permissions.
+	*
+	* @return the list of all child layouts
+	*/
+	@Override
+	public java.util.List<Layout> getChildren() {
+		return _layout.getChildren();
+	}
+
+	/**
+	* Returns all child layouts of the current layout that the user has
+	* permission to access.
+	*
+	* @param permissionChecker the user-specific context to check permissions
+	* @return the list of all child layouts that the user has permission to
+	access
+	*/
+	@Override
+	public java.util.List<Layout> getChildren(
+		com.liferay.portal.kernel.security.permission.PermissionChecker permissionChecker)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layout.getChildren(permissionChecker);
 	}
 
 	/**
@@ -301,6 +386,204 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	}
 
 	/**
+	* Returns the color scheme ID of this layout.
+	*
+	* @return the color scheme ID of this layout
+	*/
+	@Override
+	public java.lang.String getColorSchemeId() {
+		return _layout.getColorSchemeId();
+	}
+
+	/**
+	* Returns the company ID of this layout.
+	*
+	* @return the company ID of this layout
+	*/
+	@Override
+	public long getCompanyId() {
+		return _layout.getCompanyId();
+	}
+
+	/**
+	* Returns the create date of this layout.
+	*
+	* @return the create date of this layout
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _layout.getCreateDate();
+	}
+
+	/**
+	* Returns the css of this layout.
+	*
+	* @return the css of this layout
+	*/
+	@Override
+	public java.lang.String getCss() {
+		return _layout.getCss();
+	}
+
+	/**
+	* Returns the CSS text for the current layout, or for the layout set if no
+	* CSS text is configured in the current layout.
+	*
+	* <p>
+	* Layouts and layout sets can configure CSS that is applied in addition to
+	* the theme's CSS.
+	* </p>
+	*
+	* @return the CSS text for the current layout, or for the layout set if no
+	CSS text is configured in the current layout
+	*/
+	@Override
+	public java.lang.String getCssText()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layout.getCssText();
+	}
+
+	@Override
+	public java.lang.String getDefaultLanguageId() {
+		return _layout.getDefaultLanguageId();
+	}
+
+	@Override
+	public java.lang.String getDefaultThemeSetting(java.lang.String key,
+		java.lang.String device, boolean inheritLookAndFeel) {
+		return _layout.getDefaultThemeSetting(key, device, inheritLookAndFeel);
+	}
+
+	/**
+	* Returns the description of this layout.
+	*
+	* @return the description of this layout
+	*/
+	@Override
+	public java.lang.String getDescription() {
+		return _layout.getDescription();
+	}
+
+	/**
+	* Returns the localized description of this layout in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized description of this layout
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId) {
+		return _layout.getDescription(languageId);
+	}
+
+	/**
+	* Returns the localized description of this layout in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized description of this layout
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId,
+		boolean useDefault) {
+		return _layout.getDescription(languageId, useDefault);
+	}
+
+	/**
+	* Returns the localized description of this layout in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized description of this layout
+	*/
+	@Override
+	public java.lang.String getDescription(java.util.Locale locale) {
+		return _layout.getDescription(locale);
+	}
+
+	/**
+	* Returns the localized description of this layout in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized description of this layout. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getDescription(java.util.Locale locale,
+		boolean useDefault) {
+		return _layout.getDescription(locale, useDefault);
+	}
+
+	@Override
+	public java.lang.String getDescriptionCurrentLanguageId() {
+		return _layout.getDescriptionCurrentLanguageId();
+	}
+
+	@Override
+	public java.lang.String getDescriptionCurrentValue() {
+		return _layout.getDescriptionCurrentValue();
+	}
+
+	/**
+	* Returns a map of the locales and localized descriptions of this layout.
+	*
+	* @return the locales and localized descriptions of this layout
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+		return _layout.getDescriptionMap();
+	}
+
+	@Override
+	public java.util.List<Portlet> getEmbeddedPortlets() {
+		return _layout.getEmbeddedPortlets();
+	}
+
+	@Override
+	public java.util.List<Portlet> getEmbeddedPortlets(long groupId) {
+		return _layout.getEmbeddedPortlets(groupId);
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _layout.getExpandoBridge();
+	}
+
+	/**
+	* Returns the friendly url of this layout.
+	*
+	* @return the friendly url of this layout
+	*/
+	@Override
+	public java.lang.String getFriendlyURL() {
+		return _layout.getFriendlyURL();
+	}
+
+	/**
+	* Returns the layout's friendly URL for the given locale.
+	*
+	* @param locale the locale that the friendly URL should be retrieved for
+	* @return the layout's friendly URL for the given locale
+	*/
+	@Override
+	public java.lang.String getFriendlyURL(java.util.Locale locale) {
+		return _layout.getFriendlyURL(locale);
+	}
+
+	/**
+	* Returns the friendly URLs for all configured locales.
+	*
+	* @return the friendly URLs for all configured locales
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getFriendlyURLMap() {
+		return _layout.getFriendlyURLMap();
+	}
+
+	@Override
+	public java.lang.String getFriendlyURLsXML() {
+		return _layout.getFriendlyURLsXML();
+	}
+
+	/**
 	* Returns the current layout's group.
 	*
 	* <p>
@@ -314,53 +597,43 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 		return _layout.getGroup();
 	}
 
+	/**
+	* Returns the group ID of this layout.
+	*
+	* @return the group ID of this layout
+	*/
 	@Override
-	public Group getScopeGroup()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layout.getScopeGroup();
-	}
-
-	@Override
-	public Layout toEscapedModel() {
-		return new LayoutWrapper(_layout.toEscapedModel());
-	}
-
-	@Override
-	public Layout toUnescapedModel() {
-		return new LayoutWrapper(_layout.toUnescapedModel());
+	public long getGroupId() {
+		return _layout.getGroupId();
 	}
 
 	/**
-	* Returns the current layout's {@link LayoutSet}.
+	* Returns the current layout's HTML title for the given locale language ID,
+	* or the current layout's name if no HTML title is configured.
 	*
-	* @return the current layout's layout set
+	* @param localeLanguageId the locale that the HTML title should be
+	retrieved for
+	* @return the current layout's HTML title for the given locale language ID,
+	or the current layout's name if no HTML title is configured
 	*/
 	@Override
-	public LayoutSet getLayoutSet() {
-		return _layout.getLayoutSet();
+	public java.lang.String getHTMLTitle(java.lang.String localeLanguageId) {
+		return _layout.getHTMLTitle(localeLanguageId);
 	}
 
 	/**
-	* Returns the current layout's {@link LayoutType}.
+	* Returns the current layout's HTML title for the given locale, or the
+	* current layout's name for the given locale if no HTML title is
+	* configured.
 	*
-	* @return the current layout's layout type
+	* @param locale the locale that the HTML title should be retrieved for
+	* @return the current layout's HTML title for the given locale, or the
+	current layout's name for the given locale if no HTML title is
+	configured
 	*/
 	@Override
-	public LayoutType getLayoutType() {
-		return _layout.getLayoutType();
-	}
-
-	/**
-	* Returns the current layout's theme, or the layout set's theme if no
-	* layout theme is configured.
-	*
-	* @return the current layout's theme, or the layout set's theme if no
-	layout theme is configured
-	*/
-	@Override
-	public Theme getTheme()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layout.getTheme();
+	public java.lang.String getHTMLTitle(java.util.Locale locale) {
+		return _layout.getHTMLTitle(locale);
 	}
 
 	/**
@@ -385,6 +658,114 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	}
 
 	/**
+	* Returns the icon image ID of this layout.
+	*
+	* @return the icon image ID of this layout
+	*/
+	@Override
+	public long getIconImageId() {
+		return _layout.getIconImageId();
+	}
+
+	/**
+	* Returns the keywords of this layout.
+	*
+	* @return the keywords of this layout
+	*/
+	@Override
+	public java.lang.String getKeywords() {
+		return _layout.getKeywords();
+	}
+
+	/**
+	* Returns the localized keywords of this layout in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized keywords of this layout
+	*/
+	@Override
+	public java.lang.String getKeywords(java.lang.String languageId) {
+		return _layout.getKeywords(languageId);
+	}
+
+	/**
+	* Returns the localized keywords of this layout in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized keywords of this layout
+	*/
+	@Override
+	public java.lang.String getKeywords(java.lang.String languageId,
+		boolean useDefault) {
+		return _layout.getKeywords(languageId, useDefault);
+	}
+
+	/**
+	* Returns the localized keywords of this layout in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized keywords of this layout
+	*/
+	@Override
+	public java.lang.String getKeywords(java.util.Locale locale) {
+		return _layout.getKeywords(locale);
+	}
+
+	/**
+	* Returns the localized keywords of this layout in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized keywords of this layout. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getKeywords(java.util.Locale locale,
+		boolean useDefault) {
+		return _layout.getKeywords(locale, useDefault);
+	}
+
+	@Override
+	public java.lang.String getKeywordsCurrentLanguageId() {
+		return _layout.getKeywordsCurrentLanguageId();
+	}
+
+	@Override
+	public java.lang.String getKeywordsCurrentValue() {
+		return _layout.getKeywordsCurrentValue();
+	}
+
+	/**
+	* Returns a map of the locales and localized keywordses of this layout.
+	*
+	* @return the locales and localized keywordses of this layout
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getKeywordsMap() {
+		return _layout.getKeywordsMap();
+	}
+
+	/**
+	* Returns the last publish date of this layout.
+	*
+	* @return the last publish date of this layout
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _layout.getLastPublishDate();
+	}
+
+	/**
+	* Returns the layout ID of this layout.
+	*
+	* @return the layout ID of this layout
+	*/
+	@Override
+	public long getLayoutId() {
+		return _layout.getLayoutId();
+	}
+
+	/**
 	* Returns the layout prototype link enabled of this layout.
 	*
 	* @return the layout prototype link enabled of this layout
@@ -395,6 +776,201 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	}
 
 	/**
+	* Returns the layout prototype uuid of this layout.
+	*
+	* @return the layout prototype uuid of this layout
+	*/
+	@Override
+	public java.lang.String getLayoutPrototypeUuid() {
+		return _layout.getLayoutPrototypeUuid();
+	}
+
+	/**
+	* Returns the current layout's {@link LayoutSet}.
+	*
+	* @return the current layout's layout set
+	*/
+	@Override
+	public LayoutSet getLayoutSet() {
+		return _layout.getLayoutSet();
+	}
+
+	/**
+	* Returns the current layout's {@link LayoutType}.
+	*
+	* @return the current layout's layout type
+	*/
+	@Override
+	public LayoutType getLayoutType() {
+		return _layout.getLayoutType();
+	}
+
+	/**
+	* Returns the current layout's linked layout.
+	*
+	* @return the current layout's linked layout, or <code>null</code> if no
+	linked layout could be found
+	*/
+	@Override
+	public Layout getLinkedToLayout() {
+		return _layout.getLinkedToLayout();
+	}
+
+	/**
+	* Returns the modified date of this layout.
+	*
+	* @return the modified date of this layout
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _layout.getModifiedDate();
+	}
+
+	/**
+	* Returns the mvcc version of this layout.
+	*
+	* @return the mvcc version of this layout
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _layout.getMvccVersion();
+	}
+
+	/**
+	* Returns the name of this layout.
+	*
+	* @return the name of this layout
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _layout.getName();
+	}
+
+	/**
+	* Returns the localized name of this layout in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized name of this layout
+	*/
+	@Override
+	public java.lang.String getName(java.lang.String languageId) {
+		return _layout.getName(languageId);
+	}
+
+	/**
+	* Returns the localized name of this layout in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized name of this layout
+	*/
+	@Override
+	public java.lang.String getName(java.lang.String languageId,
+		boolean useDefault) {
+		return _layout.getName(languageId, useDefault);
+	}
+
+	/**
+	* Returns the localized name of this layout in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized name of this layout
+	*/
+	@Override
+	public java.lang.String getName(java.util.Locale locale) {
+		return _layout.getName(locale);
+	}
+
+	/**
+	* Returns the localized name of this layout in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized name of this layout. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
+		return _layout.getName(locale, useDefault);
+	}
+
+	@Override
+	public java.lang.String getNameCurrentLanguageId() {
+		return _layout.getNameCurrentLanguageId();
+	}
+
+	@Override
+	public java.lang.String getNameCurrentValue() {
+		return _layout.getNameCurrentValue();
+	}
+
+	/**
+	* Returns a map of the locales and localized names of this layout.
+	*
+	* @return the locales and localized names of this layout
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getNameMap() {
+		return _layout.getNameMap();
+	}
+
+	/**
+	* Returns the parent layout ID of this layout.
+	*
+	* @return the parent layout ID of this layout
+	*/
+	@Override
+	public long getParentLayoutId() {
+		return _layout.getParentLayoutId();
+	}
+
+	/**
+	* Returns the current layout's parent plid.
+	*
+	* @return the current layout's parent plid, or <code>0</code> if the
+	current layout is the topmost parent layout
+	*/
+	@Override
+	public long getParentPlid()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layout.getParentPlid();
+	}
+
+	/**
+	* Returns the plid of this layout.
+	*
+	* @return the plid of this layout
+	*/
+	@Override
+	public long getPlid() {
+		return _layout.getPlid();
+	}
+
+	/**
+	* Returns the primary key of this layout.
+	*
+	* @return the primary key of this layout
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _layout.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _layout.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the priority of this layout.
+	*
+	* @return the priority of this layout
+	*/
+	@Override
+	public int getPriority() {
+		return _layout.getPriority();
+	}
+
+	/**
 	* Returns the private layout of this layout.
 	*
 	* @return the private layout of this layout
@@ -402,6 +978,314 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	@Override
 	public boolean getPrivateLayout() {
 		return _layout.getPrivateLayout();
+	}
+
+	@Override
+	public java.lang.String getRegularURL(
+		javax.servlet.http.HttpServletRequest request)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layout.getRegularURL(request);
+	}
+
+	@Override
+	public java.lang.String getResetLayoutURL(
+		javax.servlet.http.HttpServletRequest request)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layout.getResetLayoutURL(request);
+	}
+
+	@Override
+	public java.lang.String getResetMaxStateURL(
+		javax.servlet.http.HttpServletRequest request)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layout.getResetMaxStateURL(request);
+	}
+
+	/**
+	* Returns the robots of this layout.
+	*
+	* @return the robots of this layout
+	*/
+	@Override
+	public java.lang.String getRobots() {
+		return _layout.getRobots();
+	}
+
+	/**
+	* Returns the localized robots of this layout in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized robots of this layout
+	*/
+	@Override
+	public java.lang.String getRobots(java.lang.String languageId) {
+		return _layout.getRobots(languageId);
+	}
+
+	/**
+	* Returns the localized robots of this layout in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized robots of this layout
+	*/
+	@Override
+	public java.lang.String getRobots(java.lang.String languageId,
+		boolean useDefault) {
+		return _layout.getRobots(languageId, useDefault);
+	}
+
+	/**
+	* Returns the localized robots of this layout in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized robots of this layout
+	*/
+	@Override
+	public java.lang.String getRobots(java.util.Locale locale) {
+		return _layout.getRobots(locale);
+	}
+
+	/**
+	* Returns the localized robots of this layout in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized robots of this layout. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getRobots(java.util.Locale locale,
+		boolean useDefault) {
+		return _layout.getRobots(locale, useDefault);
+	}
+
+	@Override
+	public java.lang.String getRobotsCurrentLanguageId() {
+		return _layout.getRobotsCurrentLanguageId();
+	}
+
+	@Override
+	public java.lang.String getRobotsCurrentValue() {
+		return _layout.getRobotsCurrentValue();
+	}
+
+	/**
+	* Returns a map of the locales and localized robotses of this layout.
+	*
+	* @return the locales and localized robotses of this layout
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getRobotsMap() {
+		return _layout.getRobotsMap();
+	}
+
+	@Override
+	public Group getScopeGroup()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layout.getScopeGroup();
+	}
+
+	/**
+	* Returns the source prototype layout uuid of this layout.
+	*
+	* @return the source prototype layout uuid of this layout
+	*/
+	@Override
+	public java.lang.String getSourcePrototypeLayoutUuid() {
+		return _layout.getSourcePrototypeLayoutUuid();
+	}
+
+	@Override
+	public java.lang.String getTarget() {
+		return _layout.getTarget();
+	}
+
+	/**
+	* Returns the current layout's theme, or the layout set's theme if no
+	* layout theme is configured.
+	*
+	* @return the current layout's theme, or the layout set's theme if no
+	layout theme is configured
+	*/
+	@Override
+	public Theme getTheme()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layout.getTheme();
+	}
+
+	/**
+	* Returns the theme ID of this layout.
+	*
+	* @return the theme ID of this layout
+	*/
+	@Override
+	public java.lang.String getThemeId() {
+		return _layout.getThemeId();
+	}
+
+	@Override
+	public java.lang.String getThemeSetting(java.lang.String key,
+		java.lang.String device) {
+		return _layout.getThemeSetting(key, device);
+	}
+
+	@Override
+	public java.lang.String getThemeSetting(java.lang.String key,
+		java.lang.String device, boolean inheritLookAndFeel) {
+		return _layout.getThemeSetting(key, device, inheritLookAndFeel);
+	}
+
+	/**
+	* Returns the title of this layout.
+	*
+	* @return the title of this layout
+	*/
+	@Override
+	public java.lang.String getTitle() {
+		return _layout.getTitle();
+	}
+
+	/**
+	* Returns the localized title of this layout in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized title of this layout
+	*/
+	@Override
+	public java.lang.String getTitle(java.lang.String languageId) {
+		return _layout.getTitle(languageId);
+	}
+
+	/**
+	* Returns the localized title of this layout in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized title of this layout
+	*/
+	@Override
+	public java.lang.String getTitle(java.lang.String languageId,
+		boolean useDefault) {
+		return _layout.getTitle(languageId, useDefault);
+	}
+
+	/**
+	* Returns the localized title of this layout in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized title of this layout
+	*/
+	@Override
+	public java.lang.String getTitle(java.util.Locale locale) {
+		return _layout.getTitle(locale);
+	}
+
+	/**
+	* Returns the localized title of this layout in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized title of this layout. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
+		return _layout.getTitle(locale, useDefault);
+	}
+
+	@Override
+	public java.lang.String getTitleCurrentLanguageId() {
+		return _layout.getTitleCurrentLanguageId();
+	}
+
+	@Override
+	public java.lang.String getTitleCurrentValue() {
+		return _layout.getTitleCurrentValue();
+	}
+
+	/**
+	* Returns a map of the locales and localized titles of this layout.
+	*
+	* @return the locales and localized titles of this layout
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getTitleMap() {
+		return _layout.getTitleMap();
+	}
+
+	/**
+	* Returns the type of this layout.
+	*
+	* @return the type of this layout
+	*/
+	@Override
+	public java.lang.String getType() {
+		return _layout.getType();
+	}
+
+	/**
+	* Returns the type settings of this layout.
+	*
+	* @return the type settings of this layout
+	*/
+	@Override
+	public java.lang.String getTypeSettings() {
+		return _layout.getTypeSettings();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties() {
+		return _layout.getTypeSettingsProperties();
+	}
+
+	@Override
+	public java.lang.String getTypeSettingsProperty(java.lang.String key) {
+		return _layout.getTypeSettingsProperty(key);
+	}
+
+	@Override
+	public java.lang.String getTypeSettingsProperty(java.lang.String key,
+		java.lang.String defaultValue) {
+		return _layout.getTypeSettingsProperty(key, defaultValue);
+	}
+
+	/**
+	* Returns the user ID of this layout.
+	*
+	* @return the user ID of this layout
+	*/
+	@Override
+	public long getUserId() {
+		return _layout.getUserId();
+	}
+
+	/**
+	* Returns the user name of this layout.
+	*
+	* @return the user name of this layout
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _layout.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this layout.
+	*
+	* @return the user uuid of this layout
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _layout.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this layout.
+	*
+	* @return the uuid of this layout
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _layout.getUuid();
 	}
 
 	/**
@@ -440,6 +1324,11 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	@Override
 	public boolean hasSetModifiedDate() {
 		return _layout.hasSetModifiedDate();
+	}
+
+	@Override
+	public int hashCode() {
+		return _layout.hashCode();
 	}
 
 	@Override
@@ -680,920 +1569,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	}
 
 	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _layout.getExpandoBridge();
-	}
-
-	/**
-	* Returns the current layout's linked layout.
-	*
-	* @return the current layout's linked layout, or <code>null</code> if no
-	linked layout could be found
-	*/
-	@Override
-	public Layout getLinkedToLayout() {
-		return _layout.getLinkedToLayout();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties() {
-		return _layout.getTypeSettingsProperties();
-	}
-
-	@Override
-	public int compareTo(Layout layout) {
-		return _layout.compareTo(layout);
-	}
-
-	/**
-	* Returns the priority of this layout.
-	*
-	* @return the priority of this layout
-	*/
-	@Override
-	public int getPriority() {
-		return _layout.getPriority();
-	}
-
-	@Override
-	public int hashCode() {
-		return _layout.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _layout.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new LayoutWrapper((Layout)_layout.clone());
-	}
-
-	/**
-	* Returns the color scheme ID of this layout.
-	*
-	* @return the color scheme ID of this layout
-	*/
-	@Override
-	public java.lang.String getColorSchemeId() {
-		return _layout.getColorSchemeId();
-	}
-
-	/**
-	* Returns the css of this layout.
-	*
-	* @return the css of this layout
-	*/
-	@Override
-	public java.lang.String getCss() {
-		return _layout.getCss();
-	}
-
-	/**
-	* Returns the CSS text for the current layout, or for the layout set if no
-	* CSS text is configured in the current layout.
-	*
-	* <p>
-	* Layouts and layout sets can configure CSS that is applied in addition to
-	* the theme's CSS.
-	* </p>
-	*
-	* @return the CSS text for the current layout, or for the layout set if no
-	CSS text is configured in the current layout
-	*/
-	@Override
-	public java.lang.String getCssText()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layout.getCssText();
-	}
-
-	@Override
-	public java.lang.String getDefaultLanguageId() {
-		return _layout.getDefaultLanguageId();
-	}
-
-	@Override
-	public java.lang.String getDefaultThemeSetting(java.lang.String key,
-		java.lang.String device, boolean inheritLookAndFeel) {
-		return _layout.getDefaultThemeSetting(key, device, inheritLookAndFeel);
-	}
-
-	/**
-	* Returns the description of this layout.
-	*
-	* @return the description of this layout
-	*/
-	@Override
-	public java.lang.String getDescription() {
-		return _layout.getDescription();
-	}
-
-	/**
-	* Returns the localized description of this layout in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @return the localized description of this layout
-	*/
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId) {
-		return _layout.getDescription(languageId);
-	}
-
-	/**
-	* Returns the localized description of this layout in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized description of this layout
-	*/
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId,
-		boolean useDefault) {
-		return _layout.getDescription(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized description of this layout in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized description of this layout
-	*/
-	@Override
-	public java.lang.String getDescription(java.util.Locale locale) {
-		return _layout.getDescription(locale);
-	}
-
-	/**
-	* Returns the localized description of this layout in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized description of this layout. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getDescription(java.util.Locale locale,
-		boolean useDefault) {
-		return _layout.getDescription(locale, useDefault);
-	}
-
-	@Override
-	public java.lang.String getDescriptionCurrentLanguageId() {
-		return _layout.getDescriptionCurrentLanguageId();
-	}
-
-	@Override
-	public java.lang.String getDescriptionCurrentValue() {
-		return _layout.getDescriptionCurrentValue();
-	}
-
-	/**
-	* Returns the friendly url of this layout.
-	*
-	* @return the friendly url of this layout
-	*/
-	@Override
-	public java.lang.String getFriendlyURL() {
-		return _layout.getFriendlyURL();
-	}
-
-	/**
-	* Returns the layout's friendly URL for the given locale.
-	*
-	* @param locale the locale that the friendly URL should be retrieved for
-	* @return the layout's friendly URL for the given locale
-	*/
-	@Override
-	public java.lang.String getFriendlyURL(java.util.Locale locale) {
-		return _layout.getFriendlyURL(locale);
-	}
-
-	@Override
-	public java.lang.String getFriendlyURLsXML() {
-		return _layout.getFriendlyURLsXML();
-	}
-
-	/**
-	* Returns the current layout's HTML title for the given locale language ID,
-	* or the current layout's name if no HTML title is configured.
-	*
-	* @param localeLanguageId the locale that the HTML title should be
-	retrieved for
-	* @return the current layout's HTML title for the given locale language ID,
-	or the current layout's name if no HTML title is configured
-	*/
-	@Override
-	public java.lang.String getHTMLTitle(java.lang.String localeLanguageId) {
-		return _layout.getHTMLTitle(localeLanguageId);
-	}
-
-	/**
-	* Returns the current layout's HTML title for the given locale, or the
-	* current layout's name for the given locale if no HTML title is
-	* configured.
-	*
-	* @param locale the locale that the HTML title should be retrieved for
-	* @return the current layout's HTML title for the given locale, or the
-	current layout's name for the given locale if no HTML title is
-	configured
-	*/
-	@Override
-	public java.lang.String getHTMLTitle(java.util.Locale locale) {
-		return _layout.getHTMLTitle(locale);
-	}
-
-	/**
-	* Returns the keywords of this layout.
-	*
-	* @return the keywords of this layout
-	*/
-	@Override
-	public java.lang.String getKeywords() {
-		return _layout.getKeywords();
-	}
-
-	/**
-	* Returns the localized keywords of this layout in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @return the localized keywords of this layout
-	*/
-	@Override
-	public java.lang.String getKeywords(java.lang.String languageId) {
-		return _layout.getKeywords(languageId);
-	}
-
-	/**
-	* Returns the localized keywords of this layout in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized keywords of this layout
-	*/
-	@Override
-	public java.lang.String getKeywords(java.lang.String languageId,
-		boolean useDefault) {
-		return _layout.getKeywords(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized keywords of this layout in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized keywords of this layout
-	*/
-	@Override
-	public java.lang.String getKeywords(java.util.Locale locale) {
-		return _layout.getKeywords(locale);
-	}
-
-	/**
-	* Returns the localized keywords of this layout in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized keywords of this layout. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getKeywords(java.util.Locale locale,
-		boolean useDefault) {
-		return _layout.getKeywords(locale, useDefault);
-	}
-
-	@Override
-	public java.lang.String getKeywordsCurrentLanguageId() {
-		return _layout.getKeywordsCurrentLanguageId();
-	}
-
-	@Override
-	public java.lang.String getKeywordsCurrentValue() {
-		return _layout.getKeywordsCurrentValue();
-	}
-
-	/**
-	* Returns the layout prototype uuid of this layout.
-	*
-	* @return the layout prototype uuid of this layout
-	*/
-	@Override
-	public java.lang.String getLayoutPrototypeUuid() {
-		return _layout.getLayoutPrototypeUuid();
-	}
-
-	/**
-	* Returns the name of this layout.
-	*
-	* @return the name of this layout
-	*/
-	@Override
-	public java.lang.String getName() {
-		return _layout.getName();
-	}
-
-	/**
-	* Returns the localized name of this layout in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @return the localized name of this layout
-	*/
-	@Override
-	public java.lang.String getName(java.lang.String languageId) {
-		return _layout.getName(languageId);
-	}
-
-	/**
-	* Returns the localized name of this layout in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized name of this layout
-	*/
-	@Override
-	public java.lang.String getName(java.lang.String languageId,
-		boolean useDefault) {
-		return _layout.getName(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized name of this layout in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized name of this layout
-	*/
-	@Override
-	public java.lang.String getName(java.util.Locale locale) {
-		return _layout.getName(locale);
-	}
-
-	/**
-	* Returns the localized name of this layout in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized name of this layout. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
-		return _layout.getName(locale, useDefault);
-	}
-
-	@Override
-	public java.lang.String getNameCurrentLanguageId() {
-		return _layout.getNameCurrentLanguageId();
-	}
-
-	@Override
-	public java.lang.String getNameCurrentValue() {
-		return _layout.getNameCurrentValue();
-	}
-
-	@Override
-	public java.lang.String getRegularURL(
-		javax.servlet.http.HttpServletRequest request)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layout.getRegularURL(request);
-	}
-
-	@Override
-	public java.lang.String getResetLayoutURL(
-		javax.servlet.http.HttpServletRequest request)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layout.getResetLayoutURL(request);
-	}
-
-	@Override
-	public java.lang.String getResetMaxStateURL(
-		javax.servlet.http.HttpServletRequest request)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layout.getResetMaxStateURL(request);
-	}
-
-	/**
-	* Returns the robots of this layout.
-	*
-	* @return the robots of this layout
-	*/
-	@Override
-	public java.lang.String getRobots() {
-		return _layout.getRobots();
-	}
-
-	/**
-	* Returns the localized robots of this layout in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @return the localized robots of this layout
-	*/
-	@Override
-	public java.lang.String getRobots(java.lang.String languageId) {
-		return _layout.getRobots(languageId);
-	}
-
-	/**
-	* Returns the localized robots of this layout in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized robots of this layout
-	*/
-	@Override
-	public java.lang.String getRobots(java.lang.String languageId,
-		boolean useDefault) {
-		return _layout.getRobots(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized robots of this layout in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized robots of this layout
-	*/
-	@Override
-	public java.lang.String getRobots(java.util.Locale locale) {
-		return _layout.getRobots(locale);
-	}
-
-	/**
-	* Returns the localized robots of this layout in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized robots of this layout. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getRobots(java.util.Locale locale,
-		boolean useDefault) {
-		return _layout.getRobots(locale, useDefault);
-	}
-
-	@Override
-	public java.lang.String getRobotsCurrentLanguageId() {
-		return _layout.getRobotsCurrentLanguageId();
-	}
-
-	@Override
-	public java.lang.String getRobotsCurrentValue() {
-		return _layout.getRobotsCurrentValue();
-	}
-
-	/**
-	* Returns the source prototype layout uuid of this layout.
-	*
-	* @return the source prototype layout uuid of this layout
-	*/
-	@Override
-	public java.lang.String getSourcePrototypeLayoutUuid() {
-		return _layout.getSourcePrototypeLayoutUuid();
-	}
-
-	@Override
-	public java.lang.String getTarget() {
-		return _layout.getTarget();
-	}
-
-	/**
-	* Returns the theme ID of this layout.
-	*
-	* @return the theme ID of this layout
-	*/
-	@Override
-	public java.lang.String getThemeId() {
-		return _layout.getThemeId();
-	}
-
-	@Override
-	public java.lang.String getThemeSetting(java.lang.String key,
-		java.lang.String device) {
-		return _layout.getThemeSetting(key, device);
-	}
-
-	@Override
-	public java.lang.String getThemeSetting(java.lang.String key,
-		java.lang.String device, boolean inheritLookAndFeel) {
-		return _layout.getThemeSetting(key, device, inheritLookAndFeel);
-	}
-
-	/**
-	* Returns the title of this layout.
-	*
-	* @return the title of this layout
-	*/
-	@Override
-	public java.lang.String getTitle() {
-		return _layout.getTitle();
-	}
-
-	/**
-	* Returns the localized title of this layout in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @return the localized title of this layout
-	*/
-	@Override
-	public java.lang.String getTitle(java.lang.String languageId) {
-		return _layout.getTitle(languageId);
-	}
-
-	/**
-	* Returns the localized title of this layout in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized title of this layout
-	*/
-	@Override
-	public java.lang.String getTitle(java.lang.String languageId,
-		boolean useDefault) {
-		return _layout.getTitle(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized title of this layout in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized title of this layout
-	*/
-	@Override
-	public java.lang.String getTitle(java.util.Locale locale) {
-		return _layout.getTitle(locale);
-	}
-
-	/**
-	* Returns the localized title of this layout in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized title of this layout. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
-		return _layout.getTitle(locale, useDefault);
-	}
-
-	@Override
-	public java.lang.String getTitleCurrentLanguageId() {
-		return _layout.getTitleCurrentLanguageId();
-	}
-
-	@Override
-	public java.lang.String getTitleCurrentValue() {
-		return _layout.getTitleCurrentValue();
-	}
-
-	/**
-	* Returns the type of this layout.
-	*
-	* @return the type of this layout
-	*/
-	@Override
-	public java.lang.String getType() {
-		return _layout.getType();
-	}
-
-	/**
-	* Returns the type settings of this layout.
-	*
-	* @return the type settings of this layout
-	*/
-	@Override
-	public java.lang.String getTypeSettings() {
-		return _layout.getTypeSettings();
-	}
-
-	@Override
-	public java.lang.String getTypeSettingsProperty(java.lang.String key) {
-		return _layout.getTypeSettingsProperty(key);
-	}
-
-	@Override
-	public java.lang.String getTypeSettingsProperty(java.lang.String key,
-		java.lang.String defaultValue) {
-		return _layout.getTypeSettingsProperty(key, defaultValue);
-	}
-
-	/**
-	* Returns the user name of this layout.
-	*
-	* @return the user name of this layout
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _layout.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this layout.
-	*
-	* @return the user uuid of this layout
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _layout.getUserUuid();
-	}
-
-	/**
-	* Returns the uuid of this layout.
-	*
-	* @return the uuid of this layout
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _layout.getUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _layout.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _layout.toXmlString();
-	}
-
-	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
-		return _layout.getAvailableLanguageIds();
-	}
-
-	/**
-	* Returns the create date of this layout.
-	*
-	* @return the create date of this layout
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _layout.getCreateDate();
-	}
-
-	/**
-	* Returns the last publish date of this layout.
-	*
-	* @return the last publish date of this layout
-	*/
-	@Override
-	public Date getLastPublishDate() {
-		return _layout.getLastPublishDate();
-	}
-
-	/**
-	* Returns the modified date of this layout.
-	*
-	* @return the modified date of this layout
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _layout.getModifiedDate();
-	}
-
-	/**
-	* Returns all layouts that are direct or indirect children of the current
-	* layout.
-	*
-	* @return the layouts that are direct or indirect children of the current
-	layout
-	*/
-	@Override
-	public java.util.List<Layout> getAllChildren() {
-		return _layout.getAllChildren();
-	}
-
-	/**
-	* Returns all parent layouts of the current layout. The list is retrieved
-	* recursively with the direct parent layout listed first, and most distant
-	* parent listed last.
-	*
-	* @return the current layout's list of parent layouts
-	*/
-	@Override
-	public java.util.List<Layout> getAncestors()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layout.getAncestors();
-	}
-
-	/**
-	* Returns all child layouts of the current layout, independent of user
-	* access permissions.
-	*
-	* @return the list of all child layouts
-	*/
-	@Override
-	public java.util.List<Layout> getChildren() {
-		return _layout.getChildren();
-	}
-
-	/**
-	* Returns all child layouts of the current layout that the user has
-	* permission to access.
-	*
-	* @param permissionChecker the user-specific context to check permissions
-	* @return the list of all child layouts that the user has permission to
-	access
-	*/
-	@Override
-	public java.util.List<Layout> getChildren(
-		com.liferay.portal.kernel.security.permission.PermissionChecker permissionChecker)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layout.getChildren(permissionChecker);
-	}
-
-	@Override
-	public java.util.List<Portlet> getEmbeddedPortlets() {
-		return _layout.getEmbeddedPortlets();
-	}
-
-	@Override
-	public java.util.List<Portlet> getEmbeddedPortlets(long groupId) {
-		return _layout.getEmbeddedPortlets(groupId);
-	}
-
-	/**
-	* Returns a map of the locales and localized descriptions of this layout.
-	*
-	* @return the locales and localized descriptions of this layout
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
-		return _layout.getDescriptionMap();
-	}
-
-	/**
-	* Returns the friendly URLs for all configured locales.
-	*
-	* @return the friendly URLs for all configured locales
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getFriendlyURLMap() {
-		return _layout.getFriendlyURLMap();
-	}
-
-	/**
-	* Returns a map of the locales and localized keywordses of this layout.
-	*
-	* @return the locales and localized keywordses of this layout
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getKeywordsMap() {
-		return _layout.getKeywordsMap();
-	}
-
-	/**
-	* Returns a map of the locales and localized names of this layout.
-	*
-	* @return the locales and localized names of this layout
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getNameMap() {
-		return _layout.getNameMap();
-	}
-
-	/**
-	* Returns a map of the locales and localized robotses of this layout.
-	*
-	* @return the locales and localized robotses of this layout
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getRobotsMap() {
-		return _layout.getRobotsMap();
-	}
-
-	/**
-	* Returns a map of the locales and localized titles of this layout.
-	*
-	* @return the locales and localized titles of this layout
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getTitleMap() {
-		return _layout.getTitleMap();
-	}
-
-	/**
-	* Returns the ID of the topmost parent layout (e.g. n-th parent layout) of
-	* the current layout.
-	*
-	* @return the ID of the topmost parent layout of the current layout
-	*/
-	@Override
-	public long getAncestorLayoutId()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layout.getAncestorLayoutId();
-	}
-
-	/**
-	* Returns the plid of the topmost parent layout (e.g. n-th parent layout)
-	* of the current layout.
-	*
-	* @return the plid of the topmost parent layout of the current layout
-	*/
-	@Override
-	public long getAncestorPlid()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layout.getAncestorPlid();
-	}
-
-	/**
-	* Returns the company ID of this layout.
-	*
-	* @return the company ID of this layout
-	*/
-	@Override
-	public long getCompanyId() {
-		return _layout.getCompanyId();
-	}
-
-	/**
-	* Returns the group ID of this layout.
-	*
-	* @return the group ID of this layout
-	*/
-	@Override
-	public long getGroupId() {
-		return _layout.getGroupId();
-	}
-
-	/**
-	* Returns the icon image ID of this layout.
-	*
-	* @return the icon image ID of this layout
-	*/
-	@Override
-	public long getIconImageId() {
-		return _layout.getIconImageId();
-	}
-
-	/**
-	* Returns the layout ID of this layout.
-	*
-	* @return the layout ID of this layout
-	*/
-	@Override
-	public long getLayoutId() {
-		return _layout.getLayoutId();
-	}
-
-	/**
-	* Returns the mvcc version of this layout.
-	*
-	* @return the mvcc version of this layout
-	*/
-	@Override
-	public long getMvccVersion() {
-		return _layout.getMvccVersion();
-	}
-
-	/**
-	* Returns the parent layout ID of this layout.
-	*
-	* @return the parent layout ID of this layout
-	*/
-	@Override
-	public long getParentLayoutId() {
-		return _layout.getParentLayoutId();
-	}
-
-	/**
-	* Returns the current layout's parent plid.
-	*
-	* @return the current layout's parent plid, or <code>0</code> if the
-	current layout is the topmost parent layout
-	*/
-	@Override
-	public long getParentPlid()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layout.getParentPlid();
-	}
-
-	/**
-	* Returns the plid of this layout.
-	*
-	* @return the plid of this layout
-	*/
-	@Override
-	public long getPlid() {
-		return _layout.getPlid();
-	}
-
-	/**
-	* Returns the primary key of this layout.
-	*
-	* @return the primary key of this layout
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _layout.getPrimaryKey();
-	}
-
-	/**
-	* Returns the user ID of this layout.
-	*
-	* @return the user ID of this layout
-	*/
-	@Override
-	public long getUserId() {
-		return _layout.getUserId();
-	}
-
-	@Override
 	public void persist() {
 		_layout.persist();
 	}
@@ -1721,13 +1696,13 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_layout.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_layout.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_layout.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
+		_layout.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -2233,6 +2208,31 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_layout.setUuid(uuid);
+	}
+
+	@Override
+	public CacheModel<Layout> toCacheModel() {
+		return _layout.toCacheModel();
+	}
+
+	@Override
+	public Layout toEscapedModel() {
+		return new LayoutWrapper(_layout.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _layout.toString();
+	}
+
+	@Override
+	public Layout toUnescapedModel() {
+		return new LayoutWrapper(_layout.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _layout.toXmlString();
 	}
 
 	@Override

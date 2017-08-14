@@ -50,6 +50,33 @@ public interface PortalInstancesLocalService extends BaseLocalService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PortalInstancesLocalServiceUtil} to access the portal instances local service. Add custom service methods to {@link com.liferay.portal.instances.service.impl.PortalInstancesLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public void addCompanyId(long companyId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getCompanyId(HttpServletRequest request);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long[] getCompanyIds();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long[] getCompanyIdsBySQL() throws SQLException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getDefaultCompanyId();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String[] getWebIds();
+
+	public void initializePortalInstance(ServletContext servletContext,
+		java.lang.String webId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isAutoLoginIgnoreHost(java.lang.String host);
 
@@ -64,33 +91,6 @@ public interface PortalInstancesLocalService extends BaseLocalService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isVirtualHostsIgnorePath(java.lang.String path);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String[] getWebIds();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getCompanyId(HttpServletRequest request);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getDefaultCompanyId();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long[] getCompanyIds();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long[] getCompanyIdsBySQL() throws SQLException;
-
-	public void addCompanyId(long companyId);
-
-	public void initializePortalInstance(ServletContext servletContext,
-		java.lang.String webId);
 
 	public void reload(ServletContext servletContext);
 

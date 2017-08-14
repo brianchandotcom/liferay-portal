@@ -130,68 +130,13 @@ public class MeetupsRegistrationWrapper implements MeetupsRegistration,
 	}
 
 	@Override
-	public MeetupsRegistration toEscapedModel() {
-		return new MeetupsRegistrationWrapper(_meetupsRegistration.toEscapedModel());
-	}
-
-	@Override
-	public MeetupsRegistration toUnescapedModel() {
-		return new MeetupsRegistrationWrapper(_meetupsRegistration.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _meetupsRegistration.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _meetupsRegistration.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _meetupsRegistration.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _meetupsRegistration.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<MeetupsRegistration> toCacheModel() {
-		return _meetupsRegistration.toCacheModel();
+	public java.lang.Object clone() {
+		return new MeetupsRegistrationWrapper((MeetupsRegistration)_meetupsRegistration.clone());
 	}
 
 	@Override
 	public int compareTo(MeetupsRegistration meetupsRegistration) {
 		return _meetupsRegistration.compareTo(meetupsRegistration);
-	}
-
-	/**
-	* Returns the status of this meetups registration.
-	*
-	* @return the status of this meetups registration
-	*/
-	@Override
-	public int getStatus() {
-		return _meetupsRegistration.getStatus();
-	}
-
-	@Override
-	public int hashCode() {
-		return _meetupsRegistration.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _meetupsRegistration.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new MeetupsRegistrationWrapper((MeetupsRegistration)_meetupsRegistration.clone());
 	}
 
 	/**
@@ -205,33 +150,13 @@ public class MeetupsRegistrationWrapper implements MeetupsRegistration,
 	}
 
 	/**
-	* Returns the user name of this meetups registration.
+	* Returns the company ID of this meetups registration.
 	*
-	* @return the user name of this meetups registration
+	* @return the company ID of this meetups registration
 	*/
 	@Override
-	public java.lang.String getUserName() {
-		return _meetupsRegistration.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this meetups registration.
-	*
-	* @return the user uuid of this meetups registration
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _meetupsRegistration.getUserUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _meetupsRegistration.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _meetupsRegistration.toXmlString();
+	public long getCompanyId() {
+		return _meetupsRegistration.getCompanyId();
 	}
 
 	/**
@@ -244,24 +169,9 @@ public class MeetupsRegistrationWrapper implements MeetupsRegistration,
 		return _meetupsRegistration.getCreateDate();
 	}
 
-	/**
-	* Returns the modified date of this meetups registration.
-	*
-	* @return the modified date of this meetups registration
-	*/
 	@Override
-	public Date getModifiedDate() {
-		return _meetupsRegistration.getModifiedDate();
-	}
-
-	/**
-	* Returns the company ID of this meetups registration.
-	*
-	* @return the company ID of this meetups registration
-	*/
-	@Override
-	public long getCompanyId() {
-		return _meetupsRegistration.getCompanyId();
+	public ExpandoBridge getExpandoBridge() {
+		return _meetupsRegistration.getExpandoBridge();
 	}
 
 	/**
@@ -285,6 +195,16 @@ public class MeetupsRegistrationWrapper implements MeetupsRegistration,
 	}
 
 	/**
+	* Returns the modified date of this meetups registration.
+	*
+	* @return the modified date of this meetups registration
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _meetupsRegistration.getModifiedDate();
+	}
+
+	/**
 	* Returns the primary key of this meetups registration.
 	*
 	* @return the primary key of this meetups registration
@@ -292,6 +212,21 @@ public class MeetupsRegistrationWrapper implements MeetupsRegistration,
 	@Override
 	public long getPrimaryKey() {
 		return _meetupsRegistration.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _meetupsRegistration.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the status of this meetups registration.
+	*
+	* @return the status of this meetups registration
+	*/
+	@Override
+	public int getStatus() {
+		return _meetupsRegistration.getStatus();
 	}
 
 	/**
@@ -302,6 +237,46 @@ public class MeetupsRegistrationWrapper implements MeetupsRegistration,
 	@Override
 	public long getUserId() {
 		return _meetupsRegistration.getUserId();
+	}
+
+	/**
+	* Returns the user name of this meetups registration.
+	*
+	* @return the user name of this meetups registration
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _meetupsRegistration.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this meetups registration.
+	*
+	* @return the user uuid of this meetups registration
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _meetupsRegistration.getUserUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _meetupsRegistration.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _meetupsRegistration.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _meetupsRegistration.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _meetupsRegistration.isNew();
 	}
 
 	@Override
@@ -448,6 +423,31 @@ public class MeetupsRegistrationWrapper implements MeetupsRegistration,
 	@Override
 	public void setUserUuid(java.lang.String userUuid) {
 		_meetupsRegistration.setUserUuid(userUuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<MeetupsRegistration> toCacheModel() {
+		return _meetupsRegistration.toCacheModel();
+	}
+
+	@Override
+	public MeetupsRegistration toEscapedModel() {
+		return new MeetupsRegistrationWrapper(_meetupsRegistration.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _meetupsRegistration.toString();
+	}
+
+	@Override
+	public MeetupsRegistration toUnescapedModel() {
+		return new MeetupsRegistrationWrapper(_meetupsRegistration.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _meetupsRegistration.toXmlString();
 	}
 
 	@Override

@@ -44,20 +44,22 @@ public class AddressServiceWrapper implements AddressService,
 	}
 
 	@Override
+	public void deleteAddress(long addressId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_addressService.deleteAddress(addressId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.model.Address getAddress(long addressId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _addressService.getAddress(addressId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Address updateAddress(
-		long addressId, java.lang.String street1, java.lang.String street2,
-		java.lang.String street3, java.lang.String city, java.lang.String zip,
-		long regionId, long countryId, long typeId, boolean mailing,
-		boolean primary)
+	public java.util.List<com.liferay.portal.kernel.model.Address> getAddresses(
+		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _addressService.updateAddress(addressId, street1, street2,
-			street3, city, zip, regionId, countryId, typeId, mailing, primary);
+		return _addressService.getAddresses(className, classPK);
 	}
 
 	/**
@@ -71,16 +73,14 @@ public class AddressServiceWrapper implements AddressService,
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Address> getAddresses(
-		java.lang.String className, long classPK)
+	public com.liferay.portal.kernel.model.Address updateAddress(
+		long addressId, java.lang.String street1, java.lang.String street2,
+		java.lang.String street3, java.lang.String city, java.lang.String zip,
+		long regionId, long countryId, long typeId, boolean mailing,
+		boolean primary)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _addressService.getAddresses(className, classPK);
-	}
-
-	@Override
-	public void deleteAddress(long addressId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_addressService.deleteAddress(addressId);
+		return _addressService.updateAddress(addressId, street1, street2,
+			street3, city, zip, regionId, countryId, typeId, mailing, primary);
 	}
 
 	@Override

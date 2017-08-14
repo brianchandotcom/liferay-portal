@@ -46,11 +46,6 @@ public class AppServiceUtil {
 		return getService().deleteApp(appId);
 	}
 
-	public static com.liferay.marketplace.model.App updateApp(java.io.File file)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().updateApp(file);
-	}
-
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -68,6 +63,11 @@ public class AppServiceUtil {
 	public static void uninstallApp(long remoteAppId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().uninstallApp(remoteAppId);
+	}
+
+	public static com.liferay.marketplace.model.App updateApp(java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateApp(file);
 	}
 
 	public static AppService getService() {

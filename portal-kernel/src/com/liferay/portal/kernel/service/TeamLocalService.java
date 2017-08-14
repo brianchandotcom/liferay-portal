@@ -61,41 +61,6 @@ public interface TeamLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link TeamLocalServiceUtil} to access the team local service. Add custom service methods to {@link com.liferay.portal.service.impl.TeamLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasUserGroupTeam(long userGroupId, long teamId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasUserGroupTeams(long userGroupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasUserTeam(long userId, long teamId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasUserTeams(long userId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
 
 	/**
 	* Adds the team to the database. Also notifies the appropriate model listeners.
@@ -118,6 +83,26 @@ public interface TeamLocalService extends BaseLocalService,
 		java.lang.String description, ServiceContext serviceContext)
 		throws PortalException;
 
+	public void addUserGroupTeam(long userGroupId, Team team);
+
+	public void addUserGroupTeam(long userGroupId, long teamId);
+
+	public void addUserGroupTeams(long userGroupId, List<Team> teams);
+
+	public void addUserGroupTeams(long userGroupId, long[] teamIds);
+
+	public void addUserTeam(long userId, Team team);
+
+	public void addUserTeam(long userId, long teamId);
+
+	public void addUserTeams(long userId, List<Team> teams);
+
+	public void addUserTeams(long userId, long[] teamIds);
+
+	public void clearUserGroupTeams(long userGroupId);
+
+	public void clearUserTeams(long userId);
+
 	/**
 	* Creates a new team with the primary key. Does not add the team to the database.
 	*
@@ -125,6 +110,13 @@ public interface TeamLocalService extends BaseLocalService,
 	* @return the new team
 	*/
 	public Team createTeam(long teamId);
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
 
 	/**
 	* Deletes the team from the database. Also notifies the appropriate model listeners.
@@ -146,85 +138,25 @@ public interface TeamLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public Team deleteTeam(long teamId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Team fetchTeam(long groupId, java.lang.String name);
+	public void deleteTeams(long groupId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Team fetchTeam(long teamId);
+	public void deleteUserGroupTeam(long userGroupId, Team team);
 
-	/**
-	* Returns the team matching the UUID and group.
-	*
-	* @param uuid the team's UUID
-	* @param groupId the primary key of the group
-	* @return the matching team, or <code>null</code> if a matching team could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Team fetchTeamByUuidAndGroupId(java.lang.String uuid, long groupId);
+	public void deleteUserGroupTeam(long userGroupId, long teamId);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Team getTeam(long groupId, java.lang.String name)
-		throws PortalException;
+	public void deleteUserGroupTeams(long userGroupId, List<Team> teams);
 
-	/**
-	* Returns the team with the primary key.
-	*
-	* @param teamId the primary key of the team
-	* @return the team
-	* @throws PortalException if a team with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Team getTeam(long teamId) throws PortalException;
+	public void deleteUserGroupTeams(long userGroupId, long[] teamIds);
 
-	/**
-	* Returns the team matching the UUID and group.
-	*
-	* @param uuid the team's UUID
-	* @param groupId the primary key of the group
-	* @return the matching team
-	* @throws PortalException if a matching team could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Team getTeamByUuidAndGroupId(java.lang.String uuid, long groupId)
-		throws PortalException;
+	public void deleteUserTeam(long userId, Team team);
 
-	/**
-	* Updates the team in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param team the team
-	* @return the team that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public Team updateTeam(Team team);
+	public void deleteUserTeam(long userId, long teamId);
 
-	public Team updateTeam(long teamId, java.lang.String name,
-		java.lang.String description) throws PortalException;
+	public void deleteUserTeams(long userId, List<Team> teams);
 
-	/**
-	* Returns the number of teams.
-	*
-	* @return the number of teams
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getTeamsCount();
+	public void deleteUserTeams(long userId, long[] teamIds);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getUserGroupTeamsCount(long userGroupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getUserTeamsCount(long userId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long groupId, java.lang.String name,
-		java.lang.String description,
-		LinkedHashMap<java.lang.String, java.lang.Object> params);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -265,8 +197,90 @@ public interface TeamLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Team fetchTeam(long teamId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Team fetchTeam(long groupId, java.lang.String name);
+
+	/**
+	* Returns the team matching the UUID and group.
+	*
+	* @param uuid the team's UUID
+	* @param groupId the primary key of the group
+	* @return the matching team, or <code>null</code> if a matching team could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Team fetchTeamByUuidAndGroupId(java.lang.String uuid, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Team> getGroupTeams(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Returns the team with the primary key.
+	*
+	* @param teamId the primary key of the team
+	* @return the team
+	* @throws PortalException if a team with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Team getTeam(long teamId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Team getTeam(long groupId, java.lang.String name)
+		throws PortalException;
+
+	/**
+	* Returns the team matching the UUID and group.
+	*
+	* @param uuid the team's UUID
+	* @param groupId the primary key of the group
+	* @return the matching team
+	* @throws PortalException if a matching team could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Team getTeamByUuidAndGroupId(java.lang.String uuid, long groupId)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the teams.
@@ -308,6 +322,23 @@ public interface TeamLocalService extends BaseLocalService,
 		long companyId, int start, int end,
 		OrderByComparator<Team> orderByComparator);
 
+	/**
+	* Returns the number of teams.
+	*
+	* @return the number of teams
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getTeamsCount();
+
+	/**
+	* Returns the userGroupIds of the user groups associated with the team.
+	*
+	* @param teamId the teamId of the team
+	* @return long[] the userGroupIds of user groups associated with the team
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long[] getUserGroupPrimaryKeys(long teamId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Team> getUserGroupTeams(long userGroupId);
 
@@ -319,7 +350,19 @@ public interface TeamLocalService extends BaseLocalService,
 		OrderByComparator<Team> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserGroupTeamsCount(long userGroupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Team> getUserOrUserGroupTeams(long groupId, long userId);
+
+	/**
+	* Returns the userIds of the users associated with the team.
+	*
+	* @param teamId the teamId of the team
+	* @return long[] the userIds of users associated with the team
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long[] getUserPrimaryKeys(long teamId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Team> getUserTeams(long userId);
@@ -335,86 +378,44 @@ public interface TeamLocalService extends BaseLocalService,
 	public List<Team> getUserTeams(long userId, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserTeamsCount(long userId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasUserGroupTeam(long userGroupId, long teamId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasUserGroupTeams(long userGroupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasUserTeam(long userId, long teamId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasUserTeams(long userId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Team> search(long groupId, java.lang.String name,
 		java.lang.String description,
 		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
 		int end, OrderByComparator<Team> obc);
 
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	/**
-	* Returns the userGroupIds of the user groups associated with the team.
-	*
-	* @param teamId the teamId of the team
-	* @return long[] the userGroupIds of user groups associated with the team
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long[] getUserGroupPrimaryKeys(long teamId);
-
-	/**
-	* Returns the userIds of the users associated with the team.
-	*
-	* @param teamId the teamId of the team
-	* @return long[] the userIds of users associated with the team
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long[] getUserPrimaryKeys(long teamId);
-
-	public void addUserGroupTeam(long userGroupId, Team team);
-
-	public void addUserGroupTeam(long userGroupId, long teamId);
-
-	public void addUserGroupTeams(long userGroupId, List<Team> teams);
-
-	public void addUserGroupTeams(long userGroupId, long[] teamIds);
-
-	public void addUserTeam(long userId, Team team);
-
-	public void addUserTeam(long userId, long teamId);
-
-	public void addUserTeams(long userId, List<Team> teams);
-
-	public void addUserTeams(long userId, long[] teamIds);
-
-	public void clearUserGroupTeams(long userGroupId);
-
-	public void clearUserTeams(long userId);
-
-	public void deleteTeams(long groupId) throws PortalException;
-
-	public void deleteUserGroupTeam(long userGroupId, Team team);
-
-	public void deleteUserGroupTeam(long userGroupId, long teamId);
-
-	public void deleteUserGroupTeams(long userGroupId, List<Team> teams);
-
-	public void deleteUserGroupTeams(long userGroupId, long[] teamIds);
-
-	public void deleteUserTeam(long userId, Team team);
-
-	public void deleteUserTeam(long userId, long teamId);
-
-	public void deleteUserTeams(long userId, List<Team> teams);
-
-	public void deleteUserTeams(long userId, long[] teamIds);
+	public int searchCount(long groupId, java.lang.String name,
+		java.lang.String description,
+		LinkedHashMap<java.lang.String, java.lang.Object> params);
 
 	public void setUserGroupTeams(long userGroupId, long[] teamIds);
 
 	public void setUserTeams(long userId, long[] teamIds);
+
+	/**
+	* Updates the team in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param team the team
+	* @return the team that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public Team updateTeam(Team team);
+
+	public Team updateTeam(long teamId, java.lang.String name,
+		java.lang.String description) throws PortalException;
 }

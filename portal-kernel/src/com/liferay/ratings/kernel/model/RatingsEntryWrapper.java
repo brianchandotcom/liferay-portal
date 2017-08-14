@@ -138,68 +138,13 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	}
 
 	@Override
-	public RatingsEntry toEscapedModel() {
-		return new RatingsEntryWrapper(_ratingsEntry.toEscapedModel());
-	}
-
-	@Override
-	public RatingsEntry toUnescapedModel() {
-		return new RatingsEntryWrapper(_ratingsEntry.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _ratingsEntry.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _ratingsEntry.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _ratingsEntry.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _ratingsEntry.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<RatingsEntry> toCacheModel() {
-		return _ratingsEntry.toCacheModel();
-	}
-
-	/**
-	* Returns the score of this ratings entry.
-	*
-	* @return the score of this ratings entry
-	*/
-	@Override
-	public double getScore() {
-		return _ratingsEntry.getScore();
+	public java.lang.Object clone() {
+		return new RatingsEntryWrapper((RatingsEntry)_ratingsEntry.clone());
 	}
 
 	@Override
 	public int compareTo(RatingsEntry ratingsEntry) {
 		return _ratingsEntry.compareTo(ratingsEntry);
-	}
-
-	@Override
-	public int hashCode() {
-		return _ratingsEntry.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _ratingsEntry.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new RatingsEntryWrapper((RatingsEntry)_ratingsEntry.clone());
 	}
 
 	/**
@@ -210,66 +155,6 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	@Override
 	public java.lang.String getClassName() {
 		return _ratingsEntry.getClassName();
-	}
-
-	/**
-	* Returns the user name of this ratings entry.
-	*
-	* @return the user name of this ratings entry
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _ratingsEntry.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this ratings entry.
-	*
-	* @return the user uuid of this ratings entry
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _ratingsEntry.getUserUuid();
-	}
-
-	/**
-	* Returns the uuid of this ratings entry.
-	*
-	* @return the uuid of this ratings entry
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _ratingsEntry.getUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _ratingsEntry.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _ratingsEntry.toXmlString();
-	}
-
-	/**
-	* Returns the create date of this ratings entry.
-	*
-	* @return the create date of this ratings entry
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _ratingsEntry.getCreateDate();
-	}
-
-	/**
-	* Returns the modified date of this ratings entry.
-	*
-	* @return the modified date of this ratings entry
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _ratingsEntry.getModifiedDate();
 	}
 
 	/**
@@ -303,6 +188,16 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	}
 
 	/**
+	* Returns the create date of this ratings entry.
+	*
+	* @return the create date of this ratings entry
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _ratingsEntry.getCreateDate();
+	}
+
+	/**
 	* Returns the entry ID of this ratings entry.
 	*
 	* @return the entry ID of this ratings entry
@@ -310,6 +205,21 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	@Override
 	public long getEntryId() {
 		return _ratingsEntry.getEntryId();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _ratingsEntry.getExpandoBridge();
+	}
+
+	/**
+	* Returns the modified date of this ratings entry.
+	*
+	* @return the modified date of this ratings entry
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _ratingsEntry.getModifiedDate();
 	}
 
 	/**
@@ -322,6 +232,21 @@ public class RatingsEntryWrapper implements RatingsEntry,
 		return _ratingsEntry.getPrimaryKey();
 	}
 
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _ratingsEntry.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the score of this ratings entry.
+	*
+	* @return the score of this ratings entry
+	*/
+	@Override
+	public double getScore() {
+		return _ratingsEntry.getScore();
+	}
+
 	/**
 	* Returns the user ID of this ratings entry.
 	*
@@ -330,6 +255,56 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	@Override
 	public long getUserId() {
 		return _ratingsEntry.getUserId();
+	}
+
+	/**
+	* Returns the user name of this ratings entry.
+	*
+	* @return the user name of this ratings entry
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _ratingsEntry.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this ratings entry.
+	*
+	* @return the user uuid of this ratings entry
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _ratingsEntry.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this ratings entry.
+	*
+	* @return the uuid of this ratings entry
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _ratingsEntry.getUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _ratingsEntry.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _ratingsEntry.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _ratingsEntry.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _ratingsEntry.isNew();
 	}
 
 	@Override
@@ -491,6 +466,31 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_ratingsEntry.setUuid(uuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<RatingsEntry> toCacheModel() {
+		return _ratingsEntry.toCacheModel();
+	}
+
+	@Override
+	public RatingsEntry toEscapedModel() {
+		return new RatingsEntryWrapper(_ratingsEntry.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _ratingsEntry.toString();
+	}
+
+	@Override
+	public RatingsEntry toUnescapedModel() {
+		return new RatingsEntryWrapper(_ratingsEntry.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _ratingsEntry.toXmlString();
 	}
 
 	@Override

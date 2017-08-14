@@ -235,18 +235,173 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	}
 
 	@Override
-	public WikiNode getNode() {
-		return _wikiPage.getNode();
+	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPage.addAttachmentsFolder();
 	}
 
 	@Override
-	public WikiPage toEscapedModel() {
-		return new WikiPageWrapper(_wikiPage.toEscapedModel());
+	public java.lang.Object clone() {
+		return new WikiPageWrapper((WikiPage)_wikiPage.clone());
 	}
 
 	@Override
-	public WikiPage toUnescapedModel() {
-		return new WikiPageWrapper(_wikiPage.toUnescapedModel());
+	public int compareTo(WikiPage wikiPage) {
+		return _wikiPage.compareTo(wikiPage);
+	}
+
+	@Override
+	public WikiPage fetchParentPage() {
+		return _wikiPage.fetchParentPage();
+	}
+
+	@Override
+	public WikiPage fetchRedirectPage() {
+		return _wikiPage.fetchRedirectPage();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPage.getAttachmentsFileEntries();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries(
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPage.getAttachmentsFileEntries(start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries(
+		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPage.getAttachmentsFileEntries(start, end, obc);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries(
+		java.lang.String[] mimeTypes, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.repository.model.FileEntry> obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPage.getAttachmentsFileEntries(mimeTypes, start, end, obc);
+	}
+
+	@Override
+	public int getAttachmentsFileEntriesCount()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPage.getAttachmentsFileEntriesCount();
+	}
+
+	@Override
+	public int getAttachmentsFileEntriesCount(java.lang.String[] mimeTypes)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPage.getAttachmentsFileEntriesCount(mimeTypes);
+	}
+
+	@Override
+	public long getAttachmentsFolderId() {
+		return _wikiPage.getAttachmentsFolderId();
+	}
+
+	@Override
+	public java.util.List<WikiPage> getChildPages() {
+		return _wikiPage.getChildPages();
+	}
+
+	/**
+	* Returns the company ID of this wiki page.
+	*
+	* @return the company ID of this wiki page
+	*/
+	@Override
+	public long getCompanyId() {
+		return _wikiPage.getCompanyId();
+	}
+
+	/**
+	* Returns the container model ID of this wiki page.
+	*
+	* @return the container model ID of this wiki page
+	*/
+	@Override
+	public long getContainerModelId() {
+		return _wikiPage.getContainerModelId();
+	}
+
+	/**
+	* Returns the container name of this wiki page.
+	*
+	* @return the container name of this wiki page
+	*/
+	@Override
+	public java.lang.String getContainerModelName() {
+		return _wikiPage.getContainerModelName();
+	}
+
+	/**
+	* Returns the content of this wiki page.
+	*
+	* @return the content of this wiki page
+	*/
+	@Override
+	public java.lang.String getContent() {
+		return _wikiPage.getContent();
+	}
+
+	/**
+	* Returns the create date of this wiki page.
+	*
+	* @return the create date of this wiki page
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _wikiPage.getCreateDate();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getDeletedAttachmentsFileEntries()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPage.getDeletedAttachmentsFileEntries();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getDeletedAttachmentsFileEntries(
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPage.getDeletedAttachmentsFileEntries(start, end);
+	}
+
+	@Override
+	public int getDeletedAttachmentsFileEntriesCount()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPage.getDeletedAttachmentsFileEntriesCount();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _wikiPage.getExpandoBridge();
+	}
+
+	/**
+	* Returns the format of this wiki page.
+	*
+	* @return the format of this wiki page
+	*/
+	@Override
+	public java.lang.String getFormat() {
+		return _wikiPage.getFormat();
+	}
+
+	/**
+	* Returns the group ID of this wiki page.
+	*
+	* @return the group ID of this wiki page
+	*/
+	@Override
+	public long getGroupId() {
+		return _wikiPage.getGroupId();
 	}
 
 	/**
@@ -260,6 +415,16 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	}
 
 	/**
+	* Returns the last publish date of this wiki page.
+	*
+	* @return the last publish date of this wiki page
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _wikiPage.getLastPublishDate();
+	}
+
+	/**
 	* Returns the minor edit of this wiki page.
 	*
 	* @return the minor edit of this wiki page
@@ -267,6 +432,291 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	@Override
 	public boolean getMinorEdit() {
 		return _wikiPage.getMinorEdit();
+	}
+
+	/**
+	* Returns the modified date of this wiki page.
+	*
+	* @return the modified date of this wiki page
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _wikiPage.getModifiedDate();
+	}
+
+	@Override
+	public WikiNode getNode() {
+		return _wikiPage.getNode();
+	}
+
+	@Override
+	public long getNodeAttachmentsFolderId() {
+		return _wikiPage.getNodeAttachmentsFolderId();
+	}
+
+	/**
+	* Returns the node ID of this wiki page.
+	*
+	* @return the node ID of this wiki page
+	*/
+	@Override
+	public long getNodeId() {
+		return _wikiPage.getNodeId();
+	}
+
+	/**
+	* Returns the page ID of this wiki page.
+	*
+	* @return the page ID of this wiki page
+	*/
+	@Override
+	public long getPageId() {
+		return _wikiPage.getPageId();
+	}
+
+	/**
+	* Returns the parent container model ID of this wiki page.
+	*
+	* @return the parent container model ID of this wiki page
+	*/
+	@Override
+	public long getParentContainerModelId() {
+		return _wikiPage.getParentContainerModelId();
+	}
+
+	@Override
+	public WikiPage getParentPage()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPage.getParentPage();
+	}
+
+	@Override
+	public java.util.List<WikiPage> getParentPages() {
+		return _wikiPage.getParentPages();
+	}
+
+	/**
+	* Returns the parent title of this wiki page.
+	*
+	* @return the parent title of this wiki page
+	*/
+	@Override
+	public java.lang.String getParentTitle() {
+		return _wikiPage.getParentTitle();
+	}
+
+	/**
+	* Returns the primary key of this wiki page.
+	*
+	* @return the primary key of this wiki page
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _wikiPage.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _wikiPage.getPrimaryKeyObj();
+	}
+
+	@Override
+	public WikiPage getRedirectPage()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPage.getRedirectPage();
+	}
+
+	/**
+	* Returns the redirect title of this wiki page.
+	*
+	* @return the redirect title of this wiki page
+	*/
+	@Override
+	public java.lang.String getRedirectTitle() {
+		return _wikiPage.getRedirectTitle();
+	}
+
+	/**
+	* Returns the resource prim key of this wiki page.
+	*
+	* @return the resource prim key of this wiki page
+	*/
+	@Override
+	public long getResourcePrimKey() {
+		return _wikiPage.getResourcePrimKey();
+	}
+
+	/**
+	* Returns the status of this wiki page.
+	*
+	* @return the status of this wiki page
+	*/
+	@Override
+	public int getStatus() {
+		return _wikiPage.getStatus();
+	}
+
+	/**
+	* Returns the status by user ID of this wiki page.
+	*
+	* @return the status by user ID of this wiki page
+	*/
+	@Override
+	public long getStatusByUserId() {
+		return _wikiPage.getStatusByUserId();
+	}
+
+	/**
+	* Returns the status by user name of this wiki page.
+	*
+	* @return the status by user name of this wiki page
+	*/
+	@Override
+	public java.lang.String getStatusByUserName() {
+		return _wikiPage.getStatusByUserName();
+	}
+
+	/**
+	* Returns the status by user uuid of this wiki page.
+	*
+	* @return the status by user uuid of this wiki page
+	*/
+	@Override
+	public java.lang.String getStatusByUserUuid() {
+		return _wikiPage.getStatusByUserUuid();
+	}
+
+	/**
+	* Returns the status date of this wiki page.
+	*
+	* @return the status date of this wiki page
+	*/
+	@Override
+	public Date getStatusDate() {
+		return _wikiPage.getStatusDate();
+	}
+
+	/**
+	* Returns the summary of this wiki page.
+	*
+	* @return the summary of this wiki page
+	*/
+	@Override
+	public java.lang.String getSummary() {
+		return _wikiPage.getSummary();
+	}
+
+	/**
+	* Returns the title of this wiki page.
+	*
+	* @return the title of this wiki page
+	*/
+	@Override
+	public java.lang.String getTitle() {
+		return _wikiPage.getTitle();
+	}
+
+	/**
+	* Returns the trash entry created when this wiki page was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this wiki page.
+	*
+	* @return the trash entry created when this wiki page was moved to the Recycle Bin
+	*/
+	@Override
+	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPage.getTrashEntry();
+	}
+
+	/**
+	* Returns the class primary key of the trash entry for this wiki page.
+	*
+	* @return the class primary key of the trash entry for this wiki page
+	*/
+	@Override
+	public long getTrashEntryClassPK() {
+		return _wikiPage.getTrashEntryClassPK();
+	}
+
+	/**
+	* Returns the trash handler for this wiki page.
+	*
+	* @return the trash handler for this wiki page
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@Deprecated
+	@Override
+	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
+		return _wikiPage.getTrashHandler();
+	}
+
+	/**
+	* Returns the user ID of this wiki page.
+	*
+	* @return the user ID of this wiki page
+	*/
+	@Override
+	public long getUserId() {
+		return _wikiPage.getUserId();
+	}
+
+	/**
+	* Returns the user name of this wiki page.
+	*
+	* @return the user name of this wiki page
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _wikiPage.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this wiki page.
+	*
+	* @return the user uuid of this wiki page
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _wikiPage.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this wiki page.
+	*
+	* @return the uuid of this wiki page
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _wikiPage.getUuid();
+	}
+
+	/**
+	* Returns the version of this wiki page.
+	*
+	* @return the version of this wiki page
+	*/
+	@Override
+	public double getVersion() {
+		return _wikiPage.getVersion();
+	}
+
+	@Override
+	public java.util.List<WikiPage> getViewableChildPages() {
+		return _wikiPage.getViewableChildPages();
+	}
+
+	@Override
+	public WikiPage getViewableParentPage() {
+		return _wikiPage.getViewableParentPage();
+	}
+
+	@Override
+	public java.util.List<WikiPage> getViewableParentPages() {
+		return _wikiPage.getViewableParentPages();
+	}
+
+	@Override
+	public int hashCode() {
+		return _wikiPage.hashCode();
 	}
 
 	/**
@@ -417,481 +867,6 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	@Override
 	public boolean isScheduled() {
 		return _wikiPage.isScheduled();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _wikiPage.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<WikiPage> toCacheModel() {
-		return _wikiPage.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPage.addAttachmentsFolder();
-	}
-
-	/**
-	* Returns the trash handler for this wiki page.
-	*
-	* @return the trash handler for this wiki page
-	* @deprecated As of 7.0.0, with no direct replacement
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return _wikiPage.getTrashHandler();
-	}
-
-	/**
-	* Returns the trash entry created when this wiki page was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this wiki page.
-	*
-	* @return the trash entry created when this wiki page was moved to the Recycle Bin
-	*/
-	@Override
-	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPage.getTrashEntry();
-	}
-
-	@Override
-	public WikiPage fetchParentPage() {
-		return _wikiPage.fetchParentPage();
-	}
-
-	@Override
-	public WikiPage fetchRedirectPage() {
-		return _wikiPage.fetchRedirectPage();
-	}
-
-	@Override
-	public WikiPage getParentPage()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPage.getParentPage();
-	}
-
-	@Override
-	public WikiPage getRedirectPage()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPage.getRedirectPage();
-	}
-
-	@Override
-	public WikiPage getViewableParentPage() {
-		return _wikiPage.getViewableParentPage();
-	}
-
-	/**
-	* Returns the version of this wiki page.
-	*
-	* @return the version of this wiki page
-	*/
-	@Override
-	public double getVersion() {
-		return _wikiPage.getVersion();
-	}
-
-	@Override
-	public int compareTo(WikiPage wikiPage) {
-		return _wikiPage.compareTo(wikiPage);
-	}
-
-	@Override
-	public int getAttachmentsFileEntriesCount()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPage.getAttachmentsFileEntriesCount();
-	}
-
-	@Override
-	public int getAttachmentsFileEntriesCount(java.lang.String[] mimeTypes)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPage.getAttachmentsFileEntriesCount(mimeTypes);
-	}
-
-	@Override
-	public int getDeletedAttachmentsFileEntriesCount()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPage.getDeletedAttachmentsFileEntriesCount();
-	}
-
-	/**
-	* Returns the status of this wiki page.
-	*
-	* @return the status of this wiki page
-	*/
-	@Override
-	public int getStatus() {
-		return _wikiPage.getStatus();
-	}
-
-	@Override
-	public int hashCode() {
-		return _wikiPage.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _wikiPage.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new WikiPageWrapper((WikiPage)_wikiPage.clone());
-	}
-
-	/**
-	* Returns the container name of this wiki page.
-	*
-	* @return the container name of this wiki page
-	*/
-	@Override
-	public java.lang.String getContainerModelName() {
-		return _wikiPage.getContainerModelName();
-	}
-
-	/**
-	* Returns the content of this wiki page.
-	*
-	* @return the content of this wiki page
-	*/
-	@Override
-	public java.lang.String getContent() {
-		return _wikiPage.getContent();
-	}
-
-	/**
-	* Returns the format of this wiki page.
-	*
-	* @return the format of this wiki page
-	*/
-	@Override
-	public java.lang.String getFormat() {
-		return _wikiPage.getFormat();
-	}
-
-	/**
-	* Returns the parent title of this wiki page.
-	*
-	* @return the parent title of this wiki page
-	*/
-	@Override
-	public java.lang.String getParentTitle() {
-		return _wikiPage.getParentTitle();
-	}
-
-	/**
-	* Returns the redirect title of this wiki page.
-	*
-	* @return the redirect title of this wiki page
-	*/
-	@Override
-	public java.lang.String getRedirectTitle() {
-		return _wikiPage.getRedirectTitle();
-	}
-
-	/**
-	* Returns the status by user name of this wiki page.
-	*
-	* @return the status by user name of this wiki page
-	*/
-	@Override
-	public java.lang.String getStatusByUserName() {
-		return _wikiPage.getStatusByUserName();
-	}
-
-	/**
-	* Returns the status by user uuid of this wiki page.
-	*
-	* @return the status by user uuid of this wiki page
-	*/
-	@Override
-	public java.lang.String getStatusByUserUuid() {
-		return _wikiPage.getStatusByUserUuid();
-	}
-
-	/**
-	* Returns the summary of this wiki page.
-	*
-	* @return the summary of this wiki page
-	*/
-	@Override
-	public java.lang.String getSummary() {
-		return _wikiPage.getSummary();
-	}
-
-	/**
-	* Returns the title of this wiki page.
-	*
-	* @return the title of this wiki page
-	*/
-	@Override
-	public java.lang.String getTitle() {
-		return _wikiPage.getTitle();
-	}
-
-	/**
-	* Returns the user name of this wiki page.
-	*
-	* @return the user name of this wiki page
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _wikiPage.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this wiki page.
-	*
-	* @return the user uuid of this wiki page
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _wikiPage.getUserUuid();
-	}
-
-	/**
-	* Returns the uuid of this wiki page.
-	*
-	* @return the uuid of this wiki page
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _wikiPage.getUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _wikiPage.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _wikiPage.toXmlString();
-	}
-
-	/**
-	* Returns the create date of this wiki page.
-	*
-	* @return the create date of this wiki page
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _wikiPage.getCreateDate();
-	}
-
-	/**
-	* Returns the last publish date of this wiki page.
-	*
-	* @return the last publish date of this wiki page
-	*/
-	@Override
-	public Date getLastPublishDate() {
-		return _wikiPage.getLastPublishDate();
-	}
-
-	/**
-	* Returns the modified date of this wiki page.
-	*
-	* @return the modified date of this wiki page
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _wikiPage.getModifiedDate();
-	}
-
-	/**
-	* Returns the status date of this wiki page.
-	*
-	* @return the status date of this wiki page
-	*/
-	@Override
-	public Date getStatusDate() {
-		return _wikiPage.getStatusDate();
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPage.getAttachmentsFileEntries();
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPage.getAttachmentsFileEntries(start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries(
-		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPage.getAttachmentsFileEntries(start, end, obc);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries(
-		java.lang.String[] mimeTypes, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.repository.model.FileEntry> obc)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPage.getAttachmentsFileEntries(mimeTypes, start, end, obc);
-	}
-
-	@Override
-	public java.util.List<WikiPage> getChildPages() {
-		return _wikiPage.getChildPages();
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getDeletedAttachmentsFileEntries()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPage.getDeletedAttachmentsFileEntries();
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getDeletedAttachmentsFileEntries(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPage.getDeletedAttachmentsFileEntries(start, end);
-	}
-
-	@Override
-	public java.util.List<WikiPage> getParentPages() {
-		return _wikiPage.getParentPages();
-	}
-
-	@Override
-	public java.util.List<WikiPage> getViewableChildPages() {
-		return _wikiPage.getViewableChildPages();
-	}
-
-	@Override
-	public java.util.List<WikiPage> getViewableParentPages() {
-		return _wikiPage.getViewableParentPages();
-	}
-
-	@Override
-	public long getAttachmentsFolderId() {
-		return _wikiPage.getAttachmentsFolderId();
-	}
-
-	/**
-	* Returns the company ID of this wiki page.
-	*
-	* @return the company ID of this wiki page
-	*/
-	@Override
-	public long getCompanyId() {
-		return _wikiPage.getCompanyId();
-	}
-
-	/**
-	* Returns the container model ID of this wiki page.
-	*
-	* @return the container model ID of this wiki page
-	*/
-	@Override
-	public long getContainerModelId() {
-		return _wikiPage.getContainerModelId();
-	}
-
-	/**
-	* Returns the group ID of this wiki page.
-	*
-	* @return the group ID of this wiki page
-	*/
-	@Override
-	public long getGroupId() {
-		return _wikiPage.getGroupId();
-	}
-
-	@Override
-	public long getNodeAttachmentsFolderId() {
-		return _wikiPage.getNodeAttachmentsFolderId();
-	}
-
-	/**
-	* Returns the node ID of this wiki page.
-	*
-	* @return the node ID of this wiki page
-	*/
-	@Override
-	public long getNodeId() {
-		return _wikiPage.getNodeId();
-	}
-
-	/**
-	* Returns the page ID of this wiki page.
-	*
-	* @return the page ID of this wiki page
-	*/
-	@Override
-	public long getPageId() {
-		return _wikiPage.getPageId();
-	}
-
-	/**
-	* Returns the parent container model ID of this wiki page.
-	*
-	* @return the parent container model ID of this wiki page
-	*/
-	@Override
-	public long getParentContainerModelId() {
-		return _wikiPage.getParentContainerModelId();
-	}
-
-	/**
-	* Returns the primary key of this wiki page.
-	*
-	* @return the primary key of this wiki page
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _wikiPage.getPrimaryKey();
-	}
-
-	/**
-	* Returns the resource prim key of this wiki page.
-	*
-	* @return the resource prim key of this wiki page
-	*/
-	@Override
-	public long getResourcePrimKey() {
-		return _wikiPage.getResourcePrimKey();
-	}
-
-	/**
-	* Returns the status by user ID of this wiki page.
-	*
-	* @return the status by user ID of this wiki page
-	*/
-	@Override
-	public long getStatusByUserId() {
-		return _wikiPage.getStatusByUserId();
-	}
-
-	/**
-	* Returns the class primary key of the trash entry for this wiki page.
-	*
-	* @return the class primary key of the trash entry for this wiki page
-	*/
-	@Override
-	public long getTrashEntryClassPK() {
-		return _wikiPage.getTrashEntryClassPK();
-	}
-
-	/**
-	* Returns the user ID of this wiki page.
-	*
-	* @return the user ID of this wiki page
-	*/
-	@Override
-	public long getUserId() {
-		return _wikiPage.getUserId();
 	}
 
 	@Override
@@ -1223,6 +1198,31 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	@Override
 	public void setVersion(double version) {
 		_wikiPage.setVersion(version);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<WikiPage> toCacheModel() {
+		return _wikiPage.toCacheModel();
+	}
+
+	@Override
+	public WikiPage toEscapedModel() {
+		return new WikiPageWrapper(_wikiPage.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _wikiPage.toString();
+	}
+
+	@Override
+	public WikiPage toUnescapedModel() {
+		return new WikiPageWrapper(_wikiPage.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _wikiPage.toXmlString();
 	}
 
 	@Override

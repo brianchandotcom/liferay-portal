@@ -69,74 +69,13 @@ public interface RoleLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link RoleLocalServiceUtil} to access the role local service. Add custom service methods to {@link com.liferay.portal.service.impl.RoleLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasGroupRole(long groupId, long roleId);
+	public void addGroupRole(long groupId, Role role);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasGroupRoles(long groupId);
+	public void addGroupRole(long groupId, long roleId);
 
-	/**
-	* Returns <code>true</code> if the user is associated with the named
-	* regular role.
-	*
-	* @param userId the primary key of the user
-	* @param companyId the primary key of the company
-	* @param name the name of the role
-	* @param inherited whether to include the user's inherited roles in the
-	search
-	* @return <code>true</code> if the user is associated with the regular
-	role; <code>false</code> otherwise
-	*/
-	@ThreadLocalCachable
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasUserRole(long userId, long companyId,
-		java.lang.String name, boolean inherited) throws PortalException;
+	public void addGroupRoles(long groupId, List<Role> roles);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasUserRole(long userId, long roleId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasUserRoles(long userId);
-
-	/**
-	* Returns <code>true</code> if the user has any one of the named regular
-	* roles.
-	*
-	* @param userId the primary key of the user
-	* @param companyId the primary key of the company
-	* @param names the names of the roles
-	* @param inherited whether to include the user's inherited roles in the
-	search
-	* @return <code>true</code> if the user has any one of the regular roles;
-	<code>false</code> otherwise
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasUserRoles(long userId, long companyId,
-		java.lang.String[] names, boolean inherited) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
+	public void addGroupRoles(long groupId, long[] roleIds);
 
 	/**
 	* Adds the role to the database. Also notifies the appropriate model listeners.
@@ -175,12 +114,71 @@ public interface RoleLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
+	* @throws PortalException
+	*/
+	public void addUserRole(long userId, Role role) throws PortalException;
+
+	/**
+	* @throws PortalException
+	*/
+	public void addUserRole(long userId, long roleId) throws PortalException;
+
+	/**
+	* @throws PortalException
+	*/
+	public void addUserRoles(long userId, List<Role> roles)
+		throws PortalException;
+
+	/**
+	* @throws PortalException
+	*/
+	public void addUserRoles(long userId, long[] roleIds)
+		throws PortalException;
+
+	/**
+	* Checks to ensure that the system roles map has appropriate default roles
+	* in each company.
+	*/
+	public void checkSystemRoles() throws PortalException;
+
+	/**
+	* Checks to ensure that the system roles map has appropriate default roles
+	* in the company.
+	*
+	* @param companyId the primary key of the company
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public void checkSystemRoles(long companyId) throws PortalException;
+
+	public void clearGroupRoles(long groupId);
+
+	/**
+	* @throws PortalException
+	*/
+	public void clearUserRoles(long userId) throws PortalException;
+
+	/**
 	* Creates a new role with the primary key. Does not add the role to the database.
 	*
 	* @param roleId the primary key for the new role
 	* @return the new role
 	*/
 	public Role createRole(long roleId);
+
+	public void deleteGroupRole(long groupId, Role role);
+
+	public void deleteGroupRole(long groupId, long roleId);
+
+	public void deleteGroupRoles(long groupId, List<Role> roles);
+
+	public void deleteGroupRoles(long groupId, long[] roleIds);
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
 
 	/**
 	* Deletes the role from the database. Also notifies the appropriate model listeners.
@@ -204,264 +202,30 @@ public interface RoleLocalService extends BaseLocalService,
 	public Role deleteRole(long roleId) throws PortalException;
 
 	/**
-	* Returns the role with the name in the company.
-	*
-	* <p>
-	* The method searches the system roles map first for default roles. If a
-	* role with the name is not found, then the method will query the database.
-	* </p>
-	*
-	* @param companyId the primary key of the company
-	* @param name the role's name
-	* @return Returns the role with the name or <code>null</code> if a role
-	with the name could not be found in the company
+	* @throws PortalException
 	*/
-	@Skip
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Role fetchRole(long companyId, java.lang.String name);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Role fetchRole(long roleId);
-
-	/**
-	* Returns the role with the matching UUID and company.
-	*
-	* @param uuid the role's UUID
-	* @param companyId the primary key of the company
-	* @return the matching role, or <code>null</code> if a matching role could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Role fetchRoleByUuidAndCompanyId(java.lang.String uuid,
-		long companyId);
-
-	/**
-	* Returns the default role for the group with the primary key.
-	*
-	* <p>
-	* If the group is a site, then the default role is {@link
-	* RoleConstants#SITE_MEMBER}. If the group is an organization, then the
-	* default role is {@link RoleConstants#ORGANIZATION_USER}. If the group is
-	* a user or user group, then the default role is {@link
-	* RoleConstants#POWER_USER}. For all other group types, the default role is
-	* {@link RoleConstants#USER}.
-	* </p>
-	*
-	* @param groupId the primary key of the group
-	* @return the default role for the group with the primary key
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Role getDefaultGroupRole(long groupId) throws PortalException;
-
-	/**
-	* Returns the role with the name in the company.
-	*
-	* <p>
-	* The method searches the system roles map first for default roles. If a
-	* role with the name is not found, then the method will query the database.
-	* </p>
-	*
-	* @param companyId the primary key of the company
-	* @param name the role's name
-	* @return the role with the name
-	*/
-	@Skip
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Role getRole(long companyId, java.lang.String name)
+	public void deleteUserRole(long userId, Role role)
 		throws PortalException;
 
 	/**
-	* Returns the role with the primary key.
-	*
-	* @param roleId the primary key of the role
-	* @return the role
-	* @throws PortalException if a role with the primary key could not be found
+	* @throws PortalException
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Role getRole(long roleId) throws PortalException;
-
-	/**
-	* Returns the role with the matching UUID and company.
-	*
-	* @param uuid the role's UUID
-	* @param companyId the primary key of the company
-	* @return the matching role
-	* @throws PortalException if a matching role could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Role getRoleByUuidAndCompanyId(java.lang.String uuid, long companyId)
+	public void deleteUserRole(long userId, long roleId)
 		throws PortalException;
 
 	/**
-	* Returns the team role in the company.
-	*
-	* @param companyId the primary key of the company
-	* @param teamId the primary key of the team
-	* @return the team role in the company
+	* @throws PortalException
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Role getTeamRole(long companyId, long teamId)
+	public void deleteUserRoles(long userId, List<Role> roles)
 		throws PortalException;
 
 	/**
-	* Returns a role with the name in the company.
-	*
-	* @param companyId the primary key of the company
-	* @param name the role's name (optionally <code>null</code>)
-	* @return the role with the name, or <code>null</code> if a role with the
-	name could not be found in the company
+	* @throws PortalException
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Role loadFetchRole(long companyId, java.lang.String name);
-
-	/**
-	* Returns a role with the name in the company.
-	*
-	* @param companyId the primary key of the company
-	* @param name the role's name
-	* @return the role with the name in the company
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Role loadGetRole(long companyId, java.lang.String name)
+	public void deleteUserRoles(long userId, long[] roleIds)
 		throws PortalException;
 
-	/**
-	* Updates the role in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param role the role
-	* @return the role that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public Role updateRole(Role role);
-
-	/**
-	* Updates the role with the primary key.
-	*
-	* @param roleId the primary key of the role
-	* @param name the role's new name
-	* @param titleMap the new localized titles (optionally <code>null</code>)
-	to replace those existing for the role
-	* @param descriptionMap the new localized descriptions (optionally
-	<code>null</code>) to replace those existing for the role
-	* @param subtype the role's new subtype (optionally <code>null</code>)
-	* @param serviceContext the service context to be applied (optionally
-	<code>null</code>). Can set expando bridge attributes for the
-	role.
-	* @return the role with the primary key
-	*/
-	public Role updateRole(long roleId, java.lang.String name,
-		Map<Locale, java.lang.String> titleMap,
-		Map<Locale, java.lang.String> descriptionMap, java.lang.String subtype,
-		ServiceContext serviceContext) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getAssigneesTotal(long roleId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getGroupRolesAndTeamRolesCount(long companyId,
-		java.lang.String keywords, List<java.lang.String> excludedNames,
-		int[] types, long excludedTeamRoleId, long teamGroupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getGroupRolesCount(long groupId);
-
-	/**
-	* Returns the number of roles.
-	*
-	* @return the number of roles
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getRolesCount();
-
-	/**
-	* Returns the number of roles of the subtype.
-	*
-	* @param subtype the role's subtype (optionally <code>null</code>)
-	* @return the number of roles of the subtype
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSubtypeRolesCount(java.lang.String subtype);
-
-	/**
-	* Returns the number of roles of the type.
-	*
-	* @param type the role's type (optionally <code>0</code>)
-	* @return the number of roles of the type
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getTypeRolesCount(int type);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getUserGroupGroupRolesCount(long userId, long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getUserRolesCount(long userId);
-
-	/**
-	* Returns the number of roles that match the keywords and types.
-	*
-	* @param companyId the primary key of the company
-	* @param keywords the keywords (space separated), which may occur in the
-	role's name or description (optionally <code>null</code>)
-	* @param types the role types (optionally <code>null</code>)
-	* @return the number of matching roles
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, java.lang.String keywords,
-		java.lang.Integer[] types);
-
-	/**
-	* Returns the number of roles that match the keywords, types and params.
-	*
-	* @param companyId the primary key of the company
-	* @param keywords the keywords (space separated), which may occur in the
-	role's name or description (optionally <code>null</code>)
-	* @param types the role types (optionally <code>null</code>)
-	* @param params the finder parameters. For more information, see {@link
-	com.liferay.portal.kernel.service.persistence.RoleFinder}
-	* @return the number of matching roles
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, java.lang.String keywords,
-		java.lang.Integer[] types,
-		LinkedHashMap<java.lang.String, java.lang.Object> params);
-
-	/**
-	* Returns the number of roles that match the name, description, and types.
-	*
-	* @param companyId the primary key of the company
-	* @param name the role's name (optionally <code>null</code>)
-	* @param description the role's description (optionally <code>null</code>)
-	* @param types the role types (optionally <code>null</code>)
-	* @return the number of matching roles
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, java.lang.String name,
-		java.lang.String description, java.lang.Integer[] types);
-
-	/**
-	* Returns the number of roles that match the name, description, types, and
-	* params.
-	*
-	* @param companyId the primary key of the company
-	* @param name the role's name (optionally <code>null</code>)
-	* @param description the role's description (optionally <code>null</code>)
-	* @param types the role types (optionally <code>null</code>)
-	* @param params the finder parameters. Can specify values for the
-	"usersRoles" key. For more information, see {@link
-	com.liferay.portal.kernel.service.persistence.RoleFinder}
-	* @return the number of matching roles
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, java.lang.String name,
-		java.lang.String description, java.lang.Integer[] types,
-		LinkedHashMap<java.lang.String, java.lang.Object> params);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -502,6 +266,92 @@ public interface RoleLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Role fetchRole(long roleId);
+
+	/**
+	* Returns the role with the name in the company.
+	*
+	* <p>
+	* The method searches the system roles map first for default roles. If a
+	* role with the name is not found, then the method will query the database.
+	* </p>
+	*
+	* @param companyId the primary key of the company
+	* @param name the role's name
+	* @return Returns the role with the name or <code>null</code> if a role
+	with the name could not be found in the company
+	*/
+	@Skip
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Role fetchRole(long companyId, java.lang.String name);
+
+	/**
+	* Returns the role with the matching UUID and company.
+	*
+	* @param uuid the role's UUID
+	* @param companyId the primary key of the company
+	* @return the matching role, or <code>null</code> if a matching role could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Role fetchRoleByUuidAndCompanyId(java.lang.String uuid,
+		long companyId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAssigneesTotal(long roleId) throws PortalException;
+
+	/**
+	* Returns the default role for the group with the primary key.
+	*
+	* <p>
+	* If the group is a site, then the default role is {@link
+	* RoleConstants#SITE_MEMBER}. If the group is an organization, then the
+	* default role is {@link RoleConstants#ORGANIZATION_USER}. If the group is
+	* a user or user group, then the default role is {@link
+	* RoleConstants#POWER_USER}. For all other group types, the default role is
+	* {@link RoleConstants#USER}.
+	* </p>
+	*
+	* @param groupId the primary key of the group
+	* @return the default role for the group with the primary key
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Role getDefaultGroupRole(long groupId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	/**
+	* Returns the groupIds of the groups associated with the role.
+	*
+	* @param roleId the roleId of the role
+	* @return long[] the groupIds of groups associated with the role
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long[] getGroupPrimaryKeys(long roleId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Role> getGroupRelatedRoles(long groupId)
 		throws PortalException;
@@ -523,8 +373,48 @@ public interface RoleLocalService extends BaseLocalService,
 		int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getGroupRolesAndTeamRolesCount(long companyId,
+		java.lang.String keywords, List<java.lang.String> excludedNames,
+		int[] types, long excludedTeamRoleId, long teamGroupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getGroupRolesCount(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Role> getResourceBlockRoles(long resourceBlockId,
 		java.lang.String className, java.lang.String actionId);
+
+	/**
+	* Returns a map of role names to associated action IDs for the named
+	* resource in the company within the permission scope.
+	*
+	* @param companyId the primary key of the company
+	* @param name the resource name
+	* @param scope the permission scope
+	* @param primKey the primary key of the resource's class
+	* @return the role names and action IDs
+	* @see com.liferay.portal.kernel.service.persistence.RoleFinder#findByC_N_S_P(
+	long, String, int, String)
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<java.lang.String, List<java.lang.String>> getResourceRoles(
+		long companyId, java.lang.String name, int scope,
+		java.lang.String primKey);
 
 	/**
 	* Returns all the roles associated with the action ID in the company within
@@ -542,6 +432,45 @@ public interface RoleLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Role> getResourceRoles(long companyId, java.lang.String name,
 		int scope, java.lang.String primKey, java.lang.String actionId);
+
+	/**
+	* Returns the role with the primary key.
+	*
+	* @param roleId the primary key of the role
+	* @return the role
+	* @throws PortalException if a role with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Role getRole(long roleId) throws PortalException;
+
+	/**
+	* Returns the role with the name in the company.
+	*
+	* <p>
+	* The method searches the system roles map first for default roles. If a
+	* role with the name is not found, then the method will query the database.
+	* </p>
+	*
+	* @param companyId the primary key of the company
+	* @param name the role's name
+	* @return the role with the name
+	*/
+	@Skip
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Role getRole(long companyId, java.lang.String name)
+		throws PortalException;
+
+	/**
+	* Returns the role with the matching UUID and company.
+	*
+	* @param uuid the role's UUID
+	* @param companyId the primary key of the company
+	* @return the matching role
+	* @throws PortalException if a matching role could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Role getRoleByUuidAndCompanyId(java.lang.String uuid, long companyId)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the roles.
@@ -568,6 +497,15 @@ public interface RoleLocalService extends BaseLocalService,
 	public List<Role> getRoles(int type, java.lang.String subtype);
 
 	/**
+	* Returns all the roles with the primary keys.
+	*
+	* @param roleIds the primary keys of the roles
+	* @return the roles with the primary keys
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Role> getRoles(long[] roleIds) throws PortalException;
+
+	/**
 	* Returns all the roles in the company.
 	*
 	* @param companyId the primary key of the company
@@ -587,13 +525,12 @@ public interface RoleLocalService extends BaseLocalService,
 	public List<Role> getRoles(long companyId, int[] types);
 
 	/**
-	* Returns all the roles with the primary keys.
+	* Returns the number of roles.
 	*
-	* @param roleIds the primary keys of the roles
-	* @return the roles with the primary keys
+	* @return the number of roles
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Role> getRoles(long[] roleIds) throws PortalException;
+	public int getRolesCount();
 
 	/**
 	* Returns all the roles of the subtype.
@@ -603,6 +540,36 @@ public interface RoleLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Role> getSubtypeRoles(java.lang.String subtype);
+
+	/**
+	* Returns the number of roles of the subtype.
+	*
+	* @param subtype the role's subtype (optionally <code>null</code>)
+	* @return the number of roles of the subtype
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSubtypeRolesCount(java.lang.String subtype);
+
+	/**
+	* Returns the team role in the company.
+	*
+	* @param companyId the primary key of the company
+	* @param teamId the primary key of the team
+	* @return the team role in the company
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Role getTeamRole(long companyId, long teamId)
+		throws PortalException;
+
+	/**
+	* Returns the team role map for the group.
+	*
+	* @param groupId the primary key of the group
+	* @return the team role map for the group
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<Team, Role> getTeamRoleMap(long groupId)
+		throws PortalException;
 
 	/**
 	* Returns the team roles in the group.
@@ -658,6 +625,15 @@ public interface RoleLocalService extends BaseLocalService,
 	public List<Role> getTypeRoles(int type, int start, int end);
 
 	/**
+	* Returns the number of roles of the type.
+	*
+	* @param type the role's type (optionally <code>0</code>)
+	* @return the number of roles of the type
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getTypeRolesCount(int type);
+
+	/**
 	* Returns all the user's roles within the user group.
 	*
 	* @param userId the primary key of the user
@@ -673,6 +649,9 @@ public interface RoleLocalService extends BaseLocalService,
 	public List<Role> getUserGroupGroupRoles(long userId, long groupId,
 		int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserGroupGroupRolesCount(long userId, long groupId);
+
 	/**
 	* Returns all the user's roles within the user group.
 	*
@@ -684,6 +663,15 @@ public interface RoleLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Role> getUserGroupRoles(long userId, long groupId);
+
+	/**
+	* Returns the userIds of the users associated with the role.
+	*
+	* @param roleId the roleId of the role
+	* @return long[] the userIds of users associated with the role
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long[] getUserPrimaryKeys(long roleId);
 
 	/**
 	* Returns the union of all the user's roles within the groups.
@@ -732,7 +720,77 @@ public interface RoleLocalService extends BaseLocalService,
 		OrderByComparator<Role> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserRolesCount(long userId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Role> getUserTeamRoles(long userId, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasGroupRole(long groupId, long roleId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasGroupRoles(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasUserRole(long userId, long roleId);
+
+	/**
+	* Returns <code>true</code> if the user is associated with the named
+	* regular role.
+	*
+	* @param userId the primary key of the user
+	* @param companyId the primary key of the company
+	* @param name the name of the role
+	* @param inherited whether to include the user's inherited roles in the
+	search
+	* @return <code>true</code> if the user is associated with the regular
+	role; <code>false</code> otherwise
+	*/
+	@ThreadLocalCachable
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasUserRole(long userId, long companyId,
+		java.lang.String name, boolean inherited) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasUserRoles(long userId);
+
+	/**
+	* Returns <code>true</code> if the user has any one of the named regular
+	* roles.
+	*
+	* @param userId the primary key of the user
+	* @param companyId the primary key of the company
+	* @param names the names of the roles
+	* @param inherited whether to include the user's inherited roles in the
+	search
+	* @return <code>true</code> if the user has any one of the regular roles;
+	<code>false</code> otherwise
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasUserRoles(long userId, long companyId,
+		java.lang.String[] names, boolean inherited) throws PortalException;
+
+	/**
+	* Returns a role with the name in the company.
+	*
+	* @param companyId the primary key of the company
+	* @param name the role's name (optionally <code>null</code>)
+	* @return the role with the name, or <code>null</code> if a role with the
+	name could not be found in the company
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Role loadFetchRole(long companyId, java.lang.String name);
+
+	/**
+	* Returns a role with the name in the company.
+	*
+	* @param companyId the primary key of the company
+	* @param name the role's name
+	* @return the role with the name in the company
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Role loadGetRole(long companyId, java.lang.String name)
+		throws PortalException;
 
 	/**
 	* Returns an ordered range of all the roles that match the keywords and
@@ -871,151 +929,64 @@ public interface RoleLocalService extends BaseLocalService,
 		int end, OrderByComparator<Role> obc);
 
 	/**
-	* Returns a map of role names to associated action IDs for the named
-	* resource in the company within the permission scope.
+	* Returns the number of roles that match the keywords and types.
 	*
 	* @param companyId the primary key of the company
-	* @param name the resource name
-	* @param scope the permission scope
-	* @param primKey the primary key of the resource's class
-	* @return the role names and action IDs
-	* @see com.liferay.portal.kernel.service.persistence.RoleFinder#findByC_N_S_P(
-	long, String, int, String)
+	* @param keywords the keywords (space separated), which may occur in the
+	role's name or description (optionally <code>null</code>)
+	* @param types the role types (optionally <code>null</code>)
+	* @return the number of matching roles
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<java.lang.String, List<java.lang.String>> getResourceRoles(
-		long companyId, java.lang.String name, int scope,
-		java.lang.String primKey);
+	public int searchCount(long companyId, java.lang.String keywords,
+		java.lang.Integer[] types);
 
 	/**
-	* Returns the team role map for the group.
-	*
-	* @param groupId the primary key of the group
-	* @return the team role map for the group
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<Team, Role> getTeamRoleMap(long groupId)
-		throws PortalException;
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	/**
-	* Returns the groupIds of the groups associated with the role.
-	*
-	* @param roleId the roleId of the role
-	* @return long[] the groupIds of groups associated with the role
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long[] getGroupPrimaryKeys(long roleId);
-
-	/**
-	* Returns the userIds of the users associated with the role.
-	*
-	* @param roleId the roleId of the role
-	* @return long[] the userIds of users associated with the role
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long[] getUserPrimaryKeys(long roleId);
-
-	public void addGroupRole(long groupId, Role role);
-
-	public void addGroupRole(long groupId, long roleId);
-
-	public void addGroupRoles(long groupId, List<Role> roles);
-
-	public void addGroupRoles(long groupId, long[] roleIds);
-
-	/**
-	* @throws PortalException
-	*/
-	public void addUserRole(long userId, Role role) throws PortalException;
-
-	/**
-	* @throws PortalException
-	*/
-	public void addUserRole(long userId, long roleId) throws PortalException;
-
-	/**
-	* @throws PortalException
-	*/
-	public void addUserRoles(long userId, List<Role> roles)
-		throws PortalException;
-
-	/**
-	* @throws PortalException
-	*/
-	public void addUserRoles(long userId, long[] roleIds)
-		throws PortalException;
-
-	/**
-	* Checks to ensure that the system roles map has appropriate default roles
-	* in each company.
-	*/
-	public void checkSystemRoles() throws PortalException;
-
-	/**
-	* Checks to ensure that the system roles map has appropriate default roles
-	* in the company.
+	* Returns the number of roles that match the keywords, types and params.
 	*
 	* @param companyId the primary key of the company
+	* @param keywords the keywords (space separated), which may occur in the
+	role's name or description (optionally <code>null</code>)
+	* @param types the role types (optionally <code>null</code>)
+	* @param params the finder parameters. For more information, see {@link
+	com.liferay.portal.kernel.service.persistence.RoleFinder}
+	* @return the number of matching roles
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public void checkSystemRoles(long companyId) throws PortalException;
-
-	public void clearGroupRoles(long groupId);
-
-	/**
-	* @throws PortalException
-	*/
-	public void clearUserRoles(long userId) throws PortalException;
-
-	public void deleteGroupRole(long groupId, Role role);
-
-	public void deleteGroupRole(long groupId, long roleId);
-
-	public void deleteGroupRoles(long groupId, List<Role> roles);
-
-	public void deleteGroupRoles(long groupId, long[] roleIds);
+	public int searchCount(long companyId, java.lang.String keywords,
+		java.lang.Integer[] types,
+		LinkedHashMap<java.lang.String, java.lang.Object> params);
 
 	/**
-	* @throws PortalException
+	* Returns the number of roles that match the name, description, and types.
+	*
+	* @param companyId the primary key of the company
+	* @param name the role's name (optionally <code>null</code>)
+	* @param description the role's description (optionally <code>null</code>)
+	* @param types the role types (optionally <code>null</code>)
+	* @return the number of matching roles
 	*/
-	public void deleteUserRole(long userId, Role role)
-		throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(long companyId, java.lang.String name,
+		java.lang.String description, java.lang.Integer[] types);
 
 	/**
-	* @throws PortalException
+	* Returns the number of roles that match the name, description, types, and
+	* params.
+	*
+	* @param companyId the primary key of the company
+	* @param name the role's name (optionally <code>null</code>)
+	* @param description the role's description (optionally <code>null</code>)
+	* @param types the role types (optionally <code>null</code>)
+	* @param params the finder parameters. Can specify values for the
+	"usersRoles" key. For more information, see {@link
+	com.liferay.portal.kernel.service.persistence.RoleFinder}
+	* @return the number of matching roles
 	*/
-	public void deleteUserRole(long userId, long roleId)
-		throws PortalException;
-
-	/**
-	* @throws PortalException
-	*/
-	public void deleteUserRoles(long userId, List<Role> roles)
-		throws PortalException;
-
-	/**
-	* @throws PortalException
-	*/
-	public void deleteUserRoles(long userId, long[] roleIds)
-		throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(long companyId, java.lang.String name,
+		java.lang.String description, java.lang.Integer[] types,
+		LinkedHashMap<java.lang.String, java.lang.Object> params);
 
 	public void setGroupRoles(long groupId, long[] roleIds);
 
@@ -1034,4 +1005,33 @@ public interface RoleLocalService extends BaseLocalService,
 	*/
 	public void unsetUserRoles(long userId, long[] roleIds)
 		throws PortalException;
+
+	/**
+	* Updates the role in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param role the role
+	* @return the role that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public Role updateRole(Role role);
+
+	/**
+	* Updates the role with the primary key.
+	*
+	* @param roleId the primary key of the role
+	* @param name the role's new name
+	* @param titleMap the new localized titles (optionally <code>null</code>)
+	to replace those existing for the role
+	* @param descriptionMap the new localized descriptions (optionally
+	<code>null</code>) to replace those existing for the role
+	* @param subtype the role's new subtype (optionally <code>null</code>)
+	* @param serviceContext the service context to be applied (optionally
+	<code>null</code>). Can set expando bridge attributes for the
+	role.
+	* @return the role with the primary key
+	*/
+	public Role updateRole(long roleId, java.lang.String name,
+		Map<Locale, java.lang.String> titleMap,
+		Map<Locale, java.lang.String> descriptionMap, java.lang.String subtype,
+		ServiceContext serviceContext) throws PortalException;
 }

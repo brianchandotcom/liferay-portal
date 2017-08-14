@@ -34,44 +34,6 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _wikiNodeLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _wikiNodeLocalService.dynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return _wikiNodeLocalService.getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _wikiNodeLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiNodeLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiNodeLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	@Override
 	public com.liferay.wiki.model.WikiNode addDefaultNode(long userId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -85,6 +47,38 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiNodeLocalService.addNode(userId, name, description,
 			serviceContext);
+	}
+
+	@Override
+	public void addNodeResources(com.liferay.wiki.model.WikiNode node,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_wikiNodeLocalService.addNodeResources(node, addGroupPermissions,
+			addGuestPermissions);
+	}
+
+	@Override
+	public void addNodeResources(com.liferay.wiki.model.WikiNode node,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_wikiNodeLocalService.addNodeResources(node, groupPermissions,
+			guestPermissions);
+	}
+
+	@Override
+	public void addNodeResources(long nodeId, boolean addGroupPermissions,
+		boolean addGuestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_wikiNodeLocalService.addNodeResources(nodeId, addGroupPermissions,
+			addGuestPermissions);
+	}
+
+	@Override
+	public void addNodeResources(long nodeId,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_wikiNodeLocalService.addNodeResources(nodeId, groupPermissions,
+			guestPermissions);
 	}
 
 	/**
@@ -108,6 +102,34 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	@Override
 	public com.liferay.wiki.model.WikiNode createWikiNode(long nodeId) {
 		return _wikiNodeLocalService.createWikiNode(nodeId);
+	}
+
+	@Override
+	public void deleteNode(com.liferay.wiki.model.WikiNode node)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_wikiNodeLocalService.deleteNode(node);
+	}
+
+	@Override
+	public void deleteNode(long nodeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_wikiNodeLocalService.deleteNode(nodeId);
+	}
+
+	@Override
+	public void deleteNodes(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_wikiNodeLocalService.deleteNodes(groupId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiNodeLocalService.deletePersistedModel(persistedModel);
 	}
 
 	/**
@@ -136,157 +158,8 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	}
 
 	@Override
-	public com.liferay.wiki.model.WikiNode fetchNode(long groupId,
-		java.lang.String name) {
-		return _wikiNodeLocalService.fetchNode(groupId, name);
-	}
-
-	@Override
-	public com.liferay.wiki.model.WikiNode fetchNodeByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return _wikiNodeLocalService.fetchNodeByUuidAndGroupId(uuid, groupId);
-	}
-
-	@Override
-	public com.liferay.wiki.model.WikiNode fetchWikiNode(long nodeId) {
-		return _wikiNodeLocalService.fetchWikiNode(nodeId);
-	}
-
-	/**
-	* Returns the wiki node matching the UUID and group.
-	*
-	* @param uuid the wiki node's UUID
-	* @param groupId the primary key of the group
-	* @return the matching wiki node, or <code>null</code> if a matching wiki node could not be found
-	*/
-	@Override
-	public com.liferay.wiki.model.WikiNode fetchWikiNodeByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return _wikiNodeLocalService.fetchWikiNodeByUuidAndGroupId(uuid, groupId);
-	}
-
-	@Override
-	public com.liferay.wiki.model.WikiNode getNode(long groupId,
-		java.lang.String nodeName)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiNodeLocalService.getNode(groupId, nodeName);
-	}
-
-	@Override
-	public com.liferay.wiki.model.WikiNode getNode(long nodeId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiNodeLocalService.getNode(nodeId);
-	}
-
-	/**
-	* Returns the wiki node with the primary key.
-	*
-	* @param nodeId the primary key of the wiki node
-	* @return the wiki node
-	* @throws PortalException if a wiki node with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.wiki.model.WikiNode getWikiNode(long nodeId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiNodeLocalService.getWikiNode(nodeId);
-	}
-
-	/**
-	* Returns the wiki node matching the UUID and group.
-	*
-	* @param uuid the wiki node's UUID
-	* @param groupId the primary key of the group
-	* @return the matching wiki node
-	* @throws PortalException if a matching wiki node could not be found
-	*/
-	@Override
-	public com.liferay.wiki.model.WikiNode getWikiNodeByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiNodeLocalService.getWikiNodeByUuidAndGroupId(uuid, groupId);
-	}
-
-	@Override
-	public com.liferay.wiki.model.WikiNode moveNodeToTrash(long userId,
-		com.liferay.wiki.model.WikiNode node)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiNodeLocalService.moveNodeToTrash(userId, node);
-	}
-
-	@Override
-	public com.liferay.wiki.model.WikiNode moveNodeToTrash(long userId,
-		long nodeId) throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiNodeLocalService.moveNodeToTrash(userId, nodeId);
-	}
-
-	@Override
-	public com.liferay.wiki.model.WikiNode updateNode(long nodeId,
-		java.lang.String name, java.lang.String description,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiNodeLocalService.updateNode(nodeId, name, description,
-			serviceContext);
-	}
-
-	@Override
-	public com.liferay.wiki.model.WikiNode updateStatus(long userId,
-		com.liferay.wiki.model.WikiNode node, int status,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiNodeLocalService.updateStatus(userId, node, status,
-			serviceContext);
-	}
-
-	/**
-	* Updates the wiki node in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param wikiNode the wiki node
-	* @return the wiki node that was updated
-	*/
-	@Override
-	public com.liferay.wiki.model.WikiNode updateWikiNode(
-		com.liferay.wiki.model.WikiNode wikiNode) {
-		return _wikiNodeLocalService.updateWikiNode(wikiNode);
-	}
-
-	@Override
-	public int getCompanyNodesCount(long companyId) {
-		return _wikiNodeLocalService.getCompanyNodesCount(companyId);
-	}
-
-	@Override
-	public int getCompanyNodesCount(long companyId, int status) {
-		return _wikiNodeLocalService.getCompanyNodesCount(companyId, status);
-	}
-
-	@Override
-	public int getNodesCount(long groupId) {
-		return _wikiNodeLocalService.getNodesCount(groupId);
-	}
-
-	@Override
-	public int getNodesCount(long groupId, int status) {
-		return _wikiNodeLocalService.getNodesCount(groupId, status);
-	}
-
-	/**
-	* Returns the number of wiki nodes.
-	*
-	* @return the number of wiki nodes
-	*/
-	@Override
-	public int getWikiNodesCount() {
-		return _wikiNodeLocalService.getWikiNodesCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _wikiNodeLocalService.getOSGiServiceIdentifier();
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _wikiNodeLocalService.dynamicQuery();
 	}
 
 	/**
@@ -342,6 +215,67 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 			orderByComparator);
 	}
 
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _wikiNodeLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _wikiNodeLocalService.dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	@Override
+	public com.liferay.wiki.model.WikiNode fetchNode(long groupId,
+		java.lang.String name) {
+		return _wikiNodeLocalService.fetchNode(groupId, name);
+	}
+
+	@Override
+	public com.liferay.wiki.model.WikiNode fetchNodeByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return _wikiNodeLocalService.fetchNodeByUuidAndGroupId(uuid, groupId);
+	}
+
+	@Override
+	public com.liferay.wiki.model.WikiNode fetchWikiNode(long nodeId) {
+		return _wikiNodeLocalService.fetchWikiNode(nodeId);
+	}
+
+	/**
+	* Returns the wiki node matching the UUID and group.
+	*
+	* @param uuid the wiki node's UUID
+	* @param groupId the primary key of the group
+	* @return the matching wiki node, or <code>null</code> if a matching wiki node could not be found
+	*/
+	@Override
+	public com.liferay.wiki.model.WikiNode fetchWikiNodeByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return _wikiNodeLocalService.fetchWikiNodeByUuidAndGroupId(uuid, groupId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _wikiNodeLocalService.getActionableDynamicQuery();
+	}
+
 	@Override
 	public java.util.List<com.liferay.wiki.model.WikiNode> getCompanyNodes(
 		long companyId, int start, int end) {
@@ -356,17 +290,44 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	}
 
 	@Override
-	public java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
-		long groupId)
+	public int getCompanyNodesCount(long companyId) {
+		return _wikiNodeLocalService.getCompanyNodesCount(companyId);
+	}
+
+	@Override
+	public int getCompanyNodesCount(long companyId, int status) {
+		return _wikiNodeLocalService.getCompanyNodesCount(companyId, status);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return _wikiNodeLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _wikiNodeLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.wiki.model.WikiNode getNode(long nodeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiNodeLocalService.getNodes(groupId);
+		return _wikiNodeLocalService.getNode(nodeId);
+	}
+
+	@Override
+	public com.liferay.wiki.model.WikiNode getNode(long groupId,
+		java.lang.String nodeName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiNodeLocalService.getNode(groupId, nodeName);
 	}
 
 	@Override
 	public java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
-		long groupId, int start, int end)
+		long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiNodeLocalService.getNodes(groupId, start, end);
+		return _wikiNodeLocalService.getNodes(groupId);
 	}
 
 	@Override
@@ -378,9 +339,71 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 
 	@Override
 	public java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
+		long groupId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiNodeLocalService.getNodes(groupId, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
 		long groupId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiNodeLocalService.getNodes(groupId, status, start, end);
+	}
+
+	@Override
+	public int getNodesCount(long groupId) {
+		return _wikiNodeLocalService.getNodesCount(groupId);
+	}
+
+	@Override
+	public int getNodesCount(long groupId, int status) {
+		return _wikiNodeLocalService.getNodesCount(groupId, status);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _wikiNodeLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiNodeLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Returns the wiki node with the primary key.
+	*
+	* @param nodeId the primary key of the wiki node
+	* @return the wiki node
+	* @throws PortalException if a wiki node with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.wiki.model.WikiNode getWikiNode(long nodeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiNodeLocalService.getWikiNode(nodeId);
+	}
+
+	/**
+	* Returns the wiki node matching the UUID and group.
+	*
+	* @param uuid the wiki node's UUID
+	* @param groupId the primary key of the group
+	* @return the matching wiki node
+	* @throws PortalException if a matching wiki node could not be found
+	*/
+	@Override
+	public com.liferay.wiki.model.WikiNode getWikiNodeByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiNodeLocalService.getWikiNodeByUuidAndGroupId(uuid, groupId);
 	}
 
 	/**
@@ -433,79 +456,13 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of wiki nodes.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of wiki nodes
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _wikiNodeLocalService.dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _wikiNodeLocalService.dynamicQueryCount(dynamicQuery, projection);
-	}
-
-	@Override
-	public void addNodeResources(com.liferay.wiki.model.WikiNode node,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_wikiNodeLocalService.addNodeResources(node, addGroupPermissions,
-			addGuestPermissions);
-	}
-
-	@Override
-	public void addNodeResources(com.liferay.wiki.model.WikiNode node,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_wikiNodeLocalService.addNodeResources(node, groupPermissions,
-			guestPermissions);
-	}
-
-	@Override
-	public void addNodeResources(long nodeId, boolean addGroupPermissions,
-		boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_wikiNodeLocalService.addNodeResources(nodeId, addGroupPermissions,
-			addGuestPermissions);
-	}
-
-	@Override
-	public void addNodeResources(long nodeId,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_wikiNodeLocalService.addNodeResources(nodeId, groupPermissions,
-			guestPermissions);
-	}
-
-	@Override
-	public void deleteNode(com.liferay.wiki.model.WikiNode node)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_wikiNodeLocalService.deleteNode(node);
-	}
-
-	@Override
-	public void deleteNode(long nodeId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_wikiNodeLocalService.deleteNode(nodeId);
-	}
-
-	@Override
-	public void deleteNodes(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_wikiNodeLocalService.deleteNodes(groupId);
+	public int getWikiNodesCount() {
+		return _wikiNodeLocalService.getWikiNodesCount();
 	}
 
 	@Override
@@ -515,6 +472,19 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_wikiNodeLocalService.importPages(userId, nodeId, importer,
 			inputStreams, options);
+	}
+
+	@Override
+	public com.liferay.wiki.model.WikiNode moveNodeToTrash(long userId,
+		com.liferay.wiki.model.WikiNode node)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiNodeLocalService.moveNodeToTrash(userId, node);
+	}
+
+	@Override
+	public com.liferay.wiki.model.WikiNode moveNodeToTrash(long userId,
+		long nodeId) throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiNodeLocalService.moveNodeToTrash(userId, nodeId);
 	}
 
 	@Override
@@ -534,6 +504,36 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	public void unsubscribeNode(long userId, long nodeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_wikiNodeLocalService.unsubscribeNode(userId, nodeId);
+	}
+
+	@Override
+	public com.liferay.wiki.model.WikiNode updateNode(long nodeId,
+		java.lang.String name, java.lang.String description,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiNodeLocalService.updateNode(nodeId, name, description,
+			serviceContext);
+	}
+
+	@Override
+	public com.liferay.wiki.model.WikiNode updateStatus(long userId,
+		com.liferay.wiki.model.WikiNode node, int status,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiNodeLocalService.updateStatus(userId, node, status,
+			serviceContext);
+	}
+
+	/**
+	* Updates the wiki node in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param wikiNode the wiki node
+	* @return the wiki node that was updated
+	*/
+	@Override
+	public com.liferay.wiki.model.WikiNode updateWikiNode(
+		com.liferay.wiki.model.WikiNode wikiNode) {
+		return _wikiNodeLocalService.updateWikiNode(wikiNode);
 	}
 
 	@Override

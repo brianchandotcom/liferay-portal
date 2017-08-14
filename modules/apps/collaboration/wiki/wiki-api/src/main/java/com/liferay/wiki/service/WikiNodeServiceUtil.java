@@ -48,10 +48,9 @@ public class WikiNodeServiceUtil {
 		return getService().addNode(name, description, serviceContext);
 	}
 
-	public static com.liferay.wiki.model.WikiNode getNode(long groupId,
-		java.lang.String name)
+	public static void deleteNode(long nodeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getNode(groupId, name);
+		getService().deleteNode(nodeId);
 	}
 
 	public static com.liferay.wiki.model.WikiNode getNode(long nodeId)
@@ -59,16 +58,38 @@ public class WikiNodeServiceUtil {
 		return getService().getNode(nodeId);
 	}
 
-	public static com.liferay.wiki.model.WikiNode moveNodeToTrash(long nodeId)
+	public static com.liferay.wiki.model.WikiNode getNode(long groupId,
+		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().moveNodeToTrash(nodeId);
+		return getService().getNode(groupId, name);
 	}
 
-	public static com.liferay.wiki.model.WikiNode updateNode(long nodeId,
-		java.lang.String name, java.lang.String description,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
+		long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().updateNode(nodeId, name, description, serviceContext);
+		return getService().getNodes(groupId);
+	}
+
+	public static java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
+		long groupId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getNodes(groupId, status);
+	}
+
+	public static java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
+		long groupId, int start, int end) {
+		return getService().getNodes(groupId, start, end);
+	}
+
+	public static java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
+		long groupId, int status, int start, int end) {
+		return getService().getNodes(groupId, status, start, end);
+	}
+
+	public static java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
+		long groupId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiNode> obc) {
+		return getService().getNodes(groupId, status, start, end, obc);
 	}
 
 	public static int getNodesCount(long groupId) {
@@ -88,44 +109,16 @@ public class WikiNodeServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getNodes(groupId);
-	}
-
-	public static java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
-		long groupId, int start, int end) {
-		return getService().getNodes(groupId, start, end);
-	}
-
-	public static java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
-		long groupId, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getNodes(groupId, status);
-	}
-
-	public static java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
-		long groupId, int status, int start, int end) {
-		return getService().getNodes(groupId, status, start, end);
-	}
-
-	public static java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
-		long groupId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiNode> obc) {
-		return getService().getNodes(groupId, status, start, end, obc);
-	}
-
-	public static void deleteNode(long nodeId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteNode(nodeId);
-	}
-
 	public static void importPages(long nodeId, java.lang.String importer,
 		java.io.InputStream[] inputStreams,
 		java.util.Map<java.lang.String, java.lang.String[]> options)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().importPages(nodeId, importer, inputStreams, options);
+	}
+
+	public static com.liferay.wiki.model.WikiNode moveNodeToTrash(long nodeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().moveNodeToTrash(nodeId);
 	}
 
 	public static void restoreNodeFromTrash(long nodeId)
@@ -141,6 +134,13 @@ public class WikiNodeServiceUtil {
 	public static void unsubscribeNode(long nodeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().unsubscribeNode(nodeId);
+	}
+
+	public static com.liferay.wiki.model.WikiNode updateNode(long nodeId,
+		java.lang.String name, java.lang.String description,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateNode(nodeId, name, description, serviceContext);
 	}
 
 	public static WikiNodeService getService() {

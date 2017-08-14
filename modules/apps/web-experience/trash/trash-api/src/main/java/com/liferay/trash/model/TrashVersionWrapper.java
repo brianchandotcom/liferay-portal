@@ -114,73 +114,13 @@ public class TrashVersionWrapper implements TrashVersion,
 	}
 
 	@Override
-	public TrashVersion toEscapedModel() {
-		return new TrashVersionWrapper(_trashVersion.toEscapedModel());
-	}
-
-	@Override
-	public TrashVersion toUnescapedModel() {
-		return new TrashVersionWrapper(_trashVersion.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _trashVersion.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _trashVersion.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _trashVersion.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _trashVersion.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<TrashVersion> toCacheModel() {
-		return _trashVersion.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties() {
-		return _trashVersion.getTypeSettingsProperties();
+	public java.lang.Object clone() {
+		return new TrashVersionWrapper((TrashVersion)_trashVersion.clone());
 	}
 
 	@Override
 	public int compareTo(TrashVersion trashVersion) {
 		return _trashVersion.compareTo(trashVersion);
-	}
-
-	/**
-	* Returns the status of this trash version.
-	*
-	* @return the status of this trash version
-	*/
-	@Override
-	public int getStatus() {
-		return _trashVersion.getStatus();
-	}
-
-	@Override
-	public int hashCode() {
-		return _trashVersion.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _trashVersion.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new TrashVersionWrapper((TrashVersion)_trashVersion.clone());
 	}
 
 	/**
@@ -191,37 +131,6 @@ public class TrashVersionWrapper implements TrashVersion,
 	@Override
 	public java.lang.String getClassName() {
 		return _trashVersion.getClassName();
-	}
-
-	/**
-	* Returns the type settings of this trash version.
-	*
-	* @return the type settings of this trash version
-	*/
-	@Override
-	public java.lang.String getTypeSettings() {
-		return _trashVersion.getTypeSettings();
-	}
-
-	@Override
-	public java.lang.String getTypeSettingsProperty(java.lang.String key) {
-		return _trashVersion.getTypeSettingsProperty(key);
-	}
-
-	@Override
-	public java.lang.String getTypeSettingsProperty(java.lang.String key,
-		java.lang.String defaultValue) {
-		return _trashVersion.getTypeSettingsProperty(key, defaultValue);
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _trashVersion.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _trashVersion.toXmlString();
 	}
 
 	/**
@@ -264,6 +173,11 @@ public class TrashVersionWrapper implements TrashVersion,
 		return _trashVersion.getEntryId();
 	}
 
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _trashVersion.getExpandoBridge();
+	}
+
 	/**
 	* Returns the primary key of this trash version.
 	*
@@ -274,6 +188,47 @@ public class TrashVersionWrapper implements TrashVersion,
 		return _trashVersion.getPrimaryKey();
 	}
 
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _trashVersion.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the status of this trash version.
+	*
+	* @return the status of this trash version
+	*/
+	@Override
+	public int getStatus() {
+		return _trashVersion.getStatus();
+	}
+
+	/**
+	* Returns the type settings of this trash version.
+	*
+	* @return the type settings of this trash version
+	*/
+	@Override
+	public java.lang.String getTypeSettings() {
+		return _trashVersion.getTypeSettings();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties() {
+		return _trashVersion.getTypeSettingsProperties();
+	}
+
+	@Override
+	public java.lang.String getTypeSettingsProperty(java.lang.String key) {
+		return _trashVersion.getTypeSettingsProperty(key);
+	}
+
+	@Override
+	public java.lang.String getTypeSettingsProperty(java.lang.String key,
+		java.lang.String defaultValue) {
+		return _trashVersion.getTypeSettingsProperty(key, defaultValue);
+	}
+
 	/**
 	* Returns the version ID of this trash version.
 	*
@@ -282,6 +237,26 @@ public class TrashVersionWrapper implements TrashVersion,
 	@Override
 	public long getVersionId() {
 		return _trashVersion.getVersionId();
+	}
+
+	@Override
+	public int hashCode() {
+		return _trashVersion.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _trashVersion.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _trashVersion.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _trashVersion.isNew();
 	}
 
 	@Override
@@ -409,6 +384,31 @@ public class TrashVersionWrapper implements TrashVersion,
 	@Override
 	public void setVersionId(long versionId) {
 		_trashVersion.setVersionId(versionId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<TrashVersion> toCacheModel() {
+		return _trashVersion.toCacheModel();
+	}
+
+	@Override
+	public TrashVersion toEscapedModel() {
+		return new TrashVersionWrapper(_trashVersion.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _trashVersion.toString();
+	}
+
+	@Override
+	public TrashVersion toUnescapedModel() {
+		return new TrashVersionWrapper(_trashVersion.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _trashVersion.toXmlString();
 	}
 
 	@Override

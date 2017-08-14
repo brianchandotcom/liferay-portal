@@ -31,38 +31,6 @@ public class PortletItemLocalServiceWrapper implements PortletItemLocalService,
 		_portletItemLocalService = portletItemLocalService;
 	}
 
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _portletItemLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _portletItemLocalService.dynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _portletItemLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _portletItemLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _portletItemLocalService.getPersistedModel(primaryKeyObj);
-	}
-
 	/**
 	* Adds the portlet item to the database. Also notifies the appropriate model listeners.
 	*
@@ -97,6 +65,16 @@ public class PortletItemLocalServiceWrapper implements PortletItemLocalService,
 	}
 
 	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _portletItemLocalService.deletePersistedModel(persistedModel);
+	}
+
+	/**
 	* Deletes the portlet item from the database. Also notifies the appropriate model listeners.
 	*
 	* @param portletItem the portlet item
@@ -123,73 +101,8 @@ public class PortletItemLocalServiceWrapper implements PortletItemLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.PortletItem fetchPortletItem(
-		long portletItemId) {
-		return _portletItemLocalService.fetchPortletItem(portletItemId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PortletItem getPortletItem(
-		long groupId, java.lang.String name, java.lang.String portletId,
-		java.lang.String className)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _portletItemLocalService.getPortletItem(groupId, name,
-			portletId, className);
-	}
-
-	/**
-	* Returns the portlet item with the primary key.
-	*
-	* @param portletItemId the primary key of the portlet item
-	* @return the portlet item
-	* @throws PortalException if a portlet item with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.PortletItem getPortletItem(
-		long portletItemId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _portletItemLocalService.getPortletItem(portletItemId);
-	}
-
-	/**
-	* Updates the portlet item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param portletItem the portlet item
-	* @return the portlet item that was updated
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.PortletItem updatePortletItem(
-		com.liferay.portal.kernel.model.PortletItem portletItem) {
-		return _portletItemLocalService.updatePortletItem(portletItem);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PortletItem updatePortletItem(
-		long userId, long groupId, java.lang.String name,
-		java.lang.String portletId, java.lang.String className)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _portletItemLocalService.updatePortletItem(userId, groupId,
-			name, portletId, className);
-	}
-
-	/**
-	* Returns the number of portlet items.
-	*
-	* @return the number of portlet items
-	*/
-	@Override
-	public int getPortletItemsCount() {
-		return _portletItemLocalService.getPortletItemsCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _portletItemLocalService.getOSGiServiceIdentifier();
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _portletItemLocalService.dynamicQuery();
 	}
 
 	/**
@@ -246,6 +159,89 @@ public class PortletItemLocalServiceWrapper implements PortletItemLocalService,
 	}
 
 	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _portletItemLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _portletItemLocalService.dynamicQueryCount(dynamicQuery,
+			projection);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PortletItem fetchPortletItem(
+		long portletItemId) {
+		return _portletItemLocalService.fetchPortletItem(portletItemId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _portletItemLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _portletItemLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _portletItemLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _portletItemLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Returns the portlet item with the primary key.
+	*
+	* @param portletItemId the primary key of the portlet item
+	* @return the portlet item
+	* @throws PortalException if a portlet item with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.PortletItem getPortletItem(
+		long portletItemId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _portletItemLocalService.getPortletItem(portletItemId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PortletItem getPortletItem(
+		long groupId, java.lang.String name, java.lang.String portletId,
+		java.lang.String className)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _portletItemLocalService.getPortletItem(groupId, name,
+			portletId, className);
+	}
+
+	/**
 	* Returns a range of all the portlet items.
 	*
 	* <p>
@@ -276,30 +272,34 @@ public class PortletItemLocalServiceWrapper implements PortletItemLocalService,
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of portlet items.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of portlet items
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _portletItemLocalService.dynamicQueryCount(dynamicQuery);
+	public int getPortletItemsCount() {
+		return _portletItemLocalService.getPortletItemsCount();
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Updates the portlet item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @param portletItem the portlet item
+	* @return the portlet item that was updated
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _portletItemLocalService.dynamicQueryCount(dynamicQuery,
-			projection);
+	public com.liferay.portal.kernel.model.PortletItem updatePortletItem(
+		com.liferay.portal.kernel.model.PortletItem portletItem) {
+		return _portletItemLocalService.updatePortletItem(portletItem);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PortletItem updatePortletItem(
+		long userId, long groupId, java.lang.String name,
+		java.lang.String portletId, java.lang.String className)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _portletItemLocalService.updatePortletItem(userId, groupId,
+			name, portletId, className);
 	}
 
 	@Override

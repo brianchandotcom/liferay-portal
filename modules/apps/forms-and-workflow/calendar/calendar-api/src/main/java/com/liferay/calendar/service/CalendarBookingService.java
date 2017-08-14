@@ -59,8 +59,6 @@ public interface CalendarBookingService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CalendarBookingServiceUtil} to access the calendar booking remote service. Add custom service methods to {@link com.liferay.calendar.service.impl.CalendarBookingServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasChildCalendarBookings(long parentCalendarBookingId);
 
 	/**
 	* @deprecated As of 2.2.0, replaced by {@link #addCalendarBooking(long,
@@ -123,6 +121,19 @@ public interface CalendarBookingService extends BaseService {
 	public CalendarBooking deleteCalendarBooking(long calendarBookingId)
 		throws PortalException;
 
+	public void deleteCalendarBookingInstance(long calendarBookingId,
+		int instanceIndex, boolean allFollowing) throws PortalException;
+
+	public void deleteCalendarBookingInstance(long calendarBookingId,
+		int instanceIndex, boolean allFollowing,
+		boolean deleteRecurringCalendarBookings) throws PortalException;
+
+	public void deleteCalendarBookingInstance(long calendarBookingId,
+		long startTime, boolean allFollowing) throws PortalException;
+
+	public java.lang.String exportCalendarBooking(long calendarBookingId,
+		java.lang.String type) throws java.lang.Exception;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CalendarBooking fetchCalendarBooking(long calendarBookingId)
 		throws PortalException;
@@ -140,6 +151,32 @@ public interface CalendarBookingService extends BaseService {
 		int instanceIndex) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CalendarBooking> getCalendarBookings(long calendarId,
+		int[] statuses) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CalendarBooking> getCalendarBookings(long calendarId,
+		long startTime, long endTime) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CalendarBooking> getCalendarBookings(long calendarId,
+		long startTime, long endTime, int max) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getCalendarBookingsRSS(long calendarId,
+		long startTime, long endTime, int max, java.lang.String type,
+		double version, java.lang.String displayStyle, ThemeDisplay themeDisplay)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CalendarBooking> getChildCalendarBookings(
+		long parentCalendarBookingId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CalendarBooking> getChildCalendarBookings(
+		long parentCalendarBookingId, int status) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CalendarBooking getLastInstanceCalendarBooking(
 		long calendarBookingId) throws PortalException;
 
@@ -147,6 +184,24 @@ public interface CalendarBookingService extends BaseService {
 	public CalendarBooking getNewStartTimeAndDurationCalendarBooking(
 		long calendarBookingId, long offset, long duration)
 		throws PortalException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasChildCalendarBookings(long parentCalendarBookingId);
+
+	/**
+	* @deprecated As of 2.2.0, replaced by {@link #invokeTransition(long, int,
+	long, boolean, boolean, ServiceContext)}
+	*/
+	@java.lang.Deprecated
+	public void invokeTransition(long calendarBookingId, int status,
+		ServiceContext serviceContext) throws PortalException;
 
 	public CalendarBooking invokeTransition(long calendarBookingId,
 		int instanceIndex, int status, boolean updateInstance,
@@ -163,6 +218,40 @@ public interface CalendarBookingService extends BaseService {
 
 	public CalendarBooking restoreCalendarBookingFromTrash(
 		long calendarBookingId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CalendarBooking> search(long companyId, long[] groupIds,
+		long[] calendarIds, long[] calendarResourceIds,
+		long parentCalendarBookingId, java.lang.String title,
+		java.lang.String description, java.lang.String location,
+		long startTime, long endTime, boolean recurring, int[] statuses,
+		boolean andOperator, int start, int end,
+		OrderByComparator<CalendarBooking> orderByComparator)
+		throws PortalException;
+
+	@AccessControlled(guestAccessEnabled = true)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CalendarBooking> search(long companyId, long[] groupIds,
+		long[] calendarIds, long[] calendarResourceIds,
+		long parentCalendarBookingId, java.lang.String keywords,
+		long startTime, long endTime, boolean recurring, int[] statuses,
+		int start, int end, OrderByComparator<CalendarBooking> orderByComparator)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(long companyId, long[] groupIds, long[] calendarIds,
+		long[] calendarResourceIds, long parentCalendarBookingId,
+		java.lang.String title, java.lang.String description,
+		java.lang.String location, long startTime, long endTime,
+		boolean recurring, int[] statuses, boolean andOperator)
+		throws PortalException;
+
+	@AccessControlled(guestAccessEnabled = true)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(long companyId, long[] groupIds, long[] calendarIds,
+		long[] calendarResourceIds, long parentCalendarBookingId,
+		java.lang.String keywords, long startTime, long endTime,
+		boolean recurring, int[] statuses) throws PortalException;
 
 	public CalendarBooking updateCalendarBooking(long calendarBookingId,
 		long calendarId, Map<Locale, java.lang.String> titleMap,
@@ -226,6 +315,10 @@ public interface CalendarBookingService extends BaseService {
 		long secondReminder, java.lang.String secondReminderType,
 		ServiceContext serviceContext) throws PortalException;
 
+	public void updateLastInstanceCalendarBookingRecurrence(
+		long calendarBookingId, java.lang.String recurrence)
+		throws PortalException;
+
 	public CalendarBooking updateOffsetAndDuration(long calendarBookingId,
 		long calendarId, Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> descriptionMap,
@@ -270,96 +363,4 @@ public interface CalendarBookingService extends BaseService {
 		boolean allDay, long firstReminder, java.lang.String firstReminderType,
 		long secondReminder, java.lang.String secondReminderType,
 		ServiceContext serviceContext) throws PortalException;
-
-	@AccessControlled(guestAccessEnabled = true)
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, long[] groupIds, long[] calendarIds,
-		long[] calendarResourceIds, long parentCalendarBookingId,
-		java.lang.String keywords, long startTime, long endTime,
-		boolean recurring, int[] statuses) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, long[] groupIds, long[] calendarIds,
-		long[] calendarResourceIds, long parentCalendarBookingId,
-		java.lang.String title, java.lang.String description,
-		java.lang.String location, long startTime, long endTime,
-		boolean recurring, int[] statuses, boolean andOperator)
-		throws PortalException;
-
-	public java.lang.String exportCalendarBooking(long calendarBookingId,
-		java.lang.String type) throws java.lang.Exception;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getCalendarBookingsRSS(long calendarId,
-		long startTime, long endTime, int max, java.lang.String type,
-		double version, java.lang.String displayStyle, ThemeDisplay themeDisplay)
-		throws PortalException;
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CalendarBooking> getCalendarBookings(long calendarId,
-		int[] statuses) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CalendarBooking> getCalendarBookings(long calendarId,
-		long startTime, long endTime) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CalendarBooking> getCalendarBookings(long calendarId,
-		long startTime, long endTime, int max) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CalendarBooking> getChildCalendarBookings(
-		long parentCalendarBookingId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CalendarBooking> getChildCalendarBookings(
-		long parentCalendarBookingId, int status) throws PortalException;
-
-	@AccessControlled(guestAccessEnabled = true)
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CalendarBooking> search(long companyId, long[] groupIds,
-		long[] calendarIds, long[] calendarResourceIds,
-		long parentCalendarBookingId, java.lang.String keywords,
-		long startTime, long endTime, boolean recurring, int[] statuses,
-		int start, int end, OrderByComparator<CalendarBooking> orderByComparator)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CalendarBooking> search(long companyId, long[] groupIds,
-		long[] calendarIds, long[] calendarResourceIds,
-		long parentCalendarBookingId, java.lang.String title,
-		java.lang.String description, java.lang.String location,
-		long startTime, long endTime, boolean recurring, int[] statuses,
-		boolean andOperator, int start, int end,
-		OrderByComparator<CalendarBooking> orderByComparator)
-		throws PortalException;
-
-	public void deleteCalendarBookingInstance(long calendarBookingId,
-		int instanceIndex, boolean allFollowing) throws PortalException;
-
-	public void deleteCalendarBookingInstance(long calendarBookingId,
-		int instanceIndex, boolean allFollowing,
-		boolean deleteRecurringCalendarBookings) throws PortalException;
-
-	public void deleteCalendarBookingInstance(long calendarBookingId,
-		long startTime, boolean allFollowing) throws PortalException;
-
-	/**
-	* @deprecated As of 2.2.0, replaced by {@link #invokeTransition(long, int,
-	long, boolean, boolean, ServiceContext)}
-	*/
-	@java.lang.Deprecated
-	public void invokeTransition(long calendarBookingId, int status,
-		ServiceContext serviceContext) throws PortalException;
-
-	public void updateLastInstanceCalendarBookingRecurrence(
-		long calendarBookingId, java.lang.String recurrence)
-		throws PortalException;
 }

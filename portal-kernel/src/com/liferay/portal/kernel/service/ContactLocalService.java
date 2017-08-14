@@ -57,13 +57,6 @@ public interface ContactLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ContactLocalServiceUtil} to access the contact local service. Add custom service methods to {@link com.liferay.portal.service.impl.ContactLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Adds the contact to the database. Also notifies the appropriate model listeners.
@@ -112,38 +105,6 @@ public interface ContactLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public Contact deleteContact(long contactId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Contact fetchContact(long contactId);
-
-	/**
-	* Returns the contact with the primary key.
-	*
-	* @param contactId the primary key of the contact
-	* @return the contact
-	* @throws PortalException if a contact with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Contact getContact(long contactId) throws PortalException;
-
-	/**
-	* Updates the contact in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param contact the contact
-	* @return the contact that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public Contact updateContact(Contact contact);
-
-	@Indexable(type = IndexableType.REINDEX)
-	public Contact updateContact(long contactId, java.lang.String emailAddress,
-		java.lang.String firstName, java.lang.String middleName,
-		java.lang.String lastName, long prefixId, long suffixId, boolean male,
-		int birthdayMonth, int birthdayDay, int birthdayYear,
-		java.lang.String smsSn, java.lang.String facebookSn,
-		java.lang.String jabberSn, java.lang.String skypeSn,
-		java.lang.String twitterSn, java.lang.String jobTitle)
-		throws PortalException;
-
 	/**
 	* @throws PortalException
 	*/
@@ -151,28 +112,7 @@ public interface ContactLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	* Returns the number of contacts.
-	*
-	* @return the number of contacts
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getContactsCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getContactsCount(long classNameId, long classPK);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -214,6 +154,40 @@ public interface ContactLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Contact fetchContact(long contactId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
+	* Returns the contact with the primary key.
+	*
+	* @param contactId the primary key of the contact
+	* @return the contact
+	* @throws PortalException if a contact with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Contact getContact(long contactId) throws PortalException;
+
+	/**
 	* Returns a range of all the contacts.
 	*
 	* <p>
@@ -232,20 +206,47 @@ public interface ContactLocalService extends BaseLocalService,
 		int end, OrderByComparator<Contact> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of contacts.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of contacts
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getContactsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getContactsCount(long classNameId, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Updates the contact in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param contact the contact
+	* @return the contact that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public Contact updateContact(Contact contact);
+
+	@Indexable(type = IndexableType.REINDEX)
+	public Contact updateContact(long contactId, java.lang.String emailAddress,
+		java.lang.String firstName, java.lang.String middleName,
+		java.lang.String lastName, long prefixId, long suffixId, boolean male,
+		int birthdayMonth, int birthdayDay, int birthdayYear,
+		java.lang.String smsSn, java.lang.String facebookSn,
+		java.lang.String jabberSn, java.lang.String skypeSn,
+		java.lang.String twitterSn, java.lang.String jobTitle)
+		throws PortalException;
 }

@@ -96,10 +96,6 @@ public interface FriendlyURLEntryLocalizationLocalService
 	public FriendlyURLEntryLocalization deleteFriendlyURLEntryLocalization(
 		FriendlyURLEntryLocalization friendlyURLEntryLocalization);
 
-	public FriendlyURLEntryLocalization deleteFriendlyURLEntryLocalization(
-		long friendlyURLEntryId, java.lang.String languageId)
-		throws PortalException;
-
 	/**
 	* Deletes the friendly url entry localization with the primary key from the database. Also notifies the appropriate model listeners.
 	*
@@ -111,52 +107,12 @@ public interface FriendlyURLEntryLocalizationLocalService
 	public FriendlyURLEntryLocalization deleteFriendlyURLEntryLocalization(
 		long friendlyURLEntryLocalizationId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public FriendlyURLEntryLocalization fetchFriendlyURLEntryLocalization(
-		long friendlyURLEntryId, java.lang.String languageId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public FriendlyURLEntryLocalization fetchFriendlyURLEntryLocalization(
-		long friendlyURLEntryLocalizationId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public FriendlyURLEntryLocalization fetchFriendlyURLEntryLocalization(
-		long groupId, java.lang.String urlTitle, java.lang.String languageId)
+	public FriendlyURLEntryLocalization deleteFriendlyURLEntryLocalization(
+		long friendlyURLEntryId, java.lang.String languageId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public FriendlyURLEntryLocalization fetchFriendlyURLEntryLocalization(
-		long groupId, long classNameId, long classPK,
-		java.lang.String languageId);
-
-	/**
-	* Returns the friendly url entry localization with the primary key.
-	*
-	* @param friendlyURLEntryLocalizationId the primary key of the friendly url entry localization
-	* @return the friendly url entry localization
-	* @throws PortalException if a friendly url entry localization with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public FriendlyURLEntryLocalization getFriendlyURLEntryLocalization(
-		long friendlyURLEntryLocalizationId) throws PortalException;
-
-	/**
-	* Updates the friendly url entry localization in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param friendlyURLEntryLocalization the friendly url entry localization
-	* @return the friendly url entry localization that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public FriendlyURLEntryLocalization updateFriendlyURLEntryLocalization(
-		FriendlyURLEntryLocalization friendlyURLEntryLocalization);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public void deleteFriendlyURLEntryLocalizations(long friendlyURLEntryId)
+		throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -165,28 +121,7 @@ public interface FriendlyURLEntryLocalizationLocalService
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	* Returns the number of friendly url entry localizations.
-	*
-	* @return the number of friendly url entry localizations
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFriendlyURLEntryLocalizationsCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFriendlyURLEntryLocalizationsCount(long friendlyURLEntryId);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -228,6 +163,56 @@ public interface FriendlyURLEntryLocalizationLocalService
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FriendlyURLEntryLocalization fetchFriendlyURLEntryLocalization(
+		long friendlyURLEntryLocalizationId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FriendlyURLEntryLocalization fetchFriendlyURLEntryLocalization(
+		long friendlyURLEntryId, java.lang.String languageId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FriendlyURLEntryLocalization fetchFriendlyURLEntryLocalization(
+		long groupId, java.lang.String urlTitle, java.lang.String languageId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FriendlyURLEntryLocalization fetchFriendlyURLEntryLocalization(
+		long groupId, long classNameId, long classPK,
+		java.lang.String languageId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
+	* Returns the friendly url entry localization with the primary key.
+	*
+	* @param friendlyURLEntryLocalizationId the primary key of the friendly url entry localization
+	* @return the friendly url entry localization
+	* @throws PortalException if a friendly url entry localization with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FriendlyURLEntryLocalization getFriendlyURLEntryLocalization(
+		long friendlyURLEntryLocalizationId) throws PortalException;
+
+	/**
 	* Returns a range of all the friendly url entry localizations.
 	*
 	* <p>
@@ -246,28 +231,43 @@ public interface FriendlyURLEntryLocalizationLocalService
 	public List<FriendlyURLEntryLocalization> getFriendlyURLEntryLocalizations(
 		long friendlyURLEntryId);
 
-	public List<FriendlyURLEntryLocalization> updateFriendlyURLEntryLocalizations(
-		long friendlyURLEntryId, Map<Locale, java.lang.String> urlTitleMap)
+	/**
+	* Returns the number of friendly url entry localizations.
+	*
+	* @return the number of friendly url entry localizations
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFriendlyURLEntryLocalizationsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFriendlyURLEntryLocalizationsCount(long friendlyURLEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Updates the friendly url entry localization in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @param friendlyURLEntryLocalization the friendly url entry localization
+	* @return the friendly url entry localization that was updated
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Indexable(type = IndexableType.REINDEX)
+	public FriendlyURLEntryLocalization updateFriendlyURLEntryLocalization(
+		FriendlyURLEntryLocalization friendlyURLEntryLocalization);
 
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	public void deleteFriendlyURLEntryLocalizations(long friendlyURLEntryId)
+	public List<FriendlyURLEntryLocalization> updateFriendlyURLEntryLocalizations(
+		long friendlyURLEntryId, Map<Locale, java.lang.String> urlTitleMap)
 		throws PortalException;
 }

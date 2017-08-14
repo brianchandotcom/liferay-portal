@@ -34,13 +34,6 @@ public class ScreensCommentServiceWrapper implements ScreensCommentService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.json.JSONArray getComments(
-		java.lang.String className, long classPK, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _screensCommentService.getComments(className, classPK, start, end);
-	}
-
-	@Override
 	public com.liferay.portal.kernel.json.JSONObject addComment(
 		java.lang.String className, long classPK, java.lang.String body)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -54,10 +47,10 @@ public class ScreensCommentServiceWrapper implements ScreensCommentService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.json.JSONObject updateComment(
-		long commentId, java.lang.String body)
+	public com.liferay.portal.kernel.json.JSONArray getComments(
+		java.lang.String className, long classPK, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _screensCommentService.updateComment(commentId, body);
+		return _screensCommentService.getComments(className, classPK, start, end);
 	}
 
 	@Override
@@ -74,6 +67,13 @@ public class ScreensCommentServiceWrapper implements ScreensCommentService,
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _screensCommentService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.json.JSONObject updateComment(
+		long commentId, java.lang.String body)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _screensCommentService.updateComment(commentId, body);
 	}
 
 	@Override

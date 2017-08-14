@@ -128,118 +128,13 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	}
 
 	@Override
-	public AssetLink toEscapedModel() {
-		return new AssetLinkWrapper(_assetLink.toEscapedModel());
-	}
-
-	@Override
-	public AssetLink toUnescapedModel() {
-		return new AssetLinkWrapper(_assetLink.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _assetLink.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _assetLink.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _assetLink.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _assetLink.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<AssetLink> toCacheModel() {
-		return _assetLink.toCacheModel();
+	public java.lang.Object clone() {
+		return new AssetLinkWrapper((AssetLink)_assetLink.clone());
 	}
 
 	@Override
 	public int compareTo(AssetLink assetLink) {
 		return _assetLink.compareTo(assetLink);
-	}
-
-	/**
-	* Returns the type of this asset link.
-	*
-	* @return the type of this asset link
-	*/
-	@Override
-	public int getType() {
-		return _assetLink.getType();
-	}
-
-	/**
-	* Returns the weight of this asset link.
-	*
-	* @return the weight of this asset link
-	*/
-	@Override
-	public int getWeight() {
-		return _assetLink.getWeight();
-	}
-
-	@Override
-	public int hashCode() {
-		return _assetLink.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _assetLink.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new AssetLinkWrapper((AssetLink)_assetLink.clone());
-	}
-
-	/**
-	* Returns the user name of this asset link.
-	*
-	* @return the user name of this asset link
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _assetLink.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this asset link.
-	*
-	* @return the user uuid of this asset link
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _assetLink.getUserUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _assetLink.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _assetLink.toXmlString();
-	}
-
-	/**
-	* Returns the create date of this asset link.
-	*
-	* @return the create date of this asset link
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _assetLink.getCreateDate();
 	}
 
 	/**
@@ -250,6 +145,16 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	@Override
 	public long getCompanyId() {
 		return _assetLink.getCompanyId();
+	}
+
+	/**
+	* Returns the create date of this asset link.
+	*
+	* @return the create date of this asset link
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _assetLink.getCreateDate();
 	}
 
 	/**
@@ -272,6 +177,11 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 		return _assetLink.getEntryId2();
 	}
 
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _assetLink.getExpandoBridge();
+	}
+
 	/**
 	* Returns the link ID of this asset link.
 	*
@@ -292,6 +202,21 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 		return _assetLink.getPrimaryKey();
 	}
 
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _assetLink.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the type of this asset link.
+	*
+	* @return the type of this asset link
+	*/
+	@Override
+	public int getType() {
+		return _assetLink.getType();
+	}
+
 	/**
 	* Returns the user ID of this asset link.
 	*
@@ -300,6 +225,56 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	@Override
 	public long getUserId() {
 		return _assetLink.getUserId();
+	}
+
+	/**
+	* Returns the user name of this asset link.
+	*
+	* @return the user name of this asset link
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _assetLink.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this asset link.
+	*
+	* @return the user uuid of this asset link
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _assetLink.getUserUuid();
+	}
+
+	/**
+	* Returns the weight of this asset link.
+	*
+	* @return the weight of this asset link
+	*/
+	@Override
+	public int getWeight() {
+		return _assetLink.getWeight();
+	}
+
+	@Override
+	public int hashCode() {
+		return _assetLink.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _assetLink.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _assetLink.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _assetLink.isNew();
 	}
 
 	@Override
@@ -446,6 +421,31 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	@Override
 	public void setWeight(int weight) {
 		_assetLink.setWeight(weight);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<AssetLink> toCacheModel() {
+		return _assetLink.toCacheModel();
+	}
+
+	@Override
+	public AssetLink toEscapedModel() {
+		return new AssetLinkWrapper(_assetLink.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _assetLink.toString();
+	}
+
+	@Override
+	public AssetLink toUnescapedModel() {
+		return new AssetLinkWrapper(_assetLink.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _assetLink.toXmlString();
 	}
 
 	@Override

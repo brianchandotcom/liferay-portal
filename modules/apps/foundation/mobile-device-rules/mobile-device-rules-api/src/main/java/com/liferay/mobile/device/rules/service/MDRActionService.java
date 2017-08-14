@@ -69,11 +69,20 @@ public interface MDRActionService extends BaseService {
 		java.lang.String typeSettings, ServiceContext serviceContext)
 		throws PortalException;
 
+	public void deleteAction(long actionId) throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MDRAction fetchAction(long actionId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MDRAction getAction(long actionId) throws PortalException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	public MDRAction updateAction(long actionId,
 		Map<Locale, java.lang.String> nameMap,
@@ -86,13 +95,4 @@ public interface MDRActionService extends BaseService {
 		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
 		java.lang.String typeSettings, ServiceContext serviceContext)
 		throws PortalException;
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	public void deleteAction(long actionId) throws PortalException;
 }

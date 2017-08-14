@@ -58,13 +58,12 @@ public class ExpandoValueServiceUtil {
 			classPK, data);
 	}
 
-	public static com.liferay.portal.kernel.json.JSONObject getJSONData(
-		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK)
+	public static void addValues(long companyId, java.lang.String className,
+		java.lang.String tableName, long classPK,
+		java.util.Map<java.lang.String, java.io.Serializable> attributeValues)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getJSONData(companyId, className, tableName, columnName,
-			classPK);
+		getService()
+			.addValues(companyId, className, tableName, classPK, attributeValues);
 	}
 
 	public static java.io.Serializable getData(long companyId,
@@ -73,15 +72,6 @@ public class ExpandoValueServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getData(companyId, className, tableName, columnName, classPK);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static java.util.Map<java.lang.String, java.io.Serializable> getData(
@@ -93,12 +83,22 @@ public class ExpandoValueServiceUtil {
 			classPK);
 	}
 
-	public static void addValues(long companyId, java.lang.String className,
-		java.lang.String tableName, long classPK,
-		java.util.Map<java.lang.String, java.io.Serializable> attributeValues)
+	public static com.liferay.portal.kernel.json.JSONObject getJSONData(
+		long companyId, java.lang.String className, java.lang.String tableName,
+		java.lang.String columnName, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addValues(companyId, className, tableName, classPK, attributeValues);
+		return getService()
+				   .getJSONData(companyId, className, tableName, columnName,
+			classPK);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static ExpandoValueService getService() {

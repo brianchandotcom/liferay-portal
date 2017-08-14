@@ -69,12 +69,27 @@ public interface LayoutSetPrototypeService extends BaseService {
 		boolean layoutsUpdateable, ServiceContext serviceContext)
 		throws PortalException;
 
+	public void deleteLayoutSetPrototype(long layoutSetPrototypeId)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutSetPrototype fetchLayoutSetPrototype(long layoutSetPrototypeId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutSetPrototype getLayoutSetPrototype(long layoutSetPrototypeId)
+		throws PortalException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutSetPrototype> search(long companyId,
+		java.lang.Boolean active, OrderByComparator<LayoutSetPrototype> obc)
 		throws PortalException;
 
 	public LayoutSetPrototype updateLayoutSetPrototype(
@@ -97,20 +112,5 @@ public interface LayoutSetPrototypeService extends BaseService {
 		long layoutSetPrototypeId, Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap, boolean active,
 		boolean layoutsUpdateable, ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<LayoutSetPrototype> search(long companyId,
-		java.lang.Boolean active, OrderByComparator<LayoutSetPrototype> obc)
-		throws PortalException;
-
-	public void deleteLayoutSetPrototype(long layoutSetPrototypeId)
 		throws PortalException;
 }

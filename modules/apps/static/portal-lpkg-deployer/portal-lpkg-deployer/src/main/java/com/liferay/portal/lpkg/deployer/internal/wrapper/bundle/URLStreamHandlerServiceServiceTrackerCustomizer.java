@@ -82,8 +82,10 @@ public class URLStreamHandlerServiceServiceTrackerCustomizer
 				newBundle = _bundleContext.installBundle(
 					location, urlConnection.getInputStream());
 
-				BundleStartLevelUtil.setStartLevelAndStart(
-					newBundle, _startLevel, _bundleContext);
+				if (newBundle.getState() != Bundle.UNINSTALLED) {
+					BundleStartLevelUtil.setStartLevelAndStart(
+						newBundle, _startLevel, _bundleContext);
+				}
 			}
 
 			return newBundle;

@@ -108,6 +108,10 @@ public class RSSFeedEntry {
 			String feedType = syndFeed.getFeedType();
 			String type = syndContent.getType();
 
+			if (type == null) {
+				type = "text/plain";
+			}
+
 			if (Objects.equals(RSSUtil.getFormatType(feedType), RSSUtil.ATOM) &&
 				(type.equals("html") || type.equals("xhtml"))) {
 

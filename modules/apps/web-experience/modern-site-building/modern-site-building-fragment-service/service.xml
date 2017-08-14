@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
+
+<service-builder auto-import-default-references="false" auto-namespace-tables="false" package-path="com.liferay.modern.site.building.fragment">
+	<namespace>Fragment</namespace>
+	<entity local-service="true" name="FragmentCollection" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="fragmentCollectionId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="name" type="String" />
+		<column name="description" type="String" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="name" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="G_N" return-type="FragmentCollection" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="name" />
+		</finder>
+		<finder name="G_LikeN" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column case-sensitive="false" comparator="LIKE" name="name" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="FragmentEntry" package-path="com.liferay.modern.site.building.fragment" />
+		<reference entity="Resource" package-path="com.liferay.portal" />
+		<reference entity="User" package-path="com.liferay.portal" />
+	</entity>
+	<entity local-service="true" name="FragmentEntry" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="fragmentEntryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="name" type="String" />
+		<column name="css" type="String" />
+		<column name="html" type="String" />
+		<column name="js" type="String" />
+		<column name="fragmentCollectionId" type="long" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="name" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="FragmentCollectionId" return-type="Collection">
+			<finder-column name="fragmentCollectionId" />
+		</finder>
+		<finder name="G_N" return-type="FragmentEntry" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="name" />
+		</finder>
+		<finder name="G_FC" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="fragmentCollectionId" />
+		</finder>
+		<finder name="G_LikeN_FC" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column case-sensitive="false" comparator="LIKE" name="name" />
+			<finder-column name="fragmentCollectionId" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="FragmentCollection" package-path="com.liferay.modern.site.building.fragment" />
+		<reference entity="Resource" package-path="com.liferay.portal" />
+		<reference entity="User" package-path="com.liferay.portal" />
+	</entity>
+	<exceptions>
+		<exception>DuplicateFragmentCollection</exception>
+		<exception>DuplicateFragmentEntry</exception>
+		<exception>FragmentCollectionName</exception>
+		<exception>FragmentEntryName</exception>
+	</exceptions>
+</service-builder>

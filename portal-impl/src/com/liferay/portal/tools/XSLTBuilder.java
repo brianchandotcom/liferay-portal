@@ -19,8 +19,11 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.xml.SecureXMLFactoryProviderImpl;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -44,8 +47,19 @@ import org.w3c.dom.NodeList;
  */
 public class XSLTBuilder {
 
-	public static void main(String[] args) {
-		if (args.length == 3) {
+	public static void main(String[] args) throws IOException {
+		if (args.length == 2) {
+			String xmls = null;
+
+			try (BufferedReader bufferedReader = new BufferedReader(
+					new InputStreamReader(System.in))) {
+
+				xmls = bufferedReader.readLine();
+			}
+
+			new XSLTBuilder(StringUtil.split(xmls), args[0], args[1]);
+		}
+		else if (args.length == 3) {
 			new XSLTBuilder(StringUtil.split(args[0]), args[1], args[2]);
 		}
 		else {

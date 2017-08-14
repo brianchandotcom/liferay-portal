@@ -235,7 +235,7 @@ public class UpgradeKaleoProcess extends UpgradeProcess {
 	}
 
 	protected void updateKaleoProcess() throws Exception {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(8);
 
 		sb.append("select KaleoProcess.kaleoProcessId, ");
 		sb.append("KaleoProcess.DDLRecordSetId, KaleoProcess.DDMTemplateId, ");
@@ -243,19 +243,17 @@ public class UpgradeKaleoProcess extends UpgradeProcess {
 		sb.append("DDLRecordSet on DDLRecordSet.recordSetId = ");
 		sb.append("KaleoProcess.DDLRecordSetId join DDMStructure on ");
 		sb.append("DDMStructure.structureId = DDLRecordSet.DDMStructureId ");
-		sb.append("where DDMStructure.classNameId <> ?");
+		sb.append("where DDMStructure.classNameId <> ");
+		sb.append(_kaleoProcessClassNameId);
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps = connection.prepareStatement(sb.toString());
+			ResultSet rs = ps.executeQuery();
 			PreparedStatement ps2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update KaleoProcess set DDMTemplateId = ? where " +
 						"kaleoProcessId = ?")) {
-
-			ps.setLong(1, _kaleoProcessClassNameId);
-
-			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {
 				long kaleoProcessId = rs.getLong("kaleoProcessId");
@@ -281,24 +279,22 @@ public class UpgradeKaleoProcess extends UpgradeProcess {
 	}
 
 	protected void updateKaleoProcessLink() throws Exception {
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(5);
 
 		sb.append("select KaleoProcessLink.kaleoProcessLinkId, ");
 		sb.append("KaleoProcessLink.DDMTemplateId FROM KaleoProcessLink join ");
 		sb.append("DDMTemplate on DDMTemplate.templateId = KaleoProcessLink.");
-		sb.append("DDMTemplateId where DDMTemplate.resourceClassNameId <> ?");
+		sb.append("DDMTemplateId where DDMTemplate.resourceClassNameId <> ");
+		sb.append(_kaleoProcessClassNameId);
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps = connection.prepareStatement(sb.toString());
+			ResultSet rs = ps.executeQuery();
 			PreparedStatement ps2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update KaleoProcessLink set DDMTemplateId = ? where " +
 						"kaleoProcessLinkId = ?")) {
-
-			ps.setLong(1, _kaleoProcessClassNameId);
-
-			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {
 				long kaleoProcessLinkId = rs.getLong("kaleoProcessLinkId");

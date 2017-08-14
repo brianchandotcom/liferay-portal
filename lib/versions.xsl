@@ -112,12 +112,19 @@
 				<xsl:value-of select="version" />
 			</td>
 			<td nowrap="nowrap">
-				<a>
-					<xsl:attribute name="href">
-						<xsl:value-of disable-output-escaping="yes" select="project-url" />
-					</xsl:attribute>
-					<xsl:value-of select="project-name" />
-				</a>
+				<xsl:choose>
+					<xsl:when test="project-url">
+						<a>
+							<xsl:attribute name="href">
+								<xsl:value-of disable-output-escaping="yes" select="project-url" />
+							</xsl:attribute>
+							<xsl:value-of select="project-name" />
+						</a>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:value-of select="project-name" />
+					</xsl:otherwise>
+				</xsl:choose>
 			</td>
 			<td nowrap="nowrap">
 				<xsl:apply-templates select="licenses/license" />

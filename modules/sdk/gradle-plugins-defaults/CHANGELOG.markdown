@@ -1894,7 +1894,7 @@ property:
 ### Changed
 - [LPS-73967]: Update the [Liferay Gradle Plugins] dependency to version 3.4.26.
 
-## 5.0.12 - 2017-08-11
+## 5.0.12 - 2017-08-12
 
 ### Changed
 - [LPS-74126]: Update the [Liferay Gradle Plugins] dependency to version 3.4.27.

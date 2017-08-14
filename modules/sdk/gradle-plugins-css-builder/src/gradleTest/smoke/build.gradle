@@ -1,3 +1,5 @@
+import java.util.regex.Matcher
+
 apply plugin: "com.liferay.css.builder"
 apply plugin: "java"
 
@@ -20,5 +22,11 @@ runGradleTest {
 
 			assert generatedFile.exists()
 		}
+
+		File mainCssFile = new File(dir, "main.css")
+
+		Matcher matcher = mainCssFile.text =~ /@import\s+url\s*\(\s*"(.+\.css\?t=\d+)"\s*\)\s*;/
+
+		assert matcher.count == 3
 	}
 }

@@ -443,7 +443,7 @@ public class KaleoProcessLocalServiceImpl
 	}
 
 	/**
-	 * Adds a Kaleo process link referencing the Kaleo process ID.
+	 * Updates a Kaleo process link referencing the Kaleo process ID.
 	 *
 	 * @param kaleoProcessId the primary key of the kaleo process
 	 * @param kaleoTaskFormPairs the Kaleo task form pairs. For more
@@ -455,7 +455,7 @@ public class KaleoProcessLocalServiceImpl
 
 		for (KaleoTaskFormPair kaleoTaskFormPair : kaleoTaskFormPairs) {
 			if (Validator.isNotNull(kaleoTaskFormPair.getDDMTemplateId())) {
-				kaleoProcessLinkLocalService.addKaleoProcessLink(
+				kaleoProcessLinkLocalService.updateKaleoProcessLink(
 					kaleoProcessId, kaleoTaskFormPair.getWorkflowTaskName(),
 					kaleoTaskFormPair.getDDMTemplateId());
 			}

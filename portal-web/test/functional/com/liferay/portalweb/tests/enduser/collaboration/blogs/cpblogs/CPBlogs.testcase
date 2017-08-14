@@ -905,16 +905,10 @@
 			<var name="entryContent"><![CDATA[A World-Renowned Professor<br />It's no secret that Agricultural Science Department professor Dr. Wolfgang von Richter has built his entire career on solving the problem of sustainable living on other planets. For Dr. von Richter, the humble lima bean, which comes from the aptly-named phaseolus lunatus plant of the legume family, is the solution. For years, Dr. von Richter has cultivated variety after variety of lima bean. He's turned lima beans cobalt blue by adding the hardiness of a violet gene; he's grown lima beans the size of fists with his nutrient-rich, hyper-growth soil. But how realistic is his dream of getting lima beans to grow in the harsh, unpredictable, and, frankly, otherworldly conditions of different planets?]]></var>
 		</execute>
 
-		<execute function="SelectFieldText" locator1="AlloyEditor#CONTENT_FIELD" />
-
-		<execute function="Click" locator1="AlloyEditor#TEXT_FORMATTING_STYLE" /> 
-
-		<execute function="Click" locator1="AlloyEditor#TEXT_FORMATTING_STYLE_DROPDOWN">
-			<var name="key_styleFormat" value="Heading 2" />
+		<execute macro="BlogsEntry#selectFormattingStyle">
+			<var name="styleFormat" value="Heading 2" />
 		</execute>
 
 		<execute macro="Button#clickPublish" />
-
-		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 	</command>
 </definition>

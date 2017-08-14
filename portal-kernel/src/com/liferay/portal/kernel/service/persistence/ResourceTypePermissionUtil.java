@@ -35,8 +35,10 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  * @see ResourceTypePermissionPersistence
  * @see com.liferay.portal.service.persistence.impl.ResourceTypePermissionPersistenceImpl
+ * @deprecated As of 7.0.0, with no direct replacement
  * @generated
  */
+@Deprecated
 @ProviderType
 public class ResourceTypePermissionUtil {
 	/*

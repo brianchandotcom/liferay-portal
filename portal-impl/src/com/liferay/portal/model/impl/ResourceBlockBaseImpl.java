@@ -29,8 +29,10 @@ import com.liferay.portal.kernel.service.ResourceBlockLocalServiceUtil;
  * @author Brian Wing Shun Chan
  * @see ResourceBlockImpl
  * @see ResourceBlock
+ * @deprecated As of 7.0.0, with no direct replacement
  * @generated
  */
+@Deprecated
 @ProviderType
 public abstract class ResourceBlockBaseImpl extends ResourceBlockModelImpl
 	implements ResourceBlock {

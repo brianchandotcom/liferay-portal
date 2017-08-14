@@ -50,8 +50,10 @@ import com.liferay.portal.kernel.util.MethodKey;
  * @see ResourceBlockServiceSoap
  * @see HttpPrincipal
  * @see ResourceBlockServiceUtil
+ * @deprecated
  * @generated
  */
+@Deprecated
 @ProviderType
 public class ResourceBlockServiceHttp {
 	public static void addCompanyScopePermission(HttpPrincipal httpPrincipal,

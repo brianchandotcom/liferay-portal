@@ -59,8 +59,10 @@ import javax.sql.DataSource;
  * @author Brian Wing Shun Chan
  * @see com.liferay.portal.service.impl.ResourceTypePermissionLocalServiceImpl
  * @see com.liferay.portal.kernel.service.ResourceTypePermissionLocalServiceUtil
+ * @deprecated
  * @generated
  */
+@Deprecated
 @ProviderType
 public abstract class ResourceTypePermissionLocalServiceBaseImpl
 	extends BaseLocalServiceImpl implements ResourceTypePermissionLocalService,

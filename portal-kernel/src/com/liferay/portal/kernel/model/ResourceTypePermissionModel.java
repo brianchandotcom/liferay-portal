@@ -34,8 +34,10 @@ import java.io.Serializable;
  * @see ResourceTypePermission
  * @see com.liferay.portal.model.impl.ResourceTypePermissionImpl
  * @see com.liferay.portal.model.impl.ResourceTypePermissionModelImpl
+ * @deprecated As of 7.0.0, with no direct replacement
  * @generated
  */
+@Deprecated
 @ProviderType
 public interface ResourceTypePermissionModel extends BaseModel<ResourceTypePermission>,
 	MVCCModel, ShardedModel {

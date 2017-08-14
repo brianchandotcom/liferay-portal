@@ -413,9 +413,9 @@
 		<condition
 			else="${app.module.dirs.public}"
 			property="app.module.dirs"
-			value="${app.module.dirs.excludes.private}"
+			value="${app.module.dirs.private}"
 		>
-			<istrue value="${current.private}" />
+			<istrue value="${current.branch.private}" />
 		</condition>
 
 		<condition property="module.dirs.null">

@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateVersion;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.permission.DDMStructurePermission;
@@ -56,6 +57,7 @@ public class UpgradeKaleoProcess extends UpgradeProcess {
 	public UpgradeKaleoProcess(
 		DDLRecordSetLocalService ddlRecordSetLocalService,
 		DDMStructureLocalService ddmStructureLocalService,
+		DDMStructureVersionLocalService ddmStructureVersionLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
 		DDMTemplateVersionLocalService ddmTemplateVersionLocalService,
 		ResourceActionLocalService resourceActionLocalService,
@@ -64,6 +66,7 @@ public class UpgradeKaleoProcess extends UpgradeProcess {
 
 		_ddlRecordSetLocalService = ddlRecordSetLocalService;
 		_ddmStructureLocalService = ddmStructureLocalService;
+		_ddmStructureVersionLocalService = ddmStructureVersionLocalService;
 		_ddmTemplateLocalService = ddmTemplateLocalService;
 		_ddmTemplateVersionLocalService = ddmTemplateVersionLocalService;
 		_resourceActionLocalService = resourceActionLocalService;
@@ -108,7 +111,8 @@ public class UpgradeKaleoProcess extends UpgradeProcess {
 		ServiceContext serviceContext = new ServiceContext();
 
 		DDMStructureVersion ddmStructureVersion =
-			oldDDMStructure.getStructureVersion();
+			_ddmStructureVersionLocalService.getStructureVersion(
+				oldDDMStructure.getStructureId(), oldDDMStructure.getVersion());
 
 		serviceContext.setAttribute("status", ddmStructureVersion.getStatus());
 
@@ -320,6 +324,8 @@ public class UpgradeKaleoProcess extends UpgradeProcess {
 	private final DDLRecordSetLocalService _ddlRecordSetLocalService;
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final HashMap<Long, Long> _ddmStructureMap = new HashMap<>();
+	private final DDMStructureVersionLocalService
+		_ddmStructureVersionLocalService;
 	private final DDMTemplateLocalService _ddmTemplateLocalService;
 	private final HashMap<Long, Long> _ddmTemplateMap = new HashMap<>();
 	private final DDMTemplateVersionLocalService

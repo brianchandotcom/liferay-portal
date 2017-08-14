@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalService;
@@ -68,9 +69,9 @@ public class KaleoFormsServiceUpgrade implements UpgradeStepRegistrator {
 			"com.liferay.portal.workflow.kaleo.forms.service", "1.0.2", "1.1.0",
 			new UpgradeKaleoProcess(
 				_ddlRecordSetLocalService, _ddmStructureLocalService,
-				_ddmTemplateLocalService, _ddmTemplateVersionLocalService,
-				_resourceActionLocalService, _resourceActions,
-				_resourcePermissionLocalService));
+				_ddmStructureVersionLocalService, _ddmTemplateLocalService,
+				_ddmTemplateVersionLocalService, _resourceActionLocalService,
+				_resourceActions, _resourcePermissionLocalService));
 	}
 
 	@Reference(unbind = "-")
@@ -99,6 +100,13 @@ public class KaleoFormsServiceUpgrade implements UpgradeStepRegistrator {
 		DDMStructureLocalService ddmStructureLocalService) {
 
 		_ddmStructureLocalService = ddmStructureLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setDDMStructureVersionLocalService(
+		DDMStructureVersionLocalService ddmStructureVersionLocalService) {
+
+		_ddmStructureVersionLocalService = ddmStructureVersionLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -153,6 +161,7 @@ public class KaleoFormsServiceUpgrade implements UpgradeStepRegistrator {
 	private DDLRecordLocalService _ddlRecordLocalService;
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;
 	private DDMStructureLocalService _ddmStructureLocalService;
+	private DDMStructureVersionLocalService _ddmStructureVersionLocalService;
 	private DDMTemplateLinkLocalService _ddmTemplateLinkLocalService;
 	private DDMTemplateLocalService _ddmTemplateLocalService;
 	private DDMTemplateVersionLocalService _ddmTemplateVersionLocalService;

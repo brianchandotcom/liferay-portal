@@ -540,17 +540,15 @@ public class SoyPortlet extends MVCPortlet {
 			Writer writer)
 		throws Exception {
 
+		ScriptData scriptData = new ScriptData();
+
 		String portletNamespace = portletResponse.getNamespace();
 
 		String portletComponentId = _getPortletComponentId(portletNamespace);
 
 		String portletId = PortalUtil.getPortletId(portletRequest);
-
 		String portletWrapperId = _getPortletWrapperId(portletNamespace);
-
 		Template template = getTemplate(portletRequest);
-
-		ScriptData scriptData = new ScriptData();
 
 		String portletJavaScript = _soyPortletHelper.getRouterJavaScript(
 			portletComponentId, portletId, portletNamespace, portletWrapperId,
@@ -569,10 +567,8 @@ public class SoyPortlet extends MVCPortlet {
 			Writer writer)
 		throws Exception {
 
-		String portletNamespace = portletResponse.getNamespace();
-
 		writer.write("<div id=\"");
-		writer.write(_getPortletWrapperId(portletNamespace));
+		writer.write(_getPortletWrapperId(portletResponse.getNamespace()));
 		writer.write("\">");
 
 		Template template = getTemplate(portletRequest);

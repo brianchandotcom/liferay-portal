@@ -74,9 +74,7 @@ public class SoyPortletHelperTest {
 		throws Exception {
 
 		Bundle bundle = _mockBundleWithoutPackage();
-
 		MVCCommandCache mvcCommandCache = _mockEmptyMVCCommandCache();
-
 		FriendlyURLMapper friendlyURLMapper = Mockito.mock(
 			FriendlyURLMapper.class);
 
@@ -87,11 +85,9 @@ public class SoyPortletHelperTest {
 	}
 
 	@Test
-	public void testgetJavaScriptLoaderModule() throws Exception {
+	public void testGetJavaScriptLoaderModule() throws Exception {
 		Bundle bundle = _mockBundleWithPackageFile();
-
 		MVCCommandCache mvcCommandCache = _mockEmptyMVCCommandCache();
-
 		FriendlyURLMapper friendlyURLMapper = Mockito.mock(
 			FriendlyURLMapper.class);
 
@@ -107,11 +103,9 @@ public class SoyPortletHelperTest {
 	}
 
 	@Test
-	public void testgetJavaScriptLoaderModuleForES6() throws Exception {
+	public void testGetJavaScriptLoaderModuleForES6() throws Exception {
 		Bundle bundle = _mockBundleWithPackageFile();
-
 		MVCCommandCache mvcCommandCache = _mockEmptyMVCCommandCache();
-
 		FriendlyURLMapper friendlyURLMapper = Mockito.mock(
 			FriendlyURLMapper.class);
 
@@ -126,11 +120,9 @@ public class SoyPortletHelperTest {
 	}
 
 	@Test
-	public void testgetJavaScriptLoaderModuleForSoy() throws Exception {
+	public void testGetJavaScriptLoaderModuleForSoy() throws Exception {
 		Bundle bundle = _mockBundleWithPackageFile();
-
 		MVCCommandCache mvcCommandCache = _mockEmptyMVCCommandCache();
-
 		FriendlyURLMapper friendlyURLMapper = Mockito.mock(
 			FriendlyURLMapper.class);
 

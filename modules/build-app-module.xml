@@ -59,9 +59,9 @@
 
 	<target depends="copy-hotfix-artifact,download-artifact,download-artifact-dependencies,record-artifact-change-log" name="dist-module-artifact" />
 
-	<target depends="download-artifact-sources,replace-sources-license-header" name="dist-module-artifact-sources" />
-
 	<target depends="move-artifact,move-artifact-dependencies" name="dist-module-artifact-lpkg" />
+
+	<target depends="download-artifact-sources,replace-sources-license-header" name="dist-module-artifact-sources" />
 
 	<target name="download-artifact" unless="artifact.exclude">
 		<fail message="Missing artifact.properties file in ${releng.module.dir}.">
@@ -89,6 +89,15 @@
 				<get dest="${dist.dir}" src="${artifact.url}" />
 			</else>
 		</if>
+	</target>
+
+	<target if="artifact.deploy.dependencies" name="download-artifact-dependencies">
+		<exec dir="${modules.dir}" executable="${modules.dir}/../gradlew${gradlew.suffix}">
+			<arg value="${gradle.project.path}:deployDependencies" />
+			<arg value="-Ddeploy.dependencies.keep.versions=true" />
+			<arg value="-Dforced.cache.enabled=true" />
+			<arg value="-Pforced.deploy.dir=${dist.dir}" />
+		</exec>
 	</target>
 
 	<target name="download-artifact-sources" unless="artifact.exclude">
@@ -127,17 +136,8 @@
 		</if>
 	</target>
 
-	<target if="artifact.deploy.dependencies" name="download-artifact-dependencies">
-		<exec dir="${modules.dir}" executable="${modules.dir}/../gradlew${gradlew.suffix}">
-			<arg value="${gradle.project.path}:deployDependencies" />
-			<arg value="-Ddeploy.dependencies.keep.versions=true" />
-			<arg value="-Dforced.cache.enabled=true" />
-			<arg value="-Pforced.deploy.dir=${dist.dir}" />
-		</exec>
-	</target>
-
 	<target
-		depends="get-artifact-version-previous-release,get-artifact-change-log-ticket-list-since-previous-release,get-artifact-change-log-ticket-list-full"
+		depends="get-artifact-change-log-ticket-list-full,get-artifact-change-log-ticket-list-since-previous-release,get-artifact-version-previous-release"
 		description="Get an aggregated list of tickets from the change logs of all versions of the current module since the version present in the previous release of this app."
 		if="${app.has.artifact.previous.release}"
 		name="get-artifact-change-log-ticket-list"
@@ -168,19 +168,6 @@
 		<condition property="artifact.has.change.log.ticket.list">
 			<isset property="artifact.change.log.ticket.list" />
 		</condition>
-	</target>
-
-	<target name="get-artifact-sources-file-names">
-		<basename file="${artifact.sources.url}" property="artifact.sources.file.name.original" />
-
-		<loadfile property="artifact.sources.file.name.commercial">
-			<propertyresource name="artifact.sources.file.name.original" />
-			<filterchain>
-				<tokenfilter>
-					<replaceregex pattern="(.+-sources)(\.jar|zip)" replace="\1-commercial\2" />
-				</tokenfilter>
-			</filterchain>
-		</loadfile>
 	</target>
 
 	<target
@@ -307,6 +294,19 @@
 
 		<property name="artifact.location.dest" value="${osgi.dir}/marketplace/${artifact.name}-${lp.version}.${module-incremental-version}.war" />
 		<property name="artifact.location.src" value="${osgi.dir}/../deploy/${artifact.name}-${lp.version}.${module-incremental-version}.war" />
+	</target>
+
+	<target name="get-artifact-sources-file-names">
+		<basename file="${artifact.sources.url}" property="artifact.sources.file.name.original" />
+
+		<loadfile property="artifact.sources.file.name.commercial">
+			<propertyresource name="artifact.sources.file.name.original" />
+			<filterchain>
+				<tokenfilter>
+					<replaceregex pattern="(.+-sources)(\.jar|zip)" replace="\1-commercial\2" />
+				</tokenfilter>
+			</filterchain>
+		</loadfile>
 	</target>
 
 	<target

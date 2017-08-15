@@ -1,4 +1,5 @@
 import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 apply plugin: "com.liferay.css.builder"
 apply plugin: "java"
@@ -17,16 +18,16 @@ runGradleTest {
 	doLast {
 		File dir = file("src/main/resources/css/.sass-cache")
 
+		Pattern pattern =  ~/@import\s+url\s*\(\s*['"]?(.+\.css\?t=\d+)['"]?\s*\)\s*;/
+
 		for (String fileName in ["main.css", "main_rtl.css"]) {
 			File generatedFile = new File(dir, fileName)
 
 			assert generatedFile.exists()
+
+			Matcher matcher = generatedFile.text =~ pattern
+
+			assert matcher.count == 3
 		}
-
-		File mainCssFile = new File(dir, "main.css")
-
-		Matcher matcher = mainCssFile.text =~ /@import\s+url\s*\(\s*['"]?(.+\.css\?t=\d+)['"]?\s*\)\s*;/
-
-		assert matcher.count == 3
 	}
 }

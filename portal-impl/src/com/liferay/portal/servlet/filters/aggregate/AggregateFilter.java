@@ -520,7 +520,10 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 			resourcePath, requestURI, _servletContext);
 
 		if (PortalWebResourcesUtil.hasContextPath(requestURI)) {
-			resourcePathRoot = "/";
+			resourcePathRoot = PortalWebResourcesUtil.stripContextPath(
+				cssServletContext, resourcePath);
+
+			resourcePathRoot = ServletPaths.getParentPath(resourcePathRoot);
 		}
 		else {
 			resourcePathRoot = ServletPaths.getParentPath(resourcePath);

@@ -64,12 +64,13 @@
 			</map>
 		</property>
 		<property name="hostName" value="#{T(com.liferay.lcs.util.SystemEnvironmentUtil).getValue(T(com.liferay.lcs.util.SystemEnvironmentUtil).OSB_LCS_GATEWAY_WEB_HOST_NAME, T(com.liferay.lcs.util.PortletPropsValues).OSB_LCS_GATEWAY_WEB_HOST_NAME)}" />
-		<property name="hostPort" value="#{T(com.liferay.lcs.util.SystemEnvironmentUtil).getValue(T(com.liferay.lcs.util.SystemEnvironmentUtil).OSB_LCS_GATEWAY_WEB_HOST_PORT, T(com.liferay.lcs.util.PortletPropsValues).OSB_LCS_GATEWAY_WEB_HOST_PORT)}" />		<property name="keyStore">
-		<bean class="com.liferay.lcs.security.KeyStoreFactory" factory-method="getInstance">
-			<constructor-arg type="java.lang.String" value="#{T(com.liferay.lcs.util.PortletPropsValues).OSB_LCS_GATEWAY_WEB_KEY_STORE_PATH}" />
-			<constructor-arg type="java.lang.String" value="#{T(com.liferay.lcs.util.PortletPropsValues).OSB_LCS_GATEWAY_WEB_KEY_STORE_TYPE}" />
-		</bean>
-	</property>
+		<property name="hostPort" value="#{T(com.liferay.lcs.util.SystemEnvironmentUtil).getValue(T(com.liferay.lcs.util.SystemEnvironmentUtil).OSB_LCS_GATEWAY_WEB_HOST_PORT, T(com.liferay.lcs.util.PortletPropsValues).OSB_LCS_GATEWAY_WEB_HOST_PORT)}" />
+		<property name="keyStore">
+			<bean class="com.liferay.lcs.security.KeyStoreFactory" factory-method="getInstance">
+				<constructor-arg type="java.lang.String" value="#{T(com.liferay.lcs.util.PortletPropsValues).OSB_LCS_GATEWAY_WEB_KEY_STORE_PATH}" />
+				<constructor-arg type="java.lang.String" value="#{T(com.liferay.lcs.util.PortletPropsValues).OSB_LCS_GATEWAY_WEB_KEY_STORE_TYPE}" />
+			</bean>
+		</property>
 		<property name="protocol" value="#{T(com.liferay.lcs.util.SystemEnvironmentUtil).getValue(T(com.liferay.lcs.util.SystemEnvironmentUtil).OSB_LCS_GATEWAY_WEB_PROTOCOL, T(com.liferay.lcs.util.PortletPropsValues).OSB_LCS_GATEWAY_WEB_PROTOCOL)}" />
 		<property name="proxyAuthType" value="#{T(com.liferay.lcs.util.PortletPropsValues).PROXY_AUTH_TYPE}" />
 		<property name="proxyDomain" value="#{T(com.liferay.lcs.util.PortletPropsValues).PROXY_DOMAIN}" />

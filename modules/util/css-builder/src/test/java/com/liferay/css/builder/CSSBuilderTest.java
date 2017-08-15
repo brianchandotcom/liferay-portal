@@ -102,6 +102,20 @@ public class CSSBuilderTest {
 		_testCssBuilder("ruby", _PORTAL_COMMON_CSS_DIR_NAME);
 	}
 
+	private void _assertMatchesCount(
+		Pattern pattern, String s, int expectedCount) {
+
+		int count = 0;
+
+		Matcher matcher = pattern.matcher(s);
+
+		while (matcher.find()) {
+			count++;
+		}
+
+		Assert.assertEquals(expectedCount, count);
+	}
+
 	private String _read(String fileName) throws Exception {
 		Path path = Paths.get(fileName);
 
@@ -132,15 +146,13 @@ public class CSSBuilderTest {
 		String actualTestCssImportContent = _read(
 			_docrootDirName + "/css/.sass-cache/test_css_import.css");
 
-		Matcher matcher = _cssImportPattern.matcher(actualTestCssImportContent);
+		_assertMatchesCount(_cssImportPattern, actualTestCssImportContent, 3);
 
-		int cssImportsCount = 0;
+		String actualTestCssImportRtlContent = _read(
+			_docrootDirName + "/css/.sass-cache/test_css_import_rtl.css");
 
-		while (matcher.find()) {
-			cssImportsCount++;
-		}
-
-		Assert.assertEquals(3, cssImportsCount);
+		_assertMatchesCount(
+			_cssImportPattern, actualTestCssImportRtlContent, 3);
 
 		Assert.assertEquals(expectedTestContent, actualTestContent);
 

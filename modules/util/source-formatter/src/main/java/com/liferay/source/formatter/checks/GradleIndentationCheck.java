@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -99,7 +100,7 @@ public class GradleIndentationCheck extends BaseFileCheck {
 		StringBuilder sb = new StringBuilder();
 
 		for (int i = 0; i < expectedTabCount; i++) {
-			sb.append("\t");
+			sb.append(StringPool.TAB);
 		}
 
 		sb.append(StringUtil.trimLeading(line));
@@ -134,9 +135,17 @@ public class GradleIndentationCheck extends BaseFileCheck {
 			return tabCount;
 		}
 
+		tabCount += getLevel(text, "([{", "}])");
+
+		text = StringUtil.removeSubstrings(text, "([{", "}])");
+
+		tabCount += getLevel(text, "[{", "}]");
+
+		text = StringUtil.removeSubstrings(text, "[{", "}]");
+
 		return getLevel(
-			text, new String[] {"([{", "[{", "{", "[", "("},
-			new String[] {"}])", "}]", "}", "]", ")"}, tabCount);
+			text, new String[] {"{", "[", "("}, new String[] {"}", "]", ")"},
+			tabCount);
 	}
 
 	private String _projectPathPrefix;

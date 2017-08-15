@@ -173,6 +173,10 @@ public class PermissionCacheUtil {
 		return _permissionPortalCache.get(permissionKey);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static ResourceBlockIdsBag getResourceBlockIdsBag(
 		long companyId, long groupId, long userId, String name) {
 

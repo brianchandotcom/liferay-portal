@@ -152,6 +152,8 @@ name = HtmlUtil.escapeJS(name);
 %>
 
 <aui:script use="<%= modules %>">
+	var UA = A.UA;
+
 	var getInitialContent = function() {
 		var data;
 
@@ -617,6 +619,49 @@ name = HtmlUtil.escapeJS(name);
 		);
 
 		ckEditor.on('dataReady', window['<%= name %>']._setStyles);
+
+		if (UA.edge && parseInt(UA.edge, 10) >= 14) {
+			var resetActiveElementValidation = function(activeElement) {
+				activeElement = A.one(activeElement);
+
+				var activeElementAncestor = activeElement.ancestor();
+
+				if (activeElementAncestor.hasClass('has-error') || activeElementAncestor.hasClass('has-success')) {
+					activeElementAncestor.removeClass('has-error');
+					activeElementAncestor.removeClass('has-success');
+
+					var formValidatorStack = activeElementAncestor.one('.form-validator-stack');
+
+					if (formValidatorStack) {
+						formValidatorStack.remove();
+					}
+				}
+			};
+
+			var onBlur = function(activeElement) {
+				resetActiveElementValidation(activeElement);
+
+				setTimeout(
+					function() {
+						if (activeElement) {
+							ckEditor.focusManager.blur(true);
+							activeElement.focus();
+						}
+					},
+					0
+				);
+			};
+
+			ckEditor.on(
+				'dataReady',
+				function() {
+					if (instanceReady) {
+						ckEditor.once('focus', onBlur.bind(this, document.activeElement));
+						ckEditor.focus();
+					}
+				}
+			);
+		}
 	};
 
 	<%

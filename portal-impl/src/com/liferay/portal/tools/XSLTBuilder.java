@@ -14,9 +14,11 @@
 
 package com.liferay.portal.tools;
 
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.xml.SAXReaderFactory;
+import com.liferay.util.xml.Dom4jUtil;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -24,6 +26,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -73,6 +80,21 @@ public class XSLTBuilder {
 		try {
 			System.setProperty("line.separator", StringPool.NEW_LINE);
 
+			String prefix = html.substring(
+				0, html.lastIndexOf(CharPool.PERIOD));
+
+			Document document = _combineAndSortXMLs(xmls, prefix + ".xsl");
+
+			if (xmls.length > 1) {
+				String completeXml = prefix + "-complete.xml";
+
+				String completeContent = Dom4jUtil.toString(document);
+
+				Files.write(
+					Paths.get(completeXml),
+					completeContent.getBytes(StandardCharsets.UTF_8));
+			}
+
 			TransformerFactory transformerFactory =
 				TransformerFactory.newInstance();
 
@@ -80,7 +102,7 @@ public class XSLTBuilder {
 				new StreamSource(xsl));
 
 			transformer.transform(
-				_combineAndSortXMLs(xmls),
+				new DocumentSource(document),
 				new StreamResult(new FileOutputStream(html)));
 		}
 		catch (Exception e) {
@@ -88,7 +110,9 @@ public class XSLTBuilder {
 		}
 	}
 
-	private DocumentSource _combineAndSortXMLs(String[] xmls) throws Exception {
+	private Document _combineAndSortXMLs(String[] xmls, String xsl)
+		throws Exception {
+
 		SAXReader saxReader = SAXReaderFactory.getSAXReader(null, false, false);
 
 		Map<String, Element> elementMap = new TreeMap<>();
@@ -105,6 +129,17 @@ public class XSLTBuilder {
 
 		Document document = DocumentHelper.createDocument();
 
+		File xslFile = new File(xsl);
+
+		if (xslFile.exists()) {
+			Map<String, String> args = new HashMap<>();
+
+			args.put("href", xslFile.getName());
+			args.put("type", "text/xsl");
+
+			document.addProcessingInstruction("xml-stylesheet", args);
+		}
+
 		Element versionsElement = document.addElement("versions");
 
 		Element versionElement = versionsElement.addElement("version");
@@ -115,7 +150,7 @@ public class XSLTBuilder {
 			librariesElement.add(element.detach());
 		}
 
-		return new DocumentSource(document);
+		return document;
 	}
 
 }

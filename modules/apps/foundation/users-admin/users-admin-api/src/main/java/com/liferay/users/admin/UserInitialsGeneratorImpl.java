@@ -39,19 +39,21 @@ public class UserInitialsGeneratorImpl implements UserInitialsGenerator {
 	public String getInitials(
 		Locale locale, String firstName, String middleName, String lastName) {
 
-		Map<String, String> nameInitialsMap = _getNameIntialsMap(
-			firstName, middleName, lastName);
+		String[] userNames = {firstName, middleName, lastName};
 
-		Stream<String> fieldsStream = Stream.of(_getNameIntialsFields(locale));
+		Stream<String> fieldsStream = Stream.of(
+			_getUserInitialsFieldNames(locale));
 
 		return fieldsStream.map(
-			nameInitialsMap::get
+			key -> userNames[_nameIndexMap.get(key)]
 		).filter(
-			Validator::isNotNull
-		).map(
-			StringUtil::toUpperCase
+			name -> Validator.isNotNull(name)
 		).limit(
 			2
+		).map(
+			name -> StringUtil.shorten(name, 1)
+		).map(
+			initial -> StringUtil.toUpperCase(initial)
 		).collect(
 			Collectors.joining()
 		);
@@ -64,40 +66,24 @@ public class UserInitialsGeneratorImpl implements UserInitialsGenerator {
 			user.getLastName());
 	}
 
-	private String[] _getNameIntialsFields(Locale locale) {
+	private String[] _getUserInitialsFieldNames(Locale locale) {
 		return StringUtil.split(
 			LanguageUtil.get(
 				locale, LanguageConstants.KEY_USER_INITIALS_FIELD_NAMES,
-				_DEFAULT_INITIALS_FIELDS));
+				"first-name,last-name"));
 	}
 
-	private Map<String, String> _getNameIntialsMap(
-		String firstName, String middleName, String lastName) {
+	private static final String[] _DEFAULT_INITIALS_FIELDS =
+		{LanguageConstants.VALUE_FIRST_NAME, LanguageConstants.VALUE_LAST_NAME};
 
-		Map<String, String> nameInitialsMap = new HashMap<>();
+	private static final Map<String, Integer> _nameIndexMap = new HashMap<>(3);
+	private static final Map<Locale, String[]> _userInitialsFieldNamesMap =
+		new HashMap<>();
 
-		if (Validator.isNotNull(firstName)) {
-			nameInitialsMap.put(
-				LanguageConstants.VALUE_FIRST_NAME,
-				StringUtil.shorten(firstName, 1));
-		}
-
-		if (Validator.isNotNull(middleName)) {
-			nameInitialsMap.put(
-				LanguageConstants.VALUE_MIDDLE_NAME,
-				StringUtil.shorten(middleName, 1));
-		}
-
-		if (Validator.isNotNull(lastName)) {
-			nameInitialsMap.put(
-				LanguageConstants.VALUE_LAST_NAME,
-				StringUtil.shorten(lastName, 1));
-		}
-
-		return nameInitialsMap;
+	static {
+		_nameIndexMap.put(LanguageConstants.VALUE_FIRST_NAME, 0);
+		_nameIndexMap.put(LanguageConstants.VALUE_MIDDLE_NAME, 1);
+		_nameIndexMap.put(LanguageConstants.VALUE_LAST_NAME, 2);
 	}
-
-	private static final String _DEFAULT_INITIALS_FIELDS =
-		"first-name,last-name";
 
 }

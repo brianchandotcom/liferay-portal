@@ -15,6 +15,7 @@
 package com.liferay.lcs.oauth;
 
 import com.liferay.lcs.util.PortletPropsValues;
+import com.liferay.lcs.util.SystemEnvironmentUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -57,8 +58,12 @@ public class OAuthUtil {
 		String accessToken, String accessSecret) {
 
 		OAuthConsumer oAuthConsumer = new CommonsHttpOAuthConsumer(
-			PortletPropsValues.OSB_LCS_PORTLET_OAUTH_CONSUMER_KEY,
-			PortletPropsValues.OSB_LCS_PORTLET_OAUTH_CONSUMER_SECRET);
+			SystemEnvironmentUtil.getValue(
+				SystemEnvironmentUtil.OSB_LCS_PORTLET_OAUTH_CONSUMER_KEY,
+				PortletPropsValues.OSB_LCS_PORTLET_OAUTH_CONSUMER_KEY),
+			SystemEnvironmentUtil.getValue(
+				SystemEnvironmentUtil.OSB_LCS_PORTLET_OAUTH_CONSUMER_SECRET,
+				PortletPropsValues.OSB_LCS_PORTLET_OAUTH_CONSUMER_SECRET));
 
 		oAuthConsumer.setTokenWithSecret(accessToken, accessSecret);
 

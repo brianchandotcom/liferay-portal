@@ -19,8 +19,10 @@ import com.liferay.poshi.runner.util.RegexUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Stack;
 
 import org.dom4j.Attribute;
@@ -32,27 +34,41 @@ import org.dom4j.tree.DefaultElement;
  */
 public abstract class PoshiElement extends DefaultElement {
 
-	public PoshiElement(String name, Element element) {
-		super(name);
+	public static boolean isElementType(String name, Element element) {
+		if (name.equals(element.getName())) {
+			return true;
+		}
 
-		if (isElementType(name, element)) {
-			_addAttributes(element);
-			_addElements(element);
-		}
-		else {
-			setName("unsupported");
-		}
+		return false;
 	}
 
-	public PoshiElement(String name, String readableSyntax) {
-		super(name);
+	public static PoshiElement newPoshiElement(Element element) {
+		for (PoshiElementFactory poshiElementFactory : _poshiElementFactories) {
+			PoshiElement poshiElement = poshiElementFactory.newPoshiElement(
+				element);
 
-		if (isElementType(readableSyntax)) {
-			parseReadableSyntax(readableSyntax);
+			if (poshiElement != null) {
+				return poshiElement;
+			}
 		}
-		else {
-			setName("unsupported");
+
+		throw new RuntimeException("Unknown element\n" + element.toString());
+	}
+
+	public static PoshiElement newPoshiElement(
+		PoshiElement parentPoshiElement, String readableSyntax) {
+
+		for (PoshiElementFactory poshiElementFactory : _poshiElementFactories) {
+			PoshiElement poshiElement = poshiElementFactory.newPoshiElement(
+				parentPoshiElement, readableSyntax);
+
+			if (poshiElement != null) {
+				return poshiElement;
+			}
 		}
+
+		throw new RuntimeException(
+			"Unknown readable syntax\n" + readableSyntax);
 	}
 
 	@Override
@@ -64,18 +80,6 @@ public abstract class PoshiElement extends DefaultElement {
 		}
 
 		super.add(new PoshiElementAttribute(attribute));
-	}
-
-	public boolean isElementType(String readableSyntax) {
-		return true;
-	}
-
-	public boolean isElementType(String name, Element element) {
-		if (name.equals(element.getName())) {
-			return true;
-		}
-
-		return false;
 	}
 
 	public abstract void parseReadableSyntax(String readableSyntax);
@@ -105,6 +109,12 @@ public abstract class PoshiElement extends DefaultElement {
 		}
 
 		return sb.toString();
+	}
+
+	protected static void addPoshiElementFactory(
+		PoshiElementFactory poshiElementFactory) {
+
+		_poshiElementFactories.add(poshiElementFactory);
 	}
 
 	protected static String getBracedContent(String readableSyntax) {
@@ -161,11 +171,23 @@ public abstract class PoshiElement extends DefaultElement {
 		return stack.isEmpty();
 	}
 
-	protected void addElementFromReadableSyntax(String readableSyntax) {
-		PoshiElement poshiElement = PoshiElementFactory.newPoshiElement(
-			readableSyntax);
+	protected PoshiElement(String name, Element element) {
+		super(name);
 
-		add(poshiElement);
+		if (!isElementType(name, element)) {
+			throw new RuntimeException(
+				"Element does not match expected PoshiElement name\n" +
+					element.toString());
+		}
+
+		_addAttributes(element);
+		_addElements(element);
+	}
+
+	protected PoshiElement(String name, String readableSyntax) {
+		super(name);
+
+		parseReadableSyntax(readableSyntax);
 	}
 
 	protected String createReadableBlock(String content) {
@@ -274,12 +296,14 @@ public abstract class PoshiElement extends DefaultElement {
 		for (Element childElement :
 				Dom4JUtil.toElementList(element.elements())) {
 
-			add(PoshiElementFactory.newPoshiElement(childElement));
+			add(PoshiElementFactoryOld.newPoshiElement(childElement));
 		}
 	}
 
 	private static final Map<Character, Character> _codeBoundariesMap =
 		new HashMap<>();
+	private static final Set<PoshiElementFactory> _poshiElementFactories =
+		new HashSet<>();
 
 	static {
 		_codeBoundariesMap.put('\"', '\"');

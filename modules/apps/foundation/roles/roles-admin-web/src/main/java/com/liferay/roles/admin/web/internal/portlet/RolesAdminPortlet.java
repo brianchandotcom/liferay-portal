@@ -29,9 +29,7 @@ import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocalCloseable;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.model.ResourceTypePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -41,10 +39,7 @@ import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.security.permission.comparator.ActionComparator;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
-import com.liferay.portal.kernel.service.ResourceBlockLocalService;
-import com.liferay.portal.kernel.service.ResourceBlockService;
 import com.liferay.portal.kernel.service.ResourcePermissionService;
-import com.liferay.portal.kernel.service.ResourceTypePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -54,7 +49,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -144,23 +138,9 @@ public class RolesAdminPortlet extends MVCPortlet {
 			throw new RolePermissionsException(roleName);
 		}
 
-		if (_resourceBlockLocalService.isSupported(name)) {
-			if (scope == ResourceConstants.SCOPE_GROUP) {
-				_resourceBlockService.removeGroupScopePermission(
-					themeDisplay.getScopeGroupId(), themeDisplay.getCompanyId(),
-					GetterUtil.getLong(primKey), name, roleId, actionId);
-			}
-			else {
-				_resourceBlockService.removeCompanyScopePermission(
-					themeDisplay.getScopeGroupId(), themeDisplay.getCompanyId(),
-					name, roleId, actionId);
-			}
-		}
-		else {
-			_resourcePermissionService.removeResourcePermission(
-				themeDisplay.getScopeGroupId(), themeDisplay.getCompanyId(),
-				name, scope, primKey, roleId, actionId);
-		}
+		_resourcePermissionService.removeResourcePermission(
+			themeDisplay.getScopeGroupId(), themeDisplay.getCompanyId(), name,
+			scope, primKey, roleId, actionId);
 
 		// Send redirect
 
@@ -409,16 +389,9 @@ public class RolesAdminPortlet extends MVCPortlet {
 					}
 				}
 
-				if (_resourceBlockLocalService.isSupported(selResource)) {
-					updateActions_Blocks(
-						role, themeDisplay.getScopeGroupId(), selResource,
-						actionId, selected, scope, groupIds);
-				}
-				else {
-					updateAction(
-						role, themeDisplay.getScopeGroupId(), selResource,
-						actionId, selected, scope, groupIds);
-				}
+				updateAction(
+					role, themeDisplay.getScopeGroupId(), selResource, actionId,
+					selected, scope, groupIds);
 
 				if (selected &&
 					actionId.equals(ActionKeys.ACCESS_IN_CONTROL_PANEL)) {
@@ -542,20 +515,6 @@ public class RolesAdminPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
-	protected void setResourceBlockLocalService(
-		ResourceBlockLocalService resourceBlockLocalService) {
-
-		_resourceBlockLocalService = resourceBlockLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setResourceBlockService(
-		ResourceBlockService resourceBlockService) {
-
-		_resourceBlockService = resourceBlockService;
-	}
-
-	@Reference(unbind = "-")
 	protected void setResourcePermissionService(
 		ResourcePermissionService resourcePermissionService) {
 
@@ -629,56 +588,6 @@ public class RolesAdminPortlet extends MVCPortlet {
 		}
 	}
 
-	protected void updateActions_Blocks(
-			Role role, long scopeGroupId, String selResource, String actionId,
-			boolean selected, int scope, String[] groupIds)
-		throws Exception {
-
-		long companyId = role.getCompanyId();
-		long roleId = role.getRoleId();
-
-		ResourceAction resourceAction =
-			_resourceActionLocalService.getResourceAction(
-				selResource, actionId);
-
-		ResourceTypePermission resourceTypePermission =
-			_resourceTypePermissionLocalService.fetchResourceTypePermission(
-				companyId, 0, selResource, roleId);
-
-		if (((resourceTypePermission != null) &&
-			 resourceTypePermission.hasAction(resourceAction)) == selected) {
-
-			return;
-		}
-
-		if (selected) {
-			if (scope == ResourceConstants.SCOPE_GROUP) {
-				_resourceBlockService.removeAllGroupScopePermissions(
-					scopeGroupId, companyId, selResource, roleId, actionId);
-				_resourceBlockService.removeCompanyScopePermission(
-					scopeGroupId, companyId, selResource, roleId, actionId);
-
-				for (String groupId : groupIds) {
-					_resourceBlockService.addGroupScopePermission(
-						scopeGroupId, companyId, GetterUtil.getLong(groupId),
-						selResource, roleId, actionId);
-				}
-			}
-			else {
-				_resourceBlockService.removeAllGroupScopePermissions(
-					scopeGroupId, companyId, selResource, roleId, actionId);
-				_resourceBlockService.addCompanyScopePermission(
-					scopeGroupId, companyId, selResource, roleId, actionId);
-			}
-		}
-		else {
-			_resourceBlockService.removeAllGroupScopePermissions(
-				scopeGroupId, companyId, selResource, roleId, actionId);
-			_resourceBlockService.removeCompanyScopePermission(
-				scopeGroupId, companyId, selResource, roleId, actionId);
-		}
-	}
-
 	protected void updateViewControlPanelPermission(
 			Role role, long scopeGroupId, String portletId, int scope,
 			String[] groupIds)
@@ -745,14 +654,7 @@ public class RolesAdminPortlet extends MVCPortlet {
 	@Reference
 	private ResourceActionLocalService _resourceActionLocalService;
 
-	private ResourceBlockLocalService _resourceBlockLocalService;
-	private ResourceBlockService _resourceBlockService;
 	private ResourcePermissionService _resourcePermissionService;
-
-	@Reference
-	private ResourceTypePermissionLocalService
-		_resourceTypePermissionLocalService;
-
 	private RoleLocalService _roleLocalService;
 	private RoleService _roleService;
 	private UserService _userService;

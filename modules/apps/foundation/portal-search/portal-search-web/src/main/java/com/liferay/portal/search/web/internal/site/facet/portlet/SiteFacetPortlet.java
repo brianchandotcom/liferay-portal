@@ -20,10 +20,10 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.ScopeFacetFactory;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.facet.display.builder.ScopeSearchFacetDisplayBuilder;
 import com.liferay.portal.search.web.internal.facet.display.context.ScopeSearchFacetDisplayContext;
 import com.liferay.portal.search.web.internal.site.facet.constants.SiteFacetPortletKeys;
-import com.liferay.portal.search.web.internal.site.facet.constants.SiteFacetWebKeys;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
@@ -101,7 +101,7 @@ public class SiteFacetPortlet
 			buildDisplayContext(portletSharedSearchResponse, renderRequest);
 
 		renderRequest.setAttribute(
-			SiteFacetWebKeys.DISPLAY_CONTEXT, siteFacetPortletDisplayContext);
+			WebKeys.PORTLET_DISPLAY_CONTEXT, siteFacetPortletDisplayContext);
 
 		super.render(renderRequest, renderResponse);
 	}

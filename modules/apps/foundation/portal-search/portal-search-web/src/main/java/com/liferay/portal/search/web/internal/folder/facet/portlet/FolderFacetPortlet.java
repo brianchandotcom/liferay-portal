@@ -20,12 +20,12 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.facet.display.builder.FolderSearchFacetDisplayBuilder;
 import com.liferay.portal.search.web.internal.facet.display.context.FolderSearchFacetDisplayContext;
 import com.liferay.portal.search.web.internal.facet.display.context.FolderTitleLookup;
 import com.liferay.portal.search.web.internal.facet.display.context.FolderTitleLookupImpl;
 import com.liferay.portal.search.web.internal.folder.facet.constants.FolderFacetPortletKeys;
-import com.liferay.portal.search.web.internal.folder.facet.constants.FolderFacetWebKeys;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
@@ -101,8 +101,7 @@ public class FolderFacetPortlet
 			buildDisplayContext(portletSharedSearchResponse, renderRequest);
 
 		renderRequest.setAttribute(
-			FolderFacetWebKeys.DISPLAY_CONTEXT,
-			folderSearchFacetDisplayContext);
+			WebKeys.PORTLET_DISPLAY_CONTEXT, folderSearchFacetDisplayContext);
 
 		super.render(renderRequest, renderResponse);
 	}

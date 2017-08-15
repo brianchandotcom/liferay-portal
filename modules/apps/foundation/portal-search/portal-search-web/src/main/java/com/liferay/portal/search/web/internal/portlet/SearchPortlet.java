@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.PortalOpenSearchImpl;
 import com.liferay.portal.search.web.constants.SearchPortletKeys;
 import com.liferay.portal.search.web.internal.display.context.SearchDisplayContext;
@@ -82,7 +83,7 @@ public class SearchPortlet extends MVCPortlet {
 				renderRequest, renderResponse, renderRequest.getPreferences());
 
 		renderRequest.setAttribute(
-			SearchDisplayContext.class.getName(), searchDisplayContext);
+			WebKeys.PORTLET_DISPLAY_CONTEXT, searchDisplayContext);
 
 		super.render(renderRequest, renderResponse);
 	}

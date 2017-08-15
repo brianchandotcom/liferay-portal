@@ -17,8 +17,8 @@ package com.liferay.portal.search.web.internal.search.insights.portlet;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.search.insights.constants.SearchInsightsPortletKeys;
-import com.liferay.portal.search.web.internal.search.insights.constants.SearchInsightsWebKeys;
 import com.liferay.portal.search.web.internal.search.insights.display.context.SearchInsightsDisplayContext;
 import com.liferay.portal.search.web.internal.util.SearchStringUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
@@ -76,7 +76,7 @@ public class SearchInsightsPortlet extends MVCPortlet {
 			portletSharedSearchRequest.search(renderRequest);
 
 		renderRequest.setAttribute(
-			SearchInsightsWebKeys.DISPLAY_CONTEXT,
+			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			buildDisplayContext(portletSharedSearchResponse, renderRequest));
 
 		super.render(renderRequest, renderResponse);

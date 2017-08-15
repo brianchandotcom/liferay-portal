@@ -15,11 +15,11 @@
 --%>
 
 <%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.portal.search.web.internal.search.insights.constants.SearchInsightsWebKeys" %><%@
+page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.search.web.internal.search.insights.display.context.SearchInsightsDisplayContext" %>
 
 <%
-SearchInsightsDisplayContext searchInsightsDisplayContext = (SearchInsightsDisplayContext)java.util.Objects.requireNonNull(request.getAttribute(SearchInsightsWebKeys.DISPLAY_CONTEXT));
+SearchInsightsDisplayContext searchInsightsDisplayContext = (SearchInsightsDisplayContext)java.util.Objects.requireNonNull(request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT));
 %>
 
 <style>

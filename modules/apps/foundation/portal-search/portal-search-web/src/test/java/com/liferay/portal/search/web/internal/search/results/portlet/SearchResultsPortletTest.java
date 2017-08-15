@@ -30,13 +30,13 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.summary.Summary;
 import com.liferay.portal.search.summary.SummaryBuilder;
 import com.liferay.portal.search.summary.SummaryBuilderFactory;
 import com.liferay.portal.search.web.internal.display.context.PortletURLFactory;
 import com.liferay.portal.search.web.internal.portlet.shared.task.PortletSharedRequestHelper;
 import com.liferay.portal.search.web.internal.result.display.builder.AssetRendererFactoryLookup;
-import com.liferay.portal.search.web.internal.search.results.constants.SearchResultsWebKeys;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
 
@@ -306,7 +306,7 @@ public class SearchResultsPortletTest {
 		Mockito.verify(
 			_renderRequest
 		).setAttribute(
-			Matchers.eq(SearchResultsWebKeys.DISPLAY_CONTEXT),
+			Matchers.eq(WebKeys.PORTLET_DISPLAY_CONTEXT),
 			argumentCaptor.capture()
 		);
 

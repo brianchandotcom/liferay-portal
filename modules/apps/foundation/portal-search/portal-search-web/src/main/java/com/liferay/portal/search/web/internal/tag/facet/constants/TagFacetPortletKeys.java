@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.search.web.internal.search.results.constants;
+package com.liferay.portal.search.web.internal.tag.facet.constants;
 
 /**
- * @author André de Oliveira
+ * @author Lino Alves
  */
-public class SearchResultsWebKeys {
+public class TagFacetPortletKeys {
 
-	public static final String DISPLAY_CONTEXT =
-		"SEARCH_RESULTS_PORTLET_DISPLAY_CONTEXT";
+	public static final String TAG_FACET =
+		"com_liferay_portal_search_web_tag_facet_portlet_TagFacetPortlet";
 
 }

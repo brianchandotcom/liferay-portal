@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
-import com.liferay.portal.kernel.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
@@ -267,25 +266,17 @@ public class PortletConfigurationPermissionsDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (ResourceBlockLocalServiceUtil.isSupported(getSelResource())) {
-			ResourceBlockLocalServiceUtil.verifyResourceBlockId(
+		int count =
+			ResourcePermissionLocalServiceUtil.getResourcePermissionsCount(
 				themeDisplay.getCompanyId(), getSelResource(),
-				Long.valueOf(getResourcePrimKey()));
-		}
-		else {
-			int count =
-				ResourcePermissionLocalServiceUtil.getResourcePermissionsCount(
-					themeDisplay.getCompanyId(), getSelResource(),
-					ResourceConstants.SCOPE_INDIVIDUAL, getResourcePrimKey());
+				ResourceConstants.SCOPE_INDIVIDUAL, getResourcePrimKey());
 
-			if (count == 0) {
-				boolean portletActions = Validator.isNull(getModelResource());
+		if (count == 0) {
+			boolean portletActions = Validator.isNull(getModelResource());
 
-				ResourceLocalServiceUtil.addResources(
-					themeDisplay.getCompanyId(), getGroupId(), 0,
-					getSelResource(), getResourcePrimKey(), portletActions,
-					true, true);
-			}
+			ResourceLocalServiceUtil.addResources(
+				themeDisplay.getCompanyId(), getGroupId(), 0, getSelResource(),
+				getResourcePrimKey(), portletActions, true, true);
 		}
 
 		_resource = ResourceLocalServiceUtil.getResource(

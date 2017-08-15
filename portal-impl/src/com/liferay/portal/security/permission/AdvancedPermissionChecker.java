@@ -84,6 +84,10 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		return new AdvancedPermissionChecker();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public ResourceBlockIdsBag getGuestResourceBlockIdsBag(
 			long companyId, long groupId, String name)
 		throws Exception {
@@ -149,6 +153,10 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		return roleIds;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public List<Long> getOwnerResourceBlockIds(
 		long companyId, long groupId, String name, String actionId) {
@@ -169,6 +177,10 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		return Collections.emptyList();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public ResourceBlockIdsBag getOwnerResourceBlockIdsBag(
 		long companyId, long groupId, String name) {
 
@@ -201,6 +213,10 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public List<Long> getResourceBlockIds(
 		long companyId, long groupId, long userId, String name,
@@ -222,6 +238,10 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		return Collections.emptyList();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public ResourceBlockIdsBag getResourceBlockIdsBag(
 			long companyId, long groupId, String name, long[] roleIds)
 		throws Exception {

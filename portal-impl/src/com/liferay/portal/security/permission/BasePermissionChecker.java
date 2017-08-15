@@ -50,6 +50,10 @@ public abstract class BasePermissionChecker implements PermissionChecker {
 		return PermissionChecker.DEFAULT_ROLE_IDS;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public List<Long> getOwnerResourceBlockIds(
 		long companyId, long groupId, String name, String actionId) {
@@ -67,6 +71,10 @@ public abstract class BasePermissionChecker implements PermissionChecker {
 		return _permissionChecksMap;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public List<Long> getResourceBlockIds(
 		long companyId, long groupId, long userId, String name,

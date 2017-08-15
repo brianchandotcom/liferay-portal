@@ -28,20 +28,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 public class GradlePropertiesCheck extends BaseFileCheck {
 
 	@Override
-	public void init() throws Exception {
-		_projectPathPrefix = getProjectPathPrefix();
-	}
-
-	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
 		throws Exception {
-
-		if (isPortalSource() &&
-			isModulesApp(absolutePath, _projectPathPrefix, true)) {
-
-			return content;
-		}
 
 		StringBundler sb = new StringBundler();
 
@@ -79,7 +68,5 @@ public class GradlePropertiesCheck extends BaseFileCheck {
 
 	private static final String[] _KEYS_WITH_QUOTED_VALUE =
 		{"sourceCompatibility", "targetCompatibility"};
-
-	private String _projectPathPrefix;
 
 }

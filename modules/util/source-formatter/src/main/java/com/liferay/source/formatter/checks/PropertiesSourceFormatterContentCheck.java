@@ -14,12 +14,12 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Peter Shin
  */
-public class PropertiesServiceKeysCheck extends BaseFileCheck {
+public class PropertiesSourceFormatterContentCheck extends BaseFileCheck {
 
 	@Override
 	public void init() throws Exception {
@@ -31,7 +31,7 @@ public class PropertiesServiceKeysCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (!fileName.endsWith("/service.properties")) {
+		if (!fileName.endsWith("/source-formatter.properties")) {
 			return content;
 		}
 
@@ -41,16 +41,25 @@ public class PropertiesServiceKeysCheck extends BaseFileCheck {
 			return content;
 		}
 
-		for (String legacyServiceKey : _LEGACY_SERVICE_KEYS) {
-			content = content.replaceAll(
-				"(\\A|\n)\\s*" + legacyServiceKey + "=.*(\\Z|\n)",
-				StringPool.NEW_LINE);
+		return _checkSourceFormatterContent(content);
+	}
+
+	private String _checkSourceFormatterContent(String content)
+		throws Exception {
+
+		for (String[] array : _CONVERTED_KEYS) {
+			content = StringUtil.replace(content, array[0], array[1]);
 		}
 
 		return content;
 	}
 
-	private static final String[] _LEGACY_SERVICE_KEYS = {"build.auto.upgrade"};
+	private static final String[][] _CONVERTED_KEYS = {
+		new String[] {
+			"blob/master/portal-impl/src/source-formatter.properties",
+			"blob/master/source-formatter.properties"
+		}
+	};
 
 	private String _projectPathPrefix;
 

@@ -19,7 +19,7 @@ import org.dom4j.Element;
 /**
  * @author Kenji Heigel
  */
-public class IssetElement extends PoshiElement {
+public class IsSetElement extends PoshiElement {
 
 	public static final String ELEMENT_NAME = "isset";
 
@@ -29,7 +29,7 @@ public class IssetElement extends PoshiElement {
 			@Override
 			public PoshiElement newPoshiElement(Element element) {
 				if (isElementType(ELEMENT_NAME, element)) {
-					return new IssetElement(element);
+					return new IsSetElement(element);
 				}
 
 				return null;
@@ -40,7 +40,7 @@ public class IssetElement extends PoshiElement {
 				PoshiElement parentPoshiElement, String readableSyntax) {
 
 				if (isElementType(parentPoshiElement, readableSyntax)) {
-					return new IssetElement(readableSyntax);
+					return new IsSetElement(readableSyntax);
 				}
 
 				return null;
@@ -80,11 +80,11 @@ public class IssetElement extends PoshiElement {
 		return "isset(" + attributeValue("var") + ")";
 	}
 
-	protected IssetElement(Element element) {
+	protected IsSetElement(Element element) {
 		super(ELEMENT_NAME, element);
 	}
 
-	protected IssetElement(String readableSyntax) {
+	protected IsSetElement(String readableSyntax) {
 		super(ELEMENT_NAME, readableSyntax);
 	}
 

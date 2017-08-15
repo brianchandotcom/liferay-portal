@@ -1113,6 +1113,14 @@
 		<execute function="AssertTextEquals" locator1="SitePages#INCOMPLETE_STAGING_PAGE_VARIATION_DELETE_BUTTON" value1="Delete in All Pages Variations" />
 	</command>
 
+	<command name="viewNotAvailableMenuItem">
+		<var name="key_page" value="${pageName}" />
+
+		<execute function="Click#mouseOverClick" locator1="SitePages#SPECIFIC_PAGE_ELLIPSIS" />
+
+		<execute function="AssertNotVisible" locator1="SitePages#DELETE_SPECIFIC_PAGE" />
+	</command>
+
 	<command name="viewNoPublishContentCountViaPortletStagingCP">
 		<execute macro="Staging#navigateToStagingMenuItem" />
 

@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.security.permission.UserBagFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.kernel.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
@@ -554,22 +553,6 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		throws Exception {
 
 		logHasUserPermission(groupId, name, primKey, actionId, stopWatch, 1);
-
-		if (PersistedModelLocalServiceRegistryUtil.
-				isPermissionedModelLocalService(name)) {
-
-			ResourceBlockIdsBag resourceBlockIdsBag = getResourceBlockIdsBag(
-				companyId, groupId, name, roleIds);
-
-			boolean value = ResourceBlockLocalServiceUtil.hasPermission(
-				name, GetterUtil.getLong(primKey), actionId,
-				resourceBlockIdsBag);
-
-			logHasUserPermission(
-				groupId, name, primKey, actionId, stopWatch, 2);
-
-			return value;
-		}
 
 		List<Resource> resources = getResources(
 			companyId, groupId, name, primKey, actionId);

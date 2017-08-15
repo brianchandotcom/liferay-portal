@@ -80,7 +80,9 @@ import javax.sql.DataSource;
  *
  * @author Connor McKay
  * @author Shuyang Zhou
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public class ResourceBlockLocalServiceImpl
 	extends ResourceBlockLocalServiceBaseImpl {
 

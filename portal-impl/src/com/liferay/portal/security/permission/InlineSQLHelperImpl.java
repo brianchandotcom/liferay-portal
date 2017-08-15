@@ -48,12 +48,24 @@ import java.util.Set;
 @DoPrivileged
 public class InlineSQLHelperImpl implements InlineSQLHelper {
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String FILTER_BY_RESOURCE_BLOCK_ID =
 		InlineSQLHelper.class.getName() + ".filterByResourceBlockId";
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String FILTER_BY_RESOURCE_BLOCK_ID_OWNER =
 		InlineSQLHelper.class.getName() + ".filterByResourceBlockIdOwner";
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String FIND_BY_RESOURCE_BLOCK_ID =
 		InlineSQLHelper.class.getName() + ".findByResourceBlockId";
 
@@ -250,6 +262,10 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected Set<Long> getOwnerResourceBlockIds(
 		long companyId, long[] groupIds, String className) {
 
@@ -267,6 +283,10 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		return resourceBlockIds;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected String getOwnerResourceBlockIdsSQL(
 		PermissionChecker permissionChecker, long checkGroupId,
 		String className, Set<Long> ownerResourceBlockIds) {
@@ -291,6 +311,10 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			});
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected Set<Long> getResourceBlockIds(
 		long companyId, long[] groupIds, String className) {
 
@@ -396,6 +420,10 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		return userId;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected String getUserResourceBlockIdsSQL(
 		PermissionChecker permissionChecker, long checkGroupId, long[] roleIds,
 		String className, Set<Long> userResourceBlockIds) {
@@ -420,6 +448,10 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			});
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected String replacePermissionCheckBlocks(
 		String sql, String className, String classPKField, String userIdField,
 		long[] groupIds, String bridgeJoin) {

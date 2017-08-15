@@ -75,6 +75,12 @@
 		</execute>
 	</command>
 
+	<command name="gotoArticleMenuCP">
+		<execute function="Click#makeVisibleClickAt" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
+			<var name="key_rowEntry" value="${webContentTitle}" />
+		</execute>
+	</command>
+
 	<command name="gotoArticleMenuPGViaWCD">
 		<execute function="MouseOver" locator1="WCD#WEB_CONTENT_CONTENT" />
 

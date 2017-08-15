@@ -53,10 +53,6 @@ public interface SPIDefinitionService extends BaseService, InvokableService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SPIDefinitionServiceUtil} to access the spi definition remote service. Add custom service methods to {@link com.liferay.portal.resiliency.spi.service.impl.SPIDefinitionServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Tuple getPortletIdsAndServletContextNames()
-		throws PortalException;
-
 	public SPIDefinition addSPIDefinition(java.lang.String name,
 		java.lang.String connectorAddress, int connectorPort,
 		java.lang.String description, java.lang.String jvmArguments,
@@ -67,12 +63,41 @@ public interface SPIDefinitionService extends BaseService, InvokableService {
 	public SPIDefinition deleteSPIDefinition(long spiDefinitionId)
 		throws PortalException;
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Tuple getPortletIdsAndServletContextNames()
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SPIDefinition getSPIDefinition(long spiDefinitionId)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SPIDefinition getSPIDefinition(long companyId, java.lang.String name)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SPIDefinition getSPIDefinition(long spiDefinitionId)
+	public List<SPIDefinition> getSPIDefinitions() throws PortalException;
+
+	@Override
+	public java.lang.Object invokeMethod(java.lang.String name,
+		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
+		throws java.lang.Throwable;
+
+	public void startSPI(long spiDefinitionId) throws PortalException;
+
+	public long startSPIinBackground(long spiDefinitionId)
+		throws PortalException;
+
+	public void stopSPI(long spiDefinitionId) throws PortalException;
+
+	public long stopSPIinBackground(long spiDefinitionId)
 		throws PortalException;
 
 	public SPIDefinition updateSPIDefinition(long spiDefinitionId,
@@ -85,29 +110,4 @@ public interface SPIDefinitionService extends BaseService, InvokableService {
 	public SPIDefinition updateTypeSettings(long userId, long spiDefinitionId,
 		java.lang.String recoveryOptions, ServiceContext serviceContext)
 		throws PortalException;
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable;
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SPIDefinition> getSPIDefinitions() throws PortalException;
-
-	public long startSPIinBackground(long spiDefinitionId)
-		throws PortalException;
-
-	public long stopSPIinBackground(long spiDefinitionId)
-		throws PortalException;
-
-	public void startSPI(long spiDefinitionId) throws PortalException;
-
-	public void stopSPI(long spiDefinitionId) throws PortalException;
 }

@@ -65,19 +65,6 @@ public interface SourceService extends BaseService {
 
 	public Source deleteSource(long sourceId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Source getSource(long sourceId) throws PortalException;
-
-	public Source updateSource(long sourceId,
-		Map<Locale, java.lang.String> nameMap,
-		java.lang.String driverClassName, java.lang.String driverUrl,
-		java.lang.String driverUserName, java.lang.String driverPassword,
-		ServiceContext serviceContext) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSourcesCount(long groupId, java.lang.String name,
-		java.lang.String driverUrl, boolean andSearch);
-
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -86,7 +73,20 @@ public interface SourceService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Source getSource(long sourceId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Source> getSources(long groupId, java.lang.String name,
 		java.lang.String driverUrl, boolean andSearch, int start, int end,
 		OrderByComparator orderByComparator) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSourcesCount(long groupId, java.lang.String name,
+		java.lang.String driverUrl, boolean andSearch);
+
+	public Source updateSource(long sourceId,
+		Map<Locale, java.lang.String> nameMap,
+		java.lang.String driverClassName, java.lang.String driverUrl,
+		java.lang.String driverUserName, java.lang.String driverPassword,
+		ServiceContext serviceContext) throws PortalException;
 }

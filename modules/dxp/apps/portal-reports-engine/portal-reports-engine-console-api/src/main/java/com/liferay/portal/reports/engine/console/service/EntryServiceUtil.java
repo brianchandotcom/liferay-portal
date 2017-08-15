@@ -57,10 +57,27 @@ public class EntryServiceUtil {
 			serviceContext);
 	}
 
+	public static void deleteAttachment(long companyId, long entryId,
+		java.lang.String fileName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteAttachment(companyId, entryId, fileName);
+	}
+
 	public static com.liferay.portal.reports.engine.console.model.Entry deleteEntry(
 		long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteEntry(entryId);
+	}
+
+	public static java.util.List<com.liferay.portal.reports.engine.console.model.Entry> getEntries(
+		long groupId, java.lang.String definitionName,
+		java.lang.String userName, java.util.Date createDateGT,
+		java.util.Date createDateLT, boolean andSearch, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getEntries(groupId, definitionName, userName, createDateGT,
+			createDateLT, andSearch, start, end, orderByComparator);
 	}
 
 	public static int getEntriesCount(long groupId,
@@ -80,23 +97,6 @@ public class EntryServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static java.util.List<com.liferay.portal.reports.engine.console.model.Entry> getEntries(
-		long groupId, java.lang.String definitionName,
-		java.lang.String userName, java.util.Date createDateGT,
-		java.util.Date createDateLT, boolean andSearch, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getEntries(groupId, definitionName, userName, createDateGT,
-			createDateLT, andSearch, start, end, orderByComparator);
-	}
-
-	public static void deleteAttachment(long companyId, long entryId,
-		java.lang.String fileName)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteAttachment(companyId, entryId, fileName);
 	}
 
 	public static void sendEmails(long entryId, java.lang.String fileName,

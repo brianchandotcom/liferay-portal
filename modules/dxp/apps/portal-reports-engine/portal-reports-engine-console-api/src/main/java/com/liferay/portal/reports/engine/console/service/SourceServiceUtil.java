@@ -59,10 +59,34 @@ public class SourceServiceUtil {
 		return getService().deleteSource(sourceId);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
 	public static com.liferay.portal.reports.engine.console.model.Source getSource(
 		long sourceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getSource(sourceId);
+	}
+
+	public static java.util.List<com.liferay.portal.reports.engine.console.model.Source> getSources(
+		long groupId, java.lang.String name, java.lang.String driverUrl,
+		boolean andSearch, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getSources(groupId, name, driverUrl, andSearch, start, end,
+			orderByComparator);
+	}
+
+	public static int getSourcesCount(long groupId, java.lang.String name,
+		java.lang.String driverUrl, boolean andSearch) {
+		return getService().getSourcesCount(groupId, name, driverUrl, andSearch);
 	}
 
 	public static com.liferay.portal.reports.engine.console.model.Source updateSource(
@@ -75,30 +99,6 @@ public class SourceServiceUtil {
 		return getService()
 				   .updateSource(sourceId, nameMap, driverClassName, driverUrl,
 			driverUserName, driverPassword, serviceContext);
-	}
-
-	public static int getSourcesCount(long groupId, java.lang.String name,
-		java.lang.String driverUrl, boolean andSearch) {
-		return getService().getSourcesCount(groupId, name, driverUrl, andSearch);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static java.util.List<com.liferay.portal.reports.engine.console.model.Source> getSources(
-		long groupId, java.lang.String name, java.lang.String driverUrl,
-		boolean andSearch, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getSources(groupId, name, driverUrl, andSearch, start, end,
-			orderByComparator);
 	}
 
 	public static SourceService getService() {

@@ -212,13 +212,194 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	}
 
 	@Override
-	public Entry toEscapedModel() {
-		return new EntryWrapper(_entry.toEscapedModel());
+	public java.lang.Object clone() {
+		return new EntryWrapper((Entry)_entry.clone());
 	}
 
 	@Override
-	public Entry toUnescapedModel() {
-		return new EntryWrapper(_entry.toUnescapedModel());
+	public int compareTo(Entry entry) {
+		return _entry.compareTo(entry);
+	}
+
+	@Override
+	public java.lang.String getAttachmentsDir() {
+		return _entry.getAttachmentsDir();
+	}
+
+	@Override
+	public java.lang.String[] getAttachmentsFiles()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _entry.getAttachmentsFiles();
+	}
+
+	/**
+	* Returns the company ID of this entry.
+	*
+	* @return the company ID of this entry
+	*/
+	@Override
+	public long getCompanyId() {
+		return _entry.getCompanyId();
+	}
+
+	/**
+	* Returns the create date of this entry.
+	*
+	* @return the create date of this entry
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _entry.getCreateDate();
+	}
+
+	/**
+	* Returns the definition ID of this entry.
+	*
+	* @return the definition ID of this entry
+	*/
+	@Override
+	public long getDefinitionId() {
+		return _entry.getDefinitionId();
+	}
+
+	/**
+	* Returns the email delivery of this entry.
+	*
+	* @return the email delivery of this entry
+	*/
+	@Override
+	public java.lang.String getEmailDelivery() {
+		return _entry.getEmailDelivery();
+	}
+
+	/**
+	* Returns the email notifications of this entry.
+	*
+	* @return the email notifications of this entry
+	*/
+	@Override
+	public java.lang.String getEmailNotifications() {
+		return _entry.getEmailNotifications();
+	}
+
+	/**
+	* Returns the end date of this entry.
+	*
+	* @return the end date of this entry
+	*/
+	@Override
+	public Date getEndDate() {
+		return _entry.getEndDate();
+	}
+
+	/**
+	* Returns the entry ID of this entry.
+	*
+	* @return the entry ID of this entry
+	*/
+	@Override
+	public long getEntryId() {
+		return _entry.getEntryId();
+	}
+
+	/**
+	* Returns the error message of this entry.
+	*
+	* @return the error message of this entry
+	*/
+	@Override
+	public java.lang.String getErrorMessage() {
+		return _entry.getErrorMessage();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _entry.getExpandoBridge();
+	}
+
+	/**
+	* Returns the format of this entry.
+	*
+	* @return the format of this entry
+	*/
+	@Override
+	public java.lang.String getFormat() {
+		return _entry.getFormat();
+	}
+
+	/**
+	* Returns the group ID of this entry.
+	*
+	* @return the group ID of this entry
+	*/
+	@Override
+	public long getGroupId() {
+		return _entry.getGroupId();
+	}
+
+	@Override
+	public java.lang.String getJobName() {
+		return _entry.getJobName();
+	}
+
+	/**
+	* Returns the modified date of this entry.
+	*
+	* @return the modified date of this entry
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _entry.getModifiedDate();
+	}
+
+	/**
+	* Returns the page url of this entry.
+	*
+	* @return the page url of this entry
+	*/
+	@Override
+	public java.lang.String getPageURL() {
+		return _entry.getPageURL();
+	}
+
+	/**
+	* Returns the portlet ID of this entry.
+	*
+	* @return the portlet ID of this entry
+	*/
+	@Override
+	public java.lang.String getPortletId() {
+		return _entry.getPortletId();
+	}
+
+	/**
+	* Returns the primary key of this entry.
+	*
+	* @return the primary key of this entry
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _entry.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _entry.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the recurrence of this entry.
+	*
+	* @return the recurrence of this entry
+	*/
+	@Override
+	public java.lang.String getRecurrence() {
+		return _entry.getRecurrence();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.cal.TZSRecurrence getRecurrenceObj() {
+		return _entry.getRecurrenceObj();
 	}
 
 	/**
@@ -232,6 +413,16 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	}
 
 	/**
+	* Returns the report parameters of this entry.
+	*
+	* @return the report parameters of this entry
+	*/
+	@Override
+	public java.lang.String getReportParameters() {
+		return _entry.getReportParameters();
+	}
+
+	/**
 	* Returns the schedule request of this entry.
 	*
 	* @return the schedule request of this entry
@@ -239,6 +430,66 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	@Override
 	public boolean getScheduleRequest() {
 		return _entry.getScheduleRequest();
+	}
+
+	@Override
+	public java.lang.String getSchedulerRequestName() {
+		return _entry.getSchedulerRequestName();
+	}
+
+	/**
+	* Returns the start date of this entry.
+	*
+	* @return the start date of this entry
+	*/
+	@Override
+	public Date getStartDate() {
+		return _entry.getStartDate();
+	}
+
+	/**
+	* Returns the status of this entry.
+	*
+	* @return the status of this entry
+	*/
+	@Override
+	public java.lang.String getStatus() {
+		return _entry.getStatus();
+	}
+
+	/**
+	* Returns the user ID of this entry.
+	*
+	* @return the user ID of this entry
+	*/
+	@Override
+	public long getUserId() {
+		return _entry.getUserId();
+	}
+
+	/**
+	* Returns the user name of this entry.
+	*
+	* @return the user name of this entry
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _entry.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this entry.
+	*
+	* @return the user uuid of this entry
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _entry.getUserUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _entry.hashCode();
 	}
 
 	@Override
@@ -274,282 +525,6 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	@Override
 	public boolean isScheduleRequest() {
 		return _entry.isScheduleRequest();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _entry.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.cal.TZSRecurrence getRecurrenceObj() {
-		return _entry.getRecurrenceObj();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<Entry> toCacheModel() {
-		return _entry.toCacheModel();
-	}
-
-	@Override
-	public int compareTo(Entry entry) {
-		return _entry.compareTo(entry);
-	}
-
-	@Override
-	public int hashCode() {
-		return _entry.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _entry.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new EntryWrapper((Entry)_entry.clone());
-	}
-
-	@Override
-	public java.lang.String getAttachmentsDir() {
-		return _entry.getAttachmentsDir();
-	}
-
-	/**
-	* Returns the email delivery of this entry.
-	*
-	* @return the email delivery of this entry
-	*/
-	@Override
-	public java.lang.String getEmailDelivery() {
-		return _entry.getEmailDelivery();
-	}
-
-	/**
-	* Returns the email notifications of this entry.
-	*
-	* @return the email notifications of this entry
-	*/
-	@Override
-	public java.lang.String getEmailNotifications() {
-		return _entry.getEmailNotifications();
-	}
-
-	/**
-	* Returns the error message of this entry.
-	*
-	* @return the error message of this entry
-	*/
-	@Override
-	public java.lang.String getErrorMessage() {
-		return _entry.getErrorMessage();
-	}
-
-	/**
-	* Returns the format of this entry.
-	*
-	* @return the format of this entry
-	*/
-	@Override
-	public java.lang.String getFormat() {
-		return _entry.getFormat();
-	}
-
-	@Override
-	public java.lang.String getJobName() {
-		return _entry.getJobName();
-	}
-
-	/**
-	* Returns the page url of this entry.
-	*
-	* @return the page url of this entry
-	*/
-	@Override
-	public java.lang.String getPageURL() {
-		return _entry.getPageURL();
-	}
-
-	/**
-	* Returns the portlet ID of this entry.
-	*
-	* @return the portlet ID of this entry
-	*/
-	@Override
-	public java.lang.String getPortletId() {
-		return _entry.getPortletId();
-	}
-
-	/**
-	* Returns the recurrence of this entry.
-	*
-	* @return the recurrence of this entry
-	*/
-	@Override
-	public java.lang.String getRecurrence() {
-		return _entry.getRecurrence();
-	}
-
-	/**
-	* Returns the report parameters of this entry.
-	*
-	* @return the report parameters of this entry
-	*/
-	@Override
-	public java.lang.String getReportParameters() {
-		return _entry.getReportParameters();
-	}
-
-	@Override
-	public java.lang.String getSchedulerRequestName() {
-		return _entry.getSchedulerRequestName();
-	}
-
-	/**
-	* Returns the status of this entry.
-	*
-	* @return the status of this entry
-	*/
-	@Override
-	public java.lang.String getStatus() {
-		return _entry.getStatus();
-	}
-
-	/**
-	* Returns the user name of this entry.
-	*
-	* @return the user name of this entry
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _entry.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this entry.
-	*
-	* @return the user uuid of this entry
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _entry.getUserUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _entry.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _entry.toXmlString();
-	}
-
-	@Override
-	public java.lang.String[] getAttachmentsFiles()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _entry.getAttachmentsFiles();
-	}
-
-	/**
-	* Returns the create date of this entry.
-	*
-	* @return the create date of this entry
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _entry.getCreateDate();
-	}
-
-	/**
-	* Returns the end date of this entry.
-	*
-	* @return the end date of this entry
-	*/
-	@Override
-	public Date getEndDate() {
-		return _entry.getEndDate();
-	}
-
-	/**
-	* Returns the modified date of this entry.
-	*
-	* @return the modified date of this entry
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _entry.getModifiedDate();
-	}
-
-	/**
-	* Returns the start date of this entry.
-	*
-	* @return the start date of this entry
-	*/
-	@Override
-	public Date getStartDate() {
-		return _entry.getStartDate();
-	}
-
-	/**
-	* Returns the company ID of this entry.
-	*
-	* @return the company ID of this entry
-	*/
-	@Override
-	public long getCompanyId() {
-		return _entry.getCompanyId();
-	}
-
-	/**
-	* Returns the definition ID of this entry.
-	*
-	* @return the definition ID of this entry
-	*/
-	@Override
-	public long getDefinitionId() {
-		return _entry.getDefinitionId();
-	}
-
-	/**
-	* Returns the entry ID of this entry.
-	*
-	* @return the entry ID of this entry
-	*/
-	@Override
-	public long getEntryId() {
-		return _entry.getEntryId();
-	}
-
-	/**
-	* Returns the group ID of this entry.
-	*
-	* @return the group ID of this entry
-	*/
-	@Override
-	public long getGroupId() {
-		return _entry.getGroupId();
-	}
-
-	/**
-	* Returns the primary key of this entry.
-	*
-	* @return the primary key of this entry
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _entry.getPrimaryKey();
-	}
-
-	/**
-	* Returns the user ID of this entry.
-	*
-	* @return the user ID of this entry
-	*/
-	@Override
-	public long getUserId() {
-		return _entry.getUserId();
 	}
 
 	@Override
@@ -816,6 +791,31 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	@Override
 	public void setUserUuid(java.lang.String userUuid) {
 		_entry.setUserUuid(userUuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<Entry> toCacheModel() {
+		return _entry.toCacheModel();
+	}
+
+	@Override
+	public Entry toEscapedModel() {
+		return new EntryWrapper(_entry.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _entry.toString();
+	}
+
+	@Override
+	public Entry toUnescapedModel() {
+		return new EntryWrapper(_entry.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _entry.toXmlString();
 	}
 
 	@Override

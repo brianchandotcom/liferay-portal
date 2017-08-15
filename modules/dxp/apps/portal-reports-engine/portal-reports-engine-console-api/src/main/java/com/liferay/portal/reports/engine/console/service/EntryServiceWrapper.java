@@ -49,10 +49,28 @@ public class EntryServiceWrapper implements EntryService,
 	}
 
 	@Override
+	public void deleteAttachment(long companyId, long entryId,
+		java.lang.String fileName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_entryService.deleteAttachment(companyId, entryId, fileName);
+	}
+
+	@Override
 	public com.liferay.portal.reports.engine.console.model.Entry deleteEntry(
 		long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _entryService.deleteEntry(entryId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.reports.engine.console.model.Entry> getEntries(
+		long groupId, java.lang.String definitionName,
+		java.lang.String userName, java.util.Date createDateGT,
+		java.util.Date createDateLT, boolean andSearch, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _entryService.getEntries(groupId, definitionName, userName,
+			createDateGT, createDateLT, andSearch, start, end, orderByComparator);
 	}
 
 	@Override
@@ -72,24 +90,6 @@ public class EntryServiceWrapper implements EntryService,
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _entryService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.reports.engine.console.model.Entry> getEntries(
-		long groupId, java.lang.String definitionName,
-		java.lang.String userName, java.util.Date createDateGT,
-		java.util.Date createDateLT, boolean andSearch, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _entryService.getEntries(groupId, definitionName, userName,
-			createDateGT, createDateLT, andSearch, start, end, orderByComparator);
-	}
-
-	@Override
-	public void deleteAttachment(long companyId, long entryId,
-		java.lang.String fileName)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_entryService.deleteAttachment(companyId, entryId, fileName);
 	}
 
 	@Override

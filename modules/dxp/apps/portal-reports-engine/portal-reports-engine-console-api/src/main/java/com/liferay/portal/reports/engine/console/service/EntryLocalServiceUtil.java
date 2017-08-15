@@ -41,32 +41,6 @@ public class EntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.reports.engine.console.service.impl.EntryLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
 
 	/**
 	* Adds the entry to the database. Also notifies the appropriate model listeners.
@@ -95,6 +69,24 @@ public class EntryLocalServiceUtil {
 			reportParameters, serviceContext);
 	}
 
+	public static void addEntryResources(
+		com.liferay.portal.reports.engine.console.model.Entry entry,
+		boolean addCommunityPermissions, boolean addGuestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.addEntryResources(entry, addCommunityPermissions,
+			addGuestPermissions);
+	}
+
+	public static void addEntryResources(
+		com.liferay.portal.reports.engine.console.model.Entry entry,
+		java.lang.String[] communityPermissions,
+		java.lang.String[] guestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.addEntryResources(entry, communityPermissions, guestPermissions);
+	}
+
 	/**
 	* Creates a new entry with the primary key. Does not add the entry to the database.
 	*
@@ -104,6 +96,12 @@ public class EntryLocalServiceUtil {
 	public static com.liferay.portal.reports.engine.console.model.Entry createEntry(
 		long entryId) {
 		return getService().createEntry(entryId);
+	}
+
+	public static void deleteAttachment(long companyId,
+		java.lang.String fileName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteAttachment(companyId, fileName);
 	}
 
 	/**
@@ -132,60 +130,17 @@ public class EntryLocalServiceUtil {
 		return getService().deleteEntry(entryId);
 	}
 
-	public static com.liferay.portal.reports.engine.console.model.Entry fetchEntry(
-		long entryId) {
-		return getService().fetchEntry(entryId);
-	}
-
 	/**
-	* Returns the entry with the primary key.
-	*
-	* @param entryId the primary key of the entry
-	* @return the entry
-	* @throws PortalException if a entry with the primary key could not be found
+	* @throws PortalException
 	*/
-	public static com.liferay.portal.reports.engine.console.model.Entry getEntry(
-		long entryId)
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getEntry(entryId);
+		return getService().deletePersistedModel(persistedModel);
 	}
 
-	/**
-	* Updates the entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param entry the entry
-	* @return the entry that was updated
-	*/
-	public static com.liferay.portal.reports.engine.console.model.Entry updateEntry(
-		com.liferay.portal.reports.engine.console.model.Entry entry) {
-		return getService().updateEntry(entry);
-	}
-
-	/**
-	* Returns the number of entries.
-	*
-	* @return the number of entries
-	*/
-	public static int getEntriesCount() {
-		return getService().getEntriesCount();
-	}
-
-	public static int getEntriesCount(long groupId,
-		java.lang.String definitionName, java.lang.String userName,
-		java.util.Date createDateGT, java.util.Date createDateLT,
-		boolean andSearch) {
-		return getService()
-				   .getEntriesCount(groupId, definitionName, userName,
-			createDateGT, createDateLT, andSearch);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
 	}
 
 	/**
@@ -239,6 +194,49 @@ public class EntryLocalServiceUtil {
 	}
 
 	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static com.liferay.portal.reports.engine.console.model.Entry fetchEntry(
+		long entryId) {
+		return getService().fetchEntry(entryId);
+	}
+
+	public static void generateReport(long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().generateReport(entryId);
+	}
+
+	public static void generateReport(long entryId, java.lang.String reportName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().generateReport(entryId, reportName);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
 	* Returns a range of all the entries.
 	*
 	* <p>
@@ -265,61 +263,53 @@ public class EntryLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of entries.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of entries
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
+	public static int getEntriesCount() {
+		return getService().getEntriesCount();
+	}
+
+	public static int getEntriesCount(long groupId,
+		java.lang.String definitionName, java.lang.String userName,
+		java.util.Date createDateGT, java.util.Date createDateLT,
+		boolean andSearch) {
+		return getService()
+				   .getEntriesCount(groupId, definitionName, userName,
+			createDateGT, createDateLT, andSearch);
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the entry with the primary key.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @param entryId the primary key of the entry
+	* @return the entry
+	* @throws PortalException if a entry with the primary key could not be found
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
+	public static com.liferay.portal.reports.engine.console.model.Entry getEntry(
+		long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getEntry(entryId);
 	}
 
-	public static void addEntryResources(
-		com.liferay.portal.reports.engine.console.model.Entry entry,
-		boolean addCommunityPermissions, boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addEntryResources(entry, addCommunityPermissions,
-			addGuestPermissions);
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
 	}
 
-	public static void addEntryResources(
-		com.liferay.portal.reports.engine.console.model.Entry entry,
-		java.lang.String[] communityPermissions,
-		java.lang.String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addEntryResources(entry, communityPermissions, guestPermissions);
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static void deleteAttachment(long companyId,
-		java.lang.String fileName)
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteAttachment(companyId, fileName);
-	}
-
-	public static void generateReport(long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().generateReport(entryId);
-	}
-
-	public static void generateReport(long entryId, java.lang.String reportName)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().generateReport(entryId, reportName);
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	public static void sendEmails(long entryId, java.lang.String fileName,
@@ -331,6 +321,17 @@ public class EntryLocalServiceUtil {
 	public static void unscheduleEntry(long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().unscheduleEntry(entryId);
+	}
+
+	/**
+	* Updates the entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param entry the entry
+	* @return the entry that was updated
+	*/
+	public static com.liferay.portal.reports.engine.console.model.Entry updateEntry(
+		com.liferay.portal.reports.engine.console.model.Entry entry) {
+		return getService().updateEntry(entry);
 	}
 
 	public static void updateEntry(long entryId, java.lang.String reportName,

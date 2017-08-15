@@ -179,58 +179,48 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	}
 
 	@Override
-	public SPIDefinition toEscapedModel() {
-		return new SPIDefinitionWrapper(_spiDefinition.toEscapedModel());
-	}
-
-	@Override
-	public SPIDefinition toUnescapedModel() {
-		return new SPIDefinitionWrapper(_spiDefinition.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isAlive() {
-		return _spiDefinition.isAlive();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _spiDefinition.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _spiDefinition.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _spiDefinition.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _spiDefinition.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<SPIDefinition> toCacheModel() {
-		return _spiDefinition.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.resiliency.spi.SPI getSPI() {
-		return _spiDefinition.getSPI();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties() {
-		return _spiDefinition.getTypeSettingsProperties();
+	public java.lang.Object clone() {
+		return new SPIDefinitionWrapper((SPIDefinition)_spiDefinition.clone());
 	}
 
 	@Override
 	public int compareTo(SPIDefinition spiDefinition) {
 		return _spiDefinition.compareTo(spiDefinition);
+	}
+
+	@Override
+	public void deleteBaseDir() {
+		_spiDefinition.deleteBaseDir();
+	}
+
+	@Override
+	public java.lang.String getAgentClassName() {
+		return _spiDefinition.getAgentClassName();
+	}
+
+	@Override
+	public java.lang.String getBaseDir() {
+		return _spiDefinition.getBaseDir();
+	}
+
+	/**
+	* Returns the company ID of this spi definition.
+	*
+	* @return the company ID of this spi definition
+	*/
+	@Override
+	public long getCompanyId() {
+		return _spiDefinition.getCompanyId();
+	}
+
+	/**
+	* Returns the connector address of this spi definition.
+	*
+	* @return the connector address of this spi definition
+	*/
+	@Override
+	public java.lang.String getConnectorAddress() {
+		return _spiDefinition.getConnectorAddress();
 	}
 
 	/**
@@ -241,6 +231,46 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	@Override
 	public int getConnectorPort() {
 		return _spiDefinition.getConnectorPort();
+	}
+
+	/**
+	* Returns the create date of this spi definition.
+	*
+	* @return the create date of this spi definition
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _spiDefinition.getCreateDate();
+	}
+
+	/**
+	* Returns the description of this spi definition.
+	*
+	* @return the description of this spi definition
+	*/
+	@Override
+	public java.lang.String getDescription() {
+		return _spiDefinition.getDescription();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _spiDefinition.getExpandoBridge();
+	}
+
+	@Override
+	public java.lang.String getJavaExecutable() {
+		return _spiDefinition.getJavaExecutable();
+	}
+
+	/**
+	* Returns the jvm arguments of this spi definition.
+	*
+	* @return the jvm arguments of this spi definition
+	*/
+	@Override
+	public java.lang.String getJvmArguments() {
+		return _spiDefinition.getJvmArguments();
 	}
 
 	@Override
@@ -258,79 +288,14 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 		return _spiDefinition.getMinThreads();
 	}
 
-	@Override
-	public int getRestartAttempts() {
-		return _spiDefinition.getRestartAttempts();
-	}
-
 	/**
-	* Returns the status of this spi definition.
+	* Returns the modified date of this spi definition.
 	*
-	* @return the status of this spi definition
+	* @return the modified date of this spi definition
 	*/
 	@Override
-	public int getStatus() {
-		return _spiDefinition.getStatus();
-	}
-
-	@Override
-	public int hashCode() {
-		return _spiDefinition.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _spiDefinition.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new SPIDefinitionWrapper((SPIDefinition)_spiDefinition.clone());
-	}
-
-	@Override
-	public java.lang.String getAgentClassName() {
-		return _spiDefinition.getAgentClassName();
-	}
-
-	@Override
-	public java.lang.String getBaseDir() {
-		return _spiDefinition.getBaseDir();
-	}
-
-	/**
-	* Returns the connector address of this spi definition.
-	*
-	* @return the connector address of this spi definition
-	*/
-	@Override
-	public java.lang.String getConnectorAddress() {
-		return _spiDefinition.getConnectorAddress();
-	}
-
-	/**
-	* Returns the description of this spi definition.
-	*
-	* @return the description of this spi definition
-	*/
-	@Override
-	public java.lang.String getDescription() {
-		return _spiDefinition.getDescription();
-	}
-
-	@Override
-	public java.lang.String getJavaExecutable() {
-		return _spiDefinition.getJavaExecutable();
-	}
-
-	/**
-	* Returns the jvm arguments of this spi definition.
-	*
-	* @return the jvm arguments of this spi definition
-	*/
-	@Override
-	public java.lang.String getJvmArguments() {
-		return _spiDefinition.getJvmArguments();
+	public Date getModifiedDate() {
+		return _spiDefinition.getModifiedDate();
 	}
 
 	/**
@@ -349,6 +314,11 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	}
 
 	@Override
+	public long getPingInterval() {
+		return _spiDefinition.getPingInterval();
+	}
+
+	@Override
 	public java.lang.String getPortalProperties() {
 		return _spiDefinition.getPortalProperties();
 	}
@@ -364,6 +334,36 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	}
 
 	/**
+	* Returns the primary key of this spi definition.
+	*
+	* @return the primary key of this spi definition
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _spiDefinition.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _spiDefinition.getPrimaryKeyObj();
+	}
+
+	@Override
+	public long getRegisterTimeout() {
+		return _spiDefinition.getRegisterTimeout();
+	}
+
+	@Override
+	public int getRestartAttempts() {
+		return _spiDefinition.getRestartAttempts();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.resiliency.spi.SPI getSPI() {
+		return _spiDefinition.getSPI();
+	}
+
+	/**
 	* Returns the servlet context names of this spi definition.
 	*
 	* @return the servlet context names of this spi definition
@@ -371,6 +371,31 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	@Override
 	public java.lang.String getServletContextNames() {
 		return _spiDefinition.getServletContextNames();
+	}
+
+	@Override
+	public long getShutdownTimeout() {
+		return _spiDefinition.getShutdownTimeout();
+	}
+
+	/**
+	* Returns the spi definition ID of this spi definition.
+	*
+	* @return the spi definition ID of this spi definition
+	*/
+	@Override
+	public long getSpiDefinitionId() {
+		return _spiDefinition.getSpiDefinitionId();
+	}
+
+	/**
+	* Returns the status of this spi definition.
+	*
+	* @return the status of this spi definition
+	*/
+	@Override
+	public int getStatus() {
+		return _spiDefinition.getStatus();
 	}
 
 	@Override
@@ -399,6 +424,11 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	}
 
 	@Override
+	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties() {
+		return _spiDefinition.getTypeSettingsProperties();
+	}
+
+	@Override
 	public java.lang.String getTypeSettingsProperty(java.lang.String key) {
 		return _spiDefinition.getTypeSettingsProperty(key);
 	}
@@ -407,6 +437,16 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	public java.lang.String getTypeSettingsProperty(java.lang.String key,
 		java.lang.String defaultValue) {
 		return _spiDefinition.getTypeSettingsProperty(key, defaultValue);
+	}
+
+	/**
+	* Returns the user ID of this spi definition.
+	*
+	* @return the user ID of this spi definition
+	*/
+	@Override
+	public long getUserId() {
+		return _spiDefinition.getUserId();
 	}
 
 	/**
@@ -430,93 +470,28 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	}
 
 	@Override
-	public java.lang.String toString() {
-		return _spiDefinition.toString();
+	public int hashCode() {
+		return _spiDefinition.hashCode();
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
-		return _spiDefinition.toXmlString();
-	}
-
-	/**
-	* Returns the create date of this spi definition.
-	*
-	* @return the create date of this spi definition
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _spiDefinition.getCreateDate();
-	}
-
-	/**
-	* Returns the modified date of this spi definition.
-	*
-	* @return the modified date of this spi definition
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _spiDefinition.getModifiedDate();
-	}
-
-	/**
-	* Returns the company ID of this spi definition.
-	*
-	* @return the company ID of this spi definition
-	*/
-	@Override
-	public long getCompanyId() {
-		return _spiDefinition.getCompanyId();
+	public boolean isAlive() {
+		return _spiDefinition.isAlive();
 	}
 
 	@Override
-	public long getPingInterval() {
-		return _spiDefinition.getPingInterval();
-	}
-
-	/**
-	* Returns the primary key of this spi definition.
-	*
-	* @return the primary key of this spi definition
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _spiDefinition.getPrimaryKey();
+	public boolean isCachedModel() {
+		return _spiDefinition.isCachedModel();
 	}
 
 	@Override
-	public long getRegisterTimeout() {
-		return _spiDefinition.getRegisterTimeout();
+	public boolean isEscapedModel() {
+		return _spiDefinition.isEscapedModel();
 	}
 
 	@Override
-	public long getShutdownTimeout() {
-		return _spiDefinition.getShutdownTimeout();
-	}
-
-	/**
-	* Returns the spi definition ID of this spi definition.
-	*
-	* @return the spi definition ID of this spi definition
-	*/
-	@Override
-	public long getSpiDefinitionId() {
-		return _spiDefinition.getSpiDefinitionId();
-	}
-
-	/**
-	* Returns the user ID of this spi definition.
-	*
-	* @return the user ID of this spi definition
-	*/
-	@Override
-	public long getUserId() {
-		return _spiDefinition.getUserId();
-	}
-
-	@Override
-	public void deleteBaseDir() {
-		_spiDefinition.deleteBaseDir();
+	public boolean isNew() {
+		return _spiDefinition.isNew();
 	}
 
 	@Override
@@ -760,6 +735,31 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	@Override
 	public void setUserUuid(java.lang.String userUuid) {
 		_spiDefinition.setUserUuid(userUuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<SPIDefinition> toCacheModel() {
+		return _spiDefinition.toCacheModel();
+	}
+
+	@Override
+	public SPIDefinition toEscapedModel() {
+		return new SPIDefinitionWrapper(_spiDefinition.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _spiDefinition.toString();
+	}
+
+	@Override
+	public SPIDefinition toUnescapedModel() {
+		return new SPIDefinitionWrapper(_spiDefinition.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _spiDefinition.toXmlString();
 	}
 
 	@Override

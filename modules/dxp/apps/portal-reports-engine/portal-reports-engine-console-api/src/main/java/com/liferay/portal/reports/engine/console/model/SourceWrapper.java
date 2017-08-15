@@ -165,38 +165,8 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	}
 
 	@Override
-	public Source toEscapedModel() {
-		return new SourceWrapper(_source.toEscapedModel());
-	}
-
-	@Override
-	public Source toUnescapedModel() {
-		return new SourceWrapper(_source.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _source.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _source.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _source.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _source.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<Source> toCacheModel() {
-		return _source.toCacheModel();
+	public java.lang.Object clone() {
+		return new SourceWrapper((Source)_source.clone());
 	}
 
 	@Override
@@ -205,23 +175,39 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	}
 
 	@Override
-	public int hashCode() {
-		return _source.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _source.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new SourceWrapper((Source)_source.clone());
-	}
-
-	@Override
 	public java.lang.String getAttachmentsDir() {
 		return _source.getAttachmentsDir();
+	}
+
+	@Override
+	public java.lang.String[] getAttachmentsFiles()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _source.getAttachmentsFiles();
+	}
+
+	@Override
+	public java.lang.String[] getAvailableLanguageIds() {
+		return _source.getAvailableLanguageIds();
+	}
+
+	/**
+	* Returns the company ID of this source.
+	*
+	* @return the company ID of this source
+	*/
+	@Override
+	public long getCompanyId() {
+		return _source.getCompanyId();
+	}
+
+	/**
+	* Returns the create date of this source.
+	*
+	* @return the create date of this source
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _source.getCreateDate();
 	}
 
 	@Override
@@ -267,6 +253,41 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	@Override
 	public java.lang.String getDriverUserName() {
 		return _source.getDriverUserName();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _source.getExpandoBridge();
+	}
+
+	/**
+	* Returns the group ID of this source.
+	*
+	* @return the group ID of this source
+	*/
+	@Override
+	public long getGroupId() {
+		return _source.getGroupId();
+	}
+
+	/**
+	* Returns the last publish date of this source.
+	*
+	* @return the last publish date of this source
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _source.getLastPublishDate();
+	}
+
+	/**
+	* Returns the modified date of this source.
+	*
+	* @return the modified date of this source
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _source.getModifiedDate();
 	}
 
 	/**
@@ -337,6 +358,51 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	}
 
 	/**
+	* Returns a map of the locales and localized names of this source.
+	*
+	* @return the locales and localized names of this source
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getNameMap() {
+		return _source.getNameMap();
+	}
+
+	/**
+	* Returns the primary key of this source.
+	*
+	* @return the primary key of this source
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _source.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _source.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the source ID of this source.
+	*
+	* @return the source ID of this source
+	*/
+	@Override
+	public long getSourceId() {
+		return _source.getSourceId();
+	}
+
+	/**
+	* Returns the user ID of this source.
+	*
+	* @return the user ID of this source
+	*/
+	@Override
+	public long getUserId() {
+		return _source.getUserId();
+	}
+
+	/**
 	* Returns the user name of this source.
 	*
 	* @return the user name of this source
@@ -367,114 +433,23 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	}
 
 	@Override
-	public java.lang.String toString() {
-		return _source.toString();
+	public int hashCode() {
+		return _source.hashCode();
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
-		return _source.toXmlString();
+	public boolean isCachedModel() {
+		return _source.isCachedModel();
 	}
 
 	@Override
-	public java.lang.String[] getAttachmentsFiles()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _source.getAttachmentsFiles();
+	public boolean isEscapedModel() {
+		return _source.isEscapedModel();
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
-		return _source.getAvailableLanguageIds();
-	}
-
-	/**
-	* Returns the create date of this source.
-	*
-	* @return the create date of this source
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _source.getCreateDate();
-	}
-
-	/**
-	* Returns the last publish date of this source.
-	*
-	* @return the last publish date of this source
-	*/
-	@Override
-	public Date getLastPublishDate() {
-		return _source.getLastPublishDate();
-	}
-
-	/**
-	* Returns the modified date of this source.
-	*
-	* @return the modified date of this source
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _source.getModifiedDate();
-	}
-
-	/**
-	* Returns a map of the locales and localized names of this source.
-	*
-	* @return the locales and localized names of this source
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getNameMap() {
-		return _source.getNameMap();
-	}
-
-	/**
-	* Returns the company ID of this source.
-	*
-	* @return the company ID of this source
-	*/
-	@Override
-	public long getCompanyId() {
-		return _source.getCompanyId();
-	}
-
-	/**
-	* Returns the group ID of this source.
-	*
-	* @return the group ID of this source
-	*/
-	@Override
-	public long getGroupId() {
-		return _source.getGroupId();
-	}
-
-	/**
-	* Returns the primary key of this source.
-	*
-	* @return the primary key of this source
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _source.getPrimaryKey();
-	}
-
-	/**
-	* Returns the source ID of this source.
-	*
-	* @return the source ID of this source
-	*/
-	@Override
-	public long getSourceId() {
-		return _source.getSourceId();
-	}
-
-	/**
-	* Returns the user ID of this source.
-	*
-	* @return the user ID of this source
-	*/
-	@Override
-	public long getUserId() {
-		return _source.getUserId();
+	public boolean isNew() {
+		return _source.isNew();
 	}
 
 	@Override
@@ -735,6 +710,31 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_source.setUuid(uuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<Source> toCacheModel() {
+		return _source.toCacheModel();
+	}
+
+	@Override
+	public Source toEscapedModel() {
+		return new SourceWrapper(_source.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _source.toString();
+	}
+
+	@Override
+	public Source toUnescapedModel() {
+		return new SourceWrapper(_source.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _source.toXmlString();
 	}
 
 	@Override

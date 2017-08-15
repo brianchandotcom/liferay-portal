@@ -61,25 +61,6 @@ public interface SamlSpSessionLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SamlSpSessionLocalServiceUtil} to access the saml sp session local service. Add custom service methods to {@link com.liferay.saml.persistence.service.impl.SamlSpSessionLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
 
 	/**
 	* Adds the saml sp session to the database. Also notifies the appropriate model listeners.
@@ -106,6 +87,13 @@ public interface SamlSpSessionLocalService extends BaseLocalService,
 	public SamlSpSession createSamlSpSession(long samlSpSessionId);
 
 	/**
+	* @throws PortalException
+	*/
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
+
+	/**
 	* Deletes the saml sp session from the database. Also notifies the appropriate model listeners.
 	*
 	* @param samlSpSession the saml sp session
@@ -125,78 +113,7 @@ public interface SamlSpSessionLocalService extends BaseLocalService,
 	public SamlSpSession deleteSamlSpSession(long samlSpSessionId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SamlSpSession fetchSamlSpSession(long samlSpSessionId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SamlSpSession fetchSamlSpSessionByJSessionId(
-		java.lang.String jSessionId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SamlSpSession fetchSamlSpSessionBySamlSpSessionKey(
-		java.lang.String samlSpSessionKey);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SamlSpSession fetchSamlSpSessionBySessionIndex(
-		java.lang.String sessionIndex);
-
-	/**
-	* Returns the saml sp session with the primary key.
-	*
-	* @param samlSpSessionId the primary key of the saml sp session
-	* @return the saml sp session
-	* @throws PortalException if a saml sp session with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SamlSpSession getSamlSpSession(long samlSpSessionId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SamlSpSession getSamlSpSessionByJSessionId(
-		java.lang.String jSessionId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SamlSpSession getSamlSpSessionBySamlSpSessionKey(
-		java.lang.String samlSpSessionKey) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SamlSpSession getSamlSpSessionBySessionIndex(
-		java.lang.String sessionIndex) throws PortalException;
-
-	/**
-	* Updates the saml sp session in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param samlSpSession the saml sp session
-	* @return the saml sp session that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public SamlSpSession updateSamlSpSession(SamlSpSession samlSpSession);
-
-	public SamlSpSession updateSamlSpSession(long samlSpSessionId,
-		java.lang.String jSessionId) throws PortalException;
-
-	public SamlSpSession updateSamlSpSession(long samlSpSessionId,
-		java.lang.String samlSpSessionKey, java.lang.String assertionXml,
-		java.lang.String jSessionId, java.lang.String nameIdFormat,
-		java.lang.String nameIdNameQualifier,
-		java.lang.String nameIdSPNameQualifier, java.lang.String nameIdValue,
-		java.lang.String sessionIndex, ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	* Returns the number of saml sp sessions.
-	*
-	* @return the number of saml sp sessions
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSamlSpSessionsCount();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -238,6 +155,80 @@ public interface SamlSpSessionLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SamlSpSession fetchSamlSpSession(long samlSpSessionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SamlSpSession fetchSamlSpSessionByJSessionId(
+		java.lang.String jSessionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SamlSpSession fetchSamlSpSessionBySamlSpSessionKey(
+		java.lang.String samlSpSessionKey);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SamlSpSession fetchSamlSpSessionBySessionIndex(
+		java.lang.String sessionIndex);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Returns the saml sp session with the primary key.
+	*
+	* @param samlSpSessionId the primary key of the saml sp session
+	* @return the saml sp session
+	* @throws PortalException if a saml sp session with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SamlSpSession getSamlSpSession(long samlSpSessionId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SamlSpSession getSamlSpSessionByJSessionId(
+		java.lang.String jSessionId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SamlSpSession getSamlSpSessionBySamlSpSessionKey(
+		java.lang.String samlSpSessionKey) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SamlSpSession getSamlSpSessionBySessionIndex(
+		java.lang.String sessionIndex) throws PortalException;
+
+	/**
 	* Returns a range of all the saml sp sessions.
 	*
 	* <p>
@@ -255,20 +246,30 @@ public interface SamlSpSessionLocalService extends BaseLocalService,
 	public List<SamlSpSession> getSamlSpSessions(java.lang.String nameIdValue);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of saml sp sessions.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of saml sp sessions
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSamlSpSessionsCount();
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Updates the saml sp session in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @param samlSpSession the saml sp session
+	* @return the saml sp session that was updated
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	@Indexable(type = IndexableType.REINDEX)
+	public SamlSpSession updateSamlSpSession(SamlSpSession samlSpSession);
+
+	public SamlSpSession updateSamlSpSession(long samlSpSessionId,
+		java.lang.String jSessionId) throws PortalException;
+
+	public SamlSpSession updateSamlSpSession(long samlSpSessionId,
+		java.lang.String samlSpSessionKey, java.lang.String assertionXml,
+		java.lang.String jSessionId, java.lang.String nameIdFormat,
+		java.lang.String nameIdNameQualifier,
+		java.lang.String nameIdSPNameQualifier, java.lang.String nameIdValue,
+		java.lang.String sessionIndex, ServiceContext serviceContext)
+		throws PortalException;
 }

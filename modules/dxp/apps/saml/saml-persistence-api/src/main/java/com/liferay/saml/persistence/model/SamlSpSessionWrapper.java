@@ -173,78 +173,13 @@ public class SamlSpSessionWrapper implements SamlSpSession,
 	}
 
 	@Override
-	public SamlSpSession toEscapedModel() {
-		return new SamlSpSessionWrapper(_samlSpSession.toEscapedModel());
-	}
-
-	@Override
-	public SamlSpSession toUnescapedModel() {
-		return new SamlSpSessionWrapper(_samlSpSession.toUnescapedModel());
-	}
-
-	/**
-	* Returns the terminated of this saml sp session.
-	*
-	* @return the terminated of this saml sp session
-	*/
-	@Override
-	public boolean getTerminated() {
-		return _samlSpSession.getTerminated();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _samlSpSession.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _samlSpSession.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _samlSpSession.isNew();
-	}
-
-	/**
-	* Returns <code>true</code> if this saml sp session is terminated.
-	*
-	* @return <code>true</code> if this saml sp session is terminated; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isTerminated() {
-		return _samlSpSession.isTerminated();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _samlSpSession.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<SamlSpSession> toCacheModel() {
-		return _samlSpSession.toCacheModel();
+	public java.lang.Object clone() {
+		return new SamlSpSessionWrapper((SamlSpSession)_samlSpSession.clone());
 	}
 
 	@Override
 	public int compareTo(SamlSpSession samlSpSession) {
 		return _samlSpSession.compareTo(samlSpSession);
-	}
-
-	@Override
-	public int hashCode() {
-		return _samlSpSession.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _samlSpSession.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new SamlSpSessionWrapper((SamlSpSession)_samlSpSession.clone());
 	}
 
 	/**
@@ -258,6 +193,31 @@ public class SamlSpSessionWrapper implements SamlSpSession,
 	}
 
 	/**
+	* Returns the company ID of this saml sp session.
+	*
+	* @return the company ID of this saml sp session
+	*/
+	@Override
+	public long getCompanyId() {
+		return _samlSpSession.getCompanyId();
+	}
+
+	/**
+	* Returns the create date of this saml sp session.
+	*
+	* @return the create date of this saml sp session
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _samlSpSession.getCreateDate();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _samlSpSession.getExpandoBridge();
+	}
+
+	/**
 	* Returns the j session ID of this saml sp session.
 	*
 	* @return the j session ID of this saml sp session
@@ -265,6 +225,16 @@ public class SamlSpSessionWrapper implements SamlSpSession,
 	@Override
 	public java.lang.String getJSessionId() {
 		return _samlSpSession.getJSessionId();
+	}
+
+	/**
+	* Returns the modified date of this saml sp session.
+	*
+	* @return the modified date of this saml sp session
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _samlSpSession.getModifiedDate();
 	}
 
 	/**
@@ -308,6 +278,31 @@ public class SamlSpSessionWrapper implements SamlSpSession,
 	}
 
 	/**
+	* Returns the primary key of this saml sp session.
+	*
+	* @return the primary key of this saml sp session
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _samlSpSession.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _samlSpSession.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the saml sp session ID of this saml sp session.
+	*
+	* @return the saml sp session ID of this saml sp session
+	*/
+	@Override
+	public long getSamlSpSessionId() {
+		return _samlSpSession.getSamlSpSessionId();
+	}
+
+	/**
 	* Returns the saml sp session key of this saml sp session.
 	*
 	* @return the saml sp session key of this saml sp session
@@ -325,6 +320,26 @@ public class SamlSpSessionWrapper implements SamlSpSession,
 	@Override
 	public java.lang.String getSessionIndex() {
 		return _samlSpSession.getSessionIndex();
+	}
+
+	/**
+	* Returns the terminated of this saml sp session.
+	*
+	* @return the terminated of this saml sp session
+	*/
+	@Override
+	public boolean getTerminated() {
+		return _samlSpSession.getTerminated();
+	}
+
+	/**
+	* Returns the user ID of this saml sp session.
+	*
+	* @return the user ID of this saml sp session
+	*/
+	@Override
+	public long getUserId() {
+		return _samlSpSession.getUserId();
 	}
 
 	/**
@@ -348,73 +363,33 @@ public class SamlSpSessionWrapper implements SamlSpSession,
 	}
 
 	@Override
-	public java.lang.String toString() {
-		return _samlSpSession.toString();
+	public int hashCode() {
+		return _samlSpSession.hashCode();
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
-		return _samlSpSession.toXmlString();
+	public boolean isCachedModel() {
+		return _samlSpSession.isCachedModel();
 	}
 
-	/**
-	* Returns the create date of this saml sp session.
-	*
-	* @return the create date of this saml sp session
-	*/
 	@Override
-	public Date getCreateDate() {
-		return _samlSpSession.getCreateDate();
+	public boolean isEscapedModel() {
+		return _samlSpSession.isEscapedModel();
 	}
 
-	/**
-	* Returns the modified date of this saml sp session.
-	*
-	* @return the modified date of this saml sp session
-	*/
 	@Override
-	public Date getModifiedDate() {
-		return _samlSpSession.getModifiedDate();
+	public boolean isNew() {
+		return _samlSpSession.isNew();
 	}
 
 	/**
-	* Returns the company ID of this saml sp session.
+	* Returns <code>true</code> if this saml sp session is terminated.
 	*
-	* @return the company ID of this saml sp session
+	* @return <code>true</code> if this saml sp session is terminated; <code>false</code> otherwise
 	*/
 	@Override
-	public long getCompanyId() {
-		return _samlSpSession.getCompanyId();
-	}
-
-	/**
-	* Returns the primary key of this saml sp session.
-	*
-	* @return the primary key of this saml sp session
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _samlSpSession.getPrimaryKey();
-	}
-
-	/**
-	* Returns the saml sp session ID of this saml sp session.
-	*
-	* @return the saml sp session ID of this saml sp session
-	*/
-	@Override
-	public long getSamlSpSessionId() {
-		return _samlSpSession.getSamlSpSessionId();
-	}
-
-	/**
-	* Returns the user ID of this saml sp session.
-	*
-	* @return the user ID of this saml sp session
-	*/
-	@Override
-	public long getUserId() {
-		return _samlSpSession.getUserId();
+	public boolean isTerminated() {
+		return _samlSpSession.isTerminated();
 	}
 
 	@Override
@@ -621,6 +596,31 @@ public class SamlSpSessionWrapper implements SamlSpSession,
 	@Override
 	public void setUserUuid(java.lang.String userUuid) {
 		_samlSpSession.setUserUuid(userUuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<SamlSpSession> toCacheModel() {
+		return _samlSpSession.toCacheModel();
+	}
+
+	@Override
+	public SamlSpSession toEscapedModel() {
+		return new SamlSpSessionWrapper(_samlSpSession.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _samlSpSession.toString();
+	}
+
+	@Override
+	public SamlSpSession toUnescapedModel() {
+		return new SamlSpSessionWrapper(_samlSpSession.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _samlSpSession.toXmlString();
 	}
 
 	@Override

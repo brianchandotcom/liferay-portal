@@ -62,25 +62,6 @@ public interface EntryLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link EntryLocalServiceUtil} to access the entry local service. Add custom service methods to {@link com.liferay.portal.reports.engine.console.service.impl.EntryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
 
 	/**
 	* Adds the entry to the database. Also notifies the appropriate model listeners.
@@ -99,6 +80,13 @@ public interface EntryLocalService extends BaseLocalService,
 		java.lang.String reportName, java.lang.String reportParameters,
 		ServiceContext serviceContext) throws PortalException;
 
+	public void addEntryResources(Entry entry, boolean addCommunityPermissions,
+		boolean addGuestPermissions) throws PortalException;
+
+	public void addEntryResources(Entry entry,
+		java.lang.String[] communityPermissions,
+		java.lang.String[] guestPermissions) throws PortalException;
+
 	/**
 	* Creates a new entry with the primary key. Does not add the entry to the database.
 	*
@@ -106,6 +94,9 @@ public interface EntryLocalService extends BaseLocalService,
 	* @return the new entry
 	*/
 	public Entry createEntry(long entryId);
+
+	public void deleteAttachment(long companyId, java.lang.String fileName)
+		throws PortalException;
 
 	/**
 	* Deletes the entry from the database. Also notifies the appropriate model listeners.
@@ -127,47 +118,14 @@ public interface EntryLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public Entry deleteEntry(long entryId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Entry fetchEntry(long entryId);
-
 	/**
-	* Returns the entry with the primary key.
-	*
-	* @param entryId the primary key of the entry
-	* @return the entry
-	* @throws PortalException if a entry with the primary key could not be found
+	* @throws PortalException
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Entry getEntry(long entryId) throws PortalException;
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
 
-	/**
-	* Updates the entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param entry the entry
-	* @return the entry that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public Entry updateEntry(Entry entry);
-
-	/**
-	* Returns the number of entries.
-	*
-	* @return the number of entries
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getEntriesCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getEntriesCount(long groupId, java.lang.String definitionName,
-		java.lang.String userName, Date createDateGT, Date createDateLT,
-		boolean andSearch);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -209,6 +167,35 @@ public interface EntryLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Entry fetchEntry(long entryId);
+
+	public void generateReport(long entryId) throws PortalException;
+
+	public void generateReport(long entryId, java.lang.String reportName)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
 	* Returns a range of all the entries.
 	*
 	* <p>
@@ -229,36 +216,41 @@ public interface EntryLocalService extends BaseLocalService,
 		int end, OrderByComparator orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of entries.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of entries
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getEntriesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getEntriesCount(long groupId, java.lang.String definitionName,
+		java.lang.String userName, Date createDateGT, Date createDateLT,
+		boolean andSearch);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the entry with the primary key.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @param entryId the primary key of the entry
+	* @return the entry
+	* @throws PortalException if a entry with the primary key could not be found
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Entry getEntry(long entryId) throws PortalException;
 
-	public void addEntryResources(Entry entry, boolean addCommunityPermissions,
-		boolean addGuestPermissions) throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
-	public void addEntryResources(Entry entry,
-		java.lang.String[] communityPermissions,
-		java.lang.String[] guestPermissions) throws PortalException;
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
-	public void deleteAttachment(long companyId, java.lang.String fileName)
-		throws PortalException;
-
-	public void generateReport(long entryId) throws PortalException;
-
-	public void generateReport(long entryId, java.lang.String reportName)
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
 	public void sendEmails(long entryId, java.lang.String fileName,
@@ -266,6 +258,15 @@ public interface EntryLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public void unscheduleEntry(long entryId) throws PortalException;
+
+	/**
+	* Updates the entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param entry the entry
+	* @return the entry that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public Entry updateEntry(Entry entry);
 
 	public void updateEntry(long entryId, java.lang.String reportName,
 		byte[] reportResults) throws PortalException;

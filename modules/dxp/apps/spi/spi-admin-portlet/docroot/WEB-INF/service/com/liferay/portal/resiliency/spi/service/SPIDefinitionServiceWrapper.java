@@ -34,12 +34,6 @@ public class SPIDefinitionServiceWrapper implements SPIDefinitionService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.util.Tuple getPortletIdsAndServletContextNames()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _spiDefinitionService.getPortletIdsAndServletContextNames();
-	}
-
-	@Override
 	public com.liferay.portal.resiliency.spi.model.SPIDefinition addSPIDefinition(
 		java.lang.String name, java.lang.String connectorAddress,
 		int connectorPort, java.lang.String description,
@@ -59,6 +53,29 @@ public class SPIDefinitionServiceWrapper implements SPIDefinitionService,
 		return _spiDefinitionService.deleteSPIDefinition(spiDefinitionId);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _spiDefinitionService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.util.Tuple getPortletIdsAndServletContextNames()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _spiDefinitionService.getPortletIdsAndServletContextNames();
+	}
+
+	@Override
+	public com.liferay.portal.resiliency.spi.model.SPIDefinition getSPIDefinition(
+		long spiDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _spiDefinitionService.getSPIDefinition(spiDefinitionId);
+	}
+
 	@Override
 	public com.liferay.portal.resiliency.spi.model.SPIDefinition getSPIDefinition(
 		long companyId, java.lang.String name)
@@ -67,10 +84,41 @@ public class SPIDefinitionServiceWrapper implements SPIDefinitionService,
 	}
 
 	@Override
-	public com.liferay.portal.resiliency.spi.model.SPIDefinition getSPIDefinition(
-		long spiDefinitionId)
+	public java.util.List<com.liferay.portal.resiliency.spi.model.SPIDefinition> getSPIDefinitions()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _spiDefinitionService.getSPIDefinition(spiDefinitionId);
+		return _spiDefinitionService.getSPIDefinitions();
+	}
+
+	@Override
+	public java.lang.Object invokeMethod(java.lang.String name,
+		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
+		throws java.lang.Throwable {
+		return _spiDefinitionService.invokeMethod(name, parameterTypes,
+			arguments);
+	}
+
+	@Override
+	public void startSPI(long spiDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_spiDefinitionService.startSPI(spiDefinitionId);
+	}
+
+	@Override
+	public long startSPIinBackground(long spiDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _spiDefinitionService.startSPIinBackground(spiDefinitionId);
+	}
+
+	@Override
+	public void stopSPI(long spiDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_spiDefinitionService.stopSPI(spiDefinitionId);
+	}
+
+	@Override
+	public long stopSPIinBackground(long spiDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _spiDefinitionService.stopSPIinBackground(spiDefinitionId);
 	}
 
 	@Override
@@ -93,54 +141,6 @@ public class SPIDefinitionServiceWrapper implements SPIDefinitionService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _spiDefinitionService.updateTypeSettings(userId,
 			spiDefinitionId, recoveryOptions, serviceContext);
-	}
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _spiDefinitionService.invokeMethod(name, parameterTypes,
-			arguments);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _spiDefinitionService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.resiliency.spi.model.SPIDefinition> getSPIDefinitions()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _spiDefinitionService.getSPIDefinitions();
-	}
-
-	@Override
-	public long startSPIinBackground(long spiDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _spiDefinitionService.startSPIinBackground(spiDefinitionId);
-	}
-
-	@Override
-	public long stopSPIinBackground(long spiDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _spiDefinitionService.stopSPIinBackground(spiDefinitionId);
-	}
-
-	@Override
-	public void startSPI(long spiDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_spiDefinitionService.startSPI(spiDefinitionId);
-	}
-
-	@Override
-	public void stopSPI(long spiDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_spiDefinitionService.stopSPI(spiDefinitionId);
 	}
 
 	@Override

@@ -85,6 +85,21 @@ public interface KaleoDraftDefinitionService extends BaseService {
 		throws PortalException;
 
 	/**
+	* Deletes the Kaleo draft definition and its resources.
+	*
+	* @param name the Kaleo draft definition's name
+	* @param version the Kaleo draft definition's published version
+	* @param serviceContext the service context to be applied. This can set
+	guest permissions and group permissions for the Kaleo draft
+	definition.
+	* @throws PortalException if the user did not have the required permissions
+	to delete the Kaleo draft definition or if a portal exception
+	occurred
+	*/
+	public void deleteKaleoDraftDefinitions(java.lang.String name, int version,
+		ServiceContext serviceContext) throws PortalException;
+
+	/**
 	* Returns the Kaleo draft definition matching the name, published version,
 	* and draft version.
 	*
@@ -105,6 +120,16 @@ public interface KaleoDraftDefinitionService extends BaseService {
 		throws PortalException;
 
 	/**
+	* Returns the Kaleo draft definitions.
+	*
+	* @return the Kaleo draft definitions
+	* @throws PortalException if a portal exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KaleoDraftDefinition> getKaleoDraftDefinitions()
+		throws PortalException;
+
+	/**
 	* Returns the latest Kaleo draft definition matching the name and version.
 	*
 	* @param name the Kaleo draft definition's name
@@ -121,6 +146,56 @@ public interface KaleoDraftDefinitionService extends BaseService {
 	public KaleoDraftDefinition getLatestKaleoDraftDefinition(
 		java.lang.String name, int version, ServiceContext serviceContext)
 		throws PortalException;
+
+	/**
+	* Returns an ordered range of the latest Kaleo draft definitions matching
+	* the company and version.
+	*
+	* @param companyId the primary key of the Kaleo draft definition's company
+	* @param version the Kaleo draft definition's published version
+	* @param start the lower bound of the range of Kaleo draft definitions to
+	return
+	* @param end the upper bound of the range of Kkaleo draft definitions to
+	return (not inclusive)
+	* @param orderByComparator the comparator to order the Kaleo draft
+	definitions
+	* @return the range of matching Kaleo draft definitions ordered by the
+	comparator
+	* @throws PortalException if a portal exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KaleoDraftDefinition> getLatestKaleoDraftDefinitions(
+		long companyId, int version, int start, int end,
+		OrderByComparator orderByComparator) throws PortalException;
+
+	/**
+	* Returns an ordered range of the latest Kaleo draft definitions matching
+	* the company, version, and keywords.
+	*
+	* @param companyId the primary key of the Kaleo draft definition's company
+	* @param keywords the Kaleo draft definition's name or title
+	* @param version the Kaleo draft definition's published version
+	* @param start the lower bound of the range of Kaleo draft definitions to
+	return
+	* @param end the upper bound of the range of Kaleo draft definitions to
+	return (not inclusive)
+	* @param orderByComparator the comparator to order the Kaleo draft
+	definitions
+	* @return the range of matching Kaleo draft definitions ordered by the
+	comparator
+	* @throws PortalException if a portal exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KaleoDraftDefinition> getLatestKaleoDraftDefinitions(
+		long companyId, java.lang.String keywords, int version, int start,
+		int end, OrderByComparator orderByComparator) throws PortalException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Publishes the Kaleo draft definition.
@@ -168,79 +243,4 @@ public interface KaleoDraftDefinitionService extends BaseService {
 		java.lang.String name, Map<Locale, java.lang.String> titleMap,
 		java.lang.String content, int version, ServiceContext serviceContext)
 		throws PortalException;
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	/**
-	* Returns the Kaleo draft definitions.
-	*
-	* @return the Kaleo draft definitions
-	* @throws PortalException if a portal exception occurred
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KaleoDraftDefinition> getKaleoDraftDefinitions()
-		throws PortalException;
-
-	/**
-	* Returns an ordered range of the latest Kaleo draft definitions matching
-	* the company and version.
-	*
-	* @param companyId the primary key of the Kaleo draft definition's company
-	* @param version the Kaleo draft definition's published version
-	* @param start the lower bound of the range of Kaleo draft definitions to
-	return
-	* @param end the upper bound of the range of Kkaleo draft definitions to
-	return (not inclusive)
-	* @param orderByComparator the comparator to order the Kaleo draft
-	definitions
-	* @return the range of matching Kaleo draft definitions ordered by the
-	comparator
-	* @throws PortalException if a portal exception occurred
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KaleoDraftDefinition> getLatestKaleoDraftDefinitions(
-		long companyId, int version, int start, int end,
-		OrderByComparator orderByComparator) throws PortalException;
-
-	/**
-	* Returns an ordered range of the latest Kaleo draft definitions matching
-	* the company, version, and keywords.
-	*
-	* @param companyId the primary key of the Kaleo draft definition's company
-	* @param keywords the Kaleo draft definition's name or title
-	* @param version the Kaleo draft definition's published version
-	* @param start the lower bound of the range of Kaleo draft definitions to
-	return
-	* @param end the upper bound of the range of Kaleo draft definitions to
-	return (not inclusive)
-	* @param orderByComparator the comparator to order the Kaleo draft
-	definitions
-	* @return the range of matching Kaleo draft definitions ordered by the
-	comparator
-	* @throws PortalException if a portal exception occurred
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KaleoDraftDefinition> getLatestKaleoDraftDefinitions(
-		long companyId, java.lang.String keywords, int version, int start,
-		int end, OrderByComparator orderByComparator) throws PortalException;
-
-	/**
-	* Deletes the Kaleo draft definition and its resources.
-	*
-	* @param name the Kaleo draft definition's name
-	* @param version the Kaleo draft definition's published version
-	* @param serviceContext the service context to be applied. This can set
-	guest permissions and group permissions for the Kaleo draft
-	definition.
-	* @throws PortalException if the user did not have the required permissions
-	to delete the Kaleo draft definition or if a portal exception
-	occurred
-	*/
-	public void deleteKaleoDraftDefinitions(java.lang.String name, int version,
-		ServiceContext serviceContext) throws PortalException;
 }

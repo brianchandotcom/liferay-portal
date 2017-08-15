@@ -32,44 +32,6 @@ public class SourceLocalServiceWrapper implements SourceLocalService,
 		_sourceLocalService = sourceLocalService;
 	}
 
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _sourceLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _sourceLocalService.dynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return _sourceLocalService.getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _sourceLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _sourceLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _sourceLocalService.getPersistedModel(primaryKeyObj);
-	}
-
 	/**
 	* Adds the source to the database. Also notifies the appropriate model listeners.
 	*
@@ -108,6 +70,16 @@ public class SourceLocalServiceWrapper implements SourceLocalService,
 	}
 
 	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _sourceLocalService.deletePersistedModel(persistedModel);
+	}
+
+	/**
 	* Deletes the source from the database. Also notifies the appropriate model listeners.
 	*
 	* @param source the source
@@ -136,103 +108,14 @@ public class SourceLocalServiceWrapper implements SourceLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.reports.engine.console.model.Source fetchSource(
-		long sourceId) {
-		return _sourceLocalService.fetchSource(sourceId);
-	}
-
-	/**
-	* Returns the source matching the UUID and group.
-	*
-	* @param uuid the source's UUID
-	* @param groupId the primary key of the group
-	* @return the matching source, or <code>null</code> if a matching source could not be found
-	*/
-	@Override
-	public com.liferay.portal.reports.engine.console.model.Source fetchSourceByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return _sourceLocalService.fetchSourceByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Returns the source with the primary key.
-	*
-	* @param sourceId the primary key of the source
-	* @return the source
-	* @throws PortalException if a source with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portal.reports.engine.console.model.Source getSource(
-		long sourceId)
+	public void deleteSources(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _sourceLocalService.getSource(sourceId);
-	}
-
-	/**
-	* Returns the source matching the UUID and group.
-	*
-	* @param uuid the source's UUID
-	* @param groupId the primary key of the group
-	* @return the matching source
-	* @throws PortalException if a matching source could not be found
-	*/
-	@Override
-	public com.liferay.portal.reports.engine.console.model.Source getSourceByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _sourceLocalService.getSourceByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Updates the source in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param source the source
-	* @return the source that was updated
-	*/
-	@Override
-	public com.liferay.portal.reports.engine.console.model.Source updateSource(
-		com.liferay.portal.reports.engine.console.model.Source source) {
-		return _sourceLocalService.updateSource(source);
+		_sourceLocalService.deleteSources(groupId);
 	}
 
 	@Override
-	public com.liferay.portal.reports.engine.console.model.Source updateSource(
-		long sourceId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.lang.String driverClassName, java.lang.String driverUrl,
-		java.lang.String driverUserName, java.lang.String driverPassword,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _sourceLocalService.updateSource(sourceId, nameMap,
-			driverClassName, driverUrl, driverUserName, driverPassword,
-			serviceContext);
-	}
-
-	/**
-	* Returns the number of sources.
-	*
-	* @return the number of sources
-	*/
-	@Override
-	public int getSourcesCount() {
-		return _sourceLocalService.getSourcesCount();
-	}
-
-	@Override
-	public int getSourcesCount(long groupId, java.lang.String name,
-		java.lang.String driverUrl, boolean andSearch) {
-		return _sourceLocalService.getSourcesCount(groupId, name, driverUrl,
-			andSearch);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _sourceLocalService.getOSGiServiceIdentifier();
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _sourceLocalService.dynamicQuery();
 	}
 
 	/**
@@ -286,6 +169,113 @@ public class SourceLocalServiceWrapper implements SourceLocalService,
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _sourceLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _sourceLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _sourceLocalService.dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	@Override
+	public com.liferay.portal.reports.engine.console.model.Source fetchSource(
+		long sourceId) {
+		return _sourceLocalService.fetchSource(sourceId);
+	}
+
+	/**
+	* Returns the source matching the UUID and group.
+	*
+	* @param uuid the source's UUID
+	* @param groupId the primary key of the group
+	* @return the matching source, or <code>null</code> if a matching source could not be found
+	*/
+	@Override
+	public com.liferay.portal.reports.engine.console.model.Source fetchSourceByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return _sourceLocalService.fetchSourceByUuidAndGroupId(uuid, groupId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _sourceLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return _sourceLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _sourceLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _sourceLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _sourceLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Returns the source with the primary key.
+	*
+	* @param sourceId the primary key of the source
+	* @return the source
+	* @throws PortalException if a source with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portal.reports.engine.console.model.Source getSource(
+		long sourceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _sourceLocalService.getSource(sourceId);
+	}
+
+	/**
+	* Returns the source matching the UUID and group.
+	*
+	* @param uuid the source's UUID
+	* @param groupId the primary key of the group
+	* @return the matching source
+	* @throws PortalException if a matching source could not be found
+	*/
+	@Override
+	public com.liferay.portal.reports.engine.console.model.Source getSourceByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _sourceLocalService.getSourceByUuidAndGroupId(uuid, groupId);
 	}
 
 	/**
@@ -346,35 +336,45 @@ public class SourceLocalServiceWrapper implements SourceLocalService,
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of sources.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of sources
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _sourceLocalService.dynamicQueryCount(dynamicQuery);
+	public int getSourcesCount() {
+		return _sourceLocalService.getSourcesCount();
+	}
+
+	@Override
+	public int getSourcesCount(long groupId, java.lang.String name,
+		java.lang.String driverUrl, boolean andSearch) {
+		return _sourceLocalService.getSourcesCount(groupId, name, driverUrl,
+			andSearch);
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Updates the source in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @param source the source
+	* @return the source that was updated
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _sourceLocalService.dynamicQueryCount(dynamicQuery, projection);
+	public com.liferay.portal.reports.engine.console.model.Source updateSource(
+		com.liferay.portal.reports.engine.console.model.Source source) {
+		return _sourceLocalService.updateSource(source);
 	}
 
 	@Override
-	public void deleteSources(long groupId)
+	public com.liferay.portal.reports.engine.console.model.Source updateSource(
+		long sourceId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.lang.String driverClassName, java.lang.String driverUrl,
+		java.lang.String driverUserName, java.lang.String driverPassword,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_sourceLocalService.deleteSources(groupId);
+		return _sourceLocalService.updateSource(sourceId, nameMap,
+			driverClassName, driverUrl, driverUserName, driverPassword,
+			serviceContext);
 	}
 
 	@Override

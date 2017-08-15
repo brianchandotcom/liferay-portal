@@ -34,38 +34,6 @@ public class SamlIdpSpSessionLocalServiceWrapper
 		_samlIdpSpSessionLocalService = samlIdpSpSessionLocalService;
 	}
 
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _samlIdpSpSessionLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _samlIdpSpSessionLocalService.dynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _samlIdpSpSessionLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _samlIdpSpSessionLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _samlIdpSpSessionLocalService.getPersistedModel(primaryKeyObj);
-	}
-
 	/**
 	* Adds the saml idp sp session to the database. Also notifies the appropriate model listeners.
 	*
@@ -101,6 +69,16 @@ public class SamlIdpSpSessionLocalServiceWrapper
 	}
 
 	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _samlIdpSpSessionLocalService.deletePersistedModel(persistedModel);
+	}
+
+	/**
 	* Deletes the saml idp sp session from the database. Also notifies the appropriate model listeners.
 	*
 	* @param samlIdpSpSession the saml idp sp session
@@ -127,71 +105,8 @@ public class SamlIdpSpSessionLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.saml.persistence.model.SamlIdpSpSession fetchSamlIdpSpSession(
-		long samlIdpSpSessionId) {
-		return _samlIdpSpSessionLocalService.fetchSamlIdpSpSession(samlIdpSpSessionId);
-	}
-
-	/**
-	* Returns the saml idp sp session with the primary key.
-	*
-	* @param samlIdpSpSessionId the primary key of the saml idp sp session
-	* @return the saml idp sp session
-	* @throws PortalException if a saml idp sp session with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.saml.persistence.model.SamlIdpSpSession getSamlIdpSpSession(
-		long samlIdpSpSessionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _samlIdpSpSessionLocalService.getSamlIdpSpSession(samlIdpSpSessionId);
-	}
-
-	@Override
-	public com.liferay.saml.persistence.model.SamlIdpSpSession getSamlIdpSpSession(
-		long samlIdpSsoSessionId, java.lang.String samlSpEntityId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _samlIdpSpSessionLocalService.getSamlIdpSpSession(samlIdpSsoSessionId,
-			samlSpEntityId);
-	}
-
-	@Override
-	public com.liferay.saml.persistence.model.SamlIdpSpSession updateModifiedDate(
-		long samlIdpSsoSessionId, java.lang.String samlSpEntityId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _samlIdpSpSessionLocalService.updateModifiedDate(samlIdpSsoSessionId,
-			samlSpEntityId);
-	}
-
-	/**
-	* Updates the saml idp sp session in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param samlIdpSpSession the saml idp sp session
-	* @return the saml idp sp session that was updated
-	*/
-	@Override
-	public com.liferay.saml.persistence.model.SamlIdpSpSession updateSamlIdpSpSession(
-		com.liferay.saml.persistence.model.SamlIdpSpSession samlIdpSpSession) {
-		return _samlIdpSpSessionLocalService.updateSamlIdpSpSession(samlIdpSpSession);
-	}
-
-	/**
-	* Returns the number of saml idp sp sessions.
-	*
-	* @return the number of saml idp sp sessions
-	*/
-	@Override
-	public int getSamlIdpSpSessionsCount() {
-		return _samlIdpSpSessionLocalService.getSamlIdpSpSessionsCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _samlIdpSpSessionLocalService.getOSGiServiceIdentifier();
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _samlIdpSpSessionLocalService.dynamicQuery();
 	}
 
 	/**
@@ -249,29 +164,6 @@ public class SamlIdpSpSessionLocalServiceWrapper
 	}
 
 	/**
-	* Returns a range of all the saml idp sp sessions.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.saml.persistence.model.impl.SamlIdpSpSessionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of saml idp sp sessions
-	* @param end the upper bound of the range of saml idp sp sessions (not inclusive)
-	* @return the range of saml idp sp sessions
-	*/
-	@Override
-	public java.util.List<com.liferay.saml.persistence.model.SamlIdpSpSession> getSamlIdpSpSessions(
-		int start, int end) {
-		return _samlIdpSpSessionLocalService.getSamlIdpSpSessions(start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.saml.persistence.model.SamlIdpSpSession> getSamlIdpSpSessions(
-		long samlIdpSsoSessionId) {
-		return _samlIdpSpSessionLocalService.getSamlIdpSpSessions(samlIdpSsoSessionId);
-	}
-
-	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -296,6 +188,114 @@ public class SamlIdpSpSessionLocalServiceWrapper
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _samlIdpSpSessionLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
+	}
+
+	@Override
+	public com.liferay.saml.persistence.model.SamlIdpSpSession fetchSamlIdpSpSession(
+		long samlIdpSpSessionId) {
+		return _samlIdpSpSessionLocalService.fetchSamlIdpSpSession(samlIdpSpSessionId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _samlIdpSpSessionLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _samlIdpSpSessionLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _samlIdpSpSessionLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _samlIdpSpSessionLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Returns the saml idp sp session with the primary key.
+	*
+	* @param samlIdpSpSessionId the primary key of the saml idp sp session
+	* @return the saml idp sp session
+	* @throws PortalException if a saml idp sp session with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.saml.persistence.model.SamlIdpSpSession getSamlIdpSpSession(
+		long samlIdpSpSessionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _samlIdpSpSessionLocalService.getSamlIdpSpSession(samlIdpSpSessionId);
+	}
+
+	@Override
+	public com.liferay.saml.persistence.model.SamlIdpSpSession getSamlIdpSpSession(
+		long samlIdpSsoSessionId, java.lang.String samlSpEntityId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _samlIdpSpSessionLocalService.getSamlIdpSpSession(samlIdpSsoSessionId,
+			samlSpEntityId);
+	}
+
+	/**
+	* Returns a range of all the saml idp sp sessions.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.saml.persistence.model.impl.SamlIdpSpSessionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of saml idp sp sessions
+	* @param end the upper bound of the range of saml idp sp sessions (not inclusive)
+	* @return the range of saml idp sp sessions
+	*/
+	@Override
+	public java.util.List<com.liferay.saml.persistence.model.SamlIdpSpSession> getSamlIdpSpSessions(
+		int start, int end) {
+		return _samlIdpSpSessionLocalService.getSamlIdpSpSessions(start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.saml.persistence.model.SamlIdpSpSession> getSamlIdpSpSessions(
+		long samlIdpSsoSessionId) {
+		return _samlIdpSpSessionLocalService.getSamlIdpSpSessions(samlIdpSsoSessionId);
+	}
+
+	/**
+	* Returns the number of saml idp sp sessions.
+	*
+	* @return the number of saml idp sp sessions
+	*/
+	@Override
+	public int getSamlIdpSpSessionsCount() {
+		return _samlIdpSpSessionLocalService.getSamlIdpSpSessionsCount();
+	}
+
+	@Override
+	public com.liferay.saml.persistence.model.SamlIdpSpSession updateModifiedDate(
+		long samlIdpSsoSessionId, java.lang.String samlSpEntityId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _samlIdpSpSessionLocalService.updateModifiedDate(samlIdpSsoSessionId,
+			samlSpEntityId);
+	}
+
+	/**
+	* Updates the saml idp sp session in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param samlIdpSpSession the saml idp sp session
+	* @return the saml idp sp session that was updated
+	*/
+	@Override
+	public com.liferay.saml.persistence.model.SamlIdpSpSession updateSamlIdpSpSession(
+		com.liferay.saml.persistence.model.SamlIdpSpSession samlIdpSpSession) {
+		return _samlIdpSpSessionLocalService.updateSamlIdpSpSession(samlIdpSpSession);
 	}
 
 	@Override

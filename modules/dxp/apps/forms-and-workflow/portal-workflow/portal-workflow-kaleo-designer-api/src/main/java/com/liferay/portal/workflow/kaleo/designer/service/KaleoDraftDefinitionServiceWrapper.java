@@ -67,6 +67,26 @@ public class KaleoDraftDefinitionServiceWrapper
 	}
 
 	/**
+	* Deletes the Kaleo draft definition and its resources.
+	*
+	* @param name the Kaleo draft definition's name
+	* @param version the Kaleo draft definition's published version
+	* @param serviceContext the service context to be applied. This can set
+	guest permissions and group permissions for the Kaleo draft
+	definition.
+	* @throws PortalException if the user did not have the required permissions
+	to delete the Kaleo draft definition or if a portal exception
+	occurred
+	*/
+	@Override
+	public void deleteKaleoDraftDefinitions(java.lang.String name, int version,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_kaleoDraftDefinitionService.deleteKaleoDraftDefinitions(name, version,
+			serviceContext);
+	}
+
+	/**
 	* Returns the Kaleo draft definition matching the name, published version,
 	* and draft version.
 	*
@@ -91,6 +111,18 @@ public class KaleoDraftDefinitionServiceWrapper
 	}
 
 	/**
+	* Returns the Kaleo draft definitions.
+	*
+	* @return the Kaleo draft definitions
+	* @throws PortalException if a portal exception occurred
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition> getKaleoDraftDefinitions()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoDraftDefinitionService.getKaleoDraftDefinitions();
+	}
+
+	/**
 	* Returns the latest Kaleo draft definition matching the name and version.
 	*
 	* @param name the Kaleo draft definition's name
@@ -110,6 +142,68 @@ public class KaleoDraftDefinitionServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoDraftDefinitionService.getLatestKaleoDraftDefinition(name,
 			version, serviceContext);
+	}
+
+	/**
+	* Returns an ordered range of the latest Kaleo draft definitions matching
+	* the company and version.
+	*
+	* @param companyId the primary key of the Kaleo draft definition's company
+	* @param version the Kaleo draft definition's published version
+	* @param start the lower bound of the range of Kaleo draft definitions to
+	return
+	* @param end the upper bound of the range of Kkaleo draft definitions to
+	return (not inclusive)
+	* @param orderByComparator the comparator to order the Kaleo draft
+	definitions
+	* @return the range of matching Kaleo draft definitions ordered by the
+	comparator
+	* @throws PortalException if a portal exception occurred
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition> getLatestKaleoDraftDefinitions(
+		long companyId, int version, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoDraftDefinitionService.getLatestKaleoDraftDefinitions(companyId,
+			version, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of the latest Kaleo draft definitions matching
+	* the company, version, and keywords.
+	*
+	* @param companyId the primary key of the Kaleo draft definition's company
+	* @param keywords the Kaleo draft definition's name or title
+	* @param version the Kaleo draft definition's published version
+	* @param start the lower bound of the range of Kaleo draft definitions to
+	return
+	* @param end the upper bound of the range of Kaleo draft definitions to
+	return (not inclusive)
+	* @param orderByComparator the comparator to order the Kaleo draft
+	definitions
+	* @return the range of matching Kaleo draft definitions ordered by the
+	comparator
+	* @throws PortalException if a portal exception occurred
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition> getLatestKaleoDraftDefinitions(
+		long companyId, java.lang.String keywords, int version, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoDraftDefinitionService.getLatestKaleoDraftDefinitions(companyId,
+			keywords, version, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _kaleoDraftDefinitionService.getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -169,100 +263,6 @@ public class KaleoDraftDefinitionServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoDraftDefinitionService.updateKaleoDraftDefinition(userId,
 			name, titleMap, content, version, serviceContext);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _kaleoDraftDefinitionService.getOSGiServiceIdentifier();
-	}
-
-	/**
-	* Returns the Kaleo draft definitions.
-	*
-	* @return the Kaleo draft definitions
-	* @throws PortalException if a portal exception occurred
-	*/
-	@Override
-	public java.util.List<com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition> getKaleoDraftDefinitions()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoDraftDefinitionService.getKaleoDraftDefinitions();
-	}
-
-	/**
-	* Returns an ordered range of the latest Kaleo draft definitions matching
-	* the company and version.
-	*
-	* @param companyId the primary key of the Kaleo draft definition's company
-	* @param version the Kaleo draft definition's published version
-	* @param start the lower bound of the range of Kaleo draft definitions to
-	return
-	* @param end the upper bound of the range of Kkaleo draft definitions to
-	return (not inclusive)
-	* @param orderByComparator the comparator to order the Kaleo draft
-	definitions
-	* @return the range of matching Kaleo draft definitions ordered by the
-	comparator
-	* @throws PortalException if a portal exception occurred
-	*/
-	@Override
-	public java.util.List<com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition> getLatestKaleoDraftDefinitions(
-		long companyId, int version, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoDraftDefinitionService.getLatestKaleoDraftDefinitions(companyId,
-			version, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns an ordered range of the latest Kaleo draft definitions matching
-	* the company, version, and keywords.
-	*
-	* @param companyId the primary key of the Kaleo draft definition's company
-	* @param keywords the Kaleo draft definition's name or title
-	* @param version the Kaleo draft definition's published version
-	* @param start the lower bound of the range of Kaleo draft definitions to
-	return
-	* @param end the upper bound of the range of Kaleo draft definitions to
-	return (not inclusive)
-	* @param orderByComparator the comparator to order the Kaleo draft
-	definitions
-	* @return the range of matching Kaleo draft definitions ordered by the
-	comparator
-	* @throws PortalException if a portal exception occurred
-	*/
-	@Override
-	public java.util.List<com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition> getLatestKaleoDraftDefinitions(
-		long companyId, java.lang.String keywords, int version, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoDraftDefinitionService.getLatestKaleoDraftDefinitions(companyId,
-			keywords, version, start, end, orderByComparator);
-	}
-
-	/**
-	* Deletes the Kaleo draft definition and its resources.
-	*
-	* @param name the Kaleo draft definition's name
-	* @param version the Kaleo draft definition's published version
-	* @param serviceContext the service context to be applied. This can set
-	guest permissions and group permissions for the Kaleo draft
-	definition.
-	* @throws PortalException if the user did not have the required permissions
-	to delete the Kaleo draft definition or if a portal exception
-	occurred
-	*/
-	@Override
-	public void deleteKaleoDraftDefinitions(java.lang.String name, int version,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_kaleoDraftDefinitionService.deleteKaleoDraftDefinitions(name, version,
-			serviceContext);
 	}
 
 	@Override

@@ -41,36 +41,6 @@ public class SPIDefinitionLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.resiliency.spi.service.impl.SPIDefinitionLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	public static com.liferay.portal.kernel.util.Tuple getPortletIdsAndServletContextNames() {
-		return getService().getPortletIdsAndServletContextNames();
-	}
 
 	/**
 	* Adds the spi definition to the database. Also notifies the appropriate model listeners.
@@ -108,6 +78,15 @@ public class SPIDefinitionLocalServiceUtil {
 	}
 
 	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
+
+	/**
 	* Deletes the spi definition from the database. Also notifies the appropriate model listeners.
 	*
 	* @param spiDefinition the spi definition
@@ -133,92 +112,8 @@ public class SPIDefinitionLocalServiceUtil {
 		return getService().deleteSPIDefinition(spiDefinitionId);
 	}
 
-	public static com.liferay.portal.resiliency.spi.model.SPIDefinition fetchSPIDefinition(
-		long spiDefinitionId) {
-		return getService().fetchSPIDefinition(spiDefinitionId);
-	}
-
-	public static com.liferay.portal.resiliency.spi.model.SPIDefinition getSPIDefinition(
-		long companyId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getSPIDefinition(companyId, name);
-	}
-
-	/**
-	* Returns the spi definition with the primary key.
-	*
-	* @param spiDefinitionId the primary key of the spi definition
-	* @return the spi definition
-	* @throws PortalException if a spi definition with the primary key could not be found
-	*/
-	public static com.liferay.portal.resiliency.spi.model.SPIDefinition getSPIDefinition(
-		long spiDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getSPIDefinition(spiDefinitionId);
-	}
-
-	/**
-	* Updates the spi definition in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param spiDefinition the spi definition
-	* @return the spi definition that was updated
-	*/
-	public static com.liferay.portal.resiliency.spi.model.SPIDefinition updateSPIDefinition(
-		com.liferay.portal.resiliency.spi.model.SPIDefinition spiDefinition) {
-		return getService().updateSPIDefinition(spiDefinition);
-	}
-
-	public static com.liferay.portal.resiliency.spi.model.SPIDefinition updateSPIDefinition(
-		long spiDefinitionId, int status, java.lang.String statusMessage)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateSPIDefinition(spiDefinitionId, status, statusMessage);
-	}
-
-	public static com.liferay.portal.resiliency.spi.model.SPIDefinition updateSPIDefinition(
-		long userId, long spiDefinitionId, java.lang.String connectorAddress,
-		int connectorPort, java.lang.String description,
-		java.lang.String jvmArguments, java.lang.String portletIds,
-		java.lang.String servletContextNames, java.lang.String typeSettings,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateSPIDefinition(userId, spiDefinitionId,
-			connectorAddress, connectorPort, description, jvmArguments,
-			portletIds, servletContextNames, typeSettings, serviceContext);
-	}
-
-	public static com.liferay.portal.resiliency.spi.model.SPIDefinition updateTypeSettings(
-		long userId, long spiDefinitionId, java.lang.String typeSettings,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateTypeSettings(userId, spiDefinitionId, typeSettings,
-			serviceContext);
-	}
-
-	/**
-	* Returns the number of spi definitions.
-	*
-	* @return the number of spi definitions
-	*/
-	public static int getSPIDefinitionsCount() {
-		return getService().getSPIDefinitionsCount();
-	}
-
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
 	}
 
 	/**
@@ -271,6 +166,81 @@ public class SPIDefinitionLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static com.liferay.portal.resiliency.spi.model.SPIDefinition fetchSPIDefinition(
+		long spiDefinitionId) {
+		return getService().fetchSPIDefinition(spiDefinitionId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static com.liferay.portal.kernel.util.Tuple getPortletIdsAndServletContextNames() {
+		return getService().getPortletIdsAndServletContextNames();
+	}
+
+	/**
+	* Returns the spi definition with the primary key.
+	*
+	* @param spiDefinitionId the primary key of the spi definition
+	* @return the spi definition
+	* @throws PortalException if a spi definition with the primary key could not be found
+	*/
+	public static com.liferay.portal.resiliency.spi.model.SPIDefinition getSPIDefinition(
+		long spiDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getSPIDefinition(spiDefinitionId);
+	}
+
+	public static com.liferay.portal.resiliency.spi.model.SPIDefinition getSPIDefinition(
+		long companyId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getSPIDefinition(companyId, name);
+	}
+
 	public static java.util.List<com.liferay.portal.resiliency.spi.model.SPIDefinition> getSPIDefinitions() {
 		return getService().getSPIDefinitions();
 	}
@@ -302,27 +272,23 @@ public class SPIDefinitionLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of spi definitions.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of spi definitions
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
+	public static int getSPIDefinitionsCount() {
+		return getService().getSPIDefinitionsCount();
 	}
 
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
+	public static java.lang.Object invokeMethod(java.lang.String name,
+		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
+		throws java.lang.Throwable {
+		return getService().invokeMethod(name, parameterTypes, arguments);
+	}
+
+	public static void startSPI(long spiDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().startSPI(spiDefinitionId);
 	}
 
 	public static long startSPIinBackground(long userId, long spiDefinitionId)
@@ -338,19 +304,54 @@ public class SPIDefinitionLocalServiceUtil {
 			automatedRestart);
 	}
 
+	public static void stopSPI(long spiDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().stopSPI(spiDefinitionId);
+	}
+
 	public static long stopSPIinBackground(long userId, long spiDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().stopSPIinBackground(userId, spiDefinitionId);
 	}
 
-	public static void startSPI(long spiDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().startSPI(spiDefinitionId);
+	/**
+	* Updates the spi definition in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param spiDefinition the spi definition
+	* @return the spi definition that was updated
+	*/
+	public static com.liferay.portal.resiliency.spi.model.SPIDefinition updateSPIDefinition(
+		com.liferay.portal.resiliency.spi.model.SPIDefinition spiDefinition) {
+		return getService().updateSPIDefinition(spiDefinition);
 	}
 
-	public static void stopSPI(long spiDefinitionId)
+	public static com.liferay.portal.resiliency.spi.model.SPIDefinition updateSPIDefinition(
+		long spiDefinitionId, int status, java.lang.String statusMessage)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().stopSPI(spiDefinitionId);
+		return getService()
+				   .updateSPIDefinition(spiDefinitionId, status, statusMessage);
+	}
+
+	public static com.liferay.portal.resiliency.spi.model.SPIDefinition updateSPIDefinition(
+		long userId, long spiDefinitionId, java.lang.String connectorAddress,
+		int connectorPort, java.lang.String description,
+		java.lang.String jvmArguments, java.lang.String portletIds,
+		java.lang.String servletContextNames, java.lang.String typeSettings,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateSPIDefinition(userId, spiDefinitionId,
+			connectorAddress, connectorPort, description, jvmArguments,
+			portletIds, servletContextNames, typeSettings, serviceContext);
+	}
+
+	public static com.liferay.portal.resiliency.spi.model.SPIDefinition updateTypeSettings(
+		long userId, long spiDefinitionId, java.lang.String typeSettings,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateTypeSettings(userId, spiDefinitionId, typeSettings,
+			serviceContext);
 	}
 
 	public static void clearService() {

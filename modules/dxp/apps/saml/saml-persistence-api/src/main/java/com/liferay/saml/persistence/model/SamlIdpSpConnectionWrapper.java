@@ -195,13 +195,33 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	}
 
 	@Override
-	public SamlIdpSpConnection toEscapedModel() {
-		return new SamlIdpSpConnectionWrapper(_samlIdpSpConnection.toEscapedModel());
+	public java.lang.Object clone() {
+		return new SamlIdpSpConnectionWrapper((SamlIdpSpConnection)_samlIdpSpConnection.clone());
 	}
 
 	@Override
-	public SamlIdpSpConnection toUnescapedModel() {
-		return new SamlIdpSpConnectionWrapper(_samlIdpSpConnection.toUnescapedModel());
+	public int compareTo(SamlIdpSpConnection samlIdpSpConnection) {
+		return _samlIdpSpConnection.compareTo(samlIdpSpConnection);
+	}
+
+	/**
+	* Returns the assertion lifetime of this saml idp sp connection.
+	*
+	* @return the assertion lifetime of this saml idp sp connection
+	*/
+	@Override
+	public int getAssertionLifetime() {
+		return _samlIdpSpConnection.getAssertionLifetime();
+	}
+
+	/**
+	* Returns the attribute names of this saml idp sp connection.
+	*
+	* @return the attribute names of this saml idp sp connection
+	*/
+	@Override
+	public java.lang.String getAttributeNames() {
+		return _samlIdpSpConnection.getAttributeNames();
 	}
 
 	/**
@@ -225,6 +245,26 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	}
 
 	/**
+	* Returns the company ID of this saml idp sp connection.
+	*
+	* @return the company ID of this saml idp sp connection
+	*/
+	@Override
+	public long getCompanyId() {
+		return _samlIdpSpConnection.getCompanyId();
+	}
+
+	/**
+	* Returns the create date of this saml idp sp connection.
+	*
+	* @return the create date of this saml idp sp connection
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _samlIdpSpConnection.getCreateDate();
+	}
+
+	/**
 	* Returns the enabled of this saml idp sp connection.
 	*
 	* @return the enabled of this saml idp sp connection
@@ -232,6 +272,151 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	@Override
 	public boolean getEnabled() {
 		return _samlIdpSpConnection.getEnabled();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _samlIdpSpConnection.getExpandoBridge();
+	}
+
+	/**
+	* Returns the metadata updated date of this saml idp sp connection.
+	*
+	* @return the metadata updated date of this saml idp sp connection
+	*/
+	@Override
+	public Date getMetadataUpdatedDate() {
+		return _samlIdpSpConnection.getMetadataUpdatedDate();
+	}
+
+	/**
+	* Returns the metadata url of this saml idp sp connection.
+	*
+	* @return the metadata url of this saml idp sp connection
+	*/
+	@Override
+	public java.lang.String getMetadataUrl() {
+		return _samlIdpSpConnection.getMetadataUrl();
+	}
+
+	/**
+	* Returns the metadata xml of this saml idp sp connection.
+	*
+	* @return the metadata xml of this saml idp sp connection
+	*/
+	@Override
+	public java.lang.String getMetadataXml() {
+		return _samlIdpSpConnection.getMetadataXml();
+	}
+
+	/**
+	* Returns the modified date of this saml idp sp connection.
+	*
+	* @return the modified date of this saml idp sp connection
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _samlIdpSpConnection.getModifiedDate();
+	}
+
+	/**
+	* Returns the name of this saml idp sp connection.
+	*
+	* @return the name of this saml idp sp connection
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _samlIdpSpConnection.getName();
+	}
+
+	/**
+	* Returns the name ID attribute of this saml idp sp connection.
+	*
+	* @return the name ID attribute of this saml idp sp connection
+	*/
+	@Override
+	public java.lang.String getNameIdAttribute() {
+		return _samlIdpSpConnection.getNameIdAttribute();
+	}
+
+	/**
+	* Returns the name ID format of this saml idp sp connection.
+	*
+	* @return the name ID format of this saml idp sp connection
+	*/
+	@Override
+	public java.lang.String getNameIdFormat() {
+		return _samlIdpSpConnection.getNameIdFormat();
+	}
+
+	/**
+	* Returns the primary key of this saml idp sp connection.
+	*
+	* @return the primary key of this saml idp sp connection
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _samlIdpSpConnection.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _samlIdpSpConnection.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the saml idp sp connection ID of this saml idp sp connection.
+	*
+	* @return the saml idp sp connection ID of this saml idp sp connection
+	*/
+	@Override
+	public long getSamlIdpSpConnectionId() {
+		return _samlIdpSpConnection.getSamlIdpSpConnectionId();
+	}
+
+	/**
+	* Returns the saml sp entity ID of this saml idp sp connection.
+	*
+	* @return the saml sp entity ID of this saml idp sp connection
+	*/
+	@Override
+	public java.lang.String getSamlSpEntityId() {
+		return _samlIdpSpConnection.getSamlSpEntityId();
+	}
+
+	/**
+	* Returns the user ID of this saml idp sp connection.
+	*
+	* @return the user ID of this saml idp sp connection
+	*/
+	@Override
+	public long getUserId() {
+		return _samlIdpSpConnection.getUserId();
+	}
+
+	/**
+	* Returns the user name of this saml idp sp connection.
+	*
+	* @return the user name of this saml idp sp connection
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _samlIdpSpConnection.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this saml idp sp connection.
+	*
+	* @return the user uuid of this saml idp sp connection
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _samlIdpSpConnection.getUserUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _samlIdpSpConnection.hashCode();
 	}
 
 	/**
@@ -277,216 +462,6 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	@Override
 	public boolean isNew() {
 		return _samlIdpSpConnection.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _samlIdpSpConnection.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<SamlIdpSpConnection> toCacheModel() {
-		return _samlIdpSpConnection.toCacheModel();
-	}
-
-	@Override
-	public int compareTo(SamlIdpSpConnection samlIdpSpConnection) {
-		return _samlIdpSpConnection.compareTo(samlIdpSpConnection);
-	}
-
-	/**
-	* Returns the assertion lifetime of this saml idp sp connection.
-	*
-	* @return the assertion lifetime of this saml idp sp connection
-	*/
-	@Override
-	public int getAssertionLifetime() {
-		return _samlIdpSpConnection.getAssertionLifetime();
-	}
-
-	@Override
-	public int hashCode() {
-		return _samlIdpSpConnection.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _samlIdpSpConnection.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new SamlIdpSpConnectionWrapper((SamlIdpSpConnection)_samlIdpSpConnection.clone());
-	}
-
-	/**
-	* Returns the attribute names of this saml idp sp connection.
-	*
-	* @return the attribute names of this saml idp sp connection
-	*/
-	@Override
-	public java.lang.String getAttributeNames() {
-		return _samlIdpSpConnection.getAttributeNames();
-	}
-
-	/**
-	* Returns the metadata url of this saml idp sp connection.
-	*
-	* @return the metadata url of this saml idp sp connection
-	*/
-	@Override
-	public java.lang.String getMetadataUrl() {
-		return _samlIdpSpConnection.getMetadataUrl();
-	}
-
-	/**
-	* Returns the metadata xml of this saml idp sp connection.
-	*
-	* @return the metadata xml of this saml idp sp connection
-	*/
-	@Override
-	public java.lang.String getMetadataXml() {
-		return _samlIdpSpConnection.getMetadataXml();
-	}
-
-	/**
-	* Returns the name of this saml idp sp connection.
-	*
-	* @return the name of this saml idp sp connection
-	*/
-	@Override
-	public java.lang.String getName() {
-		return _samlIdpSpConnection.getName();
-	}
-
-	/**
-	* Returns the name ID attribute of this saml idp sp connection.
-	*
-	* @return the name ID attribute of this saml idp sp connection
-	*/
-	@Override
-	public java.lang.String getNameIdAttribute() {
-		return _samlIdpSpConnection.getNameIdAttribute();
-	}
-
-	/**
-	* Returns the name ID format of this saml idp sp connection.
-	*
-	* @return the name ID format of this saml idp sp connection
-	*/
-	@Override
-	public java.lang.String getNameIdFormat() {
-		return _samlIdpSpConnection.getNameIdFormat();
-	}
-
-	/**
-	* Returns the saml sp entity ID of this saml idp sp connection.
-	*
-	* @return the saml sp entity ID of this saml idp sp connection
-	*/
-	@Override
-	public java.lang.String getSamlSpEntityId() {
-		return _samlIdpSpConnection.getSamlSpEntityId();
-	}
-
-	/**
-	* Returns the user name of this saml idp sp connection.
-	*
-	* @return the user name of this saml idp sp connection
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _samlIdpSpConnection.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this saml idp sp connection.
-	*
-	* @return the user uuid of this saml idp sp connection
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _samlIdpSpConnection.getUserUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _samlIdpSpConnection.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _samlIdpSpConnection.toXmlString();
-	}
-
-	/**
-	* Returns the create date of this saml idp sp connection.
-	*
-	* @return the create date of this saml idp sp connection
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _samlIdpSpConnection.getCreateDate();
-	}
-
-	/**
-	* Returns the metadata updated date of this saml idp sp connection.
-	*
-	* @return the metadata updated date of this saml idp sp connection
-	*/
-	@Override
-	public Date getMetadataUpdatedDate() {
-		return _samlIdpSpConnection.getMetadataUpdatedDate();
-	}
-
-	/**
-	* Returns the modified date of this saml idp sp connection.
-	*
-	* @return the modified date of this saml idp sp connection
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _samlIdpSpConnection.getModifiedDate();
-	}
-
-	/**
-	* Returns the company ID of this saml idp sp connection.
-	*
-	* @return the company ID of this saml idp sp connection
-	*/
-	@Override
-	public long getCompanyId() {
-		return _samlIdpSpConnection.getCompanyId();
-	}
-
-	/**
-	* Returns the primary key of this saml idp sp connection.
-	*
-	* @return the primary key of this saml idp sp connection
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _samlIdpSpConnection.getPrimaryKey();
-	}
-
-	/**
-	* Returns the saml idp sp connection ID of this saml idp sp connection.
-	*
-	* @return the saml idp sp connection ID of this saml idp sp connection
-	*/
-	@Override
-	public long getSamlIdpSpConnectionId() {
-		return _samlIdpSpConnection.getSamlIdpSpConnectionId();
-	}
-
-	/**
-	* Returns the user ID of this saml idp sp connection.
-	*
-	* @return the user ID of this saml idp sp connection
-	*/
-	@Override
-	public long getUserId() {
-		return _samlIdpSpConnection.getUserId();
 	}
 
 	@Override
@@ -724,6 +699,31 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	@Override
 	public void setUserUuid(java.lang.String userUuid) {
 		_samlIdpSpConnection.setUserUuid(userUuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<SamlIdpSpConnection> toCacheModel() {
+		return _samlIdpSpConnection.toCacheModel();
+	}
+
+	@Override
+	public SamlIdpSpConnection toEscapedModel() {
+		return new SamlIdpSpConnectionWrapper(_samlIdpSpConnection.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _samlIdpSpConnection.toString();
+	}
+
+	@Override
+	public SamlIdpSpConnection toUnescapedModel() {
+		return new SamlIdpSpConnectionWrapper(_samlIdpSpConnection.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _samlIdpSpConnection.toXmlString();
 	}
 
 	@Override

@@ -34,38 +34,6 @@ public class SamlSpMessageLocalServiceWrapper
 		_samlSpMessageLocalService = samlSpMessageLocalService;
 	}
 
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _samlSpMessageLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _samlSpMessageLocalService.dynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _samlSpMessageLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _samlSpMessageLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _samlSpMessageLocalService.getPersistedModel(primaryKeyObj);
-	}
-
 	/**
 	* Adds the saml sp message to the database. Also notifies the appropriate model listeners.
 	*
@@ -99,6 +67,21 @@ public class SamlSpMessageLocalServiceWrapper
 		return _samlSpMessageLocalService.createSamlSpMessage(samlSpMessageId);
 	}
 
+	@Override
+	public void deleteExpiredSamlSpMessages() {
+		_samlSpMessageLocalService.deleteExpiredSamlSpMessages();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _samlSpMessageLocalService.deletePersistedModel(persistedModel);
+	}
+
 	/**
 	* Deletes the saml sp message from the database. Also notifies the appropriate model listeners.
 	*
@@ -126,70 +109,8 @@ public class SamlSpMessageLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.saml.persistence.model.SamlSpMessage fetchSamlSpMessage(
-		java.lang.String samlIdpEntityId, java.lang.String samlIdpResponseKey) {
-		return _samlSpMessageLocalService.fetchSamlSpMessage(samlIdpEntityId,
-			samlIdpResponseKey);
-	}
-
-	@Override
-	public com.liferay.saml.persistence.model.SamlSpMessage fetchSamlSpMessage(
-		long samlSpMessageId) {
-		return _samlSpMessageLocalService.fetchSamlSpMessage(samlSpMessageId);
-	}
-
-	@Override
-	public com.liferay.saml.persistence.model.SamlSpMessage getSamlSpMessage(
-		java.lang.String samlIdpEntityId, java.lang.String samlIdpResponseKey)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _samlSpMessageLocalService.getSamlSpMessage(samlIdpEntityId,
-			samlIdpResponseKey);
-	}
-
-	/**
-	* Returns the saml sp message with the primary key.
-	*
-	* @param samlSpMessageId the primary key of the saml sp message
-	* @return the saml sp message
-	* @throws PortalException if a saml sp message with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.saml.persistence.model.SamlSpMessage getSamlSpMessage(
-		long samlSpMessageId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _samlSpMessageLocalService.getSamlSpMessage(samlSpMessageId);
-	}
-
-	/**
-	* Updates the saml sp message in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param samlSpMessage the saml sp message
-	* @return the saml sp message that was updated
-	*/
-	@Override
-	public com.liferay.saml.persistence.model.SamlSpMessage updateSamlSpMessage(
-		com.liferay.saml.persistence.model.SamlSpMessage samlSpMessage) {
-		return _samlSpMessageLocalService.updateSamlSpMessage(samlSpMessage);
-	}
-
-	/**
-	* Returns the number of saml sp messages.
-	*
-	* @return the number of saml sp messages
-	*/
-	@Override
-	public int getSamlSpMessagesCount() {
-		return _samlSpMessageLocalService.getSamlSpMessagesCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _samlSpMessageLocalService.getOSGiServiceIdentifier();
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _samlSpMessageLocalService.dynamicQuery();
 	}
 
 	/**
@@ -246,23 +167,6 @@ public class SamlSpMessageLocalServiceWrapper
 	}
 
 	/**
-	* Returns a range of all the saml sp messages.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.saml.persistence.model.impl.SamlSpMessageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of saml sp messages
-	* @param end the upper bound of the range of saml sp messages (not inclusive)
-	* @return the range of saml sp messages
-	*/
-	@Override
-	public java.util.List<com.liferay.saml.persistence.model.SamlSpMessage> getSamlSpMessages(
-		int start, int end) {
-		return _samlSpMessageLocalService.getSamlSpMessages(start, end);
-	}
-
-	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -290,8 +194,104 @@ public class SamlSpMessageLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteExpiredSamlSpMessages() {
-		_samlSpMessageLocalService.deleteExpiredSamlSpMessages();
+	public com.liferay.saml.persistence.model.SamlSpMessage fetchSamlSpMessage(
+		java.lang.String samlIdpEntityId, java.lang.String samlIdpResponseKey) {
+		return _samlSpMessageLocalService.fetchSamlSpMessage(samlIdpEntityId,
+			samlIdpResponseKey);
+	}
+
+	@Override
+	public com.liferay.saml.persistence.model.SamlSpMessage fetchSamlSpMessage(
+		long samlSpMessageId) {
+		return _samlSpMessageLocalService.fetchSamlSpMessage(samlSpMessageId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _samlSpMessageLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _samlSpMessageLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _samlSpMessageLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _samlSpMessageLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.saml.persistence.model.SamlSpMessage getSamlSpMessage(
+		java.lang.String samlIdpEntityId, java.lang.String samlIdpResponseKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _samlSpMessageLocalService.getSamlSpMessage(samlIdpEntityId,
+			samlIdpResponseKey);
+	}
+
+	/**
+	* Returns the saml sp message with the primary key.
+	*
+	* @param samlSpMessageId the primary key of the saml sp message
+	* @return the saml sp message
+	* @throws PortalException if a saml sp message with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.saml.persistence.model.SamlSpMessage getSamlSpMessage(
+		long samlSpMessageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _samlSpMessageLocalService.getSamlSpMessage(samlSpMessageId);
+	}
+
+	/**
+	* Returns a range of all the saml sp messages.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.saml.persistence.model.impl.SamlSpMessageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of saml sp messages
+	* @param end the upper bound of the range of saml sp messages (not inclusive)
+	* @return the range of saml sp messages
+	*/
+	@Override
+	public java.util.List<com.liferay.saml.persistence.model.SamlSpMessage> getSamlSpMessages(
+		int start, int end) {
+		return _samlSpMessageLocalService.getSamlSpMessages(start, end);
+	}
+
+	/**
+	* Returns the number of saml sp messages.
+	*
+	* @return the number of saml sp messages
+	*/
+	@Override
+	public int getSamlSpMessagesCount() {
+		return _samlSpMessageLocalService.getSamlSpMessagesCount();
+	}
+
+	/**
+	* Updates the saml sp message in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param samlSpMessage the saml sp message
+	* @return the saml sp message that was updated
+	*/
+	@Override
+	public com.liferay.saml.persistence.model.SamlSpMessage updateSamlSpMessage(
+		com.liferay.saml.persistence.model.SamlSpMessage samlSpMessage) {
+		return _samlSpMessageLocalService.updateSamlSpMessage(samlSpMessage);
 	}
 
 	@Override

@@ -52,10 +52,24 @@ public class OAuthApplicationServiceUtil {
 			shareableAccessToken, callbackURI, websiteURL, serviceContext);
 	}
 
+	public static void deleteLogo(long oAuthApplicationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteLogo(oAuthApplicationId);
+	}
+
 	public static com.liferay.oauth.model.OAuthApplication deleteOAuthApplication(
 		long oAuthApplicationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteOAuthApplication(oAuthApplicationId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static com.liferay.oauth.model.OAuthApplication updateLogo(
@@ -74,20 +88,6 @@ public class OAuthApplicationServiceUtil {
 				   .updateOAuthApplication(oAuthApplicationId, name,
 			description, shareableAccessToken, callbackURI, websiteURL,
 			serviceContext);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static void deleteLogo(long oAuthApplicationId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteLogo(oAuthApplicationId);
 	}
 
 	public static OAuthApplicationService getService() {

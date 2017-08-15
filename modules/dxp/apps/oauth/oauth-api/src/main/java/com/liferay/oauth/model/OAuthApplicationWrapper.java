@@ -172,58 +172,8 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	}
 
 	@Override
-	public OAuthApplication toEscapedModel() {
-		return new OAuthApplicationWrapper(_oAuthApplication.toEscapedModel());
-	}
-
-	@Override
-	public OAuthApplication toUnescapedModel() {
-		return new OAuthApplicationWrapper(_oAuthApplication.toUnescapedModel());
-	}
-
-	/**
-	* Returns the shareable access token of this o auth application.
-	*
-	* @return the shareable access token of this o auth application
-	*/
-	@Override
-	public boolean getShareableAccessToken() {
-		return _oAuthApplication.getShareableAccessToken();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _oAuthApplication.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _oAuthApplication.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _oAuthApplication.isNew();
-	}
-
-	/**
-	* Returns <code>true</code> if this o auth application is shareable access token.
-	*
-	* @return <code>true</code> if this o auth application is shareable access token; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isShareableAccessToken() {
-		return _oAuthApplication.isShareableAccessToken();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _oAuthApplication.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<OAuthApplication> toCacheModel() {
-		return _oAuthApplication.toCacheModel();
+	public java.lang.Object clone() {
+		return new OAuthApplicationWrapper((OAuthApplication)_oAuthApplication.clone());
 	}
 
 	@Override
@@ -242,21 +192,6 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	}
 
 	@Override
-	public int hashCode() {
-		return _oAuthApplication.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _oAuthApplication.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new OAuthApplicationWrapper((OAuthApplication)_oAuthApplication.clone());
-	}
-
-	@Override
 	public java.lang.String getAccessLevelLabel() {
 		return _oAuthApplication.getAccessLevelLabel();
 	}
@@ -269,6 +204,16 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	@Override
 	public java.lang.String getCallbackURI() {
 		return _oAuthApplication.getCallbackURI();
+	}
+
+	/**
+	* Returns the company ID of this o auth application.
+	*
+	* @return the company ID of this o auth application
+	*/
+	@Override
+	public long getCompanyId() {
+		return _oAuthApplication.getCompanyId();
 	}
 
 	/**
@@ -292,6 +237,16 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	}
 
 	/**
+	* Returns the create date of this o auth application.
+	*
+	* @return the create date of this o auth application
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _oAuthApplication.getCreateDate();
+	}
+
+	/**
 	* Returns the description of this o auth application.
 	*
 	* @return the description of this o auth application
@@ -299,6 +254,31 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	@Override
 	public java.lang.String getDescription() {
 		return _oAuthApplication.getDescription();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _oAuthApplication.getExpandoBridge();
+	}
+
+	/**
+	* Returns the logo ID of this o auth application.
+	*
+	* @return the logo ID of this o auth application
+	*/
+	@Override
+	public long getLogoId() {
+		return _oAuthApplication.getLogoId();
+	}
+
+	/**
+	* Returns the modified date of this o auth application.
+	*
+	* @return the modified date of this o auth application
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _oAuthApplication.getModifiedDate();
 	}
 
 	/**
@@ -309,6 +289,51 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	@Override
 	public java.lang.String getName() {
 		return _oAuthApplication.getName();
+	}
+
+	/**
+	* Returns the o auth application ID of this o auth application.
+	*
+	* @return the o auth application ID of this o auth application
+	*/
+	@Override
+	public long getOAuthApplicationId() {
+		return _oAuthApplication.getOAuthApplicationId();
+	}
+
+	/**
+	* Returns the primary key of this o auth application.
+	*
+	* @return the primary key of this o auth application
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _oAuthApplication.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _oAuthApplication.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the shareable access token of this o auth application.
+	*
+	* @return the shareable access token of this o auth application
+	*/
+	@Override
+	public boolean getShareableAccessToken() {
+		return _oAuthApplication.getShareableAccessToken();
+	}
+
+	/**
+	* Returns the user ID of this o auth application.
+	*
+	* @return the user ID of this o auth application
+	*/
+	@Override
+	public long getUserId() {
+		return _oAuthApplication.getUserId();
 	}
 
 	/**
@@ -342,83 +367,33 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	}
 
 	@Override
-	public java.lang.String toString() {
-		return _oAuthApplication.toString();
+	public int hashCode() {
+		return _oAuthApplication.hashCode();
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
-		return _oAuthApplication.toXmlString();
+	public boolean isCachedModel() {
+		return _oAuthApplication.isCachedModel();
 	}
 
-	/**
-	* Returns the create date of this o auth application.
-	*
-	* @return the create date of this o auth application
-	*/
 	@Override
-	public Date getCreateDate() {
-		return _oAuthApplication.getCreateDate();
+	public boolean isEscapedModel() {
+		return _oAuthApplication.isEscapedModel();
 	}
 
-	/**
-	* Returns the modified date of this o auth application.
-	*
-	* @return the modified date of this o auth application
-	*/
 	@Override
-	public Date getModifiedDate() {
-		return _oAuthApplication.getModifiedDate();
+	public boolean isNew() {
+		return _oAuthApplication.isNew();
 	}
 
 	/**
-	* Returns the company ID of this o auth application.
+	* Returns <code>true</code> if this o auth application is shareable access token.
 	*
-	* @return the company ID of this o auth application
+	* @return <code>true</code> if this o auth application is shareable access token; <code>false</code> otherwise
 	*/
 	@Override
-	public long getCompanyId() {
-		return _oAuthApplication.getCompanyId();
-	}
-
-	/**
-	* Returns the logo ID of this o auth application.
-	*
-	* @return the logo ID of this o auth application
-	*/
-	@Override
-	public long getLogoId() {
-		return _oAuthApplication.getLogoId();
-	}
-
-	/**
-	* Returns the o auth application ID of this o auth application.
-	*
-	* @return the o auth application ID of this o auth application
-	*/
-	@Override
-	public long getOAuthApplicationId() {
-		return _oAuthApplication.getOAuthApplicationId();
-	}
-
-	/**
-	* Returns the primary key of this o auth application.
-	*
-	* @return the primary key of this o auth application
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _oAuthApplication.getPrimaryKey();
-	}
-
-	/**
-	* Returns the user ID of this o auth application.
-	*
-	* @return the user ID of this o auth application
-	*/
-	@Override
-	public long getUserId() {
-		return _oAuthApplication.getUserId();
+	public boolean isShareableAccessToken() {
+		return _oAuthApplication.isShareableAccessToken();
 	}
 
 	@Override
@@ -625,6 +600,31 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	@Override
 	public void setWebsiteURL(java.lang.String websiteURL) {
 		_oAuthApplication.setWebsiteURL(websiteURL);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<OAuthApplication> toCacheModel() {
+		return _oAuthApplication.toCacheModel();
+	}
+
+	@Override
+	public OAuthApplication toEscapedModel() {
+		return new OAuthApplicationWrapper(_oAuthApplication.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _oAuthApplication.toString();
+	}
+
+	@Override
+	public OAuthApplication toUnescapedModel() {
+		return new OAuthApplicationWrapper(_oAuthApplication.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _oAuthApplication.toXmlString();
 	}
 
 	@Override

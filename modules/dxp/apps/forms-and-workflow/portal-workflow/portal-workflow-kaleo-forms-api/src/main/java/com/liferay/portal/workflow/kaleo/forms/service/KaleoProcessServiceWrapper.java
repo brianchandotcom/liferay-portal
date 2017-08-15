@@ -99,62 +99,6 @@ public class KaleoProcessServiceWrapper implements KaleoProcessService,
 	}
 
 	/**
-	* Updates the Kaleo process.
-	*
-	* @param kaleoProcessId the primary key of the Kaleo process
-	* @param ddmStructureId the primary key of the Kaleo process's DDM
-	structure
-	* @param nameMap the Kaleo process's locales and localized names
-	* @param descriptionMap the Kaleo process's locales and localized
-	descriptions
-	* @param ddmTemplateId the primary key of the Kaleo process's DDM template
-	* @param workflowDefinitionName the Kaleo process's workflow definition
-	name
-	* @param workflowDefinitionVersion the Kaleo process's workflow definition
-	version
-	* @param kaleoTaskFormPairs the Kaleo task form pairs. For more
-	information, see the <code>portal.workflow.kaleo.forms.api</code>
-	module's <code>KaleoTaskFormPairs</code> class.
-	* @param serviceContext the service context to be applied. This can set
-	guest permissions and group permissions for the Kaleo process.
-	* @return the Kaleo process
-	* @throws PortalException if a portal exception occurred
-	*/
-	@Override
-	public com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess updateKaleoProcess(
-		long kaleoProcessId, long ddmStructureId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		long ddmTemplateId, java.lang.String workflowDefinitionName,
-		int workflowDefinitionVersion,
-		com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs kaleoTaskFormPairs,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoProcessService.updateKaleoProcess(kaleoProcessId,
-			ddmStructureId, nameMap, descriptionMap, ddmTemplateId,
-			workflowDefinitionName, workflowDefinitionVersion,
-			kaleoTaskFormPairs, serviceContext);
-	}
-
-	/**
-	* Returns the number of Kaleo processes matching the parameters. The
-	* keywords parameter is used for matching String values to the Kaleo
-	* process's name or description.
-	*
-	* @param groupId the primary key of the Kaleo process's group
-	* @param keywords the keywords (space separated) to match in the Kaleo
-	process name or description (optionally <code>null</code>). If
-	the keywords value is not <code>null</code>, the <code>OR</code>
-	operator is used for connecting query criteria; otherwise it uses
-	the <code>AND</code> operator.
-	* @return the number of matching Kaleo processes
-	*/
-	@Override
-	public int searchCount(long groupId, java.lang.String keywords) {
-		return _kaleoProcessService.searchCount(groupId, keywords);
-	}
-
-	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
@@ -197,6 +141,62 @@ public class KaleoProcessServiceWrapper implements KaleoProcessService,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _kaleoProcessService.search(groupId, keywords, start, end,
 			orderByComparator);
+	}
+
+	/**
+	* Returns the number of Kaleo processes matching the parameters. The
+	* keywords parameter is used for matching String values to the Kaleo
+	* process's name or description.
+	*
+	* @param groupId the primary key of the Kaleo process's group
+	* @param keywords the keywords (space separated) to match in the Kaleo
+	process name or description (optionally <code>null</code>). If
+	the keywords value is not <code>null</code>, the <code>OR</code>
+	operator is used for connecting query criteria; otherwise it uses
+	the <code>AND</code> operator.
+	* @return the number of matching Kaleo processes
+	*/
+	@Override
+	public int searchCount(long groupId, java.lang.String keywords) {
+		return _kaleoProcessService.searchCount(groupId, keywords);
+	}
+
+	/**
+	* Updates the Kaleo process.
+	*
+	* @param kaleoProcessId the primary key of the Kaleo process
+	* @param ddmStructureId the primary key of the Kaleo process's DDM
+	structure
+	* @param nameMap the Kaleo process's locales and localized names
+	* @param descriptionMap the Kaleo process's locales and localized
+	descriptions
+	* @param ddmTemplateId the primary key of the Kaleo process's DDM template
+	* @param workflowDefinitionName the Kaleo process's workflow definition
+	name
+	* @param workflowDefinitionVersion the Kaleo process's workflow definition
+	version
+	* @param kaleoTaskFormPairs the Kaleo task form pairs. For more
+	information, see the <code>portal.workflow.kaleo.forms.api</code>
+	module's <code>KaleoTaskFormPairs</code> class.
+	* @param serviceContext the service context to be applied. This can set
+	guest permissions and group permissions for the Kaleo process.
+	* @return the Kaleo process
+	* @throws PortalException if a portal exception occurred
+	*/
+	@Override
+	public com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess updateKaleoProcess(
+		long kaleoProcessId, long ddmStructureId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		long ddmTemplateId, java.lang.String workflowDefinitionName,
+		int workflowDefinitionVersion,
+		com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs kaleoTaskFormPairs,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoProcessService.updateKaleoProcess(kaleoProcessId,
+			ddmStructureId, nameMap, descriptionMap, ddmTemplateId,
+			workflowDefinitionName, workflowDefinitionVersion,
+			kaleoTaskFormPairs, serviceContext);
 	}
 
 	@Override

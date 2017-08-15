@@ -73,12 +73,12 @@ public interface DefinitionService extends BaseService {
 	public Definition getDefinition(long definitionId)
 		throws PortalException;
 
-	public Definition updateDefinition(long definitionId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, long sourceId,
-		java.lang.String reportParameters, java.lang.String fileName,
-		InputStream inputStream, ServiceContext serviceContext)
-		throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Definition> getDefinitions(long groupId,
+		java.lang.String definitionName, java.lang.String description,
+		java.lang.String sourceId, java.lang.String reportName,
+		boolean andSearch, int start, int end,
+		OrderByComparator orderByComparator) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getDefinitionsCount(long groupId,
@@ -93,10 +93,10 @@ public interface DefinitionService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Definition> getDefinitions(long groupId,
-		java.lang.String definitionName, java.lang.String description,
-		java.lang.String sourceId, java.lang.String reportName,
-		boolean andSearch, int start, int end,
-		OrderByComparator orderByComparator) throws PortalException;
+	public Definition updateDefinition(long definitionId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, long sourceId,
+		java.lang.String reportParameters, java.lang.String fileName,
+		InputStream inputStream, ServiceContext serviceContext)
+		throws PortalException;
 }

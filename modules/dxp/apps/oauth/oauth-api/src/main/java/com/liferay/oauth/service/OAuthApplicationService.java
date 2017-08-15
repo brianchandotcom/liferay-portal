@@ -60,16 +60,9 @@ public interface OAuthApplicationService extends BaseService {
 		java.lang.String websiteURL, ServiceContext serviceContext)
 		throws PortalException;
 
+	public void deleteLogo(long oAuthApplicationId) throws PortalException;
+
 	public OAuthApplication deleteOAuthApplication(long oAuthApplicationId)
-		throws PortalException;
-
-	public OAuthApplication updateLogo(long oAuthApplicationId,
-		InputStream inputStream) throws PortalException;
-
-	public OAuthApplication updateOAuthApplication(long oAuthApplicationId,
-		java.lang.String name, java.lang.String description,
-		boolean shareableAccessToken, java.lang.String callbackURI,
-		java.lang.String websiteURL, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -79,5 +72,12 @@ public interface OAuthApplicationService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	public void deleteLogo(long oAuthApplicationId) throws PortalException;
+	public OAuthApplication updateLogo(long oAuthApplicationId,
+		InputStream inputStream) throws PortalException;
+
+	public OAuthApplication updateOAuthApplication(long oAuthApplicationId,
+		java.lang.String name, java.lang.String description,
+		boolean shareableAccessToken, java.lang.String callbackURI,
+		java.lang.String websiteURL, ServiceContext serviceContext)
+		throws PortalException;
 }

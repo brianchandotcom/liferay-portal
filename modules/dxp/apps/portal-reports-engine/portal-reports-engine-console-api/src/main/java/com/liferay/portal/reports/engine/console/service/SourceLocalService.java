@@ -67,29 +67,6 @@ public interface SourceLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SourceLocalServiceUtil} to access the source local service. Add custom service methods to {@link com.liferay.portal.reports.engine.console.service.impl.SourceLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
 
 	/**
 	* Adds the source to the database. Also notifies the appropriate model listeners.
@@ -115,6 +92,13 @@ public interface SourceLocalService extends BaseLocalService,
 	public Source createSource(long sourceId);
 
 	/**
+	* @throws PortalException
+	*/
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
+
+	/**
 	* Deletes the source from the database. Also notifies the appropriate model listeners.
 	*
 	* @param source the source
@@ -135,75 +119,9 @@ public interface SourceLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public Source deleteSource(long sourceId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Source fetchSource(long sourceId);
+	public void deleteSources(long groupId) throws PortalException;
 
-	/**
-	* Returns the source matching the UUID and group.
-	*
-	* @param uuid the source's UUID
-	* @param groupId the primary key of the group
-	* @return the matching source, or <code>null</code> if a matching source could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Source fetchSourceByUuidAndGroupId(java.lang.String uuid,
-		long groupId);
-
-	/**
-	* Returns the source with the primary key.
-	*
-	* @param sourceId the primary key of the source
-	* @return the source
-	* @throws PortalException if a source with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Source getSource(long sourceId) throws PortalException;
-
-	/**
-	* Returns the source matching the UUID and group.
-	*
-	* @param uuid the source's UUID
-	* @param groupId the primary key of the group
-	* @return the matching source
-	* @throws PortalException if a matching source could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Source getSourceByUuidAndGroupId(java.lang.String uuid, long groupId)
-		throws PortalException;
-
-	/**
-	* Updates the source in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param source the source
-	* @return the source that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public Source updateSource(Source source);
-
-	public Source updateSource(long sourceId,
-		Map<Locale, java.lang.String> nameMap,
-		java.lang.String driverClassName, java.lang.String driverUrl,
-		java.lang.String driverUserName, java.lang.String driverPassword,
-		ServiceContext serviceContext) throws PortalException;
-
-	/**
-	* Returns the number of sources.
-	*
-	* @return the number of sources
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSourcesCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSourcesCount(long groupId, java.lang.String name,
-		java.lang.String driverUrl, boolean andSearch);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -243,6 +161,82 @@ public interface SourceLocalService extends BaseLocalService,
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Source fetchSource(long sourceId);
+
+	/**
+	* Returns the source matching the UUID and group.
+	*
+	* @param uuid the source's UUID
+	* @param groupId the primary key of the group
+	* @return the matching source, or <code>null</code> if a matching source could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Source fetchSourceByUuidAndGroupId(java.lang.String uuid,
+		long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Returns the source with the primary key.
+	*
+	* @param sourceId the primary key of the source
+	* @return the source
+	* @throws PortalException if a source with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Source getSource(long sourceId) throws PortalException;
+
+	/**
+	* Returns the source matching the UUID and group.
+	*
+	* @param uuid the source's UUID
+	* @param groupId the primary key of the group
+	* @return the matching source
+	* @throws PortalException if a matching source could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Source getSourceByUuidAndGroupId(java.lang.String uuid, long groupId)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the sources.
@@ -290,22 +284,29 @@ public interface SourceLocalService extends BaseLocalService,
 		OrderByComparator<Source> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of sources.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of sources
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSourcesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSourcesCount(long groupId, java.lang.String name,
+		java.lang.String driverUrl, boolean andSearch);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Updates the source in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @param source the source
+	* @return the source that was updated
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	@Indexable(type = IndexableType.REINDEX)
+	public Source updateSource(Source source);
 
-	public void deleteSources(long groupId) throws PortalException;
+	public Source updateSource(long sourceId,
+		Map<Locale, java.lang.String> nameMap,
+		java.lang.String driverClassName, java.lang.String driverUrl,
+		java.lang.String driverUserName, java.lang.String driverPassword,
+		ServiceContext serviceContext) throws PortalException;
 }

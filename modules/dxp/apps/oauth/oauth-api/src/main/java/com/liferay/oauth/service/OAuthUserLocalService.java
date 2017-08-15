@@ -108,54 +108,6 @@ public interface OAuthUserLocalService extends BaseLocalService,
 	public OAuthUser deleteOAuthUser(long userId, long oAuthApplicationId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public OAuthUser fetchOAuthUser(java.lang.String accessToken);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public OAuthUser fetchOAuthUser(long oAuthUserId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public OAuthUser fetchOAuthUser(long userId, long oAuthApplicationId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public OAuthUser getOAuthUser(java.lang.String accessToken)
-		throws PortalException;
-
-	/**
-	* Returns the o auth user with the primary key.
-	*
-	* @param oAuthUserId the primary key of the o auth user
-	* @return the o auth user
-	* @throws PortalException if a o auth user with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public OAuthUser getOAuthUser(long oAuthUserId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public OAuthUser getOAuthUser(long userId, long oAuthApplicationId)
-		throws PortalException;
-
-	/**
-	* Updates the o auth user in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param oAuthUser the o auth user
-	* @return the o auth user that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public OAuthUser updateOAuthUser(OAuthUser oAuthUser);
-
-	public OAuthUser updateOAuthUser(long userId, long oAuthApplicationId,
-		java.lang.String accessToken, java.lang.String accessSecret,
-		ServiceContext serviceContext) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
 	/**
 	* @throws PortalException
 	*/
@@ -163,31 +115,7 @@ public interface OAuthUserLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getOAuthApplicationOAuthUsersCount(long oAuthApplicationId);
-
-	/**
-	* Returns the number of o auth users.
-	*
-	* @return the number of o auth users
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getOAuthUsersCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getUserOAuthUsersCount(long userId);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -228,29 +156,6 @@ public interface OAuthUserLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<OAuthUser> getOAuthApplicationOAuthUsers(
-		long oAuthApplicationId, int start, int end,
-		OrderByComparator orderByComparator);
-
-	/**
-	* Returns a range of all the o auth users.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.oauth.model.impl.OAuthUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of o auth users
-	* @param end the upper bound of the range of o auth users (not inclusive)
-	* @return the range of o auth users
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<OAuthUser> getOAuthUsers(int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<OAuthUser> getUserOAuthUsers(long userId, int start, int end,
-		OrderByComparator orderByComparator);
-
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -268,4 +173,99 @@ public interface OAuthUserLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OAuthUser fetchOAuthUser(java.lang.String accessToken);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OAuthUser fetchOAuthUser(long oAuthUserId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OAuthUser fetchOAuthUser(long userId, long oAuthApplicationId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<OAuthUser> getOAuthApplicationOAuthUsers(
+		long oAuthApplicationId, int start, int end,
+		OrderByComparator orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getOAuthApplicationOAuthUsersCount(long oAuthApplicationId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OAuthUser getOAuthUser(java.lang.String accessToken)
+		throws PortalException;
+
+	/**
+	* Returns the o auth user with the primary key.
+	*
+	* @param oAuthUserId the primary key of the o auth user
+	* @return the o auth user
+	* @throws PortalException if a o auth user with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OAuthUser getOAuthUser(long oAuthUserId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OAuthUser getOAuthUser(long userId, long oAuthApplicationId)
+		throws PortalException;
+
+	/**
+	* Returns a range of all the o auth users.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.oauth.model.impl.OAuthUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of o auth users
+	* @param end the upper bound of the range of o auth users (not inclusive)
+	* @return the range of o auth users
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<OAuthUser> getOAuthUsers(int start, int end);
+
+	/**
+	* Returns the number of o auth users.
+	*
+	* @return the number of o auth users
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getOAuthUsersCount();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<OAuthUser> getUserOAuthUsers(long userId, int start, int end,
+		OrderByComparator orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserOAuthUsersCount(long userId);
+
+	/**
+	* Updates the o auth user in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param oAuthUser the o auth user
+	* @return the o auth user that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public OAuthUser updateOAuthUser(OAuthUser oAuthUser);
+
+	public OAuthUser updateOAuthUser(long userId, long oAuthApplicationId,
+		java.lang.String accessToken, java.lang.String accessSecret,
+		ServiceContext serviceContext) throws PortalException;
 }

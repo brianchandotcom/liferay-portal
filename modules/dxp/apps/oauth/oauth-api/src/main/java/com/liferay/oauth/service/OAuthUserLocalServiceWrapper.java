@@ -100,87 +100,6 @@ public class OAuthUserLocalServiceWrapper implements OAuthUserLocalService,
 		return _oAuthUserLocalService.deleteOAuthUser(userId, oAuthApplicationId);
 	}
 
-	@Override
-	public com.liferay.oauth.model.OAuthUser fetchOAuthUser(
-		java.lang.String accessToken) {
-		return _oAuthUserLocalService.fetchOAuthUser(accessToken);
-	}
-
-	@Override
-	public com.liferay.oauth.model.OAuthUser fetchOAuthUser(long oAuthUserId) {
-		return _oAuthUserLocalService.fetchOAuthUser(oAuthUserId);
-	}
-
-	@Override
-	public com.liferay.oauth.model.OAuthUser fetchOAuthUser(long userId,
-		long oAuthApplicationId) {
-		return _oAuthUserLocalService.fetchOAuthUser(userId, oAuthApplicationId);
-	}
-
-	@Override
-	public com.liferay.oauth.model.OAuthUser getOAuthUser(
-		java.lang.String accessToken)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _oAuthUserLocalService.getOAuthUser(accessToken);
-	}
-
-	/**
-	* Returns the o auth user with the primary key.
-	*
-	* @param oAuthUserId the primary key of the o auth user
-	* @return the o auth user
-	* @throws PortalException if a o auth user with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.oauth.model.OAuthUser getOAuthUser(long oAuthUserId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _oAuthUserLocalService.getOAuthUser(oAuthUserId);
-	}
-
-	@Override
-	public com.liferay.oauth.model.OAuthUser getOAuthUser(long userId,
-		long oAuthApplicationId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _oAuthUserLocalService.getOAuthUser(userId, oAuthApplicationId);
-	}
-
-	/**
-	* Updates the o auth user in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param oAuthUser the o auth user
-	* @return the o auth user that was updated
-	*/
-	@Override
-	public com.liferay.oauth.model.OAuthUser updateOAuthUser(
-		com.liferay.oauth.model.OAuthUser oAuthUser) {
-		return _oAuthUserLocalService.updateOAuthUser(oAuthUser);
-	}
-
-	@Override
-	public com.liferay.oauth.model.OAuthUser updateOAuthUser(long userId,
-		long oAuthApplicationId, java.lang.String accessToken,
-		java.lang.String accessSecret,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _oAuthUserLocalService.updateOAuthUser(userId,
-			oAuthApplicationId, accessToken, accessSecret, serviceContext);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _oAuthUserLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _oAuthUserLocalService.dynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _oAuthUserLocalService.getIndexableActionableDynamicQuery();
-	}
-
 	/**
 	* @throws PortalException
 	*/
@@ -192,40 +111,8 @@ public class OAuthUserLocalServiceWrapper implements OAuthUserLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _oAuthUserLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	@Override
-	public int getOAuthApplicationOAuthUsersCount(long oAuthApplicationId) {
-		return _oAuthUserLocalService.getOAuthApplicationOAuthUsersCount(oAuthApplicationId);
-	}
-
-	/**
-	* Returns the number of o auth users.
-	*
-	* @return the number of o auth users
-	*/
-	@Override
-	public int getOAuthUsersCount() {
-		return _oAuthUserLocalService.getOAuthUsersCount();
-	}
-
-	@Override
-	public int getUserOAuthUsersCount(long userId) {
-		return _oAuthUserLocalService.getUserOAuthUsersCount(userId);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _oAuthUserLocalService.getOSGiServiceIdentifier();
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _oAuthUserLocalService.dynamicQuery();
 	}
 
 	/**
@@ -281,39 +168,6 @@ public class OAuthUserLocalServiceWrapper implements OAuthUserLocalService,
 			orderByComparator);
 	}
 
-	@Override
-	public java.util.List<com.liferay.oauth.model.OAuthUser> getOAuthApplicationOAuthUsers(
-		long oAuthApplicationId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
-		return _oAuthUserLocalService.getOAuthApplicationOAuthUsers(oAuthApplicationId,
-			start, end, orderByComparator);
-	}
-
-	/**
-	* Returns a range of all the o auth users.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.oauth.model.impl.OAuthUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of o auth users
-	* @param end the upper bound of the range of o auth users (not inclusive)
-	* @return the range of o auth users
-	*/
-	@Override
-	public java.util.List<com.liferay.oauth.model.OAuthUser> getOAuthUsers(
-		int start, int end) {
-		return _oAuthUserLocalService.getOAuthUsers(start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.oauth.model.OAuthUser> getUserOAuthUsers(
-		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
-		return _oAuthUserLocalService.getUserOAuthUsers(userId, start, end,
-			orderByComparator);
-	}
-
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -338,6 +192,152 @@ public class OAuthUserLocalServiceWrapper implements OAuthUserLocalService,
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _oAuthUserLocalService.dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	@Override
+	public com.liferay.oauth.model.OAuthUser fetchOAuthUser(
+		java.lang.String accessToken) {
+		return _oAuthUserLocalService.fetchOAuthUser(accessToken);
+	}
+
+	@Override
+	public com.liferay.oauth.model.OAuthUser fetchOAuthUser(long oAuthUserId) {
+		return _oAuthUserLocalService.fetchOAuthUser(oAuthUserId);
+	}
+
+	@Override
+	public com.liferay.oauth.model.OAuthUser fetchOAuthUser(long userId,
+		long oAuthApplicationId) {
+		return _oAuthUserLocalService.fetchOAuthUser(userId, oAuthApplicationId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _oAuthUserLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _oAuthUserLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	@Override
+	public java.util.List<com.liferay.oauth.model.OAuthUser> getOAuthApplicationOAuthUsers(
+		long oAuthApplicationId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		return _oAuthUserLocalService.getOAuthApplicationOAuthUsers(oAuthApplicationId,
+			start, end, orderByComparator);
+	}
+
+	@Override
+	public int getOAuthApplicationOAuthUsersCount(long oAuthApplicationId) {
+		return _oAuthUserLocalService.getOAuthApplicationOAuthUsersCount(oAuthApplicationId);
+	}
+
+	@Override
+	public com.liferay.oauth.model.OAuthUser getOAuthUser(
+		java.lang.String accessToken)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _oAuthUserLocalService.getOAuthUser(accessToken);
+	}
+
+	/**
+	* Returns the o auth user with the primary key.
+	*
+	* @param oAuthUserId the primary key of the o auth user
+	* @return the o auth user
+	* @throws PortalException if a o auth user with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.oauth.model.OAuthUser getOAuthUser(long oAuthUserId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _oAuthUserLocalService.getOAuthUser(oAuthUserId);
+	}
+
+	@Override
+	public com.liferay.oauth.model.OAuthUser getOAuthUser(long userId,
+		long oAuthApplicationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _oAuthUserLocalService.getOAuthUser(userId, oAuthApplicationId);
+	}
+
+	/**
+	* Returns a range of all the o auth users.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.oauth.model.impl.OAuthUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of o auth users
+	* @param end the upper bound of the range of o auth users (not inclusive)
+	* @return the range of o auth users
+	*/
+	@Override
+	public java.util.List<com.liferay.oauth.model.OAuthUser> getOAuthUsers(
+		int start, int end) {
+		return _oAuthUserLocalService.getOAuthUsers(start, end);
+	}
+
+	/**
+	* Returns the number of o auth users.
+	*
+	* @return the number of o auth users
+	*/
+	@Override
+	public int getOAuthUsersCount() {
+		return _oAuthUserLocalService.getOAuthUsersCount();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _oAuthUserLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _oAuthUserLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public java.util.List<com.liferay.oauth.model.OAuthUser> getUserOAuthUsers(
+		long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		return _oAuthUserLocalService.getUserOAuthUsers(userId, start, end,
+			orderByComparator);
+	}
+
+	@Override
+	public int getUserOAuthUsersCount(long userId) {
+		return _oAuthUserLocalService.getUserOAuthUsersCount(userId);
+	}
+
+	/**
+	* Updates the o auth user in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param oAuthUser the o auth user
+	* @return the o auth user that was updated
+	*/
+	@Override
+	public com.liferay.oauth.model.OAuthUser updateOAuthUser(
+		com.liferay.oauth.model.OAuthUser oAuthUser) {
+		return _oAuthUserLocalService.updateOAuthUser(oAuthUser);
+	}
+
+	@Override
+	public com.liferay.oauth.model.OAuthUser updateOAuthUser(long userId,
+		long oAuthApplicationId, java.lang.String accessToken,
+		java.lang.String accessSecret,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _oAuthUserLocalService.updateOAuthUser(userId,
+			oAuthApplicationId, accessToken, accessSecret, serviceContext);
 	}
 
 	@Override

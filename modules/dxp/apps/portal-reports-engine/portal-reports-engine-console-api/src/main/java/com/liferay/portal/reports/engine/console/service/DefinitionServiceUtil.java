@@ -66,17 +66,15 @@ public class DefinitionServiceUtil {
 		return getService().getDefinition(definitionId);
 	}
 
-	public static com.liferay.portal.reports.engine.console.model.Definition updateDefinition(
-		long definitionId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		long sourceId, java.lang.String reportParameters,
-		java.lang.String fileName, java.io.InputStream inputStream,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static java.util.List<com.liferay.portal.reports.engine.console.model.Definition> getDefinitions(
+		long groupId, java.lang.String definitionName,
+		java.lang.String description, java.lang.String sourceId,
+		java.lang.String reportName, boolean andSearch, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .updateDefinition(definitionId, nameMap, descriptionMap,
-			sourceId, reportParameters, fileName, inputStream, serviceContext);
+				   .getDefinitions(groupId, definitionName, description,
+			sourceId, reportName, andSearch, start, end, orderByComparator);
 	}
 
 	public static int getDefinitionsCount(long groupId,
@@ -97,15 +95,17 @@ public class DefinitionServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static java.util.List<com.liferay.portal.reports.engine.console.model.Definition> getDefinitions(
-		long groupId, java.lang.String definitionName,
-		java.lang.String description, java.lang.String sourceId,
-		java.lang.String reportName, boolean andSearch, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+	public static com.liferay.portal.reports.engine.console.model.Definition updateDefinition(
+		long definitionId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		long sourceId, java.lang.String reportParameters,
+		java.lang.String fileName, java.io.InputStream inputStream,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .getDefinitions(groupId, definitionName, description,
-			sourceId, reportName, andSearch, start, end, orderByComparator);
+				   .updateDefinition(definitionId, nameMap, descriptionMap,
+			sourceId, reportParameters, fileName, inputStream, serviceContext);
 	}
 
 	public static DefinitionService getService() {

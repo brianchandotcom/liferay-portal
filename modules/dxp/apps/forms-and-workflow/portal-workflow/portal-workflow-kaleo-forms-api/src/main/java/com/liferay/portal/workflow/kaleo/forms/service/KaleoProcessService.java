@@ -111,51 +111,6 @@ public interface KaleoProcessService extends BaseService {
 		throws PortalException;
 
 	/**
-	* Updates the Kaleo process.
-	*
-	* @param kaleoProcessId the primary key of the Kaleo process
-	* @param ddmStructureId the primary key of the Kaleo process's DDM
-	structure
-	* @param nameMap the Kaleo process's locales and localized names
-	* @param descriptionMap the Kaleo process's locales and localized
-	descriptions
-	* @param ddmTemplateId the primary key of the Kaleo process's DDM template
-	* @param workflowDefinitionName the Kaleo process's workflow definition
-	name
-	* @param workflowDefinitionVersion the Kaleo process's workflow definition
-	version
-	* @param kaleoTaskFormPairs the Kaleo task form pairs. For more
-	information, see the <code>portal.workflow.kaleo.forms.api</code>
-	module's <code>KaleoTaskFormPairs</code> class.
-	* @param serviceContext the service context to be applied. This can set
-	guest permissions and group permissions for the Kaleo process.
-	* @return the Kaleo process
-	* @throws PortalException if a portal exception occurred
-	*/
-	public KaleoProcess updateKaleoProcess(long kaleoProcessId,
-		long ddmStructureId, Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, long ddmTemplateId,
-		java.lang.String workflowDefinitionName, int workflowDefinitionVersion,
-		KaleoTaskFormPairs kaleoTaskFormPairs, ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	* Returns the number of Kaleo processes matching the parameters. The
-	* keywords parameter is used for matching String values to the Kaleo
-	* process's name or description.
-	*
-	* @param groupId the primary key of the Kaleo process's group
-	* @param keywords the keywords (space separated) to match in the Kaleo
-	process name or description (optionally <code>null</code>). If
-	the keywords value is not <code>null</code>, the <code>OR</code>
-	operator is used for connecting query criteria; otherwise it uses
-	the <code>AND</code> operator.
-	* @return the number of matching Kaleo processes
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long groupId, java.lang.String keywords);
-
-	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
@@ -192,4 +147,49 @@ public interface KaleoProcessService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KaleoProcess> search(long groupId, java.lang.String keywords,
 		int start, int end, OrderByComparator orderByComparator);
+
+	/**
+	* Returns the number of Kaleo processes matching the parameters. The
+	* keywords parameter is used for matching String values to the Kaleo
+	* process's name or description.
+	*
+	* @param groupId the primary key of the Kaleo process's group
+	* @param keywords the keywords (space separated) to match in the Kaleo
+	process name or description (optionally <code>null</code>). If
+	the keywords value is not <code>null</code>, the <code>OR</code>
+	operator is used for connecting query criteria; otherwise it uses
+	the <code>AND</code> operator.
+	* @return the number of matching Kaleo processes
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(long groupId, java.lang.String keywords);
+
+	/**
+	* Updates the Kaleo process.
+	*
+	* @param kaleoProcessId the primary key of the Kaleo process
+	* @param ddmStructureId the primary key of the Kaleo process's DDM
+	structure
+	* @param nameMap the Kaleo process's locales and localized names
+	* @param descriptionMap the Kaleo process's locales and localized
+	descriptions
+	* @param ddmTemplateId the primary key of the Kaleo process's DDM template
+	* @param workflowDefinitionName the Kaleo process's workflow definition
+	name
+	* @param workflowDefinitionVersion the Kaleo process's workflow definition
+	version
+	* @param kaleoTaskFormPairs the Kaleo task form pairs. For more
+	information, see the <code>portal.workflow.kaleo.forms.api</code>
+	module's <code>KaleoTaskFormPairs</code> class.
+	* @param serviceContext the service context to be applied. This can set
+	guest permissions and group permissions for the Kaleo process.
+	* @return the Kaleo process
+	* @throws PortalException if a portal exception occurred
+	*/
+	public KaleoProcess updateKaleoProcess(long kaleoProcessId,
+		long ddmStructureId, Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, long ddmTemplateId,
+		java.lang.String workflowDefinitionName, int workflowDefinitionVersion,
+		KaleoTaskFormPairs kaleoTaskFormPairs, ServiceContext serviceContext)
+		throws PortalException;
 }

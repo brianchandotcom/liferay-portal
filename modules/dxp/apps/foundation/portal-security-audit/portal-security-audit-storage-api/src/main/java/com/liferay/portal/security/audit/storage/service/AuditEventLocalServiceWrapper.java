@@ -34,38 +34,6 @@ public class AuditEventLocalServiceWrapper implements AuditEventLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _auditEventLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _auditEventLocalService.dynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _auditEventLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _auditEventLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _auditEventLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	@Override
 	public com.liferay.portal.security.audit.storage.model.AuditEvent addAuditEvent(
 		com.liferay.portal.kernel.audit.AuditMessage auditMessage) {
 		return _auditEventLocalService.addAuditEvent(auditMessage);
@@ -121,75 +89,19 @@ public class AuditEventLocalServiceWrapper implements AuditEventLocalService,
 		return _auditEventLocalService.deleteAuditEvent(auditEventId);
 	}
 
-	@Override
-	public com.liferay.portal.security.audit.storage.model.AuditEvent fetchAuditEvent(
-		long auditEventId) {
-		return _auditEventLocalService.fetchAuditEvent(auditEventId);
-	}
-
 	/**
-	* Returns the audit event with the primary key.
-	*
-	* @param auditEventId the primary key of the audit event
-	* @return the audit event
-	* @throws PortalException if a audit event with the primary key could not be found
+	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.security.audit.storage.model.AuditEvent getAuditEvent(
-		long auditEventId)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _auditEventLocalService.getAuditEvent(auditEventId);
-	}
-
-	/**
-	* Updates the audit event in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param auditEvent the audit event
-	* @return the audit event that was updated
-	*/
-	@Override
-	public com.liferay.portal.security.audit.storage.model.AuditEvent updateAuditEvent(
-		com.liferay.portal.security.audit.storage.model.AuditEvent auditEvent) {
-		return _auditEventLocalService.updateAuditEvent(auditEvent);
-	}
-
-	/**
-	* Returns the number of audit events.
-	*
-	* @return the number of audit events
-	*/
-	@Override
-	public int getAuditEventsCount() {
-		return _auditEventLocalService.getAuditEventsCount();
+		return _auditEventLocalService.deletePersistedModel(persistedModel);
 	}
 
 	@Override
-	public int getAuditEventsCount(long companyId) {
-		return _auditEventLocalService.getAuditEventsCount(companyId);
-	}
-
-	@Override
-	public int getAuditEventsCount(long companyId, long userId,
-		java.lang.String userName, java.util.Date createDateGT,
-		java.util.Date createDateLT, java.lang.String eventType,
-		java.lang.String className, java.lang.String classPK,
-		java.lang.String clientHost, java.lang.String clientIP,
-		java.lang.String serverName, int serverPort,
-		java.lang.String sessionID, boolean andSearch) {
-		return _auditEventLocalService.getAuditEventsCount(companyId, userId,
-			userName, createDateGT, createDateLT, eventType, className,
-			classPK, clientHost, clientIP, serverName, serverPort, sessionID,
-			andSearch);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _auditEventLocalService.getOSGiServiceIdentifier();
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _auditEventLocalService.dynamicQuery();
 	}
 
 	/**
@@ -246,6 +158,58 @@ public class AuditEventLocalServiceWrapper implements AuditEventLocalService,
 	}
 
 	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _auditEventLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _auditEventLocalService.dynamicQueryCount(dynamicQuery,
+			projection);
+	}
+
+	@Override
+	public com.liferay.portal.security.audit.storage.model.AuditEvent fetchAuditEvent(
+		long auditEventId) {
+		return _auditEventLocalService.fetchAuditEvent(auditEventId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _auditEventLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the audit event with the primary key.
+	*
+	* @param auditEventId the primary key of the audit event
+	* @return the audit event
+	* @throws PortalException if a audit event with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portal.security.audit.storage.model.AuditEvent getAuditEvent(
+		long auditEventId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _auditEventLocalService.getAuditEvent(auditEventId);
+	}
+
+	/**
 	* Returns a range of all the audit events.
 	*
 	* <p>
@@ -286,30 +250,66 @@ public class AuditEventLocalServiceWrapper implements AuditEventLocalService,
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of audit events.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of audit events
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _auditEventLocalService.dynamicQueryCount(dynamicQuery);
+	public int getAuditEventsCount() {
+		return _auditEventLocalService.getAuditEventsCount();
+	}
+
+	@Override
+	public int getAuditEventsCount(long companyId) {
+		return _auditEventLocalService.getAuditEventsCount(companyId);
+	}
+
+	@Override
+	public int getAuditEventsCount(long companyId, long userId,
+		java.lang.String userName, java.util.Date createDateGT,
+		java.util.Date createDateLT, java.lang.String eventType,
+		java.lang.String className, java.lang.String classPK,
+		java.lang.String clientHost, java.lang.String clientIP,
+		java.lang.String serverName, int serverPort,
+		java.lang.String sessionID, boolean andSearch) {
+		return _auditEventLocalService.getAuditEventsCount(companyId, userId,
+			userName, createDateGT, createDateLT, eventType, className,
+			classPK, clientHost, clientIP, serverName, serverPort, sessionID,
+			andSearch);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _auditEventLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _auditEventLocalService.dynamicQueryCount(dynamicQuery,
-			projection);
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _auditEventLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _auditEventLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Updates the audit event in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param auditEvent the audit event
+	* @return the audit event that was updated
+	*/
+	@Override
+	public com.liferay.portal.security.audit.storage.model.AuditEvent updateAuditEvent(
+		com.liferay.portal.security.audit.storage.model.AuditEvent auditEvent) {
+		return _auditEventLocalService.updateAuditEvent(auditEvent);
 	}
 
 	@Override

@@ -63,28 +63,6 @@ public interface SPIDefinitionLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SPIDefinitionLocalServiceUtil} to access the spi definition local service. Add custom service methods to {@link com.liferay.portal.resiliency.spi.service.impl.SPIDefinitionLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Tuple getPortletIdsAndServletContextNames();
 
 	/**
 	* Adds the spi definition to the database. Also notifies the appropriate model listeners.
@@ -111,6 +89,13 @@ public interface SPIDefinitionLocalService extends BaseLocalService,
 	public SPIDefinition createSPIDefinition(long spiDefinitionId);
 
 	/**
+	* @throws PortalException
+	*/
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
+
+	/**
 	* Deletes the spi definition from the database. Also notifies the appropriate model listeners.
 	*
 	* @param spiDefinition the spi definition
@@ -132,66 +117,7 @@ public interface SPIDefinitionLocalService extends BaseLocalService,
 	public SPIDefinition deleteSPIDefinition(long spiDefinitionId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SPIDefinition fetchSPIDefinition(long spiDefinitionId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SPIDefinition getSPIDefinition(long companyId, java.lang.String name)
-		throws PortalException;
-
-	/**
-	* Returns the spi definition with the primary key.
-	*
-	* @param spiDefinitionId the primary key of the spi definition
-	* @return the spi definition
-	* @throws PortalException if a spi definition with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SPIDefinition getSPIDefinition(long spiDefinitionId)
-		throws PortalException;
-
-	/**
-	* Updates the spi definition in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param spiDefinition the spi definition
-	* @return the spi definition that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public SPIDefinition updateSPIDefinition(SPIDefinition spiDefinition);
-
-	public SPIDefinition updateSPIDefinition(long spiDefinitionId, int status,
-		java.lang.String statusMessage) throws PortalException;
-
-	public SPIDefinition updateSPIDefinition(long userId, long spiDefinitionId,
-		java.lang.String connectorAddress, int connectorPort,
-		java.lang.String description, java.lang.String jvmArguments,
-		java.lang.String portletIds, java.lang.String servletContextNames,
-		java.lang.String typeSettings, ServiceContext serviceContext)
-		throws PortalException;
-
-	public SPIDefinition updateTypeSettings(long userId, long spiDefinitionId,
-		java.lang.String typeSettings, ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	* Returns the number of spi definitions.
-	*
-	* @return the number of spi definitions
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSPIDefinitionsCount();
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable;
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -232,6 +158,63 @@ public interface SPIDefinitionLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SPIDefinition fetchSPIDefinition(long spiDefinitionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Tuple getPortletIdsAndServletContextNames();
+
+	/**
+	* Returns the spi definition with the primary key.
+	*
+	* @param spiDefinitionId the primary key of the spi definition
+	* @return the spi definition
+	* @throws PortalException if a spi definition with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SPIDefinition getSPIDefinition(long spiDefinitionId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SPIDefinition getSPIDefinition(long companyId, java.lang.String name)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SPIDefinition> getSPIDefinitions();
 
@@ -256,22 +239,20 @@ public interface SPIDefinitionLocalService extends BaseLocalService,
 	public List<SPIDefinition> getSPIDefinitions(long companyId, int[] statuses);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of spi definitions.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of spi definitions
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSPIDefinitionsCount();
 
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	@Override
+	public java.lang.Object invokeMethod(java.lang.String name,
+		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
+		throws java.lang.Throwable;
+
+	@Clusterable
+	public void startSPI(long spiDefinitionId) throws PortalException;
 
 	public long startSPIinBackground(long userId, long spiDefinitionId)
 		throws PortalException;
@@ -279,12 +260,32 @@ public interface SPIDefinitionLocalService extends BaseLocalService,
 	public long startSPIinBackground(long userId, long spiDefinitionId,
 		boolean automatedRestart) throws PortalException;
 
+	@Clusterable
+	public void stopSPI(long spiDefinitionId) throws PortalException;
+
 	public long stopSPIinBackground(long userId, long spiDefinitionId)
 		throws PortalException;
 
-	@Clusterable
-	public void startSPI(long spiDefinitionId) throws PortalException;
+	/**
+	* Updates the spi definition in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param spiDefinition the spi definition
+	* @return the spi definition that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public SPIDefinition updateSPIDefinition(SPIDefinition spiDefinition);
 
-	@Clusterable
-	public void stopSPI(long spiDefinitionId) throws PortalException;
+	public SPIDefinition updateSPIDefinition(long spiDefinitionId, int status,
+		java.lang.String statusMessage) throws PortalException;
+
+	public SPIDefinition updateSPIDefinition(long userId, long spiDefinitionId,
+		java.lang.String connectorAddress, int connectorPort,
+		java.lang.String description, java.lang.String jvmArguments,
+		java.lang.String portletIds, java.lang.String servletContextNames,
+		java.lang.String typeSettings, ServiceContext serviceContext)
+		throws PortalException;
+
+	public SPIDefinition updateTypeSettings(long userId, long spiDefinitionId,
+		java.lang.String typeSettings, ServiceContext serviceContext)
+		throws PortalException;
 }

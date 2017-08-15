@@ -62,25 +62,6 @@ public interface SamlSpIdpConnectionLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SamlSpIdpConnectionLocalServiceUtil} to access the saml sp idp connection local service. Add custom service methods to {@link com.liferay.saml.persistence.service.impl.SamlSpIdpConnectionLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
 
 	/**
 	* Adds the saml sp idp connection to the database. Also notifies the appropriate model listeners.
@@ -111,6 +92,13 @@ public interface SamlSpIdpConnectionLocalService extends BaseLocalService,
 		long samlSpIdpConnectionId);
 
 	/**
+	* @throws PortalException
+	*/
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
+
+	/**
 	* Deletes the saml sp idp connection from the database. Also notifies the appropriate model listeners.
 	*
 	* @param samlSpIdpConnection the saml sp idp connection
@@ -131,61 +119,7 @@ public interface SamlSpIdpConnectionLocalService extends BaseLocalService,
 	public SamlSpIdpConnection deleteSamlSpIdpConnection(
 		long samlSpIdpConnectionId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SamlSpIdpConnection fetchSamlSpIdpConnection(
-		long samlSpIdpConnectionId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SamlSpIdpConnection getSamlSpIdpConnection(long companyId,
-		java.lang.String samlIdpEntityId) throws PortalException;
-
-	/**
-	* Returns the saml sp idp connection with the primary key.
-	*
-	* @param samlSpIdpConnectionId the primary key of the saml sp idp connection
-	* @return the saml sp idp connection
-	* @throws PortalException if a saml sp idp connection with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SamlSpIdpConnection getSamlSpIdpConnection(
-		long samlSpIdpConnectionId) throws PortalException;
-
-	/**
-	* Updates the saml sp idp connection in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param samlSpIdpConnection the saml sp idp connection
-	* @return the saml sp idp connection that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public SamlSpIdpConnection updateSamlSpIdpConnection(
-		SamlSpIdpConnection samlSpIdpConnection);
-
-	public SamlSpIdpConnection updateSamlSpIdpConnection(
-		long samlSpIdpConnectionId, java.lang.String samlIdpEntityId,
-		boolean assertionSignatureRequired, long clockSkew, boolean enabled,
-		boolean forceAuthn, boolean ldapImportEnabled,
-		java.lang.String metadataUrl, InputStream metadataXmlInputStream,
-		java.lang.String name, java.lang.String nameIdFormat,
-		boolean signAuthnRequest, java.lang.String userAttributeMappings,
-		ServiceContext serviceContext) throws PortalException;
-
-	/**
-	* Returns the number of saml sp idp connections.
-	*
-	* @return the number of saml sp idp connections
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSamlSpIdpConnectionsCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSamlSpIdpConnectionsCount(long companyId);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -227,6 +161,61 @@ public interface SamlSpIdpConnectionLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SamlSpIdpConnection fetchSamlSpIdpConnection(
+		long samlSpIdpConnectionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Returns the saml sp idp connection with the primary key.
+	*
+	* @param samlSpIdpConnectionId the primary key of the saml sp idp connection
+	* @return the saml sp idp connection
+	* @throws PortalException if a saml sp idp connection with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SamlSpIdpConnection getSamlSpIdpConnection(
+		long samlSpIdpConnectionId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SamlSpIdpConnection getSamlSpIdpConnection(long companyId,
+		java.lang.String samlIdpEntityId) throws PortalException;
+
+	/**
 	* Returns a range of all the saml sp idp connections.
 	*
 	* <p>
@@ -252,23 +241,35 @@ public interface SamlSpIdpConnectionLocalService extends BaseLocalService,
 		int start, int end, OrderByComparator orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of saml sp idp connections.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of saml sp idp connections
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSamlSpIdpConnectionsCount();
 
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSamlSpIdpConnectionsCount(long companyId);
 
 	public void updateMetadata(long samlSpIdpConnectionId)
 		throws PortalException;
+
+	/**
+	* Updates the saml sp idp connection in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param samlSpIdpConnection the saml sp idp connection
+	* @return the saml sp idp connection that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public SamlSpIdpConnection updateSamlSpIdpConnection(
+		SamlSpIdpConnection samlSpIdpConnection);
+
+	public SamlSpIdpConnection updateSamlSpIdpConnection(
+		long samlSpIdpConnectionId, java.lang.String samlIdpEntityId,
+		boolean assertionSignatureRequired, long clockSkew, boolean enabled,
+		boolean forceAuthn, boolean ldapImportEnabled,
+		java.lang.String metadataUrl, InputStream metadataXmlInputStream,
+		java.lang.String name, java.lang.String nameIdFormat,
+		boolean signAuthnRequest, java.lang.String userAttributeMappings,
+		ServiceContext serviceContext) throws PortalException;
 }

@@ -68,29 +68,6 @@ public interface DefinitionLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DefinitionLocalServiceUtil} to access the definition local service. Add custom service methods to {@link com.liferay.portal.reports.engine.console.service.impl.DefinitionLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
 
 	/**
 	* Adds the definition to the database. Also notifies the appropriate model listeners.
@@ -139,79 +116,19 @@ public interface DefinitionLocalService extends BaseLocalService,
 	public Definition deleteDefinition(long definitionId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Definition fetchDefinition(long definitionId);
+	public void deleteDefinitionTemplates(long companyId,
+		java.lang.String attachmentsDirectory) throws PortalException;
+
+	public void deleteDefinitions(long groupId) throws PortalException;
 
 	/**
-	* Returns the definition matching the UUID and group.
-	*
-	* @param uuid the definition's UUID
-	* @param groupId the primary key of the group
-	* @return the matching definition, or <code>null</code> if a matching definition could not be found
+	* @throws PortalException
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Definition fetchDefinitionByUuidAndGroupId(java.lang.String uuid,
-		long groupId);
-
-	/**
-	* Returns the definition with the primary key.
-	*
-	* @param definitionId the primary key of the definition
-	* @return the definition
-	* @throws PortalException if a definition with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Definition getDefinition(long definitionId)
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	/**
-	* Returns the definition matching the UUID and group.
-	*
-	* @param uuid the definition's UUID
-	* @param groupId the primary key of the group
-	* @return the matching definition
-	* @throws PortalException if a matching definition could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Definition getDefinitionByUuidAndGroupId(java.lang.String uuid,
-		long groupId) throws PortalException;
-
-	/**
-	* Updates the definition in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param definition the definition
-	* @return the definition that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public Definition updateDefinition(Definition definition);
-
-	public Definition updateDefinition(long definitionId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, long sourceId,
-		java.lang.String reportParameters, java.lang.String fileName,
-		InputStream inputStream, ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	* Returns the number of definitions.
-	*
-	* @return the number of definitions
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getDefinitionsCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getDefinitionsCount(long groupId,
-		java.lang.String definitionName, java.lang.String description,
-		java.lang.String sourceId, java.lang.String reportName,
-		boolean andSearch);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -251,6 +168,64 @@ public interface DefinitionLocalService extends BaseLocalService,
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Definition fetchDefinition(long definitionId);
+
+	/**
+	* Returns the definition matching the UUID and group.
+	*
+	* @param uuid the definition's UUID
+	* @param groupId the primary key of the group
+	* @return the matching definition, or <code>null</code> if a matching definition could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Definition fetchDefinitionByUuidAndGroupId(java.lang.String uuid,
+		long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
+	* Returns the definition with the primary key.
+	*
+	* @param definitionId the primary key of the definition
+	* @return the definition
+	* @throws PortalException if a definition with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Definition getDefinition(long definitionId)
+		throws PortalException;
+
+	/**
+	* Returns the definition matching the UUID and group.
+	*
+	* @param uuid the definition's UUID
+	* @param groupId the primary key of the group
+	* @return the matching definition
+	* @throws PortalException if a matching definition could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Definition getDefinitionByUuidAndGroupId(java.lang.String uuid,
+		long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the definitions.
@@ -300,27 +275,53 @@ public interface DefinitionLocalService extends BaseLocalService,
 		OrderByComparator<Definition> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of definitions.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of definitions
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getDefinitionsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getDefinitionsCount(long groupId,
+		java.lang.String definitionName, java.lang.String description,
+		java.lang.String sourceId, java.lang.String reportName,
+		boolean andSearch);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public java.lang.String getOSGiServiceIdentifier();
 
-	public void deleteDefinitionTemplates(long companyId,
-		java.lang.String attachmentsDirectory) throws PortalException;
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
-	public void deleteDefinitions(long groupId) throws PortalException;
+	/**
+	* Updates the definition in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param definition the definition
+	* @return the definition that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public Definition updateDefinition(Definition definition);
+
+	public Definition updateDefinition(long definitionId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, long sourceId,
+		java.lang.String reportParameters, java.lang.String fileName,
+		InputStream inputStream, ServiceContext serviceContext)
+		throws PortalException;
 
 	public void updateDefinitionResources(Definition definition,
 		java.lang.String[] communityPermissions,

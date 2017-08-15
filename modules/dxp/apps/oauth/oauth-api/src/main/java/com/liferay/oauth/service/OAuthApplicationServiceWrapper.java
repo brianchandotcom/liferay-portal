@@ -46,10 +46,26 @@ public class OAuthApplicationServiceWrapper implements OAuthApplicationService,
 	}
 
 	@Override
+	public void deleteLogo(long oAuthApplicationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_oAuthApplicationService.deleteLogo(oAuthApplicationId);
+	}
+
+	@Override
 	public com.liferay.oauth.model.OAuthApplication deleteOAuthApplication(
 		long oAuthApplicationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _oAuthApplicationService.deleteOAuthApplication(oAuthApplicationId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _oAuthApplicationService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -70,22 +86,6 @@ public class OAuthApplicationServiceWrapper implements OAuthApplicationService,
 		return _oAuthApplicationService.updateOAuthApplication(oAuthApplicationId,
 			name, description, shareableAccessToken, callbackURI, websiteURL,
 			serviceContext);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _oAuthApplicationService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public void deleteLogo(long oAuthApplicationId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_oAuthApplicationService.deleteLogo(oAuthApplicationId);
 	}
 
 	@Override

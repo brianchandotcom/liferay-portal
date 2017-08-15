@@ -170,68 +170,13 @@ public class AuditEventWrapper implements AuditEvent, ModelWrapper<AuditEvent> {
 	}
 
 	@Override
-	public AuditEvent toEscapedModel() {
-		return new AuditEventWrapper(_auditEvent.toEscapedModel());
-	}
-
-	@Override
-	public AuditEvent toUnescapedModel() {
-		return new AuditEventWrapper(_auditEvent.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _auditEvent.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _auditEvent.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _auditEvent.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _auditEvent.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<AuditEvent> toCacheModel() {
-		return _auditEvent.toCacheModel();
+	public java.lang.Object clone() {
+		return new AuditEventWrapper((AuditEvent)_auditEvent.clone());
 	}
 
 	@Override
 	public int compareTo(AuditEvent auditEvent) {
 		return _auditEvent.compareTo(auditEvent);
-	}
-
-	/**
-	* Returns the server port of this audit event.
-	*
-	* @return the server port of this audit event
-	*/
-	@Override
-	public int getServerPort() {
-		return _auditEvent.getServerPort();
-	}
-
-	@Override
-	public int hashCode() {
-		return _auditEvent.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _auditEvent.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new AuditEventWrapper((AuditEvent)_auditEvent.clone());
 	}
 
 	/**
@@ -242,6 +187,16 @@ public class AuditEventWrapper implements AuditEvent, ModelWrapper<AuditEvent> {
 	@Override
 	public java.lang.String getAdditionalInfo() {
 		return _auditEvent.getAdditionalInfo();
+	}
+
+	/**
+	* Returns the audit event ID of this audit event.
+	*
+	* @return the audit event ID of this audit event
+	*/
+	@Override
+	public long getAuditEventId() {
+		return _auditEvent.getAuditEventId();
 	}
 
 	/**
@@ -285,6 +240,26 @@ public class AuditEventWrapper implements AuditEvent, ModelWrapper<AuditEvent> {
 	}
 
 	/**
+	* Returns the company ID of this audit event.
+	*
+	* @return the company ID of this audit event
+	*/
+	@Override
+	public long getCompanyId() {
+		return _auditEvent.getCompanyId();
+	}
+
+	/**
+	* Returns the create date of this audit event.
+	*
+	* @return the create date of this audit event
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _auditEvent.getCreateDate();
+	}
+
+	/**
 	* Returns the event type of this audit event.
 	*
 	* @return the event type of this audit event
@@ -292,6 +267,11 @@ public class AuditEventWrapper implements AuditEvent, ModelWrapper<AuditEvent> {
 	@Override
 	public java.lang.String getEventType() {
 		return _auditEvent.getEventType();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _auditEvent.getExpandoBridge();
 	}
 
 	/**
@@ -305,6 +285,21 @@ public class AuditEventWrapper implements AuditEvent, ModelWrapper<AuditEvent> {
 	}
 
 	/**
+	* Returns the primary key of this audit event.
+	*
+	* @return the primary key of this audit event
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _auditEvent.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _auditEvent.getPrimaryKeyObj();
+	}
+
+	/**
 	* Returns the server name of this audit event.
 	*
 	* @return the server name of this audit event
@@ -315,6 +310,16 @@ public class AuditEventWrapper implements AuditEvent, ModelWrapper<AuditEvent> {
 	}
 
 	/**
+	* Returns the server port of this audit event.
+	*
+	* @return the server port of this audit event
+	*/
+	@Override
+	public int getServerPort() {
+		return _auditEvent.getServerPort();
+	}
+
+	/**
 	* Returns the session ID of this audit event.
 	*
 	* @return the session ID of this audit event
@@ -322,6 +327,16 @@ public class AuditEventWrapper implements AuditEvent, ModelWrapper<AuditEvent> {
 	@Override
 	public java.lang.String getSessionID() {
 		return _auditEvent.getSessionID();
+	}
+
+	/**
+	* Returns the user ID of this audit event.
+	*
+	* @return the user ID of this audit event
+	*/
+	@Override
+	public long getUserId() {
+		return _auditEvent.getUserId();
 	}
 
 	/**
@@ -345,63 +360,23 @@ public class AuditEventWrapper implements AuditEvent, ModelWrapper<AuditEvent> {
 	}
 
 	@Override
-	public java.lang.String toString() {
-		return _auditEvent.toString();
+	public int hashCode() {
+		return _auditEvent.hashCode();
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
-		return _auditEvent.toXmlString();
+	public boolean isCachedModel() {
+		return _auditEvent.isCachedModel();
 	}
 
-	/**
-	* Returns the create date of this audit event.
-	*
-	* @return the create date of this audit event
-	*/
 	@Override
-	public Date getCreateDate() {
-		return _auditEvent.getCreateDate();
+	public boolean isEscapedModel() {
+		return _auditEvent.isEscapedModel();
 	}
 
-	/**
-	* Returns the audit event ID of this audit event.
-	*
-	* @return the audit event ID of this audit event
-	*/
 	@Override
-	public long getAuditEventId() {
-		return _auditEvent.getAuditEventId();
-	}
-
-	/**
-	* Returns the company ID of this audit event.
-	*
-	* @return the company ID of this audit event
-	*/
-	@Override
-	public long getCompanyId() {
-		return _auditEvent.getCompanyId();
-	}
-
-	/**
-	* Returns the primary key of this audit event.
-	*
-	* @return the primary key of this audit event
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _auditEvent.getPrimaryKey();
-	}
-
-	/**
-	* Returns the user ID of this audit event.
-	*
-	* @return the user ID of this audit event
-	*/
-	@Override
-	public long getUserId() {
-		return _auditEvent.getUserId();
+	public boolean isNew() {
+		return _auditEvent.isNew();
 	}
 
 	@Override
@@ -608,6 +583,31 @@ public class AuditEventWrapper implements AuditEvent, ModelWrapper<AuditEvent> {
 	@Override
 	public void setUserUuid(java.lang.String userUuid) {
 		_auditEvent.setUserUuid(userUuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<AuditEvent> toCacheModel() {
+		return _auditEvent.toCacheModel();
+	}
+
+	@Override
+	public AuditEvent toEscapedModel() {
+		return new AuditEventWrapper(_auditEvent.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _auditEvent.toString();
+	}
+
+	@Override
+	public AuditEvent toUnescapedModel() {
+		return new AuditEventWrapper(_auditEvent.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _auditEvent.toXmlString();
 	}
 
 	@Override

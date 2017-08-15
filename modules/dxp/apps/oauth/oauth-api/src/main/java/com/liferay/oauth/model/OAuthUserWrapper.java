@@ -128,58 +128,13 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	}
 
 	@Override
-	public OAuthUser toEscapedModel() {
-		return new OAuthUserWrapper(_oAuthUser.toEscapedModel());
-	}
-
-	@Override
-	public OAuthUser toUnescapedModel() {
-		return new OAuthUserWrapper(_oAuthUser.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _oAuthUser.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _oAuthUser.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _oAuthUser.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _oAuthUser.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<OAuthUser> toCacheModel() {
-		return _oAuthUser.toCacheModel();
+	public java.lang.Object clone() {
+		return new OAuthUserWrapper((OAuthUser)_oAuthUser.clone());
 	}
 
 	@Override
 	public int compareTo(OAuthUser oAuthUser) {
 		return _oAuthUser.compareTo(oAuthUser);
-	}
-
-	@Override
-	public int hashCode() {
-		return _oAuthUser.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _oAuthUser.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new OAuthUserWrapper((OAuthUser)_oAuthUser.clone());
 	}
 
 	/**
@@ -203,43 +158,13 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	}
 
 	/**
-	* Returns the o auth user uuid of this o auth user.
+	* Returns the company ID of this o auth user.
 	*
-	* @return the o auth user uuid of this o auth user
+	* @return the company ID of this o auth user
 	*/
 	@Override
-	public java.lang.String getOAuthUserUuid() {
-		return _oAuthUser.getOAuthUserUuid();
-	}
-
-	/**
-	* Returns the user name of this o auth user.
-	*
-	* @return the user name of this o auth user
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _oAuthUser.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this o auth user.
-	*
-	* @return the user uuid of this o auth user
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _oAuthUser.getUserUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _oAuthUser.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _oAuthUser.toXmlString();
+	public long getCompanyId() {
+		return _oAuthUser.getCompanyId();
 	}
 
 	/**
@@ -252,6 +177,11 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 		return _oAuthUser.getCreateDate();
 	}
 
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _oAuthUser.getExpandoBridge();
+	}
+
 	/**
 	* Returns the modified date of this o auth user.
 	*
@@ -260,16 +190,6 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	@Override
 	public Date getModifiedDate() {
 		return _oAuthUser.getModifiedDate();
-	}
-
-	/**
-	* Returns the company ID of this o auth user.
-	*
-	* @return the company ID of this o auth user
-	*/
-	@Override
-	public long getCompanyId() {
-		return _oAuthUser.getCompanyId();
 	}
 
 	/**
@@ -293,6 +213,16 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	}
 
 	/**
+	* Returns the o auth user uuid of this o auth user.
+	*
+	* @return the o auth user uuid of this o auth user
+	*/
+	@Override
+	public java.lang.String getOAuthUserUuid() {
+		return _oAuthUser.getOAuthUserUuid();
+	}
+
+	/**
 	* Returns the primary key of this o auth user.
 	*
 	* @return the primary key of this o auth user
@@ -300,6 +230,11 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	@Override
 	public long getPrimaryKey() {
 		return _oAuthUser.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _oAuthUser.getPrimaryKeyObj();
 	}
 
 	/**
@@ -310,6 +245,46 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	@Override
 	public long getUserId() {
 		return _oAuthUser.getUserId();
+	}
+
+	/**
+	* Returns the user name of this o auth user.
+	*
+	* @return the user name of this o auth user
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _oAuthUser.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this o auth user.
+	*
+	* @return the user uuid of this o auth user
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _oAuthUser.getUserUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _oAuthUser.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _oAuthUser.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _oAuthUser.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _oAuthUser.isNew();
 	}
 
 	@Override
@@ -466,6 +441,31 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	@Override
 	public void setUserUuid(java.lang.String userUuid) {
 		_oAuthUser.setUserUuid(userUuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<OAuthUser> toCacheModel() {
+		return _oAuthUser.toCacheModel();
+	}
+
+	@Override
+	public OAuthUser toEscapedModel() {
+		return new OAuthUserWrapper(_oAuthUser.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _oAuthUser.toString();
+	}
+
+	@Override
+	public OAuthUser toUnescapedModel() {
+		return new OAuthUserWrapper(_oAuthUser.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _oAuthUser.toXmlString();
 	}
 
 	@Override

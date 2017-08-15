@@ -64,7 +64,16 @@ public interface EntryService extends BaseService {
 		java.lang.String reportName, java.lang.String reportParameters,
 		ServiceContext serviceContext) throws PortalException;
 
+	public void deleteAttachment(long companyId, long entryId,
+		java.lang.String fileName) throws PortalException;
+
 	public Entry deleteEntry(long entryId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Entry> getEntries(long groupId,
+		java.lang.String definitionName, java.lang.String userName,
+		Date createDateGT, Date createDateLT, boolean andSearch, int start,
+		int end, OrderByComparator orderByComparator) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getEntriesCount(long groupId, java.lang.String definitionName,
@@ -77,15 +86,6 @@ public interface EntryService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Entry> getEntries(long groupId,
-		java.lang.String definitionName, java.lang.String userName,
-		Date createDateGT, Date createDateLT, boolean andSearch, int start,
-		int end, OrderByComparator orderByComparator) throws PortalException;
-
-	public void deleteAttachment(long companyId, long entryId,
-		java.lang.String fileName) throws PortalException;
 
 	public void sendEmails(long entryId, java.lang.String fileName,
 		java.lang.String[] emailAddresses, boolean notification)

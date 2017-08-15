@@ -85,7 +85,7 @@
 		</execute>
 
 		<execute macro="User#editDetailsViaMyAccount">
-			<var name="userLastNameEdit"><![CDATA[><script>alert(document.cookie)</script>]]></var>
+			<var name="userLastNameEdit"><![CDATA[<script>document.write("XSS"); window.stop();</script>]]></var>
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -105,12 +105,12 @@
 			<var name="bookmarkURL" value="http://www.liferay.com" />
 		</execute>
 
-		<execute function="AssertAlertNotPresent" />
+		<execute function="AssertElementNotPresent" locator1="//body[.='XSS']" />
 	</command>
 
 	<command name="ViewControlPanelNoXSS" priority="5">
 		<property name="portal.acceptance" value="true" />
-		<var name="siteName"><![CDATA[<script>alert(123)</script>]]></var>
+		<var name="siteName"><![CDATA[<script>document.write("XSS"); window.stop();</script>]]></var>
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
@@ -132,7 +132,7 @@
 
 		<execute function="AssertClick" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${siteName}" />
 
-		<execute function="AssertAlertNotPresent" />
+		<execute function="AssertElementNotPresent" locator1="//body[.='XSS']" />
 
 		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="Public Pages" />
 
@@ -201,11 +201,11 @@
 		<property name="portal.acceptance" value="true" />
 
 		<execute macro="Page#add">
-			<var name="pageName"><![CDATA[<script>alert(123)</script>]]></var>
+			<var name="pageName"><![CDATA[<script>document.write("XSS"); window.stop();</script>]]></var>
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName"><![CDATA[<script>alert(123)</script>]]></var>
+			<var name="pageName"><![CDATA[<script>document.write("XSS"); window.stop();</script>]]></var>
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -217,13 +217,13 @@
 			<var name="portletOption" value="Look and Feel Configuration" />
 		</execute>
 
-		<execute function="AssertAlertNotPresent" />
+		<execute function="AssertElementNotPresent" locator1="//body[.='XSS']" />
 	</command>
 
 	<command name="ViewRecycleBinNoXSS" priority="5">
 		<property name="portal.acceptance" value="true" />
 
-		<var name="entryTitle"><![CDATA[<script>alert(123)</script>]]></var>
+		<var name="entryTitle"><![CDATA[<script>document.write("XSS"); window.stop();</script>]]></var>
 
 		<execute macro="Navigator#openURL" />
 
@@ -269,7 +269,7 @@
 			<var name="assetType" value="Blogs Entry" />
 		</execute>
 
-		<execute function="AssertAlertNotPresent" />
+		<execute function="AssertElementNotPresent" locator1="//body[.='XSS']" />
 	</command>
 
 	<command name="ViewRolesNoXSS" priority="4">

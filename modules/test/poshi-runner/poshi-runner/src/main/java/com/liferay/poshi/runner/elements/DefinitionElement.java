@@ -24,15 +24,40 @@ import org.dom4j.Element;
  */
 public class DefinitionElement extends PoshiElement {
 
-	public DefinitionElement(Element element) {
-		super("definition", element);
+	public static final String ELEMENT_NAME = "definition";
+
+	static {
+		PoshiElementFactory definitionElementFactory =
+			new PoshiElementFactory() {
+
+				@Override
+				public PoshiElement newPoshiElement(Element element) {
+					if (isElementType(ELEMENT_NAME, element)) {
+						return new DefinitionElement(element);
+					}
+
+					return null;
+				}
+
+				@Override
+				public PoshiElement newPoshiElement(
+					PoshiElement parentPoshiElement, String readableSyntax) {
+
+					if (isElementType(parentPoshiElement, readableSyntax)) {
+						return new DefinitionElement(readableSyntax);
+					}
+
+					return null;
+				}
+
+			};
+
+		PoshiElement.addPoshiElementFactory(definitionElementFactory);
 	}
 
-	public DefinitionElement(String readableSyntax) {
-		super("definition", readableSyntax);
-	}
+	public static boolean isElementType(
+		PoshiElement parentPoshiElement, String readableSyntax) {
 
-	public boolean isElementType(String readableSyntax) {
 		readableSyntax = readableSyntax.trim();
 
 		if (!isBalancedReadableSyntax(readableSyntax)) {
@@ -75,7 +100,7 @@ public class DefinitionElement extends PoshiElement {
 				continue;
 			}
 
-			addElementFromReadableSyntax(readableBlock);
+			add(newPoshiElement(this, readableBlock));
 		}
 	}
 
@@ -129,6 +154,14 @@ public class DefinitionElement extends PoshiElement {
 		String string = sb.toString();
 
 		return string.trim();
+	}
+
+	protected DefinitionElement(Element element) {
+		super(ELEMENT_NAME, element);
+	}
+
+	protected DefinitionElement(String readableSyntax) {
+		super(ELEMENT_NAME, readableSyntax);
 	}
 
 	@Override

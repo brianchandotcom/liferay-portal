@@ -223,16 +223,8 @@ public class RoleStagedModelDataHandler
 
 		for (Permission permission : permissions) {
 			try {
-				if (_resourceBlockLocalService.isSupported(
-						permission.getName())) {
-
-					importResourceBlock(
-						portletDataContext, importedRole, permission);
-				}
-				else {
-					importResourcePermissions(
-						portletDataContext, importedRole, permission);
-				}
+				importResourcePermissions(
+					portletDataContext, importedRole, permission);
 			}
 			catch (NoSuchResourceActionException nsrae) {
 				if (_log.isDebugEnabled()) {

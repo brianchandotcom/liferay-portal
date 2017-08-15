@@ -151,14 +151,7 @@ for (int i = 0; i < results.size(); i++) {
 		scope = ResourceConstants.SCOPE_GROUP_TEMPLATE;
 	}
 
-	boolean selected = false;
-
-	if (ResourceBlockLocalServiceUtil.isSupported(curResource)) {
-		selected = ResourceTypePermissionLocalServiceUtil.hasEitherScopePermission(company.getCompanyId(), curResource, role.getRoleId(), actionId);
-	}
-	else {
-		selected = ResourcePermissionLocalServiceUtil.hasScopeResourcePermission(company.getCompanyId(), curResource, scope, role.getRoleId(), actionId);
-	}
+	boolean selected = ResourcePermissionLocalServiceUtil.hasScopeResourcePermission(company.getCompanyId(), curResource, scope, role.getRoleId(), actionId);
 
 	if (!selected) {
 		continue;

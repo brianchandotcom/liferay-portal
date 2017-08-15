@@ -1293,10 +1293,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 				continue;
 			}
 
-			if (resourceBlockLocalService.isSupported(modelResource)) {
-				continue;
-			}
-
 			resourceLocalService.addResources(
 				portlet.getCompanyId(), 0, 0, modelResource, modelResource,
 				false, false, true);

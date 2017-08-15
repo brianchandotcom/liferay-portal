@@ -21,11 +21,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
-import com.liferay.portal.kernel.model.PermissionedModel;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.Resource;
 import com.liferay.portal.kernel.model.ResourceBlockConstants;
@@ -326,34 +324,6 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		}
 
 		try {
-			if (ResourceBlockLocalServiceUtil.isSupported(name)) {
-				PermissionedModel permissionedModel =
-					ResourceBlockLocalServiceUtil.getPermissionedModel(
-						name, GetterUtil.getLong(primKey));
-
-				long groupId = 0;
-
-				if (permissionedModel instanceof GroupedModel) {
-					GroupedModel groupedModel = (GroupedModel)permissionedModel;
-
-					groupId = groupedModel.getGroupId();
-				}
-
-				ResourceBlockIdsBag resourceBlockIdsBag = null;
-
-				if (ownerIsDefaultUser) {
-					resourceBlockIdsBag = getGuestResourceBlockIdsBag(
-						companyId, groupId, name);
-				}
-				else {
-					resourceBlockIdsBag = getOwnerResourceBlockIdsBag(
-						companyId, groupId, name);
-				}
-
-				return ResourceBlockLocalServiceUtil.hasPermission(
-					name, permissionedModel, actionId, resourceBlockIdsBag);
-			}
-
 			long ownerRoleId = getOwnerRoleId();
 
 			if (ownerIsDefaultUser) {
@@ -392,9 +362,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 				// If the group is a scope group for a layout, check the
 				// original group.
 
-				if (group.isLayout() &&
-					!ResourceBlockLocalServiceUtil.isSupported(name)) {
-
+				if (group.isLayout()) {
 					Layout layout = LayoutLocalServiceUtil.getLayout(
 						group.getClassPK());
 
@@ -1544,15 +1512,6 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		}
 
 		try {
-			if (ResourceBlockLocalServiceUtil.isSupported(name)) {
-				ResourceBlockIdsBag resourceBlockIdsBag =
-					getGuestResourceBlockIdsBag(companyId, groupId, name);
-
-				return ResourceBlockLocalServiceUtil.hasPermission(
-					name, GetterUtil.getLong(primKey), actionId,
-					resourceBlockIdsBag);
-			}
-
 			List<Resource> resources = getResources(
 				companyId, groupId, name, primKey, actionId);
 

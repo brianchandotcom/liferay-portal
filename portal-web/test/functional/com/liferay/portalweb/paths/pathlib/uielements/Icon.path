@@ -280,6 +280,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EDIT_ASSET_VERTICAL_ELLIPSIS</td>
+	<td>//h4[contains(.,'${key_assetTitle}')]//..//span/*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FAVORITE</td>
 	<td>//div[contains(@class,'open')]//li[contains(@class,'dropdown-header') and contains(.,'Favorite')]</td>
 	<td></td>

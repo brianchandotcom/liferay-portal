@@ -20,15 +20,12 @@ import com.liferay.portal.kernel.model.Permission;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
-import com.liferay.portal.kernel.model.ResourceTypePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.security.permission.PermissionConversionFilter;
 import com.liferay.portal.kernel.security.permission.PermissionConverter;
 import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
-import com.liferay.portal.kernel.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
-import com.liferay.portal.kernel.service.ResourceTypePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.model.impl.PermissionImpl;
 
@@ -110,50 +107,6 @@ public class PermissionConverterImpl implements PermissionConverter {
 
 					permissions.add(permission);
 				}
-			}
-		}
-
-		List<ResourceTypePermission> resourceTypePermissions =
-			ResourceTypePermissionLocalServiceUtil.
-				getRoleResourceTypePermissions(role.getRoleId());
-
-		for (ResourceTypePermission resourceTypePermission :
-				resourceTypePermissions) {
-
-			if ((permissionConversionFilter != null) &&
-				!permissionConversionFilter.accept(
-					role, resourceTypePermission)) {
-
-				continue;
-			}
-
-			List<String> actionIds = ResourceBlockLocalServiceUtil.getActionIds(
-				resourceTypePermission.getName(),
-				resourceTypePermission.getActionIds());
-
-			for (String actionId : actionIds) {
-				Permission permission = new PermissionImpl();
-
-				permission.setName(resourceTypePermission.getName());
-
-				if (role.getType() == RoleConstants.TYPE_REGULAR) {
-					if (resourceTypePermission.isCompanyScope()) {
-						permission.setScope(ResourceConstants.SCOPE_COMPANY);
-					}
-					else {
-						permission.setScope(ResourceConstants.SCOPE_GROUP);
-					}
-				}
-				else {
-					permission.setScope(ResourceConstants.SCOPE_GROUP_TEMPLATE);
-				}
-
-				permission.setPrimKey(
-					String.valueOf(resourceTypePermission.getGroupId()));
-
-				permission.setActionId(actionId);
-
-				permissions.add(permission);
 			}
 		}
 

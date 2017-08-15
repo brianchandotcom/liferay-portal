@@ -437,7 +437,6 @@
 
 	<command name="ViewWeekStartMonday" priority="5">
 		<property name="portal.acceptance" value="true" />
-		<property name="test.name.skip.portal.instance" value="CalendarConfiguration#ViewWeekStartMonday" />
 
 		<description message="This is a use case for 51127." />
 

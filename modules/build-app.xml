@@ -178,6 +178,14 @@
 		</subant>
 	</target>
 
+	<target depends="get-osgi-static-modules,init-build-app" name="dist-module-artifacts-lpkg" unless="module.dirs.null">
+		<subant genericantfile="${modules.dir}/build-app-module.xml" target="dist-module-artifact-lpkg">
+			<dirset dir="${modules.dir}" excludes="${build.modules.excludes}" includes="${app.module.dirs}" />
+			<property name="osgi.dir" value="${osgi.dir}" />
+			<property name="osgi.static.modules" value="${osgi.static.modules}" />
+		</subant>
+	</target>
+
 	<target depends="check-stale-artifacts,get-artifact-versions-previous-release" if="app.release.sources" name="dist-module-artifacts-sources">
 		<mkdir dir="${dist.dir}/sources" />
 
@@ -187,14 +195,6 @@
 			<property name="build.repository.private.password" value="${build.repository.private.password}" />
 			<property name="build.repository.private.username" value="${build.repository.private.username}" />
 			<property name="dist.dir.sources" value="${dist.dir}/sources" />
-		</subant>
-	</target>
-
-	<target depends="get-osgi-static-modules,init-build-app" name="dist-module-artifacts-lpkg" unless="module.dirs.null">
-		<subant genericantfile="${modules.dir}/build-app-module.xml" target="dist-module-artifact-lpkg">
-			<dirset dir="${modules.dir}" excludes="${build.modules.excludes}" includes="${app.module.dirs}" />
-			<property name="osgi.dir" value="${osgi.dir}" />
-			<property name="osgi.static.modules" value="${osgi.static.modules}" />
 		</subant>
 	</target>
 

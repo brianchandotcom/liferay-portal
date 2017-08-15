@@ -136,8 +136,10 @@ public class SourceFormatterUtil {
 								propertiesFileLocation)) {
 
 							for (String excludeRegex : entry.getValue()) {
-								if (encodedFileName.matches(excludeRegex)) {
-									continue outerLoop;
+								if (!excludeRegex.contains(StringPool.DOLLAR)) {
+									if (encodedFileName.matches(excludeRegex)) {
+										continue outerLoop;
+									}
 								}
 							}
 						}

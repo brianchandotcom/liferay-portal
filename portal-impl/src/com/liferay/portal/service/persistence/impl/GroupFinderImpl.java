@@ -135,6 +135,10 @@ public class GroupFinderImpl
 	public static final String JOIN_BY_ROLE_RESOURCE_PERMISSIONS =
 		GroupFinder.class.getName() + ".joinByRoleResourcePermissions";
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String JOIN_BY_ROLE_RESOURCE_TYPE_PERMISSIONS =
 		GroupFinder.class.getName() + ".joinByRoleResourceTypePermissions";
 
@@ -1384,10 +1388,6 @@ public class GroupFinderImpl
 		joinMap.put(
 			"rolePermissions_6",
 			_removeWhere(CustomSQLUtil.get(JOIN_BY_ROLE_RESOURCE_PERMISSIONS)));
-		joinMap.put(
-			"rolePermissions_6_block",
-			_removeWhere(
-				CustomSQLUtil.get(JOIN_BY_ROLE_RESOURCE_TYPE_PERMISSIONS)));
 		joinMap.put("site", _removeWhere(CustomSQLUtil.get(JOIN_BY_SITE)));
 		joinMap.put("type", _removeWhere(CustomSQLUtil.get(JOIN_BY_TYPE)));
 		joinMap.put(
@@ -1439,10 +1439,6 @@ public class GroupFinderImpl
 			"rolePermissions_6",
 			_getCondition(
 				CustomSQLUtil.get(JOIN_BY_ROLE_RESOURCE_PERMISSIONS)));
-		whereMap.put(
-			"rolePermissions_6_block",
-			_getCondition(
-				CustomSQLUtil.get(JOIN_BY_ROLE_RESOURCE_TYPE_PERMISSIONS)));
 		whereMap.put("site", _getCondition(CustomSQLUtil.get(JOIN_BY_SITE)));
 		whereMap.put("type", _getCondition(CustomSQLUtil.get(JOIN_BY_TYPE)));
 		whereMap.put(

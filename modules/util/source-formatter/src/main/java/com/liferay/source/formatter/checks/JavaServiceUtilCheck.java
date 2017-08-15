@@ -36,12 +36,16 @@ public class JavaServiceUtilCheck extends BaseFileCheck {
 
 		String className = JavaSourceUtil.getClassName(fileName);
 
+		if (absolutePath.contains("/wsrp/internal/bind/") ||
+			className.equals("BaseServiceImpl") ||
+			!className.endsWith("ServiceImpl")) {
+
+			return content;
+		}
+
 		Matcher matcher = _serviceUtilPattern.matcher(content);
 
-		if (!absolutePath.contains("/wsrp/internal/bind/") &&
-			!className.equals("BaseServiceImpl") &&
-			className.endsWith("ServiceImpl") && matcher.find()) {
-
+		if (matcher.find()) {
 			addMessage(
 				fileName,
 				"Do not use a portal-kernel *ServiceUtil in a *ServiceImpl " +

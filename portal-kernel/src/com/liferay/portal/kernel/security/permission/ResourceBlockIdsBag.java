@@ -26,7 +26,9 @@ import java.util.Map;
  * the resources in each.
  *
  * @author Connor McKay
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public class ResourceBlockIdsBag implements Serializable {
 
 	public void addResourceBlockId(long resourceBlockId, long actionIdsLong) {

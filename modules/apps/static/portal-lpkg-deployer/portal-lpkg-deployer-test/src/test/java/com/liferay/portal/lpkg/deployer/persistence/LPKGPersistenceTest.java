@@ -14,7 +14,7 @@
 
 package com.liferay.portal.lpkg.deployer.persistence;
 
-import com.liferay.portal.lpkg.deployer.util.LPKGTestUtil;
+import com.liferay.portal.lpkg.deployer.test.util.LPKGTestUtil;
 
 import java.nio.file.Files;
 import java.nio.file.Path;

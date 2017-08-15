@@ -18,27 +18,17 @@
 			<var name="portlet" value="OAuth Admin" />
 		</execute>
 
-		<execute function="AssertClick" locator1="TestOAuth#OAUTH_ADMIN_ADD" value1="Add" />
+		<execute macro="TestOAuth#addApplication">
+			<var name="applicationName" value="oauth1" />
+			<var name="callbackURI" value="http://localhost:8080" />
+			<var name="websiteURL" value="http://www.liferay.com" />
+		</execute>
 
-		<execute function="Type" locator1="TestOAuth#OAUTH_ADMIN_APPLICATION_NAME" value1="oauth1" />
-		<execute function="Type" locator1="TestOAuth#OAUTH_ADMIN_WEBSITE_URL" value1="http://www.liferay.com" />
-		<execute function="Type" locator1="TestOAuth#OAUTH_ADMIN_CALLBACK_URI" value1="http://localhost:8080" />
-
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-
-		<execute macro="Alert#viewSuccessMessage" />
-
-		<var name="key_name" value="oauth1" />
-
-		<execute function="AssertClick" locator1="TestOAuth#OAUTH_ADMIN_TABLE_NAME" value1="${key_name}" />
-
-		<var locator="TestOAuth#OAUTH_ADMIN_APPLICATION_CREDENTIALS" name="application_credentials" />
-
-		<var method="StringUtil#stripBetween('${application_credentials}', 'Application', 'Secret: ')" name="consumer_secret" />
-
-		<var method="StringUtil#stripBetween('${application_credentials}', 'Application', 'Key: ')" name="stripped_result" />
-
-		<var method="StringUtil#stripBetween('${stripped_result}', ' Consumer', '${consumer_secret}')" name="consumer_key" />
+		<execute macro="TestOAuth#getConsumerKeyAndSecret">
+			<var name="key_name" value="oauth1" />
+			<return from="consumer_key" name="consumer_key" />
+			<return from="consumer_secret" name="consumer_secret" />
+		</execute>
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Test Page" />
@@ -48,26 +38,14 @@
 			<var name="portletName" value="Test OAuth" />
 		</execute>
 
-		<execute function="Type" locator1="TestOAuth#TEST_PORTLET_KEY" value1="${consumer_key}" />
-		<execute function="Type" locator1="TestOAuth#TEST_PORTLET_SECRET" value1="${consumer_secret}" />
+		<execute macro="TestOAuth#testConsumerKeyAndSecret">
+			<var name="consumer_key" value="${consumer_key}" />
+			<var name="consumer_secret" value="${consumer_secret}" />
+			<var name="webID" value="liferay.com" />
+		</execute>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-
-		<execute macro="Alert#viewSuccessMessage" />
-
-		<execute function="AssertClick" locator1="TestOAuth#TEST_PORTLET_AUTHORIZE_ACCESS" value1="Authorize Access" />
-
-		<execute function="AssertClick" locator1="TestOAuth#TEST_PORTLET_GRANT_ACCESS" value1="Grant Access" />
-
-		<execute macro="Alert#viewSuccessMessage" />
-
-		<execute function="Type" locator1="TestOAuth#TEST_PORTLET_WEB_ID" value1="liferay.com" />
-
-		<execute function="AssertClick" locator1="TestOAuth#TEST_PORTLET_TEST" value1="Test" />
-
-		<execute function="AssertVisible" locator1="TestOAuth#TEST_PORTLET_JSON" />
-
-		<execute function="AssertTextPresent" locator1="TestOAuth#TEST_PORTLET_JSON" value1="&quot;mx&quot;:&quot;liferay.com&quot;" />
-		<execute function="AssertTextPresent" locator1="TestOAuth#TEST_PORTLET_JSON" value1="&quot;webId&quot;:&quot;liferay.com&quot;" />
+		<execute macro="TestOAuth#viewJSON">
+			<var name="domainName" value="liferay.com" />
+		</execute>
 	</command>
 </definition>

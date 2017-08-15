@@ -21,15 +21,39 @@ import org.dom4j.Element;
  */
 public class WhileElement extends IfElement {
 
-	public WhileElement(Element element) {
-		super("while", element);
+	public static final String ELEMENT_NAME = "while";
+
+	static {
+		PoshiElementFactory whileElementFactory = new PoshiElementFactory() {
+
+			@Override
+			public PoshiElement newPoshiElement(Element element) {
+				if (isElementType(ELEMENT_NAME, element)) {
+					return new WhileElement(element);
+				}
+
+				return null;
+			}
+
+			@Override
+			public PoshiElement newPoshiElement(
+				PoshiElement parentPoshiElement, String readableSyntax) {
+
+				if (isElementType(parentPoshiElement, readableSyntax)) {
+					return new WhileElement(readableSyntax);
+				}
+
+				return null;
+			}
+
+		};
+
+		PoshiElement.addPoshiElementFactory(whileElementFactory);
 	}
 
-	public WhileElement(String readableSyntax) {
-		super("while", readableSyntax);
-	}
+	public static boolean isElementType(
+		PoshiElement parentPoshiElement, String readableSyntax) {
 
-	public boolean isElementType(String readableSyntax) {
 		readableSyntax = readableSyntax.trim();
 
 		if (!isBalancedReadableSyntax(readableSyntax)) {
@@ -45,6 +69,14 @@ public class WhileElement extends IfElement {
 		}
 
 		return true;
+	}
+
+	protected WhileElement(Element element) {
+		super(ELEMENT_NAME, element);
+	}
+
+	protected WhileElement(String readableSyntax) {
+		super(ELEMENT_NAME, readableSyntax);
 	}
 
 }

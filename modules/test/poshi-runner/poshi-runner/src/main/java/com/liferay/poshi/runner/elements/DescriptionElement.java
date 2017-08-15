@@ -21,12 +21,47 @@ import org.dom4j.Element;
  */
 public class DescriptionElement extends PoshiElement {
 
-	public DescriptionElement(Element element) {
-		super("description", element);
+	public static final String ELEMENT_NAME = "description";
+
+	static {
+		PoshiElementFactory descriptionElementFactory =
+			new PoshiElementFactory() {
+
+				@Override
+				public PoshiElement newPoshiElement(Element element) {
+					if (isElementType(ELEMENT_NAME, element)) {
+						return new DescriptionElement(element);
+					}
+
+					return null;
+				}
+
+				@Override
+				public PoshiElement newPoshiElement(
+					PoshiElement parentPoshiElement, String readableSyntax) {
+
+					if (isElementType(parentPoshiElement, readableSyntax)) {
+						return new DescriptionElement(readableSyntax);
+					}
+
+					return null;
+				}
+
+			};
+
+		PoshiElement.addPoshiElementFactory(descriptionElementFactory);
 	}
 
-	public DescriptionElement(String readableSyntax) {
-		super("description", readableSyntax);
+	public static boolean isElementType(
+		PoshiElement parentPoshiElement, String readableSyntax) {
+
+		if (parentPoshiElement instanceof CommandElement &&
+			readableSyntax.startsWith("@description")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -39,6 +74,14 @@ public class DescriptionElement extends PoshiElement {
 		String message = getQuotedContent(readableSyntax);
 
 		addAttribute("message", message);
+	}
+
+	protected DescriptionElement(Element element) {
+		super(ELEMENT_NAME, element);
+	}
+
+	protected DescriptionElement(String readableSyntax) {
+		super(ELEMENT_NAME, readableSyntax);
 	}
 
 }

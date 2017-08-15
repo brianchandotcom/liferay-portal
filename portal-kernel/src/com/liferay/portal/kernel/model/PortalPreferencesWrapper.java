@@ -99,38 +99,8 @@ public class PortalPreferencesWrapper implements PortalPreferences,
 	}
 
 	@Override
-	public CacheModel<PortalPreferences> toCacheModel() {
-		return _portalPreferences.toCacheModel();
-	}
-
-	@Override
-	public PortalPreferences toEscapedModel() {
-		return new PortalPreferencesWrapper(_portalPreferences.toEscapedModel());
-	}
-
-	@Override
-	public PortalPreferences toUnescapedModel() {
-		return new PortalPreferencesWrapper(_portalPreferences.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _portalPreferences.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _portalPreferences.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _portalPreferences.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _portalPreferences.getExpandoBridge();
+	public java.lang.Object clone() {
+		return new PortalPreferencesWrapper((PortalPreferences)_portalPreferences.clone());
 	}
 
 	@Override
@@ -138,49 +108,9 @@ public class PortalPreferencesWrapper implements PortalPreferences,
 		return _portalPreferences.compareTo(portalPreferences);
 	}
 
-	/**
-	* Returns the owner type of this portal preferences.
-	*
-	* @return the owner type of this portal preferences
-	*/
 	@Override
-	public int getOwnerType() {
-		return _portalPreferences.getOwnerType();
-	}
-
-	@Override
-	public int hashCode() {
-		return _portalPreferences.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _portalPreferences.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new PortalPreferencesWrapper((PortalPreferences)_portalPreferences.clone());
-	}
-
-	/**
-	* Returns the preferences of this portal preferences.
-	*
-	* @return the preferences of this portal preferences
-	*/
-	@Override
-	public java.lang.String getPreferences() {
-		return _portalPreferences.getPreferences();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _portalPreferences.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _portalPreferences.toXmlString();
+	public ExpandoBridge getExpandoBridge() {
+		return _portalPreferences.getExpandoBridge();
 	}
 
 	/**
@@ -204,6 +134,16 @@ public class PortalPreferencesWrapper implements PortalPreferences,
 	}
 
 	/**
+	* Returns the owner type of this portal preferences.
+	*
+	* @return the owner type of this portal preferences
+	*/
+	@Override
+	public int getOwnerType() {
+		return _portalPreferences.getOwnerType();
+	}
+
+	/**
 	* Returns the portal preferences ID of this portal preferences.
 	*
 	* @return the portal preferences ID of this portal preferences
@@ -211,6 +151,16 @@ public class PortalPreferencesWrapper implements PortalPreferences,
 	@Override
 	public long getPortalPreferencesId() {
 		return _portalPreferences.getPortalPreferencesId();
+	}
+
+	/**
+	* Returns the preferences of this portal preferences.
+	*
+	* @return the preferences of this portal preferences
+	*/
+	@Override
+	public java.lang.String getPreferences() {
+		return _portalPreferences.getPreferences();
 	}
 
 	/**
@@ -224,6 +174,31 @@ public class PortalPreferencesWrapper implements PortalPreferences,
 	}
 
 	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _portalPreferences.getPrimaryKeyObj();
+	}
+
+	@Override
+	public int hashCode() {
+		return _portalPreferences.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _portalPreferences.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _portalPreferences.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _portalPreferences.isNew();
+	}
+
+	@Override
 	public void persist() {
 		_portalPreferences.persist();
 	}
@@ -234,13 +209,13 @@ public class PortalPreferencesWrapper implements PortalPreferences,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_portalPreferences.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_portalPreferences.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_portalPreferences.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
+		_portalPreferences.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -316,6 +291,31 @@ public class PortalPreferencesWrapper implements PortalPreferences,
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_portalPreferences.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	@Override
+	public CacheModel<PortalPreferences> toCacheModel() {
+		return _portalPreferences.toCacheModel();
+	}
+
+	@Override
+	public PortalPreferences toEscapedModel() {
+		return new PortalPreferencesWrapper(_portalPreferences.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _portalPreferences.toString();
+	}
+
+	@Override
+	public PortalPreferences toUnescapedModel() {
+		return new PortalPreferencesWrapper(_portalPreferences.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _portalPreferences.toXmlString();
 	}
 
 	@Override

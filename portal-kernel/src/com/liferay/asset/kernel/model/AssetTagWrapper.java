@@ -144,38 +144,8 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	}
 
 	@Override
-	public AssetTag toEscapedModel() {
-		return new AssetTagWrapper(_assetTag.toEscapedModel());
-	}
-
-	@Override
-	public AssetTag toUnescapedModel() {
-		return new AssetTagWrapper(_assetTag.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _assetTag.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _assetTag.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _assetTag.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _assetTag.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<AssetTag> toCacheModel() {
-		return _assetTag.toCacheModel();
+	public java.lang.Object clone() {
+		return new AssetTagWrapper((AssetTag)_assetTag.clone());
 	}
 
 	@Override
@@ -193,19 +163,59 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 		return _assetTag.getAssetCount();
 	}
 
+	/**
+	* Returns the company ID of this asset tag.
+	*
+	* @return the company ID of this asset tag
+	*/
 	@Override
-	public int hashCode() {
-		return _assetTag.hashCode();
+	public long getCompanyId() {
+		return _assetTag.getCompanyId();
+	}
+
+	/**
+	* Returns the create date of this asset tag.
+	*
+	* @return the create date of this asset tag
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _assetTag.getCreateDate();
 	}
 
 	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _assetTag.getPrimaryKeyObj();
+	public ExpandoBridge getExpandoBridge() {
+		return _assetTag.getExpandoBridge();
 	}
 
+	/**
+	* Returns the group ID of this asset tag.
+	*
+	* @return the group ID of this asset tag
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new AssetTagWrapper((AssetTag)_assetTag.clone());
+	public long getGroupId() {
+		return _assetTag.getGroupId();
+	}
+
+	/**
+	* Returns the last publish date of this asset tag.
+	*
+	* @return the last publish date of this asset tag
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _assetTag.getLastPublishDate();
+	}
+
+	/**
+	* Returns the modified date of this asset tag.
+	*
+	* @return the modified date of this asset tag
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _assetTag.getModifiedDate();
 	}
 
 	/**
@@ -216,6 +226,41 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	@Override
 	public java.lang.String getName() {
 		return _assetTag.getName();
+	}
+
+	/**
+	* Returns the primary key of this asset tag.
+	*
+	* @return the primary key of this asset tag
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _assetTag.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _assetTag.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the tag ID of this asset tag.
+	*
+	* @return the tag ID of this asset tag
+	*/
+	@Override
+	public long getTagId() {
+		return _assetTag.getTagId();
+	}
+
+	/**
+	* Returns the user ID of this asset tag.
+	*
+	* @return the user ID of this asset tag
+	*/
+	@Override
+	public long getUserId() {
+		return _assetTag.getUserId();
 	}
 
 	/**
@@ -249,93 +294,23 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	}
 
 	@Override
-	public java.lang.String toString() {
-		return _assetTag.toString();
+	public int hashCode() {
+		return _assetTag.hashCode();
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
-		return _assetTag.toXmlString();
+	public boolean isCachedModel() {
+		return _assetTag.isCachedModel();
 	}
 
-	/**
-	* Returns the create date of this asset tag.
-	*
-	* @return the create date of this asset tag
-	*/
 	@Override
-	public Date getCreateDate() {
-		return _assetTag.getCreateDate();
+	public boolean isEscapedModel() {
+		return _assetTag.isEscapedModel();
 	}
 
-	/**
-	* Returns the last publish date of this asset tag.
-	*
-	* @return the last publish date of this asset tag
-	*/
 	@Override
-	public Date getLastPublishDate() {
-		return _assetTag.getLastPublishDate();
-	}
-
-	/**
-	* Returns the modified date of this asset tag.
-	*
-	* @return the modified date of this asset tag
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _assetTag.getModifiedDate();
-	}
-
-	/**
-	* Returns the company ID of this asset tag.
-	*
-	* @return the company ID of this asset tag
-	*/
-	@Override
-	public long getCompanyId() {
-		return _assetTag.getCompanyId();
-	}
-
-	/**
-	* Returns the group ID of this asset tag.
-	*
-	* @return the group ID of this asset tag
-	*/
-	@Override
-	public long getGroupId() {
-		return _assetTag.getGroupId();
-	}
-
-	/**
-	* Returns the primary key of this asset tag.
-	*
-	* @return the primary key of this asset tag
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _assetTag.getPrimaryKey();
-	}
-
-	/**
-	* Returns the tag ID of this asset tag.
-	*
-	* @return the tag ID of this asset tag
-	*/
-	@Override
-	public long getTagId() {
-		return _assetTag.getTagId();
-	}
-
-	/**
-	* Returns the user ID of this asset tag.
-	*
-	* @return the user ID of this asset tag
-	*/
-	@Override
-	public long getUserId() {
-		return _assetTag.getUserId();
+	public boolean isNew() {
+		return _assetTag.isNew();
 	}
 
 	@Override
@@ -502,6 +477,31 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_assetTag.setUuid(uuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<AssetTag> toCacheModel() {
+		return _assetTag.toCacheModel();
+	}
+
+	@Override
+	public AssetTag toEscapedModel() {
+		return new AssetTagWrapper(_assetTag.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _assetTag.toString();
+	}
+
+	@Override
+	public AssetTag toUnescapedModel() {
+		return new AssetTagWrapper(_assetTag.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _assetTag.toXmlString();
 	}
 
 	@Override

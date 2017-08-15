@@ -65,13 +65,24 @@ public interface ExpandoValueService extends BaseService {
 		java.lang.String tableName, java.lang.String columnName, long classPK,
 		java.lang.String data) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JSONObject getJSONData(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK)
+	public void addValues(long companyId, java.lang.String className,
+		java.lang.String tableName, long classPK,
+		Map<java.lang.String, Serializable> attributeValues)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Serializable getData(long companyId, java.lang.String className,
+		java.lang.String tableName, java.lang.String columnName, long classPK)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<java.lang.String, Serializable> getData(long companyId,
+		java.lang.String className, java.lang.String tableName,
+		Collection<java.lang.String> columnNames, long classPK)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JSONObject getJSONData(long companyId, java.lang.String className,
 		java.lang.String tableName, java.lang.String columnName, long classPK)
 		throws PortalException;
 
@@ -81,15 +92,4 @@ public interface ExpandoValueService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<java.lang.String, Serializable> getData(long companyId,
-		java.lang.String className, java.lang.String tableName,
-		Collection<java.lang.String> columnNames, long classPK)
-		throws PortalException;
-
-	public void addValues(long companyId, java.lang.String className,
-		java.lang.String tableName, long classPK,
-		Map<java.lang.String, Serializable> attributeValues)
-		throws PortalException;
 }

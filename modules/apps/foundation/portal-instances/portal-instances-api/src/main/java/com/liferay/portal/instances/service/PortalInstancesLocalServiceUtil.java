@@ -41,6 +41,45 @@ public class PortalInstancesLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.instances.service.impl.PortalInstancesLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static void addCompanyId(long companyId) {
+		getService().addCompanyId(companyId);
+	}
+
+	public static long getCompanyId(
+		javax.servlet.http.HttpServletRequest request) {
+		return getService().getCompanyId(request);
+	}
+
+	public static long[] getCompanyIds() {
+		return getService().getCompanyIds();
+	}
+
+	public static long[] getCompanyIdsBySQL() throws java.sql.SQLException {
+		return getService().getCompanyIdsBySQL();
+	}
+
+	public static long getDefaultCompanyId() {
+		return getService().getDefaultCompanyId();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static java.lang.String[] getWebIds() {
+		return getService().getWebIds();
+	}
+
+	public static void initializePortalInstance(
+		javax.servlet.ServletContext servletContext, java.lang.String webId) {
+		getService().initializePortalInstance(servletContext, webId);
+	}
+
 	public static boolean isAutoLoginIgnoreHost(java.lang.String host) {
 		return getService().isAutoLoginIgnoreHost(host);
 	}
@@ -59,45 +98,6 @@ public class PortalInstancesLocalServiceUtil {
 
 	public static boolean isVirtualHostsIgnorePath(java.lang.String path) {
 		return getService().isVirtualHostsIgnorePath(path);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static java.lang.String[] getWebIds() {
-		return getService().getWebIds();
-	}
-
-	public static long getCompanyId(
-		javax.servlet.http.HttpServletRequest request) {
-		return getService().getCompanyId(request);
-	}
-
-	public static long getDefaultCompanyId() {
-		return getService().getDefaultCompanyId();
-	}
-
-	public static long[] getCompanyIds() {
-		return getService().getCompanyIds();
-	}
-
-	public static long[] getCompanyIdsBySQL() throws java.sql.SQLException {
-		return getService().getCompanyIdsBySQL();
-	}
-
-	public static void addCompanyId(long companyId) {
-		getService().addCompanyId(companyId);
-	}
-
-	public static void initializePortalInstance(
-		javax.servlet.ServletContext servletContext, java.lang.String webId) {
-		getService().initializePortalInstance(servletContext, webId);
 	}
 
 	public static void reload(javax.servlet.ServletContext servletContext) {

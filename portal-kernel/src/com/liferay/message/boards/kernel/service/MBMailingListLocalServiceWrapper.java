@@ -77,6 +77,12 @@ public class MBMailingListLocalServiceWrapper
 		return _mbMailingListLocalService.createMBMailingList(mailingListId);
 	}
 
+	@Override
+	public void deleteCategoryMailingList(long groupId, long categoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_mbMailingListLocalService.deleteCategoryMailingList(groupId, categoryId);
+	}
+
 	/**
 	* Deletes the message boards mailing list from the database. Also notifies the appropriate model listeners.
 	*
@@ -104,120 +110,16 @@ public class MBMailingListLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.message.boards.kernel.model.MBMailingList fetchCategoryMailingList(
-		long groupId, long categoryId) {
-		return _mbMailingListLocalService.fetchCategoryMailingList(groupId,
-			categoryId);
-	}
-
-	@Override
-	public com.liferay.message.boards.kernel.model.MBMailingList fetchMBMailingList(
-		long mailingListId) {
-		return _mbMailingListLocalService.fetchMBMailingList(mailingListId);
-	}
-
-	/**
-	* Returns the message boards mailing list matching the UUID and group.
-	*
-	* @param uuid the message boards mailing list's UUID
-	* @param groupId the primary key of the group
-	* @return the matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
-	*/
-	@Override
-	public com.liferay.message.boards.kernel.model.MBMailingList fetchMBMailingListByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return _mbMailingListLocalService.fetchMBMailingListByUuidAndGroupId(uuid,
-			groupId);
-	}
-
-	@Override
-	public com.liferay.message.boards.kernel.model.MBMailingList getCategoryMailingList(
-		long groupId, long categoryId)
+	public void deleteMailingList(
+		com.liferay.message.boards.kernel.model.MBMailingList mailingList)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMailingListLocalService.getCategoryMailingList(groupId,
-			categoryId);
+		_mbMailingListLocalService.deleteMailingList(mailingList);
 	}
 
-	/**
-	* Returns the message boards mailing list with the primary key.
-	*
-	* @param mailingListId the primary key of the message boards mailing list
-	* @return the message boards mailing list
-	* @throws PortalException if a message boards mailing list with the primary key could not be found
-	*/
 	@Override
-	public com.liferay.message.boards.kernel.model.MBMailingList getMBMailingList(
-		long mailingListId)
+	public void deleteMailingList(long mailingListId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMailingListLocalService.getMBMailingList(mailingListId);
-	}
-
-	/**
-	* Returns the message boards mailing list matching the UUID and group.
-	*
-	* @param uuid the message boards mailing list's UUID
-	* @param groupId the primary key of the group
-	* @return the matching message boards mailing list
-	* @throws PortalException if a matching message boards mailing list could not be found
-	*/
-	@Override
-	public com.liferay.message.boards.kernel.model.MBMailingList getMBMailingListByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMailingListLocalService.getMBMailingListByUuidAndGroupId(uuid,
-			groupId);
-	}
-
-	/**
-	* Updates the message boards mailing list in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param mbMailingList the message boards mailing list
-	* @return the message boards mailing list that was updated
-	*/
-	@Override
-	public com.liferay.message.boards.kernel.model.MBMailingList updateMBMailingList(
-		com.liferay.message.boards.kernel.model.MBMailingList mbMailingList) {
-		return _mbMailingListLocalService.updateMBMailingList(mbMailingList);
-	}
-
-	@Override
-	public com.liferay.message.boards.kernel.model.MBMailingList updateMailingList(
-		long mailingListId, java.lang.String emailAddress,
-		java.lang.String inProtocol, java.lang.String inServerName,
-		int inServerPort, boolean inUseSSL, java.lang.String inUserName,
-		java.lang.String inPassword, int inReadInterval,
-		java.lang.String outEmailAddress, boolean outCustom,
-		java.lang.String outServerName, int outServerPort, boolean outUseSSL,
-		java.lang.String outUserName, java.lang.String outPassword,
-		boolean allowAnonymous, boolean active,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMailingListLocalService.updateMailingList(mailingListId,
-			emailAddress, inProtocol, inServerName, inServerPort, inUseSSL,
-			inUserName, inPassword, inReadInterval, outEmailAddress, outCustom,
-			outServerName, outServerPort, outUseSSL, outUserName, outPassword,
-			allowAnonymous, active, serviceContext);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _mbMailingListLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _mbMailingListLocalService.dynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return _mbMailingListLocalService.getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _mbMailingListLocalService.getIndexableActionableDynamicQuery();
+		_mbMailingListLocalService.deleteMailingList(mailingListId);
 	}
 
 	/**
@@ -231,30 +133,8 @@ public class MBMailingListLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMailingListLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the number of message boards mailing lists.
-	*
-	* @return the number of message boards mailing lists
-	*/
-	@Override
-	public int getMBMailingListsCount() {
-		return _mbMailingListLocalService.getMBMailingListsCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _mbMailingListLocalService.getOSGiServiceIdentifier();
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _mbMailingListLocalService.dynamicQuery();
 	}
 
 	/**
@@ -311,6 +191,114 @@ public class MBMailingListLocalServiceWrapper
 	}
 
 	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _mbMailingListLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _mbMailingListLocalService.dynamicQueryCount(dynamicQuery,
+			projection);
+	}
+
+	@Override
+	public com.liferay.message.boards.kernel.model.MBMailingList fetchCategoryMailingList(
+		long groupId, long categoryId) {
+		return _mbMailingListLocalService.fetchCategoryMailingList(groupId,
+			categoryId);
+	}
+
+	@Override
+	public com.liferay.message.boards.kernel.model.MBMailingList fetchMBMailingList(
+		long mailingListId) {
+		return _mbMailingListLocalService.fetchMBMailingList(mailingListId);
+	}
+
+	/**
+	* Returns the message boards mailing list matching the UUID and group.
+	*
+	* @param uuid the message boards mailing list's UUID
+	* @param groupId the primary key of the group
+	* @return the matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
+	*/
+	@Override
+	public com.liferay.message.boards.kernel.model.MBMailingList fetchMBMailingListByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return _mbMailingListLocalService.fetchMBMailingListByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _mbMailingListLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.message.boards.kernel.model.MBMailingList getCategoryMailingList(
+		long groupId, long categoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMailingListLocalService.getCategoryMailingList(groupId,
+			categoryId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return _mbMailingListLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _mbMailingListLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the message boards mailing list with the primary key.
+	*
+	* @param mailingListId the primary key of the message boards mailing list
+	* @return the message boards mailing list
+	* @throws PortalException if a message boards mailing list with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.message.boards.kernel.model.MBMailingList getMBMailingList(
+		long mailingListId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMailingListLocalService.getMBMailingList(mailingListId);
+	}
+
+	/**
+	* Returns the message boards mailing list matching the UUID and group.
+	*
+	* @param uuid the message boards mailing list's UUID
+	* @param groupId the primary key of the group
+	* @return the matching message boards mailing list
+	* @throws PortalException if a matching message boards mailing list could not be found
+	*/
+	@Override
+	public com.liferay.message.boards.kernel.model.MBMailingList getMBMailingListByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMailingListLocalService.getMBMailingListByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	/**
 	* Returns a range of all the message boards mailing lists.
 	*
 	* <p>
@@ -360,49 +348,61 @@ public class MBMailingListLocalServiceWrapper
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of message boards mailing lists.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of message boards mailing lists
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _mbMailingListLocalService.dynamicQueryCount(dynamicQuery);
+	public int getMBMailingListsCount() {
+		return _mbMailingListLocalService.getMBMailingListsCount();
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _mbMailingListLocalService.dynamicQueryCount(dynamicQuery,
-			projection);
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _mbMailingListLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
-	public void deleteCategoryMailingList(long groupId, long categoryId)
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_mbMailingListLocalService.deleteCategoryMailingList(groupId, categoryId);
+		return _mbMailingListLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Updates the message boards mailing list in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param mbMailingList the message boards mailing list
+	* @return the message boards mailing list that was updated
+	*/
+	@Override
+	public com.liferay.message.boards.kernel.model.MBMailingList updateMBMailingList(
+		com.liferay.message.boards.kernel.model.MBMailingList mbMailingList) {
+		return _mbMailingListLocalService.updateMBMailingList(mbMailingList);
 	}
 
 	@Override
-	public void deleteMailingList(
-		com.liferay.message.boards.kernel.model.MBMailingList mailingList)
+	public com.liferay.message.boards.kernel.model.MBMailingList updateMailingList(
+		long mailingListId, java.lang.String emailAddress,
+		java.lang.String inProtocol, java.lang.String inServerName,
+		int inServerPort, boolean inUseSSL, java.lang.String inUserName,
+		java.lang.String inPassword, int inReadInterval,
+		java.lang.String outEmailAddress, boolean outCustom,
+		java.lang.String outServerName, int outServerPort, boolean outUseSSL,
+		java.lang.String outUserName, java.lang.String outPassword,
+		boolean allowAnonymous, boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_mbMailingListLocalService.deleteMailingList(mailingList);
-	}
-
-	@Override
-	public void deleteMailingList(long mailingListId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_mbMailingListLocalService.deleteMailingList(mailingListId);
+		return _mbMailingListLocalService.updateMailingList(mailingListId,
+			emailAddress, inProtocol, inServerName, inServerPort, inUseSSL,
+			inUserName, inPassword, inReadInterval, outEmailAddress, outCustom,
+			outServerName, outServerPort, outUseSSL, outUserName, outPassword,
+			allowAnonymous, active, serviceContext);
 	}
 
 	@Override

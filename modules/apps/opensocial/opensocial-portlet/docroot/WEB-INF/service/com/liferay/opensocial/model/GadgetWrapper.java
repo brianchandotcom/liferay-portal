@@ -131,38 +131,8 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 	}
 
 	@Override
-	public Gadget toEscapedModel() {
-		return new GadgetWrapper(_gadget.toEscapedModel());
-	}
-
-	@Override
-	public Gadget toUnescapedModel() {
-		return new GadgetWrapper(_gadget.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _gadget.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _gadget.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _gadget.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _gadget.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<Gadget> toCacheModel() {
-		return _gadget.toCacheModel();
+	public java.lang.Object clone() {
+		return new GadgetWrapper((Gadget)_gadget.clone());
 	}
 
 	@Override
@@ -170,69 +140,14 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 		return _gadget.compareTo(gadget);
 	}
 
-	@Override
-	public int hashCode() {
-		return _gadget.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _gadget.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new GadgetWrapper((Gadget)_gadget.clone());
-	}
-
 	/**
-	* Returns the name of this gadget.
+	* Returns the company ID of this gadget.
 	*
-	* @return the name of this gadget
+	* @return the company ID of this gadget
 	*/
 	@Override
-	public java.lang.String getName() {
-		return _gadget.getName();
-	}
-
-	/**
-	* Returns the portlet category names of this gadget.
-	*
-	* @return the portlet category names of this gadget
-	*/
-	@Override
-	public java.lang.String getPortletCategoryNames() {
-		return _gadget.getPortletCategoryNames();
-	}
-
-	/**
-	* Returns the url of this gadget.
-	*
-	* @return the url of this gadget
-	*/
-	@Override
-	public java.lang.String getUrl() {
-		return _gadget.getUrl();
-	}
-
-	/**
-	* Returns the uuid of this gadget.
-	*
-	* @return the uuid of this gadget
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _gadget.getUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _gadget.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _gadget.toXmlString();
+	public long getCompanyId() {
+		return _gadget.getCompanyId();
 	}
 
 	/**
@@ -243,6 +158,21 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 	@Override
 	public Date getCreateDate() {
 		return _gadget.getCreateDate();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _gadget.getExpandoBridge();
+	}
+
+	/**
+	* Returns the gadget ID of this gadget.
+	*
+	* @return the gadget ID of this gadget
+	*/
+	@Override
+	public long getGadgetId() {
+		return _gadget.getGadgetId();
 	}
 
 	/**
@@ -266,23 +196,23 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 	}
 
 	/**
-	* Returns the company ID of this gadget.
+	* Returns the name of this gadget.
 	*
-	* @return the company ID of this gadget
+	* @return the name of this gadget
 	*/
 	@Override
-	public long getCompanyId() {
-		return _gadget.getCompanyId();
+	public java.lang.String getName() {
+		return _gadget.getName();
 	}
 
 	/**
-	* Returns the gadget ID of this gadget.
+	* Returns the portlet category names of this gadget.
 	*
-	* @return the gadget ID of this gadget
+	* @return the portlet category names of this gadget
 	*/
 	@Override
-	public long getGadgetId() {
-		return _gadget.getGadgetId();
+	public java.lang.String getPortletCategoryNames() {
+		return _gadget.getPortletCategoryNames();
 	}
 
 	/**
@@ -293,6 +223,51 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 	@Override
 	public long getPrimaryKey() {
 		return _gadget.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _gadget.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the url of this gadget.
+	*
+	* @return the url of this gadget
+	*/
+	@Override
+	public java.lang.String getUrl() {
+		return _gadget.getUrl();
+	}
+
+	/**
+	* Returns the uuid of this gadget.
+	*
+	* @return the uuid of this gadget
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _gadget.getUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _gadget.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _gadget.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _gadget.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _gadget.isNew();
 	}
 
 	@Override
@@ -429,6 +404,31 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_gadget.setUuid(uuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<Gadget> toCacheModel() {
+		return _gadget.toCacheModel();
+	}
+
+	@Override
+	public Gadget toEscapedModel() {
+		return new GadgetWrapper(_gadget.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _gadget.toString();
+	}
+
+	@Override
+	public Gadget toUnescapedModel() {
+		return new GadgetWrapper(_gadget.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _gadget.toXmlString();
 	}
 
 	@Override

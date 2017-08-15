@@ -30,44 +30,6 @@ public class PhoneLocalServiceWrapper implements PhoneLocalService,
 		_phoneLocalService = phoneLocalService;
 	}
 
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _phoneLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _phoneLocalService.dynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return _phoneLocalService.getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _phoneLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _phoneLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _phoneLocalService.getPersistedModel(primaryKeyObj);
-	}
-
 	/**
 	* Adds the phone to the database. Also notifies the appropriate model listeners.
 	*
@@ -102,6 +64,16 @@ public class PhoneLocalServiceWrapper implements PhoneLocalService,
 	}
 
 	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _phoneLocalService.deletePersistedModel(persistedModel);
+	}
+
+	/**
 	* Deletes the phone from the database. Also notifies the appropriate model listeners.
 	*
 	* @param phone the phone
@@ -127,90 +99,14 @@ public class PhoneLocalServiceWrapper implements PhoneLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Phone fetchPhone(long phoneId) {
-		return _phoneLocalService.fetchPhone(phoneId);
-	}
-
-	/**
-	* Returns the phone with the matching UUID and company.
-	*
-	* @param uuid the phone's UUID
-	* @param companyId the primary key of the company
-	* @return the matching phone, or <code>null</code> if a matching phone could not be found
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.Phone fetchPhoneByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return _phoneLocalService.fetchPhoneByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
-	* Returns the phone with the primary key.
-	*
-	* @param phoneId the primary key of the phone
-	* @return the phone
-	* @throws PortalException if a phone with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.Phone getPhone(long phoneId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _phoneLocalService.getPhone(phoneId);
-	}
-
-	/**
-	* Returns the phone with the matching UUID and company.
-	*
-	* @param uuid the phone's UUID
-	* @param companyId the primary key of the company
-	* @return the matching phone
-	* @throws PortalException if a matching phone could not be found
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.Phone getPhoneByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _phoneLocalService.getPhoneByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
-	* Updates the phone in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param phone the phone
-	* @return the phone that was updated
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.Phone updatePhone(
-		com.liferay.portal.kernel.model.Phone phone) {
-		return _phoneLocalService.updatePhone(phone);
+	public void deletePhones(long companyId, java.lang.String className,
+		long classPK) {
+		_phoneLocalService.deletePhones(companyId, className, classPK);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Phone updatePhone(long phoneId,
-		java.lang.String number, java.lang.String extension, long typeId,
-		boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _phoneLocalService.updatePhone(phoneId, number, extension,
-			typeId, primary);
-	}
-
-	/**
-	* Returns the number of phones.
-	*
-	* @return the number of phones
-	*/
-	@Override
-	public int getPhonesCount() {
-		return _phoneLocalService.getPhonesCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _phoneLocalService.getOSGiServiceIdentifier();
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _phoneLocalService.dynamicQuery();
 	}
 
 	/**
@@ -266,6 +162,111 @@ public class PhoneLocalServiceWrapper implements PhoneLocalService,
 			orderByComparator);
 	}
 
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _phoneLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _phoneLocalService.dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Phone fetchPhone(long phoneId) {
+		return _phoneLocalService.fetchPhone(phoneId);
+	}
+
+	/**
+	* Returns the phone with the matching UUID and company.
+	*
+	* @param uuid the phone's UUID
+	* @param companyId the primary key of the company
+	* @return the matching phone, or <code>null</code> if a matching phone could not be found
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.Phone fetchPhoneByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return _phoneLocalService.fetchPhoneByUuidAndCompanyId(uuid, companyId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _phoneLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return _phoneLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _phoneLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _phoneLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _phoneLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Returns the phone with the primary key.
+	*
+	* @param phoneId the primary key of the phone
+	* @return the phone
+	* @throws PortalException if a phone with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.Phone getPhone(long phoneId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _phoneLocalService.getPhone(phoneId);
+	}
+
+	/**
+	* Returns the phone with the matching UUID and company.
+	*
+	* @param uuid the phone's UUID
+	* @param companyId the primary key of the company
+	* @return the matching phone
+	* @throws PortalException if a matching phone could not be found
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.Phone getPhoneByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _phoneLocalService.getPhoneByUuidAndCompanyId(uuid, companyId);
+	}
+
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Phone> getPhones() {
 		return _phoneLocalService.getPhones();
@@ -295,35 +296,34 @@ public class PhoneLocalServiceWrapper implements PhoneLocalService,
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of phones.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of phones
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _phoneLocalService.dynamicQueryCount(dynamicQuery);
+	public int getPhonesCount() {
+		return _phoneLocalService.getPhonesCount();
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Updates the phone in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @param phone the phone
+	* @return the phone that was updated
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _phoneLocalService.dynamicQueryCount(dynamicQuery, projection);
+	public com.liferay.portal.kernel.model.Phone updatePhone(
+		com.liferay.portal.kernel.model.Phone phone) {
+		return _phoneLocalService.updatePhone(phone);
 	}
 
 	@Override
-	public void deletePhones(long companyId, java.lang.String className,
-		long classPK) {
-		_phoneLocalService.deletePhones(companyId, className, classPK);
+	public com.liferay.portal.kernel.model.Phone updatePhone(long phoneId,
+		java.lang.String number, java.lang.String extension, long typeId,
+		boolean primary)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _phoneLocalService.updatePhone(phoneId, number, extension,
+			typeId, primary);
 	}
 
 	@Override

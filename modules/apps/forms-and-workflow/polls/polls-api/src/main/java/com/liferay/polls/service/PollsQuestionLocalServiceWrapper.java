@@ -61,6 +61,40 @@ public class PollsQuestionLocalServiceWrapper
 			neverExpire, choices, serviceContext);
 	}
 
+	@Override
+	public void addQuestionResources(
+		com.liferay.polls.model.PollsQuestion question,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_pollsQuestionLocalService.addQuestionResources(question,
+			addGroupPermissions, addGuestPermissions);
+	}
+
+	@Override
+	public void addQuestionResources(
+		com.liferay.polls.model.PollsQuestion question,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_pollsQuestionLocalService.addQuestionResources(question,
+			groupPermissions, guestPermissions);
+	}
+
+	@Override
+	public void addQuestionResources(long questionId,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_pollsQuestionLocalService.addQuestionResources(questionId,
+			addGroupPermissions, addGuestPermissions);
+	}
+
+	@Override
+	public void addQuestionResources(long questionId,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_pollsQuestionLocalService.addQuestionResources(questionId,
+			groupPermissions, guestPermissions);
+	}
+
 	/**
 	* Creates a new polls question with the primary key. Does not add the polls question to the database.
 	*
@@ -71,6 +105,16 @@ public class PollsQuestionLocalServiceWrapper
 	public com.liferay.polls.model.PollsQuestion createPollsQuestion(
 		long questionId) {
 		return _pollsQuestionLocalService.createPollsQuestion(questionId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _pollsQuestionLocalService.deletePersistedModel(persistedModel);
 	}
 
 	/**
@@ -100,165 +144,26 @@ public class PollsQuestionLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.polls.model.PollsQuestion fetchPollsQuestion(
-		long questionId) {
-		return _pollsQuestionLocalService.fetchPollsQuestion(questionId);
-	}
-
-	/**
-	* Returns the polls question matching the UUID and group.
-	*
-	* @param uuid the polls question's UUID
-	* @param groupId the primary key of the group
-	* @return the matching polls question, or <code>null</code> if a matching polls question could not be found
-	*/
-	@Override
-	public com.liferay.polls.model.PollsQuestion fetchPollsQuestionByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return _pollsQuestionLocalService.fetchPollsQuestionByUuidAndGroupId(uuid,
-			groupId);
-	}
-
-	/**
-	* Returns the polls question with the primary key.
-	*
-	* @param questionId the primary key of the polls question
-	* @return the polls question
-	* @throws PortalException if a polls question with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.polls.model.PollsQuestion getPollsQuestion(
-		long questionId)
+	public void deleteQuestion(com.liferay.polls.model.PollsQuestion question)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _pollsQuestionLocalService.getPollsQuestion(questionId);
+		_pollsQuestionLocalService.deleteQuestion(question);
 	}
 
-	/**
-	* Returns the polls question matching the UUID and group.
-	*
-	* @param uuid the polls question's UUID
-	* @param groupId the primary key of the group
-	* @return the matching polls question
-	* @throws PortalException if a matching polls question could not be found
-	*/
 	@Override
-	public com.liferay.polls.model.PollsQuestion getPollsQuestionByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+	public void deleteQuestion(long questionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _pollsQuestionLocalService.getPollsQuestionByUuidAndGroupId(uuid,
-			groupId);
+		_pollsQuestionLocalService.deleteQuestion(questionId);
 	}
 
 	@Override
-	public com.liferay.polls.model.PollsQuestion getQuestion(long questionId)
+	public void deleteQuestions(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _pollsQuestionLocalService.getQuestion(questionId);
-	}
-
-	/**
-	* Updates the polls question in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param pollsQuestion the polls question
-	* @return the polls question that was updated
-	*/
-	@Override
-	public com.liferay.polls.model.PollsQuestion updatePollsQuestion(
-		com.liferay.polls.model.PollsQuestion pollsQuestion) {
-		return _pollsQuestionLocalService.updatePollsQuestion(pollsQuestion);
-	}
-
-	@Override
-	public com.liferay.polls.model.PollsQuestion updateQuestion(long userId,
-		long questionId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
-		java.util.List<com.liferay.polls.model.PollsChoice> choices,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _pollsQuestionLocalService.updateQuestion(userId, questionId,
-			titleMap, descriptionMap, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, choices, serviceContext);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _pollsQuestionLocalService.getActionableDynamicQuery();
+		_pollsQuestionLocalService.deleteQuestions(groupId);
 	}
 
 	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _pollsQuestionLocalService.dynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return _pollsQuestionLocalService.getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _pollsQuestionLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _pollsQuestionLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _pollsQuestionLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the number of polls questions.
-	*
-	* @return the number of polls questions
-	*/
-	@Override
-	public int getPollsQuestionsCount() {
-		return _pollsQuestionLocalService.getPollsQuestionsCount();
-	}
-
-	@Override
-	public int getQuestionsCount(long groupId) {
-		return _pollsQuestionLocalService.getQuestionsCount(groupId);
-	}
-
-	@Override
-	public int searchCount(long companyId, long[] groupIds,
-		java.lang.String keywords) {
-		return _pollsQuestionLocalService.searchCount(companyId, groupIds,
-			keywords);
-	}
-
-	@Override
-	public int searchCount(long companyId, long[] groupIds,
-		java.lang.String title, java.lang.String description,
-		boolean andOperator) {
-		return _pollsQuestionLocalService.searchCount(companyId, groupIds,
-			title, description, andOperator);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _pollsQuestionLocalService.getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -315,6 +220,116 @@ public class PollsQuestionLocalServiceWrapper
 	}
 
 	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _pollsQuestionLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _pollsQuestionLocalService.dynamicQueryCount(dynamicQuery,
+			projection);
+	}
+
+	@Override
+	public com.liferay.polls.model.PollsQuestion fetchPollsQuestion(
+		long questionId) {
+		return _pollsQuestionLocalService.fetchPollsQuestion(questionId);
+	}
+
+	/**
+	* Returns the polls question matching the UUID and group.
+	*
+	* @param uuid the polls question's UUID
+	* @param groupId the primary key of the group
+	* @return the matching polls question, or <code>null</code> if a matching polls question could not be found
+	*/
+	@Override
+	public com.liferay.polls.model.PollsQuestion fetchPollsQuestionByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return _pollsQuestionLocalService.fetchPollsQuestionByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _pollsQuestionLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return _pollsQuestionLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _pollsQuestionLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _pollsQuestionLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _pollsQuestionLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Returns the polls question with the primary key.
+	*
+	* @param questionId the primary key of the polls question
+	* @return the polls question
+	* @throws PortalException if a polls question with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.polls.model.PollsQuestion getPollsQuestion(
+		long questionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _pollsQuestionLocalService.getPollsQuestion(questionId);
+	}
+
+	/**
+	* Returns the polls question matching the UUID and group.
+	*
+	* @param uuid the polls question's UUID
+	* @param groupId the primary key of the group
+	* @return the matching polls question
+	* @throws PortalException if a matching polls question could not be found
+	*/
+	@Override
+	public com.liferay.polls.model.PollsQuestion getPollsQuestionByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _pollsQuestionLocalService.getPollsQuestionByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	/**
 	* Returns a range of all the polls questions.
 	*
 	* <p>
@@ -363,6 +378,22 @@ public class PollsQuestionLocalServiceWrapper
 			companyId, start, end, orderByComparator);
 	}
 
+	/**
+	* Returns the number of polls questions.
+	*
+	* @return the number of polls questions
+	*/
+	@Override
+	public int getPollsQuestionsCount() {
+		return _pollsQuestionLocalService.getPollsQuestionsCount();
+	}
+
+	@Override
+	public com.liferay.polls.model.PollsQuestion getQuestion(long questionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _pollsQuestionLocalService.getQuestion(questionId);
+	}
+
 	@Override
 	public java.util.List<com.liferay.polls.model.PollsQuestion> getQuestions(
 		long groupId) {
@@ -373,6 +404,11 @@ public class PollsQuestionLocalServiceWrapper
 	public java.util.List<com.liferay.polls.model.PollsQuestion> getQuestions(
 		long groupId, int start, int end) {
 		return _pollsQuestionLocalService.getQuestions(groupId, start, end);
+	}
+
+	@Override
+	public int getQuestionsCount(long groupId) {
+		return _pollsQuestionLocalService.getQuestionsCount(groupId);
 	}
 
 	@Override
@@ -393,83 +429,47 @@ public class PollsQuestionLocalServiceWrapper
 			description, andOperator, start, end, orderByComparator);
 	}
 
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _pollsQuestionLocalService.dynamicQueryCount(dynamicQuery);
+	public int searchCount(long companyId, long[] groupIds,
+		java.lang.String keywords) {
+		return _pollsQuestionLocalService.searchCount(companyId, groupIds,
+			keywords);
+	}
+
+	@Override
+	public int searchCount(long companyId, long[] groupIds,
+		java.lang.String title, java.lang.String description,
+		boolean andOperator) {
+		return _pollsQuestionLocalService.searchCount(companyId, groupIds,
+			title, description, andOperator);
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Updates the polls question in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @param pollsQuestion the polls question
+	* @return the polls question that was updated
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _pollsQuestionLocalService.dynamicQueryCount(dynamicQuery,
-			projection);
+	public com.liferay.polls.model.PollsQuestion updatePollsQuestion(
+		com.liferay.polls.model.PollsQuestion pollsQuestion) {
+		return _pollsQuestionLocalService.updatePollsQuestion(pollsQuestion);
 	}
 
 	@Override
-	public void addQuestionResources(
-		com.liferay.polls.model.PollsQuestion question,
-		boolean addGroupPermissions, boolean addGuestPermissions)
+	public com.liferay.polls.model.PollsQuestion updateQuestion(long userId,
+		long questionId,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
+		java.util.List<com.liferay.polls.model.PollsChoice> choices,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_pollsQuestionLocalService.addQuestionResources(question,
-			addGroupPermissions, addGuestPermissions);
-	}
-
-	@Override
-	public void addQuestionResources(
-		com.liferay.polls.model.PollsQuestion question,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_pollsQuestionLocalService.addQuestionResources(question,
-			groupPermissions, guestPermissions);
-	}
-
-	@Override
-	public void addQuestionResources(long questionId,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_pollsQuestionLocalService.addQuestionResources(questionId,
-			addGroupPermissions, addGuestPermissions);
-	}
-
-	@Override
-	public void addQuestionResources(long questionId,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_pollsQuestionLocalService.addQuestionResources(questionId,
-			groupPermissions, guestPermissions);
-	}
-
-	@Override
-	public void deleteQuestion(com.liferay.polls.model.PollsQuestion question)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_pollsQuestionLocalService.deleteQuestion(question);
-	}
-
-	@Override
-	public void deleteQuestion(long questionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_pollsQuestionLocalService.deleteQuestion(questionId);
-	}
-
-	@Override
-	public void deleteQuestions(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_pollsQuestionLocalService.deleteQuestions(groupId);
+		return _pollsQuestionLocalService.updateQuestion(userId, questionId,
+			titleMap, descriptionMap, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, choices, serviceContext);
 	}
 
 	@Override

@@ -152,58 +152,13 @@ public class MBDiscussionWrapper implements MBDiscussion,
 	}
 
 	@Override
-	public MBDiscussion toEscapedModel() {
-		return new MBDiscussionWrapper(_mbDiscussion.toEscapedModel());
-	}
-
-	@Override
-	public MBDiscussion toUnescapedModel() {
-		return new MBDiscussionWrapper(_mbDiscussion.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _mbDiscussion.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _mbDiscussion.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _mbDiscussion.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _mbDiscussion.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<MBDiscussion> toCacheModel() {
-		return _mbDiscussion.toCacheModel();
+	public java.lang.Object clone() {
+		return new MBDiscussionWrapper((MBDiscussion)_mbDiscussion.clone());
 	}
 
 	@Override
 	public int compareTo(MBDiscussion mbDiscussion) {
 		return _mbDiscussion.compareTo(mbDiscussion);
-	}
-
-	@Override
-	public int hashCode() {
-		return _mbDiscussion.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _mbDiscussion.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new MBDiscussionWrapper((MBDiscussion)_mbDiscussion.clone());
 	}
 
 	/**
@@ -214,76 +169,6 @@ public class MBDiscussionWrapper implements MBDiscussion,
 	@Override
 	public java.lang.String getClassName() {
 		return _mbDiscussion.getClassName();
-	}
-
-	/**
-	* Returns the user name of this message boards discussion.
-	*
-	* @return the user name of this message boards discussion
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _mbDiscussion.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this message boards discussion.
-	*
-	* @return the user uuid of this message boards discussion
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _mbDiscussion.getUserUuid();
-	}
-
-	/**
-	* Returns the uuid of this message boards discussion.
-	*
-	* @return the uuid of this message boards discussion
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _mbDiscussion.getUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _mbDiscussion.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _mbDiscussion.toXmlString();
-	}
-
-	/**
-	* Returns the create date of this message boards discussion.
-	*
-	* @return the create date of this message boards discussion
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _mbDiscussion.getCreateDate();
-	}
-
-	/**
-	* Returns the last publish date of this message boards discussion.
-	*
-	* @return the last publish date of this message boards discussion
-	*/
-	@Override
-	public Date getLastPublishDate() {
-		return _mbDiscussion.getLastPublishDate();
-	}
-
-	/**
-	* Returns the modified date of this message boards discussion.
-	*
-	* @return the modified date of this message boards discussion
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _mbDiscussion.getModifiedDate();
 	}
 
 	/**
@@ -317,6 +202,16 @@ public class MBDiscussionWrapper implements MBDiscussion,
 	}
 
 	/**
+	* Returns the create date of this message boards discussion.
+	*
+	* @return the create date of this message boards discussion
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _mbDiscussion.getCreateDate();
+	}
+
+	/**
 	* Returns the discussion ID of this message boards discussion.
 	*
 	* @return the discussion ID of this message boards discussion
@@ -324,6 +219,11 @@ public class MBDiscussionWrapper implements MBDiscussion,
 	@Override
 	public long getDiscussionId() {
 		return _mbDiscussion.getDiscussionId();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _mbDiscussion.getExpandoBridge();
 	}
 
 	/**
@@ -337,6 +237,26 @@ public class MBDiscussionWrapper implements MBDiscussion,
 	}
 
 	/**
+	* Returns the last publish date of this message boards discussion.
+	*
+	* @return the last publish date of this message boards discussion
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _mbDiscussion.getLastPublishDate();
+	}
+
+	/**
+	* Returns the modified date of this message boards discussion.
+	*
+	* @return the modified date of this message boards discussion
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _mbDiscussion.getModifiedDate();
+	}
+
+	/**
 	* Returns the primary key of this message boards discussion.
 	*
 	* @return the primary key of this message boards discussion
@@ -344,6 +264,11 @@ public class MBDiscussionWrapper implements MBDiscussion,
 	@Override
 	public long getPrimaryKey() {
 		return _mbDiscussion.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _mbDiscussion.getPrimaryKeyObj();
 	}
 
 	/**
@@ -364,6 +289,56 @@ public class MBDiscussionWrapper implements MBDiscussion,
 	@Override
 	public long getUserId() {
 		return _mbDiscussion.getUserId();
+	}
+
+	/**
+	* Returns the user name of this message boards discussion.
+	*
+	* @return the user name of this message boards discussion
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _mbDiscussion.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this message boards discussion.
+	*
+	* @return the user uuid of this message boards discussion
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _mbDiscussion.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this message boards discussion.
+	*
+	* @return the uuid of this message boards discussion
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _mbDiscussion.getUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _mbDiscussion.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _mbDiscussion.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _mbDiscussion.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _mbDiscussion.isNew();
 	}
 
 	@Override
@@ -545,6 +520,31 @@ public class MBDiscussionWrapper implements MBDiscussion,
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_mbDiscussion.setUuid(uuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<MBDiscussion> toCacheModel() {
+		return _mbDiscussion.toCacheModel();
+	}
+
+	@Override
+	public MBDiscussion toEscapedModel() {
+		return new MBDiscussionWrapper(_mbDiscussion.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _mbDiscussion.toString();
+	}
+
+	@Override
+	public MBDiscussion toUnescapedModel() {
+		return new MBDiscussionWrapper(_mbDiscussion.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _mbDiscussion.toXmlString();
 	}
 
 	@Override

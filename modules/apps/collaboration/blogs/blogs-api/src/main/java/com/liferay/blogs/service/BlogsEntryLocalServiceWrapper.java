@@ -33,6 +33,13 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 		_blogsEntryLocalService = blogsEntryLocalService;
 	}
 
+	@Override
+	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder(
+		long userId, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _blogsEntryLocalService.addAttachmentsFolder(userId, groupId);
+	}
+
 	/**
 	* Adds the blogs entry to the database. Also notifies the appropriate model listeners.
 	*
@@ -46,22 +53,19 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	}
 
 	@Override
+	public void addCoverImage(long entryId,
+		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector imageSelector)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_blogsEntryLocalService.addCoverImage(entryId, imageSelector);
+	}
+
+	@Override
 	public com.liferay.blogs.model.BlogsEntry addEntry(long userId,
 		java.lang.String title, java.lang.String content,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _blogsEntryLocalService.addEntry(userId, title, content,
 			serviceContext);
-	}
-
-	@Override
-	public com.liferay.blogs.model.BlogsEntry addEntry(long userId,
-		java.lang.String title, java.lang.String content,
-		java.util.Date displayDate,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _blogsEntryLocalService.addEntry(userId, title, content,
-			displayDate, serviceContext);
 	}
 
 	/**
@@ -111,23 +115,6 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	@Override
 	public com.liferay.blogs.model.BlogsEntry addEntry(long userId,
 		java.lang.String title, java.lang.String subtitle,
-		java.lang.String description, java.lang.String content,
-		java.util.Date displayDate, boolean allowPingbacks,
-		boolean allowTrackbacks, java.lang.String[] trackbacks,
-		java.lang.String coverImageCaption,
-		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
-		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _blogsEntryLocalService.addEntry(userId, title, subtitle,
-			description, content, displayDate, allowPingbacks, allowTrackbacks,
-			trackbacks, coverImageCaption, coverImageImageSelector,
-			smallImageImageSelector, serviceContext);
-	}
-
-	@Override
-	public com.liferay.blogs.model.BlogsEntry addEntry(long userId,
-		java.lang.String title, java.lang.String subtitle,
 		java.lang.String urlTitle, java.lang.String description,
 		java.lang.String content, int displayDateMonth, int displayDateDay,
 		int displayDateYear, int displayDateHour, int displayDateMinute,
@@ -159,6 +146,85 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 			urlTitle, description, content, displayDate, allowPingbacks,
 			allowTrackbacks, trackbacks, coverImageCaption,
 			coverImageImageSelector, smallImageImageSelector, serviceContext);
+	}
+
+	@Override
+	public com.liferay.blogs.model.BlogsEntry addEntry(long userId,
+		java.lang.String title, java.lang.String subtitle,
+		java.lang.String description, java.lang.String content,
+		java.util.Date displayDate, boolean allowPingbacks,
+		boolean allowTrackbacks, java.lang.String[] trackbacks,
+		java.lang.String coverImageCaption,
+		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
+		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _blogsEntryLocalService.addEntry(userId, title, subtitle,
+			description, content, displayDate, allowPingbacks, allowTrackbacks,
+			trackbacks, coverImageCaption, coverImageImageSelector,
+			smallImageImageSelector, serviceContext);
+	}
+
+	@Override
+	public com.liferay.blogs.model.BlogsEntry addEntry(long userId,
+		java.lang.String title, java.lang.String content,
+		java.util.Date displayDate,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _blogsEntryLocalService.addEntry(userId, title, content,
+			displayDate, serviceContext);
+	}
+
+	@Override
+	public void addEntryResources(com.liferay.blogs.model.BlogsEntry entry,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_blogsEntryLocalService.addEntryResources(entry, addGroupPermissions,
+			addGuestPermissions);
+	}
+
+	@Override
+	public void addEntryResources(com.liferay.blogs.model.BlogsEntry entry,
+		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_blogsEntryLocalService.addEntryResources(entry, modelPermissions);
+	}
+
+	@Override
+	public void addEntryResources(long entryId, boolean addGroupPermissions,
+		boolean addGuestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_blogsEntryLocalService.addEntryResources(entryId, addGroupPermissions,
+			addGuestPermissions);
+	}
+
+	@Override
+	public void addEntryResources(long entryId,
+		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_blogsEntryLocalService.addEntryResources(entryId, modelPermissions);
+	}
+
+	@Override
+	public long addOriginalImageFileEntry(long userId, long groupId,
+		long entryId,
+		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector imageSelector)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _blogsEntryLocalService.addOriginalImageFileEntry(userId,
+			groupId, entryId, imageSelector);
+	}
+
+	@Override
+	public void addSmallImage(long entryId,
+		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector imageSelector)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_blogsEntryLocalService.addSmallImage(entryId, imageSelector);
+	}
+
+	@Override
+	public void checkEntries()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_blogsEntryLocalService.checkEntries();
 	}
 
 	/**
@@ -198,10 +264,123 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	}
 
 	@Override
+	public void deleteEntries(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_blogsEntryLocalService.deleteEntries(groupId);
+	}
+
+	@Override
 	public com.liferay.blogs.model.BlogsEntry deleteEntry(
 		com.liferay.blogs.model.BlogsEntry entry)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _blogsEntryLocalService.deleteEntry(entry);
+	}
+
+	@Override
+	public void deleteEntry(long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_blogsEntryLocalService.deleteEntry(entryId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _blogsEntryLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _blogsEntryLocalService.dynamicQuery();
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	*/
+	@Override
+	public <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _blogsEntryLocalService.dynamicQuery(dynamicQuery);
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns a range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.blogs.model.impl.BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @return the range of matching rows
+	*/
+	@Override
+	public <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end) {
+		return _blogsEntryLocalService.dynamicQuery(dynamicQuery, start, end);
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.blogs.model.impl.BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching rows
+	*/
+	@Override
+	public <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+		return _blogsEntryLocalService.dynamicQuery(dynamicQuery, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _blogsEntryLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _blogsEntryLocalService.dynamicQueryCount(dynamicQuery,
+			projection);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.repository.model.Folder fetchAttachmentsFolder(
+		long userId, long groupId) {
+		return _blogsEntryLocalService.fetchAttachmentsFolder(userId, groupId);
 	}
 
 	@Override
@@ -227,6 +406,70 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	public com.liferay.blogs.model.BlogsEntry fetchEntry(long groupId,
 		java.lang.String urlTitle) {
 		return _blogsEntryLocalService.fetchEntry(groupId, urlTitle);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _blogsEntryLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns a range of all the blogs entries.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.blogs.model.impl.BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @return the range of blogs entries
+	*/
+	@Override
+	public java.util.List<com.liferay.blogs.model.BlogsEntry> getBlogsEntries(
+		int start, int end) {
+		return _blogsEntryLocalService.getBlogsEntries(start, end);
+	}
+
+	/**
+	* Returns all the blogs entries matching the UUID and company.
+	*
+	* @param uuid the UUID of the blogs entries
+	* @param companyId the primary key of the company
+	* @return the matching blogs entries, or an empty list if no matches were found
+	*/
+	@Override
+	public java.util.List<com.liferay.blogs.model.BlogsEntry> getBlogsEntriesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return _blogsEntryLocalService.getBlogsEntriesByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	/**
+	* Returns a range of blogs entries matching the UUID and company.
+	*
+	* @param uuid the UUID of the blogs entries
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching blogs entries, or an empty list if no matches were found
+	*/
+	@Override
+	public java.util.List<com.liferay.blogs.model.BlogsEntry> getBlogsEntriesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.blogs.model.BlogsEntry> orderByComparator) {
+		return _blogsEntryLocalService.getBlogsEntriesByUuidAndCompanyId(uuid,
+			companyId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the number of blogs entries.
+	*
+	* @return the number of blogs entries
+	*/
+	@Override
+	public int getBlogsEntriesCount() {
+		return _blogsEntryLocalService.getBlogsEntriesCount();
 	}
 
 	/**
@@ -259,6 +502,29 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.blogs.model.BlogsEntry> getCompanyEntries(
+		long companyId, java.util.Date displayDate,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.blogs.model.BlogsEntry> queryDefinition) {
+		return _blogsEntryLocalService.getCompanyEntries(companyId,
+			displayDate, queryDefinition);
+	}
+
+	@Override
+	public int getCompanyEntriesCount(long companyId,
+		java.util.Date displayDate,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.blogs.model.BlogsEntry> queryDefinition) {
+		return _blogsEntryLocalService.getCompanyEntriesCount(companyId,
+			displayDate, queryDefinition);
+	}
+
+	@Override
+	public com.liferay.blogs.model.BlogsEntry[] getEntriesPrevAndNext(
+		long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _blogsEntryLocalService.getEntriesPrevAndNext(entryId);
+	}
+
+	@Override
 	public com.liferay.blogs.model.BlogsEntry getEntry(long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _blogsEntryLocalService.getEntry(entryId);
@@ -269,6 +535,121 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 		java.lang.String urlTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _blogsEntryLocalService.getEntry(groupId, urlTitle);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return _blogsEntryLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	@Override
+	public java.util.List<com.liferay.blogs.model.BlogsEntry> getGroupEntries(
+		long groupId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.blogs.model.BlogsEntry> queryDefinition) {
+		return _blogsEntryLocalService.getGroupEntries(groupId, queryDefinition);
+	}
+
+	@Override
+	public java.util.List<com.liferay.blogs.model.BlogsEntry> getGroupEntries(
+		long groupId, java.util.Date displayDate,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.blogs.model.BlogsEntry> queryDefinition) {
+		return _blogsEntryLocalService.getGroupEntries(groupId, displayDate,
+			queryDefinition);
+	}
+
+	@Override
+	public int getGroupEntriesCount(long groupId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.blogs.model.BlogsEntry> queryDefinition) {
+		return _blogsEntryLocalService.getGroupEntriesCount(groupId,
+			queryDefinition);
+	}
+
+	@Override
+	public int getGroupEntriesCount(long groupId, java.util.Date displayDate,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.blogs.model.BlogsEntry> queryDefinition) {
+		return _blogsEntryLocalService.getGroupEntriesCount(groupId,
+			displayDate, queryDefinition);
+	}
+
+	@Override
+	public java.util.List<com.liferay.blogs.model.BlogsEntry> getGroupUserEntries(
+		long groupId, long userId, java.util.Date displayDate,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.blogs.model.BlogsEntry> queryDefinition) {
+		return _blogsEntryLocalService.getGroupUserEntries(groupId, userId,
+			displayDate, queryDefinition);
+	}
+
+	@Override
+	public int getGroupUserEntriesCount(long groupId, long userId,
+		java.util.Date displayDate,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.blogs.model.BlogsEntry> queryDefinition) {
+		return _blogsEntryLocalService.getGroupUserEntriesCount(groupId,
+			userId, displayDate, queryDefinition);
+	}
+
+	@Override
+	public java.util.List<com.liferay.blogs.model.BlogsEntry> getGroupsEntries(
+		long companyId, long groupId, java.util.Date displayDate,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.blogs.model.BlogsEntry> queryDefinition) {
+		return _blogsEntryLocalService.getGroupsEntries(companyId, groupId,
+			displayDate, queryDefinition);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _blogsEntryLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	@Override
+	public java.util.List<com.liferay.blogs.model.BlogsEntry> getNoAssetEntries() {
+		return _blogsEntryLocalService.getNoAssetEntries();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _blogsEntryLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.util.List<com.liferay.blogs.model.BlogsEntry> getOrganizationEntries(
+		long organizationId, java.util.Date displayDate,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.blogs.model.BlogsEntry> queryDefinition) {
+		return _blogsEntryLocalService.getOrganizationEntries(organizationId,
+			displayDate, queryDefinition);
+	}
+
+	@Override
+	public int getOrganizationEntriesCount(long organizationId,
+		java.util.Date displayDate,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.blogs.model.BlogsEntry> queryDefinition) {
+		return _blogsEntryLocalService.getOrganizationEntriesCount(organizationId,
+			displayDate, queryDefinition);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _blogsEntryLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public java.lang.String getUniqueUrlTitle(
+		com.liferay.blogs.model.BlogsEntry entry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _blogsEntryLocalService.getUniqueUrlTitle(entry);
+	}
+
+	@Override
+	public void moveEntriesToTrash(long groupId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_blogsEntryLocalService.moveEntriesToTrash(groupId, userId);
 	}
 
 	/**
@@ -313,6 +694,28 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 		long userId, long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _blogsEntryLocalService.restoreEntryFromTrash(userId, entryId);
+	}
+
+	@Override
+	public void subscribe(long userId, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_blogsEntryLocalService.subscribe(userId, groupId);
+	}
+
+	@Override
+	public void unsubscribe(long userId, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_blogsEntryLocalService.unsubscribe(userId, groupId);
+	}
+
+	@Override
+	public void updateAsset(long userId,
+		com.liferay.blogs.model.BlogsEntry entry, long[] assetCategoryIds,
+		java.lang.String[] assetTagNames, long[] assetLinkEntryIds,
+		java.lang.Double priority)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_blogsEntryLocalService.updateAsset(userId, entry, assetCategoryIds,
+			assetTagNames, assetLinkEntryIds, priority);
 	}
 
 	/**
@@ -384,23 +787,6 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	@Override
 	public com.liferay.blogs.model.BlogsEntry updateEntry(long userId,
 		long entryId, java.lang.String title, java.lang.String subtitle,
-		java.lang.String description, java.lang.String content,
-		java.util.Date displayDate, boolean allowPingbacks,
-		boolean allowTrackbacks, java.lang.String[] trackbacks,
-		java.lang.String coverImageCaption,
-		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
-		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _blogsEntryLocalService.updateEntry(userId, entryId, title,
-			subtitle, description, content, displayDate, allowPingbacks,
-			allowTrackbacks, trackbacks, coverImageCaption,
-			coverImageImageSelector, smallImageImageSelector, serviceContext);
-	}
-
-	@Override
-	public com.liferay.blogs.model.BlogsEntry updateEntry(long userId,
-		long entryId, java.lang.String title, java.lang.String subtitle,
 		java.lang.String urlTitle, java.lang.String description,
 		java.lang.String content, int displayDateMonth, int displayDateDay,
 		int displayDateYear, int displayDateHour, int displayDateMinute,
@@ -435,6 +821,38 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 			coverImageImageSelector, smallImageImageSelector, serviceContext);
 	}
 
+	@Override
+	public com.liferay.blogs.model.BlogsEntry updateEntry(long userId,
+		long entryId, java.lang.String title, java.lang.String subtitle,
+		java.lang.String description, java.lang.String content,
+		java.util.Date displayDate, boolean allowPingbacks,
+		boolean allowTrackbacks, java.lang.String[] trackbacks,
+		java.lang.String coverImageCaption,
+		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
+		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _blogsEntryLocalService.updateEntry(userId, entryId, title,
+			subtitle, description, content, displayDate, allowPingbacks,
+			allowTrackbacks, trackbacks, coverImageCaption,
+			coverImageImageSelector, smallImageImageSelector, serviceContext);
+	}
+
+	@Override
+	public void updateEntryResources(com.liferay.blogs.model.BlogsEntry entry,
+		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_blogsEntryLocalService.updateEntryResources(entry, modelPermissions);
+	}
+
+	@Override
+	public void updateEntryResources(com.liferay.blogs.model.BlogsEntry entry,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_blogsEntryLocalService.updateEntryResources(entry, groupPermissions,
+			guestPermissions);
+	}
+
 	/**
 	* @deprecated As of 1.1.0, replaced by {@link #updateStatus(long, long,
 	int, ServiceContext, Map)}
@@ -457,424 +875,6 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _blogsEntryLocalService.updateStatus(userId, entryId, status,
 			serviceContext, workflowContext);
-	}
-
-	@Override
-	public com.liferay.blogs.model.BlogsEntry[] getEntriesPrevAndNext(
-		long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _blogsEntryLocalService.getEntriesPrevAndNext(entryId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _blogsEntryLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _blogsEntryLocalService.dynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return _blogsEntryLocalService.getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _blogsEntryLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _blogsEntryLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _blogsEntryLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder(
-		long userId, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _blogsEntryLocalService.addAttachmentsFolder(userId, groupId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.repository.model.Folder fetchAttachmentsFolder(
-		long userId, long groupId) {
-		return _blogsEntryLocalService.fetchAttachmentsFolder(userId, groupId);
-	}
-
-	/**
-	* Returns the number of blogs entries.
-	*
-	* @return the number of blogs entries
-	*/
-	@Override
-	public int getBlogsEntriesCount() {
-		return _blogsEntryLocalService.getBlogsEntriesCount();
-	}
-
-	@Override
-	public int getCompanyEntriesCount(long companyId,
-		java.util.Date displayDate,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.blogs.model.BlogsEntry> queryDefinition) {
-		return _blogsEntryLocalService.getCompanyEntriesCount(companyId,
-			displayDate, queryDefinition);
-	}
-
-	@Override
-	public int getGroupEntriesCount(long groupId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.blogs.model.BlogsEntry> queryDefinition) {
-		return _blogsEntryLocalService.getGroupEntriesCount(groupId,
-			queryDefinition);
-	}
-
-	@Override
-	public int getGroupEntriesCount(long groupId, java.util.Date displayDate,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.blogs.model.BlogsEntry> queryDefinition) {
-		return _blogsEntryLocalService.getGroupEntriesCount(groupId,
-			displayDate, queryDefinition);
-	}
-
-	@Override
-	public int getGroupUserEntriesCount(long groupId, long userId,
-		java.util.Date displayDate,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.blogs.model.BlogsEntry> queryDefinition) {
-		return _blogsEntryLocalService.getGroupUserEntriesCount(groupId,
-			userId, displayDate, queryDefinition);
-	}
-
-	@Override
-	public int getOrganizationEntriesCount(long organizationId,
-		java.util.Date displayDate,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.blogs.model.BlogsEntry> queryDefinition) {
-		return _blogsEntryLocalService.getOrganizationEntriesCount(organizationId,
-			displayDate, queryDefinition);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _blogsEntryLocalService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public java.lang.String getUniqueUrlTitle(
-		com.liferay.blogs.model.BlogsEntry entry)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _blogsEntryLocalService.getUniqueUrlTitle(entry);
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	*/
-	@Override
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _blogsEntryLocalService.dynamicQuery(dynamicQuery);
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns a range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.blogs.model.impl.BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @return the range of matching rows
-	*/
-	@Override
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
-		return _blogsEntryLocalService.dynamicQuery(dynamicQuery, start, end);
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.blogs.model.impl.BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching rows
-	*/
-	@Override
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
-		return _blogsEntryLocalService.dynamicQuery(dynamicQuery, start, end,
-			orderByComparator);
-	}
-
-	/**
-	* Returns a range of all the blogs entries.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.blogs.model.impl.BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of blogs entries
-	* @param end the upper bound of the range of blogs entries (not inclusive)
-	* @return the range of blogs entries
-	*/
-	@Override
-	public java.util.List<com.liferay.blogs.model.BlogsEntry> getBlogsEntries(
-		int start, int end) {
-		return _blogsEntryLocalService.getBlogsEntries(start, end);
-	}
-
-	/**
-	* Returns all the blogs entries matching the UUID and company.
-	*
-	* @param uuid the UUID of the blogs entries
-	* @param companyId the primary key of the company
-	* @return the matching blogs entries, or an empty list if no matches were found
-	*/
-	@Override
-	public java.util.List<com.liferay.blogs.model.BlogsEntry> getBlogsEntriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return _blogsEntryLocalService.getBlogsEntriesByUuidAndCompanyId(uuid,
-			companyId);
-	}
-
-	/**
-	* Returns a range of blogs entries matching the UUID and company.
-	*
-	* @param uuid the UUID of the blogs entries
-	* @param companyId the primary key of the company
-	* @param start the lower bound of the range of blogs entries
-	* @param end the upper bound of the range of blogs entries (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the range of matching blogs entries, or an empty list if no matches were found
-	*/
-	@Override
-	public java.util.List<com.liferay.blogs.model.BlogsEntry> getBlogsEntriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.blogs.model.BlogsEntry> orderByComparator) {
-		return _blogsEntryLocalService.getBlogsEntriesByUuidAndCompanyId(uuid,
-			companyId, start, end, orderByComparator);
-	}
-
-	@Override
-	public java.util.List<com.liferay.blogs.model.BlogsEntry> getCompanyEntries(
-		long companyId, java.util.Date displayDate,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.blogs.model.BlogsEntry> queryDefinition) {
-		return _blogsEntryLocalService.getCompanyEntries(companyId,
-			displayDate, queryDefinition);
-	}
-
-	@Override
-	public java.util.List<com.liferay.blogs.model.BlogsEntry> getGroupEntries(
-		long groupId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.blogs.model.BlogsEntry> queryDefinition) {
-		return _blogsEntryLocalService.getGroupEntries(groupId, queryDefinition);
-	}
-
-	@Override
-	public java.util.List<com.liferay.blogs.model.BlogsEntry> getGroupEntries(
-		long groupId, java.util.Date displayDate,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.blogs.model.BlogsEntry> queryDefinition) {
-		return _blogsEntryLocalService.getGroupEntries(groupId, displayDate,
-			queryDefinition);
-	}
-
-	@Override
-	public java.util.List<com.liferay.blogs.model.BlogsEntry> getGroupUserEntries(
-		long groupId, long userId, java.util.Date displayDate,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.blogs.model.BlogsEntry> queryDefinition) {
-		return _blogsEntryLocalService.getGroupUserEntries(groupId, userId,
-			displayDate, queryDefinition);
-	}
-
-	@Override
-	public java.util.List<com.liferay.blogs.model.BlogsEntry> getGroupsEntries(
-		long companyId, long groupId, java.util.Date displayDate,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.blogs.model.BlogsEntry> queryDefinition) {
-		return _blogsEntryLocalService.getGroupsEntries(companyId, groupId,
-			displayDate, queryDefinition);
-	}
-
-	@Override
-	public java.util.List<com.liferay.blogs.model.BlogsEntry> getNoAssetEntries() {
-		return _blogsEntryLocalService.getNoAssetEntries();
-	}
-
-	@Override
-	public java.util.List<com.liferay.blogs.model.BlogsEntry> getOrganizationEntries(
-		long organizationId, java.util.Date displayDate,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.blogs.model.BlogsEntry> queryDefinition) {
-		return _blogsEntryLocalService.getOrganizationEntries(organizationId,
-			displayDate, queryDefinition);
-	}
-
-	@Override
-	public long addOriginalImageFileEntry(long userId, long groupId,
-		long entryId,
-		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector imageSelector)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _blogsEntryLocalService.addOriginalImageFileEntry(userId,
-			groupId, entryId, imageSelector);
-	}
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _blogsEntryLocalService.dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _blogsEntryLocalService.dynamicQueryCount(dynamicQuery,
-			projection);
-	}
-
-	@Override
-	public void addCoverImage(long entryId,
-		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector imageSelector)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_blogsEntryLocalService.addCoverImage(entryId, imageSelector);
-	}
-
-	@Override
-	public void addEntryResources(com.liferay.blogs.model.BlogsEntry entry,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_blogsEntryLocalService.addEntryResources(entry, addGroupPermissions,
-			addGuestPermissions);
-	}
-
-	@Override
-	public void addEntryResources(com.liferay.blogs.model.BlogsEntry entry,
-		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_blogsEntryLocalService.addEntryResources(entry, modelPermissions);
-	}
-
-	@Override
-	public void addEntryResources(long entryId, boolean addGroupPermissions,
-		boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_blogsEntryLocalService.addEntryResources(entryId, addGroupPermissions,
-			addGuestPermissions);
-	}
-
-	@Override
-	public void addEntryResources(long entryId,
-		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_blogsEntryLocalService.addEntryResources(entryId, modelPermissions);
-	}
-
-	@Override
-	public void addSmallImage(long entryId,
-		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector imageSelector)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_blogsEntryLocalService.addSmallImage(entryId, imageSelector);
-	}
-
-	@Override
-	public void checkEntries()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_blogsEntryLocalService.checkEntries();
-	}
-
-	@Override
-	public void deleteEntries(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_blogsEntryLocalService.deleteEntries(groupId);
-	}
-
-	@Override
-	public void deleteEntry(long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_blogsEntryLocalService.deleteEntry(entryId);
-	}
-
-	@Override
-	public void moveEntriesToTrash(long groupId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_blogsEntryLocalService.moveEntriesToTrash(groupId, userId);
-	}
-
-	@Override
-	public void subscribe(long userId, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_blogsEntryLocalService.subscribe(userId, groupId);
-	}
-
-	@Override
-	public void unsubscribe(long userId, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_blogsEntryLocalService.unsubscribe(userId, groupId);
-	}
-
-	@Override
-	public void updateAsset(long userId,
-		com.liferay.blogs.model.BlogsEntry entry, long[] assetCategoryIds,
-		java.lang.String[] assetTagNames, long[] assetLinkEntryIds,
-		java.lang.Double priority)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_blogsEntryLocalService.updateAsset(userId, entry, assetCategoryIds,
-			assetTagNames, assetLinkEntryIds, priority);
-	}
-
-	@Override
-	public void updateEntryResources(com.liferay.blogs.model.BlogsEntry entry,
-		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_blogsEntryLocalService.updateEntryResources(entry, modelPermissions);
-	}
-
-	@Override
-	public void updateEntryResources(com.liferay.blogs.model.BlogsEntry entry,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_blogsEntryLocalService.updateEntryResources(entry, groupPermissions,
-			guestPermissions);
 	}
 
 	@Override

@@ -136,58 +136,13 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	}
 
 	@Override
-	public WeDeployAuthApp toEscapedModel() {
-		return new WeDeployAuthAppWrapper(_weDeployAuthApp.toEscapedModel());
-	}
-
-	@Override
-	public WeDeployAuthApp toUnescapedModel() {
-		return new WeDeployAuthAppWrapper(_weDeployAuthApp.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _weDeployAuthApp.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _weDeployAuthApp.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _weDeployAuthApp.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _weDeployAuthApp.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<WeDeployAuthApp> toCacheModel() {
-		return _weDeployAuthApp.toCacheModel();
+	public java.lang.Object clone() {
+		return new WeDeployAuthAppWrapper((WeDeployAuthApp)_weDeployAuthApp.clone());
 	}
 
 	@Override
 	public int compareTo(WeDeployAuthApp weDeployAuthApp) {
 		return _weDeployAuthApp.compareTo(weDeployAuthApp);
-	}
-
-	@Override
-	public int hashCode() {
-		return _weDeployAuthApp.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _weDeployAuthApp.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new WeDeployAuthAppWrapper((WeDeployAuthApp)_weDeployAuthApp.clone());
 	}
 
 	/**
@@ -211,6 +166,41 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	}
 
 	/**
+	* Returns the company ID of this we deploy auth app.
+	*
+	* @return the company ID of this we deploy auth app
+	*/
+	@Override
+	public long getCompanyId() {
+		return _weDeployAuthApp.getCompanyId();
+	}
+
+	/**
+	* Returns the create date of this we deploy auth app.
+	*
+	* @return the create date of this we deploy auth app
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _weDeployAuthApp.getCreateDate();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _weDeployAuthApp.getExpandoBridge();
+	}
+
+	/**
+	* Returns the modified date of this we deploy auth app.
+	*
+	* @return the modified date of this we deploy auth app
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _weDeployAuthApp.getModifiedDate();
+	}
+
+	/**
 	* Returns the name of this we deploy auth app.
 	*
 	* @return the name of this we deploy auth app
@@ -221,6 +211,21 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	}
 
 	/**
+	* Returns the primary key of this we deploy auth app.
+	*
+	* @return the primary key of this we deploy auth app
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _weDeployAuthApp.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _weDeployAuthApp.getPrimaryKeyObj();
+	}
+
+	/**
 	* Returns the redirect uri of this we deploy auth app.
 	*
 	* @return the redirect uri of this we deploy auth app
@@ -228,6 +233,16 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	@Override
 	public java.lang.String getRedirectURI() {
 		return _weDeployAuthApp.getRedirectURI();
+	}
+
+	/**
+	* Returns the user ID of this we deploy auth app.
+	*
+	* @return the user ID of this we deploy auth app
+	*/
+	@Override
+	public long getUserId() {
+		return _weDeployAuthApp.getUserId();
 	}
 
 	/**
@@ -250,66 +265,6 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 		return _weDeployAuthApp.getUserUuid();
 	}
 
-	@Override
-	public java.lang.String toString() {
-		return _weDeployAuthApp.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _weDeployAuthApp.toXmlString();
-	}
-
-	/**
-	* Returns the create date of this we deploy auth app.
-	*
-	* @return the create date of this we deploy auth app
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _weDeployAuthApp.getCreateDate();
-	}
-
-	/**
-	* Returns the modified date of this we deploy auth app.
-	*
-	* @return the modified date of this we deploy auth app
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _weDeployAuthApp.getModifiedDate();
-	}
-
-	/**
-	* Returns the company ID of this we deploy auth app.
-	*
-	* @return the company ID of this we deploy auth app
-	*/
-	@Override
-	public long getCompanyId() {
-		return _weDeployAuthApp.getCompanyId();
-	}
-
-	/**
-	* Returns the primary key of this we deploy auth app.
-	*
-	* @return the primary key of this we deploy auth app
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _weDeployAuthApp.getPrimaryKey();
-	}
-
-	/**
-	* Returns the user ID of this we deploy auth app.
-	*
-	* @return the user ID of this we deploy auth app
-	*/
-	@Override
-	public long getUserId() {
-		return _weDeployAuthApp.getUserId();
-	}
-
 	/**
 	* Returns the we deploy auth app ID of this we deploy auth app.
 	*
@@ -318,6 +273,26 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	@Override
 	public long getWeDeployAuthAppId() {
 		return _weDeployAuthApp.getWeDeployAuthAppId();
+	}
+
+	@Override
+	public int hashCode() {
+		return _weDeployAuthApp.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _weDeployAuthApp.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _weDeployAuthApp.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _weDeployAuthApp.isNew();
 	}
 
 	@Override
@@ -474,6 +449,31 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	@Override
 	public void setWeDeployAuthAppId(long weDeployAuthAppId) {
 		_weDeployAuthApp.setWeDeployAuthAppId(weDeployAuthAppId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<WeDeployAuthApp> toCacheModel() {
+		return _weDeployAuthApp.toCacheModel();
+	}
+
+	@Override
+	public WeDeployAuthApp toEscapedModel() {
+		return new WeDeployAuthAppWrapper(_weDeployAuthApp.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _weDeployAuthApp.toString();
+	}
+
+	@Override
+	public WeDeployAuthApp toUnescapedModel() {
+		return new WeDeployAuthAppWrapper(_weDeployAuthApp.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _weDeployAuthApp.toXmlString();
 	}
 
 	@Override

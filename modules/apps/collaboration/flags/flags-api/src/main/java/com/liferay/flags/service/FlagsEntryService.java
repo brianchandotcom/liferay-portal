@@ -50,6 +50,11 @@ public interface FlagsEntryService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link FlagsEntryServiceUtil} to access the flags entry remote service. Add custom service methods to {@link com.liferay.flags.service.impl.FlagsEntryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public void addEntry(java.lang.String className, long classPK,
+		java.lang.String reporterEmailAddress, long reportedUserId,
+		java.lang.String contentTitle, java.lang.String contentURL,
+		java.lang.String reason, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -57,10 +62,4 @@ public interface FlagsEntryService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
-
-	public void addEntry(java.lang.String className, long classPK,
-		java.lang.String reporterEmailAddress, long reportedUserId,
-		java.lang.String contentTitle, java.lang.String contentURL,
-		java.lang.String reason, ServiceContext serviceContext)
-		throws PortalException;
 }

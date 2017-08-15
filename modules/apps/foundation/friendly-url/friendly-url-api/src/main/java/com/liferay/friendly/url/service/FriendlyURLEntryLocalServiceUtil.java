@@ -108,99 +108,27 @@ public class FriendlyURLEntryLocalServiceUtil {
 		return getService().deleteFriendlyURLEntry(friendlyURLEntryId);
 	}
 
-	public static com.liferay.friendly.url.model.FriendlyURLEntry fetchFriendlyURLEntry(
-		long friendlyURLEntryId) {
-		return getService().fetchFriendlyURLEntry(friendlyURLEntryId);
+	public static void deleteFriendlyURLEntry(long groupId,
+		java.lang.Class<?> clazz, long classPK) {
+		getService().deleteFriendlyURLEntry(groupId, clazz, classPK);
 	}
 
-	public static com.liferay.friendly.url.model.FriendlyURLEntry fetchFriendlyURLEntry(
-		long groupId, java.lang.Class<?> clazz, java.lang.String urlTitle) {
-		return getService().fetchFriendlyURLEntry(groupId, clazz, urlTitle);
+	public static void deleteFriendlyURLEntry(long groupId,
+		java.lang.Class<?> clazz, long classPK, java.lang.String urlTitle)
+		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryException {
+		getService().deleteFriendlyURLEntry(groupId, clazz, classPK, urlTitle);
 	}
 
-	public static com.liferay.friendly.url.model.FriendlyURLEntry fetchFriendlyURLEntry(
-		long groupId, long classNameId, java.lang.String urlTitle) {
-		return getService().fetchFriendlyURLEntry(groupId, classNameId, urlTitle);
+	public static void deleteFriendlyURLEntry(long groupId, long classNameId,
+		long classPK, java.lang.String urlTitle)
+		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryException {
+		getService()
+			.deleteFriendlyURLEntry(groupId, classNameId, classPK, urlTitle);
 	}
 
-	/**
-	* Returns the friendly url entry matching the UUID and group.
-	*
-	* @param uuid the friendly url entry's UUID
-	* @param groupId the primary key of the group
-	* @return the matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
-	*/
-	public static com.liferay.friendly.url.model.FriendlyURLEntry fetchFriendlyURLEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return getService().fetchFriendlyURLEntryByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Returns the friendly url entry with the primary key.
-	*
-	* @param friendlyURLEntryId the primary key of the friendly url entry
-	* @return the friendly url entry
-	* @throws PortalException if a friendly url entry with the primary key could not be found
-	*/
-	public static com.liferay.friendly.url.model.FriendlyURLEntry getFriendlyURLEntry(
-		long friendlyURLEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getFriendlyURLEntry(friendlyURLEntryId);
-	}
-
-	/**
-	* Returns the friendly url entry matching the UUID and group.
-	*
-	* @param uuid the friendly url entry's UUID
-	* @param groupId the primary key of the group
-	* @return the matching friendly url entry
-	* @throws PortalException if a matching friendly url entry could not be found
-	*/
-	public static com.liferay.friendly.url.model.FriendlyURLEntry getFriendlyURLEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getFriendlyURLEntryByUuidAndGroupId(uuid, groupId);
-	}
-
-	public static com.liferay.friendly.url.model.FriendlyURLEntry getMainFriendlyURLEntry(
-		long groupId, java.lang.Class<?> clazz, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getMainFriendlyURLEntry(groupId, clazz, classPK);
-	}
-
-	public static com.liferay.friendly.url.model.FriendlyURLEntry getMainFriendlyURLEntry(
-		long groupId, long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getMainFriendlyURLEntry(groupId, classNameId, classPK);
-	}
-
-	/**
-	* Updates the friendly url entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param friendlyURLEntry the friendly url entry
-	* @return the friendly url entry that was updated
-	*/
-	public static com.liferay.friendly.url.model.FriendlyURLEntry updateFriendlyURLEntry(
-		com.liferay.friendly.url.model.FriendlyURLEntry friendlyURLEntry) {
-		return getService().updateFriendlyURLEntry(friendlyURLEntry);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
+	public static void deleteGroupFriendlyURLEntries(long groupId,
+		long classNameId) {
+		getService().deleteGroupFriendlyURLEntries(groupId, classNameId);
 	}
 
 	/**
@@ -212,34 +140,8 @@ public class FriendlyURLEntryLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the number of friendly url entries.
-	*
-	* @return the number of friendly url entries
-	*/
-	public static int getFriendlyURLEntriesCount() {
-		return getService().getFriendlyURLEntriesCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static java.lang.String getUniqueUrlTitle(long groupId,
-		long classNameId, long classPK, java.lang.String urlTitle) {
-		return getService()
-				   .getUniqueUrlTitle(groupId, classNameId, classPK, urlTitle);
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
 	}
 
 	/**
@@ -290,6 +192,66 @@ public class FriendlyURLEntryLocalServiceUtil {
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static com.liferay.friendly.url.model.FriendlyURLEntry fetchFriendlyURLEntry(
+		long friendlyURLEntryId) {
+		return getService().fetchFriendlyURLEntry(friendlyURLEntryId);
+	}
+
+	public static com.liferay.friendly.url.model.FriendlyURLEntry fetchFriendlyURLEntry(
+		long groupId, java.lang.Class<?> clazz, java.lang.String urlTitle) {
+		return getService().fetchFriendlyURLEntry(groupId, clazz, urlTitle);
+	}
+
+	public static com.liferay.friendly.url.model.FriendlyURLEntry fetchFriendlyURLEntry(
+		long groupId, long classNameId, java.lang.String urlTitle) {
+		return getService().fetchFriendlyURLEntry(groupId, classNameId, urlTitle);
+	}
+
+	/**
+	* Returns the friendly url entry matching the UUID and group.
+	*
+	* @param uuid the friendly url entry's UUID
+	* @param groupId the primary key of the group
+	* @return the matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
+	*/
+	public static com.liferay.friendly.url.model.FriendlyURLEntry fetchFriendlyURLEntryByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return getService().fetchFriendlyURLEntryByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	/**
@@ -345,50 +307,88 @@ public class FriendlyURLEntryLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of friendly url entries.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of friendly url entries
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
+	public static int getFriendlyURLEntriesCount() {
+		return getService().getFriendlyURLEntriesCount();
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the friendly url entry with the primary key.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @param friendlyURLEntryId the primary key of the friendly url entry
+	* @return the friendly url entry
+	* @throws PortalException if a friendly url entry with the primary key could not be found
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
+	public static com.liferay.friendly.url.model.FriendlyURLEntry getFriendlyURLEntry(
+		long friendlyURLEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getFriendlyURLEntry(friendlyURLEntryId);
 	}
 
-	public static void deleteFriendlyURLEntry(long groupId,
-		java.lang.Class<?> clazz, long classPK) {
-		getService().deleteFriendlyURLEntry(groupId, clazz, classPK);
+	/**
+	* Returns the friendly url entry matching the UUID and group.
+	*
+	* @param uuid the friendly url entry's UUID
+	* @param groupId the primary key of the group
+	* @return the matching friendly url entry
+	* @throws PortalException if a matching friendly url entry could not be found
+	*/
+	public static com.liferay.friendly.url.model.FriendlyURLEntry getFriendlyURLEntryByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getFriendlyURLEntryByUuidAndGroupId(uuid, groupId);
 	}
 
-	public static void deleteFriendlyURLEntry(long groupId,
-		java.lang.Class<?> clazz, long classPK, java.lang.String urlTitle)
-		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryException {
-		getService().deleteFriendlyURLEntry(groupId, clazz, classPK, urlTitle);
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
 	}
 
-	public static void deleteFriendlyURLEntry(long groupId, long classNameId,
-		long classPK, java.lang.String urlTitle)
-		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryException {
-		getService()
-			.deleteFriendlyURLEntry(groupId, classNameId, classPK, urlTitle);
+	public static com.liferay.friendly.url.model.FriendlyURLEntry getMainFriendlyURLEntry(
+		long groupId, java.lang.Class<?> clazz, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getMainFriendlyURLEntry(groupId, clazz, classPK);
 	}
 
-	public static void deleteGroupFriendlyURLEntries(long groupId,
-		long classNameId) {
-		getService().deleteGroupFriendlyURLEntries(groupId, classNameId);
+	public static com.liferay.friendly.url.model.FriendlyURLEntry getMainFriendlyURLEntry(
+		long groupId, long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getMainFriendlyURLEntry(groupId, classNameId, classPK);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static java.lang.String getUniqueUrlTitle(long groupId,
+		long classNameId, long classPK, java.lang.String urlTitle) {
+		return getService()
+				   .getUniqueUrlTitle(groupId, classNameId, classPK, urlTitle);
+	}
+
+	/**
+	* Updates the friendly url entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param friendlyURLEntry the friendly url entry
+	* @return the friendly url entry that was updated
+	*/
+	public static com.liferay.friendly.url.model.FriendlyURLEntry updateFriendlyURLEntry(
+		com.liferay.friendly.url.model.FriendlyURLEntry friendlyURLEntry) {
+		return getService().updateFriendlyURLEntry(friendlyURLEntry);
 	}
 
 	public static void validate(long groupId, long classNameId,

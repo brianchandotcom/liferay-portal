@@ -50,9 +50,8 @@ public interface LayoutBranchService extends BaseService {
 		java.lang.String name, java.lang.String description, boolean master,
 		ServiceContext serviceContext) throws PortalException;
 
-	public LayoutBranch updateLayoutBranch(long layoutBranchId,
-		java.lang.String name, java.lang.String description,
-		ServiceContext serviceContext) throws PortalException;
+	public void deleteLayoutBranch(long layoutBranchId)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -61,6 +60,7 @@ public interface LayoutBranchService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	public void deleteLayoutBranch(long layoutBranchId)
-		throws PortalException;
+	public LayoutBranch updateLayoutBranch(long layoutBranchId,
+		java.lang.String name, java.lang.String description,
+		ServiceContext serviceContext) throws PortalException;
 }

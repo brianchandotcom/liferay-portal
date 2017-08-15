@@ -106,103 +106,13 @@ public class ServiceComponentWrapper implements ServiceComponent,
 	}
 
 	@Override
-	public CacheModel<ServiceComponent> toCacheModel() {
-		return _serviceComponent.toCacheModel();
-	}
-
-	@Override
-	public ServiceComponent toEscapedModel() {
-		return new ServiceComponentWrapper(_serviceComponent.toEscapedModel());
-	}
-
-	@Override
-	public ServiceComponent toUnescapedModel() {
-		return new ServiceComponentWrapper(_serviceComponent.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _serviceComponent.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _serviceComponent.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _serviceComponent.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _serviceComponent.getExpandoBridge();
+	public java.lang.Object clone() {
+		return new ServiceComponentWrapper((ServiceComponent)_serviceComponent.clone());
 	}
 
 	@Override
 	public int compareTo(ServiceComponent serviceComponent) {
 		return _serviceComponent.compareTo(serviceComponent);
-	}
-
-	@Override
-	public int hashCode() {
-		return _serviceComponent.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _serviceComponent.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new ServiceComponentWrapper((ServiceComponent)_serviceComponent.clone());
-	}
-
-	/**
-	* Returns the build namespace of this service component.
-	*
-	* @return the build namespace of this service component
-	*/
-	@Override
-	public java.lang.String getBuildNamespace() {
-		return _serviceComponent.getBuildNamespace();
-	}
-
-	/**
-	* Returns the data of this service component.
-	*
-	* @return the data of this service component
-	*/
-	@Override
-	public java.lang.String getData() {
-		return _serviceComponent.getData();
-	}
-
-	@Override
-	public java.lang.String getIndexesSQL() {
-		return _serviceComponent.getIndexesSQL();
-	}
-
-	@Override
-	public java.lang.String getSequencesSQL() {
-		return _serviceComponent.getSequencesSQL();
-	}
-
-	@Override
-	public java.lang.String getTablesSQL() {
-		return _serviceComponent.getTablesSQL();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _serviceComponent.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _serviceComponent.toXmlString();
 	}
 
 	/**
@@ -216,6 +126,16 @@ public class ServiceComponentWrapper implements ServiceComponent,
 	}
 
 	/**
+	* Returns the build namespace of this service component.
+	*
+	* @return the build namespace of this service component
+	*/
+	@Override
+	public java.lang.String getBuildNamespace() {
+		return _serviceComponent.getBuildNamespace();
+	}
+
+	/**
 	* Returns the build number of this service component.
 	*
 	* @return the build number of this service component
@@ -223,6 +143,26 @@ public class ServiceComponentWrapper implements ServiceComponent,
 	@Override
 	public long getBuildNumber() {
 		return _serviceComponent.getBuildNumber();
+	}
+
+	/**
+	* Returns the data of this service component.
+	*
+	* @return the data of this service component
+	*/
+	@Override
+	public java.lang.String getData() {
+		return _serviceComponent.getData();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _serviceComponent.getExpandoBridge();
+	}
+
+	@Override
+	public java.lang.String getIndexesSQL() {
+		return _serviceComponent.getIndexesSQL();
 	}
 
 	/**
@@ -245,6 +185,16 @@ public class ServiceComponentWrapper implements ServiceComponent,
 		return _serviceComponent.getPrimaryKey();
 	}
 
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _serviceComponent.getPrimaryKeyObj();
+	}
+
+	@Override
+	public java.lang.String getSequencesSQL() {
+		return _serviceComponent.getSequencesSQL();
+	}
+
 	/**
 	* Returns the service component ID of this service component.
 	*
@@ -253,6 +203,31 @@ public class ServiceComponentWrapper implements ServiceComponent,
 	@Override
 	public long getServiceComponentId() {
 		return _serviceComponent.getServiceComponentId();
+	}
+
+	@Override
+	public java.lang.String getTablesSQL() {
+		return _serviceComponent.getTablesSQL();
+	}
+
+	@Override
+	public int hashCode() {
+		return _serviceComponent.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _serviceComponent.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _serviceComponent.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _serviceComponent.isNew();
 	}
 
 	@Override
@@ -306,13 +281,13 @@ public class ServiceComponentWrapper implements ServiceComponent,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_serviceComponent.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_serviceComponent.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_serviceComponent.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
+		_serviceComponent.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -358,6 +333,31 @@ public class ServiceComponentWrapper implements ServiceComponent,
 	@Override
 	public void setServiceComponentId(long serviceComponentId) {
 		_serviceComponent.setServiceComponentId(serviceComponentId);
+	}
+
+	@Override
+	public CacheModel<ServiceComponent> toCacheModel() {
+		return _serviceComponent.toCacheModel();
+	}
+
+	@Override
+	public ServiceComponent toEscapedModel() {
+		return new ServiceComponentWrapper(_serviceComponent.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _serviceComponent.toString();
+	}
+
+	@Override
+	public ServiceComponent toUnescapedModel() {
+		return new ServiceComponentWrapper(_serviceComponent.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _serviceComponent.toXmlString();
 	}
 
 	@Override

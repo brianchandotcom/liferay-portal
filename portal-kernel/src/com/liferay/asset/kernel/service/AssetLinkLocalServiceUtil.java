@@ -107,56 +107,46 @@ public class AssetLinkLocalServiceUtil {
 		return getService().deleteAssetLink(linkId);
 	}
 
-	public static com.liferay.asset.kernel.model.AssetLink fetchAssetLink(
-		long linkId) {
-		return getService().fetchAssetLink(linkId);
+	public static void deleteGroupLinks(long groupId) {
+		getService().deleteGroupLinks(groupId);
 	}
 
 	/**
-	* Returns the asset link with the primary key.
+	* Deletes the asset link.
+	*
+	* @param link the asset link
+	*/
+	public static void deleteLink(com.liferay.asset.kernel.model.AssetLink link) {
+		getService().deleteLink(link);
+	}
+
+	/**
+	* Deletes the asset link.
 	*
 	* @param linkId the primary key of the asset link
-	* @return the asset link
-	* @throws PortalException if a asset link with the primary key could not be found
 	*/
-	public static com.liferay.asset.kernel.model.AssetLink getAssetLink(
-		long linkId) throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getAssetLink(linkId);
+	public static void deleteLink(long linkId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteLink(linkId);
 	}
 
 	/**
-	* Updates the asset link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Deletes all links associated with the asset entry.
 	*
-	* @param assetLink the asset link
-	* @return the asset link that was updated
+	* @param entryId the primary key of the asset entry
 	*/
-	public static com.liferay.asset.kernel.model.AssetLink updateAssetLink(
-		com.liferay.asset.kernel.model.AssetLink assetLink) {
-		return getService().updateAssetLink(assetLink);
+	public static void deleteLinks(long entryId) {
+		getService().deleteLinks(entryId);
 	}
 
-	public static com.liferay.asset.kernel.model.AssetLink updateLink(
-		long userId, long entryId1, long entryId2, int typeId, int weight)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateLink(userId, entryId1, entryId2, typeId, weight);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionbleDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionbleDynamicQuery(portletDataContext);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
+	/**
+	* Delete all links that associate the two asset entries.
+	*
+	* @param entryId1 the primary key of the first asset entry
+	* @param entryId2 the primary key of the second asset entry
+	*/
+	public static void deleteLinks(long entryId1, long entryId2) {
+		getService().deleteLinks(entryId1, entryId2);
 	}
 
 	/**
@@ -168,28 +158,8 @@ public class AssetLinkLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the number of asset links.
-	*
-	* @return the number of asset links
-	*/
-	public static int getAssetLinksCount() {
-		return getService().getAssetLinksCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
 	}
 
 	/**
@@ -243,6 +213,51 @@ public class AssetLinkLocalServiceUtil {
 	}
 
 	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static com.liferay.asset.kernel.model.AssetLink fetchAssetLink(
+		long linkId) {
+		return getService().fetchAssetLink(linkId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the asset link with the primary key.
+	*
+	* @param linkId the primary key of the asset link
+	* @return the asset link
+	* @throws PortalException if a asset link with the primary key could not be found
+	*/
+	public static com.liferay.asset.kernel.model.AssetLink getAssetLink(
+		long linkId) throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getAssetLink(linkId);
+	}
+
+	/**
 	* Returns a range of all the asset links.
 	*
 	* <p>
@@ -256,6 +271,15 @@ public class AssetLinkLocalServiceUtil {
 	public static java.util.List<com.liferay.asset.kernel.model.AssetLink> getAssetLinks(
 		int start, int end) {
 		return getService().getAssetLinks(start, end);
+	}
+
+	/**
+	* Returns the number of asset links.
+	*
+	* @return the number of asset links
+	*/
+	public static int getAssetLinksCount() {
+		return getService().getAssetLinksCount();
 	}
 
 	/**
@@ -298,6 +322,15 @@ public class AssetLinkLocalServiceUtil {
 				   .getDirectLinks(entryId, typeId, excludeInvisibleLinks);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionbleDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionbleDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns all the asset links whose first or second entry ID is the given
 	* entry ID.
@@ -330,6 +363,21 @@ public class AssetLinkLocalServiceUtil {
 	}
 
 	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
 	* Returns all the asset links of the given link type whose second entry ID
 	* is the given entry ID.
 	*
@@ -348,69 +396,21 @@ public class AssetLinkLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Updates the asset link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @param assetLink the asset link
+	* @return the asset link that was updated
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
+	public static com.liferay.asset.kernel.model.AssetLink updateAssetLink(
+		com.liferay.asset.kernel.model.AssetLink assetLink) {
+		return getService().updateAssetLink(assetLink);
 	}
 
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
-	}
-
-	public static void deleteGroupLinks(long groupId) {
-		getService().deleteGroupLinks(groupId);
-	}
-
-	/**
-	* Deletes the asset link.
-	*
-	* @param link the asset link
-	*/
-	public static void deleteLink(com.liferay.asset.kernel.model.AssetLink link) {
-		getService().deleteLink(link);
-	}
-
-	/**
-	* Deletes the asset link.
-	*
-	* @param linkId the primary key of the asset link
-	*/
-	public static void deleteLink(long linkId)
+	public static com.liferay.asset.kernel.model.AssetLink updateLink(
+		long userId, long entryId1, long entryId2, int typeId, int weight)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteLink(linkId);
-	}
-
-	/**
-	* Deletes all links associated with the asset entry.
-	*
-	* @param entryId the primary key of the asset entry
-	*/
-	public static void deleteLinks(long entryId) {
-		getService().deleteLinks(entryId);
-	}
-
-	/**
-	* Delete all links that associate the two asset entries.
-	*
-	* @param entryId1 the primary key of the first asset entry
-	* @param entryId2 the primary key of the second asset entry
-	*/
-	public static void deleteLinks(long entryId1, long entryId2) {
-		getService().deleteLinks(entryId1, entryId2);
+		return getService()
+				   .updateLink(userId, entryId1, entryId2, typeId, weight);
 	}
 
 	/**

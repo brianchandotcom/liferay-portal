@@ -62,29 +62,6 @@ public interface WebsiteLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WebsiteLocalServiceUtil} to access the website local service. Add custom service methods to {@link com.liferay.portal.service.impl.WebsiteLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
 
 	/**
 	* Adds the website to the database. Also notifies the appropriate model listeners.
@@ -108,6 +85,13 @@ public interface WebsiteLocalService extends BaseLocalService,
 	public Website createWebsite(long websiteId);
 
 	/**
+	* @throws PortalException
+	*/
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
+
+	/**
 	* Deletes the website from the database. Also notifies the appropriate model listeners.
 	*
 	* @param website the website
@@ -127,68 +111,10 @@ public interface WebsiteLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public Website deleteWebsite(long websiteId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Website fetchWebsite(long websiteId);
+	public void deleteWebsites(long companyId, java.lang.String className,
+		long classPK);
 
-	/**
-	* Returns the website with the matching UUID and company.
-	*
-	* @param uuid the website's UUID
-	* @param companyId the primary key of the company
-	* @return the matching website, or <code>null</code> if a matching website could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Website fetchWebsiteByUuidAndCompanyId(java.lang.String uuid,
-		long companyId);
-
-	/**
-	* Returns the website with the primary key.
-	*
-	* @param websiteId the primary key of the website
-	* @return the website
-	* @throws PortalException if a website with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Website getWebsite(long websiteId) throws PortalException;
-
-	/**
-	* Returns the website with the matching UUID and company.
-	*
-	* @param uuid the website's UUID
-	* @param companyId the primary key of the company
-	* @return the matching website
-	* @throws PortalException if a matching website could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Website getWebsiteByUuidAndCompanyId(java.lang.String uuid,
-		long companyId) throws PortalException;
-
-	/**
-	* Updates the website in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param website the website
-	* @return the website that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public Website updateWebsite(Website website);
-
-	public Website updateWebsite(long websiteId, java.lang.String url,
-		long typeId, boolean primary) throws PortalException;
-
-	/**
-	* Returns the number of websites.
-	*
-	* @return the number of websites
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getWebsitesCount();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -229,6 +155,82 @@ public interface WebsiteLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Website fetchWebsite(long websiteId);
+
+	/**
+	* Returns the website with the matching UUID and company.
+	*
+	* @param uuid the website's UUID
+	* @param companyId the primary key of the company
+	* @return the matching website, or <code>null</code> if a matching website could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Website fetchWebsiteByUuidAndCompanyId(java.lang.String uuid,
+		long companyId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Returns the website with the primary key.
+	*
+	* @param websiteId the primary key of the website
+	* @return the website
+	* @throws PortalException if a website with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Website getWebsite(long websiteId) throws PortalException;
+
+	/**
+	* Returns the website with the matching UUID and company.
+	*
+	* @param uuid the website's UUID
+	* @param companyId the primary key of the company
+	* @return the matching website
+	* @throws PortalException if a matching website could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Website getWebsiteByUuidAndCompanyId(java.lang.String uuid,
+		long companyId) throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Website> getWebsites();
 
@@ -251,23 +253,22 @@ public interface WebsiteLocalService extends BaseLocalService,
 		java.lang.String className, long classPK);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of websites.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of websites
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getWebsitesCount();
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Updates the website in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @param website the website
+	* @return the website that was updated
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	@Indexable(type = IndexableType.REINDEX)
+	public Website updateWebsite(Website website);
 
-	public void deleteWebsites(long companyId, java.lang.String className,
-		long classPK);
+	public Website updateWebsite(long websiteId, java.lang.String url,
+		long typeId, boolean primary) throws PortalException;
 }

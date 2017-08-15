@@ -33,16 +33,6 @@ public class ResourcePermissionServiceWrapper
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _resourcePermissionService.getOSGiServiceIdentifier();
-	}
-
-	/**
 	* Grants the role permission at the scope to perform the action on
 	* resources of the type. Existing actions are retained.
 	*
@@ -85,6 +75,16 @@ public class ResourcePermissionServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_resourcePermissionService.addResourcePermission(groupId, companyId,
 			name, scope, primKey, roleId, actionId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _resourcePermissionService.getOSGiServiceIdentifier();
 	}
 
 	/**

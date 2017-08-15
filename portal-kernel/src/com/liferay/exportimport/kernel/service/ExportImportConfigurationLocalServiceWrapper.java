@@ -127,86 +127,8 @@ public class ExportImportConfigurationLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.exportimport.kernel.model.ExportImportConfiguration fetchExportImportConfiguration(
-		long exportImportConfigurationId) {
-		return _exportImportConfigurationLocalService.fetchExportImportConfiguration(exportImportConfigurationId);
-	}
-
-	/**
-	* Returns the export import configuration with the primary key.
-	*
-	* @param exportImportConfigurationId the primary key of the export import configuration
-	* @return the export import configuration
-	* @throws PortalException if a export import configuration with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.exportimport.kernel.model.ExportImportConfiguration getExportImportConfiguration(
-		long exportImportConfigurationId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _exportImportConfigurationLocalService.getExportImportConfiguration(exportImportConfigurationId);
-	}
-
-	@Override
-	public com.liferay.exportimport.kernel.model.ExportImportConfiguration moveExportImportConfigurationToTrash(
-		long userId, long exportImportConfigurationId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _exportImportConfigurationLocalService.moveExportImportConfigurationToTrash(userId,
-			exportImportConfigurationId);
-	}
-
-	@Override
-	public com.liferay.exportimport.kernel.model.ExportImportConfiguration restoreExportImportConfigurationFromTrash(
-		long userId, long exportImportConfigurationId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _exportImportConfigurationLocalService.restoreExportImportConfigurationFromTrash(userId,
-			exportImportConfigurationId);
-	}
-
-	/**
-	* Updates the export import configuration in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param exportImportConfiguration the export import configuration
-	* @return the export import configuration that was updated
-	*/
-	@Override
-	public com.liferay.exportimport.kernel.model.ExportImportConfiguration updateExportImportConfiguration(
-		com.liferay.exportimport.kernel.model.ExportImportConfiguration exportImportConfiguration) {
-		return _exportImportConfigurationLocalService.updateExportImportConfiguration(exportImportConfiguration);
-	}
-
-	@Override
-	public com.liferay.exportimport.kernel.model.ExportImportConfiguration updateExportImportConfiguration(
-		long userId, long exportImportConfigurationId, java.lang.String name,
-		java.lang.String description,
-		java.util.Map<java.lang.String, java.io.Serializable> settingsMap,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _exportImportConfigurationLocalService.updateExportImportConfiguration(userId,
-			exportImportConfigurationId, name, description, settingsMap,
-			serviceContext);
-	}
-
-	@Override
-	public com.liferay.exportimport.kernel.model.ExportImportConfiguration updateStatus(
-		long userId, long exportImportConfigurationId, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _exportImportConfigurationLocalService.updateStatus(userId,
-			exportImportConfigurationId, status);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _exportImportConfigurationLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _exportImportConfigurationLocalService.dynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _exportImportConfigurationLocalService.getIndexableActionableDynamicQuery();
+	public void deleteExportImportConfigurations(long groupId) {
+		_exportImportConfigurationLocalService.deleteExportImportConfigurations(groupId);
 	}
 
 	/**
@@ -220,75 +142,8 @@ public class ExportImportConfigurationLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _exportImportConfigurationLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.exportimport.kernel.model.ExportImportConfiguration> searchExportImportConfigurations(
-		long companyId, long groupId, int type, java.lang.String keywords,
-		int start, int end, com.liferay.portal.kernel.search.Sort sort)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _exportImportConfigurationLocalService.searchExportImportConfigurations(companyId,
-			groupId, type, keywords, start, end, sort);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.exportimport.kernel.model.ExportImportConfiguration> searchExportImportConfigurations(
-		long companyId, long groupId, int type, java.lang.String name,
-		java.lang.String description, boolean andSearch, int start, int end,
-		com.liferay.portal.kernel.search.Sort sort)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _exportImportConfigurationLocalService.searchExportImportConfigurations(companyId,
-			groupId, type, name, description, andSearch, start, end, sort);
-	}
-
-	/**
-	* Returns the number of export import configurations.
-	*
-	* @return the number of export import configurations
-	*/
-	@Override
-	public int getExportImportConfigurationsCount() {
-		return _exportImportConfigurationLocalService.getExportImportConfigurationsCount();
-	}
-
-	@Override
-	public int getExportImportConfigurationsCount(long companyId, long groupId,
-		java.lang.String keywords, int type) {
-		return _exportImportConfigurationLocalService.getExportImportConfigurationsCount(companyId,
-			groupId, keywords, type);
-	}
-
-	@Override
-	public int getExportImportConfigurationsCount(long companyId, long groupId,
-		java.lang.String name, java.lang.String description, int type,
-		boolean andSearch) {
-		return _exportImportConfigurationLocalService.getExportImportConfigurationsCount(companyId,
-			groupId, name, description, type, andSearch);
-	}
-
-	@Override
-	public int getExportImportConfigurationsCount(long groupId) {
-		return _exportImportConfigurationLocalService.getExportImportConfigurationsCount(groupId);
-	}
-
-	@Override
-	public int getExportImportConfigurationsCount(long groupId, int type) {
-		return _exportImportConfigurationLocalService.getExportImportConfigurationsCount(groupId,
-			type);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _exportImportConfigurationLocalService.getOSGiServiceIdentifier();
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _exportImportConfigurationLocalService.dynamicQuery();
 	}
 
 	/**
@@ -345,66 +200,6 @@ public class ExportImportConfigurationLocalServiceWrapper
 			start, end, orderByComparator);
 	}
 
-	@Override
-	public java.util.List<com.liferay.exportimport.kernel.model.ExportImportConfiguration> getExportImportConfigurations(
-		com.liferay.portal.kernel.search.Hits hits)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _exportImportConfigurationLocalService.getExportImportConfigurations(hits);
-	}
-
-	/**
-	* Returns a range of all the export import configurations.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.exportimport.model.impl.ExportImportConfigurationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of export import configurations
-	* @param end the upper bound of the range of export import configurations (not inclusive)
-	* @return the range of export import configurations
-	*/
-	@Override
-	public java.util.List<com.liferay.exportimport.kernel.model.ExportImportConfiguration> getExportImportConfigurations(
-		int start, int end) {
-		return _exportImportConfigurationLocalService.getExportImportConfigurations(start,
-			end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.exportimport.kernel.model.ExportImportConfiguration> getExportImportConfigurations(
-		long companyId, long groupId, java.lang.String keywords, int type,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.exportimport.kernel.model.ExportImportConfiguration> orderByComparator) {
-		return _exportImportConfigurationLocalService.getExportImportConfigurations(companyId,
-			groupId, keywords, type, start, end, orderByComparator);
-	}
-
-	@Override
-	public java.util.List<com.liferay.exportimport.kernel.model.ExportImportConfiguration> getExportImportConfigurations(
-		long companyId, long groupId, java.lang.String name,
-		java.lang.String description, int type, boolean andSearch, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.exportimport.kernel.model.ExportImportConfiguration> orderByComparator) {
-		return _exportImportConfigurationLocalService.getExportImportConfigurations(companyId,
-			groupId, name, description, type, andSearch, start, end,
-			orderByComparator);
-	}
-
-	@Override
-	public java.util.List<com.liferay.exportimport.kernel.model.ExportImportConfiguration> getExportImportConfigurations(
-		long groupId, int type) {
-		return _exportImportConfigurationLocalService.getExportImportConfigurations(groupId,
-			type);
-	}
-
-	@Override
-	public java.util.List<com.liferay.exportimport.kernel.model.ExportImportConfiguration> getExportImportConfigurations(
-		long groupId, int type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.exportimport.kernel.model.ExportImportConfiguration> orderByComparator) {
-		return _exportImportConfigurationLocalService.getExportImportConfigurations(groupId,
-			type, start, end, orderByComparator);
-	}
-
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -433,8 +228,213 @@ public class ExportImportConfigurationLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteExportImportConfigurations(long groupId) {
-		_exportImportConfigurationLocalService.deleteExportImportConfigurations(groupId);
+	public com.liferay.exportimport.kernel.model.ExportImportConfiguration fetchExportImportConfiguration(
+		long exportImportConfigurationId) {
+		return _exportImportConfigurationLocalService.fetchExportImportConfiguration(exportImportConfigurationId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _exportImportConfigurationLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the export import configuration with the primary key.
+	*
+	* @param exportImportConfigurationId the primary key of the export import configuration
+	* @return the export import configuration
+	* @throws PortalException if a export import configuration with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.exportimport.kernel.model.ExportImportConfiguration getExportImportConfiguration(
+		long exportImportConfigurationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _exportImportConfigurationLocalService.getExportImportConfiguration(exportImportConfigurationId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.exportimport.kernel.model.ExportImportConfiguration> getExportImportConfigurations(
+		com.liferay.portal.kernel.search.Hits hits)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _exportImportConfigurationLocalService.getExportImportConfigurations(hits);
+	}
+
+	/**
+	* Returns a range of all the export import configurations.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.exportimport.model.impl.ExportImportConfigurationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of export import configurations
+	* @param end the upper bound of the range of export import configurations (not inclusive)
+	* @return the range of export import configurations
+	*/
+	@Override
+	public java.util.List<com.liferay.exportimport.kernel.model.ExportImportConfiguration> getExportImportConfigurations(
+		int start, int end) {
+		return _exportImportConfigurationLocalService.getExportImportConfigurations(start,
+			end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.exportimport.kernel.model.ExportImportConfiguration> getExportImportConfigurations(
+		long groupId, int type) {
+		return _exportImportConfigurationLocalService.getExportImportConfigurations(groupId,
+			type);
+	}
+
+	@Override
+	public java.util.List<com.liferay.exportimport.kernel.model.ExportImportConfiguration> getExportImportConfigurations(
+		long groupId, int type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.exportimport.kernel.model.ExportImportConfiguration> orderByComparator) {
+		return _exportImportConfigurationLocalService.getExportImportConfigurations(groupId,
+			type, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.exportimport.kernel.model.ExportImportConfiguration> getExportImportConfigurations(
+		long companyId, long groupId, java.lang.String keywords, int type,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.exportimport.kernel.model.ExportImportConfiguration> orderByComparator) {
+		return _exportImportConfigurationLocalService.getExportImportConfigurations(companyId,
+			groupId, keywords, type, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.exportimport.kernel.model.ExportImportConfiguration> getExportImportConfigurations(
+		long companyId, long groupId, java.lang.String name,
+		java.lang.String description, int type, boolean andSearch, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.exportimport.kernel.model.ExportImportConfiguration> orderByComparator) {
+		return _exportImportConfigurationLocalService.getExportImportConfigurations(companyId,
+			groupId, name, description, type, andSearch, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the number of export import configurations.
+	*
+	* @return the number of export import configurations
+	*/
+	@Override
+	public int getExportImportConfigurationsCount() {
+		return _exportImportConfigurationLocalService.getExportImportConfigurationsCount();
+	}
+
+	@Override
+	public int getExportImportConfigurationsCount(long groupId) {
+		return _exportImportConfigurationLocalService.getExportImportConfigurationsCount(groupId);
+	}
+
+	@Override
+	public int getExportImportConfigurationsCount(long groupId, int type) {
+		return _exportImportConfigurationLocalService.getExportImportConfigurationsCount(groupId,
+			type);
+	}
+
+	@Override
+	public int getExportImportConfigurationsCount(long companyId, long groupId,
+		java.lang.String keywords, int type) {
+		return _exportImportConfigurationLocalService.getExportImportConfigurationsCount(companyId,
+			groupId, keywords, type);
+	}
+
+	@Override
+	public int getExportImportConfigurationsCount(long companyId, long groupId,
+		java.lang.String name, java.lang.String description, int type,
+		boolean andSearch) {
+		return _exportImportConfigurationLocalService.getExportImportConfigurationsCount(companyId,
+			groupId, name, description, type, andSearch);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _exportImportConfigurationLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _exportImportConfigurationLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _exportImportConfigurationLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.exportimport.kernel.model.ExportImportConfiguration moveExportImportConfigurationToTrash(
+		long userId, long exportImportConfigurationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _exportImportConfigurationLocalService.moveExportImportConfigurationToTrash(userId,
+			exportImportConfigurationId);
+	}
+
+	@Override
+	public com.liferay.exportimport.kernel.model.ExportImportConfiguration restoreExportImportConfigurationFromTrash(
+		long userId, long exportImportConfigurationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _exportImportConfigurationLocalService.restoreExportImportConfigurationFromTrash(userId,
+			exportImportConfigurationId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.exportimport.kernel.model.ExportImportConfiguration> searchExportImportConfigurations(
+		long companyId, long groupId, int type, java.lang.String keywords,
+		int start, int end, com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _exportImportConfigurationLocalService.searchExportImportConfigurations(companyId,
+			groupId, type, keywords, start, end, sort);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.exportimport.kernel.model.ExportImportConfiguration> searchExportImportConfigurations(
+		long companyId, long groupId, int type, java.lang.String name,
+		java.lang.String description, boolean andSearch, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _exportImportConfigurationLocalService.searchExportImportConfigurations(companyId,
+			groupId, type, name, description, andSearch, start, end, sort);
+	}
+
+	/**
+	* Updates the export import configuration in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param exportImportConfiguration the export import configuration
+	* @return the export import configuration that was updated
+	*/
+	@Override
+	public com.liferay.exportimport.kernel.model.ExportImportConfiguration updateExportImportConfiguration(
+		com.liferay.exportimport.kernel.model.ExportImportConfiguration exportImportConfiguration) {
+		return _exportImportConfigurationLocalService.updateExportImportConfiguration(exportImportConfiguration);
+	}
+
+	@Override
+	public com.liferay.exportimport.kernel.model.ExportImportConfiguration updateExportImportConfiguration(
+		long userId, long exportImportConfigurationId, java.lang.String name,
+		java.lang.String description,
+		java.util.Map<java.lang.String, java.io.Serializable> settingsMap,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _exportImportConfigurationLocalService.updateExportImportConfiguration(userId,
+			exportImportConfigurationId, name, description, settingsMap,
+			serviceContext);
+	}
+
+	@Override
+	public com.liferay.exportimport.kernel.model.ExportImportConfiguration updateStatus(
+		long userId, long exportImportConfigurationId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _exportImportConfigurationLocalService.updateStatus(userId,
+			exportImportConfigurationId, status);
 	}
 
 	@Override

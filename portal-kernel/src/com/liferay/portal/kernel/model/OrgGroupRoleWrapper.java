@@ -99,18 +99,13 @@ public class OrgGroupRoleWrapper implements OrgGroupRole,
 	}
 
 	@Override
-	public CacheModel<OrgGroupRole> toCacheModel() {
-		return _orgGroupRole.toCacheModel();
+	public java.lang.Object clone() {
+		return new OrgGroupRoleWrapper((OrgGroupRole)_orgGroupRole.clone());
 	}
 
 	@Override
-	public OrgGroupRole toEscapedModel() {
-		return new OrgGroupRoleWrapper(_orgGroupRole.toEscapedModel());
-	}
-
-	@Override
-	public OrgGroupRole toUnescapedModel() {
-		return new OrgGroupRoleWrapper(_orgGroupRole.toUnescapedModel());
+	public int compareTo(OrgGroupRole orgGroupRole) {
+		return _orgGroupRole.compareTo(orgGroupRole);
 	}
 
 	@Override
@@ -124,66 +119,6 @@ public class OrgGroupRoleWrapper implements OrgGroupRole,
 		return _orgGroupRole.containsOrganization(organizations);
 	}
 
-	@Override
-	public boolean isCachedModel() {
-		return _orgGroupRole.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _orgGroupRole.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _orgGroupRole.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _orgGroupRole.getExpandoBridge();
-	}
-
-	/**
-	* Returns the primary key of this org group role.
-	*
-	* @return the primary key of this org group role
-	*/
-	@Override
-	public com.liferay.portal.kernel.service.persistence.OrgGroupRolePK getPrimaryKey() {
-		return _orgGroupRole.getPrimaryKey();
-	}
-
-	@Override
-	public int compareTo(OrgGroupRole orgGroupRole) {
-		return _orgGroupRole.compareTo(orgGroupRole);
-	}
-
-	@Override
-	public int hashCode() {
-		return _orgGroupRole.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _orgGroupRole.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new OrgGroupRoleWrapper((OrgGroupRole)_orgGroupRole.clone());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _orgGroupRole.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _orgGroupRole.toXmlString();
-	}
-
 	/**
 	* Returns the company ID of this org group role.
 	*
@@ -192,6 +127,11 @@ public class OrgGroupRoleWrapper implements OrgGroupRole,
 	@Override
 	public long getCompanyId() {
 		return _orgGroupRole.getCompanyId();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _orgGroupRole.getExpandoBridge();
 	}
 
 	/**
@@ -225,6 +165,21 @@ public class OrgGroupRoleWrapper implements OrgGroupRole,
 	}
 
 	/**
+	* Returns the primary key of this org group role.
+	*
+	* @return the primary key of this org group role
+	*/
+	@Override
+	public com.liferay.portal.kernel.service.persistence.OrgGroupRolePK getPrimaryKey() {
+		return _orgGroupRole.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _orgGroupRole.getPrimaryKeyObj();
+	}
+
+	/**
 	* Returns the role ID of this org group role.
 	*
 	* @return the role ID of this org group role
@@ -232,6 +187,26 @@ public class OrgGroupRoleWrapper implements OrgGroupRole,
 	@Override
 	public long getRoleId() {
 		return _orgGroupRole.getRoleId();
+	}
+
+	@Override
+	public int hashCode() {
+		return _orgGroupRole.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _orgGroupRole.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _orgGroupRole.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _orgGroupRole.isNew();
 	}
 
 	@Override
@@ -250,13 +225,13 @@ public class OrgGroupRoleWrapper implements OrgGroupRole,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_orgGroupRole.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_orgGroupRole.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_orgGroupRole.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
+		_orgGroupRole.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -323,6 +298,31 @@ public class OrgGroupRoleWrapper implements OrgGroupRole,
 	@Override
 	public void setRoleId(long roleId) {
 		_orgGroupRole.setRoleId(roleId);
+	}
+
+	@Override
+	public CacheModel<OrgGroupRole> toCacheModel() {
+		return _orgGroupRole.toCacheModel();
+	}
+
+	@Override
+	public OrgGroupRole toEscapedModel() {
+		return new OrgGroupRoleWrapper(_orgGroupRole.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _orgGroupRole.toString();
+	}
+
+	@Override
+	public OrgGroupRole toUnescapedModel() {
+		return new OrgGroupRoleWrapper(_orgGroupRole.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _orgGroupRole.toXmlString();
 	}
 
 	@Override

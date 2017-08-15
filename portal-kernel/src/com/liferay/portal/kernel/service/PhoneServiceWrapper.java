@@ -41,18 +41,9 @@ public class PhoneServiceWrapper implements PhoneService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Phone getPhone(long phoneId)
+	public void deletePhone(long phoneId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _phoneService.getPhone(phoneId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Phone updatePhone(long phoneId,
-		java.lang.String number, java.lang.String extension, long typeId,
-		boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _phoneService.updatePhone(phoneId, number, extension, typeId,
-			primary);
+		_phoneService.deletePhone(phoneId);
 	}
 
 	/**
@@ -66,6 +57,12 @@ public class PhoneServiceWrapper implements PhoneService,
 	}
 
 	@Override
+	public com.liferay.portal.kernel.model.Phone getPhone(long phoneId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _phoneService.getPhone(phoneId);
+	}
+
+	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Phone> getPhones(
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -73,9 +70,12 @@ public class PhoneServiceWrapper implements PhoneService,
 	}
 
 	@Override
-	public void deletePhone(long phoneId)
+	public com.liferay.portal.kernel.model.Phone updatePhone(long phoneId,
+		java.lang.String number, java.lang.String extension, long typeId,
+		boolean primary)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_phoneService.deletePhone(phoneId);
+		return _phoneService.updatePhone(phoneId, number, extension, typeId,
+			primary);
 	}
 
 	@Override

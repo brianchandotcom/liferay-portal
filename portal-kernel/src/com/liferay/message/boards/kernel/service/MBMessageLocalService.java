@@ -130,6 +130,24 @@ public interface MBMessageLocalService extends BaseLocalService,
 		boolean anonymous, double priority, boolean allowPingbacks,
 		ServiceContext serviceContext) throws PortalException;
 
+	public void addMessageAttachment(long userId, long messageId,
+		java.lang.String fileName, File file, java.lang.String mimeType)
+		throws PortalException;
+
+	public void addMessageResources(MBMessage message,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws PortalException;
+
+	public void addMessageResources(MBMessage message,
+		ModelPermissions modelPermissions) throws PortalException;
+
+	public void addMessageResources(long messageId,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws PortalException;
+
+	public void addMessageResources(long messageId,
+		ModelPermissions modelPermissions) throws PortalException;
+
 	/**
 	* Creates a new message-boards message with the primary key. Does not add the message-boards message to the database.
 	*
@@ -141,6 +159,9 @@ public interface MBMessageLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public MBMessage deleteDiscussionMessage(long messageId)
 		throws PortalException;
+
+	public void deleteDiscussionMessages(java.lang.String className,
+		long classPK) throws PortalException;
 
 	/**
 	* Deletes the message-boards message from the database. Also notifies the appropriate model listeners.
@@ -168,6 +189,81 @@ public interface MBMessageLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public MBMessage deleteMessage(long messageId) throws PortalException;
 
+	public void deleteMessageAttachment(long messageId,
+		java.lang.String fileName) throws PortalException;
+
+	public void deleteMessageAttachments(long messageId)
+		throws PortalException;
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
+
+	public DynamicQuery dynamicQuery();
+
+	/**
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	*/
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
+
+	/**
+	* Performs a dynamic query on the database and returns a range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.messageboards.model.impl.MBMessageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @return the range of matching rows
+	*/
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end);
+
+	/**
+	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.messageboards.model.impl.MBMessageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching rows
+	*/
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	public void emptyMessageAttachments(long messageId)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MBMessage fetchMBMessage(long messageId);
 
@@ -181,6 +277,92 @@ public interface MBMessageLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MBMessage fetchMBMessageByUuidAndGroupId(java.lang.String uuid,
 		long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getCategoryMessages(long groupId, long categoryId,
+		int status, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getCategoryMessages(long groupId, long categoryId,
+		int status, int start, int end, OrderByComparator<MBMessage> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCategoryMessagesCount(long groupId, long categoryId,
+		int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getCompanyMessages(long companyId, int status,
+		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getCompanyMessages(long companyId, int status,
+		int start, int end, OrderByComparator<MBMessage> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCompanyMessagesCount(long companyId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBMessageDisplay getDiscussionMessageDisplay(long userId,
+		long groupId, java.lang.String className, long classPK, int status)
+		throws PortalException;
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link
+	#getDiscussionMessageDisplay(long, long, String, long, int)}
+	*/
+	@java.lang.Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBMessageDisplay getDiscussionMessageDisplay(long userId,
+		long groupId, java.lang.String className, long classPK, int status,
+		java.lang.String threadView) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBMessageDisplay getDiscussionMessageDisplay(long userId,
+		long groupId, java.lang.String className, long classPK, int status,
+		Comparator<MBMessage> comparator) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getDiscussionMessagesCount(java.lang.String className,
+		long classPK, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getDiscussionMessagesCount(long classNameId, long classPK,
+		int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBDiscussion> getDiscussions(java.lang.String className);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getGroupMessages(long groupId, int status,
+		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getGroupMessages(long groupId, int status,
+		int start, int end, OrderByComparator<MBMessage> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getGroupMessages(long groupId, long userId,
+		int status, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getGroupMessages(long groupId, long userId,
+		int status, int start, int end, OrderByComparator<MBMessage> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getGroupMessagesCount(long groupId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getGroupMessagesCount(long groupId, long userId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the message-boards message with the primary key.
@@ -204,8 +386,191 @@ public interface MBMessageLocalService extends BaseLocalService,
 	public MBMessage getMBMessageByUuidAndGroupId(java.lang.String uuid,
 		long groupId) throws PortalException;
 
+	/**
+	* Returns a range of all the message-boards messages.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.messageboards.model.impl.MBMessageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of message-boards messages
+	* @param end the upper bound of the range of message-boards messages (not inclusive)
+	* @return the range of message-boards messages
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getMBMessages(int start, int end);
+
+	/**
+	* Returns all the message-boards messages matching the UUID and company.
+	*
+	* @param uuid the UUID of the message-boards messages
+	* @param companyId the primary key of the company
+	* @return the matching message-boards messages, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getMBMessagesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId);
+
+	/**
+	* Returns a range of message-boards messages matching the UUID and company.
+	*
+	* @param uuid the UUID of the message-boards messages
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of message-boards messages
+	* @param end the upper bound of the range of message-boards messages (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching message-boards messages, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getMBMessagesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		OrderByComparator<MBMessage> orderByComparator);
+
+	/**
+	* Returns the number of message-boards messages.
+	*
+	* @return the number of message-boards messages
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getMBMessagesCount();
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MBMessage getMessage(long messageId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBMessageDisplay getMessageDisplay(long userId, MBMessage message,
+		int status) throws PortalException;
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
+	MBMessage, int)}
+	*/
+	@java.lang.Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBMessageDisplay getMessageDisplay(long userId, MBMessage message,
+		int status, java.lang.String threadView, boolean includePrevAndNext)
+		throws PortalException;
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
+	MBMessage, int, Comparator)} (
+	*/
+	@java.lang.Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBMessageDisplay getMessageDisplay(long userId, MBMessage message,
+		int status, java.lang.String threadView, boolean includePrevAndNext,
+		Comparator<MBMessage> comparator) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBMessageDisplay getMessageDisplay(long userId, MBMessage message,
+		int status, Comparator<MBMessage> comparator) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBMessageDisplay getMessageDisplay(long userId, long messageId,
+		int status) throws PortalException;
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
+	long, int)}
+	*/
+	@java.lang.Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBMessageDisplay getMessageDisplay(long userId, long messageId,
+		int status, java.lang.String threadView, boolean includePrevAndNext)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getMessages(java.lang.String className,
+		long classPK, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getNoAssetMessages();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getPositionInThread(long messageId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getThreadMessages(long threadId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getThreadMessages(long threadId, int status,
+		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getThreadMessages(long threadId, int status,
+		Comparator<MBMessage> comparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getThreadMessages(long userId, long threadId,
+		int status, int start, int end, Comparator<MBMessage> comparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getThreadMessagesCount(long threadId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getThreadRepliesMessages(long threadId, int status,
+		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getUserDiscussionMessages(long userId,
+		java.lang.String className, long classPK, int status, int start,
+		int end, OrderByComparator<MBMessage> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getUserDiscussionMessages(long userId,
+		long[] classNameIds, int status, int start, int end,
+		OrderByComparator<MBMessage> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getUserDiscussionMessages(long userId,
+		long classNameId, long classPK, int status, int start, int end,
+		OrderByComparator<MBMessage> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserDiscussionMessagesCount(long userId,
+		java.lang.String className, long classPK, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserDiscussionMessagesCount(long userId, long[] classNameIds,
+		int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserDiscussionMessagesCount(long userId, long classNameId,
+		long classPK, int status);
+
+	public long moveMessageAttachmentToTrash(long userId, long messageId,
+		java.lang.String fileName) throws PortalException;
+
+	public void restoreMessageAttachmentFromTrash(long userId, long messageId,
+		java.lang.String deletedFileName) throws PortalException;
+
+	public void subscribeMessage(long userId, long messageId)
+		throws PortalException;
+
+	public void unsubscribeMessage(long userId, long messageId)
+		throws PortalException;
+
+	public void updateAnswer(MBMessage message, boolean answer, boolean cascade)
+		throws PortalException;
+
+	public void updateAnswer(long messageId, boolean answer, boolean cascade)
+		throws PortalException;
+
+	public void updateAsset(long userId, MBMessage message,
+		long[] assetCategoryIds, java.lang.String[] assetTagNames,
+		long[] assetLinkEntryIds) throws PortalException;
 
 	public MBMessage updateDiscussionMessage(long userId, long messageId,
 		java.lang.String className, long classPK, java.lang.String subject,
@@ -251,371 +616,6 @@ public interface MBMessageLocalService extends BaseLocalService,
 		ServiceContext serviceContext,
 		Map<java.lang.String, Serializable> workflowContext)
 		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBMessageDisplay getDiscussionMessageDisplay(long userId,
-		long groupId, java.lang.String className, long classPK, int status)
-		throws PortalException;
-
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	#getDiscussionMessageDisplay(long, long, String, long, int)}
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBMessageDisplay getDiscussionMessageDisplay(long userId,
-		long groupId, java.lang.String className, long classPK, int status,
-		java.lang.String threadView) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBMessageDisplay getDiscussionMessageDisplay(long userId,
-		long groupId, java.lang.String className, long classPK, int status,
-		Comparator<MBMessage> comparator) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBMessageDisplay getMessageDisplay(long userId, MBMessage message,
-		int status) throws PortalException;
-
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
-	MBMessage, int)}
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBMessageDisplay getMessageDisplay(long userId, MBMessage message,
-		int status, java.lang.String threadView, boolean includePrevAndNext)
-		throws PortalException;
-
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
-	MBMessage, int, Comparator)} (
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBMessageDisplay getMessageDisplay(long userId, MBMessage message,
-		int status, java.lang.String threadView, boolean includePrevAndNext,
-		Comparator<MBMessage> comparator) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBMessageDisplay getMessageDisplay(long userId, MBMessage message,
-		int status, Comparator<MBMessage> comparator) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBMessageDisplay getMessageDisplay(long userId, long messageId,
-		int status) throws PortalException;
-
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
-	long, int)}
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBMessageDisplay getMessageDisplay(long userId, long messageId,
-		int status, java.lang.String threadView, boolean includePrevAndNext)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCategoryMessagesCount(long groupId, long categoryId,
-		int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCompanyMessagesCount(long companyId, int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getDiscussionMessagesCount(java.lang.String className,
-		long classPK, int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getDiscussionMessagesCount(long classNameId, long classPK,
-		int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getGroupMessagesCount(long groupId, int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getGroupMessagesCount(long groupId, long userId, int status);
-
-	/**
-	* Returns the number of message-boards messages.
-	*
-	* @return the number of message-boards messages
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getMBMessagesCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getPositionInThread(long messageId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getThreadMessagesCount(long threadId, int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getUserDiscussionMessagesCount(long userId,
-		java.lang.String className, long classPK, int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getUserDiscussionMessagesCount(long userId, long classNameId,
-		long classPK, int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getUserDiscussionMessagesCount(long userId, long[] classNameIds,
-		int status);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	*/
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
-
-	/**
-	* Performs a dynamic query on the database and returns a range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.messageboards.model.impl.MBMessageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @return the range of matching rows
-	*/
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end);
-
-	/**
-	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.messageboards.model.impl.MBMessageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching rows
-	*/
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBMessage> getCategoryMessages(long groupId, long categoryId,
-		int status, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBMessage> getCategoryMessages(long groupId, long categoryId,
-		int status, int start, int end, OrderByComparator<MBMessage> obc);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBMessage> getCompanyMessages(long companyId, int status,
-		int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBMessage> getCompanyMessages(long companyId, int status,
-		int start, int end, OrderByComparator<MBMessage> obc);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBDiscussion> getDiscussions(java.lang.String className);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBMessage> getGroupMessages(long groupId, int status,
-		int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBMessage> getGroupMessages(long groupId, int status,
-		int start, int end, OrderByComparator<MBMessage> obc);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBMessage> getGroupMessages(long groupId, long userId,
-		int status, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBMessage> getGroupMessages(long groupId, long userId,
-		int status, int start, int end, OrderByComparator<MBMessage> obc);
-
-	/**
-	* Returns a range of all the message-boards messages.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.messageboards.model.impl.MBMessageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of message-boards messages
-	* @param end the upper bound of the range of message-boards messages (not inclusive)
-	* @return the range of message-boards messages
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBMessage> getMBMessages(int start, int end);
-
-	/**
-	* Returns all the message-boards messages matching the UUID and company.
-	*
-	* @param uuid the UUID of the message-boards messages
-	* @param companyId the primary key of the company
-	* @return the matching message-boards messages, or an empty list if no matches were found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBMessage> getMBMessagesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
-
-	/**
-	* Returns a range of message-boards messages matching the UUID and company.
-	*
-	* @param uuid the UUID of the message-boards messages
-	* @param companyId the primary key of the company
-	* @param start the lower bound of the range of message-boards messages
-	* @param end the upper bound of the range of message-boards messages (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the range of matching message-boards messages, or an empty list if no matches were found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBMessage> getMBMessagesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
-		OrderByComparator<MBMessage> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBMessage> getMessages(java.lang.String className,
-		long classPK, int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBMessage> getNoAssetMessages();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBMessage> getThreadMessages(long threadId, int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBMessage> getThreadMessages(long threadId, int status,
-		int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBMessage> getThreadMessages(long threadId, int status,
-		Comparator<MBMessage> comparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBMessage> getThreadMessages(long userId, long threadId,
-		int status, int start, int end, Comparator<MBMessage> comparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBMessage> getThreadRepliesMessages(long threadId, int status,
-		int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBMessage> getUserDiscussionMessages(long userId,
-		java.lang.String className, long classPK, int status, int start,
-		int end, OrderByComparator<MBMessage> obc);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBMessage> getUserDiscussionMessages(long userId,
-		long classNameId, long classPK, int status, int start, int end,
-		OrderByComparator<MBMessage> obc);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBMessage> getUserDiscussionMessages(long userId,
-		long[] classNameIds, int status, int start, int end,
-		OrderByComparator<MBMessage> obc);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	public long moveMessageAttachmentToTrash(long userId, long messageId,
-		java.lang.String fileName) throws PortalException;
-
-	public void addMessageAttachment(long userId, long messageId,
-		java.lang.String fileName, File file, java.lang.String mimeType)
-		throws PortalException;
-
-	public void addMessageResources(MBMessage message,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws PortalException;
-
-	public void addMessageResources(MBMessage message,
-		ModelPermissions modelPermissions) throws PortalException;
-
-	public void addMessageResources(long messageId,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws PortalException;
-
-	public void addMessageResources(long messageId,
-		ModelPermissions modelPermissions) throws PortalException;
-
-	public void deleteDiscussionMessages(java.lang.String className,
-		long classPK) throws PortalException;
-
-	public void deleteMessageAttachment(long messageId,
-		java.lang.String fileName) throws PortalException;
-
-	public void deleteMessageAttachments(long messageId)
-		throws PortalException;
-
-	public void emptyMessageAttachments(long messageId)
-		throws PortalException;
-
-	public void restoreMessageAttachmentFromTrash(long userId, long messageId,
-		java.lang.String deletedFileName) throws PortalException;
-
-	public void subscribeMessage(long userId, long messageId)
-		throws PortalException;
-
-	public void unsubscribeMessage(long userId, long messageId)
-		throws PortalException;
-
-	public void updateAnswer(MBMessage message, boolean answer, boolean cascade)
-		throws PortalException;
-
-	public void updateAnswer(long messageId, boolean answer, boolean cascade)
-		throws PortalException;
-
-	public void updateAsset(long userId, MBMessage message,
-		long[] assetCategoryIds, java.lang.String[] assetTagNames,
-		long[] assetLinkEntryIds) throws PortalException;
 
 	public void updateUserName(long userId, java.lang.String userName);
 }

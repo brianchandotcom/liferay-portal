@@ -60,28 +60,6 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WikiPageResourceLocalServiceUtil} to access the wiki page resource local service. Add custom service methods to {@link com.liferay.wiki.service.impl.WikiPageResourceLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	public WikiPageResource addPageResource(long groupId, long nodeId,
-		java.lang.String title);
 
 	/**
 	* @deprecated As of 1.2.0, replaced by {@link #addPageResource(long, long,
@@ -89,6 +67,9 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 	*/
 	@java.lang.Deprecated
 	public WikiPageResource addPageResource(long nodeId, java.lang.String title);
+
+	public WikiPageResource addPageResource(long groupId, long nodeId,
+		java.lang.String title);
 
 	/**
 	* Adds the wiki page resource to the database. Also notifies the appropriate model listeners.
@@ -107,6 +88,16 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 	* @return the new wiki page resource
 	*/
 	public WikiPageResource createWikiPageResource(long resourcePrimKey);
+
+	public void deletePageResource(long nodeId, java.lang.String title)
+		throws PortalException;
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
 
 	/**
 	* Deletes the wiki page resource from the database. Also notifies the appropriate model listeners.
@@ -129,82 +120,7 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 	public WikiPageResource deleteWikiPageResource(long resourcePrimKey)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiPageResource fetchPageResource(java.lang.String uuid);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiPageResource fetchPageResource(long nodeId,
-		java.lang.String title);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiPageResource fetchWikiPageResource(long resourcePrimKey);
-
-	/**
-	* Returns the wiki page resource matching the UUID and group.
-	*
-	* @param uuid the wiki page resource's UUID
-	* @param groupId the primary key of the group
-	* @return the matching wiki page resource, or <code>null</code> if a matching wiki page resource could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiPageResource fetchWikiPageResourceByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiPageResource getPageResource(long nodeId, java.lang.String title)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiPageResource getPageResource(long pageResourcePrimKey)
-		throws PortalException;
-
-	/**
-	* Returns the wiki page resource with the primary key.
-	*
-	* @param resourcePrimKey the primary key of the wiki page resource
-	* @return the wiki page resource
-	* @throws PortalException if a wiki page resource with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiPageResource getWikiPageResource(long resourcePrimKey)
-		throws PortalException;
-
-	/**
-	* Returns the wiki page resource matching the UUID and group.
-	*
-	* @param uuid the wiki page resource's UUID
-	* @param groupId the primary key of the group
-	* @return the matching wiki page resource
-	* @throws PortalException if a matching wiki page resource could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiPageResource getWikiPageResourceByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
-
-	/**
-	* Updates the wiki page resource in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param wikiPageResource the wiki page resource
-	* @return the wiki page resource that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public WikiPageResource updateWikiPageResource(
-		WikiPageResource wikiPageResource);
-
-	/**
-	* Returns the number of wiki page resources.
-	*
-	* @return the number of wiki page resources
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getWikiPageResourcesCount();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -244,6 +160,106 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WikiPageResource fetchPageResource(java.lang.String uuid);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WikiPageResource fetchPageResource(long nodeId,
+		java.lang.String title);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WikiPageResource fetchWikiPageResource(long resourcePrimKey);
+
+	/**
+	* Returns the wiki page resource matching the UUID and group.
+	*
+	* @param uuid the wiki page resource's UUID
+	* @param groupId the primary key of the group
+	* @return the matching wiki page resource, or <code>null</code> if a matching wiki page resource could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WikiPageResource fetchWikiPageResourceByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WikiPageResource getPageResource(long pageResourcePrimKey)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WikiPageResource getPageResource(long nodeId, java.lang.String title)
+		throws PortalException;
+
+	/**
+	* @deprecated As of 1.2.0, replaced by {@link #getPageResourcePrimKey(long,
+	long, String)}
+	*/
+	@java.lang.Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getPageResourcePrimKey(long nodeId, java.lang.String title);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getPageResourcePrimKey(long groupId, long nodeId,
+		java.lang.String title);
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Returns the wiki page resource with the primary key.
+	*
+	* @param resourcePrimKey the primary key of the wiki page resource
+	* @return the wiki page resource
+	* @throws PortalException if a wiki page resource with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WikiPageResource getWikiPageResource(long resourcePrimKey)
+		throws PortalException;
+
+	/**
+	* Returns the wiki page resource matching the UUID and group.
+	*
+	* @param uuid the wiki page resource's UUID
+	* @param groupId the primary key of the group
+	* @return the matching wiki page resource
+	* @throws PortalException if a matching wiki page resource could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WikiPageResource getWikiPageResourceByUuidAndGroupId(
+		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the wiki page resources.
@@ -286,35 +302,20 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 		OrderByComparator<WikiPageResource> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of wiki page resources.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of wiki page resources
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getWikiPageResourcesCount();
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Updates the wiki page resource in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @param wikiPageResource the wiki page resource
+	* @return the wiki page resource that was updated
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getPageResourcePrimKey(long groupId, long nodeId,
-		java.lang.String title);
-
-	/**
-	* @deprecated As of 1.2.0, replaced by {@link #getPageResourcePrimKey(long,
-	long, String)}
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getPageResourcePrimKey(long nodeId, java.lang.String title);
-
-	public void deletePageResource(long nodeId, java.lang.String title)
-		throws PortalException;
+	@Indexable(type = IndexableType.REINDEX)
+	public WikiPageResource updateWikiPageResource(
+		WikiPageResource wikiPageResource);
 }

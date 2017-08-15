@@ -40,9 +40,6 @@ public class ThemeServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.ThemeServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.json.JSONArray getWARThemes() {
-		return getService().getWARThemes();
-	}
 
 	/**
 	* Returns the OSGi service identifier.
@@ -56,6 +53,10 @@ public class ThemeServiceUtil {
 	public static java.util.List<com.liferay.portal.kernel.model.Theme> getThemes(
 		long companyId) {
 		return getService().getThemes(companyId);
+	}
+
+	public static com.liferay.portal.kernel.json.JSONArray getWARThemes() {
+		return getService().getWARThemes();
 	}
 
 	public static ThemeService getService() {

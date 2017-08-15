@@ -40,32 +40,32 @@ public class PowwowMeetingServiceClp implements PowwowMeetingService {
 
 		_methodParameterTypes1 = new String[] { "long" };
 
-		_methodName2 = "getPowwowMeeting";
+		_methodName2 = "getOSGiServiceIdentifier";
 
-		_methodParameterTypes2 = new String[] { "long" };
+		_methodParameterTypes2 = new String[] {  };
 
-		_methodName3 = "updatePowwowMeeting";
+		_methodName3 = "getPowwowMeeting";
 
-		_methodParameterTypes3 = new String[] {
+		_methodParameterTypes3 = new String[] { "long" };
+
+		_methodName4 = "getPowwowMeetings";
+
+		_methodParameterTypes4 = new String[] {
+				"long", "int", "int",
+				"com.liferay.portal.kernel.util.OrderByComparator"
+			};
+
+		_methodName5 = "getPowwowMeetingsCount";
+
+		_methodParameterTypes5 = new String[] { "long" };
+
+		_methodName7 = "updatePowwowMeeting";
+
+		_methodParameterTypes7 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.util.Map", "java.lang.String", "long",
 				"int", "java.util.List",
 				"com.liferay.portal.kernel.service.ServiceContext"
-			};
-
-		_methodName4 = "getPowwowMeetingsCount";
-
-		_methodParameterTypes4 = new String[] { "long" };
-
-		_methodName6 = "getOSGiServiceIdentifier";
-
-		_methodParameterTypes6 = new String[] {  };
-
-		_methodName7 = "getPowwowMeetings";
-
-		_methodParameterTypes7 = new String[] {
-				"long", "int", "int",
-				"com.liferay.portal.kernel.util.OrderByComparator"
 			};
 	}
 
@@ -159,14 +159,37 @@ public class PowwowMeetingServiceClp implements PowwowMeetingService {
 	}
 
 	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName2,
+					_methodParameterTypes2, new Object[] {  });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.String)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public com.liferay.powwow.model.PowwowMeeting getPowwowMeeting(
 		long powwowMeetingId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableService.invokeMethod(_methodName2,
-					_methodParameterTypes2, new Object[] { powwowMeetingId });
+			returnObj = _invokableService.invokeMethod(_methodName3,
+					_methodParameterTypes3, new Object[] { powwowMeetingId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -188,6 +211,70 @@ public class PowwowMeetingServiceClp implements PowwowMeetingService {
 	}
 
 	@Override
+	public java.util.List<com.liferay.powwow.model.PowwowMeeting> getPowwowMeetings(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName4,
+					_methodParameterTypes4,
+					new Object[] {
+						groupId,
+						
+					start,
+						
+					end,
+						
+					ClpSerializer.translateInput(obc)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.liferay.powwow.model.PowwowMeeting>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public int getPowwowMeetingsCount(long groupId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName5,
+					_methodParameterTypes5, new Object[] { groupId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Integer)returnObj).intValue();
+	}
+
+	@Override
+	public java.lang.Object invokeMethod(java.lang.String name,
+		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
+		throws java.lang.Throwable {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public com.liferay.powwow.model.PowwowMeeting updatePowwowMeeting(
 		long powwowMeetingId, long powwowServerId, java.lang.String name,
 		java.lang.String description, java.lang.String providerType,
@@ -199,8 +286,8 @@ public class PowwowMeetingServiceClp implements PowwowMeetingService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableService.invokeMethod(_methodName3,
-					_methodParameterTypes3,
+			returnObj = _invokableService.invokeMethod(_methodName7,
+					_methodParameterTypes7,
 					new Object[] {
 						powwowMeetingId,
 						
@@ -244,93 +331,6 @@ public class PowwowMeetingServiceClp implements PowwowMeetingService {
 		return (com.liferay.powwow.model.PowwowMeeting)ClpSerializer.translateOutput(returnObj);
 	}
 
-	@Override
-	public int getPowwowMeetingsCount(long groupId) {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableService.invokeMethod(_methodName4,
-					_methodParameterTypes4, new Object[] { groupId });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return ((Integer)returnObj).intValue();
-	}
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableService.invokeMethod(_methodName6,
-					_methodParameterTypes6, new Object[] {  });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (java.lang.String)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
-	public java.util.List<com.liferay.powwow.model.PowwowMeeting> getPowwowMeetings(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc) {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableService.invokeMethod(_methodName7,
-					_methodParameterTypes7,
-					new Object[] {
-						groupId,
-						
-					start,
-						
-					end,
-						
-					ClpSerializer.translateInput(obc)
-					});
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (java.util.List<com.liferay.powwow.model.PowwowMeeting>)ClpSerializer.translateOutput(returnObj);
-	}
-
 	private InvokableService _invokableService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -342,8 +342,8 @@ public class PowwowMeetingServiceClp implements PowwowMeetingService {
 	private String[] _methodParameterTypes3;
 	private String _methodName4;
 	private String[] _methodParameterTypes4;
-	private String _methodName6;
-	private String[] _methodParameterTypes6;
+	private String _methodName5;
+	private String[] _methodParameterTypes5;
 	private String _methodName7;
 	private String[] _methodParameterTypes7;
 }

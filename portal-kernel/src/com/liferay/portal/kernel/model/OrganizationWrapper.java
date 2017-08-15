@@ -193,13 +193,96 @@ public class OrganizationWrapper implements Organization,
 	}
 
 	@Override
+	public java.lang.String buildTreePath()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _organization.buildTreePath();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new OrganizationWrapper((Organization)_organization.clone());
+	}
+
+	@Override
+	public int compareTo(Organization organization) {
+		return _organization.compareTo(organization);
+	}
+
+	@Override
 	public Address getAddress() {
 		return _organization.getAddress();
 	}
 
 	@Override
-	public CacheModel<Organization> toCacheModel() {
-		return _organization.toCacheModel();
+	public java.util.List<Address> getAddresses() {
+		return _organization.getAddresses();
+	}
+
+	@Override
+	public long[] getAncestorOrganizationIds()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _organization.getAncestorOrganizationIds();
+	}
+
+	@Override
+	public java.util.List<Organization> getAncestors()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _organization.getAncestors();
+	}
+
+	@Override
+	public java.lang.String[] getChildrenTypes() {
+		return _organization.getChildrenTypes();
+	}
+
+	/**
+	* Returns the comments of this organization.
+	*
+	* @return the comments of this organization
+	*/
+	@Override
+	public java.lang.String getComments() {
+		return _organization.getComments();
+	}
+
+	/**
+	* Returns the company ID of this organization.
+	*
+	* @return the company ID of this organization
+	*/
+	@Override
+	public long getCompanyId() {
+		return _organization.getCompanyId();
+	}
+
+	/**
+	* Returns the country ID of this organization.
+	*
+	* @return the country ID of this organization
+	*/
+	@Override
+	public long getCountryId() {
+		return _organization.getCountryId();
+	}
+
+	/**
+	* Returns the create date of this organization.
+	*
+	* @return the create date of this organization
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _organization.getCreateDate();
+	}
+
+	@Override
+	public java.util.List<Organization> getDescendants() {
+		return _organization.getDescendants();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _organization.getExpandoBridge();
 	}
 
 	@Override
@@ -208,13 +291,109 @@ public class OrganizationWrapper implements Organization,
 	}
 
 	@Override
-	public Organization toEscapedModel() {
-		return new OrganizationWrapper(_organization.toEscapedModel());
+	public long getGroupId() {
+		return _organization.getGroupId();
+	}
+
+	/**
+	* Returns the logo ID of this organization.
+	*
+	* @return the logo ID of this organization
+	*/
+	@Override
+	public long getLogoId() {
+		return _organization.getLogoId();
+	}
+
+	/**
+	* Returns the modified date of this organization.
+	*
+	* @return the modified date of this organization
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _organization.getModifiedDate();
+	}
+
+	/**
+	* Returns the mvcc version of this organization.
+	*
+	* @return the mvcc version of this organization
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _organization.getMvccVersion();
+	}
+
+	/**
+	* Returns the name of this organization.
+	*
+	* @return the name of this organization
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _organization.getName();
+	}
+
+	/**
+	* Returns the organization ID of this organization.
+	*
+	* @return the organization ID of this organization
+	*/
+	@Override
+	public long getOrganizationId() {
+		return _organization.getOrganizationId();
 	}
 
 	@Override
-	public Organization toUnescapedModel() {
-		return new OrganizationWrapper(_organization.toUnescapedModel());
+	public Organization getParentOrganization()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _organization.getParentOrganization();
+	}
+
+	/**
+	* Returns the parent organization ID of this organization.
+	*
+	* @return the parent organization ID of this organization
+	*/
+	@Override
+	public long getParentOrganizationId() {
+		return _organization.getParentOrganizationId();
+	}
+
+	@Override
+	public java.lang.String getParentOrganizationName() {
+		return _organization.getParentOrganizationName();
+	}
+
+	@Override
+	public javax.portlet.PortletPreferences getPreferences() {
+		return _organization.getPreferences();
+	}
+
+	/**
+	* Returns the primary key of this organization.
+	*
+	* @return the primary key of this organization
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _organization.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _organization.getPrimaryKeyObj();
+	}
+
+	@Override
+	public int getPrivateLayoutsPageCount() {
+		return _organization.getPrivateLayoutsPageCount();
+	}
+
+	@Override
+	public int getPublicLayoutsPageCount() {
+		return _organization.getPublicLayoutsPageCount();
 	}
 
 	/**
@@ -225,6 +404,113 @@ public class OrganizationWrapper implements Organization,
 	@Override
 	public boolean getRecursable() {
 		return _organization.getRecursable();
+	}
+
+	/**
+	* Returns the region ID of this organization.
+	*
+	* @return the region ID of this organization
+	*/
+	@Override
+	public long getRegionId() {
+		return _organization.getRegionId();
+	}
+
+	@Override
+	public java.util.Set<java.lang.String> getReminderQueryQuestions(
+		java.lang.String languageId) {
+		return _organization.getReminderQueryQuestions(languageId);
+	}
+
+	@Override
+	public java.util.Set<java.lang.String> getReminderQueryQuestions(
+		java.util.Locale locale) {
+		return _organization.getReminderQueryQuestions(locale);
+	}
+
+	/**
+	* Returns the status ID of this organization.
+	*
+	* @return the status ID of this organization
+	*/
+	@Override
+	public long getStatusId() {
+		return _organization.getStatusId();
+	}
+
+	@Override
+	public java.util.List<Organization> getSuborganizations() {
+		return _organization.getSuborganizations();
+	}
+
+	@Override
+	public int getSuborganizationsSize() {
+		return _organization.getSuborganizationsSize();
+	}
+
+	/**
+	* Returns the tree path of this organization.
+	*
+	* @return the tree path of this organization
+	*/
+	@Override
+	public java.lang.String getTreePath() {
+		return _organization.getTreePath();
+	}
+
+	/**
+	* Returns the type of this organization.
+	*
+	* @return the type of this organization
+	*/
+	@Override
+	public java.lang.String getType() {
+		return _organization.getType();
+	}
+
+	@Override
+	public int getTypeOrder() {
+		return _organization.getTypeOrder();
+	}
+
+	/**
+	* Returns the user ID of this organization.
+	*
+	* @return the user ID of this organization
+	*/
+	@Override
+	public long getUserId() {
+		return _organization.getUserId();
+	}
+
+	/**
+	* Returns the user name of this organization.
+	*
+	* @return the user name of this organization
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _organization.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this organization.
+	*
+	* @return the user uuid of this organization
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _organization.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this organization.
+	*
+	* @return the uuid of this organization
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _organization.getUuid();
 	}
 
 	@Override
@@ -240,6 +526,11 @@ public class OrganizationWrapper implements Organization,
 	@Override
 	public boolean hasSuborganizations() {
 		return _organization.hasSuborganizations();
+	}
+
+	@Override
+	public int hashCode() {
+		return _organization.hashCode();
 	}
 
 	@Override
@@ -275,322 +566,6 @@ public class OrganizationWrapper implements Organization,
 	@Override
 	public boolean isRoot() {
 		return _organization.isRoot();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _organization.getExpandoBridge();
-	}
-
-	@Override
-	public Organization getParentOrganization()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _organization.getParentOrganization();
-	}
-
-	@Override
-	public int compareTo(Organization organization) {
-		return _organization.compareTo(organization);
-	}
-
-	@Override
-	public int getPrivateLayoutsPageCount() {
-		return _organization.getPrivateLayoutsPageCount();
-	}
-
-	@Override
-	public int getPublicLayoutsPageCount() {
-		return _organization.getPublicLayoutsPageCount();
-	}
-
-	@Override
-	public int getSuborganizationsSize() {
-		return _organization.getSuborganizationsSize();
-	}
-
-	@Override
-	public int getTypeOrder() {
-		return _organization.getTypeOrder();
-	}
-
-	@Override
-	public int hashCode() {
-		return _organization.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _organization.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new OrganizationWrapper((Organization)_organization.clone());
-	}
-
-	@Override
-	public java.lang.String buildTreePath()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _organization.buildTreePath();
-	}
-
-	/**
-	* Returns the comments of this organization.
-	*
-	* @return the comments of this organization
-	*/
-	@Override
-	public java.lang.String getComments() {
-		return _organization.getComments();
-	}
-
-	/**
-	* Returns the name of this organization.
-	*
-	* @return the name of this organization
-	*/
-	@Override
-	public java.lang.String getName() {
-		return _organization.getName();
-	}
-
-	@Override
-	public java.lang.String getParentOrganizationName() {
-		return _organization.getParentOrganizationName();
-	}
-
-	/**
-	* Returns the tree path of this organization.
-	*
-	* @return the tree path of this organization
-	*/
-	@Override
-	public java.lang.String getTreePath() {
-		return _organization.getTreePath();
-	}
-
-	/**
-	* Returns the type of this organization.
-	*
-	* @return the type of this organization
-	*/
-	@Override
-	public java.lang.String getType() {
-		return _organization.getType();
-	}
-
-	/**
-	* Returns the user name of this organization.
-	*
-	* @return the user name of this organization
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _organization.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this organization.
-	*
-	* @return the user uuid of this organization
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _organization.getUserUuid();
-	}
-
-	/**
-	* Returns the uuid of this organization.
-	*
-	* @return the uuid of this organization
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _organization.getUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _organization.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _organization.toXmlString();
-	}
-
-	@Override
-	public java.lang.String[] getChildrenTypes() {
-		return _organization.getChildrenTypes();
-	}
-
-	/**
-	* Returns the create date of this organization.
-	*
-	* @return the create date of this organization
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _organization.getCreateDate();
-	}
-
-	/**
-	* Returns the modified date of this organization.
-	*
-	* @return the modified date of this organization
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _organization.getModifiedDate();
-	}
-
-	@Override
-	public java.util.List<Address> getAddresses() {
-		return _organization.getAddresses();
-	}
-
-	@Override
-	public java.util.List<Organization> getAncestors()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _organization.getAncestors();
-	}
-
-	@Override
-	public java.util.List<Organization> getDescendants() {
-		return _organization.getDescendants();
-	}
-
-	@Override
-	public java.util.List<Organization> getSuborganizations() {
-		return _organization.getSuborganizations();
-	}
-
-	@Override
-	public java.util.Set<java.lang.String> getReminderQueryQuestions(
-		java.lang.String languageId) {
-		return _organization.getReminderQueryQuestions(languageId);
-	}
-
-	@Override
-	public java.util.Set<java.lang.String> getReminderQueryQuestions(
-		java.util.Locale locale) {
-		return _organization.getReminderQueryQuestions(locale);
-	}
-
-	@Override
-	public javax.portlet.PortletPreferences getPreferences() {
-		return _organization.getPreferences();
-	}
-
-	/**
-	* Returns the company ID of this organization.
-	*
-	* @return the company ID of this organization
-	*/
-	@Override
-	public long getCompanyId() {
-		return _organization.getCompanyId();
-	}
-
-	/**
-	* Returns the country ID of this organization.
-	*
-	* @return the country ID of this organization
-	*/
-	@Override
-	public long getCountryId() {
-		return _organization.getCountryId();
-	}
-
-	@Override
-	public long getGroupId() {
-		return _organization.getGroupId();
-	}
-
-	/**
-	* Returns the logo ID of this organization.
-	*
-	* @return the logo ID of this organization
-	*/
-	@Override
-	public long getLogoId() {
-		return _organization.getLogoId();
-	}
-
-	/**
-	* Returns the mvcc version of this organization.
-	*
-	* @return the mvcc version of this organization
-	*/
-	@Override
-	public long getMvccVersion() {
-		return _organization.getMvccVersion();
-	}
-
-	/**
-	* Returns the organization ID of this organization.
-	*
-	* @return the organization ID of this organization
-	*/
-	@Override
-	public long getOrganizationId() {
-		return _organization.getOrganizationId();
-	}
-
-	/**
-	* Returns the parent organization ID of this organization.
-	*
-	* @return the parent organization ID of this organization
-	*/
-	@Override
-	public long getParentOrganizationId() {
-		return _organization.getParentOrganizationId();
-	}
-
-	/**
-	* Returns the primary key of this organization.
-	*
-	* @return the primary key of this organization
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _organization.getPrimaryKey();
-	}
-
-	/**
-	* Returns the region ID of this organization.
-	*
-	* @return the region ID of this organization
-	*/
-	@Override
-	public long getRegionId() {
-		return _organization.getRegionId();
-	}
-
-	/**
-	* Returns the status ID of this organization.
-	*
-	* @return the status ID of this organization
-	*/
-	@Override
-	public long getStatusId() {
-		return _organization.getStatusId();
-	}
-
-	/**
-	* Returns the user ID of this organization.
-	*
-	* @return the user ID of this organization
-	*/
-	@Override
-	public long getUserId() {
-		return _organization.getUserId();
-	}
-
-	@Override
-	public long[] getAncestorOrganizationIds()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _organization.getAncestorOrganizationIds();
 	}
 
 	@Override
@@ -644,13 +619,13 @@ public class OrganizationWrapper implements Organization,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_organization.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_organization.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_organization.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
+		_organization.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -826,6 +801,31 @@ public class OrganizationWrapper implements Organization,
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_organization.setUuid(uuid);
+	}
+
+	@Override
+	public CacheModel<Organization> toCacheModel() {
+		return _organization.toCacheModel();
+	}
+
+	@Override
+	public Organization toEscapedModel() {
+		return new OrganizationWrapper(_organization.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _organization.toString();
+	}
+
+	@Override
+	public Organization toUnescapedModel() {
+		return new OrganizationWrapper(_organization.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _organization.toXmlString();
 	}
 
 	@Override

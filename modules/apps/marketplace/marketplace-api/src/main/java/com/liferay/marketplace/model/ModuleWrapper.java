@@ -113,43 +113,8 @@ public class ModuleWrapper implements Module, ModelWrapper<Module> {
 	}
 
 	@Override
-	public Module toEscapedModel() {
-		return new ModuleWrapper(_module.toEscapedModel());
-	}
-
-	@Override
-	public Module toUnescapedModel() {
-		return new ModuleWrapper(_module.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isBundle() {
-		return _module.isBundle();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _module.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _module.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _module.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _module.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<Module> toCacheModel() {
-		return _module.toCacheModel();
+	public java.lang.Object clone() {
+		return new ModuleWrapper((Module)_module.clone());
 	}
 
 	@Override
@@ -157,19 +122,14 @@ public class ModuleWrapper implements Module, ModelWrapper<Module> {
 		return _module.compareTo(module);
 	}
 
+	/**
+	* Returns the app ID of this module.
+	*
+	* @return the app ID of this module
+	*/
 	@Override
-	public int hashCode() {
-		return _module.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _module.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new ModuleWrapper((Module)_module.clone());
+	public long getAppId() {
+		return _module.getAppId();
 	}
 
 	/**
@@ -193,6 +153,16 @@ public class ModuleWrapper implements Module, ModelWrapper<Module> {
 	}
 
 	/**
+	* Returns the company ID of this module.
+	*
+	* @return the company ID of this module
+	*/
+	@Override
+	public long getCompanyId() {
+		return _module.getCompanyId();
+	}
+
+	/**
 	* Returns the context name of this module.
 	*
 	* @return the context name of this module
@@ -202,44 +172,9 @@ public class ModuleWrapper implements Module, ModelWrapper<Module> {
 		return _module.getContextName();
 	}
 
-	/**
-	* Returns the uuid of this module.
-	*
-	* @return the uuid of this module
-	*/
 	@Override
-	public java.lang.String getUuid() {
-		return _module.getUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _module.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _module.toXmlString();
-	}
-
-	/**
-	* Returns the app ID of this module.
-	*
-	* @return the app ID of this module
-	*/
-	@Override
-	public long getAppId() {
-		return _module.getAppId();
-	}
-
-	/**
-	* Returns the company ID of this module.
-	*
-	* @return the company ID of this module
-	*/
-	@Override
-	public long getCompanyId() {
-		return _module.getCompanyId();
+	public ExpandoBridge getExpandoBridge() {
+		return _module.getExpandoBridge();
 	}
 
 	/**
@@ -260,6 +195,46 @@ public class ModuleWrapper implements Module, ModelWrapper<Module> {
 	@Override
 	public long getPrimaryKey() {
 		return _module.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _module.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the uuid of this module.
+	*
+	* @return the uuid of this module
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _module.getUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _module.hashCode();
+	}
+
+	@Override
+	public boolean isBundle() {
+		return _module.isBundle();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _module.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _module.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _module.isNew();
 	}
 
 	@Override
@@ -376,6 +351,31 @@ public class ModuleWrapper implements Module, ModelWrapper<Module> {
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_module.setUuid(uuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<Module> toCacheModel() {
+		return _module.toCacheModel();
+	}
+
+	@Override
+	public Module toEscapedModel() {
+		return new ModuleWrapper(_module.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _module.toString();
+	}
+
+	@Override
+	public Module toUnescapedModel() {
+		return new ModuleWrapper(_module.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _module.toXmlString();
 	}
 
 	@Override

@@ -31,128 +31,67 @@ public class UserServiceWrapper implements UserService,
 	}
 
 	/**
-	* Returns <code>true</code> if the user is a member of the group.
+	* Adds the users to the group.
 	*
 	* @param groupId the primary key of the group
-	* @param userId the primary key of the user
-	* @return <code>true</code> if the user is a member of the group;
-	<code>false</code> otherwise
+	* @param userIds the primary keys of the users
+	* @param serviceContext the service context to be applied (optionally
+	<code>null</code>)
 	*/
 	@Override
-	public boolean hasGroupUser(long groupId, long userId)
+	public void addGroupUsers(long groupId, long[] userIds,
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userService.hasGroupUser(groupId, userId);
+		_userService.addGroupUsers(groupId, userIds, serviceContext);
 	}
 
 	/**
-	* Returns <code>true</code> if the user has the role with the name,
-	* optionally through inheritance.
+	* Adds the users to the organization.
 	*
-	* @param companyId the primary key of the role's company
-	* @param name the name of the role (must be a regular role, not an
-	organization, site or provider role)
-	* @param userId the primary key of the user
-	* @param inherited whether to include roles inherited from organizations,
-	sites, etc.
-	* @return <code>true</code> if the user has the role; <code>false</code>
-	otherwise
+	* @param organizationId the primary key of the organization
+	* @param userIds the primary keys of the users
 	*/
 	@Override
-	public boolean hasRoleUser(long companyId, java.lang.String name,
-		long userId, boolean inherited)
+	public void addOrganizationUsers(long organizationId, long[] userIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userService.hasRoleUser(companyId, name, userId, inherited);
+		_userService.addOrganizationUsers(organizationId, userIds);
 	}
 
 	/**
-	* Returns <code>true</code> if the user is a member of the role.
+	* Assigns the password policy to the users, removing any other currently
+	* assigned password policies.
+	*
+	* @param passwordPolicyId the primary key of the password policy
+	* @param userIds the primary keys of the users
+	*/
+	@Override
+	public void addPasswordPolicyUsers(long passwordPolicyId, long[] userIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_userService.addPasswordPolicyUsers(passwordPolicyId, userIds);
+	}
+
+	/**
+	* Adds the users to the role.
 	*
 	* @param roleId the primary key of the role
-	* @param userId the primary key of the user
-	* @return <code>true</code> if the user is a member of the role;
-	<code>false</code> otherwise
+	* @param userIds the primary keys of the users
 	*/
 	@Override
-	public boolean hasRoleUser(long roleId, long userId)
+	public void addRoleUsers(long roleId, long[] userIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userService.hasRoleUser(roleId, userId);
+		_userService.addRoleUsers(roleId, userIds);
 	}
 
 	/**
-	* Sends a password notification email to the user matching the email
-	* address. The portal's settings determine whether a password is sent
-	* explicitly or whether a link for resetting the user's password is sent.
-	* The method sends the email asynchronously and returns before the email is
-	* sent.
+	* Adds the users to the team.
 	*
-	* <p>
-	* The content of the notification email is specified with the
-	* <code>admin.email.password</code> portal property keys. They can be
-	* overridden via a <code>portal-ext.properties</code> file or modified
-	* through the Portal Settings UI.
-	* </p>
-	*
-	* @param companyId the primary key of the user's company
-	* @param emailAddress the user's email address
-	* @return <code>true</code> if the notification email includes a new
-	password; <code>false</code> if the notification email only
-	contains a reset link
+	* @param teamId the primary key of the team
+	* @param userIds the primary keys of the users
 	*/
 	@Override
-	public boolean sendPasswordByEmailAddress(long companyId,
-		java.lang.String emailAddress)
+	public void addTeamUsers(long teamId, long[] userIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userService.sendPasswordByEmailAddress(companyId, emailAddress);
-	}
-
-	/**
-	* Sends a password notification email to the user matching the screen name.
-	* The portal's settings determine whether a password is sent explicitly or
-	* whether a link for resetting the user's password is sent. The method
-	* sends the email asynchronously and returns before the email is sent.
-	*
-	* <p>
-	* The content of the notification email is specified with the
-	* <code>admin.email.password</code> portal property keys. They can be
-	* overridden via a <code>portal-ext.properties</code> file or modified
-	* through the Portal Settings UI.
-	* </p>
-	*
-	* @param companyId the primary key of the user's company
-	* @param screenName the user's screen name
-	* @return <code>true</code> if the notification email includes a new
-	password; <code>false</code> if the notification email only
-	contains a reset link
-	*/
-	@Override
-	public boolean sendPasswordByScreenName(long companyId,
-		java.lang.String screenName)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userService.sendPasswordByScreenName(companyId, screenName);
-	}
-
-	/**
-	* Sends a password notification email to the user matching the ID. The
-	* portal's settings determine whether a password is sent explicitly or
-	* whether a link for resetting the user's password is sent. The method
-	* sends the email asynchronously and returns before the email is sent.
-	*
-	* <p>
-	* The content of the notification email is specified with the
-	* <code>admin.email.password</code> portal property keys. They can be
-	* overridden via a <code>portal-ext.properties</code> file or modified
-	* through the Portal Settings UI.
-	* </p>
-	*
-	* @param userId the user's primary key
-	* @return <code>true</code> if the notification email includes a new
-	password; <code>false</code> if the notification email only
-	contains a reset link
-	*/
-	@Override
-	public boolean sendPasswordByUserId(long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userService.sendPasswordByUserId(userId);
+		_userService.addTeamUsers(teamId, userIds);
 	}
 
 	/**
@@ -299,6 +238,18 @@ public class UserServiceWrapper implements UserService,
 	}
 
 	/**
+	* Adds the users to the user group.
+	*
+	* @param userGroupId the primary key of the user group
+	* @param userIds the primary keys of the users
+	*/
+	@Override
+	public void addUserGroupUsers(long userGroupId, long[] userIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_userService.addUserGroupUsers(userGroupId, userIds);
+	}
+
+	/**
 	* Adds a user with workflow.
 	*
 	* <p>
@@ -441,10 +392,129 @@ public class UserServiceWrapper implements UserService,
 			sendEmail, serviceContext);
 	}
 
+	/**
+	* Deletes the user's portrait image.
+	*
+	* @param userId the primary key of the user
+	*/
+	@Override
+	public void deletePortrait(long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_userService.deletePortrait(userId);
+	}
+
+	/**
+	* Removes the user from the role.
+	*
+	* @param roleId the primary key of the role
+	* @param userId the primary key of the user
+	*/
+	@Override
+	public void deleteRoleUser(long roleId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_userService.deleteRoleUser(roleId, userId);
+	}
+
+	/**
+	* Deletes the user.
+	*
+	* @param userId the primary key of the user
+	*/
+	@Override
+	public void deleteUser(long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_userService.deleteUser(userId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.User> getCompanyUsers(
+		long companyId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userService.getCompanyUsers(companyId, start, end);
+	}
+
+	@Override
+	public int getCompanyUsersCount(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userService.getCompanyUsersCount(companyId);
+	}
+
 	@Override
 	public com.liferay.portal.kernel.model.User getCurrentUser()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userService.getCurrentUser();
+	}
+
+	/**
+	* Returns the primary keys of all the users belonging to the group.
+	*
+	* @param groupId the primary key of the group
+	* @return the primary keys of the users belonging to the group
+	*/
+	@Override
+	public long[] getGroupUserIds(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userService.getGroupUserIds(groupId);
+	}
+
+	/**
+	* Returns all the users belonging to the group.
+	*
+	* @param groupId the primary key of the group
+	* @return the users belonging to the group
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.User> getGroupUsers(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userService.getGroupUsers(groupId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _userService.getOSGiServiceIdentifier();
+	}
+
+	/**
+	* Returns the primary keys of all the users belonging to the organization.
+	*
+	* @param organizationId the primary key of the organization
+	* @return the primary keys of the users belonging to the organization
+	*/
+	@Override
+	public long[] getOrganizationUserIds(long organizationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userService.getOrganizationUserIds(organizationId);
+	}
+
+	/**
+	* Returns all the users belonging to the organization.
+	*
+	* @param organizationId the primary key of the organization
+	* @return users belonging to the organization
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.User> getOrganizationUsers(
+		long organizationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userService.getOrganizationUsers(organizationId);
+	}
+
+	/**
+	* Returns the primary keys of all the users belonging to the role.
+	*
+	* @param roleId the primary key of the role
+	* @return the primary keys of the users belonging to the role
+	*/
+	@Override
+	public long[] getRoleUserIds(long roleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userService.getRoleUserIds(roleId);
 	}
 
 	/**
@@ -485,6 +555,279 @@ public class UserServiceWrapper implements UserService,
 		long companyId, java.lang.String screenName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userService.getUserByScreenName(companyId, screenName);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.User> getUserGroupUsers(
+		long userGroupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userService.getUserGroupUsers(userGroupId);
+	}
+
+	/**
+	* Returns the primary key of the user with the email address.
+	*
+	* @param companyId the primary key of the user's company
+	* @param emailAddress the user's email address
+	* @return the primary key of the user with the email address
+	*/
+	@Override
+	public long getUserIdByEmailAddress(long companyId,
+		java.lang.String emailAddress)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userService.getUserIdByEmailAddress(companyId, emailAddress);
+	}
+
+	/**
+	* Returns the primary key of the user with the screen name.
+	*
+	* @param companyId the primary key of the user's company
+	* @param screenName the user's screen name
+	* @return the primary key of the user with the screen name
+	*/
+	@Override
+	public long getUserIdByScreenName(long companyId,
+		java.lang.String screenName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userService.getUserIdByScreenName(companyId, screenName);
+	}
+
+	/**
+	* Returns <code>true</code> if the user is a member of the group.
+	*
+	* @param groupId the primary key of the group
+	* @param userId the primary key of the user
+	* @return <code>true</code> if the user is a member of the group;
+	<code>false</code> otherwise
+	*/
+	@Override
+	public boolean hasGroupUser(long groupId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userService.hasGroupUser(groupId, userId);
+	}
+
+	/**
+	* Returns <code>true</code> if the user has the role with the name,
+	* optionally through inheritance.
+	*
+	* @param companyId the primary key of the role's company
+	* @param name the name of the role (must be a regular role, not an
+	organization, site or provider role)
+	* @param userId the primary key of the user
+	* @param inherited whether to include roles inherited from organizations,
+	sites, etc.
+	* @return <code>true</code> if the user has the role; <code>false</code>
+	otherwise
+	*/
+	@Override
+	public boolean hasRoleUser(long companyId, java.lang.String name,
+		long userId, boolean inherited)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userService.hasRoleUser(companyId, name, userId, inherited);
+	}
+
+	/**
+	* Returns <code>true</code> if the user is a member of the role.
+	*
+	* @param roleId the primary key of the role
+	* @param userId the primary key of the user
+	* @return <code>true</code> if the user is a member of the role;
+	<code>false</code> otherwise
+	*/
+	@Override
+	public boolean hasRoleUser(long roleId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userService.hasRoleUser(roleId, userId);
+	}
+
+	/**
+	* Sends a password notification email to the user matching the email
+	* address. The portal's settings determine whether a password is sent
+	* explicitly or whether a link for resetting the user's password is sent.
+	* The method sends the email asynchronously and returns before the email is
+	* sent.
+	*
+	* <p>
+	* The content of the notification email is specified with the
+	* <code>admin.email.password</code> portal property keys. They can be
+	* overridden via a <code>portal-ext.properties</code> file or modified
+	* through the Portal Settings UI.
+	* </p>
+	*
+	* @param companyId the primary key of the user's company
+	* @param emailAddress the user's email address
+	* @return <code>true</code> if the notification email includes a new
+	password; <code>false</code> if the notification email only
+	contains a reset link
+	*/
+	@Override
+	public boolean sendPasswordByEmailAddress(long companyId,
+		java.lang.String emailAddress)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userService.sendPasswordByEmailAddress(companyId, emailAddress);
+	}
+
+	/**
+	* Sends a password notification email to the user matching the screen name.
+	* The portal's settings determine whether a password is sent explicitly or
+	* whether a link for resetting the user's password is sent. The method
+	* sends the email asynchronously and returns before the email is sent.
+	*
+	* <p>
+	* The content of the notification email is specified with the
+	* <code>admin.email.password</code> portal property keys. They can be
+	* overridden via a <code>portal-ext.properties</code> file or modified
+	* through the Portal Settings UI.
+	* </p>
+	*
+	* @param companyId the primary key of the user's company
+	* @param screenName the user's screen name
+	* @return <code>true</code> if the notification email includes a new
+	password; <code>false</code> if the notification email only
+	contains a reset link
+	*/
+	@Override
+	public boolean sendPasswordByScreenName(long companyId,
+		java.lang.String screenName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userService.sendPasswordByScreenName(companyId, screenName);
+	}
+
+	/**
+	* Sends a password notification email to the user matching the ID. The
+	* portal's settings determine whether a password is sent explicitly or
+	* whether a link for resetting the user's password is sent. The method
+	* sends the email asynchronously and returns before the email is sent.
+	*
+	* <p>
+	* The content of the notification email is specified with the
+	* <code>admin.email.password</code> portal property keys. They can be
+	* overridden via a <code>portal-ext.properties</code> file or modified
+	* through the Portal Settings UI.
+	* </p>
+	*
+	* @param userId the user's primary key
+	* @return <code>true</code> if the notification email includes a new
+	password; <code>false</code> if the notification email only
+	contains a reset link
+	*/
+	@Override
+	public boolean sendPasswordByUserId(long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userService.sendPasswordByUserId(userId);
+	}
+
+	/**
+	* Sets the users in the role, removing and adding users to the role as
+	* necessary.
+	*
+	* @param roleId the primary key of the role
+	* @param userIds the primary keys of the users
+	*/
+	@Override
+	public void setRoleUsers(long roleId, long[] userIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_userService.setRoleUsers(roleId, userIds);
+	}
+
+	/**
+	* Sets the users in the user group, removing and adding users to the user
+	* group as necessary.
+	*
+	* @param userGroupId the primary key of the user group
+	* @param userIds the primary keys of the users
+	*/
+	@Override
+	public void setUserGroupUsers(long userGroupId, long[] userIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_userService.setUserGroupUsers(userGroupId, userIds);
+	}
+
+	/**
+	* Removes the users from the teams of a group.
+	*
+	* @param groupId the primary key of the group
+	* @param userIds the primary keys of the users
+	*/
+	@Override
+	public void unsetGroupTeamsUsers(long groupId, long[] userIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_userService.unsetGroupTeamsUsers(groupId, userIds);
+	}
+
+	/**
+	* Removes the users from the group.
+	*
+	* @param groupId the primary key of the group
+	* @param userIds the primary keys of the users
+	* @param serviceContext the service context to be applied (optionally
+	<code>null</code>)
+	*/
+	@Override
+	public void unsetGroupUsers(long groupId, long[] userIds,
+		ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_userService.unsetGroupUsers(groupId, userIds, serviceContext);
+	}
+
+	/**
+	* Removes the users from the organization.
+	*
+	* @param organizationId the primary key of the organization
+	* @param userIds the primary keys of the users
+	*/
+	@Override
+	public void unsetOrganizationUsers(long organizationId, long[] userIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_userService.unsetOrganizationUsers(organizationId, userIds);
+	}
+
+	/**
+	* Removes the users from the password policy.
+	*
+	* @param passwordPolicyId the primary key of the password policy
+	* @param userIds the primary keys of the users
+	*/
+	@Override
+	public void unsetPasswordPolicyUsers(long passwordPolicyId, long[] userIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_userService.unsetPasswordPolicyUsers(passwordPolicyId, userIds);
+	}
+
+	/**
+	* Removes the users from the role.
+	*
+	* @param roleId the primary key of the role
+	* @param userIds the primary keys of the users
+	*/
+	@Override
+	public void unsetRoleUsers(long roleId, long[] userIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_userService.unsetRoleUsers(roleId, userIds);
+	}
+
+	/**
+	* Removes the users from the team.
+	*
+	* @param teamId the primary key of the team
+	* @param userIds the primary keys of the users
+	*/
+	@Override
+	public void unsetTeamUsers(long teamId, long[] userIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_userService.unsetTeamUsers(teamId, userIds);
+	}
+
+	/**
+	* Removes the users from the user group.
+	*
+	* @param userGroupId the primary key of the user group
+	* @param userIds the primary keys of the users
+	*/
+	@Override
+	public void unsetUserGroupUsers(long userGroupId, long[] userIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_userService.unsetUserGroupUsers(userGroupId, userIds);
 	}
 
 	/**
@@ -603,6 +946,22 @@ public class UserServiceWrapper implements UserService,
 		java.lang.String openId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userService.updateOpenId(userId, openId);
+	}
+
+	/**
+	* Sets the organizations that the user is in, removing and adding
+	* organizations as necessary.
+	*
+	* @param userId the primary key of the user
+	* @param organizationIds the primary keys of the organizations
+	* @param serviceContext the service context to be applied. Must set whether
+	user indexing is enabled.
+	*/
+	@Override
+	public void updateOrganizations(long userId, long[] organizationIds,
+		ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_userService.updateOrganizations(userId, organizationIds, serviceContext);
 	}
 
 	/**
@@ -964,365 +1323,6 @@ public class UserServiceWrapper implements UserService,
 			jobTitle, groupIds, organizationIds, roleIds, userGroupRoles,
 			userGroupIds, addresses, emailAddresses, phones, websites,
 			announcementsDelivers, serviceContext);
-	}
-
-	@Override
-	public int getCompanyUsersCount(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userService.getCompanyUsersCount(companyId);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _userService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.User> getCompanyUsers(
-		long companyId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userService.getCompanyUsers(companyId, start, end);
-	}
-
-	/**
-	* Returns all the users belonging to the group.
-	*
-	* @param groupId the primary key of the group
-	* @return the users belonging to the group
-	*/
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.User> getGroupUsers(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userService.getGroupUsers(groupId);
-	}
-
-	/**
-	* Returns all the users belonging to the organization.
-	*
-	* @param organizationId the primary key of the organization
-	* @return users belonging to the organization
-	*/
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.User> getOrganizationUsers(
-		long organizationId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userService.getOrganizationUsers(organizationId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.User> getUserGroupUsers(
-		long userGroupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userService.getUserGroupUsers(userGroupId);
-	}
-
-	/**
-	* Returns the primary key of the user with the email address.
-	*
-	* @param companyId the primary key of the user's company
-	* @param emailAddress the user's email address
-	* @return the primary key of the user with the email address
-	*/
-	@Override
-	public long getUserIdByEmailAddress(long companyId,
-		java.lang.String emailAddress)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userService.getUserIdByEmailAddress(companyId, emailAddress);
-	}
-
-	/**
-	* Returns the primary key of the user with the screen name.
-	*
-	* @param companyId the primary key of the user's company
-	* @param screenName the user's screen name
-	* @return the primary key of the user with the screen name
-	*/
-	@Override
-	public long getUserIdByScreenName(long companyId,
-		java.lang.String screenName)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userService.getUserIdByScreenName(companyId, screenName);
-	}
-
-	/**
-	* Returns the primary keys of all the users belonging to the group.
-	*
-	* @param groupId the primary key of the group
-	* @return the primary keys of the users belonging to the group
-	*/
-	@Override
-	public long[] getGroupUserIds(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userService.getGroupUserIds(groupId);
-	}
-
-	/**
-	* Returns the primary keys of all the users belonging to the organization.
-	*
-	* @param organizationId the primary key of the organization
-	* @return the primary keys of the users belonging to the organization
-	*/
-	@Override
-	public long[] getOrganizationUserIds(long organizationId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userService.getOrganizationUserIds(organizationId);
-	}
-
-	/**
-	* Returns the primary keys of all the users belonging to the role.
-	*
-	* @param roleId the primary key of the role
-	* @return the primary keys of the users belonging to the role
-	*/
-	@Override
-	public long[] getRoleUserIds(long roleId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userService.getRoleUserIds(roleId);
-	}
-
-	/**
-	* Adds the users to the group.
-	*
-	* @param groupId the primary key of the group
-	* @param userIds the primary keys of the users
-	* @param serviceContext the service context to be applied (optionally
-	<code>null</code>)
-	*/
-	@Override
-	public void addGroupUsers(long groupId, long[] userIds,
-		ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_userService.addGroupUsers(groupId, userIds, serviceContext);
-	}
-
-	/**
-	* Adds the users to the organization.
-	*
-	* @param organizationId the primary key of the organization
-	* @param userIds the primary keys of the users
-	*/
-	@Override
-	public void addOrganizationUsers(long organizationId, long[] userIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_userService.addOrganizationUsers(organizationId, userIds);
-	}
-
-	/**
-	* Assigns the password policy to the users, removing any other currently
-	* assigned password policies.
-	*
-	* @param passwordPolicyId the primary key of the password policy
-	* @param userIds the primary keys of the users
-	*/
-	@Override
-	public void addPasswordPolicyUsers(long passwordPolicyId, long[] userIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_userService.addPasswordPolicyUsers(passwordPolicyId, userIds);
-	}
-
-	/**
-	* Adds the users to the role.
-	*
-	* @param roleId the primary key of the role
-	* @param userIds the primary keys of the users
-	*/
-	@Override
-	public void addRoleUsers(long roleId, long[] userIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_userService.addRoleUsers(roleId, userIds);
-	}
-
-	/**
-	* Adds the users to the team.
-	*
-	* @param teamId the primary key of the team
-	* @param userIds the primary keys of the users
-	*/
-	@Override
-	public void addTeamUsers(long teamId, long[] userIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_userService.addTeamUsers(teamId, userIds);
-	}
-
-	/**
-	* Adds the users to the user group.
-	*
-	* @param userGroupId the primary key of the user group
-	* @param userIds the primary keys of the users
-	*/
-	@Override
-	public void addUserGroupUsers(long userGroupId, long[] userIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_userService.addUserGroupUsers(userGroupId, userIds);
-	}
-
-	/**
-	* Deletes the user's portrait image.
-	*
-	* @param userId the primary key of the user
-	*/
-	@Override
-	public void deletePortrait(long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_userService.deletePortrait(userId);
-	}
-
-	/**
-	* Removes the user from the role.
-	*
-	* @param roleId the primary key of the role
-	* @param userId the primary key of the user
-	*/
-	@Override
-	public void deleteRoleUser(long roleId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_userService.deleteRoleUser(roleId, userId);
-	}
-
-	/**
-	* Deletes the user.
-	*
-	* @param userId the primary key of the user
-	*/
-	@Override
-	public void deleteUser(long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_userService.deleteUser(userId);
-	}
-
-	/**
-	* Sets the users in the role, removing and adding users to the role as
-	* necessary.
-	*
-	* @param roleId the primary key of the role
-	* @param userIds the primary keys of the users
-	*/
-	@Override
-	public void setRoleUsers(long roleId, long[] userIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_userService.setRoleUsers(roleId, userIds);
-	}
-
-	/**
-	* Sets the users in the user group, removing and adding users to the user
-	* group as necessary.
-	*
-	* @param userGroupId the primary key of the user group
-	* @param userIds the primary keys of the users
-	*/
-	@Override
-	public void setUserGroupUsers(long userGroupId, long[] userIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_userService.setUserGroupUsers(userGroupId, userIds);
-	}
-
-	/**
-	* Removes the users from the teams of a group.
-	*
-	* @param groupId the primary key of the group
-	* @param userIds the primary keys of the users
-	*/
-	@Override
-	public void unsetGroupTeamsUsers(long groupId, long[] userIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_userService.unsetGroupTeamsUsers(groupId, userIds);
-	}
-
-	/**
-	* Removes the users from the group.
-	*
-	* @param groupId the primary key of the group
-	* @param userIds the primary keys of the users
-	* @param serviceContext the service context to be applied (optionally
-	<code>null</code>)
-	*/
-	@Override
-	public void unsetGroupUsers(long groupId, long[] userIds,
-		ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_userService.unsetGroupUsers(groupId, userIds, serviceContext);
-	}
-
-	/**
-	* Removes the users from the organization.
-	*
-	* @param organizationId the primary key of the organization
-	* @param userIds the primary keys of the users
-	*/
-	@Override
-	public void unsetOrganizationUsers(long organizationId, long[] userIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_userService.unsetOrganizationUsers(organizationId, userIds);
-	}
-
-	/**
-	* Removes the users from the password policy.
-	*
-	* @param passwordPolicyId the primary key of the password policy
-	* @param userIds the primary keys of the users
-	*/
-	@Override
-	public void unsetPasswordPolicyUsers(long passwordPolicyId, long[] userIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_userService.unsetPasswordPolicyUsers(passwordPolicyId, userIds);
-	}
-
-	/**
-	* Removes the users from the role.
-	*
-	* @param roleId the primary key of the role
-	* @param userIds the primary keys of the users
-	*/
-	@Override
-	public void unsetRoleUsers(long roleId, long[] userIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_userService.unsetRoleUsers(roleId, userIds);
-	}
-
-	/**
-	* Removes the users from the team.
-	*
-	* @param teamId the primary key of the team
-	* @param userIds the primary keys of the users
-	*/
-	@Override
-	public void unsetTeamUsers(long teamId, long[] userIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_userService.unsetTeamUsers(teamId, userIds);
-	}
-
-	/**
-	* Removes the users from the user group.
-	*
-	* @param userGroupId the primary key of the user group
-	* @param userIds the primary keys of the users
-	*/
-	@Override
-	public void unsetUserGroupUsers(long userGroupId, long[] userIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_userService.unsetUserGroupUsers(userGroupId, userIds);
-	}
-
-	/**
-	* Sets the organizations that the user is in, removing and adding
-	* organizations as necessary.
-	*
-	* @param userId the primary key of the user
-	* @param organizationIds the primary keys of the organizations
-	* @param serviceContext the service context to be applied. Must set whether
-	user indexing is enabled.
-	*/
-	@Override
-	public void updateOrganizations(long userId, long[] organizationIds,
-		ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_userService.updateOrganizations(userId, organizationIds, serviceContext);
 	}
 
 	@Override

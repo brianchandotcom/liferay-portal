@@ -52,18 +52,15 @@ public interface ScreensCommentService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ScreensCommentServiceUtil} to access the screens comment remote service. Add custom service methods to {@link com.liferay.screens.service.impl.ScreensCommentServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JSONArray getComments(java.lang.String className, long classPK,
-		int start, int end) throws PortalException;
-
 	public JSONObject addComment(java.lang.String className, long classPK,
 		java.lang.String body) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JSONObject getComment(long commentId) throws PortalException;
 
-	public JSONObject updateComment(long commentId, java.lang.String body)
-		throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JSONArray getComments(java.lang.String className, long classPK,
+		int start, int end) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommentsCount(java.lang.String className, long classPK)
@@ -75,4 +72,7 @@ public interface ScreensCommentService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	public JSONObject updateComment(long commentId, java.lang.String body)
+		throws PortalException;
 }

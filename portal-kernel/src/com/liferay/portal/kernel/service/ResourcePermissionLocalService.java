@@ -67,146 +67,6 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	 */
 
 	/**
-	* Returns <code>true</code> if the resource permission grants permission to
-	* perform the resource action. Note that this method does not ensure that
-	* the resource permission refers to the same type of resource as the
-	* resource action.
-	*
-	* @param resourcePermission the resource permission
-	* @param resourceAction the resource action
-	* @return <code>true</code> if the resource permission grants permission to
-	perform the resource action
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasActionId(ResourcePermission resourcePermission,
-		ResourceAction resourceAction);
-
-	/**
-	* Returns <code>true</code> if the roles have permission at the scope to
-	* perform the action on the resources.
-	*
-	* <p>
-	* Depending on the scope, the value of <code>primKey</code> will have
-	* different meanings. For more information, see {@link
-	* com.liferay.portal.model.impl.ResourcePermissionImpl}.
-	* </p>
-	*
-	* @param resources the resources
-	* @param roleIds the primary keys of the roles
-	* @param actionId the action ID
-	* @return <code>true</code> if any one of the roles has permission to
-	perform the action on any one of the resources;
-	<code>false</code> otherwise
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasResourcePermission(List<Resource> resources,
-		long[] roleIds, java.lang.String actionId) throws PortalException;
-
-	/**
-	* Returns <code>true</code> if the role has permission at the scope to
-	* perform the action on resources of the type.
-	*
-	* <p>
-	* Depending on the scope, the value of <code>primKey</code> will have
-	* different meanings. For more information, see {@link
-	* com.liferay.portal.model.impl.ResourcePermissionImpl}.
-	* </p>
-	*
-	* @param companyId the primary key of the company
-	* @param name the resource's name, which can be either a class name or a
-	portlet ID
-	* @param scope the scope
-	* @param primKey the primary key
-	* @param roleId the primary key of the role
-	* @param actionId the action ID
-	* @return <code>true</code> if the role has permission to perform the
-	action on the resource; <code>false</code> otherwise
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasResourcePermission(long companyId, java.lang.String name,
-		int scope, java.lang.String primKey, long roleId,
-		java.lang.String actionId) throws PortalException;
-
-	/**
-	* Returns <code>true</code> if the roles have permission at the scope to
-	* perform the action on resources of the type.
-	*
-	* <p>
-	* Depending on the scope, the value of <code>primKey</code> will have
-	* different meanings. For more information, see {@link
-	* com.liferay.portal.model.impl.ResourcePermissionImpl}.
-	* </p>
-	*
-	* @param companyId the primary key of the company
-	* @param name the resource's name, which can be either a class name or a
-	portlet ID
-	* @param scope the scope
-	* @param primKey the primary key
-	* @param roleIds the primary keys of the roles
-	* @param actionId the action ID
-	* @return <code>true</code> if any one of the roles has permission to
-	perform the action on the resource; <code>false</code> otherwise
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasResourcePermission(long companyId, java.lang.String name,
-		int scope, java.lang.String primKey, long[] roleIds,
-		java.lang.String actionId) throws PortalException;
-
-	/**
-	* Returns <code>true</code> if the role has permission at the scope to
-	* perform the action on the resource.
-	*
-	* <p>
-	* Depending on the scope, the value of <code>primKey</code> will have
-	* different meanings. For more information, see {@link
-	* com.liferay.portal.model.impl.ResourcePermissionImpl}.
-	* </p>
-	*
-	* @param companyId the primary key of the company
-	* @param name the resource's name, which can be either a class name or a
-	portlet ID
-	* @param scope the scope
-	* @param roleId the primary key of the role
-	* @param actionId the action ID
-	* @return <code>true</code> if the role has permission to perform the
-	action on the resource; <code>false</code> otherwise
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasScopeResourcePermission(long companyId,
-		java.lang.String name, int scope, long roleId, java.lang.String actionId)
-		throws PortalException;
-
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getRoles(long, String, int,
-	String, String}
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean[] hasResourcePermissions(long companyId,
-		java.lang.String name, int scope, java.lang.String primKey,
-		long[] roleIds, java.lang.String actionId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
 	* Adds the resource permission to the database. Also notifies the appropriate model listeners.
 	*
 	* @param resourcePermission the resource permission
@@ -217,6 +77,69 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 		ResourcePermission resourcePermission);
 
 	/**
+	* Grants the role permission at the scope to perform the action on
+	* resources of the type. Existing actions are retained.
+	*
+	* <p>
+	* This method cannot be used to grant individual scope permissions, but is
+	* only intended for adding permissions at the company, group, and
+	* group-template scopes. For example, this method could be used to grant a
+	* company scope permission to edit message board posts.
+	* </p>
+	*
+	* <p>
+	* If a company scope permission is granted to resources that the role
+	* already had group scope permissions to, the group scope permissions are
+	* deleted. Likewise, if a group scope permission is granted to resources
+	* that the role already had company scope permissions to, the company scope
+	* permissions are deleted. Be aware that this latter behavior can result in
+	* an overall reduction in permissions for the role.
+	* </p>
+	*
+	* <p>
+	* Depending on the scope, the value of <code>primKey</code> will have
+	* different meanings. For more information, see {@link
+	* com.liferay.portal.model.impl.ResourcePermissionImpl}.
+	* </p>
+	*
+	* @param companyId the primary key of the company
+	* @param name the resource's name, which can be either a class name or a
+	portlet ID
+	* @param scope the scope. This method only supports company, group, and
+	group-template scope.
+	* @param primKey the primary key
+	* @param roleId the primary key of the role
+	* @param actionId the action ID
+	*/
+	@Retry(acceptor = ExceptionRetryAcceptor.class, properties =  {
+		@Property(name = ExceptionRetryAcceptor.EXCEPTION_NAME, value = "org.springframework.dao.DataIntegrityViolationException")
+	}
+	)
+	public void addResourcePermission(long companyId, java.lang.String name,
+		int scope, java.lang.String primKey, long roleId,
+		java.lang.String actionId) throws PortalException;
+
+	/**
+	* Grants the role permissions at the scope to perform the actions on all
+	* resources of the type. Existing actions are retained.
+	*
+	* <p>
+	* This method should only be used to add default permissions to existing
+	* resources en masse during upgrades or while verifying permissions. For
+	* example, this method could be used to grant site members individual scope
+	* permissions to view all blog posts.
+	* </p>
+	*
+	* @param resourceName the resource's name, which can be either a class name
+	or a portlet ID
+	* @param roleName the role's name
+	* @param scope the scope
+	* @param resourceActionBitwiseValue the bitwise IDs of the actions
+	*/
+	public void addResourcePermissions(java.lang.String resourceName,
+		java.lang.String roleName, int scope, long resourceActionBitwiseValue);
+
+	/**
 	* Creates a new resource permission with the primary key. Does not add the resource permission to the database.
 	*
 	* @param resourcePermissionId the primary key for the new resource permission
@@ -224,6 +147,13 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	*/
 	public ResourcePermission createResourcePermission(
 		long resourcePermissionId);
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
 
 	/**
 	* Deletes the resource permission from the database. Also notifies the appropriate model listeners.
@@ -246,80 +176,57 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	public ResourcePermission deleteResourcePermission(
 		long resourcePermissionId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ResourcePermission fetchResourcePermission(long companyId,
-		java.lang.String name, int scope, java.lang.String primKey, long roleId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ResourcePermission fetchResourcePermission(long resourcePermissionId);
-
 	/**
-	* Returns the resource permission for the role at the scope to perform the
-	* actions on resources of the type.
+	* Deletes all resource permissions at the scope to resources of the type.
+	* This method should not be confused with any of the
+	* <code>removeResourcePermission</code> methods, as its purpose is very
+	* different. This method should only be used for deleting resource
+	* permissions that refer to a resource when that resource is deleted. For
+	* example this method could be used to delete all individual scope
+	* permissions to a blog post when it is deleted.
+	*
+	* <p>
+	* Depending on the scope, the value of <code>primKey</code> will have
+	* different meanings. For more information, see {@link
+	* com.liferay.portal.model.impl.ResourcePermissionImpl}.
+	* </p>
 	*
 	* @param companyId the primary key of the company
 	* @param name the resource's name, which can be either a class name or a
 	portlet ID
 	* @param scope the scope
 	* @param primKey the primary key
-	* @param roleId the primary key of the role
-	* @return the resource permission for the role at the scope to perform the
-	actions on resources of the type
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ResourcePermission getResourcePermission(long companyId,
-		java.lang.String name, int scope, java.lang.String primKey, long roleId)
+	public void deleteResourcePermissions(long companyId,
+		java.lang.String name, int scope, java.lang.String primKey)
 		throws PortalException;
 
 	/**
-	* Returns the resource permission with the primary key.
+	* Deletes all resource permissions at the scope to resources of the type.
+	* This method should not be confused with any of the
+	* <code>removeResourcePermission</code> methods, as its purpose is very
+	* different. This method should only be used for deleting resource
+	* permissions that refer to a resource when that resource is deleted. For
+	* example this method could be used to delete all individual scope
+	* permissions to a blog post when it is deleted.
 	*
-	* @param resourcePermissionId the primary key of the resource permission
-	* @return the resource permission
-	* @throws PortalException if a resource permission with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ResourcePermission getResourcePermission(long resourcePermissionId)
-		throws PortalException;
-
-	/**
-	* Updates the resource permission in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param resourcePermission the resource permission
-	* @return the resource permission that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public ResourcePermission updateResourcePermission(
-		ResourcePermission resourcePermission);
-
-	/**
-	* Returns the number of resource permissions.
-	*
-	* @return the number of resource permissions
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getResourcePermissionsCount();
-
-	/**
-	* Returns the number of resource permissions at the scope of the type.
+	* <p>
+	* Depending on the scope, the value of <code>primKey</code> will have
+	* different meanings. For more information, see {@link
+	* com.liferay.portal.model.impl.ResourcePermissionImpl}.
+	* </p>
 	*
 	* @param companyId the primary key of the company
 	* @param name the resource's name, which can be either a class name or a
 	portlet ID
 	* @param scope the scope
 	* @param primKey the primary key
-	* @return the number of resource permissions at the scope of the type
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getResourcePermissionsCount(long companyId,
-		java.lang.String name, int scope, java.lang.String primKey);
+	public void deleteResourcePermissions(long companyId,
+		java.lang.String name, int scope, long primKey)
+		throws PortalException;
 
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -361,6 +268,51 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ResourcePermission fetchResourcePermission(long resourcePermissionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ResourcePermission fetchResourcePermission(long companyId,
+		java.lang.String name, int scope, java.lang.String primKey, long roleId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<java.lang.Long, Set<java.lang.String>> getAvailableResourcePermissionActionIds(
+		long companyId, java.lang.String name, int scope,
+		java.lang.String primKey, Collection<java.lang.String> actionIds);
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link
+	#getAvailableResourcePermissionActionIds(long, String, int,
+	String, Collection)}
+	*/
+	@java.lang.Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<java.lang.Long, Set<java.lang.String>> getAvailableResourcePermissionActionIds(
+		long companyId, java.lang.String name, int scope,
+		java.lang.String primKey, long[] roleIds,
+		Collection<java.lang.String> actionIds);
+
+	/**
 	* Returns the intersection of action IDs the role has permission at the
 	* scope to perform on resources of the type.
 	*
@@ -379,6 +331,50 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 		long companyId, java.lang.String name, int scope,
 		java.lang.String primKey, long roleId,
 		Collection<java.lang.String> actionIds) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Returns the resource permission with the primary key.
+	*
+	* @param resourcePermissionId the primary key of the resource permission
+	* @return the resource permission
+	* @throws PortalException if a resource permission with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ResourcePermission getResourcePermission(long resourcePermissionId)
+		throws PortalException;
+
+	/**
+	* Returns the resource permission for the role at the scope to perform the
+	* actions on resources of the type.
+	*
+	* @param companyId the primary key of the company
+	* @param name the resource's name, which can be either a class name or a
+	portlet ID
+	* @param scope the scope
+	* @param primKey the primary key
+	* @param roleId the primary key of the role
+	* @return the resource permission for the role at the scope to perform the
+	actions on resources of the type
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ResourcePermission getResourcePermission(long companyId,
+		java.lang.String name, int scope, java.lang.String primKey, long roleId)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the resource permissions.
@@ -406,6 +402,28 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ResourcePermission> getResourcePermissions(long companyId,
+		java.lang.String name, int scope, java.lang.String primKey);
+
+	/**
+	* Returns the number of resource permissions.
+	*
+	* @return the number of resource permissions
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getResourcePermissionsCount();
+
+	/**
+	* Returns the number of resource permissions at the scope of the type.
+	*
+	* @param companyId the primary key of the company
+	* @param name the resource's name, which can be either a class name or a
+	portlet ID
+	* @param scope the scope
+	* @param primKey the primary key
+	* @return the number of resource permissions at the scope of the type
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getResourcePermissionsCount(long companyId,
 		java.lang.String name, int scope, java.lang.String primKey);
 
 	/**
@@ -480,60 +498,45 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ResourcePermission> getScopeResourcePermissions(int[] scopes);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<java.lang.Long, Set<java.lang.String>> getAvailableResourcePermissionActionIds(
-		long companyId, java.lang.String name, int scope,
-		java.lang.String primKey, Collection<java.lang.String> actionIds);
-
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	#getAvailableResourcePermissionActionIds(long, String, int,
-	String, Collection)}
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<java.lang.Long, Set<java.lang.String>> getAvailableResourcePermissionActionIds(
-		long companyId, java.lang.String name, int scope,
-		java.lang.String primKey, long[] roleIds,
-		Collection<java.lang.String> actionIds);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns <code>true</code> if the resource permission grants permission to
+	* perform the resource action. Note that this method does not ensure that
+	* the resource permission refers to the same type of resource as the
+	* resource action.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @param resourcePermission the resource permission
+	* @param resourceAction the resource action
+	* @return <code>true</code> if the resource permission grants permission to
+	perform the resource action
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasActionId(ResourcePermission resourcePermission,
+		ResourceAction resourceAction);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	/**
-	* Grants the role permission at the scope to perform the action on
-	* resources of the type. Existing actions are retained.
+	* Returns <code>true</code> if the roles have permission at the scope to
+	* perform the action on the resources.
 	*
 	* <p>
-	* This method cannot be used to grant individual scope permissions, but is
-	* only intended for adding permissions at the company, group, and
-	* group-template scopes. For example, this method could be used to grant a
-	* company scope permission to edit message board posts.
+	* Depending on the scope, the value of <code>primKey</code> will have
+	* different meanings. For more information, see {@link
+	* com.liferay.portal.model.impl.ResourcePermissionImpl}.
 	* </p>
 	*
-	* <p>
-	* If a company scope permission is granted to resources that the role
-	* already had group scope permissions to, the group scope permissions are
-	* deleted. Likewise, if a group scope permission is granted to resources
-	* that the role already had company scope permissions to, the company scope
-	* permissions are deleted. Be aware that this latter behavior can result in
-	* an overall reduction in permissions for the role.
-	* </p>
+	* @param resources the resources
+	* @param roleIds the primary keys of the roles
+	* @param actionId the action ID
+	* @return <code>true</code> if any one of the roles has permission to
+	perform the action on any one of the resources;
+	<code>false</code> otherwise
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasResourcePermission(List<Resource> resources,
+		long[] roleIds, java.lang.String actionId) throws PortalException;
+
+	/**
+	* Returns <code>true</code> if the roles have permission at the scope to
+	* perform the action on resources of the type.
 	*
 	* <p>
 	* Depending on the scope, the value of <code>primKey</code> will have
@@ -544,48 +547,56 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	* @param companyId the primary key of the company
 	* @param name the resource's name, which can be either a class name or a
 	portlet ID
-	* @param scope the scope. This method only supports company, group, and
-	group-template scope.
+	* @param scope the scope
+	* @param primKey the primary key
+	* @param roleIds the primary keys of the roles
+	* @param actionId the action ID
+	* @return <code>true</code> if any one of the roles has permission to
+	perform the action on the resource; <code>false</code> otherwise
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasResourcePermission(long companyId, java.lang.String name,
+		int scope, java.lang.String primKey, long[] roleIds,
+		java.lang.String actionId) throws PortalException;
+
+	/**
+	* Returns <code>true</code> if the role has permission at the scope to
+	* perform the action on resources of the type.
+	*
+	* <p>
+	* Depending on the scope, the value of <code>primKey</code> will have
+	* different meanings. For more information, see {@link
+	* com.liferay.portal.model.impl.ResourcePermissionImpl}.
+	* </p>
+	*
+	* @param companyId the primary key of the company
+	* @param name the resource's name, which can be either a class name or a
+	portlet ID
+	* @param scope the scope
 	* @param primKey the primary key
 	* @param roleId the primary key of the role
 	* @param actionId the action ID
+	* @return <code>true</code> if the role has permission to perform the
+	action on the resource; <code>false</code> otherwise
 	*/
-	@Retry(acceptor = ExceptionRetryAcceptor.class, properties =  {
-		@Property(name = ExceptionRetryAcceptor.EXCEPTION_NAME, value = "org.springframework.dao.DataIntegrityViolationException")
-	}
-	)
-	public void addResourcePermission(long companyId, java.lang.String name,
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasResourcePermission(long companyId, java.lang.String name,
 		int scope, java.lang.String primKey, long roleId,
 		java.lang.String actionId) throws PortalException;
 
 	/**
-	* Grants the role permissions at the scope to perform the actions on all
-	* resources of the type. Existing actions are retained.
-	*
-	* <p>
-	* This method should only be used to add default permissions to existing
-	* resources en masse during upgrades or while verifying permissions. For
-	* example, this method could be used to grant site members individual scope
-	* permissions to view all blog posts.
-	* </p>
-	*
-	* @param resourceName the resource's name, which can be either a class name
-	or a portlet ID
-	* @param roleName the role's name
-	* @param scope the scope
-	* @param resourceActionBitwiseValue the bitwise IDs of the actions
+	* @deprecated As of 7.0.0, replaced by {@link #getRoles(long, String, int,
+	String, String}
 	*/
-	public void addResourcePermissions(java.lang.String resourceName,
-		java.lang.String roleName, int scope, long resourceActionBitwiseValue);
+	@java.lang.Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean[] hasResourcePermissions(long companyId,
+		java.lang.String name, int scope, java.lang.String primKey,
+		long[] roleIds, java.lang.String actionId) throws PortalException;
 
 	/**
-	* Deletes all resource permissions at the scope to resources of the type.
-	* This method should not be confused with any of the
-	* <code>removeResourcePermission</code> methods, as its purpose is very
-	* different. This method should only be used for deleting resource
-	* permissions that refer to a resource when that resource is deleted. For
-	* example this method could be used to delete all individual scope
-	* permissions to a blog post when it is deleted.
+	* Returns <code>true</code> if the role has permission at the scope to
+	* perform the action on the resource.
 	*
 	* <p>
 	* Depending on the scope, the value of <code>primKey</code> will have
@@ -597,35 +608,14 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	* @param name the resource's name, which can be either a class name or a
 	portlet ID
 	* @param scope the scope
-	* @param primKey the primary key
+	* @param roleId the primary key of the role
+	* @param actionId the action ID
+	* @return <code>true</code> if the role has permission to perform the
+	action on the resource; <code>false</code> otherwise
 	*/
-	public void deleteResourcePermissions(long companyId,
-		java.lang.String name, int scope, java.lang.String primKey)
-		throws PortalException;
-
-	/**
-	* Deletes all resource permissions at the scope to resources of the type.
-	* This method should not be confused with any of the
-	* <code>removeResourcePermission</code> methods, as its purpose is very
-	* different. This method should only be used for deleting resource
-	* permissions that refer to a resource when that resource is deleted. For
-	* example this method could be used to delete all individual scope
-	* permissions to a blog post when it is deleted.
-	*
-	* <p>
-	* Depending on the scope, the value of <code>primKey</code> will have
-	* different meanings. For more information, see {@link
-	* com.liferay.portal.model.impl.ResourcePermissionImpl}.
-	* </p>
-	*
-	* @param companyId the primary key of the company
-	* @param name the resource's name, which can be either a class name or a
-	portlet ID
-	* @param scope the scope
-	* @param primKey the primary key
-	*/
-	public void deleteResourcePermissions(long companyId,
-		java.lang.String name, int scope, long primKey)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasScopeResourcePermission(long companyId,
+		java.lang.String name, int scope, long roleId, java.lang.String actionId)
 		throws PortalException;
 
 	/**
@@ -789,4 +779,14 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	public void setResourcePermissions(long companyId, java.lang.String name,
 		int scope, java.lang.String primKey, long roleId,
 		java.lang.String[] actionIds) throws PortalException;
+
+	/**
+	* Updates the resource permission in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param resourcePermission the resource permission
+	* @return the resource permission that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public ResourcePermission updateResourcePermission(
+		ResourcePermission resourcePermission);
 }

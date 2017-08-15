@@ -142,58 +142,13 @@ public class PortletItemWrapper implements PortletItem,
 	}
 
 	@Override
-	public CacheModel<PortletItem> toCacheModel() {
-		return _portletItem.toCacheModel();
-	}
-
-	@Override
-	public PortletItem toEscapedModel() {
-		return new PortletItemWrapper(_portletItem.toEscapedModel());
-	}
-
-	@Override
-	public PortletItem toUnescapedModel() {
-		return new PortletItemWrapper(_portletItem.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _portletItem.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _portletItem.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _portletItem.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _portletItem.getExpandoBridge();
+	public java.lang.Object clone() {
+		return new PortletItemWrapper((PortletItem)_portletItem.clone());
 	}
 
 	@Override
 	public int compareTo(PortletItem portletItem) {
 		return _portletItem.compareTo(portletItem);
-	}
-
-	@Override
-	public int hashCode() {
-		return _portletItem.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _portletItem.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new PortletItemWrapper((PortletItem)_portletItem.clone());
 	}
 
 	/**
@@ -204,76 +159,6 @@ public class PortletItemWrapper implements PortletItem,
 	@Override
 	public java.lang.String getClassName() {
 		return _portletItem.getClassName();
-	}
-
-	/**
-	* Returns the name of this portlet item.
-	*
-	* @return the name of this portlet item
-	*/
-	@Override
-	public java.lang.String getName() {
-		return _portletItem.getName();
-	}
-
-	/**
-	* Returns the portlet ID of this portlet item.
-	*
-	* @return the portlet ID of this portlet item
-	*/
-	@Override
-	public java.lang.String getPortletId() {
-		return _portletItem.getPortletId();
-	}
-
-	/**
-	* Returns the user name of this portlet item.
-	*
-	* @return the user name of this portlet item
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _portletItem.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this portlet item.
-	*
-	* @return the user uuid of this portlet item
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _portletItem.getUserUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _portletItem.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _portletItem.toXmlString();
-	}
-
-	/**
-	* Returns the create date of this portlet item.
-	*
-	* @return the create date of this portlet item
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _portletItem.getCreateDate();
-	}
-
-	/**
-	* Returns the modified date of this portlet item.
-	*
-	* @return the modified date of this portlet item
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _portletItem.getModifiedDate();
 	}
 
 	/**
@@ -297,6 +182,21 @@ public class PortletItemWrapper implements PortletItem,
 	}
 
 	/**
+	* Returns the create date of this portlet item.
+	*
+	* @return the create date of this portlet item
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _portletItem.getCreateDate();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _portletItem.getExpandoBridge();
+	}
+
+	/**
 	* Returns the group ID of this portlet item.
 	*
 	* @return the group ID of this portlet item
@@ -307,6 +207,16 @@ public class PortletItemWrapper implements PortletItem,
 	}
 
 	/**
+	* Returns the modified date of this portlet item.
+	*
+	* @return the modified date of this portlet item
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _portletItem.getModifiedDate();
+	}
+
+	/**
 	* Returns the mvcc version of this portlet item.
 	*
 	* @return the mvcc version of this portlet item
@@ -314,6 +224,26 @@ public class PortletItemWrapper implements PortletItem,
 	@Override
 	public long getMvccVersion() {
 		return _portletItem.getMvccVersion();
+	}
+
+	/**
+	* Returns the name of this portlet item.
+	*
+	* @return the name of this portlet item
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _portletItem.getName();
+	}
+
+	/**
+	* Returns the portlet ID of this portlet item.
+	*
+	* @return the portlet ID of this portlet item
+	*/
+	@Override
+	public java.lang.String getPortletId() {
+		return _portletItem.getPortletId();
 	}
 
 	/**
@@ -336,6 +266,11 @@ public class PortletItemWrapper implements PortletItem,
 		return _portletItem.getPrimaryKey();
 	}
 
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _portletItem.getPrimaryKeyObj();
+	}
+
 	/**
 	* Returns the user ID of this portlet item.
 	*
@@ -344,6 +279,46 @@ public class PortletItemWrapper implements PortletItem,
 	@Override
 	public long getUserId() {
 		return _portletItem.getUserId();
+	}
+
+	/**
+	* Returns the user name of this portlet item.
+	*
+	* @return the user name of this portlet item
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _portletItem.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this portlet item.
+	*
+	* @return the user uuid of this portlet item
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _portletItem.getUserUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _portletItem.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _portletItem.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _portletItem.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _portletItem.isNew();
 	}
 
 	@Override
@@ -392,13 +367,13 @@ public class PortletItemWrapper implements PortletItem,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_portletItem.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_portletItem.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_portletItem.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
+		_portletItem.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -514,6 +489,31 @@ public class PortletItemWrapper implements PortletItem,
 	@Override
 	public void setUserUuid(java.lang.String userUuid) {
 		_portletItem.setUserUuid(userUuid);
+	}
+
+	@Override
+	public CacheModel<PortletItem> toCacheModel() {
+		return _portletItem.toCacheModel();
+	}
+
+	@Override
+	public PortletItem toEscapedModel() {
+		return new PortletItemWrapper(_portletItem.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _portletItem.toString();
+	}
+
+	@Override
+	public PortletItem toUnescapedModel() {
+		return new PortletItemWrapper(_portletItem.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _portletItem.toXmlString();
 	}
 
 	@Override

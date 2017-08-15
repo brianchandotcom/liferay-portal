@@ -32,38 +32,6 @@ public class UserNotificationEventLocalServiceWrapper
 		_userNotificationEventLocalService = userNotificationEventLocalService;
 	}
 
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _userNotificationEventLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _userNotificationEventLocalService.dynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _userNotificationEventLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userNotificationEventLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userNotificationEventLocalService.getPersistedModel(primaryKeyObj);
-	}
-
 	/**
 	* Adds the user notification event to the database. Also notifies the appropriate model listeners.
 	*
@@ -131,6 +99,23 @@ public class UserNotificationEventLocalServiceWrapper
 			type, timestamp, deliverBy, payload, archived, serviceContext);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.UserNotificationEvent> addUserNotificationEvents(
+		long userId,
+		java.util.Collection<com.liferay.portal.kernel.notifications.NotificationEvent> notificationEvents)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userNotificationEventLocalService.addUserNotificationEvents(userId,
+			notificationEvents);
+	}
+
+	@Override
+	public void archiveUserNotificationEvents(long userId, int deliveryType,
+		boolean actionRequired)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_userNotificationEventLocalService.archiveUserNotificationEvents(userId,
+			deliveryType, actionRequired);
+	}
+
 	/**
 	* Creates a new user notification event with the primary key. Does not add the user notification event to the database.
 	*
@@ -144,6 +129,16 @@ public class UserNotificationEventLocalServiceWrapper
 	}
 
 	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userNotificationEventLocalService.deletePersistedModel(persistedModel);
+	}
+
+	/**
 	* Deletes the user notification event from the database. Also notifies the appropriate model listeners.
 	*
 	* @param userNotificationEvent the user notification event
@@ -153,6 +148,13 @@ public class UserNotificationEventLocalServiceWrapper
 	public com.liferay.portal.kernel.model.UserNotificationEvent deleteUserNotificationEvent(
 		com.liferay.portal.kernel.model.UserNotificationEvent userNotificationEvent) {
 		return _userNotificationEventLocalService.deleteUserNotificationEvent(userNotificationEvent);
+	}
+
+	@Override
+	public void deleteUserNotificationEvent(java.lang.String uuid,
+		long companyId) {
+		_userNotificationEventLocalService.deleteUserNotificationEvent(uuid,
+			companyId);
 	}
 
 	/**
@@ -170,194 +172,15 @@ public class UserNotificationEventLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.UserNotificationEvent fetchUserNotificationEvent(
-		long userNotificationEventId) {
-		return _userNotificationEventLocalService.fetchUserNotificationEvent(userNotificationEventId);
-	}
-
-	/**
-	* Returns the user notification event with the matching UUID and company.
-	*
-	* @param uuid the user notification event's UUID
-	* @param companyId the primary key of the company
-	* @return the matching user notification event, or <code>null</code> if a matching user notification event could not be found
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.UserNotificationEvent fetchUserNotificationEventByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return _userNotificationEventLocalService.fetchUserNotificationEventByUuidAndCompanyId(uuid,
-			companyId);
-	}
-
-	/**
-	* Returns the user notification event with the primary key.
-	*
-	* @param userNotificationEventId the primary key of the user notification event
-	* @return the user notification event
-	* @throws PortalException if a user notification event with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.UserNotificationEvent getUserNotificationEvent(
-		long userNotificationEventId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userNotificationEventLocalService.getUserNotificationEvent(userNotificationEventId);
-	}
-
-	/**
-	* Returns the user notification event with the matching UUID and company.
-	*
-	* @param uuid the user notification event's UUID
-	* @param companyId the primary key of the company
-	* @return the matching user notification event
-	* @throws PortalException if a matching user notification event could not be found
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.UserNotificationEvent getUserNotificationEventByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userNotificationEventLocalService.getUserNotificationEventByUuidAndCompanyId(uuid,
+	public void deleteUserNotificationEvents(
+		java.util.Collection<java.lang.String> uuids, long companyId) {
+		_userNotificationEventLocalService.deleteUserNotificationEvents(uuids,
 			companyId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.UserNotificationEvent sendUserNotificationEvents(
-		long userId, java.lang.String portletId, int deliveryType,
-		boolean actionRequired,
-		com.liferay.portal.kernel.json.JSONObject notificationEventJSONObject)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userNotificationEventLocalService.sendUserNotificationEvents(userId,
-			portletId, deliveryType, actionRequired, notificationEventJSONObject);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.UserNotificationEvent sendUserNotificationEvents(
-		long userId, java.lang.String portletId, int deliveryType,
-		com.liferay.portal.kernel.json.JSONObject notificationEventJSONObject)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userNotificationEventLocalService.sendUserNotificationEvents(userId,
-			portletId, deliveryType, notificationEventJSONObject);
-	}
-
-	/**
-	* Updates the user notification event in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param userNotificationEvent the user notification event
-	* @return the user notification event that was updated
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.UserNotificationEvent updateUserNotificationEvent(
-		com.liferay.portal.kernel.model.UserNotificationEvent userNotificationEvent) {
-		return _userNotificationEventLocalService.updateUserNotificationEvent(userNotificationEvent);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.UserNotificationEvent updateUserNotificationEvent(
-		java.lang.String uuid, long companyId, boolean archive) {
-		return _userNotificationEventLocalService.updateUserNotificationEvent(uuid,
-			companyId, archive);
-	}
-
-	@Override
-	public int getArchivedUserNotificationEventsCount(long userId,
-		boolean actionRequired, boolean archived) {
-		return _userNotificationEventLocalService.getArchivedUserNotificationEventsCount(userId,
-			actionRequired, archived);
-	}
-
-	@Override
-	public int getArchivedUserNotificationEventsCount(long userId,
-		boolean archived) {
-		return _userNotificationEventLocalService.getArchivedUserNotificationEventsCount(userId,
-			archived);
-	}
-
-	@Override
-	public int getArchivedUserNotificationEventsCount(long userId,
-		int deliveryType, boolean actionRequired, boolean archived) {
-		return _userNotificationEventLocalService.getArchivedUserNotificationEventsCount(userId,
-			deliveryType, actionRequired, archived);
-	}
-
-	@Override
-	public int getArchivedUserNotificationEventsCount(long userId,
-		int deliveryType, boolean archived) {
-		return _userNotificationEventLocalService.getArchivedUserNotificationEventsCount(userId,
-			deliveryType, archived);
-	}
-
-	@Override
-	public int getDeliveredUserNotificationEventsCount(long userId,
-		boolean delivered) {
-		return _userNotificationEventLocalService.getDeliveredUserNotificationEventsCount(userId,
-			delivered);
-	}
-
-	@Override
-	public int getDeliveredUserNotificationEventsCount(long userId,
-		boolean delivered, boolean actionRequired) {
-		return _userNotificationEventLocalService.getDeliveredUserNotificationEventsCount(userId,
-			delivered, actionRequired);
-	}
-
-	@Override
-	public int getDeliveredUserNotificationEventsCount(long userId,
-		int deliveryType, boolean delivered) {
-		return _userNotificationEventLocalService.getDeliveredUserNotificationEventsCount(userId,
-			deliveryType, delivered);
-	}
-
-	@Override
-	public int getDeliveredUserNotificationEventsCount(long userId,
-		int deliveryType, boolean delivered, boolean actionRequired) {
-		return _userNotificationEventLocalService.getDeliveredUserNotificationEventsCount(userId,
-			deliveryType, delivered, actionRequired);
-	}
-
-	/**
-	* Returns the number of user notification events.
-	*
-	* @return the number of user notification events
-	*/
-	@Override
-	public int getUserNotificationEventsCount() {
-		return _userNotificationEventLocalService.getUserNotificationEventsCount();
-	}
-
-	@Override
-	public int getUserNotificationEventsCount(long userId) {
-		return _userNotificationEventLocalService.getUserNotificationEventsCount(userId);
-	}
-
-	@Override
-	public int getUserNotificationEventsCount(long userId, int deliveryType) {
-		return _userNotificationEventLocalService.getUserNotificationEventsCount(userId,
-			deliveryType);
-	}
-
-	@Override
-	public int getUserNotificationEventsCount(long userId,
-		java.lang.String type, int deliveryType, boolean archived) {
-		return _userNotificationEventLocalService.getUserNotificationEventsCount(userId,
-			type, deliveryType, archived);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _userNotificationEventLocalService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.UserNotificationEvent> addUserNotificationEvents(
-		long userId,
-		java.util.Collection<com.liferay.portal.kernel.notifications.NotificationEvent> notificationEvents)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userNotificationEventLocalService.addUserNotificationEvents(userId,
-			notificationEvents);
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _userNotificationEventLocalService.dynamicQuery();
 	}
 
 	/**
@@ -414,6 +237,65 @@ public class UserNotificationEventLocalServiceWrapper
 			start, end, orderByComparator);
 	}
 
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _userNotificationEventLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _userNotificationEventLocalService.dynamicQueryCount(dynamicQuery,
+			projection);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.UserNotificationEvent fetchUserNotificationEvent(
+		long userNotificationEventId) {
+		return _userNotificationEventLocalService.fetchUserNotificationEvent(userNotificationEventId);
+	}
+
+	/**
+	* Returns the user notification event with the matching UUID and company.
+	*
+	* @param uuid the user notification event's UUID
+	* @param companyId the primary key of the company
+	* @return the matching user notification event, or <code>null</code> if a matching user notification event could not be found
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.UserNotificationEvent fetchUserNotificationEventByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return _userNotificationEventLocalService.fetchUserNotificationEventByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _userNotificationEventLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.UserNotificationEvent> getArchivedUserNotificationEvents(
+		long userId, boolean archived) {
+		return _userNotificationEventLocalService.getArchivedUserNotificationEvents(userId,
+			archived);
+	}
+
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.UserNotificationEvent> getArchivedUserNotificationEvents(
 		long userId, boolean actionRequired, boolean archived) {
@@ -431,16 +313,16 @@ public class UserNotificationEventLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.UserNotificationEvent> getArchivedUserNotificationEvents(
-		long userId, boolean archived) {
+		long userId, boolean archived, int start, int end) {
 		return _userNotificationEventLocalService.getArchivedUserNotificationEvents(userId,
-			archived);
+			archived, start, end);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.UserNotificationEvent> getArchivedUserNotificationEvents(
-		long userId, boolean archived, int start, int end) {
+		long userId, int deliveryType, boolean archived) {
 		return _userNotificationEventLocalService.getArchivedUserNotificationEvents(userId,
-			archived, start, end);
+			deliveryType, archived);
 	}
 
 	@Override
@@ -469,16 +351,37 @@ public class UserNotificationEventLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.UserNotificationEvent> getArchivedUserNotificationEvents(
-		long userId, int deliveryType, boolean archived) {
+		long userId, int deliveryType, boolean archived, int start, int end) {
 		return _userNotificationEventLocalService.getArchivedUserNotificationEvents(userId,
+			deliveryType, archived, start, end);
+	}
+
+	@Override
+	public int getArchivedUserNotificationEventsCount(long userId,
+		boolean archived) {
+		return _userNotificationEventLocalService.getArchivedUserNotificationEventsCount(userId,
+			archived);
+	}
+
+	@Override
+	public int getArchivedUserNotificationEventsCount(long userId,
+		boolean actionRequired, boolean archived) {
+		return _userNotificationEventLocalService.getArchivedUserNotificationEventsCount(userId,
+			actionRequired, archived);
+	}
+
+	@Override
+	public int getArchivedUserNotificationEventsCount(long userId,
+		int deliveryType, boolean archived) {
+		return _userNotificationEventLocalService.getArchivedUserNotificationEventsCount(userId,
 			deliveryType, archived);
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.UserNotificationEvent> getArchivedUserNotificationEvents(
-		long userId, int deliveryType, boolean archived, int start, int end) {
-		return _userNotificationEventLocalService.getArchivedUserNotificationEvents(userId,
-			deliveryType, archived, start, end);
+	public int getArchivedUserNotificationEventsCount(long userId,
+		int deliveryType, boolean actionRequired, boolean archived) {
+		return _userNotificationEventLocalService.getArchivedUserNotificationEventsCount(userId,
+			deliveryType, actionRequired, archived);
 	}
 
 	@Override
@@ -549,9 +452,89 @@ public class UserNotificationEventLocalServiceWrapper
 	}
 
 	@Override
+	public int getDeliveredUserNotificationEventsCount(long userId,
+		boolean delivered) {
+		return _userNotificationEventLocalService.getDeliveredUserNotificationEventsCount(userId,
+			delivered);
+	}
+
+	@Override
+	public int getDeliveredUserNotificationEventsCount(long userId,
+		boolean delivered, boolean actionRequired) {
+		return _userNotificationEventLocalService.getDeliveredUserNotificationEventsCount(userId,
+			delivered, actionRequired);
+	}
+
+	@Override
+	public int getDeliveredUserNotificationEventsCount(long userId,
+		int deliveryType, boolean delivered) {
+		return _userNotificationEventLocalService.getDeliveredUserNotificationEventsCount(userId,
+			deliveryType, delivered);
+	}
+
+	@Override
+	public int getDeliveredUserNotificationEventsCount(long userId,
+		int deliveryType, boolean delivered, boolean actionRequired) {
+		return _userNotificationEventLocalService.getDeliveredUserNotificationEventsCount(userId,
+			deliveryType, delivered, actionRequired);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _userNotificationEventLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _userNotificationEventLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userNotificationEventLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
 	public java.util.List<com.liferay.portal.kernel.model.UserNotificationEvent> getTypeNotificationEvents(
 		java.lang.String type) {
 		return _userNotificationEventLocalService.getTypeNotificationEvents(type);
+	}
+
+	/**
+	* Returns the user notification event with the primary key.
+	*
+	* @param userNotificationEventId the primary key of the user notification event
+	* @return the user notification event
+	* @throws PortalException if a user notification event with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.UserNotificationEvent getUserNotificationEvent(
+		long userNotificationEventId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userNotificationEventLocalService.getUserNotificationEvent(userNotificationEventId);
+	}
+
+	/**
+	* Returns the user notification event with the matching UUID and company.
+	*
+	* @param uuid the user notification event's UUID
+	* @param companyId the primary key of the company
+	* @return the matching user notification event
+	* @throws PortalException if a matching user notification event could not be found
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.UserNotificationEvent getUserNotificationEventByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userNotificationEventLocalService.getUserNotificationEventByUuidAndCompanyId(uuid,
+			companyId);
 	}
 
 	/**
@@ -587,16 +570,82 @@ public class UserNotificationEventLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.UserNotificationEvent> getUserNotificationEvents(
+		long userId, int start, int end) {
+		return _userNotificationEventLocalService.getUserNotificationEvents(userId,
+			start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.UserNotificationEvent> getUserNotificationEvents(
 		long userId, int deliveryType, int start, int end) {
 		return _userNotificationEventLocalService.getUserNotificationEvents(userId,
 			deliveryType, start, end);
 	}
 
+	/**
+	* Returns the number of user notification events.
+	*
+	* @return the number of user notification events
+	*/
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.UserNotificationEvent> getUserNotificationEvents(
-		long userId, int start, int end) {
-		return _userNotificationEventLocalService.getUserNotificationEvents(userId,
-			start, end);
+	public int getUserNotificationEventsCount() {
+		return _userNotificationEventLocalService.getUserNotificationEventsCount();
+	}
+
+	@Override
+	public int getUserNotificationEventsCount(long userId) {
+		return _userNotificationEventLocalService.getUserNotificationEventsCount(userId);
+	}
+
+	@Override
+	public int getUserNotificationEventsCount(long userId, int deliveryType) {
+		return _userNotificationEventLocalService.getUserNotificationEventsCount(userId,
+			deliveryType);
+	}
+
+	@Override
+	public int getUserNotificationEventsCount(long userId,
+		java.lang.String type, int deliveryType, boolean archived) {
+		return _userNotificationEventLocalService.getUserNotificationEventsCount(userId,
+			type, deliveryType, archived);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.UserNotificationEvent sendUserNotificationEvents(
+		long userId, java.lang.String portletId, int deliveryType,
+		boolean actionRequired,
+		com.liferay.portal.kernel.json.JSONObject notificationEventJSONObject)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userNotificationEventLocalService.sendUserNotificationEvents(userId,
+			portletId, deliveryType, actionRequired, notificationEventJSONObject);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.UserNotificationEvent sendUserNotificationEvents(
+		long userId, java.lang.String portletId, int deliveryType,
+		com.liferay.portal.kernel.json.JSONObject notificationEventJSONObject)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userNotificationEventLocalService.sendUserNotificationEvents(userId,
+			portletId, deliveryType, notificationEventJSONObject);
+	}
+
+	/**
+	* Updates the user notification event in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param userNotificationEvent the user notification event
+	* @return the user notification event that was updated
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.UserNotificationEvent updateUserNotificationEvent(
+		com.liferay.portal.kernel.model.UserNotificationEvent userNotificationEvent) {
+		return _userNotificationEventLocalService.updateUserNotificationEvent(userNotificationEvent);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.UserNotificationEvent updateUserNotificationEvent(
+		java.lang.String uuid, long companyId, boolean archive) {
+		return _userNotificationEventLocalService.updateUserNotificationEvent(uuid,
+			companyId, archive);
 	}
 
 	@Override
@@ -605,55 +654,6 @@ public class UserNotificationEventLocalServiceWrapper
 		boolean archive) {
 		return _userNotificationEventLocalService.updateUserNotificationEvents(uuids,
 			companyId, archive);
-	}
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _userNotificationEventLocalService.dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _userNotificationEventLocalService.dynamicQueryCount(dynamicQuery,
-			projection);
-	}
-
-	@Override
-	public void archiveUserNotificationEvents(long userId, int deliveryType,
-		boolean actionRequired)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_userNotificationEventLocalService.archiveUserNotificationEvents(userId,
-			deliveryType, actionRequired);
-	}
-
-	@Override
-	public void deleteUserNotificationEvent(java.lang.String uuid,
-		long companyId) {
-		_userNotificationEventLocalService.deleteUserNotificationEvent(uuid,
-			companyId);
-	}
-
-	@Override
-	public void deleteUserNotificationEvents(
-		java.util.Collection<java.lang.String> uuids, long companyId) {
-		_userNotificationEventLocalService.deleteUserNotificationEvents(uuids,
-			companyId);
 	}
 
 	@Override

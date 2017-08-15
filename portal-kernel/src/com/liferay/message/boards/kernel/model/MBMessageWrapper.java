@@ -249,25 +249,19 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	}
 
 	@Override
-	public MBCategory getCategory()
+	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessage.getCategory();
+		return _mbMessage.addAttachmentsFolder();
 	}
 
 	@Override
-	public MBMessage toEscapedModel() {
-		return new MBMessageWrapper(_mbMessage.toEscapedModel());
+	public java.lang.Object clone() {
+		return new MBMessageWrapper((MBMessage)_mbMessage.clone());
 	}
 
 	@Override
-	public MBMessage toUnescapedModel() {
-		return new MBMessageWrapper(_mbMessage.toUnescapedModel());
-	}
-
-	@Override
-	public MBThread getThread()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessage.getThread();
+	public int compareTo(MBMessage mbMessage) {
+		return _mbMessage.compareTo(mbMessage);
 	}
 
 	/**
@@ -298,6 +292,401 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	@Override
 	public boolean getAnswer() {
 		return _mbMessage.getAnswer();
+	}
+
+	@Override
+	public java.lang.String[] getAssetTagNames() {
+		return _mbMessage.getAssetTagNames();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessage.getAttachmentsFileEntries();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries(
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessage.getAttachmentsFileEntries(start, end);
+	}
+
+	@Override
+	public int getAttachmentsFileEntriesCount()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessage.getAttachmentsFileEntriesCount();
+	}
+
+	@Override
+	public long getAttachmentsFolderId()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessage.getAttachmentsFolderId();
+	}
+
+	/**
+	* Returns the body of this message-boards message.
+	*
+	* @return the body of this message-boards message
+	*/
+	@Override
+	public java.lang.String getBody() {
+		return _mbMessage.getBody();
+	}
+
+	@Override
+	public java.lang.String getBody(boolean translate) {
+		return _mbMessage.getBody(translate);
+	}
+
+	@Override
+	public MBCategory getCategory()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessage.getCategory();
+	}
+
+	/**
+	* Returns the category ID of this message-boards message.
+	*
+	* @return the category ID of this message-boards message
+	*/
+	@Override
+	public long getCategoryId() {
+		return _mbMessage.getCategoryId();
+	}
+
+	/**
+	* Returns the fully qualified class name of this message-boards message.
+	*
+	* @return the fully qualified class name of this message-boards message
+	*/
+	@Override
+	public java.lang.String getClassName() {
+		return _mbMessage.getClassName();
+	}
+
+	/**
+	* Returns the class name ID of this message-boards message.
+	*
+	* @return the class name ID of this message-boards message
+	*/
+	@Override
+	public long getClassNameId() {
+		return _mbMessage.getClassNameId();
+	}
+
+	/**
+	* Returns the class pk of this message-boards message.
+	*
+	* @return the class pk of this message-boards message
+	*/
+	@Override
+	public long getClassPK() {
+		return _mbMessage.getClassPK();
+	}
+
+	/**
+	* Returns the company ID of this message-boards message.
+	*
+	* @return the company ID of this message-boards message
+	*/
+	@Override
+	public long getCompanyId() {
+		return _mbMessage.getCompanyId();
+	}
+
+	/**
+	* Returns the create date of this message-boards message.
+	*
+	* @return the create date of this message-boards message
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _mbMessage.getCreateDate();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getDeletedAttachmentsFileEntries()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessage.getDeletedAttachmentsFileEntries();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getDeletedAttachmentsFileEntries(
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessage.getDeletedAttachmentsFileEntries(start, end);
+	}
+
+	@Override
+	public int getDeletedAttachmentsFileEntriesCount()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessage.getDeletedAttachmentsFileEntriesCount();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _mbMessage.getExpandoBridge();
+	}
+
+	/**
+	* Returns the format of this message-boards message.
+	*
+	* @return the format of this message-boards message
+	*/
+	@Override
+	public java.lang.String getFormat() {
+		return _mbMessage.getFormat();
+	}
+
+	/**
+	* Returns the group ID of this message-boards message.
+	*
+	* @return the group ID of this message-boards message
+	*/
+	@Override
+	public long getGroupId() {
+		return _mbMessage.getGroupId();
+	}
+
+	/**
+	* Returns the last publish date of this message-boards message.
+	*
+	* @return the last publish date of this message-boards message
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _mbMessage.getLastPublishDate();
+	}
+
+	/**
+	* Returns the message ID of this message-boards message.
+	*
+	* @return the message ID of this message-boards message
+	*/
+	@Override
+	public long getMessageId() {
+		return _mbMessage.getMessageId();
+	}
+
+	/**
+	* Returns the modified date of this message-boards message.
+	*
+	* @return the modified date of this message-boards message
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _mbMessage.getModifiedDate();
+	}
+
+	/**
+	* Returns the parent message ID of this message-boards message.
+	*
+	* @return the parent message ID of this message-boards message
+	*/
+	@Override
+	public long getParentMessageId() {
+		return _mbMessage.getParentMessageId();
+	}
+
+	/**
+	* Returns the primary key of this message-boards message.
+	*
+	* @return the primary key of this message-boards message
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _mbMessage.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _mbMessage.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the priority of this message-boards message.
+	*
+	* @return the priority of this message-boards message
+	*/
+	@Override
+	public double getPriority() {
+		return _mbMessage.getPriority();
+	}
+
+	/**
+	* Returns the root message ID of this message-boards message.
+	*
+	* @return the root message ID of this message-boards message
+	*/
+	@Override
+	public long getRootMessageId() {
+		return _mbMessage.getRootMessageId();
+	}
+
+	/**
+	* Returns the status of this message-boards message.
+	*
+	* @return the status of this message-boards message
+	*/
+	@Override
+	public int getStatus() {
+		return _mbMessage.getStatus();
+	}
+
+	/**
+	* Returns the status by user ID of this message-boards message.
+	*
+	* @return the status by user ID of this message-boards message
+	*/
+	@Override
+	public long getStatusByUserId() {
+		return _mbMessage.getStatusByUserId();
+	}
+
+	/**
+	* Returns the status by user name of this message-boards message.
+	*
+	* @return the status by user name of this message-boards message
+	*/
+	@Override
+	public java.lang.String getStatusByUserName() {
+		return _mbMessage.getStatusByUserName();
+	}
+
+	/**
+	* Returns the status by user uuid of this message-boards message.
+	*
+	* @return the status by user uuid of this message-boards message
+	*/
+	@Override
+	public java.lang.String getStatusByUserUuid() {
+		return _mbMessage.getStatusByUserUuid();
+	}
+
+	/**
+	* Returns the status date of this message-boards message.
+	*
+	* @return the status date of this message-boards message
+	*/
+	@Override
+	public Date getStatusDate() {
+		return _mbMessage.getStatusDate();
+	}
+
+	/**
+	* Returns the subject of this message-boards message.
+	*
+	* @return the subject of this message-boards message
+	*/
+	@Override
+	public java.lang.String getSubject() {
+		return _mbMessage.getSubject();
+	}
+
+	@Override
+	public MBThread getThread()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessage.getThread();
+	}
+
+	@Override
+	public long getThreadAttachmentsFolderId()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessage.getThreadAttachmentsFolderId();
+	}
+
+	/**
+	* Returns the thread ID of this message-boards message.
+	*
+	* @return the thread ID of this message-boards message
+	*/
+	@Override
+	public long getThreadId() {
+		return _mbMessage.getThreadId();
+	}
+
+	/**
+	* Returns the trash entry created when this message-boards message was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this message-boards message.
+	*
+	* @return the trash entry created when this message-boards message was moved to the Recycle Bin
+	*/
+	@Override
+	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessage.getTrashEntry();
+	}
+
+	/**
+	* Returns the class primary key of the trash entry for this message-boards message.
+	*
+	* @return the class primary key of the trash entry for this message-boards message
+	*/
+	@Override
+	public long getTrashEntryClassPK() {
+		return _mbMessage.getTrashEntryClassPK();
+	}
+
+	/**
+	* Returns the trash handler for this message-boards message.
+	*
+	* @return the trash handler for this message-boards message
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@Deprecated
+	@Override
+	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
+		return _mbMessage.getTrashHandler();
+	}
+
+	/**
+	* Returns the user ID of this message-boards message.
+	*
+	* @return the user ID of this message-boards message
+	*/
+	@Override
+	public long getUserId() {
+		return _mbMessage.getUserId();
+	}
+
+	/**
+	* Returns the user name of this message-boards message.
+	*
+	* @return the user name of this message-boards message
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _mbMessage.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this message-boards message.
+	*
+	* @return the user uuid of this message-boards message
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _mbMessage.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this message-boards message.
+	*
+	* @return the uuid of this message-boards message
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _mbMessage.getUuid();
+	}
+
+	@Override
+	public java.lang.String getWorkflowClassName() {
+		return _mbMessage.getWorkflowClassName();
+	}
+
+	@Override
+	public int hashCode() {
+		return _mbMessage.hashCode();
 	}
 
 	/**
@@ -473,420 +862,6 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	@Override
 	public boolean isScheduled() {
 		return _mbMessage.isScheduled();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _mbMessage.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<MBMessage> toCacheModel() {
-		return _mbMessage.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessage.addAttachmentsFolder();
-	}
-
-	/**
-	* Returns the trash handler for this message-boards message.
-	*
-	* @return the trash handler for this message-boards message
-	* @deprecated As of 7.0.0, with no direct replacement
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return _mbMessage.getTrashHandler();
-	}
-
-	/**
-	* Returns the trash entry created when this message-boards message was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this message-boards message.
-	*
-	* @return the trash entry created when this message-boards message was moved to the Recycle Bin
-	*/
-	@Override
-	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessage.getTrashEntry();
-	}
-
-	/**
-	* Returns the priority of this message-boards message.
-	*
-	* @return the priority of this message-boards message
-	*/
-	@Override
-	public double getPriority() {
-		return _mbMessage.getPriority();
-	}
-
-	@Override
-	public int compareTo(MBMessage mbMessage) {
-		return _mbMessage.compareTo(mbMessage);
-	}
-
-	@Override
-	public int getAttachmentsFileEntriesCount()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessage.getAttachmentsFileEntriesCount();
-	}
-
-	@Override
-	public int getDeletedAttachmentsFileEntriesCount()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessage.getDeletedAttachmentsFileEntriesCount();
-	}
-
-	/**
-	* Returns the status of this message-boards message.
-	*
-	* @return the status of this message-boards message
-	*/
-	@Override
-	public int getStatus() {
-		return _mbMessage.getStatus();
-	}
-
-	@Override
-	public int hashCode() {
-		return _mbMessage.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _mbMessage.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new MBMessageWrapper((MBMessage)_mbMessage.clone());
-	}
-
-	/**
-	* Returns the body of this message-boards message.
-	*
-	* @return the body of this message-boards message
-	*/
-	@Override
-	public java.lang.String getBody() {
-		return _mbMessage.getBody();
-	}
-
-	@Override
-	public java.lang.String getBody(boolean translate) {
-		return _mbMessage.getBody(translate);
-	}
-
-	/**
-	* Returns the fully qualified class name of this message-boards message.
-	*
-	* @return the fully qualified class name of this message-boards message
-	*/
-	@Override
-	public java.lang.String getClassName() {
-		return _mbMessage.getClassName();
-	}
-
-	/**
-	* Returns the format of this message-boards message.
-	*
-	* @return the format of this message-boards message
-	*/
-	@Override
-	public java.lang.String getFormat() {
-		return _mbMessage.getFormat();
-	}
-
-	/**
-	* Returns the status by user name of this message-boards message.
-	*
-	* @return the status by user name of this message-boards message
-	*/
-	@Override
-	public java.lang.String getStatusByUserName() {
-		return _mbMessage.getStatusByUserName();
-	}
-
-	/**
-	* Returns the status by user uuid of this message-boards message.
-	*
-	* @return the status by user uuid of this message-boards message
-	*/
-	@Override
-	public java.lang.String getStatusByUserUuid() {
-		return _mbMessage.getStatusByUserUuid();
-	}
-
-	/**
-	* Returns the subject of this message-boards message.
-	*
-	* @return the subject of this message-boards message
-	*/
-	@Override
-	public java.lang.String getSubject() {
-		return _mbMessage.getSubject();
-	}
-
-	/**
-	* Returns the user name of this message-boards message.
-	*
-	* @return the user name of this message-boards message
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _mbMessage.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this message-boards message.
-	*
-	* @return the user uuid of this message-boards message
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _mbMessage.getUserUuid();
-	}
-
-	/**
-	* Returns the uuid of this message-boards message.
-	*
-	* @return the uuid of this message-boards message
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _mbMessage.getUuid();
-	}
-
-	@Override
-	public java.lang.String getWorkflowClassName() {
-		return _mbMessage.getWorkflowClassName();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _mbMessage.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _mbMessage.toXmlString();
-	}
-
-	@Override
-	public java.lang.String[] getAssetTagNames() {
-		return _mbMessage.getAssetTagNames();
-	}
-
-	/**
-	* Returns the create date of this message-boards message.
-	*
-	* @return the create date of this message-boards message
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _mbMessage.getCreateDate();
-	}
-
-	/**
-	* Returns the last publish date of this message-boards message.
-	*
-	* @return the last publish date of this message-boards message
-	*/
-	@Override
-	public Date getLastPublishDate() {
-		return _mbMessage.getLastPublishDate();
-	}
-
-	/**
-	* Returns the modified date of this message-boards message.
-	*
-	* @return the modified date of this message-boards message
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _mbMessage.getModifiedDate();
-	}
-
-	/**
-	* Returns the status date of this message-boards message.
-	*
-	* @return the status date of this message-boards message
-	*/
-	@Override
-	public Date getStatusDate() {
-		return _mbMessage.getStatusDate();
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessage.getAttachmentsFileEntries();
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessage.getAttachmentsFileEntries(start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getDeletedAttachmentsFileEntries()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessage.getDeletedAttachmentsFileEntries();
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getDeletedAttachmentsFileEntries(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessage.getDeletedAttachmentsFileEntries(start, end);
-	}
-
-	@Override
-	public long getAttachmentsFolderId()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessage.getAttachmentsFolderId();
-	}
-
-	/**
-	* Returns the category ID of this message-boards message.
-	*
-	* @return the category ID of this message-boards message
-	*/
-	@Override
-	public long getCategoryId() {
-		return _mbMessage.getCategoryId();
-	}
-
-	/**
-	* Returns the class name ID of this message-boards message.
-	*
-	* @return the class name ID of this message-boards message
-	*/
-	@Override
-	public long getClassNameId() {
-		return _mbMessage.getClassNameId();
-	}
-
-	/**
-	* Returns the class pk of this message-boards message.
-	*
-	* @return the class pk of this message-boards message
-	*/
-	@Override
-	public long getClassPK() {
-		return _mbMessage.getClassPK();
-	}
-
-	/**
-	* Returns the company ID of this message-boards message.
-	*
-	* @return the company ID of this message-boards message
-	*/
-	@Override
-	public long getCompanyId() {
-		return _mbMessage.getCompanyId();
-	}
-
-	/**
-	* Returns the group ID of this message-boards message.
-	*
-	* @return the group ID of this message-boards message
-	*/
-	@Override
-	public long getGroupId() {
-		return _mbMessage.getGroupId();
-	}
-
-	/**
-	* Returns the message ID of this message-boards message.
-	*
-	* @return the message ID of this message-boards message
-	*/
-	@Override
-	public long getMessageId() {
-		return _mbMessage.getMessageId();
-	}
-
-	/**
-	* Returns the parent message ID of this message-boards message.
-	*
-	* @return the parent message ID of this message-boards message
-	*/
-	@Override
-	public long getParentMessageId() {
-		return _mbMessage.getParentMessageId();
-	}
-
-	/**
-	* Returns the primary key of this message-boards message.
-	*
-	* @return the primary key of this message-boards message
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _mbMessage.getPrimaryKey();
-	}
-
-	/**
-	* Returns the root message ID of this message-boards message.
-	*
-	* @return the root message ID of this message-boards message
-	*/
-	@Override
-	public long getRootMessageId() {
-		return _mbMessage.getRootMessageId();
-	}
-
-	/**
-	* Returns the status by user ID of this message-boards message.
-	*
-	* @return the status by user ID of this message-boards message
-	*/
-	@Override
-	public long getStatusByUserId() {
-		return _mbMessage.getStatusByUserId();
-	}
-
-	@Override
-	public long getThreadAttachmentsFolderId()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessage.getThreadAttachmentsFolderId();
-	}
-
-	/**
-	* Returns the thread ID of this message-boards message.
-	*
-	* @return the thread ID of this message-boards message
-	*/
-	@Override
-	public long getThreadId() {
-		return _mbMessage.getThreadId();
-	}
-
-	/**
-	* Returns the class primary key of the trash entry for this message-boards message.
-	*
-	* @return the class primary key of the trash entry for this message-boards message
-	*/
-	@Override
-	public long getTrashEntryClassPK() {
-		return _mbMessage.getTrashEntryClassPK();
-	}
-
-	/**
-	* Returns the user ID of this message-boards message.
-	*
-	* @return the user ID of this message-boards message
-	*/
-	@Override
-	public long getUserId() {
-		return _mbMessage.getUserId();
 	}
 
 	@Override
@@ -1223,6 +1198,31 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_mbMessage.setUuid(uuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<MBMessage> toCacheModel() {
+		return _mbMessage.toCacheModel();
+	}
+
+	@Override
+	public MBMessage toEscapedModel() {
+		return new MBMessageWrapper(_mbMessage.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _mbMessage.toString();
+	}
+
+	@Override
+	public MBMessage toUnescapedModel() {
+		return new MBMessageWrapper(_mbMessage.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _mbMessage.toXmlString();
 	}
 
 	@Override

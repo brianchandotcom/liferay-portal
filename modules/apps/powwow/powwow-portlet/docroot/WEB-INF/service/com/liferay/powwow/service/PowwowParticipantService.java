@@ -56,20 +56,6 @@ public interface PowwowParticipantService extends BaseService, InvokableService 
 	public PowwowParticipant deletePowwowParticipant(
 		PowwowParticipant powwowParticipant) throws PortalException;
 
-	public PowwowParticipant updatePowwowParticipant(long powwowParticipantId,
-		long powwowMeetingId, java.lang.String name, long participantUserId,
-		java.lang.String emailAddress, int type, int status,
-		ServiceContext serviceContext) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getPowwowParticipantsCount(long powwowMeetingId)
-		throws PortalException;
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable;
-
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -80,4 +66,18 @@ public interface PowwowParticipantService extends BaseService, InvokableService 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<PowwowParticipant> getPowwowParticipants(long powwowMeetingId)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getPowwowParticipantsCount(long powwowMeetingId)
+		throws PortalException;
+
+	@Override
+	public java.lang.Object invokeMethod(java.lang.String name,
+		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
+		throws java.lang.Throwable;
+
+	public PowwowParticipant updatePowwowParticipant(long powwowParticipantId,
+		long powwowMeetingId, java.lang.String name, long participantUserId,
+		java.lang.String emailAddress, int type, int status,
+		ServiceContext serviceContext) throws PortalException;
 }

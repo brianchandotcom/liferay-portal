@@ -42,6 +42,28 @@ public class UserGroupServiceUtil {
 	 */
 
 	/**
+	* Adds the user groups to the group.
+	*
+	* @param groupId the primary key of the group
+	* @param userGroupIds the primary keys of the user groups
+	*/
+	public static void addGroupUserGroups(long groupId, long[] userGroupIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().addGroupUserGroups(groupId, userGroupIds);
+	}
+
+	/**
+	* Adds the user groups to the team
+	*
+	* @param teamId the primary key of the team
+	* @param userGroupIds the primary keys of the user groups
+	*/
+	public static void addTeamUserGroups(long teamId, long[] userGroupIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().addTeamUserGroups(teamId, userGroupIds);
+	}
+
+	/**
 	* Adds a user group.
 	*
 	* <p>
@@ -85,6 +107,16 @@ public class UserGroupServiceUtil {
 	}
 
 	/**
+	* Deletes the user group.
+	*
+	* @param userGroupId the primary key of the user group
+	*/
+	public static void deleteUserGroup(long userGroupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteUserGroup(userGroupId);
+	}
+
+	/**
 	* Fetches the user group with the primary key.
 	*
 	* @param userGroupId the primary key of the user group
@@ -94,6 +126,15 @@ public class UserGroupServiceUtil {
 		long userGroupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().fetchUserGroup(userGroupId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -118,6 +159,45 @@ public class UserGroupServiceUtil {
 		long userGroupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getUserGroup(userGroupId);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.UserGroup> getUserGroups(
+		long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getUserGroups(companyId);
+	}
+
+	/**
+	* Returns all the user groups to which the user belongs.
+	*
+	* @param userId the primary key of the user
+	* @return the user groups to which the user belongs
+	*/
+	public static java.util.List<com.liferay.portal.kernel.model.UserGroup> getUserUserGroups(
+		long userId) throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getUserUserGroups(userId);
+	}
+
+	/**
+	* Removes the user groups from the group.
+	*
+	* @param groupId the primary key of the group
+	* @param userGroupIds the primary keys of the user groups
+	*/
+	public static void unsetGroupUserGroups(long groupId, long[] userGroupIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().unsetGroupUserGroups(groupId, userGroupIds);
+	}
+
+	/**
+	* Removes the user groups from the team.
+	*
+	* @param teamId the primary key of the team
+	* @param userGroupIds the primary keys of the user groups
+	*/
+	public static void unsetTeamUserGroups(long teamId, long[] userGroupIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().unsetTeamUserGroups(teamId, userGroupIds);
 	}
 
 	/**
@@ -155,86 +235,6 @@ public class UserGroupServiceUtil {
 		return getService()
 				   .updateUserGroup(userGroupId, name, description,
 			serviceContext);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static java.util.List<com.liferay.portal.kernel.model.UserGroup> getUserGroups(
-		long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getUserGroups(companyId);
-	}
-
-	/**
-	* Returns all the user groups to which the user belongs.
-	*
-	* @param userId the primary key of the user
-	* @return the user groups to which the user belongs
-	*/
-	public static java.util.List<com.liferay.portal.kernel.model.UserGroup> getUserUserGroups(
-		long userId) throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getUserUserGroups(userId);
-	}
-
-	/**
-	* Adds the user groups to the group.
-	*
-	* @param groupId the primary key of the group
-	* @param userGroupIds the primary keys of the user groups
-	*/
-	public static void addGroupUserGroups(long groupId, long[] userGroupIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().addGroupUserGroups(groupId, userGroupIds);
-	}
-
-	/**
-	* Adds the user groups to the team
-	*
-	* @param teamId the primary key of the team
-	* @param userGroupIds the primary keys of the user groups
-	*/
-	public static void addTeamUserGroups(long teamId, long[] userGroupIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().addTeamUserGroups(teamId, userGroupIds);
-	}
-
-	/**
-	* Deletes the user group.
-	*
-	* @param userGroupId the primary key of the user group
-	*/
-	public static void deleteUserGroup(long userGroupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteUserGroup(userGroupId);
-	}
-
-	/**
-	* Removes the user groups from the group.
-	*
-	* @param groupId the primary key of the group
-	* @param userGroupIds the primary keys of the user groups
-	*/
-	public static void unsetGroupUserGroups(long groupId, long[] userGroupIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().unsetGroupUserGroups(groupId, userGroupIds);
-	}
-
-	/**
-	* Removes the user groups from the team.
-	*
-	* @param teamId the primary key of the team
-	* @param userGroupIds the primary keys of the user groups
-	*/
-	public static void unsetTeamUserGroups(long teamId, long[] userGroupIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().unsetTeamUserGroups(teamId, userGroupIds);
 	}
 
 	public static UserGroupService getService() {

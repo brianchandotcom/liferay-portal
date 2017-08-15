@@ -179,13 +179,298 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	}
 
 	@Override
-	public WikiNode toEscapedModel() {
-		return new WikiNodeWrapper(_wikiNode.toEscapedModel());
+	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiNode.addAttachmentsFolder();
 	}
 
 	@Override
-	public WikiNode toUnescapedModel() {
-		return new WikiNodeWrapper(_wikiNode.toUnescapedModel());
+	public java.lang.Object clone() {
+		return new WikiNodeWrapper((WikiNode)_wikiNode.clone());
+	}
+
+	@Override
+	public int compareTo(WikiNode wikiNode) {
+		return _wikiNode.compareTo(wikiNode);
+	}
+
+	@Override
+	public long getAttachmentsFolderId() {
+		return _wikiNode.getAttachmentsFolderId();
+	}
+
+	/**
+	* Returns the company ID of this wiki node.
+	*
+	* @return the company ID of this wiki node
+	*/
+	@Override
+	public long getCompanyId() {
+		return _wikiNode.getCompanyId();
+	}
+
+	/**
+	* Returns the container model ID of this wiki node.
+	*
+	* @return the container model ID of this wiki node
+	*/
+	@Override
+	public long getContainerModelId() {
+		return _wikiNode.getContainerModelId();
+	}
+
+	/**
+	* Returns the container name of this wiki node.
+	*
+	* @return the container name of this wiki node
+	*/
+	@Override
+	public java.lang.String getContainerModelName() {
+		return _wikiNode.getContainerModelName();
+	}
+
+	/**
+	* Returns the create date of this wiki node.
+	*
+	* @return the create date of this wiki node
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _wikiNode.getCreateDate();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getDeletedAttachmentsFiles()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiNode.getDeletedAttachmentsFiles();
+	}
+
+	/**
+	* Returns the description of this wiki node.
+	*
+	* @return the description of this wiki node
+	*/
+	@Override
+	public java.lang.String getDescription() {
+		return _wikiNode.getDescription();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _wikiNode.getExpandoBridge();
+	}
+
+	/**
+	* Returns the group ID of this wiki node.
+	*
+	* @return the group ID of this wiki node
+	*/
+	@Override
+	public long getGroupId() {
+		return _wikiNode.getGroupId();
+	}
+
+	/**
+	* Returns the last post date of this wiki node.
+	*
+	* @return the last post date of this wiki node
+	*/
+	@Override
+	public Date getLastPostDate() {
+		return _wikiNode.getLastPostDate();
+	}
+
+	/**
+	* Returns the last publish date of this wiki node.
+	*
+	* @return the last publish date of this wiki node
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _wikiNode.getLastPublishDate();
+	}
+
+	/**
+	* Returns the modified date of this wiki node.
+	*
+	* @return the modified date of this wiki node
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _wikiNode.getModifiedDate();
+	}
+
+	/**
+	* Returns the name of this wiki node.
+	*
+	* @return the name of this wiki node
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _wikiNode.getName();
+	}
+
+	/**
+	* Returns the node ID of this wiki node.
+	*
+	* @return the node ID of this wiki node
+	*/
+	@Override
+	public long getNodeId() {
+		return _wikiNode.getNodeId();
+	}
+
+	/**
+	* Returns the parent container model ID of this wiki node.
+	*
+	* @return the parent container model ID of this wiki node
+	*/
+	@Override
+	public long getParentContainerModelId() {
+		return _wikiNode.getParentContainerModelId();
+	}
+
+	/**
+	* Returns the primary key of this wiki node.
+	*
+	* @return the primary key of this wiki node
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _wikiNode.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _wikiNode.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the status of this wiki node.
+	*
+	* @return the status of this wiki node
+	*/
+	@Override
+	public int getStatus() {
+		return _wikiNode.getStatus();
+	}
+
+	/**
+	* Returns the status by user ID of this wiki node.
+	*
+	* @return the status by user ID of this wiki node
+	*/
+	@Override
+	public long getStatusByUserId() {
+		return _wikiNode.getStatusByUserId();
+	}
+
+	/**
+	* Returns the status by user name of this wiki node.
+	*
+	* @return the status by user name of this wiki node
+	*/
+	@Override
+	public java.lang.String getStatusByUserName() {
+		return _wikiNode.getStatusByUserName();
+	}
+
+	/**
+	* Returns the status by user uuid of this wiki node.
+	*
+	* @return the status by user uuid of this wiki node
+	*/
+	@Override
+	public java.lang.String getStatusByUserUuid() {
+		return _wikiNode.getStatusByUserUuid();
+	}
+
+	/**
+	* Returns the status date of this wiki node.
+	*
+	* @return the status date of this wiki node
+	*/
+	@Override
+	public Date getStatusDate() {
+		return _wikiNode.getStatusDate();
+	}
+
+	/**
+	* Returns the trash entry created when this wiki node was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this wiki node.
+	*
+	* @return the trash entry created when this wiki node was moved to the Recycle Bin
+	*/
+	@Override
+	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiNode.getTrashEntry();
+	}
+
+	/**
+	* Returns the class primary key of the trash entry for this wiki node.
+	*
+	* @return the class primary key of the trash entry for this wiki node
+	*/
+	@Override
+	public long getTrashEntryClassPK() {
+		return _wikiNode.getTrashEntryClassPK();
+	}
+
+	/**
+	* Returns the trash handler for this wiki node.
+	*
+	* @return the trash handler for this wiki node
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@Deprecated
+	@Override
+	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
+		return _wikiNode.getTrashHandler();
+	}
+
+	/**
+	* Returns the user ID of this wiki node.
+	*
+	* @return the user ID of this wiki node
+	*/
+	@Override
+	public long getUserId() {
+		return _wikiNode.getUserId();
+	}
+
+	/**
+	* Returns the user name of this wiki node.
+	*
+	* @return the user name of this wiki node
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _wikiNode.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this wiki node.
+	*
+	* @return the user uuid of this wiki node
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _wikiNode.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this wiki node.
+	*
+	* @return the uuid of this wiki node
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _wikiNode.getUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _wikiNode.hashCode();
 	}
 
 	/**
@@ -311,316 +596,6 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	@Override
 	public boolean isScheduled() {
 		return _wikiNode.isScheduled();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _wikiNode.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<WikiNode> toCacheModel() {
-		return _wikiNode.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiNode.addAttachmentsFolder();
-	}
-
-	/**
-	* Returns the trash handler for this wiki node.
-	*
-	* @return the trash handler for this wiki node
-	* @deprecated As of 7.0.0, with no direct replacement
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return _wikiNode.getTrashHandler();
-	}
-
-	/**
-	* Returns the trash entry created when this wiki node was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this wiki node.
-	*
-	* @return the trash entry created when this wiki node was moved to the Recycle Bin
-	*/
-	@Override
-	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiNode.getTrashEntry();
-	}
-
-	@Override
-	public int compareTo(WikiNode wikiNode) {
-		return _wikiNode.compareTo(wikiNode);
-	}
-
-	/**
-	* Returns the status of this wiki node.
-	*
-	* @return the status of this wiki node
-	*/
-	@Override
-	public int getStatus() {
-		return _wikiNode.getStatus();
-	}
-
-	@Override
-	public int hashCode() {
-		return _wikiNode.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _wikiNode.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new WikiNodeWrapper((WikiNode)_wikiNode.clone());
-	}
-
-	/**
-	* Returns the container name of this wiki node.
-	*
-	* @return the container name of this wiki node
-	*/
-	@Override
-	public java.lang.String getContainerModelName() {
-		return _wikiNode.getContainerModelName();
-	}
-
-	/**
-	* Returns the description of this wiki node.
-	*
-	* @return the description of this wiki node
-	*/
-	@Override
-	public java.lang.String getDescription() {
-		return _wikiNode.getDescription();
-	}
-
-	/**
-	* Returns the name of this wiki node.
-	*
-	* @return the name of this wiki node
-	*/
-	@Override
-	public java.lang.String getName() {
-		return _wikiNode.getName();
-	}
-
-	/**
-	* Returns the status by user name of this wiki node.
-	*
-	* @return the status by user name of this wiki node
-	*/
-	@Override
-	public java.lang.String getStatusByUserName() {
-		return _wikiNode.getStatusByUserName();
-	}
-
-	/**
-	* Returns the status by user uuid of this wiki node.
-	*
-	* @return the status by user uuid of this wiki node
-	*/
-	@Override
-	public java.lang.String getStatusByUserUuid() {
-		return _wikiNode.getStatusByUserUuid();
-	}
-
-	/**
-	* Returns the user name of this wiki node.
-	*
-	* @return the user name of this wiki node
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _wikiNode.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this wiki node.
-	*
-	* @return the user uuid of this wiki node
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _wikiNode.getUserUuid();
-	}
-
-	/**
-	* Returns the uuid of this wiki node.
-	*
-	* @return the uuid of this wiki node
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _wikiNode.getUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _wikiNode.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _wikiNode.toXmlString();
-	}
-
-	/**
-	* Returns the create date of this wiki node.
-	*
-	* @return the create date of this wiki node
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _wikiNode.getCreateDate();
-	}
-
-	/**
-	* Returns the last post date of this wiki node.
-	*
-	* @return the last post date of this wiki node
-	*/
-	@Override
-	public Date getLastPostDate() {
-		return _wikiNode.getLastPostDate();
-	}
-
-	/**
-	* Returns the last publish date of this wiki node.
-	*
-	* @return the last publish date of this wiki node
-	*/
-	@Override
-	public Date getLastPublishDate() {
-		return _wikiNode.getLastPublishDate();
-	}
-
-	/**
-	* Returns the modified date of this wiki node.
-	*
-	* @return the modified date of this wiki node
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _wikiNode.getModifiedDate();
-	}
-
-	/**
-	* Returns the status date of this wiki node.
-	*
-	* @return the status date of this wiki node
-	*/
-	@Override
-	public Date getStatusDate() {
-		return _wikiNode.getStatusDate();
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getDeletedAttachmentsFiles()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiNode.getDeletedAttachmentsFiles();
-	}
-
-	@Override
-	public long getAttachmentsFolderId() {
-		return _wikiNode.getAttachmentsFolderId();
-	}
-
-	/**
-	* Returns the company ID of this wiki node.
-	*
-	* @return the company ID of this wiki node
-	*/
-	@Override
-	public long getCompanyId() {
-		return _wikiNode.getCompanyId();
-	}
-
-	/**
-	* Returns the container model ID of this wiki node.
-	*
-	* @return the container model ID of this wiki node
-	*/
-	@Override
-	public long getContainerModelId() {
-		return _wikiNode.getContainerModelId();
-	}
-
-	/**
-	* Returns the group ID of this wiki node.
-	*
-	* @return the group ID of this wiki node
-	*/
-	@Override
-	public long getGroupId() {
-		return _wikiNode.getGroupId();
-	}
-
-	/**
-	* Returns the node ID of this wiki node.
-	*
-	* @return the node ID of this wiki node
-	*/
-	@Override
-	public long getNodeId() {
-		return _wikiNode.getNodeId();
-	}
-
-	/**
-	* Returns the parent container model ID of this wiki node.
-	*
-	* @return the parent container model ID of this wiki node
-	*/
-	@Override
-	public long getParentContainerModelId() {
-		return _wikiNode.getParentContainerModelId();
-	}
-
-	/**
-	* Returns the primary key of this wiki node.
-	*
-	* @return the primary key of this wiki node
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _wikiNode.getPrimaryKey();
-	}
-
-	/**
-	* Returns the status by user ID of this wiki node.
-	*
-	* @return the status by user ID of this wiki node
-	*/
-	@Override
-	public long getStatusByUserId() {
-		return _wikiNode.getStatusByUserId();
-	}
-
-	/**
-	* Returns the class primary key of the trash entry for this wiki node.
-	*
-	* @return the class primary key of the trash entry for this wiki node
-	*/
-	@Override
-	public long getTrashEntryClassPK() {
-		return _wikiNode.getTrashEntryClassPK();
-	}
-
-	/**
-	* Returns the user ID of this wiki node.
-	*
-	* @return the user ID of this wiki node
-	*/
-	@Override
-	public long getUserId() {
-		return _wikiNode.getUserId();
 	}
 
 	@Override
@@ -867,6 +842,31 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_wikiNode.setUuid(uuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<WikiNode> toCacheModel() {
+		return _wikiNode.toCacheModel();
+	}
+
+	@Override
+	public WikiNode toEscapedModel() {
+		return new WikiNodeWrapper(_wikiNode.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _wikiNode.toString();
+	}
+
+	@Override
+	public WikiNode toUnescapedModel() {
+		return new WikiNodeWrapper(_wikiNode.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _wikiNode.toXmlString();
 	}
 
 	@Override

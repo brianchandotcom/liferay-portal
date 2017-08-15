@@ -31,26 +31,16 @@ public class UserGroupRoleServiceWrapper implements UserGroupRoleService,
 		_userGroupRoleService = userGroupRoleService;
 	}
 
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _userGroupRoleService.getOSGiServiceIdentifier();
+	public void addUserGroupRoles(long[] userIds, long groupId, long roleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_userGroupRoleService.addUserGroupRoles(userIds, groupId, roleId);
 	}
 
 	@Override
 	public void addUserGroupRoles(long userId, long groupId, long[] roleIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_userGroupRoleService.addUserGroupRoles(userId, groupId, roleIds);
-	}
-
-	@Override
-	public void addUserGroupRoles(long[] userIds, long groupId, long roleId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_userGroupRoleService.addUserGroupRoles(userIds, groupId, roleId);
 	}
 
 	@Override
@@ -63,6 +53,16 @@ public class UserGroupRoleServiceWrapper implements UserGroupRoleService,
 	public void deleteUserGroupRoles(long[] userIds, long groupId, long roleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_userGroupRoleService.deleteUserGroupRoles(userIds, groupId, roleId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _userGroupRoleService.getOSGiServiceIdentifier();
 	}
 
 	@Override

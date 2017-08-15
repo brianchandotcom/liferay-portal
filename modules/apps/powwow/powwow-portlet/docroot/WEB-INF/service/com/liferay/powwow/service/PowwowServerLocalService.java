@@ -62,25 +62,6 @@ public interface PowwowServerLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PowwowServerLocalServiceUtil} to access the powwow server local service. Add custom service methods to {@link com.liferay.powwow.service.impl.PowwowServerLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
 
 	/**
 	* Adds the powwow server to the database. Also notifies the appropriate model listeners.
@@ -96,6 +77,8 @@ public interface PowwowServerLocalService extends BaseLocalService,
 		java.lang.String apiKey, java.lang.String secret,
 		ServiceContext serviceContext) throws PortalException;
 
+	public void checkPowwowServers();
+
 	/**
 	* Creates a new powwow server with the primary key. Does not add the powwow server to the database.
 	*
@@ -103,6 +86,13 @@ public interface PowwowServerLocalService extends BaseLocalService,
 	* @return the new powwow server
 	*/
 	public PowwowServer createPowwowServer(long powwowServerId);
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
 
 	/**
 	* Deletes the powwow server from the database. Also notifies the appropriate model listeners.
@@ -124,57 +114,7 @@ public interface PowwowServerLocalService extends BaseLocalService,
 	public PowwowServer deletePowwowServer(long powwowServerId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PowwowServer fetchPowwowServer(long powwowServerId);
-
-	/**
-	* Returns the powwow server with the primary key.
-	*
-	* @param powwowServerId the primary key of the powwow server
-	* @return the powwow server
-	* @throws PortalException if a powwow server with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PowwowServer getPowwowServer(long powwowServerId)
-		throws PortalException;
-
-	/**
-	* Updates the powwow server in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param powwowServer the powwow server
-	* @return the powwow server that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public PowwowServer updatePowwowServer(PowwowServer powwowServer);
-
-	public PowwowServer updatePowwowServer(long powwowServerId,
-		java.lang.String name, java.lang.String providerType,
-		java.lang.String url, java.lang.String apiKey, java.lang.String secret,
-		ServiceContext serviceContext) throws PortalException;
-
-	/**
-	* Returns the number of powwow servers.
-	*
-	* @return the number of powwow servers
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getPowwowServersCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getPowwowServersCount(java.lang.String providerType,
-		boolean active);
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable;
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -216,6 +156,56 @@ public interface PowwowServerLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PowwowServer fetchPowwowServer(long powwowServerId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Returns the powwow server with the primary key.
+	*
+	* @param powwowServerId the primary key of the powwow server
+	* @return the powwow server
+	* @throws PortalException if a powwow server with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PowwowServer getPowwowServer(long powwowServerId)
+		throws PortalException;
+
+	/**
 	* Returns a range of all the powwow servers.
 	*
 	* <p>
@@ -238,22 +228,33 @@ public interface PowwowServerLocalService extends BaseLocalService,
 		boolean active);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of powwow servers.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of powwow servers
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getPowwowServersCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getPowwowServersCount(java.lang.String providerType,
+		boolean active);
+
+	@Override
+	public java.lang.Object invokeMethod(java.lang.String name,
+		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
+		throws java.lang.Throwable;
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Updates the powwow server in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @param powwowServer the powwow server
+	* @return the powwow server that was updated
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	@Indexable(type = IndexableType.REINDEX)
+	public PowwowServer updatePowwowServer(PowwowServer powwowServer);
 
-	public void checkPowwowServers();
+	public PowwowServer updatePowwowServer(long powwowServerId,
+		java.lang.String name, java.lang.String providerType,
+		java.lang.String url, java.lang.String apiKey, java.lang.String secret,
+		ServiceContext serviceContext) throws PortalException;
 }

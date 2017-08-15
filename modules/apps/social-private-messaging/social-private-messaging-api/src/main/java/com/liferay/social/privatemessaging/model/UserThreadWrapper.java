@@ -135,13 +135,33 @@ public class UserThreadWrapper implements UserThread, ModelWrapper<UserThread> {
 	}
 
 	@Override
-	public UserThread toEscapedModel() {
-		return new UserThreadWrapper(_userThread.toEscapedModel());
+	public java.lang.Object clone() {
+		return new UserThreadWrapper((UserThread)_userThread.clone());
 	}
 
 	@Override
-	public UserThread toUnescapedModel() {
-		return new UserThreadWrapper(_userThread.toUnescapedModel());
+	public int compareTo(UserThread userThread) {
+		return _userThread.compareTo(userThread);
+	}
+
+	/**
+	* Returns the company ID of this user thread.
+	*
+	* @return the company ID of this user thread
+	*/
+	@Override
+	public long getCompanyId() {
+		return _userThread.getCompanyId();
+	}
+
+	/**
+	* Returns the create date of this user thread.
+	*
+	* @return the create date of this user thread
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _userThread.getCreateDate();
 	}
 
 	/**
@@ -154,6 +174,46 @@ public class UserThreadWrapper implements UserThread, ModelWrapper<UserThread> {
 		return _userThread.getDeleted();
 	}
 
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _userThread.getExpandoBridge();
+	}
+
+	/**
+	* Returns the mb thread ID of this user thread.
+	*
+	* @return the mb thread ID of this user thread
+	*/
+	@Override
+	public long getMbThreadId() {
+		return _userThread.getMbThreadId();
+	}
+
+	/**
+	* Returns the modified date of this user thread.
+	*
+	* @return the modified date of this user thread
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _userThread.getModifiedDate();
+	}
+
+	/**
+	* Returns the primary key of this user thread.
+	*
+	* @return the primary key of this user thread
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _userThread.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _userThread.getPrimaryKeyObj();
+	}
+
 	/**
 	* Returns the read of this user thread.
 	*
@@ -162,6 +222,61 @@ public class UserThreadWrapper implements UserThread, ModelWrapper<UserThread> {
 	@Override
 	public boolean getRead() {
 		return _userThread.getRead();
+	}
+
+	/**
+	* Returns the top mb message ID of this user thread.
+	*
+	* @return the top mb message ID of this user thread
+	*/
+	@Override
+	public long getTopMBMessageId() {
+		return _userThread.getTopMBMessageId();
+	}
+
+	/**
+	* Returns the user ID of this user thread.
+	*
+	* @return the user ID of this user thread
+	*/
+	@Override
+	public long getUserId() {
+		return _userThread.getUserId();
+	}
+
+	/**
+	* Returns the user name of this user thread.
+	*
+	* @return the user name of this user thread
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _userThread.getUserName();
+	}
+
+	/**
+	* Returns the user thread ID of this user thread.
+	*
+	* @return the user thread ID of this user thread
+	*/
+	@Override
+	public long getUserThreadId() {
+		return _userThread.getUserThreadId();
+	}
+
+	/**
+	* Returns the user uuid of this user thread.
+	*
+	* @return the user uuid of this user thread
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _userThread.getUserUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _userThread.hashCode();
 	}
 
 	@Override
@@ -197,146 +312,6 @@ public class UserThreadWrapper implements UserThread, ModelWrapper<UserThread> {
 	@Override
 	public boolean isRead() {
 		return _userThread.isRead();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _userThread.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<UserThread> toCacheModel() {
-		return _userThread.toCacheModel();
-	}
-
-	@Override
-	public int compareTo(UserThread userThread) {
-		return _userThread.compareTo(userThread);
-	}
-
-	@Override
-	public int hashCode() {
-		return _userThread.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _userThread.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new UserThreadWrapper((UserThread)_userThread.clone());
-	}
-
-	/**
-	* Returns the user name of this user thread.
-	*
-	* @return the user name of this user thread
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _userThread.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this user thread.
-	*
-	* @return the user uuid of this user thread
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _userThread.getUserUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _userThread.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _userThread.toXmlString();
-	}
-
-	/**
-	* Returns the create date of this user thread.
-	*
-	* @return the create date of this user thread
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _userThread.getCreateDate();
-	}
-
-	/**
-	* Returns the modified date of this user thread.
-	*
-	* @return the modified date of this user thread
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _userThread.getModifiedDate();
-	}
-
-	/**
-	* Returns the company ID of this user thread.
-	*
-	* @return the company ID of this user thread
-	*/
-	@Override
-	public long getCompanyId() {
-		return _userThread.getCompanyId();
-	}
-
-	/**
-	* Returns the mb thread ID of this user thread.
-	*
-	* @return the mb thread ID of this user thread
-	*/
-	@Override
-	public long getMbThreadId() {
-		return _userThread.getMbThreadId();
-	}
-
-	/**
-	* Returns the primary key of this user thread.
-	*
-	* @return the primary key of this user thread
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _userThread.getPrimaryKey();
-	}
-
-	/**
-	* Returns the top mb message ID of this user thread.
-	*
-	* @return the top mb message ID of this user thread
-	*/
-	@Override
-	public long getTopMBMessageId() {
-		return _userThread.getTopMBMessageId();
-	}
-
-	/**
-	* Returns the user ID of this user thread.
-	*
-	* @return the user ID of this user thread
-	*/
-	@Override
-	public long getUserId() {
-		return _userThread.getUserId();
-	}
-
-	/**
-	* Returns the user thread ID of this user thread.
-	*
-	* @return the user thread ID of this user thread
-	*/
-	@Override
-	public long getUserThreadId() {
-		return _userThread.getUserThreadId();
 	}
 
 	@Override
@@ -493,6 +468,31 @@ public class UserThreadWrapper implements UserThread, ModelWrapper<UserThread> {
 	@Override
 	public void setUserUuid(java.lang.String userUuid) {
 		_userThread.setUserUuid(userUuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<UserThread> toCacheModel() {
+		return _userThread.toCacheModel();
+	}
+
+	@Override
+	public UserThread toEscapedModel() {
+		return new UserThreadWrapper(_userThread.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _userThread.toString();
+	}
+
+	@Override
+	public UserThread toUnescapedModel() {
+		return new UserThreadWrapper(_userThread.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _userThread.toXmlString();
 	}
 
 	@Override

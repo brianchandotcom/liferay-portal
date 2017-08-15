@@ -39,12 +39,6 @@ public class UserThreadServiceWrapper implements UserThreadService,
 		return _userThreadService.getLastThreadMessage(mbThreadId);
 	}
 
-	@Override
-	public int getThreadMessagesCount(long mbThreadId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userThreadService.getThreadMessagesCount(mbThreadId);
-	}
-
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -61,6 +55,12 @@ public class UserThreadServiceWrapper implements UserThreadService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userThreadService.getThreadMessages(mbThreadId, start, end,
 			ascending);
+	}
+
+	@Override
+	public int getThreadMessagesCount(long mbThreadId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userThreadService.getThreadMessagesCount(mbThreadId);
 	}
 
 	@Override

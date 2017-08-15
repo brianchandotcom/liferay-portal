@@ -107,88 +107,13 @@ public class UserTrackerPathWrapper implements UserTrackerPath,
 	}
 
 	@Override
-	public CacheModel<UserTrackerPath> toCacheModel() {
-		return _userTrackerPath.toCacheModel();
-	}
-
-	@Override
-	public UserTrackerPath toEscapedModel() {
-		return new UserTrackerPathWrapper(_userTrackerPath.toEscapedModel());
-	}
-
-	@Override
-	public UserTrackerPath toUnescapedModel() {
-		return new UserTrackerPathWrapper(_userTrackerPath.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _userTrackerPath.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _userTrackerPath.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _userTrackerPath.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _userTrackerPath.getExpandoBridge();
+	public java.lang.Object clone() {
+		return new UserTrackerPathWrapper((UserTrackerPath)_userTrackerPath.clone());
 	}
 
 	@Override
 	public int compareTo(UserTrackerPath userTrackerPath) {
 		return _userTrackerPath.compareTo(userTrackerPath);
-	}
-
-	@Override
-	public int hashCode() {
-		return _userTrackerPath.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _userTrackerPath.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new UserTrackerPathWrapper((UserTrackerPath)_userTrackerPath.clone());
-	}
-
-	/**
-	* Returns the path of this user tracker path.
-	*
-	* @return the path of this user tracker path
-	*/
-	@Override
-	public java.lang.String getPath() {
-		return _userTrackerPath.getPath();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _userTrackerPath.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _userTrackerPath.toXmlString();
-	}
-
-	/**
-	* Returns the path date of this user tracker path.
-	*
-	* @return the path date of this user tracker path
-	*/
-	@Override
-	public Date getPathDate() {
-		return _userTrackerPath.getPathDate();
 	}
 
 	/**
@@ -199,6 +124,11 @@ public class UserTrackerPathWrapper implements UserTrackerPath,
 	@Override
 	public long getCompanyId() {
 		return _userTrackerPath.getCompanyId();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _userTrackerPath.getExpandoBridge();
 	}
 
 	/**
@@ -212,6 +142,26 @@ public class UserTrackerPathWrapper implements UserTrackerPath,
 	}
 
 	/**
+	* Returns the path of this user tracker path.
+	*
+	* @return the path of this user tracker path
+	*/
+	@Override
+	public java.lang.String getPath() {
+		return _userTrackerPath.getPath();
+	}
+
+	/**
+	* Returns the path date of this user tracker path.
+	*
+	* @return the path date of this user tracker path
+	*/
+	@Override
+	public Date getPathDate() {
+		return _userTrackerPath.getPathDate();
+	}
+
+	/**
 	* Returns the primary key of this user tracker path.
 	*
 	* @return the primary key of this user tracker path
@@ -219,6 +169,11 @@ public class UserTrackerPathWrapper implements UserTrackerPath,
 	@Override
 	public long getPrimaryKey() {
 		return _userTrackerPath.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _userTrackerPath.getPrimaryKeyObj();
 	}
 
 	/**
@@ -242,6 +197,26 @@ public class UserTrackerPathWrapper implements UserTrackerPath,
 	}
 
 	@Override
+	public int hashCode() {
+		return _userTrackerPath.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _userTrackerPath.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _userTrackerPath.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _userTrackerPath.isNew();
+	}
+
+	@Override
 	public void persist() {
 		_userTrackerPath.persist();
 	}
@@ -262,13 +237,13 @@ public class UserTrackerPathWrapper implements UserTrackerPath,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_userTrackerPath.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_userTrackerPath.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_userTrackerPath.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
+		_userTrackerPath.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -344,6 +319,31 @@ public class UserTrackerPathWrapper implements UserTrackerPath,
 	@Override
 	public void setUserTrackerPathId(long userTrackerPathId) {
 		_userTrackerPath.setUserTrackerPathId(userTrackerPathId);
+	}
+
+	@Override
+	public CacheModel<UserTrackerPath> toCacheModel() {
+		return _userTrackerPath.toCacheModel();
+	}
+
+	@Override
+	public UserTrackerPath toEscapedModel() {
+		return new UserTrackerPathWrapper(_userTrackerPath.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _userTrackerPath.toString();
+	}
+
+	@Override
+	public UserTrackerPath toUnescapedModel() {
+		return new UserTrackerPathWrapper(_userTrackerPath.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _userTrackerPath.toXmlString();
 	}
 
 	@Override

@@ -86,6 +86,12 @@ public class MicroblogsEntryLocalServiceUtil {
 		return getService().createMicroblogsEntry(microblogsEntryId);
 	}
 
+	public static void deleteMicroblogsEntries(long creatorClassNameId,
+		long creatorClassPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteMicroblogsEntries(creatorClassNameId, creatorClassPK);
+	}
+
 	/**
 	* Deletes the microblogs entry from the database. Also notifies the appropriate model listeners.
 	*
@@ -112,57 +118,6 @@ public class MicroblogsEntryLocalServiceUtil {
 		return getService().deleteMicroblogsEntry(microblogsEntryId);
 	}
 
-	public static com.liferay.microblogs.model.MicroblogsEntry fetchMicroblogsEntry(
-		long microblogsEntryId) {
-		return getService().fetchMicroblogsEntry(microblogsEntryId);
-	}
-
-	/**
-	* Returns the microblogs entry with the primary key.
-	*
-	* @param microblogsEntryId the primary key of the microblogs entry
-	* @return the microblogs entry
-	* @throws PortalException if a microblogs entry with the primary key could not be found
-	*/
-	public static com.liferay.microblogs.model.MicroblogsEntry getMicroblogsEntry(
-		long microblogsEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getMicroblogsEntry(microblogsEntryId);
-	}
-
-	/**
-	* Updates the microblogs entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param microblogsEntry the microblogs entry
-	* @return the microblogs entry that was updated
-	*/
-	public static com.liferay.microblogs.model.MicroblogsEntry updateMicroblogsEntry(
-		com.liferay.microblogs.model.MicroblogsEntry microblogsEntry) {
-		return getService().updateMicroblogsEntry(microblogsEntry);
-	}
-
-	public static com.liferay.microblogs.model.MicroblogsEntry updateMicroblogsEntry(
-		long microblogsEntryId, java.lang.String content,
-		int socialRelationType,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateMicroblogsEntry(microblogsEntryId, content,
-			socialRelationType, serviceContext);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
 	/**
 	* @throws PortalException
 	*/
@@ -172,118 +127,13 @@ public class MicroblogsEntryLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
+	public static void deleteUserMicroblogsEntries(long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
+		getService().deleteUserMicroblogsEntries(userId);
 	}
 
-	public static int getCompanyMicroblogsEntriesCount(long companyId) {
-		return getService().getCompanyMicroblogsEntriesCount(companyId);
-	}
-
-	/**
-	* Returns the number of microblogs entries.
-	*
-	* @return the number of microblogs entries
-	*/
-	public static int getMicroblogsEntriesCount() {
-		return getService().getMicroblogsEntriesCount();
-	}
-
-	public static int getMicroblogsEntriesCount(long companyId,
-		long creatorClassNameId, java.lang.String assetTagName) {
-		return getService()
-				   .getMicroblogsEntriesCount(companyId, creatorClassNameId,
-			assetTagName);
-	}
-
-	public static int getMicroblogsEntriesCount(long companyId,
-		long creatorClassNameId, long creatorClassPK) {
-		return getService()
-				   .getMicroblogsEntriesCount(companyId, creatorClassNameId,
-			creatorClassPK);
-	}
-
-	public static int getMicroblogsEntriesCount(long companyId,
-		long creatorClassNameId, long creatorClassPK, int type) {
-		return getService()
-				   .getMicroblogsEntriesCount(companyId, creatorClassNameId,
-			creatorClassPK, type);
-	}
-
-	public static int getMicroblogsEntriesCount(long companyId,
-		long creatorClassNameId, long creatorClassPK,
-		java.lang.String assetTagName, boolean andOperator) {
-		return getService()
-				   .getMicroblogsEntriesCount(companyId, creatorClassNameId,
-			creatorClassPK, assetTagName, andOperator);
-	}
-
-	/**
-	* @deprecated As of 2.1.0
-	*/
-	@Deprecated
-	public static int getMicroblogsEntriesCount(long creatorClassNameId,
-		java.lang.String assetTagName) {
-		return getService()
-				   .getMicroblogsEntriesCount(creatorClassNameId, assetTagName);
-	}
-
-	/**
-	* @deprecated As of 2.1.0
-	*/
-	@Deprecated
-	public static int getMicroblogsEntriesCount(long creatorClassNameId,
-		long creatorClassPK) {
-		return getService()
-				   .getMicroblogsEntriesCount(creatorClassNameId, creatorClassPK);
-	}
-
-	/**
-	* @deprecated As of 2.1.0
-	*/
-	@Deprecated
-	public static int getMicroblogsEntriesCount(long creatorClassNameId,
-		long creatorClassPK, int type) {
-		return getService()
-				   .getMicroblogsEntriesCount(creatorClassNameId,
-			creatorClassPK, type);
-	}
-
-	/**
-	* @deprecated As of 2.1.0
-	*/
-	@Deprecated
-	public static int getMicroblogsEntriesCount(long creatorClassNameId,
-		long creatorClassPK, java.lang.String assetTagName, boolean andOperator) {
-		return getService()
-				   .getMicroblogsEntriesCount(creatorClassNameId,
-			creatorClassPK, assetTagName, andOperator);
-	}
-
-	public static int getParentMicroblogsEntryMicroblogsEntriesCount(int type,
-		long parentMicroblogsEntryId) {
-		return getService()
-				   .getParentMicroblogsEntryMicroblogsEntriesCount(type,
-			parentMicroblogsEntryId);
-	}
-
-	public static int getUserMicroblogsEntriesCount(long userId) {
-		return getService().getUserMicroblogsEntriesCount(userId);
-	}
-
-	public static int getUserMicroblogsEntriesCount(long userId, int type) {
-		return getService().getUserMicroblogsEntriesCount(userId, type);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
 	}
 
 	/**
@@ -336,9 +186,50 @@ public class MicroblogsEntryLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static com.liferay.microblogs.model.MicroblogsEntry fetchMicroblogsEntry(
+		long microblogsEntryId) {
+		return getService().fetchMicroblogsEntry(microblogsEntryId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
 	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getCompanyMicroblogsEntries(
 		long companyId, int start, int end) {
 		return getService().getCompanyMicroblogsEntries(companyId, start, end);
+	}
+
+	public static int getCompanyMicroblogsEntriesCount(long companyId) {
+		return getService().getCompanyMicroblogsEntriesCount(companyId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
 	}
 
 	/**
@@ -355,46 +246,6 @@ public class MicroblogsEntryLocalServiceUtil {
 	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
 		int start, int end) {
 		return getService().getMicroblogsEntries(start, end);
-	}
-
-	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
-		long companyId, long creatorClassNameId, int type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc) {
-		return getService()
-				   .getMicroblogsEntries(companyId, creatorClassNameId, type,
-			start, end, obc);
-	}
-
-	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
-		long companyId, long creatorClassNameId, java.lang.String assetTagName,
-		int start, int end) {
-		return getService()
-				   .getMicroblogsEntries(companyId, creatorClassNameId,
-			assetTagName, start, end);
-	}
-
-	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
-		long companyId, long creatorClassNameId, long creatorClassPK,
-		int start, int end) {
-		return getService()
-				   .getMicroblogsEntries(companyId, creatorClassNameId,
-			creatorClassPK, start, end);
-	}
-
-	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
-		long companyId, long creatorClassNameId, long creatorClassPK, int type,
-		int start, int end) {
-		return getService()
-				   .getMicroblogsEntries(companyId, creatorClassNameId,
-			creatorClassPK, type, start, end);
-	}
-
-	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
-		long companyId, long creatorClassNameId, long creatorClassPK,
-		java.lang.String assetTagName, boolean andOperator, int start, int end) {
-		return getService()
-				   .getMicroblogsEntries(companyId, creatorClassNameId,
-			creatorClassPK, assetTagName, andOperator, start, end);
 	}
 
 	/**
@@ -444,6 +295,14 @@ public class MicroblogsEntryLocalServiceUtil {
 			type, start, end);
 	}
 
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
+		long companyId, long creatorClassNameId, int type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc) {
+		return getService()
+				   .getMicroblogsEntries(companyId, creatorClassNameId, type,
+			start, end, obc);
+	}
+
 	/**
 	* @deprecated As of 2.1.0
 	*/
@@ -454,6 +313,140 @@ public class MicroblogsEntryLocalServiceUtil {
 		return getService()
 				   .getMicroblogsEntries(creatorClassNameId, creatorClassPK,
 			assetTagName, andOperator, start, end);
+	}
+
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
+		long companyId, long creatorClassNameId, java.lang.String assetTagName,
+		int start, int end) {
+		return getService()
+				   .getMicroblogsEntries(companyId, creatorClassNameId,
+			assetTagName, start, end);
+	}
+
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
+		long companyId, long creatorClassNameId, long creatorClassPK,
+		int start, int end) {
+		return getService()
+				   .getMicroblogsEntries(companyId, creatorClassNameId,
+			creatorClassPK, start, end);
+	}
+
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
+		long companyId, long creatorClassNameId, long creatorClassPK, int type,
+		int start, int end) {
+		return getService()
+				   .getMicroblogsEntries(companyId, creatorClassNameId,
+			creatorClassPK, type, start, end);
+	}
+
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
+		long companyId, long creatorClassNameId, long creatorClassPK,
+		java.lang.String assetTagName, boolean andOperator, int start, int end) {
+		return getService()
+				   .getMicroblogsEntries(companyId, creatorClassNameId,
+			creatorClassPK, assetTagName, andOperator, start, end);
+	}
+
+	/**
+	* Returns the number of microblogs entries.
+	*
+	* @return the number of microblogs entries
+	*/
+	public static int getMicroblogsEntriesCount() {
+		return getService().getMicroblogsEntriesCount();
+	}
+
+	/**
+	* @deprecated As of 2.1.0
+	*/
+	@Deprecated
+	public static int getMicroblogsEntriesCount(long creatorClassNameId,
+		java.lang.String assetTagName) {
+		return getService()
+				   .getMicroblogsEntriesCount(creatorClassNameId, assetTagName);
+	}
+
+	/**
+	* @deprecated As of 2.1.0
+	*/
+	@Deprecated
+	public static int getMicroblogsEntriesCount(long creatorClassNameId,
+		long creatorClassPK) {
+		return getService()
+				   .getMicroblogsEntriesCount(creatorClassNameId, creatorClassPK);
+	}
+
+	/**
+	* @deprecated As of 2.1.0
+	*/
+	@Deprecated
+	public static int getMicroblogsEntriesCount(long creatorClassNameId,
+		long creatorClassPK, int type) {
+		return getService()
+				   .getMicroblogsEntriesCount(creatorClassNameId,
+			creatorClassPK, type);
+	}
+
+	public static int getMicroblogsEntriesCount(long companyId,
+		long creatorClassNameId, java.lang.String assetTagName) {
+		return getService()
+				   .getMicroblogsEntriesCount(companyId, creatorClassNameId,
+			assetTagName);
+	}
+
+	/**
+	* @deprecated As of 2.1.0
+	*/
+	@Deprecated
+	public static int getMicroblogsEntriesCount(long creatorClassNameId,
+		long creatorClassPK, java.lang.String assetTagName, boolean andOperator) {
+		return getService()
+				   .getMicroblogsEntriesCount(creatorClassNameId,
+			creatorClassPK, assetTagName, andOperator);
+	}
+
+	public static int getMicroblogsEntriesCount(long companyId,
+		long creatorClassNameId, long creatorClassPK) {
+		return getService()
+				   .getMicroblogsEntriesCount(companyId, creatorClassNameId,
+			creatorClassPK);
+	}
+
+	public static int getMicroblogsEntriesCount(long companyId,
+		long creatorClassNameId, long creatorClassPK, int type) {
+		return getService()
+				   .getMicroblogsEntriesCount(companyId, creatorClassNameId,
+			creatorClassPK, type);
+	}
+
+	public static int getMicroblogsEntriesCount(long companyId,
+		long creatorClassNameId, long creatorClassPK,
+		java.lang.String assetTagName, boolean andOperator) {
+		return getService()
+				   .getMicroblogsEntriesCount(companyId, creatorClassNameId,
+			creatorClassPK, assetTagName, andOperator);
+	}
+
+	/**
+	* Returns the microblogs entry with the primary key.
+	*
+	* @param microblogsEntryId the primary key of the microblogs entry
+	* @return the microblogs entry
+	* @throws PortalException if a microblogs entry with the primary key could not be found
+	*/
+	public static com.liferay.microblogs.model.MicroblogsEntry getMicroblogsEntry(
+		long microblogsEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getMicroblogsEntry(microblogsEntryId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getParentMicroblogsEntryMicroblogsEntries(
@@ -471,6 +464,19 @@ public class MicroblogsEntryLocalServiceUtil {
 			parentMicroblogsEntryId, start, end, orderByComparator);
 	}
 
+	public static int getParentMicroblogsEntryMicroblogsEntriesCount(int type,
+		long parentMicroblogsEntryId) {
+		return getService()
+				   .getParentMicroblogsEntryMicroblogsEntriesCount(type,
+			parentMicroblogsEntryId);
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
 	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getUserMicroblogsEntries(
 		long userId, int start, int end) {
 		return getService().getUserMicroblogsEntries(userId, start, end);
@@ -481,39 +487,12 @@ public class MicroblogsEntryLocalServiceUtil {
 		return getService().getUserMicroblogsEntries(userId, type, start, end);
 	}
 
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
+	public static int getUserMicroblogsEntriesCount(long userId) {
+		return getService().getUserMicroblogsEntriesCount(userId);
 	}
 
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
-	}
-
-	public static void deleteMicroblogsEntries(long creatorClassNameId,
-		long creatorClassPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteMicroblogsEntries(creatorClassNameId, creatorClassPK);
-	}
-
-	public static void deleteUserMicroblogsEntries(long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteUserMicroblogsEntries(userId);
+	public static int getUserMicroblogsEntriesCount(long userId, int type) {
+		return getService().getUserMicroblogsEntriesCount(userId, type);
 	}
 
 	public static void updateAsset(
@@ -522,6 +501,27 @@ public class MicroblogsEntryLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.updateAsset(microblogsEntry, assetCategoryIds, assetTagNames);
+	}
+
+	/**
+	* Updates the microblogs entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param microblogsEntry the microblogs entry
+	* @return the microblogs entry that was updated
+	*/
+	public static com.liferay.microblogs.model.MicroblogsEntry updateMicroblogsEntry(
+		com.liferay.microblogs.model.MicroblogsEntry microblogsEntry) {
+		return getService().updateMicroblogsEntry(microblogsEntry);
+	}
+
+	public static com.liferay.microblogs.model.MicroblogsEntry updateMicroblogsEntry(
+		long microblogsEntryId, java.lang.String content,
+		int socialRelationType,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateMicroblogsEntry(microblogsEntryId, content,
+			socialRelationType, serviceContext);
 	}
 
 	public static MicroblogsEntryLocalService getService() {

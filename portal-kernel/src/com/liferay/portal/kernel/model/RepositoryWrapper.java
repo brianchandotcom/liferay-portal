@@ -178,63 +178,13 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	}
 
 	@Override
-	public CacheModel<Repository> toCacheModel() {
-		return _repository.toCacheModel();
-	}
-
-	@Override
-	public Repository toEscapedModel() {
-		return new RepositoryWrapper(_repository.toEscapedModel());
-	}
-
-	@Override
-	public Repository toUnescapedModel() {
-		return new RepositoryWrapper(_repository.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _repository.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _repository.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _repository.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _repository.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties() {
-		return _repository.getTypeSettingsProperties();
+	public java.lang.Object clone() {
+		return new RepositoryWrapper((Repository)_repository.clone());
 	}
 
 	@Override
 	public int compareTo(Repository repository) {
 		return _repository.compareTo(repository);
-	}
-
-	@Override
-	public int hashCode() {
-		return _repository.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _repository.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new RepositoryWrapper((Repository)_repository.clone());
 	}
 
 	/**
@@ -248,6 +198,36 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	}
 
 	/**
+	* Returns the class name ID of this repository.
+	*
+	* @return the class name ID of this repository
+	*/
+	@Override
+	public long getClassNameId() {
+		return _repository.getClassNameId();
+	}
+
+	/**
+	* Returns the company ID of this repository.
+	*
+	* @return the company ID of this repository
+	*/
+	@Override
+	public long getCompanyId() {
+		return _repository.getCompanyId();
+	}
+
+	/**
+	* Returns the create date of this repository.
+	*
+	* @return the create date of this repository
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _repository.getCreateDate();
+	}
+
+	/**
 	* Returns the description of this repository.
 	*
 	* @return the description of this repository
@@ -255,6 +235,61 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	@Override
 	public java.lang.String getDescription() {
 		return _repository.getDescription();
+	}
+
+	/**
+	* Returns the dl folder ID of this repository.
+	*
+	* @return the dl folder ID of this repository
+	*/
+	@Override
+	public long getDlFolderId() {
+		return _repository.getDlFolderId();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _repository.getExpandoBridge();
+	}
+
+	/**
+	* Returns the group ID of this repository.
+	*
+	* @return the group ID of this repository
+	*/
+	@Override
+	public long getGroupId() {
+		return _repository.getGroupId();
+	}
+
+	/**
+	* Returns the last publish date of this repository.
+	*
+	* @return the last publish date of this repository
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _repository.getLastPublishDate();
+	}
+
+	/**
+	* Returns the modified date of this repository.
+	*
+	* @return the modified date of this repository
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _repository.getModifiedDate();
+	}
+
+	/**
+	* Returns the mvcc version of this repository.
+	*
+	* @return the mvcc version of this repository
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _repository.getMvccVersion();
 	}
 
 	/**
@@ -278,6 +313,31 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	}
 
 	/**
+	* Returns the primary key of this repository.
+	*
+	* @return the primary key of this repository
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _repository.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _repository.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the repository ID of this repository.
+	*
+	* @return the repository ID of this repository
+	*/
+	@Override
+	public long getRepositoryId() {
+		return _repository.getRepositoryId();
+	}
+
+	/**
 	* Returns the type settings of this repository.
 	*
 	* @return the type settings of this repository
@@ -285,6 +345,21 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	@Override
 	public java.lang.String getTypeSettings() {
 		return _repository.getTypeSettings();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties() {
+		return _repository.getTypeSettingsProperties();
+	}
+
+	/**
+	* Returns the user ID of this repository.
+	*
+	* @return the user ID of this repository
+	*/
+	@Override
+	public long getUserId() {
+		return _repository.getUserId();
 	}
 
 	/**
@@ -318,123 +393,23 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	}
 
 	@Override
-	public java.lang.String toString() {
-		return _repository.toString();
+	public int hashCode() {
+		return _repository.hashCode();
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
-		return _repository.toXmlString();
+	public boolean isCachedModel() {
+		return _repository.isCachedModel();
 	}
 
-	/**
-	* Returns the create date of this repository.
-	*
-	* @return the create date of this repository
-	*/
 	@Override
-	public Date getCreateDate() {
-		return _repository.getCreateDate();
+	public boolean isEscapedModel() {
+		return _repository.isEscapedModel();
 	}
 
-	/**
-	* Returns the last publish date of this repository.
-	*
-	* @return the last publish date of this repository
-	*/
 	@Override
-	public Date getLastPublishDate() {
-		return _repository.getLastPublishDate();
-	}
-
-	/**
-	* Returns the modified date of this repository.
-	*
-	* @return the modified date of this repository
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _repository.getModifiedDate();
-	}
-
-	/**
-	* Returns the class name ID of this repository.
-	*
-	* @return the class name ID of this repository
-	*/
-	@Override
-	public long getClassNameId() {
-		return _repository.getClassNameId();
-	}
-
-	/**
-	* Returns the company ID of this repository.
-	*
-	* @return the company ID of this repository
-	*/
-	@Override
-	public long getCompanyId() {
-		return _repository.getCompanyId();
-	}
-
-	/**
-	* Returns the dl folder ID of this repository.
-	*
-	* @return the dl folder ID of this repository
-	*/
-	@Override
-	public long getDlFolderId() {
-		return _repository.getDlFolderId();
-	}
-
-	/**
-	* Returns the group ID of this repository.
-	*
-	* @return the group ID of this repository
-	*/
-	@Override
-	public long getGroupId() {
-		return _repository.getGroupId();
-	}
-
-	/**
-	* Returns the mvcc version of this repository.
-	*
-	* @return the mvcc version of this repository
-	*/
-	@Override
-	public long getMvccVersion() {
-		return _repository.getMvccVersion();
-	}
-
-	/**
-	* Returns the primary key of this repository.
-	*
-	* @return the primary key of this repository
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _repository.getPrimaryKey();
-	}
-
-	/**
-	* Returns the repository ID of this repository.
-	*
-	* @return the repository ID of this repository
-	*/
-	@Override
-	public long getRepositoryId() {
-		return _repository.getRepositoryId();
-	}
-
-	/**
-	* Returns the user ID of this repository.
-	*
-	* @return the user ID of this repository
-	*/
-	@Override
-	public long getUserId() {
-		return _repository.getUserId();
+	public boolean isNew() {
+		return _repository.isNew();
 	}
 
 	@Override
@@ -503,13 +478,13 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_repository.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_repository.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_repository.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
+		_repository.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -661,6 +636,31 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_repository.setUuid(uuid);
+	}
+
+	@Override
+	public CacheModel<Repository> toCacheModel() {
+		return _repository.toCacheModel();
+	}
+
+	@Override
+	public Repository toEscapedModel() {
+		return new RepositoryWrapper(_repository.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _repository.toString();
+	}
+
+	@Override
+	public Repository toUnescapedModel() {
+		return new RepositoryWrapper(_repository.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _repository.toXmlString();
 	}
 
 	@Override

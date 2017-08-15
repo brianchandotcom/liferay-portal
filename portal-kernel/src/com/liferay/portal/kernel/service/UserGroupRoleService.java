@@ -45,18 +45,10 @@ public interface UserGroupRoleService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link UserGroupRoleServiceUtil} to access the user group role remote service. Add custom service methods to {@link com.liferay.portal.service.impl.UserGroupRoleServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	public void addUserGroupRoles(long userId, long groupId, long[] roleIds)
+	public void addUserGroupRoles(long[] userIds, long groupId, long roleId)
 		throws PortalException;
 
-	public void addUserGroupRoles(long[] userIds, long groupId, long roleId)
+	public void addUserGroupRoles(long userId, long groupId, long[] roleIds)
 		throws PortalException;
 
 	public void deleteUserGroupRoles(long userId, long groupId, long[] roleIds)
@@ -64,6 +56,13 @@ public interface UserGroupRoleService extends BaseService {
 
 	public void deleteUserGroupRoles(long[] userIds, long groupId, long roleId)
 		throws PortalException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	public void updateUserGroupRoles(long userId, long groupId,
 		long[] addedRoleIds, long[] deletedRoleIds) throws PortalException;

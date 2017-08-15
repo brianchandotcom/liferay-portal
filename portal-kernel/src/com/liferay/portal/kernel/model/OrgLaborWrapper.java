@@ -196,49 +196,28 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	}
 
 	@Override
-	public CacheModel<OrgLabor> toCacheModel() {
-		return _orgLabor.toCacheModel();
-	}
-
-	@Override
-	public ListType getType()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _orgLabor.getType();
-	}
-
-	@Override
-	public OrgLabor toEscapedModel() {
-		return new OrgLaborWrapper(_orgLabor.toEscapedModel());
-	}
-
-	@Override
-	public OrgLabor toUnescapedModel() {
-		return new OrgLaborWrapper(_orgLabor.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _orgLabor.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _orgLabor.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _orgLabor.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _orgLabor.getExpandoBridge();
+	public java.lang.Object clone() {
+		return new OrgLaborWrapper((OrgLabor)_orgLabor.clone());
 	}
 
 	@Override
 	public int compareTo(OrgLabor orgLabor) {
 		return _orgLabor.compareTo(orgLabor);
+	}
+
+	/**
+	* Returns the company ID of this org labor.
+	*
+	* @return the company ID of this org labor
+	*/
+	@Override
+	public long getCompanyId() {
+		return _orgLabor.getCompanyId();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _orgLabor.getExpandoBridge();
 	}
 
 	/**
@@ -279,6 +258,51 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	@Override
 	public int getMonOpen() {
 		return _orgLabor.getMonOpen();
+	}
+
+	/**
+	* Returns the mvcc version of this org labor.
+	*
+	* @return the mvcc version of this org labor
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _orgLabor.getMvccVersion();
+	}
+
+	/**
+	* Returns the org labor ID of this org labor.
+	*
+	* @return the org labor ID of this org labor
+	*/
+	@Override
+	public long getOrgLaborId() {
+		return _orgLabor.getOrgLaborId();
+	}
+
+	/**
+	* Returns the organization ID of this org labor.
+	*
+	* @return the organization ID of this org labor
+	*/
+	@Override
+	public long getOrganizationId() {
+		return _orgLabor.getOrganizationId();
+	}
+
+	/**
+	* Returns the primary key of this org labor.
+	*
+	* @return the primary key of this org labor
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _orgLabor.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _orgLabor.getPrimaryKeyObj();
 	}
 
 	/**
@@ -361,6 +385,22 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 		return _orgLabor.getTueOpen();
 	}
 
+	@Override
+	public ListType getType()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _orgLabor.getType();
+	}
+
+	/**
+	* Returns the type ID of this org labor.
+	*
+	* @return the type ID of this org labor
+	*/
+	@Override
+	public long getTypeId() {
+		return _orgLabor.getTypeId();
+	}
+
 	/**
 	* Returns the wed close of this org labor.
 	*
@@ -387,83 +427,18 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	}
 
 	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _orgLabor.getPrimaryKeyObj();
+	public boolean isCachedModel() {
+		return _orgLabor.isCachedModel();
 	}
 
 	@Override
-	public java.lang.Object clone() {
-		return new OrgLaborWrapper((OrgLabor)_orgLabor.clone());
+	public boolean isEscapedModel() {
+		return _orgLabor.isEscapedModel();
 	}
 
 	@Override
-	public java.lang.String toString() {
-		return _orgLabor.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _orgLabor.toXmlString();
-	}
-
-	/**
-	* Returns the company ID of this org labor.
-	*
-	* @return the company ID of this org labor
-	*/
-	@Override
-	public long getCompanyId() {
-		return _orgLabor.getCompanyId();
-	}
-
-	/**
-	* Returns the mvcc version of this org labor.
-	*
-	* @return the mvcc version of this org labor
-	*/
-	@Override
-	public long getMvccVersion() {
-		return _orgLabor.getMvccVersion();
-	}
-
-	/**
-	* Returns the org labor ID of this org labor.
-	*
-	* @return the org labor ID of this org labor
-	*/
-	@Override
-	public long getOrgLaborId() {
-		return _orgLabor.getOrgLaborId();
-	}
-
-	/**
-	* Returns the organization ID of this org labor.
-	*
-	* @return the organization ID of this org labor
-	*/
-	@Override
-	public long getOrganizationId() {
-		return _orgLabor.getOrganizationId();
-	}
-
-	/**
-	* Returns the primary key of this org labor.
-	*
-	* @return the primary key of this org labor
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _orgLabor.getPrimaryKey();
-	}
-
-	/**
-	* Returns the type ID of this org labor.
-	*
-	* @return the type ID of this org labor
-	*/
-	@Override
-	public long getTypeId() {
-		return _orgLabor.getTypeId();
+	public boolean isNew() {
+		return _orgLabor.isNew();
 	}
 
 	@Override
@@ -487,13 +462,13 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_orgLabor.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_orgLabor.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_orgLabor.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
+		_orgLabor.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -699,6 +674,31 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	@Override
 	public void setWedOpen(int wedOpen) {
 		_orgLabor.setWedOpen(wedOpen);
+	}
+
+	@Override
+	public CacheModel<OrgLabor> toCacheModel() {
+		return _orgLabor.toCacheModel();
+	}
+
+	@Override
+	public OrgLabor toEscapedModel() {
+		return new OrgLaborWrapper(_orgLabor.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _orgLabor.toString();
+	}
+
+	@Override
+	public OrgLabor toUnescapedModel() {
+		return new OrgLaborWrapper(_orgLabor.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _orgLabor.toXmlString();
 	}
 
 	@Override

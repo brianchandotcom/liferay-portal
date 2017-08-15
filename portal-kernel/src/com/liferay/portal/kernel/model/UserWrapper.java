@@ -365,13 +365,86 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	}
 
 	@Override
-	public CacheModel<User> toCacheModel() {
-		return _user.toCacheModel();
+	public void addRemotePreference(
+		com.liferay.portal.kernel.util.RemotePreference remotePreference) {
+		_user.addRemotePreference(remotePreference);
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new UserWrapper((User)_user.clone());
+	}
+
+	@Override
+	public int compareTo(User user) {
+		return _user.compareTo(user);
 	}
 
 	@Override
 	public Contact fetchContact() {
 		return _user.fetchContact();
+	}
+
+	/**
+	* Returns the user's addresses.
+	*
+	* @return the user's addresses
+	*/
+	@Override
+	public java.util.List<Address> getAddresses() {
+		return _user.getAddresses();
+	}
+
+	/**
+	* Returns the agreed to terms of use of this user.
+	*
+	* @return the agreed to terms of use of this user
+	*/
+	@Override
+	public boolean getAgreedToTermsOfUse() {
+		return _user.getAgreedToTermsOfUse();
+	}
+
+	/**
+	* Returns the user's birth date.
+	*
+	* @return the user's birth date
+	*/
+	@Override
+	public Date getBirthday()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _user.getBirthday();
+	}
+
+	/**
+	* Returns the comments of this user.
+	*
+	* @return the comments of this user
+	*/
+	@Override
+	public java.lang.String getComments() {
+		return _user.getComments();
+	}
+
+	/**
+	* Returns the company ID of this user.
+	*
+	* @return the company ID of this user
+	*/
+	@Override
+	public long getCompanyId() {
+		return _user.getCompanyId();
+	}
+
+	/**
+	* Returns the user's company's mail domain.
+	*
+	* @return the user's company's mail domain
+	*/
+	@Override
+	public java.lang.String getCompanyMx()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _user.getCompanyMx();
 	}
 
 	/**
@@ -386,35 +459,24 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		return _user.getContact();
 	}
 
+	/**
+	* Returns the contact ID of this user.
+	*
+	* @return the contact ID of this user
+	*/
 	@Override
-	public Group getGroup() {
-		return _user.getGroup();
-	}
-
-	@Override
-	public PasswordPolicy getPasswordPolicy()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _user.getPasswordPolicy();
-	}
-
-	@Override
-	public User toEscapedModel() {
-		return new UserWrapper(_user.toEscapedModel());
-	}
-
-	@Override
-	public User toUnescapedModel() {
-		return new UserWrapper(_user.toUnescapedModel());
+	public long getContactId() {
+		return _user.getContactId();
 	}
 
 	/**
-	* Returns the agreed to terms of use of this user.
+	* Returns the create date of this user.
 	*
-	* @return the agreed to terms of use of this user
+	* @return the create date of this user
 	*/
 	@Override
-	public boolean getAgreedToTermsOfUse() {
-		return _user.getAgreedToTermsOfUse();
+	public Date getCreateDate() {
+		return _user.getCreateDate();
 	}
 
 	/**
@@ -425,336 +487,6 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	@Override
 	public boolean getDefaultUser() {
 		return _user.getDefaultUser();
-	}
-
-	/**
-	* Returns the email address verified of this user.
-	*
-	* @return the email address verified of this user
-	*/
-	@Override
-	public boolean getEmailAddressVerified() {
-		return _user.getEmailAddressVerified();
-	}
-
-	/**
-	* Returns <code>true</code> if the user is female.
-	*
-	* @return <code>true</code> if the user is female; <code>false</code>
-	otherwise
-	*/
-	@Override
-	public boolean getFemale()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _user.getFemale();
-	}
-
-	/**
-	* Returns the lockout of this user.
-	*
-	* @return the lockout of this user
-	*/
-	@Override
-	public boolean getLockout() {
-		return _user.getLockout();
-	}
-
-	/**
-	* Returns <code>true</code> if the user is male.
-	*
-	* @return <code>true</code> if the user is male; <code>false</code>
-	otherwise
-	*/
-	@Override
-	public boolean getMale()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _user.getMale();
-	}
-
-	/**
-	* Returns the password encrypted of this user.
-	*
-	* @return the password encrypted of this user
-	*/
-	@Override
-	public boolean getPasswordEncrypted() {
-		return _user.getPasswordEncrypted();
-	}
-
-	@Override
-	public boolean getPasswordModified() {
-		return _user.getPasswordModified();
-	}
-
-	/**
-	* Returns the password reset of this user.
-	*
-	* @return the password reset of this user
-	*/
-	@Override
-	public boolean getPasswordReset() {
-		return _user.getPasswordReset();
-	}
-
-	@Override
-	public boolean hasCompanyMx()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _user.hasCompanyMx();
-	}
-
-	@Override
-	public boolean hasCompanyMx(java.lang.String emailAddress)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _user.hasCompanyMx(emailAddress);
-	}
-
-	@Override
-	public boolean hasMySites()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _user.hasMySites();
-	}
-
-	@Override
-	public boolean hasOrganization() {
-		return _user.hasOrganization();
-	}
-
-	@Override
-	public boolean hasPrivateLayouts()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _user.hasPrivateLayouts();
-	}
-
-	@Override
-	public boolean hasPublicLayouts()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _user.hasPublicLayouts();
-	}
-
-	@Override
-	public boolean hasReminderQuery() {
-		return _user.hasReminderQuery();
-	}
-
-	@Override
-	public boolean isActive() {
-		return _user.isActive();
-	}
-
-	/**
-	* Returns <code>true</code> if this user is agreed to terms of use.
-	*
-	* @return <code>true</code> if this user is agreed to terms of use; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isAgreedToTermsOfUse() {
-		return _user.isAgreedToTermsOfUse();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _user.isCachedModel();
-	}
-
-	/**
-	* Returns <code>true</code> if this user is default user.
-	*
-	* @return <code>true</code> if this user is default user; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isDefaultUser() {
-		return _user.isDefaultUser();
-	}
-
-	@Override
-	public boolean isEmailAddressComplete() {
-		return _user.isEmailAddressComplete();
-	}
-
-	@Override
-	public boolean isEmailAddressVerificationComplete() {
-		return _user.isEmailAddressVerificationComplete();
-	}
-
-	/**
-	* Returns <code>true</code> if this user is email address verified.
-	*
-	* @return <code>true</code> if this user is email address verified; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isEmailAddressVerified() {
-		return _user.isEmailAddressVerified();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _user.isEscapedModel();
-	}
-
-	@Override
-	public boolean isFemale()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _user.isFemale();
-	}
-
-	/**
-	* Returns <code>true</code> if this user is lockout.
-	*
-	* @return <code>true</code> if this user is lockout; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isLockout() {
-		return _user.isLockout();
-	}
-
-	@Override
-	public boolean isMale()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _user.isMale();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _user.isNew();
-	}
-
-	/**
-	* Returns <code>true</code> if this user is password encrypted.
-	*
-	* @return <code>true</code> if this user is password encrypted; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isPasswordEncrypted() {
-		return _user.isPasswordEncrypted();
-	}
-
-	@Override
-	public boolean isPasswordModified() {
-		return _user.isPasswordModified();
-	}
-
-	/**
-	* Returns <code>true</code> if this user is password reset.
-	*
-	* @return <code>true</code> if this user is password reset; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isPasswordReset() {
-		return _user.isPasswordReset();
-	}
-
-	@Override
-	public boolean isReminderQueryComplete() {
-		return _user.isReminderQueryComplete();
-	}
-
-	@Override
-	public boolean isSetupComplete() {
-		return _user.isSetupComplete();
-	}
-
-	@Override
-	public boolean isTermsOfUseComplete() {
-		return _user.isTermsOfUseComplete();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _user.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.util.RemotePreference getRemotePreference(
-		java.lang.String name) {
-		return _user.getRemotePreference(name);
-	}
-
-	@Override
-	public int compareTo(User user) {
-		return _user.compareTo(user);
-	}
-
-	/**
-	* Returns the failed login attempts of this user.
-	*
-	* @return the failed login attempts of this user
-	*/
-	@Override
-	public int getFailedLoginAttempts() {
-		return _user.getFailedLoginAttempts();
-	}
-
-	/**
-	* Returns the grace login count of this user.
-	*
-	* @return the grace login count of this user
-	*/
-	@Override
-	public int getGraceLoginCount() {
-		return _user.getGraceLoginCount();
-	}
-
-	@Override
-	public int getPrivateLayoutsPageCount()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _user.getPrivateLayoutsPageCount();
-	}
-
-	@Override
-	public int getPublicLayoutsPageCount()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _user.getPublicLayoutsPageCount();
-	}
-
-	/**
-	* Returns the status of this user.
-	*
-	* @return the status of this user
-	*/
-	@Override
-	public int getStatus() {
-		return _user.getStatus();
-	}
-
-	@Override
-	public int hashCode() {
-		return _user.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _user.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Iterable<com.liferay.portal.kernel.util.RemotePreference> getRemotePreferences() {
-		return _user.getRemotePreferences();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new UserWrapper((User)_user.clone());
-	}
-
-	/**
-	* Returns the comments of this user.
-	*
-	* @return the comments of this user
-	*/
-	@Override
-	public java.lang.String getComments() {
-		return _user.getComments();
-	}
-
-	/**
-	* Returns the user's company's mail domain.
-	*
-	* @return the user's company's mail domain
-	*/
-	@Override
-	public java.lang.String getCompanyMx()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _user.getCompanyMx();
 	}
 
 	/**
@@ -946,6 +678,63 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	}
 
 	/**
+	* Returns the email address verified of this user.
+	*
+	* @return the email address verified of this user
+	*/
+	@Override
+	public boolean getEmailAddressVerified() {
+		return _user.getEmailAddressVerified();
+	}
+
+	/**
+	* Returns the user's email addresses.
+	*
+	* @return the user's email addresses
+	*/
+	@Override
+	public java.util.List<EmailAddress> getEmailAddresses() {
+		return _user.getEmailAddresses();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _user.getExpandoBridge();
+	}
+
+	/**
+	* Returns the facebook ID of this user.
+	*
+	* @return the facebook ID of this user
+	*/
+	@Override
+	public long getFacebookId() {
+		return _user.getFacebookId();
+	}
+
+	/**
+	* Returns the failed login attempts of this user.
+	*
+	* @return the failed login attempts of this user
+	*/
+	@Override
+	public int getFailedLoginAttempts() {
+		return _user.getFailedLoginAttempts();
+	}
+
+	/**
+	* Returns <code>true</code> if the user is female.
+	*
+	* @return <code>true</code> if the user is female; <code>false</code>
+	otherwise
+	*/
+	@Override
+	public boolean getFemale()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _user.getFemale();
+	}
+
+	/**
 	* Returns the first name of this user.
 	*
 	* @return the first name of this user
@@ -986,6 +775,16 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	}
 
 	/**
+	* Returns the grace login count of this user.
+	*
+	* @return the grace login count of this user
+	*/
+	@Override
+	public int getGraceLoginCount() {
+		return _user.getGraceLoginCount();
+	}
+
+	/**
 	* Returns the greeting of this user.
 	*
 	* @return the greeting of this user
@@ -993,6 +792,26 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	@Override
 	public java.lang.String getGreeting() {
 		return _user.getGreeting();
+	}
+
+	@Override
+	public Group getGroup() {
+		return _user.getGroup();
+	}
+
+	@Override
+	public long getGroupId() {
+		return _user.getGroupId();
+	}
+
+	@Override
+	public long[] getGroupIds() {
+		return _user.getGroupIds();
+	}
+
+	@Override
+	public java.util.List<Group> getGroups() {
+		return _user.getGroups();
 	}
 
 	@Override
@@ -1021,6 +840,26 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	}
 
 	/**
+	* Returns the last failed login date of this user.
+	*
+	* @return the last failed login date of this user
+	*/
+	@Override
+	public Date getLastFailedLoginDate() {
+		return _user.getLastFailedLoginDate();
+	}
+
+	/**
+	* Returns the last login date of this user.
+	*
+	* @return the last login date of this user
+	*/
+	@Override
+	public Date getLastLoginDate() {
+		return _user.getLastLoginDate();
+	}
+
+	/**
 	* Returns the last login ip of this user.
 	*
 	* @return the last login ip of this user
@@ -1040,10 +879,55 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		return _user.getLastName();
 	}
 
+	/**
+	* Returns the ldap server ID of this user.
+	*
+	* @return the ldap server ID of this user
+	*/
+	@Override
+	public long getLdapServerId() {
+		return _user.getLdapServerId();
+	}
+
+	@Override
+	public java.util.Locale getLocale() {
+		return _user.getLocale();
+	}
+
+	/**
+	* Returns the lockout of this user.
+	*
+	* @return the lockout of this user
+	*/
+	@Override
+	public boolean getLockout() {
+		return _user.getLockout();
+	}
+
+	/**
+	* Returns the lockout date of this user.
+	*
+	* @return the lockout date of this user
+	*/
+	@Override
+	public Date getLockoutDate() {
+		return _user.getLockoutDate();
+	}
+
 	@Override
 	public java.lang.String getLogin()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _user.getLogin();
+	}
+
+	/**
+	* Returns the login date of this user.
+	*
+	* @return the login date of this user
+	*/
+	@Override
+	public Date getLoginDate() {
+		return _user.getLoginDate();
 	}
 
 	/**
@@ -1057,6 +941,18 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	}
 
 	/**
+	* Returns <code>true</code> if the user is male.
+	*
+	* @return <code>true</code> if the user is male; <code>false</code>
+	otherwise
+	*/
+	@Override
+	public boolean getMale()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _user.getMale();
+	}
+
+	/**
 	* Returns the middle name of this user.
 	*
 	* @return the middle name of this user
@@ -1067,6 +963,45 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	}
 
 	/**
+	* Returns the modified date of this user.
+	*
+	* @return the modified date of this user
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _user.getModifiedDate();
+	}
+
+	/**
+	* Returns the mvcc version of this user.
+	*
+	* @return the mvcc version of this user
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _user.getMvccVersion();
+	}
+
+	@Override
+	public java.util.List<Group> getMySiteGroups()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _user.getMySiteGroups();
+	}
+
+	@Override
+	public java.util.List<Group> getMySiteGroups(int max)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _user.getMySiteGroups(max);
+	}
+
+	@Override
+	public java.util.List<Group> getMySiteGroups(
+		java.lang.String[] classNames, int max)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _user.getMySiteGroups(classNames, max);
+	}
+
+	/**
 	* Returns the open ID of this user.
 	*
 	* @return the open ID of this user
@@ -1074,6 +1009,31 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	@Override
 	public java.lang.String getOpenId() {
 		return _user.getOpenId();
+	}
+
+	@Override
+	public long[] getOrganizationIds()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _user.getOrganizationIds();
+	}
+
+	@Override
+	public long[] getOrganizationIds(boolean includeAdministrative)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _user.getOrganizationIds(includeAdministrative);
+	}
+
+	@Override
+	public java.util.List<Organization> getOrganizations()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _user.getOrganizations();
+	}
+
+	@Override
+	public java.util.List<Organization> getOrganizations(
+		boolean includeAdministrative)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _user.getOrganizations(includeAdministrative);
 	}
 
 	@Override
@@ -1091,9 +1051,65 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		return _user.getPassword();
 	}
 
+	/**
+	* Returns the password encrypted of this user.
+	*
+	* @return the password encrypted of this user
+	*/
+	@Override
+	public boolean getPasswordEncrypted() {
+		return _user.getPasswordEncrypted();
+	}
+
+	@Override
+	public boolean getPasswordModified() {
+		return _user.getPasswordModified();
+	}
+
+	/**
+	* Returns the password modified date of this user.
+	*
+	* @return the password modified date of this user
+	*/
+	@Override
+	public Date getPasswordModifiedDate() {
+		return _user.getPasswordModifiedDate();
+	}
+
+	@Override
+	public PasswordPolicy getPasswordPolicy()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _user.getPasswordPolicy();
+	}
+
+	/**
+	* Returns the password reset of this user.
+	*
+	* @return the password reset of this user
+	*/
+	@Override
+	public boolean getPasswordReset() {
+		return _user.getPasswordReset();
+	}
+
 	@Override
 	public java.lang.String getPasswordUnencrypted() {
 		return _user.getPasswordUnencrypted();
+	}
+
+	@Override
+	public java.util.List<Phone> getPhones() {
+		return _user.getPhones();
+	}
+
+	/**
+	* Returns the portrait ID of this user.
+	*
+	* @return the portrait ID of this user
+	*/
+	@Override
+	public long getPortraitId() {
+		return _user.getPortraitId();
 	}
 
 	@Override
@@ -1101,6 +1117,33 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _user.getPortraitURL(themeDisplay);
+	}
+
+	/**
+	* Returns the primary key of this user.
+	*
+	* @return the primary key of this user
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _user.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _user.getPrimaryKeyObj();
+	}
+
+	@Override
+	public int getPrivateLayoutsPageCount()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _user.getPrivateLayoutsPageCount();
+	}
+
+	@Override
+	public int getPublicLayoutsPageCount()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _user.getPublicLayoutsPageCount();
 	}
 
 	/**
@@ -1123,6 +1166,33 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		return _user.getReminderQueryQuestion();
 	}
 
+	@Override
+	public java.util.Set<java.lang.String> getReminderQueryQuestions()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _user.getReminderQueryQuestions();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.util.RemotePreference getRemotePreference(
+		java.lang.String name) {
+		return _user.getRemotePreference(name);
+	}
+
+	@Override
+	public java.lang.Iterable<com.liferay.portal.kernel.util.RemotePreference> getRemotePreferences() {
+		return _user.getRemotePreferences();
+	}
+
+	@Override
+	public long[] getRoleIds() {
+		return _user.getRoleIds();
+	}
+
+	@Override
+	public java.util.List<Role> getRoles() {
+		return _user.getRoles();
+	}
+
 	/**
 	* Returns the screen name of this user.
 	*
@@ -1133,6 +1203,43 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		return _user.getScreenName();
 	}
 
+	@Override
+	public java.util.List<Group> getSiteGroups()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _user.getSiteGroups();
+	}
+
+	@Override
+	public java.util.List<Group> getSiteGroups(boolean includeAdministrative)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _user.getSiteGroups(includeAdministrative);
+	}
+
+	/**
+	* Returns the status of this user.
+	*
+	* @return the status of this user
+	*/
+	@Override
+	public int getStatus() {
+		return _user.getStatus();
+	}
+
+	@Override
+	public long[] getTeamIds() {
+		return _user.getTeamIds();
+	}
+
+	@Override
+	public java.util.List<Team> getTeams() {
+		return _user.getTeams();
+	}
+
+	@Override
+	public java.util.TimeZone getTimeZone() {
+		return _user.getTimeZone();
+	}
+
 	/**
 	* Returns the time zone ID of this user.
 	*
@@ -1141,6 +1248,37 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	@Override
 	public java.lang.String getTimeZoneId() {
 		return _user.getTimeZoneId();
+	}
+
+	@Override
+	public Date getUnlockDate()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _user.getUnlockDate();
+	}
+
+	@Override
+	public Date getUnlockDate(PasswordPolicy passwordPolicy) {
+		return _user.getUnlockDate(passwordPolicy);
+	}
+
+	@Override
+	public long[] getUserGroupIds() {
+		return _user.getUserGroupIds();
+	}
+
+	@Override
+	public java.util.List<UserGroup> getUserGroups() {
+		return _user.getUserGroups();
+	}
+
+	/**
+	* Returns the user ID of this user.
+	*
+	* @return the user ID of this user
+	*/
+	@Override
+	public long getUserId() {
+		return _user.getUserId();
 	}
 
 	/**
@@ -1164,338 +1302,175 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	}
 
 	@Override
-	public java.lang.String toString() {
-		return _user.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _user.toXmlString();
-	}
-
-	/**
-	* Returns the user's birth date.
-	*
-	* @return the user's birth date
-	*/
-	@Override
-	public Date getBirthday()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _user.getBirthday();
-	}
-
-	/**
-	* Returns the create date of this user.
-	*
-	* @return the create date of this user
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _user.getCreateDate();
-	}
-
-	/**
-	* Returns the last failed login date of this user.
-	*
-	* @return the last failed login date of this user
-	*/
-	@Override
-	public Date getLastFailedLoginDate() {
-		return _user.getLastFailedLoginDate();
-	}
-
-	/**
-	* Returns the last login date of this user.
-	*
-	* @return the last login date of this user
-	*/
-	@Override
-	public Date getLastLoginDate() {
-		return _user.getLastLoginDate();
-	}
-
-	/**
-	* Returns the lockout date of this user.
-	*
-	* @return the lockout date of this user
-	*/
-	@Override
-	public Date getLockoutDate() {
-		return _user.getLockoutDate();
-	}
-
-	/**
-	* Returns the login date of this user.
-	*
-	* @return the login date of this user
-	*/
-	@Override
-	public Date getLoginDate() {
-		return _user.getLoginDate();
-	}
-
-	/**
-	* Returns the modified date of this user.
-	*
-	* @return the modified date of this user
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _user.getModifiedDate();
-	}
-
-	/**
-	* Returns the password modified date of this user.
-	*
-	* @return the password modified date of this user
-	*/
-	@Override
-	public Date getPasswordModifiedDate() {
-		return _user.getPasswordModifiedDate();
-	}
-
-	@Override
-	public Date getUnlockDate()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _user.getUnlockDate();
-	}
-
-	@Override
-	public Date getUnlockDate(PasswordPolicy passwordPolicy) {
-		return _user.getUnlockDate(passwordPolicy);
-	}
-
-	/**
-	* Returns the user's addresses.
-	*
-	* @return the user's addresses
-	*/
-	@Override
-	public java.util.List<Address> getAddresses() {
-		return _user.getAddresses();
-	}
-
-	/**
-	* Returns the user's email addresses.
-	*
-	* @return the user's email addresses
-	*/
-	@Override
-	public java.util.List<EmailAddress> getEmailAddresses() {
-		return _user.getEmailAddresses();
-	}
-
-	@Override
-	public java.util.List<Group> getGroups() {
-		return _user.getGroups();
-	}
-
-	@Override
-	public java.util.List<Group> getMySiteGroups()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _user.getMySiteGroups();
-	}
-
-	@Override
-	public java.util.List<Group> getMySiteGroups(int max)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _user.getMySiteGroups(max);
-	}
-
-	@Override
-	public java.util.List<Group> getMySiteGroups(
-		java.lang.String[] classNames, int max)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _user.getMySiteGroups(classNames, max);
-	}
-
-	@Override
-	public java.util.List<Organization> getOrganizations()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _user.getOrganizations();
-	}
-
-	@Override
-	public java.util.List<Organization> getOrganizations(
-		boolean includeAdministrative)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _user.getOrganizations(includeAdministrative);
-	}
-
-	@Override
-	public java.util.List<Phone> getPhones() {
-		return _user.getPhones();
-	}
-
-	@Override
-	public java.util.List<Role> getRoles() {
-		return _user.getRoles();
-	}
-
-	@Override
-	public java.util.List<Group> getSiteGroups()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _user.getSiteGroups();
-	}
-
-	@Override
-	public java.util.List<Group> getSiteGroups(boolean includeAdministrative)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _user.getSiteGroups(includeAdministrative);
-	}
-
-	@Override
-	public java.util.List<Team> getTeams() {
-		return _user.getTeams();
-	}
-
-	@Override
-	public java.util.List<UserGroup> getUserGroups() {
-		return _user.getUserGroups();
-	}
-
-	@Override
 	public java.util.List<Website> getWebsites() {
 		return _user.getWebsites();
 	}
 
 	@Override
-	public java.util.Locale getLocale() {
-		return _user.getLocale();
-	}
-
-	@Override
-	public java.util.Set<java.lang.String> getReminderQueryQuestions()
+	public boolean hasCompanyMx()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _user.getReminderQueryQuestions();
+		return _user.hasCompanyMx();
 	}
 
 	@Override
-	public java.util.TimeZone getTimeZone() {
-		return _user.getTimeZone();
-	}
-
-	/**
-	* Returns the company ID of this user.
-	*
-	* @return the company ID of this user
-	*/
-	@Override
-	public long getCompanyId() {
-		return _user.getCompanyId();
-	}
-
-	/**
-	* Returns the contact ID of this user.
-	*
-	* @return the contact ID of this user
-	*/
-	@Override
-	public long getContactId() {
-		return _user.getContactId();
-	}
-
-	/**
-	* Returns the facebook ID of this user.
-	*
-	* @return the facebook ID of this user
-	*/
-	@Override
-	public long getFacebookId() {
-		return _user.getFacebookId();
-	}
-
-	@Override
-	public long getGroupId() {
-		return _user.getGroupId();
-	}
-
-	/**
-	* Returns the ldap server ID of this user.
-	*
-	* @return the ldap server ID of this user
-	*/
-	@Override
-	public long getLdapServerId() {
-		return _user.getLdapServerId();
-	}
-
-	/**
-	* Returns the mvcc version of this user.
-	*
-	* @return the mvcc version of this user
-	*/
-	@Override
-	public long getMvccVersion() {
-		return _user.getMvccVersion();
-	}
-
-	/**
-	* Returns the portrait ID of this user.
-	*
-	* @return the portrait ID of this user
-	*/
-	@Override
-	public long getPortraitId() {
-		return _user.getPortraitId();
-	}
-
-	/**
-	* Returns the primary key of this user.
-	*
-	* @return the primary key of this user
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _user.getPrimaryKey();
-	}
-
-	/**
-	* Returns the user ID of this user.
-	*
-	* @return the user ID of this user
-	*/
-	@Override
-	public long getUserId() {
-		return _user.getUserId();
-	}
-
-	@Override
-	public long[] getGroupIds() {
-		return _user.getGroupIds();
-	}
-
-	@Override
-	public long[] getOrganizationIds()
+	public boolean hasCompanyMx(java.lang.String emailAddress)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _user.getOrganizationIds();
+		return _user.hasCompanyMx(emailAddress);
 	}
 
 	@Override
-	public long[] getOrganizationIds(boolean includeAdministrative)
+	public boolean hasMySites()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _user.getOrganizationIds(includeAdministrative);
+		return _user.hasMySites();
 	}
 
 	@Override
-	public long[] getRoleIds() {
-		return _user.getRoleIds();
+	public boolean hasOrganization() {
+		return _user.hasOrganization();
 	}
 
 	@Override
-	public long[] getTeamIds() {
-		return _user.getTeamIds();
+	public boolean hasPrivateLayouts()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _user.hasPrivateLayouts();
 	}
 
 	@Override
-	public long[] getUserGroupIds() {
-		return _user.getUserGroupIds();
+	public boolean hasPublicLayouts()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _user.hasPublicLayouts();
 	}
 
 	@Override
-	public void addRemotePreference(
-		com.liferay.portal.kernel.util.RemotePreference remotePreference) {
-		_user.addRemotePreference(remotePreference);
+	public boolean hasReminderQuery() {
+		return _user.hasReminderQuery();
+	}
+
+	@Override
+	public int hashCode() {
+		return _user.hashCode();
+	}
+
+	@Override
+	public boolean isActive() {
+		return _user.isActive();
+	}
+
+	/**
+	* Returns <code>true</code> if this user is agreed to terms of use.
+	*
+	* @return <code>true</code> if this user is agreed to terms of use; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isAgreedToTermsOfUse() {
+		return _user.isAgreedToTermsOfUse();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _user.isCachedModel();
+	}
+
+	/**
+	* Returns <code>true</code> if this user is default user.
+	*
+	* @return <code>true</code> if this user is default user; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isDefaultUser() {
+		return _user.isDefaultUser();
+	}
+
+	@Override
+	public boolean isEmailAddressComplete() {
+		return _user.isEmailAddressComplete();
+	}
+
+	@Override
+	public boolean isEmailAddressVerificationComplete() {
+		return _user.isEmailAddressVerificationComplete();
+	}
+
+	/**
+	* Returns <code>true</code> if this user is email address verified.
+	*
+	* @return <code>true</code> if this user is email address verified; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isEmailAddressVerified() {
+		return _user.isEmailAddressVerified();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _user.isEscapedModel();
+	}
+
+	@Override
+	public boolean isFemale()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _user.isFemale();
+	}
+
+	/**
+	* Returns <code>true</code> if this user is lockout.
+	*
+	* @return <code>true</code> if this user is lockout; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isLockout() {
+		return _user.isLockout();
+	}
+
+	@Override
+	public boolean isMale()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _user.isMale();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _user.isNew();
+	}
+
+	/**
+	* Returns <code>true</code> if this user is password encrypted.
+	*
+	* @return <code>true</code> if this user is password encrypted; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isPasswordEncrypted() {
+		return _user.isPasswordEncrypted();
+	}
+
+	@Override
+	public boolean isPasswordModified() {
+		return _user.isPasswordModified();
+	}
+
+	/**
+	* Returns <code>true</code> if this user is password reset.
+	*
+	* @return <code>true</code> if this user is password reset; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isPasswordReset() {
+		return _user.isPasswordReset();
+	}
+
+	@Override
+	public boolean isReminderQueryComplete() {
+		return _user.isReminderQueryComplete();
+	}
+
+	@Override
+	public boolean isSetupComplete() {
+		return _user.isSetupComplete();
+	}
+
+	@Override
+	public boolean isTermsOfUseComplete() {
+		return _user.isTermsOfUseComplete();
 	}
 
 	@Override
@@ -1599,13 +1574,13 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_user.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_user.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_user.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
+		_user.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -1981,6 +1956,31 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_user.setUuid(uuid);
+	}
+
+	@Override
+	public CacheModel<User> toCacheModel() {
+		return _user.toCacheModel();
+	}
+
+	@Override
+	public User toEscapedModel() {
+		return new UserWrapper(_user.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _user.toString();
+	}
+
+	@Override
+	public User toUnescapedModel() {
+		return new UserWrapper(_user.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _user.toXmlString();
 	}
 
 	@Override

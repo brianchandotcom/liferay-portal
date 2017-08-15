@@ -106,68 +106,13 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	}
 
 	@Override
-	public Entry toEscapedModel() {
-		return new EntryWrapper(_entry.toEscapedModel());
-	}
-
-	@Override
-	public Entry toUnescapedModel() {
-		return new EntryWrapper(_entry.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _entry.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _entry.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _entry.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _entry.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<Entry> toCacheModel() {
-		return _entry.toCacheModel();
+	public java.lang.Object clone() {
+		return new EntryWrapper((Entry)_entry.clone());
 	}
 
 	@Override
 	public int compareTo(Entry entry) {
 		return _entry.compareTo(entry);
-	}
-
-	/**
-	* Returns the flag of this entry.
-	*
-	* @return the flag of this entry
-	*/
-	@Override
-	public int getFlag() {
-		return _entry.getFlag();
-	}
-
-	@Override
-	public int hashCode() {
-		return _entry.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _entry.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new EntryWrapper((Entry)_entry.clone());
 	}
 
 	/**
@@ -178,36 +123,6 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	@Override
 	public java.lang.String getContent() {
 		return _entry.getContent();
-	}
-
-	/**
-	* Returns the from user uuid of this entry.
-	*
-	* @return the from user uuid of this entry
-	*/
-	@Override
-	public java.lang.String getFromUserUuid() {
-		return _entry.getFromUserUuid();
-	}
-
-	/**
-	* Returns the to user uuid of this entry.
-	*
-	* @return the to user uuid of this entry
-	*/
-	@Override
-	public java.lang.String getToUserUuid() {
-		return _entry.getToUserUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _entry.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _entry.toXmlString();
 	}
 
 	/**
@@ -230,6 +145,21 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 		return _entry.getEntryId();
 	}
 
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _entry.getExpandoBridge();
+	}
+
+	/**
+	* Returns the flag of this entry.
+	*
+	* @return the flag of this entry
+	*/
+	@Override
+	public int getFlag() {
+		return _entry.getFlag();
+	}
+
 	/**
 	* Returns the from user ID of this entry.
 	*
@@ -238,6 +168,16 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	@Override
 	public long getFromUserId() {
 		return _entry.getFromUserId();
+	}
+
+	/**
+	* Returns the from user uuid of this entry.
+	*
+	* @return the from user uuid of this entry
+	*/
+	@Override
+	public java.lang.String getFromUserUuid() {
+		return _entry.getFromUserUuid();
 	}
 
 	/**
@@ -250,6 +190,11 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 		return _entry.getPrimaryKey();
 	}
 
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _entry.getPrimaryKeyObj();
+	}
+
 	/**
 	* Returns the to user ID of this entry.
 	*
@@ -258,6 +203,36 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	@Override
 	public long getToUserId() {
 		return _entry.getToUserId();
+	}
+
+	/**
+	* Returns the to user uuid of this entry.
+	*
+	* @return the to user uuid of this entry
+	*/
+	@Override
+	public java.lang.String getToUserUuid() {
+		return _entry.getToUserUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _entry.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _entry.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _entry.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _entry.isNew();
 	}
 
 	@Override
@@ -384,6 +359,31 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	@Override
 	public void setToUserUuid(java.lang.String toUserUuid) {
 		_entry.setToUserUuid(toUserUuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<Entry> toCacheModel() {
+		return _entry.toCacheModel();
+	}
+
+	@Override
+	public Entry toEscapedModel() {
+		return new EntryWrapper(_entry.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _entry.toString();
+	}
+
+	@Override
+	public Entry toUnescapedModel() {
+		return new EntryWrapper(_entry.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _entry.toXmlString();
 	}
 
 	@Override

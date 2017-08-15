@@ -35,38 +35,6 @@ public class WeDeployAuthTokenLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _weDeployAuthTokenLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _weDeployAuthTokenLocalService.dynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _weDeployAuthTokenLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _weDeployAuthTokenLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _weDeployAuthTokenLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	@Override
 	public com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken addAccessWeDeployAuthToken(
 		java.lang.String redirectURI, java.lang.String clientId,
 		java.lang.String clientSecret, java.lang.String authorizationToken,
@@ -121,6 +89,16 @@ public class WeDeployAuthTokenLocalServiceWrapper
 	}
 
 	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _weDeployAuthTokenLocalService.deletePersistedModel(persistedModel);
+	}
+
+	/**
 	* Deletes the we deploy auth token from the database. Also notifies the appropriate model listeners.
 	*
 	* @param weDeployAuthToken the we deploy auth token
@@ -147,62 +125,8 @@ public class WeDeployAuthTokenLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken fetchWeDeployAuthToken(
-		long weDeployAuthTokenId) {
-		return _weDeployAuthTokenLocalService.fetchWeDeployAuthToken(weDeployAuthTokenId);
-	}
-
-	@Override
-	public com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken getWeDeployAuthToken(
-		java.lang.String token, int type)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _weDeployAuthTokenLocalService.getWeDeployAuthToken(token, type);
-	}
-
-	/**
-	* Returns the we deploy auth token with the primary key.
-	*
-	* @param weDeployAuthTokenId the primary key of the we deploy auth token
-	* @return the we deploy auth token
-	* @throws PortalException if a we deploy auth token with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken getWeDeployAuthToken(
-		long weDeployAuthTokenId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _weDeployAuthTokenLocalService.getWeDeployAuthToken(weDeployAuthTokenId);
-	}
-
-	/**
-	* Updates the we deploy auth token in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param weDeployAuthToken the we deploy auth token
-	* @return the we deploy auth token that was updated
-	*/
-	@Override
-	public com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken updateWeDeployAuthToken(
-		com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken weDeployAuthToken) {
-		return _weDeployAuthTokenLocalService.updateWeDeployAuthToken(weDeployAuthToken);
-	}
-
-	/**
-	* Returns the number of we deploy auth tokens.
-	*
-	* @return the number of we deploy auth tokens
-	*/
-	@Override
-	public int getWeDeployAuthTokensCount() {
-		return _weDeployAuthTokenLocalService.getWeDeployAuthTokensCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _weDeployAuthTokenLocalService.getOSGiServiceIdentifier();
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _weDeployAuthTokenLocalService.dynamicQuery();
 	}
 
 	/**
@@ -260,23 +184,6 @@ public class WeDeployAuthTokenLocalServiceWrapper
 	}
 
 	/**
-	* Returns a range of all the we deploy auth tokens.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.security.wedeploy.auth.model.impl.WeDeployAuthTokenModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of we deploy auth tokens
-	* @param end the upper bound of the range of we deploy auth tokens (not inclusive)
-	* @return the range of we deploy auth tokens
-	*/
-	@Override
-	public java.util.List<com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken> getWeDeployAuthTokens(
-		int start, int end) {
-		return _weDeployAuthTokenLocalService.getWeDeployAuthTokens(start, end);
-	}
-
-	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -301,6 +208,99 @@ public class WeDeployAuthTokenLocalServiceWrapper
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _weDeployAuthTokenLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
+	}
+
+	@Override
+	public com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken fetchWeDeployAuthToken(
+		long weDeployAuthTokenId) {
+		return _weDeployAuthTokenLocalService.fetchWeDeployAuthToken(weDeployAuthTokenId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _weDeployAuthTokenLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _weDeployAuthTokenLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _weDeployAuthTokenLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _weDeployAuthTokenLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken getWeDeployAuthToken(
+		java.lang.String token, int type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _weDeployAuthTokenLocalService.getWeDeployAuthToken(token, type);
+	}
+
+	/**
+	* Returns the we deploy auth token with the primary key.
+	*
+	* @param weDeployAuthTokenId the primary key of the we deploy auth token
+	* @return the we deploy auth token
+	* @throws PortalException if a we deploy auth token with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken getWeDeployAuthToken(
+		long weDeployAuthTokenId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _weDeployAuthTokenLocalService.getWeDeployAuthToken(weDeployAuthTokenId);
+	}
+
+	/**
+	* Returns a range of all the we deploy auth tokens.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.security.wedeploy.auth.model.impl.WeDeployAuthTokenModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of we deploy auth tokens
+	* @param end the upper bound of the range of we deploy auth tokens (not inclusive)
+	* @return the range of we deploy auth tokens
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken> getWeDeployAuthTokens(
+		int start, int end) {
+		return _weDeployAuthTokenLocalService.getWeDeployAuthTokens(start, end);
+	}
+
+	/**
+	* Returns the number of we deploy auth tokens.
+	*
+	* @return the number of we deploy auth tokens
+	*/
+	@Override
+	public int getWeDeployAuthTokensCount() {
+		return _weDeployAuthTokenLocalService.getWeDeployAuthTokensCount();
+	}
+
+	/**
+	* Updates the we deploy auth token in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param weDeployAuthToken the we deploy auth token
+	* @return the we deploy auth token that was updated
+	*/
+	@Override
+	public com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken updateWeDeployAuthToken(
+		com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken weDeployAuthToken) {
+		return _weDeployAuthTokenLocalService.updateWeDeployAuthToken(weDeployAuthToken);
 	}
 
 	@Override

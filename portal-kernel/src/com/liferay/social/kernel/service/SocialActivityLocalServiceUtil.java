@@ -40,31 +40,78 @@ public class SocialActivityLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.social.service.impl.SocialActivityLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
+	public static void addActivity(
+		com.liferay.social.kernel.model.SocialActivity activity,
+		com.liferay.social.kernel.model.SocialActivity mirrorActivity)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().addActivity(activity, mirrorActivity);
 	}
 
 	/**
-	* @throws PortalException
+	* Records an activity in the database, using a time based on the current
+	* time in an attempt to make the activity's time unique.
+	*
+	* @param userId the primary key of the acting user
+	* @param groupId the primary key of the group
+	* @param className the target asset's class name
+	* @param classPK the primary key of the target asset
+	* @param type the activity's type
+	* @param extraData any extra data regarding the activity
+	* @param receiverUserId the primary key of the receiving user
 	*/
-	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+	public static void addActivity(long userId, long groupId,
+		java.lang.String className, long classPK, int type,
+		java.lang.String extraData, long receiverUserId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
+		getService()
+			.addActivity(userId, groupId, className, classPK, type, extraData,
+			receiverUserId);
 	}
 
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
+	/**
+	* Records an activity with the given time in the database.
+	*
+	* <p>
+	* This method records a social activity done on an asset, identified by its
+	* class name and class primary key, in the database. Additional information
+	* (such as the original message ID for a reply to a forum post) is passed
+	* in via the <code>extraData</code> in JSON format. For activities
+	* affecting another user, a mirror activity is generated that describes the
+	* action from the user's point of view. The target user's ID is passed in
+	* via the <code>receiverUserId</code>.
+	* </p>
+	*
+	* <p>
+	* Example for a mirrored activity:<br> When a user replies to a message
+	* boards post, the reply action is stored in the database with the
+	* <code>receiverUserId</code> being the ID of the author of the original
+	* message. The <code>extraData</code> contains the ID of the original
+	* message in JSON format. A mirror activity is generated with the values of
+	* the <code>userId</code> and the <code>receiverUserId</code> swapped. This
+	* mirror activity basically describes a "replied to" event.
+	* </p>
+	*
+	* <p>
+	* Mirror activities are most often used in relation to friend requests and
+	* activities.
+	* </p>
+	*
+	* @param userId the primary key of the acting user
+	* @param groupId the primary key of the group
+	* @param createDate the activity's date
+	* @param className the target asset's class name
+	* @param classPK the primary key of the target asset
+	* @param type the activity's type
+	* @param extraData any extra data regarding the activity
+	* @param receiverUserId the primary key of the receiving user
+	*/
+	public static void addActivity(long userId, long groupId,
+		java.util.Date createDate, java.lang.String className, long classPK,
+		int type, java.lang.String extraData, long receiverUserId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
+		getService()
+			.addActivity(userId, groupId, createDate, className, classPK, type,
+			extraData, receiverUserId);
 	}
 
 	/**
@@ -79,6 +126,59 @@ public class SocialActivityLocalServiceUtil {
 	}
 
 	/**
+	* Records an activity with the current time in the database, but only if
+	* there isn't one with the same parameters.
+	*
+	* <p>
+	* For the main functionality see {@link #addActivity(long, long, Date,
+	* String, long, int, String, long)}
+	* </p>
+	*
+	* @param userId the primary key of the acting user
+	* @param groupId the primary key of the group
+	* @param className the target asset's class name
+	* @param classPK the primary key of the target asset
+	* @param type the activity's type
+	* @param extraData any extra data regarding the activity
+	* @param receiverUserId the primary key of the receiving user
+	*/
+	public static void addUniqueActivity(long userId, long groupId,
+		java.lang.String className, long classPK, int type,
+		java.lang.String extraData, long receiverUserId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.addUniqueActivity(userId, groupId, className, classPK, type,
+			extraData, receiverUserId);
+	}
+
+	/**
+	* Records an activity in the database, but only if there isn't already an
+	* activity with the same parameters.
+	*
+	* <p>
+	* For the main functionality see {@link #addActivity(long, long, Date,
+	* String, long, int, String, long)}
+	* </p>
+	*
+	* @param userId the primary key of the acting user
+	* @param groupId the primary key of the group
+	* @param createDate the activity's date
+	* @param className the target asset's class name
+	* @param classPK the primary key of the target asset
+	* @param type the activity's type
+	* @param extraData any extra data regarding the activity
+	* @param receiverUserId the primary key of the receiving user
+	*/
+	public static void addUniqueActivity(long userId, long groupId,
+		java.util.Date createDate, java.lang.String className, long classPK,
+		int type, java.lang.String extraData, long receiverUserId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.addUniqueActivity(userId, groupId, createDate, className, classPK,
+			type, extraData, receiverUserId);
+	}
+
+	/**
 	* Creates a new social activity with the primary key. Does not add the social activity to the database.
 	*
 	* @param activityId the primary key for the new social activity
@@ -87,6 +187,63 @@ public class SocialActivityLocalServiceUtil {
 	public static com.liferay.social.kernel.model.SocialActivity createSocialActivity(
 		long activityId) {
 		return getService().createSocialActivity(activityId);
+	}
+
+	/**
+	* Removes stored activities for the asset.
+	*
+	* @param assetEntry the asset from which to remove stored activities
+	*/
+	public static void deleteActivities(
+		com.liferay.asset.kernel.model.AssetEntry assetEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteActivities(assetEntry);
+	}
+
+	/**
+	* Removes stored activities for the asset identified by the class name and
+	* class primary key.
+	*
+	* @param className the target asset's class name
+	* @param classPK the primary key of the target asset
+	*/
+	public static void deleteActivities(java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteActivities(className, classPK);
+	}
+
+	public static void deleteActivities(long groupId) {
+		getService().deleteActivities(groupId);
+	}
+
+	/**
+	* Removes the stored activity and its mirror activity from the database.
+	*
+	* @param activity the activity to be removed
+	*/
+	public static void deleteActivity(
+		com.liferay.social.kernel.model.SocialActivity activity)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteActivity(activity);
+	}
+
+	/**
+	* Removes the stored activity from the database.
+	*
+	* @param activityId the primary key of the stored activity
+	*/
+	public static void deleteActivity(long activityId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteActivity(activityId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
 	}
 
 	/**
@@ -113,259 +270,23 @@ public class SocialActivityLocalServiceUtil {
 		return getService().deleteSocialActivity(activityId);
 	}
 
-	public static com.liferay.social.kernel.model.SocialActivity fetchFirstActivity(
-		java.lang.String className, long classPK, int type) {
-		return getService().fetchFirstActivity(className, classPK, type);
-	}
-
-	public static com.liferay.social.kernel.model.SocialActivity fetchSocialActivity(
-		long activityId) {
-		return getService().fetchSocialActivity(activityId);
-	}
-
 	/**
-	* Returns the activity identified by its primary key.
-	*
-	* @param activityId the primary key of the activity
-	* @return Returns the activity
-	*/
-	public static com.liferay.social.kernel.model.SocialActivity getActivity(
-		long activityId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getActivity(activityId);
-	}
-
-	/**
-	* Returns the activity that has the mirror activity.
-	*
-	* @param mirrorActivityId the primary key of the mirror activity
-	* @return Returns the mirror activity
-	*/
-	public static com.liferay.social.kernel.model.SocialActivity getMirrorActivity(
-		long mirrorActivityId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getMirrorActivity(mirrorActivityId);
-	}
-
-	/**
-	* Returns the social activity with the primary key.
-	*
-	* @param activityId the primary key of the social activity
-	* @return the social activity
-	* @throws PortalException if a social activity with the primary key could not be found
-	*/
-	public static com.liferay.social.kernel.model.SocialActivity getSocialActivity(
-		long activityId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getSocialActivity(activityId);
-	}
-
-	/**
-	* Updates the social activity in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param socialActivity the social activity
-	* @return the social activity that was updated
-	*/
-	public static com.liferay.social.kernel.model.SocialActivity updateSocialActivity(
-		com.liferay.social.kernel.model.SocialActivity socialActivity) {
-		return getService().updateSocialActivity(socialActivity);
-	}
-
-	/**
-	* Returns the number of activities done on assets identified by class name.
-	*
-	* @param className the target asset's class name
-	* @return the number of matching activities
-	*/
-	public static int getActivitiesCount(java.lang.String className) {
-		return getService().getActivitiesCount(className);
-	}
-
-	/**
-	* Returns the number of activities done on assets identified by the class
-	* name ID.
-	*
-	* @param classNameId the target asset's class name ID
-	* @return the number of matching activities
-	*/
-	public static int getActivitiesCount(long classNameId) {
-		return getService().getActivitiesCount(classNameId);
-	}
-
-	/**
-	* Returns the number of activities done on the asset identified by the
-	* class name and class primary key that are mirrors of the activity
-	* identified by the mirror activity ID.
-	*
-	* @param mirrorActivityId the primary key of the mirror activity
-	* @param className the target asset's class name
-	* @param classPK the primary key of the target asset
-	* @return the number of matching activities
-	*/
-	public static int getActivitiesCount(long mirrorActivityId,
-		java.lang.String className, long classPK) {
-		return getService()
-				   .getActivitiesCount(mirrorActivityId, className, classPK);
-	}
-
-	/**
-	* Returns the number of activities done on the asset identified by the
-	* class name ID and class primary key that are mirrors of the activity
-	* identified by the mirror activity ID.
-	*
-	* @param mirrorActivityId the primary key of the mirror activity
-	* @param classNameId the target asset's class name ID
-	* @param classPK the primary key of the target asset
-	* @return the number of matching activities
-	*/
-	public static int getActivitiesCount(long mirrorActivityId,
-		long classNameId, long classPK) {
-		return getService()
-				   .getActivitiesCount(mirrorActivityId, classNameId, classPK);
-	}
-
-	public static int getActivitiesCount(long userId, long groupId,
-		java.util.Date createDate, java.lang.String className, long classPK,
-		int type, long receiverUserId) {
-		return getService()
-				   .getActivitiesCount(userId, groupId, createDate, className,
-			classPK, type, receiverUserId);
-	}
-
-	/**
-	* Returns the number of activities done in the group.
+	* Removes the user's stored activities from the database.
 	*
 	* <p>
-	* This method only counts activities without mirrors.
+	* This method removes all activities where the user is either the actor or
+	* the receiver.
 	* </p>
 	*
-	* @param groupId the primary key of the group
-	* @return the number of matching activities
-	*/
-	public static int getGroupActivitiesCount(long groupId) {
-		return getService().getGroupActivitiesCount(groupId);
-	}
-
-	/**
-	* Returns the number of activities done by users that are members of the
-	* group.
-	*
-	* <p>
-	* This method only counts activities without mirrors.
-	* </p>
-	*
-	* @param groupId the primary key of the group
-	* @return the number of matching activities
-	*/
-	public static int getGroupUsersActivitiesCount(long groupId) {
-		return getService().getGroupUsersActivitiesCount(groupId);
-	}
-
-	/**
-	* Returns the number of activities done in the organization. This method
-	* only counts activities without mirrors.
-	*
-	* @param organizationId the primary key of the organization
-	* @return the number of matching activities
-	*/
-	public static int getOrganizationActivitiesCount(long organizationId) {
-		return getService().getOrganizationActivitiesCount(organizationId);
-	}
-
-	/**
-	* Returns the number of activities done by users of the organization. This
-	* method only counts activities without mirrors.
-	*
-	* @param organizationId the primary key of the organization
-	* @return the number of matching activities
-	*/
-	public static int getOrganizationUsersActivitiesCount(long organizationId) {
-		return getService().getOrganizationUsersActivitiesCount(organizationId);
-	}
-
-	/**
-	* Returns the number of activities done by users in a relationship with the
-	* user identified by userId.
-	*
 	* @param userId the primary key of the user
-	* @return the number of matching activities
 	*/
-	public static int getRelationActivitiesCount(long userId) {
-		return getService().getRelationActivitiesCount(userId);
+	public static void deleteUserActivities(long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteUserActivities(userId);
 	}
 
-	/**
-	* Returns the number of activities done by users in a relationship of type
-	* <code>type</code> with the user identified by <code>userId</code>. This
-	* method only counts activities without mirrors.
-	*
-	* @param userId the primary key of the user
-	* @param type the relationship type
-	* @return the number of matching activities
-	*/
-	public static int getRelationActivitiesCount(long userId, int type) {
-		return getService().getRelationActivitiesCount(userId, type);
-	}
-
-	/**
-	* Returns the number of social activities.
-	*
-	* @return the number of social activities
-	*/
-	public static int getSocialActivitiesCount() {
-		return getService().getSocialActivitiesCount();
-	}
-
-	/**
-	* Returns the number of activities done by the user.
-	*
-	* @param userId the primary key of the user
-	* @return the number of matching activities
-	*/
-	public static int getUserActivitiesCount(long userId) {
-		return getService().getUserActivitiesCount(userId);
-	}
-
-	/**
-	* Returns the number of activities done in user's groups. This method only
-	* counts activities without mirrors.
-	*
-	* @param userId the primary key of the user
-	* @return the number of matching activities
-	*/
-	public static int getUserGroupsActivitiesCount(long userId) {
-		return getService().getUserGroupsActivitiesCount(userId);
-	}
-
-	/**
-	* Returns the number of activities done in user's groups and organizations.
-	* This method only counts activities without mirrors.
-	*
-	* @param userId the primary key of the user
-	* @return the number of matching activities
-	*/
-	public static int getUserGroupsAndOrganizationsActivitiesCount(long userId) {
-		return getService().getUserGroupsAndOrganizationsActivitiesCount(userId);
-	}
-
-	/**
-	* Returns the number of activities done in the user's organizations. This
-	* method only counts activities without mirrors.
-	*
-	* @param userId the primary key of the user
-	* @return the number of matching activities
-	*/
-	public static int getUserOrganizationsActivitiesCount(long userId) {
-		return getService().getUserOrganizationsActivitiesCount(userId);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
 	}
 
 	/**
@@ -416,6 +337,44 @@ public class SocialActivityLocalServiceUtil {
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static com.liferay.social.kernel.model.SocialActivity fetchFirstActivity(
+		java.lang.String className, long classPK, int type) {
+		return getService().fetchFirstActivity(className, classPK, type);
+	}
+
+	public static com.liferay.social.kernel.model.SocialActivity fetchSocialActivity(
+		long activityId) {
+		return getService().fetchSocialActivity(activityId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
 	}
 
 	/**
@@ -522,6 +481,79 @@ public class SocialActivityLocalServiceUtil {
 			start, end);
 	}
 
+	/**
+	* Returns the number of activities done on assets identified by class name.
+	*
+	* @param className the target asset's class name
+	* @return the number of matching activities
+	*/
+	public static int getActivitiesCount(java.lang.String className) {
+		return getService().getActivitiesCount(className);
+	}
+
+	/**
+	* Returns the number of activities done on assets identified by the class
+	* name ID.
+	*
+	* @param classNameId the target asset's class name ID
+	* @return the number of matching activities
+	*/
+	public static int getActivitiesCount(long classNameId) {
+		return getService().getActivitiesCount(classNameId);
+	}
+
+	/**
+	* Returns the number of activities done on the asset identified by the
+	* class name and class primary key that are mirrors of the activity
+	* identified by the mirror activity ID.
+	*
+	* @param mirrorActivityId the primary key of the mirror activity
+	* @param className the target asset's class name
+	* @param classPK the primary key of the target asset
+	* @return the number of matching activities
+	*/
+	public static int getActivitiesCount(long mirrorActivityId,
+		java.lang.String className, long classPK) {
+		return getService()
+				   .getActivitiesCount(mirrorActivityId, className, classPK);
+	}
+
+	public static int getActivitiesCount(long userId, long groupId,
+		java.util.Date createDate, java.lang.String className, long classPK,
+		int type, long receiverUserId) {
+		return getService()
+				   .getActivitiesCount(userId, groupId, createDate, className,
+			classPK, type, receiverUserId);
+	}
+
+	/**
+	* Returns the number of activities done on the asset identified by the
+	* class name ID and class primary key that are mirrors of the activity
+	* identified by the mirror activity ID.
+	*
+	* @param mirrorActivityId the primary key of the mirror activity
+	* @param classNameId the target asset's class name ID
+	* @param classPK the primary key of the target asset
+	* @return the number of matching activities
+	*/
+	public static int getActivitiesCount(long mirrorActivityId,
+		long classNameId, long classPK) {
+		return getService()
+				   .getActivitiesCount(mirrorActivityId, classNameId, classPK);
+	}
+
+	/**
+	* Returns the activity identified by its primary key.
+	*
+	* @param activityId the primary key of the activity
+	* @return Returns the activity
+	*/
+	public static com.liferay.social.kernel.model.SocialActivity getActivity(
+		long activityId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getActivity(activityId);
+	}
+
 	public static java.util.List<com.liferay.social.kernel.model.SocialActivity> getActivitySetActivities(
 		long activitySetId, int start, int end) {
 		return getService().getActivitySetActivities(activitySetId, start, end);
@@ -554,6 +586,20 @@ public class SocialActivityLocalServiceUtil {
 	}
 
 	/**
+	* Returns the number of activities done in the group.
+	*
+	* <p>
+	* This method only counts activities without mirrors.
+	* </p>
+	*
+	* @param groupId the primary key of the group
+	* @return the number of matching activities
+	*/
+	public static int getGroupActivitiesCount(long groupId) {
+		return getService().getGroupActivitiesCount(groupId);
+	}
+
+	/**
 	* Returns a range of activities done by users that are members of the
 	* group.
 	*
@@ -581,6 +627,46 @@ public class SocialActivityLocalServiceUtil {
 	}
 
 	/**
+	* Returns the number of activities done by users that are members of the
+	* group.
+	*
+	* <p>
+	* This method only counts activities without mirrors.
+	* </p>
+	*
+	* @param groupId the primary key of the group
+	* @return the number of matching activities
+	*/
+	public static int getGroupUsersActivitiesCount(long groupId) {
+		return getService().getGroupUsersActivitiesCount(groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the activity that has the mirror activity.
+	*
+	* @param mirrorActivityId the primary key of the mirror activity
+	* @return Returns the mirror activity
+	*/
+	public static com.liferay.social.kernel.model.SocialActivity getMirrorActivity(
+		long mirrorActivityId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getMirrorActivity(mirrorActivityId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	/**
 	* Returns a range of all the activities done in the organization. This
 	* method only finds activities without mirrors.
 	*
@@ -601,6 +687,17 @@ public class SocialActivityLocalServiceUtil {
 	public static java.util.List<com.liferay.social.kernel.model.SocialActivity> getOrganizationActivities(
 		long organizationId, int start, int end) {
 		return getService().getOrganizationActivities(organizationId, start, end);
+	}
+
+	/**
+	* Returns the number of activities done in the organization. This method
+	* only counts activities without mirrors.
+	*
+	* @param organizationId the primary key of the organization
+	* @return the number of matching activities
+	*/
+	public static int getOrganizationActivitiesCount(long organizationId) {
+		return getService().getOrganizationActivitiesCount(organizationId);
 	}
 
 	/**
@@ -625,6 +722,23 @@ public class SocialActivityLocalServiceUtil {
 		long organizationId, int start, int end) {
 		return getService()
 				   .getOrganizationUsersActivities(organizationId, start, end);
+	}
+
+	/**
+	* Returns the number of activities done by users of the organization. This
+	* method only counts activities without mirrors.
+	*
+	* @param organizationId the primary key of the organization
+	* @return the number of matching activities
+	*/
+	public static int getOrganizationUsersActivitiesCount(long organizationId) {
+		return getService().getOrganizationUsersActivitiesCount(organizationId);
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -676,6 +790,30 @@ public class SocialActivityLocalServiceUtil {
 	}
 
 	/**
+	* Returns the number of activities done by users in a relationship with the
+	* user identified by userId.
+	*
+	* @param userId the primary key of the user
+	* @return the number of matching activities
+	*/
+	public static int getRelationActivitiesCount(long userId) {
+		return getService().getRelationActivitiesCount(userId);
+	}
+
+	/**
+	* Returns the number of activities done by users in a relationship of type
+	* <code>type</code> with the user identified by <code>userId</code>. This
+	* method only counts activities without mirrors.
+	*
+	* @param userId the primary key of the user
+	* @param type the relationship type
+	* @return the number of matching activities
+	*/
+	public static int getRelationActivitiesCount(long userId, int type) {
+		return getService().getRelationActivitiesCount(userId, type);
+	}
+
+	/**
 	* Returns a range of all the social activities.
 	*
 	* <p>
@@ -689,6 +827,28 @@ public class SocialActivityLocalServiceUtil {
 	public static java.util.List<com.liferay.social.kernel.model.SocialActivity> getSocialActivities(
 		int start, int end) {
 		return getService().getSocialActivities(start, end);
+	}
+
+	/**
+	* Returns the number of social activities.
+	*
+	* @return the number of social activities
+	*/
+	public static int getSocialActivitiesCount() {
+		return getService().getSocialActivitiesCount();
+	}
+
+	/**
+	* Returns the social activity with the primary key.
+	*
+	* @param activityId the primary key of the social activity
+	* @return the social activity
+	* @throws PortalException if a social activity with the primary key could not be found
+	*/
+	public static com.liferay.social.kernel.model.SocialActivity getSocialActivity(
+		long activityId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getSocialActivity(activityId);
 	}
 
 	/**
@@ -714,6 +874,16 @@ public class SocialActivityLocalServiceUtil {
 	}
 
 	/**
+	* Returns the number of activities done by the user.
+	*
+	* @param userId the primary key of the user
+	* @return the number of matching activities
+	*/
+	public static int getUserActivitiesCount(long userId) {
+		return getService().getUserActivitiesCount(userId);
+	}
+
+	/**
 	* Returns a range of all the activities done in the user's groups. This
 	* method only finds activities without mirrors.
 	*
@@ -734,6 +904,17 @@ public class SocialActivityLocalServiceUtil {
 	public static java.util.List<com.liferay.social.kernel.model.SocialActivity> getUserGroupsActivities(
 		long userId, int start, int end) {
 		return getService().getUserGroupsActivities(userId, start, end);
+	}
+
+	/**
+	* Returns the number of activities done in user's groups. This method only
+	* counts activities without mirrors.
+	*
+	* @param userId the primary key of the user
+	* @return the number of matching activities
+	*/
+	public static int getUserGroupsActivitiesCount(long userId) {
+		return getService().getUserGroupsActivitiesCount(userId);
 	}
 
 	/**
@@ -761,6 +942,17 @@ public class SocialActivityLocalServiceUtil {
 	}
 
 	/**
+	* Returns the number of activities done in user's groups and organizations.
+	* This method only counts activities without mirrors.
+	*
+	* @param userId the primary key of the user
+	* @return the number of matching activities
+	*/
+	public static int getUserGroupsAndOrganizationsActivitiesCount(long userId) {
+		return getService().getUserGroupsAndOrganizationsActivitiesCount(userId);
+	}
+
+	/**
 	* Returns a range of all activities done in the user's organizations. This
 	* method only finds activities without mirrors.
 	*
@@ -784,217 +976,25 @@ public class SocialActivityLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
-	}
-
-	public static void addActivity(
-		com.liferay.social.kernel.model.SocialActivity activity,
-		com.liferay.social.kernel.model.SocialActivity mirrorActivity)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().addActivity(activity, mirrorActivity);
-	}
-
-	/**
-	* Records an activity in the database, using a time based on the current
-	* time in an attempt to make the activity's time unique.
-	*
-	* @param userId the primary key of the acting user
-	* @param groupId the primary key of the group
-	* @param className the target asset's class name
-	* @param classPK the primary key of the target asset
-	* @param type the activity's type
-	* @param extraData any extra data regarding the activity
-	* @param receiverUserId the primary key of the receiving user
-	*/
-	public static void addActivity(long userId, long groupId,
-		java.lang.String className, long classPK, int type,
-		java.lang.String extraData, long receiverUserId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addActivity(userId, groupId, className, classPK, type, extraData,
-			receiverUserId);
-	}
-
-	/**
-	* Records an activity with the given time in the database.
-	*
-	* <p>
-	* This method records a social activity done on an asset, identified by its
-	* class name and class primary key, in the database. Additional information
-	* (such as the original message ID for a reply to a forum post) is passed
-	* in via the <code>extraData</code> in JSON format. For activities
-	* affecting another user, a mirror activity is generated that describes the
-	* action from the user's point of view. The target user's ID is passed in
-	* via the <code>receiverUserId</code>.
-	* </p>
-	*
-	* <p>
-	* Example for a mirrored activity:<br> When a user replies to a message
-	* boards post, the reply action is stored in the database with the
-	* <code>receiverUserId</code> being the ID of the author of the original
-	* message. The <code>extraData</code> contains the ID of the original
-	* message in JSON format. A mirror activity is generated with the values of
-	* the <code>userId</code> and the <code>receiverUserId</code> swapped. This
-	* mirror activity basically describes a "replied to" event.
-	* </p>
-	*
-	* <p>
-	* Mirror activities are most often used in relation to friend requests and
-	* activities.
-	* </p>
-	*
-	* @param userId the primary key of the acting user
-	* @param groupId the primary key of the group
-	* @param createDate the activity's date
-	* @param className the target asset's class name
-	* @param classPK the primary key of the target asset
-	* @param type the activity's type
-	* @param extraData any extra data regarding the activity
-	* @param receiverUserId the primary key of the receiving user
-	*/
-	public static void addActivity(long userId, long groupId,
-		java.util.Date createDate, java.lang.String className, long classPK,
-		int type, java.lang.String extraData, long receiverUserId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addActivity(userId, groupId, createDate, className, classPK, type,
-			extraData, receiverUserId);
-	}
-
-	/**
-	* Records an activity with the current time in the database, but only if
-	* there isn't one with the same parameters.
-	*
-	* <p>
-	* For the main functionality see {@link #addActivity(long, long, Date,
-	* String, long, int, String, long)}
-	* </p>
-	*
-	* @param userId the primary key of the acting user
-	* @param groupId the primary key of the group
-	* @param className the target asset's class name
-	* @param classPK the primary key of the target asset
-	* @param type the activity's type
-	* @param extraData any extra data regarding the activity
-	* @param receiverUserId the primary key of the receiving user
-	*/
-	public static void addUniqueActivity(long userId, long groupId,
-		java.lang.String className, long classPK, int type,
-		java.lang.String extraData, long receiverUserId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addUniqueActivity(userId, groupId, className, classPK, type,
-			extraData, receiverUserId);
-	}
-
-	/**
-	* Records an activity in the database, but only if there isn't already an
-	* activity with the same parameters.
-	*
-	* <p>
-	* For the main functionality see {@link #addActivity(long, long, Date,
-	* String, long, int, String, long)}
-	* </p>
-	*
-	* @param userId the primary key of the acting user
-	* @param groupId the primary key of the group
-	* @param createDate the activity's date
-	* @param className the target asset's class name
-	* @param classPK the primary key of the target asset
-	* @param type the activity's type
-	* @param extraData any extra data regarding the activity
-	* @param receiverUserId the primary key of the receiving user
-	*/
-	public static void addUniqueActivity(long userId, long groupId,
-		java.util.Date createDate, java.lang.String className, long classPK,
-		int type, java.lang.String extraData, long receiverUserId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addUniqueActivity(userId, groupId, createDate, className, classPK,
-			type, extraData, receiverUserId);
-	}
-
-	/**
-	* Removes stored activities for the asset.
-	*
-	* @param assetEntry the asset from which to remove stored activities
-	*/
-	public static void deleteActivities(
-		com.liferay.asset.kernel.model.AssetEntry assetEntry)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteActivities(assetEntry);
-	}
-
-	/**
-	* Removes stored activities for the asset identified by the class name and
-	* class primary key.
-	*
-	* @param className the target asset's class name
-	* @param classPK the primary key of the target asset
-	*/
-	public static void deleteActivities(java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteActivities(className, classPK);
-	}
-
-	public static void deleteActivities(long groupId) {
-		getService().deleteActivities(groupId);
-	}
-
-	/**
-	* Removes the stored activity and its mirror activity from the database.
-	*
-	* @param activity the activity to be removed
-	*/
-	public static void deleteActivity(
-		com.liferay.social.kernel.model.SocialActivity activity)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteActivity(activity);
-	}
-
-	/**
-	* Removes the stored activity from the database.
-	*
-	* @param activityId the primary key of the stored activity
-	*/
-	public static void deleteActivity(long activityId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteActivity(activityId);
-	}
-
-	/**
-	* Removes the user's stored activities from the database.
-	*
-	* <p>
-	* This method removes all activities where the user is either the actor or
-	* the receiver.
-	* </p>
+	* Returns the number of activities done in the user's organizations. This
+	* method only counts activities without mirrors.
 	*
 	* @param userId the primary key of the user
+	* @return the number of matching activities
 	*/
-	public static void deleteUserActivities(long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteUserActivities(userId);
+	public static int getUserOrganizationsActivitiesCount(long userId) {
+		return getService().getUserOrganizationsActivitiesCount(userId);
+	}
+
+	/**
+	* Updates the social activity in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param socialActivity the social activity
+	* @return the social activity that was updated
+	*/
+	public static com.liferay.social.kernel.model.SocialActivity updateSocialActivity(
+		com.liferay.social.kernel.model.SocialActivity socialActivity) {
+		return getService().updateSocialActivity(socialActivity);
 	}
 
 	public static SocialActivityLocalService getService() {

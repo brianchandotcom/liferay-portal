@@ -31,27 +31,6 @@ public class EmailAddressLocalServiceWrapper implements EmailAddressLocalService
 		_emailAddressLocalService = emailAddressLocalService;
 	}
 
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _emailAddressLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _emailAddressLocalService.dynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return _emailAddressLocalService.getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _emailAddressLocalService.getIndexableActionableDynamicQuery();
-	}
-
 	/**
 	* Adds the email address to the database. Also notifies the appropriate model listeners.
 	*
@@ -113,74 +92,10 @@ public class EmailAddressLocalServiceWrapper implements EmailAddressLocalService
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.EmailAddress fetchEmailAddress(
-		long emailAddressId) {
-		return _emailAddressLocalService.fetchEmailAddress(emailAddressId);
-	}
-
-	/**
-	* Returns the email address with the matching UUID and company.
-	*
-	* @param uuid the email address's UUID
-	* @param companyId the primary key of the company
-	* @return the matching email address, or <code>null</code> if a matching email address could not be found
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.EmailAddress fetchEmailAddressByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return _emailAddressLocalService.fetchEmailAddressByUuidAndCompanyId(uuid,
-			companyId);
-	}
-
-	/**
-	* Returns the email address with the primary key.
-	*
-	* @param emailAddressId the primary key of the email address
-	* @return the email address
-	* @throws PortalException if a email address with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.EmailAddress getEmailAddress(
-		long emailAddressId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _emailAddressLocalService.getEmailAddress(emailAddressId);
-	}
-
-	/**
-	* Returns the email address with the matching UUID and company.
-	*
-	* @param uuid the email address's UUID
-	* @param companyId the primary key of the company
-	* @return the matching email address
-	* @throws PortalException if a matching email address could not be found
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.EmailAddress getEmailAddressByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _emailAddressLocalService.getEmailAddressByUuidAndCompanyId(uuid,
-			companyId);
-	}
-
-	/**
-	* Updates the email address in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param emailAddress the email address
-	* @return the email address that was updated
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.EmailAddress updateEmailAddress(
-		com.liferay.portal.kernel.model.EmailAddress emailAddress) {
-		return _emailAddressLocalService.updateEmailAddress(emailAddress);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.EmailAddress updateEmailAddress(
-		long emailAddressId, java.lang.String address, long typeId,
-		boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _emailAddressLocalService.updateEmailAddress(emailAddressId,
-			address, typeId, primary);
+	public void deleteEmailAddresses(long companyId,
+		java.lang.String className, long classPK) {
+		_emailAddressLocalService.deleteEmailAddresses(companyId, className,
+			classPK);
 	}
 
 	/**
@@ -194,30 +109,8 @@ public class EmailAddressLocalServiceWrapper implements EmailAddressLocalService
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _emailAddressLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the number of email addresses.
-	*
-	* @return the number of email addresses
-	*/
-	@Override
-	public int getEmailAddressesCount() {
-		return _emailAddressLocalService.getEmailAddressesCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _emailAddressLocalService.getOSGiServiceIdentifier();
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _emailAddressLocalService.dynamicQuery();
 	}
 
 	/**
@@ -273,6 +166,88 @@ public class EmailAddressLocalServiceWrapper implements EmailAddressLocalService
 			orderByComparator);
 	}
 
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _emailAddressLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _emailAddressLocalService.dynamicQueryCount(dynamicQuery,
+			projection);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.EmailAddress fetchEmailAddress(
+		long emailAddressId) {
+		return _emailAddressLocalService.fetchEmailAddress(emailAddressId);
+	}
+
+	/**
+	* Returns the email address with the matching UUID and company.
+	*
+	* @param uuid the email address's UUID
+	* @param companyId the primary key of the company
+	* @return the matching email address, or <code>null</code> if a matching email address could not be found
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.EmailAddress fetchEmailAddressByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return _emailAddressLocalService.fetchEmailAddressByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _emailAddressLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the email address with the primary key.
+	*
+	* @param emailAddressId the primary key of the email address
+	* @return the email address
+	* @throws PortalException if a email address with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.EmailAddress getEmailAddress(
+		long emailAddressId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _emailAddressLocalService.getEmailAddress(emailAddressId);
+	}
+
+	/**
+	* Returns the email address with the matching UUID and company.
+	*
+	* @param uuid the email address's UUID
+	* @param companyId the primary key of the company
+	* @return the matching email address
+	* @throws PortalException if a matching email address could not be found
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.EmailAddress getEmailAddressByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _emailAddressLocalService.getEmailAddressByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.EmailAddress> getEmailAddresses() {
 		return _emailAddressLocalService.getEmailAddresses();
@@ -303,37 +278,62 @@ public class EmailAddressLocalServiceWrapper implements EmailAddressLocalService
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of email addresses.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of email addresses
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _emailAddressLocalService.dynamicQueryCount(dynamicQuery);
+	public int getEmailAddressesCount() {
+		return _emailAddressLocalService.getEmailAddressesCount();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return _emailAddressLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _emailAddressLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _emailAddressLocalService.dynamicQueryCount(dynamicQuery,
-			projection);
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _emailAddressLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
-	public void deleteEmailAddresses(long companyId,
-		java.lang.String className, long classPK) {
-		_emailAddressLocalService.deleteEmailAddresses(companyId, className,
-			classPK);
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _emailAddressLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Updates the email address in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param emailAddress the email address
+	* @return the email address that was updated
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.EmailAddress updateEmailAddress(
+		com.liferay.portal.kernel.model.EmailAddress emailAddress) {
+		return _emailAddressLocalService.updateEmailAddress(emailAddress);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.EmailAddress updateEmailAddress(
+		long emailAddressId, java.lang.String address, long typeId,
+		boolean primary)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _emailAddressLocalService.updateEmailAddress(emailAddressId,
+			address, typeId, primary);
 	}
 
 	@Override

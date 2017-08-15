@@ -62,31 +62,15 @@ public interface BookmarksEntryService extends BaseService {
 		java.lang.String description, ServiceContext serviceContext)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BookmarksEntry getEntry(long entryId) throws PortalException;
-
-	public BookmarksEntry moveEntry(long entryId, long parentFolderId)
-		throws PortalException;
-
-	public BookmarksEntry moveEntryFromTrash(long entryId, long parentFolderId)
-		throws PortalException;
-
-	public BookmarksEntry moveEntryToTrash(long entryId)
-		throws PortalException;
-
-	public BookmarksEntry openEntry(BookmarksEntry entry)
-		throws PortalException;
-
-	public BookmarksEntry openEntry(long entryId) throws PortalException;
-
-	public BookmarksEntry updateEntry(long entryId, long groupId,
-		long folderId, java.lang.String name, java.lang.String url,
-		java.lang.String description, ServiceContext serviceContext)
-		throws PortalException;
+	public void deleteEntry(long entryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Hits search(long groupId, long creatorUserId, int status, int start,
-		int end) throws PortalException;
+	public List<BookmarksEntry> getEntries(long groupId, long folderId,
+		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BookmarksEntry> getEntries(long groupId, long folderId,
+		int start, int end, OrderByComparator<BookmarksEntry> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getEntriesCount(long groupId, long folderId);
@@ -95,8 +79,23 @@ public interface BookmarksEntryService extends BaseService {
 	public int getEntriesCount(long groupId, long folderId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BookmarksEntry getEntry(long entryId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFoldersEntriesCount(long groupId,
 		List<java.lang.Long> folderIds);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BookmarksEntry> getGroupEntries(long groupId, int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BookmarksEntry> getGroupEntries(long groupId, long userId,
+		int start, int end) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BookmarksEntry> getGroupEntries(long groupId, long userId,
+		long rootFolderId, int start, int end) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupEntriesCount(long groupId) throws PortalException;
@@ -116,31 +115,32 @@ public interface BookmarksEntryService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BookmarksEntry> getEntries(long groupId, long folderId,
-		int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BookmarksEntry> getEntries(long groupId, long folderId,
-		int start, int end, OrderByComparator<BookmarksEntry> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BookmarksEntry> getGroupEntries(long groupId, int start, int end)
+	public BookmarksEntry moveEntry(long entryId, long parentFolderId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BookmarksEntry> getGroupEntries(long groupId, long userId,
-		int start, int end) throws PortalException;
+	public BookmarksEntry moveEntryFromTrash(long entryId, long parentFolderId)
+		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BookmarksEntry> getGroupEntries(long groupId, long userId,
-		long rootFolderId, int start, int end) throws PortalException;
+	public BookmarksEntry moveEntryToTrash(long entryId)
+		throws PortalException;
 
-	public void deleteEntry(long entryId) throws PortalException;
+	public BookmarksEntry openEntry(BookmarksEntry entry)
+		throws PortalException;
+
+	public BookmarksEntry openEntry(long entryId) throws PortalException;
 
 	public void restoreEntryFromTrash(long entryId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Hits search(long groupId, long creatorUserId, int status, int start,
+		int end) throws PortalException;
 
 	public void subscribeEntry(long entryId) throws PortalException;
 
 	public void unsubscribeEntry(long entryId) throws PortalException;
+
+	public BookmarksEntry updateEntry(long entryId, long groupId,
+		long folderId, java.lang.String name, java.lang.String url,
+		java.lang.String description, ServiceContext serviceContext)
+		throws PortalException;
 }

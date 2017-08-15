@@ -52,15 +52,15 @@ public interface ListTypeService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ListType getListType(long listTypeId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ListType> getListTypes(java.lang.String type);
+
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ListType> getListTypes(java.lang.String type);
 
 	public void validate(long listTypeId, java.lang.String type)
 		throws PortalException;

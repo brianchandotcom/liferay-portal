@@ -221,19 +221,200 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	}
 
 	@Override
+	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbThread.addAttachmentsFolder();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new MBThreadWrapper((MBThread)_mbThread.clone());
+	}
+
+	@Override
+	public int compareTo(MBThread mbThread) {
+		return _mbThread.compareTo(mbThread);
+	}
+
+	@Override
+	public long getAttachmentsFolderId() {
+		return _mbThread.getAttachmentsFolderId();
+	}
+
+	@Override
 	public MBCategory getCategory()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbThread.getCategory();
 	}
 
+	/**
+	* Returns the category ID of this message boards thread.
+	*
+	* @return the category ID of this message boards thread
+	*/
 	@Override
-	public MBThread toEscapedModel() {
-		return new MBThreadWrapper(_mbThread.toEscapedModel());
+	public long getCategoryId() {
+		return _mbThread.getCategoryId();
+	}
+
+	/**
+	* Returns the company ID of this message boards thread.
+	*
+	* @return the company ID of this message boards thread
+	*/
+	@Override
+	public long getCompanyId() {
+		return _mbThread.getCompanyId();
+	}
+
+	/**
+	* Returns the container model ID of this message boards thread.
+	*
+	* @return the container model ID of this message boards thread
+	*/
+	@Override
+	public long getContainerModelId() {
+		return _mbThread.getContainerModelId();
+	}
+
+	/**
+	* Returns the container name of this message boards thread.
+	*
+	* @return the container name of this message boards thread
+	*/
+	@Override
+	public java.lang.String getContainerModelName() {
+		return _mbThread.getContainerModelName();
+	}
+
+	/**
+	* Returns the create date of this message boards thread.
+	*
+	* @return the create date of this message boards thread
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _mbThread.getCreateDate();
 	}
 
 	@Override
-	public MBThread toUnescapedModel() {
-		return new MBThreadWrapper(_mbThread.toUnescapedModel());
+	public ExpandoBridge getExpandoBridge() {
+		return _mbThread.getExpandoBridge();
+	}
+
+	/**
+	* Returns the group ID of this message boards thread.
+	*
+	* @return the group ID of this message boards thread
+	*/
+	@Override
+	public long getGroupId() {
+		return _mbThread.getGroupId();
+	}
+
+	/**
+	* Returns the last post by user ID of this message boards thread.
+	*
+	* @return the last post by user ID of this message boards thread
+	*/
+	@Override
+	public long getLastPostByUserId() {
+		return _mbThread.getLastPostByUserId();
+	}
+
+	/**
+	* Returns the last post by user uuid of this message boards thread.
+	*
+	* @return the last post by user uuid of this message boards thread
+	*/
+	@Override
+	public java.lang.String getLastPostByUserUuid() {
+		return _mbThread.getLastPostByUserUuid();
+	}
+
+	/**
+	* Returns the last post date of this message boards thread.
+	*
+	* @return the last post date of this message boards thread
+	*/
+	@Override
+	public Date getLastPostDate() {
+		return _mbThread.getLastPostDate();
+	}
+
+	/**
+	* Returns the last publish date of this message boards thread.
+	*
+	* @return the last publish date of this message boards thread
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _mbThread.getLastPublishDate();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.lock.Lock getLock() {
+		return _mbThread.getLock();
+	}
+
+	/**
+	* Returns the message count of this message boards thread.
+	*
+	* @return the message count of this message boards thread
+	*/
+	@Override
+	public int getMessageCount() {
+		return _mbThread.getMessageCount();
+	}
+
+	/**
+	* Returns the modified date of this message boards thread.
+	*
+	* @return the modified date of this message boards thread
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _mbThread.getModifiedDate();
+	}
+
+	/**
+	* Returns the parent container model ID of this message boards thread.
+	*
+	* @return the parent container model ID of this message boards thread
+	*/
+	@Override
+	public long getParentContainerModelId() {
+		return _mbThread.getParentContainerModelId();
+	}
+
+	@Override
+	public long[] getParticipantUserIds() {
+		return _mbThread.getParticipantUserIds();
+	}
+
+	/**
+	* Returns the primary key of this message boards thread.
+	*
+	* @return the primary key of this message boards thread
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _mbThread.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _mbThread.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the priority of this message boards thread.
+	*
+	* @return the priority of this message boards thread
+	*/
+	@Override
+	public double getPriority() {
+		return _mbThread.getPriority();
 	}
 
 	/**
@@ -246,9 +427,187 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 		return _mbThread.getQuestion();
 	}
 
+	/**
+	* Returns the root message ID of this message boards thread.
+	*
+	* @return the root message ID of this message boards thread
+	*/
+	@Override
+	public long getRootMessageId() {
+		return _mbThread.getRootMessageId();
+	}
+
+	/**
+	* Returns the root message user ID of this message boards thread.
+	*
+	* @return the root message user ID of this message boards thread
+	*/
+	@Override
+	public long getRootMessageUserId() {
+		return _mbThread.getRootMessageUserId();
+	}
+
+	/**
+	* Returns the root message user uuid of this message boards thread.
+	*
+	* @return the root message user uuid of this message boards thread
+	*/
+	@Override
+	public java.lang.String getRootMessageUserUuid() {
+		return _mbThread.getRootMessageUserUuid();
+	}
+
+	/**
+	* Returns the status of this message boards thread.
+	*
+	* @return the status of this message boards thread
+	*/
+	@Override
+	public int getStatus() {
+		return _mbThread.getStatus();
+	}
+
+	/**
+	* Returns the status by user ID of this message boards thread.
+	*
+	* @return the status by user ID of this message boards thread
+	*/
+	@Override
+	public long getStatusByUserId() {
+		return _mbThread.getStatusByUserId();
+	}
+
+	/**
+	* Returns the status by user name of this message boards thread.
+	*
+	* @return the status by user name of this message boards thread
+	*/
+	@Override
+	public java.lang.String getStatusByUserName() {
+		return _mbThread.getStatusByUserName();
+	}
+
+	/**
+	* Returns the status by user uuid of this message boards thread.
+	*
+	* @return the status by user uuid of this message boards thread
+	*/
+	@Override
+	public java.lang.String getStatusByUserUuid() {
+		return _mbThread.getStatusByUserUuid();
+	}
+
+	/**
+	* Returns the status date of this message boards thread.
+	*
+	* @return the status date of this message boards thread
+	*/
+	@Override
+	public Date getStatusDate() {
+		return _mbThread.getStatusDate();
+	}
+
+	/**
+	* Returns the thread ID of this message boards thread.
+	*
+	* @return the thread ID of this message boards thread
+	*/
+	@Override
+	public long getThreadId() {
+		return _mbThread.getThreadId();
+	}
+
+	/**
+	* Returns the trash entry created when this message boards thread was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this message boards thread.
+	*
+	* @return the trash entry created when this message boards thread was moved to the Recycle Bin
+	*/
+	@Override
+	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbThread.getTrashEntry();
+	}
+
+	/**
+	* Returns the class primary key of the trash entry for this message boards thread.
+	*
+	* @return the class primary key of the trash entry for this message boards thread
+	*/
+	@Override
+	public long getTrashEntryClassPK() {
+		return _mbThread.getTrashEntryClassPK();
+	}
+
+	/**
+	* Returns the trash handler for this message boards thread.
+	*
+	* @return the trash handler for this message boards thread
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@Deprecated
+	@Override
+	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
+		return _mbThread.getTrashHandler();
+	}
+
+	/**
+	* Returns the user ID of this message boards thread.
+	*
+	* @return the user ID of this message boards thread
+	*/
+	@Override
+	public long getUserId() {
+		return _mbThread.getUserId();
+	}
+
+	/**
+	* Returns the user name of this message boards thread.
+	*
+	* @return the user name of this message boards thread
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _mbThread.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this message boards thread.
+	*
+	* @return the user uuid of this message boards thread
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _mbThread.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this message boards thread.
+	*
+	* @return the uuid of this message boards thread
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _mbThread.getUuid();
+	}
+
+	/**
+	* Returns the view count of this message boards thread.
+	*
+	* @return the view count of this message boards thread
+	*/
+	@Override
+	public int getViewCount() {
+		return _mbThread.getViewCount();
+	}
+
 	@Override
 	public boolean hasLock(long userId) {
 		return _mbThread.hasLock(userId);
+	}
+
+	@Override
+	public int hashCode() {
+		return _mbThread.hashCode();
 	}
 
 	/**
@@ -389,390 +748,6 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	@Override
 	public boolean isScheduled() {
 		return _mbThread.isScheduled();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _mbThread.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.lock.Lock getLock() {
-		return _mbThread.getLock();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<MBThread> toCacheModel() {
-		return _mbThread.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbThread.addAttachmentsFolder();
-	}
-
-	/**
-	* Returns the trash handler for this message boards thread.
-	*
-	* @return the trash handler for this message boards thread
-	* @deprecated As of 7.0.0, with no direct replacement
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return _mbThread.getTrashHandler();
-	}
-
-	/**
-	* Returns the trash entry created when this message boards thread was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this message boards thread.
-	*
-	* @return the trash entry created when this message boards thread was moved to the Recycle Bin
-	*/
-	@Override
-	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbThread.getTrashEntry();
-	}
-
-	/**
-	* Returns the priority of this message boards thread.
-	*
-	* @return the priority of this message boards thread
-	*/
-	@Override
-	public double getPriority() {
-		return _mbThread.getPriority();
-	}
-
-	@Override
-	public int compareTo(MBThread mbThread) {
-		return _mbThread.compareTo(mbThread);
-	}
-
-	/**
-	* Returns the message count of this message boards thread.
-	*
-	* @return the message count of this message boards thread
-	*/
-	@Override
-	public int getMessageCount() {
-		return _mbThread.getMessageCount();
-	}
-
-	/**
-	* Returns the status of this message boards thread.
-	*
-	* @return the status of this message boards thread
-	*/
-	@Override
-	public int getStatus() {
-		return _mbThread.getStatus();
-	}
-
-	/**
-	* Returns the view count of this message boards thread.
-	*
-	* @return the view count of this message boards thread
-	*/
-	@Override
-	public int getViewCount() {
-		return _mbThread.getViewCount();
-	}
-
-	@Override
-	public int hashCode() {
-		return _mbThread.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _mbThread.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new MBThreadWrapper((MBThread)_mbThread.clone());
-	}
-
-	/**
-	* Returns the container name of this message boards thread.
-	*
-	* @return the container name of this message boards thread
-	*/
-	@Override
-	public java.lang.String getContainerModelName() {
-		return _mbThread.getContainerModelName();
-	}
-
-	/**
-	* Returns the last post by user uuid of this message boards thread.
-	*
-	* @return the last post by user uuid of this message boards thread
-	*/
-	@Override
-	public java.lang.String getLastPostByUserUuid() {
-		return _mbThread.getLastPostByUserUuid();
-	}
-
-	/**
-	* Returns the root message user uuid of this message boards thread.
-	*
-	* @return the root message user uuid of this message boards thread
-	*/
-	@Override
-	public java.lang.String getRootMessageUserUuid() {
-		return _mbThread.getRootMessageUserUuid();
-	}
-
-	/**
-	* Returns the status by user name of this message boards thread.
-	*
-	* @return the status by user name of this message boards thread
-	*/
-	@Override
-	public java.lang.String getStatusByUserName() {
-		return _mbThread.getStatusByUserName();
-	}
-
-	/**
-	* Returns the status by user uuid of this message boards thread.
-	*
-	* @return the status by user uuid of this message boards thread
-	*/
-	@Override
-	public java.lang.String getStatusByUserUuid() {
-		return _mbThread.getStatusByUserUuid();
-	}
-
-	/**
-	* Returns the user name of this message boards thread.
-	*
-	* @return the user name of this message boards thread
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _mbThread.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this message boards thread.
-	*
-	* @return the user uuid of this message boards thread
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _mbThread.getUserUuid();
-	}
-
-	/**
-	* Returns the uuid of this message boards thread.
-	*
-	* @return the uuid of this message boards thread
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _mbThread.getUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _mbThread.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _mbThread.toXmlString();
-	}
-
-	/**
-	* Returns the create date of this message boards thread.
-	*
-	* @return the create date of this message boards thread
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _mbThread.getCreateDate();
-	}
-
-	/**
-	* Returns the last post date of this message boards thread.
-	*
-	* @return the last post date of this message boards thread
-	*/
-	@Override
-	public Date getLastPostDate() {
-		return _mbThread.getLastPostDate();
-	}
-
-	/**
-	* Returns the last publish date of this message boards thread.
-	*
-	* @return the last publish date of this message boards thread
-	*/
-	@Override
-	public Date getLastPublishDate() {
-		return _mbThread.getLastPublishDate();
-	}
-
-	/**
-	* Returns the modified date of this message boards thread.
-	*
-	* @return the modified date of this message boards thread
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _mbThread.getModifiedDate();
-	}
-
-	/**
-	* Returns the status date of this message boards thread.
-	*
-	* @return the status date of this message boards thread
-	*/
-	@Override
-	public Date getStatusDate() {
-		return _mbThread.getStatusDate();
-	}
-
-	@Override
-	public long getAttachmentsFolderId() {
-		return _mbThread.getAttachmentsFolderId();
-	}
-
-	/**
-	* Returns the category ID of this message boards thread.
-	*
-	* @return the category ID of this message boards thread
-	*/
-	@Override
-	public long getCategoryId() {
-		return _mbThread.getCategoryId();
-	}
-
-	/**
-	* Returns the company ID of this message boards thread.
-	*
-	* @return the company ID of this message boards thread
-	*/
-	@Override
-	public long getCompanyId() {
-		return _mbThread.getCompanyId();
-	}
-
-	/**
-	* Returns the container model ID of this message boards thread.
-	*
-	* @return the container model ID of this message boards thread
-	*/
-	@Override
-	public long getContainerModelId() {
-		return _mbThread.getContainerModelId();
-	}
-
-	/**
-	* Returns the group ID of this message boards thread.
-	*
-	* @return the group ID of this message boards thread
-	*/
-	@Override
-	public long getGroupId() {
-		return _mbThread.getGroupId();
-	}
-
-	/**
-	* Returns the last post by user ID of this message boards thread.
-	*
-	* @return the last post by user ID of this message boards thread
-	*/
-	@Override
-	public long getLastPostByUserId() {
-		return _mbThread.getLastPostByUserId();
-	}
-
-	/**
-	* Returns the parent container model ID of this message boards thread.
-	*
-	* @return the parent container model ID of this message boards thread
-	*/
-	@Override
-	public long getParentContainerModelId() {
-		return _mbThread.getParentContainerModelId();
-	}
-
-	/**
-	* Returns the primary key of this message boards thread.
-	*
-	* @return the primary key of this message boards thread
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _mbThread.getPrimaryKey();
-	}
-
-	/**
-	* Returns the root message ID of this message boards thread.
-	*
-	* @return the root message ID of this message boards thread
-	*/
-	@Override
-	public long getRootMessageId() {
-		return _mbThread.getRootMessageId();
-	}
-
-	/**
-	* Returns the root message user ID of this message boards thread.
-	*
-	* @return the root message user ID of this message boards thread
-	*/
-	@Override
-	public long getRootMessageUserId() {
-		return _mbThread.getRootMessageUserId();
-	}
-
-	/**
-	* Returns the status by user ID of this message boards thread.
-	*
-	* @return the status by user ID of this message boards thread
-	*/
-	@Override
-	public long getStatusByUserId() {
-		return _mbThread.getStatusByUserId();
-	}
-
-	/**
-	* Returns the thread ID of this message boards thread.
-	*
-	* @return the thread ID of this message boards thread
-	*/
-	@Override
-	public long getThreadId() {
-		return _mbThread.getThreadId();
-	}
-
-	/**
-	* Returns the class primary key of the trash entry for this message boards thread.
-	*
-	* @return the class primary key of the trash entry for this message boards thread
-	*/
-	@Override
-	public long getTrashEntryClassPK() {
-		return _mbThread.getTrashEntryClassPK();
-	}
-
-	/**
-	* Returns the user ID of this message boards thread.
-	*
-	* @return the user ID of this message boards thread
-	*/
-	@Override
-	public long getUserId() {
-		return _mbThread.getUserId();
-	}
-
-	@Override
-	public long[] getParticipantUserIds() {
-		return _mbThread.getParticipantUserIds();
 	}
 
 	@Override
@@ -1099,6 +1074,31 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	@Override
 	public void setViewCount(int viewCount) {
 		_mbThread.setViewCount(viewCount);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<MBThread> toCacheModel() {
+		return _mbThread.toCacheModel();
+	}
+
+	@Override
+	public MBThread toEscapedModel() {
+		return new MBThreadWrapper(_mbThread.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _mbThread.toString();
+	}
+
+	@Override
+	public MBThread toUnescapedModel() {
+		return new MBThreadWrapper(_mbThread.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _mbThread.toXmlString();
 	}
 
 	@Override

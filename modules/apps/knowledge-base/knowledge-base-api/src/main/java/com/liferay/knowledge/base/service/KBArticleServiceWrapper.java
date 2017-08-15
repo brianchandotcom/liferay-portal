@@ -48,10 +48,44 @@ public class KBArticleServiceWrapper implements KBArticleService,
 	}
 
 	@Override
+	public int addKBArticlesMarkdown(long groupId, long parentKBFolderId,
+		java.lang.String fileName, boolean prioritizeByNumericalPrefix,
+		java.io.InputStream inputStream,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbArticleService.addKBArticlesMarkdown(groupId,
+			parentKBFolderId, fileName, prioritizeByNumericalPrefix,
+			inputStream, serviceContext);
+	}
+
+	@Override
+	public void addTempAttachment(long groupId, long resourcePrimKey,
+		java.lang.String fileName, java.lang.String tempFolderName,
+		java.io.InputStream inputStream, java.lang.String mimeType)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_kbArticleService.addTempAttachment(groupId, resourcePrimKey, fileName,
+			tempFolderName, inputStream, mimeType);
+	}
+
+	@Override
 	public com.liferay.knowledge.base.model.KBArticle deleteKBArticle(
 		long resourcePrimKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kbArticleService.deleteKBArticle(resourcePrimKey);
+	}
+
+	@Override
+	public void deleteKBArticles(long groupId, long[] resourcePrimKeys)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_kbArticleService.deleteKBArticles(groupId, resourcePrimKeys);
+	}
+
+	@Override
+	public void deleteTempAttachment(long groupId, long resourcePrimKey,
+		java.lang.String fileName, java.lang.String tempFolderName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_kbArticleService.deleteTempAttachment(groupId, resourcePrimKey,
+			fileName, tempFolderName);
 	}
 
 	@Override
@@ -76,162 +110,6 @@ public class KBArticleServiceWrapper implements KBArticleService,
 		return _kbArticleService.fetchLatestKBArticle(resourcePrimKey, status);
 	}
 
-	@Override
-	public com.liferay.knowledge.base.model.KBArticle getKBArticle(
-		long resourcePrimKey, int version)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kbArticleService.getKBArticle(resourcePrimKey, version);
-	}
-
-	@Override
-	public com.liferay.knowledge.base.model.KBArticle getLatestKBArticle(
-		long resourcePrimKey, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kbArticleService.getLatestKBArticle(resourcePrimKey, status);
-	}
-
-	@Override
-	public com.liferay.knowledge.base.model.KBArticle revertKBArticle(
-		long resourcePrimKey, int version,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kbArticleService.revertKBArticle(resourcePrimKey, version,
-			serviceContext);
-	}
-
-	@Override
-	public com.liferay.knowledge.base.model.KBArticle updateKBArticle(
-		long resourcePrimKey, java.lang.String title, java.lang.String content,
-		java.lang.String description, java.lang.String sourceURL,
-		java.lang.String[] sections, java.lang.String[] selectedFileNames,
-		long[] removeFileEntryIds,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kbArticleService.updateKBArticle(resourcePrimKey, title,
-			content, description, sourceURL, sections, selectedFileNames,
-			removeFileEntryIds, serviceContext);
-	}
-
-	@Override
-	public com.liferay.knowledge.base.model.KBArticleSearchDisplay getKBArticleSearchDisplay(
-		long groupId, java.lang.String title, java.lang.String content,
-		int status, java.util.Date startDate, java.util.Date endDate,
-		boolean andOperator, int[] curStartValues, int cur, int delta,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kbArticleService.getKBArticleSearchDisplay(groupId, title,
-			content, status, startDate, endDate, andOperator, curStartValues,
-			cur, delta, orderByComparator);
-	}
-
-	@Override
-	public com.liferay.knowledge.base.model.KBArticle[] getPreviousAndNextKBArticles(
-		long kbArticleId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kbArticleService.getPreviousAndNextKBArticles(kbArticleId);
-	}
-
-	@Override
-	public int addKBArticlesMarkdown(long groupId, long parentKBFolderId,
-		java.lang.String fileName, boolean prioritizeByNumericalPrefix,
-		java.io.InputStream inputStream,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kbArticleService.addKBArticlesMarkdown(groupId,
-			parentKBFolderId, fileName, prioritizeByNumericalPrefix,
-			inputStream, serviceContext);
-	}
-
-	@Override
-	public int getGroupKBArticlesCount(long groupId, int status) {
-		return _kbArticleService.getGroupKBArticlesCount(groupId, status);
-	}
-
-	@Override
-	public int getKBArticleVersionsCount(long groupId, long resourcePrimKey,
-		int status) {
-		return _kbArticleService.getKBArticleVersionsCount(groupId,
-			resourcePrimKey, status);
-	}
-
-	@Override
-	public int getKBArticlesCount(long groupId, long parentResourcePrimKey,
-		int status) {
-		return _kbArticleService.getKBArticlesCount(groupId,
-			parentResourcePrimKey, status);
-	}
-
-	@Override
-	public int getKBArticlesCount(long groupId, long[] resourcePrimKeys,
-		int status) {
-		return _kbArticleService.getKBArticlesCount(groupId, resourcePrimKeys,
-			status);
-	}
-
-	@Override
-	public int getSectionsKBArticlesCount(long groupId,
-		java.lang.String[] sections, int status) {
-		return _kbArticleService.getSectionsKBArticlesCount(groupId, sections,
-			status);
-	}
-
-	/**
-	* @deprecated As of 1.1.0, replaced by {@link #getKBArticlesCount(long,
-	long, int)}
-	*/
-	@Deprecated
-	@Override
-	public int getSiblingKBArticlesCount(long groupId,
-		long parentResourcePrimKey, int status) {
-		return _kbArticleService.getSiblingKBArticlesCount(groupId,
-			parentResourcePrimKey, status);
-	}
-
-	@Override
-	public java.lang.String getGroupKBArticlesRSS(int status, int rssDelta,
-		java.lang.String rssDisplayStyle, java.lang.String rssFormat,
-		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kbArticleService.getGroupKBArticlesRSS(status, rssDelta,
-			rssDisplayStyle, rssFormat, themeDisplay);
-	}
-
-	@Override
-	public java.lang.String getKBArticleRSS(long resourcePrimKey, int status,
-		int rssDelta, java.lang.String rssDisplayStyle,
-		java.lang.String rssFormat,
-		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kbArticleService.getKBArticleRSS(resourcePrimKey, status,
-			rssDelta, rssDisplayStyle, rssFormat, themeDisplay);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _kbArticleService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public java.lang.String[] getTempAttachmentNames(long groupId,
-		java.lang.String tempFolderName)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kbArticleService.getTempAttachmentNames(groupId, tempFolderName);
-	}
-
-	@Override
-	public java.util.List<com.liferay.knowledge.base.model.KBArticle> getAllDescendantKBArticles(
-		long groupId, long resourcePrimKey, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kbArticleService.getAllDescendantKBArticles(groupId,
-			resourcePrimKey, status, orderByComparator);
-	}
-
 	/**
 	* @deprecated As of 1.1.0, replaced by {@link
 	#getAllDescendantKBArticles(long, long, int,
@@ -248,11 +126,41 @@ public class KBArticleServiceWrapper implements KBArticleService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.knowledge.base.model.KBArticle> getAllDescendantKBArticles(
+		long groupId, long resourcePrimKey, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbArticleService.getAllDescendantKBArticles(groupId,
+			resourcePrimKey, status, orderByComparator);
+	}
+
+	@Override
 	public java.util.List<com.liferay.knowledge.base.model.KBArticle> getGroupKBArticles(
 		long groupId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator) {
 		return _kbArticleService.getGroupKBArticles(groupId, status, start,
 			end, orderByComparator);
+	}
+
+	@Override
+	public int getGroupKBArticlesCount(long groupId, int status) {
+		return _kbArticleService.getGroupKBArticlesCount(groupId, status);
+	}
+
+	@Override
+	public java.lang.String getGroupKBArticlesRSS(int status, int rssDelta,
+		java.lang.String rssDisplayStyle, java.lang.String rssFormat,
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbArticleService.getGroupKBArticlesRSS(status, rssDelta,
+			rssDisplayStyle, rssFormat, themeDisplay);
+	}
+
+	@Override
+	public com.liferay.knowledge.base.model.KBArticle getKBArticle(
+		long resourcePrimKey, int version)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbArticleService.getKBArticle(resourcePrimKey, version);
 	}
 
 	@Override
@@ -279,11 +187,48 @@ public class KBArticleServiceWrapper implements KBArticleService,
 	}
 
 	@Override
+	public java.lang.String getKBArticleRSS(long resourcePrimKey, int status,
+		int rssDelta, java.lang.String rssDisplayStyle,
+		java.lang.String rssFormat,
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbArticleService.getKBArticleRSS(resourcePrimKey, status,
+			rssDelta, rssDisplayStyle, rssFormat, themeDisplay);
+	}
+
+	@Override
+	public com.liferay.knowledge.base.model.KBArticleSearchDisplay getKBArticleSearchDisplay(
+		long groupId, java.lang.String title, java.lang.String content,
+		int status, java.util.Date startDate, java.util.Date endDate,
+		boolean andOperator, int[] curStartValues, int cur, int delta,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbArticleService.getKBArticleSearchDisplay(groupId, title,
+			content, status, startDate, endDate, andOperator, curStartValues,
+			cur, delta, orderByComparator);
+	}
+
+	@Override
 	public java.util.List<com.liferay.knowledge.base.model.KBArticle> getKBArticleVersions(
 		long groupId, long resourcePrimKey, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator) {
 		return _kbArticleService.getKBArticleVersions(groupId, resourcePrimKey,
 			status, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getKBArticleVersionsCount(long groupId, long resourcePrimKey,
+		int status) {
+		return _kbArticleService.getKBArticleVersionsCount(groupId,
+			resourcePrimKey, status);
+	}
+
+	@Override
+	public java.util.List<com.liferay.knowledge.base.model.KBArticle> getKBArticles(
+		long groupId, long[] resourcePrimKeys, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator) {
+		return _kbArticleService.getKBArticles(groupId, resourcePrimKeys,
+			status, orderByComparator);
 	}
 
 	@Override
@@ -297,18 +242,48 @@ public class KBArticleServiceWrapper implements KBArticleService,
 
 	@Override
 	public java.util.List<com.liferay.knowledge.base.model.KBArticle> getKBArticles(
-		long groupId, long[] resourcePrimKeys, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator) {
-		return _kbArticleService.getKBArticles(groupId, resourcePrimKeys,
-			status, orderByComparator);
-	}
-
-	@Override
-	public java.util.List<com.liferay.knowledge.base.model.KBArticle> getKBArticles(
 		long groupId, long[] resourcePrimKeys, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator) {
 		return _kbArticleService.getKBArticles(groupId, resourcePrimKeys,
 			status, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getKBArticlesCount(long groupId, long[] resourcePrimKeys,
+		int status) {
+		return _kbArticleService.getKBArticlesCount(groupId, resourcePrimKeys,
+			status);
+	}
+
+	@Override
+	public int getKBArticlesCount(long groupId, long parentResourcePrimKey,
+		int status) {
+		return _kbArticleService.getKBArticlesCount(groupId,
+			parentResourcePrimKey, status);
+	}
+
+	@Override
+	public com.liferay.knowledge.base.model.KBArticle getLatestKBArticle(
+		long resourcePrimKey, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbArticleService.getLatestKBArticle(resourcePrimKey, status);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _kbArticleService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.knowledge.base.model.KBArticle[] getPreviousAndNextKBArticles(
+		long kbArticleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbArticleService.getPreviousAndNextKBArticles(kbArticleId);
 	}
 
 	@Override
@@ -318,6 +293,13 @@ public class KBArticleServiceWrapper implements KBArticleService,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator) {
 		return _kbArticleService.getSectionsKBArticles(groupId, sections,
 			status, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getSectionsKBArticlesCount(long groupId,
+		java.lang.String[] sections, int status) {
+		return _kbArticleService.getSectionsKBArticlesCount(groupId, sections,
+			status);
 	}
 
 	/**
@@ -334,27 +316,23 @@ public class KBArticleServiceWrapper implements KBArticleService,
 			parentResourcePrimKey, status, start, end, orderByComparator);
 	}
 
+	/**
+	* @deprecated As of 1.1.0, replaced by {@link #getKBArticlesCount(long,
+	long, int)}
+	*/
+	@Deprecated
 	@Override
-	public void addTempAttachment(long groupId, long resourcePrimKey,
-		java.lang.String fileName, java.lang.String tempFolderName,
-		java.io.InputStream inputStream, java.lang.String mimeType)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_kbArticleService.addTempAttachment(groupId, resourcePrimKey, fileName,
-			tempFolderName, inputStream, mimeType);
+	public int getSiblingKBArticlesCount(long groupId,
+		long parentResourcePrimKey, int status) {
+		return _kbArticleService.getSiblingKBArticlesCount(groupId,
+			parentResourcePrimKey, status);
 	}
 
 	@Override
-	public void deleteKBArticles(long groupId, long[] resourcePrimKeys)
+	public java.lang.String[] getTempAttachmentNames(long groupId,
+		java.lang.String tempFolderName)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_kbArticleService.deleteKBArticles(groupId, resourcePrimKeys);
-	}
-
-	@Override
-	public void deleteTempAttachment(long groupId, long resourcePrimKey,
-		java.lang.String fileName, java.lang.String tempFolderName)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_kbArticleService.deleteTempAttachment(groupId, resourcePrimKey,
-			fileName, tempFolderName);
+		return _kbArticleService.getTempAttachmentNames(groupId, tempFolderName);
 	}
 
 	@Override
@@ -364,6 +342,15 @@ public class KBArticleServiceWrapper implements KBArticleService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_kbArticleService.moveKBArticle(resourcePrimKey,
 			parentResourceClassNameId, parentResourcePrimKey, priority);
+	}
+
+	@Override
+	public com.liferay.knowledge.base.model.KBArticle revertKBArticle(
+		long resourcePrimKey, int version,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbArticleService.revertKBArticle(resourcePrimKey, version,
+			serviceContext);
 	}
 
 	@Override
@@ -390,6 +377,19 @@ public class KBArticleServiceWrapper implements KBArticleService,
 	public void unsubscribeKBArticle(long resourcePrimKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_kbArticleService.unsubscribeKBArticle(resourcePrimKey);
+	}
+
+	@Override
+	public com.liferay.knowledge.base.model.KBArticle updateKBArticle(
+		long resourcePrimKey, java.lang.String title, java.lang.String content,
+		java.lang.String description, java.lang.String sourceURL,
+		java.lang.String[] sections, java.lang.String[] selectedFileNames,
+		long[] removeFileEntryIds,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbArticleService.updateKBArticle(resourcePrimKey, title,
+			content, description, sourceURL, sections, selectedFileNames,
+			removeFileEntryIds, serviceContext);
 	}
 
 	@Override

@@ -279,19 +279,194 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	}
 
 	@Override
-	public DLFileEntry toEscapedModel() {
-		return new DLFileEntryWrapper(_dlFileEntry.toEscapedModel());
+	public java.lang.String buildTreePath()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileEntry.buildTreePath();
 	}
 
 	@Override
-	public DLFileEntry toUnescapedModel() {
-		return new DLFileEntryWrapper(_dlFileEntry.toUnescapedModel());
+	public java.lang.Object clone() {
+		return new DLFileEntryWrapper((DLFileEntry)_dlFileEntry.clone());
+	}
+
+	@Override
+	public int compareTo(DLFileEntry dlFileEntry) {
+		return _dlFileEntry.compareTo(dlFileEntry);
+	}
+
+	/**
+	* Returns the fully qualified class name of this document library file entry.
+	*
+	* @return the fully qualified class name of this document library file entry
+	*/
+	@Override
+	public java.lang.String getClassName() {
+		return _dlFileEntry.getClassName();
+	}
+
+	/**
+	* Returns the class name ID of this document library file entry.
+	*
+	* @return the class name ID of this document library file entry
+	*/
+	@Override
+	public long getClassNameId() {
+		return _dlFileEntry.getClassNameId();
+	}
+
+	/**
+	* Returns the class pk of this document library file entry.
+	*
+	* @return the class pk of this document library file entry
+	*/
+	@Override
+	public long getClassPK() {
+		return _dlFileEntry.getClassPK();
+	}
+
+	/**
+	* Returns the company ID of this document library file entry.
+	*
+	* @return the company ID of this document library file entry
+	*/
+	@Override
+	public long getCompanyId() {
+		return _dlFileEntry.getCompanyId();
+	}
+
+	@Override
+	public java.io.InputStream getContentStream()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileEntry.getContentStream();
+	}
+
+	@Override
+	public java.io.InputStream getContentStream(java.lang.String version)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileEntry.getContentStream(version);
+	}
+
+	/**
+	* Returns the create date of this document library file entry.
+	*
+	* @return the create date of this document library file entry
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _dlFileEntry.getCreateDate();
+	}
+
+	/**
+	* Returns the custom1 image ID of this document library file entry.
+	*
+	* @return the custom1 image ID of this document library file entry
+	*/
+	@Override
+	public long getCustom1ImageId() {
+		return _dlFileEntry.getCustom1ImageId();
+	}
+
+	/**
+	* Returns the custom2 image ID of this document library file entry.
+	*
+	* @return the custom2 image ID of this document library file entry
+	*/
+	@Override
+	public long getCustom2ImageId() {
+		return _dlFileEntry.getCustom2ImageId();
+	}
+
+	@Override
+	public Map<java.lang.String, com.liferay.dynamic.data.mapping.kernel.DDMFormValues> getDDMFormValuesMap(
+		long fileVersionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileEntry.getDDMFormValuesMap(fileVersionId);
 	}
 
 	@Override
 	public DLFileEntryType getDLFileEntryType()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileEntry.getDLFileEntryType();
+	}
+
+	@Override
+	public long getDataRepositoryId() {
+		return _dlFileEntry.getDataRepositoryId();
+	}
+
+	/**
+	* Returns the description of this document library file entry.
+	*
+	* @return the description of this document library file entry
+	*/
+	@Override
+	public java.lang.String getDescription() {
+		return _dlFileEntry.getDescription();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _dlFileEntry.getExpandoBridge();
+	}
+
+	/**
+	* Returns the extension of this document library file entry.
+	*
+	* @return the extension of this document library file entry
+	*/
+	@Override
+	public java.lang.String getExtension() {
+		return _dlFileEntry.getExtension();
+	}
+
+	/**
+	* Returns the extra settings of this document library file entry.
+	*
+	* @return the extra settings of this document library file entry
+	*/
+	@Override
+	public java.lang.String getExtraSettings() {
+		return _dlFileEntry.getExtraSettings();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.util.UnicodeProperties getExtraSettingsProperties() {
+		return _dlFileEntry.getExtraSettingsProperties();
+	}
+
+	/**
+	* Returns the file entry ID of this document library file entry.
+	*
+	* @return the file entry ID of this document library file entry
+	*/
+	@Override
+	public long getFileEntryId() {
+		return _dlFileEntry.getFileEntryId();
+	}
+
+	/**
+	* Returns the file entry type ID of this document library file entry.
+	*
+	* @return the file entry type ID of this document library file entry
+	*/
+	@Override
+	public long getFileEntryTypeId() {
+		return _dlFileEntry.getFileEntryTypeId();
+	}
+
+	/**
+	* Returns the file name of this document library file entry.
+	*
+	* @return the file name of this document library file entry
+	*/
+	@Override
+	public java.lang.String getFileName() {
+		return _dlFileEntry.getFileName();
+	}
+
+	@Override
+	public java.util.List<DLFileShortcut> getFileShortcuts() {
+		return _dlFileEntry.getFileShortcuts();
 	}
 
 	@Override
@@ -307,15 +482,85 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	}
 
 	@Override
-	public DLFileVersion getLatestFileVersion(boolean trusted)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileEntry.getLatestFileVersion(trusted);
+	public java.util.List<DLFileVersion> getFileVersions(int status) {
+		return _dlFileEntry.getFileVersions(status);
+	}
+
+	@Override
+	public int getFileVersionsCount(int status) {
+		return _dlFileEntry.getFileVersionsCount(status);
 	}
 
 	@Override
 	public DLFolder getFolder()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileEntry.getFolder();
+	}
+
+	/**
+	* Returns the folder ID of this document library file entry.
+	*
+	* @return the folder ID of this document library file entry
+	*/
+	@Override
+	public long getFolderId() {
+		return _dlFileEntry.getFolderId();
+	}
+
+	/**
+	* Returns the group ID of this document library file entry.
+	*
+	* @return the group ID of this document library file entry
+	*/
+	@Override
+	public long getGroupId() {
+		return _dlFileEntry.getGroupId();
+	}
+
+	@Override
+	public java.lang.String getIcon() {
+		return _dlFileEntry.getIcon();
+	}
+
+	@Override
+	public java.lang.String getIconCssClass() {
+		return _dlFileEntry.getIconCssClass();
+	}
+
+	/**
+	* Returns the large image ID of this document library file entry.
+	*
+	* @return the large image ID of this document library file entry
+	*/
+	@Override
+	public long getLargeImageId() {
+		return _dlFileEntry.getLargeImageId();
+	}
+
+	/**
+	* Returns the last publish date of this document library file entry.
+	*
+	* @return the last publish date of this document library file entry
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _dlFileEntry.getLastPublishDate();
+	}
+
+	@Override
+	public DLFileVersion getLatestFileVersion(boolean trusted)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileEntry.getLatestFileVersion(trusted);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.lock.Lock getLock() {
+		return _dlFileEntry.getLock();
+	}
+
+	@Override
+	public java.lang.String getLuceneProperties() {
+		return _dlFileEntry.getLuceneProperties();
 	}
 
 	/**
@@ -328,9 +573,212 @@ public class DLFileEntryWrapper implements DLFileEntry,
 		return _dlFileEntry.getManualCheckInRequired();
 	}
 
+	/**
+	* Returns the mime type of this document library file entry.
+	*
+	* @return the mime type of this document library file entry
+	*/
+	@Override
+	public java.lang.String getMimeType() {
+		return _dlFileEntry.getMimeType();
+	}
+
+	/**
+	* Returns the modified date of this document library file entry.
+	*
+	* @return the modified date of this document library file entry
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _dlFileEntry.getModifiedDate();
+	}
+
+	/**
+	* Returns the name of this document library file entry.
+	*
+	* @return the name of this document library file entry
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _dlFileEntry.getName();
+	}
+
+	/**
+	* Returns the primary key of this document library file entry.
+	*
+	* @return the primary key of this document library file entry
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _dlFileEntry.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _dlFileEntry.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the read count of this document library file entry.
+	*
+	* @return the read count of this document library file entry
+	*/
+	@Override
+	public int getReadCount() {
+		return _dlFileEntry.getReadCount();
+	}
+
+	/**
+	* Returns the repository ID of this document library file entry.
+	*
+	* @return the repository ID of this document library file entry
+	*/
+	@Override
+	public long getRepositoryId() {
+		return _dlFileEntry.getRepositoryId();
+	}
+
+	/**
+	* Returns the size of this document library file entry.
+	*
+	* @return the size of this document library file entry
+	*/
+	@Override
+	public long getSize() {
+		return _dlFileEntry.getSize();
+	}
+
+	/**
+	* Returns the small image ID of this document library file entry.
+	*
+	* @return the small image ID of this document library file entry
+	*/
+	@Override
+	public long getSmallImageId() {
+		return _dlFileEntry.getSmallImageId();
+	}
+
+	/**
+	* Returns the status of this document library file entry.
+	*
+	* @return the status of this document library file entry
+	*/
+	@Override
+	public int getStatus() {
+		return _dlFileEntry.getStatus();
+	}
+
+	/**
+	* Returns the title of this document library file entry.
+	*
+	* @return the title of this document library file entry
+	*/
+	@Override
+	public java.lang.String getTitle() {
+		return _dlFileEntry.getTitle();
+	}
+
+	/**
+	* Returns the trash entry created when this document library file entry was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this document library file entry.
+	*
+	* @return the trash entry created when this document library file entry was moved to the Recycle Bin
+	*/
+	@Override
+	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileEntry.getTrashEntry();
+	}
+
+	/**
+	* Returns the class primary key of the trash entry for this document library file entry.
+	*
+	* @return the class primary key of the trash entry for this document library file entry
+	*/
+	@Override
+	public long getTrashEntryClassPK() {
+		return _dlFileEntry.getTrashEntryClassPK();
+	}
+
+	/**
+	* Returns the trash handler for this document library file entry.
+	*
+	* @return the trash handler for this document library file entry
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@Deprecated
+	@Override
+	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
+		return _dlFileEntry.getTrashHandler();
+	}
+
+	/**
+	* Returns the tree path of this document library file entry.
+	*
+	* @return the tree path of this document library file entry
+	*/
+	@Override
+	public java.lang.String getTreePath() {
+		return _dlFileEntry.getTreePath();
+	}
+
+	/**
+	* Returns the user ID of this document library file entry.
+	*
+	* @return the user ID of this document library file entry
+	*/
+	@Override
+	public long getUserId() {
+		return _dlFileEntry.getUserId();
+	}
+
+	/**
+	* Returns the user name of this document library file entry.
+	*
+	* @return the user name of this document library file entry
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _dlFileEntry.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this document library file entry.
+	*
+	* @return the user uuid of this document library file entry
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _dlFileEntry.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this document library file entry.
+	*
+	* @return the uuid of this document library file entry
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _dlFileEntry.getUuid();
+	}
+
+	/**
+	* Returns the version of this document library file entry.
+	*
+	* @return the version of this document library file entry
+	*/
+	@Override
+	public java.lang.String getVersion() {
+		return _dlFileEntry.getVersion();
+	}
+
 	@Override
 	public boolean hasLock() {
 		return _dlFileEntry.hasLock();
+	}
+
+	@Override
+	public int hashCode() {
+		return _dlFileEntry.hashCode();
 	}
 
 	@Override
@@ -396,479 +844,6 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	@Override
 	public boolean isNew() {
 		return _dlFileEntry.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _dlFileEntry.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.lock.Lock getLock() {
-		return _dlFileEntry.getLock();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<DLFileEntry> toCacheModel() {
-		return _dlFileEntry.toCacheModel();
-	}
-
-	/**
-	* Returns the trash handler for this document library file entry.
-	*
-	* @return the trash handler for this document library file entry
-	* @deprecated As of 7.0.0, with no direct replacement
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return _dlFileEntry.getTrashHandler();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.util.UnicodeProperties getExtraSettingsProperties() {
-		return _dlFileEntry.getExtraSettingsProperties();
-	}
-
-	/**
-	* Returns the trash entry created when this document library file entry was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this document library file entry.
-	*
-	* @return the trash entry created when this document library file entry was moved to the Recycle Bin
-	*/
-	@Override
-	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileEntry.getTrashEntry();
-	}
-
-	@Override
-	public int compareTo(DLFileEntry dlFileEntry) {
-		return _dlFileEntry.compareTo(dlFileEntry);
-	}
-
-	@Override
-	public int getFileVersionsCount(int status) {
-		return _dlFileEntry.getFileVersionsCount(status);
-	}
-
-	/**
-	* Returns the read count of this document library file entry.
-	*
-	* @return the read count of this document library file entry
-	*/
-	@Override
-	public int getReadCount() {
-		return _dlFileEntry.getReadCount();
-	}
-
-	/**
-	* Returns the status of this document library file entry.
-	*
-	* @return the status of this document library file entry
-	*/
-	@Override
-	public int getStatus() {
-		return _dlFileEntry.getStatus();
-	}
-
-	@Override
-	public int hashCode() {
-		return _dlFileEntry.hashCode();
-	}
-
-	@Override
-	public java.io.InputStream getContentStream()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileEntry.getContentStream();
-	}
-
-	@Override
-	public java.io.InputStream getContentStream(java.lang.String version)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileEntry.getContentStream(version);
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _dlFileEntry.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new DLFileEntryWrapper((DLFileEntry)_dlFileEntry.clone());
-	}
-
-	@Override
-	public java.lang.String buildTreePath()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileEntry.buildTreePath();
-	}
-
-	/**
-	* Returns the fully qualified class name of this document library file entry.
-	*
-	* @return the fully qualified class name of this document library file entry
-	*/
-	@Override
-	public java.lang.String getClassName() {
-		return _dlFileEntry.getClassName();
-	}
-
-	/**
-	* Returns the description of this document library file entry.
-	*
-	* @return the description of this document library file entry
-	*/
-	@Override
-	public java.lang.String getDescription() {
-		return _dlFileEntry.getDescription();
-	}
-
-	/**
-	* Returns the extension of this document library file entry.
-	*
-	* @return the extension of this document library file entry
-	*/
-	@Override
-	public java.lang.String getExtension() {
-		return _dlFileEntry.getExtension();
-	}
-
-	/**
-	* Returns the extra settings of this document library file entry.
-	*
-	* @return the extra settings of this document library file entry
-	*/
-	@Override
-	public java.lang.String getExtraSettings() {
-		return _dlFileEntry.getExtraSettings();
-	}
-
-	/**
-	* Returns the file name of this document library file entry.
-	*
-	* @return the file name of this document library file entry
-	*/
-	@Override
-	public java.lang.String getFileName() {
-		return _dlFileEntry.getFileName();
-	}
-
-	@Override
-	public java.lang.String getIcon() {
-		return _dlFileEntry.getIcon();
-	}
-
-	@Override
-	public java.lang.String getIconCssClass() {
-		return _dlFileEntry.getIconCssClass();
-	}
-
-	@Override
-	public java.lang.String getLuceneProperties() {
-		return _dlFileEntry.getLuceneProperties();
-	}
-
-	/**
-	* Returns the mime type of this document library file entry.
-	*
-	* @return the mime type of this document library file entry
-	*/
-	@Override
-	public java.lang.String getMimeType() {
-		return _dlFileEntry.getMimeType();
-	}
-
-	/**
-	* Returns the name of this document library file entry.
-	*
-	* @return the name of this document library file entry
-	*/
-	@Override
-	public java.lang.String getName() {
-		return _dlFileEntry.getName();
-	}
-
-	/**
-	* Returns the title of this document library file entry.
-	*
-	* @return the title of this document library file entry
-	*/
-	@Override
-	public java.lang.String getTitle() {
-		return _dlFileEntry.getTitle();
-	}
-
-	/**
-	* Returns the tree path of this document library file entry.
-	*
-	* @return the tree path of this document library file entry
-	*/
-	@Override
-	public java.lang.String getTreePath() {
-		return _dlFileEntry.getTreePath();
-	}
-
-	/**
-	* Returns the user name of this document library file entry.
-	*
-	* @return the user name of this document library file entry
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _dlFileEntry.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this document library file entry.
-	*
-	* @return the user uuid of this document library file entry
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _dlFileEntry.getUserUuid();
-	}
-
-	/**
-	* Returns the uuid of this document library file entry.
-	*
-	* @return the uuid of this document library file entry
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _dlFileEntry.getUuid();
-	}
-
-	/**
-	* Returns the version of this document library file entry.
-	*
-	* @return the version of this document library file entry
-	*/
-	@Override
-	public java.lang.String getVersion() {
-		return _dlFileEntry.getVersion();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _dlFileEntry.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _dlFileEntry.toXmlString();
-	}
-
-	/**
-	* Returns the create date of this document library file entry.
-	*
-	* @return the create date of this document library file entry
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _dlFileEntry.getCreateDate();
-	}
-
-	/**
-	* Returns the last publish date of this document library file entry.
-	*
-	* @return the last publish date of this document library file entry
-	*/
-	@Override
-	public Date getLastPublishDate() {
-		return _dlFileEntry.getLastPublishDate();
-	}
-
-	/**
-	* Returns the modified date of this document library file entry.
-	*
-	* @return the modified date of this document library file entry
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _dlFileEntry.getModifiedDate();
-	}
-
-	@Override
-	public java.util.List<DLFileShortcut> getFileShortcuts() {
-		return _dlFileEntry.getFileShortcuts();
-	}
-
-	@Override
-	public java.util.List<DLFileVersion> getFileVersions(int status) {
-		return _dlFileEntry.getFileVersions(status);
-	}
-
-	@Override
-	public Map<java.lang.String, com.liferay.dynamic.data.mapping.kernel.DDMFormValues> getDDMFormValuesMap(
-		long fileVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileEntry.getDDMFormValuesMap(fileVersionId);
-	}
-
-	/**
-	* Returns the class name ID of this document library file entry.
-	*
-	* @return the class name ID of this document library file entry
-	*/
-	@Override
-	public long getClassNameId() {
-		return _dlFileEntry.getClassNameId();
-	}
-
-	/**
-	* Returns the class pk of this document library file entry.
-	*
-	* @return the class pk of this document library file entry
-	*/
-	@Override
-	public long getClassPK() {
-		return _dlFileEntry.getClassPK();
-	}
-
-	/**
-	* Returns the company ID of this document library file entry.
-	*
-	* @return the company ID of this document library file entry
-	*/
-	@Override
-	public long getCompanyId() {
-		return _dlFileEntry.getCompanyId();
-	}
-
-	/**
-	* Returns the custom1 image ID of this document library file entry.
-	*
-	* @return the custom1 image ID of this document library file entry
-	*/
-	@Override
-	public long getCustom1ImageId() {
-		return _dlFileEntry.getCustom1ImageId();
-	}
-
-	/**
-	* Returns the custom2 image ID of this document library file entry.
-	*
-	* @return the custom2 image ID of this document library file entry
-	*/
-	@Override
-	public long getCustom2ImageId() {
-		return _dlFileEntry.getCustom2ImageId();
-	}
-
-	@Override
-	public long getDataRepositoryId() {
-		return _dlFileEntry.getDataRepositoryId();
-	}
-
-	/**
-	* Returns the file entry ID of this document library file entry.
-	*
-	* @return the file entry ID of this document library file entry
-	*/
-	@Override
-	public long getFileEntryId() {
-		return _dlFileEntry.getFileEntryId();
-	}
-
-	/**
-	* Returns the file entry type ID of this document library file entry.
-	*
-	* @return the file entry type ID of this document library file entry
-	*/
-	@Override
-	public long getFileEntryTypeId() {
-		return _dlFileEntry.getFileEntryTypeId();
-	}
-
-	/**
-	* Returns the folder ID of this document library file entry.
-	*
-	* @return the folder ID of this document library file entry
-	*/
-	@Override
-	public long getFolderId() {
-		return _dlFileEntry.getFolderId();
-	}
-
-	/**
-	* Returns the group ID of this document library file entry.
-	*
-	* @return the group ID of this document library file entry
-	*/
-	@Override
-	public long getGroupId() {
-		return _dlFileEntry.getGroupId();
-	}
-
-	/**
-	* Returns the large image ID of this document library file entry.
-	*
-	* @return the large image ID of this document library file entry
-	*/
-	@Override
-	public long getLargeImageId() {
-		return _dlFileEntry.getLargeImageId();
-	}
-
-	/**
-	* Returns the primary key of this document library file entry.
-	*
-	* @return the primary key of this document library file entry
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _dlFileEntry.getPrimaryKey();
-	}
-
-	/**
-	* Returns the repository ID of this document library file entry.
-	*
-	* @return the repository ID of this document library file entry
-	*/
-	@Override
-	public long getRepositoryId() {
-		return _dlFileEntry.getRepositoryId();
-	}
-
-	/**
-	* Returns the size of this document library file entry.
-	*
-	* @return the size of this document library file entry
-	*/
-	@Override
-	public long getSize() {
-		return _dlFileEntry.getSize();
-	}
-
-	/**
-	* Returns the small image ID of this document library file entry.
-	*
-	* @return the small image ID of this document library file entry
-	*/
-	@Override
-	public long getSmallImageId() {
-		return _dlFileEntry.getSmallImageId();
-	}
-
-	/**
-	* Returns the class primary key of the trash entry for this document library file entry.
-	*
-	* @return the class primary key of the trash entry for this document library file entry
-	*/
-	@Override
-	public long getTrashEntryClassPK() {
-		return _dlFileEntry.getTrashEntryClassPK();
-	}
-
-	/**
-	* Returns the user ID of this document library file entry.
-	*
-	* @return the user ID of this document library file entry
-	*/
-	@Override
-	public long getUserId() {
-		return _dlFileEntry.getUserId();
 	}
 
 	@Override
@@ -1236,6 +1211,31 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	@Override
 	public void setVersion(java.lang.String version) {
 		_dlFileEntry.setVersion(version);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<DLFileEntry> toCacheModel() {
+		return _dlFileEntry.toCacheModel();
+	}
+
+	@Override
+	public DLFileEntry toEscapedModel() {
+		return new DLFileEntryWrapper(_dlFileEntry.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _dlFileEntry.toString();
+	}
+
+	@Override
+	public DLFileEntry toUnescapedModel() {
+		return new DLFileEntryWrapper(_dlFileEntry.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _dlFileEntry.toXmlString();
 	}
 
 	@Override

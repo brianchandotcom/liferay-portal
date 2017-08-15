@@ -89,6 +89,9 @@ public interface MicroblogsEntryLocalService extends BaseLocalService,
 	*/
 	public MicroblogsEntry createMicroblogsEntry(long microblogsEntryId);
 
+	public void deleteMicroblogsEntries(long creatorClassNameId,
+		long creatorClassPK) throws PortalException;
+
 	/**
 	* Deletes the microblogs entry from the database. Also notifies the appropriate model listeners.
 	*
@@ -111,42 +114,6 @@ public interface MicroblogsEntryLocalService extends BaseLocalService,
 	public MicroblogsEntry deleteMicroblogsEntry(long microblogsEntryId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MicroblogsEntry fetchMicroblogsEntry(long microblogsEntryId);
-
-	/**
-	* Returns the microblogs entry with the primary key.
-	*
-	* @param microblogsEntryId the primary key of the microblogs entry
-	* @return the microblogs entry
-	* @throws PortalException if a microblogs entry with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MicroblogsEntry getMicroblogsEntry(long microblogsEntryId)
-		throws PortalException;
-
-	/**
-	* Updates the microblogs entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param microblogsEntry the microblogs entry
-	* @return the microblogs entry that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public MicroblogsEntry updateMicroblogsEntry(
-		MicroblogsEntry microblogsEntry);
-
-	public MicroblogsEntry updateMicroblogsEntry(long microblogsEntryId,
-		java.lang.String content, int socialRelationType,
-		ServiceContext serviceContext) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
 	/**
 	* @throws PortalException
 	*/
@@ -154,87 +121,10 @@ public interface MicroblogsEntryLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+	public void deleteUserMicroblogsEntries(long userId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCompanyMicroblogsEntriesCount(long companyId);
-
-	/**
-	* Returns the number of microblogs entries.
-	*
-	* @return the number of microblogs entries
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getMicroblogsEntriesCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getMicroblogsEntriesCount(long companyId,
-		long creatorClassNameId, java.lang.String assetTagName);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getMicroblogsEntriesCount(long companyId,
-		long creatorClassNameId, long creatorClassPK);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getMicroblogsEntriesCount(long companyId,
-		long creatorClassNameId, long creatorClassPK, int type);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getMicroblogsEntriesCount(long companyId,
-		long creatorClassNameId, long creatorClassPK,
-		java.lang.String assetTagName, boolean andOperator);
-
-	/**
-	* @deprecated As of 2.1.0
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getMicroblogsEntriesCount(long creatorClassNameId,
-		java.lang.String assetTagName);
-
-	/**
-	* @deprecated As of 2.1.0
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getMicroblogsEntriesCount(long creatorClassNameId,
-		long creatorClassPK);
-
-	/**
-	* @deprecated As of 2.1.0
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getMicroblogsEntriesCount(long creatorClassNameId,
-		long creatorClassPK, int type);
-
-	/**
-	* @deprecated As of 2.1.0
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getMicroblogsEntriesCount(long creatorClassNameId,
-		long creatorClassPK, java.lang.String assetTagName, boolean andOperator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getParentMicroblogsEntryMicroblogsEntriesCount(int type,
-		long parentMicroblogsEntryId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getUserMicroblogsEntriesCount(long userId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getUserMicroblogsEntriesCount(long userId, int type);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -275,9 +165,39 @@ public interface MicroblogsEntryLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MicroblogsEntry fetchMicroblogsEntry(long microblogsEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MicroblogsEntry> getCompanyMicroblogsEntries(long companyId,
 		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCompanyMicroblogsEntriesCount(long companyId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns a range of all the microblogs entries.
@@ -292,30 +212,6 @@ public interface MicroblogsEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MicroblogsEntry> getMicroblogsEntries(int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MicroblogsEntry> getMicroblogsEntries(long companyId,
-		long creatorClassNameId, int type, int start, int end,
-		OrderByComparator obc);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MicroblogsEntry> getMicroblogsEntries(long companyId,
-		long creatorClassNameId, java.lang.String assetTagName, int start,
-		int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MicroblogsEntry> getMicroblogsEntries(long companyId,
-		long creatorClassNameId, long creatorClassPK, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MicroblogsEntry> getMicroblogsEntries(long companyId,
-		long creatorClassNameId, long creatorClassPK, int type, int start,
-		int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MicroblogsEntry> getMicroblogsEntries(long companyId,
-		long creatorClassNameId, long creatorClassPK,
-		java.lang.String assetTagName, boolean andOperator, int start, int end);
 
 	/**
 	* @deprecated As of 2.1.0
@@ -349,6 +245,11 @@ public interface MicroblogsEntryLocalService extends BaseLocalService,
 	public List<MicroblogsEntry> getMicroblogsEntries(long creatorClassNameId,
 		long creatorClassPK, int type, int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MicroblogsEntry> getMicroblogsEntries(long companyId,
+		long creatorClassNameId, int type, int start, int end,
+		OrderByComparator obc);
+
 	/**
 	* @deprecated As of 2.1.0
 	*/
@@ -357,6 +258,100 @@ public interface MicroblogsEntryLocalService extends BaseLocalService,
 	public List<MicroblogsEntry> getMicroblogsEntries(long creatorClassNameId,
 		long creatorClassPK, java.lang.String assetTagName,
 		boolean andOperator, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MicroblogsEntry> getMicroblogsEntries(long companyId,
+		long creatorClassNameId, java.lang.String assetTagName, int start,
+		int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MicroblogsEntry> getMicroblogsEntries(long companyId,
+		long creatorClassNameId, long creatorClassPK, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MicroblogsEntry> getMicroblogsEntries(long companyId,
+		long creatorClassNameId, long creatorClassPK, int type, int start,
+		int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MicroblogsEntry> getMicroblogsEntries(long companyId,
+		long creatorClassNameId, long creatorClassPK,
+		java.lang.String assetTagName, boolean andOperator, int start, int end);
+
+	/**
+	* Returns the number of microblogs entries.
+	*
+	* @return the number of microblogs entries
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getMicroblogsEntriesCount();
+
+	/**
+	* @deprecated As of 2.1.0
+	*/
+	@java.lang.Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getMicroblogsEntriesCount(long creatorClassNameId,
+		java.lang.String assetTagName);
+
+	/**
+	* @deprecated As of 2.1.0
+	*/
+	@java.lang.Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getMicroblogsEntriesCount(long creatorClassNameId,
+		long creatorClassPK);
+
+	/**
+	* @deprecated As of 2.1.0
+	*/
+	@java.lang.Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getMicroblogsEntriesCount(long creatorClassNameId,
+		long creatorClassPK, int type);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getMicroblogsEntriesCount(long companyId,
+		long creatorClassNameId, java.lang.String assetTagName);
+
+	/**
+	* @deprecated As of 2.1.0
+	*/
+	@java.lang.Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getMicroblogsEntriesCount(long creatorClassNameId,
+		long creatorClassPK, java.lang.String assetTagName, boolean andOperator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getMicroblogsEntriesCount(long companyId,
+		long creatorClassNameId, long creatorClassPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getMicroblogsEntriesCount(long companyId,
+		long creatorClassNameId, long creatorClassPK, int type);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getMicroblogsEntriesCount(long companyId,
+		long creatorClassNameId, long creatorClassPK,
+		java.lang.String assetTagName, boolean andOperator);
+
+	/**
+	* Returns the microblogs entry with the primary key.
+	*
+	* @param microblogsEntryId the primary key of the microblogs entry
+	* @return the microblogs entry
+	* @throws PortalException if a microblogs entry with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MicroblogsEntry getMicroblogsEntry(long microblogsEntryId)
+		throws PortalException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MicroblogsEntry> getParentMicroblogsEntryMicroblogsEntries(
@@ -368,6 +363,15 @@ public interface MicroblogsEntryLocalService extends BaseLocalService,
 		OrderByComparator<MicroblogsEntry> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getParentMicroblogsEntryMicroblogsEntriesCount(int type,
+		long parentMicroblogsEntryId);
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MicroblogsEntry> getUserMicroblogsEntries(long userId,
 		int start, int end);
 
@@ -375,31 +379,27 @@ public interface MicroblogsEntryLocalService extends BaseLocalService,
 	public List<MicroblogsEntry> getUserMicroblogsEntries(long userId,
 		int type, int start, int end);
 
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserMicroblogsEntriesCount(long userId);
 
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	public void deleteMicroblogsEntries(long creatorClassNameId,
-		long creatorClassPK) throws PortalException;
-
-	public void deleteUserMicroblogsEntries(long userId)
-		throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserMicroblogsEntriesCount(long userId, int type);
 
 	public void updateAsset(MicroblogsEntry microblogsEntry,
 		long[] assetCategoryIds, java.lang.String[] assetTagNames)
 		throws PortalException;
+
+	/**
+	* Updates the microblogs entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param microblogsEntry the microblogs entry
+	* @return the microblogs entry that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public MicroblogsEntry updateMicroblogsEntry(
+		MicroblogsEntry microblogsEntry);
+
+	public MicroblogsEntry updateMicroblogsEntry(long microblogsEntryId,
+		java.lang.String content, int socialRelationType,
+		ServiceContext serviceContext) throws PortalException;
 }

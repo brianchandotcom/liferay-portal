@@ -41,32 +41,6 @@ public class PowwowParticipantLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.powwow.service.impl.PowwowParticipantLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
 
 	/**
 	* Adds the powwow participant to the database. Also notifies the appropriate model listeners.
@@ -102,6 +76,15 @@ public class PowwowParticipantLocalServiceUtil {
 	}
 
 	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
+
+	/**
 	* Deletes the powwow participant from the database. Also notifies the appropriate model listeners.
 	*
 	* @param powwowParticipant the powwow participant
@@ -125,94 +108,8 @@ public class PowwowParticipantLocalServiceUtil {
 		return getService().deletePowwowParticipant(powwowParticipantId);
 	}
 
-	public static com.liferay.powwow.model.PowwowParticipant fetchPowwowParticipant(
-		long powwowMeetingId, java.lang.String emailAddress) {
-		return getService().fetchPowwowParticipant(powwowMeetingId, emailAddress);
-	}
-
-	public static com.liferay.powwow.model.PowwowParticipant fetchPowwowParticipant(
-		long powwowMeetingId, long participantUserId) {
-		return getService()
-				   .fetchPowwowParticipant(powwowMeetingId, participantUserId);
-	}
-
-	public static com.liferay.powwow.model.PowwowParticipant fetchPowwowParticipant(
-		long powwowParticipantId) {
-		return getService().fetchPowwowParticipant(powwowParticipantId);
-	}
-
-	/**
-	* Returns the powwow participant with the primary key.
-	*
-	* @param powwowParticipantId the primary key of the powwow participant
-	* @return the powwow participant
-	* @throws PortalException if a powwow participant with the primary key could not be found
-	*/
-	public static com.liferay.powwow.model.PowwowParticipant getPowwowParticipant(
-		long powwowParticipantId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPowwowParticipant(powwowParticipantId);
-	}
-
-	/**
-	* Updates the powwow participant in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param powwowParticipant the powwow participant
-	* @return the powwow participant that was updated
-	*/
-	public static com.liferay.powwow.model.PowwowParticipant updatePowwowParticipant(
-		com.liferay.powwow.model.PowwowParticipant powwowParticipant) {
-		return getService().updatePowwowParticipant(powwowParticipant);
-	}
-
-	public static com.liferay.powwow.model.PowwowParticipant updatePowwowParticipant(
-		long powwowParticipantId, long powwowMeetingId, java.lang.String name,
-		long participantUserId, java.lang.String emailAddress, int type,
-		int status,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updatePowwowParticipant(powwowParticipantId,
-			powwowMeetingId, name, participantUserId, emailAddress, type,
-			status, serviceContext);
-	}
-
-	public static com.liferay.powwow.model.PowwowParticipant updateStatus(
-		long powwowParticipantId, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().updateStatus(powwowParticipantId, status);
-	}
-
-	/**
-	* Returns the number of powwow participants.
-	*
-	* @return the number of powwow participants
-	*/
-	public static int getPowwowParticipantsCount() {
-		return getService().getPowwowParticipantsCount();
-	}
-
-	public static int getPowwowParticipantsCount(long powwowMeetingId) {
-		return getService().getPowwowParticipantsCount(powwowMeetingId);
-	}
-
-	public static int getPowwowParticipantsCount(long powwowMeetingId, int type) {
-		return getService().getPowwowParticipantsCount(powwowMeetingId, type);
-	}
-
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
 	}
 
 	/**
@@ -266,6 +163,82 @@ public class PowwowParticipantLocalServiceUtil {
 	}
 
 	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static com.liferay.powwow.model.PowwowParticipant fetchPowwowParticipant(
+		long powwowParticipantId) {
+		return getService().fetchPowwowParticipant(powwowParticipantId);
+	}
+
+	public static com.liferay.powwow.model.PowwowParticipant fetchPowwowParticipant(
+		long powwowMeetingId, java.lang.String emailAddress) {
+		return getService().fetchPowwowParticipant(powwowMeetingId, emailAddress);
+	}
+
+	public static com.liferay.powwow.model.PowwowParticipant fetchPowwowParticipant(
+		long powwowMeetingId, long participantUserId) {
+		return getService()
+				   .fetchPowwowParticipant(powwowMeetingId, participantUserId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Returns the powwow participant with the primary key.
+	*
+	* @param powwowParticipantId the primary key of the powwow participant
+	* @return the powwow participant
+	* @throws PortalException if a powwow participant with the primary key could not be found
+	*/
+	public static com.liferay.powwow.model.PowwowParticipant getPowwowParticipant(
+		long powwowParticipantId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPowwowParticipant(powwowParticipantId);
+	}
+
+	/**
 	* Returns a range of all the powwow participants.
 	*
 	* <p>
@@ -292,27 +265,55 @@ public class PowwowParticipantLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of powwow participants.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of powwow participants
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
+	public static int getPowwowParticipantsCount() {
+		return getService().getPowwowParticipantsCount();
+	}
+
+	public static int getPowwowParticipantsCount(long powwowMeetingId) {
+		return getService().getPowwowParticipantsCount(powwowMeetingId);
+	}
+
+	public static int getPowwowParticipantsCount(long powwowMeetingId, int type) {
+		return getService().getPowwowParticipantsCount(powwowMeetingId, type);
+	}
+
+	public static java.lang.Object invokeMethod(java.lang.String name,
+		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
+		throws java.lang.Throwable {
+		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Updates the powwow participant in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @param powwowParticipant the powwow participant
+	* @return the powwow participant that was updated
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
+	public static com.liferay.powwow.model.PowwowParticipant updatePowwowParticipant(
+		com.liferay.powwow.model.PowwowParticipant powwowParticipant) {
+		return getService().updatePowwowParticipant(powwowParticipant);
+	}
+
+	public static com.liferay.powwow.model.PowwowParticipant updatePowwowParticipant(
+		long powwowParticipantId, long powwowMeetingId, java.lang.String name,
+		long participantUserId, java.lang.String emailAddress, int type,
+		int status,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updatePowwowParticipant(powwowParticipantId,
+			powwowMeetingId, name, participantUserId, emailAddress, type,
+			status, serviceContext);
+	}
+
+	public static com.liferay.powwow.model.PowwowParticipant updateStatus(
+		long powwowParticipantId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateStatus(powwowParticipantId, status);
 	}
 
 	public static void clearService() {

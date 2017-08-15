@@ -80,6 +80,8 @@ public interface DDLRecordSetVersionLocalService extends BaseLocalService,
 	public DDLRecordSetVersion createDDLRecordSetVersion(
 		long recordSetVersionId);
 
+	public void deleteByRecordSetId(long recordSetId);
+
 	/**
 	* Deletes the ddl record set version from the database. Also notifies the appropriate model listeners.
 	*
@@ -101,50 +103,6 @@ public interface DDLRecordSetVersionLocalService extends BaseLocalService,
 	public DDLRecordSetVersion deleteDDLRecordSetVersion(
 		long recordSetVersionId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DDLRecordSetVersion fetchDDLRecordSetVersion(long recordSetVersionId);
-
-	/**
-	* Returns the ddl record set version with the primary key.
-	*
-	* @param recordSetVersionId the primary key of the ddl record set version
-	* @return the ddl record set version
-	* @throws PortalException if a ddl record set version with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DDLRecordSetVersion getDDLRecordSetVersion(long recordSetVersionId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DDLRecordSetVersion getLatestRecordSetVersion(long recordSetId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DDLRecordSetVersion getRecordSetVersion(long recordSetId,
-		java.lang.String version) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DDLRecordSetVersion getRecordSetVersion(long recordSetVersionId)
-		throws PortalException;
-
-	/**
-	* Updates the ddl record set version in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param ddlRecordSetVersion the ddl record set version
-	* @return the ddl record set version that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public DDLRecordSetVersion updateDDLRecordSetVersion(
-		DDLRecordSetVersion ddlRecordSetVersion);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
 	/**
 	* @throws PortalException
 	*/
@@ -152,28 +110,7 @@ public interface DDLRecordSetVersionLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	* Returns the number of ddl record set versions.
-	*
-	* @return the number of ddl record set versions
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getDDLRecordSetVersionsCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getRecordSetVersionsCount(long recordSetId);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -215,28 +152,6 @@ public interface DDLRecordSetVersionLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns a range of all the ddl record set versions.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.lists.model.impl.DDLRecordSetVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of ddl record set versions
-	* @param end the upper bound of the range of ddl record set versions (not inclusive)
-	* @return the range of ddl record set versions
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DDLRecordSetVersion> getDDLRecordSetVersions(int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DDLRecordSetVersion> getRecordSetVersions(long recordSetId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DDLRecordSetVersion> getRecordSetVersions(long recordSetId,
-		int start, int end,
-		OrderByComparator<DDLRecordSetVersion> orderByComparator);
-
-	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -254,5 +169,90 @@ public interface DDLRecordSetVersionLocalService extends BaseLocalService,
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
 
-	public void deleteByRecordSetId(long recordSetId);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDLRecordSetVersion fetchDDLRecordSetVersion(long recordSetVersionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
+	* Returns the ddl record set version with the primary key.
+	*
+	* @param recordSetVersionId the primary key of the ddl record set version
+	* @return the ddl record set version
+	* @throws PortalException if a ddl record set version with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDLRecordSetVersion getDDLRecordSetVersion(long recordSetVersionId)
+		throws PortalException;
+
+	/**
+	* Returns a range of all the ddl record set versions.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.lists.model.impl.DDLRecordSetVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of ddl record set versions
+	* @param end the upper bound of the range of ddl record set versions (not inclusive)
+	* @return the range of ddl record set versions
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DDLRecordSetVersion> getDDLRecordSetVersions(int start, int end);
+
+	/**
+	* Returns the number of ddl record set versions.
+	*
+	* @return the number of ddl record set versions
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getDDLRecordSetVersionsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDLRecordSetVersion getLatestRecordSetVersion(long recordSetId)
+		throws PortalException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDLRecordSetVersion getRecordSetVersion(long recordSetVersionId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDLRecordSetVersion getRecordSetVersion(long recordSetId,
+		java.lang.String version) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DDLRecordSetVersion> getRecordSetVersions(long recordSetId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DDLRecordSetVersion> getRecordSetVersions(long recordSetId,
+		int start, int end,
+		OrderByComparator<DDLRecordSetVersion> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getRecordSetVersionsCount(long recordSetId);
+
+	/**
+	* Updates the ddl record set version in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param ddlRecordSetVersion the ddl record set version
+	* @return the ddl record set version that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public DDLRecordSetVersion updateDDLRecordSetVersion(
+		DDLRecordSetVersion ddlRecordSetVersion);
 }

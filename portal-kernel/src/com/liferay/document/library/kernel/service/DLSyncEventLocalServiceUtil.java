@@ -92,45 +92,8 @@ public class DLSyncEventLocalServiceUtil {
 		return getService().deleteDLSyncEvent(syncEventId);
 	}
 
-	public static com.liferay.document.library.kernel.model.DLSyncEvent fetchDLSyncEvent(
-		long syncEventId) {
-		return getService().fetchDLSyncEvent(syncEventId);
-	}
-
-	/**
-	* Returns the dl sync event with the primary key.
-	*
-	* @param syncEventId the primary key of the dl sync event
-	* @return the dl sync event
-	* @throws PortalException if a dl sync event with the primary key could not be found
-	*/
-	public static com.liferay.document.library.kernel.model.DLSyncEvent getDLSyncEvent(
-		long syncEventId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getDLSyncEvent(syncEventId);
-	}
-
-	/**
-	* Updates the dl sync event in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param dlSyncEvent the dl sync event
-	* @return the dl sync event that was updated
-	*/
-	public static com.liferay.document.library.kernel.model.DLSyncEvent updateDLSyncEvent(
-		com.liferay.document.library.kernel.model.DLSyncEvent dlSyncEvent) {
-		return getService().updateDLSyncEvent(dlSyncEvent);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
+	public static void deleteDLSyncEvents() {
+		getService().deleteDLSyncEvents();
 	}
 
 	/**
@@ -142,28 +105,8 @@ public class DLSyncEventLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the number of dl sync events.
-	*
-	* @return the number of dl sync events
-	*/
-	public static int getDLSyncEventsCount() {
-		return getService().getDLSyncEventsCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
 	}
 
 	/**
@@ -217,31 +160,6 @@ public class DLSyncEventLocalServiceUtil {
 	}
 
 	/**
-	* Returns a range of all the dl sync events.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLSyncEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of dl sync events
-	* @param end the upper bound of the range of dl sync events (not inclusive)
-	* @return the range of dl sync events
-	*/
-	public static java.util.List<com.liferay.document.library.kernel.model.DLSyncEvent> getDLSyncEvents(
-		int start, int end) {
-		return getService().getDLSyncEvents(start, end);
-	}
-
-	public static java.util.List<com.liferay.document.library.kernel.model.DLSyncEvent> getDLSyncEvents(
-		long modifiedTime) {
-		return getService().getDLSyncEvents(modifiedTime);
-	}
-
-	public static java.util.List<com.liferay.document.library.kernel.model.DLSyncEvent> getLatestDLSyncEvents() {
-		return getService().getLatestDLSyncEvents();
-	}
-
-	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -265,8 +183,90 @@ public class DLSyncEventLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static void deleteDLSyncEvents() {
-		getService().deleteDLSyncEvents();
+	public static com.liferay.document.library.kernel.model.DLSyncEvent fetchDLSyncEvent(
+		long syncEventId) {
+		return getService().fetchDLSyncEvent(syncEventId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the dl sync event with the primary key.
+	*
+	* @param syncEventId the primary key of the dl sync event
+	* @return the dl sync event
+	* @throws PortalException if a dl sync event with the primary key could not be found
+	*/
+	public static com.liferay.document.library.kernel.model.DLSyncEvent getDLSyncEvent(
+		long syncEventId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getDLSyncEvent(syncEventId);
+	}
+
+	/**
+	* Returns a range of all the dl sync events.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLSyncEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of dl sync events
+	* @param end the upper bound of the range of dl sync events (not inclusive)
+	* @return the range of dl sync events
+	*/
+	public static java.util.List<com.liferay.document.library.kernel.model.DLSyncEvent> getDLSyncEvents(
+		int start, int end) {
+		return getService().getDLSyncEvents(start, end);
+	}
+
+	public static java.util.List<com.liferay.document.library.kernel.model.DLSyncEvent> getDLSyncEvents(
+		long modifiedTime) {
+		return getService().getDLSyncEvents(modifiedTime);
+	}
+
+	/**
+	* Returns the number of dl sync events.
+	*
+	* @return the number of dl sync events
+	*/
+	public static int getDLSyncEventsCount() {
+		return getService().getDLSyncEventsCount();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
+	public static java.util.List<com.liferay.document.library.kernel.model.DLSyncEvent> getLatestDLSyncEvents() {
+		return getService().getLatestDLSyncEvents();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Updates the dl sync event in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param dlSyncEvent the dl sync event
+	* @return the dl sync event that was updated
+	*/
+	public static com.liferay.document.library.kernel.model.DLSyncEvent updateDLSyncEvent(
+		com.liferay.document.library.kernel.model.DLSyncEvent dlSyncEvent) {
+		return getService().updateDLSyncEvent(dlSyncEvent);
 	}
 
 	public static DLSyncEventLocalService getService() {

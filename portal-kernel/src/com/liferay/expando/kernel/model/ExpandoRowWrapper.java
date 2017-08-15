@@ -98,78 +98,13 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 	}
 
 	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _expandoRow.getExpandoBridge();
-	}
-
-	@Override
-	public ExpandoRow toEscapedModel() {
-		return new ExpandoRowWrapper(_expandoRow.toEscapedModel());
-	}
-
-	@Override
-	public ExpandoRow toUnescapedModel() {
-		return new ExpandoRowWrapper(_expandoRow.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _expandoRow.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _expandoRow.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _expandoRow.isNew();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<ExpandoRow> toCacheModel() {
-		return _expandoRow.toCacheModel();
-	}
-
-	@Override
-	public int compareTo(ExpandoRow expandoRow) {
-		return _expandoRow.compareTo(expandoRow);
-	}
-
-	@Override
-	public int hashCode() {
-		return _expandoRow.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _expandoRow.getPrimaryKeyObj();
-	}
-
-	@Override
 	public java.lang.Object clone() {
 		return new ExpandoRowWrapper((ExpandoRow)_expandoRow.clone());
 	}
 
 	@Override
-	public java.lang.String toString() {
-		return _expandoRow.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _expandoRow.toXmlString();
-	}
-
-	/**
-	* Returns the modified date of this expando row.
-	*
-	* @return the modified date of this expando row
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _expandoRow.getModifiedDate();
+	public int compareTo(ExpandoRow expandoRow) {
+		return _expandoRow.compareTo(expandoRow);
 	}
 
 	/**
@@ -192,6 +127,21 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 		return _expandoRow.getCompanyId();
 	}
 
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _expandoRow.getExpandoBridge();
+	}
+
+	/**
+	* Returns the modified date of this expando row.
+	*
+	* @return the modified date of this expando row
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _expandoRow.getModifiedDate();
+	}
+
 	/**
 	* Returns the primary key of this expando row.
 	*
@@ -200,6 +150,11 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 	@Override
 	public long getPrimaryKey() {
 		return _expandoRow.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _expandoRow.getPrimaryKeyObj();
 	}
 
 	/**
@@ -220,6 +175,26 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 	@Override
 	public long getTableId() {
 		return _expandoRow.getTableId();
+	}
+
+	@Override
+	public int hashCode() {
+		return _expandoRow.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _expandoRow.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _expandoRow.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _expandoRow.isNew();
 	}
 
 	@Override
@@ -316,6 +291,31 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 	@Override
 	public void setTableId(long tableId) {
 		_expandoRow.setTableId(tableId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<ExpandoRow> toCacheModel() {
+		return _expandoRow.toCacheModel();
+	}
+
+	@Override
+	public ExpandoRow toEscapedModel() {
+		return new ExpandoRowWrapper(_expandoRow.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _expandoRow.toString();
+	}
+
+	@Override
+	public ExpandoRow toUnescapedModel() {
+		return new ExpandoRowWrapper(_expandoRow.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _expandoRow.toXmlString();
 	}
 
 	@Override

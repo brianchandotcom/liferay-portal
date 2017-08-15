@@ -31,16 +31,6 @@ public class ResourceBlockServiceWrapper implements ResourceBlockService,
 		_resourceBlockService = resourceBlockService;
 	}
 
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _resourceBlockService.getOSGiServiceIdentifier();
-	}
-
 	@Override
 	public void addCompanyScopePermission(long scopeGroupId, long companyId,
 		java.lang.String name, long roleId, java.lang.String actionId)
@@ -65,6 +55,16 @@ public class ResourceBlockServiceWrapper implements ResourceBlockService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_resourceBlockService.addIndividualScopePermission(companyId, groupId,
 			name, primKey, roleId, actionId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _resourceBlockService.getOSGiServiceIdentifier();
 	}
 
 	@Override

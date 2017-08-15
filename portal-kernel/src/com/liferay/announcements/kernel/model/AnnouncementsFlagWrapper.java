@@ -108,98 +108,13 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 	}
 
 	@Override
-	public AnnouncementsFlag toEscapedModel() {
-		return new AnnouncementsFlagWrapper(_announcementsFlag.toEscapedModel());
-	}
-
-	@Override
-	public AnnouncementsFlag toUnescapedModel() {
-		return new AnnouncementsFlagWrapper(_announcementsFlag.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _announcementsFlag.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _announcementsFlag.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _announcementsFlag.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _announcementsFlag.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<AnnouncementsFlag> toCacheModel() {
-		return _announcementsFlag.toCacheModel();
+	public java.lang.Object clone() {
+		return new AnnouncementsFlagWrapper((AnnouncementsFlag)_announcementsFlag.clone());
 	}
 
 	@Override
 	public int compareTo(AnnouncementsFlag announcementsFlag) {
 		return _announcementsFlag.compareTo(announcementsFlag);
-	}
-
-	/**
-	* Returns the value of this announcements flag.
-	*
-	* @return the value of this announcements flag
-	*/
-	@Override
-	public int getValue() {
-		return _announcementsFlag.getValue();
-	}
-
-	@Override
-	public int hashCode() {
-		return _announcementsFlag.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _announcementsFlag.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new AnnouncementsFlagWrapper((AnnouncementsFlag)_announcementsFlag.clone());
-	}
-
-	/**
-	* Returns the user uuid of this announcements flag.
-	*
-	* @return the user uuid of this announcements flag
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _announcementsFlag.getUserUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _announcementsFlag.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _announcementsFlag.toXmlString();
-	}
-
-	/**
-	* Returns the create date of this announcements flag.
-	*
-	* @return the create date of this announcements flag
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _announcementsFlag.getCreateDate();
 	}
 
 	/**
@@ -213,6 +128,16 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 	}
 
 	/**
+	* Returns the create date of this announcements flag.
+	*
+	* @return the create date of this announcements flag
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _announcementsFlag.getCreateDate();
+	}
+
+	/**
 	* Returns the entry ID of this announcements flag.
 	*
 	* @return the entry ID of this announcements flag
@@ -220,6 +145,11 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 	@Override
 	public long getEntryId() {
 		return _announcementsFlag.getEntryId();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _announcementsFlag.getExpandoBridge();
 	}
 
 	/**
@@ -242,6 +172,11 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 		return _announcementsFlag.getPrimaryKey();
 	}
 
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _announcementsFlag.getPrimaryKeyObj();
+	}
+
 	/**
 	* Returns the user ID of this announcements flag.
 	*
@@ -250,6 +185,46 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 	@Override
 	public long getUserId() {
 		return _announcementsFlag.getUserId();
+	}
+
+	/**
+	* Returns the user uuid of this announcements flag.
+	*
+	* @return the user uuid of this announcements flag
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _announcementsFlag.getUserUuid();
+	}
+
+	/**
+	* Returns the value of this announcements flag.
+	*
+	* @return the value of this announcements flag
+	*/
+	@Override
+	public int getValue() {
+		return _announcementsFlag.getValue();
+	}
+
+	@Override
+	public int hashCode() {
+		return _announcementsFlag.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _announcementsFlag.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _announcementsFlag.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _announcementsFlag.isNew();
 	}
 
 	@Override
@@ -366,6 +341,31 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 	@Override
 	public void setValue(int value) {
 		_announcementsFlag.setValue(value);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<AnnouncementsFlag> toCacheModel() {
+		return _announcementsFlag.toCacheModel();
+	}
+
+	@Override
+	public AnnouncementsFlag toEscapedModel() {
+		return new AnnouncementsFlagWrapper(_announcementsFlag.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _announcementsFlag.toString();
+	}
+
+	@Override
+	public AnnouncementsFlag toUnescapedModel() {
+		return new AnnouncementsFlagWrapper(_announcementsFlag.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _announcementsFlag.toXmlString();
 	}
 
 	@Override

@@ -42,6 +42,16 @@ public class ScreensRatingsEntryServiceWrapper
 			className, ratingsLength);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _screensRatingsEntryService.getOSGiServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.portal.kernel.json.JSONObject getRatingsEntries(
 		long assetEntryId, int ratingsLength)
@@ -65,16 +75,6 @@ public class ScreensRatingsEntryServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _screensRatingsEntryService.updateRatingsEntry(classPK,
 			className, score, ratingsLength);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _screensRatingsEntryService.getOSGiServiceIdentifier();
 	}
 
 	@Override

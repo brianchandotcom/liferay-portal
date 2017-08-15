@@ -57,27 +57,6 @@ public interface SystemEventLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SystemEventLocalServiceUtil} to access the system event local service. Add custom service methods to {@link com.liferay.portal.service.impl.SystemEventLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public boolean validateGroup(long groupId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
 
 	/**
 	* Adds the system event to the database. Also notifies the appropriate model listeners.
@@ -98,6 +77,8 @@ public interface SystemEventLocalService extends BaseLocalService,
 		java.lang.String referrerClassName, int type, java.lang.String extraData)
 		throws PortalException;
 
+	public void checkSystemEvents() throws PortalException;
+
 	/**
 	* Creates a new system event with the primary key. Does not add the system event to the database.
 	*
@@ -105,6 +86,13 @@ public interface SystemEventLocalService extends BaseLocalService,
 	* @return the new system event
 	*/
 	public SystemEvent createSystemEvent(long systemEventId);
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
 
 	/**
 	* Deletes the system event from the database. Also notifies the appropriate model listeners.
@@ -126,47 +114,11 @@ public interface SystemEventLocalService extends BaseLocalService,
 	public SystemEvent deleteSystemEvent(long systemEventId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SystemEvent fetchSystemEvent(long groupId, long classNameId,
-		long classPK, int type);
+	public void deleteSystemEvents(long groupId);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SystemEvent fetchSystemEvent(long systemEventId);
+	public void deleteSystemEvents(long groupId, long systemEventSetKey);
 
-	/**
-	* Returns the system event with the primary key.
-	*
-	* @param systemEventId the primary key of the system event
-	* @return the system event
-	* @throws PortalException if a system event with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SystemEvent getSystemEvent(long systemEventId)
-		throws PortalException;
-
-	/**
-	* Updates the system event in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param systemEvent the system event
-	* @return the system event that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public SystemEvent updateSystemEvent(SystemEvent systemEvent);
-
-	/**
-	* Returns the number of system events.
-	*
-	* @return the number of system events
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSystemEventsCount();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -208,6 +160,60 @@ public interface SystemEventLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SystemEvent fetchSystemEvent(long systemEventId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SystemEvent fetchSystemEvent(long groupId, long classNameId,
+		long classPK, int type);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Returns the system event with the primary key.
+	*
+	* @param systemEventId the primary key of the system event
+	* @return the system event
+	* @throws PortalException if a system event with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SystemEvent getSystemEvent(long systemEventId)
+		throws PortalException;
+
+	/**
 	* Returns a range of all the system events.
 	*
 	* <p>
@@ -230,26 +236,21 @@ public interface SystemEventLocalService extends BaseLocalService,
 		long classPK, int type);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of system events.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of system events
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSystemEventsCount();
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Updates the system event in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @param systemEvent the system event
+	* @return the system event that was updated
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	@Indexable(type = IndexableType.REINDEX)
+	public SystemEvent updateSystemEvent(SystemEvent systemEvent);
 
-	public void checkSystemEvents() throws PortalException;
-
-	public void deleteSystemEvents(long groupId);
-
-	public void deleteSystemEvents(long groupId, long systemEventSetKey);
+	public boolean validateGroup(long groupId) throws PortalException;
 }

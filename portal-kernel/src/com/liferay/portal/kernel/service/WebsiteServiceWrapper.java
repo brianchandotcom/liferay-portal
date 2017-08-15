@@ -40,16 +40,9 @@ public class WebsiteServiceWrapper implements WebsiteService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Website getWebsite(long websiteId)
+	public void deleteWebsite(long websiteId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _websiteService.getWebsite(websiteId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Website updateWebsite(
-		long websiteId, java.lang.String url, long typeId, boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _websiteService.updateWebsite(websiteId, url, typeId, primary);
+		_websiteService.deleteWebsite(websiteId);
 	}
 
 	/**
@@ -63,6 +56,12 @@ public class WebsiteServiceWrapper implements WebsiteService,
 	}
 
 	@Override
+	public com.liferay.portal.kernel.model.Website getWebsite(long websiteId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _websiteService.getWebsite(websiteId);
+	}
+
+	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Website> getWebsites(
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -70,9 +69,10 @@ public class WebsiteServiceWrapper implements WebsiteService,
 	}
 
 	@Override
-	public void deleteWebsite(long websiteId)
+	public com.liferay.portal.kernel.model.Website updateWebsite(
+		long websiteId, java.lang.String url, long typeId, boolean primary)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_websiteService.deleteWebsite(websiteId);
+		return _websiteService.updateWebsite(websiteId, url, typeId, primary);
 	}
 
 	@Override

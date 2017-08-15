@@ -59,21 +59,6 @@ public interface GroupService extends BaseService {
 	 */
 
 	/**
-	* Returns <code>true</code> if the user is associated with the group,
-	* including the user's inherited organizations and user groups. System and
-	* staged groups are not included.
-	*
-	* @param userId the primary key of the user
-	* @param groupId the primary key of the group
-	* @return <code>true</code> if the user is associated with the group;
-	<code>false</code> otherwise
-	* @throws PortalException if a portal exception occurred
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasUserGroup(long userId, long groupId)
-		throws PortalException;
-
-	/**
 	* Adds a group.
 	*
 	* @param parentGroupId the primary key of the parent group
@@ -112,16 +97,54 @@ public interface GroupService extends BaseService {
 		Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap, int type,
 		boolean manualMembership, int membershipRestriction,
-		java.lang.String friendlyURL, boolean site, boolean active,
-		ServiceContext serviceContext) throws PortalException;
+		java.lang.String friendlyURL, boolean site, boolean inheritContent,
+		boolean active, ServiceContext serviceContext)
+		throws PortalException;
 
 	public Group addGroup(long parentGroupId, long liveGroupId,
 		Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap, int type,
 		boolean manualMembership, int membershipRestriction,
-		java.lang.String friendlyURL, boolean site, boolean inheritContent,
-		boolean active, ServiceContext serviceContext)
+		java.lang.String friendlyURL, boolean site, boolean active,
+		ServiceContext serviceContext) throws PortalException;
+
+	/**
+	* Adds the groups to the role.
+	*
+	* @param roleId the primary key of the role
+	* @param groupIds the primary keys of the groups
+	* @throws PortalException if a portal exception occurred
+	*/
+	public void addRoleGroups(long roleId, long[] groupIds)
 		throws PortalException;
+
+	/**
+	* Checks that the current user is permitted to use the group for Remote
+	* Staging.
+	*
+	* @param groupId the primary key of the group
+	* @throws PortalException if a portal exception occurred
+	*/
+	public void checkRemoteStagingGroup(long groupId) throws PortalException;
+
+	/**
+	* Deletes the group.
+	*
+	* <p>
+	* The group is unstaged and its assets and resources including layouts,
+	* membership requests, subscriptions, teams, blogs, bookmarks, calendar
+	* events, image gallery, journals, message boards, polls, shopping related
+	* entities, and wikis are also deleted.
+	* </p>
+	*
+	* @param groupId the primary key of the group
+	* @throws PortalException if a portal exception occurred
+	*/
+	public void deleteGroup(long groupId) throws PortalException;
+
+	public void disableStaging(long groupId) throws PortalException;
+
+	public void enableStaging(long groupId) throws PortalException;
 
 	/**
 	* Returns the company group.
@@ -134,18 +157,6 @@ public interface GroupService extends BaseService {
 	public Group getCompanyGroup(long companyId) throws PortalException;
 
 	/**
-	* Returns the group with the name.
-	*
-	* @param companyId the primary key of the company
-	* @param groupKey the group key
-	* @return the group with the group key
-	* @throws PortalException if a portal exception occurred
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Group getGroup(long companyId, java.lang.String groupKey)
-		throws PortalException;
-
-	/**
 	* Returns the group with the primary key.
 	*
 	* @param groupId the primary key of the group
@@ -156,115 +167,16 @@ public interface GroupService extends BaseService {
 	public Group getGroup(long groupId) throws PortalException;
 
 	/**
-	* Returns the group directly associated with the user.
+	* Returns the group with the name.
 	*
 	* @param companyId the primary key of the company
-	* @param userId the primary key of the user
-	* @return the group directly associated with the user
+	* @param groupKey the group key
+	* @return the group with the group key
 	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Group getUserGroup(long companyId, long userId)
+	public Group getGroup(long companyId, java.lang.String groupKey)
 		throws PortalException;
-
-	/**
-	* Updates the group's friendly URL.
-	*
-	* @param groupId the primary key of the group
-	* @param friendlyURL the group's new friendlyURL (optionally
-	<code>null</code>)
-	* @return the group
-	* @throws PortalException if a portal exception occurred
-	*/
-	public Group updateFriendlyURL(long groupId, java.lang.String friendlyURL)
-		throws PortalException;
-
-	/**
-	* Updates the group's type settings.
-	*
-	* @param groupId the primary key of the group
-	* @param typeSettings the group's new type settings (optionally
-	<code>null</code>)
-	* @return the group
-	* @throws PortalException if a portal exception occurred
-	*/
-	public Group updateGroup(long groupId, java.lang.String typeSettings)
-		throws PortalException;
-
-	/**
-	* Updates the group.
-	*
-	* @param groupId the primary key of the group
-	* @param parentGroupId the primary key of the parent group
-	* @param name the group's name
-	* @param description the group's new description (optionally
-	<code>null</code>)
-	* @param type the group's new type. For more information see {@link
-	GroupConstants}.
-	* @param manualMembership whether manual membership is allowed for the
-	group
-	* @param membershipRestriction the group's membership restriction. For
-	more information see {@link GroupConstants}.
-	* @param friendlyURL the group's new friendlyURL (optionally
-	<code>null</code>)
-	* @param inheritContent whether to inherit content from the parent
-	group
-	* @param active whether the group is active
-	* @param serviceContext the service context to be applied (optionally
-	<code>null</code>). Can set the asset category IDs and asset
-	tag names for the group.
-	* @return the group
-	* @throws PortalException if a portal exception occurred
-	* @deprecated As of 7.0.0, replaced by {@link #updateGroup(long, long, Map,
-	Map, int, boolean, int, String, boolean, boolean,
-	ServiceContext)}
-	*/
-	@java.lang.Deprecated
-	public Group updateGroup(long groupId, long parentGroupId,
-		java.lang.String name, java.lang.String description, int type,
-		boolean manualMembership, int membershipRestriction,
-		java.lang.String friendlyURL, boolean inheritContent, boolean active,
-		ServiceContext serviceContext) throws PortalException;
-
-	public Group updateGroup(long groupId, long parentGroupId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, int type,
-		boolean manualMembership, int membershipRestriction,
-		java.lang.String friendlyURL, boolean inheritContent, boolean active,
-		ServiceContext serviceContext) throws PortalException;
-
-	/**
-	* Returns the number of the guest or current user's groups
-	* &quot;sites&quot; associated with the group entity class names, including
-	* the Control Panel group if the user is permitted to view the Control
-	* Panel.
-	*
-	* @return the number of user's groups &quot;sites&quot;
-	* @throws PortalException if a portal exception occurred
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getUserSitesGroupsCount() throws PortalException;
-
-	/**
-	* Returns the number of groups and organization groups that match the name
-	* and description, optionally including the user's inherited organizations
-	* and user groups. System and staged groups are not included.
-	*
-	* @param companyId the primary key of the company
-	* @param name the group's name (optionally <code>null</code>)
-	* @param description the group's description (optionally
-	<code>null</code>)
-	* @param params the finder params (optionally <code>null</code>). To
-	include the user's inherited organizations and user groups in the
-	search, add entries having &quot;usersGroups&quot; and
-	&quot;inherit&quot; as keys mapped to the the user's ID. For more
-	information see {@link
-	com.liferay.portal.kernel.service.persistence.GroupFinder}.
-	* @return the number of matching groups
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, java.lang.String name,
-		java.lang.String description, java.lang.String[] params);
 
 	/**
 	* Returns the group's display URL.
@@ -281,13 +193,6 @@ public interface GroupService extends BaseService {
 	public java.lang.String getGroupDisplayURL(long groupId,
 		boolean privateLayout, boolean secureConnection)
 		throws PortalException;
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Returns all the groups that are direct children of the parent group.
@@ -319,6 +224,13 @@ public interface GroupService extends BaseService {
 		int max) throws PortalException;
 
 	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	/**
 	* Returns the groups associated with the organizations.
 	*
 	* @param organizations the organizations
@@ -327,6 +239,18 @@ public interface GroupService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Group> getOrganizationsGroups(List<Organization> organizations)
+		throws PortalException;
+
+	/**
+	* Returns the group directly associated with the user.
+	*
+	* @param companyId the primary key of the company
+	* @param userId the primary key of the user
+	* @return the group directly associated with the user
+	* @throws PortalException if a portal exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Group getUserGroup(long companyId, long userId)
 		throws PortalException;
 
 	/**
@@ -443,6 +367,33 @@ public interface GroupService extends BaseService {
 		java.lang.String[] classNames, int max) throws PortalException;
 
 	/**
+	* Returns the number of the guest or current user's groups
+	* &quot;sites&quot; associated with the group entity class names, including
+	* the Control Panel group if the user is permitted to view the Control
+	* Panel.
+	*
+	* @return the number of user's groups &quot;sites&quot;
+	* @throws PortalException if a portal exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserSitesGroupsCount() throws PortalException;
+
+	/**
+	* Returns <code>true</code> if the user is associated with the group,
+	* including the user's inherited organizations and user groups. System and
+	* staged groups are not included.
+	*
+	* @param userId the primary key of the user
+	* @param groupId the primary key of the group
+	* @return <code>true</code> if the user is associated with the group;
+	<code>false</code> otherwise
+	* @throws PortalException if a portal exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasUserGroup(long userId, long groupId)
+		throws PortalException;
+
+	/**
 	* Returns an ordered range of all the site groups and organization groups
 	* that match the name and description, optionally including the user's
 	* inherited organization groups and user groups. System and staged groups
@@ -480,54 +431,37 @@ public interface GroupService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Group> search(long companyId, long[] classNameIds,
-		java.lang.String keywords,
-		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
-		int end, OrderByComparator<Group> obc) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Group> search(long companyId, long[] classNameIds,
 		java.lang.String name, java.lang.String description,
 		LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator, int start, int end, OrderByComparator<Group> obc)
 		throws PortalException;
 
-	/**
-	* Adds the groups to the role.
-	*
-	* @param roleId the primary key of the role
-	* @param groupIds the primary keys of the groups
-	* @throws PortalException if a portal exception occurred
-	*/
-	public void addRoleGroups(long roleId, long[] groupIds)
-		throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Group> search(long companyId, long[] classNameIds,
+		java.lang.String keywords,
+		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
+		int end, OrderByComparator<Group> obc) throws PortalException;
 
 	/**
-	* Checks that the current user is permitted to use the group for Remote
-	* Staging.
+	* Returns the number of groups and organization groups that match the name
+	* and description, optionally including the user's inherited organizations
+	* and user groups. System and staged groups are not included.
 	*
-	* @param groupId the primary key of the group
-	* @throws PortalException if a portal exception occurred
+	* @param companyId the primary key of the company
+	* @param name the group's name (optionally <code>null</code>)
+	* @param description the group's description (optionally
+	<code>null</code>)
+	* @param params the finder params (optionally <code>null</code>). To
+	include the user's inherited organizations and user groups in the
+	search, add entries having &quot;usersGroups&quot; and
+	&quot;inherit&quot; as keys mapped to the the user's ID. For more
+	information see {@link
+	com.liferay.portal.kernel.service.persistence.GroupFinder}.
+	* @return the number of matching groups
 	*/
-	public void checkRemoteStagingGroup(long groupId) throws PortalException;
-
-	/**
-	* Deletes the group.
-	*
-	* <p>
-	* The group is unstaged and its assets and resources including layouts,
-	* membership requests, subscriptions, teams, blogs, bookmarks, calendar
-	* events, image gallery, journals, message boards, polls, shopping related
-	* entities, and wikis are also deleted.
-	* </p>
-	*
-	* @param groupId the primary key of the group
-	* @throws PortalException if a portal exception occurred
-	*/
-	public void deleteGroup(long groupId) throws PortalException;
-
-	public void disableStaging(long groupId) throws PortalException;
-
-	public void enableStaging(long groupId) throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(long companyId, java.lang.String name,
+		java.lang.String description, java.lang.String[] params);
 
 	/**
 	* Sets the groups associated with the role, removing and adding
@@ -549,6 +483,72 @@ public interface GroupService extends BaseService {
 	*/
 	public void unsetRoleGroups(long roleId, long[] groupIds)
 		throws PortalException;
+
+	/**
+	* Updates the group's friendly URL.
+	*
+	* @param groupId the primary key of the group
+	* @param friendlyURL the group's new friendlyURL (optionally
+	<code>null</code>)
+	* @return the group
+	* @throws PortalException if a portal exception occurred
+	*/
+	public Group updateFriendlyURL(long groupId, java.lang.String friendlyURL)
+		throws PortalException;
+
+	/**
+	* Updates the group's type settings.
+	*
+	* @param groupId the primary key of the group
+	* @param typeSettings the group's new type settings (optionally
+	<code>null</code>)
+	* @return the group
+	* @throws PortalException if a portal exception occurred
+	*/
+	public Group updateGroup(long groupId, java.lang.String typeSettings)
+		throws PortalException;
+
+	/**
+	* Updates the group.
+	*
+	* @param groupId the primary key of the group
+	* @param parentGroupId the primary key of the parent group
+	* @param name the group's name
+	* @param description the group's new description (optionally
+	<code>null</code>)
+	* @param type the group's new type. For more information see {@link
+	GroupConstants}.
+	* @param manualMembership whether manual membership is allowed for the
+	group
+	* @param membershipRestriction the group's membership restriction. For
+	more information see {@link GroupConstants}.
+	* @param friendlyURL the group's new friendlyURL (optionally
+	<code>null</code>)
+	* @param inheritContent whether to inherit content from the parent
+	group
+	* @param active whether the group is active
+	* @param serviceContext the service context to be applied (optionally
+	<code>null</code>). Can set the asset category IDs and asset
+	tag names for the group.
+	* @return the group
+	* @throws PortalException if a portal exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link #updateGroup(long, long, Map,
+	Map, int, boolean, int, String, boolean, boolean,
+	ServiceContext)}
+	*/
+	@java.lang.Deprecated
+	public Group updateGroup(long groupId, long parentGroupId,
+		java.lang.String name, java.lang.String description, int type,
+		boolean manualMembership, int membershipRestriction,
+		java.lang.String friendlyURL, boolean inheritContent, boolean active,
+		ServiceContext serviceContext) throws PortalException;
+
+	public Group updateGroup(long groupId, long parentGroupId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, int type,
+		boolean manualMembership, int membershipRestriction,
+		java.lang.String friendlyURL, boolean inheritContent, boolean active,
+		ServiceContext serviceContext) throws PortalException;
 
 	public void updateStagedPortlets(long groupId,
 		Map<java.lang.String, java.lang.String> stagedPortletIds)

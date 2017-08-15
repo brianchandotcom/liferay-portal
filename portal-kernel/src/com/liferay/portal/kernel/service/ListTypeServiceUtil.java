@@ -46,6 +46,11 @@ public class ListTypeServiceUtil {
 		return getService().getListType(listTypeId);
 	}
 
+	public static java.util.List<com.liferay.portal.kernel.model.ListType> getListTypes(
+		java.lang.String type) {
+		return getService().getListTypes(type);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -53,11 +58,6 @@ public class ListTypeServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static java.util.List<com.liferay.portal.kernel.model.ListType> getListTypes(
-		java.lang.String type) {
-		return getService().getListTypes(type);
 	}
 
 	public static void validate(long listTypeId, java.lang.String type)

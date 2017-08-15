@@ -65,39 +65,6 @@ public interface KBCommentService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBComment getKBComment(long kbCommentId) throws PortalException;
 
-	public KBComment updateKBComment(long kbCommentId, long classNameId,
-		long classPK, java.lang.String content, ServiceContext serviceContext)
-		throws PortalException;
-
-	public KBComment updateKBComment(long kbCommentId, long classNameId,
-		long classPK, java.lang.String content, int status,
-		ServiceContext serviceContext) throws PortalException;
-
-	public KBComment updateStatus(long kbCommentId, int status,
-		ServiceContext serviceContext) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKBCommentsCount(long groupId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKBCommentsCount(long groupId, int status)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKBCommentsCount(long groupId, java.lang.String className,
-		long classPK) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKBCommentsCount(long groupId, java.lang.String className,
-		long classPK, int status) throws PortalException;
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KBComment> getKBComments(long groupId, int start, int end,
 		OrderByComparator<KBComment> obc) throws PortalException;
@@ -124,4 +91,37 @@ public interface KBCommentService extends BaseService {
 	public List<KBComment> getKBComments(long groupId,
 		java.lang.String className, long classPK, int status, int start,
 		int end, OrderByComparator<KBComment> obc) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getKBCommentsCount(long groupId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getKBCommentsCount(long groupId, int status)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getKBCommentsCount(long groupId, java.lang.String className,
+		long classPK) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getKBCommentsCount(long groupId, java.lang.String className,
+		long classPK, int status) throws PortalException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	public KBComment updateKBComment(long kbCommentId, long classNameId,
+		long classPK, java.lang.String content, ServiceContext serviceContext)
+		throws PortalException;
+
+	public KBComment updateKBComment(long kbCommentId, long classNameId,
+		long classPK, java.lang.String content, int status,
+		ServiceContext serviceContext) throws PortalException;
+
+	public KBComment updateStatus(long kbCommentId, int status,
+		ServiceContext serviceContext) throws PortalException;
 }

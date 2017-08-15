@@ -58,26 +58,6 @@ public interface TicketLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link TicketLocalServiceUtil} to access the ticket local service. Add custom service methods to {@link com.liferay.portal.service.impl.TicketLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
 	public Ticket addDistinctTicket(long companyId, java.lang.String className,
 		long classPK, int type, java.lang.String extraInfo,
 		Date expirationDate, ServiceContext serviceContext);
@@ -104,6 +84,13 @@ public interface TicketLocalService extends BaseLocalService,
 	public Ticket createTicket(long ticketId);
 
 	/**
+	* @throws PortalException
+	*/
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
+
+	/**
 	* Deletes the ticket from the database. Also notifies the appropriate model listeners.
 	*
 	* @param ticket the ticket
@@ -122,52 +109,7 @@ public interface TicketLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public Ticket deleteTicket(long ticketId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Ticket fetchTicket(java.lang.String key);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Ticket fetchTicket(long ticketId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Ticket getTicket(java.lang.String key) throws PortalException;
-
-	/**
-	* Returns the ticket with the primary key.
-	*
-	* @param ticketId the primary key of the ticket
-	* @return the ticket
-	* @throws PortalException if a ticket with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Ticket getTicket(long ticketId) throws PortalException;
-
-	/**
-	* Updates the ticket in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param ticket the ticket
-	* @return the ticket that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public Ticket updateTicket(Ticket ticket);
-
-	public Ticket updateTicket(long ticketId, java.lang.String className,
-		long classPK, int type, java.lang.String extraInfo, Date expirationDate)
-		throws PortalException;
-
-	/**
-	* Returns the number of tickets.
-	*
-	* @return the number of tickets
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getTicketsCount();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -209,6 +151,61 @@ public interface TicketLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Ticket fetchTicket(java.lang.String key);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Ticket fetchTicket(long ticketId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Ticket getTicket(java.lang.String key) throws PortalException;
+
+	/**
+	* Returns the ticket with the primary key.
+	*
+	* @param ticketId the primary key of the ticket
+	* @return the ticket
+	* @throws PortalException if a ticket with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Ticket getTicket(long ticketId) throws PortalException;
+
+	/**
 	* Returns a range of all the tickets.
 	*
 	* <p>
@@ -227,20 +224,23 @@ public interface TicketLocalService extends BaseLocalService,
 		long classPK, int type);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of tickets.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of tickets
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getTicketsCount();
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Updates the ticket in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @param ticket the ticket
+	* @return the ticket that was updated
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	@Indexable(type = IndexableType.REINDEX)
+	public Ticket updateTicket(Ticket ticket);
+
+	public Ticket updateTicket(long ticketId, java.lang.String className,
+		long classPK, int type, java.lang.String extraInfo, Date expirationDate)
+		throws PortalException;
 }

@@ -54,20 +54,8 @@ public interface AssetCategoryPropertyService extends BaseService {
 	public AssetCategoryProperty addCategoryProperty(long entryId,
 		java.lang.String key, java.lang.String value) throws PortalException;
 
-	public AssetCategoryProperty updateCategoryProperty(
-		long categoryPropertyId, java.lang.String key, java.lang.String value)
+	public void deleteCategoryProperty(long categoryPropertyId)
 		throws PortalException;
-
-	public AssetCategoryProperty updateCategoryProperty(long userId,
-		long categoryPropertyId, java.lang.String key, java.lang.String value)
-		throws PortalException;
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetCategoryProperty> getCategoryProperties(long entryId);
@@ -76,6 +64,18 @@ public interface AssetCategoryPropertyService extends BaseService {
 	public List<AssetCategoryProperty> getCategoryPropertyValues(
 		long companyId, java.lang.String key);
 
-	public void deleteCategoryProperty(long categoryPropertyId)
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	public AssetCategoryProperty updateCategoryProperty(
+		long categoryPropertyId, java.lang.String key, java.lang.String value)
+		throws PortalException;
+
+	public AssetCategoryProperty updateCategoryProperty(long userId,
+		long categoryPropertyId, java.lang.String key, java.lang.String value)
 		throws PortalException;
 }

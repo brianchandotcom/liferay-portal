@@ -142,38 +142,8 @@ public class SocialActivitySetWrapper implements SocialActivitySet,
 	}
 
 	@Override
-	public SocialActivitySet toEscapedModel() {
-		return new SocialActivitySetWrapper(_socialActivitySet.toEscapedModel());
-	}
-
-	@Override
-	public SocialActivitySet toUnescapedModel() {
-		return new SocialActivitySetWrapper(_socialActivitySet.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _socialActivitySet.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _socialActivitySet.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _socialActivitySet.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _socialActivitySet.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<SocialActivitySet> toCacheModel() {
-		return _socialActivitySet.toCacheModel();
+	public java.lang.Object clone() {
+		return new SocialActivitySetWrapper((SocialActivitySet)_socialActivitySet.clone());
 	}
 
 	@Override
@@ -192,28 +162,13 @@ public class SocialActivitySetWrapper implements SocialActivitySet,
 	}
 
 	/**
-	* Returns the type of this social activity set.
+	* Returns the activity set ID of this social activity set.
 	*
-	* @return the type of this social activity set
+	* @return the activity set ID of this social activity set
 	*/
 	@Override
-	public int getType() {
-		return _socialActivitySet.getType();
-	}
-
-	@Override
-	public int hashCode() {
-		return _socialActivitySet.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _socialActivitySet.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new SocialActivitySetWrapper((SocialActivitySet)_socialActivitySet.clone());
+	public long getActivitySetId() {
+		return _socialActivitySet.getActivitySetId();
 	}
 
 	/**
@@ -224,46 +179,6 @@ public class SocialActivitySetWrapper implements SocialActivitySet,
 	@Override
 	public java.lang.String getClassName() {
 		return _socialActivitySet.getClassName();
-	}
-
-	/**
-	* Returns the extra data of this social activity set.
-	*
-	* @return the extra data of this social activity set
-	*/
-	@Override
-	public java.lang.String getExtraData() {
-		return _socialActivitySet.getExtraData();
-	}
-
-	/**
-	* Returns the user uuid of this social activity set.
-	*
-	* @return the user uuid of this social activity set
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _socialActivitySet.getUserUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _socialActivitySet.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _socialActivitySet.toXmlString();
-	}
-
-	/**
-	* Returns the activity set ID of this social activity set.
-	*
-	* @return the activity set ID of this social activity set
-	*/
-	@Override
-	public long getActivitySetId() {
-		return _socialActivitySet.getActivitySetId();
 	}
 
 	/**
@@ -306,6 +221,21 @@ public class SocialActivitySetWrapper implements SocialActivitySet,
 		return _socialActivitySet.getCreateDate();
 	}
 
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _socialActivitySet.getExpandoBridge();
+	}
+
+	/**
+	* Returns the extra data of this social activity set.
+	*
+	* @return the extra data of this social activity set
+	*/
+	@Override
+	public java.lang.String getExtraData() {
+		return _socialActivitySet.getExtraData();
+	}
+
 	/**
 	* Returns the group ID of this social activity set.
 	*
@@ -336,6 +266,21 @@ public class SocialActivitySetWrapper implements SocialActivitySet,
 		return _socialActivitySet.getPrimaryKey();
 	}
 
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _socialActivitySet.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the type of this social activity set.
+	*
+	* @return the type of this social activity set
+	*/
+	@Override
+	public int getType() {
+		return _socialActivitySet.getType();
+	}
+
 	/**
 	* Returns the user ID of this social activity set.
 	*
@@ -344,6 +289,36 @@ public class SocialActivitySetWrapper implements SocialActivitySet,
 	@Override
 	public long getUserId() {
 		return _socialActivitySet.getUserId();
+	}
+
+	/**
+	* Returns the user uuid of this social activity set.
+	*
+	* @return the user uuid of this social activity set
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _socialActivitySet.getUserUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _socialActivitySet.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _socialActivitySet.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _socialActivitySet.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _socialActivitySet.isNew();
 	}
 
 	@Override
@@ -515,6 +490,31 @@ public class SocialActivitySetWrapper implements SocialActivitySet,
 	@Override
 	public void setUserUuid(java.lang.String userUuid) {
 		_socialActivitySet.setUserUuid(userUuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<SocialActivitySet> toCacheModel() {
+		return _socialActivitySet.toCacheModel();
+	}
+
+	@Override
+	public SocialActivitySet toEscapedModel() {
+		return new SocialActivitySetWrapper(_socialActivitySet.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _socialActivitySet.toString();
+	}
+
+	@Override
+	public SocialActivitySet toUnescapedModel() {
+		return new SocialActivitySetWrapper(_socialActivitySet.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _socialActivitySet.toXmlString();
 	}
 
 	@Override

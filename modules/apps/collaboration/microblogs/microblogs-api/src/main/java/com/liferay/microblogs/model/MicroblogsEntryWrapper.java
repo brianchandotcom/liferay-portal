@@ -152,138 +152,13 @@ public class MicroblogsEntryWrapper implements MicroblogsEntry,
 	}
 
 	@Override
-	public MicroblogsEntry toEscapedModel() {
-		return new MicroblogsEntryWrapper(_microblogsEntry.toEscapedModel());
-	}
-
-	@Override
-	public MicroblogsEntry toUnescapedModel() {
-		return new MicroblogsEntryWrapper(_microblogsEntry.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _microblogsEntry.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _microblogsEntry.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _microblogsEntry.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _microblogsEntry.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<MicroblogsEntry> toCacheModel() {
-		return _microblogsEntry.toCacheModel();
+	public java.lang.Object clone() {
+		return new MicroblogsEntryWrapper((MicroblogsEntry)_microblogsEntry.clone());
 	}
 
 	@Override
 	public int compareTo(MicroblogsEntry microblogsEntry) {
 		return _microblogsEntry.compareTo(microblogsEntry);
-	}
-
-	/**
-	* Returns the social relation type of this microblogs entry.
-	*
-	* @return the social relation type of this microblogs entry
-	*/
-	@Override
-	public int getSocialRelationType() {
-		return _microblogsEntry.getSocialRelationType();
-	}
-
-	/**
-	* Returns the type of this microblogs entry.
-	*
-	* @return the type of this microblogs entry
-	*/
-	@Override
-	public int getType() {
-		return _microblogsEntry.getType();
-	}
-
-	@Override
-	public int hashCode() {
-		return _microblogsEntry.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _microblogsEntry.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new MicroblogsEntryWrapper((MicroblogsEntry)_microblogsEntry.clone());
-	}
-
-	/**
-	* Returns the content of this microblogs entry.
-	*
-	* @return the content of this microblogs entry
-	*/
-	@Override
-	public java.lang.String getContent() {
-		return _microblogsEntry.getContent();
-	}
-
-	/**
-	* Returns the user name of this microblogs entry.
-	*
-	* @return the user name of this microblogs entry
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _microblogsEntry.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this microblogs entry.
-	*
-	* @return the user uuid of this microblogs entry
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _microblogsEntry.getUserUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _microblogsEntry.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _microblogsEntry.toXmlString();
-	}
-
-	/**
-	* Returns the create date of this microblogs entry.
-	*
-	* @return the create date of this microblogs entry
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _microblogsEntry.getCreateDate();
-	}
-
-	/**
-	* Returns the modified date of this microblogs entry.
-	*
-	* @return the modified date of this microblogs entry
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _microblogsEntry.getModifiedDate();
 	}
 
 	@Override
@@ -299,6 +174,26 @@ public class MicroblogsEntryWrapper implements MicroblogsEntry,
 	@Override
 	public long getCompanyId() {
 		return _microblogsEntry.getCompanyId();
+	}
+
+	/**
+	* Returns the content of this microblogs entry.
+	*
+	* @return the content of this microblogs entry
+	*/
+	@Override
+	public java.lang.String getContent() {
+		return _microblogsEntry.getContent();
+	}
+
+	/**
+	* Returns the create date of this microblogs entry.
+	*
+	* @return the create date of this microblogs entry
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _microblogsEntry.getCreateDate();
 	}
 
 	/**
@@ -321,6 +216,11 @@ public class MicroblogsEntryWrapper implements MicroblogsEntry,
 		return _microblogsEntry.getCreatorClassPK();
 	}
 
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _microblogsEntry.getExpandoBridge();
+	}
+
 	/**
 	* Returns the microblogs entry ID of this microblogs entry.
 	*
@@ -329,6 +229,16 @@ public class MicroblogsEntryWrapper implements MicroblogsEntry,
 	@Override
 	public long getMicroblogsEntryId() {
 		return _microblogsEntry.getMicroblogsEntryId();
+	}
+
+	/**
+	* Returns the modified date of this microblogs entry.
+	*
+	* @return the modified date of this microblogs entry
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _microblogsEntry.getModifiedDate();
 	}
 
 	/**
@@ -357,6 +267,31 @@ public class MicroblogsEntryWrapper implements MicroblogsEntry,
 		return _microblogsEntry.getPrimaryKey();
 	}
 
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _microblogsEntry.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the social relation type of this microblogs entry.
+	*
+	* @return the social relation type of this microblogs entry
+	*/
+	@Override
+	public int getSocialRelationType() {
+		return _microblogsEntry.getSocialRelationType();
+	}
+
+	/**
+	* Returns the type of this microblogs entry.
+	*
+	* @return the type of this microblogs entry
+	*/
+	@Override
+	public int getType() {
+		return _microblogsEntry.getType();
+	}
+
 	/**
 	* Returns the user ID of this microblogs entry.
 	*
@@ -365,6 +300,46 @@ public class MicroblogsEntryWrapper implements MicroblogsEntry,
 	@Override
 	public long getUserId() {
 		return _microblogsEntry.getUserId();
+	}
+
+	/**
+	* Returns the user name of this microblogs entry.
+	*
+	* @return the user name of this microblogs entry
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _microblogsEntry.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this microblogs entry.
+	*
+	* @return the user uuid of this microblogs entry
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _microblogsEntry.getUserUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _microblogsEntry.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _microblogsEntry.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _microblogsEntry.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _microblogsEntry.isNew();
 	}
 
 	@Override
@@ -541,6 +516,31 @@ public class MicroblogsEntryWrapper implements MicroblogsEntry,
 	@Override
 	public void setUserUuid(java.lang.String userUuid) {
 		_microblogsEntry.setUserUuid(userUuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<MicroblogsEntry> toCacheModel() {
+		return _microblogsEntry.toCacheModel();
+	}
+
+	@Override
+	public MicroblogsEntry toEscapedModel() {
+		return new MicroblogsEntryWrapper(_microblogsEntry.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _microblogsEntry.toString();
+	}
+
+	@Override
+	public MicroblogsEntry toUnescapedModel() {
+		return new MicroblogsEntryWrapper(_microblogsEntry.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _microblogsEntry.toXmlString();
 	}
 
 	@Override

@@ -57,7 +57,31 @@ public interface AssetEntryService extends BaseService {
 	public AssetEntry fetchEntry(long entryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetEntry> getCompanyEntries(long companyId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCompanyEntriesCount(long companyId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetEntry> getEntries(AssetEntryQuery entryQuery)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getEntriesCount(AssetEntryQuery entryQuery)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetEntry getEntry(long entryId) throws PortalException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	public void incrementViewCounter(AssetEntry assetEntry)
+		throws PortalException;
 
 	public AssetEntry incrementViewCounter(java.lang.String className,
 		long classPK) throws PortalException;
@@ -105,28 +129,4 @@ public interface AssetEntryService extends BaseService {
 		java.lang.String summary, java.lang.String url,
 		java.lang.String layoutUuid, int height, int width,
 		java.lang.Integer priority, boolean sync) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCompanyEntriesCount(long companyId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getEntriesCount(AssetEntryQuery entryQuery)
-		throws PortalException;
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetEntry> getCompanyEntries(long companyId, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetEntry> getEntries(AssetEntryQuery entryQuery)
-		throws PortalException;
-
-	public void incrementViewCounter(AssetEntry assetEntry)
-		throws PortalException;
 }

@@ -62,17 +62,6 @@ public interface EmailAddressLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link EmailAddressLocalServiceUtil} to access the email address local service. Add custom service methods to {@link com.liferay.portal.service.impl.EmailAddressLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Adds the email address to the database. Also notifies the appropriate model listeners.
@@ -117,55 +106,8 @@ public interface EmailAddressLocalService extends BaseLocalService,
 	public EmailAddress deleteEmailAddress(long emailAddressId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public EmailAddress fetchEmailAddress(long emailAddressId);
-
-	/**
-	* Returns the email address with the matching UUID and company.
-	*
-	* @param uuid the email address's UUID
-	* @param companyId the primary key of the company
-	* @return the matching email address, or <code>null</code> if a matching email address could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public EmailAddress fetchEmailAddressByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
-
-	/**
-	* Returns the email address with the primary key.
-	*
-	* @param emailAddressId the primary key of the email address
-	* @return the email address
-	* @throws PortalException if a email address with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public EmailAddress getEmailAddress(long emailAddressId)
-		throws PortalException;
-
-	/**
-	* Returns the email address with the matching UUID and company.
-	*
-	* @param uuid the email address's UUID
-	* @param companyId the primary key of the company
-	* @return the matching email address
-	* @throws PortalException if a matching email address could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public EmailAddress getEmailAddressByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) throws PortalException;
-
-	/**
-	* Updates the email address in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param emailAddress the email address
-	* @return the email address that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public EmailAddress updateEmailAddress(EmailAddress emailAddress);
-
-	public EmailAddress updateEmailAddress(long emailAddressId,
-		java.lang.String address, long typeId, boolean primary)
-		throws PortalException;
+	public void deleteEmailAddresses(long companyId,
+		java.lang.String className, long classPK);
 
 	/**
 	* @throws PortalException
@@ -174,25 +116,7 @@ public interface EmailAddressLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	* Returns the number of email addresses.
-	*
-	* @return the number of email addresses
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getEmailAddressesCount();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -233,6 +157,64 @@ public interface EmailAddressLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public EmailAddress fetchEmailAddress(long emailAddressId);
+
+	/**
+	* Returns the email address with the matching UUID and company.
+	*
+	* @param uuid the email address's UUID
+	* @param companyId the primary key of the company
+	* @return the matching email address, or <code>null</code> if a matching email address could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public EmailAddress fetchEmailAddressByUuidAndCompanyId(
+		java.lang.String uuid, long companyId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
+	* Returns the email address with the primary key.
+	*
+	* @param emailAddressId the primary key of the email address
+	* @return the email address
+	* @throws PortalException if a email address with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public EmailAddress getEmailAddress(long emailAddressId)
+		throws PortalException;
+
+	/**
+	* Returns the email address with the matching UUID and company.
+	*
+	* @param uuid the email address's UUID
+	* @param companyId the primary key of the company
+	* @return the matching email address
+	* @throws PortalException if a matching email address could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public EmailAddress getEmailAddressByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<EmailAddress> getEmailAddresses();
 
@@ -255,23 +237,42 @@ public interface EmailAddressLocalService extends BaseLocalService,
 		java.lang.String className, long classPK);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of email addresses.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of email addresses
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getEmailAddressesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public java.lang.String getOSGiServiceIdentifier();
 
-	public void deleteEmailAddresses(long companyId,
-		java.lang.String className, long classPK);
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Updates the email address in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param emailAddress the email address
+	* @return the email address that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public EmailAddress updateEmailAddress(EmailAddress emailAddress);
+
+	public EmailAddress updateEmailAddress(long emailAddressId,
+		java.lang.String address, long typeId, boolean primary)
+		throws PortalException;
 }

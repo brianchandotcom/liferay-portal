@@ -53,17 +53,10 @@ public interface RegionService extends BaseService {
 		java.lang.String name, boolean active) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Region fetchRegion(long countryId, java.lang.String regionCode);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Region fetchRegion(long regionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Region getRegion(long countryId, java.lang.String regionCode)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Region getRegion(long regionId) throws PortalException;
+	public Region fetchRegion(long countryId, java.lang.String regionCode);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -71,6 +64,13 @@ public interface RegionService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Region getRegion(long regionId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Region getRegion(long countryId, java.lang.String regionCode)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Region> getRegions();

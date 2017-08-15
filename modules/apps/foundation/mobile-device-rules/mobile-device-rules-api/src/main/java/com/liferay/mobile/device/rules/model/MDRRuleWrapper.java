@@ -165,43 +165,8 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	}
 
 	@Override
-	public MDRRule toEscapedModel() {
-		return new MDRRuleWrapper(_mdrRule.toEscapedModel());
-	}
-
-	@Override
-	public MDRRule toUnescapedModel() {
-		return new MDRRuleWrapper(_mdrRule.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _mdrRule.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _mdrRule.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _mdrRule.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _mdrRule.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<MDRRule> toCacheModel() {
-		return _mdrRule.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties() {
-		return _mdrRule.getTypeSettingsProperties();
+	public java.lang.Object clone() {
+		return new MDRRuleWrapper((MDRRule)_mdrRule.clone());
 	}
 
 	@Override
@@ -210,18 +175,28 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	}
 
 	@Override
-	public int hashCode() {
-		return _mdrRule.hashCode();
+	public java.lang.String[] getAvailableLanguageIds() {
+		return _mdrRule.getAvailableLanguageIds();
 	}
 
+	/**
+	* Returns the company ID of this mdr rule.
+	*
+	* @return the company ID of this mdr rule
+	*/
 	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _mdrRule.getPrimaryKeyObj();
+	public long getCompanyId() {
+		return _mdrRule.getCompanyId();
 	}
 
+	/**
+	* Returns the create date of this mdr rule.
+	*
+	* @return the create date of this mdr rule
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new MDRRuleWrapper((MDRRule)_mdrRule.clone());
+	public Date getCreateDate() {
+		return _mdrRule.getCreateDate();
 	}
 
 	@Override
@@ -298,6 +273,51 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	}
 
 	/**
+	* Returns a map of the locales and localized descriptions of this mdr rule.
+	*
+	* @return the locales and localized descriptions of this mdr rule
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+		return _mdrRule.getDescriptionMap();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _mdrRule.getExpandoBridge();
+	}
+
+	/**
+	* Returns the group ID of this mdr rule.
+	*
+	* @return the group ID of this mdr rule
+	*/
+	@Override
+	public long getGroupId() {
+		return _mdrRule.getGroupId();
+	}
+
+	/**
+	* Returns the last publish date of this mdr rule.
+	*
+	* @return the last publish date of this mdr rule
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _mdrRule.getLastPublishDate();
+	}
+
+	/**
+	* Returns the modified date of this mdr rule.
+	*
+	* @return the modified date of this mdr rule
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _mdrRule.getModifiedDate();
+	}
+
+	/**
 	* Returns the name of this mdr rule.
 	*
 	* @return the name of this mdr rule
@@ -365,6 +385,51 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	}
 
 	/**
+	* Returns a map of the locales and localized names of this mdr rule.
+	*
+	* @return the locales and localized names of this mdr rule
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getNameMap() {
+		return _mdrRule.getNameMap();
+	}
+
+	/**
+	* Returns the primary key of this mdr rule.
+	*
+	* @return the primary key of this mdr rule
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _mdrRule.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _mdrRule.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the rule group ID of this mdr rule.
+	*
+	* @return the rule group ID of this mdr rule
+	*/
+	@Override
+	public long getRuleGroupId() {
+		return _mdrRule.getRuleGroupId();
+	}
+
+	/**
+	* Returns the rule ID of this mdr rule.
+	*
+	* @return the rule ID of this mdr rule
+	*/
+	@Override
+	public long getRuleId() {
+		return _mdrRule.getRuleId();
+	}
+
+	/**
 	* Returns the type of this mdr rule.
 	*
 	* @return the type of this mdr rule
@@ -382,6 +447,21 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	@Override
 	public java.lang.String getTypeSettings() {
 		return _mdrRule.getTypeSettings();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties() {
+		return _mdrRule.getTypeSettingsProperties();
+	}
+
+	/**
+	* Returns the user ID of this mdr rule.
+	*
+	* @return the user ID of this mdr rule
+	*/
+	@Override
+	public long getUserId() {
+		return _mdrRule.getUserId();
 	}
 
 	/**
@@ -415,128 +495,23 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	}
 
 	@Override
-	public java.lang.String toString() {
-		return _mdrRule.toString();
+	public int hashCode() {
+		return _mdrRule.hashCode();
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
-		return _mdrRule.toXmlString();
+	public boolean isCachedModel() {
+		return _mdrRule.isCachedModel();
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
-		return _mdrRule.getAvailableLanguageIds();
+	public boolean isEscapedModel() {
+		return _mdrRule.isEscapedModel();
 	}
 
-	/**
-	* Returns the create date of this mdr rule.
-	*
-	* @return the create date of this mdr rule
-	*/
 	@Override
-	public Date getCreateDate() {
-		return _mdrRule.getCreateDate();
-	}
-
-	/**
-	* Returns the last publish date of this mdr rule.
-	*
-	* @return the last publish date of this mdr rule
-	*/
-	@Override
-	public Date getLastPublishDate() {
-		return _mdrRule.getLastPublishDate();
-	}
-
-	/**
-	* Returns the modified date of this mdr rule.
-	*
-	* @return the modified date of this mdr rule
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _mdrRule.getModifiedDate();
-	}
-
-	/**
-	* Returns a map of the locales and localized descriptions of this mdr rule.
-	*
-	* @return the locales and localized descriptions of this mdr rule
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
-		return _mdrRule.getDescriptionMap();
-	}
-
-	/**
-	* Returns a map of the locales and localized names of this mdr rule.
-	*
-	* @return the locales and localized names of this mdr rule
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getNameMap() {
-		return _mdrRule.getNameMap();
-	}
-
-	/**
-	* Returns the company ID of this mdr rule.
-	*
-	* @return the company ID of this mdr rule
-	*/
-	@Override
-	public long getCompanyId() {
-		return _mdrRule.getCompanyId();
-	}
-
-	/**
-	* Returns the group ID of this mdr rule.
-	*
-	* @return the group ID of this mdr rule
-	*/
-	@Override
-	public long getGroupId() {
-		return _mdrRule.getGroupId();
-	}
-
-	/**
-	* Returns the primary key of this mdr rule.
-	*
-	* @return the primary key of this mdr rule
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _mdrRule.getPrimaryKey();
-	}
-
-	/**
-	* Returns the rule group ID of this mdr rule.
-	*
-	* @return the rule group ID of this mdr rule
-	*/
-	@Override
-	public long getRuleGroupId() {
-		return _mdrRule.getRuleGroupId();
-	}
-
-	/**
-	* Returns the rule ID of this mdr rule.
-	*
-	* @return the rule ID of this mdr rule
-	*/
-	@Override
-	public long getRuleId() {
-		return _mdrRule.getRuleId();
-	}
-
-	/**
-	* Returns the user ID of this mdr rule.
-	*
-	* @return the user ID of this mdr rule
-	*/
-	@Override
-	public long getUserId() {
-		return _mdrRule.getUserId();
+	public boolean isNew() {
+		return _mdrRule.isNew();
 	}
 
 	@Override
@@ -857,6 +832,31 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_mdrRule.setUuid(uuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<MDRRule> toCacheModel() {
+		return _mdrRule.toCacheModel();
+	}
+
+	@Override
+	public MDRRule toEscapedModel() {
+		return new MDRRuleWrapper(_mdrRule.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _mdrRule.toString();
+	}
+
+	@Override
+	public MDRRule toUnescapedModel() {
+		return new MDRRuleWrapper(_mdrRule.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _mdrRule.toXmlString();
 	}
 
 	@Override

@@ -41,6 +41,19 @@ public class DLFileVersionServiceWrapper implements DLFileVersionService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.document.library.kernel.model.DLFileVersion> getFileVersions(
+		long fileEntryId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileVersionService.getFileVersions(fileEntryId, status);
+	}
+
+	@Override
+	public int getFileVersionsCount(long fileEntryId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileVersionService.getFileVersionsCount(fileEntryId, status);
+	}
+
+	@Override
 	public com.liferay.document.library.kernel.model.DLFileVersion getLatestFileVersion(
 		long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -55,12 +68,6 @@ public class DLFileVersionServiceWrapper implements DLFileVersionService,
 			excludeWorkingCopy);
 	}
 
-	@Override
-	public int getFileVersionsCount(long fileEntryId, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileVersionService.getFileVersionsCount(fileEntryId, status);
-	}
-
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -69,13 +76,6 @@ public class DLFileVersionServiceWrapper implements DLFileVersionService,
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _dlFileVersionService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public java.util.List<com.liferay.document.library.kernel.model.DLFileVersion> getFileVersions(
-		long fileEntryId, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileVersionService.getFileVersions(fileEntryId, status);
 	}
 
 	@Override

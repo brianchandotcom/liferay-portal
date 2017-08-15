@@ -114,38 +114,13 @@ public class RatingsStatsWrapper implements RatingsStats,
 	}
 
 	@Override
-	public RatingsStats toEscapedModel() {
-		return new RatingsStatsWrapper(_ratingsStats.toEscapedModel());
+	public java.lang.Object clone() {
+		return new RatingsStatsWrapper((RatingsStats)_ratingsStats.clone());
 	}
 
 	@Override
-	public RatingsStats toUnescapedModel() {
-		return new RatingsStatsWrapper(_ratingsStats.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _ratingsStats.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _ratingsStats.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _ratingsStats.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _ratingsStats.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<RatingsStats> toCacheModel() {
-		return _ratingsStats.toCacheModel();
+	public int compareTo(RatingsStats ratingsStats) {
+		return _ratingsStats.compareTo(ratingsStats);
 	}
 
 	/**
@@ -159,46 +134,6 @@ public class RatingsStatsWrapper implements RatingsStats,
 	}
 
 	/**
-	* Returns the total score of this ratings stats.
-	*
-	* @return the total score of this ratings stats
-	*/
-	@Override
-	public double getTotalScore() {
-		return _ratingsStats.getTotalScore();
-	}
-
-	@Override
-	public int compareTo(RatingsStats ratingsStats) {
-		return _ratingsStats.compareTo(ratingsStats);
-	}
-
-	/**
-	* Returns the total entries of this ratings stats.
-	*
-	* @return the total entries of this ratings stats
-	*/
-	@Override
-	public int getTotalEntries() {
-		return _ratingsStats.getTotalEntries();
-	}
-
-	@Override
-	public int hashCode() {
-		return _ratingsStats.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _ratingsStats.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new RatingsStatsWrapper((RatingsStats)_ratingsStats.clone());
-	}
-
-	/**
 	* Returns the fully qualified class name of this ratings stats.
 	*
 	* @return the fully qualified class name of this ratings stats
@@ -206,16 +141,6 @@ public class RatingsStatsWrapper implements RatingsStats,
 	@Override
 	public java.lang.String getClassName() {
 		return _ratingsStats.getClassName();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _ratingsStats.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _ratingsStats.toXmlString();
 	}
 
 	/**
@@ -248,6 +173,11 @@ public class RatingsStatsWrapper implements RatingsStats,
 		return _ratingsStats.getCompanyId();
 	}
 
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _ratingsStats.getExpandoBridge();
+	}
+
 	/**
 	* Returns the primary key of this ratings stats.
 	*
@@ -258,6 +188,11 @@ public class RatingsStatsWrapper implements RatingsStats,
 		return _ratingsStats.getPrimaryKey();
 	}
 
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _ratingsStats.getPrimaryKeyObj();
+	}
+
 	/**
 	* Returns the stats ID of this ratings stats.
 	*
@@ -266,6 +201,46 @@ public class RatingsStatsWrapper implements RatingsStats,
 	@Override
 	public long getStatsId() {
 		return _ratingsStats.getStatsId();
+	}
+
+	/**
+	* Returns the total entries of this ratings stats.
+	*
+	* @return the total entries of this ratings stats
+	*/
+	@Override
+	public int getTotalEntries() {
+		return _ratingsStats.getTotalEntries();
+	}
+
+	/**
+	* Returns the total score of this ratings stats.
+	*
+	* @return the total score of this ratings stats
+	*/
+	@Override
+	public double getTotalScore() {
+		return _ratingsStats.getTotalScore();
+	}
+
+	@Override
+	public int hashCode() {
+		return _ratingsStats.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _ratingsStats.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _ratingsStats.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _ratingsStats.isNew();
 	}
 
 	@Override
@@ -387,6 +362,31 @@ public class RatingsStatsWrapper implements RatingsStats,
 	@Override
 	public void setTotalScore(double totalScore) {
 		_ratingsStats.setTotalScore(totalScore);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<RatingsStats> toCacheModel() {
+		return _ratingsStats.toCacheModel();
+	}
+
+	@Override
+	public RatingsStats toEscapedModel() {
+		return new RatingsStatsWrapper(_ratingsStats.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _ratingsStats.toString();
+	}
+
+	@Override
+	public RatingsStats toUnescapedModel() {
+		return new RatingsStatsWrapper(_ratingsStats.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _ratingsStats.toXmlString();
 	}
 
 	@Override

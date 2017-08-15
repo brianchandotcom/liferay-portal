@@ -68,6 +68,16 @@ public class CompanyServiceUtil {
 	}
 
 	/**
+	* Deletes the company's logo.
+	*
+	* @param companyId the primary key of the company
+	*/
+	public static void deleteLogo(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteLogo(companyId);
+	}
+
+	/**
 	* Returns the company with the primary key.
 	*
 	* @param companyId the primary key of the company
@@ -124,6 +134,30 @@ public class CompanyServiceUtil {
 		java.lang.String webId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCompanyByWebId(webId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	/**
+	* Removes the values that match the keys of the company's preferences.
+	*
+	* This method is called by {@link
+	* com.liferay.portlet.portalsettings.action.EditLDAPServerAction} remotely
+	* through {@link CompanyService}.
+	*
+	* @param companyId the primary key of the company
+	* @param keys the company's preferences keys to be remove
+	*/
+	public static void removePreferences(long companyId, java.lang.String[] keys)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().removePreferences(companyId, keys);
 	}
 
 	/**
@@ -346,6 +380,19 @@ public class CompanyServiceUtil {
 	}
 
 	/**
+	* Update the company's display.
+	*
+	* @param companyId the primary key of the company
+	* @param languageId the ID of the company's default user's language
+	* @param timeZoneId the ID of the company's default user's time zone
+	*/
+	public static void updateDisplay(long companyId,
+		java.lang.String languageId, java.lang.String timeZoneId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().updateDisplay(companyId, languageId, timeZoneId);
+	}
+
+	/**
 	* Updates the company's logo.
 	*
 	* @param companyId the primary key of the company
@@ -369,53 +416,6 @@ public class CompanyServiceUtil {
 		long companyId, java.io.InputStream inputStream)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateLogo(companyId, inputStream);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	/**
-	* Deletes the company's logo.
-	*
-	* @param companyId the primary key of the company
-	*/
-	public static void deleteLogo(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteLogo(companyId);
-	}
-
-	/**
-	* Removes the values that match the keys of the company's preferences.
-	*
-	* This method is called by {@link
-	* com.liferay.portlet.portalsettings.action.EditLDAPServerAction} remotely
-	* through {@link CompanyService}.
-	*
-	* @param companyId the primary key of the company
-	* @param keys the company's preferences keys to be remove
-	*/
-	public static void removePreferences(long companyId, java.lang.String[] keys)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().removePreferences(companyId, keys);
-	}
-
-	/**
-	* Update the company's display.
-	*
-	* @param companyId the primary key of the company
-	* @param languageId the ID of the company's default user's language
-	* @param timeZoneId the ID of the company's default user's time zone
-	*/
-	public static void updateDisplay(long companyId,
-		java.lang.String languageId, java.lang.String timeZoneId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().updateDisplay(companyId, languageId, timeZoneId);
 	}
 
 	/**

@@ -55,14 +55,12 @@ public interface LayoutSetBranchService extends BaseService {
 		long copyLayoutSetBranchId, ServiceContext serviceContext)
 		throws PortalException;
 
-	public LayoutSetBranch mergeLayoutSetBranch(long layoutSetBranchId,
-		long mergeLayoutSetBranchId, ServiceContext serviceContext)
+	public void deleteLayoutSetBranch(long layoutSetBranchId)
 		throws PortalException;
 
-	public LayoutSetBranch updateLayoutSetBranch(long groupId,
-		long layoutSetBranchId, java.lang.String name,
-		java.lang.String description, ServiceContext serviceContext)
-		throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutSetBranch> getLayoutSetBranches(long groupId,
+		boolean privateLayout);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -71,10 +69,12 @@ public interface LayoutSetBranchService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<LayoutSetBranch> getLayoutSetBranches(long groupId,
-		boolean privateLayout);
+	public LayoutSetBranch mergeLayoutSetBranch(long layoutSetBranchId,
+		long mergeLayoutSetBranchId, ServiceContext serviceContext)
+		throws PortalException;
 
-	public void deleteLayoutSetBranch(long layoutSetBranchId)
+	public LayoutSetBranch updateLayoutSetBranch(long groupId,
+		long layoutSetBranchId, java.lang.String name,
+		java.lang.String description, ServiceContext serviceContext)
 		throws PortalException;
 }

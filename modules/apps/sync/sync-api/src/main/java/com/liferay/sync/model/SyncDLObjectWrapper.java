@@ -263,53 +263,8 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	}
 
 	@Override
-	public SyncDLObject toEscapedModel() {
-		return new SyncDLObjectWrapper(_syncDLObject.toEscapedModel());
-	}
-
-	@Override
-	public SyncDLObject toUnescapedModel() {
-		return new SyncDLObjectWrapper(_syncDLObject.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _syncDLObject.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _syncDLObject.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _syncDLObject.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _syncDLObject.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<SyncDLObject> toCacheModel() {
-		return _syncDLObject.toCacheModel();
-	}
-
-	@Override
-	public int compareTo(SyncDLObject syncDLObject) {
-		return _syncDLObject.compareTo(syncDLObject);
-	}
-
-	@Override
-	public int hashCode() {
-		return _syncDLObject.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _syncDLObject.getPrimaryKeyObj();
+	public java.lang.String buildTreePath() {
+		return _syncDLObject.buildTreePath();
 	}
 
 	@Override
@@ -318,8 +273,8 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	}
 
 	@Override
-	public java.lang.String buildTreePath() {
-		return _syncDLObject.buildTreePath();
+	public int compareTo(SyncDLObject syncDLObject) {
+		return _syncDLObject.compareTo(syncDLObject);
 	}
 
 	/**
@@ -343,6 +298,26 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	}
 
 	/**
+	* Returns the company ID of this sync dl object.
+	*
+	* @return the company ID of this sync dl object
+	*/
+	@Override
+	public long getCompanyId() {
+		return _syncDLObject.getCompanyId();
+	}
+
+	/**
+	* Returns the create time of this sync dl object.
+	*
+	* @return the create time of this sync dl object
+	*/
+	@Override
+	public long getCreateTime() {
+		return _syncDLObject.getCreateTime();
+	}
+
+	/**
 	* Returns the description of this sync dl object.
 	*
 	* @return the description of this sync dl object
@@ -360,6 +335,11 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	@Override
 	public java.lang.String getEvent() {
 		return _syncDLObject.getEvent();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _syncDLObject.getExpandoBridge();
 	}
 
 	/**
@@ -393,6 +373,36 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	}
 
 	/**
+	* Returns the last permission change date of this sync dl object.
+	*
+	* @return the last permission change date of this sync dl object
+	*/
+	@Override
+	public Date getLastPermissionChangeDate() {
+		return _syncDLObject.getLastPermissionChangeDate();
+	}
+
+	/**
+	* Returns the lock expiration date of this sync dl object.
+	*
+	* @return the lock expiration date of this sync dl object
+	*/
+	@Override
+	public Date getLockExpirationDate() {
+		return _syncDLObject.getLockExpirationDate();
+	}
+
+	/**
+	* Returns the lock user ID of this sync dl object.
+	*
+	* @return the lock user ID of this sync dl object
+	*/
+	@Override
+	public long getLockUserId() {
+		return _syncDLObject.getLockUserId();
+	}
+
+	/**
 	* Returns the lock user name of this sync dl object.
 	*
 	* @return the lock user name of this sync dl object
@@ -423,136 +433,6 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	}
 
 	/**
-	* Returns the name of this sync dl object.
-	*
-	* @return the name of this sync dl object
-	*/
-	@Override
-	public java.lang.String getName() {
-		return _syncDLObject.getName();
-	}
-
-	/**
-	* Returns the tree path of this sync dl object.
-	*
-	* @return the tree path of this sync dl object
-	*/
-	@Override
-	public java.lang.String getTreePath() {
-		return _syncDLObject.getTreePath();
-	}
-
-	/**
-	* Returns the type of this sync dl object.
-	*
-	* @return the type of this sync dl object
-	*/
-	@Override
-	public java.lang.String getType() {
-		return _syncDLObject.getType();
-	}
-
-	/**
-	* Returns the type uuid of this sync dl object.
-	*
-	* @return the type uuid of this sync dl object
-	*/
-	@Override
-	public java.lang.String getTypeUuid() {
-		return _syncDLObject.getTypeUuid();
-	}
-
-	/**
-	* Returns the user name of this sync dl object.
-	*
-	* @return the user name of this sync dl object
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _syncDLObject.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this sync dl object.
-	*
-	* @return the user uuid of this sync dl object
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _syncDLObject.getUserUuid();
-	}
-
-	/**
-	* Returns the version of this sync dl object.
-	*
-	* @return the version of this sync dl object
-	*/
-	@Override
-	public java.lang.String getVersion() {
-		return _syncDLObject.getVersion();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _syncDLObject.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _syncDLObject.toXmlString();
-	}
-
-	/**
-	* Returns the last permission change date of this sync dl object.
-	*
-	* @return the last permission change date of this sync dl object
-	*/
-	@Override
-	public Date getLastPermissionChangeDate() {
-		return _syncDLObject.getLastPermissionChangeDate();
-	}
-
-	/**
-	* Returns the lock expiration date of this sync dl object.
-	*
-	* @return the lock expiration date of this sync dl object
-	*/
-	@Override
-	public Date getLockExpirationDate() {
-		return _syncDLObject.getLockExpirationDate();
-	}
-
-	/**
-	* Returns the company ID of this sync dl object.
-	*
-	* @return the company ID of this sync dl object
-	*/
-	@Override
-	public long getCompanyId() {
-		return _syncDLObject.getCompanyId();
-	}
-
-	/**
-	* Returns the create time of this sync dl object.
-	*
-	* @return the create time of this sync dl object
-	*/
-	@Override
-	public long getCreateTime() {
-		return _syncDLObject.getCreateTime();
-	}
-
-	/**
-	* Returns the lock user ID of this sync dl object.
-	*
-	* @return the lock user ID of this sync dl object
-	*/
-	@Override
-	public long getLockUserId() {
-		return _syncDLObject.getLockUserId();
-	}
-
-	/**
 	* Returns the modified time of this sync dl object.
 	*
 	* @return the modified time of this sync dl object
@@ -560,6 +440,16 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	@Override
 	public long getModifiedTime() {
 		return _syncDLObject.getModifiedTime();
+	}
+
+	/**
+	* Returns the name of this sync dl object.
+	*
+	* @return the name of this sync dl object
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _syncDLObject.getName();
 	}
 
 	/**
@@ -580,6 +470,11 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	@Override
 	public long getPrimaryKey() {
 		return _syncDLObject.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _syncDLObject.getPrimaryKeyObj();
 	}
 
 	/**
@@ -613,6 +508,26 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	}
 
 	/**
+	* Returns the tree path of this sync dl object.
+	*
+	* @return the tree path of this sync dl object
+	*/
+	@Override
+	public java.lang.String getTreePath() {
+		return _syncDLObject.getTreePath();
+	}
+
+	/**
+	* Returns the type of this sync dl object.
+	*
+	* @return the type of this sync dl object
+	*/
+	@Override
+	public java.lang.String getType() {
+		return _syncDLObject.getType();
+	}
+
+	/**
 	* Returns the type pk of this sync dl object.
 	*
 	* @return the type pk of this sync dl object
@@ -620,6 +535,16 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	@Override
 	public long getTypePK() {
 		return _syncDLObject.getTypePK();
+	}
+
+	/**
+	* Returns the type uuid of this sync dl object.
+	*
+	* @return the type uuid of this sync dl object
+	*/
+	@Override
+	public java.lang.String getTypeUuid() {
+		return _syncDLObject.getTypeUuid();
 	}
 
 	/**
@@ -633,6 +558,36 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	}
 
 	/**
+	* Returns the user name of this sync dl object.
+	*
+	* @return the user name of this sync dl object
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _syncDLObject.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this sync dl object.
+	*
+	* @return the user uuid of this sync dl object
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _syncDLObject.getUserUuid();
+	}
+
+	/**
+	* Returns the version of this sync dl object.
+	*
+	* @return the version of this sync dl object
+	*/
+	@Override
+	public java.lang.String getVersion() {
+		return _syncDLObject.getVersion();
+	}
+
+	/**
 	* Returns the version ID of this sync dl object.
 	*
 	* @return the version ID of this sync dl object
@@ -640,6 +595,26 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	@Override
 	public long getVersionId() {
 		return _syncDLObject.getVersionId();
+	}
+
+	@Override
+	public int hashCode() {
+		return _syncDLObject.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _syncDLObject.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _syncDLObject.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _syncDLObject.isNew();
 	}
 
 	@Override
@@ -996,6 +971,31 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	@Override
 	public void setVersionId(long versionId) {
 		_syncDLObject.setVersionId(versionId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<SyncDLObject> toCacheModel() {
+		return _syncDLObject.toCacheModel();
+	}
+
+	@Override
+	public SyncDLObject toEscapedModel() {
+		return new SyncDLObjectWrapper(_syncDLObject.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _syncDLObject.toString();
+	}
+
+	@Override
+	public SyncDLObject toUnescapedModel() {
+		return new SyncDLObjectWrapper(_syncDLObject.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _syncDLObject.toXmlString();
 	}
 
 	@Override

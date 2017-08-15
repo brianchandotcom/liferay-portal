@@ -94,75 +94,8 @@ public class OAuthConsumerLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.opensocial.model.OAuthConsumer fetchOAuthConsumer(
-		java.lang.String gadgetKey, java.lang.String serviceName) {
-		return _oAuthConsumerLocalService.fetchOAuthConsumer(gadgetKey,
-			serviceName);
-	}
-
-	@Override
-	public com.liferay.opensocial.model.OAuthConsumer fetchOAuthConsumer(
-		long oAuthConsumerId) {
-		return _oAuthConsumerLocalService.fetchOAuthConsumer(oAuthConsumerId);
-	}
-
-	@Override
-	public com.liferay.opensocial.model.OAuthConsumer getOAuthConsumer(
-		java.lang.String gadgetKey, java.lang.String serviceName)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _oAuthConsumerLocalService.getOAuthConsumer(gadgetKey,
-			serviceName);
-	}
-
-	/**
-	* Returns the o auth consumer with the primary key.
-	*
-	* @param oAuthConsumerId the primary key of the o auth consumer
-	* @return the o auth consumer
-	* @throws PortalException if a o auth consumer with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.opensocial.model.OAuthConsumer getOAuthConsumer(
-		long oAuthConsumerId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _oAuthConsumerLocalService.getOAuthConsumer(oAuthConsumerId);
-	}
-
-	/**
-	* Updates the o auth consumer in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param oAuthConsumer the o auth consumer
-	* @return the o auth consumer that was updated
-	*/
-	@Override
-	public com.liferay.opensocial.model.OAuthConsumer updateOAuthConsumer(
-		com.liferay.opensocial.model.OAuthConsumer oAuthConsumer) {
-		return _oAuthConsumerLocalService.updateOAuthConsumer(oAuthConsumer);
-	}
-
-	@Override
-	public com.liferay.opensocial.model.OAuthConsumer updateOAuthConsumer(
-		long oAuthConsumerId, java.lang.String consumerKey,
-		java.lang.String consumerSecret, java.lang.String keyType,
-		java.lang.String keyName, java.lang.String callbackURL)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _oAuthConsumerLocalService.updateOAuthConsumer(oAuthConsumerId,
-			consumerKey, consumerSecret, keyType, keyName, callbackURL);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _oAuthConsumerLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _oAuthConsumerLocalService.dynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _oAuthConsumerLocalService.getIndexableActionableDynamicQuery();
+	public void deleteOAuthConsumers(java.lang.String gadgetKey) {
+		_oAuthConsumerLocalService.deleteOAuthConsumers(gadgetKey);
 	}
 
 	/**
@@ -176,43 +109,8 @@ public class OAuthConsumerLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _oAuthConsumerLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the number of o auth consumers.
-	*
-	* @return the number of o auth consumers
-	*/
-	@Override
-	public int getOAuthConsumersCount() {
-		return _oAuthConsumerLocalService.getOAuthConsumersCount();
-	}
-
-	@Override
-	public int getOAuthConsumersCount(java.lang.String gadgetKey) {
-		return _oAuthConsumerLocalService.getOAuthConsumersCount(gadgetKey);
-	}
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _oAuthConsumerLocalService.invokeMethod(name, parameterTypes,
-			arguments);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _oAuthConsumerLocalService.getOSGiServiceIdentifier();
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _oAuthConsumerLocalService.dynamicQuery();
 	}
 
 	/**
@@ -269,6 +167,78 @@ public class OAuthConsumerLocalServiceWrapper
 	}
 
 	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _oAuthConsumerLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _oAuthConsumerLocalService.dynamicQueryCount(dynamicQuery,
+			projection);
+	}
+
+	@Override
+	public com.liferay.opensocial.model.OAuthConsumer fetchOAuthConsumer(
+		java.lang.String gadgetKey, java.lang.String serviceName) {
+		return _oAuthConsumerLocalService.fetchOAuthConsumer(gadgetKey,
+			serviceName);
+	}
+
+	@Override
+	public com.liferay.opensocial.model.OAuthConsumer fetchOAuthConsumer(
+		long oAuthConsumerId) {
+		return _oAuthConsumerLocalService.fetchOAuthConsumer(oAuthConsumerId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _oAuthConsumerLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _oAuthConsumerLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.opensocial.model.OAuthConsumer getOAuthConsumer(
+		java.lang.String gadgetKey, java.lang.String serviceName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _oAuthConsumerLocalService.getOAuthConsumer(gadgetKey,
+			serviceName);
+	}
+
+	/**
+	* Returns the o auth consumer with the primary key.
+	*
+	* @param oAuthConsumerId the primary key of the o auth consumer
+	* @return the o auth consumer
+	* @throws PortalException if a o auth consumer with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.opensocial.model.OAuthConsumer getOAuthConsumer(
+		long oAuthConsumerId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _oAuthConsumerLocalService.getOAuthConsumer(oAuthConsumerId);
+	}
+
+	/**
 	* Returns a range of all the o auth consumers.
 	*
 	* <p>
@@ -299,35 +269,65 @@ public class OAuthConsumerLocalServiceWrapper
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of o auth consumers.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of o auth consumers
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _oAuthConsumerLocalService.dynamicQueryCount(dynamicQuery);
+	public int getOAuthConsumersCount() {
+		return _oAuthConsumerLocalService.getOAuthConsumersCount();
+	}
+
+	@Override
+	public int getOAuthConsumersCount(java.lang.String gadgetKey) {
+		return _oAuthConsumerLocalService.getOAuthConsumersCount(gadgetKey);
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _oAuthConsumerLocalService.dynamicQueryCount(dynamicQuery,
-			projection);
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _oAuthConsumerLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
-	public void deleteOAuthConsumers(java.lang.String gadgetKey) {
-		_oAuthConsumerLocalService.deleteOAuthConsumers(gadgetKey);
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _oAuthConsumerLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public java.lang.Object invokeMethod(java.lang.String name,
+		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
+		throws java.lang.Throwable {
+		return _oAuthConsumerLocalService.invokeMethod(name, parameterTypes,
+			arguments);
+	}
+
+	/**
+	* Updates the o auth consumer in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param oAuthConsumer the o auth consumer
+	* @return the o auth consumer that was updated
+	*/
+	@Override
+	public com.liferay.opensocial.model.OAuthConsumer updateOAuthConsumer(
+		com.liferay.opensocial.model.OAuthConsumer oAuthConsumer) {
+		return _oAuthConsumerLocalService.updateOAuthConsumer(oAuthConsumer);
+	}
+
+	@Override
+	public com.liferay.opensocial.model.OAuthConsumer updateOAuthConsumer(
+		long oAuthConsumerId, java.lang.String consumerKey,
+		java.lang.String consumerSecret, java.lang.String keyType,
+		java.lang.String keyName, java.lang.String callbackURL)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _oAuthConsumerLocalService.updateOAuthConsumer(oAuthConsumerId,
+			consumerKey, consumerSecret, keyType, keyName, callbackURL);
 	}
 
 	@Override

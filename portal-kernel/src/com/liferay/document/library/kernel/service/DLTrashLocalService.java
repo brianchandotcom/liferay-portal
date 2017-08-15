@@ -45,12 +45,6 @@ public interface DLTrashLocalService extends BaseLocalService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DLTrashLocalServiceUtil} to access the dl trash local service. Add custom service methods to {@link com.liferay.portlet.documentlibrary.service.impl.DLTrashLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public FileEntry moveFileEntryFromTrash(long userId, long repositoryId,
-		long fileEntryId, long newFolderId, ServiceContext serviceContext)
-		throws PortalException;
-
-	public FileEntry moveFileEntryToTrash(long userId, long repositoryId,
-		long fileEntryId) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -58,6 +52,13 @@ public interface DLTrashLocalService extends BaseLocalService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	public FileEntry moveFileEntryFromTrash(long userId, long repositoryId,
+		long fileEntryId, long newFolderId, ServiceContext serviceContext)
+		throws PortalException;
+
+	public FileEntry moveFileEntryToTrash(long userId, long repositoryId,
+		long fileEntryId) throws PortalException;
 
 	public void restoreFileEntryFromTrash(long userId, long repositoryId,
 		long fileEntryId) throws PortalException;

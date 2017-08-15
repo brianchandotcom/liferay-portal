@@ -56,6 +56,16 @@ public class PowwowMeetingServiceWrapper implements PowwowMeetingService,
 		return _powwowMeetingService.deletePowwowMeeting(powwowMeetingId);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _powwowMeetingService.getOSGiServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.powwow.model.PowwowMeeting getPowwowMeeting(
 		long powwowMeetingId)
@@ -64,18 +74,10 @@ public class PowwowMeetingServiceWrapper implements PowwowMeetingService,
 	}
 
 	@Override
-	public com.liferay.powwow.model.PowwowMeeting updatePowwowMeeting(
-		long powwowMeetingId, long powwowServerId, java.lang.String name,
-		java.lang.String description, java.lang.String providerType,
-		java.util.Map<java.lang.String, java.io.Serializable> providerTypeMetadataMap,
-		java.lang.String languageId, long calendarBookingId, int status,
-		java.util.List<com.liferay.powwow.model.PowwowParticipant> powwowParticipants,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _powwowMeetingService.updatePowwowMeeting(powwowMeetingId,
-			powwowServerId, name, description, providerType,
-			providerTypeMetadataMap, languageId, calendarBookingId, status,
-			powwowParticipants, serviceContext);
+	public java.util.List<com.liferay.powwow.model.PowwowMeeting> getPowwowMeetings(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc) {
+		return _powwowMeetingService.getPowwowMeetings(groupId, start, end, obc);
 	}
 
 	@Override
@@ -91,21 +93,19 @@ public class PowwowMeetingServiceWrapper implements PowwowMeetingService,
 			arguments);
 	}
 
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _powwowMeetingService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public java.util.List<com.liferay.powwow.model.PowwowMeeting> getPowwowMeetings(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc) {
-		return _powwowMeetingService.getPowwowMeetings(groupId, start, end, obc);
+	public com.liferay.powwow.model.PowwowMeeting updatePowwowMeeting(
+		long powwowMeetingId, long powwowServerId, java.lang.String name,
+		java.lang.String description, java.lang.String providerType,
+		java.util.Map<java.lang.String, java.io.Serializable> providerTypeMetadataMap,
+		java.lang.String languageId, long calendarBookingId, int status,
+		java.util.List<com.liferay.powwow.model.PowwowParticipant> powwowParticipants,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _powwowMeetingService.updatePowwowMeeting(powwowMeetingId,
+			powwowServerId, name, description, providerType,
+			providerTypeMetadataMap, languageId, calendarBookingId, status,
+			powwowParticipants, serviceContext);
 	}
 
 	@Override

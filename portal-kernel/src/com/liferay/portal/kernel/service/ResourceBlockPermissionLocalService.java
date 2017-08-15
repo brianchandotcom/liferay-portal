@@ -60,25 +60,6 @@ public interface ResourceBlockPermissionLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ResourceBlockPermissionLocalServiceUtil} to access the resource block permission local service. Add custom service methods to {@link com.liferay.portal.service.impl.ResourceBlockPermissionLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
 
 	/**
 	* Adds the resource block permission to the database. Also notifies the appropriate model listeners.
@@ -90,6 +71,9 @@ public interface ResourceBlockPermissionLocalService extends BaseLocalService,
 	public ResourceBlockPermission addResourceBlockPermission(
 		ResourceBlockPermission resourceBlockPermission);
 
+	public void addResourceBlockPermissions(long resourceBlockId,
+		ResourceBlockPermissionsContainer resourceBlockPermissionsContainer);
+
 	/**
 	* Creates a new resource block permission with the primary key. Does not add the resource block permission to the database.
 	*
@@ -98,6 +82,13 @@ public interface ResourceBlockPermissionLocalService extends BaseLocalService,
 	*/
 	public ResourceBlockPermission createResourceBlockPermission(
 		long resourceBlockPermissionId);
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
 
 	/**
 	* Deletes the resource block permission from the database. Also notifies the appropriate model listeners.
@@ -120,53 +111,9 @@ public interface ResourceBlockPermissionLocalService extends BaseLocalService,
 	public ResourceBlockPermission deleteResourceBlockPermission(
 		long resourceBlockPermissionId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ResourceBlockPermission fetchResourceBlockPermission(
-		long resourceBlockPermissionId);
+	public void deleteResourceBlockPermissions(long resourceBlockId);
 
-	/**
-	* Returns the resource block permission with the primary key.
-	*
-	* @param resourceBlockPermissionId the primary key of the resource block permission
-	* @return the resource block permission
-	* @throws PortalException if a resource block permission with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ResourceBlockPermission getResourceBlockPermission(
-		long resourceBlockPermissionId) throws PortalException;
-
-	/**
-	* Updates the resource block permission in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param resourceBlockPermission the resource block permission
-	* @return the resource block permission that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public ResourceBlockPermission updateResourceBlockPermission(
-		ResourceBlockPermission resourceBlockPermission);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ResourceBlockPermissionsContainer getResourceBlockPermissionsContainer(
-		long resourceBlockId);
-
-	/**
-	* Returns the number of resource block permissions.
-	*
-	* @return the number of resource block permissions
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getResourceBlockPermissionsCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getResourceBlockPermissionsCount(long resourceBlockId,
-		long roleId);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -208,37 +155,6 @@ public interface ResourceBlockPermissionLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns a range of all the resource block permissions.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ResourceBlockPermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of resource block permissions
-	* @param end the upper bound of the range of resource block permissions (not inclusive)
-	* @return the range of resource block permissions
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ResourceBlockPermission> getResourceBlockPermissions(
-		int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<java.lang.Long, Set<java.lang.String>> getAvailableResourceBlockPermissionActionIds(
-		java.lang.String name, long primKey, List<java.lang.String> actionIds)
-		throws PortalException;
-
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	#getAvailableResourceBlockPermissionActionIds(String, long,
-	List)}
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<java.lang.Long, Set<java.lang.String>> getAvailableResourceBlockPermissionActionIds(
-		long[] roleIds, java.lang.String name, long primKey,
-		List<java.lang.String> actionIds) throws PortalException;
-
-	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -256,10 +172,95 @@ public interface ResourceBlockPermissionLocalService extends BaseLocalService,
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
 
-	public void addResourceBlockPermissions(long resourceBlockId,
-		ResourceBlockPermissionsContainer resourceBlockPermissionsContainer);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ResourceBlockPermission fetchResourceBlockPermission(
+		long resourceBlockPermissionId);
 
-	public void deleteResourceBlockPermissions(long resourceBlockId);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<java.lang.Long, Set<java.lang.String>> getAvailableResourceBlockPermissionActionIds(
+		java.lang.String name, long primKey, List<java.lang.String> actionIds)
+		throws PortalException;
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link
+	#getAvailableResourceBlockPermissionActionIds(String, long,
+	List)}
+	*/
+	@java.lang.Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<java.lang.Long, Set<java.lang.String>> getAvailableResourceBlockPermissionActionIds(
+		long[] roleIds, java.lang.String name, long primKey,
+		List<java.lang.String> actionIds) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Returns the resource block permission with the primary key.
+	*
+	* @param resourceBlockPermissionId the primary key of the resource block permission
+	* @return the resource block permission
+	* @throws PortalException if a resource block permission with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ResourceBlockPermission getResourceBlockPermission(
+		long resourceBlockPermissionId) throws PortalException;
+
+	/**
+	* Returns a range of all the resource block permissions.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ResourceBlockPermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of resource block permissions
+	* @param end the upper bound of the range of resource block permissions (not inclusive)
+	* @return the range of resource block permissions
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ResourceBlockPermission> getResourceBlockPermissions(
+		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ResourceBlockPermissionsContainer getResourceBlockPermissionsContainer(
+		long resourceBlockId);
+
+	/**
+	* Returns the number of resource block permissions.
+	*
+	* @return the number of resource block permissions
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getResourceBlockPermissionsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getResourceBlockPermissionsCount(long resourceBlockId,
+		long roleId);
+
+	/**
+	* Updates the resource block permission in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param resourceBlockPermission the resource block permission
+	* @return the resource block permission that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public ResourceBlockPermission updateResourceBlockPermission(
+		ResourceBlockPermission resourceBlockPermission);
 
 	public void updateResourceBlockPermission(long resourceBlockId,
 		long roleId, long actionIdsLong, int operator);

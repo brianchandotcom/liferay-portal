@@ -40,16 +40,21 @@ public class PowwowParticipantServiceWrapper implements PowwowParticipantService
 		return _powwowParticipantService.deletePowwowParticipant(powwowParticipant);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	@Override
-	public com.liferay.powwow.model.PowwowParticipant updatePowwowParticipant(
-		long powwowParticipantId, long powwowMeetingId, java.lang.String name,
-		long participantUserId, java.lang.String emailAddress, int type,
-		int status,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _powwowParticipantService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.util.List<com.liferay.powwow.model.PowwowParticipant> getPowwowParticipants(
+		long powwowMeetingId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _powwowParticipantService.updatePowwowParticipant(powwowParticipantId,
-			powwowMeetingId, name, participantUserId, emailAddress, type,
-			status, serviceContext);
+		return _powwowParticipantService.getPowwowParticipants(powwowMeetingId);
 	}
 
 	@Override
@@ -66,21 +71,16 @@ public class PowwowParticipantServiceWrapper implements PowwowParticipantService
 			arguments);
 	}
 
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _powwowParticipantService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public java.util.List<com.liferay.powwow.model.PowwowParticipant> getPowwowParticipants(
-		long powwowMeetingId)
+	public com.liferay.powwow.model.PowwowParticipant updatePowwowParticipant(
+		long powwowParticipantId, long powwowMeetingId, java.lang.String name,
+		long participantUserId, java.lang.String emailAddress, int type,
+		int status,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _powwowParticipantService.getPowwowParticipants(powwowMeetingId);
+		return _powwowParticipantService.updatePowwowParticipant(powwowParticipantId,
+			powwowMeetingId, name, participantUserId, emailAddress, type,
+			status, serviceContext);
 	}
 
 	@Override

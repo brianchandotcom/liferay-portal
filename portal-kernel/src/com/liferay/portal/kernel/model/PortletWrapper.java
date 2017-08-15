@@ -104,76 +104,73 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 		}
 	}
 
+	/**
+	* Adds an application type.
+	*
+	* @param applicationType an application type
+	*/
 	@Override
-	public CacheModel<Portlet> toCacheModel() {
-		return _portlet.toCacheModel();
+	public void addApplicationType(
+		com.liferay.portal.kernel.application.type.ApplicationType applicationType) {
+		_portlet.addApplicationType(applicationType);
 	}
 
 	/**
-	* Get the default plugin settings of the portlet.
-	*
-	* @return the plugin settings
+	* Adds a processing event.
 	*/
 	@Override
-	public PluginSetting getDefaultPluginSetting() {
-		return _portlet.getDefaultPluginSetting();
-	}
-
-	@Override
-	public Portlet toEscapedModel() {
-		return new PortletWrapper(_portlet.toEscapedModel());
-	}
-
-	@Override
-	public Portlet toUnescapedModel() {
-		return new PortletWrapper(_portlet.toUnescapedModel());
+	public void addProcessingEvent(
+		com.liferay.portal.kernel.xml.QName processingEvent) {
+		_portlet.addProcessingEvent(processingEvent);
 	}
 
 	/**
-	* Returns this portlet's application.
+	* Adds a public render parameter.
 	*
-	* @return this portlet's application
+	* @param publicRenderParameter a public render parameter
 	*/
 	@Override
-	public PortletApp getPortletApp() {
-		return _portlet.getPortletApp();
+	public void addPublicRenderParameter(
+		PublicRenderParameter publicRenderParameter) {
+		_portlet.addPublicRenderParameter(publicRenderParameter);
 	}
 
 	/**
-	* Returns the portlet info of the portlet.
-	*
-	* @return portlet info of the portlet
+	* Adds a publishing event.
 	*/
 	@Override
-	public PortletInfo getPortletInfo() {
-		return _portlet.getPortletInfo();
+	public void addPublishingEvent(
+		com.liferay.portal.kernel.xml.QName publishingEvent) {
+		_portlet.addPublishingEvent(publishingEvent);
 	}
 
 	/**
-	* Returns the public render parameter from an identifier.
-	*
-	* @param identifier the identifier
-	* @return the public render parameter from an identifier
+	* Adds a scheduler entry.
 	*/
 	@Override
-	public PublicRenderParameter getPublicRenderParameter(
-		java.lang.String identifier) {
-		return _portlet.getPublicRenderParameter(identifier);
+	public void addSchedulerEntry(
+		com.liferay.portal.kernel.scheduler.SchedulerEntry schedulerEntry) {
+		_portlet.addSchedulerEntry(schedulerEntry);
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new PortletWrapper((Portlet)_portlet.clone());
+	}
+
+	@Override
+	public int compareTo(Portlet portlet) {
+		return _portlet.compareTo(portlet);
 	}
 
 	/**
-	* Returns the spublic render parameter from a namespace URI and a local
-	* part.
+	* Returns the action timeout of the portlet.
 	*
-	* @param uri the namespace URI
-	* @param localPart the local part
-	* @return the spublic render parameter from a namespace URI and a local
-	part
+	* @return the action timeout of the portlet
 	*/
 	@Override
-	public PublicRenderParameter getPublicRenderParameter(
-		java.lang.String uri, java.lang.String localPart) {
-		return _portlet.getPublicRenderParameter(uri, localPart);
+	public int getActionTimeout() {
+		return _portlet.getActionTimeout();
 	}
 
 	/**
@@ -221,6 +218,450 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	}
 
 	/**
+	* Returns the portlet modes of the portlet.
+	*
+	* @return the portlet modes of the portlet
+	*/
+	@Override
+	public java.util.Set<java.lang.String> getAllPortletModes() {
+		return _portlet.getAllPortletModes();
+	}
+
+	/**
+	* Returns the window states of the portlet.
+	*
+	* @return the window states of the portlet
+	*/
+	@Override
+	public java.util.Set<java.lang.String> getAllWindowStates() {
+		return _portlet.getAllWindowStates();
+	}
+
+	/**
+	* Returns the application types of the portlet.
+	*
+	* @return the application types of the portlet
+	*/
+	@Override
+	public java.util.Set<com.liferay.portal.kernel.application.type.ApplicationType> getApplicationTypes() {
+		return _portlet.getApplicationTypes();
+	}
+
+	/**
+	* Returns the names of the classes that represent asset types associated
+	* with the portlet.
+	*
+	* @return the names of the classes that represent asset types associated
+	with the portlet
+	*/
+	@Override
+	public java.util.List<java.lang.String> getAssetRendererFactoryClasses() {
+		return _portlet.getAssetRendererFactoryClasses();
+	}
+
+	/**
+	* Returns the asset type instances of the portlet.
+	*
+	* @return the asset type instances of the portlet
+	*/
+	@Override
+	public java.util.List<com.liferay.asset.kernel.model.AssetRendererFactory<?>> getAssetRendererFactoryInstances() {
+		return _portlet.getAssetRendererFactoryInstances();
+	}
+
+	/**
+	* Returns the names of the classes that represent atom collection adapters
+	* associated with the portlet.
+	*
+	* @return the names of the classes that represent atom collection adapters
+	associated with the portlet
+	*/
+	@Override
+	public java.util.List<java.lang.String> getAtomCollectionAdapterClasses() {
+		return _portlet.getAtomCollectionAdapterClasses();
+	}
+
+	/**
+	* Returns the atom collection adapter instances of the portlet.
+	*
+	* @return the atom collection adapter instances of the portlet
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.kernel.atom.AtomCollectionAdapter<?>> getAtomCollectionAdapterInstances() {
+		return _portlet.getAtomCollectionAdapterInstances();
+	}
+
+	/**
+	* Returns the names of the parameters that will be automatically propagated
+	* through the portlet.
+	*
+	* @return the names of the parameters that will be automatically propagated
+	through the portlet
+	*/
+	@Override
+	public java.util.Set<java.lang.String> getAutopropagatedParameters() {
+		return _portlet.getAutopropagatedParameters();
+	}
+
+	/**
+	* Returns <code>true</code> if the portlet is found in a WAR file.
+	*
+	* @param portletId the cloned instance portlet ID
+	* @return a cloned instance of the portlet
+	*/
+	@Override
+	public Portlet getClonedInstance(java.lang.String portletId) {
+		return _portlet.getClonedInstance(portletId);
+	}
+
+	/**
+	* Returns the company ID of this portlet.
+	*
+	* @return the company ID of this portlet
+	*/
+	@Override
+	public long getCompanyId() {
+		return _portlet.getCompanyId();
+	}
+
+	/**
+	* Returns the configuration action class of the portlet.
+	*
+	* @return the configuration action class of the portlet
+	*/
+	@Override
+	public java.lang.String getConfigurationActionClass() {
+		return _portlet.getConfigurationActionClass();
+	}
+
+	/**
+	* Returns the configuration action instance of the portlet.
+	*
+	* @return the configuration action instance of the portlet
+	*/
+	@Override
+	public com.liferay.portal.kernel.portlet.ConfigurationAction getConfigurationActionInstance() {
+		return _portlet.getConfigurationActionInstance();
+	}
+
+	/**
+	* Returns the servlet context name of the portlet.
+	*
+	* @return the servlet context name of the portlet
+	*/
+	@Override
+	public java.lang.String getContextName() {
+		return _portlet.getContextName();
+	}
+
+	/**
+	* Returns the servlet context path of the portlet.
+	*
+	* @return the servlet context path of the portlet
+	*/
+	@Override
+	public java.lang.String getContextPath() {
+		return _portlet.getContextPath();
+	}
+
+	/**
+	* Returns the name of the category of the Control Panel where the portlet
+	* will be shown.
+	*
+	* @return the name of the category of the Control Panel where the portlet
+	will be shown
+	*/
+	@Override
+	public java.lang.String getControlPanelEntryCategory() {
+		return _portlet.getControlPanelEntryCategory();
+	}
+
+	/**
+	* Returns the name of the class that will control when the portlet will be
+	* shown in the Control Panel.
+	*
+	* @return the name of the class that will control when the portlet will be
+	shown in the Control Panel
+	*/
+	@Override
+	public java.lang.String getControlPanelEntryClass() {
+		return _portlet.getControlPanelEntryClass();
+	}
+
+	/**
+	* Returns an instance of the class that will control when the portlet will
+	* be shown in the Control Panel.
+	*
+	* @return the instance of the class that will control when the portlet will
+	be shown in the Control Panel
+	*/
+	@Override
+	public com.liferay.portal.kernel.portlet.ControlPanelEntry getControlPanelEntryInstance() {
+		return _portlet.getControlPanelEntryInstance();
+	}
+
+	/**
+	* Returns the relative weight of the portlet with respect to the other
+	* portlets in the same category of the Control Panel.
+	*
+	* @return the relative weight of the portlet with respect to the other
+	portlets in the same category of the Control Panel
+	*/
+	@Override
+	public double getControlPanelEntryWeight() {
+		return _portlet.getControlPanelEntryWeight();
+	}
+
+	/**
+	* Returns the name of the CSS class that will be injected in the DIV that
+	* wraps this portlet.
+	*
+	* @return the name of the CSS class that will be injected in the DIV that
+	wraps this portlet
+	*/
+	@Override
+	public java.lang.String getCssClassWrapper() {
+		return _portlet.getCssClassWrapper();
+	}
+
+	/**
+	* Returns the names of the classes that represent custom attribute displays
+	* associated with the portlet.
+	*
+	* @return the names of the classes that represent asset types associated
+	with the portlet
+	*/
+	@Override
+	public java.util.List<java.lang.String> getCustomAttributesDisplayClasses() {
+		return _portlet.getCustomAttributesDisplayClasses();
+	}
+
+	/**
+	* Returns the custom attribute display instances of the portlet.
+	*
+	* @return the custom attribute display instances of the portlet
+	*/
+	@Override
+	public java.util.List<com.liferay.expando.kernel.model.CustomAttributesDisplay> getCustomAttributesDisplayInstances() {
+		return _portlet.getCustomAttributesDisplayInstances();
+	}
+
+	/**
+	* Get the default plugin settings of the portlet.
+	*
+	* @return the plugin settings
+	*/
+	@Override
+	public PluginSetting getDefaultPluginSetting() {
+		return _portlet.getDefaultPluginSetting();
+	}
+
+	/**
+	* Returns the default preferences of the portlet.
+	*
+	* @return the default preferences of the portlet
+	*/
+	@Override
+	public java.lang.String getDefaultPreferences() {
+		return _portlet.getDefaultPreferences();
+	}
+
+	/**
+	* Returns the display name of the portlet.
+	*
+	* @return the display name of the portlet
+	*/
+	@Override
+	public java.lang.String getDisplayName() {
+		return _portlet.getDisplayName();
+	}
+
+	/**
+	* Returns expiration cache of the portlet.
+	*
+	* @return expiration cache of the portlet
+	*/
+	@Override
+	public java.lang.Integer getExpCache() {
+		return _portlet.getExpCache();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _portlet.getExpandoBridge();
+	}
+
+	/**
+	* Returns the Facebook integration method of the portlet.
+	*
+	* @return the Facebook integration method of the portlet
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@Deprecated
+	@Override
+	public java.lang.String getFacebookIntegration() {
+		return _portlet.getFacebookIntegration();
+	}
+
+	/**
+	* Returns a list of CSS files that will be referenced from the page's
+	* footer relative to the portal's context path.
+	*
+	* @return a list of CSS files that will be referenced from the page's
+	footer relative to the portal's context path
+	*/
+	@Override
+	public java.util.List<java.lang.String> getFooterPortalCss() {
+		return _portlet.getFooterPortalCss();
+	}
+
+	/**
+	* Returns a list of JavaScript files that will be referenced from the
+	* page's footer relative to the portal's context path.
+	*
+	* @return a list of JavaScript files that will be referenced from the
+	page's footer relative to the portal's context path
+	*/
+	@Override
+	public java.util.List<java.lang.String> getFooterPortalJavaScript() {
+		return _portlet.getFooterPortalJavaScript();
+	}
+
+	/**
+	* Returns a list of CSS files that will be referenced from the page's
+	* footer relative to the portlet's context path.
+	*
+	* @return a list of CSS files that will be referenced from the page's
+	footer relative to the portlet's context path
+	*/
+	@Override
+	public java.util.List<java.lang.String> getFooterPortletCss() {
+		return _portlet.getFooterPortletCss();
+	}
+
+	/**
+	* Returns a list of JavaScript files that will be referenced from the
+	* page's footer relative to the portlet's context path.
+	*
+	* @return a list of JavaScript files that will be referenced from the
+	page's footer relative to the portlet's context path
+	*/
+	@Override
+	public java.util.List<java.lang.String> getFooterPortletJavaScript() {
+		return _portlet.getFooterPortletJavaScript();
+	}
+
+	/**
+	* Returns the name of the friendly URL mapper class of the portlet.
+	*
+	* @return the name of the friendly URL mapper class of the portlet
+	*/
+	@Override
+	public java.lang.String getFriendlyURLMapperClass() {
+		return _portlet.getFriendlyURLMapperClass();
+	}
+
+	/**
+	* Returns the friendly URL mapper instance of the portlet.
+	*
+	* @return the friendly URL mapper instance of the portlet
+	*/
+	@Override
+	public com.liferay.portal.kernel.portlet.FriendlyURLMapper getFriendlyURLMapperInstance() {
+		return _portlet.getFriendlyURLMapperInstance();
+	}
+
+	/**
+	* Returns the name of the friendly URL mapping of the portlet.
+	*
+	* @return the name of the friendly URL mapping of the portlet
+	*/
+	@Override
+	public java.lang.String getFriendlyURLMapping() {
+		return _portlet.getFriendlyURLMapping();
+	}
+
+	/**
+	* Returns the class loader resource path to the friendly URL routes of the
+	* portlet.
+	*
+	* @return the class loader resource path to the friendly URL routes of the
+	portlet
+	*/
+	@Override
+	public java.lang.String getFriendlyURLRoutes() {
+		return _portlet.getFriendlyURLRoutes();
+	}
+
+	/**
+	* Returns a list of CSS files that will be referenced from the page's
+	* header relative to the portal's context path.
+	*
+	* @return a list of CSS files that will be referenced from the page's
+	header relative to the portal's context path
+	*/
+	@Override
+	public java.util.List<java.lang.String> getHeaderPortalCss() {
+		return _portlet.getHeaderPortalCss();
+	}
+
+	/**
+	* Returns a list of JavaScript files that will be referenced from the
+	* page's header relative to the portal's context path.
+	*
+	* @return a list of JavaScript files that will be referenced from the
+	page's header relative to the portal's context path
+	*/
+	@Override
+	public java.util.List<java.lang.String> getHeaderPortalJavaScript() {
+		return _portlet.getHeaderPortalJavaScript();
+	}
+
+	/**
+	* Returns a list of CSS files that will be referenced from the page's
+	* header relative to the portlet's context path.
+	*
+	* @return a list of CSS files that will be referenced from the page's
+	header relative to the portlet's context path
+	*/
+	@Override
+	public java.util.List<java.lang.String> getHeaderPortletCss() {
+		return _portlet.getHeaderPortletCss();
+	}
+
+	/**
+	* Returns a list of JavaScript files that will be referenced from the
+	* page's header relative to the portlet's context path.
+	*
+	* @return a list of JavaScript files that will be referenced from the
+	page's header relative to the portlet's context path
+	*/
+	@Override
+	public java.util.List<java.lang.String> getHeaderPortletJavaScript() {
+		return _portlet.getHeaderPortletJavaScript();
+	}
+
+	/**
+	* Returns the icon of the portlet.
+	*
+	* @return the icon of the portlet
+	*/
+	@Override
+	public java.lang.String getIcon() {
+		return _portlet.getIcon();
+	}
+
+	/**
+	* Returns the ID of this portlet.
+	*
+	* @return the ID of this portlet
+	*/
+	@Override
+	public long getId() {
+		return _portlet.getId();
+	}
+
+	/**
 	* Returns <code>true</code> to include the portlet and make it available to
 	* be made active.
 	*
@@ -230,6 +671,48 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public boolean getInclude() {
 		return _portlet.getInclude();
+	}
+
+	/**
+	* Returns the names of the classes that represent indexers associated with
+	* the portlet.
+	*
+	* @return the names of the classes that represent indexers associated with
+	the portlet
+	*/
+	@Override
+	public java.util.List<java.lang.String> getIndexerClasses() {
+		return _portlet.getIndexerClasses();
+	}
+
+	/**
+	* Returns the indexer instances of the portlet.
+	*
+	* @return the indexer instances of the portlet
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.kernel.search.Indexer<?>> getIndexerInstances() {
+		return _portlet.getIndexerInstances();
+	}
+
+	/**
+	* Returns the init parameters of the portlet.
+	*
+	* @return init parameters of the portlet
+	*/
+	@Override
+	public Map<java.lang.String, java.lang.String> getInitParams() {
+		return _portlet.getInitParams();
+	}
+
+	/**
+	* Returns the instance ID of the portlet.
+	*
+	* @return the instance ID of the portlet
+	*/
+	@Override
+	public java.lang.String getInstanceId() {
+		return _portlet.getInstanceId();
 	}
 
 	/**
@@ -280,6 +763,136 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	}
 
 	/**
+	* Returns the mvcc version of this portlet.
+	*
+	* @return the mvcc version of this portlet
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _portlet.getMvccVersion();
+	}
+
+	/**
+	* Returns the name of the open search class of the portlet.
+	*
+	* @return the name of the open search class of the portlet
+	*/
+	@Override
+	public java.lang.String getOpenSearchClass() {
+		return _portlet.getOpenSearchClass();
+	}
+
+	/**
+	* Returns the indexer instance of the portlet.
+	*
+	* @return the indexer instance of the portlet
+	*/
+	@Override
+	public com.liferay.portal.kernel.search.OpenSearch getOpenSearchInstance() {
+		return _portlet.getOpenSearchInstance();
+	}
+
+	/**
+	* Returns the parent struts path of the portlet.
+	*
+	* @return the parent struts path of the portlet.
+	*/
+	@Override
+	public java.lang.String getParentStrutsPath() {
+		return _portlet.getParentStrutsPath();
+	}
+
+	/**
+	* Returns the name of the permission propagator class of the portlet.
+	*
+	* @return the name of the permission propagator class of the portlet
+	*/
+	@Override
+	public java.lang.String getPermissionPropagatorClass() {
+		return _portlet.getPermissionPropagatorClass();
+	}
+
+	/**
+	* Returns the permission propagator instance of the portlet.
+	*
+	* @return the permission propagator instance of the portlet
+	*/
+	@Override
+	public com.liferay.portal.kernel.security.permission.PermissionPropagator getPermissionPropagatorInstance() {
+		return _portlet.getPermissionPropagatorInstance();
+	}
+
+	/**
+	* Returns the plugin ID of the portlet.
+	*
+	* @return the plugin ID of the portlet
+	*/
+	@Override
+	public java.lang.String getPluginId() {
+		return _portlet.getPluginId();
+	}
+
+	/**
+	* Returns this portlet's plugin package.
+	*
+	* @return this portlet's plugin package
+	*/
+	@Override
+	public com.liferay.portal.kernel.plugin.PluginPackage getPluginPackage() {
+		return _portlet.getPluginPackage();
+	}
+
+	/**
+	* Returns the plugin type of the portlet.
+	*
+	* @return the plugin type of the portlet
+	*/
+	@Override
+	public java.lang.String getPluginType() {
+		return _portlet.getPluginType();
+	}
+
+	/**
+	* Returns the name of the poller processor class of the portlet.
+	*
+	* @return the name of the poller processor class of the portlet
+	*/
+	@Override
+	public java.lang.String getPollerProcessorClass() {
+		return _portlet.getPollerProcessorClass();
+	}
+
+	/**
+	* Returns the poller processor instance of the portlet.
+	*
+	* @return the poller processor instance of the portlet
+	*/
+	@Override
+	public com.liferay.portal.kernel.poller.PollerProcessor getPollerProcessorInstance() {
+		return _portlet.getPollerProcessorInstance();
+	}
+
+	/**
+	* Returns the name of the POP message listener class of the portlet.
+	*
+	* @return the name of the POP message listener class of the portlet
+	*/
+	@Override
+	public java.lang.String getPopMessageListenerClass() {
+		return _portlet.getPopMessageListenerClass();
+	}
+
+	/**
+	* Returns the POP message listener instance of the portlet.
+	*
+	* @return the POP message listener instance of the portlet
+	*/
+	@Override
+	public com.liferay.portal.kernel.pop.MessageListener getPopMessageListenerInstance() {
+		return _portlet.getPopMessageListenerInstance();
+	}
+
+	/**
 	* Returns <code>true</code> if the portlet goes into the pop up state when
 	* the user goes into the print mode.
 	*
@@ -289,6 +902,126 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public boolean getPopUpPrint() {
 		return _portlet.getPopUpPrint();
+	}
+
+	/**
+	* Returns this portlet's application.
+	*
+	* @return this portlet's application
+	*/
+	@Override
+	public PortletApp getPortletApp() {
+		return _portlet.getPortletApp();
+	}
+
+	/**
+	* Returns the name of the portlet class of the portlet.
+	*
+	* @return the name of the portlet class of the portlet
+	*/
+	@Override
+	public java.lang.String getPortletClass() {
+		return _portlet.getPortletClass();
+	}
+
+	/**
+	* Returns the name of the portlet data handler class of the portlet.
+	*
+	* @return the name of the portlet data handler class of the portlet
+	*/
+	@Override
+	public java.lang.String getPortletDataHandlerClass() {
+		return _portlet.getPortletDataHandlerClass();
+	}
+
+	/**
+	* Returns the portlet data handler instance of the portlet.
+	*
+	* @return the portlet data handler instance of the portlet
+	*/
+	@Override
+	public com.liferay.exportimport.kernel.lar.PortletDataHandler getPortletDataHandlerInstance() {
+		return _portlet.getPortletDataHandlerInstance();
+	}
+
+	/**
+	* Returns the filters of the portlet.
+	*
+	* @return filters of the portlet
+	*/
+	@Override
+	public Map<java.lang.String, PortletFilter> getPortletFilters() {
+		return _portlet.getPortletFilters();
+	}
+
+	/**
+	* Returns the portlet ID of this portlet.
+	*
+	* @return the portlet ID of this portlet
+	*/
+	@Override
+	public java.lang.String getPortletId() {
+		return _portlet.getPortletId();
+	}
+
+	/**
+	* Returns the portlet info of the portlet.
+	*
+	* @return portlet info of the portlet
+	*/
+	@Override
+	public PortletInfo getPortletInfo() {
+		return _portlet.getPortletInfo();
+	}
+
+	/**
+	* Returns the name of the portlet layout listener class of the portlet.
+	*
+	* @return the name of the portlet layout listener class of the portlet
+	*/
+	@Override
+	public java.lang.String getPortletLayoutListenerClass() {
+		return _portlet.getPortletLayoutListenerClass();
+	}
+
+	/**
+	* Returns the portlet layout listener instance of the portlet.
+	*
+	* @return the portlet layout listener instance of the portlet
+	*/
+	@Override
+	public com.liferay.portal.kernel.portlet.PortletLayoutListener getPortletLayoutListenerInstance() {
+		return _portlet.getPortletLayoutListenerInstance();
+	}
+
+	/**
+	* Returns the portlet modes of the portlet.
+	*
+	* @return portlet modes of the portlet
+	*/
+	@Override
+	public Map<java.lang.String, java.util.Set<java.lang.String>> getPortletModes() {
+		return _portlet.getPortletModes();
+	}
+
+	/**
+	* Returns the name of the portlet.
+	*
+	* @return the display name of the portlet
+	*/
+	@Override
+	public java.lang.String getPortletName() {
+		return _portlet.getPortletName();
+	}
+
+	/**
+	* Returns the name of the portlet URL class of the portlet.
+	*
+	* @return the name of the portlet URL class of the portlet
+	*/
+	@Override
+	public java.lang.String getPortletURLClass() {
+		return _portlet.getPortletURLClass();
 	}
 
 	/**
@@ -328,6 +1061,31 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	}
 
 	/**
+	* Returns the name of the preferences validator class of the portlet.
+	*
+	* @return the name of the preferences validator class of the portlet
+	*/
+	@Override
+	public java.lang.String getPreferencesValidator() {
+		return _portlet.getPreferencesValidator();
+	}
+
+	/**
+	* Returns the primary key of this portlet.
+	*
+	* @return the primary key of this portlet
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _portlet.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _portlet.getPrimaryKeyObj();
+	}
+
+	/**
 	* Returns <code>true</code> if the portlet does not share request
 	* attributes with the portal or portlets from another WAR.
 	*
@@ -352,6 +1110,76 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	}
 
 	/**
+	* Returns the processing event from a namespace URI and a local part.
+	*
+	* @param uri the namespace URI
+	* @param localPart the local part
+	* @return the processing event from a namespace URI and a local part
+	*/
+	@Override
+	public com.liferay.portal.kernel.xml.QName getProcessingEvent(
+		java.lang.String uri, java.lang.String localPart) {
+		return _portlet.getProcessingEvent(uri, localPart);
+	}
+
+	/**
+	* Returns the processing events of the portlet.
+	*
+	* @return the processing events of the portlet
+	*/
+	@Override
+	public java.util.Set<com.liferay.portal.kernel.xml.QName> getProcessingEvents() {
+		return _portlet.getProcessingEvents();
+	}
+
+	/**
+	* Returns the public render parameter from an identifier.
+	*
+	* @param identifier the identifier
+	* @return the public render parameter from an identifier
+	*/
+	@Override
+	public PublicRenderParameter getPublicRenderParameter(
+		java.lang.String identifier) {
+		return _portlet.getPublicRenderParameter(identifier);
+	}
+
+	/**
+	* Returns the spublic render parameter from a namespace URI and a local
+	* part.
+	*
+	* @param uri the namespace URI
+	* @param localPart the local part
+	* @return the spublic render parameter from a namespace URI and a local
+	part
+	*/
+	@Override
+	public PublicRenderParameter getPublicRenderParameter(
+		java.lang.String uri, java.lang.String localPart) {
+		return _portlet.getPublicRenderParameter(uri, localPart);
+	}
+
+	/**
+	* Returns the public render parameters of the portlet.
+	*
+	* @return the public render parameters of the portlet
+	*/
+	@Override
+	public java.util.Set<PublicRenderParameter> getPublicRenderParameters() {
+		return _portlet.getPublicRenderParameters();
+	}
+
+	/**
+	* Returns the publishing events of the portlet.
+	*
+	* @return the publishing events of the portlet
+	*/
+	@Override
+	public java.util.Set<com.liferay.portal.kernel.xml.QName> getPublishingEvents() {
+		return _portlet.getPublishingEvents();
+	}
+
+	/**
 	* Returns <code>true</code> if the portlet is ready to be used.
 	*
 	* @return <code>true</code> if the portlet is ready to be used
@@ -372,6 +1200,36 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	}
 
 	/**
+	* Returns the render timeout of the portlet.
+	*
+	* @return the render timeout of the portlet
+	*/
+	@Override
+	public int getRenderTimeout() {
+		return _portlet.getRenderTimeout();
+	}
+
+	/**
+	* Returns the render weight of the portlet.
+	*
+	* @return the render weight of the portlet
+	*/
+	@Override
+	public int getRenderWeight() {
+		return _portlet.getRenderWeight();
+	}
+
+	/**
+	* Returns the resource bundle of the portlet.
+	*
+	* @return resource bundle of the portlet
+	*/
+	@Override
+	public java.lang.String getResourceBundle() {
+		return _portlet.getResourceBundle();
+	}
+
+	/**
 	* Returns <code>true</code> if the portlet restores to the current view
 	* from the maximized state.
 	*
@@ -381,6 +1239,66 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public boolean getRestoreCurrentView() {
 		return _portlet.getRestoreCurrentView();
+	}
+
+	/**
+	* Returns the role mappers of the portlet.
+	*
+	* @return role mappers of the portlet
+	*/
+	@Override
+	public Map<java.lang.String, java.lang.String> getRoleMappers() {
+		return _portlet.getRoleMappers();
+	}
+
+	/**
+	* Returns the roles of this portlet.
+	*
+	* @return the roles of this portlet
+	*/
+	@Override
+	public java.lang.String getRoles() {
+		return _portlet.getRoles();
+	}
+
+	/**
+	* Returns an array of required roles of the portlet.
+	*
+	* @return an array of required roles of the portlet
+	*/
+	@Override
+	public java.lang.String[] getRolesArray() {
+		return _portlet.getRolesArray();
+	}
+
+	/**
+	* Returns the root portlet of this portlet instance.
+	*
+	* @return the root portlet of this portlet instance
+	*/
+	@Override
+	public Portlet getRootPortlet() {
+		return _portlet.getRootPortlet();
+	}
+
+	/**
+	* Returns the root portlet ID of the portlet.
+	*
+	* @return the root portlet ID of the portlet
+	*/
+	@Override
+	public java.lang.String getRootPortletId() {
+		return _portlet.getRootPortletId();
+	}
+
+	/**
+	* Returns the scheduler entries of the portlet.
+	*
+	* @return the scheduler entries of the portlet
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.kernel.scheduler.SchedulerEntry> getSchedulerEntries() {
+		return _portlet.getSchedulerEntries();
 	}
 
 	/**
@@ -427,6 +1345,72 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	}
 
 	/**
+	* Returns the names of the classes that represent social activity
+	* interpreters associated with the portlet.
+	*
+	* @return the names of the classes that represent social activity
+	interpreters associated with the portlet
+	*/
+	@Override
+	public java.util.List<java.lang.String> getSocialActivityInterpreterClasses() {
+		return _portlet.getSocialActivityInterpreterClasses();
+	}
+
+	/**
+	* Returns the social activity interpreter instances of the portlet.
+	*
+	* @return the social activity interpreter instances of the portlet
+	*/
+	@Override
+	public java.util.List<com.liferay.social.kernel.model.SocialActivityInterpreter> getSocialActivityInterpreterInstances() {
+		return _portlet.getSocialActivityInterpreterInstances();
+	}
+
+	/**
+	* Returns the name of the social request interpreter class of the portlet.
+	*
+	* @return the name of the social request interpreter class of the portlet
+	*/
+	@Override
+	public java.lang.String getSocialRequestInterpreterClass() {
+		return _portlet.getSocialRequestInterpreterClass();
+	}
+
+	/**
+	* Returns the name of the social request interpreter instance of the
+	* portlet.
+	*
+	* @return the name of the social request interpreter instance of the
+	portlet
+	*/
+	@Override
+	public com.liferay.social.kernel.model.SocialRequestInterpreter getSocialRequestInterpreterInstance() {
+		return _portlet.getSocialRequestInterpreterInstance();
+	}
+
+	/**
+	* Returns the names of the classes that represent staged model data
+	* handlers associated with the portlet.
+	*
+	* @return the names of the classes that represent staged model data
+	handlers associated with the portlet
+	*/
+	@Override
+	public java.util.List<java.lang.String> getStagedModelDataHandlerClasses() {
+		return _portlet.getStagedModelDataHandlerClasses();
+	}
+
+	/**
+	* Returns the staged model data handler instances of the portlet.
+	*
+	* @return the staged model data handler instances of the portlet
+	*/
+	@Override
+	public java.util.List<com.liferay.exportimport.kernel.lar.StagedModelDataHandler<?>> getStagedModelDataHandlerInstances() {
+		return _portlet.getStagedModelDataHandlerInstances();
+	}
+
+	/**
 	* Returns <code>true</code> if the portlet is a static portlet that is
 	* cannot be moved.
 	*
@@ -451,6 +1435,16 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	}
 
 	/**
+	* Returns the path for static resources served by this portlet.
+	*
+	* @return the path for static resources served by this portlet
+	*/
+	@Override
+	public java.lang.String getStaticResourcePath() {
+		return _portlet.getStaticResourcePath();
+	}
+
+	/**
 	* Returns <code>true</code> if the portlet is a static portlet at the start
 	* of a list of portlets.
 	*
@@ -460,6 +1454,26 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public boolean getStaticStart() {
 		return _portlet.getStaticStart();
+	}
+
+	/**
+	* Returns the struts path of the portlet.
+	*
+	* @return the struts path of the portlet
+	*/
+	@Override
+	public java.lang.String getStrutsPath() {
+		return _portlet.getStrutsPath();
+	}
+
+	/**
+	* Returns the supported locales of the portlet.
+	*
+	* @return the supported locales of the portlet
+	*/
+	@Override
+	public java.util.Set<java.lang.String> getSupportedLocales() {
+		return _portlet.getSupportedLocales();
 	}
 
 	/**
@@ -475,6 +1489,78 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	}
 
 	/**
+	* Returns the name of the template handler class of the portlet.
+	*
+	* @return the name of the template handler class of the portlet
+	*/
+	@Override
+	public java.lang.String getTemplateHandlerClass() {
+		return _portlet.getTemplateHandlerClass();
+	}
+
+	/**
+	* Returns the template handler instance of the portlet.
+	*
+	* @return the template handler instance of the portlet
+	*/
+	@Override
+	public com.liferay.portal.kernel.template.TemplateHandler getTemplateHandlerInstance() {
+		return _portlet.getTemplateHandlerInstance();
+	}
+
+	/**
+	* Returns the timestamp of the portlet.
+	*
+	* @return the timestamp of the portlet
+	*/
+	@Override
+	public long getTimestamp() {
+		return _portlet.getTimestamp();
+	}
+
+	/**
+	* Returns the names of the classes that represent trash handlers associated
+	* with the portlet.
+	*
+	* @return the names of the classes that represent trash handlers associated
+	with the portlet
+	*/
+	@Override
+	public java.util.List<java.lang.String> getTrashHandlerClasses() {
+		return _portlet.getTrashHandlerClasses();
+	}
+
+	/**
+	* Returns the trash handler instances of the portlet.
+	*
+	* @return the trash handler instances of the portlet
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.kernel.trash.TrashHandler> getTrashHandlerInstances() {
+		return _portlet.getTrashHandlerInstances();
+	}
+
+	/**
+	* Returns the name of the URL encoder class of the portlet.
+	*
+	* @return the name of the URL encoder class of the portlet
+	*/
+	@Override
+	public java.lang.String getURLEncoderClass() {
+		return _portlet.getURLEncoderClass();
+	}
+
+	/**
+	* Returns the URL encoder instance of the portlet.
+	*
+	* @return the URL encoder instance of the portlet
+	*/
+	@Override
+	public com.liferay.portal.kernel.servlet.URLEncoder getURLEncoderInstance() {
+		return _portlet.getURLEncoderInstance();
+	}
+
+	/**
 	* Returns <code>true</code> if the portlet is an undeployed portlet.
 	*
 	* @return <code>true</code> if the portlet is a placeholder of an
@@ -486,6 +1572,16 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	}
 
 	/**
+	* Returns the unlinked roles of the portlet.
+	*
+	* @return unlinked roles of the portlet
+	*/
+	@Override
+	public java.util.Set<java.lang.String> getUnlinkedRoles() {
+		return _portlet.getUnlinkedRoles();
+	}
+
+	/**
 	* Returns <code>true</code> if the portlet uses the default template.
 	*
 	* @return <code>true</code> if the portlet uses the default template
@@ -493,6 +1589,153 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public boolean getUseDefaultTemplate() {
 		return _portlet.getUseDefaultTemplate();
+	}
+
+	/**
+	* Returns the user ID of the portlet. This only applies when the portlet is
+	* added by a user in a customizable layout.
+	*
+	* @return the user ID of the portlet
+	*/
+	@Override
+	public long getUserId() {
+		return _portlet.getUserId();
+	}
+
+	/**
+	* Returns the class loader resource path to the use notification
+	* definitions of the portlet.
+	*
+	* @return the class loader resource path to the use notification
+	definitions of the portlet
+	*/
+	@Override
+	public java.lang.String getUserNotificationDefinitions() {
+		return _portlet.getUserNotificationDefinitions();
+	}
+
+	/**
+	* Returns the names of the classes that represent user notification
+	* handlers associated with the portlet.
+	*
+	* @return the names of the classes that represent user notification
+	handlers associated with the portlet
+	*/
+	@Override
+	public java.util.List<java.lang.String> getUserNotificationHandlerClasses() {
+		return _portlet.getUserNotificationHandlerClasses();
+	}
+
+	/**
+	* Returns the user notification handler instances of the portlet.
+	*
+	* @return the user notification handler instances of the portlet
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.kernel.notifications.UserNotificationHandler> getUserNotificationHandlerInstances() {
+		return _portlet.getUserNotificationHandlerInstances();
+	}
+
+	/**
+	* Returns the user principal strategy of the portlet.
+	*
+	* @return the user principal strategy of the portlet
+	*/
+	@Override
+	public java.lang.String getUserPrincipalStrategy() {
+		return _portlet.getUserPrincipalStrategy();
+	}
+
+	/**
+	* Returns the virtual path of the portlet.
+	*
+	* @return the virtual path of the portlet
+	*/
+	@Override
+	public java.lang.String getVirtualPath() {
+		return _portlet.getVirtualPath();
+	}
+
+	/**
+	* Returns the name of the WebDAV storage class of the portlet.
+	*
+	* @return the name of the WebDAV storage class of the portlet
+	*/
+	@Override
+	public java.lang.String getWebDAVStorageClass() {
+		return _portlet.getWebDAVStorageClass();
+	}
+
+	/**
+	* Returns the name of the WebDAV storage instance of the portlet.
+	*
+	* @return the name of the WebDAV storage instance of the portlet
+	*/
+	@Override
+	public com.liferay.portal.kernel.webdav.WebDAVStorage getWebDAVStorageInstance() {
+		return _portlet.getWebDAVStorageInstance();
+	}
+
+	/**
+	* Returns the name of the WebDAV storage token of the portlet.
+	*
+	* @return the name of the WebDAV storage token of the portlet
+	*/
+	@Override
+	public java.lang.String getWebDAVStorageToken() {
+		return _portlet.getWebDAVStorageToken();
+	}
+
+	/**
+	* Returns the window states of the portlet.
+	*
+	* @return window states of the portlet
+	*/
+	@Override
+	public Map<java.lang.String, java.util.Set<java.lang.String>> getWindowStates() {
+		return _portlet.getWindowStates();
+	}
+
+	/**
+	* Returns the names of the classes that represent workflow handlers
+	* associated with the portlet.
+	*
+	* @return the names of the classes that represent workflow handlers
+	associated with the portlet
+	*/
+	@Override
+	public java.util.List<java.lang.String> getWorkflowHandlerClasses() {
+		return _portlet.getWorkflowHandlerClasses();
+	}
+
+	/**
+	* Returns the workflow handler instances of the portlet.
+	*
+	* @return the workflow handler instances of the portlet
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.kernel.workflow.WorkflowHandler<?>> getWorkflowHandlerInstances() {
+		return _portlet.getWorkflowHandlerInstances();
+	}
+
+	/**
+	* Returns the name of the XML-RPC method class of the portlet.
+	*
+	* @return the name of the XML-RPC method class of the portlet
+	*/
+	@Override
+	public java.lang.String getXmlRpcMethodClass() {
+		return _portlet.getXmlRpcMethodClass();
+	}
+
+	/**
+	* Returns the name of the XML-RPC method instance of the portlet.
+	*
+	* @return the name of the XML-RPC method instance of the portlet
+	*/
+	@Override
+	public com.liferay.portal.kernel.xmlrpc.Method getXmlRpcMethodInstance() {
+		return _portlet.getXmlRpcMethodInstance();
 	}
 
 	/**
@@ -600,6 +1843,11 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	public boolean hasWindowState(java.lang.String mimeType,
 		javax.portlet.WindowState windowState) {
 		return _portlet.hasWindowState(mimeType, windowState);
+	}
+
+	@Override
+	public int hashCode() {
+		return _portlet.hashCode();
 	}
 
 	/**
@@ -953,1279 +2201,6 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 		return _portlet.isUseDefaultTemplate();
 	}
 
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _portlet.getExpandoBridge();
-	}
-
-	/**
-	* Returns the portlet data handler instance of the portlet.
-	*
-	* @return the portlet data handler instance of the portlet
-	*/
-	@Override
-	public com.liferay.exportimport.kernel.lar.PortletDataHandler getPortletDataHandlerInstance() {
-		return _portlet.getPortletDataHandlerInstance();
-	}
-
-	/**
-	* Returns <code>true</code> if the portlet is found in a WAR file.
-	*
-	* @param portletId the cloned instance portlet ID
-	* @return a cloned instance of the portlet
-	*/
-	@Override
-	public Portlet getClonedInstance(java.lang.String portletId) {
-		return _portlet.getClonedInstance(portletId);
-	}
-
-	/**
-	* Returns the root portlet of this portlet instance.
-	*
-	* @return the root portlet of this portlet instance
-	*/
-	@Override
-	public Portlet getRootPortlet() {
-		return _portlet.getRootPortlet();
-	}
-
-	/**
-	* Returns this portlet's plugin package.
-	*
-	* @return this portlet's plugin package
-	*/
-	@Override
-	public com.liferay.portal.kernel.plugin.PluginPackage getPluginPackage() {
-		return _portlet.getPluginPackage();
-	}
-
-	/**
-	* Returns the poller processor instance of the portlet.
-	*
-	* @return the poller processor instance of the portlet
-	*/
-	@Override
-	public com.liferay.portal.kernel.poller.PollerProcessor getPollerProcessorInstance() {
-		return _portlet.getPollerProcessorInstance();
-	}
-
-	/**
-	* Returns the POP message listener instance of the portlet.
-	*
-	* @return the POP message listener instance of the portlet
-	*/
-	@Override
-	public com.liferay.portal.kernel.pop.MessageListener getPopMessageListenerInstance() {
-		return _portlet.getPopMessageListenerInstance();
-	}
-
-	/**
-	* Returns the configuration action instance of the portlet.
-	*
-	* @return the configuration action instance of the portlet
-	*/
-	@Override
-	public com.liferay.portal.kernel.portlet.ConfigurationAction getConfigurationActionInstance() {
-		return _portlet.getConfigurationActionInstance();
-	}
-
-	/**
-	* Returns an instance of the class that will control when the portlet will
-	* be shown in the Control Panel.
-	*
-	* @return the instance of the class that will control when the portlet will
-	be shown in the Control Panel
-	*/
-	@Override
-	public com.liferay.portal.kernel.portlet.ControlPanelEntry getControlPanelEntryInstance() {
-		return _portlet.getControlPanelEntryInstance();
-	}
-
-	/**
-	* Returns the friendly URL mapper instance of the portlet.
-	*
-	* @return the friendly URL mapper instance of the portlet
-	*/
-	@Override
-	public com.liferay.portal.kernel.portlet.FriendlyURLMapper getFriendlyURLMapperInstance() {
-		return _portlet.getFriendlyURLMapperInstance();
-	}
-
-	/**
-	* Returns the portlet layout listener instance of the portlet.
-	*
-	* @return the portlet layout listener instance of the portlet
-	*/
-	@Override
-	public com.liferay.portal.kernel.portlet.PortletLayoutListener getPortletLayoutListenerInstance() {
-		return _portlet.getPortletLayoutListenerInstance();
-	}
-
-	/**
-	* Returns the indexer instance of the portlet.
-	*
-	* @return the indexer instance of the portlet
-	*/
-	@Override
-	public com.liferay.portal.kernel.search.OpenSearch getOpenSearchInstance() {
-		return _portlet.getOpenSearchInstance();
-	}
-
-	/**
-	* Returns the permission propagator instance of the portlet.
-	*
-	* @return the permission propagator instance of the portlet
-	*/
-	@Override
-	public com.liferay.portal.kernel.security.permission.PermissionPropagator getPermissionPropagatorInstance() {
-		return _portlet.getPermissionPropagatorInstance();
-	}
-
-	/**
-	* Returns the URL encoder instance of the portlet.
-	*
-	* @return the URL encoder instance of the portlet
-	*/
-	@Override
-	public com.liferay.portal.kernel.servlet.URLEncoder getURLEncoderInstance() {
-		return _portlet.getURLEncoderInstance();
-	}
-
-	/**
-	* Returns the template handler instance of the portlet.
-	*
-	* @return the template handler instance of the portlet
-	*/
-	@Override
-	public com.liferay.portal.kernel.template.TemplateHandler getTemplateHandlerInstance() {
-		return _portlet.getTemplateHandlerInstance();
-	}
-
-	/**
-	* Returns the name of the WebDAV storage instance of the portlet.
-	*
-	* @return the name of the WebDAV storage instance of the portlet
-	*/
-	@Override
-	public com.liferay.portal.kernel.webdav.WebDAVStorage getWebDAVStorageInstance() {
-		return _portlet.getWebDAVStorageInstance();
-	}
-
-	/**
-	* Returns the processing event from a namespace URI and a local part.
-	*
-	* @param uri the namespace URI
-	* @param localPart the local part
-	* @return the processing event from a namespace URI and a local part
-	*/
-	@Override
-	public com.liferay.portal.kernel.xml.QName getProcessingEvent(
-		java.lang.String uri, java.lang.String localPart) {
-		return _portlet.getProcessingEvent(uri, localPart);
-	}
-
-	/**
-	* Returns the name of the XML-RPC method instance of the portlet.
-	*
-	* @return the name of the XML-RPC method instance of the portlet
-	*/
-	@Override
-	public com.liferay.portal.kernel.xmlrpc.Method getXmlRpcMethodInstance() {
-		return _portlet.getXmlRpcMethodInstance();
-	}
-
-	/**
-	* Returns the name of the social request interpreter instance of the
-	* portlet.
-	*
-	* @return the name of the social request interpreter instance of the
-	portlet
-	*/
-	@Override
-	public com.liferay.social.kernel.model.SocialRequestInterpreter getSocialRequestInterpreterInstance() {
-		return _portlet.getSocialRequestInterpreterInstance();
-	}
-
-	/**
-	* Returns the relative weight of the portlet with respect to the other
-	* portlets in the same category of the Control Panel.
-	*
-	* @return the relative weight of the portlet with respect to the other
-	portlets in the same category of the Control Panel
-	*/
-	@Override
-	public double getControlPanelEntryWeight() {
-		return _portlet.getControlPanelEntryWeight();
-	}
-
-	@Override
-	public int compareTo(Portlet portlet) {
-		return _portlet.compareTo(portlet);
-	}
-
-	/**
-	* Returns the action timeout of the portlet.
-	*
-	* @return the action timeout of the portlet
-	*/
-	@Override
-	public int getActionTimeout() {
-		return _portlet.getActionTimeout();
-	}
-
-	/**
-	* Returns the render timeout of the portlet.
-	*
-	* @return the render timeout of the portlet
-	*/
-	@Override
-	public int getRenderTimeout() {
-		return _portlet.getRenderTimeout();
-	}
-
-	/**
-	* Returns the render weight of the portlet.
-	*
-	* @return the render weight of the portlet
-	*/
-	@Override
-	public int getRenderWeight() {
-		return _portlet.getRenderWeight();
-	}
-
-	@Override
-	public int hashCode() {
-		return _portlet.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _portlet.getPrimaryKeyObj();
-	}
-
-	/**
-	* Returns expiration cache of the portlet.
-	*
-	* @return expiration cache of the portlet
-	*/
-	@Override
-	public java.lang.Integer getExpCache() {
-		return _portlet.getExpCache();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new PortletWrapper((Portlet)_portlet.clone());
-	}
-
-	/**
-	* Returns the configuration action class of the portlet.
-	*
-	* @return the configuration action class of the portlet
-	*/
-	@Override
-	public java.lang.String getConfigurationActionClass() {
-		return _portlet.getConfigurationActionClass();
-	}
-
-	/**
-	* Returns the servlet context name of the portlet.
-	*
-	* @return the servlet context name of the portlet
-	*/
-	@Override
-	public java.lang.String getContextName() {
-		return _portlet.getContextName();
-	}
-
-	/**
-	* Returns the servlet context path of the portlet.
-	*
-	* @return the servlet context path of the portlet
-	*/
-	@Override
-	public java.lang.String getContextPath() {
-		return _portlet.getContextPath();
-	}
-
-	/**
-	* Returns the name of the category of the Control Panel where the portlet
-	* will be shown.
-	*
-	* @return the name of the category of the Control Panel where the portlet
-	will be shown
-	*/
-	@Override
-	public java.lang.String getControlPanelEntryCategory() {
-		return _portlet.getControlPanelEntryCategory();
-	}
-
-	/**
-	* Returns the name of the class that will control when the portlet will be
-	* shown in the Control Panel.
-	*
-	* @return the name of the class that will control when the portlet will be
-	shown in the Control Panel
-	*/
-	@Override
-	public java.lang.String getControlPanelEntryClass() {
-		return _portlet.getControlPanelEntryClass();
-	}
-
-	/**
-	* Returns the name of the CSS class that will be injected in the DIV that
-	* wraps this portlet.
-	*
-	* @return the name of the CSS class that will be injected in the DIV that
-	wraps this portlet
-	*/
-	@Override
-	public java.lang.String getCssClassWrapper() {
-		return _portlet.getCssClassWrapper();
-	}
-
-	/**
-	* Returns the default preferences of the portlet.
-	*
-	* @return the default preferences of the portlet
-	*/
-	@Override
-	public java.lang.String getDefaultPreferences() {
-		return _portlet.getDefaultPreferences();
-	}
-
-	/**
-	* Returns the display name of the portlet.
-	*
-	* @return the display name of the portlet
-	*/
-	@Override
-	public java.lang.String getDisplayName() {
-		return _portlet.getDisplayName();
-	}
-
-	/**
-	* Returns the Facebook integration method of the portlet.
-	*
-	* @return the Facebook integration method of the portlet
-	* @deprecated As of 7.0.0, with no direct replacement
-	*/
-	@Deprecated
-	@Override
-	public java.lang.String getFacebookIntegration() {
-		return _portlet.getFacebookIntegration();
-	}
-
-	/**
-	* Returns the name of the friendly URL mapper class of the portlet.
-	*
-	* @return the name of the friendly URL mapper class of the portlet
-	*/
-	@Override
-	public java.lang.String getFriendlyURLMapperClass() {
-		return _portlet.getFriendlyURLMapperClass();
-	}
-
-	/**
-	* Returns the name of the friendly URL mapping of the portlet.
-	*
-	* @return the name of the friendly URL mapping of the portlet
-	*/
-	@Override
-	public java.lang.String getFriendlyURLMapping() {
-		return _portlet.getFriendlyURLMapping();
-	}
-
-	/**
-	* Returns the class loader resource path to the friendly URL routes of the
-	* portlet.
-	*
-	* @return the class loader resource path to the friendly URL routes of the
-	portlet
-	*/
-	@Override
-	public java.lang.String getFriendlyURLRoutes() {
-		return _portlet.getFriendlyURLRoutes();
-	}
-
-	/**
-	* Returns the icon of the portlet.
-	*
-	* @return the icon of the portlet
-	*/
-	@Override
-	public java.lang.String getIcon() {
-		return _portlet.getIcon();
-	}
-
-	/**
-	* Returns the instance ID of the portlet.
-	*
-	* @return the instance ID of the portlet
-	*/
-	@Override
-	public java.lang.String getInstanceId() {
-		return _portlet.getInstanceId();
-	}
-
-	/**
-	* Returns the name of the open search class of the portlet.
-	*
-	* @return the name of the open search class of the portlet
-	*/
-	@Override
-	public java.lang.String getOpenSearchClass() {
-		return _portlet.getOpenSearchClass();
-	}
-
-	/**
-	* Returns the parent struts path of the portlet.
-	*
-	* @return the parent struts path of the portlet.
-	*/
-	@Override
-	public java.lang.String getParentStrutsPath() {
-		return _portlet.getParentStrutsPath();
-	}
-
-	/**
-	* Returns the name of the permission propagator class of the portlet.
-	*
-	* @return the name of the permission propagator class of the portlet
-	*/
-	@Override
-	public java.lang.String getPermissionPropagatorClass() {
-		return _portlet.getPermissionPropagatorClass();
-	}
-
-	/**
-	* Returns the plugin ID of the portlet.
-	*
-	* @return the plugin ID of the portlet
-	*/
-	@Override
-	public java.lang.String getPluginId() {
-		return _portlet.getPluginId();
-	}
-
-	/**
-	* Returns the plugin type of the portlet.
-	*
-	* @return the plugin type of the portlet
-	*/
-	@Override
-	public java.lang.String getPluginType() {
-		return _portlet.getPluginType();
-	}
-
-	/**
-	* Returns the name of the poller processor class of the portlet.
-	*
-	* @return the name of the poller processor class of the portlet
-	*/
-	@Override
-	public java.lang.String getPollerProcessorClass() {
-		return _portlet.getPollerProcessorClass();
-	}
-
-	/**
-	* Returns the name of the POP message listener class of the portlet.
-	*
-	* @return the name of the POP message listener class of the portlet
-	*/
-	@Override
-	public java.lang.String getPopMessageListenerClass() {
-		return _portlet.getPopMessageListenerClass();
-	}
-
-	/**
-	* Returns the name of the portlet class of the portlet.
-	*
-	* @return the name of the portlet class of the portlet
-	*/
-	@Override
-	public java.lang.String getPortletClass() {
-		return _portlet.getPortletClass();
-	}
-
-	/**
-	* Returns the name of the portlet data handler class of the portlet.
-	*
-	* @return the name of the portlet data handler class of the portlet
-	*/
-	@Override
-	public java.lang.String getPortletDataHandlerClass() {
-		return _portlet.getPortletDataHandlerClass();
-	}
-
-	/**
-	* Returns the portlet ID of this portlet.
-	*
-	* @return the portlet ID of this portlet
-	*/
-	@Override
-	public java.lang.String getPortletId() {
-		return _portlet.getPortletId();
-	}
-
-	/**
-	* Returns the name of the portlet layout listener class of the portlet.
-	*
-	* @return the name of the portlet layout listener class of the portlet
-	*/
-	@Override
-	public java.lang.String getPortletLayoutListenerClass() {
-		return _portlet.getPortletLayoutListenerClass();
-	}
-
-	/**
-	* Returns the name of the portlet.
-	*
-	* @return the display name of the portlet
-	*/
-	@Override
-	public java.lang.String getPortletName() {
-		return _portlet.getPortletName();
-	}
-
-	/**
-	* Returns the name of the portlet URL class of the portlet.
-	*
-	* @return the name of the portlet URL class of the portlet
-	*/
-	@Override
-	public java.lang.String getPortletURLClass() {
-		return _portlet.getPortletURLClass();
-	}
-
-	/**
-	* Returns the name of the preferences validator class of the portlet.
-	*
-	* @return the name of the preferences validator class of the portlet
-	*/
-	@Override
-	public java.lang.String getPreferencesValidator() {
-		return _portlet.getPreferencesValidator();
-	}
-
-	/**
-	* Returns the resource bundle of the portlet.
-	*
-	* @return resource bundle of the portlet
-	*/
-	@Override
-	public java.lang.String getResourceBundle() {
-		return _portlet.getResourceBundle();
-	}
-
-	/**
-	* Returns the roles of this portlet.
-	*
-	* @return the roles of this portlet
-	*/
-	@Override
-	public java.lang.String getRoles() {
-		return _portlet.getRoles();
-	}
-
-	/**
-	* Returns the root portlet ID of the portlet.
-	*
-	* @return the root portlet ID of the portlet
-	*/
-	@Override
-	public java.lang.String getRootPortletId() {
-		return _portlet.getRootPortletId();
-	}
-
-	/**
-	* Returns the name of the social request interpreter class of the portlet.
-	*
-	* @return the name of the social request interpreter class of the portlet
-	*/
-	@Override
-	public java.lang.String getSocialRequestInterpreterClass() {
-		return _portlet.getSocialRequestInterpreterClass();
-	}
-
-	/**
-	* Returns the path for static resources served by this portlet.
-	*
-	* @return the path for static resources served by this portlet
-	*/
-	@Override
-	public java.lang.String getStaticResourcePath() {
-		return _portlet.getStaticResourcePath();
-	}
-
-	/**
-	* Returns the struts path of the portlet.
-	*
-	* @return the struts path of the portlet
-	*/
-	@Override
-	public java.lang.String getStrutsPath() {
-		return _portlet.getStrutsPath();
-	}
-
-	/**
-	* Returns the name of the template handler class of the portlet.
-	*
-	* @return the name of the template handler class of the portlet
-	*/
-	@Override
-	public java.lang.String getTemplateHandlerClass() {
-		return _portlet.getTemplateHandlerClass();
-	}
-
-	/**
-	* Returns the name of the URL encoder class of the portlet.
-	*
-	* @return the name of the URL encoder class of the portlet
-	*/
-	@Override
-	public java.lang.String getURLEncoderClass() {
-		return _portlet.getURLEncoderClass();
-	}
-
-	/**
-	* Returns the class loader resource path to the use notification
-	* definitions of the portlet.
-	*
-	* @return the class loader resource path to the use notification
-	definitions of the portlet
-	*/
-	@Override
-	public java.lang.String getUserNotificationDefinitions() {
-		return _portlet.getUserNotificationDefinitions();
-	}
-
-	/**
-	* Returns the user principal strategy of the portlet.
-	*
-	* @return the user principal strategy of the portlet
-	*/
-	@Override
-	public java.lang.String getUserPrincipalStrategy() {
-		return _portlet.getUserPrincipalStrategy();
-	}
-
-	/**
-	* Returns the virtual path of the portlet.
-	*
-	* @return the virtual path of the portlet
-	*/
-	@Override
-	public java.lang.String getVirtualPath() {
-		return _portlet.getVirtualPath();
-	}
-
-	/**
-	* Returns the name of the WebDAV storage class of the portlet.
-	*
-	* @return the name of the WebDAV storage class of the portlet
-	*/
-	@Override
-	public java.lang.String getWebDAVStorageClass() {
-		return _portlet.getWebDAVStorageClass();
-	}
-
-	/**
-	* Returns the name of the WebDAV storage token of the portlet.
-	*
-	* @return the name of the WebDAV storage token of the portlet
-	*/
-	@Override
-	public java.lang.String getWebDAVStorageToken() {
-		return _portlet.getWebDAVStorageToken();
-	}
-
-	/**
-	* Returns the name of the XML-RPC method class of the portlet.
-	*
-	* @return the name of the XML-RPC method class of the portlet
-	*/
-	@Override
-	public java.lang.String getXmlRpcMethodClass() {
-		return _portlet.getXmlRpcMethodClass();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _portlet.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _portlet.toXmlString();
-	}
-
-	/**
-	* Returns an array of required roles of the portlet.
-	*
-	* @return an array of required roles of the portlet
-	*/
-	@Override
-	public java.lang.String[] getRolesArray() {
-		return _portlet.getRolesArray();
-	}
-
-	/**
-	* Returns the names of the classes that represent asset types associated
-	* with the portlet.
-	*
-	* @return the names of the classes that represent asset types associated
-	with the portlet
-	*/
-	@Override
-	public java.util.List<java.lang.String> getAssetRendererFactoryClasses() {
-		return _portlet.getAssetRendererFactoryClasses();
-	}
-
-	/**
-	* Returns the asset type instances of the portlet.
-	*
-	* @return the asset type instances of the portlet
-	*/
-	@Override
-	public java.util.List<com.liferay.asset.kernel.model.AssetRendererFactory<?>> getAssetRendererFactoryInstances() {
-		return _portlet.getAssetRendererFactoryInstances();
-	}
-
-	/**
-	* Returns the names of the classes that represent atom collection adapters
-	* associated with the portlet.
-	*
-	* @return the names of the classes that represent atom collection adapters
-	associated with the portlet
-	*/
-	@Override
-	public java.util.List<java.lang.String> getAtomCollectionAdapterClasses() {
-		return _portlet.getAtomCollectionAdapterClasses();
-	}
-
-	/**
-	* Returns the atom collection adapter instances of the portlet.
-	*
-	* @return the atom collection adapter instances of the portlet
-	*/
-	@Override
-	public java.util.List<com.liferay.portal.kernel.atom.AtomCollectionAdapter<?>> getAtomCollectionAdapterInstances() {
-		return _portlet.getAtomCollectionAdapterInstances();
-	}
-
-	/**
-	* Returns the names of the classes that represent custom attribute displays
-	* associated with the portlet.
-	*
-	* @return the names of the classes that represent asset types associated
-	with the portlet
-	*/
-	@Override
-	public java.util.List<java.lang.String> getCustomAttributesDisplayClasses() {
-		return _portlet.getCustomAttributesDisplayClasses();
-	}
-
-	/**
-	* Returns the custom attribute display instances of the portlet.
-	*
-	* @return the custom attribute display instances of the portlet
-	*/
-	@Override
-	public java.util.List<com.liferay.expando.kernel.model.CustomAttributesDisplay> getCustomAttributesDisplayInstances() {
-		return _portlet.getCustomAttributesDisplayInstances();
-	}
-
-	/**
-	* Returns a list of CSS files that will be referenced from the page's
-	* footer relative to the portal's context path.
-	*
-	* @return a list of CSS files that will be referenced from the page's
-	footer relative to the portal's context path
-	*/
-	@Override
-	public java.util.List<java.lang.String> getFooterPortalCss() {
-		return _portlet.getFooterPortalCss();
-	}
-
-	/**
-	* Returns a list of JavaScript files that will be referenced from the
-	* page's footer relative to the portal's context path.
-	*
-	* @return a list of JavaScript files that will be referenced from the
-	page's footer relative to the portal's context path
-	*/
-	@Override
-	public java.util.List<java.lang.String> getFooterPortalJavaScript() {
-		return _portlet.getFooterPortalJavaScript();
-	}
-
-	/**
-	* Returns a list of CSS files that will be referenced from the page's
-	* footer relative to the portlet's context path.
-	*
-	* @return a list of CSS files that will be referenced from the page's
-	footer relative to the portlet's context path
-	*/
-	@Override
-	public java.util.List<java.lang.String> getFooterPortletCss() {
-		return _portlet.getFooterPortletCss();
-	}
-
-	/**
-	* Returns a list of JavaScript files that will be referenced from the
-	* page's footer relative to the portlet's context path.
-	*
-	* @return a list of JavaScript files that will be referenced from the
-	page's footer relative to the portlet's context path
-	*/
-	@Override
-	public java.util.List<java.lang.String> getFooterPortletJavaScript() {
-		return _portlet.getFooterPortletJavaScript();
-	}
-
-	/**
-	* Returns a list of CSS files that will be referenced from the page's
-	* header relative to the portal's context path.
-	*
-	* @return a list of CSS files that will be referenced from the page's
-	header relative to the portal's context path
-	*/
-	@Override
-	public java.util.List<java.lang.String> getHeaderPortalCss() {
-		return _portlet.getHeaderPortalCss();
-	}
-
-	/**
-	* Returns a list of JavaScript files that will be referenced from the
-	* page's header relative to the portal's context path.
-	*
-	* @return a list of JavaScript files that will be referenced from the
-	page's header relative to the portal's context path
-	*/
-	@Override
-	public java.util.List<java.lang.String> getHeaderPortalJavaScript() {
-		return _portlet.getHeaderPortalJavaScript();
-	}
-
-	/**
-	* Returns a list of CSS files that will be referenced from the page's
-	* header relative to the portlet's context path.
-	*
-	* @return a list of CSS files that will be referenced from the page's
-	header relative to the portlet's context path
-	*/
-	@Override
-	public java.util.List<java.lang.String> getHeaderPortletCss() {
-		return _portlet.getHeaderPortletCss();
-	}
-
-	/**
-	* Returns a list of JavaScript files that will be referenced from the
-	* page's header relative to the portlet's context path.
-	*
-	* @return a list of JavaScript files that will be referenced from the
-	page's header relative to the portlet's context path
-	*/
-	@Override
-	public java.util.List<java.lang.String> getHeaderPortletJavaScript() {
-		return _portlet.getHeaderPortletJavaScript();
-	}
-
-	/**
-	* Returns the names of the classes that represent indexers associated with
-	* the portlet.
-	*
-	* @return the names of the classes that represent indexers associated with
-	the portlet
-	*/
-	@Override
-	public java.util.List<java.lang.String> getIndexerClasses() {
-		return _portlet.getIndexerClasses();
-	}
-
-	/**
-	* Returns the indexer instances of the portlet.
-	*
-	* @return the indexer instances of the portlet
-	*/
-	@Override
-	public java.util.List<com.liferay.portal.kernel.search.Indexer<?>> getIndexerInstances() {
-		return _portlet.getIndexerInstances();
-	}
-
-	/**
-	* Returns the scheduler entries of the portlet.
-	*
-	* @return the scheduler entries of the portlet
-	*/
-	@Override
-	public java.util.List<com.liferay.portal.kernel.scheduler.SchedulerEntry> getSchedulerEntries() {
-		return _portlet.getSchedulerEntries();
-	}
-
-	/**
-	* Returns the names of the classes that represent social activity
-	* interpreters associated with the portlet.
-	*
-	* @return the names of the classes that represent social activity
-	interpreters associated with the portlet
-	*/
-	@Override
-	public java.util.List<java.lang.String> getSocialActivityInterpreterClasses() {
-		return _portlet.getSocialActivityInterpreterClasses();
-	}
-
-	/**
-	* Returns the social activity interpreter instances of the portlet.
-	*
-	* @return the social activity interpreter instances of the portlet
-	*/
-	@Override
-	public java.util.List<com.liferay.social.kernel.model.SocialActivityInterpreter> getSocialActivityInterpreterInstances() {
-		return _portlet.getSocialActivityInterpreterInstances();
-	}
-
-	/**
-	* Returns the names of the classes that represent staged model data
-	* handlers associated with the portlet.
-	*
-	* @return the names of the classes that represent staged model data
-	handlers associated with the portlet
-	*/
-	@Override
-	public java.util.List<java.lang.String> getStagedModelDataHandlerClasses() {
-		return _portlet.getStagedModelDataHandlerClasses();
-	}
-
-	/**
-	* Returns the staged model data handler instances of the portlet.
-	*
-	* @return the staged model data handler instances of the portlet
-	*/
-	@Override
-	public java.util.List<com.liferay.exportimport.kernel.lar.StagedModelDataHandler<?>> getStagedModelDataHandlerInstances() {
-		return _portlet.getStagedModelDataHandlerInstances();
-	}
-
-	/**
-	* Returns the names of the classes that represent trash handlers associated
-	* with the portlet.
-	*
-	* @return the names of the classes that represent trash handlers associated
-	with the portlet
-	*/
-	@Override
-	public java.util.List<java.lang.String> getTrashHandlerClasses() {
-		return _portlet.getTrashHandlerClasses();
-	}
-
-	/**
-	* Returns the trash handler instances of the portlet.
-	*
-	* @return the trash handler instances of the portlet
-	*/
-	@Override
-	public java.util.List<com.liferay.portal.kernel.trash.TrashHandler> getTrashHandlerInstances() {
-		return _portlet.getTrashHandlerInstances();
-	}
-
-	/**
-	* Returns the names of the classes that represent user notification
-	* handlers associated with the portlet.
-	*
-	* @return the names of the classes that represent user notification
-	handlers associated with the portlet
-	*/
-	@Override
-	public java.util.List<java.lang.String> getUserNotificationHandlerClasses() {
-		return _portlet.getUserNotificationHandlerClasses();
-	}
-
-	/**
-	* Returns the user notification handler instances of the portlet.
-	*
-	* @return the user notification handler instances of the portlet
-	*/
-	@Override
-	public java.util.List<com.liferay.portal.kernel.notifications.UserNotificationHandler> getUserNotificationHandlerInstances() {
-		return _portlet.getUserNotificationHandlerInstances();
-	}
-
-	/**
-	* Returns the names of the classes that represent workflow handlers
-	* associated with the portlet.
-	*
-	* @return the names of the classes that represent workflow handlers
-	associated with the portlet
-	*/
-	@Override
-	public java.util.List<java.lang.String> getWorkflowHandlerClasses() {
-		return _portlet.getWorkflowHandlerClasses();
-	}
-
-	/**
-	* Returns the workflow handler instances of the portlet.
-	*
-	* @return the workflow handler instances of the portlet
-	*/
-	@Override
-	public java.util.List<com.liferay.portal.kernel.workflow.WorkflowHandler<?>> getWorkflowHandlerInstances() {
-		return _portlet.getWorkflowHandlerInstances();
-	}
-
-	/**
-	* Returns the init parameters of the portlet.
-	*
-	* @return init parameters of the portlet
-	*/
-	@Override
-	public Map<java.lang.String, java.lang.String> getInitParams() {
-		return _portlet.getInitParams();
-	}
-
-	/**
-	* Returns the filters of the portlet.
-	*
-	* @return filters of the portlet
-	*/
-	@Override
-	public Map<java.lang.String, PortletFilter> getPortletFilters() {
-		return _portlet.getPortletFilters();
-	}
-
-	/**
-	* Returns the portlet modes of the portlet.
-	*
-	* @return portlet modes of the portlet
-	*/
-	@Override
-	public Map<java.lang.String, java.util.Set<java.lang.String>> getPortletModes() {
-		return _portlet.getPortletModes();
-	}
-
-	/**
-	* Returns the role mappers of the portlet.
-	*
-	* @return role mappers of the portlet
-	*/
-	@Override
-	public Map<java.lang.String, java.lang.String> getRoleMappers() {
-		return _portlet.getRoleMappers();
-	}
-
-	/**
-	* Returns the window states of the portlet.
-	*
-	* @return window states of the portlet
-	*/
-	@Override
-	public Map<java.lang.String, java.util.Set<java.lang.String>> getWindowStates() {
-		return _portlet.getWindowStates();
-	}
-
-	/**
-	* Returns the portlet modes of the portlet.
-	*
-	* @return the portlet modes of the portlet
-	*/
-	@Override
-	public java.util.Set<java.lang.String> getAllPortletModes() {
-		return _portlet.getAllPortletModes();
-	}
-
-	/**
-	* Returns the window states of the portlet.
-	*
-	* @return the window states of the portlet
-	*/
-	@Override
-	public java.util.Set<java.lang.String> getAllWindowStates() {
-		return _portlet.getAllWindowStates();
-	}
-
-	/**
-	* Returns the application types of the portlet.
-	*
-	* @return the application types of the portlet
-	*/
-	@Override
-	public java.util.Set<com.liferay.portal.kernel.application.type.ApplicationType> getApplicationTypes() {
-		return _portlet.getApplicationTypes();
-	}
-
-	/**
-	* Returns the names of the parameters that will be automatically propagated
-	* through the portlet.
-	*
-	* @return the names of the parameters that will be automatically propagated
-	through the portlet
-	*/
-	@Override
-	public java.util.Set<java.lang.String> getAutopropagatedParameters() {
-		return _portlet.getAutopropagatedParameters();
-	}
-
-	/**
-	* Returns the processing events of the portlet.
-	*
-	* @return the processing events of the portlet
-	*/
-	@Override
-	public java.util.Set<com.liferay.portal.kernel.xml.QName> getProcessingEvents() {
-		return _portlet.getProcessingEvents();
-	}
-
-	/**
-	* Returns the public render parameters of the portlet.
-	*
-	* @return the public render parameters of the portlet
-	*/
-	@Override
-	public java.util.Set<PublicRenderParameter> getPublicRenderParameters() {
-		return _portlet.getPublicRenderParameters();
-	}
-
-	/**
-	* Returns the publishing events of the portlet.
-	*
-	* @return the publishing events of the portlet
-	*/
-	@Override
-	public java.util.Set<com.liferay.portal.kernel.xml.QName> getPublishingEvents() {
-		return _portlet.getPublishingEvents();
-	}
-
-	/**
-	* Returns the supported locales of the portlet.
-	*
-	* @return the supported locales of the portlet
-	*/
-	@Override
-	public java.util.Set<java.lang.String> getSupportedLocales() {
-		return _portlet.getSupportedLocales();
-	}
-
-	/**
-	* Returns the unlinked roles of the portlet.
-	*
-	* @return unlinked roles of the portlet
-	*/
-	@Override
-	public java.util.Set<java.lang.String> getUnlinkedRoles() {
-		return _portlet.getUnlinkedRoles();
-	}
-
-	/**
-	* Returns the company ID of this portlet.
-	*
-	* @return the company ID of this portlet
-	*/
-	@Override
-	public long getCompanyId() {
-		return _portlet.getCompanyId();
-	}
-
-	/**
-	* Returns the ID of this portlet.
-	*
-	* @return the ID of this portlet
-	*/
-	@Override
-	public long getId() {
-		return _portlet.getId();
-	}
-
-	/**
-	* Returns the mvcc version of this portlet.
-	*
-	* @return the mvcc version of this portlet
-	*/
-	@Override
-	public long getMvccVersion() {
-		return _portlet.getMvccVersion();
-	}
-
-	/**
-	* Returns the primary key of this portlet.
-	*
-	* @return the primary key of this portlet
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _portlet.getPrimaryKey();
-	}
-
-	/**
-	* Returns the timestamp of the portlet.
-	*
-	* @return the timestamp of the portlet
-	*/
-	@Override
-	public long getTimestamp() {
-		return _portlet.getTimestamp();
-	}
-
-	/**
-	* Returns the user ID of the portlet. This only applies when the portlet is
-	* added by a user in a customizable layout.
-	*
-	* @return the user ID of the portlet
-	*/
-	@Override
-	public long getUserId() {
-		return _portlet.getUserId();
-	}
-
-	/**
-	* Adds an application type.
-	*
-	* @param applicationType an application type
-	*/
-	@Override
-	public void addApplicationType(
-		com.liferay.portal.kernel.application.type.ApplicationType applicationType) {
-		_portlet.addApplicationType(applicationType);
-	}
-
-	/**
-	* Adds a processing event.
-	*/
-	@Override
-	public void addProcessingEvent(
-		com.liferay.portal.kernel.xml.QName processingEvent) {
-		_portlet.addProcessingEvent(processingEvent);
-	}
-
-	/**
-	* Adds a public render parameter.
-	*
-	* @param publicRenderParameter a public render parameter
-	*/
-	@Override
-	public void addPublicRenderParameter(
-		PublicRenderParameter publicRenderParameter) {
-		_portlet.addPublicRenderParameter(publicRenderParameter);
-	}
-
-	/**
-	* Adds a publishing event.
-	*/
-	@Override
-	public void addPublishingEvent(
-		com.liferay.portal.kernel.xml.QName publishingEvent) {
-		_portlet.addPublishingEvent(publishingEvent);
-	}
-
-	/**
-	* Adds a scheduler entry.
-	*/
-	@Override
-	public void addSchedulerEntry(
-		com.liferay.portal.kernel.scheduler.SchedulerEntry schedulerEntry) {
-		_portlet.addSchedulerEntry(schedulerEntry);
-	}
-
 	/**
 	* Link the role names set in portlet.xml with the Liferay roles set in
 	* liferay-portlet.xml.
@@ -2477,13 +2452,13 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_portlet.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_portlet.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_portlet.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
+		_portlet.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -3494,6 +3469,31 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void setXmlRpcMethodClass(java.lang.String xmlRpcMethodClass) {
 		_portlet.setXmlRpcMethodClass(xmlRpcMethodClass);
+	}
+
+	@Override
+	public CacheModel<Portlet> toCacheModel() {
+		return _portlet.toCacheModel();
+	}
+
+	@Override
+	public Portlet toEscapedModel() {
+		return new PortletWrapper(_portlet.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _portlet.toString();
+	}
+
+	@Override
+	public Portlet toUnescapedModel() {
+		return new PortletWrapper(_portlet.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _portlet.toXmlString();
 	}
 
 	@Override

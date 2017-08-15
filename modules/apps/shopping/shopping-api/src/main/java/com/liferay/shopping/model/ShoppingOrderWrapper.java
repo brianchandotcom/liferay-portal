@@ -425,228 +425,13 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	}
 
 	@Override
-	public ShoppingOrder toEscapedModel() {
-		return new ShoppingOrderWrapper(_shoppingOrder.toEscapedModel());
-	}
-
-	@Override
-	public ShoppingOrder toUnescapedModel() {
-		return new ShoppingOrderWrapper(_shoppingOrder.toUnescapedModel());
-	}
-
-	/**
-	* Returns the insure of this shopping order.
-	*
-	* @return the insure of this shopping order
-	*/
-	@Override
-	public boolean getInsure() {
-		return _shoppingOrder.getInsure();
-	}
-
-	/**
-	* Returns the requires shipping of this shopping order.
-	*
-	* @return the requires shipping of this shopping order
-	*/
-	@Override
-	public boolean getRequiresShipping() {
-		return _shoppingOrder.getRequiresShipping();
-	}
-
-	/**
-	* Returns the send order email of this shopping order.
-	*
-	* @return the send order email of this shopping order
-	*/
-	@Override
-	public boolean getSendOrderEmail() {
-		return _shoppingOrder.getSendOrderEmail();
-	}
-
-	/**
-	* Returns the send shipping email of this shopping order.
-	*
-	* @return the send shipping email of this shopping order
-	*/
-	@Override
-	public boolean getSendShippingEmail() {
-		return _shoppingOrder.getSendShippingEmail();
-	}
-
-	/**
-	* Returns the ship to billing of this shopping order.
-	*
-	* @return the ship to billing of this shopping order
-	*/
-	@Override
-	public boolean getShipToBilling() {
-		return _shoppingOrder.getShipToBilling();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _shoppingOrder.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _shoppingOrder.isEscapedModel();
-	}
-
-	/**
-	* Returns <code>true</code> if this shopping order is insure.
-	*
-	* @return <code>true</code> if this shopping order is insure; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isInsure() {
-		return _shoppingOrder.isInsure();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _shoppingOrder.isNew();
-	}
-
-	/**
-	* Returns <code>true</code> if this shopping order is requires shipping.
-	*
-	* @return <code>true</code> if this shopping order is requires shipping; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isRequiresShipping() {
-		return _shoppingOrder.isRequiresShipping();
-	}
-
-	/**
-	* Returns <code>true</code> if this shopping order is send order email.
-	*
-	* @return <code>true</code> if this shopping order is send order email; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isSendOrderEmail() {
-		return _shoppingOrder.isSendOrderEmail();
-	}
-
-	/**
-	* Returns <code>true</code> if this shopping order is send shipping email.
-	*
-	* @return <code>true</code> if this shopping order is send shipping email; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isSendShippingEmail() {
-		return _shoppingOrder.isSendShippingEmail();
-	}
-
-	/**
-	* Returns <code>true</code> if this shopping order is ship to billing.
-	*
-	* @return <code>true</code> if this shopping order is ship to billing; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isShipToBilling() {
-		return _shoppingOrder.isShipToBilling();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _shoppingOrder.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<ShoppingOrder> toCacheModel() {
-		return _shoppingOrder.toCacheModel();
-	}
-
-	/**
-	* Returns the coupon discount of this shopping order.
-	*
-	* @return the coupon discount of this shopping order
-	*/
-	@Override
-	public double getCouponDiscount() {
-		return _shoppingOrder.getCouponDiscount();
-	}
-
-	/**
-	* Returns the insurance of this shopping order.
-	*
-	* @return the insurance of this shopping order
-	*/
-	@Override
-	public double getInsurance() {
-		return _shoppingOrder.getInsurance();
-	}
-
-	/**
-	* Returns the pp payment gross of this shopping order.
-	*
-	* @return the pp payment gross of this shopping order
-	*/
-	@Override
-	public double getPpPaymentGross() {
-		return _shoppingOrder.getPpPaymentGross();
-	}
-
-	/**
-	* Returns the shipping of this shopping order.
-	*
-	* @return the shipping of this shopping order
-	*/
-	@Override
-	public double getShipping() {
-		return _shoppingOrder.getShipping();
-	}
-
-	/**
-	* Returns the tax of this shopping order.
-	*
-	* @return the tax of this shopping order
-	*/
-	@Override
-	public double getTax() {
-		return _shoppingOrder.getTax();
+	public java.lang.Object clone() {
+		return new ShoppingOrderWrapper((ShoppingOrder)_shoppingOrder.clone());
 	}
 
 	@Override
 	public int compareTo(ShoppingOrder shoppingOrder) {
 		return _shoppingOrder.compareTo(shoppingOrder);
-	}
-
-	/**
-	* Returns the cc exp month of this shopping order.
-	*
-	* @return the cc exp month of this shopping order
-	*/
-	@Override
-	public int getCcExpMonth() {
-		return _shoppingOrder.getCcExpMonth();
-	}
-
-	/**
-	* Returns the cc exp year of this shopping order.
-	*
-	* @return the cc exp year of this shopping order
-	*/
-	@Override
-	public int getCcExpYear() {
-		return _shoppingOrder.getCcExpYear();
-	}
-
-	@Override
-	public int hashCode() {
-		return _shoppingOrder.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _shoppingOrder.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new ShoppingOrderWrapper((ShoppingOrder)_shoppingOrder.clone());
 	}
 
 	/**
@@ -760,6 +545,26 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	}
 
 	/**
+	* Returns the cc exp month of this shopping order.
+	*
+	* @return the cc exp month of this shopping order
+	*/
+	@Override
+	public int getCcExpMonth() {
+		return _shoppingOrder.getCcExpMonth();
+	}
+
+	/**
+	* Returns the cc exp year of this shopping order.
+	*
+	* @return the cc exp year of this shopping order
+	*/
+	@Override
+	public int getCcExpYear() {
+		return _shoppingOrder.getCcExpYear();
+	}
+
+	/**
 	* Returns the cc name of this shopping order.
 	*
 	* @return the cc name of this shopping order
@@ -810,6 +615,16 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	}
 
 	/**
+	* Returns the company ID of this shopping order.
+	*
+	* @return the company ID of this shopping order
+	*/
+	@Override
+	public long getCompanyId() {
+		return _shoppingOrder.getCompanyId();
+	}
+
+	/**
 	* Returns the coupon codes of this shopping order.
 	*
 	* @return the coupon codes of this shopping order
@@ -817,6 +632,71 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	@Override
 	public java.lang.String getCouponCodes() {
 		return _shoppingOrder.getCouponCodes();
+	}
+
+	/**
+	* Returns the coupon discount of this shopping order.
+	*
+	* @return the coupon discount of this shopping order
+	*/
+	@Override
+	public double getCouponDiscount() {
+		return _shoppingOrder.getCouponDiscount();
+	}
+
+	/**
+	* Returns the create date of this shopping order.
+	*
+	* @return the create date of this shopping order
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _shoppingOrder.getCreateDate();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _shoppingOrder.getExpandoBridge();
+	}
+
+	/**
+	* Returns the group ID of this shopping order.
+	*
+	* @return the group ID of this shopping order
+	*/
+	@Override
+	public long getGroupId() {
+		return _shoppingOrder.getGroupId();
+	}
+
+	/**
+	* Returns the insurance of this shopping order.
+	*
+	* @return the insurance of this shopping order
+	*/
+	@Override
+	public double getInsurance() {
+		return _shoppingOrder.getInsurance();
+	}
+
+	/**
+	* Returns the insure of this shopping order.
+	*
+	* @return the insure of this shopping order
+	*/
+	@Override
+	public boolean getInsure() {
+		return _shoppingOrder.getInsure();
+	}
+
+	/**
+	* Returns the modified date of this shopping order.
+	*
+	* @return the modified date of this shopping order
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _shoppingOrder.getModifiedDate();
 	}
 
 	/**
@@ -830,6 +710,16 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	}
 
 	/**
+	* Returns the order ID of this shopping order.
+	*
+	* @return the order ID of this shopping order
+	*/
+	@Override
+	public long getOrderId() {
+		return _shoppingOrder.getOrderId();
+	}
+
+	/**
 	* Returns the pp payer email of this shopping order.
 	*
 	* @return the pp payer email of this shopping order
@@ -837,6 +727,16 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	@Override
 	public java.lang.String getPpPayerEmail() {
 		return _shoppingOrder.getPpPayerEmail();
+	}
+
+	/**
+	* Returns the pp payment gross of this shopping order.
+	*
+	* @return the pp payment gross of this shopping order
+	*/
+	@Override
+	public double getPpPaymentGross() {
+		return _shoppingOrder.getPpPaymentGross();
 	}
 
 	/**
@@ -867,6 +767,71 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	@Override
 	public java.lang.String getPpTxnId() {
 		return _shoppingOrder.getPpTxnId();
+	}
+
+	/**
+	* Returns the primary key of this shopping order.
+	*
+	* @return the primary key of this shopping order
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _shoppingOrder.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _shoppingOrder.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the requires shipping of this shopping order.
+	*
+	* @return the requires shipping of this shopping order
+	*/
+	@Override
+	public boolean getRequiresShipping() {
+		return _shoppingOrder.getRequiresShipping();
+	}
+
+	/**
+	* Returns the send order email of this shopping order.
+	*
+	* @return the send order email of this shopping order
+	*/
+	@Override
+	public boolean getSendOrderEmail() {
+		return _shoppingOrder.getSendOrderEmail();
+	}
+
+	/**
+	* Returns the send shipping email of this shopping order.
+	*
+	* @return the send shipping email of this shopping order
+	*/
+	@Override
+	public boolean getSendShippingEmail() {
+		return _shoppingOrder.getSendShippingEmail();
+	}
+
+	/**
+	* Returns the ship to billing of this shopping order.
+	*
+	* @return the ship to billing of this shopping order
+	*/
+	@Override
+	public boolean getShipToBilling() {
+		return _shoppingOrder.getShipToBilling();
+	}
+
+	/**
+	* Returns the shipping of this shopping order.
+	*
+	* @return the shipping of this shopping order
+	*/
+	@Override
+	public double getShipping() {
+		return _shoppingOrder.getShipping();
 	}
 
 	/**
@@ -970,6 +935,26 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	}
 
 	/**
+	* Returns the tax of this shopping order.
+	*
+	* @return the tax of this shopping order
+	*/
+	@Override
+	public double getTax() {
+		return _shoppingOrder.getTax();
+	}
+
+	/**
+	* Returns the user ID of this shopping order.
+	*
+	* @return the user ID of this shopping order
+	*/
+	@Override
+	public long getUserId() {
+		return _shoppingOrder.getUserId();
+	}
+
+	/**
 	* Returns the user name of this shopping order.
 	*
 	* @return the user name of this shopping order
@@ -990,83 +975,73 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	}
 
 	@Override
-	public java.lang.String toString() {
-		return _shoppingOrder.toString();
+	public int hashCode() {
+		return _shoppingOrder.hashCode();
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
-		return _shoppingOrder.toXmlString();
+	public boolean isCachedModel() {
+		return _shoppingOrder.isCachedModel();
 	}
 
-	/**
-	* Returns the create date of this shopping order.
-	*
-	* @return the create date of this shopping order
-	*/
 	@Override
-	public Date getCreateDate() {
-		return _shoppingOrder.getCreateDate();
+	public boolean isEscapedModel() {
+		return _shoppingOrder.isEscapedModel();
 	}
 
 	/**
-	* Returns the modified date of this shopping order.
+	* Returns <code>true</code> if this shopping order is insure.
 	*
-	* @return the modified date of this shopping order
+	* @return <code>true</code> if this shopping order is insure; <code>false</code> otherwise
 	*/
 	@Override
-	public Date getModifiedDate() {
-		return _shoppingOrder.getModifiedDate();
+	public boolean isInsure() {
+		return _shoppingOrder.isInsure();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _shoppingOrder.isNew();
 	}
 
 	/**
-	* Returns the company ID of this shopping order.
+	* Returns <code>true</code> if this shopping order is requires shipping.
 	*
-	* @return the company ID of this shopping order
+	* @return <code>true</code> if this shopping order is requires shipping; <code>false</code> otherwise
 	*/
 	@Override
-	public long getCompanyId() {
-		return _shoppingOrder.getCompanyId();
+	public boolean isRequiresShipping() {
+		return _shoppingOrder.isRequiresShipping();
 	}
 
 	/**
-	* Returns the group ID of this shopping order.
+	* Returns <code>true</code> if this shopping order is send order email.
 	*
-	* @return the group ID of this shopping order
+	* @return <code>true</code> if this shopping order is send order email; <code>false</code> otherwise
 	*/
 	@Override
-	public long getGroupId() {
-		return _shoppingOrder.getGroupId();
+	public boolean isSendOrderEmail() {
+		return _shoppingOrder.isSendOrderEmail();
 	}
 
 	/**
-	* Returns the order ID of this shopping order.
+	* Returns <code>true</code> if this shopping order is send shipping email.
 	*
-	* @return the order ID of this shopping order
+	* @return <code>true</code> if this shopping order is send shipping email; <code>false</code> otherwise
 	*/
 	@Override
-	public long getOrderId() {
-		return _shoppingOrder.getOrderId();
+	public boolean isSendShippingEmail() {
+		return _shoppingOrder.isSendShippingEmail();
 	}
 
 	/**
-	* Returns the primary key of this shopping order.
+	* Returns <code>true</code> if this shopping order is ship to billing.
 	*
-	* @return the primary key of this shopping order
+	* @return <code>true</code> if this shopping order is ship to billing; <code>false</code> otherwise
 	*/
 	@Override
-	public long getPrimaryKey() {
-		return _shoppingOrder.getPrimaryKey();
-	}
-
-	/**
-	* Returns the user ID of this shopping order.
-	*
-	* @return the user ID of this shopping order
-	*/
-	@Override
-	public long getUserId() {
-		return _shoppingOrder.getUserId();
+	public boolean isShipToBilling() {
+		return _shoppingOrder.isShipToBilling();
 	}
 
 	@Override
@@ -1633,6 +1608,31 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	@Override
 	public void setUserUuid(java.lang.String userUuid) {
 		_shoppingOrder.setUserUuid(userUuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<ShoppingOrder> toCacheModel() {
+		return _shoppingOrder.toCacheModel();
+	}
+
+	@Override
+	public ShoppingOrder toEscapedModel() {
+		return new ShoppingOrderWrapper(_shoppingOrder.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _shoppingOrder.toString();
+	}
+
+	@Override
+	public ShoppingOrder toUnescapedModel() {
+		return new ShoppingOrderWrapper(_shoppingOrder.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _shoppingOrder.toXmlString();
 	}
 
 	@Override

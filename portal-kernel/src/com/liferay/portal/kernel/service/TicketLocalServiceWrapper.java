@@ -31,38 +31,6 @@ public class TicketLocalServiceWrapper implements TicketLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _ticketLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _ticketLocalService.dynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _ticketLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ticketLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ticketLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	@Override
 	public com.liferay.portal.kernel.model.Ticket addDistinctTicket(
 		long companyId, java.lang.String className, long classPK, int type,
 		java.lang.String extraInfo, java.util.Date expirationDate,
@@ -104,6 +72,16 @@ public class TicketLocalServiceWrapper implements TicketLocalService,
 	}
 
 	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ticketLocalService.deletePersistedModel(persistedModel);
+	}
+
+	/**
 	* Deletes the ticket from the database. Also notifies the appropriate model listeners.
 	*
 	* @param ticket the ticket
@@ -129,75 +107,8 @@ public class TicketLocalServiceWrapper implements TicketLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Ticket fetchTicket(
-		java.lang.String key) {
-		return _ticketLocalService.fetchTicket(key);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Ticket fetchTicket(long ticketId) {
-		return _ticketLocalService.fetchTicket(ticketId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Ticket getTicket(
-		java.lang.String key)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ticketLocalService.getTicket(key);
-	}
-
-	/**
-	* Returns the ticket with the primary key.
-	*
-	* @param ticketId the primary key of the ticket
-	* @return the ticket
-	* @throws PortalException if a ticket with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.Ticket getTicket(long ticketId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ticketLocalService.getTicket(ticketId);
-	}
-
-	/**
-	* Updates the ticket in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param ticket the ticket
-	* @return the ticket that was updated
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.Ticket updateTicket(
-		com.liferay.portal.kernel.model.Ticket ticket) {
-		return _ticketLocalService.updateTicket(ticket);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Ticket updateTicket(long ticketId,
-		java.lang.String className, long classPK, int type,
-		java.lang.String extraInfo, java.util.Date expirationDate)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ticketLocalService.updateTicket(ticketId, className, classPK,
-			type, extraInfo, expirationDate);
-	}
-
-	/**
-	* Returns the number of tickets.
-	*
-	* @return the number of tickets
-	*/
-	@Override
-	public int getTicketsCount() {
-		return _ticketLocalService.getTicketsCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _ticketLocalService.getOSGiServiceIdentifier();
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _ticketLocalService.dynamicQuery();
 	}
 
 	/**
@@ -254,6 +165,90 @@ public class TicketLocalServiceWrapper implements TicketLocalService,
 	}
 
 	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _ticketLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _ticketLocalService.dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Ticket fetchTicket(
+		java.lang.String key) {
+		return _ticketLocalService.fetchTicket(key);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Ticket fetchTicket(long ticketId) {
+		return _ticketLocalService.fetchTicket(ticketId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _ticketLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _ticketLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _ticketLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ticketLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Ticket getTicket(
+		java.lang.String key)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ticketLocalService.getTicket(key);
+	}
+
+	/**
+	* Returns the ticket with the primary key.
+	*
+	* @param ticketId the primary key of the ticket
+	* @return the ticket
+	* @throws PortalException if a ticket with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.Ticket getTicket(long ticketId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ticketLocalService.getTicket(ticketId);
+	}
+
+	/**
 	* Returns a range of all the tickets.
 	*
 	* <p>
@@ -278,29 +273,34 @@ public class TicketLocalServiceWrapper implements TicketLocalService,
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of tickets.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of tickets
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _ticketLocalService.dynamicQueryCount(dynamicQuery);
+	public int getTicketsCount() {
+		return _ticketLocalService.getTicketsCount();
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Updates the ticket in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @param ticket the ticket
+	* @return the ticket that was updated
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _ticketLocalService.dynamicQueryCount(dynamicQuery, projection);
+	public com.liferay.portal.kernel.model.Ticket updateTicket(
+		com.liferay.portal.kernel.model.Ticket ticket) {
+		return _ticketLocalService.updateTicket(ticket);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Ticket updateTicket(long ticketId,
+		java.lang.String className, long classPK, int type,
+		java.lang.String extraInfo, java.util.Date expirationDate)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ticketLocalService.updateTicket(ticketId, className, classPK,
+			type, extraInfo, expirationDate);
 	}
 
 	@Override

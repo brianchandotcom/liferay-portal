@@ -179,19 +179,375 @@ public class DDLRecordSetVersionWrapper implements DDLRecordSetVersion,
 	}
 
 	@Override
+	public java.lang.Object clone() {
+		return new DDLRecordSetVersionWrapper((DDLRecordSetVersion)_ddlRecordSetVersion.clone());
+	}
+
+	@Override
+	public int compareTo(DDLRecordSetVersion ddlRecordSetVersion) {
+		return _ddlRecordSetVersion.compareTo(ddlRecordSetVersion);
+	}
+
+	@Override
+	public java.lang.String[] getAvailableLanguageIds() {
+		return _ddlRecordSetVersion.getAvailableLanguageIds();
+	}
+
+	/**
+	* Returns the company ID of this ddl record set version.
+	*
+	* @return the company ID of this ddl record set version
+	*/
+	@Override
+	public long getCompanyId() {
+		return _ddlRecordSetVersion.getCompanyId();
+	}
+
+	/**
+	* Returns the create date of this ddl record set version.
+	*
+	* @return the create date of this ddl record set version
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _ddlRecordSetVersion.getCreateDate();
+	}
+
+	@Override
+	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion getDDMStructureVersion()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecordSetVersion.getDDMStructureVersion();
+	}
+
+	/**
+	* Returns the ddm structure version ID of this ddl record set version.
+	*
+	* @return the ddm structure version ID of this ddl record set version
+	*/
+	@Override
+	public long getDDMStructureVersionId() {
+		return _ddlRecordSetVersion.getDDMStructureVersionId();
+	}
+
+	@Override
+	public java.lang.String getDefaultLanguageId() {
+		return _ddlRecordSetVersion.getDefaultLanguageId();
+	}
+
+	/**
+	* Returns the description of this ddl record set version.
+	*
+	* @return the description of this ddl record set version
+	*/
+	@Override
+	public java.lang.String getDescription() {
+		return _ddlRecordSetVersion.getDescription();
+	}
+
+	/**
+	* Returns the localized description of this ddl record set version in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized description of this ddl record set version
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId) {
+		return _ddlRecordSetVersion.getDescription(languageId);
+	}
+
+	/**
+	* Returns the localized description of this ddl record set version in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized description of this ddl record set version
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId,
+		boolean useDefault) {
+		return _ddlRecordSetVersion.getDescription(languageId, useDefault);
+	}
+
+	/**
+	* Returns the localized description of this ddl record set version in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized description of this ddl record set version
+	*/
+	@Override
+	public java.lang.String getDescription(java.util.Locale locale) {
+		return _ddlRecordSetVersion.getDescription(locale);
+	}
+
+	/**
+	* Returns the localized description of this ddl record set version in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized description of this ddl record set version. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getDescription(java.util.Locale locale,
+		boolean useDefault) {
+		return _ddlRecordSetVersion.getDescription(locale, useDefault);
+	}
+
+	@Override
+	public java.lang.String getDescriptionCurrentLanguageId() {
+		return _ddlRecordSetVersion.getDescriptionCurrentLanguageId();
+	}
+
+	@Override
+	public java.lang.String getDescriptionCurrentValue() {
+		return _ddlRecordSetVersion.getDescriptionCurrentValue();
+	}
+
+	/**
+	* Returns a map of the locales and localized descriptions of this ddl record set version.
+	*
+	* @return the locales and localized descriptions of this ddl record set version
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+		return _ddlRecordSetVersion.getDescriptionMap();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _ddlRecordSetVersion.getExpandoBridge();
+	}
+
+	/**
+	* Returns the group ID of this ddl record set version.
+	*
+	* @return the group ID of this ddl record set version
+	*/
+	@Override
+	public long getGroupId() {
+		return _ddlRecordSetVersion.getGroupId();
+	}
+
+	/**
+	* Returns the name of this ddl record set version.
+	*
+	* @return the name of this ddl record set version
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _ddlRecordSetVersion.getName();
+	}
+
+	/**
+	* Returns the localized name of this ddl record set version in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized name of this ddl record set version
+	*/
+	@Override
+	public java.lang.String getName(java.lang.String languageId) {
+		return _ddlRecordSetVersion.getName(languageId);
+	}
+
+	/**
+	* Returns the localized name of this ddl record set version in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized name of this ddl record set version
+	*/
+	@Override
+	public java.lang.String getName(java.lang.String languageId,
+		boolean useDefault) {
+		return _ddlRecordSetVersion.getName(languageId, useDefault);
+	}
+
+	/**
+	* Returns the localized name of this ddl record set version in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized name of this ddl record set version
+	*/
+	@Override
+	public java.lang.String getName(java.util.Locale locale) {
+		return _ddlRecordSetVersion.getName(locale);
+	}
+
+	/**
+	* Returns the localized name of this ddl record set version in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized name of this ddl record set version. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
+		return _ddlRecordSetVersion.getName(locale, useDefault);
+	}
+
+	@Override
+	public java.lang.String getNameCurrentLanguageId() {
+		return _ddlRecordSetVersion.getNameCurrentLanguageId();
+	}
+
+	@Override
+	public java.lang.String getNameCurrentValue() {
+		return _ddlRecordSetVersion.getNameCurrentValue();
+	}
+
+	/**
+	* Returns a map of the locales and localized names of this ddl record set version.
+	*
+	* @return the locales and localized names of this ddl record set version
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getNameMap() {
+		return _ddlRecordSetVersion.getNameMap();
+	}
+
+	/**
+	* Returns the primary key of this ddl record set version.
+	*
+	* @return the primary key of this ddl record set version
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _ddlRecordSetVersion.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _ddlRecordSetVersion.getPrimaryKeyObj();
+	}
+
+	@Override
 	public DDLRecordSet getRecordSet()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordSetVersion.getRecordSet();
 	}
 
+	/**
+	* Returns the record set ID of this ddl record set version.
+	*
+	* @return the record set ID of this ddl record set version
+	*/
 	@Override
-	public DDLRecordSetVersion toEscapedModel() {
-		return new DDLRecordSetVersionWrapper(_ddlRecordSetVersion.toEscapedModel());
+	public long getRecordSetId() {
+		return _ddlRecordSetVersion.getRecordSetId();
+	}
+
+	/**
+	* Returns the record set version ID of this ddl record set version.
+	*
+	* @return the record set version ID of this ddl record set version
+	*/
+	@Override
+	public long getRecordSetVersionId() {
+		return _ddlRecordSetVersion.getRecordSetVersionId();
+	}
+
+	/**
+	* Returns the settings of this ddl record set version.
+	*
+	* @return the settings of this ddl record set version
+	*/
+	@Override
+	public java.lang.String getSettings() {
+		return _ddlRecordSetVersion.getSettings();
+	}
+
+	/**
+	* Returns the status of this ddl record set version.
+	*
+	* @return the status of this ddl record set version
+	*/
+	@Override
+	public int getStatus() {
+		return _ddlRecordSetVersion.getStatus();
+	}
+
+	/**
+	* Returns the status by user ID of this ddl record set version.
+	*
+	* @return the status by user ID of this ddl record set version
+	*/
+	@Override
+	public long getStatusByUserId() {
+		return _ddlRecordSetVersion.getStatusByUserId();
+	}
+
+	/**
+	* Returns the status by user name of this ddl record set version.
+	*
+	* @return the status by user name of this ddl record set version
+	*/
+	@Override
+	public java.lang.String getStatusByUserName() {
+		return _ddlRecordSetVersion.getStatusByUserName();
+	}
+
+	/**
+	* Returns the status by user uuid of this ddl record set version.
+	*
+	* @return the status by user uuid of this ddl record set version
+	*/
+	@Override
+	public java.lang.String getStatusByUserUuid() {
+		return _ddlRecordSetVersion.getStatusByUserUuid();
+	}
+
+	/**
+	* Returns the status date of this ddl record set version.
+	*
+	* @return the status date of this ddl record set version
+	*/
+	@Override
+	public Date getStatusDate() {
+		return _ddlRecordSetVersion.getStatusDate();
+	}
+
+	/**
+	* Returns the user ID of this ddl record set version.
+	*
+	* @return the user ID of this ddl record set version
+	*/
+	@Override
+	public long getUserId() {
+		return _ddlRecordSetVersion.getUserId();
+	}
+
+	/**
+	* Returns the user name of this ddl record set version.
+	*
+	* @return the user name of this ddl record set version
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _ddlRecordSetVersion.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this ddl record set version.
+	*
+	* @return the user uuid of this ddl record set version
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _ddlRecordSetVersion.getUserUuid();
+	}
+
+	/**
+	* Returns the version of this ddl record set version.
+	*
+	* @return the version of this ddl record set version
+	*/
+	@Override
+	public java.lang.String getVersion() {
+		return _ddlRecordSetVersion.getVersion();
 	}
 
 	@Override
-	public DDLRecordSetVersion toUnescapedModel() {
-		return new DDLRecordSetVersionWrapper(_ddlRecordSetVersion.toUnescapedModel());
+	public int hashCode() {
+		return _ddlRecordSetVersion.hashCode();
 	}
 
 	/**
@@ -287,387 +643,6 @@ public class DDLRecordSetVersionWrapper implements DDLRecordSetVersion,
 	@Override
 	public boolean isScheduled() {
 		return _ddlRecordSetVersion.isScheduled();
-	}
-
-	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion getDDMStructureVersion()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecordSetVersion.getDDMStructureVersion();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _ddlRecordSetVersion.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<DDLRecordSetVersion> toCacheModel() {
-		return _ddlRecordSetVersion.toCacheModel();
-	}
-
-	@Override
-	public int compareTo(DDLRecordSetVersion ddlRecordSetVersion) {
-		return _ddlRecordSetVersion.compareTo(ddlRecordSetVersion);
-	}
-
-	/**
-	* Returns the status of this ddl record set version.
-	*
-	* @return the status of this ddl record set version
-	*/
-	@Override
-	public int getStatus() {
-		return _ddlRecordSetVersion.getStatus();
-	}
-
-	@Override
-	public int hashCode() {
-		return _ddlRecordSetVersion.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _ddlRecordSetVersion.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new DDLRecordSetVersionWrapper((DDLRecordSetVersion)_ddlRecordSetVersion.clone());
-	}
-
-	@Override
-	public java.lang.String getDefaultLanguageId() {
-		return _ddlRecordSetVersion.getDefaultLanguageId();
-	}
-
-	/**
-	* Returns the description of this ddl record set version.
-	*
-	* @return the description of this ddl record set version
-	*/
-	@Override
-	public java.lang.String getDescription() {
-		return _ddlRecordSetVersion.getDescription();
-	}
-
-	/**
-	* Returns the localized description of this ddl record set version in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @return the localized description of this ddl record set version
-	*/
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId) {
-		return _ddlRecordSetVersion.getDescription(languageId);
-	}
-
-	/**
-	* Returns the localized description of this ddl record set version in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized description of this ddl record set version
-	*/
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId,
-		boolean useDefault) {
-		return _ddlRecordSetVersion.getDescription(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized description of this ddl record set version in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized description of this ddl record set version
-	*/
-	@Override
-	public java.lang.String getDescription(java.util.Locale locale) {
-		return _ddlRecordSetVersion.getDescription(locale);
-	}
-
-	/**
-	* Returns the localized description of this ddl record set version in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized description of this ddl record set version. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getDescription(java.util.Locale locale,
-		boolean useDefault) {
-		return _ddlRecordSetVersion.getDescription(locale, useDefault);
-	}
-
-	@Override
-	public java.lang.String getDescriptionCurrentLanguageId() {
-		return _ddlRecordSetVersion.getDescriptionCurrentLanguageId();
-	}
-
-	@Override
-	public java.lang.String getDescriptionCurrentValue() {
-		return _ddlRecordSetVersion.getDescriptionCurrentValue();
-	}
-
-	/**
-	* Returns the name of this ddl record set version.
-	*
-	* @return the name of this ddl record set version
-	*/
-	@Override
-	public java.lang.String getName() {
-		return _ddlRecordSetVersion.getName();
-	}
-
-	/**
-	* Returns the localized name of this ddl record set version in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @return the localized name of this ddl record set version
-	*/
-	@Override
-	public java.lang.String getName(java.lang.String languageId) {
-		return _ddlRecordSetVersion.getName(languageId);
-	}
-
-	/**
-	* Returns the localized name of this ddl record set version in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized name of this ddl record set version
-	*/
-	@Override
-	public java.lang.String getName(java.lang.String languageId,
-		boolean useDefault) {
-		return _ddlRecordSetVersion.getName(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized name of this ddl record set version in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized name of this ddl record set version
-	*/
-	@Override
-	public java.lang.String getName(java.util.Locale locale) {
-		return _ddlRecordSetVersion.getName(locale);
-	}
-
-	/**
-	* Returns the localized name of this ddl record set version in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized name of this ddl record set version. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
-		return _ddlRecordSetVersion.getName(locale, useDefault);
-	}
-
-	@Override
-	public java.lang.String getNameCurrentLanguageId() {
-		return _ddlRecordSetVersion.getNameCurrentLanguageId();
-	}
-
-	@Override
-	public java.lang.String getNameCurrentValue() {
-		return _ddlRecordSetVersion.getNameCurrentValue();
-	}
-
-	/**
-	* Returns the settings of this ddl record set version.
-	*
-	* @return the settings of this ddl record set version
-	*/
-	@Override
-	public java.lang.String getSettings() {
-		return _ddlRecordSetVersion.getSettings();
-	}
-
-	/**
-	* Returns the status by user name of this ddl record set version.
-	*
-	* @return the status by user name of this ddl record set version
-	*/
-	@Override
-	public java.lang.String getStatusByUserName() {
-		return _ddlRecordSetVersion.getStatusByUserName();
-	}
-
-	/**
-	* Returns the status by user uuid of this ddl record set version.
-	*
-	* @return the status by user uuid of this ddl record set version
-	*/
-	@Override
-	public java.lang.String getStatusByUserUuid() {
-		return _ddlRecordSetVersion.getStatusByUserUuid();
-	}
-
-	/**
-	* Returns the user name of this ddl record set version.
-	*
-	* @return the user name of this ddl record set version
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _ddlRecordSetVersion.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this ddl record set version.
-	*
-	* @return the user uuid of this ddl record set version
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _ddlRecordSetVersion.getUserUuid();
-	}
-
-	/**
-	* Returns the version of this ddl record set version.
-	*
-	* @return the version of this ddl record set version
-	*/
-	@Override
-	public java.lang.String getVersion() {
-		return _ddlRecordSetVersion.getVersion();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _ddlRecordSetVersion.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _ddlRecordSetVersion.toXmlString();
-	}
-
-	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
-		return _ddlRecordSetVersion.getAvailableLanguageIds();
-	}
-
-	/**
-	* Returns the create date of this ddl record set version.
-	*
-	* @return the create date of this ddl record set version
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _ddlRecordSetVersion.getCreateDate();
-	}
-
-	/**
-	* Returns the status date of this ddl record set version.
-	*
-	* @return the status date of this ddl record set version
-	*/
-	@Override
-	public Date getStatusDate() {
-		return _ddlRecordSetVersion.getStatusDate();
-	}
-
-	/**
-	* Returns a map of the locales and localized descriptions of this ddl record set version.
-	*
-	* @return the locales and localized descriptions of this ddl record set version
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
-		return _ddlRecordSetVersion.getDescriptionMap();
-	}
-
-	/**
-	* Returns a map of the locales and localized names of this ddl record set version.
-	*
-	* @return the locales and localized names of this ddl record set version
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getNameMap() {
-		return _ddlRecordSetVersion.getNameMap();
-	}
-
-	/**
-	* Returns the company ID of this ddl record set version.
-	*
-	* @return the company ID of this ddl record set version
-	*/
-	@Override
-	public long getCompanyId() {
-		return _ddlRecordSetVersion.getCompanyId();
-	}
-
-	/**
-	* Returns the ddm structure version ID of this ddl record set version.
-	*
-	* @return the ddm structure version ID of this ddl record set version
-	*/
-	@Override
-	public long getDDMStructureVersionId() {
-		return _ddlRecordSetVersion.getDDMStructureVersionId();
-	}
-
-	/**
-	* Returns the group ID of this ddl record set version.
-	*
-	* @return the group ID of this ddl record set version
-	*/
-	@Override
-	public long getGroupId() {
-		return _ddlRecordSetVersion.getGroupId();
-	}
-
-	/**
-	* Returns the primary key of this ddl record set version.
-	*
-	* @return the primary key of this ddl record set version
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _ddlRecordSetVersion.getPrimaryKey();
-	}
-
-	/**
-	* Returns the record set ID of this ddl record set version.
-	*
-	* @return the record set ID of this ddl record set version
-	*/
-	@Override
-	public long getRecordSetId() {
-		return _ddlRecordSetVersion.getRecordSetId();
-	}
-
-	/**
-	* Returns the record set version ID of this ddl record set version.
-	*
-	* @return the record set version ID of this ddl record set version
-	*/
-	@Override
-	public long getRecordSetVersionId() {
-		return _ddlRecordSetVersion.getRecordSetVersionId();
-	}
-
-	/**
-	* Returns the status by user ID of this ddl record set version.
-	*
-	* @return the status by user ID of this ddl record set version
-	*/
-	@Override
-	public long getStatusByUserId() {
-		return _ddlRecordSetVersion.getStatusByUserId();
-	}
-
-	/**
-	* Returns the user ID of this ddl record set version.
-	*
-	* @return the user ID of this ddl record set version
-	*/
-	@Override
-	public long getUserId() {
-		return _ddlRecordSetVersion.getUserId();
 	}
 
 	@Override
@@ -1012,6 +987,31 @@ public class DDLRecordSetVersionWrapper implements DDLRecordSetVersion,
 	@Override
 	public void setVersion(java.lang.String version) {
 		_ddlRecordSetVersion.setVersion(version);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<DDLRecordSetVersion> toCacheModel() {
+		return _ddlRecordSetVersion.toCacheModel();
+	}
+
+	@Override
+	public DDLRecordSetVersion toEscapedModel() {
+		return new DDLRecordSetVersionWrapper(_ddlRecordSetVersion.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _ddlRecordSetVersion.toString();
+	}
+
+	@Override
+	public DDLRecordSetVersion toUnescapedModel() {
+		return new DDLRecordSetVersionWrapper(_ddlRecordSetVersion.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _ddlRecordSetVersion.toXmlString();
 	}
 
 	@Override

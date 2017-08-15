@@ -34,44 +34,6 @@ public class SiteFriendlyURLLocalServiceWrapper
 		_siteFriendlyURLLocalService = siteFriendlyURLLocalService;
 	}
 
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _siteFriendlyURLLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _siteFriendlyURLLocalService.dynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return _siteFriendlyURLLocalService.getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _siteFriendlyURLLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _siteFriendlyURLLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _siteFriendlyURLLocalService.getPersistedModel(primaryKeyObj);
-	}
-
 	/**
 	* Adds the site friendly url to the database. Also notifies the appropriate model listeners.
 	*
@@ -94,6 +56,16 @@ public class SiteFriendlyURLLocalServiceWrapper
 			companyId, groupId, friendlyURL, languageId, serviceContext);
 	}
 
+	@Override
+	public java.util.List<com.liferay.site.model.SiteFriendlyURL> addSiteFriendlyURLs(
+		long userId, long companyId, long groupId,
+		java.util.Map<java.util.Locale, java.lang.String> friendlyURLMap,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _siteFriendlyURLLocalService.addSiteFriendlyURLs(userId,
+			companyId, groupId, friendlyURLMap, serviceContext);
+	}
+
 	/**
 	* Creates a new site friendly url with the primary key. Does not add the site friendly url to the database.
 	*
@@ -107,6 +79,16 @@ public class SiteFriendlyURLLocalServiceWrapper
 	}
 
 	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _siteFriendlyURLLocalService.deletePersistedModel(persistedModel);
+	}
+
+	/**
 	* Deletes the site friendly url from the database. Also notifies the appropriate model listeners.
 	*
 	* @param siteFriendlyURL the site friendly url
@@ -116,14 +98,6 @@ public class SiteFriendlyURLLocalServiceWrapper
 	public com.liferay.site.model.SiteFriendlyURL deleteSiteFriendlyURL(
 		com.liferay.site.model.SiteFriendlyURL siteFriendlyURL) {
 		return _siteFriendlyURLLocalService.deleteSiteFriendlyURL(siteFriendlyURL);
-	}
-
-	@Override
-	public com.liferay.site.model.SiteFriendlyURL deleteSiteFriendlyURL(
-		long companyId, long groupId, java.lang.String languageId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _siteFriendlyURLLocalService.deleteSiteFriendlyURL(companyId,
-			groupId, languageId);
 	}
 
 	/**
@@ -141,119 +115,21 @@ public class SiteFriendlyURLLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.site.model.SiteFriendlyURL fetchSiteFriendlyURL(
-		long companyId, long groupId, java.lang.String languageId) {
-		return _siteFriendlyURLLocalService.fetchSiteFriendlyURL(companyId,
+	public com.liferay.site.model.SiteFriendlyURL deleteSiteFriendlyURL(
+		long companyId, long groupId, java.lang.String languageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _siteFriendlyURLLocalService.deleteSiteFriendlyURL(companyId,
 			groupId, languageId);
 	}
 
 	@Override
-	public com.liferay.site.model.SiteFriendlyURL fetchSiteFriendlyURL(
-		long siteFriendlyURLId) {
-		return _siteFriendlyURLLocalService.fetchSiteFriendlyURL(siteFriendlyURLId);
+	public void deleteSiteFriendlyURLs(long companyId, long groupId) {
+		_siteFriendlyURLLocalService.deleteSiteFriendlyURLs(companyId, groupId);
 	}
 
 	@Override
-	public com.liferay.site.model.SiteFriendlyURL fetchSiteFriendlyURLByFriendlyURL(
-		long companyId, java.lang.String friendlyURL) {
-		return _siteFriendlyURLLocalService.fetchSiteFriendlyURLByFriendlyURL(companyId,
-			friendlyURL);
-	}
-
-	/**
-	* Returns the site friendly url matching the UUID and group.
-	*
-	* @param uuid the site friendly url's UUID
-	* @param groupId the primary key of the group
-	* @return the matching site friendly url, or <code>null</code> if a matching site friendly url could not be found
-	*/
-	@Override
-	public com.liferay.site.model.SiteFriendlyURL fetchSiteFriendlyURLByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return _siteFriendlyURLLocalService.fetchSiteFriendlyURLByUuidAndGroupId(uuid,
-			groupId);
-	}
-
-	/**
-	* Returns the site friendly url with the primary key.
-	*
-	* @param siteFriendlyURLId the primary key of the site friendly url
-	* @return the site friendly url
-	* @throws PortalException if a site friendly url with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.site.model.SiteFriendlyURL getSiteFriendlyURL(
-		long siteFriendlyURLId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _siteFriendlyURLLocalService.getSiteFriendlyURL(siteFriendlyURLId);
-	}
-
-	/**
-	* Returns the site friendly url matching the UUID and group.
-	*
-	* @param uuid the site friendly url's UUID
-	* @param groupId the primary key of the group
-	* @return the matching site friendly url
-	* @throws PortalException if a matching site friendly url could not be found
-	*/
-	@Override
-	public com.liferay.site.model.SiteFriendlyURL getSiteFriendlyURLByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _siteFriendlyURLLocalService.getSiteFriendlyURLByUuidAndGroupId(uuid,
-			groupId);
-	}
-
-	/**
-	* Updates the site friendly url in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param siteFriendlyURL the site friendly url
-	* @return the site friendly url that was updated
-	*/
-	@Override
-	public com.liferay.site.model.SiteFriendlyURL updateSiteFriendlyURL(
-		com.liferay.site.model.SiteFriendlyURL siteFriendlyURL) {
-		return _siteFriendlyURLLocalService.updateSiteFriendlyURL(siteFriendlyURL);
-	}
-
-	@Override
-	public com.liferay.site.model.SiteFriendlyURL updateSiteFriendlyURL(
-		long userId, long companyId, long groupId,
-		java.lang.String friendlyURL, java.lang.String languageId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _siteFriendlyURLLocalService.updateSiteFriendlyURL(userId,
-			companyId, groupId, friendlyURL, languageId, serviceContext);
-	}
-
-	/**
-	* Returns the number of site friendly urls.
-	*
-	* @return the number of site friendly urls
-	*/
-	@Override
-	public int getSiteFriendlyURLsCount() {
-		return _siteFriendlyURLLocalService.getSiteFriendlyURLsCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _siteFriendlyURLLocalService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public java.util.List<com.liferay.site.model.SiteFriendlyURL> addSiteFriendlyURLs(
-		long userId, long companyId, long groupId,
-		java.util.Map<java.util.Locale, java.lang.String> friendlyURLMap,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _siteFriendlyURLLocalService.addSiteFriendlyURLs(userId,
-			companyId, groupId, friendlyURLMap, serviceContext);
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _siteFriendlyURLLocalService.dynamicQuery();
 	}
 
 	/**
@@ -308,6 +184,130 @@ public class SiteFriendlyURLLocalServiceWrapper
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _siteFriendlyURLLocalService.dynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _siteFriendlyURLLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _siteFriendlyURLLocalService.dynamicQueryCount(dynamicQuery,
+			projection);
+	}
+
+	@Override
+	public com.liferay.site.model.SiteFriendlyURL fetchSiteFriendlyURL(
+		long siteFriendlyURLId) {
+		return _siteFriendlyURLLocalService.fetchSiteFriendlyURL(siteFriendlyURLId);
+	}
+
+	@Override
+	public com.liferay.site.model.SiteFriendlyURL fetchSiteFriendlyURL(
+		long companyId, long groupId, java.lang.String languageId) {
+		return _siteFriendlyURLLocalService.fetchSiteFriendlyURL(companyId,
+			groupId, languageId);
+	}
+
+	@Override
+	public com.liferay.site.model.SiteFriendlyURL fetchSiteFriendlyURLByFriendlyURL(
+		long companyId, java.lang.String friendlyURL) {
+		return _siteFriendlyURLLocalService.fetchSiteFriendlyURLByFriendlyURL(companyId,
+			friendlyURL);
+	}
+
+	/**
+	* Returns the site friendly url matching the UUID and group.
+	*
+	* @param uuid the site friendly url's UUID
+	* @param groupId the primary key of the group
+	* @return the matching site friendly url, or <code>null</code> if a matching site friendly url could not be found
+	*/
+	@Override
+	public com.liferay.site.model.SiteFriendlyURL fetchSiteFriendlyURLByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return _siteFriendlyURLLocalService.fetchSiteFriendlyURLByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _siteFriendlyURLLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return _siteFriendlyURLLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _siteFriendlyURLLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _siteFriendlyURLLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _siteFriendlyURLLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Returns the site friendly url with the primary key.
+	*
+	* @param siteFriendlyURLId the primary key of the site friendly url
+	* @return the site friendly url
+	* @throws PortalException if a site friendly url with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.site.model.SiteFriendlyURL getSiteFriendlyURL(
+		long siteFriendlyURLId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _siteFriendlyURLLocalService.getSiteFriendlyURL(siteFriendlyURLId);
+	}
+
+	/**
+	* Returns the site friendly url matching the UUID and group.
+	*
+	* @param uuid the site friendly url's UUID
+	* @param groupId the primary key of the group
+	* @return the matching site friendly url
+	* @throws PortalException if a matching site friendly url could not be found
+	*/
+	@Override
+	public com.liferay.site.model.SiteFriendlyURL getSiteFriendlyURLByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _siteFriendlyURLLocalService.getSiteFriendlyURLByUuidAndGroupId(uuid,
+			groupId);
 	}
 
 	/**
@@ -366,6 +366,38 @@ public class SiteFriendlyURLLocalServiceWrapper
 			companyId, start, end, orderByComparator);
 	}
 
+	/**
+	* Returns the number of site friendly urls.
+	*
+	* @return the number of site friendly urls
+	*/
+	@Override
+	public int getSiteFriendlyURLsCount() {
+		return _siteFriendlyURLLocalService.getSiteFriendlyURLsCount();
+	}
+
+	/**
+	* Updates the site friendly url in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param siteFriendlyURL the site friendly url
+	* @return the site friendly url that was updated
+	*/
+	@Override
+	public com.liferay.site.model.SiteFriendlyURL updateSiteFriendlyURL(
+		com.liferay.site.model.SiteFriendlyURL siteFriendlyURL) {
+		return _siteFriendlyURLLocalService.updateSiteFriendlyURL(siteFriendlyURL);
+	}
+
+	@Override
+	public com.liferay.site.model.SiteFriendlyURL updateSiteFriendlyURL(
+		long userId, long companyId, long groupId,
+		java.lang.String friendlyURL, java.lang.String languageId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _siteFriendlyURLLocalService.updateSiteFriendlyURL(userId,
+			companyId, groupId, friendlyURL, languageId, serviceContext);
+	}
+
 	@Override
 	public java.util.List<com.liferay.site.model.SiteFriendlyURL> updateSiteFriendlyURLs(
 		long userId, long companyId, long groupId,
@@ -374,38 +406,6 @@ public class SiteFriendlyURLLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _siteFriendlyURLLocalService.updateSiteFriendlyURLs(userId,
 			companyId, groupId, friendlyURLMap, serviceContext);
-	}
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _siteFriendlyURLLocalService.dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _siteFriendlyURLLocalService.dynamicQueryCount(dynamicQuery,
-			projection);
-	}
-
-	@Override
-	public void deleteSiteFriendlyURLs(long companyId, long groupId) {
-		_siteFriendlyURLLocalService.deleteSiteFriendlyURLs(companyId, groupId);
 	}
 
 	@Override

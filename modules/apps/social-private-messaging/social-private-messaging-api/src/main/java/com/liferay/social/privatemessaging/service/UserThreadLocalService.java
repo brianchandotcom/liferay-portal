@@ -76,26 +76,6 @@ public interface UserThreadLocalService extends BaseLocalService,
 		List<ObjectValuePair<java.lang.String, InputStream>> inputStreamOVPs,
 		ThemeDisplay themeDisplay) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
 	/**
 	* Adds the user thread to the database. Also notifies the appropriate model listeners.
 	*
@@ -105,6 +85,10 @@ public interface UserThreadLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public UserThread addUserThread(UserThread userThread);
 
+	public void addUserThread(long userId, long mbThreadId,
+		long topMBMessageId, boolean read, boolean deleted)
+		throws PortalException;
+
 	/**
 	* Creates a new user thread with the primary key. Does not add the user thread to the database.
 	*
@@ -112,6 +96,15 @@ public interface UserThreadLocalService extends BaseLocalService,
 	* @return the new user thread
 	*/
 	public UserThread createUserThread(long userThreadId);
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
+
+	public void deleteUser(long userId) throws PortalException;
 
 	/**
 	* Deletes the user thread from the database. Also notifies the appropriate model listeners.
@@ -133,57 +126,10 @@ public interface UserThreadLocalService extends BaseLocalService,
 	public UserThread deleteUserThread(long userThreadId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public UserThread fetchUserThread(long userId, long mbThreadId)
+	public void deleteUserThread(long userId, long mbThreadId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public UserThread fetchUserThread(long userThreadId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public UserThread getUserThread(long userId, long mbThreadId)
-		throws PortalException;
-
-	/**
-	* Returns the user thread with the primary key.
-	*
-	* @param userThreadId the primary key of the user thread
-	* @return the user thread
-	* @throws PortalException if a user thread with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public UserThread getUserThread(long userThreadId)
-		throws PortalException;
-
-	/**
-	* Updates the user thread in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param userThread the user thread
-	* @return the user thread that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public UserThread updateUserThread(UserThread userThread);
-
-	/**
-	* Returns the number of user threads.
-	*
-	* @return the number of user threads
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getUserThreadsCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getUserUserThreadCount(long userId, boolean deleted);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getUserUserThreadCount(long userId, boolean read, boolean deleted);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -224,34 +170,6 @@ public interface UserThreadLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<UserThread> getMBThreadUserThreads(long mbThreadId);
-
-	/**
-	* Returns a range of all the user threads.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.social.privatemessaging.model.impl.UserThreadModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of user threads
-	* @param end the upper bound of the range of user threads (not inclusive)
-	* @return the range of user threads
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<UserThread> getUserThreads(int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<UserThread> getUserUserThreads(long userId, boolean deleted);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<UserThread> getUserUserThreads(long userId, boolean deleted,
-		int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<UserThread> getUserUserThreads(long userId, boolean read,
-		boolean deleted);
-
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -270,14 +188,87 @@ public interface UserThreadLocalService extends BaseLocalService,
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
 
-	public void addUserThread(long userId, long mbThreadId,
-		long topMBMessageId, boolean read, boolean deleted)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public UserThread fetchUserThread(long userThreadId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public UserThread fetchUserThread(long userId, long mbThreadId)
 		throws PortalException;
 
-	public void deleteUser(long userId) throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
-	public void deleteUserThread(long userId, long mbThreadId)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<UserThread> getMBThreadUserThreads(long mbThreadId);
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	/**
+	* Returns the user thread with the primary key.
+	*
+	* @param userThreadId the primary key of the user thread
+	* @return the user thread
+	* @throws PortalException if a user thread with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public UserThread getUserThread(long userThreadId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public UserThread getUserThread(long userId, long mbThreadId)
+		throws PortalException;
+
+	/**
+	* Returns a range of all the user threads.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.social.privatemessaging.model.impl.UserThreadModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of user threads
+	* @param end the upper bound of the range of user threads (not inclusive)
+	* @return the range of user threads
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<UserThread> getUserThreads(int start, int end);
+
+	/**
+	* Returns the number of user threads.
+	*
+	* @return the number of user threads
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserThreadsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserUserThreadCount(long userId, boolean deleted);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserUserThreadCount(long userId, boolean read, boolean deleted);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<UserThread> getUserUserThreads(long userId, boolean deleted);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<UserThread> getUserUserThreads(long userId, boolean read,
+		boolean deleted);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<UserThread> getUserUserThreads(long userId, boolean deleted,
+		int start, int end);
 
 	public void markUserThreadAsRead(long userId, long mbThreadId)
 		throws PortalException;
@@ -286,4 +277,13 @@ public interface UserThreadLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public void updateUserName(User user);
+
+	/**
+	* Updates the user thread in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param userThread the user thread
+	* @return the user thread that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public UserThread updateUserThread(UserThread userThread);
 }

@@ -43,21 +43,9 @@ public class OrgLaborServiceWrapper implements OrgLaborService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.OrgLabor getOrgLabor(long orgLaborId)
+	public void deleteOrgLabor(long orgLaborId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _orgLaborService.getOrgLabor(orgLaborId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.OrgLabor updateOrgLabor(
-		long orgLaborId, long typeId, int sunOpen, int sunClose, int monOpen,
-		int monClose, int tueOpen, int tueClose, int wedOpen, int wedClose,
-		int thuOpen, int thuClose, int friOpen, int friClose, int satOpen,
-		int satClose)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _orgLaborService.updateOrgLabor(orgLaborId, typeId, sunOpen,
-			sunClose, monOpen, monClose, tueOpen, tueClose, wedOpen, wedClose,
-			thuOpen, thuClose, friOpen, friClose, satOpen, satClose);
+		_orgLaborService.deleteOrgLabor(orgLaborId);
 	}
 
 	/**
@@ -71,6 +59,12 @@ public class OrgLaborServiceWrapper implements OrgLaborService,
 	}
 
 	@Override
+	public com.liferay.portal.kernel.model.OrgLabor getOrgLabor(long orgLaborId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _orgLaborService.getOrgLabor(orgLaborId);
+	}
+
+	@Override
 	public java.util.List<com.liferay.portal.kernel.model.OrgLabor> getOrgLabors(
 		long organizationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -78,9 +72,15 @@ public class OrgLaborServiceWrapper implements OrgLaborService,
 	}
 
 	@Override
-	public void deleteOrgLabor(long orgLaborId)
+	public com.liferay.portal.kernel.model.OrgLabor updateOrgLabor(
+		long orgLaborId, long typeId, int sunOpen, int sunClose, int monOpen,
+		int monClose, int tueOpen, int tueClose, int wedOpen, int wedClose,
+		int thuOpen, int thuClose, int friOpen, int friClose, int satOpen,
+		int satClose)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_orgLaborService.deleteOrgLabor(orgLaborId);
+		return _orgLaborService.updateOrgLabor(orgLaborId, typeId, sunOpen,
+			sunClose, monOpen, monClose, tueOpen, tueClose, wedOpen, wedClose,
+			thuOpen, thuClose, friOpen, friClose, satOpen, satClose);
 	}
 
 	@Override

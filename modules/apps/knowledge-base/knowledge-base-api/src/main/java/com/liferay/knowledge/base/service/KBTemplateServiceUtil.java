@@ -56,19 +56,26 @@ public class KBTemplateServiceUtil {
 		return getService().deleteKBTemplate(kbTemplateId);
 	}
 
+	public static void deleteKBTemplates(long groupId, long[] kbTemplateIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteKBTemplates(groupId, kbTemplateIds);
+	}
+
+	public static java.util.List<com.liferay.knowledge.base.model.KBTemplate> getGroupKBTemplates(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBTemplate> orderByComparator) {
+		return getService()
+				   .getGroupKBTemplates(groupId, start, end, orderByComparator);
+	}
+
+	public static int getGroupKBTemplatesCount(long groupId) {
+		return getService().getGroupKBTemplatesCount(groupId);
+	}
+
 	public static com.liferay.knowledge.base.model.KBTemplate getKBTemplate(
 		long kbTemplateId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getKBTemplate(kbTemplateId);
-	}
-
-	public static com.liferay.knowledge.base.model.KBTemplate updateKBTemplate(
-		long kbTemplateId, java.lang.String title, java.lang.String content,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateKBTemplate(kbTemplateId, title, content,
-			serviceContext);
 	}
 
 	public static com.liferay.knowledge.base.model.KBTemplateSearchDisplay getKBTemplateSearchDisplay(
@@ -83,10 +90,6 @@ public class KBTemplateServiceUtil {
 			orderByComparator);
 	}
 
-	public static int getGroupKBTemplatesCount(long groupId) {
-		return getService().getGroupKBTemplatesCount(groupId);
-	}
-
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -96,16 +99,13 @@ public class KBTemplateServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static java.util.List<com.liferay.knowledge.base.model.KBTemplate> getGroupKBTemplates(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBTemplate> orderByComparator) {
-		return getService()
-				   .getGroupKBTemplates(groupId, start, end, orderByComparator);
-	}
-
-	public static void deleteKBTemplates(long groupId, long[] kbTemplateIds)
+	public static com.liferay.knowledge.base.model.KBTemplate updateKBTemplate(
+		long kbTemplateId, java.lang.String title, java.lang.String content,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteKBTemplates(groupId, kbTemplateIds);
+		return getService()
+				   .updateKBTemplate(kbTemplateId, title, content,
+			serviceContext);
 	}
 
 	public static KBTemplateService getService() {

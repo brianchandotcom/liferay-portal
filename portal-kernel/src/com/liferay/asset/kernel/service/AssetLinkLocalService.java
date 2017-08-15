@@ -118,42 +118,36 @@ public interface AssetLinkLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public AssetLink deleteAssetLink(long linkId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public AssetLink fetchAssetLink(long linkId);
+	public void deleteGroupLinks(long groupId);
 
 	/**
-	* Returns the asset link with the primary key.
+	* Deletes the asset link.
+	*
+	* @param link the asset link
+	*/
+	public void deleteLink(AssetLink link);
+
+	/**
+	* Deletes the asset link.
 	*
 	* @param linkId the primary key of the asset link
-	* @return the asset link
-	* @throws PortalException if a asset link with the primary key could not be found
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public AssetLink getAssetLink(long linkId) throws PortalException;
+	public void deleteLink(long linkId) throws PortalException;
 
 	/**
-	* Updates the asset link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Deletes all links associated with the asset entry.
 	*
-	* @param assetLink the asset link
-	* @return the asset link that was updated
+	* @param entryId the primary key of the asset entry
 	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public AssetLink updateAssetLink(AssetLink assetLink);
+	public void deleteLinks(long entryId);
 
-	public AssetLink updateLink(long userId, long entryId1, long entryId2,
-		int typeId, int weight) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionbleDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	/**
+	* Delete all links that associate the two asset entries.
+	*
+	* @param entryId1 the primary key of the first asset entry
+	* @param entryId2 the primary key of the second asset entry
+	*/
+	public void deleteLinks(long entryId1, long entryId2);
 
 	/**
 	* @throws PortalException
@@ -162,25 +156,7 @@ public interface AssetLinkLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	* Returns the number of asset links.
-	*
-	* @return the number of asset links
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getAssetLinksCount();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -222,6 +198,40 @@ public interface AssetLinkLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetLink fetchAssetLink(long linkId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
+	* Returns the asset link with the primary key.
+	*
+	* @param linkId the primary key of the asset link
+	* @return the asset link
+	* @throws PortalException if a asset link with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetLink getAssetLink(long linkId) throws PortalException;
+
+	/**
 	* Returns a range of all the asset links.
 	*
 	* <p>
@@ -234,6 +244,14 @@ public interface AssetLinkLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetLink> getAssetLinks(int start, int end);
+
+	/**
+	* Returns the number of asset links.
+	*
+	* @return the number of asset links
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAssetLinksCount();
 
 	/**
 	* Returns all the asset links whose first entry ID is the given entry ID.
@@ -268,6 +286,13 @@ public interface AssetLinkLocalService extends BaseLocalService,
 	public List<AssetLink> getDirectLinks(long entryId, int typeId,
 		boolean excludeInvisibleLinks);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionbleDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
 	/**
 	* Returns all the asset links whose first or second entry ID is the given
 	* entry ID.
@@ -296,6 +321,18 @@ public interface AssetLinkLocalService extends BaseLocalService,
 	public List<AssetLink> getLinks(long entryId, int typeId);
 
 	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
 	* Returns all the asset links of the given link type whose second entry ID
 	* is the given entry ID.
 	*
@@ -312,53 +349,16 @@ public interface AssetLinkLocalService extends BaseLocalService,
 	public List<AssetLink> getReverseLinks(long entryId, int typeId);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Updates the asset link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @param assetLink the asset link
+	* @return the asset link that was updated
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Indexable(type = IndexableType.REINDEX)
+	public AssetLink updateAssetLink(AssetLink assetLink);
 
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	public void deleteGroupLinks(long groupId);
-
-	/**
-	* Deletes the asset link.
-	*
-	* @param link the asset link
-	*/
-	public void deleteLink(AssetLink link);
-
-	/**
-	* Deletes the asset link.
-	*
-	* @param linkId the primary key of the asset link
-	*/
-	public void deleteLink(long linkId) throws PortalException;
-
-	/**
-	* Deletes all links associated with the asset entry.
-	*
-	* @param entryId the primary key of the asset entry
-	*/
-	public void deleteLinks(long entryId);
-
-	/**
-	* Delete all links that associate the two asset entries.
-	*
-	* @param entryId1 the primary key of the first asset entry
-	* @param entryId2 the primary key of the second asset entry
-	*/
-	public void deleteLinks(long entryId1, long entryId2);
+	public AssetLink updateLink(long userId, long entryId1, long entryId2,
+		int typeId, int weight) throws PortalException;
 
 	/**
 	* Updates all links of the asset entry, replacing them with links

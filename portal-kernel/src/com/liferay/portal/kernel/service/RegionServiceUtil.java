@@ -48,25 +48,13 @@ public class RegionServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.Region fetchRegion(
-		long countryId, java.lang.String regionCode) {
-		return getService().fetchRegion(countryId, regionCode);
-	}
-
-	public static com.liferay.portal.kernel.model.Region fetchRegion(
 		long regionId) {
 		return getService().fetchRegion(regionId);
 	}
 
-	public static com.liferay.portal.kernel.model.Region getRegion(
-		long countryId, java.lang.String regionCode)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getRegion(countryId, regionCode);
-	}
-
-	public static com.liferay.portal.kernel.model.Region getRegion(
-		long regionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getRegion(regionId);
+	public static com.liferay.portal.kernel.model.Region fetchRegion(
+		long countryId, java.lang.String regionCode) {
+		return getService().fetchRegion(countryId, regionCode);
 	}
 
 	/**
@@ -76,6 +64,18 @@ public class RegionServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.model.Region getRegion(
+		long regionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getRegion(regionId);
+	}
+
+	public static com.liferay.portal.kernel.model.Region getRegion(
+		long countryId, java.lang.String regionCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getRegion(countryId, regionCode);
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.Region> getRegions() {

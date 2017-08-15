@@ -130,18 +130,43 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	}
 
 	@Override
-	public CacheModel<UserNotificationDelivery> toCacheModel() {
-		return _userNotificationDelivery.toCacheModel();
+	public java.lang.Object clone() {
+		return new UserNotificationDeliveryWrapper((UserNotificationDelivery)_userNotificationDelivery.clone());
 	}
 
 	@Override
-	public UserNotificationDelivery toEscapedModel() {
-		return new UserNotificationDeliveryWrapper(_userNotificationDelivery.toEscapedModel());
+	public int compareTo(UserNotificationDelivery userNotificationDelivery) {
+		return _userNotificationDelivery.compareTo(userNotificationDelivery);
 	}
 
+	/**
+	* Returns the fully qualified class name of this user notification delivery.
+	*
+	* @return the fully qualified class name of this user notification delivery
+	*/
 	@Override
-	public UserNotificationDelivery toUnescapedModel() {
-		return new UserNotificationDeliveryWrapper(_userNotificationDelivery.toUnescapedModel());
+	public java.lang.String getClassName() {
+		return _userNotificationDelivery.getClassName();
+	}
+
+	/**
+	* Returns the class name ID of this user notification delivery.
+	*
+	* @return the class name ID of this user notification delivery
+	*/
+	@Override
+	public long getClassNameId() {
+		return _userNotificationDelivery.getClassNameId();
+	}
+
+	/**
+	* Returns the company ID of this user notification delivery.
+	*
+	* @return the company ID of this user notification delivery
+	*/
+	@Override
+	public long getCompanyId() {
+		return _userNotificationDelivery.getCompanyId();
 	}
 
 	/**
@@ -152,6 +177,101 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	@Override
 	public boolean getDeliver() {
 		return _userNotificationDelivery.getDeliver();
+	}
+
+	/**
+	* Returns the delivery type of this user notification delivery.
+	*
+	* @return the delivery type of this user notification delivery
+	*/
+	@Override
+	public int getDeliveryType() {
+		return _userNotificationDelivery.getDeliveryType();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _userNotificationDelivery.getExpandoBridge();
+	}
+
+	/**
+	* Returns the mvcc version of this user notification delivery.
+	*
+	* @return the mvcc version of this user notification delivery
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _userNotificationDelivery.getMvccVersion();
+	}
+
+	/**
+	* Returns the notification type of this user notification delivery.
+	*
+	* @return the notification type of this user notification delivery
+	*/
+	@Override
+	public int getNotificationType() {
+		return _userNotificationDelivery.getNotificationType();
+	}
+
+	/**
+	* Returns the portlet ID of this user notification delivery.
+	*
+	* @return the portlet ID of this user notification delivery
+	*/
+	@Override
+	public java.lang.String getPortletId() {
+		return _userNotificationDelivery.getPortletId();
+	}
+
+	/**
+	* Returns the primary key of this user notification delivery.
+	*
+	* @return the primary key of this user notification delivery
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _userNotificationDelivery.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _userNotificationDelivery.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the user ID of this user notification delivery.
+	*
+	* @return the user ID of this user notification delivery
+	*/
+	@Override
+	public long getUserId() {
+		return _userNotificationDelivery.getUserId();
+	}
+
+	/**
+	* Returns the user notification delivery ID of this user notification delivery.
+	*
+	* @return the user notification delivery ID of this user notification delivery
+	*/
+	@Override
+	public long getUserNotificationDeliveryId() {
+		return _userNotificationDelivery.getUserNotificationDeliveryId();
+	}
+
+	/**
+	* Returns the user uuid of this user notification delivery.
+	*
+	* @return the user uuid of this user notification delivery
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _userNotificationDelivery.getUserUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _userNotificationDelivery.hashCode();
 	}
 
 	@Override
@@ -177,151 +297,6 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	@Override
 	public boolean isNew() {
 		return _userNotificationDelivery.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _userNotificationDelivery.getExpandoBridge();
-	}
-
-	@Override
-	public int compareTo(UserNotificationDelivery userNotificationDelivery) {
-		return _userNotificationDelivery.compareTo(userNotificationDelivery);
-	}
-
-	/**
-	* Returns the delivery type of this user notification delivery.
-	*
-	* @return the delivery type of this user notification delivery
-	*/
-	@Override
-	public int getDeliveryType() {
-		return _userNotificationDelivery.getDeliveryType();
-	}
-
-	/**
-	* Returns the notification type of this user notification delivery.
-	*
-	* @return the notification type of this user notification delivery
-	*/
-	@Override
-	public int getNotificationType() {
-		return _userNotificationDelivery.getNotificationType();
-	}
-
-	@Override
-	public int hashCode() {
-		return _userNotificationDelivery.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _userNotificationDelivery.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new UserNotificationDeliveryWrapper((UserNotificationDelivery)_userNotificationDelivery.clone());
-	}
-
-	/**
-	* Returns the fully qualified class name of this user notification delivery.
-	*
-	* @return the fully qualified class name of this user notification delivery
-	*/
-	@Override
-	public java.lang.String getClassName() {
-		return _userNotificationDelivery.getClassName();
-	}
-
-	/**
-	* Returns the portlet ID of this user notification delivery.
-	*
-	* @return the portlet ID of this user notification delivery
-	*/
-	@Override
-	public java.lang.String getPortletId() {
-		return _userNotificationDelivery.getPortletId();
-	}
-
-	/**
-	* Returns the user uuid of this user notification delivery.
-	*
-	* @return the user uuid of this user notification delivery
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _userNotificationDelivery.getUserUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _userNotificationDelivery.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _userNotificationDelivery.toXmlString();
-	}
-
-	/**
-	* Returns the class name ID of this user notification delivery.
-	*
-	* @return the class name ID of this user notification delivery
-	*/
-	@Override
-	public long getClassNameId() {
-		return _userNotificationDelivery.getClassNameId();
-	}
-
-	/**
-	* Returns the company ID of this user notification delivery.
-	*
-	* @return the company ID of this user notification delivery
-	*/
-	@Override
-	public long getCompanyId() {
-		return _userNotificationDelivery.getCompanyId();
-	}
-
-	/**
-	* Returns the mvcc version of this user notification delivery.
-	*
-	* @return the mvcc version of this user notification delivery
-	*/
-	@Override
-	public long getMvccVersion() {
-		return _userNotificationDelivery.getMvccVersion();
-	}
-
-	/**
-	* Returns the primary key of this user notification delivery.
-	*
-	* @return the primary key of this user notification delivery
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _userNotificationDelivery.getPrimaryKey();
-	}
-
-	/**
-	* Returns the user ID of this user notification delivery.
-	*
-	* @return the user ID of this user notification delivery
-	*/
-	@Override
-	public long getUserId() {
-		return _userNotificationDelivery.getUserId();
-	}
-
-	/**
-	* Returns the user notification delivery ID of this user notification delivery.
-	*
-	* @return the user notification delivery ID of this user notification delivery
-	*/
-	@Override
-	public long getUserNotificationDeliveryId() {
-		return _userNotificationDelivery.getUserNotificationDeliveryId();
 	}
 
 	@Override
@@ -380,13 +355,13 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_userNotificationDelivery.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_userNotificationDelivery.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_userNotificationDelivery.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
+		_userNotificationDelivery.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -472,6 +447,31 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	@Override
 	public void setUserUuid(java.lang.String userUuid) {
 		_userNotificationDelivery.setUserUuid(userUuid);
+	}
+
+	@Override
+	public CacheModel<UserNotificationDelivery> toCacheModel() {
+		return _userNotificationDelivery.toCacheModel();
+	}
+
+	@Override
+	public UserNotificationDelivery toEscapedModel() {
+		return new UserNotificationDeliveryWrapper(_userNotificationDelivery.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _userNotificationDelivery.toString();
+	}
+
+	@Override
+	public UserNotificationDelivery toUnescapedModel() {
+		return new UserNotificationDeliveryWrapper(_userNotificationDelivery.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _userNotificationDelivery.toXmlString();
 	}
 
 	@Override

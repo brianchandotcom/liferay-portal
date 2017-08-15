@@ -136,138 +136,13 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	}
 
 	@Override
-	public Folder toEscapedModel() {
-		return new FolderWrapper(_folder.toEscapedModel());
-	}
-
-	@Override
-	public Folder toUnescapedModel() {
-		return new FolderWrapper(_folder.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _folder.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _folder.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _folder.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _folder.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<Folder> toCacheModel() {
-		return _folder.toCacheModel();
+	public java.lang.Object clone() {
+		return new FolderWrapper((Folder)_folder.clone());
 	}
 
 	@Override
 	public int compareTo(Folder folder) {
 		return _folder.compareTo(folder);
-	}
-
-	/**
-	* Returns the remote message count of this folder.
-	*
-	* @return the remote message count of this folder
-	*/
-	@Override
-	public int getRemoteMessageCount() {
-		return _folder.getRemoteMessageCount();
-	}
-
-	@Override
-	public int hashCode() {
-		return _folder.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _folder.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new FolderWrapper((Folder)_folder.clone());
-	}
-
-	/**
-	* Returns the display name of this folder.
-	*
-	* @return the display name of this folder
-	*/
-	@Override
-	public java.lang.String getDisplayName() {
-		return _folder.getDisplayName();
-	}
-
-	/**
-	* Returns the full name of this folder.
-	*
-	* @return the full name of this folder
-	*/
-	@Override
-	public java.lang.String getFullName() {
-		return _folder.getFullName();
-	}
-
-	/**
-	* Returns the user name of this folder.
-	*
-	* @return the user name of this folder
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _folder.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this folder.
-	*
-	* @return the user uuid of this folder
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _folder.getUserUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _folder.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _folder.toXmlString();
-	}
-
-	/**
-	* Returns the create date of this folder.
-	*
-	* @return the create date of this folder
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _folder.getCreateDate();
-	}
-
-	/**
-	* Returns the modified date of this folder.
-	*
-	* @return the modified date of this folder
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _folder.getModifiedDate();
 	}
 
 	/**
@@ -291,6 +166,31 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	}
 
 	/**
+	* Returns the create date of this folder.
+	*
+	* @return the create date of this folder
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _folder.getCreateDate();
+	}
+
+	/**
+	* Returns the display name of this folder.
+	*
+	* @return the display name of this folder
+	*/
+	@Override
+	public java.lang.String getDisplayName() {
+		return _folder.getDisplayName();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _folder.getExpandoBridge();
+	}
+
+	/**
 	* Returns the folder ID of this folder.
 	*
 	* @return the folder ID of this folder
@@ -298,6 +198,26 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	@Override
 	public long getFolderId() {
 		return _folder.getFolderId();
+	}
+
+	/**
+	* Returns the full name of this folder.
+	*
+	* @return the full name of this folder
+	*/
+	@Override
+	public java.lang.String getFullName() {
+		return _folder.getFullName();
+	}
+
+	/**
+	* Returns the modified date of this folder.
+	*
+	* @return the modified date of this folder
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _folder.getModifiedDate();
 	}
 
 	/**
@@ -310,6 +230,21 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 		return _folder.getPrimaryKey();
 	}
 
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _folder.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the remote message count of this folder.
+	*
+	* @return the remote message count of this folder
+	*/
+	@Override
+	public int getRemoteMessageCount() {
+		return _folder.getRemoteMessageCount();
+	}
+
 	/**
 	* Returns the user ID of this folder.
 	*
@@ -318,6 +253,46 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	@Override
 	public long getUserId() {
 		return _folder.getUserId();
+	}
+
+	/**
+	* Returns the user name of this folder.
+	*
+	* @return the user name of this folder
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _folder.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this folder.
+	*
+	* @return the user uuid of this folder
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _folder.getUserUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _folder.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _folder.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _folder.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _folder.isNew();
 	}
 
 	@Override
@@ -474,6 +449,31 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	@Override
 	public void setUserUuid(java.lang.String userUuid) {
 		_folder.setUserUuid(userUuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<Folder> toCacheModel() {
+		return _folder.toCacheModel();
+	}
+
+	@Override
+	public Folder toEscapedModel() {
+		return new FolderWrapper(_folder.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _folder.toString();
+	}
+
+	@Override
+	public Folder toUnescapedModel() {
+		return new FolderWrapper(_folder.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _folder.toXmlString();
 	}
 
 	@Override

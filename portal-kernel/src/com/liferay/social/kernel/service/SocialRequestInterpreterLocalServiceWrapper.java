@@ -35,40 +35,6 @@ public class SocialRequestInterpreterLocalServiceWrapper
 	}
 
 	/**
-	* Creates a human readable request feed entry for the social request using
-	* an available compatible request interpreter.
-	*
-	* <p>
-	* This method finds the appropriate interpreter for the request by going
-	* through the available interpreters to find one that can handle the asset
-	* type of the request.
-	* </p>
-	*
-	* @param request the social request to be translated to human readable
-	form
-	* @param themeDisplay the theme display needed by interpreters to create
-	links and get localized text fragments
-	* @return the social request feed entry
-	*/
-	@Override
-	public com.liferay.social.kernel.model.SocialRequestFeedEntry interpret(
-		com.liferay.social.kernel.model.SocialRequest request,
-		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
-		return _socialRequestInterpreterLocalService.interpret(request,
-			themeDisplay);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _socialRequestInterpreterLocalService.getOSGiServiceIdentifier();
-	}
-
-	/**
 	* Adds the social request interpreter to the list of available
 	* interpreters.
 	*
@@ -90,6 +56,40 @@ public class SocialRequestInterpreterLocalServiceWrapper
 	public void deleteRequestInterpreter(
 		com.liferay.social.kernel.model.SocialRequestInterpreter requestInterpreter) {
 		_socialRequestInterpreterLocalService.deleteRequestInterpreter(requestInterpreter);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _socialRequestInterpreterLocalService.getOSGiServiceIdentifier();
+	}
+
+	/**
+	* Creates a human readable request feed entry for the social request using
+	* an available compatible request interpreter.
+	*
+	* <p>
+	* This method finds the appropriate interpreter for the request by going
+	* through the available interpreters to find one that can handle the asset
+	* type of the request.
+	* </p>
+	*
+	* @param request the social request to be translated to human readable
+	form
+	* @param themeDisplay the theme display needed by interpreters to create
+	links and get localized text fragments
+	* @return the social request feed entry
+	*/
+	@Override
+	public com.liferay.social.kernel.model.SocialRequestFeedEntry interpret(
+		com.liferay.social.kernel.model.SocialRequest request,
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
+		return _socialRequestInterpreterLocalService.interpret(request,
+			themeDisplay);
 	}
 
 	/**

@@ -66,29 +66,6 @@ public interface WSRPProducerLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WSRPProducerLocalServiceUtil} to access the wsrp producer local service. Add custom service methods to {@link com.liferay.wsrp.service.impl.WSRPProducerLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
 
 	/**
 	* Adds the wsrp producer to the database. Also notifies the appropriate model listeners.
@@ -117,6 +94,13 @@ public interface WSRPProducerLocalService extends BaseLocalService,
 	public WSRPProducer createWSRPProducer(long wsrpProducerId);
 
 	/**
+	* @throws PortalException
+	*/
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
+
+	/**
 	* Deletes the wsrp producer from the database. Also notifies the appropriate model listeners.
 	*
 	* @param wsrpProducer the wsrp producer
@@ -139,77 +123,9 @@ public interface WSRPProducerLocalService extends BaseLocalService,
 	public WSRPProducer deleteWSRPProducer(long wsrpProducerId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WSRPProducer fetchWSRPProducer(long wsrpProducerId);
+	public void deleteWSRPProducers(long companyId) throws PortalException;
 
-	/**
-	* Returns the wsrp producer matching the UUID and group.
-	*
-	* @param uuid the wsrp producer's UUID
-	* @param groupId the primary key of the group
-	* @return the matching wsrp producer, or <code>null</code> if a matching wsrp producer could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WSRPProducer fetchWSRPProducerByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WSRPProducer getWSRPProducer(java.lang.String wsrpProducerUuid)
-		throws PortalException;
-
-	/**
-	* Returns the wsrp producer with the primary key.
-	*
-	* @param wsrpProducerId the primary key of the wsrp producer
-	* @return the wsrp producer
-	* @throws PortalException if a wsrp producer with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WSRPProducer getWSRPProducer(long wsrpProducerId)
-		throws PortalException;
-
-	/**
-	* Returns the wsrp producer matching the UUID and group.
-	*
-	* @param uuid the wsrp producer's UUID
-	* @param groupId the primary key of the group
-	* @return the matching wsrp producer
-	* @throws PortalException if a matching wsrp producer could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WSRPProducer getWSRPProducerByUuidAndGroupId(java.lang.String uuid,
-		long groupId) throws PortalException;
-
-	/**
-	* Updates the wsrp producer in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param wsrpProducer the wsrp producer
-	* @return the wsrp producer that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public WSRPProducer updateWSRPProducer(WSRPProducer wsrpProducer);
-
-	public WSRPProducer updateWSRPProducer(long wsrpProducerId,
-		java.lang.String name, java.lang.String version,
-		java.lang.String portletIds) throws PortalException;
-
-	/**
-	* Returns the number of wsrp producers.
-	*
-	* @return the number of wsrp producers
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getWSRPProducersCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getWSRPProducersCount(long companyId);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -249,6 +165,87 @@ public interface WSRPProducerLocalService extends BaseLocalService,
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WSRPProducer fetchWSRPProducer(long wsrpProducerId);
+
+	/**
+	* Returns the wsrp producer matching the UUID and group.
+	*
+	* @param uuid the wsrp producer's UUID
+	* @param groupId the primary key of the group
+	* @return the matching wsrp producer, or <code>null</code> if a matching wsrp producer could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WSRPProducer fetchWSRPProducerByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WSRPProducer getWSRPProducer(java.lang.String wsrpProducerUuid)
+		throws PortalException;
+
+	/**
+	* Returns the wsrp producer with the primary key.
+	*
+	* @param wsrpProducerId the primary key of the wsrp producer
+	* @return the wsrp producer
+	* @throws PortalException if a wsrp producer with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WSRPProducer getWSRPProducer(long wsrpProducerId)
+		throws PortalException;
+
+	/**
+	* Returns the wsrp producer matching the UUID and group.
+	*
+	* @param uuid the wsrp producer's UUID
+	* @param groupId the primary key of the group
+	* @return the matching wsrp producer
+	* @throws PortalException if a matching wsrp producer could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WSRPProducer getWSRPProducerByUuidAndGroupId(java.lang.String uuid,
+		long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the wsrp producers.
@@ -295,22 +292,26 @@ public interface WSRPProducerLocalService extends BaseLocalService,
 		OrderByComparator<WSRPProducer> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of wsrp producers.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of wsrp producers
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getWSRPProducersCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getWSRPProducersCount(long companyId);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Updates the wsrp producer in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @param wsrpProducer the wsrp producer
+	* @return the wsrp producer that was updated
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	@Indexable(type = IndexableType.REINDEX)
+	public WSRPProducer updateWSRPProducer(WSRPProducer wsrpProducer);
 
-	public void deleteWSRPProducers(long companyId) throws PortalException;
+	public WSRPProducer updateWSRPProducer(long wsrpProducerId,
+		java.lang.String name, java.lang.String version,
+		java.lang.String portletIds) throws PortalException;
 }

@@ -33,28 +33,18 @@ public class LayoutTemplateLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.LayoutTemplate getLayoutTemplate(
-		java.lang.String layoutTemplateId, boolean standard,
-		java.lang.String themeId) {
-		return _layoutTemplateLocalService.getLayoutTemplate(layoutTemplateId,
-			standard, themeId);
-	}
-
-	@Override
 	public java.lang.String getContent(java.lang.String layoutTemplateId,
 		boolean standard, java.lang.String themeId) {
 		return _layoutTemplateLocalService.getContent(layoutTemplateId,
 			standard, themeId);
 	}
 
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _layoutTemplateLocalService.getOSGiServiceIdentifier();
+	public com.liferay.portal.kernel.model.LayoutTemplate getLayoutTemplate(
+		java.lang.String layoutTemplateId, boolean standard,
+		java.lang.String themeId) {
+		return _layoutTemplateLocalService.getLayoutTemplate(layoutTemplateId,
+			standard, themeId);
 	}
 
 	@Override
@@ -66,6 +56,16 @@ public class LayoutTemplateLocalServiceWrapper
 	public java.util.List<com.liferay.portal.kernel.model.LayoutTemplate> getLayoutTemplates(
 		java.lang.String themeId) {
 		return _layoutTemplateLocalService.getLayoutTemplates(themeId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _layoutTemplateLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override

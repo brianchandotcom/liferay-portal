@@ -69,10 +69,26 @@ public class AnnouncementsEntryServiceWrapper
 	}
 
 	@Override
+	public void deleteEntry(long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_announcementsEntryService.deleteEntry(entryId);
+	}
+
+	@Override
 	public com.liferay.announcements.kernel.model.AnnouncementsEntry getEntry(
 		long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _announcementsEntryService.getEntry(entryId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _announcementsEntryService.getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -104,22 +120,6 @@ public class AnnouncementsEntryServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _announcementsEntryService.updateEntry(entryId, title, content,
 			url, type, displayDate, expirationDate, priority);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _announcementsEntryService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public void deleteEntry(long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_announcementsEntryService.deleteEntry(entryId);
 	}
 
 	@Override

@@ -30,21 +30,6 @@ public class ImageLocalServiceWrapper implements ImageLocalService,
 		_imageLocalService = imageLocalService;
 	}
 
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _imageLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _imageLocalService.dynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _imageLocalService.getIndexableActionableDynamicQuery();
-	}
-
 	/**
 	* Adds the image to the database. Also notifies the appropriate model listeners.
 	*
@@ -93,89 +78,6 @@ public class ImageLocalServiceWrapper implements ImageLocalService,
 		return _imageLocalService.deleteImage(imageId);
 	}
 
-	@Override
-	public com.liferay.portal.kernel.model.Image fetchImage(long imageId) {
-		return _imageLocalService.fetchImage(imageId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Image getCompanyLogo(long imageId) {
-		return _imageLocalService.getCompanyLogo(imageId);
-	}
-
-	/**
-	* Returns the image with the primary key.
-	*
-	* @param imageId the primary key of the image
-	* @return the image
-	* @throws PortalException if a image with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.Image getImage(long imageId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _imageLocalService.getImage(imageId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Image getImageOrDefault(long imageId) {
-		return _imageLocalService.getImageOrDefault(imageId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Image moveImage(long imageId,
-		byte[] bytes)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _imageLocalService.moveImage(imageId, bytes);
-	}
-
-	/**
-	* Updates the image in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param image the image
-	* @return the image that was updated
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.Image updateImage(
-		com.liferay.portal.kernel.model.Image image) {
-		return _imageLocalService.updateImage(image);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Image updateImage(long imageId,
-		byte[] bytes)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _imageLocalService.updateImage(imageId, bytes);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Image updateImage(long imageId,
-		byte[] bytes, java.lang.String type, int height, int width, int size)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _imageLocalService.updateImage(imageId, bytes, type, height,
-			width, size);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Image updateImage(long imageId,
-		java.io.File file)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _imageLocalService.updateImage(imageId, file);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Image updateImage(long imageId,
-		java.io.InputStream is)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _imageLocalService.updateImage(imageId, is);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Image updateImage(long imageId,
-		java.io.InputStream is, boolean cleanUpStream)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _imageLocalService.updateImage(imageId, is, cleanUpStream);
-	}
-
 	/**
 	* @throws PortalException
 	*/
@@ -187,30 +89,8 @@ public class ImageLocalServiceWrapper implements ImageLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _imageLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the number of images.
-	*
-	* @return the number of images
-	*/
-	@Override
-	public int getImagesCount() {
-		return _imageLocalService.getImagesCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _imageLocalService.getOSGiServiceIdentifier();
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _imageLocalService.dynamicQuery();
 	}
 
 	/**
@@ -266,6 +146,65 @@ public class ImageLocalServiceWrapper implements ImageLocalService,
 			orderByComparator);
 	}
 
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _imageLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _imageLocalService.dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Image fetchImage(long imageId) {
+		return _imageLocalService.fetchImage(imageId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _imageLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Image getCompanyLogo(long imageId) {
+		return _imageLocalService.getCompanyLogo(imageId);
+	}
+
+	/**
+	* Returns the image with the primary key.
+	*
+	* @param imageId the primary key of the image
+	* @return the image
+	* @throws PortalException if a image with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.Image getImage(long imageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _imageLocalService.getImage(imageId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Image getImageOrDefault(long imageId) {
+		return _imageLocalService.getImageOrDefault(imageId);
+	}
+
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Image> getImages() {
 		return _imageLocalService.getImages();
@@ -295,29 +234,90 @@ public class ImageLocalServiceWrapper implements ImageLocalService,
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of images.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of images
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _imageLocalService.dynamicQueryCount(dynamicQuery);
+	public int getImagesCount() {
+		return _imageLocalService.getImagesCount();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _imageLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _imageLocalService.dynamicQueryCount(dynamicQuery, projection);
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _imageLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _imageLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Image moveImage(long imageId,
+		byte[] bytes)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _imageLocalService.moveImage(imageId, bytes);
+	}
+
+	/**
+	* Updates the image in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param image the image
+	* @return the image that was updated
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.Image updateImage(
+		com.liferay.portal.kernel.model.Image image) {
+		return _imageLocalService.updateImage(image);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Image updateImage(long imageId,
+		byte[] bytes)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _imageLocalService.updateImage(imageId, bytes);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Image updateImage(long imageId,
+		byte[] bytes, java.lang.String type, int height, int width, int size)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _imageLocalService.updateImage(imageId, bytes, type, height,
+			width, size);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Image updateImage(long imageId,
+		java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _imageLocalService.updateImage(imageId, file);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Image updateImage(long imageId,
+		java.io.InputStream is)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _imageLocalService.updateImage(imageId, is);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Image updateImage(long imageId,
+		java.io.InputStream is, boolean cleanUpStream)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _imageLocalService.updateImage(imageId, is, cleanUpStream);
 	}
 
 	@Override

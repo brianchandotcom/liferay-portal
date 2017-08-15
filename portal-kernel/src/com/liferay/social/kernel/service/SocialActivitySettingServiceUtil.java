@@ -40,26 +40,11 @@ public class SocialActivitySettingServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.social.service.impl.SocialActivitySettingServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.json.JSONArray getJSONActivityDefinitions(
-		long groupId, java.lang.String className)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getJSONActivityDefinitions(groupId, className);
-	}
-
 	public static com.liferay.social.kernel.model.SocialActivityDefinition getActivityDefinition(
 		long groupId, java.lang.String className, int activityType)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getActivityDefinition(groupId, className, activityType);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static java.util.List<com.liferay.social.kernel.model.SocialActivityDefinition> getActivityDefinitions(
@@ -72,6 +57,21 @@ public class SocialActivitySettingServiceUtil {
 		long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getActivitySettings(groupId);
+	}
+
+	public static com.liferay.portal.kernel.json.JSONArray getJSONActivityDefinitions(
+		long groupId, java.lang.String className)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getJSONActivityDefinitions(groupId, className);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static void updateActivitySetting(long groupId,

@@ -65,6 +65,15 @@ public interface PollsQuestionService extends BaseService {
 		List<PollsChoice> choices, ServiceContext serviceContext)
 		throws PortalException;
 
+	public void deleteQuestion(long questionId) throws PortalException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PollsQuestion getQuestion(long questionId) throws PortalException;
 
@@ -75,13 +84,4 @@ public interface PollsQuestionService extends BaseService {
 		int expirationDateMinute, boolean neverExpire,
 		List<PollsChoice> choices, ServiceContext serviceContext)
 		throws PortalException;
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	public void deleteQuestion(long questionId) throws PortalException;
 }

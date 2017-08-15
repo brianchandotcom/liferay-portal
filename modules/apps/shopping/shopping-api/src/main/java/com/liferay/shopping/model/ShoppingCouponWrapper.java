@@ -192,13 +192,13 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 	}
 
 	@Override
-	public ShoppingCoupon toEscapedModel() {
-		return new ShoppingCouponWrapper(_shoppingCoupon.toEscapedModel());
+	public java.lang.Object clone() {
+		return new ShoppingCouponWrapper((ShoppingCoupon)_shoppingCoupon.clone());
 	}
 
 	@Override
-	public ShoppingCoupon toUnescapedModel() {
-		return new ShoppingCouponWrapper(_shoppingCoupon.toUnescapedModel());
+	public int compareTo(ShoppingCoupon shoppingCoupon) {
+		return _shoppingCoupon.compareTo(shoppingCoupon);
 	}
 
 	/**
@@ -209,6 +209,206 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 	@Override
 	public boolean getActive() {
 		return _shoppingCoupon.getActive();
+	}
+
+	/**
+	* Returns the code of this shopping coupon.
+	*
+	* @return the code of this shopping coupon
+	*/
+	@Override
+	public java.lang.String getCode() {
+		return _shoppingCoupon.getCode();
+	}
+
+	/**
+	* Returns the company ID of this shopping coupon.
+	*
+	* @return the company ID of this shopping coupon
+	*/
+	@Override
+	public long getCompanyId() {
+		return _shoppingCoupon.getCompanyId();
+	}
+
+	/**
+	* Returns the coupon ID of this shopping coupon.
+	*
+	* @return the coupon ID of this shopping coupon
+	*/
+	@Override
+	public long getCouponId() {
+		return _shoppingCoupon.getCouponId();
+	}
+
+	/**
+	* Returns the create date of this shopping coupon.
+	*
+	* @return the create date of this shopping coupon
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _shoppingCoupon.getCreateDate();
+	}
+
+	/**
+	* Returns the description of this shopping coupon.
+	*
+	* @return the description of this shopping coupon
+	*/
+	@Override
+	public java.lang.String getDescription() {
+		return _shoppingCoupon.getDescription();
+	}
+
+	/**
+	* Returns the discount of this shopping coupon.
+	*
+	* @return the discount of this shopping coupon
+	*/
+	@Override
+	public double getDiscount() {
+		return _shoppingCoupon.getDiscount();
+	}
+
+	/**
+	* Returns the discount type of this shopping coupon.
+	*
+	* @return the discount type of this shopping coupon
+	*/
+	@Override
+	public java.lang.String getDiscountType() {
+		return _shoppingCoupon.getDiscountType();
+	}
+
+	/**
+	* Returns the end date of this shopping coupon.
+	*
+	* @return the end date of this shopping coupon
+	*/
+	@Override
+	public Date getEndDate() {
+		return _shoppingCoupon.getEndDate();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _shoppingCoupon.getExpandoBridge();
+	}
+
+	/**
+	* Returns the group ID of this shopping coupon.
+	*
+	* @return the group ID of this shopping coupon
+	*/
+	@Override
+	public long getGroupId() {
+		return _shoppingCoupon.getGroupId();
+	}
+
+	/**
+	* Returns the limit categories of this shopping coupon.
+	*
+	* @return the limit categories of this shopping coupon
+	*/
+	@Override
+	public java.lang.String getLimitCategories() {
+		return _shoppingCoupon.getLimitCategories();
+	}
+
+	/**
+	* Returns the limit skus of this shopping coupon.
+	*
+	* @return the limit skus of this shopping coupon
+	*/
+	@Override
+	public java.lang.String getLimitSkus() {
+		return _shoppingCoupon.getLimitSkus();
+	}
+
+	/**
+	* Returns the min order of this shopping coupon.
+	*
+	* @return the min order of this shopping coupon
+	*/
+	@Override
+	public double getMinOrder() {
+		return _shoppingCoupon.getMinOrder();
+	}
+
+	/**
+	* Returns the modified date of this shopping coupon.
+	*
+	* @return the modified date of this shopping coupon
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _shoppingCoupon.getModifiedDate();
+	}
+
+	/**
+	* Returns the name of this shopping coupon.
+	*
+	* @return the name of this shopping coupon
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _shoppingCoupon.getName();
+	}
+
+	/**
+	* Returns the primary key of this shopping coupon.
+	*
+	* @return the primary key of this shopping coupon
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _shoppingCoupon.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _shoppingCoupon.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the start date of this shopping coupon.
+	*
+	* @return the start date of this shopping coupon
+	*/
+	@Override
+	public Date getStartDate() {
+		return _shoppingCoupon.getStartDate();
+	}
+
+	/**
+	* Returns the user ID of this shopping coupon.
+	*
+	* @return the user ID of this shopping coupon
+	*/
+	@Override
+	public long getUserId() {
+		return _shoppingCoupon.getUserId();
+	}
+
+	/**
+	* Returns the user name of this shopping coupon.
+	*
+	* @return the user name of this shopping coupon
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _shoppingCoupon.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this shopping coupon.
+	*
+	* @return the user uuid of this shopping coupon
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _shoppingCoupon.getUserUuid();
 	}
 
 	@Override
@@ -224,6 +424,11 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 	@Override
 	public boolean hasValidStartDate() {
 		return _shoppingCoupon.hasValidStartDate();
+	}
+
+	@Override
+	public int hashCode() {
+		return _shoppingCoupon.hashCode();
 	}
 
 	/**
@@ -249,236 +454,6 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 	@Override
 	public boolean isNew() {
 		return _shoppingCoupon.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _shoppingCoupon.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<ShoppingCoupon> toCacheModel() {
-		return _shoppingCoupon.toCacheModel();
-	}
-
-	/**
-	* Returns the discount of this shopping coupon.
-	*
-	* @return the discount of this shopping coupon
-	*/
-	@Override
-	public double getDiscount() {
-		return _shoppingCoupon.getDiscount();
-	}
-
-	/**
-	* Returns the min order of this shopping coupon.
-	*
-	* @return the min order of this shopping coupon
-	*/
-	@Override
-	public double getMinOrder() {
-		return _shoppingCoupon.getMinOrder();
-	}
-
-	@Override
-	public int compareTo(ShoppingCoupon shoppingCoupon) {
-		return _shoppingCoupon.compareTo(shoppingCoupon);
-	}
-
-	@Override
-	public int hashCode() {
-		return _shoppingCoupon.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _shoppingCoupon.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new ShoppingCouponWrapper((ShoppingCoupon)_shoppingCoupon.clone());
-	}
-
-	/**
-	* Returns the code of this shopping coupon.
-	*
-	* @return the code of this shopping coupon
-	*/
-	@Override
-	public java.lang.String getCode() {
-		return _shoppingCoupon.getCode();
-	}
-
-	/**
-	* Returns the description of this shopping coupon.
-	*
-	* @return the description of this shopping coupon
-	*/
-	@Override
-	public java.lang.String getDescription() {
-		return _shoppingCoupon.getDescription();
-	}
-
-	/**
-	* Returns the discount type of this shopping coupon.
-	*
-	* @return the discount type of this shopping coupon
-	*/
-	@Override
-	public java.lang.String getDiscountType() {
-		return _shoppingCoupon.getDiscountType();
-	}
-
-	/**
-	* Returns the limit categories of this shopping coupon.
-	*
-	* @return the limit categories of this shopping coupon
-	*/
-	@Override
-	public java.lang.String getLimitCategories() {
-		return _shoppingCoupon.getLimitCategories();
-	}
-
-	/**
-	* Returns the limit skus of this shopping coupon.
-	*
-	* @return the limit skus of this shopping coupon
-	*/
-	@Override
-	public java.lang.String getLimitSkus() {
-		return _shoppingCoupon.getLimitSkus();
-	}
-
-	/**
-	* Returns the name of this shopping coupon.
-	*
-	* @return the name of this shopping coupon
-	*/
-	@Override
-	public java.lang.String getName() {
-		return _shoppingCoupon.getName();
-	}
-
-	/**
-	* Returns the user name of this shopping coupon.
-	*
-	* @return the user name of this shopping coupon
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _shoppingCoupon.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this shopping coupon.
-	*
-	* @return the user uuid of this shopping coupon
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _shoppingCoupon.getUserUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _shoppingCoupon.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _shoppingCoupon.toXmlString();
-	}
-
-	/**
-	* Returns the create date of this shopping coupon.
-	*
-	* @return the create date of this shopping coupon
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _shoppingCoupon.getCreateDate();
-	}
-
-	/**
-	* Returns the end date of this shopping coupon.
-	*
-	* @return the end date of this shopping coupon
-	*/
-	@Override
-	public Date getEndDate() {
-		return _shoppingCoupon.getEndDate();
-	}
-
-	/**
-	* Returns the modified date of this shopping coupon.
-	*
-	* @return the modified date of this shopping coupon
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _shoppingCoupon.getModifiedDate();
-	}
-
-	/**
-	* Returns the start date of this shopping coupon.
-	*
-	* @return the start date of this shopping coupon
-	*/
-	@Override
-	public Date getStartDate() {
-		return _shoppingCoupon.getStartDate();
-	}
-
-	/**
-	* Returns the company ID of this shopping coupon.
-	*
-	* @return the company ID of this shopping coupon
-	*/
-	@Override
-	public long getCompanyId() {
-		return _shoppingCoupon.getCompanyId();
-	}
-
-	/**
-	* Returns the coupon ID of this shopping coupon.
-	*
-	* @return the coupon ID of this shopping coupon
-	*/
-	@Override
-	public long getCouponId() {
-		return _shoppingCoupon.getCouponId();
-	}
-
-	/**
-	* Returns the group ID of this shopping coupon.
-	*
-	* @return the group ID of this shopping coupon
-	*/
-	@Override
-	public long getGroupId() {
-		return _shoppingCoupon.getGroupId();
-	}
-
-	/**
-	* Returns the primary key of this shopping coupon.
-	*
-	* @return the primary key of this shopping coupon
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _shoppingCoupon.getPrimaryKey();
-	}
-
-	/**
-	* Returns the user ID of this shopping coupon.
-	*
-	* @return the user ID of this shopping coupon
-	*/
-	@Override
-	public long getUserId() {
-		return _shoppingCoupon.getUserId();
 	}
 
 	@Override
@@ -715,6 +690,31 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 	@Override
 	public void setUserUuid(java.lang.String userUuid) {
 		_shoppingCoupon.setUserUuid(userUuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<ShoppingCoupon> toCacheModel() {
+		return _shoppingCoupon.toCacheModel();
+	}
+
+	@Override
+	public ShoppingCoupon toEscapedModel() {
+		return new ShoppingCouponWrapper(_shoppingCoupon.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _shoppingCoupon.toString();
+	}
+
+	@Override
+	public ShoppingCoupon toUnescapedModel() {
+		return new ShoppingCouponWrapper(_shoppingCoupon.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _shoppingCoupon.toXmlString();
 	}
 
 	@Override

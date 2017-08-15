@@ -53,21 +53,21 @@ public class AddressServiceUtil {
 			serviceContext);
 	}
 
+	public static void deleteAddress(long addressId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteAddress(addressId);
+	}
+
 	public static com.liferay.portal.kernel.model.Address getAddress(
 		long addressId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getAddress(addressId);
 	}
 
-	public static com.liferay.portal.kernel.model.Address updateAddress(
-		long addressId, java.lang.String street1, java.lang.String street2,
-		java.lang.String street3, java.lang.String city, java.lang.String zip,
-		long regionId, long countryId, long typeId, boolean mailing,
-		boolean primary)
+	public static java.util.List<com.liferay.portal.kernel.model.Address> getAddresses(
+		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateAddress(addressId, street1, street2, street3, city,
-			zip, regionId, countryId, typeId, mailing, primary);
+		return getService().getAddresses(className, classPK);
 	}
 
 	/**
@@ -79,15 +79,15 @@ public class AddressServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.Address> getAddresses(
-		java.lang.String className, long classPK)
+	public static com.liferay.portal.kernel.model.Address updateAddress(
+		long addressId, java.lang.String street1, java.lang.String street2,
+		java.lang.String street3, java.lang.String city, java.lang.String zip,
+		long regionId, long countryId, long typeId, boolean mailing,
+		boolean primary)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getAddresses(className, classPK);
-	}
-
-	public static void deleteAddress(long addressId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteAddress(addressId);
+		return getService()
+				   .updateAddress(addressId, street1, street2, street3, city,
+			zip, regionId, countryId, typeId, mailing, primary);
 	}
 
 	public static AddressService getService() {

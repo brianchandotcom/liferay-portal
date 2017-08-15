@@ -57,13 +57,6 @@ public interface OrgLaborLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link OrgLaborLocalServiceUtil} to access the org labor local service. Add custom service methods to {@link com.liferay.portal.service.impl.OrgLaborLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Adds the org labor to the database. Also notifies the appropriate model listeners.
@@ -106,33 +99,6 @@ public interface OrgLaborLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public OrgLabor deleteOrgLabor(long orgLaborId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public OrgLabor fetchOrgLabor(long orgLaborId);
-
-	/**
-	* Returns the org labor with the primary key.
-	*
-	* @param orgLaborId the primary key of the org labor
-	* @return the org labor
-	* @throws PortalException if a org labor with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public OrgLabor getOrgLabor(long orgLaborId) throws PortalException;
-
-	/**
-	* Updates the org labor in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param orgLabor the org labor
-	* @return the org labor that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public OrgLabor updateOrgLabor(OrgLabor orgLabor);
-
-	public OrgLabor updateOrgLabor(long orgLaborId, long typeId, int sunOpen,
-		int sunClose, int monOpen, int monClose, int tueOpen, int tueClose,
-		int wedOpen, int wedClose, int thuOpen, int thuClose, int friOpen,
-		int friClose, int satOpen, int satClose) throws PortalException;
-
 	/**
 	* @throws PortalException
 	*/
@@ -140,25 +106,7 @@ public interface OrgLaborLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	* Returns the number of org labors.
-	*
-	* @return the number of org labors
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getOrgLaborsCount();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -200,6 +148,50 @@ public interface OrgLaborLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OrgLabor fetchOrgLabor(long orgLaborId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	/**
+	* Returns the org labor with the primary key.
+	*
+	* @param orgLaborId the primary key of the org labor
+	* @return the org labor
+	* @throws PortalException if a org labor with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OrgLabor getOrgLabor(long orgLaborId) throws PortalException;
+
+	/**
 	* Returns a range of all the org labors.
 	*
 	* <p>
@@ -217,20 +209,29 @@ public interface OrgLaborLocalService extends BaseLocalService,
 	public List<OrgLabor> getOrgLabors(long organizationId);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of org labors.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of org labors
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getOrgLaborsCount();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Updates the org labor in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @param orgLabor the org labor
+	* @return the org labor that was updated
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	@Indexable(type = IndexableType.REINDEX)
+	public OrgLabor updateOrgLabor(OrgLabor orgLabor);
+
+	public OrgLabor updateOrgLabor(long orgLaborId, long typeId, int sunOpen,
+		int sunClose, int monOpen, int monClose, int tueOpen, int tueClose,
+		int wedOpen, int wedClose, int thuOpen, int thuClose, int friOpen,
+		int friClose, int satOpen, int satClose) throws PortalException;
 }

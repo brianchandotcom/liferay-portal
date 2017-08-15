@@ -99,78 +99,13 @@ public class VirtualHostWrapper implements VirtualHost,
 	}
 
 	@Override
-	public CacheModel<VirtualHost> toCacheModel() {
-		return _virtualHost.toCacheModel();
-	}
-
-	@Override
-	public VirtualHost toEscapedModel() {
-		return new VirtualHostWrapper(_virtualHost.toEscapedModel());
-	}
-
-	@Override
-	public VirtualHost toUnescapedModel() {
-		return new VirtualHostWrapper(_virtualHost.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _virtualHost.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _virtualHost.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _virtualHost.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _virtualHost.getExpandoBridge();
+	public java.lang.Object clone() {
+		return new VirtualHostWrapper((VirtualHost)_virtualHost.clone());
 	}
 
 	@Override
 	public int compareTo(VirtualHost virtualHost) {
 		return _virtualHost.compareTo(virtualHost);
-	}
-
-	@Override
-	public int hashCode() {
-		return _virtualHost.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _virtualHost.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new VirtualHostWrapper((VirtualHost)_virtualHost.clone());
-	}
-
-	/**
-	* Returns the hostname of this virtual host.
-	*
-	* @return the hostname of this virtual host
-	*/
-	@Override
-	public java.lang.String getHostname() {
-		return _virtualHost.getHostname();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _virtualHost.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _virtualHost.toXmlString();
 	}
 
 	/**
@@ -181,6 +116,21 @@ public class VirtualHostWrapper implements VirtualHost,
 	@Override
 	public long getCompanyId() {
 		return _virtualHost.getCompanyId();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _virtualHost.getExpandoBridge();
+	}
+
+	/**
+	* Returns the hostname of this virtual host.
+	*
+	* @return the hostname of this virtual host
+	*/
+	@Override
+	public java.lang.String getHostname() {
+		return _virtualHost.getHostname();
 	}
 
 	/**
@@ -213,6 +163,11 @@ public class VirtualHostWrapper implements VirtualHost,
 		return _virtualHost.getPrimaryKey();
 	}
 
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _virtualHost.getPrimaryKeyObj();
+	}
+
 	/**
 	* Returns the virtual host ID of this virtual host.
 	*
@@ -221,6 +176,26 @@ public class VirtualHostWrapper implements VirtualHost,
 	@Override
 	public long getVirtualHostId() {
 		return _virtualHost.getVirtualHostId();
+	}
+
+	@Override
+	public int hashCode() {
+		return _virtualHost.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _virtualHost.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _virtualHost.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _virtualHost.isNew();
 	}
 
 	@Override
@@ -244,13 +219,13 @@ public class VirtualHostWrapper implements VirtualHost,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_virtualHost.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_virtualHost.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_virtualHost.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
+		_virtualHost.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -316,6 +291,31 @@ public class VirtualHostWrapper implements VirtualHost,
 	@Override
 	public void setVirtualHostId(long virtualHostId) {
 		_virtualHost.setVirtualHostId(virtualHostId);
+	}
+
+	@Override
+	public CacheModel<VirtualHost> toCacheModel() {
+		return _virtualHost.toCacheModel();
+	}
+
+	@Override
+	public VirtualHost toEscapedModel() {
+		return new VirtualHostWrapper(_virtualHost.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _virtualHost.toString();
+	}
+
+	@Override
+	public VirtualHost toUnescapedModel() {
+		return new VirtualHostWrapper(_virtualHost.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _virtualHost.toXmlString();
 	}
 
 	@Override

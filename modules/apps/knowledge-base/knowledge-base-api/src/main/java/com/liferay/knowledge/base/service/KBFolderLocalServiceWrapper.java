@@ -96,146 +96,9 @@ public class KBFolderLocalServiceWrapper implements KBFolderLocalService,
 	}
 
 	@Override
-	public com.liferay.knowledge.base.model.KBFolder fetchFirstChildKBFolder(
-		long groupId, long kbFolderId)
+	public void deleteKBFolders(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kbFolderLocalService.fetchFirstChildKBFolder(groupId, kbFolderId);
-	}
-
-	@Override
-	public com.liferay.knowledge.base.model.KBFolder fetchFirstChildKBFolder(
-		long groupId, long kbFolderId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBFolder> obc)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kbFolderLocalService.fetchFirstChildKBFolder(groupId,
-			kbFolderId, obc);
-	}
-
-	@Override
-	public com.liferay.knowledge.base.model.KBFolder fetchKBFolder(
-		java.lang.String uuid, long groupId) {
-		return _kbFolderLocalService.fetchKBFolder(uuid, groupId);
-	}
-
-	@Override
-	public com.liferay.knowledge.base.model.KBFolder fetchKBFolder(
-		long kbFolderId) {
-		return _kbFolderLocalService.fetchKBFolder(kbFolderId);
-	}
-
-	@Override
-	public com.liferay.knowledge.base.model.KBFolder fetchKBFolderByUrlTitle(
-		long groupId, long parentKbFolderId, java.lang.String urlTitle)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kbFolderLocalService.fetchKBFolderByUrlTitle(groupId,
-			parentKbFolderId, urlTitle);
-	}
-
-	/**
-	* Returns the kb folder matching the UUID and group.
-	*
-	* @param uuid the kb folder's UUID
-	* @param groupId the primary key of the group
-	* @return the matching kb folder, or <code>null</code> if a matching kb folder could not be found
-	*/
-	@Override
-	public com.liferay.knowledge.base.model.KBFolder fetchKBFolderByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return _kbFolderLocalService.fetchKBFolderByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Returns the kb folder with the primary key.
-	*
-	* @param kbFolderId the primary key of the kb folder
-	* @return the kb folder
-	* @throws PortalException if a kb folder with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.knowledge.base.model.KBFolder getKBFolder(
-		long kbFolderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kbFolderLocalService.getKBFolder(kbFolderId);
-	}
-
-	@Override
-	public com.liferay.knowledge.base.model.KBFolder getKBFolderByUrlTitle(
-		long groupId, long parentKbFolderId, java.lang.String urlTitle)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kbFolderLocalService.getKBFolderByUrlTitle(groupId,
-			parentKbFolderId, urlTitle);
-	}
-
-	/**
-	* Returns the kb folder matching the UUID and group.
-	*
-	* @param uuid the kb folder's UUID
-	* @param groupId the primary key of the group
-	* @return the matching kb folder
-	* @throws PortalException if a matching kb folder could not be found
-	*/
-	@Override
-	public com.liferay.knowledge.base.model.KBFolder getKBFolderByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kbFolderLocalService.getKBFolderByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Updates the kb folder in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param kbFolder the kb folder
-	* @return the kb folder that was updated
-	*/
-	@Override
-	public com.liferay.knowledge.base.model.KBFolder updateKBFolder(
-		com.liferay.knowledge.base.model.KBFolder kbFolder) {
-		return _kbFolderLocalService.updateKBFolder(kbFolder);
-	}
-
-	/**
-	* @deprecated As of 1.1.0, replaced by {@link #updateKBFolder(long, long,
-	long, String, String, ServiceContext)}
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.knowledge.base.model.KBFolder updateKBFolder(
-		long parentResourceClassNameId, long parentResourcePrimKey,
-		long kbFolderId, java.lang.String name, java.lang.String description)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kbFolderLocalService.updateKBFolder(parentResourceClassNameId,
-			parentResourcePrimKey, kbFolderId, name, description);
-	}
-
-	@Override
-	public com.liferay.knowledge.base.model.KBFolder updateKBFolder(
-		long parentResourceClassNameId, long parentResourcePrimKey,
-		long kbFolderId, java.lang.String name, java.lang.String description,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kbFolderLocalService.updateKBFolder(parentResourceClassNameId,
-			parentResourcePrimKey, kbFolderId, name, description, serviceContext);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _kbFolderLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _kbFolderLocalService.dynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return _kbFolderLocalService.getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _kbFolderLocalService.getIndexableActionableDynamicQuery();
+		_kbFolderLocalService.deleteKBFolders(groupId);
 	}
 
 	/**
@@ -249,43 +112,8 @@ public class KBFolderLocalServiceWrapper implements KBFolderLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kbFolderLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	@Override
-	public int getKBFoldersAndKBArticlesCount(long groupId,
-		long parentResourcePrimKey, int status) {
-		return _kbFolderLocalService.getKBFoldersAndKBArticlesCount(groupId,
-			parentResourcePrimKey, status);
-	}
-
-	/**
-	* Returns the number of kb folders.
-	*
-	* @return the number of kb folders
-	*/
-	@Override
-	public int getKBFoldersCount() {
-		return _kbFolderLocalService.getKBFoldersCount();
-	}
-
-	@Override
-	public int getKBFoldersCount(long groupId, long parentKBFolderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kbFolderLocalService.getKBFoldersCount(groupId, parentKBFolderId);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _kbFolderLocalService.getOSGiServiceIdentifier();
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _kbFolderLocalService.dynamicQuery();
 	}
 
 	/**
@@ -342,6 +170,134 @@ public class KBFolderLocalServiceWrapper implements KBFolderLocalService,
 	}
 
 	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _kbFolderLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _kbFolderLocalService.dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	@Override
+	public com.liferay.knowledge.base.model.KBFolder fetchFirstChildKBFolder(
+		long groupId, long kbFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbFolderLocalService.fetchFirstChildKBFolder(groupId, kbFolderId);
+	}
+
+	@Override
+	public com.liferay.knowledge.base.model.KBFolder fetchFirstChildKBFolder(
+		long groupId, long kbFolderId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBFolder> obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbFolderLocalService.fetchFirstChildKBFolder(groupId,
+			kbFolderId, obc);
+	}
+
+	@Override
+	public com.liferay.knowledge.base.model.KBFolder fetchKBFolder(
+		java.lang.String uuid, long groupId) {
+		return _kbFolderLocalService.fetchKBFolder(uuid, groupId);
+	}
+
+	@Override
+	public com.liferay.knowledge.base.model.KBFolder fetchKBFolder(
+		long kbFolderId) {
+		return _kbFolderLocalService.fetchKBFolder(kbFolderId);
+	}
+
+	@Override
+	public com.liferay.knowledge.base.model.KBFolder fetchKBFolderByUrlTitle(
+		long groupId, long parentKbFolderId, java.lang.String urlTitle)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbFolderLocalService.fetchKBFolderByUrlTitle(groupId,
+			parentKbFolderId, urlTitle);
+	}
+
+	/**
+	* Returns the kb folder matching the UUID and group.
+	*
+	* @param uuid the kb folder's UUID
+	* @param groupId the primary key of the group
+	* @return the matching kb folder, or <code>null</code> if a matching kb folder could not be found
+	*/
+	@Override
+	public com.liferay.knowledge.base.model.KBFolder fetchKBFolderByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return _kbFolderLocalService.fetchKBFolderByUuidAndGroupId(uuid, groupId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _kbFolderLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return _kbFolderLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _kbFolderLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the kb folder with the primary key.
+	*
+	* @param kbFolderId the primary key of the kb folder
+	* @return the kb folder
+	* @throws PortalException if a kb folder with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.knowledge.base.model.KBFolder getKBFolder(
+		long kbFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbFolderLocalService.getKBFolder(kbFolderId);
+	}
+
+	@Override
+	public com.liferay.knowledge.base.model.KBFolder getKBFolderByUrlTitle(
+		long groupId, long parentKbFolderId, java.lang.String urlTitle)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbFolderLocalService.getKBFolderByUrlTitle(groupId,
+			parentKbFolderId, urlTitle);
+	}
+
+	/**
+	* Returns the kb folder matching the UUID and group.
+	*
+	* @param uuid the kb folder's UUID
+	* @param groupId the primary key of the group
+	* @return the matching kb folder
+	* @throws PortalException if a matching kb folder could not be found
+	*/
+	@Override
+	public com.liferay.knowledge.base.model.KBFolder getKBFolderByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbFolderLocalService.getKBFolderByUuidAndGroupId(uuid, groupId);
+	}
+
+	/**
 	* Returns a range of all the kb folders.
 	*
 	* <p>
@@ -373,6 +329,13 @@ public class KBFolderLocalServiceWrapper implements KBFolderLocalService,
 		com.liferay.portal.kernel.util.OrderByComparator<?> orderByComparator) {
 		return _kbFolderLocalService.getKBFoldersAndKBArticles(groupId,
 			parentResourcePrimKey, status, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getKBFoldersAndKBArticlesCount(long groupId,
+		long parentResourcePrimKey, int status) {
+		return _kbFolderLocalService.getKBFoldersAndKBArticlesCount(groupId,
+			parentResourcePrimKey, status);
 	}
 
 	/**
@@ -408,41 +371,78 @@ public class KBFolderLocalServiceWrapper implements KBFolderLocalService,
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of kb folders.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of kb folders
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _kbFolderLocalService.dynamicQueryCount(dynamicQuery);
+	public int getKBFoldersCount() {
+		return _kbFolderLocalService.getKBFoldersCount();
+	}
+
+	@Override
+	public int getKBFoldersCount(long groupId, long parentKBFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbFolderLocalService.getKBFoldersCount(groupId, parentKBFolderId);
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _kbFolderLocalService.dynamicQueryCount(dynamicQuery, projection);
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _kbFolderLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
-	public void deleteKBFolders(long groupId)
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_kbFolderLocalService.deleteKBFolders(groupId);
+		return _kbFolderLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	@Override
 	public void moveKBFolder(long kbFolderId, long parentKBFolderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_kbFolderLocalService.moveKBFolder(kbFolderId, parentKBFolderId);
+	}
+
+	/**
+	* Updates the kb folder in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param kbFolder the kb folder
+	* @return the kb folder that was updated
+	*/
+	@Override
+	public com.liferay.knowledge.base.model.KBFolder updateKBFolder(
+		com.liferay.knowledge.base.model.KBFolder kbFolder) {
+		return _kbFolderLocalService.updateKBFolder(kbFolder);
+	}
+
+	/**
+	* @deprecated As of 1.1.0, replaced by {@link #updateKBFolder(long, long,
+	long, String, String, ServiceContext)}
+	*/
+	@Deprecated
+	@Override
+	public com.liferay.knowledge.base.model.KBFolder updateKBFolder(
+		long parentResourceClassNameId, long parentResourcePrimKey,
+		long kbFolderId, java.lang.String name, java.lang.String description)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbFolderLocalService.updateKBFolder(parentResourceClassNameId,
+			parentResourcePrimKey, kbFolderId, name, description);
+	}
+
+	@Override
+	public com.liferay.knowledge.base.model.KBFolder updateKBFolder(
+		long parentResourceClassNameId, long parentResourcePrimKey,
+		long kbFolderId, java.lang.String name, java.lang.String description,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbFolderLocalService.updateKBFolder(parentResourceClassNameId,
+			parentResourcePrimKey, kbFolderId, name, description, serviceContext);
 	}
 
 	@Override

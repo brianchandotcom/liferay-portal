@@ -60,6 +60,8 @@ public class WABWrapperUtil {
 		sb.append("&Web-ContextPath=/");
 		sb.append(contextName);
 		sb.append("&protocol=lpkg");
+		sb.append(StringPool.AMPERSAND);
+		sb.append(lpkgURL.getQuery());
 
 		return sb.toString();
 	}

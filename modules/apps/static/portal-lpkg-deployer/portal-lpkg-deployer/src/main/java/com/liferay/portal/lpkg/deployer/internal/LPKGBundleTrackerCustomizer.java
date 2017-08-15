@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.lpkg.deployer.internal.wrapper.bundle.URLStreamHandlerServiceServiceTrackerCustomizer;
 import com.liferay.portal.lpkg.deployer.internal.wrapper.bundle.WARBundleWrapperBundleActivator;
 import com.liferay.portal.util.PropsValues;
@@ -461,7 +462,9 @@ public class LPKGBundleTrackerCustomizer
 		bundle.uninstall();
 	}
 
-	private String _readServletContextName(URL url) throws IOException {
+	private String[] _readServletContextNameAndPortalProfileNames(URL url)
+		throws IOException {
+
 		String pathString = url.getPath();
 
 		String servletContextName = pathString.substring(
@@ -472,6 +475,8 @@ public class LPKGBundleTrackerCustomizer
 		if (index >= 0) {
 			servletContextName = servletContextName.substring(0, index);
 		}
+
+		String portalProfileNames = null;
 
 		Path tempFilePath = Files.createTempFile(null, null);
 
@@ -496,6 +501,9 @@ public class LPKGBundleTrackerCustomizer
 					if (configuredServletContextName != null) {
 						servletContextName = configuredServletContextName;
 					}
+
+					portalProfileNames = properties.getProperty(
+						"liferay-portal-profile-names");
 				}
 			}
 		}
@@ -503,7 +511,7 @@ public class LPKGBundleTrackerCustomizer
 			Files.delete(tempFilePath);
 		}
 
-		return servletContextName;
+		return new String[] {servletContextName, portalProfileNames};
 	}
 
 	private InputStream _toWARWrapperBundle(Bundle bundle, URL url)
@@ -517,11 +525,21 @@ public class LPKGBundleTrackerCustomizer
 		sb.append(bundle.getVersion());
 		sb.append(StringPool.SLASH);
 
-		String servletContextName = _readServletContextName(url);
+		String[] strings = _readServletContextNameAndPortalProfileNames(url);
+
+		String servletContextName = strings[0];
 
 		sb.append(servletContextName);
 
 		sb.append(".war");
+
+		String portalProfileNames = strings[1];
+
+		if (Validator.isNotNull(portalProfileNames)) {
+			sb.append(StringPool.QUESTION);
+			sb.append("liferay-portal-profile-names=");
+			sb.append(portalProfileNames);
+		}
 
 		String lpkgURL = sb.toString();
 

@@ -15,20 +15,18 @@
 package com.liferay.portal.upgrade.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.ServiceComponentUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.DBAssertionUtil;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.impl.BuildAutoUpgradeTestEntityModelImpl;
 import com.liferay.portal.test.log.CaptureAppender;
@@ -40,7 +38,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -48,7 +45,6 @@ import java.sql.Types;
 
 import java.util.List;
 import java.util.Properties;
-import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarOutputStream;
 
@@ -162,13 +158,15 @@ public abstract class BaseBuildAutoUpgradeTestCase {
 
 		// Initial columns
 
-		_assertColumns("id_", "data_");
+		DBAssertionUtil.assertColumns(
+			"BuildAutoUpgradeTestEntity", "id_", "data_");
 
 		// Add "data2" column
 
 		_updateBundle(getBundleInputStream(2));
 
-		_assertColumns("id_", "data_", "data2");
+		DBAssertionUtil.assertColumns(
+			"BuildAutoUpgradeTestEntity", "id_", "data_", "data2");
 
 		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
 			PreparedStatement ps = con.prepareStatement(
@@ -199,7 +197,8 @@ public abstract class BaseBuildAutoUpgradeTestCase {
 
 		_updateBundle(getBundleInputStream(3));
 
-		_assertColumns("id_", "data2");
+		DBAssertionUtil.assertColumns(
+			"BuildAutoUpgradeTestEntity", "id_", "data2");
 
 		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
 			PreparedStatement ps = con.prepareStatement(
@@ -218,7 +217,8 @@ public abstract class BaseBuildAutoUpgradeTestCase {
 
 		_updateBundle(getBundleInputStream(4));
 
-		_assertColumns("id_", "data_");
+		DBAssertionUtil.assertColumns(
+			"BuildAutoUpgradeTestEntity", "id_", "data_");
 
 		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
 			PreparedStatement ps = con.prepareStatement(
@@ -433,33 +433,6 @@ public abstract class BaseBuildAutoUpgradeTestCase {
 		LoggingEvent loggingEvent = loggingEvents.get(0);
 
 		return loggingEvent.getRenderedMessage();
-	}
-
-	private void _assertColumns(String... columnNames) throws Exception {
-		Set<String> names = SetUtil.fromArray(columnNames);
-
-		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
-			DBInspector dbInspector = new DBInspector(con);
-
-			DatabaseMetaData metaData = con.getMetaData();
-
-			try (ResultSet rs = metaData.getColumns(
-					dbInspector.getCatalog(), dbInspector.getSchema(),
-					dbInspector.normalizeName("BuildAutoUpgradeTestEntity"),
-					null)) {
-
-				while (rs.next()) {
-					String columnName = StringUtil.toLowerCase(
-						rs.getString("COLUMN_NAME"));
-
-					Assert.assertTrue(
-						columnName + " should not exist",
-						names.remove(columnName));
-				}
-			}
-		}
-
-		Assert.assertEquals(names.toString(), 0, names.size());
 	}
 
 	private void _initTableColumns(

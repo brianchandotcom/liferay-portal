@@ -15,7 +15,7 @@
 package com.liferay.text.localizer.address;
 
 import com.liferay.portal.kernel.model.Address;
-import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -24,6 +24,7 @@ import com.liferay.text.localizer.address.util.AddressTextLocalizerUtil;
 import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
@@ -34,6 +35,7 @@ import org.osgi.service.component.annotations.Component;
 )
 public class USAddressTextLocalizer implements AddressTextLocalizer {
 
+	@Override
 	public String format(Address address) {
 		StringBundler sb = new StringBundler(14);
 
@@ -81,7 +83,7 @@ public class USAddressTextLocalizer implements AddressTextLocalizer {
 		}
 
 		regionNameOptional.ifPresent(
-			regionName -> sb.append(HtmlUtil.escape(regionName)));
+			regionName -> sb.append(html.escape(regionName)));
 
 		if (hasZip) {
 			if (hasRegionName) {
@@ -94,10 +96,13 @@ public class USAddressTextLocalizer implements AddressTextLocalizer {
 		countryNameOptional.ifPresent(
 			countryName -> {
 				sb.append(StringPool.NEW_LINE);
-				sb.append(HtmlUtil.escape(countryName));
+				sb.append(html.escape(countryName));
 			});
 
 		return sb.toString().trim();
 	}
+
+	@Reference
+	protected Html html;
 
 }

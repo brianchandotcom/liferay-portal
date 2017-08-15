@@ -99,7 +99,7 @@ public class SourceFormatterUtil {
 				if (excludeSyntax.equals(ExcludeSyntax.REGEX)) {
 					regexList.add(excludePattern);
 				}
-				else {
+				else if (!excludePattern.contains(StringPool.DOLLAR)) {
 					regexList.add(_createRegex(excludePattern));
 				}
 			}
@@ -136,10 +136,8 @@ public class SourceFormatterUtil {
 								propertiesFileLocation)) {
 
 							for (String excludeRegex : entry.getValue()) {
-								if (!excludeRegex.contains(StringPool.DOLLAR)) {
-									if (encodedFileName.matches(excludeRegex)) {
-										continue outerLoop;
-									}
+								if (encodedFileName.matches(excludeRegex)) {
+									continue outerLoop;
 								}
 							}
 						}

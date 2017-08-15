@@ -2906,6 +2906,10 @@ public class ServiceBuilder {
 	}
 
 	private void _createPersistenceTest(Entity entity) throws Exception {
+		if (entity.isDeprecated()) {
+			return;
+		}
+
 		Map<String, Object> context = _getContext();
 
 		context.put("entity", entity);

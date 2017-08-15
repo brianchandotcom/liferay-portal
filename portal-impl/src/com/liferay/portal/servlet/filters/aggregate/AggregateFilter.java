@@ -528,6 +528,10 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 				cssServletContext, resourcePath);
 
 			resourcePathRoot = ServletPaths.getParentPath(resourcePathRoot);
+
+			if (resourcePathRoot.equals(StringPool.BLANK)) {
+				resourcePathRoot = "/";
+			}
 		}
 		else {
 			resourcePathRoot = ServletPaths.getParentPath(resourcePath);

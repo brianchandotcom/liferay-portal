@@ -15,7 +15,10 @@
 package com.liferay.poshi.runner.elements;
 
 import com.liferay.poshi.runner.util.Dom4JUtil;
+import com.liferay.poshi.runner.util.FileUtil;
 import com.liferay.poshi.runner.util.RegexUtil;
+
+import java.io.File;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,6 +29,7 @@ import java.util.Set;
 import java.util.Stack;
 
 import org.dom4j.Attribute;
+import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.tree.DefaultElement;
 
@@ -69,6 +73,31 @@ public abstract class PoshiElement extends DefaultElement {
 
 		throw new RuntimeException(
 			"Unknown readable syntax\n" + readableSyntax);
+	}
+
+	public static PoshiElement newPoshiElementFromFile(String filePath) {
+		File file = new File(filePath);
+
+		try {
+			String fileContent = FileUtil.read(file);
+
+			if (fileContent.contains("<definition")) {
+				Document document = Dom4JUtil.parse(fileContent);
+
+				Element rootElement = document.getRootElement();
+
+				return newPoshiElement(rootElement);
+			}
+
+			return newPoshiElement(null, fileContent);
+		}
+		catch (Exception e) {
+			System.out.println("Unable to generate the Poshi element");
+
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 
 	@Override
@@ -296,7 +325,7 @@ public abstract class PoshiElement extends DefaultElement {
 		for (Element childElement :
 				Dom4JUtil.toElementList(element.elements())) {
 
-			add(PoshiElementFactoryOld.newPoshiElement(childElement));
+			add(newPoshiElement(childElement));
 		}
 	}
 

@@ -14,7 +14,7 @@
 
 package com.liferay.poshi.runner;
 
-import com.liferay.poshi.runner.elements.PoshiElementFactory;
+import com.liferay.poshi.runner.elements.PoshiElement;
 import com.liferay.poshi.runner.selenium.SeleniumUtil;
 import com.liferay.poshi.runner.util.Dom4JUtil;
 import com.liferay.poshi.runner.util.ExternalMethod;
@@ -270,8 +270,7 @@ public class PoshiRunnerGetterUtil {
 		if (!fileContent.contains("<definition") &&
 			filePath.endsWith(".testcase")) {
 
-			Element element = PoshiElementFactory.newPoshiElementFromFile(
-				filePath);
+			Element element = PoshiElement.newPoshiElementFromFile(filePath);
 
 			fileContent = Dom4JUtil.format(element);
 		}

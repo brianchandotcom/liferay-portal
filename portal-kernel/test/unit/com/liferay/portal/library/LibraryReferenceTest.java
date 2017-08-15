@@ -146,6 +146,10 @@ public class LibraryReferenceTest {
 	@Test
 	public void testVersionsExtJarsInLib() {
 		for (String jar : _versionsExtJars) {
+			if (jar.indexOf(CharPool.EXCLAMATION) != -1) {
+				continue;
+			}
+
 			Assert.assertTrue(
 				_VERSIONS_EXT_FILE_NAME + " has a nonexistent reference to " +
 					jar,

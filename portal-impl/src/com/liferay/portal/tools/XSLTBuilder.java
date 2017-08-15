@@ -14,38 +14,57 @@
 
 package com.liferay.portal.tools;
 
-import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProvider;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.security.xml.SecureXMLFactoryProviderImpl;
+import com.liferay.portal.xml.SAXReaderFactory;
+import com.liferay.util.xml.Dom4jUtil;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import org.dom4j.Document;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
+import org.dom4j.Node;
+import org.dom4j.io.DocumentSource;
+import org.dom4j.io.SAXReader;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class XSLTBuilder {
 
-	public static void main(String[] args) {
-		if (args.length == 3) {
+	public static void main(String[] args) throws IOException {
+		if (args.length == 2) {
+			String xmls = null;
+
+			try (BufferedReader bufferedReader = new BufferedReader(
+					new InputStreamReader(System.in))) {
+
+				xmls = bufferedReader.readLine();
+			}
+
+			new XSLTBuilder(StringUtil.split(xmls), args[0], args[1]);
+		}
+		else if (args.length == 3) {
 			new XSLTBuilder(StringUtil.split(args[0]), args[1], args[2]);
 		}
 		else {
@@ -61,6 +80,21 @@ public class XSLTBuilder {
 		try {
 			System.setProperty("line.separator", StringPool.NEW_LINE);
 
+			String prefix = html.substring(
+				0, html.lastIndexOf(CharPool.PERIOD));
+
+			Document document = _combineAndSortXMLs(xmls, prefix + ".xsl");
+
+			if (xmls.length > 1) {
+				String completeXml = prefix + "-complete.xml";
+
+				String completeContent = Dom4jUtil.toString(document);
+
+				Files.write(
+					Paths.get(completeXml),
+					completeContent.getBytes(StandardCharsets.UTF_8));
+			}
+
 			TransformerFactory transformerFactory =
 				TransformerFactory.newInstance();
 
@@ -68,7 +102,7 @@ public class XSLTBuilder {
 				new StreamSource(xsl));
 
 			transformer.transform(
-				_combineAndSortXMLs(xmls),
+				new DocumentSource(document),
 				new StreamResult(new FileOutputStream(html)));
 		}
 		catch (Exception e) {
@@ -76,49 +110,47 @@ public class XSLTBuilder {
 		}
 	}
 
-	private Source _combineAndSortXMLs(String[] xmls) throws Exception {
-		SecureXMLFactoryProvider secureXMLFactoryProvider =
-			new SecureXMLFactoryProviderImpl();
+	private Document _combineAndSortXMLs(String[] xmls, String xsl)
+		throws Exception {
 
-		DocumentBuilderFactory documentBuilderFactory =
-			secureXMLFactoryProvider.newDocumentBuilderFactory();
+		SAXReader saxReader = SAXReaderFactory.getSAXReader(null, false, false);
 
-		DocumentBuilder documentBuilder =
-			documentBuilderFactory.newDocumentBuilder();
-
-		Map<String, Node> nodeMap = new TreeMap<>();
+		Map<String, Element> elementMap = new TreeMap<>();
 
 		for (String xml : xmls) {
-			Document document = documentBuilder.parse(new File(xml));
+			Document document = saxReader.read(new File(xml));
 
-			NodeList nodeList = document.getElementsByTagName("file-name");
+			List<Node> nodes = document.selectNodes("//file-name");
 
-			for (int i = 0; i < nodeList.getLength(); i++) {
-				Node node = nodeList.item(i);
-
-				nodeMap.put(node.getTextContent(), node.getParentNode());
+			for (Node node : nodes) {
+				elementMap.put(node.getText(), node.getParent());
 			}
 		}
 
-		Document document = documentBuilder.newDocument();
+		Document document = DocumentHelper.createDocument();
 
-		Element versionsElement = document.createElement("versions");
+		File xslFile = new File(xsl);
 
-		document.appendChild(versionsElement);
+		if (xslFile.exists()) {
+			Map<String, String> args = new HashMap<>();
 
-		Element versionElement = document.createElement("version");
+			args.put("href", xslFile.getName());
+			args.put("type", "text/xsl");
 
-		versionsElement.appendChild(versionElement);
-
-		Element librariesElement = document.createElement("libraries");
-
-		versionElement.appendChild(librariesElement);
-
-		for (Node node : nodeMap.values()) {
-			librariesElement.appendChild(document.importNode(node, true));
+			document.addProcessingInstruction("xml-stylesheet", args);
 		}
 
-		return new DOMSource(document);
+		Element versionsElement = document.addElement("versions");
+
+		Element versionElement = versionsElement.addElement("version");
+
+		Element librariesElement = versionElement.addElement("libraries");
+
+		for (Element element : elementMap.values()) {
+			librariesElement.add(element.detach());
+		}
+
+		return document;
 	}
 
 }

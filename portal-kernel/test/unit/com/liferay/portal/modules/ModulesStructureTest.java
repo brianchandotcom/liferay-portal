@@ -217,9 +217,7 @@ public class ModulesStructureTest {
 
 					String fileName = String.valueOf(path.getFileName());
 
-					if (StringUtil.endsWith(fileName, ".gradle") &&
-						!fileName.equals("licenses.gradle")) {
-
+					if (StringUtil.endsWith(fileName, ".gradle")) {
 						_testGradleFile(path);
 					}
 

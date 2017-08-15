@@ -375,9 +375,14 @@
 				</filtermapper>
 			</chainedmapper>
 			<path>
-				<dirset dir="${modules.dir}" excludes="**/*-test*" includes="apps/${app.name}/**,private/apps/${app.name}/**">
+				<dirset dir="${modules.dir}" excludes="**/*-test*" includes="apps/${app.name}/**">
 					<present targetdir="${modules.dir}">
 						<mapper from="*" to="*/.lfrbuild-portal" type="glob" />
+					</present>
+				</dirset>
+				<dirset dir="${modules.dir}" excludes="**/*-test*" includes="private/apps/${app.name}/**">
+					<present targetdir="${modules.dir}">
+						<mapper from="*" to="*/.lfrbuild-portal-private" type="glob" />
 					</present>
 				</dirset>
 			</path>

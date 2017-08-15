@@ -70,6 +70,12 @@ public class BindLdapHandler extends BaseLdapHandler {
 
 		BindRequest bindRequest = (BindRequest)request;
 
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Bind request from " + ioSession.getRemoteAddress() + " for " +
+					bindRequest.getName());
+		}
+
 		String saslMechanism = GetterUtil.getString(
 			bindRequest.getSaslMechanism());
 

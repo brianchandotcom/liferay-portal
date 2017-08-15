@@ -27,39 +27,39 @@ import org.dom4j.Node;
  */
 public class VarElement extends PoshiElement {
 
-	public VarElement(Element element) {
-		this("var", element);
-	}
+	public static final String ELEMENT_NAME = "var";
 
-	public VarElement(String readableSyntax) {
-		this("var", readableSyntax);
-	}
+	static {
+		PoshiElementFactory varElementFactory = new PoshiElementFactory() {
 
-	public VarElement(String name, Element element) {
-		super(name, element);
-
-		if (isElementType(name, element)) {
-			initValueAttributeName(element);
-		}
-	}
-
-	public VarElement(String name, String readableSyntax) {
-		super(name, readableSyntax);
-	}
-
-	public String getVarValue() {
-		if (valueAttributeName == null) {
-			for (Node node : Dom4JUtil.toNodeList(content())) {
-				if (node instanceof CDATA) {
-					return node.getText();
+			@Override
+			public PoshiElement newPoshiElement(Element element) {
+				if (isElementType(ELEMENT_NAME, element)) {
+					return new VarElement(element);
 				}
-			}
-		}
 
-		return attributeValue(valueAttributeName);
+				return null;
+			}
+
+			@Override
+			public PoshiElement newPoshiElement(
+				PoshiElement parentPoshiElement, String readableSyntax) {
+
+				if (isElementType(parentPoshiElement, readableSyntax)) {
+					return new VarElement(readableSyntax);
+				}
+
+				return null;
+			}
+
+		};
+
+		PoshiElement.addPoshiElementFactory(varElementFactory);
 	}
 
-	public boolean isElementType(String readableSyntax) {
+	public static boolean isElementType(
+		PoshiElement parentPoshiElement, String readableSyntax) {
+
 		readableSyntax = readableSyntax.trim();
 
 		if (!isBalancedReadableSyntax(readableSyntax)) {
@@ -79,6 +79,18 @@ public class VarElement extends PoshiElement {
 		}
 
 		return true;
+	}
+
+	public String getVarValue() {
+		if (valueAttributeName == null) {
+			for (Node node : Dom4JUtil.toNodeList(content())) {
+				if (node instanceof CDATA) {
+					return node.getText();
+				}
+			}
+		}
+
+		return attributeValue(valueAttributeName);
 	}
 
 	@Override
@@ -140,6 +152,26 @@ public class VarElement extends PoshiElement {
 		}
 
 		return sb.toString();
+	}
+
+	protected VarElement(Element element) {
+		this(ELEMENT_NAME, element);
+	}
+
+	protected VarElement(String readableSyntax) {
+		this(ELEMENT_NAME, readableSyntax);
+	}
+
+	protected VarElement(String name, Element element) {
+		super(name, element);
+
+		if (isElementType(name, element)) {
+			initValueAttributeName(element);
+		}
+	}
+
+	protected VarElement(String name, String readableSyntax) {
+		super(name, readableSyntax);
 	}
 
 	@Override

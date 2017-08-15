@@ -21,15 +21,39 @@ import org.dom4j.Element;
  */
 public class TearDownElement extends CommandElement {
 
-	public TearDownElement(Element element) {
-		super("tear-down", element);
+	public static final String ELEMENT_NAME = "tear-down";
+
+	static {
+		PoshiElementFactory tearDownElementFactory = new PoshiElementFactory() {
+
+			@Override
+			public PoshiElement newPoshiElement(Element element) {
+				if (isElementType(ELEMENT_NAME, element)) {
+					return new TearDownElement(element);
+				}
+
+				return null;
+			}
+
+			@Override
+			public PoshiElement newPoshiElement(
+				PoshiElement parentPoshiElement, String readableSyntax) {
+
+				if (isElementType(parentPoshiElement, readableSyntax)) {
+					return new TearDownElement(readableSyntax);
+				}
+
+				return null;
+			}
+
+		};
+
+		PoshiElement.addPoshiElementFactory(tearDownElementFactory);
 	}
 
-	public TearDownElement(String readableSyntax) {
-		super("tear-down", readableSyntax);
-	}
+	public static boolean isElementType(
+		PoshiElement parentPoshiElement, String readableSyntax) {
 
-	public boolean isElementType(String readableSyntax) {
 		readableSyntax = readableSyntax.trim();
 
 		if (!isBalancedReadableSyntax(readableSyntax)) {
@@ -55,6 +79,14 @@ public class TearDownElement extends CommandElement {
 		}
 
 		return true;
+	}
+
+	protected TearDownElement(Element element) {
+		super(ELEMENT_NAME, element);
+	}
+
+	protected TearDownElement(String readableSyntax) {
+		super(ELEMENT_NAME, readableSyntax);
 	}
 
 	@Override

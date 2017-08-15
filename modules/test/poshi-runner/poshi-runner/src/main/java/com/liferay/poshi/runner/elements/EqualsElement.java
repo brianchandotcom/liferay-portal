@@ -21,12 +21,46 @@ import org.dom4j.Element;
  */
 public class EqualsElement extends PoshiElement {
 
-	public EqualsElement(Element element) {
-		super("equals", element);
+	public static final String ELEMENT_NAME = "equals";
+
+	static {
+		PoshiElementFactory equalsElementFactory = new PoshiElementFactory() {
+
+			@Override
+			public PoshiElement newPoshiElement(Element element) {
+				if (isElementType(ELEMENT_NAME, element)) {
+					return new EqualsElement(element);
+				}
+
+				return null;
+			}
+
+			@Override
+			public PoshiElement newPoshiElement(
+				PoshiElement parentPoshiElement, String readableSyntax) {
+
+				if (isElementType(parentPoshiElement, readableSyntax)) {
+					return new EqualsElement(readableSyntax);
+				}
+
+				return null;
+			}
+
+		};
+
+		PoshiElement.addPoshiElementFactory(equalsElementFactory);
 	}
 
-	public EqualsElement(String readableSyntax) {
-		super("equals", readableSyntax);
+	public static boolean isElementType(
+		PoshiElement parentPoshiElement, String readableSyntax) {
+
+		if (parentPoshiElement instanceof IfElement &&
+			readableSyntax.contains("==")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -62,6 +96,14 @@ public class EqualsElement extends PoshiElement {
 		sb.append("\"");
 
 		return sb.toString();
+	}
+
+	protected EqualsElement(Element element) {
+		super(ELEMENT_NAME, element);
+	}
+
+	protected EqualsElement(String readableSyntax) {
+		super(ELEMENT_NAME, readableSyntax);
 	}
 
 }

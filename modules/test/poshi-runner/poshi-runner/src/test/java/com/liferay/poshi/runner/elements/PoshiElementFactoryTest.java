@@ -53,7 +53,7 @@ public class PoshiElementFactoryTest {
 		String readableSyntax = poshiElement.toReadableSyntax();
 
 		PoshiElement elementFromReadableSyntax = PoshiElement.newPoshiElement(
-			readableSyntax);
+			null, readableSyntax);
 
 		Element baselineElement = _getBaselineElement();
 

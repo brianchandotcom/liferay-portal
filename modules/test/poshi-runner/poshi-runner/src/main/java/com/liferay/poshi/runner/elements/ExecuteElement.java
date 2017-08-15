@@ -28,23 +28,39 @@ import org.dom4j.Element;
  */
 public class ExecuteElement extends PoshiElement {
 
-	public ExecuteElement(Element element) {
-		super("execute", element);
+	public static final String ELEMENT_NAME = "execute";
+
+	static {
+		PoshiElementFactory executeElementFactory = new PoshiElementFactory() {
+
+			@Override
+			public PoshiElement newPoshiElement(Element element) {
+				if (isElementType(ELEMENT_NAME, element)) {
+					return new ExecuteElement(element);
+				}
+
+				return null;
+			}
+
+			@Override
+			public PoshiElement newPoshiElement(
+				PoshiElement parentPoshiElement, String readableSyntax) {
+
+				if (isElementType(parentPoshiElement, readableSyntax)) {
+					return new ExecuteElement(readableSyntax);
+				}
+
+				return null;
+			}
+
+		};
+
+		PoshiElement.addPoshiElementFactory(executeElementFactory);
 	}
 
-	public ExecuteElement(String readableSyntax) {
-		super("execute", readableSyntax);
-	}
+	public static boolean isElementType(
+		PoshiElement parentPoshiElement, String readableSyntax) {
 
-	public ExecuteElement(String name, Element element) {
-		super(name, element);
-	}
-
-	public ExecuteElement(String name, String readableSyntax) {
-		super(name, readableSyntax);
-	}
-
-	public boolean isElementType(String readableSyntax) {
 		readableSyntax = readableSyntax.trim();
 
 		if (!isBalancedReadableSyntax(readableSyntax)) {
@@ -74,20 +90,8 @@ public class ExecuteElement extends PoshiElement {
 
 	@Override
 	public void parseReadableSyntax(String readableSyntax) {
-		if (readableSyntax.contains("return(\n")) {
-			ReturnElement returnElement = new ReturnElement(readableSyntax);
-
-			String returnFrom = RegexUtil.getGroup(
-				readableSyntax, ".*,(.*)\\)", 1);
-
-			returnElement.addAttribute("from", returnFrom.trim());
-
-			String returnName = RegexUtil.getGroup(
-				readableSyntax, "var(.*?)=", 1);
-
-			returnElement.addAttribute("name", returnName.trim());
-
-			add(returnElement);
+		if (ReturnElement.isElementType(this, readableSyntax)) {
+			add(PoshiElement.newPoshiElement(this, readableSyntax));
 
 			readableSyntax = RegexUtil.getGroup(
 				readableSyntax, "return\\((.*),", 1);
@@ -132,7 +136,7 @@ public class ExecuteElement extends PoshiElement {
 			if (executeType.equals("macro")) {
 				assignment = "var " + assignment + ";";
 
-				add(new VarElement(assignment));
+				add(PoshiElement.newPoshiElement(this, assignment));
 
 				continue;
 			}
@@ -190,6 +194,22 @@ public class ExecuteElement extends PoshiElement {
 		}
 
 		return returnElement.createReadableBlock(readableBlock);
+	}
+
+	protected ExecuteElement(Element element) {
+		super("execute", element);
+	}
+
+	protected ExecuteElement(String readableSyntax) {
+		super("execute", readableSyntax);
+	}
+
+	protected ExecuteElement(String name, Element element) {
+		super(name, element);
+	}
+
+	protected ExecuteElement(String name, String readableSyntax) {
+		super(name, readableSyntax);
 	}
 
 	@Override

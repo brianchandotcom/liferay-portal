@@ -24,20 +24,46 @@ import org.dom4j.Element;
  */
 public class ThenElement extends PoshiElement {
 
-	public ThenElement(Element element) {
-		super("then", element);
+	public static final String ELEMENT_NAME = "then";
+
+	static {
+		PoshiElementFactory thenElementFactory = new PoshiElementFactory() {
+
+			@Override
+			public PoshiElement newPoshiElement(Element element) {
+				if (isElementType(ELEMENT_NAME, element)) {
+					return new ThenElement(element);
+				}
+
+				return null;
+			}
+
+			@Override
+			public PoshiElement newPoshiElement(
+				PoshiElement parentPoshiElement, String readableSyntax) {
+
+				if (isElementType(parentPoshiElement, readableSyntax)) {
+					return new ThenElement(readableSyntax);
+				}
+
+				return null;
+			}
+
+		};
+
+		PoshiElement.addPoshiElementFactory(thenElementFactory);
 	}
 
-	public ThenElement(String readableSyntax) {
-		super("then", readableSyntax);
-	}
+	public static boolean isElementType(
+		PoshiElement parentPoshiElement, String readableSyntax) {
 
-	public ThenElement(String name, Element element) {
-		super(name, element);
-	}
+		if (parentPoshiElement instanceof IfElement &&
+			readableSyntax.startsWith("{")) {
 
-	public ThenElement(String name, String readableSyntax) {
-		super(name, readableSyntax);
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -48,8 +74,24 @@ public class ThenElement extends PoshiElement {
 	@Override
 	public void parseReadableSyntax(String readableSyntax) {
 		for (String readableBlock : getReadableBlocks(readableSyntax)) {
-			addElementFromReadableSyntax(readableBlock);
+			add(newPoshiElement(this, readableBlock));
 		}
+	}
+
+	protected ThenElement(Element element) {
+		super(ELEMENT_NAME, element);
+	}
+
+	protected ThenElement(String readableSyntax) {
+		super(ELEMENT_NAME, readableSyntax);
+	}
+
+	protected ThenElement(String name, Element element) {
+		super(name, element);
+	}
+
+	protected ThenElement(String name, String readableSyntax) {
+		super(name, readableSyntax);
 	}
 
 	protected List<String> getReadableBlocks(String readableSyntax) {

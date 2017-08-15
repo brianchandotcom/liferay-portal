@@ -24,28 +24,39 @@ import org.dom4j.Element;
  */
 public class ForElement extends PoshiElement {
 
-	public ForElement(Element element) {
-		super("for", element);
+	public static final String ELEMENT_NAME = "for";
+
+	static {
+		PoshiElementFactory forElementFactory = new PoshiElementFactory() {
+
+			@Override
+			public PoshiElement newPoshiElement(Element element) {
+				if (isElementType(ELEMENT_NAME, element)) {
+					return new ForElement(element);
+				}
+
+				return null;
+			}
+
+			@Override
+			public PoshiElement newPoshiElement(
+				PoshiElement parentPoshiElement, String readableSyntax) {
+
+				if (isElementType(parentPoshiElement, readableSyntax)) {
+					return new ForElement(readableSyntax);
+				}
+
+				return null;
+			}
+
+		};
+
+		PoshiElement.addPoshiElementFactory(forElementFactory);
 	}
 
-	public ForElement(String readableSyntax) {
-		super("for", readableSyntax);
-	}
+	public static boolean isElementType(
+		PoshiElement parentPoshiElement, String readableSyntax) {
 
-	@Override
-	public String getBlockName() {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("for (");
-		sb.append(attributeValue("param"));
-		sb.append(" : \"");
-		sb.append(attributeValue("list"));
-		sb.append("\")");
-
-		return sb.toString();
-	}
-
-	public boolean isElementType(String readableSyntax) {
 		readableSyntax = readableSyntax.trim();
 
 		if (!isBalancedReadableSyntax(readableSyntax)) {
@@ -61,6 +72,19 @@ public class ForElement extends PoshiElement {
 		}
 
 		return true;
+	}
+
+	@Override
+	public String getBlockName() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("for (");
+		sb.append(attributeValue("param"));
+		sb.append(" : \"");
+		sb.append(attributeValue("list"));
+		sb.append("\")");
+
+		return sb.toString();
 	}
 
 	@Override
@@ -85,7 +109,7 @@ public class ForElement extends PoshiElement {
 				continue;
 			}
 
-			addElementFromReadableSyntax(readableBlock);
+			add(PoshiElement.newPoshiElement(this, readableBlock));
 		}
 	}
 
@@ -94,6 +118,14 @@ public class ForElement extends PoshiElement {
 		String readableSyntax = super.toReadableSyntax();
 
 		return "\n" + createReadableBlock(readableSyntax);
+	}
+
+	protected ForElement(Element element) {
+		super(ELEMENT_NAME, element);
+	}
+
+	protected ForElement(String readableSyntax) {
+		super(ELEMENT_NAME, readableSyntax);
 	}
 
 	protected List<String> getReadableBlocks(String readableSyntax) {

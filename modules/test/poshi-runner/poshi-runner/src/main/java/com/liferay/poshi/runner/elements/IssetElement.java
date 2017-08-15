@@ -21,12 +21,46 @@ import org.dom4j.Element;
  */
 public class IssetElement extends PoshiElement {
 
-	public IssetElement(Element element) {
-		super("isset", element);
+	public static final String ELEMENT_NAME = "isset";
+
+	static {
+		PoshiElementFactory isSetElementFactory = new PoshiElementFactory() {
+
+			@Override
+			public PoshiElement newPoshiElement(Element element) {
+				if (isElementType(ELEMENT_NAME, element)) {
+					return new IssetElement(element);
+				}
+
+				return null;
+			}
+
+			@Override
+			public PoshiElement newPoshiElement(
+				PoshiElement parentPoshiElement, String readableSyntax) {
+
+				if (isElementType(parentPoshiElement, readableSyntax)) {
+					return new IssetElement(readableSyntax);
+				}
+
+				return null;
+			}
+
+		};
+
+		PoshiElement.addPoshiElementFactory(isSetElementFactory);
 	}
 
-	public IssetElement(String readableSyntax) {
-		super("isset", readableSyntax);
+	public static boolean isElementType(
+		PoshiElement parentPoshiElement, String readableSyntax) {
+
+		if (parentPoshiElement instanceof IfElement &&
+			readableSyntax.startsWith("isset(")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -44,6 +78,14 @@ public class IssetElement extends PoshiElement {
 	@Override
 	public String toReadableSyntax() {
 		return "isset(" + attributeValue("var") + ")";
+	}
+
+	protected IssetElement(Element element) {
+		super(ELEMENT_NAME, element);
+	}
+
+	protected IssetElement(String readableSyntax) {
+		super(ELEMENT_NAME, readableSyntax);
 	}
 
 }

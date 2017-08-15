@@ -103,6 +103,6 @@ public class CSSBuilderUtil {
 	}
 
 	private static final Pattern _cssImportPattern = Pattern.compile(
-		"@import\\s+url\\s*\\(\\s*\"(.+\\.css)");
+		"@import\\s+url\\s*\\(\\s*['\"]?(.+\\.css)");
 
 }

@@ -15,24 +15,19 @@
 package com.liferay.text.localizer.address;
 
 import com.liferay.portal.kernel.model.Address;
-import com.liferay.portal.kernel.model.AddressWrapper;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.impl.AddressImpl;
-import com.liferay.portal.model.impl.CountryImpl;
-import com.liferay.portal.model.impl.RegionImpl;
 import com.liferay.portal.util.HtmlImpl;
-
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import org.mockito.Mockito;
 
 /**
  * @author Drew Brokke
@@ -41,19 +36,16 @@ public class USAddressTextLocalizerTest {
 
 	@Before
 	public void setUp() {
-		ReflectionTestUtil.setFieldValue(
-			HtmlUtil.class, "_html", new HtmlImpl());
-
-		_address = new AddressImpl();
+		_address = _createAddress();
 	}
 
 	@Test
 	public void testAllFields() {
-		_address = _setStreets(_address);
-		_address = _setCity(_address);
-		_address = _setRegion(_address);
-		_address = _setZip(_address);
-		_address = _setCountry(_address);
+		_setStreets(_address);
+		_setCity(_address);
+		_setRegion(_address);
+		_setZip(_address);
+		_setCountry(_address);
 
 		Assert.assertEquals(
 			_constructExpectedAddress(
@@ -66,7 +58,7 @@ public class USAddressTextLocalizerTest {
 
 	@Test
 	public void testCountryLine() {
-		_address = _setCountry(_address);
+		_setCountry(_address);
 
 		Assert.assertEquals(
 			_constructExpectedAddress(_COUNTRY_NAME),
@@ -75,8 +67,8 @@ public class USAddressTextLocalizerTest {
 
 	@Test
 	public void testRegionLineWithCityAndRegionName() {
-		_address = _setCity(_address);
-		_address = _setRegion(_address);
+		_setCity(_address);
+		_setRegion(_address);
 
 		Assert.assertEquals(
 			_constructExpectedAddress(
@@ -86,9 +78,9 @@ public class USAddressTextLocalizerTest {
 
 	@Test
 	public void testRegionLineWithCityAndRegionNameAndZip() {
-		_address = _setCity(_address);
-		_address = _setRegion(_address);
-		_address = _setZip(_address);
+		_setCity(_address);
+		_setRegion(_address);
+		_setZip(_address);
 
 		Assert.assertEquals(
 			_constructExpectedAddress(
@@ -99,8 +91,8 @@ public class USAddressTextLocalizerTest {
 
 	@Test
 	public void testRegionLineWithCityAndZip() {
-		_address = _setCity(_address);
-		_address = _setZip(_address);
+		_setCity(_address);
+		_setZip(_address);
 
 		Assert.assertEquals(
 			_constructExpectedAddress(_CITY, StringPool.COMMA_AND_SPACE, _ZIP),
@@ -129,8 +121,8 @@ public class USAddressTextLocalizerTest {
 
 	@Test
 	public void testStreetAndCountryLines() {
-		_address = _setStreets(_address);
-		_address = _setCountry(_address);
+		_setStreets(_address);
+		_setCountry(_address);
 
 		Assert.assertEquals(
 			_constructExpectedAddress(
@@ -141,7 +133,7 @@ public class USAddressTextLocalizerTest {
 
 	@Test
 	public void testStreetLines() {
-		_address = _setStreets(_address);
+		_setStreets(_address);
 
 		Assert.assertEquals(
 			_constructExpectedAddress(
@@ -155,16 +147,16 @@ public class USAddressTextLocalizerTest {
 		String xssFieldValue =
 			"<script type=\"text/javascript\">alert(\"Hello World\");</script>";
 
-		_address.setStreet1(xssFieldValue);
-		_address.setStreet2(xssFieldValue);
-		_address.setStreet3(xssFieldValue);
-		_address.setCity(xssFieldValue);
-		_address.setZip(xssFieldValue);
+		Mockito.doReturn(xssFieldValue).when(_address).getStreet1();
+		Mockito.doReturn(xssFieldValue).when(_address).getStreet2();
+		Mockito.doReturn(xssFieldValue).when(_address).getStreet3();
+		Mockito.doReturn(xssFieldValue).when(_address).getCity();
+		Mockito.doReturn(xssFieldValue).when(_address).getZip();
 
-		_address = _setCountry(_address, xssFieldValue);
-		_address = _setRegion(_address, xssFieldValue);
+		_setCountry(_address, xssFieldValue);
+		_setRegion(_address, xssFieldValue);
 
-		String escapedValue = HtmlUtil.escape(xssFieldValue);
+		String escapedValue = _html.escape(xssFieldValue);
 
 		Assert.assertEquals(
 			_constructExpectedAddress(
@@ -177,71 +169,101 @@ public class USAddressTextLocalizerTest {
 	}
 
 	private String _constructExpectedAddress(String... elements) {
-		StringBundler sb = new StringBundler(elements.length);
-
-		Stream.of(elements).forEachOrdered(sb::append);
+		StringBundler sb = new StringBundler(elements);
 
 		return sb.toString();
 	}
 
-	private Address _setCity(Address address) {
-		address.setCity(_CITY);
+	private Address _createAddress() {
+		Address address = Mockito.mock(Address.class);
+
+		Mockito.doReturn(_toEscapedModel(address)).when(address).toEscapedModel();
 
 		return address;
 	}
 
-	private Address _setCountry(Address address) {
-		return _setCountry(address, _COUNTRY_NAME);
-	}
-
-	private Address _setCountry(Address address, String countryName) {
-		Country country = new CountryImpl();
-
-		country.setName(countryName);
-		country.setCountryId(RandomTestUtil.randomLong());
-
-		return new AddressWrapper(address) {
-
-			@Override
-			public Country getCountry() {
-				return country;
+	private AddressTextLocalizer _createAddressTextLocalizer() {
+		return new USAddressTextLocalizer() {
+			{
+				html = new HtmlImpl();
 			}
-
 		};
 	}
 
-	private Address _setRegion(Address address) {
-		return _setRegion(address, _REGION_NAME);
+	private void _setCity(Address address) {
+		Mockito.doReturn(_CITY).when(address).getCity();
 	}
 
-	private Address _setRegion(Address address, String regionName) {
-		Region region = new RegionImpl();
-
-		region.setName(regionName);
-		region.setRegionId(RandomTestUtil.randomLong());
-
-		return new AddressWrapper(address) {
-
-			@Override
-			public Region getRegion() {
-				return region;
-			}
-
-		};
+	private void _setCountry(Address address) {
+		_setCountry(address, _COUNTRY_NAME);
 	}
 
-	private Address _setStreets(Address address) {
-		address.setStreet1(_STREET_1);
-		address.setStreet2(_STREET_2);
-		address.setStreet3(_STREET_3);
+	private void _setCountry(Address address, String countryName) {
+		Country country = Mockito.mock(Country.class);
 
-		return address;
+		Mockito.doReturn(countryName).when(country).getName();
+		Mockito.doReturn(RandomTestUtil.randomLong()).when(country).getCountryId();
+
+		Mockito.doReturn(country).when(address).getCountry();
 	}
 
-	private Address _setZip(Address address) {
-		address.setZip(_ZIP);
+	private void _setRegion(Address address) {
+		_setRegion(address, _REGION_NAME);
+	}
 
-		return address;
+	private void _setRegion(Address address, String regionName) {
+		Region region = Mockito.mock(Region.class);
+
+		Mockito.doReturn(regionName).when(region).getName();
+		Mockito.doReturn(RandomTestUtil.randomLong()).when(region).getRegionId();
+
+		Mockito.doReturn(region).when(address).getRegion();
+	}
+
+	private void _setStreets(Address address) {
+		Mockito.doReturn(_STREET_1).when(address).getStreet1();
+		Mockito.doReturn(_STREET_2).when(address).getStreet2();
+		Mockito.doReturn(_STREET_3).when(address).getStreet3();
+	}
+
+	private void _setZip(Address address) {
+		Mockito.doReturn(_ZIP).when(address).getZip();
+	}
+
+	private Address _toEscapedModel(Address address) {
+		Address escapedAddress = Mockito.mock(Address.class);
+
+		Mockito.doAnswer(
+			invocationOnMock -> _html.escape(address.getCity())
+		).when(
+			escapedAddress
+		).getCity();
+
+		Mockito.doAnswer(
+			invocationOnMock -> _html.escape(address.getStreet1())
+		).when(
+			escapedAddress
+		).getStreet1();
+
+		Mockito.doAnswer(
+			invocationOnMock -> _html.escape(address.getStreet2())
+		).when(
+			escapedAddress
+		).getStreet2();
+
+		Mockito.doAnswer(
+			invocationOnMock -> _html.escape(address.getStreet3())
+		).when(
+			escapedAddress
+		).getStreet3();
+
+		Mockito.doAnswer(
+			invocationOnMock -> _html.escape(address.getZip())
+		).when(
+			escapedAddress
+		).getZip();
+
+		return escapedAddress;
 	}
 
 	private static final String _CITY = RandomTestUtil.randomString();
@@ -259,7 +281,10 @@ public class USAddressTextLocalizerTest {
 	private static final String _ZIP = RandomTestUtil.randomString();
 
 	private Address _address;
+
+	private final Html _html = new HtmlImpl();
+
 	private final AddressTextLocalizer _localizer =
-		new USAddressTextLocalizer();
+		_createAddressTextLocalizer();
 
 }

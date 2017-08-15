@@ -872,7 +872,13 @@
 
 		<execute function="MouseOver" locator1="AP#BODY" />
 
-		<execute function="Click#mouseOverClick" locator1="Icon#EDIT" />
+		<execute function="Click" locator1="Icon#EDIT_ASSET_VERTICAL_ELLIPSIS">
+			<var name="key_assetTitle" value="${assetTitle}" />
+		</execute>
+
+		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM">
+			<var name="key_menuItem" value="${menuItem}" />
+		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 

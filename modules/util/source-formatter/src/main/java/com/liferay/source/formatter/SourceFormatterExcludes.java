@@ -24,29 +24,38 @@ import java.util.Set;
  */
 public class SourceFormatterExcludes {
 
-	public SourceFormatterExcludes(Set<String> defaultExcludes) {
-		_defaultExcludes = defaultExcludes;
+	public SourceFormatterExcludes(
+		Set<ExcludeSyntaxPattern> defaultExcludeSyntaxPatterns) {
+
+		_defaultExcludeSyntaxPatterns = defaultExcludeSyntaxPatterns;
 	}
 
-	public void addDefaultExcludes(List<String> defaultExcludes) {
-		_defaultExcludes.addAll(defaultExcludes);
+	public void addDefaultExcludeSyntaxPatterns(
+		List<ExcludeSyntaxPattern> defaultExcludeSyntaxPatterns) {
+
+		_defaultExcludeSyntaxPatterns.addAll(defaultExcludeSyntaxPatterns);
 	}
 
-	public void addExcludes(
-		String propertiesFileLocation, List<String> exludes) {
+	public void addExcludeSyntaxPatterns(
+		String propertiesFileLocation,
+		List<ExcludeSyntaxPattern> excludeSyntaxPatterns) {
 
-		_excludesMap.put(propertiesFileLocation, exludes);
+		_excludeSyntaxPatternsMap.put(
+			propertiesFileLocation, excludeSyntaxPatterns);
 	}
 
-	public Set<String> getDefaultExcludes() {
-		return _defaultExcludes;
+	public Set<ExcludeSyntaxPattern> getDefaultExcludeSyntaxPatterns() {
+		return _defaultExcludeSyntaxPatterns;
 	}
 
-	public Map<String, List<String>> getExcludesMap() {
-		return _excludesMap;
+	public Map<String, List<ExcludeSyntaxPattern>>
+		getExcludeSyntaxPatternsMap() {
+
+		return _excludeSyntaxPatternsMap;
 	}
 
-	private final Set<String> _defaultExcludes;
-	private Map<String, List<String>> _excludesMap = new HashMap<>();
+	private final Set<ExcludeSyntaxPattern> _defaultExcludeSyntaxPatterns;
+	private Map<String, List<ExcludeSyntaxPattern>> _excludeSyntaxPatternsMap =
+		new HashMap<>();
 
 }

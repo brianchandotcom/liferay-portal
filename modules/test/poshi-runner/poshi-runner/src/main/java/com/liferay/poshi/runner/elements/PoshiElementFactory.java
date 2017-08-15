@@ -14,98 +14,16 @@
 
 package com.liferay.poshi.runner.elements;
 
-import com.liferay.poshi.runner.util.Dom4JUtil;
-import com.liferay.poshi.runner.util.FileUtil;
-
-import java.io.File;
-
-import org.dom4j.Document;
 import org.dom4j.Element;
 
 /**
  * @author Kenji Heigel
  */
-public class PoshiElementFactory {
+public interface PoshiElementFactory {
 
-	public static PoshiElement getSupportedPoshiElement(
-		PoshiElement[] poshiElements) {
+	public PoshiElement newPoshiElement(Element element);
 
-		for (PoshiElement poshiElement : poshiElements) {
-			String poshiElementName = poshiElement.getName();
-
-			if (!poshiElementName.equals("unsupported")) {
-				return poshiElement;
-			}
-		}
-
-		return null;
-	}
-
-	public static PoshiElement newPoshiElement(Element element) {
-		PoshiElement[] poshiElements = {
-			new CommandElement(element), new ConditionElement(element),
-			new DefinitionElement(element), new DescriptionElement(element),
-			new ElseElement(element), new EqualsElement(element),
-			new ExecuteElement(element), new ForElement(element),
-			new IfElement(element), new IssetElement(element),
-			new PropertyElement(element), new ReturnElement(element),
-			new SetUpElement(element), new TearDownElement(element),
-			new ThenElement(element), new VarElement(element),
-			new WhileElement(element)
-		};
-
-		PoshiElement poshiElement = getSupportedPoshiElement(poshiElements);
-
-		if (poshiElement != null) {
-			return poshiElement;
-		}
-
-		return new UnsupportedElement(element);
-	}
-
-	public static PoshiElement newPoshiElement(String readableSyntax) {
-		PoshiElement[] poshiElements = {
-			new CommandElement(readableSyntax),
-			new DefinitionElement(readableSyntax),
-			new ExecuteElement(readableSyntax), new ForElement(readableSyntax),
-			new IfElement(readableSyntax), new PropertyElement(readableSyntax),
-			new SetUpElement(readableSyntax),
-			new TearDownElement(readableSyntax), new VarElement(readableSyntax),
-			new WhileElement(readableSyntax)
-		};
-
-		PoshiElement poshiElement = getSupportedPoshiElement(poshiElements);
-
-		if (poshiElement != null) {
-			return poshiElement;
-		}
-
-		return new UnsupportedElement(readableSyntax);
-	}
-
-	public static PoshiElement newPoshiElementFromFile(String filePath) {
-		File file = new File(filePath);
-
-		try {
-			String fileContent = FileUtil.read(file);
-
-			if (fileContent.contains("<definition")) {
-				Document document = Dom4JUtil.parse(fileContent);
-
-				Element rootElement = document.getRootElement();
-
-				return newPoshiElement(rootElement);
-			}
-
-			return newPoshiElement(fileContent);
-		}
-		catch (Exception e) {
-			System.out.println("Unable to generate the Poshi element");
-
-			e.printStackTrace();
-		}
-
-		return null;
-	}
+	public PoshiElement newPoshiElement(
+		PoshiElement parentPoshiElement, String readableSyntax);
 
 }

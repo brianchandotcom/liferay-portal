@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourceTypePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -250,16 +249,9 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			return sql;
 		}
 
-		if (ResourceBlockLocalServiceUtil.isSupported(className)) {
-			return replacePermissionCheckBlocks(
-				sql, className, classPKField, userIdField, groupIds,
-				bridgeJoin);
-		}
-		else {
-			return replacePermissionCheckJoin(
-				sql, className, classPKField, userIdField, groupIdField,
-				groupIds, bridgeJoin);
-		}
+		return replacePermissionCheckJoin(
+			sql, className, classPKField, userIdField, groupIdField, groupIds,
+			bridgeJoin);
 	}
 
 	/**

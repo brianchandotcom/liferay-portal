@@ -481,7 +481,7 @@ app.server.type=@{app.server.type}]]></echo>
 						basedir="${project.dir}"
 						destfile="liferay-portal-source.zip"
 						excludes="modules/**/tmp/**/*.class"
-						includes="**/*.class,modules/core/portal-bootstrap/build/system.packages.extra.mf,sql/**/*.sql,sql/lportal.properties,sql/lportal.script,tmp/**/*.jar,tools/sdk/dist/com.liferay.portal.dao.db-*.jar"
+						includes="**/*.class,modules/core/portal-bootstrap/build/system.packages.extra.mf,lib/development/com.liferay.util.taglib.compat.jar,sql/**/*.sql,sql/lportal.properties,sql/lportal.script,tmp/**/*.jar,tools/sdk/dist/com.liferay.portal.dao.db-*.jar"
 					/>
 
 					<prepare-liferay-classes if:true="${test.batch.code.coverage}" merged.jar="${project.dir}/jacoco/merged.jar" portal.bundle.dir="bundles" />

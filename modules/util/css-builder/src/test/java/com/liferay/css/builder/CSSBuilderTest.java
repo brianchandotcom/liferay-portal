@@ -184,7 +184,7 @@ public class CSSBuilderTest {
 		"build/portal-common-css-jar/com.liferay.frontend.css.common.jar";
 
 	private static final Pattern _cssImportPattern = Pattern.compile(
-		"@import\\s+url\\s*\\(\\s*\"(.+\\.css\\?t=\\d+)\"\\s*\\)\\s*;");
+		"@import\\s+url\\s*\\(\\s*['\"]?(.+\\.css\\?t=\\d+)['\"]?\\s*\\)\\s*;");
 	private static String _docrootDirName;
 
 }

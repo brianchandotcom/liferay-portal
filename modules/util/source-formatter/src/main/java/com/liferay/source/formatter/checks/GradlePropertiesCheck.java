@@ -17,7 +17,9 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
@@ -49,17 +51,15 @@ public class GradlePropertiesCheck extends BaseFileCheck {
 			String line = null;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
-				String[] array = line.split("=", 2);
+				String[] array = line.split(StringPool.EQUAL, 2);
 
 				if (array.length == 2) {
 					String key = array[0].trim();
 					String value = array[1].trim();
 
 					if (ArrayUtil.contains(_KEYS_WITH_QUOTED_VALUE, key)) {
-						String[] newSubs = {"", ""};
-						String[] oldSubs = {"'", "\""};
-
-						value = StringUtil.replace(value, oldSubs, newSubs);
+						value = StringUtil.removeChars(
+							value, CharPool.APOSTROPHE, CharPool.QUOTE);
 
 						line = key + " = \"" + value + "\"";
 					}

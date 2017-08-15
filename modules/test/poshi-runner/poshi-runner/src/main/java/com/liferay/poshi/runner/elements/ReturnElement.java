@@ -23,21 +23,70 @@ import org.dom4j.Element;
  */
 public class ReturnElement extends PoshiElement {
 
-	public ReturnElement(Element element) {
-		super("return", element);
+	public static final String ELEMENT_NAME = "return";
+
+	static {
+		PoshiElementFactory returnElementFactory = new PoshiElementFactory() {
+
+			@Override
+			public PoshiElement newPoshiElement(Element element) {
+				if (isElementType(ELEMENT_NAME, element)) {
+					return new ReturnElement(element);
+				}
+
+				return null;
+			}
+
+			@Override
+			public PoshiElement newPoshiElement(
+				PoshiElement parentPoshiElement, String readableSyntax) {
+
+				if (isElementType(parentPoshiElement, readableSyntax)) {
+					return new ReturnElement(readableSyntax);
+				}
+
+				return null;
+			}
+
+		};
+
+		PoshiElement.addPoshiElementFactory(returnElementFactory);
 	}
 
-	public ReturnElement(String readableSyntax) {
-		super("return", readableSyntax);
+	public static boolean isElementType(
+		PoshiElement parentPoshiElement, String readableSyntax) {
+
+		if (parentPoshiElement instanceof ExecuteElement &&
+			readableSyntax.contains("return(\n")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
 	public void parseReadableSyntax(String readableSyntax) {
+		String returnFrom = RegexUtil.getGroup(readableSyntax, ".*,(.*)\\)", 1);
+
+		addAttribute("from", returnFrom.trim());
+
+		String returnName = RegexUtil.getGroup(readableSyntax, "var(.*?)=", 1);
+
+		addAttribute("name", returnName.trim());
 	}
 
 	@Override
 	public String toReadableSyntax() {
 		return "";
+	}
+
+	protected ReturnElement(Element element) {
+		super(ELEMENT_NAME, element);
+	}
+
+	protected ReturnElement(String readableSyntax) {
+		super(ELEMENT_NAME, readableSyntax);
 	}
 
 	@Override

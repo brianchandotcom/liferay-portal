@@ -23,8 +23,8 @@ boolean requireCaptcha = GetterUtil.getBoolean(portletPreferences.getValue("requ
 String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 
 boolean sendAsEmail = GetterUtil.getBoolean(portletPreferences.getValue("sendAsEmail", StringPool.BLANK));
-String emailFromName = webFormServiceConfiguration.emailFromName();
-String emailFromAddress = webFormServiceConfiguration.emailFromAddress();
+String emailFromName = GetterUtil.getString(portletPreferences.getValue("emailFromName", webFormServiceConfiguration.emailFromName()));
+String emailFromAddress = GetterUtil.getString(portletPreferences.getValue("emailFromAddress", webFormServiceConfiguration.emailFromAddress()));
 String emailAddress = portletPreferences.getValue("emailAddress", StringPool.BLANK);
 String subject = portletPreferences.getValue("subject", StringPool.BLANK);
 

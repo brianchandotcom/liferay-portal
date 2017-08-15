@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.Resource;
-import com.liferay.portal.kernel.model.ResourceBlockConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
@@ -42,7 +41,6 @@ import com.liferay.portal.kernel.security.permission.UserBagFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
-import com.liferay.portal.kernel.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
@@ -89,30 +87,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			long companyId, long groupId, String name)
 		throws Exception {
 
-		ResourceBlockIdsBag resourceBlockIdsBag =
-			PermissionCacheUtil.getResourceBlockIdsBag(
-				companyId, groupId, defaultUserId, name);
-
-		if (resourceBlockIdsBag != null) {
-			return resourceBlockIdsBag;
-		}
-
-		try {
-			resourceBlockIdsBag =
-				ResourceBlockLocalServiceUtil.getResourceBlockIdsBag(
-					getCompanyId(), groupId, name, getGuestUserRoleIds());
-
-			PermissionCacheUtil.putResourceBlockIdsBag(
-				companyId, groupId, defaultUserId, name, resourceBlockIdsBag);
-
-			return resourceBlockIdsBag;
-		}
-		catch (Exception e) {
-			PermissionCacheUtil.removeResourceBlockIdsBag(
-				getCompanyId(), groupId, defaultUserId, name);
-
-			throw e;
-		}
+		return null;
 	}
 
 	@Override
@@ -158,19 +133,6 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 	public List<Long> getOwnerResourceBlockIds(
 		long companyId, long groupId, String name, String actionId) {
 
-		try {
-			ResourceBlockIdsBag resourceBlockIdsBag =
-				getOwnerResourceBlockIdsBag(companyId, groupId, name);
-
-			return ResourceBlockLocalServiceUtil.getResourceBlockIds(
-				resourceBlockIdsBag, name, actionId);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
-			}
-		}
-
 		return Collections.emptyList();
 	}
 
@@ -181,33 +143,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 	public ResourceBlockIdsBag getOwnerResourceBlockIdsBag(
 		long companyId, long groupId, String name) {
 
-		ResourceBlockIdsBag resourceBlockIdsBag =
-			PermissionCacheUtil.getResourceBlockIdsBag(
-				companyId, groupId, ResourceBlockConstants.OWNER_USER_ID, name);
-
-		if (resourceBlockIdsBag != null) {
-			return resourceBlockIdsBag;
-		}
-
-		try {
-			long[] roleIds = {getOwnerRoleId()};
-
-			resourceBlockIdsBag =
-				ResourceBlockLocalServiceUtil.getResourceBlockIdsBag(
-					getCompanyId(), groupId, name, roleIds);
-
-			PermissionCacheUtil.putResourceBlockIdsBag(
-				companyId, groupId, ResourceBlockConstants.OWNER_USER_ID, name,
-				resourceBlockIdsBag);
-
-			return resourceBlockIdsBag;
-		}
-		catch (Exception e) {
-			PermissionCacheUtil.removeResourceBlockIdsBag(
-				companyId, groupId, ResourceBlockConstants.OWNER_USER_ID, name);
-
-			throw e;
-		}
+		return null;
 	}
 
 	/**
@@ -218,19 +154,6 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 	public List<Long> getResourceBlockIds(
 		long companyId, long groupId, long userId, String name,
 		String actionId) {
-
-		try {
-			ResourceBlockIdsBag resourceBlockIdsBag = getResourceBlockIdsBag(
-				companyId, groupId, name, getRoleIds(getUserId(), groupId));
-
-			return ResourceBlockLocalServiceUtil.getResourceBlockIds(
-				resourceBlockIdsBag, name, actionId);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
-			}
-		}
 
 		return Collections.emptyList();
 	}
@@ -243,30 +166,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			long companyId, long groupId, String name, long[] roleIds)
 		throws Exception {
 
-		ResourceBlockIdsBag resourceBlockIdsBag =
-			PermissionCacheUtil.getResourceBlockIdsBag(
-				companyId, groupId, getUserId(), name);
-
-		if (resourceBlockIdsBag != null) {
-			return resourceBlockIdsBag;
-		}
-
-		try {
-			resourceBlockIdsBag =
-				ResourceBlockLocalServiceUtil.getResourceBlockIdsBag(
-					getCompanyId(), groupId, name, roleIds);
-
-			PermissionCacheUtil.putResourceBlockIdsBag(
-				companyId, groupId, getUserId(), name, resourceBlockIdsBag);
-
-			return resourceBlockIdsBag;
-		}
-		catch (Exception e) {
-			PermissionCacheUtil.removeResourceBlockIdsBag(
-				companyId, groupId, getUserId(), name);
-
-			throw e;
-		}
+		return null;
 	}
 
 	@Override

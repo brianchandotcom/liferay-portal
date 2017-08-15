@@ -489,11 +489,6 @@ public class ResourceBlockLocalServiceImpl
 							resourceBlockPermissionLocalService.
 								deleteResourceBlockPermissions(resourceBlockId);
 						}
-
-						PermissionCacheUtil.clearResourceBlockCache(
-							resourceBlock.getCompanyId(),
-							resourceBlock.getGroupId(),
-							resourceBlock.getName());
 					}
 				}
 
@@ -754,9 +749,6 @@ public class ResourceBlockLocalServiceImpl
 			PermissionThreadLocal.setFlushResourceBlockEnabled(
 				companyId, groupId, name, flushResourceBlockEnabled);
 
-			PermissionCacheUtil.clearResourceBlockCache(
-				companyId, groupId, name);
-
 			PermissionCacheUtil.clearResourcePermissionCache(
 				ResourceConstants.SCOPE_INDIVIDUAL, name,
 				String.valueOf(primKey));
@@ -873,8 +865,6 @@ public class ResourceBlockLocalServiceImpl
 		resourceBlockLocalService.updateResourceBlockId(
 			companyId, groupId, name, permissionedModel, permissionsHash,
 			resourceBlockPermissionsContainer);
-
-		PermissionCacheUtil.clearResourceBlockCache(companyId, groupId, name);
 	}
 
 	@Override

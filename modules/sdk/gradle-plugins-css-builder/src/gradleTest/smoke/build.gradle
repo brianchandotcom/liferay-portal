@@ -25,7 +25,7 @@ runGradleTest {
 
 		File mainCssFile = new File(dir, "main.css")
 
-		Matcher matcher = mainCssFile.text =~ /@import\s+url\s*\(\s*"(.+\.css\?t=\d+)"\s*\)\s*;/
+		Matcher matcher = mainCssFile.text =~ /@import\s+url\s*\(\s*['"]?(.+\.css\?t=\d+)['"]?\s*\)\s*;/
 
 		assert matcher.count == 3
 	}

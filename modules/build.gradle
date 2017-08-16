@@ -74,6 +74,8 @@ gradle.beforeProject {
 	configure(project) {
 		apply plugin: "com.liferay.defaults.plugin"
 
+		task printProjectPath
+
 		afterEvaluate {
 			String forcedUpdateVersion = GradleUtil.getProperty(project, "forced.update.version", (String)null)
 
@@ -82,6 +84,10 @@ gradle.beforeProject {
 					replacement = forcedUpdateVersion
 				}
 			}
+		}
+
+		printProjectPath {
+			println project.path
 		}
 
 		if (project.path.startsWith(":sdk:project-templates-")) {

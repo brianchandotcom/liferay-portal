@@ -107,7 +107,7 @@ public class IfElement extends PoshiElement {
 				continue;
 			}
 
-			add(newPoshiElement(this, readableSyntax));
+			add(newPoshiElement(this, readableBlock));
 		}
 	}
 

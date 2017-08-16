@@ -37,7 +37,7 @@ runGradleTest {
 }
 
 setUpTestableTomcat {
-	zipUrl = "http://archive.apache.org/dist/tomcat/tomcat-8/v8.0.32/bin/apache-tomcat-8.0.32.zip"
+	zipUrl = "http://archive.apache.org/dist/tomcat/tomcat-9/v9.0.6/bin/apache-tomcat-9.0.6.zip"
 }
 
 testIntegrationTomcat {

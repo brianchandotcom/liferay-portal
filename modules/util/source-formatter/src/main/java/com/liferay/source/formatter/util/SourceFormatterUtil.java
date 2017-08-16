@@ -564,6 +564,16 @@ public class SourceFormatterUtil {
 					_fileSystem.getPathMatcher(
 						excludeSyntax.getValue() + ":" + excludePattern));
 			}
+			else if (excludeSyntax.equals(ExcludeSyntax.REGEX) &&
+					 excludePattern.endsWith("[\\/\\\\].*")) {
+
+				excludePattern = excludePattern.substring(
+					0, excludePattern.length() - 8);
+
+				_excludeDirPathMatchers.add(
+					_fileSystem.getPathMatcher(
+						excludeSyntax.getValue() + ":" + excludePattern));
+			}
 			else {
 				_excludeFilePathMatchers.add(
 					_fileSystem.getPathMatcher(
@@ -597,6 +607,16 @@ public class SourceFormatterUtil {
 
 					excludePattern = excludePattern.substring(
 						0, excludePattern.length() - 3);
+
+					excludeDirPathMatcherList.add(
+						_fileSystem.getPathMatcher(
+							excludeSyntax.getValue() + ":" + excludePattern));
+				}
+				else if (excludeSyntax.equals(ExcludeSyntax.REGEX) &&
+						 excludePattern.endsWith("[\\/\\\\].*")) {
+
+					excludePattern = excludePattern.substring(
+						0, excludePattern.length() - 8);
 
 					excludeDirPathMatcherList.add(
 						_fileSystem.getPathMatcher(

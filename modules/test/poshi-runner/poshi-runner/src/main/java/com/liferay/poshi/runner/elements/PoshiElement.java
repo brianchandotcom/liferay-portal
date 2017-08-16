@@ -19,6 +19,7 @@ import com.liferay.poshi.runner.util.FileUtil;
 import com.liferay.poshi.runner.util.RegexUtil;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,7 +57,15 @@ public abstract class PoshiElement extends DefaultElement {
 			}
 		}
 
-		throw new RuntimeException("Unknown element\n" + element.toString());
+		String formattedElement = null;
+		try {
+			formattedElement = Dom4JUtil.format(element);
+		}
+		catch (IOException ioe) {
+			formattedElement = element.toString();
+		}
+
+		throw new RuntimeException("Unknown element\n" + formattedElement);
 	}
 
 	public static PoshiElement newPoshiElement(
@@ -335,6 +344,25 @@ public abstract class PoshiElement extends DefaultElement {
 		new HashSet<>();
 
 	static {
+		String[] elementClassNames = {
+			"CommandElement", "ConditionElement", "DefinitionElement",
+			"DescriptionElement", "ElseElement", "EqualsElement",
+			"ExecuteElement", "ForElement", "IfElement", "IsSetElement",
+			"PropertyElement", "ReturnElement", "SetUpElement",
+			"TearDownElement", "ThenElement", "VarElement", "WhileElement"
+		};
+
+		for (String elementClassName : elementClassNames) {
+			try {
+				Class.forName(
+					"com.liferay.poshi.runner.elements." + elementClassName);
+			}
+			catch (ClassNotFoundException cnfe) {
+				throw new RuntimeException(
+					elementClassName + " not found", cnfe);
+			}
+		}
+
 		_codeBoundariesMap.put('\"', '\"');
 		_codeBoundariesMap.put('(', ')');
 		_codeBoundariesMap.put('{', '}');

@@ -22,22 +22,11 @@ import com.liferay.portal.kernel.util.StringUtil;
 public class PropertiesSourceFormatterContentCheck extends BaseFileCheck {
 
 	@Override
-	public void init() throws Exception {
-		_projectPathPrefix = getProjectPathPrefix();
-	}
-
-	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
 		if (!fileName.endsWith("/source-formatter.properties")) {
-			return content;
-		}
-
-		if (isPortalSource() &&
-			isModulesApp(absolutePath, _projectPathPrefix, true)) {
-
 			return content;
 		}
 
@@ -60,7 +49,5 @@ public class PropertiesSourceFormatterContentCheck extends BaseFileCheck {
 			"blob/master/source-formatter.properties"
 		}
 	};
-
-	private String _projectPathPrefix;
 
 }

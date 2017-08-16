@@ -27,20 +27,9 @@ import com.liferay.portal.kernel.util.Validator;
 public class GradleIndentationCheck extends BaseFileCheck {
 
 	@Override
-	public void init() throws Exception {
-		_projectPathPrefix = getProjectPathPrefix();
-	}
-
-	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
 		throws Exception {
-
-		if (isPortalSource() &&
-			isModulesApp(absolutePath, _projectPathPrefix, true)) {
-
-			return content;
-		}
 
 		return _checkIndentation(content);
 	}
@@ -147,7 +136,5 @@ public class GradleIndentationCheck extends BaseFileCheck {
 			text, new String[] {"{", "[", "("}, new String[] {"}", "]", ")"},
 			tabCount);
 	}
-
-	private String _projectPathPrefix;
 
 }

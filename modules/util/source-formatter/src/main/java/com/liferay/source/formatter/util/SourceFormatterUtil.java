@@ -598,12 +598,12 @@ public class SourceFormatterUtil {
 					excludePattern = excludePattern.substring(
 						0, excludePattern.length() - 3);
 
-					_excludeDirPathMatchers.add(
+					excludeDirPathMatcherList.add(
 						_fileSystem.getPathMatcher(
 							excludeSyntax.getValue() + ":" + excludePattern));
 				}
 				else {
-					_excludeFilePathMatchers.add(
+					excludeFilePathMatcherList.add(
 						_fileSystem.getPathMatcher(
 							excludeSyntax.getValue() + ":" + excludePattern));
 				}

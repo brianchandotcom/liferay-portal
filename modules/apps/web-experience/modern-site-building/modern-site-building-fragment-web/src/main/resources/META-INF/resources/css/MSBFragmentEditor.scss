@@ -1,0 +1,11 @@
+@import "mixins";
+
+@include sm {
+	.msb-fragment-editor {
+		height: 59px;
+	}
+
+	.has-control-menu .msb-fragment-editor {
+		height: calc(100vh - 124px);
+	}
+}

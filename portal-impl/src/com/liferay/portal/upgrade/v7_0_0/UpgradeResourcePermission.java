@@ -14,13 +14,17 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
-import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Sampsa Sohlman
@@ -45,46 +49,75 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 
 	protected void upgradeResourcePermissions() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			String selectSQL =
-				"select resourcePermissionId, primKey, actionIds from " +
-					"ResourcePermission";
-			String updateSQL =
-				"update ResourcePermission set primKeyId = ?, viewActionId = " +
-					"? where resourcePermissionId = ?";
+			runSQL(
+				"update ResourcePermission set viewActionId = [$FALSE$] " +
+					"where MOD(actionIds, 2) = 0");
+			runSQL(
+				"update ResourcePermission set viewActionId = [$TRUE$] where " +
+					"MOD(actionIds, 2) = 1");
 
-			try (PreparedStatement ps1 = connection.prepareStatement(selectSQL);
-				ResultSet rs = ps1.executeQuery();
-				PreparedStatement ps2 =
-					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-						connection, updateSQL)) {
+			List<String> stringPrimKeys = new ArrayList<>();
+
+			try (PreparedStatement ps = connection.prepareStatement(
+					"select distinct primKey from ResourcePermission");
+				ResultSet rs = ps.executeQuery()) {
 
 				while (rs.next()) {
-					long resourcePermissionId = rs.getLong(
-						"resourcePermissionId");
-					long actionIds = rs.getLong("actionIds");
+					String primKey = rs.getString("primKey");
 
-					long newPrimKeyId = GetterUtil.getLong(
-						rs.getString("primKey"));
+					long primKeyId = GetterUtil.getLong(primKey);
 
-					boolean newViewActionId = false;
-
-					if ((actionIds % 2) == 1) {
-						newViewActionId = true;
+					if (primKeyId <= 0) {
+						stringPrimKeys.add(primKey);
 					}
-
-					if ((newPrimKeyId == 0) && !newViewActionId) {
-						continue;
-					}
-
-					ps2.setLong(1, newPrimKeyId);
-					ps2.setBoolean(2, newViewActionId);
-					ps2.setLong(3, resourcePermissionId);
-
-					ps2.addBatch();
 				}
-
-				ps2.executeBatch();
 			}
+
+			if (stringPrimKeys.isEmpty()) {
+				runSQL(
+					"update ResourcePermission set primKeyId = CAST_LONG(" +
+						"primKey)");
+
+				return;
+			}
+
+			StringBundler sb = new StringBundler(stringPrimKeys.size() + 1);
+
+			sb.append("in (?");
+
+			for (int i = 1; i < stringPrimKeys.size(); i++) {
+				sb.append(", ?");
+			}
+
+			sb.append(")");
+
+			String inClause = sb.toString();
+
+			_updatePrimKeyIds(
+				"update ResourcePermission set primKeyId = 0 where primKey " +
+					inClause,
+				stringPrimKeys);
+
+			_updatePrimKeyIds(
+				"update ResourcePermission set primKeyId = CAST_LONG(primKey" +
+					") where primKey not " + inClause,
+				stringPrimKeys);
+		}
+	}
+
+	private void _updatePrimKeyIds(String sql, List<String> primKeys)
+		throws Exception {
+
+		try (PreparedStatement ps = connection.prepareStatement(
+				SQLTransformer.transform(sql))) {
+
+			for (int i = 0; i < primKeys.size(); i++) {
+				String primKey = primKeys.get(i);
+
+				ps.setString(i + 1, primKey);
+			}
+
+			ps.executeUpdate();
 		}
 	}
 

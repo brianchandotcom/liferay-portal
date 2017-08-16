@@ -38,6 +38,11 @@ public class PostgreSQLTransformerLogic extends BaseSQLTransformerLogic {
 	}
 
 	@Override
+	protected String replaceCastLong(Matcher matcher) {
+		return matcher.replaceAll("CAST($1 AS INTEGER)");
+	}
+
+	@Override
 	protected String replaceCastText(Matcher matcher) {
 		return matcher.replaceAll("CAST($1 AS TEXT)");
 	}

@@ -65,7 +65,7 @@ public class PostgreSQLTransformerLogicTest
 
 	@Override
 	protected String getCastLongTransformedSQL() {
-		return "select foo from Foo";
+		return "select CAST(foo AS INTEGER) from Foo";
 	}
 
 	@Override

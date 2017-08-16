@@ -124,6 +124,12 @@ public class GradleIndentationCheck extends BaseFileCheck {
 			return tabCount;
 		}
 
+		if (text.matches("^\\s*Matcher\\s+.*") ||
+			text.matches("^\\s*Pattern\\s+.*")) {
+
+			return tabCount;
+		}
+
 		tabCount += getLevel(text, "([{", "}])");
 
 		text = StringUtil.removeSubstrings(text, "([{", "}])");

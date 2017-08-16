@@ -352,7 +352,7 @@ public class DefaultExportImportContentProcessorTest {
 
 		Assert.assertFalse(
 			content.contains(VirtualLayoutConstants.CANONICAL_URL_SEPARATOR));
-		Assert.assertFalse(
+		Assert.assertTrue(
 			content.contains(GroupConstants.CONTROL_PANEL_FRIENDLY_URL));
 		Assert.assertFalse(
 			content.contains(PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL));
@@ -409,7 +409,7 @@ public class DefaultExportImportContentProcessorTest {
 
 		Assert.assertFalse(
 			content.contains(VirtualLayoutConstants.CANONICAL_URL_SEPARATOR));
-		Assert.assertFalse(
+		Assert.assertTrue(
 			content.contains(GroupConstants.CONTROL_PANEL_FRIENDLY_URL));
 		Assert.assertFalse(
 			content.contains(PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL));

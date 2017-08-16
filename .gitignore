@@ -464,5 +464,6 @@
 /util-taglib/classes
 /util-taglib/util-taglib*.asc
 /util-taglib/util-taglib*.jar
+/working.dir.properties
 /WEB-INF
 _sass_cache_*.css

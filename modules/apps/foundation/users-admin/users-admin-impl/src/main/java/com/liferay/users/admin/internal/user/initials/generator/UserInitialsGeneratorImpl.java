@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.users.admin;
+package com.liferay.users.admin.internal.user.initials.generator;
 
 import com.liferay.portal.kernel.language.LanguageConstants;
 import com.liferay.portal.kernel.language.LanguageUtil;

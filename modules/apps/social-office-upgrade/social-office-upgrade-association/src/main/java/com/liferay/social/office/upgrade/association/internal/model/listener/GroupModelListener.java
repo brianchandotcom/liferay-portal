@@ -20,7 +20,10 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.social.office.upgrade.association.internal.constants.RoleConstants;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,6 +46,13 @@ public class GroupModelListener extends BaseModelListener<Group> {
 	}
 
 	protected void setSocialOfficeEnabled(Group group) throws Exception {
+		Role role = roleLocalService.fetchRole(
+			group.getCompanyId(), RoleConstants.SOCIAL_OFFICE_USER);
+
+		if (role == null) {
+			return;
+		}
+
 		boolean socialOfficeEnabled = false;
 
 		String customJspServletContextName = GetterUtil.getString(
@@ -60,5 +70,8 @@ public class GroupModelListener extends BaseModelListener<Group> {
 
 	@Reference
 	protected ExpandoValueLocalService expandoValueLocalService;
+
+	@Reference
+	protected RoleLocalService roleLocalService;
 
 }

@@ -9861,6 +9861,10 @@ jdbc.default.password=${database.mysql.password}</echo>
 		<antcall target="clean-up-web-xml" />
 	</target>
 
+	<target name="set-tomcat-version-number">
+		<set-tomcat-version-number liferay.portal.bundle="${liferay.portal.bundle}" />
+	</target>
+
 	<target name="set-portal-impl-portal-test-ext-properties">
 		<set-portal-impl-portal-test-ext-properties />
 	</target>

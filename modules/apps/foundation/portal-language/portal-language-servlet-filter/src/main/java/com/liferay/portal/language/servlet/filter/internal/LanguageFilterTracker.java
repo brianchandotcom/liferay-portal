@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
@@ -130,24 +131,52 @@ public class LanguageFilterTracker {
 
 			Bundle bundle = serviceReference.getBundle();
 
-			String filterString =
-				"(&(bundle.symbolic.name=" + bundle.getSymbolicName() +
-					")(objectClass=" + ResourceBundleLoader.class.getName() +
-						")(resource.bundle.base.name=*))";
+			Object contextName = serviceReference.getProperty(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME);
+
+			StringBundler filterString = new StringBundler();
+
+			if (contextName == null) {
+				filterString.append("(&");
+				filterString.append("(bundle.symbolic.name=");
+				filterString.append(bundle.getSymbolicName());
+				filterString.append(")");
+				filterString.append("(objectClass=");
+				filterString.append(ResourceBundleLoader.class.getName());
+				filterString.append(")");
+				filterString.append("(resource.bundle.base.name=*)");
+				filterString.append(")");
+			}
+			else {
+				filterString.append("(&");
+				filterString.append("(|");
+				filterString.append("(bundle.symbolic.name=");
+				filterString.append(bundle.getSymbolicName());
+				filterString.append(")");
+				filterString.append("(&");
+				filterString.append("(servlet.context.name=");
+				filterString.append(contextName);
+				filterString.append(")");
+				filterString.append("(service.bundleid=0)");
+				filterString.append(")");
+				filterString.append(")");
+				filterString.append("(objectClass=");
+				filterString.append(ResourceBundleLoader.class.getName());
+				filterString.append(")");
+				filterString.append("(resource.bundle.base.name=*)");
+				filterString.append(")");
+			}
 
 			Map<String, Object> properties = new HashMap<>();
 
 			properties.put("service.ranking", Integer.MIN_VALUE);
 
-			Object contextName = serviceReference.getProperty(
-				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME);
-
 			properties.put("servlet.context.name", contextName);
 
 			return ServiceTrackerFactory.open(
-				bundle.getBundleContext(), filterString,
+				bundle.getBundleContext(), filterString.toString(),
 				new ResourceBundleLoaderServiceTrackerCustomizer(
-					properties, filterString, contextName));
+					properties, filterString.toString(), contextName));
 		}
 
 		@Override

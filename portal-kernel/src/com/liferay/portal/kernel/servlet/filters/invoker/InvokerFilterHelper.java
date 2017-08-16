@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
@@ -90,6 +92,13 @@ public class InvokerFilterHelper {
 
 			String servletContextName = GetterUtil.getString(
 				servletContext.getServletContextName());
+
+			String portalServletContextName =
+				PortalUtil.getServletContextName();
+
+			if (servletContextName.equals(portalServletContextName)) {
+				servletContextName = StringPool.BLANK;
+			}
 
 			com.liferay.registry.Filter filter = registry.getFilter(
 				"(&(objectClass=" + Filter.class.getName() +

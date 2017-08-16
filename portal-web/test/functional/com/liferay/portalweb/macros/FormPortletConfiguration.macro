@@ -1,6 +1,21 @@
 <definition>
 	<var name="formName" value="Created Form Name" />
 
+	<command name="configureScopePG">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="${portletName}" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+
+		<execute function="AssertClick" locator1="NavBar#SCOPE" value1="Scope" />
+
+		<execute function="Select" locator1="Select#SCOPE" value1="${scopeSelection}" />
+
+		<execute macro="PortletEntry#save" />
+	</command>
+
 	<command name="selectForm">
 		<var name="key_formName" value="${formName}" />
 

@@ -17,6 +17,7 @@ package com.liferay.users.admin;
 import com.liferay.portal.kernel.language.LanguageConstants;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.users.admin.kernel.util.UserInitialsGenerator;
@@ -67,13 +68,19 @@ public class UserInitialsGeneratorImpl implements UserInitialsGenerator {
 	}
 
 	private String[] _getUserInitialsFieldNames(Locale locale) {
-		return StringUtil.split(
+		String[]  userInitialsFieldNames = StringUtil.split(
 			LanguageUtil.get(
 				locale, LanguageConstants.KEY_USER_INITIALS_FIELD_NAMES,
-				"first-name,last-name"));
+				null));
+
+		if (ArrayUtil.isEmpty(userInitialsFieldNames)) {
+			userInitialsFieldNames = _DEFAULT_INITIALS_FIELD_NAMES;
+		}
+
+		return userInitialsFieldNames;
 	}
 
-	private static final String[] _DEFAULT_INITIALS_FIELDS =
+	private static final String[] _DEFAULT_INITIALS_FIELD_NAMES =
 		{LanguageConstants.VALUE_FIRST_NAME, LanguageConstants.VALUE_LAST_NAME};
 
 	private static final Map<String, Integer> _nameIndexMap = new HashMap<>(3);

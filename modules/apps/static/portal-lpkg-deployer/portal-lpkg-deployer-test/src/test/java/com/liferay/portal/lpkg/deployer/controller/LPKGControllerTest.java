@@ -35,7 +35,8 @@ public class LPKGControllerTest {
 		Assert.assertNotNull(
 			"Missing system property \"liferay.home\"", liferayHome);
 
-		Path path = Paths.get(liferayHome, "osgi/marketplace/Test.lpkg");
+		Path path = Paths.get(
+			liferayHome, "osgi/marketplace/Liferay Controller Test.lpkg");
 
 		Files.createFile(path);
 

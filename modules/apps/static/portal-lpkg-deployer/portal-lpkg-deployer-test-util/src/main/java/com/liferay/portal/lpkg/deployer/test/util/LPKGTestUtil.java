@@ -95,8 +95,15 @@ public class LPKGTestUtil {
 			sb.append("/marketplace/-/mp/asset/icon/71985553\n");
 			sb.append("remote-app-id=Test\n");
 			sb.append("restart-required=false\n");
-			sb.append("title=Test\n");
-			sb.append("version=1.0");
+			sb.append("title=");
+
+			Path namePath = path.getFileName();
+
+			String name = namePath.toString();
+
+			sb.append(name.substring(0, name.indexOf(".lpkg")));
+
+			sb.append("\nversion=1.0");
 
 			String properties = sb.toString();
 

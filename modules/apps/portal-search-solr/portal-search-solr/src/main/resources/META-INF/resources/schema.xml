@@ -574,6 +574,7 @@
 		<dynamicField docValues="true" indexed="true" name="*_coordinate" stored="false" type="double" />
 		<dynamicField docValues="true" indexed="true" multiValued="false" name="*Date_sortable" stored="true" type="long" />
 		<dynamicField docValues="true" indexed="true" multiValued="false" name="*Number_sortable" stored="true" type="double" />
+		<dynamicField docValues="true" indexed="true" multiValued="false" name="*String_sortable" stored="true" type="string" />
 		<dynamicField docValues="true" indexed="true" multiValued="false" name="*_sortable" stored="true" type="string" />
 		<dynamicField indexed="true" multiValued="false" name="*_geolocation" stored="true" type="location" />
 		<dynamicField indexed="true" multiValued="true" name="assetCategoryTitles*" stored="true" termPositions="true" termVectors="true" type="text" />

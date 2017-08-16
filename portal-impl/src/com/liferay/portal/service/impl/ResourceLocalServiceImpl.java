@@ -729,15 +729,10 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 
 		// Permissions
 
-		boolean flushResourceBlockEnabled =
-			PermissionThreadLocal.isFlushResourceBlockEnabled(
-				companyId, groupId, name);
 		boolean flushResourcePermissionEnabled =
 			PermissionThreadLocal.isFlushResourcePermissionEnabled(
 				name, primKey);
 
-		PermissionThreadLocal.setFlushResourceBlockEnabled(
-			companyId, groupId, name, false);
 		PermissionThreadLocal.setFlushResourcePermissionEnabled(
 			name, primKey, false);
 
@@ -747,8 +742,6 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 				permissionedModel);
 		}
 		finally {
-			PermissionThreadLocal.setFlushResourceBlockEnabled(
-				companyId, groupId, name, flushResourceBlockEnabled);
 			PermissionThreadLocal.setFlushResourcePermissionEnabled(
 				name, primKey, flushResourcePermissionEnabled);
 
@@ -824,15 +817,10 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 
 		// Permissions
 
-		boolean flushResourceBlockEnabled =
-			PermissionThreadLocal.isFlushResourceBlockEnabled(
-				companyId, groupId, name);
 		boolean flushResourcePermissionEnabled =
 			PermissionThreadLocal.isFlushResourcePermissionEnabled(
 				name, primKey);
 
-		PermissionThreadLocal.setFlushResourceBlockEnabled(
-			companyId, groupId, name, false);
 		PermissionThreadLocal.setFlushResourcePermissionEnabled(
 			name, primKey, false);
 
@@ -871,8 +859,6 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 		finally {
 			ResourcePermissionsThreadLocal.setResourcePermissions(null);
 
-			PermissionThreadLocal.setFlushResourceBlockEnabled(
-				companyId, groupId, name, flushResourceBlockEnabled);
 			PermissionThreadLocal.setFlushResourcePermissionEnabled(
 				name, primKey, flushResourcePermissionEnabled);
 

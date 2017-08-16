@@ -2259,11 +2259,34 @@ app.server.type=@{app.server.type}]]></echo>
 	<target name="modules-compile-jdk8">
 		<run-batch-test>
 			<test-action>
-				<gradle-execute dir="modules" task="assemble">
-					<arg value="--continue" />
-					<arg value="--parallel" />
+				<gradle-execute dir="modules" outputproperty="modules.compile.project.paths" task="printProjectPath">
+					<arg value="--quiet" />
 					<arg value="-Dbuild.exclude.dirs=private/apps/osb-lcs,private/apps/saml,third-party" />
 				</gradle-execute>
+
+				<propertyregex
+					input="${modules.compile.project.paths}"
+					property="modules.compile.task.groups"
+					regexp="(\S+)\r?\n"
+					replace="\1:assemble "
+				/>
+
+				<propertyregex
+					input="${modules.compile.task.groups}:assemble"
+					override="true"
+					property="modules.compile.task.groups"
+					regexp="(\S+ ){${test.module.groups.size}}"
+					replace="\0,"
+				/>
+
+				<for list="${modules.compile.task.groups}" param="modules.compile.task.group" trim="true">
+					<sequential>
+						<gradle-execute dir="modules" task="@{modules.compile.task.group}">
+							<arg value="--continue" />
+							<arg value="--parallel" />
+						</gradle-execute>
+					</sequential>
+				</for>
 			</test-action>
 
 			<test-set-up>

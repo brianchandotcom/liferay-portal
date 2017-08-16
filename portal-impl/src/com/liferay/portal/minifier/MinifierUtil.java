@@ -77,7 +77,7 @@ public class MinifierUtil {
 				unsyncStringWriter, PropsValues.YUI_COMPRESSOR_CSS_LINE_BREAK);
 		}
 		catch (Exception e) {
-			_log.error("Unable to minfiy CSS:\n" + content, e);
+			_log.error("Unable to minify CSS:\n" + content, e);
 
 			unsyncStringWriter.append(content);
 		}

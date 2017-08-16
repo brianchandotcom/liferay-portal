@@ -1,0 +1,13 @@
+task runGradleTest
+
+createToken {
+	tokenFile = "custom/token"
+}
+
+runGradleTest {
+	dependsOn createToken
+
+	doLast {
+		assert createToken.state.skipped
+	}
+}

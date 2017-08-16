@@ -44,7 +44,6 @@ public class MockSPIAgent implements SPIAgent {
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public HttpServletRequest prepareRequest(HttpServletRequest request)
 		throws IOException {
 

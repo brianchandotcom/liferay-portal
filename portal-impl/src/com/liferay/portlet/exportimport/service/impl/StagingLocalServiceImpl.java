@@ -437,7 +437,6 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 	 */
 	@Deprecated
 	@Override
-	@SuppressWarnings("unused")
 	public MissingReferences publishStagingRequest(
 			long userId, long stagingRequestId, boolean privateLayout,
 			Map<String, String[]> parameterMap)

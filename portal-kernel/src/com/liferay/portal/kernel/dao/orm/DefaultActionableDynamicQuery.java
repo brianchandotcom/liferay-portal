@@ -395,7 +395,6 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 		return _transactionConfig;
 	}
 
-	@SuppressWarnings("unused")
 	protected void intervalCompleted(long startPrimaryKey, long endPrimaryKey)
 		throws PortalException {
 	}

@@ -285,7 +285,6 @@ public abstract class SettingsConfigurationAction
 		return settingsId;
 	}
 
-	@SuppressWarnings("unused")
 	protected void postProcess(
 			long companyId, PortletRequest portletRequest, Settings settings)
 		throws PortalException {

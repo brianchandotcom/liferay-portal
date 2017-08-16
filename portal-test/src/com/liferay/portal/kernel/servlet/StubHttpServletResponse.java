@@ -83,7 +83,6 @@ public class StubHttpServletResponse implements HttpServletResponse {
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public void flushBuffer() throws IOException {
 		throw new UnsupportedOperationException();
 	}
@@ -124,7 +123,6 @@ public class StubHttpServletResponse implements HttpServletResponse {
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public ServletOutputStream getOutputStream() throws IOException {
 		throw new UnsupportedOperationException();
 	}
@@ -135,7 +133,6 @@ public class StubHttpServletResponse implements HttpServletResponse {
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public PrintWriter getWriter() throws IOException {
 		throw new UnsupportedOperationException();
 	}
@@ -156,19 +153,16 @@ public class StubHttpServletResponse implements HttpServletResponse {
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public void sendError(int status) throws IOException {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public void sendError(int status, String message) throws IOException {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public void sendRedirect(String location) throws IOException {
 		throw new UnsupportedOperationException();
 	}

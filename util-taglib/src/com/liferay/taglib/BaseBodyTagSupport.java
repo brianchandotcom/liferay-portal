@@ -37,17 +37,14 @@ import javax.servlet.jsp.tagext.BodyTag;
  */
 public class BaseBodyTagSupport extends TagSupport {
 
-	@SuppressWarnings("unused")
 	public int doAfterBody() throws JspException {
 		return SKIP_BODY;
 	}
 
-	@SuppressWarnings("unused")
 	public void doInitBody() throws JspException {
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public int doStartTag() throws JspException {
 		return BodyTag.EVAL_BODY_BUFFERED;
 	}

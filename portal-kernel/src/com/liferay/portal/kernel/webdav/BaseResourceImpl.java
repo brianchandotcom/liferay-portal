@@ -93,7 +93,6 @@ public class BaseResourceImpl implements Resource {
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public InputStream getContentAsStream() throws WebDAVException {
 		return null;
 	}

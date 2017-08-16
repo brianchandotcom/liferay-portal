@@ -114,7 +114,6 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public String getIconCssClass() throws PortalException {
 		return getAssetRendererFactory().getIconCssClass();
 	}
@@ -309,7 +308,6 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public boolean hasEditPermission(PermissionChecker permissionChecker)
 		throws PortalException {
 
@@ -317,7 +315,6 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public boolean hasViewPermission(PermissionChecker permissionChecker)
 		throws PortalException {
 

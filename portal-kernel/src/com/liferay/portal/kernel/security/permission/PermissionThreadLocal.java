@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.security.permission;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.HashSet;
@@ -36,20 +35,14 @@ public class PermissionThreadLocal {
 		return _addResource.get();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static boolean isFlushResourceBlockEnabled(
 		long companyId, long groupId, String name) {
 
-		Set<String> set = _flushResourceBlockEnabled.get();
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(companyId);
-		sb.append(StringPool.UNDERLINE);
-		sb.append(groupId);
-		sb.append(StringPool.UNDERLINE);
-		sb.append(name);
-
-		return !set.contains(sb.toString());
+		return false;
 	}
 
 	public static boolean isFlushResourcePermissionEnabled(
@@ -64,25 +57,12 @@ public class PermissionThreadLocal {
 		_addResource.set(addResource);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static void setFlushResourceBlockEnabled(
 		long companyId, long groupId, String name, boolean enabled) {
-
-		Set<String> set = _flushResourceBlockEnabled.get();
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(companyId);
-		sb.append(StringPool.UNDERLINE);
-		sb.append(groupId);
-		sb.append(StringPool.UNDERLINE);
-		sb.append(name);
-
-		if (enabled) {
-			set.remove(sb.toString());
-		}
-		else {
-			set.add(sb.toString());
-		}
 	}
 
 	public static void setFlushResourcePermissionEnabled(
@@ -107,10 +87,6 @@ public class PermissionThreadLocal {
 	private static final ThreadLocal<Boolean> _addResource =
 		new CentralizedThreadLocal<>(
 			PermissionThreadLocal.class + "._addResource", () -> Boolean.TRUE);
-	private static final ThreadLocal<Set<String>> _flushResourceBlockEnabled =
-		new CentralizedThreadLocal<>(
-			PermissionThreadLocal.class + "._flushResourceBlockEnabled",
-			HashSet::new);
 	private static final ThreadLocal<Set<String>>
 		_flushResourcePermissionEnabled = new CentralizedThreadLocal<>(
 			PermissionThreadLocal.class +

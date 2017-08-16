@@ -61,6 +61,8 @@
 
 	<target depends="move-artifact,move-artifact-dependencies" name="dist-module-artifact-lpkg" />
 
+	<target depends="download-artifact-sources,replace-sources-license-header" name="dist-module-artifact-sources" />
+
 	<target name="download-artifact" unless="artifact.exclude">
 		<fail message="Missing artifact.properties file in ${releng.module.dir}.">
 			<condition>
@@ -98,8 +100,44 @@
 		</exec>
 	</target>
 
+	<target name="download-artifact-sources" unless="artifact.exclude">
+		<fail message="Missing artifact.properties file in ${releng.module.dir}.">
+			<condition>
+				<not>
+					<available file="${releng.module.dir}/artifact.properties" />
+				</not>
+			</condition>
+		</fail>
+
+		<loadproperties srcFile="${releng.module.dir}/artifact.properties">
+			<filterchain>
+				<linecontains>
+					<contains value="artifact.sources.url=" />
+				</linecontains>
+			</filterchain>
+		</loadproperties>
+
+		<fail message="No sources URL found in ${releng.module.dir}/artifact.properties.">
+			<condition>
+				<not>
+					<isset property="${artifact.sources.url}" />
+				</not>
+			</condition>
+		</fail>
+
+		<if>
+			<contains string="${basedir}" substring="private${file.separator}" />
+			<then>
+				<get dest="${dist.dir.sources}" password="${build.repository.private.password}" src="${artifact.sources.url}" username="${build.repository.private.username}" />
+			</then>
+			<else>
+				<get dest="${dist.dir.sources}" src="${artifact.sources.url}" />
+			</else>
+		</if>
+	</target>
+
 	<target
-		depends="get-artifact-version-previous-release,get-artifact-change-log-ticket-list-since-previous-release,get-artifact-change-log-ticket-list-full"
+		depends="get-artifact-change-log-ticket-list-full,get-artifact-change-log-ticket-list-since-previous-release,get-artifact-version-previous-release"
 		description="Get an aggregated list of tickets from the change logs of all versions of the current module since the version present in the previous release of this app."
 		if="${app.has.artifact.previous.release}"
 		name="get-artifact-change-log-ticket-list"
@@ -258,6 +296,19 @@
 		<property name="artifact.location.src" value="${osgi.dir}/../deploy/${artifact.name}-${lp.version}.${module-incremental-version}.war" />
 	</target>
 
+	<target name="get-artifact-sources-file-names">
+		<basename file="${artifact.sources.url}" property="artifact.sources.file.name.original" />
+
+		<loadfile property="artifact.sources.file.name.commercial">
+			<propertyresource name="artifact.sources.file.name.original" />
+			<filterchain>
+				<tokenfilter>
+					<replaceregex pattern="(.+-sources)(\.jar|zip)" replace="\1-commercial\2" />
+				</tokenfilter>
+			</filterchain>
+		</loadfile>
+	</target>
+
 	<target
 		description="Get the version of the current module that was present in the previous release of this app."
 		name="get-artifact-version-previous-release"
@@ -330,6 +381,32 @@
 		name="record-artifact-change-log"
 	>
 		<echo append="true" file="${dist.dir}/ticket.list.tmp">${artifact.change.log.ticket.list} </echo>
+	</target>
+
+	<target
+		depends="download-artifact-sources,get-artifact-sources-file-names"
+		if="${current.branch.private}"
+		name="replace-sources-license-header"
+	>
+		<delete dir="${dist.dir.sources}/tmp" />
+
+		<mkdir dir="${dist.dir.sources}/tmp" />
+
+		<unzip dest="${dist.dir.sources}/tmp" src="${dist.dir.sources}/${artifact.sources.file.name.original}" />
+
+		<replaceregexp flags="g">
+			<fileset dir="${dist.dir.sources}/tmp" includes="**/*" />
+			<regexp pattern="/\*\*${line.separator} \* Copyright \(c\) 2000-(?:20\d\d|present) Liferay, Inc\. All rights reserved.${line.separator} \*${line.separator} \* This library is free software; you can redistribute it and\/or modify it under${line.separator} \* the terms of the GNU Lesser General Public License as published by the Free${line.separator} \* Software Foundation; either version 2\.1 of the License, or \(at your option\)${line.separator} \* any later version\.${line.separator} \*${line.separator} \* This library is distributed in the hope that it will be useful, but WITHOUT${line.separator} \* ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS${line.separator} \* FOR A PARTICULAR PURPOSE\. See the GNU Lesser General Public License for more${line.separator} \* details\.${line.separator} \*/" />
+			<substitution expression="/**${line.separator} * Copyright (c) 2000-present Liferay, Inc. All rights reserved.${line.separator} *${line.separator} * The contents of this file are subject to the terms of the Liferay Enterprise${line.separator} * Subscription License (&quot;License&quot;). You may not use this file except in${line.separator} * compliance with the License. You can obtain a copy of the License by${line.separator} * contacting Liferay, Inc. See the License for the specific language governing${line.separator} * permissions and limitations under the License, including but not limited to${line.separator} * distribution rights of the Software.${line.separator} *${line.separator} *${line.separator} *${line.separator} */" />
+		</replaceregexp>
+
+		<zip destfile="${dist.dir.sources}/${artifact.sources.file.name.commercial}">
+			<fileset dir="${dist.dir.sources}/tmp" includes="**/*" />
+		</zip>
+
+		<delete dir="${dist.dir.sources}/tmp" />
+
+		<delete file="${dist.dir.sources}/${artifact.sources.file.name.original}" />
 	</target>
 
 	<target depends="reset-artifact-dependencies" name="reset-artifact">

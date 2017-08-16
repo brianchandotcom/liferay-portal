@@ -3,3 +3,11 @@ Bundle-SymbolicName: com.liferay.modern.site.building.fragment.web
 Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Modern Site Building
+Provide-Capability:\
+	soy;\
+		type="modern-site-building-fragment";\
+		version:Version="${Bundle-Version}"
+Require-Capability:\
+	osgi.extender;\
+		filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/soy))"
+Web-ContextPath: /modern-site-building-fragment-web

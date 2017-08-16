@@ -1935,6 +1935,13 @@ the `versions.xml` file by setting the system property
 ### Changed
 - [LPS-74139]: Update the [Liferay Gradle Plugins] dependency to version 3.4.31.
 
+## 5.0.18 - 2017-08-16
+
+### Added
+- [LPS-74210]: Add the ability to set one or more `-Xlint` compiler arguments by
+setting the system property `[task name].lint` (where `[task name]` is the name
+of the `JavaCompile` task to configure).
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -2143,6 +2150,7 @@ the `versions.xml` file by setting the system property
 [LPS-74104]: https://issues.liferay.com/browse/LPS-74104
 [LPS-74126]: https://issues.liferay.com/browse/LPS-74126
 [LPS-74155]: https://issues.liferay.com/browse/LPS-74155
+[LPS-74210]: https://issues.liferay.com/browse/LPS-74210
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

@@ -73,6 +73,7 @@ import java.util.function.BiConsumer;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletSecurityException;
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceURL;
@@ -645,7 +646,7 @@ public class PortletURLImpl
 	}
 
 	@Override
-	public void setSecure(boolean secure) {
+	public void setSecure(boolean secure) throws PortletSecurityException {
 		_secure = secure;
 
 		clearCache();

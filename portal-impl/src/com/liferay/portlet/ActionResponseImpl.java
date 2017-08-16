@@ -14,6 +14,8 @@
 
 package com.liferay.portlet;
 
+import java.io.IOException;
+
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
 
@@ -29,7 +31,7 @@ public class ActionResponseImpl
 	}
 
 	@Override
-	public void sendRedirect(String location) {
+	public void sendRedirect(String location) throws IOException {
 		if ((location == null) ||
 			(!location.startsWith("/") && !location.contains("://") &&
 			 !location.startsWith("wsrp_rewrite?"))) {
@@ -54,7 +56,8 @@ public class ActionResponseImpl
 	}
 
 	@Override
-	public void sendRedirect(String location, String renderUrlParamName) {
+	public void sendRedirect(String location, String renderUrlParamName)
+		throws IOException {
 	}
 
 }

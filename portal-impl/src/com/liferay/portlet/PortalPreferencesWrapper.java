@@ -26,6 +26,7 @@ import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.ReadOnlyException;
+import javax.portlet.ValidatorException;
 
 /**
  * @author Alexander Chow
@@ -102,7 +103,7 @@ public class PortalPreferencesWrapper
 	}
 
 	@Override
-	public void store() throws IOException {
+	public void store() throws IOException, ValidatorException {
 		_portalPreferencesImpl.store();
 	}
 

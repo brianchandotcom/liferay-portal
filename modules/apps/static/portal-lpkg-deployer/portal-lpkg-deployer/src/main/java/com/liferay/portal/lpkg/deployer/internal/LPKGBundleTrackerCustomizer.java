@@ -166,16 +166,16 @@ public class LPKGBundleTrackerCustomizer
 				while (enumeration.hasMoreElements()) {
 					URL url = enumeration.nextElement();
 
-					if (_checkOverridden(symbolicName, url)) {
+					String location = LPKGUtil.generateBundleLocation(
+						bundle, url.getPath());
+
+					if (_checkOverridden(symbolicName, url, location)) {
 						continue;
 					}
 
 					if (_isBundleInstalled(bundle, url)) {
 						continue;
 					}
-
-					String location = LPKGUtil.generateBundleLocation(
-						bundle, url.getPath());
 
 					Bundle newBundle = _bundleContext.getBundle(location);
 
@@ -211,12 +211,12 @@ public class LPKGBundleTrackerCustomizer
 			while (enumeration.hasMoreElements()) {
 				URL url = enumeration.nextElement();
 
-				if (_checkOverridden(symbolicName, url)) {
-					continue;
-				}
-
 				String location = LPKGUtil.generateBundleLocation(
 					bundle, url.getPath());
+
+				if (_checkOverridden(symbolicName, url, location)) {
+					continue;
+				}
 
 				Bundle newBundle = _bundleContext.getBundle(location);
 
@@ -383,7 +383,8 @@ public class LPKGBundleTrackerCustomizer
 		return sb.toString();
 	}
 
-	private boolean _checkOverridden(String symbolicName, URL url)
+	private boolean _checkOverridden(
+			String symbolicName, URL url, String location)
 		throws Throwable {
 
 		String path = url.getPath();
@@ -397,7 +398,7 @@ public class LPKGBundleTrackerCustomizer
 		path = StringUtil.toLowerCase(path);
 
 		if (_overrideFileNames.contains(path)) {
-			Bundle bundle = _bundleContext.getBundle(url.getPath());
+			Bundle bundle = _bundleContext.getBundle(location);
 
 			if (bundle != null) {
 				_uninstallBundle(symbolicName.concat(StringPool.DASH), bundle);

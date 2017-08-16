@@ -140,6 +140,12 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 						urlConnection.getInputStream());
 				}
 				else {
+					int queryPos = importFileName.indexOf(CharPool.QUESTION);
+
+					if (queryPos != -1) {
+						importFileName = importFileName.substring(0, queryPos);
+					}
+
 					ServletPaths importFileServletPaths = servletPaths.down(
 						importFileName);
 

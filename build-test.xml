@@ -9873,6 +9873,10 @@ jdbc.default.password=${database.mysql.password}</echo>
 		<set-portal-impl-portal-test-ext-properties />
 	</target>
 
+	<target name="set-tomcat-version-number">
+		<set-tomcat-version-number liferay.portal.bundle="${liferay.portal.bundle}" />
+	</target>
+
 	<target name="setup-testable-tomcat">
 		<setup-testable-tomcat />
 	</target>

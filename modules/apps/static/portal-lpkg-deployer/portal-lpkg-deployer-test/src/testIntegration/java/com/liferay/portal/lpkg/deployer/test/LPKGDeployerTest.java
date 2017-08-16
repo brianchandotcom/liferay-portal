@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.lpkg.deployer.LPKGDeployer;
 
 import java.io.File;
@@ -195,6 +196,8 @@ public class LPKGDeployerTest {
 						contextName = contextName.substring(0, index);
 					}
 
+					String portalProfileNames = null;
+
 					Path tempFilePath = Files.createTempFile(null, null);
 
 					try (InputStream inputStream1 = zipFile.getInputStream(
@@ -223,6 +226,9 @@ public class LPKGDeployerTest {
 								if (configuredServletContextName != null) {
 									contextName = configuredServletContextName;
 								}
+
+								portalProfileNames = properties.getProperty(
+									"liferay-portal-profile-names");
 							}
 						}
 					}
@@ -230,7 +236,7 @@ public class LPKGDeployerTest {
 						Files.delete(tempFilePath);
 					}
 
-					StringBundler sb = new StringBundler(11);
+					StringBundler sb = new StringBundler(13);
 
 					sb.append("webbundle:/");
 					sb.append(URLCodec.encodeURL(lpkgBundle.getSymbolicName()));
@@ -243,6 +249,11 @@ public class LPKGDeployerTest {
 					sb.append("&Web-ContextPath=/");
 					sb.append(contextName);
 					sb.append("&protocol=lpkg");
+
+					if (Validator.isNotNull(portalProfileNames)) {
+						sb.append("&liferay-portal-profile-names=");
+						sb.append(portalProfileNames);
+					}
 
 					String location = sb.toString();
 

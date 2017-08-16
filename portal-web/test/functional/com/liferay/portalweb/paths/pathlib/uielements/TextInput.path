@@ -419,6 +419,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEO_HTML_TITLE</td>
+	<td>//div[contains(.,'HTML')]/span/input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SETUP_XML_URL</td>
 	<td>//input[contains(@id,'xmlUrl')]</td>
 	<td></td>

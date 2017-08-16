@@ -100,11 +100,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_TYPE_PANEL_DESCRIPTION_FIELD</td>
-	<td>//textarea[contains(@id,'descriptionPanel')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PAGE_TYPE_PANEL_COMPONENT_TREE_ARROW</td>
 	<td>//span[contains(.,'${key_componentName}')]/../i[contains(@class,'tree-hitarea')]</td>
 	<td></td>
@@ -174,11 +169,6 @@
 <tr>
 	<td>SEO_PANEL_TOGGLE</td>
 	<td>//div[contains(@id,'seo')]/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEO_HTML_TITLE</td>
-	<td>//div[contains(.,'HTML')]/span/input</td>
 	<td></td>
 </tr>
 <tr>

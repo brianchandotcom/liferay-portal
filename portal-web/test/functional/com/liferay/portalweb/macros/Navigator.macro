@@ -116,6 +116,16 @@
 		</execute>
 	</command>
 
+	<command name="gotoSEOPanel">
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="SEO" />
+		</execute>
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="SEO" />
+		</execute>
+	</command>
+
 	<command name="gotoSitePage">
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="${siteName}" />

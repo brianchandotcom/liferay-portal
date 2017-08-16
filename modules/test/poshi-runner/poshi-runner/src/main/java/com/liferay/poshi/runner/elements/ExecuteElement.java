@@ -91,7 +91,7 @@ public class ExecuteElement extends PoshiElement {
 	@Override
 	public void parseReadableSyntax(String readableSyntax) {
 		if (ReturnElement.isElementType(this, readableSyntax)) {
-			add(PoshiElement.newPoshiElement(this, readableSyntax));
+			add(new ReturnElement(readableSyntax));
 
 			readableSyntax = RegexUtil.getGroup(
 				readableSyntax, "return\\((.*),", 1);

@@ -1,0 +1,37 @@
+<definition component-name="portal-upgrades">
+	<property name="ignore.errors" value="Plugin security management is not enabled. Enable a security manager, then restart." />
+	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
+	<property name="testray.main.component.name" value="Upgrades Collaboration" />
+
+	<set-up>
+		<execute macro="SignIn#signIn">
+			<var name="userEmailAddress" value="user@liferay.com" />
+		</execute>
+
+		<execute macro="Smoke#viewWelcomePage" />
+
+		<execute macro="Upgrade#reindexSearches" />
+	</set-up>
+
+	<command name="ViewNotifications621015" priority="5">
+		<property name="data.archive.type" value="data-archive-notifications" />
+		<property name="portal.version" value="6.2.10.15" />
+
+		<execute macro="Upgrade#viewNotifications" />
+	</command>
+
+	<command name="ViewNotifications623" priority="5">
+		<property name="data.archive.type" value="data-archive-notifications" />
+		<property name="portal.version" value="6.2.3" />
+
+		<execute macro="Upgrade#viewNotifications" />
+	</command>
+
+	<command name="ViewNotifications625" priority="5">
+		<property name="data.archive.type" value="data-archive-notifications" />
+		<property name="portal.version" value="6.2.5" />
+
+		<execute macro="Upgrade#viewNotifications" />
+	</command>
+</definition>

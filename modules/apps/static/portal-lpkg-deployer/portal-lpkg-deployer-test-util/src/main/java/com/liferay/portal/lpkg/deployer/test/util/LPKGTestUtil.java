@@ -94,6 +94,7 @@ public class LPKGTestUtil {
 			sb.append("icon-url=https://www.liferay.com/web/guest");
 			sb.append("/marketplace/-/mp/asset/icon/71985553\n");
 			sb.append("remote-app-id=Test\n");
+			sb.append("restart-required=false\n");
 			sb.append("title=Test\n");
 			sb.append("version=1.0");
 

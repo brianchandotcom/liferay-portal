@@ -1,0 +1,13 @@
+task runGradleTest
+
+createToken {
+	tokenFile "${projectDir}/custom/token"
+}
+
+gradle.taskGraph.afterTask { Task task, TaskState state ->
+	if (task.name == "createToken") {
+		assert state.skipped == true
+	}
+}
+
+runGradleTest.dependsOn createToken

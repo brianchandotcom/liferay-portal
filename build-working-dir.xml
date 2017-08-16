@@ -1,17 +1,11 @@
 <?xml version="1.0"?>
 
 <project default="prepare-working-dir" xmlns:if="ant:if" xmlns:unless="ant:unless">
-	<dirname file="${ant.file.build-common}" property="project.dir.native" />
-
-	<pathconvert property="project.dir" targetos="unix">
-		<path location="${project.dir.native}" />
-	</pathconvert>
-
-	<property file="${project.dir}/working.dir.${user.name}.properties" />
-	<property file="${project.dir}/working.dir.${env.COMPUTERNAME}.properties" />
-	<property file="${project.dir}/working.dir.${env.HOST}.properties" />
-	<property file="${project.dir}/working.dir.${env.HOSTNAME}.properties" />
-	<property file="${project.dir}/working.dir.properties" />
+	<property file="working.dir.${user.name}.properties" />
+	<property file="working.dir.${env.COMPUTERNAME}.properties" />
+	<property file="working.dir.${env.HOST}.properties" />
+	<property file="working.dir.${env.HOSTNAME}.properties" />
+	<property file="working.dir.properties" />
 
 	<condition property="prepare.working.dir.private">
 		<not>

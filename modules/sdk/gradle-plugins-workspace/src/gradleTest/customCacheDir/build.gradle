@@ -1,18 +1,14 @@
 task runGradleTest
 
 gradle.liferayWorkspace {
-	File bundleFile = file("bundle.zip")
-
-	URL bundleURL = bundleFile.toURL()
-
-	bundleUrl = bundleURL.toExternalForm()
+	bundleUrl = uri("bundle.zip")
 }
 
 runGradleTest {
 	dependsOn initBundle
 
 	doLast {
-		File bundleFile = new File("${projectDir}/cacheDir/bundle.zip")
+		File bundleFile = file("cacheDir/bundle.zip")
 
 		assert bundleFile.exists()
 	}

@@ -16,6 +16,19 @@ sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 ```
 
+### Enable Java Compiler Warnings
+
+In order to enable Java [compiler warnings](http://docs.oracle.com/javase/8/docs/technotes/tools/windows/javac.html#BHCJCABJ)
+when building an OSGi module with Gradle, please set the `-D[task name].lint`
+system property (where `[task name]` is the name of the [`JavaCompile`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.compile.JavaCompile.html)
+task to configure) to a comma-separated list of warnings. For example:
+
+```bash
+./gradlew compileJava -DcompileJava.lint=deprecation,unchecked
+./gradlew compileTestJava -DcompileJava.lint=deprecation,unchecked
+./gradlew compileTestIntegrationJava -DcompileJava.lint=deprecation,unchecked
+```
+
 ### Deploy Directory
 
 The module's deploy directory is the `deploy.destinationDir` property (the

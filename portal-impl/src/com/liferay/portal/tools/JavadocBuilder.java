@@ -209,7 +209,7 @@ public class JavadocBuilder {
 				continue;
 			}
 			else {
-				curValue = value;
+				value = curValue;
 
 				break;
 			}
@@ -266,7 +266,7 @@ public class JavadocBuilder {
 				continue;
 			}
 			else {
-				curValue = value;
+				value = curValue;
 
 				break;
 			}

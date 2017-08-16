@@ -722,7 +722,12 @@ public class DefaultTextExportImportContentProcessor
 					throw new NoSuchLayoutException();
 				}
 
-				urlSB.append(_DATA_HANDLER_GROUP_FRIENDLY_URL);
+				if (urlGroup.getGroupId() == groupId) {
+					urlSB.append(_DATA_HANDLER_GROUP_FRIENDLY_URL);
+				}
+				else {
+					urlSB.append(groupFriendlyURL);
+				}
 
 				String siteAdminURL =
 					GroupConstants.CONTROL_PANEL_FRIENDLY_URL +

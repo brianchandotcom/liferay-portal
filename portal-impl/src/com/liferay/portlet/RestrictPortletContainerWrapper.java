@@ -37,6 +37,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class RestrictPortletContainerWrapper implements PortletContainer {
 
+	@SuppressWarnings("unused")
 	public static PortletContainer createRestrictPortletContainerWrapper(
 		PortletContainer portletContainer) {
 

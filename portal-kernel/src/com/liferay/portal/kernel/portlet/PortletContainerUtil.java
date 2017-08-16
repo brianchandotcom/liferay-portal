@@ -177,6 +177,7 @@ public class PortletContainerUtil {
 			request, renderPath, columnId, columnPos, columnCount, null, null);
 	}
 
+	@SuppressWarnings("unused")
 	public static HttpServletRequest setupOptionalRenderParameters(
 		HttpServletRequest request, String renderPath, String columnId,
 		Integer columnPos, Integer columnCount, Boolean boundary,

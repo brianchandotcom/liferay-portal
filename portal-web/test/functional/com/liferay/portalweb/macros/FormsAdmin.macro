@@ -151,6 +151,20 @@
 		</execute>
 	</command>
 
+	<command name="viewDocumentsAndMediaFile">
+		<execute macro="FormFields#viewDocumentsAndMediaLabel">
+			<var name="fieldLabel" value="${fieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<var name="key_fieldName" value="${fieldName}" />
+		<var name="key_uploadFileName" value="${uploadFileName}" />
+
+		<execute function="AssertTextEquals" locator1="FormFields#DOCUMENTS_AND_MEDIA_FILE_NAME" value1="${uploadFileName}" />
+
+		<execute function="AssertElementPresent" locator1="FormFields#DOCUMENTS_AND_MEDIA_DOWNLOAD_ICON" value1="${uploadFileName}" />
+	</command>
+
 	<command name="viewForm">
 		<var name="key_formName" value="${formName}" />
 

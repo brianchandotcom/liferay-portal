@@ -243,10 +243,6 @@
 		<var name="key_pageVariationName" value="${pageVariationNameMenulistName}" />
 
 		<execute function="AssertClick" locator1="Staging#PAGE_VARIATION_MENULIST_NAME" value1="${pageVariationNameMenulistName}" />
-
-		<execute function="SelectFrame" value1="relative=top" />
-
-		<execute function="Click" locator1="Icon#CLOSE" />
 	</command>
 
 	<command name="changeSitePageVariationPG">

@@ -18,7 +18,7 @@ runGradleTest {
 	doLast {
 		File dir = file("src/main/resources/css/.sass-cache")
 
-		Pattern pattern =  ~/@import\s+url\s*\(\s*['"]?(.+\.css\?t=\d+)['"]?\s*\)\s*;/
+		Pattern pattern = ~/@import\s+url\s*\(\s*['"]?(.+\.css\?t=\d+)['"]?\s*\)\s*;/
 
 		for (String fileName in ["main.css", "main_rtl.css"]) {
 			File generatedFile = new File(dir, fileName)

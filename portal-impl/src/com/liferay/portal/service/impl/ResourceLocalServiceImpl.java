@@ -748,42 +748,6 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	}
 
 	protected void addModelResources(
-			long companyId, long groupId, long userId, Resource resource,
-			ModelPermissions modelPermissions,
-			PermissionedModel permissionedModel)
-		throws PortalException {
-
-		// Owner permissions
-
-		Role ownerRole = roleLocalService.getRole(
-			companyId, RoleConstants.OWNER);
-
-		List<String> ownerActionIds =
-			ResourceActionsUtil.getModelResourceActions(resource.getName());
-
-		filterOwnerActions(resource.getName(), ownerActionIds);
-
-		String[] ownerPermissions = ownerActionIds.toArray(
-			new String[ownerActionIds.size()]);
-
-		resourcePermissionLocalService.setOwnerResourcePermissions(
-			resource.getCompanyId(), resource.getName(), resource.getScope(),
-			resource.getPrimKey(), ownerRole.getRoleId(), userId,
-			ownerPermissions);
-
-		if (modelPermissions != null) {
-			for (String roleName : modelPermissions.getRoleNames()) {
-				Role role = getRole(resource.getCompanyId(), groupId, roleName);
-
-				resourcePermissionLocalService.setResourcePermissions(
-					resource.getCompanyId(), resource.getName(),
-					resource.getScope(), resource.getPrimKey(),
-					role.getRoleId(), modelPermissions.getActionIds(roleName));
-			}
-		}
-	}
-
-	protected void addModelResources(
 			long companyId, long groupId, long userId, String name,
 			String primKey, ModelPermissions modelPermissions,
 			PermissionedModel permissionedModel)
@@ -814,9 +778,37 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			name, primKey, false);
 
 		try {
-			addModelResources(
-				companyId, groupId, userId, resource, modelPermissions,
-				permissionedModel);
+
+			// Owner permissions
+
+			Role ownerRole = roleLocalService.getRole(
+				companyId, RoleConstants.OWNER);
+
+			List<String> ownerActionIds =
+				ResourceActionsUtil.getModelResourceActions(resource.getName());
+
+			filterOwnerActions(resource.getName(), ownerActionIds);
+
+			String[] ownerPermissions = ownerActionIds.toArray(
+				new String[ownerActionIds.size()]);
+
+			resourcePermissionLocalService.setOwnerResourcePermissions(
+				resource.getCompanyId(), resource.getName(),
+				resource.getScope(), resource.getPrimKey(),
+				ownerRole.getRoleId(), userId, ownerPermissions);
+
+			if (modelPermissions != null) {
+				for (String roleName : modelPermissions.getRoleNames()) {
+					Role role = getRole(
+						resource.getCompanyId(), groupId, roleName);
+
+					resourcePermissionLocalService.setResourcePermissions(
+						resource.getCompanyId(), resource.getName(),
+						resource.getScope(), resource.getPrimKey(),
+						role.getRoleId(),
+						modelPermissions.getActionIds(roleName));
+				}
+			}
 		}
 		finally {
 			PermissionThreadLocal.setFlushResourcePermissionEnabled(

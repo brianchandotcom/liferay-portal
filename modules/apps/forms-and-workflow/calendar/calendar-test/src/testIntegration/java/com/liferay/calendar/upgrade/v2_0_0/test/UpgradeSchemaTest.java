@@ -17,6 +17,8 @@ package com.liferay.calendar.upgrade.v2_0_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
+import com.liferay.calendar.model.impl.CalendarBookingImpl;
+import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
 import com.liferay.calendar.test.util.CalendarBookingTestUtil;
 import com.liferay.calendar.test.util.CalendarTestUtil;
 import com.liferay.calendar.test.util.CalendarUpgradeTestUtil;
@@ -24,6 +26,7 @@ import com.liferay.calendar.test.util.CheckBookingsMessageListenerTestUtil;
 import com.liferay.calendar.test.util.UpgradeDatabaseTestHelper;
 import com.liferay.calendar.upgrade.v2_0_0.UpgradeSchema;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -34,8 +37,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -108,20 +109,14 @@ public class UpgradeSchemaTest extends UpgradeSchema {
 
 		_upgradeSchema.upgrade();
 
-		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
-			connection = con;
+		EntityCacheUtil.clearCache(CalendarBookingImpl.class);
 
-			Statement statement = connection.createStatement();
+		calendarBooking = CalendarBookingLocalServiceUtil.getCalendarBooking(
+			calendarBooking.getCalendarBookingId());
 
-			ResultSet rs = statement.executeQuery(
-				"select recurringCalendarBookingId from CalendarBooking " +
-					"where calendarBookingId = " +
-						calendarBooking.getCalendarBookingId());
-
-			rs.next();
-
-			Assert.assertEquals(recurringCalendarBookingId, rs.getLong(1));
-		}
+		Assert.assertEquals(
+			recurringCalendarBookingId,
+			calendarBooking.getRecurringCalendarBookingId());
 	}
 
 	protected void dropColumnRecurringCalendarBookingId() throws Exception {

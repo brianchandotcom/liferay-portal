@@ -974,23 +974,6 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	}
 
 	protected void updateResourcePermissions(
-			long groupId, Resource resource, ModelPermissions modelPermissions)
-		throws PortalException {
-
-		for (String roleName : modelPermissions.getRoleNames()) {
-			Role role = getRole(resource.getCompanyId(), groupId, roleName);
-
-			List<String> actionIds = modelPermissions.getActionIdsList(
-				roleName);
-
-			resourcePermissionLocalService.setResourcePermissions(
-				resource.getCompanyId(), resource.getName(),
-				resource.getScope(), resource.getPrimKey(), role.getRoleId(),
-				actionIds.toArray(new String[actionIds.size()]));
-		}
-	}
-
-	protected void updateResourcePermissions(
 		long companyId, String name, int scope, String primKey,
 		String newPrimKey) {
 
@@ -1015,7 +998,17 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 		Resource resource = getResource(
 			companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, primKey);
 
-		updateResourcePermissions(groupId, resource, modelPermissions);
+		for (String roleName : modelPermissions.getRoleNames()) {
+			Role role = getRole(resource.getCompanyId(), groupId, roleName);
+
+			List<String> actionIds = modelPermissions.getActionIdsList(
+				roleName);
+
+			resourcePermissionLocalService.setResourcePermissions(
+				resource.getCompanyId(), resource.getName(),
+				resource.getScope(), resource.getPrimKey(), role.getRoleId(),
+				actionIds.toArray(new String[actionIds.size()]));
+		}
 	}
 
 	protected void validate(String name, boolean portletActions)

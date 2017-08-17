@@ -1,5 +1,5 @@
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
 
 buildService {
 	apiDir = "../commerce-product-api/src/main/java"

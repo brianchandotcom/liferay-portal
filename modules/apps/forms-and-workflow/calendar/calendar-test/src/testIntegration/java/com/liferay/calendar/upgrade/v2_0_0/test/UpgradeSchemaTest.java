@@ -24,8 +24,6 @@ import com.liferay.calendar.test.util.CalendarTestUtil;
 import com.liferay.calendar.test.util.CalendarUpgradeTestUtil;
 import com.liferay.calendar.test.util.CheckBookingsMessageListenerTestUtil;
 import com.liferay.calendar.test.util.UpgradeDatabaseTestHelper;
-import com.liferay.calendar.upgrade.v2_0_0.UpgradeSchema;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -35,8 +33,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
-
-import java.sql.Connection;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -51,7 +47,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 @Sync
-public class UpgradeSchemaTest extends UpgradeSchema {
+public class UpgradeSchemaTest {
 
 	@ClassRule
 	@Rule
@@ -88,13 +84,9 @@ public class UpgradeSchemaTest extends UpgradeSchema {
 
 		_upgradeSchema.upgrade();
 
-		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
-			connection = con;
-
-			Assert.assertTrue(
-				_upgradeDatabaseTestHelper.hasColumn(
-					"CalendarBooking", "recurringCalendarBookingId"));
-		}
+		Assert.assertTrue(
+			_upgradeDatabaseTestHelper.hasColumn(
+				"CalendarBooking", "recurringCalendarBookingId"));
 	}
 
 	@Test

@@ -531,7 +531,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 
 		addGroupPermissions(groupId, resource, groupPermissions);
 
-		addGuestPermissions(companyId, resource, guestPermissions);
+		addGuestPermissions(resource, guestPermissions);
 	}
 
 	/**
@@ -640,15 +640,14 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 
 		String[] actionIds = actions.toArray(new String[actions.size()]);
 
-		addGuestPermissions(companyId, resource, actionIds);
+		addGuestPermissions(resource, actionIds);
 	}
 
-	protected void addGuestPermissions(
-			long companyId, Resource resource, String[] actionIds)
+	protected void addGuestPermissions(Resource resource, String[] actionIds)
 		throws PortalException {
 
 		Role guestRole = roleLocalService.getRole(
-			companyId, RoleConstants.GUEST);
+			resource.getCompanyId(), RoleConstants.GUEST);
 
 		resourcePermissionLocalService.setResourcePermissions(
 			resource.getCompanyId(), resource.getName(), resource.getScope(),

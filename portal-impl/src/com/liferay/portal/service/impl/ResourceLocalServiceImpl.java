@@ -351,8 +351,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 
 		deleteResource(
 			auditedModel.getCompanyId(), auditedModel.getModelClassName(),
-			scope, String.valueOf(auditedModel.getPrimaryKeyObj()),
-			getPermissionedModel(auditedModel));
+			scope, String.valueOf(auditedModel.getPrimaryKeyObj()));
 	}
 
 	/**
@@ -370,7 +369,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			long companyId, String name, int scope, long primKey)
 		throws PortalException {
 
-		deleteResource(companyId, name, scope, String.valueOf(primKey), null);
+		deleteResource(companyId, name, scope, String.valueOf(primKey));
 	}
 
 	/**
@@ -388,7 +387,8 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			long companyId, String name, int scope, String primKey)
 		throws PortalException {
 
-		deleteResource(companyId, name, scope, primKey, null);
+		resourcePermissionLocalService.deleteResourcePermissions(
+			companyId, name, scope, primKey);
 	}
 
 	/**
@@ -887,15 +887,6 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 
 			IndexWriterHelperUtil.updatePermissionFields(name, primKey);
 		}
-	}
-
-	protected void deleteResource(
-			long companyId, String name, int scope, String primKey,
-			PermissionedModel permissionedModel)
-		throws PortalException {
-
-		resourcePermissionLocalService.deleteResourcePermissions(
-			companyId, name, scope, primKey);
 	}
 
 	protected void filterOwnerActions(String name, List<String> actionIds) {

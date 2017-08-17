@@ -149,9 +149,6 @@ public class SoyPortletRequestFactory {
 		renderRequestImpl.setPortletRequestDispatcherRequest(
 			httpServletRequest);
 
-		renderRequestImpl.setAttribute(
-			_ORIGINAL_PARAMETERS_MAP, resourceRequest.getParameterMap());
-
 		PortletResponse portletResponse = createRenderResponse(
 			renderRequestImpl, resourceResponse);
 
@@ -172,9 +169,6 @@ public class SoyPortletRequestFactory {
 			renderRequestImpl, httpServletResponse, _portlet.getPortletId(),
 			_portlet.getCompanyId());
 	}
-
-	private static final String _ORIGINAL_PARAMETERS_MAP =
-		"_ORIGINAL_PARAMETERS_MAP_";
 
 	private final Portlet _portlet;
 

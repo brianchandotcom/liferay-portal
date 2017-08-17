@@ -707,7 +707,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			try {
 				long classNameId = GetterUtil.getLong(oldValue);
 
-				String className = _portal.getClassName(classNameId);
+				String className = portal.getClassName(classNameId);
 
 				newValues[i++] = className;
 			}
@@ -802,7 +802,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		long anyAssetType = GetterUtil.getLong(anyAssetTypeString);
 
 		if (anyAssetType > 0) {
-			anyAssetTypeClassName = _portal.getClassName(anyAssetType);
+			anyAssetTypeClassName = portal.getClassName(anyAssetType);
 		}
 
 		Portlet portlet = _portletLocalService.getPortletById(
@@ -1130,7 +1130,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			}
 
 			try {
-				long classNameId = _portal.getClassNameId(oldValue);
+				long classNameId = portal.getClassNameId(oldValue);
 
 				newValues[i++] = String.valueOf(classNameId);
 			}
@@ -1375,6 +1375,9 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			key, newValues.toArray(new String[newValues.size()]));
 	}
 
+	@Reference
+	protected Portal portal;
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetPublisherExportImportPortletPreferencesProcessor.class);
 
@@ -1391,10 +1394,6 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 	private GroupLocalService _groupLocalService;
 	private LayoutLocalService _layoutLocalService;
 	private OrganizationLocalService _organizationLocalService;
-
-	@Reference
-	private Portal _portal;
-
 	private PortletLocalService _portletLocalService;
 	private ReferencedStagedModelImporterCapability
 		_referencedStagedModelImporterCapability;

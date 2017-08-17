@@ -19,6 +19,7 @@ import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.test.util.CalendarBookingTestUtil;
 import com.liferay.calendar.test.util.CalendarTestUtil;
+import com.liferay.calendar.test.util.CalendarUpgradeTestUtil;
 import com.liferay.calendar.test.util.CheckBookingsMessageListenerTestUtil;
 import com.liferay.calendar.upgrade.v2_0_0.UpgradeSchema;
 import com.liferay.calendar.util.CalendarUtil;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 
@@ -62,6 +64,9 @@ public class UpgradeSchemaTest extends UpgradeSchema {
 
 		_calendar = CalendarTestUtil.addCalendar(_group);
 
+		_upgradeSchema = CalendarUpgradeTestUtil.getUpgradeStep(
+			"com.liferay.calendar.upgrade.v2_0_0.UpgradeSchema");
+
 		CheckBookingsMessageListenerTestUtil.setUp();
 	}
 
@@ -76,7 +81,7 @@ public class UpgradeSchemaTest extends UpgradeSchema {
 
 		dropColumnRecurringCalendarBookingId();
 
-		upgrade();
+		_upgradeSchema.upgrade();
 
 		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
 			connection = con;
@@ -96,7 +101,7 @@ public class UpgradeSchemaTest extends UpgradeSchema {
 
 		dropColumnRecurringCalendarBookingId();
 
-		upgrade();
+		_upgradeSchema.upgrade();
 
 		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
 			connection = con;
@@ -139,5 +144,7 @@ public class UpgradeSchemaTest extends UpgradeSchema {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	private UpgradeProcess _upgradeSchema;
 
 }

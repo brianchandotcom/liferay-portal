@@ -1,0 +1,15 @@
+Bundle-Name: Liferay Modern Site Building Fragment API
+Bundle-SymbolicName: com.liferay.modern.site.building.fragment.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.modern.site.building.fragment.constants,\
+	com.liferay.modern.site.building.fragment.exception,\
+	com.liferay.modern.site.building.fragment.model,\
+	com.liferay.modern.site.building.fragment.service,\
+	com.liferay.modern.site.building.fragment.service.persistence
+Import-Package:\
+	com.liferay.portal.kernel.model;version="[1.0,1.2)",\
+	\
+	*
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Modern Site Building

@@ -95,29 +95,12 @@ public class GitWorkingDirectory {
 			String upstreamBranchName, String workingDirectory)
 		throws GitAPIException, IOException {
 
-		_upstreamBranchName = upstreamBranchName;
-
-		setWorkingDirectory(workingDirectory);
-
-		waitForIndexLock();
-
-		FileRepositoryBuilder fileRepositoryBuilder =
-			new FileRepositoryBuilder();
-
-		fileRepositoryBuilder.setGitDir(_gitDirectory);
-		fileRepositoryBuilder.setWorkTree(_workingDirectory);
-
-		_repository = fileRepositoryBuilder.build();
-
-		_git = new Git(_repository);
-
-		_repositoryName = loadRepositoryName();
-		_repositoryUsername = loadRepositoryUsername();
+		this(upstreamBranchName, workingDirectory, null);
 	}
 
 	public GitWorkingDirectory(
 			String upstreamBranchName, String workingDirectory,
-			String repository)
+			String repositoryName)
 		throws GitAPIException, IOException {
 
 		_upstreamBranchName = upstreamBranchName;
@@ -136,7 +119,11 @@ public class GitWorkingDirectory {
 
 		_git = new Git(_repository);
 
-		_repositoryName = repository;
+		if (repositoryName == null) {
+			repositoryName = loadRepositoryName();
+		}
+
+		_repositoryName = repositoryName;
 		_repositoryUsername = loadRepositoryUsername();
 	}
 

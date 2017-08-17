@@ -1213,6 +1213,10 @@ app.server.type=@{app.server.type}]]></echo>
 									<if>
 										<equals arg1="${Liferay-Releng-Bundle}" arg2="true" />
 										<then>
+											<fileset dir="${app.server.parent.dir}/osgi" id="osgi.content" />
+
+											<fail>${toString:osgi.content}</fail>
+
 											<ant dir="modules" inheritAll="false" target="build-app-lpkg">
 												<property name="app.name" value="${app.name}" />
 												<property name="osgi.dir" value="${app.server.parent.dir}/osgi" />

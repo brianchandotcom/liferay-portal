@@ -703,20 +703,6 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	}
 
 	protected void addModelResources(
-			long companyId, long groupId, long userId, Resource resource,
-			String[] groupPermissions, String[] guestPermissions,
-			PermissionedModel permissionedModel)
-		throws PortalException {
-
-		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
-			groupPermissions, guestPermissions);
-
-		addModelResources(
-			companyId, groupId, userId, resource, modelPermissions,
-			permissionedModel);
-	}
-
-	protected void addModelResources(
 			long companyId, long groupId, long userId, String name,
 			String primKey, ModelPermissions modelPermissions,
 			PermissionedModel permissionedModel)

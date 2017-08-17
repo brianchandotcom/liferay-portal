@@ -43,7 +43,7 @@
 				</div>
 
 				<div class="flex-item-expand hidden-sm hidden-xs lfr-device-item text-center" data-device="autosize">
-					<aui:icon cssClass="icon icon-monospaced" image="full-size" markupView="lexicon" />
+					<aui:icon cssClass="icon icon-monospaced" image="autosize" markupView="lexicon" />
 
 					<small><%= LanguageUtil.get(resourceBundle, "autosize") %></small>
 				</div>

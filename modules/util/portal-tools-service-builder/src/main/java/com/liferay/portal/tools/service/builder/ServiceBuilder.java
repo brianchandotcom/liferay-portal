@@ -5035,7 +5035,7 @@ public class ServiceBuilder {
 						javaMethod2, parentClass2.getPackageName(), true);
 				}
 
-				return methodSignature1.compareTo(methodSignature2);
+				return methodSignature1.compareToIgnoreCase(methodSignature2);
 			}
 
 		};

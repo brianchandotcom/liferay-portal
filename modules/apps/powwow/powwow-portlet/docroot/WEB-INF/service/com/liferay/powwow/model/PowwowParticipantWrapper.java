@@ -397,14 +397,14 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_powwowParticipant.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_powwowParticipant.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_powwowParticipant.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

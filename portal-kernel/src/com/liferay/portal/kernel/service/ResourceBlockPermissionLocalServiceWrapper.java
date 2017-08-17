@@ -74,18 +74,6 @@ public class ResourceBlockPermissionLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the resource block permission from the database. Also notifies the appropriate model listeners.
-	*
-	* @param resourceBlockPermission the resource block permission
-	* @return the resource block permission that was removed
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.ResourceBlockPermission deleteResourceBlockPermission(
-		com.liferay.portal.kernel.model.ResourceBlockPermission resourceBlockPermission) {
-		return _resourceBlockPermissionLocalService.deleteResourceBlockPermission(resourceBlockPermission);
-	}
-
-	/**
 	* Deletes the resource block permission with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param resourceBlockPermissionId the primary key of the resource block permission
@@ -97,6 +85,18 @@ public class ResourceBlockPermissionLocalServiceWrapper
 		long resourceBlockPermissionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _resourceBlockPermissionLocalService.deleteResourceBlockPermission(resourceBlockPermissionId);
+	}
+
+	/**
+	* Deletes the resource block permission from the database. Also notifies the appropriate model listeners.
+	*
+	* @param resourceBlockPermission the resource block permission
+	* @return the resource block permission that was removed
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.ResourceBlockPermission deleteResourceBlockPermission(
+		com.liferay.portal.kernel.model.ResourceBlockPermission resourceBlockPermission) {
+		return _resourceBlockPermissionLocalService.deleteResourceBlockPermission(resourceBlockPermission);
 	}
 
 	@Override
@@ -201,15 +201,6 @@ public class ResourceBlockPermissionLocalServiceWrapper
 		return _resourceBlockPermissionLocalService.getActionableDynamicQuery();
 	}
 
-	@Override
-	public java.util.Map<java.lang.Long, java.util.Set<java.lang.String>> getAvailableResourceBlockPermissionActionIds(
-		java.lang.String name, long primKey,
-		java.util.List<java.lang.String> actionIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _resourceBlockPermissionLocalService.getAvailableResourceBlockPermissionActionIds(name,
-			primKey, actionIds);
-	}
-
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
 	#getAvailableResourceBlockPermissionActionIds(String, long,
@@ -223,6 +214,15 @@ public class ResourceBlockPermissionLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _resourceBlockPermissionLocalService.getAvailableResourceBlockPermissionActionIds(roleIds,
 			name, primKey, actionIds);
+	}
+
+	@Override
+	public java.util.Map<java.lang.Long, java.util.Set<java.lang.String>> getAvailableResourceBlockPermissionActionIds(
+		java.lang.String name, long primKey,
+		java.util.List<java.lang.String> actionIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _resourceBlockPermissionLocalService.getAvailableResourceBlockPermissionActionIds(name,
+			primKey, actionIds);
 	}
 
 	@Override
@@ -302,6 +302,13 @@ public class ResourceBlockPermissionLocalServiceWrapper
 			roleId);
 	}
 
+	@Override
+	public void updateResourceBlockPermission(long resourceBlockId,
+		long roleId, long actionIdsLong, int operator) {
+		_resourceBlockPermissionLocalService.updateResourceBlockPermission(resourceBlockId,
+			roleId, actionIdsLong, operator);
+	}
+
 	/**
 	* Updates the resource block permission in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -312,13 +319,6 @@ public class ResourceBlockPermissionLocalServiceWrapper
 	public com.liferay.portal.kernel.model.ResourceBlockPermission updateResourceBlockPermission(
 		com.liferay.portal.kernel.model.ResourceBlockPermission resourceBlockPermission) {
 		return _resourceBlockPermissionLocalService.updateResourceBlockPermission(resourceBlockPermission);
-	}
-
-	@Override
-	public void updateResourceBlockPermission(long resourceBlockId,
-		long roleId, long actionIdsLong, int operator) {
-		_resourceBlockPermissionLocalService.updateResourceBlockPermission(resourceBlockId,
-			roleId, actionIdsLong, operator);
 	}
 
 	@Override

@@ -85,12 +85,12 @@ public interface RatingsEntryLocalService extends BaseLocalService,
 	*/
 	public RatingsEntry createRatingsEntry(long entryId);
 
+	public void deleteEntry(long userId, java.lang.String className,
+		long classPK) throws PortalException;
+
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public void deleteEntry(RatingsEntry entry, long userId,
 		java.lang.String className, long classPK) throws PortalException;
-
-	public void deleteEntry(long userId, java.lang.String className,
-		long classPK) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -98,15 +98,6 @@ public interface RatingsEntryLocalService extends BaseLocalService,
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
-
-	/**
-	* Deletes the ratings entry from the database. Also notifies the appropriate model listeners.
-	*
-	* @param ratingsEntry the ratings entry
-	* @return the ratings entry that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public RatingsEntry deleteRatingsEntry(RatingsEntry ratingsEntry);
 
 	/**
 	* Deletes the ratings entry with the primary key from the database. Also notifies the appropriate model listeners.
@@ -118,6 +109,15 @@ public interface RatingsEntryLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public RatingsEntry deleteRatingsEntry(long entryId)
 		throws PortalException;
+
+	/**
+	* Deletes the ratings entry from the database. Also notifies the appropriate model listeners.
+	*
+	* @param ratingsEntry the ratings entry
+	* @return the ratings entry that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public RatingsEntry deleteRatingsEntry(RatingsEntry ratingsEntry);
 
 	public DynamicQuery dynamicQuery();
 
@@ -199,14 +199,6 @@ public interface RatingsEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<RatingsEntry> getEntries(java.lang.String className,
-		long classPK);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<RatingsEntry> getEntries(java.lang.String className,
-		long classPK, double score);
-
 	/**
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
@@ -218,6 +210,14 @@ public interface RatingsEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Map<java.lang.Long, RatingsEntry> getEntries(long userId,
 		java.lang.String className, long[] classPKs);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<RatingsEntry> getEntries(java.lang.String className,
+		long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<RatingsEntry> getEntries(java.lang.String className,
+		long classPK, double score);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getEntriesCount(java.lang.String className, long classPK,

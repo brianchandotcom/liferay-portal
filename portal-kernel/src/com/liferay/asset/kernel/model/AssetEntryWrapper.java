@@ -376,30 +376,6 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	/**
 	* Returns the localized description of this asset entry in the language. Uses the default language if no localization exists for the requested language.
 	*
-	* @param languageId the ID of the language
-	* @return the localized description of this asset entry
-	*/
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId) {
-		return _assetEntry.getDescription(languageId);
-	}
-
-	/**
-	* Returns the localized description of this asset entry in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized description of this asset entry
-	*/
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId,
-		boolean useDefault) {
-		return _assetEntry.getDescription(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized description of this asset entry in the language. Uses the default language if no localization exists for the requested language.
-	*
 	* @param locale the locale of the language
 	* @return the localized description of this asset entry
 	*/
@@ -419,6 +395,30 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	public java.lang.String getDescription(java.util.Locale locale,
 		boolean useDefault) {
 		return _assetEntry.getDescription(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized description of this asset entry in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized description of this asset entry
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId) {
+		return _assetEntry.getDescription(languageId);
+	}
+
+	/**
+	* Returns the localized description of this asset entry in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized description of this asset entry
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId,
+		boolean useDefault) {
+		return _assetEntry.getDescription(languageId, useDefault);
 	}
 
 	@Override
@@ -594,30 +594,6 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	/**
 	* Returns the localized summary of this asset entry in the language. Uses the default language if no localization exists for the requested language.
 	*
-	* @param languageId the ID of the language
-	* @return the localized summary of this asset entry
-	*/
-	@Override
-	public java.lang.String getSummary(java.lang.String languageId) {
-		return _assetEntry.getSummary(languageId);
-	}
-
-	/**
-	* Returns the localized summary of this asset entry in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized summary of this asset entry
-	*/
-	@Override
-	public java.lang.String getSummary(java.lang.String languageId,
-		boolean useDefault) {
-		return _assetEntry.getSummary(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized summary of this asset entry in the language. Uses the default language if no localization exists for the requested language.
-	*
 	* @param locale the locale of the language
 	* @return the localized summary of this asset entry
 	*/
@@ -637,6 +613,30 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	public java.lang.String getSummary(java.util.Locale locale,
 		boolean useDefault) {
 		return _assetEntry.getSummary(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized summary of this asset entry in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized summary of this asset entry
+	*/
+	@Override
+	public java.lang.String getSummary(java.lang.String languageId) {
+		return _assetEntry.getSummary(languageId);
+	}
+
+	/**
+	* Returns the localized summary of this asset entry in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized summary of this asset entry
+	*/
+	@Override
+	public java.lang.String getSummary(java.lang.String languageId,
+		boolean useDefault) {
+		return _assetEntry.getSummary(languageId, useDefault);
 	}
 
 	@Override
@@ -682,6 +682,29 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	/**
 	* Returns the localized title of this asset entry in the language. Uses the default language if no localization exists for the requested language.
 	*
+	* @param locale the locale of the language
+	* @return the localized title of this asset entry
+	*/
+	@Override
+	public java.lang.String getTitle(java.util.Locale locale) {
+		return _assetEntry.getTitle(locale);
+	}
+
+	/**
+	* Returns the localized title of this asset entry in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized title of this asset entry. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
+		return _assetEntry.getTitle(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized title of this asset entry in the language. Uses the default language if no localization exists for the requested language.
+	*
 	* @param languageId the ID of the language
 	* @return the localized title of this asset entry
 	*/
@@ -701,29 +724,6 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	public java.lang.String getTitle(java.lang.String languageId,
 		boolean useDefault) {
 		return _assetEntry.getTitle(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized title of this asset entry in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized title of this asset entry
-	*/
-	@Override
-	public java.lang.String getTitle(java.util.Locale locale) {
-		return _assetEntry.getTitle(locale);
-	}
-
-	/**
-	* Returns the localized title of this asset entry in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized title of this asset entry. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
-		return _assetEntry.getTitle(locale, useDefault);
 	}
 
 	@Override
@@ -1029,14 +1029,14 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_assetEntry.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_assetEntry.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_assetEntry.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

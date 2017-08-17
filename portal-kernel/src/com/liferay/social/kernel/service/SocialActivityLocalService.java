@@ -64,26 +64,6 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SocialActivityLocalServiceUtil} to access the social activity local service. Add custom service methods to {@link com.liferay.portlet.social.service.impl.SocialActivityLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Async
-	public void addActivity(SocialActivity activity,
-		SocialActivity mirrorActivity) throws PortalException;
-
-	/**
-	* Records an activity in the database, using a time based on the current
-	* time in an attempt to make the activity's time unique.
-	*
-	* @param userId the primary key of the acting user
-	* @param groupId the primary key of the group
-	* @param className the target asset's class name
-	* @param classPK the primary key of the target asset
-	* @param type the activity's type
-	* @param extraData any extra data regarding the activity
-	* @param receiverUserId the primary key of the receiving user
-	*/
-	public void addActivity(long userId, long groupId,
-		java.lang.String className, long classPK, int type,
-		java.lang.String extraData, long receiverUserId)
-		throws PortalException;
 
 	/**
 	* Records an activity with the given time in the database.
@@ -128,22 +108,8 @@ public interface SocialActivityLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Adds the social activity to the database. Also notifies the appropriate model listeners.
-	*
-	* @param socialActivity the social activity
-	* @return the social activity that was added
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public SocialActivity addSocialActivity(SocialActivity socialActivity);
-
-	/**
-	* Records an activity with the current time in the database, but only if
-	* there isn't one with the same parameters.
-	*
-	* <p>
-	* For the main functionality see {@link #addActivity(long, long, Date,
-	* String, long, int, String, long)}
-	* </p>
+	* Records an activity in the database, using a time based on the current
+	* time in an attempt to make the activity's time unique.
 	*
 	* @param userId the primary key of the acting user
 	* @param groupId the primary key of the group
@@ -153,10 +119,23 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @param extraData any extra data regarding the activity
 	* @param receiverUserId the primary key of the receiving user
 	*/
-	public void addUniqueActivity(long userId, long groupId,
+	public void addActivity(long userId, long groupId,
 		java.lang.String className, long classPK, int type,
 		java.lang.String extraData, long receiverUserId)
 		throws PortalException;
+
+	@Async
+	public void addActivity(SocialActivity activity,
+		SocialActivity mirrorActivity) throws PortalException;
+
+	/**
+	* Adds the social activity to the database. Also notifies the appropriate model listeners.
+	*
+	* @param socialActivity the social activity
+	* @return the social activity that was added
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public SocialActivity addSocialActivity(SocialActivity socialActivity);
 
 	/**
 	* Records an activity in the database, but only if there isn't already an
@@ -182,6 +161,28 @@ public interface SocialActivityLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
+	* Records an activity with the current time in the database, but only if
+	* there isn't one with the same parameters.
+	*
+	* <p>
+	* For the main functionality see {@link #addActivity(long, long, Date,
+	* String, long, int, String, long)}
+	* </p>
+	*
+	* @param userId the primary key of the acting user
+	* @param groupId the primary key of the group
+	* @param className the target asset's class name
+	* @param classPK the primary key of the target asset
+	* @param type the activity's type
+	* @param extraData any extra data regarding the activity
+	* @param receiverUserId the primary key of the receiving user
+	*/
+	public void addUniqueActivity(long userId, long groupId,
+		java.lang.String className, long classPK, int type,
+		java.lang.String extraData, long receiverUserId)
+		throws PortalException;
+
+	/**
 	* Creates a new social activity with the primary key. Does not add the social activity to the database.
 	*
 	* @param activityId the primary key for the new social activity
@@ -197,6 +198,8 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	public void deleteActivities(AssetEntry assetEntry)
 		throws PortalException;
 
+	public void deleteActivities(long groupId);
+
 	/**
 	* Removes stored activities for the asset identified by the class name and
 	* class primary key.
@@ -207,7 +210,12 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	public void deleteActivities(java.lang.String className, long classPK)
 		throws PortalException;
 
-	public void deleteActivities(long groupId);
+	/**
+	* Removes the stored activity from the database.
+	*
+	* @param activityId the primary key of the stored activity
+	*/
+	public void deleteActivity(long activityId) throws PortalException;
 
 	/**
 	* Removes the stored activity and its mirror activity from the database.
@@ -218,27 +226,11 @@ public interface SocialActivityLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Removes the stored activity from the database.
-	*
-	* @param activityId the primary key of the stored activity
-	*/
-	public void deleteActivity(long activityId) throws PortalException;
-
-	/**
 	* @throws PortalException
 	*/
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
-
-	/**
-	* Deletes the social activity from the database. Also notifies the appropriate model listeners.
-	*
-	* @param socialActivity the social activity
-	* @return the social activity that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public SocialActivity deleteSocialActivity(SocialActivity socialActivity);
 
 	/**
 	* Deletes the social activity with the primary key from the database. Also notifies the appropriate model listeners.
@@ -250,6 +242,15 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public SocialActivity deleteSocialActivity(long activityId)
 		throws PortalException;
+
+	/**
+	* Deletes the social activity from the database. Also notifies the appropriate model listeners.
+	*
+	* @param socialActivity the social activity
+	* @return the social activity that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public SocialActivity deleteSocialActivity(SocialActivity socialActivity);
 
 	/**
 	* Removes the user's stored activities from the database.
@@ -334,28 +335,6 @@ public interface SocialActivityLocalService extends BaseLocalService,
 
 	/**
 	* Returns a range of all the activities done on assets identified by the
-	* class name.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
-	* result set.
-	* </p>
-	*
-	* @param className the target asset's class name
-	* @param start the lower bound of the range of results
-	* @param end the upper bound of the range of results (not inclusive)
-	* @return the range of matching activities
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SocialActivity> getActivities(java.lang.String className,
-		int start, int end);
-
-	/**
-	* Returns a range of all the activities done on assets identified by the
 	* class name ID.
 	*
 	* <p>
@@ -375,31 +354,6 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SocialActivity> getActivities(long classNameId, int start,
 		int end);
-
-	/**
-	* Returns a range of all the activities done on the asset identified by the
-	* class name and the class primary key that are mirrors of the activity
-	* identified by the mirror activity ID.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
-	* result set.
-	* </p>
-	*
-	* @param mirrorActivityId the primary key of the mirror activity
-	* @param className the target asset's class name
-	* @param classPK the primary key of the target asset
-	* @param start the lower bound of the range of results
-	* @param end the upper bound of the range of results (not inclusive)
-	* @return the range of matching activities
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SocialActivity> getActivities(long mirrorActivityId,
-		java.lang.String className, long classPK, int start, int end);
 
 	/**
 	* Returns a range of all the activities done on the asset identified by the
@@ -427,13 +381,51 @@ public interface SocialActivityLocalService extends BaseLocalService,
 		long classNameId, long classPK, int start, int end);
 
 	/**
-	* Returns the number of activities done on assets identified by class name.
+	* Returns a range of all the activities done on the asset identified by the
+	* class name and the class primary key that are mirrors of the activity
+	* identified by the mirror activity ID.
 	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param mirrorActivityId the primary key of the mirror activity
 	* @param className the target asset's class name
-	* @return the number of matching activities
+	* @param classPK the primary key of the target asset
+	* @param start the lower bound of the range of results
+	* @param end the upper bound of the range of results (not inclusive)
+	* @return the range of matching activities
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getActivitiesCount(java.lang.String className);
+	public List<SocialActivity> getActivities(long mirrorActivityId,
+		java.lang.String className, long classPK, int start, int end);
+
+	/**
+	* Returns a range of all the activities done on assets identified by the
+	* class name.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param className the target asset's class name
+	* @param start the lower bound of the range of results
+	* @param end the upper bound of the range of results (not inclusive)
+	* @return the range of matching activities
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SocialActivity> getActivities(java.lang.String className,
+		int start, int end);
 
 	/**
 	* Returns the number of activities done on assets identified by the class
@@ -444,20 +436,6 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getActivitiesCount(long classNameId);
-
-	/**
-	* Returns the number of activities done on the asset identified by the
-	* class name and class primary key that are mirrors of the activity
-	* identified by the mirror activity ID.
-	*
-	* @param mirrorActivityId the primary key of the mirror activity
-	* @param className the target asset's class name
-	* @param classPK the primary key of the target asset
-	* @return the number of matching activities
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getActivitiesCount(long mirrorActivityId,
-		java.lang.String className, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getActivitiesCount(long userId, long groupId, Date createDate,
@@ -476,6 +454,29 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getActivitiesCount(long mirrorActivityId, long classNameId,
 		long classPK);
+
+	/**
+	* Returns the number of activities done on the asset identified by the
+	* class name and class primary key that are mirrors of the activity
+	* identified by the mirror activity ID.
+	*
+	* @param mirrorActivityId the primary key of the mirror activity
+	* @param className the target asset's class name
+	* @param classPK the primary key of the target asset
+	* @return the number of matching activities
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getActivitiesCount(long mirrorActivityId,
+		java.lang.String className, long classPK);
+
+	/**
+	* Returns the number of activities done on assets identified by class name.
+	*
+	* @param className the target asset's class name
+	* @return the number of matching activities
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getActivitiesCount(java.lang.String className);
 
 	/**
 	* Returns the activity identified by its primary key.
@@ -583,13 +584,6 @@ public interface SocialActivityLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	/**
 	* Returns a range of all the activities done in the organization. This
 	* method only finds activities without mirrors.
 	*
@@ -652,6 +646,13 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getOrganizationUsersActivitiesCount(long organizationId);
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

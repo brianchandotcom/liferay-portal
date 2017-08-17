@@ -41,6 +41,14 @@ public class SyncDeviceLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.sync.service.impl.SyncDeviceLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.sync.model.SyncDevice addSyncDevice(long userId,
+		java.lang.String type, long buildNumber, java.lang.String hostname,
+		int featureSet)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addSyncDevice(userId, type, buildNumber, hostname,
+			featureSet);
+	}
 
 	/**
 	* Adds the sync device to the database. Also notifies the appropriate model listeners.
@@ -51,15 +59,6 @@ public class SyncDeviceLocalServiceUtil {
 	public static com.liferay.sync.model.SyncDevice addSyncDevice(
 		com.liferay.sync.model.SyncDevice syncDevice) {
 		return getService().addSyncDevice(syncDevice);
-	}
-
-	public static com.liferay.sync.model.SyncDevice addSyncDevice(long userId,
-		java.lang.String type, long buildNumber, java.lang.String hostname,
-		int featureSet)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addSyncDevice(userId, type, buildNumber, hostname,
-			featureSet);
 	}
 
 	/**
@@ -83,17 +82,6 @@ public class SyncDeviceLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the sync device from the database. Also notifies the appropriate model listeners.
-	*
-	* @param syncDevice the sync device
-	* @return the sync device that was removed
-	*/
-	public static com.liferay.sync.model.SyncDevice deleteSyncDevice(
-		com.liferay.sync.model.SyncDevice syncDevice) {
-		return getService().deleteSyncDevice(syncDevice);
-	}
-
-	/**
 	* Deletes the sync device with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param syncDeviceId the primary key of the sync device
@@ -104,6 +92,17 @@ public class SyncDeviceLocalServiceUtil {
 		long syncDeviceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteSyncDevice(syncDeviceId);
+	}
+
+	/**
+	* Deletes the sync device from the database. Also notifies the appropriate model listeners.
+	*
+	* @param syncDevice the sync device
+	* @return the sync device that was removed
+	*/
+	public static com.liferay.sync.model.SyncDevice deleteSyncDevice(
+		com.liferay.sync.model.SyncDevice syncDevice) {
+		return getService().deleteSyncDevice(syncDevice);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -300,6 +299,15 @@ public class SyncDeviceLocalServiceUtil {
 		getService().updateStatus(syncDeviceId, status);
 	}
 
+	public static com.liferay.sync.model.SyncDevice updateSyncDevice(
+		long syncDeviceId, java.lang.String type, long buildNumber,
+		int featureSet, java.lang.String hostname, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateSyncDevice(syncDeviceId, type, buildNumber,
+			featureSet, hostname, status);
+	}
+
 	/**
 	* Updates the sync device in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -309,15 +317,6 @@ public class SyncDeviceLocalServiceUtil {
 	public static com.liferay.sync.model.SyncDevice updateSyncDevice(
 		com.liferay.sync.model.SyncDevice syncDevice) {
 		return getService().updateSyncDevice(syncDevice);
-	}
-
-	public static com.liferay.sync.model.SyncDevice updateSyncDevice(
-		long syncDeviceId, java.lang.String type, long buildNumber,
-		int featureSet, java.lang.String hostname, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateSyncDevice(syncDeviceId, type, buildNumber,
-			featureSet, hostname, status);
 	}
 
 	public static SyncDeviceLocalService getService() {

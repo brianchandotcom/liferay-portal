@@ -92,11 +92,11 @@ public interface ResourceBlockService extends BaseService {
 		List<java.lang.String> actionIds) throws PortalException;
 
 	public void setIndividualScopePermissions(long companyId, long groupId,
+		java.lang.String name, long primKey, long roleId,
+		List<java.lang.String> actionIds) throws PortalException;
+
+	public void setIndividualScopePermissions(long companyId, long groupId,
 		java.lang.String name, long primKey,
 		Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds)
 		throws PortalException;
-
-	public void setIndividualScopePermissions(long companyId, long groupId,
-		java.lang.String name, long primKey, long roleId,
-		List<java.lang.String> actionIds) throws PortalException;
 }

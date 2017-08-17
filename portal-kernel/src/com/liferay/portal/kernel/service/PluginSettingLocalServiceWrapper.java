@@ -74,18 +74,6 @@ public class PluginSettingLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the plugin setting from the database. Also notifies the appropriate model listeners.
-	*
-	* @param pluginSetting the plugin setting
-	* @return the plugin setting that was removed
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.PluginSetting deletePluginSetting(
-		com.liferay.portal.kernel.model.PluginSetting pluginSetting) {
-		return _pluginSettingLocalService.deletePluginSetting(pluginSetting);
-	}
-
-	/**
 	* Deletes the plugin setting with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param pluginSettingId the primary key of the plugin setting
@@ -97,6 +85,18 @@ public class PluginSettingLocalServiceWrapper
 		long pluginSettingId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _pluginSettingLocalService.deletePluginSetting(pluginSettingId);
+	}
+
+	/**
+	* Deletes the plugin setting from the database. Also notifies the appropriate model listeners.
+	*
+	* @param pluginSetting the plugin setting
+	* @return the plugin setting that was removed
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.PluginSetting deletePluginSetting(
+		com.liferay.portal.kernel.model.PluginSetting pluginSetting) {
+		return _pluginSettingLocalService.deletePluginSetting(pluginSetting);
 	}
 
 	@Override
@@ -277,6 +277,14 @@ public class PluginSettingLocalServiceWrapper
 			pluginType);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.PluginSetting updatePluginSetting(
+		long companyId, java.lang.String pluginId, java.lang.String pluginType,
+		java.lang.String roles, boolean active) {
+		return _pluginSettingLocalService.updatePluginSetting(companyId,
+			pluginId, pluginType, roles, active);
+	}
+
 	/**
 	* Updates the plugin setting in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -287,14 +295,6 @@ public class PluginSettingLocalServiceWrapper
 	public com.liferay.portal.kernel.model.PluginSetting updatePluginSetting(
 		com.liferay.portal.kernel.model.PluginSetting pluginSetting) {
 		return _pluginSettingLocalService.updatePluginSetting(pluginSetting);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PluginSetting updatePluginSetting(
-		long companyId, java.lang.String pluginId, java.lang.String pluginType,
-		java.lang.String roles, boolean active) {
-		return _pluginSettingLocalService.updatePluginSetting(companyId,
-			pluginId, pluginType, roles, active);
 	}
 
 	@Override

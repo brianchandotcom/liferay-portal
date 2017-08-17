@@ -74,17 +74,6 @@ public class ShoppingOrderItemLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the shopping order item from the database. Also notifies the appropriate model listeners.
-	*
-	* @param shoppingOrderItem the shopping order item
-	* @return the shopping order item that was removed
-	*/
-	public static com.liferay.shopping.model.ShoppingOrderItem deleteShoppingOrderItem(
-		com.liferay.shopping.model.ShoppingOrderItem shoppingOrderItem) {
-		return getService().deleteShoppingOrderItem(shoppingOrderItem);
-	}
-
-	/**
 	* Deletes the shopping order item with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param orderItemId the primary key of the shopping order item
@@ -95,6 +84,17 @@ public class ShoppingOrderItemLocalServiceUtil {
 		long orderItemId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteShoppingOrderItem(orderItemId);
+	}
+
+	/**
+	* Deletes the shopping order item from the database. Also notifies the appropriate model listeners.
+	*
+	* @param shoppingOrderItem the shopping order item
+	* @return the shopping order item that was removed
+	*/
+	public static com.liferay.shopping.model.ShoppingOrderItem deleteShoppingOrderItem(
+		com.liferay.shopping.model.ShoppingOrderItem shoppingOrderItem) {
+		return getService().deleteShoppingOrderItem(shoppingOrderItem);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -188,6 +188,11 @@ public class ShoppingOrderItemLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
+	public static java.util.List<com.liferay.shopping.model.ShoppingOrderItem> getOrderItems(
+		long orderId) {
+		return getService().getOrderItems(orderId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -195,11 +200,6 @@ public class ShoppingOrderItemLocalServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static java.util.List<com.liferay.shopping.model.ShoppingOrderItem> getOrderItems(
-		long orderId) {
-		return getService().getOrderItems(orderId);
 	}
 
 	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(

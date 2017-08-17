@@ -67,11 +67,11 @@ public interface LayoutBranchLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public LayoutBranch addLayoutBranch(LayoutBranch layoutBranch);
 
-	public LayoutBranch addLayoutBranch(long layoutRevisionId,
+	public LayoutBranch addLayoutBranch(long layoutSetBranchId, long plid,
 		java.lang.String name, java.lang.String description, boolean master,
 		ServiceContext serviceContext) throws PortalException;
 
-	public LayoutBranch addLayoutBranch(long layoutSetBranchId, long plid,
+	public LayoutBranch addLayoutBranch(long layoutRevisionId,
 		java.lang.String name, java.lang.String description, boolean master,
 		ServiceContext serviceContext) throws PortalException;
 

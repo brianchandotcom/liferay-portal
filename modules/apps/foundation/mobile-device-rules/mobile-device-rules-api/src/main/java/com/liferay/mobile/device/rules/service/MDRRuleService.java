@@ -58,17 +58,17 @@ public interface MDRRuleService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MDRRuleServiceUtil} to access the mdr rule remote service. Add custom service methods to {@link com.liferay.mobile.device.rules.service.impl.MDRRuleServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public MDRRule addRule(long ruleGroupId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
+		java.lang.String typeSettings, ServiceContext serviceContext)
+		throws PortalException;
+
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	public MDRRule addRule(long ruleGroupId,
 		Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
 		UnicodeProperties typeSettings, ServiceContext serviceContext)
-		throws PortalException;
-
-	public MDRRule addRule(long ruleGroupId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
-		java.lang.String typeSettings, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteRule(long ruleId) throws PortalException;
@@ -89,12 +89,12 @@ public interface MDRRuleService extends BaseService {
 	public MDRRule updateRule(long ruleId,
 		Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
-		UnicodeProperties typeSettingsProperties, ServiceContext serviceContext)
+		java.lang.String typeSettings, ServiceContext serviceContext)
 		throws PortalException;
 
 	public MDRRule updateRule(long ruleId,
 		Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
-		java.lang.String typeSettings, ServiceContext serviceContext)
+		UnicodeProperties typeSettingsProperties, ServiceContext serviceContext)
 		throws PortalException;
 }

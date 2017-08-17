@@ -91,16 +91,6 @@ public interface SocialActivityAchievementLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the social activity achievement from the database. Also notifies the appropriate model listeners.
-	*
-	* @param socialActivityAchievement the social activity achievement
-	* @return the social activity achievement that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public SocialActivityAchievement deleteSocialActivityAchievement(
-		SocialActivityAchievement socialActivityAchievement);
-
-	/**
 	* Deletes the social activity achievement with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param activityAchievementId the primary key of the social activity achievement
@@ -110,6 +100,16 @@ public interface SocialActivityAchievementLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public SocialActivityAchievement deleteSocialActivityAchievement(
 		long activityAchievementId) throws PortalException;
+
+	/**
+	* Deletes the social activity achievement from the database. Also notifies the appropriate model listeners.
+	*
+	* @param socialActivityAchievement the social activity achievement
+	* @return the social activity achievement that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public SocialActivityAchievement deleteSocialActivityAchievement(
+		SocialActivityAchievement socialActivityAchievement);
 
 	public DynamicQuery dynamicQuery();
 

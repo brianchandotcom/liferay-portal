@@ -66,18 +66,6 @@ public class UserIdMapperLocalServiceWrapper implements UserIdMapperLocalService
 	}
 
 	/**
-	* Deletes the user ID mapper from the database. Also notifies the appropriate model listeners.
-	*
-	* @param userIdMapper the user ID mapper
-	* @return the user ID mapper that was removed
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.UserIdMapper deleteUserIdMapper(
-		com.liferay.portal.kernel.model.UserIdMapper userIdMapper) {
-		return _userIdMapperLocalService.deleteUserIdMapper(userIdMapper);
-	}
-
-	/**
 	* Deletes the user ID mapper with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param userIdMapperId the primary key of the user ID mapper
@@ -89,6 +77,18 @@ public class UserIdMapperLocalServiceWrapper implements UserIdMapperLocalService
 		long userIdMapperId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userIdMapperLocalService.deleteUserIdMapper(userIdMapperId);
+	}
+
+	/**
+	* Deletes the user ID mapper from the database. Also notifies the appropriate model listeners.
+	*
+	* @param userIdMapper the user ID mapper
+	* @return the user ID mapper that was removed
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.UserIdMapper deleteUserIdMapper(
+		com.liferay.portal.kernel.model.UserIdMapper userIdMapper) {
+		return _userIdMapperLocalService.deleteUserIdMapper(userIdMapper);
 	}
 
 	@Override
@@ -276,6 +276,14 @@ public class UserIdMapperLocalServiceWrapper implements UserIdMapperLocalService
 		return _userIdMapperLocalService.getUserIdMappersCount();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.UserIdMapper updateUserIdMapper(
+		long userId, java.lang.String type, java.lang.String description,
+		java.lang.String externalUserId) {
+		return _userIdMapperLocalService.updateUserIdMapper(userId, type,
+			description, externalUserId);
+	}
+
 	/**
 	* Updates the user ID mapper in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -286,14 +294,6 @@ public class UserIdMapperLocalServiceWrapper implements UserIdMapperLocalService
 	public com.liferay.portal.kernel.model.UserIdMapper updateUserIdMapper(
 		com.liferay.portal.kernel.model.UserIdMapper userIdMapper) {
 		return _userIdMapperLocalService.updateUserIdMapper(userIdMapper);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.UserIdMapper updateUserIdMapper(
-		long userId, java.lang.String type, java.lang.String description,
-		java.lang.String externalUserId) {
-		return _userIdMapperLocalService.updateUserIdMapper(userId, type,
-			description, externalUserId);
 	}
 
 	@Override

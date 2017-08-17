@@ -71,14 +71,14 @@ public interface ExpandoValueService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Serializable getData(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Map<java.lang.String, Serializable> getData(long companyId,
 		java.lang.String className, java.lang.String tableName,
 		Collection<java.lang.String> columnNames, long classPK)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Serializable getData(long companyId, java.lang.String className,
+		java.lang.String tableName, java.lang.String columnName, long classPK)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

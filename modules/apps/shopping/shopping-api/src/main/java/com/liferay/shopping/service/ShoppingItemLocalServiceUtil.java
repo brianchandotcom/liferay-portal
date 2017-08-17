@@ -64,6 +64,19 @@ public class ShoppingItemLocalServiceUtil {
 			serviceContext);
 	}
 
+	public static void addItemResources(long itemId,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.addItemResources(itemId, addGroupPermissions, addGuestPermissions);
+	}
+
+	public static void addItemResources(long itemId,
+		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().addItemResources(itemId, modelPermissions);
+	}
+
 	public static void addItemResources(
 		com.liferay.shopping.model.ShoppingItem item,
 		boolean addGroupPermissions, boolean addGuestPermissions)
@@ -77,19 +90,6 @@ public class ShoppingItemLocalServiceUtil {
 		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().addItemResources(item, modelPermissions);
-	}
-
-	public static void addItemResources(long itemId,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addItemResources(itemId, addGroupPermissions, addGuestPermissions);
-	}
-
-	public static void addItemResources(long itemId,
-		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().addItemResources(itemId, modelPermissions);
 	}
 
 	/**
@@ -114,14 +114,14 @@ public class ShoppingItemLocalServiceUtil {
 		return getService().createShoppingItem(itemId);
 	}
 
-	public static void deleteItem(com.liferay.shopping.model.ShoppingItem item)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteItem(item);
-	}
-
 	public static void deleteItem(long itemId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteItem(itemId);
+	}
+
+	public static void deleteItem(com.liferay.shopping.model.ShoppingItem item)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteItem(item);
 	}
 
 	public static void deleteItems(long groupId, long categoryId)
@@ -139,17 +139,6 @@ public class ShoppingItemLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the shopping item from the database. Also notifies the appropriate model listeners.
-	*
-	* @param shoppingItem the shopping item
-	* @return the shopping item that was removed
-	*/
-	public static com.liferay.shopping.model.ShoppingItem deleteShoppingItem(
-		com.liferay.shopping.model.ShoppingItem shoppingItem) {
-		return getService().deleteShoppingItem(shoppingItem);
-	}
-
-	/**
 	* Deletes the shopping item with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param itemId the primary key of the shopping item
@@ -159,6 +148,17 @@ public class ShoppingItemLocalServiceUtil {
 	public static com.liferay.shopping.model.ShoppingItem deleteShoppingItem(
 		long itemId) throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteShoppingItem(itemId);
+	}
+
+	/**
+	* Deletes the shopping item from the database. Also notifies the appropriate model listeners.
+	*
+	* @param shoppingItem the shopping item
+	* @return the shopping item that was removed
+	*/
+	public static com.liferay.shopping.model.ShoppingItem deleteShoppingItem(
+		com.liferay.shopping.model.ShoppingItem shoppingItem) {
+		return getService().deleteShoppingItem(shoppingItem);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {

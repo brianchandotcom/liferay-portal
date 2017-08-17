@@ -71,11 +71,11 @@ public interface AssetCategoryPropertyService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	public AssetCategoryProperty updateCategoryProperty(
+	public AssetCategoryProperty updateCategoryProperty(long userId,
 		long categoryPropertyId, java.lang.String key, java.lang.String value)
 		throws PortalException;
 
-	public AssetCategoryProperty updateCategoryProperty(long userId,
+	public AssetCategoryProperty updateCategoryProperty(
 		long categoryPropertyId, java.lang.String key, java.lang.String value)
 		throws PortalException;
 }

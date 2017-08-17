@@ -31,18 +31,6 @@ public class OrgLaborLocalServiceWrapper implements OrgLaborLocalService,
 		_orgLaborLocalService = orgLaborLocalService;
 	}
 
-	/**
-	* Adds the org labor to the database. Also notifies the appropriate model listeners.
-	*
-	* @param orgLabor the org labor
-	* @return the org labor that was added
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.OrgLabor addOrgLabor(
-		com.liferay.portal.kernel.model.OrgLabor orgLabor) {
-		return _orgLaborLocalService.addOrgLabor(orgLabor);
-	}
-
 	@Override
 	public com.liferay.portal.kernel.model.OrgLabor addOrgLabor(
 		long organizationId, long typeId, int sunOpen, int sunClose,
@@ -53,6 +41,18 @@ public class OrgLaborLocalServiceWrapper implements OrgLaborLocalService,
 		return _orgLaborLocalService.addOrgLabor(organizationId, typeId,
 			sunOpen, sunClose, monOpen, monClose, tueOpen, tueClose, wedOpen,
 			wedClose, thuOpen, thuClose, friOpen, friClose, satOpen, satClose);
+	}
+
+	/**
+	* Adds the org labor to the database. Also notifies the appropriate model listeners.
+	*
+	* @param orgLabor the org labor
+	* @return the org labor that was added
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.OrgLabor addOrgLabor(
+		com.liferay.portal.kernel.model.OrgLabor orgLabor) {
+		return _orgLaborLocalService.addOrgLabor(orgLabor);
 	}
 
 	/**
@@ -68,18 +68,6 @@ public class OrgLaborLocalServiceWrapper implements OrgLaborLocalService,
 	}
 
 	/**
-	* Deletes the org labor from the database. Also notifies the appropriate model listeners.
-	*
-	* @param orgLabor the org labor
-	* @return the org labor that was removed
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.OrgLabor deleteOrgLabor(
-		com.liferay.portal.kernel.model.OrgLabor orgLabor) {
-		return _orgLaborLocalService.deleteOrgLabor(orgLabor);
-	}
-
-	/**
 	* Deletes the org labor with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param orgLaborId the primary key of the org labor
@@ -91,6 +79,18 @@ public class OrgLaborLocalServiceWrapper implements OrgLaborLocalService,
 		long orgLaborId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _orgLaborLocalService.deleteOrgLabor(orgLaborId);
+	}
+
+	/**
+	* Deletes the org labor from the database. Also notifies the appropriate model listeners.
+	*
+	* @param orgLabor the org labor
+	* @return the org labor that was removed
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.OrgLabor deleteOrgLabor(
+		com.liferay.portal.kernel.model.OrgLabor orgLabor) {
+		return _orgLaborLocalService.deleteOrgLabor(orgLabor);
 	}
 
 	/**
@@ -204,16 +204,6 @@ public class OrgLaborLocalServiceWrapper implements OrgLaborLocalService,
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _orgLaborLocalService.getOSGiServiceIdentifier();
-	}
-
-	/**
 	* Returns the org labor with the primary key.
 	*
 	* @param orgLaborId the primary key of the org labor
@@ -259,23 +249,21 @@ public class OrgLaborLocalServiceWrapper implements OrgLaborLocalService,
 		return _orgLaborLocalService.getOrgLaborsCount();
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _orgLaborLocalService.getOSGiServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _orgLaborLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Updates the org labor in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param orgLabor the org labor
-	* @return the org labor that was updated
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.OrgLabor updateOrgLabor(
-		com.liferay.portal.kernel.model.OrgLabor orgLabor) {
-		return _orgLaborLocalService.updateOrgLabor(orgLabor);
 	}
 
 	@Override
@@ -288,6 +276,18 @@ public class OrgLaborLocalServiceWrapper implements OrgLaborLocalService,
 		return _orgLaborLocalService.updateOrgLabor(orgLaborId, typeId,
 			sunOpen, sunClose, monOpen, monClose, tueOpen, tueClose, wedOpen,
 			wedClose, thuOpen, thuClose, friOpen, friClose, satOpen, satClose);
+	}
+
+	/**
+	* Updates the org labor in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param orgLabor the org labor
+	* @return the org labor that was updated
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.OrgLabor updateOrgLabor(
+		com.liferay.portal.kernel.model.OrgLabor orgLabor) {
+		return _orgLaborLocalService.updateOrgLabor(orgLabor);
 	}
 
 	@Override

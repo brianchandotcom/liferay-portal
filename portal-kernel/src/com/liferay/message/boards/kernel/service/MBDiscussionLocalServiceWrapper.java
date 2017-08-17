@@ -33,6 +33,16 @@ public class MBDiscussionLocalServiceWrapper implements MBDiscussionLocalService
 		_mbDiscussionLocalService = mbDiscussionLocalService;
 	}
 
+	@Override
+	public com.liferay.message.boards.kernel.model.MBDiscussion addDiscussion(
+		long userId, long groupId, long classNameId, long classPK,
+		long threadId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbDiscussionLocalService.addDiscussion(userId, groupId,
+			classNameId, classPK, threadId, serviceContext);
+	}
+
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #addDiscussion(long, long,
 	long, long, long, ServiceContext)}
@@ -45,16 +55,6 @@ public class MBDiscussionLocalServiceWrapper implements MBDiscussionLocalService
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbDiscussionLocalService.addDiscussion(userId, classNameId,
 			classPK, threadId, serviceContext);
-	}
-
-	@Override
-	public com.liferay.message.boards.kernel.model.MBDiscussion addDiscussion(
-		long userId, long groupId, long classNameId, long classPK,
-		long threadId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbDiscussionLocalService.addDiscussion(userId, groupId,
-			classNameId, classPK, threadId, serviceContext);
 	}
 
 	/**
@@ -82,18 +82,6 @@ public class MBDiscussionLocalServiceWrapper implements MBDiscussionLocalService
 	}
 
 	/**
-	* Deletes the message boards discussion from the database. Also notifies the appropriate model listeners.
-	*
-	* @param mbDiscussion the message boards discussion
-	* @return the message boards discussion that was removed
-	*/
-	@Override
-	public com.liferay.message.boards.kernel.model.MBDiscussion deleteMBDiscussion(
-		com.liferay.message.boards.kernel.model.MBDiscussion mbDiscussion) {
-		return _mbDiscussionLocalService.deleteMBDiscussion(mbDiscussion);
-	}
-
-	/**
 	* Deletes the message boards discussion with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param discussionId the primary key of the message boards discussion
@@ -105,6 +93,18 @@ public class MBDiscussionLocalServiceWrapper implements MBDiscussionLocalService
 		long discussionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbDiscussionLocalService.deleteMBDiscussion(discussionId);
+	}
+
+	/**
+	* Deletes the message boards discussion from the database. Also notifies the appropriate model listeners.
+	*
+	* @param mbDiscussion the message boards discussion
+	* @return the message boards discussion that was removed
+	*/
+	@Override
+	public com.liferay.message.boards.kernel.model.MBDiscussion deleteMBDiscussion(
+		com.liferay.message.boards.kernel.model.MBDiscussion mbDiscussion) {
+		return _mbDiscussionLocalService.deleteMBDiscussion(mbDiscussion);
 	}
 
 	/**
@@ -204,14 +204,14 @@ public class MBDiscussionLocalServiceWrapper implements MBDiscussionLocalService
 
 	@Override
 	public com.liferay.message.boards.kernel.model.MBDiscussion fetchDiscussion(
-		java.lang.String className, long classPK) {
-		return _mbDiscussionLocalService.fetchDiscussion(className, classPK);
+		long discussionId) {
+		return _mbDiscussionLocalService.fetchDiscussion(discussionId);
 	}
 
 	@Override
 	public com.liferay.message.boards.kernel.model.MBDiscussion fetchDiscussion(
-		long discussionId) {
-		return _mbDiscussionLocalService.fetchDiscussion(discussionId);
+		java.lang.String className, long classPK) {
+		return _mbDiscussionLocalService.fetchDiscussion(className, classPK);
 	}
 
 	@Override
@@ -247,16 +247,16 @@ public class MBDiscussionLocalServiceWrapper implements MBDiscussionLocalService
 
 	@Override
 	public com.liferay.message.boards.kernel.model.MBDiscussion getDiscussion(
-		java.lang.String className, long classPK)
+		long discussionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbDiscussionLocalService.getDiscussion(className, classPK);
+		return _mbDiscussionLocalService.getDiscussion(discussionId);
 	}
 
 	@Override
 	public com.liferay.message.boards.kernel.model.MBDiscussion getDiscussion(
-		long discussionId)
+		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbDiscussionLocalService.getDiscussion(discussionId);
+		return _mbDiscussionLocalService.getDiscussion(className, classPK);
 	}
 
 	@Override

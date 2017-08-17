@@ -81,17 +81,6 @@ public class SocialActivityLimitLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the social activity limit from the database. Also notifies the appropriate model listeners.
-	*
-	* @param socialActivityLimit the social activity limit
-	* @return the social activity limit that was removed
-	*/
-	public static com.liferay.social.kernel.model.SocialActivityLimit deleteSocialActivityLimit(
-		com.liferay.social.kernel.model.SocialActivityLimit socialActivityLimit) {
-		return getService().deleteSocialActivityLimit(socialActivityLimit);
-	}
-
-	/**
 	* Deletes the social activity limit with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param activityLimitId the primary key of the social activity limit
@@ -102,6 +91,17 @@ public class SocialActivityLimitLocalServiceUtil {
 		long activityLimitId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteSocialActivityLimit(activityLimitId);
+	}
+
+	/**
+	* Deletes the social activity limit from the database. Also notifies the appropriate model listeners.
+	*
+	* @param socialActivityLimit the social activity limit
+	* @return the social activity limit that was removed
+	*/
+	public static com.liferay.social.kernel.model.SocialActivityLimit deleteSocialActivityLimit(
+		com.liferay.social.kernel.model.SocialActivityLimit socialActivityLimit) {
+		return getService().deleteSocialActivityLimit(socialActivityLimit);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {

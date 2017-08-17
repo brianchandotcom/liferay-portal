@@ -53,15 +53,15 @@ public class SAPEntryServiceUtil {
 	}
 
 	public static com.liferay.portal.security.service.access.policy.model.SAPEntry deleteSAPEntry(
-		com.liferay.portal.security.service.access.policy.model.SAPEntry sapEntry)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteSAPEntry(sapEntry);
-	}
-
-	public static com.liferay.portal.security.service.access.policy.model.SAPEntry deleteSAPEntry(
 		long sapEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteSAPEntry(sapEntryId);
+	}
+
+	public static com.liferay.portal.security.service.access.policy.model.SAPEntry deleteSAPEntry(
+		com.liferay.portal.security.service.access.policy.model.SAPEntry sapEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteSAPEntry(sapEntry);
 	}
 
 	public static com.liferay.portal.security.service.access.policy.model.SAPEntry fetchSAPEntry(

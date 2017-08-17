@@ -93,15 +93,6 @@ public interface PollsChoiceLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the polls choice from the database. Also notifies the appropriate model listeners.
-	*
-	* @param pollsChoice the polls choice
-	* @return the polls choice that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public PollsChoice deletePollsChoice(PollsChoice pollsChoice);
-
-	/**
 	* Deletes the polls choice with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param choiceId the primary key of the polls choice
@@ -111,6 +102,15 @@ public interface PollsChoiceLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public PollsChoice deletePollsChoice(long choiceId)
 		throws PortalException;
+
+	/**
+	* Deletes the polls choice from the database. Also notifies the appropriate model listeners.
+	*
+	* @param pollsChoice the polls choice
+	* @return the polls choice that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public PollsChoice deletePollsChoice(PollsChoice pollsChoice);
 
 	public DynamicQuery dynamicQuery();
 

@@ -260,6 +260,12 @@ public class DLContentLocalServiceWrapper implements DLContentLocalService,
 			repositoryId, dirName);
 	}
 
+	@Override
+	public com.liferay.document.library.kernel.model.DLContentDataBlobModel getDataBlobModel(
+		java.io.Serializable primaryKey) {
+		return _dlContentLocalService.getDataBlobModel(primaryKey);
+	}
+
 	/**
 	* Returns the document library content with the primary key.
 	*
@@ -299,12 +305,6 @@ public class DLContentLocalServiceWrapper implements DLContentLocalService,
 	@Override
 	public int getDLContentsCount() {
 		return _dlContentLocalService.getDLContentsCount();
-	}
-
-	@Override
-	public com.liferay.document.library.kernel.model.DLContentDataBlobModel getDataBlobModel(
-		java.io.Serializable primaryKey) {
-		return _dlContentLocalService.getDataBlobModel(primaryKey);
 	}
 
 	@Override

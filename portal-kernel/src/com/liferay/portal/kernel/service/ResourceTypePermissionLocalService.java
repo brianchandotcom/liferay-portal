@@ -86,16 +86,6 @@ public interface ResourceTypePermissionLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the resource type permission from the database. Also notifies the appropriate model listeners.
-	*
-	* @param resourceTypePermission the resource type permission
-	* @return the resource type permission that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public ResourceTypePermission deleteResourceTypePermission(
-		ResourceTypePermission resourceTypePermission);
-
-	/**
 	* Deletes the resource type permission with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param resourceTypePermissionId the primary key of the resource type permission
@@ -105,6 +95,16 @@ public interface ResourceTypePermissionLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public ResourceTypePermission deleteResourceTypePermission(
 		long resourceTypePermissionId) throws PortalException;
+
+	/**
+	* Deletes the resource type permission from the database. Also notifies the appropriate model listeners.
+	*
+	* @param resourceTypePermission the resource type permission
+	* @return the resource type permission that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public ResourceTypePermission deleteResourceTypePermission(
+		ResourceTypePermission resourceTypePermission);
 
 	public DynamicQuery dynamicQuery();
 

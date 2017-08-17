@@ -78,14 +78,14 @@ public class ShoppingCouponLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteCoupon(com.liferay.shopping.model.ShoppingCoupon coupon) {
-		_shoppingCouponLocalService.deleteCoupon(coupon);
-	}
-
-	@Override
 	public void deleteCoupon(long couponId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_shoppingCouponLocalService.deleteCoupon(couponId);
+	}
+
+	@Override
+	public void deleteCoupon(com.liferay.shopping.model.ShoppingCoupon coupon) {
+		_shoppingCouponLocalService.deleteCoupon(coupon);
 	}
 
 	@Override
@@ -104,18 +104,6 @@ public class ShoppingCouponLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the shopping coupon from the database. Also notifies the appropriate model listeners.
-	*
-	* @param shoppingCoupon the shopping coupon
-	* @return the shopping coupon that was removed
-	*/
-	@Override
-	public com.liferay.shopping.model.ShoppingCoupon deleteShoppingCoupon(
-		com.liferay.shopping.model.ShoppingCoupon shoppingCoupon) {
-		return _shoppingCouponLocalService.deleteShoppingCoupon(shoppingCoupon);
-	}
-
-	/**
 	* Deletes the shopping coupon with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param couponId the primary key of the shopping coupon
@@ -127,6 +115,18 @@ public class ShoppingCouponLocalServiceWrapper
 		long couponId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingCouponLocalService.deleteShoppingCoupon(couponId);
+	}
+
+	/**
+	* Deletes the shopping coupon from the database. Also notifies the appropriate model listeners.
+	*
+	* @param shoppingCoupon the shopping coupon
+	* @return the shopping coupon that was removed
+	*/
+	@Override
+	public com.liferay.shopping.model.ShoppingCoupon deleteShoppingCoupon(
+		com.liferay.shopping.model.ShoppingCoupon shoppingCoupon) {
+		return _shoppingCouponLocalService.deleteShoppingCoupon(shoppingCoupon);
 	}
 
 	@Override
@@ -226,16 +226,16 @@ public class ShoppingCouponLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.shopping.model.ShoppingCoupon getCoupon(long couponId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingCouponLocalService.getCoupon(couponId);
+	}
+
+	@Override
 	public com.liferay.shopping.model.ShoppingCoupon getCoupon(
 		java.lang.String code)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingCouponLocalService.getCoupon(code);
-	}
-
-	@Override
-	public com.liferay.shopping.model.ShoppingCoupon getCoupon(long couponId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingCouponLocalService.getCoupon(couponId);
 	}
 
 	@Override

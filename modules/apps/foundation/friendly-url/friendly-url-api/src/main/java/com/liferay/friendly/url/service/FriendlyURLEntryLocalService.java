@@ -333,9 +333,9 @@ public interface FriendlyURLEntryLocalService extends BaseLocalService,
 	public FriendlyURLEntry updateFriendlyURLEntry(
 		FriendlyURLEntry friendlyURLEntry);
 
-	public void validate(long groupId, long classNameId,
+	public void validate(long groupId, long classNameId, long classPK,
 		java.lang.String urlTitle) throws PortalException;
 
-	public void validate(long groupId, long classNameId, long classPK,
+	public void validate(long groupId, long classNameId,
 		java.lang.String urlTitle) throws PortalException;
 }

@@ -120,6 +120,14 @@ public interface BlogsEntryService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BlogsEntry> getGroupEntries(long groupId, Date displayDate,
+		int status, int max);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BlogsEntry> getGroupEntries(long groupId, Date displayDate,
+		int status, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BlogsEntry> getGroupEntries(long groupId, int status, int max);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -131,18 +139,10 @@ public interface BlogsEntryService extends BaseService {
 		int start, int end, OrderByComparator<BlogsEntry> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BlogsEntry> getGroupEntries(long groupId, Date displayDate,
-		int status, int max);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BlogsEntry> getGroupEntries(long groupId, Date displayDate,
-		int status, int start, int end);
+	public int getGroupEntriesCount(long groupId, Date displayDate, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupEntriesCount(long groupId, int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getGroupEntriesCount(long groupId, Date displayDate, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getGroupEntriesRSS(long groupId, Date displayDate,
@@ -150,6 +150,10 @@ public interface BlogsEntryService extends BaseService {
 		java.lang.String displayStyle, java.lang.String feedURL,
 		java.lang.String entryURL, ThemeDisplay themeDisplay)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BlogsEntry> getGroupsEntries(long companyId, long groupId,
+		Date displayDate, int status, int max) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BlogsEntry> getGroupUserEntries(long groupId, long userId,
@@ -167,17 +171,6 @@ public interface BlogsEntryService extends BaseService {
 		int[] statuses);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BlogsEntry> getGroupsEntries(long companyId, long groupId,
-		Date displayDate, int status, int max) throws PortalException;
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BlogsEntry> getOrganizationEntries(long organizationId,
 		Date displayDate, int status, int max) throws PortalException;
 
@@ -187,6 +180,13 @@ public interface BlogsEntryService extends BaseService {
 		double version, java.lang.String displayStyle,
 		java.lang.String feedURL, java.lang.String entryURL,
 		ThemeDisplay themeDisplay) throws PortalException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	public BlogsEntry moveEntryToTrash(long entryId) throws PortalException;
 

@@ -39,7 +39,7 @@ public class PermissionServiceWrapper implements PermissionService,
 	*/
 	@Override
 	public void checkPermission(long groupId, java.lang.String name,
-		java.lang.String primKey)
+		long primKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_permissionService.checkPermission(groupId, name, primKey);
 	}
@@ -53,7 +53,7 @@ public class PermissionServiceWrapper implements PermissionService,
 	*/
 	@Override
 	public void checkPermission(long groupId, java.lang.String name,
-		long primKey)
+		java.lang.String primKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_permissionService.checkPermission(groupId, name, primKey);
 	}

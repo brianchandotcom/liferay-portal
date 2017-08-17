@@ -41,6 +41,11 @@ public class PushNotificationsDeviceLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.push.notifications.service.impl.PushNotificationsDeviceLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.push.notifications.model.PushNotificationsDevice addPushNotificationsDevice(
+		long userId, java.lang.String platform, java.lang.String token)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addPushNotificationsDevice(userId, platform, token);
+	}
 
 	/**
 	* Adds the push notifications device to the database. Also notifies the appropriate model listeners.
@@ -51,12 +56,6 @@ public class PushNotificationsDeviceLocalServiceUtil {
 	public static com.liferay.push.notifications.model.PushNotificationsDevice addPushNotificationsDevice(
 		com.liferay.push.notifications.model.PushNotificationsDevice pushNotificationsDevice) {
 		return getService().addPushNotificationsDevice(pushNotificationsDevice);
-	}
-
-	public static com.liferay.push.notifications.model.PushNotificationsDevice addPushNotificationsDevice(
-		long userId, java.lang.String platform, java.lang.String token)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().addPushNotificationsDevice(userId, platform, token);
 	}
 
 	/**
@@ -81,6 +80,20 @@ public class PushNotificationsDeviceLocalServiceUtil {
 	}
 
 	/**
+	* Deletes the push notifications device with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param pushNotificationsDeviceId the primary key of the push notifications device
+	* @return the push notifications device that was removed
+	* @throws PortalException if a push notifications device with the primary key could not be found
+	*/
+	public static com.liferay.push.notifications.model.PushNotificationsDevice deletePushNotificationsDevice(
+		long pushNotificationsDeviceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .deletePushNotificationsDevice(pushNotificationsDeviceId);
+	}
+
+	/**
 	* Deletes the push notifications device from the database. Also notifies the appropriate model listeners.
 	*
 	* @param pushNotificationsDevice the push notifications device
@@ -96,20 +109,6 @@ public class PushNotificationsDeviceLocalServiceUtil {
 		java.lang.String token)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deletePushNotificationsDevice(token);
-	}
-
-	/**
-	* Deletes the push notifications device with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param pushNotificationsDeviceId the primary key of the push notifications device
-	* @return the push notifications device that was removed
-	* @throws PortalException if a push notifications device with the primary key could not be found
-	*/
-	public static com.liferay.push.notifications.model.PushNotificationsDevice deletePushNotificationsDevice(
-		long pushNotificationsDeviceId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .deletePushNotificationsDevice(pushNotificationsDeviceId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -264,17 +263,17 @@ public class PushNotificationsDeviceLocalServiceUtil {
 		return getService().getPushNotificationsDevicesCount();
 	}
 
+	public static void sendPushNotification(long[] toUserIds,
+		com.liferay.portal.kernel.json.JSONObject payloadJSONObject)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().sendPushNotification(toUserIds, payloadJSONObject);
+	}
+
 	public static void sendPushNotification(java.lang.String platform,
 		java.util.List<java.lang.String> tokens,
 		com.liferay.portal.kernel.json.JSONObject payloadJSONObject)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().sendPushNotification(platform, tokens, payloadJSONObject);
-	}
-
-	public static void sendPushNotification(long[] toUserIds,
-		com.liferay.portal.kernel.json.JSONObject payloadJSONObject)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().sendPushNotification(toUserIds, payloadJSONObject);
 	}
 
 	/**

@@ -177,9 +177,8 @@ public class LockLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.portal.lock.model.Lock fetchLock(
-		java.lang.String className, java.lang.String key) {
-		return getService().fetchLock(className, key);
+	public static com.liferay.portal.lock.model.Lock fetchLock(long lockId) {
+		return getService().fetchLock(lockId);
 	}
 
 	public static com.liferay.portal.lock.model.Lock fetchLock(
@@ -187,8 +186,9 @@ public class LockLocalServiceUtil {
 		return getService().fetchLock(className, key);
 	}
 
-	public static com.liferay.portal.lock.model.Lock fetchLock(long lockId) {
-		return getService().fetchLock(lockId);
+	public static com.liferay.portal.lock.model.Lock fetchLock(
+		java.lang.String className, java.lang.String key) {
+		return getService().fetchLock(className, key);
 	}
 
 	/**
@@ -211,18 +211,6 @@ public class LockLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
-	public static com.liferay.portal.lock.model.Lock getLock(
-		java.lang.String className, java.lang.String key)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getLock(className, key);
-	}
-
-	public static com.liferay.portal.lock.model.Lock getLock(
-		java.lang.String className, long key)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getLock(className, key);
-	}
-
 	/**
 	* Returns the lock with the primary key.
 	*
@@ -233,6 +221,18 @@ public class LockLocalServiceUtil {
 	public static com.liferay.portal.lock.model.Lock getLock(long lockId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getLock(lockId);
+	}
+
+	public static com.liferay.portal.lock.model.Lock getLock(
+		java.lang.String className, long key)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getLock(className, key);
+	}
+
+	public static com.liferay.portal.lock.model.Lock getLock(
+		java.lang.String className, java.lang.String key)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getLock(className, key);
 	}
 
 	/**
@@ -290,13 +290,17 @@ public class LockLocalServiceUtil {
 	}
 
 	public static boolean hasLock(long userId, java.lang.String className,
-		java.lang.String key) {
+		long key) {
 		return getService().hasLock(userId, className, key);
 	}
 
 	public static boolean hasLock(long userId, java.lang.String className,
-		long key) {
+		java.lang.String key) {
 		return getService().hasLock(userId, className, key);
+	}
+
+	public static boolean isLocked(java.lang.String className, long key) {
+		return getService().isLocked(className, key);
 	}
 
 	public static boolean isLocked(java.lang.String className,
@@ -304,19 +308,22 @@ public class LockLocalServiceUtil {
 		return getService().isLocked(className, key);
 	}
 
-	public static boolean isLocked(java.lang.String className, long key) {
-		return getService().isLocked(className, key);
+	public static com.liferay.portal.lock.model.Lock lock(long userId,
+		java.lang.String className, long key, java.lang.String owner,
+		boolean inheritable, long expirationTime)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .lock(userId, className, key, owner, inheritable,
+			expirationTime);
 	}
 
-	public static com.liferay.portal.lock.model.Lock lock(
-		java.lang.String className, java.lang.String key, java.lang.String owner) {
-		return getService().lock(className, key, owner);
-	}
-
-	public static com.liferay.portal.lock.model.Lock lock(
-		java.lang.String className, java.lang.String key,
-		java.lang.String expectedOwner, java.lang.String updatedOwner) {
-		return getService().lock(className, key, expectedOwner, updatedOwner);
+	public static com.liferay.portal.lock.model.Lock lock(long userId,
+		java.lang.String className, long key, java.lang.String owner,
+		boolean inheritable, long expirationTime, boolean renew)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .lock(userId, className, key, owner, inheritable,
+			expirationTime, renew);
 	}
 
 	public static com.liferay.portal.lock.model.Lock lock(long userId,
@@ -338,28 +345,25 @@ public class LockLocalServiceUtil {
 			expirationTime, renew);
 	}
 
-	public static com.liferay.portal.lock.model.Lock lock(long userId,
-		java.lang.String className, long key, java.lang.String owner,
-		boolean inheritable, long expirationTime)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .lock(userId, className, key, owner, inheritable,
-			expirationTime);
+	public static com.liferay.portal.lock.model.Lock lock(
+		java.lang.String className, java.lang.String key, java.lang.String owner) {
+		return getService().lock(className, key, owner);
 	}
 
-	public static com.liferay.portal.lock.model.Lock lock(long userId,
-		java.lang.String className, long key, java.lang.String owner,
-		boolean inheritable, long expirationTime, boolean renew)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .lock(userId, className, key, owner, inheritable,
-			expirationTime, renew);
+	public static com.liferay.portal.lock.model.Lock lock(
+		java.lang.String className, java.lang.String key,
+		java.lang.String expectedOwner, java.lang.String updatedOwner) {
+		return getService().lock(className, key, expectedOwner, updatedOwner);
 	}
 
 	public static com.liferay.portal.lock.model.Lock refresh(
 		java.lang.String uuid, long companyId, long expirationTime)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().refresh(uuid, companyId, expirationTime);
+	}
+
+	public static void unlock(java.lang.String className, long key) {
+		getService().unlock(className, key);
 	}
 
 	public static void unlock(java.lang.String className, java.lang.String key) {
@@ -369,10 +373,6 @@ public class LockLocalServiceUtil {
 	public static void unlock(java.lang.String className, java.lang.String key,
 		java.lang.String owner) {
 		getService().unlock(className, key, owner);
-	}
-
-	public static void unlock(java.lang.String className, long key) {
-		getService().unlock(className, key);
 	}
 
 	/**

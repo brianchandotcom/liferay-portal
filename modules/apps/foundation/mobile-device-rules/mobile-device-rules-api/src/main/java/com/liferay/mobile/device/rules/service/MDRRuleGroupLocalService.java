@@ -84,10 +84,10 @@ public interface MDRRuleGroupLocalService extends BaseLocalService,
 		Map<Locale, java.lang.String> descriptionMap,
 		ServiceContext serviceContext) throws PortalException;
 
-	public MDRRuleGroup copyRuleGroup(MDRRuleGroup ruleGroup, long groupId,
+	public MDRRuleGroup copyRuleGroup(long ruleGroupId, long groupId,
 		ServiceContext serviceContext) throws PortalException;
 
-	public MDRRuleGroup copyRuleGroup(long ruleGroupId, long groupId,
+	public MDRRuleGroup copyRuleGroup(MDRRuleGroup ruleGroup, long groupId,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -97,15 +97,6 @@ public interface MDRRuleGroupLocalService extends BaseLocalService,
 	* @return the new mdr rule group
 	*/
 	public MDRRuleGroup createMDRRuleGroup(long ruleGroupId);
-
-	/**
-	* Deletes the mdr rule group from the database. Also notifies the appropriate model listeners.
-	*
-	* @param mdrRuleGroup the mdr rule group
-	* @return the mdr rule group that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public MDRRuleGroup deleteMDRRuleGroup(MDRRuleGroup mdrRuleGroup);
 
 	/**
 	* Deletes the mdr rule group with the primary key from the database. Also notifies the appropriate model listeners.
@@ -119,16 +110,25 @@ public interface MDRRuleGroupLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
+	* Deletes the mdr rule group from the database. Also notifies the appropriate model listeners.
+	*
+	* @param mdrRuleGroup the mdr rule group
+	* @return the mdr rule group that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public MDRRuleGroup deleteMDRRuleGroup(MDRRuleGroup mdrRuleGroup);
+
+	/**
 	* @throws PortalException
 	*/
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
+	public void deleteRuleGroup(long ruleGroupId);
+
 	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
 	public void deleteRuleGroup(MDRRuleGroup ruleGroup);
-
-	public void deleteRuleGroup(long ruleGroupId);
 
 	public void deleteRuleGroups(long groupId);
 

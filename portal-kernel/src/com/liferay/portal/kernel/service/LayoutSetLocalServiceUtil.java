@@ -187,11 +187,6 @@ public class LayoutSetLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.LayoutSet fetchLayoutSet(
-		java.lang.String virtualHostname) {
-		return getService().fetchLayoutSet(virtualHostname);
-	}
-
-	public static com.liferay.portal.kernel.model.LayoutSet fetchLayoutSet(
 		long layoutSetId) {
 		return getService().fetchLayoutSet(layoutSetId);
 	}
@@ -199,6 +194,11 @@ public class LayoutSetLocalServiceUtil {
 	public static com.liferay.portal.kernel.model.LayoutSet fetchLayoutSet(
 		long groupId, boolean privateLayout) {
 		return getService().fetchLayoutSet(groupId, privateLayout);
+	}
+
+	public static com.liferay.portal.kernel.model.LayoutSet fetchLayoutSet(
+		java.lang.String virtualHostname) {
+		return getService().fetchLayoutSet(virtualHostname);
 	}
 
 	public static com.liferay.portal.kernel.model.LayoutSet fetchLayoutSetByLogoId(
@@ -213,12 +213,6 @@ public class LayoutSetLocalServiceUtil {
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.model.LayoutSet getLayoutSet(
-		java.lang.String virtualHostname)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getLayoutSet(virtualHostname);
 	}
 
 	/**
@@ -238,6 +232,12 @@ public class LayoutSetLocalServiceUtil {
 		long groupId, boolean privateLayout)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getLayoutSet(groupId, privateLayout);
+	}
+
+	public static com.liferay.portal.kernel.model.LayoutSet getLayoutSet(
+		java.lang.String virtualHostname)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getLayoutSet(virtualHostname);
 	}
 
 	/**

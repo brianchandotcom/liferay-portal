@@ -86,6 +86,16 @@ public interface AssetEntryService extends BaseService {
 	public AssetEntry incrementViewCounter(java.lang.String className,
 		long classPK) throws PortalException;
 
+	public AssetEntry updateEntry(long groupId, Date createDate,
+		Date modifiedDate, java.lang.String className, long classPK,
+		java.lang.String classUuid, long classTypeId, long[] categoryIds,
+		java.lang.String[] tagNames, boolean listable, boolean visible,
+		Date startDate, Date endDate, Date publishDate, Date expirationDate,
+		java.lang.String mimeType, java.lang.String title,
+		java.lang.String description, java.lang.String summary,
+		java.lang.String url, java.lang.String layoutUuid, int height,
+		int width, java.lang.Double priority) throws PortalException;
+
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, Date,
 	Date, String, long, String, long, long[], String[], boolean,
@@ -98,16 +108,6 @@ public interface AssetEntryService extends BaseService {
 		java.lang.String classUuid, long classTypeId, long[] categoryIds,
 		java.lang.String[] tagNames, boolean listable, boolean visible,
 		Date startDate, Date endDate, Date expirationDate,
-		java.lang.String mimeType, java.lang.String title,
-		java.lang.String description, java.lang.String summary,
-		java.lang.String url, java.lang.String layoutUuid, int height,
-		int width, java.lang.Double priority) throws PortalException;
-
-	public AssetEntry updateEntry(long groupId, Date createDate,
-		Date modifiedDate, java.lang.String className, long classPK,
-		java.lang.String classUuid, long classTypeId, long[] categoryIds,
-		java.lang.String[] tagNames, boolean listable, boolean visible,
-		Date startDate, Date endDate, Date publishDate, Date expirationDate,
 		java.lang.String mimeType, java.lang.String title,
 		java.lang.String description, java.lang.String summary,
 		java.lang.String url, java.lang.String layoutUuid, int height,

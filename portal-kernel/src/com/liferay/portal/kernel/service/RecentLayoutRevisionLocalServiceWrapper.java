@@ -32,6 +32,14 @@ public class RecentLayoutRevisionLocalServiceWrapper
 		_recentLayoutRevisionLocalService = recentLayoutRevisionLocalService;
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.RecentLayoutRevision addRecentLayoutRevision(
+		long userId, long layoutRevisionId, long layoutSetBranchId, long plid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _recentLayoutRevisionLocalService.addRecentLayoutRevision(userId,
+			layoutRevisionId, layoutSetBranchId, plid);
+	}
+
 	/**
 	* Adds the recent layout revision to the database. Also notifies the appropriate model listeners.
 	*
@@ -42,14 +50,6 @@ public class RecentLayoutRevisionLocalServiceWrapper
 	public com.liferay.portal.kernel.model.RecentLayoutRevision addRecentLayoutRevision(
 		com.liferay.portal.kernel.model.RecentLayoutRevision recentLayoutRevision) {
 		return _recentLayoutRevisionLocalService.addRecentLayoutRevision(recentLayoutRevision);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.RecentLayoutRevision addRecentLayoutRevision(
-		long userId, long layoutRevisionId, long layoutSetBranchId, long plid)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _recentLayoutRevisionLocalService.addRecentLayoutRevision(userId,
-			layoutRevisionId, layoutSetBranchId, plid);
 	}
 
 	/**
@@ -75,18 +75,6 @@ public class RecentLayoutRevisionLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the recent layout revision from the database. Also notifies the appropriate model listeners.
-	*
-	* @param recentLayoutRevision the recent layout revision
-	* @return the recent layout revision that was removed
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.RecentLayoutRevision deleteRecentLayoutRevision(
-		com.liferay.portal.kernel.model.RecentLayoutRevision recentLayoutRevision) {
-		return _recentLayoutRevisionLocalService.deleteRecentLayoutRevision(recentLayoutRevision);
-	}
-
-	/**
 	* Deletes the recent layout revision with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param recentLayoutRevisionId the primary key of the recent layout revision
@@ -98,6 +86,18 @@ public class RecentLayoutRevisionLocalServiceWrapper
 		long recentLayoutRevisionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _recentLayoutRevisionLocalService.deleteRecentLayoutRevision(recentLayoutRevisionId);
+	}
+
+	/**
+	* Deletes the recent layout revision from the database. Also notifies the appropriate model listeners.
+	*
+	* @param recentLayoutRevision the recent layout revision
+	* @return the recent layout revision that was removed
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.RecentLayoutRevision deleteRecentLayoutRevision(
+		com.liferay.portal.kernel.model.RecentLayoutRevision recentLayoutRevision) {
+		return _recentLayoutRevisionLocalService.deleteRecentLayoutRevision(recentLayoutRevision);
 	}
 
 	@Override

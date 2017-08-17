@@ -41,6 +41,14 @@ public class SyncDLFileVersionDiffLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.sync.service.impl.SyncDLFileVersionDiffLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.sync.model.SyncDLFileVersionDiff addSyncDLFileVersionDiff(
+		long fileEntryId, long sourceFileVersionId, long targetFileVersionId,
+		java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addSyncDLFileVersionDiff(fileEntryId, sourceFileVersionId,
+			targetFileVersionId, file);
+	}
 
 	/**
 	* Adds the sync dl file version diff to the database. Also notifies the appropriate model listeners.
@@ -51,15 +59,6 @@ public class SyncDLFileVersionDiffLocalServiceUtil {
 	public static com.liferay.sync.model.SyncDLFileVersionDiff addSyncDLFileVersionDiff(
 		com.liferay.sync.model.SyncDLFileVersionDiff syncDLFileVersionDiff) {
 		return getService().addSyncDLFileVersionDiff(syncDLFileVersionDiff);
-	}
-
-	public static com.liferay.sync.model.SyncDLFileVersionDiff addSyncDLFileVersionDiff(
-		long fileEntryId, long sourceFileVersionId, long targetFileVersionId,
-		java.io.File file)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addSyncDLFileVersionDiff(fileEntryId, sourceFileVersionId,
-			targetFileVersionId, file);
 	}
 
 	/**
@@ -88,19 +87,6 @@ public class SyncDLFileVersionDiffLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the sync dl file version diff from the database. Also notifies the appropriate model listeners.
-	*
-	* @param syncDLFileVersionDiff the sync dl file version diff
-	* @return the sync dl file version diff that was removed
-	* @throws PortalException
-	*/
-	public static com.liferay.sync.model.SyncDLFileVersionDiff deleteSyncDLFileVersionDiff(
-		com.liferay.sync.model.SyncDLFileVersionDiff syncDLFileVersionDiff)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteSyncDLFileVersionDiff(syncDLFileVersionDiff);
-	}
-
-	/**
 	* Deletes the sync dl file version diff with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param syncDLFileVersionDiffId the primary key of the sync dl file version diff
@@ -111,6 +97,19 @@ public class SyncDLFileVersionDiffLocalServiceUtil {
 		long syncDLFileVersionDiffId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteSyncDLFileVersionDiff(syncDLFileVersionDiffId);
+	}
+
+	/**
+	* Deletes the sync dl file version diff from the database. Also notifies the appropriate model listeners.
+	*
+	* @param syncDLFileVersionDiff the sync dl file version diff
+	* @return the sync dl file version diff that was removed
+	* @throws PortalException
+	*/
+	public static com.liferay.sync.model.SyncDLFileVersionDiff deleteSyncDLFileVersionDiff(
+		com.liferay.sync.model.SyncDLFileVersionDiff syncDLFileVersionDiff)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteSyncDLFileVersionDiff(syncDLFileVersionDiff);
 	}
 
 	public static void deleteSyncDLFileVersionDiffs(long fileEntryId)

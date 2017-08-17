@@ -57,6 +57,8 @@ public interface RecentLayoutSetBranchLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link RecentLayoutSetBranchLocalServiceUtil} to access the recent layout set branch local service. Add custom service methods to {@link com.liferay.portal.service.impl.RecentLayoutSetBranchLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public RecentLayoutSetBranch addRecentLayoutSetBranch(long userId,
+		long layoutSetBranchId, long layoutSetId) throws PortalException;
 
 	/**
 	* Adds the recent layout set branch to the database. Also notifies the appropriate model listeners.
@@ -67,9 +69,6 @@ public interface RecentLayoutSetBranchLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public RecentLayoutSetBranch addRecentLayoutSetBranch(
 		RecentLayoutSetBranch recentLayoutSetBranch);
-
-	public RecentLayoutSetBranch addRecentLayoutSetBranch(long userId,
-		long layoutSetBranchId, long layoutSetId) throws PortalException;
 
 	/**
 	* Creates a new recent layout set branch with the primary key. Does not add the recent layout set branch to the database.
@@ -88,16 +87,6 @@ public interface RecentLayoutSetBranchLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the recent layout set branch from the database. Also notifies the appropriate model listeners.
-	*
-	* @param recentLayoutSetBranch the recent layout set branch
-	* @return the recent layout set branch that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public RecentLayoutSetBranch deleteRecentLayoutSetBranch(
-		RecentLayoutSetBranch recentLayoutSetBranch);
-
-	/**
 	* Deletes the recent layout set branch with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param recentLayoutSetBranchId the primary key of the recent layout set branch
@@ -107,6 +96,16 @@ public interface RecentLayoutSetBranchLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public RecentLayoutSetBranch deleteRecentLayoutSetBranch(
 		long recentLayoutSetBranchId) throws PortalException;
+
+	/**
+	* Deletes the recent layout set branch from the database. Also notifies the appropriate model listeners.
+	*
+	* @param recentLayoutSetBranch the recent layout set branch
+	* @return the recent layout set branch that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public RecentLayoutSetBranch deleteRecentLayoutSetBranch(
+		RecentLayoutSetBranch recentLayoutSetBranch);
 
 	public void deleteRecentLayoutSetBranches(long layoutSetBranchId);
 

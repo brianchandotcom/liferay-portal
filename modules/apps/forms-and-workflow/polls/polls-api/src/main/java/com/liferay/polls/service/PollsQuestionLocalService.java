@@ -87,19 +87,19 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 		List<PollsChoice> choices, ServiceContext serviceContext)
 		throws PortalException;
 
-	public void addQuestionResources(PollsQuestion question,
+	public void addQuestionResources(long questionId,
 		boolean addGroupPermissions, boolean addGuestPermissions)
 		throws PortalException;
 
-	public void addQuestionResources(PollsQuestion question,
+	public void addQuestionResources(long questionId,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
 		throws PortalException;
 
-	public void addQuestionResources(long questionId,
+	public void addQuestionResources(PollsQuestion question,
 		boolean addGroupPermissions, boolean addGuestPermissions)
 		throws PortalException;
 
-	public void addQuestionResources(long questionId,
+	public void addQuestionResources(PollsQuestion question,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
 		throws PortalException;
 
@@ -119,15 +119,6 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the polls question from the database. Also notifies the appropriate model listeners.
-	*
-	* @param pollsQuestion the polls question
-	* @return the polls question that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public PollsQuestion deletePollsQuestion(PollsQuestion pollsQuestion);
-
-	/**
 	* Deletes the polls question with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param questionId the primary key of the polls question
@@ -138,11 +129,20 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 	public PollsQuestion deletePollsQuestion(long questionId)
 		throws PortalException;
 
+	/**
+	* Deletes the polls question from the database. Also notifies the appropriate model listeners.
+	*
+	* @param pollsQuestion the polls question
+	* @return the polls question that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public PollsQuestion deletePollsQuestion(PollsQuestion pollsQuestion);
+
+	public void deleteQuestion(long questionId) throws PortalException;
+
 	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
 	public void deleteQuestion(PollsQuestion question)
 		throws PortalException;
-
-	public void deleteQuestion(long questionId) throws PortalException;
 
 	public void deleteQuestions(long groupId) throws PortalException;
 

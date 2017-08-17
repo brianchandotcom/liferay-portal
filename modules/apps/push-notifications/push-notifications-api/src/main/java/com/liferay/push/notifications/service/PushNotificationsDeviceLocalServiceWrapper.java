@@ -34,6 +34,14 @@ public class PushNotificationsDeviceLocalServiceWrapper
 		_pushNotificationsDeviceLocalService = pushNotificationsDeviceLocalService;
 	}
 
+	@Override
+	public com.liferay.push.notifications.model.PushNotificationsDevice addPushNotificationsDevice(
+		long userId, java.lang.String platform, java.lang.String token)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _pushNotificationsDeviceLocalService.addPushNotificationsDevice(userId,
+			platform, token);
+	}
+
 	/**
 	* Adds the push notifications device to the database. Also notifies the appropriate model listeners.
 	*
@@ -44,14 +52,6 @@ public class PushNotificationsDeviceLocalServiceWrapper
 	public com.liferay.push.notifications.model.PushNotificationsDevice addPushNotificationsDevice(
 		com.liferay.push.notifications.model.PushNotificationsDevice pushNotificationsDevice) {
 		return _pushNotificationsDeviceLocalService.addPushNotificationsDevice(pushNotificationsDevice);
-	}
-
-	@Override
-	public com.liferay.push.notifications.model.PushNotificationsDevice addPushNotificationsDevice(
-		long userId, java.lang.String platform, java.lang.String token)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _pushNotificationsDeviceLocalService.addPushNotificationsDevice(userId,
-			platform, token);
 	}
 
 	/**
@@ -77,6 +77,20 @@ public class PushNotificationsDeviceLocalServiceWrapper
 	}
 
 	/**
+	* Deletes the push notifications device with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param pushNotificationsDeviceId the primary key of the push notifications device
+	* @return the push notifications device that was removed
+	* @throws PortalException if a push notifications device with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.push.notifications.model.PushNotificationsDevice deletePushNotificationsDevice(
+		long pushNotificationsDeviceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _pushNotificationsDeviceLocalService.deletePushNotificationsDevice(pushNotificationsDeviceId);
+	}
+
+	/**
 	* Deletes the push notifications device from the database. Also notifies the appropriate model listeners.
 	*
 	* @param pushNotificationsDevice the push notifications device
@@ -93,20 +107,6 @@ public class PushNotificationsDeviceLocalServiceWrapper
 		java.lang.String token)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _pushNotificationsDeviceLocalService.deletePushNotificationsDevice(token);
-	}
-
-	/**
-	* Deletes the push notifications device with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param pushNotificationsDeviceId the primary key of the push notifications device
-	* @return the push notifications device that was removed
-	* @throws PortalException if a push notifications device with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.push.notifications.model.PushNotificationsDevice deletePushNotificationsDevice(
-		long pushNotificationsDeviceId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _pushNotificationsDeviceLocalService.deletePushNotificationsDevice(pushNotificationsDeviceId);
 	}
 
 	@Override
@@ -279,20 +279,20 @@ public class PushNotificationsDeviceLocalServiceWrapper
 	}
 
 	@Override
+	public void sendPushNotification(long[] toUserIds,
+		com.liferay.portal.kernel.json.JSONObject payloadJSONObject)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_pushNotificationsDeviceLocalService.sendPushNotification(toUserIds,
+			payloadJSONObject);
+	}
+
+	@Override
 	public void sendPushNotification(java.lang.String platform,
 		java.util.List<java.lang.String> tokens,
 		com.liferay.portal.kernel.json.JSONObject payloadJSONObject)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_pushNotificationsDeviceLocalService.sendPushNotification(platform,
 			tokens, payloadJSONObject);
-	}
-
-	@Override
-	public void sendPushNotification(long[] toUserIds,
-		com.liferay.portal.kernel.json.JSONObject payloadJSONObject)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_pushNotificationsDeviceLocalService.sendPushNotification(toUserIds,
-			payloadJSONObject);
 	}
 
 	/**

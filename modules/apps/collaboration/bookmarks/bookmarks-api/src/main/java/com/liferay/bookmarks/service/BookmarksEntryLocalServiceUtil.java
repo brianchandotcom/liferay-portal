@@ -318,13 +318,6 @@ public class BookmarksEntryLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> getEntries(
-		long groupId, long folderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
-		return getService()
-				   .getEntries(groupId, folderId, start, end, orderByComparator);
-	}
-
-	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> getEntries(
 		long groupId, long folderId, int status, int start, int end) {
 		return getService().getEntries(groupId, folderId, status, start, end);
 	}
@@ -335,6 +328,13 @@ public class BookmarksEntryLocalServiceUtil {
 		return getService()
 				   .getEntries(groupId, folderId, status, start, end,
 			orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> getEntries(
+		long groupId, long folderId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
+		return getService()
+				   .getEntries(groupId, folderId, start, end, orderByComparator);
 	}
 
 	public static int getEntriesCount(long groupId, long folderId) {

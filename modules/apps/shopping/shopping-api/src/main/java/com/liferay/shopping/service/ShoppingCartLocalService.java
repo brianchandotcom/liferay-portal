@@ -90,15 +90,6 @@ public interface ShoppingCartLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the shopping cart from the database. Also notifies the appropriate model listeners.
-	*
-	* @param shoppingCart the shopping cart
-	* @return the shopping cart that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public ShoppingCart deleteShoppingCart(ShoppingCart shoppingCart);
-
-	/**
 	* Deletes the shopping cart with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param cartId the primary key of the shopping cart
@@ -108,6 +99,15 @@ public interface ShoppingCartLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public ShoppingCart deleteShoppingCart(long cartId)
 		throws PortalException;
+
+	/**
+	* Deletes the shopping cart from the database. Also notifies the appropriate model listeners.
+	*
+	* @param shoppingCart the shopping cart
+	* @return the shopping cart that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public ShoppingCart deleteShoppingCart(ShoppingCart shoppingCart);
 
 	public void deleteUserCarts(long userId);
 

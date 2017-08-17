@@ -32,18 +32,6 @@ public class PasswordPolicyLocalServiceWrapper
 		_passwordPolicyLocalService = passwordPolicyLocalService;
 	}
 
-	/**
-	* Adds the password policy to the database. Also notifies the appropriate model listeners.
-	*
-	* @param passwordPolicy the password policy
-	* @return the password policy that was added
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.PasswordPolicy addPasswordPolicy(
-		com.liferay.portal.kernel.model.PasswordPolicy passwordPolicy) {
-		return _passwordPolicyLocalService.addPasswordPolicy(passwordPolicy);
-	}
-
 	@Override
 	public com.liferay.portal.kernel.model.PasswordPolicy addPasswordPolicy(
 		long userId, boolean defaultPolicy, java.lang.String name,
@@ -64,6 +52,18 @@ public class PasswordPolicyLocalServiceWrapper
 			regex, history, historyCount, expireable, maxAge, warningTime,
 			graceLimit, lockout, maxFailure, lockoutDuration,
 			resetFailureCount, resetTicketMaxAge, serviceContext);
+	}
+
+	/**
+	* Adds the password policy to the database. Also notifies the appropriate model listeners.
+	*
+	* @param passwordPolicy the password policy
+	* @return the password policy that was added
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.PasswordPolicy addPasswordPolicy(
+		com.liferay.portal.kernel.model.PasswordPolicy passwordPolicy) {
+		return _passwordPolicyLocalService.addPasswordPolicy(passwordPolicy);
 	}
 
 	@Override
@@ -91,20 +91,6 @@ public class PasswordPolicyLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the password policy from the database. Also notifies the appropriate model listeners.
-	*
-	* @param passwordPolicy the password policy
-	* @return the password policy that was removed
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.PasswordPolicy deletePasswordPolicy(
-		com.liferay.portal.kernel.model.PasswordPolicy passwordPolicy)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _passwordPolicyLocalService.deletePasswordPolicy(passwordPolicy);
-	}
-
-	/**
 	* Deletes the password policy with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param passwordPolicyId the primary key of the password policy
@@ -116,6 +102,20 @@ public class PasswordPolicyLocalServiceWrapper
 		long passwordPolicyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _passwordPolicyLocalService.deletePasswordPolicy(passwordPolicyId);
+	}
+
+	/**
+	* Deletes the password policy from the database. Also notifies the appropriate model listeners.
+	*
+	* @param passwordPolicy the password policy
+	* @return the password policy that was removed
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.PasswordPolicy deletePasswordPolicy(
+		com.liferay.portal.kernel.model.PasswordPolicy passwordPolicy)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _passwordPolicyLocalService.deletePasswordPolicy(passwordPolicy);
 	}
 
 	/**
@@ -370,18 +370,6 @@ public class PasswordPolicyLocalServiceWrapper
 		return _passwordPolicyLocalService.searchCount(companyId, name);
 	}
 
-	/**
-	* Updates the password policy in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param passwordPolicy the password policy
-	* @return the password policy that was updated
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.PasswordPolicy updatePasswordPolicy(
-		com.liferay.portal.kernel.model.PasswordPolicy passwordPolicy) {
-		return _passwordPolicyLocalService.updatePasswordPolicy(passwordPolicy);
-	}
-
 	@Override
 	public com.liferay.portal.kernel.model.PasswordPolicy updatePasswordPolicy(
 		long passwordPolicyId, java.lang.String name,
@@ -402,6 +390,18 @@ public class PasswordPolicyLocalServiceWrapper
 			expireable, maxAge, warningTime, graceLimit, lockout, maxFailure,
 			lockoutDuration, resetFailureCount, resetTicketMaxAge,
 			serviceContext);
+	}
+
+	/**
+	* Updates the password policy in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param passwordPolicy the password policy
+	* @return the password policy that was updated
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.PasswordPolicy updatePasswordPolicy(
+		com.liferay.portal.kernel.model.PasswordPolicy passwordPolicy) {
+		return _passwordPolicyLocalService.updatePasswordPolicy(passwordPolicy);
 	}
 
 	@Override

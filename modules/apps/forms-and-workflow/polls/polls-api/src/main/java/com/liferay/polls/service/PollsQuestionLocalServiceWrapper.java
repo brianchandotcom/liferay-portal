@@ -62,36 +62,36 @@ public class PollsQuestionLocalServiceWrapper
 	}
 
 	@Override
-	public void addQuestionResources(
-		com.liferay.polls.model.PollsQuestion question,
+	public void addQuestionResources(long questionId,
 		boolean addGroupPermissions, boolean addGuestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_pollsQuestionLocalService.addQuestionResources(question,
+		_pollsQuestionLocalService.addQuestionResources(questionId,
 			addGroupPermissions, addGuestPermissions);
 	}
 
 	@Override
-	public void addQuestionResources(
-		com.liferay.polls.model.PollsQuestion question,
+	public void addQuestionResources(long questionId,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_pollsQuestionLocalService.addQuestionResources(question,
+		_pollsQuestionLocalService.addQuestionResources(questionId,
 			groupPermissions, guestPermissions);
 	}
 
 	@Override
-	public void addQuestionResources(long questionId,
+	public void addQuestionResources(
+		com.liferay.polls.model.PollsQuestion question,
 		boolean addGroupPermissions, boolean addGuestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_pollsQuestionLocalService.addQuestionResources(questionId,
+		_pollsQuestionLocalService.addQuestionResources(question,
 			addGroupPermissions, addGuestPermissions);
 	}
 
 	@Override
-	public void addQuestionResources(long questionId,
+	public void addQuestionResources(
+		com.liferay.polls.model.PollsQuestion question,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_pollsQuestionLocalService.addQuestionResources(questionId,
+		_pollsQuestionLocalService.addQuestionResources(question,
 			groupPermissions, guestPermissions);
 	}
 
@@ -118,18 +118,6 @@ public class PollsQuestionLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the polls question from the database. Also notifies the appropriate model listeners.
-	*
-	* @param pollsQuestion the polls question
-	* @return the polls question that was removed
-	*/
-	@Override
-	public com.liferay.polls.model.PollsQuestion deletePollsQuestion(
-		com.liferay.polls.model.PollsQuestion pollsQuestion) {
-		return _pollsQuestionLocalService.deletePollsQuestion(pollsQuestion);
-	}
-
-	/**
 	* Deletes the polls question with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param questionId the primary key of the polls question
@@ -143,16 +131,28 @@ public class PollsQuestionLocalServiceWrapper
 		return _pollsQuestionLocalService.deletePollsQuestion(questionId);
 	}
 
+	/**
+	* Deletes the polls question from the database. Also notifies the appropriate model listeners.
+	*
+	* @param pollsQuestion the polls question
+	* @return the polls question that was removed
+	*/
 	@Override
-	public void deleteQuestion(com.liferay.polls.model.PollsQuestion question)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_pollsQuestionLocalService.deleteQuestion(question);
+	public com.liferay.polls.model.PollsQuestion deletePollsQuestion(
+		com.liferay.polls.model.PollsQuestion pollsQuestion) {
+		return _pollsQuestionLocalService.deletePollsQuestion(pollsQuestion);
 	}
 
 	@Override
 	public void deleteQuestion(long questionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_pollsQuestionLocalService.deleteQuestion(questionId);
+	}
+
+	@Override
+	public void deleteQuestion(com.liferay.polls.model.PollsQuestion question)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_pollsQuestionLocalService.deleteQuestion(question);
 	}
 
 	@Override

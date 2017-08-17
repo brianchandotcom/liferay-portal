@@ -283,15 +283,27 @@ public class DLFolderServiceUtil {
 				   .refreshFolderLock(lockUuid, companyId, expirationTime);
 	}
 
+	public static void unlockFolder(long groupId, long parentFolderId,
+		java.lang.String name, java.lang.String lockUuid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().unlockFolder(groupId, parentFolderId, name, lockUuid);
+	}
+
 	public static void unlockFolder(long folderId, java.lang.String lockUuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().unlockFolder(folderId, lockUuid);
 	}
 
-	public static void unlockFolder(long groupId, long parentFolderId,
-		java.lang.String name, java.lang.String lockUuid)
+	public static com.liferay.document.library.kernel.model.DLFolder updateFolder(
+		long folderId, long parentFolderId, java.lang.String name,
+		java.lang.String description, long defaultFileEntryTypeId,
+		java.util.List<java.lang.Long> fileEntryTypeIds, int restrictionType,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().unlockFolder(groupId, parentFolderId, name, lockUuid);
+		return getService()
+				   .updateFolder(folderId, parentFolderId, name, description,
+			defaultFileEntryTypeId, fileEntryTypeIds, restrictionType,
+			serviceContext);
 	}
 
 	/**
@@ -321,18 +333,6 @@ public class DLFolderServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateFolder(folderId, name, description,
-			defaultFileEntryTypeId, fileEntryTypeIds, restrictionType,
-			serviceContext);
-	}
-
-	public static com.liferay.document.library.kernel.model.DLFolder updateFolder(
-		long folderId, long parentFolderId, java.lang.String name,
-		java.lang.String description, long defaultFileEntryTypeId,
-		java.util.List<java.lang.Long> fileEntryTypeIds, int restrictionType,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateFolder(folderId, parentFolderId, name, description,
 			defaultFileEntryTypeId, fileEntryTypeIds, restrictionType,
 			serviceContext);
 	}

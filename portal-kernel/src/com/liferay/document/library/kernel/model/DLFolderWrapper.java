@@ -608,6 +608,11 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	}
 
 	@Override
+	public int hashCode() {
+		return _dlFolder.hashCode();
+	}
+
+	@Override
 	public boolean hasInheritableLock() {
 		return _dlFolder.hasInheritableLock();
 	}
@@ -615,11 +620,6 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	@Override
 	public boolean hasLock() {
 		return _dlFolder.hasLock();
-	}
-
-	@Override
-	public int hashCode() {
-		return _dlFolder.hashCode();
 	}
 
 	/**
@@ -682,6 +682,26 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 		return _dlFolder.isHidden();
 	}
 
+	/**
+	* Returns <code>true</code> if this document library folder is inactive.
+	*
+	* @return <code>true</code> if this document library folder is inactive; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isInactive() {
+		return _dlFolder.isInactive();
+	}
+
+	/**
+	* Returns <code>true</code> if this document library folder is incomplete.
+	*
+	* @return <code>true</code> if this document library folder is incomplete; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isIncomplete() {
+		return _dlFolder.isIncomplete();
+	}
+
 	@Override
 	public boolean isInHiddenFolder() {
 		return _dlFolder.isInHiddenFolder();
@@ -715,26 +735,6 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	@Override
 	public boolean isInTrashImplicitly() {
 		return _dlFolder.isInTrashImplicitly();
-	}
-
-	/**
-	* Returns <code>true</code> if this document library folder is inactive.
-	*
-	* @return <code>true</code> if this document library folder is inactive; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isInactive() {
-		return _dlFolder.isInactive();
-	}
-
-	/**
-	* Returns <code>true</code> if this document library folder is incomplete.
-	*
-	* @return <code>true</code> if this document library folder is incomplete; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isIncomplete() {
-		return _dlFolder.isIncomplete();
 	}
 
 	@Override
@@ -843,14 +843,14 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_dlFolder.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_dlFolder.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_dlFolder.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

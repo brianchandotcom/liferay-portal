@@ -62,16 +62,16 @@ public interface ShoppingOrderService extends BaseService {
 	public void deleteOrder(long groupId, long orderId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ShoppingOrder getOrder(long groupId, long orderId)
+		throws PortalException;
+
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ShoppingOrder getOrder(long groupId, long orderId)
-		throws PortalException;
 
 	public void sendEmail(long groupId, long orderId,
 		java.lang.String emailType, ServiceContext serviceContext)

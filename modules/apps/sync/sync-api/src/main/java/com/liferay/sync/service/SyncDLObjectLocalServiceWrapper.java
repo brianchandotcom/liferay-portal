@@ -34,38 +34,6 @@ public class SyncDLObjectLocalServiceWrapper implements SyncDLObjectLocalService
 	}
 
 	/**
-	* Adds the sync dl object to the database. Also notifies the appropriate model listeners.
-	*
-	* @param syncDLObject the sync dl object
-	* @return the sync dl object that was added
-	*/
-	@Override
-	public com.liferay.sync.model.SyncDLObject addSyncDLObject(
-		com.liferay.sync.model.SyncDLObject syncDLObject) {
-		return _syncDLObjectLocalService.addSyncDLObject(syncDLObject);
-	}
-
-	@Override
-	public com.liferay.sync.model.SyncDLObject addSyncDLObject(long companyId,
-		long userId, java.lang.String userName, long modifiedTime,
-		long repositoryId, long parentFolderId, java.lang.String treePath,
-		java.lang.String name, java.lang.String extension,
-		java.lang.String mimeType, java.lang.String description,
-		java.lang.String changeLog, java.lang.String extraSettings,
-		java.lang.String version, long versionId, long size,
-		java.lang.String checksum, java.lang.String event,
-		java.lang.String lanTokenKey, java.util.Date lockExpirationDate,
-		long lockUserId, java.lang.String lockUserName, java.lang.String type,
-		long typePK, java.lang.String typeUuid)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _syncDLObjectLocalService.addSyncDLObject(companyId, userId,
-			userName, modifiedTime, repositoryId, parentFolderId, treePath,
-			name, extension, mimeType, description, changeLog, extraSettings,
-			version, versionId, size, checksum, event, lanTokenKey,
-			lockExpirationDate, lockUserId, lockUserName, type, typePK, typeUuid);
-	}
-
-	/**
 	* @deprecated As of 1.3.0, replaced by {@link #addSyncDLObject(long, long,
 	String, long, long, long, String, String, String, String,
 	String, String, String, String, long, long, String, String,
@@ -92,6 +60,38 @@ public class SyncDLObjectLocalServiceWrapper implements SyncDLObjectLocalService
 			lockUserId, lockUserName, type, typePK, typeUuid);
 	}
 
+	@Override
+	public com.liferay.sync.model.SyncDLObject addSyncDLObject(long companyId,
+		long userId, java.lang.String userName, long modifiedTime,
+		long repositoryId, long parentFolderId, java.lang.String treePath,
+		java.lang.String name, java.lang.String extension,
+		java.lang.String mimeType, java.lang.String description,
+		java.lang.String changeLog, java.lang.String extraSettings,
+		java.lang.String version, long versionId, long size,
+		java.lang.String checksum, java.lang.String event,
+		java.lang.String lanTokenKey, java.util.Date lockExpirationDate,
+		long lockUserId, java.lang.String lockUserName, java.lang.String type,
+		long typePK, java.lang.String typeUuid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _syncDLObjectLocalService.addSyncDLObject(companyId, userId,
+			userName, modifiedTime, repositoryId, parentFolderId, treePath,
+			name, extension, mimeType, description, changeLog, extraSettings,
+			version, versionId, size, checksum, event, lanTokenKey,
+			lockExpirationDate, lockUserId, lockUserName, type, typePK, typeUuid);
+	}
+
+	/**
+	* Adds the sync dl object to the database. Also notifies the appropriate model listeners.
+	*
+	* @param syncDLObject the sync dl object
+	* @return the sync dl object that was added
+	*/
+	@Override
+	public com.liferay.sync.model.SyncDLObject addSyncDLObject(
+		com.liferay.sync.model.SyncDLObject syncDLObject) {
+		return _syncDLObjectLocalService.addSyncDLObject(syncDLObject);
+	}
+
 	/**
 	* Creates a new sync dl object with the primary key. Does not add the sync dl object to the database.
 	*
@@ -115,18 +115,6 @@ public class SyncDLObjectLocalServiceWrapper implements SyncDLObjectLocalService
 	}
 
 	/**
-	* Deletes the sync dl object from the database. Also notifies the appropriate model listeners.
-	*
-	* @param syncDLObject the sync dl object
-	* @return the sync dl object that was removed
-	*/
-	@Override
-	public com.liferay.sync.model.SyncDLObject deleteSyncDLObject(
-		com.liferay.sync.model.SyncDLObject syncDLObject) {
-		return _syncDLObjectLocalService.deleteSyncDLObject(syncDLObject);
-	}
-
-	/**
 	* Deletes the sync dl object with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param syncDLObjectId the primary key of the sync dl object
@@ -138,6 +126,18 @@ public class SyncDLObjectLocalServiceWrapper implements SyncDLObjectLocalService
 		long syncDLObjectId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _syncDLObjectLocalService.deleteSyncDLObject(syncDLObjectId);
+	}
+
+	/**
+	* Deletes the sync dl object from the database. Also notifies the appropriate model listeners.
+	*
+	* @param syncDLObject the sync dl object
+	* @return the sync dl object that was removed
+	*/
+	@Override
+	public com.liferay.sync.model.SyncDLObject deleteSyncDLObject(
+		com.liferay.sync.model.SyncDLObject syncDLObject) {
+		return _syncDLObjectLocalService.deleteSyncDLObject(syncDLObject);
 	}
 
 	@Override
@@ -233,14 +233,14 @@ public class SyncDLObjectLocalServiceWrapper implements SyncDLObjectLocalService
 
 	@Override
 	public com.liferay.sync.model.SyncDLObject fetchSyncDLObject(
-		java.lang.String type, long typePK) {
-		return _syncDLObjectLocalService.fetchSyncDLObject(type, typePK);
+		long syncDLObjectId) {
+		return _syncDLObjectLocalService.fetchSyncDLObject(syncDLObjectId);
 	}
 
 	@Override
 	public com.liferay.sync.model.SyncDLObject fetchSyncDLObject(
-		long syncDLObjectId) {
-		return _syncDLObjectLocalService.fetchSyncDLObject(syncDLObjectId);
+		java.lang.String type, long typePK) {
+		return _syncDLObjectLocalService.fetchSyncDLObject(type, typePK);
 	}
 
 	@Override

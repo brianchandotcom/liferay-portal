@@ -41,18 +41,6 @@ public class OAuthTokenLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.opensocial.service.impl.OAuthTokenLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-
-	/**
-	* Adds the o auth token to the database. Also notifies the appropriate model listeners.
-	*
-	* @param oAuthToken the o auth token
-	* @return the o auth token that was added
-	*/
-	public static com.liferay.opensocial.model.OAuthToken addOAuthToken(
-		com.liferay.opensocial.model.OAuthToken oAuthToken) {
-		return getService().addOAuthToken(oAuthToken);
-	}
-
 	public static com.liferay.opensocial.model.OAuthToken addOAuthToken(
 		long userId, java.lang.String gadgetKey, java.lang.String serviceName,
 		long moduleId, java.lang.String accessToken,
@@ -65,6 +53,17 @@ public class OAuthTokenLocalServiceUtil {
 	}
 
 	/**
+	* Adds the o auth token to the database. Also notifies the appropriate model listeners.
+	*
+	* @param oAuthToken the o auth token
+	* @return the o auth token that was added
+	*/
+	public static com.liferay.opensocial.model.OAuthToken addOAuthToken(
+		com.liferay.opensocial.model.OAuthToken oAuthToken) {
+		return getService().addOAuthToken(oAuthToken);
+	}
+
+	/**
 	* Creates a new o auth token with the primary key. Does not add the o auth token to the database.
 	*
 	* @param oAuthTokenId the primary key for the new o auth token
@@ -73,17 +72,6 @@ public class OAuthTokenLocalServiceUtil {
 	public static com.liferay.opensocial.model.OAuthToken createOAuthToken(
 		long oAuthTokenId) {
 		return getService().createOAuthToken(oAuthTokenId);
-	}
-
-	/**
-	* Deletes the o auth token from the database. Also notifies the appropriate model listeners.
-	*
-	* @param oAuthToken the o auth token
-	* @return the o auth token that was removed
-	*/
-	public static com.liferay.opensocial.model.OAuthToken deleteOAuthToken(
-		com.liferay.opensocial.model.OAuthToken oAuthToken) {
-		return getService().deleteOAuthToken(oAuthToken);
 	}
 
 	/**
@@ -106,6 +94,17 @@ public class OAuthTokenLocalServiceUtil {
 		getService()
 			.deleteOAuthToken(userId, gadgetKey, serviceName, moduleId,
 			tokenName);
+	}
+
+	/**
+	* Deletes the o auth token from the database. Also notifies the appropriate model listeners.
+	*
+	* @param oAuthToken the o auth token
+	* @return the o auth token that was removed
+	*/
+	public static com.liferay.opensocial.model.OAuthToken deleteOAuthToken(
+		com.liferay.opensocial.model.OAuthToken oAuthToken) {
+		return getService().deleteOAuthToken(oAuthToken);
 	}
 
 	public static void deleteOAuthTokens(java.lang.String gadgetKey,

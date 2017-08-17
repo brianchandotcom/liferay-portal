@@ -328,19 +328,19 @@ public class AssetCategoryPropertyLocalServiceWrapper
 
 	@Override
 	public com.liferay.asset.kernel.model.AssetCategoryProperty updateCategoryProperty(
-		long categoryPropertyId, java.lang.String key, java.lang.String value)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetCategoryPropertyLocalService.updateCategoryProperty(categoryPropertyId,
-			key, value);
-	}
-
-	@Override
-	public com.liferay.asset.kernel.model.AssetCategoryProperty updateCategoryProperty(
 		long userId, long categoryPropertyId, java.lang.String key,
 		java.lang.String value)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetCategoryPropertyLocalService.updateCategoryProperty(userId,
 			categoryPropertyId, key, value);
+	}
+
+	@Override
+	public com.liferay.asset.kernel.model.AssetCategoryProperty updateCategoryProperty(
+		long categoryPropertyId, java.lang.String key, java.lang.String value)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetCategoryPropertyLocalService.updateCategoryProperty(categoryPropertyId,
+			key, value);
 	}
 
 	@Override

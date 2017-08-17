@@ -41,6 +41,16 @@ public class SAPEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.security.service.access.policy.service.impl.SAPEntryLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portal.security.service.access.policy.model.SAPEntry addSAPEntry(
+		long userId, java.lang.String allowedServiceSignatures,
+		boolean defaultSAPEntry, boolean enabled, java.lang.String name,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addSAPEntry(userId, allowedServiceSignatures,
+			defaultSAPEntry, enabled, name, titleMap, serviceContext);
+	}
 
 	/**
 	* Adds the sap entry to the database. Also notifies the appropriate model listeners.
@@ -51,17 +61,6 @@ public class SAPEntryLocalServiceUtil {
 	public static com.liferay.portal.security.service.access.policy.model.SAPEntry addSAPEntry(
 		com.liferay.portal.security.service.access.policy.model.SAPEntry sapEntry) {
 		return getService().addSAPEntry(sapEntry);
-	}
-
-	public static com.liferay.portal.security.service.access.policy.model.SAPEntry addSAPEntry(
-		long userId, java.lang.String allowedServiceSignatures,
-		boolean defaultSAPEntry, boolean enabled, java.lang.String name,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addSAPEntry(userId, allowedServiceSignatures,
-			defaultSAPEntry, enabled, name, titleMap, serviceContext);
 	}
 
 	public static void checkSystemSAPEntries(long companyId)
@@ -90,19 +89,6 @@ public class SAPEntryLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the sap entry from the database. Also notifies the appropriate model listeners.
-	*
-	* @param sapEntry the sap entry
-	* @return the sap entry that was removed
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.security.service.access.policy.model.SAPEntry deleteSAPEntry(
-		com.liferay.portal.security.service.access.policy.model.SAPEntry sapEntry)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteSAPEntry(sapEntry);
-	}
-
-	/**
 	* Deletes the sap entry with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param sapEntryId the primary key of the sap entry
@@ -113,6 +99,19 @@ public class SAPEntryLocalServiceUtil {
 		long sapEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteSAPEntry(sapEntryId);
+	}
+
+	/**
+	* Deletes the sap entry from the database. Also notifies the appropriate model listeners.
+	*
+	* @param sapEntry the sap entry
+	* @return the sap entry that was removed
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.security.service.access.policy.model.SAPEntry deleteSAPEntry(
+		com.liferay.portal.security.service.access.policy.model.SAPEntry sapEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteSAPEntry(sapEntry);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -322,17 +321,6 @@ public class SAPEntryLocalServiceUtil {
 		return getService().getSAPEntryByUuidAndCompanyId(uuid, companyId);
 	}
 
-	/**
-	* Updates the sap entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param sapEntry the sap entry
-	* @return the sap entry that was updated
-	*/
-	public static com.liferay.portal.security.service.access.policy.model.SAPEntry updateSAPEntry(
-		com.liferay.portal.security.service.access.policy.model.SAPEntry sapEntry) {
-		return getService().updateSAPEntry(sapEntry);
-	}
-
 	public static com.liferay.portal.security.service.access.policy.model.SAPEntry updateSAPEntry(
 		long sapEntryId, java.lang.String allowedServiceSignatures,
 		boolean defaultSAPEntry, boolean enabled, java.lang.String name,
@@ -342,6 +330,17 @@ public class SAPEntryLocalServiceUtil {
 		return getService()
 				   .updateSAPEntry(sapEntryId, allowedServiceSignatures,
 			defaultSAPEntry, enabled, name, titleMap, serviceContext);
+	}
+
+	/**
+	* Updates the sap entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param sapEntry the sap entry
+	* @return the sap entry that was updated
+	*/
+	public static com.liferay.portal.security.service.access.policy.model.SAPEntry updateSAPEntry(
+		com.liferay.portal.security.service.access.policy.model.SAPEntry sapEntry) {
+		return getService().updateSAPEntry(sapEntry);
 	}
 
 	public static SAPEntryLocalService getService() {

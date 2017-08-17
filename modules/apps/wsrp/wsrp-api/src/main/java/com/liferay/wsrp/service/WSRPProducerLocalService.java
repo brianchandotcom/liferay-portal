@@ -66,6 +66,14 @@ public interface WSRPProducerLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WSRPProducerLocalServiceUtil} to access the wsrp producer local service. Add custom service methods to {@link com.liferay.wsrp.service.impl.WSRPProducerLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public WSRPProducer addWSRPProducer(long userId, long groupId,
+		java.lang.String name, java.lang.String version,
+		java.lang.String portletIds, ServiceContext serviceContext)
+		throws PortalException;
+
+	public WSRPProducer addWSRPProducer(long userId, java.lang.String name,
+		java.lang.String version, java.lang.String portletIds,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Adds the wsrp producer to the database. Also notifies the appropriate model listeners.
@@ -75,15 +83,6 @@ public interface WSRPProducerLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public WSRPProducer addWSRPProducer(WSRPProducer wsrpProducer);
-
-	public WSRPProducer addWSRPProducer(long userId, java.lang.String name,
-		java.lang.String version, java.lang.String portletIds,
-		ServiceContext serviceContext) throws PortalException;
-
-	public WSRPProducer addWSRPProducer(long userId, long groupId,
-		java.lang.String name, java.lang.String version,
-		java.lang.String portletIds, ServiceContext serviceContext)
-		throws PortalException;
 
 	/**
 	* Creates a new wsrp producer with the primary key. Does not add the wsrp producer to the database.
@@ -101,6 +100,17 @@ public interface WSRPProducerLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
+	* Deletes the wsrp producer with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param wsrpProducerId the primary key of the wsrp producer
+	* @return the wsrp producer that was removed
+	* @throws PortalException if a wsrp producer with the primary key could not be found
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public WSRPProducer deleteWSRPProducer(long wsrpProducerId)
+		throws PortalException;
+
+	/**
 	* Deletes the wsrp producer from the database. Also notifies the appropriate model listeners.
 	*
 	* @param wsrpProducer the wsrp producer
@@ -110,17 +120,6 @@ public interface WSRPProducerLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
 	public WSRPProducer deleteWSRPProducer(WSRPProducer wsrpProducer)
-		throws PortalException;
-
-	/**
-	* Deletes the wsrp producer with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param wsrpProducerId the primary key of the wsrp producer
-	* @return the wsrp producer that was removed
-	* @throws PortalException if a wsrp producer with the primary key could not be found
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public WSRPProducer deleteWSRPProducer(long wsrpProducerId)
 		throws PortalException;
 
 	public void deleteWSRPProducers(long companyId) throws PortalException;
@@ -220,10 +219,6 @@ public interface WSRPProducerLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WSRPProducer getWSRPProducer(java.lang.String wsrpProducerUuid)
-		throws PortalException;
-
 	/**
 	* Returns the wsrp producer with the primary key.
 	*
@@ -233,6 +228,10 @@ public interface WSRPProducerLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WSRPProducer getWSRPProducer(long wsrpProducerId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WSRPProducer getWSRPProducer(java.lang.String wsrpProducerUuid)
 		throws PortalException;
 
 	/**
@@ -302,6 +301,10 @@ public interface WSRPProducerLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getWSRPProducersCount(long companyId);
 
+	public WSRPProducer updateWSRPProducer(long wsrpProducerId,
+		java.lang.String name, java.lang.String version,
+		java.lang.String portletIds) throws PortalException;
+
 	/**
 	* Updates the wsrp producer in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -310,8 +313,4 @@ public interface WSRPProducerLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public WSRPProducer updateWSRPProducer(WSRPProducer wsrpProducer);
-
-	public WSRPProducer updateWSRPProducer(long wsrpProducerId,
-		java.lang.String name, java.lang.String version,
-		java.lang.String portletIds) throws PortalException;
 }

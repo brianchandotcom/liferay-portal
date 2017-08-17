@@ -76,16 +76,6 @@ public interface PasswordTrackerLocalService extends BaseLocalService,
 	public PasswordTracker createPasswordTracker(long passwordTrackerId);
 
 	/**
-	* Deletes the password tracker from the database. Also notifies the appropriate model listeners.
-	*
-	* @param passwordTracker the password tracker
-	* @return the password tracker that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public PasswordTracker deletePasswordTracker(
-		PasswordTracker passwordTracker);
-
-	/**
 	* Deletes the password tracker with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param passwordTrackerId the primary key of the password tracker
@@ -95,6 +85,16 @@ public interface PasswordTrackerLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public PasswordTracker deletePasswordTracker(long passwordTrackerId)
 		throws PortalException;
+
+	/**
+	* Deletes the password tracker from the database. Also notifies the appropriate model listeners.
+	*
+	* @param passwordTracker the password tracker
+	* @return the password tracker that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public PasswordTracker deletePasswordTracker(
+		PasswordTracker passwordTracker);
 
 	public void deletePasswordTrackers(long userId);
 

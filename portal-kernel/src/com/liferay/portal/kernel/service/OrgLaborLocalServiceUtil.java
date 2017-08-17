@@ -40,18 +40,6 @@ public class OrgLaborLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.OrgLaborLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-
-	/**
-	* Adds the org labor to the database. Also notifies the appropriate model listeners.
-	*
-	* @param orgLabor the org labor
-	* @return the org labor that was added
-	*/
-	public static com.liferay.portal.kernel.model.OrgLabor addOrgLabor(
-		com.liferay.portal.kernel.model.OrgLabor orgLabor) {
-		return getService().addOrgLabor(orgLabor);
-	}
-
 	public static com.liferay.portal.kernel.model.OrgLabor addOrgLabor(
 		long organizationId, long typeId, int sunOpen, int sunClose,
 		int monOpen, int monClose, int tueOpen, int tueClose, int wedOpen,
@@ -62,6 +50,17 @@ public class OrgLaborLocalServiceUtil {
 				   .addOrgLabor(organizationId, typeId, sunOpen, sunClose,
 			monOpen, monClose, tueOpen, tueClose, wedOpen, wedClose, thuOpen,
 			thuClose, friOpen, friClose, satOpen, satClose);
+	}
+
+	/**
+	* Adds the org labor to the database. Also notifies the appropriate model listeners.
+	*
+	* @param orgLabor the org labor
+	* @return the org labor that was added
+	*/
+	public static com.liferay.portal.kernel.model.OrgLabor addOrgLabor(
+		com.liferay.portal.kernel.model.OrgLabor orgLabor) {
+		return getService().addOrgLabor(orgLabor);
 	}
 
 	/**
@@ -76,17 +75,6 @@ public class OrgLaborLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the org labor from the database. Also notifies the appropriate model listeners.
-	*
-	* @param orgLabor the org labor
-	* @return the org labor that was removed
-	*/
-	public static com.liferay.portal.kernel.model.OrgLabor deleteOrgLabor(
-		com.liferay.portal.kernel.model.OrgLabor orgLabor) {
-		return getService().deleteOrgLabor(orgLabor);
-	}
-
-	/**
 	* Deletes the org labor with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param orgLaborId the primary key of the org labor
@@ -97,6 +85,17 @@ public class OrgLaborLocalServiceUtil {
 		long orgLaborId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteOrgLabor(orgLaborId);
+	}
+
+	/**
+	* Deletes the org labor from the database. Also notifies the appropriate model listeners.
+	*
+	* @param orgLabor the org labor
+	* @return the org labor that was removed
+	*/
+	public static com.liferay.portal.kernel.model.OrgLabor deleteOrgLabor(
+		com.liferay.portal.kernel.model.OrgLabor orgLabor) {
+		return getService().deleteOrgLabor(orgLabor);
 	}
 
 	/**
@@ -200,15 +199,6 @@ public class OrgLaborLocalServiceUtil {
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	/**
 	* Returns the org labor with the primary key.
 	*
 	* @param orgLaborId the primary key of the org labor
@@ -251,21 +241,19 @@ public class OrgLaborLocalServiceUtil {
 		return getService().getOrgLaborsCount();
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
 	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Updates the org labor in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param orgLabor the org labor
-	* @return the org labor that was updated
-	*/
-	public static com.liferay.portal.kernel.model.OrgLabor updateOrgLabor(
-		com.liferay.portal.kernel.model.OrgLabor orgLabor) {
-		return getService().updateOrgLabor(orgLabor);
 	}
 
 	public static com.liferay.portal.kernel.model.OrgLabor updateOrgLabor(
@@ -278,6 +266,17 @@ public class OrgLaborLocalServiceUtil {
 				   .updateOrgLabor(orgLaborId, typeId, sunOpen, sunClose,
 			monOpen, monClose, tueOpen, tueClose, wedOpen, wedClose, thuOpen,
 			thuClose, friOpen, friClose, satOpen, satClose);
+	}
+
+	/**
+	* Updates the org labor in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param orgLabor the org labor
+	* @return the org labor that was updated
+	*/
+	public static com.liferay.portal.kernel.model.OrgLabor updateOrgLabor(
+		com.liferay.portal.kernel.model.OrgLabor orgLabor) {
+		return getService().updateOrgLabor(orgLabor);
 	}
 
 	public static OrgLaborLocalService getService() {

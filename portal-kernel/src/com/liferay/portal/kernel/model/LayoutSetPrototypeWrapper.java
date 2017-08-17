@@ -213,30 +213,6 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	/**
 	* Returns the localized description of this layout set prototype in the language. Uses the default language if no localization exists for the requested language.
 	*
-	* @param languageId the ID of the language
-	* @return the localized description of this layout set prototype
-	*/
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId) {
-		return _layoutSetPrototype.getDescription(languageId);
-	}
-
-	/**
-	* Returns the localized description of this layout set prototype in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized description of this layout set prototype
-	*/
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId,
-		boolean useDefault) {
-		return _layoutSetPrototype.getDescription(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized description of this layout set prototype in the language. Uses the default language if no localization exists for the requested language.
-	*
 	* @param locale the locale of the language
 	* @return the localized description of this layout set prototype
 	*/
@@ -256,6 +232,30 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	public java.lang.String getDescription(java.util.Locale locale,
 		boolean useDefault) {
 		return _layoutSetPrototype.getDescription(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized description of this layout set prototype in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized description of this layout set prototype
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId) {
+		return _layoutSetPrototype.getDescription(languageId);
+	}
+
+	/**
+	* Returns the localized description of this layout set prototype in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized description of this layout set prototype
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId,
+		boolean useDefault) {
+		return _layoutSetPrototype.getDescription(languageId, useDefault);
 	}
 
 	@Override
@@ -344,6 +344,29 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	/**
 	* Returns the localized name of this layout set prototype in the language. Uses the default language if no localization exists for the requested language.
 	*
+	* @param locale the locale of the language
+	* @return the localized name of this layout set prototype
+	*/
+	@Override
+	public java.lang.String getName(java.util.Locale locale) {
+		return _layoutSetPrototype.getName(locale);
+	}
+
+	/**
+	* Returns the localized name of this layout set prototype in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized name of this layout set prototype. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
+		return _layoutSetPrototype.getName(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized name of this layout set prototype in the language. Uses the default language if no localization exists for the requested language.
+	*
 	* @param languageId the ID of the language
 	* @return the localized name of this layout set prototype
 	*/
@@ -363,29 +386,6 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	public java.lang.String getName(java.lang.String languageId,
 		boolean useDefault) {
 		return _layoutSetPrototype.getName(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized name of this layout set prototype in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized name of this layout set prototype
-	*/
-	@Override
-	public java.lang.String getName(java.util.Locale locale) {
-		return _layoutSetPrototype.getName(locale);
-	}
-
-	/**
-	* Returns the localized name of this layout set prototype in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized name of this layout set prototype. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
-		return _layoutSetPrototype.getName(locale, useDefault);
 	}
 
 	@Override
@@ -484,13 +484,13 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	}
 
 	@Override
-	public boolean hasSetModifiedDate() {
-		return _layoutSetPrototype.hasSetModifiedDate();
+	public int hashCode() {
+		return _layoutSetPrototype.hashCode();
 	}
 
 	@Override
-	public int hashCode() {
-		return _layoutSetPrototype.hashCode();
+	public boolean hasSetModifiedDate() {
+		return _layoutSetPrototype.hasSetModifiedDate();
 	}
 
 	/**
@@ -636,13 +636,13 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_layoutSetPrototype.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
+		_layoutSetPrototype.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_layoutSetPrototype.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_layoutSetPrototype.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

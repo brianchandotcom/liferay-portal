@@ -34,6 +34,16 @@ public class SiteFriendlyURLLocalServiceWrapper
 		_siteFriendlyURLLocalService = siteFriendlyURLLocalService;
 	}
 
+	@Override
+	public com.liferay.site.model.SiteFriendlyURL addSiteFriendlyURL(
+		long userId, long companyId, long groupId,
+		java.lang.String friendlyURL, java.lang.String languageId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _siteFriendlyURLLocalService.addSiteFriendlyURL(userId,
+			companyId, groupId, friendlyURL, languageId, serviceContext);
+	}
+
 	/**
 	* Adds the site friendly url to the database. Also notifies the appropriate model listeners.
 	*
@@ -44,16 +54,6 @@ public class SiteFriendlyURLLocalServiceWrapper
 	public com.liferay.site.model.SiteFriendlyURL addSiteFriendlyURL(
 		com.liferay.site.model.SiteFriendlyURL siteFriendlyURL) {
 		return _siteFriendlyURLLocalService.addSiteFriendlyURL(siteFriendlyURL);
-	}
-
-	@Override
-	public com.liferay.site.model.SiteFriendlyURL addSiteFriendlyURL(
-		long userId, long companyId, long groupId,
-		java.lang.String friendlyURL, java.lang.String languageId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _siteFriendlyURLLocalService.addSiteFriendlyURL(userId,
-			companyId, groupId, friendlyURL, languageId, serviceContext);
 	}
 
 	@Override
@@ -89,18 +89,6 @@ public class SiteFriendlyURLLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the site friendly url from the database. Also notifies the appropriate model listeners.
-	*
-	* @param siteFriendlyURL the site friendly url
-	* @return the site friendly url that was removed
-	*/
-	@Override
-	public com.liferay.site.model.SiteFriendlyURL deleteSiteFriendlyURL(
-		com.liferay.site.model.SiteFriendlyURL siteFriendlyURL) {
-		return _siteFriendlyURLLocalService.deleteSiteFriendlyURL(siteFriendlyURL);
-	}
-
-	/**
 	* Deletes the site friendly url with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param siteFriendlyURLId the primary key of the site friendly url
@@ -120,6 +108,18 @@ public class SiteFriendlyURLLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _siteFriendlyURLLocalService.deleteSiteFriendlyURL(companyId,
 			groupId, languageId);
+	}
+
+	/**
+	* Deletes the site friendly url from the database. Also notifies the appropriate model listeners.
+	*
+	* @param siteFriendlyURL the site friendly url
+	* @return the site friendly url that was removed
+	*/
+	@Override
+	public com.liferay.site.model.SiteFriendlyURL deleteSiteFriendlyURL(
+		com.liferay.site.model.SiteFriendlyURL siteFriendlyURL) {
+		return _siteFriendlyURLLocalService.deleteSiteFriendlyURL(siteFriendlyURL);
 	}
 
 	@Override
@@ -376,6 +376,16 @@ public class SiteFriendlyURLLocalServiceWrapper
 		return _siteFriendlyURLLocalService.getSiteFriendlyURLsCount();
 	}
 
+	@Override
+	public com.liferay.site.model.SiteFriendlyURL updateSiteFriendlyURL(
+		long userId, long companyId, long groupId,
+		java.lang.String friendlyURL, java.lang.String languageId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _siteFriendlyURLLocalService.updateSiteFriendlyURL(userId,
+			companyId, groupId, friendlyURL, languageId, serviceContext);
+	}
+
 	/**
 	* Updates the site friendly url in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -386,16 +396,6 @@ public class SiteFriendlyURLLocalServiceWrapper
 	public com.liferay.site.model.SiteFriendlyURL updateSiteFriendlyURL(
 		com.liferay.site.model.SiteFriendlyURL siteFriendlyURL) {
 		return _siteFriendlyURLLocalService.updateSiteFriendlyURL(siteFriendlyURL);
-	}
-
-	@Override
-	public com.liferay.site.model.SiteFriendlyURL updateSiteFriendlyURL(
-		long userId, long companyId, long groupId,
-		java.lang.String friendlyURL, java.lang.String languageId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _siteFriendlyURLLocalService.updateSiteFriendlyURL(userId,
-			companyId, groupId, friendlyURL, languageId, serviceContext);
 	}
 
 	@Override

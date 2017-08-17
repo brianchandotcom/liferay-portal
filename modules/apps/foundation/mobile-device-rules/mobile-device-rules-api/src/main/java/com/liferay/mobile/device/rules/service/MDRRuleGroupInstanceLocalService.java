@@ -79,11 +79,11 @@ public interface MDRRuleGroupInstanceLocalService extends BaseLocalService,
 
 	public MDRRuleGroupInstance addRuleGroupInstance(long groupId,
 		java.lang.String className, long classPK, long ruleGroupId,
-		ServiceContext serviceContext) throws PortalException;
+		int priority, ServiceContext serviceContext) throws PortalException;
 
 	public MDRRuleGroupInstance addRuleGroupInstance(long groupId,
 		java.lang.String className, long classPK, long ruleGroupId,
-		int priority, ServiceContext serviceContext) throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new mdr rule group instance with the primary key. Does not add the mdr rule group instance to the database.
@@ -97,16 +97,6 @@ public interface MDRRuleGroupInstanceLocalService extends BaseLocalService,
 	public void deleteGroupRuleGroupInstances(long groupId);
 
 	/**
-	* Deletes the mdr rule group instance from the database. Also notifies the appropriate model listeners.
-	*
-	* @param mdrRuleGroupInstance the mdr rule group instance
-	* @return the mdr rule group instance that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public MDRRuleGroupInstance deleteMDRRuleGroupInstance(
-		MDRRuleGroupInstance mdrRuleGroupInstance);
-
-	/**
 	* Deletes the mdr rule group instance with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param ruleGroupInstanceId the primary key of the mdr rule group instance
@@ -118,16 +108,26 @@ public interface MDRRuleGroupInstanceLocalService extends BaseLocalService,
 		long ruleGroupInstanceId) throws PortalException;
 
 	/**
+	* Deletes the mdr rule group instance from the database. Also notifies the appropriate model listeners.
+	*
+	* @param mdrRuleGroupInstance the mdr rule group instance
+	* @return the mdr rule group instance that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public MDRRuleGroupInstance deleteMDRRuleGroupInstance(
+		MDRRuleGroupInstance mdrRuleGroupInstance);
+
+	/**
 	* @throws PortalException
 	*/
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
+	public void deleteRuleGroupInstance(long ruleGroupInstanceId);
+
 	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
 	public void deleteRuleGroupInstance(MDRRuleGroupInstance ruleGroupInstance);
-
-	public void deleteRuleGroupInstance(long ruleGroupInstanceId);
 
 	public void deleteRuleGroupInstances(long ruleGroupId);
 
@@ -206,11 +206,11 @@ public interface MDRRuleGroupInstanceLocalService extends BaseLocalService,
 		java.lang.String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MDRRuleGroupInstance fetchRuleGroupInstance(
-		java.lang.String className, long classPK, long ruleGroupId);
+	public MDRRuleGroupInstance fetchRuleGroupInstance(long ruleGroupInstanceId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MDRRuleGroupInstance fetchRuleGroupInstance(long ruleGroupInstanceId);
+	public MDRRuleGroupInstance fetchRuleGroupInstance(
+		java.lang.String className, long classPK, long ruleGroupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -307,13 +307,20 @@ public interface MDRRuleGroupInstanceLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MDRRuleGroupInstance getRuleGroupInstance(long ruleGroupInstanceId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MDRRuleGroupInstance getRuleGroupInstance(
 		java.lang.String className, long classPK, long ruleGroupId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MDRRuleGroupInstance getRuleGroupInstance(long ruleGroupInstanceId)
-		throws PortalException;
+	public List<MDRRuleGroupInstance> getRuleGroupInstances(long ruleGroupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MDRRuleGroupInstance> getRuleGroupInstances(long ruleGroupId,
+		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MDRRuleGroupInstance> getRuleGroupInstances(
@@ -325,18 +332,11 @@ public interface MDRRuleGroupInstanceLocalService extends BaseLocalService,
 		OrderByComparator<MDRRuleGroupInstance> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MDRRuleGroupInstance> getRuleGroupInstances(long ruleGroupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MDRRuleGroupInstance> getRuleGroupInstances(long ruleGroupId,
-		int start, int end);
+	public int getRuleGroupInstancesCount(long ruleGroupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRuleGroupInstancesCount(java.lang.String className,
 		long classPK);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getRuleGroupInstancesCount(long ruleGroupId);
 
 	/**
 	* Updates the mdr rule group instance in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

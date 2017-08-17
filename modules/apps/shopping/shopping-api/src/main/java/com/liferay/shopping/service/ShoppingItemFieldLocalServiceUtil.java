@@ -74,17 +74,6 @@ public class ShoppingItemFieldLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the shopping item field from the database. Also notifies the appropriate model listeners.
-	*
-	* @param shoppingItemField the shopping item field
-	* @return the shopping item field that was removed
-	*/
-	public static com.liferay.shopping.model.ShoppingItemField deleteShoppingItemField(
-		com.liferay.shopping.model.ShoppingItemField shoppingItemField) {
-		return getService().deleteShoppingItemField(shoppingItemField);
-	}
-
-	/**
 	* Deletes the shopping item field with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param itemFieldId the primary key of the shopping item field
@@ -95,6 +84,17 @@ public class ShoppingItemFieldLocalServiceUtil {
 		long itemFieldId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteShoppingItemField(itemFieldId);
+	}
+
+	/**
+	* Deletes the shopping item field from the database. Also notifies the appropriate model listeners.
+	*
+	* @param shoppingItemField the shopping item field
+	* @return the shopping item field that was removed
+	*/
+	public static com.liferay.shopping.model.ShoppingItemField deleteShoppingItemField(
+		com.liferay.shopping.model.ShoppingItemField shoppingItemField) {
+		return getService().deleteShoppingItemField(shoppingItemField);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {

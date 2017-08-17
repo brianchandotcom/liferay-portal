@@ -280,6 +280,15 @@ public class BackgroundTaskLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.background.task.model.BackgroundTask fetchFirstBackgroundTask(
+		long groupId, java.lang.String taskExecutorClassName,
+		boolean completed,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.background.task.model.BackgroundTask> orderByComparator) {
+		return _backgroundTaskLocalService.fetchFirstBackgroundTask(groupId,
+			taskExecutorClassName, completed, orderByComparator);
+	}
+
+	@Override
+	public com.liferay.portal.background.task.model.BackgroundTask fetchFirstBackgroundTask(
 		java.lang.String taskExecutorClassName, int status) {
 		return _backgroundTaskLocalService.fetchFirstBackgroundTask(taskExecutorClassName,
 			status);
@@ -291,15 +300,6 @@ public class BackgroundTaskLocalServiceWrapper
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.background.task.model.BackgroundTask> orderByComparator) {
 		return _backgroundTaskLocalService.fetchFirstBackgroundTask(taskExecutorClassName,
 			status, orderByComparator);
-	}
-
-	@Override
-	public com.liferay.portal.background.task.model.BackgroundTask fetchFirstBackgroundTask(
-		long groupId, java.lang.String taskExecutorClassName,
-		boolean completed,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.background.task.model.BackgroundTask> orderByComparator) {
-		return _backgroundTaskLocalService.fetchFirstBackgroundTask(groupId,
-			taskExecutorClassName, completed, orderByComparator);
 	}
 
 	@Override
@@ -321,11 +321,6 @@ public class BackgroundTaskLocalServiceWrapper
 		return _backgroundTaskLocalService.getBackgroundTask(backgroundTaskId);
 	}
 
-	@Override
-	public java.lang.String getBackgroundTaskStatusJSON(long backgroundTaskId) {
-		return _backgroundTaskLocalService.getBackgroundTaskStatusJSON(backgroundTaskId);
-	}
-
 	/**
 	* Returns a range of all the background tasks.
 	*
@@ -341,37 +336,6 @@ public class BackgroundTaskLocalServiceWrapper
 	public java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
 		int start, int end) {
 		return _backgroundTaskLocalService.getBackgroundTasks(start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
-		java.lang.String taskExecutorClassName, int status) {
-		return _backgroundTaskLocalService.getBackgroundTasks(taskExecutorClassName,
-			status);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
-		java.lang.String[] taskExecutorClassNames, int status) {
-		return _backgroundTaskLocalService.getBackgroundTasks(taskExecutorClassNames,
-			status);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
-		java.lang.String taskExecutorClassName, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.background.task.model.BackgroundTask> orderByComparator) {
-		return _backgroundTaskLocalService.getBackgroundTasks(taskExecutorClassName,
-			status, start, end, orderByComparator);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
-		java.lang.String[] taskExecutorClassNames, int status, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.background.task.model.BackgroundTask> orderByComparator) {
-		return _backgroundTaskLocalService.getBackgroundTasks(taskExecutorClassNames,
-			status, start, end, orderByComparator);
 	}
 
 	@Override
@@ -470,6 +434,37 @@ public class BackgroundTaskLocalServiceWrapper
 			taskExecutorClassName, start, end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
+		java.lang.String taskExecutorClassName, int status) {
+		return _backgroundTaskLocalService.getBackgroundTasks(taskExecutorClassName,
+			status);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
+		java.lang.String[] taskExecutorClassNames, int status) {
+		return _backgroundTaskLocalService.getBackgroundTasks(taskExecutorClassNames,
+			status);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
+		java.lang.String taskExecutorClassName, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.background.task.model.BackgroundTask> orderByComparator) {
+		return _backgroundTaskLocalService.getBackgroundTasks(taskExecutorClassName,
+			status, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
+		java.lang.String[] taskExecutorClassNames, int status, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.background.task.model.BackgroundTask> orderByComparator) {
+		return _backgroundTaskLocalService.getBackgroundTasks(taskExecutorClassNames,
+			status, start, end, orderByComparator);
+	}
+
 	/**
 	* Returns the number of background tasks.
 	*
@@ -534,6 +529,11 @@ public class BackgroundTaskLocalServiceWrapper
 		java.lang.String taskExecutorClassName, boolean completed) {
 		return _backgroundTaskLocalService.getBackgroundTasksCount(groupIds,
 			name, taskExecutorClassName, completed);
+	}
+
+	@Override
+	public java.lang.String getBackgroundTaskStatusJSON(long backgroundTaskId) {
+		return _backgroundTaskLocalService.getBackgroundTaskStatusJSON(backgroundTaskId);
 	}
 
 	@Override

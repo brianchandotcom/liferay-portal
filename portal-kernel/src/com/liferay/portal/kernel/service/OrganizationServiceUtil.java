@@ -54,39 +54,6 @@ public class OrganizationServiceUtil {
 	}
 
 	/**
-	* Adds an organization.
-	*
-	* <p>
-	* This method handles the creation and bookkeeping of the organization
-	* including its resources, metadata, and internal data structures.
-	* </p>
-	*
-	* @param parentOrganizationId the primary key of the organization's parent
-	organization
-	* @param name the organization's name
-	* @param type the organization's type
-	* @param regionId the primary key of the organization's region
-	* @param countryId the primary key of the organization's country
-	* @param statusId the organization's workflow status
-	* @param comments the comments about the organization
-	* @param site whether the organization is to be associated with a main
-	site
-	* @param serviceContext the service context to be applied (optionally
-	<code>null</code>). Can set asset category IDs, asset tag names,
-	and expando bridge attributes for the organization.
-	* @return the organization
-	*/
-	public static com.liferay.portal.kernel.model.Organization addOrganization(
-		long parentOrganizationId, java.lang.String name,
-		java.lang.String type, long regionId, long countryId, long statusId,
-		java.lang.String comments, boolean site, ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addOrganization(parentOrganizationId, name, type, regionId,
-			countryId, statusId, comments, site, serviceContext);
-	}
-
-	/**
 	* Adds an organization with additional parameters.
 	*
 	* <p>
@@ -129,6 +96,39 @@ public class OrganizationServiceUtil {
 				   .addOrganization(parentOrganizationId, name, type, regionId,
 			countryId, statusId, comments, site, addresses, emailAddresses,
 			orgLabors, phones, websites, serviceContext);
+	}
+
+	/**
+	* Adds an organization.
+	*
+	* <p>
+	* This method handles the creation and bookkeeping of the organization
+	* including its resources, metadata, and internal data structures.
+	* </p>
+	*
+	* @param parentOrganizationId the primary key of the organization's parent
+	organization
+	* @param name the organization's name
+	* @param type the organization's type
+	* @param regionId the primary key of the organization's region
+	* @param countryId the primary key of the organization's country
+	* @param statusId the organization's workflow status
+	* @param comments the comments about the organization
+	* @param site whether the organization is to be associated with a main
+	site
+	* @param serviceContext the service context to be applied (optionally
+	<code>null</code>). Can set asset category IDs, asset tag names,
+	and expando bridge attributes for the organization.
+	* @return the organization
+	*/
+	public static com.liferay.portal.kernel.model.Organization addOrganization(
+		long parentOrganizationId, java.lang.String name,
+		java.lang.String type, long regionId, long countryId, long statusId,
+		java.lang.String comments, boolean site, ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addOrganization(parentOrganizationId, name, type, regionId,
+			countryId, statusId, comments, site, serviceContext);
 	}
 
 	/**
@@ -178,15 +178,6 @@ public class OrganizationServiceUtil {
 		long organizationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().fetchOrganization(organizationId);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -267,6 +258,15 @@ public class OrganizationServiceUtil {
 		long parentOrganizationId) {
 		return getService()
 				   .getOrganizationsCount(companyId, parentOrganizationId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -372,37 +372,6 @@ public class OrganizationServiceUtil {
 	}
 
 	/**
-	* Updates the organization.
-	*
-	* @param organizationId the primary key of the organization
-	* @param parentOrganizationId the primary key of the organization's parent
-	organization
-	* @param name the organization's name
-	* @param type the organization's type
-	* @param regionId the primary key of the organization's region
-	* @param countryId the primary key of the organization's country
-	* @param statusId the organization's workflow status
-	* @param comments the comments about the organization
-	* @param site whether the organization is to be associated with a main
-	site
-	* @param serviceContext the service context to be applied (optionally
-	<code>null</code>). Can set asset category IDs and asset tag
-	names for the organization, and merge expando bridge attributes
-	for the organization.
-	* @return the organization
-	*/
-	public static com.liferay.portal.kernel.model.Organization updateOrganization(
-		long organizationId, long parentOrganizationId, java.lang.String name,
-		java.lang.String type, long regionId, long countryId, long statusId,
-		java.lang.String comments, boolean site, ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateOrganization(organizationId, parentOrganizationId,
-			name, type, regionId, countryId, statusId, comments, site,
-			serviceContext);
-	}
-
-	/**
 	* Updates the organization with additional parameters.
 	*
 	* @param organizationId the primary key of the organization
@@ -447,6 +416,37 @@ public class OrganizationServiceUtil {
 				   .updateOrganization(organizationId, parentOrganizationId,
 			name, type, regionId, countryId, statusId, comments, site,
 			addresses, emailAddresses, orgLabors, phones, websites,
+			serviceContext);
+	}
+
+	/**
+	* Updates the organization.
+	*
+	* @param organizationId the primary key of the organization
+	* @param parentOrganizationId the primary key of the organization's parent
+	organization
+	* @param name the organization's name
+	* @param type the organization's type
+	* @param regionId the primary key of the organization's region
+	* @param countryId the primary key of the organization's country
+	* @param statusId the organization's workflow status
+	* @param comments the comments about the organization
+	* @param site whether the organization is to be associated with a main
+	site
+	* @param serviceContext the service context to be applied (optionally
+	<code>null</code>). Can set asset category IDs and asset tag
+	names for the organization, and merge expando bridge attributes
+	for the organization.
+	* @return the organization
+	*/
+	public static com.liferay.portal.kernel.model.Organization updateOrganization(
+		long organizationId, long parentOrganizationId, java.lang.String name,
+		java.lang.String type, long regionId, long countryId, long statusId,
+		java.lang.String comments, boolean site, ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateOrganization(organizationId, parentOrganizationId,
+			name, type, regionId, countryId, statusId, comments, site,
 			serviceContext);
 	}
 

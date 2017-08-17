@@ -61,6 +61,16 @@ public class WeDeployAuthTokenLocalServiceUtil {
 			clientId, serviceContext);
 	}
 
+	public static com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken addWeDeployAuthToken(
+		long userId, java.lang.String clientId, java.lang.String token,
+		int type,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addWeDeployAuthToken(userId, clientId, token, type,
+			serviceContext);
+	}
+
 	/**
 	* Adds the we deploy auth token to the database. Also notifies the appropriate model listeners.
 	*
@@ -70,16 +80,6 @@ public class WeDeployAuthTokenLocalServiceUtil {
 	public static com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken addWeDeployAuthToken(
 		com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken weDeployAuthToken) {
 		return getService().addWeDeployAuthToken(weDeployAuthToken);
-	}
-
-	public static com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken addWeDeployAuthToken(
-		long userId, java.lang.String clientId, java.lang.String token,
-		int type,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addWeDeployAuthToken(userId, clientId, token, type,
-			serviceContext);
 	}
 
 	/**
@@ -103,17 +103,6 @@ public class WeDeployAuthTokenLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the we deploy auth token from the database. Also notifies the appropriate model listeners.
-	*
-	* @param weDeployAuthToken the we deploy auth token
-	* @return the we deploy auth token that was removed
-	*/
-	public static com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken deleteWeDeployAuthToken(
-		com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken weDeployAuthToken) {
-		return getService().deleteWeDeployAuthToken(weDeployAuthToken);
-	}
-
-	/**
 	* Deletes the we deploy auth token with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param weDeployAuthTokenId the primary key of the we deploy auth token
@@ -124,6 +113,17 @@ public class WeDeployAuthTokenLocalServiceUtil {
 		long weDeployAuthTokenId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteWeDeployAuthToken(weDeployAuthTokenId);
+	}
+
+	/**
+	* Deletes the we deploy auth token from the database. Also notifies the appropriate model listeners.
+	*
+	* @param weDeployAuthToken the we deploy auth token
+	* @return the we deploy auth token that was removed
+	*/
+	public static com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken deleteWeDeployAuthToken(
+		com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken weDeployAuthToken) {
+		return getService().deleteWeDeployAuthToken(weDeployAuthToken);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -232,12 +232,6 @@ public class WeDeployAuthTokenLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken getWeDeployAuthToken(
-		java.lang.String token, int type)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getWeDeployAuthToken(token, type);
-	}
-
 	/**
 	* Returns the we deploy auth token with the primary key.
 	*
@@ -249,6 +243,12 @@ public class WeDeployAuthTokenLocalServiceUtil {
 		long weDeployAuthTokenId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getWeDeployAuthToken(weDeployAuthTokenId);
+	}
+
+	public static com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken getWeDeployAuthToken(
+		java.lang.String token, int type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getWeDeployAuthToken(token, type);
 	}
 
 	/**

@@ -35,16 +35,6 @@ public class DLFileEntryTypeServiceWrapper implements DLFileEntryTypeService,
 
 	@Override
 	public com.liferay.document.library.kernel.model.DLFileEntryType addFileEntryType(
-		long groupId, java.lang.String name, java.lang.String description,
-		long[] ddmStructureIds,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileEntryTypeService.addFileEntryType(groupId, name,
-			description, ddmStructureIds, serviceContext);
-	}
-
-	@Override
-	public com.liferay.document.library.kernel.model.DLFileEntryType addFileEntryType(
 		long groupId, java.lang.String fileEntryTypeKey,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
@@ -54,6 +44,16 @@ public class DLFileEntryTypeServiceWrapper implements DLFileEntryTypeService,
 		return _dlFileEntryTypeService.addFileEntryType(groupId,
 			fileEntryTypeKey, nameMap, descriptionMap, ddmStructureIds,
 			serviceContext);
+	}
+
+	@Override
+	public com.liferay.document.library.kernel.model.DLFileEntryType addFileEntryType(
+		long groupId, java.lang.String name, java.lang.String description,
+		long[] ddmStructureIds,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileEntryTypeService.addFileEntryType(groupId, name,
+			description, ddmStructureIds, serviceContext);
 	}
 
 	@Override
@@ -122,16 +122,6 @@ public class DLFileEntryTypeServiceWrapper implements DLFileEntryTypeService,
 
 	@Override
 	public void updateFileEntryType(long fileEntryTypeId,
-		java.lang.String name, java.lang.String description,
-		long[] ddmStructureIds,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_dlFileEntryTypeService.updateFileEntryType(fileEntryTypeId, name,
-			description, ddmStructureIds, serviceContext);
-	}
-
-	@Override
-	public void updateFileEntryType(long fileEntryTypeId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long[] ddmStructureIds,
@@ -139,6 +129,16 @@ public class DLFileEntryTypeServiceWrapper implements DLFileEntryTypeService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlFileEntryTypeService.updateFileEntryType(fileEntryTypeId, nameMap,
 			descriptionMap, ddmStructureIds, serviceContext);
+	}
+
+	@Override
+	public void updateFileEntryType(long fileEntryTypeId,
+		java.lang.String name, java.lang.String description,
+		long[] ddmStructureIds,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlFileEntryTypeService.updateFileEntryType(fileEntryTypeId, name,
+			description, ddmStructureIds, serviceContext);
 	}
 
 	@Override

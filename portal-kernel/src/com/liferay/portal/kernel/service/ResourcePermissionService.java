@@ -158,12 +158,12 @@ public interface ResourcePermissionService extends BaseService {
 	* @param name the resource's name, which can be either a class name or a
 	portlet ID
 	* @param primKey the primary key
-	* @param roleIdsToActionIds a map of role IDs to action IDs of the actions
+	* @param roleId the primary key of the role
+	* @param actionIds the action IDs of the actions
 	*/
 	public void setIndividualResourcePermissions(long groupId, long companyId,
-		java.lang.String name, java.lang.String primKey,
-		Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds)
-		throws PortalException;
+		java.lang.String name, java.lang.String primKey, long roleId,
+		java.lang.String[] actionIds) throws PortalException;
 
 	/**
 	* Updates the role's permissions at the scope, setting the actions that can
@@ -186,10 +186,10 @@ public interface ResourcePermissionService extends BaseService {
 	* @param name the resource's name, which can be either a class name or a
 	portlet ID
 	* @param primKey the primary key
-	* @param roleId the primary key of the role
-	* @param actionIds the action IDs of the actions
+	* @param roleIdsToActionIds a map of role IDs to action IDs of the actions
 	*/
 	public void setIndividualResourcePermissions(long groupId, long companyId,
-		java.lang.String name, java.lang.String primKey, long roleId,
-		java.lang.String[] actionIds) throws PortalException;
+		java.lang.String name, java.lang.String primKey,
+		Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds)
+		throws PortalException;
 }

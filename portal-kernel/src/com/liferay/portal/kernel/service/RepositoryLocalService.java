@@ -63,6 +63,11 @@ public interface RepositoryLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link RepositoryLocalServiceUtil} to access the repository local service. Add custom service methods to {@link com.liferay.portal.service.impl.RepositoryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public Repository addRepository(long userId, long groupId,
+		long classNameId, long parentFolderId, java.lang.String name,
+		java.lang.String description, java.lang.String portletId,
+		UnicodeProperties typeSettingsProperties, boolean hidden,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Adds the repository to the database. Also notifies the appropriate model listeners.
@@ -72,12 +77,6 @@ public interface RepositoryLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public Repository addRepository(Repository repository);
-
-	public Repository addRepository(long userId, long groupId,
-		long classNameId, long parentFolderId, java.lang.String name,
-		java.lang.String description, java.lang.String portletId,
-		UnicodeProperties typeSettingsProperties, boolean hidden,
-		ServiceContext serviceContext) throws PortalException;
 
 	public void checkRepository(long repositoryId);
 
@@ -99,16 +98,6 @@ public interface RepositoryLocalService extends BaseLocalService,
 	public void deleteRepositories(long groupId) throws PortalException;
 
 	/**
-	* Deletes the repository from the database. Also notifies the appropriate model listeners.
-	*
-	* @param repository the repository
-	* @return the repository that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
-	public Repository deleteRepository(Repository repository);
-
-	/**
 	* Deletes the repository with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param repositoryId the primary key of the repository
@@ -118,6 +107,16 @@ public interface RepositoryLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public Repository deleteRepository(long repositoryId)
 		throws PortalException;
+
+	/**
+	* Deletes the repository from the database. Also notifies the appropriate model listeners.
+	*
+	* @param repository the repository
+	* @return the repository that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
+	public Repository deleteRepository(Repository repository);
 
 	public DynamicQuery dynamicQuery();
 
@@ -307,6 +306,12 @@ public interface RepositoryLocalService extends BaseLocalService,
 	public UnicodeProperties getTypeSettingsProperties(long repositoryId)
 		throws PortalException;
 
+	public void updateRepository(long repositoryId, java.lang.String name,
+		java.lang.String description) throws PortalException;
+
+	public void updateRepository(long repositoryId,
+		UnicodeProperties typeSettingsProperties) throws PortalException;
+
 	/**
 	* Updates the repository in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -315,10 +320,4 @@ public interface RepositoryLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public Repository updateRepository(Repository repository);
-
-	public void updateRepository(long repositoryId,
-		UnicodeProperties typeSettingsProperties) throws PortalException;
-
-	public void updateRepository(long repositoryId, java.lang.String name,
-		java.lang.String description) throws PortalException;
 }

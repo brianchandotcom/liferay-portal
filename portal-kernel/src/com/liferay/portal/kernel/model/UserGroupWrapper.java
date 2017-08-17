@@ -334,6 +334,11 @@ public class UserGroupWrapper implements UserGroup, ModelWrapper<UserGroup> {
 	}
 
 	@Override
+	public int hashCode() {
+		return _userGroup.hashCode();
+	}
+
+	@Override
 	public boolean hasPrivateLayouts()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userGroup.hasPrivateLayouts();
@@ -343,11 +348,6 @@ public class UserGroupWrapper implements UserGroup, ModelWrapper<UserGroup> {
 	public boolean hasPublicLayouts()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userGroup.hasPublicLayouts();
-	}
-
-	@Override
-	public int hashCode() {
-		return _userGroup.hashCode();
 	}
 
 	/**
@@ -426,13 +426,13 @@ public class UserGroupWrapper implements UserGroup, ModelWrapper<UserGroup> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_userGroup.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
+		_userGroup.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_userGroup.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_userGroup.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

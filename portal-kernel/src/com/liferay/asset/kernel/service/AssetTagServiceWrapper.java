@@ -53,6 +53,12 @@ public class AssetTagServiceWrapper implements AssetTagService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.asset.kernel.model.AssetTag> getGroupsTags(
+		long[] groupIds) {
+		return _assetTagService.getGroupsTags(groupIds);
+	}
+
+	@Override
 	public java.util.List<com.liferay.asset.kernel.model.AssetTag> getGroupTags(
 		long groupId) {
 		return _assetTagService.getGroupTags(groupId);
@@ -76,12 +82,6 @@ public class AssetTagServiceWrapper implements AssetTagService,
 		return _assetTagService.getGroupTagsDisplay(groupId, name, start, end);
 	}
 
-	@Override
-	public java.util.List<com.liferay.asset.kernel.model.AssetTag> getGroupsTags(
-		long[] groupIds) {
-		return _assetTagService.getGroupsTags(groupIds);
-	}
-
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -100,8 +100,17 @@ public class AssetTagServiceWrapper implements AssetTagService,
 
 	@Override
 	public java.util.List<com.liferay.asset.kernel.model.AssetTag> getTags(
-		java.lang.String className, long classPK) {
-		return _assetTagService.getTags(className, classPK);
+		long groupId, long classNameId, java.lang.String name) {
+		return _assetTagService.getTags(groupId, classNameId, name);
+	}
+
+	@Override
+	public java.util.List<com.liferay.asset.kernel.model.AssetTag> getTags(
+		long groupId, long classNameId, java.lang.String name, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.kernel.model.AssetTag> obc) {
+		return _assetTagService.getTags(groupId, classNameId, name, start, end,
+			obc);
 	}
 
 	@Override
@@ -132,17 +141,8 @@ public class AssetTagServiceWrapper implements AssetTagService,
 
 	@Override
 	public java.util.List<com.liferay.asset.kernel.model.AssetTag> getTags(
-		long groupId, long classNameId, java.lang.String name) {
-		return _assetTagService.getTags(groupId, classNameId, name);
-	}
-
-	@Override
-	public java.util.List<com.liferay.asset.kernel.model.AssetTag> getTags(
-		long groupId, long classNameId, java.lang.String name, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.kernel.model.AssetTag> obc) {
-		return _assetTagService.getTags(groupId, classNameId, name, start, end,
-			obc);
+		java.lang.String className, long classPK) {
+		return _assetTagService.getTags(className, classPK);
 	}
 
 	@Override
@@ -151,15 +151,15 @@ public class AssetTagServiceWrapper implements AssetTagService,
 	}
 
 	@Override
-	public int getVisibleAssetsTagsCount(long groupId, java.lang.String name) {
-		return _assetTagService.getVisibleAssetsTagsCount(groupId, name);
-	}
-
-	@Override
 	public int getVisibleAssetsTagsCount(long groupId, long classNameId,
 		java.lang.String name) {
 		return _assetTagService.getVisibleAssetsTagsCount(groupId, classNameId,
 			name);
+	}
+
+	@Override
+	public int getVisibleAssetsTagsCount(long groupId, java.lang.String name) {
+		return _assetTagService.getVisibleAssetsTagsCount(groupId, name);
 	}
 
 	@Override

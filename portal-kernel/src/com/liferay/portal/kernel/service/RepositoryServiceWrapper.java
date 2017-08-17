@@ -86,9 +86,9 @@ public class RepositoryServiceWrapper implements RepositoryService,
 	*/
 	@Deprecated
 	@Override
-	public java.lang.String[] getSupportedParameters(
-		java.lang.String className, java.lang.String configuration) {
-		return _repositoryService.getSupportedParameters(className,
+	public java.lang.String[] getSupportedParameters(long classNameId,
+		java.lang.String configuration) {
+		return _repositoryService.getSupportedParameters(classNameId,
 			configuration);
 	}
 
@@ -97,9 +97,9 @@ public class RepositoryServiceWrapper implements RepositoryService,
 	*/
 	@Deprecated
 	@Override
-	public java.lang.String[] getSupportedParameters(long classNameId,
-		java.lang.String configuration) {
-		return _repositoryService.getSupportedParameters(classNameId,
+	public java.lang.String[] getSupportedParameters(
+		java.lang.String className, java.lang.String configuration) {
+		return _repositoryService.getSupportedParameters(className,
 			configuration);
 	}
 

@@ -87,19 +87,6 @@ public class SocialRelationLocalServiceWrapper
 	* Removes the relation (and its inverse in case of a bidirectional
 	* relation) from the database.
 	*
-	* @param relation the relation to be removed
-	*/
-	@Override
-	public void deleteRelation(
-		com.liferay.social.kernel.model.SocialRelation relation)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_socialRelationLocalService.deleteRelation(relation);
-	}
-
-	/**
-	* Removes the relation (and its inverse in case of a bidirectional
-	* relation) from the database.
-	*
 	* @param relationId the primary key of the relation
 	*/
 	@Override
@@ -120,6 +107,19 @@ public class SocialRelationLocalServiceWrapper
 	public void deleteRelation(long userId1, long userId2, int type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_socialRelationLocalService.deleteRelation(userId1, userId2, type);
+	}
+
+	/**
+	* Removes the relation (and its inverse in case of a bidirectional
+	* relation) from the database.
+	*
+	* @param relation the relation to be removed
+	*/
+	@Override
+	public void deleteRelation(
+		com.liferay.social.kernel.model.SocialRelation relation)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_socialRelationLocalService.deleteRelation(relation);
 	}
 
 	/**
@@ -145,18 +145,6 @@ public class SocialRelationLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the social relation from the database. Also notifies the appropriate model listeners.
-	*
-	* @param socialRelation the social relation
-	* @return the social relation that was removed
-	*/
-	@Override
-	public com.liferay.social.kernel.model.SocialRelation deleteSocialRelation(
-		com.liferay.social.kernel.model.SocialRelation socialRelation) {
-		return _socialRelationLocalService.deleteSocialRelation(socialRelation);
-	}
-
-	/**
 	* Deletes the social relation with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param relationId the primary key of the social relation
@@ -168,6 +156,18 @@ public class SocialRelationLocalServiceWrapper
 		long relationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _socialRelationLocalService.deleteSocialRelation(relationId);
+	}
+
+	/**
+	* Deletes the social relation from the database. Also notifies the appropriate model listeners.
+	*
+	* @param socialRelation the social relation
+	* @return the social relation that was removed
+	*/
+	@Override
+	public com.liferay.social.kernel.model.SocialRelation deleteSocialRelation(
+		com.liferay.social.kernel.model.SocialRelation socialRelation) {
+		return _socialRelationLocalService.deleteSocialRelation(socialRelation);
 	}
 
 	@Override

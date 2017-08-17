@@ -201,13 +201,13 @@ public class CalendarResourceLocalServiceUtil {
 	}
 
 	public static com.liferay.calendar.model.CalendarResource fetchCalendarResource(
-		long groupId, java.lang.String code) {
-		return getService().fetchCalendarResource(groupId, code);
+		long classNameId, long classPK) {
+		return getService().fetchCalendarResource(classNameId, classPK);
 	}
 
 	public static com.liferay.calendar.model.CalendarResource fetchCalendarResource(
-		long classNameId, long classPK) {
-		return getService().fetchCalendarResource(classNameId, classPK);
+		long groupId, java.lang.String code) {
+		return getService().fetchCalendarResource(groupId, code);
 	}
 
 	/**

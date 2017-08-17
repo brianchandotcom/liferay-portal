@@ -385,16 +385,6 @@ public class MBMailingListWrapper implements MBMailingList,
 	}
 
 	/**
-	* Returns the in use ssl of this message boards mailing list.
-	*
-	* @return the in use ssl of this message boards mailing list
-	*/
-	@Override
-	public boolean getInUseSSL() {
-		return _mbMailingList.getInUseSSL();
-	}
-
-	/**
 	* Returns the in user name of this message boards mailing list.
 	*
 	* @return the in user name of this message boards mailing list
@@ -402,6 +392,16 @@ public class MBMailingListWrapper implements MBMailingList,
 	@Override
 	public java.lang.String getInUserName() {
 		return _mbMailingList.getInUserName();
+	}
+
+	/**
+	* Returns the in use ssl of this message boards mailing list.
+	*
+	* @return the in use ssl of this message boards mailing list
+	*/
+	@Override
+	public boolean getInUseSSL() {
+		return _mbMailingList.getInUseSSL();
 	}
 
 	/**
@@ -475,16 +475,6 @@ public class MBMailingListWrapper implements MBMailingList,
 	}
 
 	/**
-	* Returns the out use ssl of this message boards mailing list.
-	*
-	* @return the out use ssl of this message boards mailing list
-	*/
-	@Override
-	public boolean getOutUseSSL() {
-		return _mbMailingList.getOutUseSSL();
-	}
-
-	/**
 	* Returns the out user name of this message boards mailing list.
 	*
 	* @return the out user name of this message boards mailing list
@@ -492,6 +482,16 @@ public class MBMailingListWrapper implements MBMailingList,
 	@Override
 	public java.lang.String getOutUserName() {
 		return _mbMailingList.getOutUserName();
+	}
+
+	/**
+	* Returns the out use ssl of this message boards mailing list.
+	*
+	* @return the out use ssl of this message boards mailing list
+	*/
+	@Override
+	public boolean getOutUseSSL() {
+		return _mbMailingList.getOutUseSSL();
 	}
 
 	/**
@@ -690,14 +690,14 @@ public class MBMailingListWrapper implements MBMailingList,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_mbMailingList.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_mbMailingList.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_mbMailingList.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -766,16 +766,6 @@ public class MBMailingListWrapper implements MBMailingList,
 	}
 
 	/**
-	* Sets whether this message boards mailing list is in use ssl.
-	*
-	* @param inUseSSL the in use ssl of this message boards mailing list
-	*/
-	@Override
-	public void setInUseSSL(boolean inUseSSL) {
-		_mbMailingList.setInUseSSL(inUseSSL);
-	}
-
-	/**
 	* Sets the in user name of this message boards mailing list.
 	*
 	* @param inUserName the in user name of this message boards mailing list
@@ -783,6 +773,16 @@ public class MBMailingListWrapper implements MBMailingList,
 	@Override
 	public void setInUserName(java.lang.String inUserName) {
 		_mbMailingList.setInUserName(inUserName);
+	}
+
+	/**
+	* Sets whether this message boards mailing list is in use ssl.
+	*
+	* @param inUseSSL the in use ssl of this message boards mailing list
+	*/
+	@Override
+	public void setInUseSSL(boolean inUseSSL) {
+		_mbMailingList.setInUseSSL(inUseSSL);
 	}
 
 	/**
@@ -861,16 +861,6 @@ public class MBMailingListWrapper implements MBMailingList,
 	}
 
 	/**
-	* Sets whether this message boards mailing list is out use ssl.
-	*
-	* @param outUseSSL the out use ssl of this message boards mailing list
-	*/
-	@Override
-	public void setOutUseSSL(boolean outUseSSL) {
-		_mbMailingList.setOutUseSSL(outUseSSL);
-	}
-
-	/**
 	* Sets the out user name of this message boards mailing list.
 	*
 	* @param outUserName the out user name of this message boards mailing list
@@ -878,6 +868,16 @@ public class MBMailingListWrapper implements MBMailingList,
 	@Override
 	public void setOutUserName(java.lang.String outUserName) {
 		_mbMailingList.setOutUserName(outUserName);
+	}
+
+	/**
+	* Sets whether this message boards mailing list is out use ssl.
+	*
+	* @param outUseSSL the out use ssl of this message boards mailing list
+	*/
+	@Override
+	public void setOutUseSSL(boolean outUseSSL) {
+		_mbMailingList.setOutUseSSL(outUseSSL);
 	}
 
 	/**

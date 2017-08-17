@@ -34,16 +34,14 @@ public class WSRPConsumerPortletLocalServiceWrapper
 		_wsrpConsumerPortletLocalService = wsrpConsumerPortletLocalService;
 	}
 
-	/**
-	* Adds the wsrp consumer portlet to the database. Also notifies the appropriate model listeners.
-	*
-	* @param wsrpConsumerPortlet the wsrp consumer portlet
-	* @return the wsrp consumer portlet that was added
-	*/
 	@Override
 	public com.liferay.wsrp.model.WSRPConsumerPortlet addWSRPConsumerPortlet(
-		com.liferay.wsrp.model.WSRPConsumerPortlet wsrpConsumerPortlet) {
-		return _wsrpConsumerPortletLocalService.addWSRPConsumerPortlet(wsrpConsumerPortlet);
+		long wsrpConsumerId, java.lang.String name,
+		java.lang.String portletHandle,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wsrpConsumerPortletLocalService.addWSRPConsumerPortlet(wsrpConsumerId,
+			name, portletHandle, serviceContext);
 	}
 
 	@Override
@@ -56,14 +54,16 @@ public class WSRPConsumerPortletLocalServiceWrapper
 			name, portletHandle, serviceContext);
 	}
 
+	/**
+	* Adds the wsrp consumer portlet to the database. Also notifies the appropriate model listeners.
+	*
+	* @param wsrpConsumerPortlet the wsrp consumer portlet
+	* @return the wsrp consumer portlet that was added
+	*/
 	@Override
 	public com.liferay.wsrp.model.WSRPConsumerPortlet addWSRPConsumerPortlet(
-		long wsrpConsumerId, java.lang.String name,
-		java.lang.String portletHandle,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wsrpConsumerPortletLocalService.addWSRPConsumerPortlet(wsrpConsumerId,
-			name, portletHandle, serviceContext);
+		com.liferay.wsrp.model.WSRPConsumerPortlet wsrpConsumerPortlet) {
+		return _wsrpConsumerPortletLocalService.addWSRPConsumerPortlet(wsrpConsumerPortlet);
 	}
 
 	/**
@@ -89,27 +89,6 @@ public class WSRPConsumerPortletLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the wsrp consumer portlet from the database. Also notifies the appropriate model listeners.
-	*
-	* @param wsrpConsumerPortlet the wsrp consumer portlet
-	* @return the wsrp consumer portlet that was removed
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.wsrp.model.WSRPConsumerPortlet deleteWSRPConsumerPortlet(
-		com.liferay.wsrp.model.WSRPConsumerPortlet wsrpConsumerPortlet)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wsrpConsumerPortletLocalService.deleteWSRPConsumerPortlet(wsrpConsumerPortlet);
-	}
-
-	@Override
-	public void deleteWSRPConsumerPortlet(
-		java.lang.String wsrpConsumerPortletUuid)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_wsrpConsumerPortletLocalService.deleteWSRPConsumerPortlet(wsrpConsumerPortletUuid);
-	}
-
-	/**
 	* Deletes the wsrp consumer portlet with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param wsrpConsumerPortletId the primary key of the wsrp consumer portlet
@@ -121,6 +100,27 @@ public class WSRPConsumerPortletLocalServiceWrapper
 		long wsrpConsumerPortletId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wsrpConsumerPortletLocalService.deleteWSRPConsumerPortlet(wsrpConsumerPortletId);
+	}
+
+	@Override
+	public void deleteWSRPConsumerPortlet(
+		java.lang.String wsrpConsumerPortletUuid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_wsrpConsumerPortletLocalService.deleteWSRPConsumerPortlet(wsrpConsumerPortletUuid);
+	}
+
+	/**
+	* Deletes the wsrp consumer portlet from the database. Also notifies the appropriate model listeners.
+	*
+	* @param wsrpConsumerPortlet the wsrp consumer portlet
+	* @return the wsrp consumer portlet that was removed
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.wsrp.model.WSRPConsumerPortlet deleteWSRPConsumerPortlet(
+		com.liferay.wsrp.model.WSRPConsumerPortlet wsrpConsumerPortlet)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wsrpConsumerPortletLocalService.deleteWSRPConsumerPortlet(wsrpConsumerPortlet);
 	}
 
 	@Override
@@ -281,13 +281,6 @@ public class WSRPConsumerPortletLocalServiceWrapper
 		return _wsrpConsumerPortletLocalService.getPersistedModel(primaryKeyObj);
 	}
 
-	@Override
-	public com.liferay.wsrp.model.WSRPConsumerPortlet getWSRPConsumerPortlet(
-		java.lang.String wsrpConsumerPortletUuid)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wsrpConsumerPortletLocalService.getWSRPConsumerPortlet(wsrpConsumerPortletUuid);
-	}
-
 	/**
 	* Returns the wsrp consumer portlet with the primary key.
 	*
@@ -308,6 +301,13 @@ public class WSRPConsumerPortletLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wsrpConsumerPortletLocalService.getWSRPConsumerPortlet(wsrpConsumerId,
 			portletHandle);
+	}
+
+	@Override
+	public com.liferay.wsrp.model.WSRPConsumerPortlet getWSRPConsumerPortlet(
+		java.lang.String wsrpConsumerPortletUuid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wsrpConsumerPortletLocalService.getWSRPConsumerPortlet(wsrpConsumerPortletUuid);
 	}
 
 	/**
@@ -386,6 +386,14 @@ public class WSRPConsumerPortletLocalServiceWrapper
 		_wsrpConsumerPortletLocalService.initWSRPConsumerPortlets();
 	}
 
+	@Override
+	public com.liferay.wsrp.model.WSRPConsumerPortlet updateWSRPConsumerPortlet(
+		long wsrpConsumerPortletId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wsrpConsumerPortletLocalService.updateWSRPConsumerPortlet(wsrpConsumerPortletId,
+			name);
+	}
+
 	/**
 	* Updates the wsrp consumer portlet in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -396,14 +404,6 @@ public class WSRPConsumerPortletLocalServiceWrapper
 	public com.liferay.wsrp.model.WSRPConsumerPortlet updateWSRPConsumerPortlet(
 		com.liferay.wsrp.model.WSRPConsumerPortlet wsrpConsumerPortlet) {
 		return _wsrpConsumerPortletLocalService.updateWSRPConsumerPortlet(wsrpConsumerPortlet);
-	}
-
-	@Override
-	public com.liferay.wsrp.model.WSRPConsumerPortlet updateWSRPConsumerPortlet(
-		long wsrpConsumerPortletId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wsrpConsumerPortletLocalService.updateWSRPConsumerPortlet(wsrpConsumerPortletId,
-			name);
 	}
 
 	@Override

@@ -87,16 +87,6 @@ public interface ShoppingItemPriceLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the shopping item price from the database. Also notifies the appropriate model listeners.
-	*
-	* @param shoppingItemPrice the shopping item price
-	* @return the shopping item price that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public ShoppingItemPrice deleteShoppingItemPrice(
-		ShoppingItemPrice shoppingItemPrice);
-
-	/**
 	* Deletes the shopping item price with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param itemPriceId the primary key of the shopping item price
@@ -106,6 +96,16 @@ public interface ShoppingItemPriceLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public ShoppingItemPrice deleteShoppingItemPrice(long itemPriceId)
 		throws PortalException;
+
+	/**
+	* Deletes the shopping item price from the database. Also notifies the appropriate model listeners.
+	*
+	* @param shoppingItemPrice the shopping item price
+	* @return the shopping item price that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public ShoppingItemPrice deleteShoppingItemPrice(
+		ShoppingItemPrice shoppingItemPrice);
 
 	public DynamicQuery dynamicQuery();
 

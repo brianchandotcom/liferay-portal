@@ -66,18 +66,18 @@ public interface ShoppingCategoryLocalService extends BaseLocalService,
 		java.lang.String name, java.lang.String description,
 		ServiceContext serviceContext) throws PortalException;
 
-	public void addCategoryResources(ShoppingCategory category,
+	public void addCategoryResources(long categoryId,
 		boolean addGroupPermissions, boolean addGuestPermissions)
 		throws PortalException;
 
-	public void addCategoryResources(ShoppingCategory category,
+	public void addCategoryResources(long categoryId,
 		ModelPermissions modelPermissions) throws PortalException;
 
-	public void addCategoryResources(long categoryId,
+	public void addCategoryResources(ShoppingCategory category,
 		boolean addGroupPermissions, boolean addGuestPermissions)
 		throws PortalException;
 
-	public void addCategoryResources(long categoryId,
+	public void addCategoryResources(ShoppingCategory category,
 		ModelPermissions modelPermissions) throws PortalException;
 
 	/**
@@ -100,10 +100,10 @@ public interface ShoppingCategoryLocalService extends BaseLocalService,
 
 	public void deleteCategories(long groupId) throws PortalException;
 
+	public void deleteCategory(long categoryId) throws PortalException;
+
 	public void deleteCategory(ShoppingCategory category)
 		throws PortalException;
-
-	public void deleteCategory(long categoryId) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -111,16 +111,6 @@ public interface ShoppingCategoryLocalService extends BaseLocalService,
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
-
-	/**
-	* Deletes the shopping category from the database. Also notifies the appropriate model listeners.
-	*
-	* @param shoppingCategory the shopping category
-	* @return the shopping category that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public ShoppingCategory deleteShoppingCategory(
-		ShoppingCategory shoppingCategory);
 
 	/**
 	* Deletes the shopping category with the primary key from the database. Also notifies the appropriate model listeners.
@@ -132,6 +122,16 @@ public interface ShoppingCategoryLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public ShoppingCategory deleteShoppingCategory(long categoryId)
 		throws PortalException;
+
+	/**
+	* Deletes the shopping category from the database. Also notifies the appropriate model listeners.
+	*
+	* @param shoppingCategory the shopping category
+	* @return the shopping category that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public ShoppingCategory deleteShoppingCategory(
+		ShoppingCategory shoppingCategory);
 
 	public DynamicQuery dynamicQuery();
 
@@ -227,11 +227,11 @@ public interface ShoppingCategoryLocalService extends BaseLocalService,
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ShoppingCategory> getParentCategories(ShoppingCategory category)
+	public List<ShoppingCategory> getParentCategories(long categoryId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ShoppingCategory> getParentCategories(long categoryId)
+	public List<ShoppingCategory> getParentCategories(ShoppingCategory category)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

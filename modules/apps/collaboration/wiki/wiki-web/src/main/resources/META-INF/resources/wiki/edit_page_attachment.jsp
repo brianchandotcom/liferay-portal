@@ -28,35 +28,28 @@ WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
 <div class="hide lfr-fallback" id="<portlet:namespace />fallback">
 	<aui:input name="numOfFiles" type="hidden" value="3" />
 
-	<aui:input label='<%= LanguageUtil.get(request, "file") + " 1" %>' name="file1" type="file" />
+	<%
+	String acceptedExtensions = StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA));
+	%>
 
-	<aui:input label='<%= LanguageUtil.get(request, "file") + " 2" %>' name="file2" type="file" />
+	<aui:input label='<%= LanguageUtil.get(request, "file") + " 1" %>' name="file1" type="file">
+		<aui:validator name="acceptFiles">
+			'<%= acceptedExtensions %>'
+		</aui:validator>
+	</aui:input>
 
-	<aui:input label='<%= LanguageUtil.get(request, "file") + " 3" %>' name="file3" type="file" />
+	<aui:input label='<%= LanguageUtil.get(request, "file") + " 2" %>' name="file2" type="file">
+		<aui:validator name="acceptFiles">
+			'<%= acceptedExtensions %>'
+		</aui:validator>
+	</aui:input>
+
+	<aui:input label='<%= LanguageUtil.get(request, "file") + " 3" %>' name="file3" type="file">
+		<aui:validator name="acceptFiles">
+			'<%= acceptedExtensions %>'
+		</aui:validator>
+	</aui:input>
 </div>
-
-<aui:script sandbox="<%= true %>">
-	$('#<portlet:namespace />fallback').on(
-		'change',
-		'input',
-		function(event) {
-			var currentTarget = $(event.currentTarget);
-
-			var value = currentTarget.val();
-
-			if (value) {
-				var extension = value.substring(value.lastIndexOf('.')).toLowerCase();
-				var validExtensions = ['<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA), "', '") %>'];
-
-				if ((validExtensions.indexOf('*') == -1) && (validExtensions.indexOf(extension) == -1)) {
-					alert('<%= UnicodeLanguageUtil.get(request, "document-names-must-end-with-one-of-the-following-extensions") %> <%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA), StringPool.COMMA_AND_SPACE) %>');
-
-					currentTarget.val('');
-				}
-			}
-		}
-	);
-</aui:script>
 
 <%
 Date expirationDate = new Date(System.currentTimeMillis() + GetterUtil.getInteger(PropsUtil.get(PropsKeys.SESSION_TIMEOUT)) * Time.MINUTE);

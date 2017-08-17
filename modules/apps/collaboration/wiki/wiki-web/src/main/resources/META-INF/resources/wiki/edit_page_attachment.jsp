@@ -28,21 +28,25 @@ WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
 <div class="hide lfr-fallback" id="<portlet:namespace />fallback">
 	<aui:input name="numOfFiles" type="hidden" value="3" />
 
+	<%
+	String acceptedExtensions = StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA));
+	%>
+
 	<aui:input label='<%= LanguageUtil.get(request, "file") + " 1" %>' name="file1" type="file">
 		<aui:validator name="acceptFiles">
-			'<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)) %>'
+			'<%= acceptedExtensions %>'
 		</aui:validator>
 	</aui:input>
 
 	<aui:input label='<%= LanguageUtil.get(request, "file") + " 2" %>' name="file2" type="file">
 		<aui:validator name="acceptFiles">
-			'<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)) %>'
+			'<%= acceptedExtensions %>'
 		</aui:validator>
 	</aui:input>
 
 	<aui:input label='<%= LanguageUtil.get(request, "file") + " 3" %>' name="file3" type="file">
 		<aui:validator name="acceptFiles">
-			'<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)) %>'
+			'<%= acceptedExtensions %>'
 		</aui:validator>
 	</aui:input>
 </div>

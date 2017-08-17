@@ -88,19 +88,22 @@ public class UpgradeClient {
 			File logFile = null;
 
 			if (commandLine.hasOption("log-file")) {
-				logFile = new File(commandLine.getOptionValue("log-file"));
+				logFile = new File(
+					_jarFolder, commandLine.getOptionValue("log-file"));
 			}
 			else {
-				logFile = new File("upgrade.log");
+				logFile = new File(_jarFolder, "upgrade.log");
 			}
 
 			if (logFile.exists()) {
 				String logFileName = logFile.getName();
 
 				logFile.renameTo(
-					new File(logFileName + "." + logFile.lastModified()));
+					new File(
+						_jarFolder,
+						logFileName + "." + logFile.lastModified()));
 
-				logFile = new File(logFileName);
+				logFile = new File(_jarFolder, logFileName);
 			}
 
 			boolean shell = false;
@@ -133,18 +136,19 @@ public class UpgradeClient {
 		_logFile = logFile;
 		_shell = shell;
 
-		_appServerPropertiesFile = new File("app-server.properties");
+		_appServerPropertiesFile = new File(
+			_jarFolder, "app-server.properties");
 
 		_appServerProperties = _readProperties(_appServerPropertiesFile);
 
 		_portalUpgradeDatabasePropertiesFile = new File(
-			"portal-upgrade-database.properties");
+			_jarFolder, "portal-upgrade-database.properties");
 
 		_portalUpgradeDatabaseProperties = _readProperties(
 			_portalUpgradeDatabasePropertiesFile);
 
 		_portalUpgradeExtPropertiesFile = new File(
-			"portal-upgrade-ext.properties");
+			_jarFolder, "portal-upgrade-ext.properties");
 
 		_portalUpgradeExtProperties = _readProperties(
 			_portalUpgradeExtPropertiesFile);
@@ -327,8 +331,8 @@ public class UpgradeClient {
 			sb.append(File.pathSeparator);
 		}
 
-		_appendClassPath(sb, new File("lib"));
-		_appendClassPath(sb, new File("."));
+		_appendClassPath(sb, new File(_jarFolder, "lib"));
+		_appendClassPath(sb, _jarFolder);
 		_appendClassPath(sb, _appServer.getGlobalLibDir());
 		_appendClassPath(sb, _appServer.getExtraLibDirs());
 
@@ -659,7 +663,7 @@ public class UpgradeClient {
 		String value = _portalUpgradeExtProperties.getProperty("liferay.home");
 
 		if ((value == null) || value.isEmpty()) {
-			File defaultLiferayHome = new File("../../");
+			File defaultLiferayHome = new File(_jarFolder, "../../");
 
 			System.out.println(
 				"Please enter your Liferay home (" +

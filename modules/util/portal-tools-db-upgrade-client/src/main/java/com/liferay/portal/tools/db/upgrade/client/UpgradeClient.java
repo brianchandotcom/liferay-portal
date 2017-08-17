@@ -310,27 +310,11 @@ public class UpgradeClient {
 	}
 
 	private String _getBootstrapClassPath() throws IOException {
-		ProtectionDomain protectionDomain =
-			UpgradeClient.class.getProtectionDomain();
+		StringBuilder sb = new StringBuilder();
 
-		CodeSource codeSource = protectionDomain.getCodeSource();
+		_appendClassPath(sb, _jarFolder);
 
-		URL url = codeSource.getLocation();
-
-		try {
-			StringBuilder sb = new StringBuilder();
-
-			Path path = Paths.get(url.toURI());
-
-			File jarFile = path.toFile();
-
-			_appendClassPath(sb, jarFile.getParentFile());
-
-			return sb.toString();
-		}
-		catch (URISyntaxException urise) {
-			throw new IOException(urise);
-		}
+		return sb.toString();
 	}
 
 	private String _getClassPath() throws IOException {
@@ -700,6 +684,7 @@ public class UpgradeClient {
 		new LinkedHashMap<>();
 	private static final Map<String, Database> _databases =
 		new LinkedHashMap<>();
+	private static File _jarFolder;
 
 	static {
 		_appServers.put("jboss", AppServer.getJBossEAPAppServer());
@@ -718,6 +703,24 @@ public class UpgradeClient {
 		_databases.put("postgresql", Database.getPostgreSQLDatabase());
 		_databases.put("sqlserver", Database.getSQLServerDatabase());
 		_databases.put("sybase", Database.getSybaseDatabase());
+
+		ProtectionDomain protectionDomain =
+			UpgradeClient.class.getProtectionDomain();
+
+		CodeSource codeSource = protectionDomain.getCodeSource();
+
+		URL url = codeSource.getLocation();
+
+		try {
+			Path path = Paths.get(url.toURI());
+
+			File jarFile = path.toFile();
+
+			_jarFolder = jarFile.getParentFile();
+		}
+		catch (URISyntaxException urise) {
+			throw new ExceptionInInitializerError(urise);
+		}
 	}
 
 	private AppServer _appServer;

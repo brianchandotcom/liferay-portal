@@ -6073,6 +6073,26 @@ go]]></replacevalue>
 		</if>
 	</target>
 
+	<target name="prepare-clustering-ce">
+		<delete>
+		    <fileset dir="${liferay.home}/osgi/portal" includes="*.single.jar" />
+		</delete>
+
+		<var name="foundation.modules.dir" value="modules/apps/foundation" />
+
+		<move file="${foundation.modules.dir}/portal/settings.gradle" tofile="${foundation.modules.dir}/portal/settings" />
+
+		<for list="${foundation.modules.dir}/portal/portal-cluster-multiple,${foundation.modules.dir}/portal-cache/portal-cache-ehcache-multiple,${foundation.modules.dir}/portal-scheduler/portal-scheduler-multiple" param="osgi.app.name">
+			<sequential>
+				<gradle-execute dir="@{osgi.app.name}" task="deploy">
+					<arg value="clean" />
+				</gradle-execute>
+			</sequential>
+		</for>
+
+		<move file="${foundation.modules.dir}/portal/settings" tofile="${foundation.modules.dir}/portal/settings.gradle" />
+	</target>
+
 	<target name="prepare-lcs-gateway-bundle">
 		<ant antfile="build-dist.xml" inheritAll="false" target="unzip-tomcat">
 			<property name="app.server.parent.dir" value="${app.server.parent.dir}/gateway" />
@@ -9466,6 +9486,15 @@ jdbc.default.password=${database.mysql.password}</echo>
 		<antcall inheritAll="false" target="copy-optional-jars">
 			<param name="todir" value="${app.server.lib.global.dir}" />
 		</antcall>
+
+		<get-testcase-property property.name="deploy.cluster.ce.plugins" />
+
+		<if>
+			<equals arg1="${deploy.cluster.ce.plugins}" arg2="true" />
+			<then>
+				<antcall target="prepare-clustering-ce" />
+			</then>
+		</if>
 
 		<get-testcase-property property.name="portal.version" />
 

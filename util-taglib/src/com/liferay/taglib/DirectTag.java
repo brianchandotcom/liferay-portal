@@ -14,8 +14,6 @@
 
 package com.liferay.taglib;
 
-import static javax.servlet.jsp.tagext.Tag.SKIP_BODY;
-
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.taglib.servlet.PageContextFactoryUtil;
 import com.liferay.taglib.servlet.PipingPageContext;

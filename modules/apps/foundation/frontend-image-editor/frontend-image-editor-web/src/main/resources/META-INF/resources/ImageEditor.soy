@@ -186,7 +186,7 @@
 {template .tool_control}
 	<div class="controls-container {$selectedControl and $selectedControl.label == $control.label ? 'open' : ''}">
 		<div class="btn-space col-md-2 col-sm-2 col-xs-2">
-			<button class="btn btn-link" data-onclick="accept">{$strings['apply']}</a>
+			<button class="btn btn-link" data-onclick="accept">{$strings['apply']}</button>
 		</div>
 		<div class="col-md-8 col-sm-8 col-xs-8 tool-controls">
 			{if $selectedControl and $selectedControl.label == $control.label}
@@ -197,7 +197,7 @@
 			{/if}
 		</div>
 		<div class="btn-space col-md-2 col-sm-2 col-xs-2">
-			<button class="btn btn-link" data-onclick="discard">{$strings['cancel']}</a>
+			<button class="btn btn-link" data-onclick="discard">{$strings['cancel']}</button>
 		</div>
 	</div>
 {/template}

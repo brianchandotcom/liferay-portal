@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.suggest.NGramHolder;
 import com.liferay.portal.kernel.search.suggest.NGramHolderBuilder;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -136,14 +137,17 @@ public class NGramQueryBuilderImpl implements NGramQueryBuilder {
 		sb.append(_OR_QUERY_SEPARATOR);
 	}
 
-	protected void addQuery(
-		StringBundler sb, String fieldName, String fieldValue) {
+	protected void addQuery(StringBundler sb, String name, String value) {
+		value = QueryParser.escape(value);
 
-		sb.append(fieldName);
+		value = _defuseUpperCaseLuceneBooleanOperators(value);
+
+		value = _encloseMultiword(
+			value, StringPool.OPEN_PARENTHESIS, StringPool.CLOSE_PARENTHESIS);
+
+		sb.append(name);
 		sb.append(StringPool.COLON);
-		sb.append(StringPool.OPEN_PARENTHESIS);
-		sb.append(QueryParser.escape(StringUtil.toLowerCase(fieldValue)));
-		sb.append(StringPool.CLOSE_PARENTHESIS);
+		sb.append(value);
 	}
 
 	@Reference(
@@ -161,6 +165,18 @@ public class NGramQueryBuilderImpl implements NGramQueryBuilder {
 		NGramHolderBuilder nGramHolderBuilder) {
 
 		_nGramHolderBuilder = null;
+	}
+
+	private String _defuseUpperCaseLuceneBooleanOperators(String value) {
+		return StringUtil.toLowerCase(value);
+	}
+
+	private String _encloseMultiword(String value, String open, String close) {
+		if (value.indexOf(CharPool.SPACE) == -1) {
+			return value;
+		}
+
+		return open + value + close;
 	}
 
 	private static final String _OR_QUERY_SEPARATOR = " OR ";

@@ -616,28 +616,6 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	}
 
 	protected void addGroupPermissions(
-			long companyId, long groupId, long userId, String name,
-			Resource resource, boolean portletActions,
-			PermissionedModel permissionedModel)
-		throws PortalException {
-
-		List<String> actions = null;
-
-		if (portletActions) {
-			actions = ResourceActionsUtil.getPortletResourceGroupDefaultActions(
-				name);
-		}
-		else {
-			actions = ResourceActionsUtil.getModelResourceGroupDefaultActions(
-				name);
-		}
-
-		String[] actionIds = actions.toArray(new String[actions.size()]);
-
-		addGroupPermissions(groupId, resource, actionIds);
-	}
-
-	protected void addGroupPermissions(
 			long groupId, Resource resource, String[] actionIds)
 		throws PortalException {
 
@@ -867,9 +845,23 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			// Group permissions
 
 			if ((groupId > 0) && addGroupPermissions) {
-				addGroupPermissions(
-					companyId, groupId, userId, name, resource, portletActions,
-					permissionedModel);
+				List<String> actions = null;
+
+				if (portletActions) {
+					actions =
+						ResourceActionsUtil.
+							getPortletResourceGroupDefaultActions(name);
+				}
+				else {
+					actions =
+						ResourceActionsUtil.getModelResourceGroupDefaultActions(
+							name);
+				}
+
+				String[] actionIds = actions.toArray(
+					new String[actions.size()]);
+
+				addGroupPermissions(groupId, resource, actionIds);
 			}
 
 			// Guest permissions

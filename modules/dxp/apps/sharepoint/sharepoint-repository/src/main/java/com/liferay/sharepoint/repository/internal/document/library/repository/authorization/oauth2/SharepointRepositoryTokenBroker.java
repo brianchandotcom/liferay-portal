@@ -23,6 +23,7 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.mashape.unirest.request.HttpRequestWithBody;
+import com.mashape.unirest.request.body.MultipartBody;
 
 import java.io.IOException;
 
@@ -45,19 +46,24 @@ public class SharepointRepositoryTokenBroker {
 				_sharepointRepositoryConfiguration.
 					authorizationTokenEndpoint());
 
-			httpRequestWithBody.field(
+			MultipartBody multipartBody = httpRequestWithBody.field(
 				"client_id",
 				_sharepointRepositoryConfiguration.clientId() + "@" +
 					_sharepointRepositoryConfiguration.tenantId());
-			httpRequestWithBody.field(
+
+			multipartBody = multipartBody.field(
 				"client_secret",
 				_sharepointRepositoryConfiguration.clientSecret());
-			httpRequestWithBody.field("refresh_token", token.getRefreshToken());
-			httpRequestWithBody.field("grant_type", "refresh_token");
-			httpRequestWithBody.field(
+
+			multipartBody = multipartBody.field(
+				"refresh_token", token.getRefreshToken());
+
+			multipartBody = multipartBody.field("grant_type", "refresh_token");
+
+			multipartBody = multipartBody.field(
 				"resource", _sharepointRepositoryConfiguration.resource());
 
-			HttpResponse<String> httpResponse = httpRequestWithBody.asString();
+			HttpResponse<String> httpResponse = multipartBody.asString();
 
 			return SharepointRepositoryToken.newInstance(
 				httpResponse.getBody(), token);
@@ -75,20 +81,26 @@ public class SharepointRepositoryTokenBroker {
 				_sharepointRepositoryConfiguration.
 					authorizationTokenEndpoint());
 
-			httpRequestWithBody.field(
+			MultipartBody multipartBody = httpRequestWithBody.field(
 				"client_id",
 				_sharepointRepositoryConfiguration.clientId() + "@" +
 					_sharepointRepositoryConfiguration.tenantId());
-			httpRequestWithBody.field(
+
+			multipartBody = multipartBody.field(
 				"client_secret",
 				_sharepointRepositoryConfiguration.clientSecret());
-			httpRequestWithBody.field("code", code);
-			httpRequestWithBody.field("grant_type", "authorization_code");
-			httpRequestWithBody.field("redirect_uri", redirectURL);
-			httpRequestWithBody.field(
+
+			multipartBody = multipartBody.field("code", code);
+
+			multipartBody = multipartBody.field(
+				"grant_type", "authorization_code");
+
+			multipartBody = multipartBody.field("redirect_uri", redirectURL);
+
+			multipartBody = multipartBody.field(
 				"resource", _sharepointRepositoryConfiguration.resource());
 
-			HttpResponse<String> httpResponse = httpRequestWithBody.asString();
+			HttpResponse<String> httpResponse = multipartBody.asString();
 
 			return SharepointRepositoryToken.newInstance(
 				httpResponse.getBody());

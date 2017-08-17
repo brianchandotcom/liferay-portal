@@ -84,8 +84,6 @@ public class UserInitialsGeneratorImpl implements UserInitialsGenerator {
 		{LanguageConstants.VALUE_FIRST_NAME, LanguageConstants.VALUE_LAST_NAME};
 
 	private static final Map<String, Integer> _nameIndexMap = new HashMap<>(3);
-	private static final Map<Locale, String[]> _userInitialsFieldNamesMap =
-		new HashMap<>();
 
 	static {
 		_nameIndexMap.put(LanguageConstants.VALUE_FIRST_NAME, 0);

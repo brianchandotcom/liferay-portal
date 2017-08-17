@@ -46,12 +46,11 @@ public class AntUtil {
 
 				StringBundler sb = new StringBundler();
 
-				try {
-					boolean first = true;
-
-					UnsyncBufferedReader unsyncBufferedReader =
+				try (UnsyncBufferedReader unsyncBufferedReader =
 						new UnsyncBufferedReader(
-							new UnsyncStringReader(buildEvent.getMessage()));
+							new UnsyncStringReader(buildEvent.getMessage()))) {
+
+					boolean first = true;
 
 					String line = unsyncBufferedReader.readLine();
 

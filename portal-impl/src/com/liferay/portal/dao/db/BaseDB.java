@@ -81,36 +81,37 @@ public abstract class BaseDB implements DB {
 			_log.info("Adding indexes");
 		}
 
-		UnsyncBufferedReader bufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(indexesSQL));
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(indexesSQL))) {
 
-		String sql = null;
+			String sql = null;
 
-		while ((sql = bufferedReader.readLine()) != null) {
-			if (Validator.isNull(sql)) {
-				continue;
-			}
+			while ((sql = unsyncBufferedReader.readLine()) != null) {
+				if (Validator.isNull(sql)) {
+					continue;
+				}
 
-			int y = sql.indexOf(" on ");
+				int y = sql.indexOf(" on ");
 
-			int x = sql.lastIndexOf(" ", y - 1);
+				int x = sql.lastIndexOf(" ", y - 1);
 
-			String indexName = sql.substring(x + 1, y);
+				String indexName = sql.substring(x + 1, y);
 
-			if (validIndexNames.contains(indexName)) {
-				continue;
-			}
+				if (validIndexNames.contains(indexName)) {
+					continue;
+				}
 
-			if (_log.isInfoEnabled()) {
-				_log.info(sql);
-			}
+				if (_log.isInfoEnabled()) {
+					_log.info(sql);
+				}
 
-			try {
-				runSQL(con, sql);
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(e.getMessage() + ": " + sql);
+				try {
+					runSQL(con, sql);
+				}
+				catch (Exception e) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(e.getMessage() + ": " + sql);
+					}
 				}
 			}
 		}

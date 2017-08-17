@@ -188,11 +188,11 @@ public interface CalendarResourceLocalService extends BaseLocalService,
 	public CalendarResource fetchCalendarResource(long calendarResourceId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CalendarResource fetchCalendarResource(long groupId,
-		java.lang.String code);
+	public CalendarResource fetchCalendarResource(long classNameId, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CalendarResource fetchCalendarResource(long classNameId, long classPK);
+	public CalendarResource fetchCalendarResource(long groupId,
+		java.lang.String code);
 
 	/**
 	* Returns the calendar resource matching the UUID and group.

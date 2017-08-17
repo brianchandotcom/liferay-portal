@@ -73,17 +73,6 @@ public class ServiceComponentLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the service component from the database. Also notifies the appropriate model listeners.
-	*
-	* @param serviceComponent the service component
-	* @return the service component that was removed
-	*/
-	public static com.liferay.portal.kernel.model.ServiceComponent deleteServiceComponent(
-		com.liferay.portal.kernel.model.ServiceComponent serviceComponent) {
-		return getService().deleteServiceComponent(serviceComponent);
-	}
-
-	/**
 	* Deletes the service component with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param serviceComponentId the primary key of the service component
@@ -94,6 +83,17 @@ public class ServiceComponentLocalServiceUtil {
 		long serviceComponentId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteServiceComponent(serviceComponentId);
+	}
+
+	/**
+	* Deletes the service component from the database. Also notifies the appropriate model listeners.
+	*
+	* @param serviceComponent the service component
+	* @return the service component that was removed
+	*/
+	public static com.liferay.portal.kernel.model.ServiceComponent deleteServiceComponent(
+		com.liferay.portal.kernel.model.ServiceComponent serviceComponent) {
+		return getService().deleteServiceComponent(serviceComponent);
 	}
 
 	public static void destroyServiceComponent(

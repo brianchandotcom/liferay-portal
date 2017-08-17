@@ -221,30 +221,6 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	/**
 	* Returns the localized description of this asset vocabulary in the language. Uses the default language if no localization exists for the requested language.
 	*
-	* @param languageId the ID of the language
-	* @return the localized description of this asset vocabulary
-	*/
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId) {
-		return _assetVocabulary.getDescription(languageId);
-	}
-
-	/**
-	* Returns the localized description of this asset vocabulary in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized description of this asset vocabulary
-	*/
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId,
-		boolean useDefault) {
-		return _assetVocabulary.getDescription(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized description of this asset vocabulary in the language. Uses the default language if no localization exists for the requested language.
-	*
 	* @param locale the locale of the language
 	* @return the localized description of this asset vocabulary
 	*/
@@ -264,6 +240,30 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	public java.lang.String getDescription(java.util.Locale locale,
 		boolean useDefault) {
 		return _assetVocabulary.getDescription(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized description of this asset vocabulary in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized description of this asset vocabulary
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId) {
+		return _assetVocabulary.getDescription(languageId);
+	}
+
+	/**
+	* Returns the localized description of this asset vocabulary in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized description of this asset vocabulary
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId,
+		boolean useDefault) {
+		return _assetVocabulary.getDescription(languageId, useDefault);
 	}
 
 	@Override
@@ -393,6 +393,29 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	/**
 	* Returns the localized title of this asset vocabulary in the language. Uses the default language if no localization exists for the requested language.
 	*
+	* @param locale the locale of the language
+	* @return the localized title of this asset vocabulary
+	*/
+	@Override
+	public java.lang.String getTitle(java.util.Locale locale) {
+		return _assetVocabulary.getTitle(locale);
+	}
+
+	/**
+	* Returns the localized title of this asset vocabulary in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized title of this asset vocabulary. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
+		return _assetVocabulary.getTitle(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized title of this asset vocabulary in the language. Uses the default language if no localization exists for the requested language.
+	*
 	* @param languageId the ID of the language
 	* @return the localized title of this asset vocabulary
 	*/
@@ -412,29 +435,6 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	public java.lang.String getTitle(java.lang.String languageId,
 		boolean useDefault) {
 		return _assetVocabulary.getTitle(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized title of this asset vocabulary in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized title of this asset vocabulary
-	*/
-	@Override
-	public java.lang.String getTitle(java.util.Locale locale) {
-		return _assetVocabulary.getTitle(locale);
-	}
-
-	/**
-	* Returns the localized title of this asset vocabulary in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized title of this asset vocabulary. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
-		return _assetVocabulary.getTitle(locale, useDefault);
 	}
 
 	@Override
@@ -517,13 +517,13 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	}
 
 	@Override
-	public boolean hasMoreThanOneCategorySelected(long[] categoryIds) {
-		return _assetVocabulary.hasMoreThanOneCategorySelected(categoryIds);
+	public int hashCode() {
+		return _assetVocabulary.hashCode();
 	}
 
 	@Override
-	public int hashCode() {
-		return _assetVocabulary.hashCode();
+	public boolean hasMoreThanOneCategorySelected(long[] categoryIds) {
+		return _assetVocabulary.hasMoreThanOneCategorySelected(categoryIds);
 	}
 
 	@Override
@@ -687,14 +687,14 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_assetVocabulary.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_assetVocabulary.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_assetVocabulary.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

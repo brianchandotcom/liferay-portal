@@ -41,6 +41,12 @@ public class WallEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.social.networking.service.impl.WallEntryLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.social.networking.model.WallEntry addWallEntry(
+		long groupId, long userId, java.lang.String comments,
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addWallEntry(groupId, userId, comments, themeDisplay);
+	}
 
 	/**
 	* Adds the wall entry to the database. Also notifies the appropriate model listeners.
@@ -51,13 +57,6 @@ public class WallEntryLocalServiceUtil {
 	public static com.liferay.social.networking.model.WallEntry addWallEntry(
 		com.liferay.social.networking.model.WallEntry wallEntry) {
 		return getService().addWallEntry(wallEntry);
-	}
-
-	public static com.liferay.social.networking.model.WallEntry addWallEntry(
-		long groupId, long userId, java.lang.String comments,
-		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().addWallEntry(groupId, userId, comments, themeDisplay);
 	}
 
 	/**
@@ -86,19 +85,6 @@ public class WallEntryLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the wall entry from the database. Also notifies the appropriate model listeners.
-	*
-	* @param wallEntry the wall entry
-	* @return the wall entry that was removed
-	* @throws PortalException
-	*/
-	public static com.liferay.social.networking.model.WallEntry deleteWallEntry(
-		com.liferay.social.networking.model.WallEntry wallEntry)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteWallEntry(wallEntry);
-	}
-
-	/**
 	* Deletes the wall entry with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param wallEntryId the primary key of the wall entry
@@ -109,6 +95,19 @@ public class WallEntryLocalServiceUtil {
 		long wallEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteWallEntry(wallEntryId);
+	}
+
+	/**
+	* Deletes the wall entry from the database. Also notifies the appropriate model listeners.
+	*
+	* @param wallEntry the wall entry
+	* @return the wall entry that was removed
+	* @throws PortalException
+	*/
+	public static com.liferay.social.networking.model.WallEntry deleteWallEntry(
+		com.liferay.social.networking.model.WallEntry wallEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteWallEntry(wallEntry);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -279,6 +278,12 @@ public class WallEntryLocalServiceUtil {
 			userId2);
 	}
 
+	public static com.liferay.social.networking.model.WallEntry updateWallEntry(
+		long wallEntryId, java.lang.String comments)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateWallEntry(wallEntryId, comments);
+	}
+
 	/**
 	* Updates the wall entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -288,12 +293,6 @@ public class WallEntryLocalServiceUtil {
 	public static com.liferay.social.networking.model.WallEntry updateWallEntry(
 		com.liferay.social.networking.model.WallEntry wallEntry) {
 		return getService().updateWallEntry(wallEntry);
-	}
-
-	public static com.liferay.social.networking.model.WallEntry updateWallEntry(
-		long wallEntryId, java.lang.String comments)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().updateWallEntry(wallEntryId, comments);
 	}
 
 	public static WallEntryLocalService getService() {

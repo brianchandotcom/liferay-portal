@@ -51,11 +51,11 @@ public interface BackgroundTaskService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link BackgroundTaskServiceUtil} to access the background task remote service. Add custom service methods to {@link com.liferay.portal.background.task.service.impl.BackgroundTaskServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getBackgroundTaskStatusJSON(long backgroundTaskId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getBackgroundTasksCount(long groupId,
 		java.lang.String taskExecutorClassName, java.lang.String completed);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getBackgroundTaskStatusJSON(long backgroundTaskId);
 
 	/**
 	* Returns the OSGi service identifier.

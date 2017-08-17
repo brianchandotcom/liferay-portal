@@ -96,15 +96,6 @@ public interface ResourceActionLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the resource action from the database. Also notifies the appropriate model listeners.
-	*
-	* @param resourceAction the resource action
-	* @return the resource action that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public ResourceAction deleteResourceAction(ResourceAction resourceAction);
-
-	/**
 	* Deletes the resource action with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param resourceActionId the primary key of the resource action
@@ -114,6 +105,15 @@ public interface ResourceActionLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public ResourceAction deleteResourceAction(long resourceActionId)
 		throws PortalException;
+
+	/**
+	* Deletes the resource action from the database. Also notifies the appropriate model listeners.
+	*
+	* @param resourceAction the resource action
+	* @return the resource action that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public ResourceAction deleteResourceAction(ResourceAction resourceAction);
 
 	public DynamicQuery dynamicQuery();
 
@@ -174,13 +174,13 @@ public interface ResourceActionLocalService extends BaseLocalService,
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ResourceAction fetchResourceAction(long resourceActionId);
+
 	@Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ResourceAction fetchResourceAction(java.lang.String name,
 		java.lang.String actionId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ResourceAction fetchResourceAction(long resourceActionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -200,11 +200,6 @@ public interface ResourceActionLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	@Skip
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ResourceAction getResourceAction(java.lang.String name,
-		java.lang.String actionId) throws PortalException;
-
 	/**
 	* Returns the resource action with the primary key.
 	*
@@ -215,6 +210,11 @@ public interface ResourceActionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ResourceAction getResourceAction(long resourceActionId)
 		throws PortalException;
+
+	@Skip
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ResourceAction getResourceAction(java.lang.String name,
+		java.lang.String actionId) throws PortalException;
 
 	/**
 	* Returns a range of all the resource actions.

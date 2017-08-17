@@ -65,6 +65,11 @@ public interface SAPEntryLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SAPEntryLocalServiceUtil} to access the sap entry local service. Add custom service methods to {@link com.liferay.portal.security.service.access.policy.service.impl.SAPEntryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public SAPEntry addSAPEntry(long userId,
+		java.lang.String allowedServiceSignatures, boolean defaultSAPEntry,
+		boolean enabled, java.lang.String name,
+		Map<Locale, java.lang.String> titleMap, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Adds the sap entry to the database. Also notifies the appropriate model listeners.
@@ -74,12 +79,6 @@ public interface SAPEntryLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public SAPEntry addSAPEntry(SAPEntry sapEntry);
-
-	public SAPEntry addSAPEntry(long userId,
-		java.lang.String allowedServiceSignatures, boolean defaultSAPEntry,
-		boolean enabled, java.lang.String name,
-		Map<Locale, java.lang.String> titleMap, ServiceContext serviceContext)
-		throws PortalException;
 
 	public void checkSystemSAPEntries(long companyId) throws PortalException;
 
@@ -99,16 +98,6 @@ public interface SAPEntryLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the sap entry from the database. Also notifies the appropriate model listeners.
-	*
-	* @param sapEntry the sap entry
-	* @return the sap entry that was removed
-	* @throws PortalException
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public SAPEntry deleteSAPEntry(SAPEntry sapEntry) throws PortalException;
-
-	/**
 	* Deletes the sap entry with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param sapEntryId the primary key of the sap entry
@@ -117,6 +106,16 @@ public interface SAPEntryLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public SAPEntry deleteSAPEntry(long sapEntryId) throws PortalException;
+
+	/**
+	* Deletes the sap entry from the database. Also notifies the appropriate model listeners.
+	*
+	* @param sapEntry the sap entry
+	* @return the sap entry that was removed
+	* @throws PortalException
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public SAPEntry deleteSAPEntry(SAPEntry sapEntry) throws PortalException;
 
 	public DynamicQuery dynamicQuery();
 
@@ -280,6 +279,12 @@ public interface SAPEntryLocalService extends BaseLocalService,
 	public SAPEntry getSAPEntryByUuidAndCompanyId(java.lang.String uuid,
 		long companyId) throws PortalException;
 
+	public SAPEntry updateSAPEntry(long sapEntryId,
+		java.lang.String allowedServiceSignatures, boolean defaultSAPEntry,
+		boolean enabled, java.lang.String name,
+		Map<Locale, java.lang.String> titleMap, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	* Updates the sap entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -288,10 +293,4 @@ public interface SAPEntryLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public SAPEntry updateSAPEntry(SAPEntry sapEntry);
-
-	public SAPEntry updateSAPEntry(long sapEntryId,
-		java.lang.String allowedServiceSignatures, boolean defaultSAPEntry,
-		boolean enabled, java.lang.String name,
-		Map<Locale, java.lang.String> titleMap, ServiceContext serviceContext)
-		throws PortalException;
 }

@@ -31,15 +31,15 @@ public class PowwowServerLocalServiceClp implements PowwowServerLocalService {
 		_methodName0 = "addPowwowServer";
 
 		_methodParameterTypes0 = new String[] {
-				"com.liferay.powwow.model.PowwowServer"
+				"long", "java.lang.String", "java.lang.String",
+				"java.lang.String", "java.lang.String", "java.lang.String",
+				"com.liferay.portal.kernel.service.ServiceContext"
 			};
 
 		_methodName1 = "addPowwowServer";
 
 		_methodParameterTypes1 = new String[] {
-				"long", "java.lang.String", "java.lang.String",
-				"java.lang.String", "java.lang.String", "java.lang.String",
-				"com.liferay.portal.kernel.service.ServiceContext"
+				"com.liferay.powwow.model.PowwowServer"
 			};
 
 		_methodName2 = "checkPowwowServers";
@@ -58,13 +58,13 @@ public class PowwowServerLocalServiceClp implements PowwowServerLocalService {
 
 		_methodName5 = "deletePowwowServer";
 
-		_methodParameterTypes5 = new String[] {
-				"com.liferay.powwow.model.PowwowServer"
-			};
+		_methodParameterTypes5 = new String[] { "long" };
 
 		_methodName6 = "deletePowwowServer";
 
-		_methodParameterTypes6 = new String[] { "long" };
+		_methodParameterTypes6 = new String[] {
+				"com.liferay.powwow.model.PowwowServer"
+			};
 
 		_methodName7 = "dynamicQuery";
 
@@ -151,41 +151,16 @@ public class PowwowServerLocalServiceClp implements PowwowServerLocalService {
 		_methodName25 = "updatePowwowServer";
 
 		_methodParameterTypes25 = new String[] {
-				"com.liferay.powwow.model.PowwowServer"
+				"long", "java.lang.String", "java.lang.String",
+				"java.lang.String", "java.lang.String", "java.lang.String",
+				"com.liferay.portal.kernel.service.ServiceContext"
 			};
 
 		_methodName26 = "updatePowwowServer";
 
 		_methodParameterTypes26 = new String[] {
-				"long", "java.lang.String", "java.lang.String",
-				"java.lang.String", "java.lang.String", "java.lang.String",
-				"com.liferay.portal.kernel.service.ServiceContext"
+				"com.liferay.powwow.model.PowwowServer"
 			};
-	}
-
-	@Override
-	public com.liferay.powwow.model.PowwowServer addPowwowServer(
-		com.liferay.powwow.model.PowwowServer powwowServer) {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName0,
-					_methodParameterTypes0,
-					new Object[] { ClpSerializer.translateInput(powwowServer) });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (com.liferay.powwow.model.PowwowServer)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
@@ -197,8 +172,8 @@ public class PowwowServerLocalServiceClp implements PowwowServerLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName1,
-					_methodParameterTypes1,
+			returnObj = _invokableLocalService.invokeMethod(_methodName0,
+					_methodParameterTypes0,
 					new Object[] {
 						userId,
 						
@@ -221,6 +196,31 @@ public class PowwowServerLocalServiceClp implements PowwowServerLocalService {
 			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
 				throw (com.liferay.portal.kernel.exception.PortalException)t;
 			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.powwow.model.PowwowServer)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public com.liferay.powwow.model.PowwowServer addPowwowServer(
+		com.liferay.powwow.model.PowwowServer powwowServer) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName1,
+					_methodParameterTypes1,
+					new Object[] { ClpSerializer.translateInput(powwowServer) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
 
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
@@ -309,16 +309,20 @@ public class PowwowServerLocalServiceClp implements PowwowServerLocalService {
 
 	@Override
 	public com.liferay.powwow.model.PowwowServer deletePowwowServer(
-		com.liferay.powwow.model.PowwowServer powwowServer) {
+		long powwowServerId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName5,
-					_methodParameterTypes5,
-					new Object[] { ClpSerializer.translateInput(powwowServer) });
+					_methodParameterTypes5, new Object[] { powwowServerId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
 
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
@@ -334,20 +338,16 @@ public class PowwowServerLocalServiceClp implements PowwowServerLocalService {
 
 	@Override
 	public com.liferay.powwow.model.PowwowServer deletePowwowServer(
-		long powwowServerId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		com.liferay.powwow.model.PowwowServer powwowServer) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName6,
-					_methodParameterTypes6, new Object[] { powwowServerId });
+					_methodParameterTypes6,
+					new Object[] { ClpSerializer.translateInput(powwowServer) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
-				throw (com.liferay.portal.kernel.exception.PortalException)t;
-			}
 
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
@@ -822,31 +822,6 @@ public class PowwowServerLocalServiceClp implements PowwowServerLocalService {
 
 	@Override
 	public com.liferay.powwow.model.PowwowServer updatePowwowServer(
-		com.liferay.powwow.model.PowwowServer powwowServer) {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName25,
-					_methodParameterTypes25,
-					new Object[] { ClpSerializer.translateInput(powwowServer) });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (com.liferay.powwow.model.PowwowServer)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
-	public com.liferay.powwow.model.PowwowServer updatePowwowServer(
 		long powwowServerId, java.lang.String name,
 		java.lang.String providerType, java.lang.String url,
 		java.lang.String apiKey, java.lang.String secret,
@@ -855,8 +830,8 @@ public class PowwowServerLocalServiceClp implements PowwowServerLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName26,
-					_methodParameterTypes26,
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25,
 					new Object[] {
 						powwowServerId,
 						
@@ -879,6 +854,31 @@ public class PowwowServerLocalServiceClp implements PowwowServerLocalService {
 			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
 				throw (com.liferay.portal.kernel.exception.PortalException)t;
 			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.powwow.model.PowwowServer)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public com.liferay.powwow.model.PowwowServer updatePowwowServer(
+		com.liferay.powwow.model.PowwowServer powwowServer) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26,
+					new Object[] { ClpSerializer.translateInput(powwowServer) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
 
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;

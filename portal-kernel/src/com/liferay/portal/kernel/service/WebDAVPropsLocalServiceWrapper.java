@@ -66,23 +66,6 @@ public class WebDAVPropsLocalServiceWrapper implements WebDAVPropsLocalService,
 	}
 
 	/**
-	* Deletes the web dav props from the database. Also notifies the appropriate model listeners.
-	*
-	* @param webDAVProps the web dav props
-	* @return the web dav props that was removed
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.WebDAVProps deleteWebDAVProps(
-		com.liferay.portal.kernel.model.WebDAVProps webDAVProps) {
-		return _webDAVPropsLocalService.deleteWebDAVProps(webDAVProps);
-	}
-
-	@Override
-	public void deleteWebDAVProps(java.lang.String className, long classPK) {
-		_webDAVPropsLocalService.deleteWebDAVProps(className, classPK);
-	}
-
-	/**
 	* Deletes the web dav props with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param webDavPropsId the primary key of the web dav props
@@ -94,6 +77,23 @@ public class WebDAVPropsLocalServiceWrapper implements WebDAVPropsLocalService,
 		long webDavPropsId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _webDAVPropsLocalService.deleteWebDAVProps(webDavPropsId);
+	}
+
+	@Override
+	public void deleteWebDAVProps(java.lang.String className, long classPK) {
+		_webDAVPropsLocalService.deleteWebDAVProps(className, classPK);
+	}
+
+	/**
+	* Deletes the web dav props from the database. Also notifies the appropriate model listeners.
+	*
+	* @param webDAVProps the web dav props
+	* @return the web dav props that was removed
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.WebDAVProps deleteWebDAVProps(
+		com.liferay.portal.kernel.model.WebDAVProps webDAVProps) {
+		return _webDAVPropsLocalService.deleteWebDAVProps(webDAVProps);
 	}
 
 	@Override

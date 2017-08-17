@@ -48,16 +48,6 @@ public class OrgLaborServiceWrapper implements OrgLaborService,
 		_orgLaborService.deleteOrgLabor(orgLaborId);
 	}
 
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _orgLaborService.getOSGiServiceIdentifier();
-	}
-
 	@Override
 	public com.liferay.portal.kernel.model.OrgLabor getOrgLabor(long orgLaborId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -69,6 +59,16 @@ public class OrgLaborServiceWrapper implements OrgLaborService,
 		long organizationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _orgLaborService.getOrgLabors(organizationId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _orgLaborService.getOSGiServiceIdentifier();
 	}
 
 	@Override

@@ -78,15 +78,15 @@ public class ShoppingOrderLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteOrder(com.liferay.shopping.model.ShoppingOrder order)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_shoppingOrderLocalService.deleteOrder(order);
-	}
-
-	@Override
 	public void deleteOrder(long orderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_shoppingOrderLocalService.deleteOrder(orderId);
+	}
+
+	@Override
+	public void deleteOrder(com.liferay.shopping.model.ShoppingOrder order)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_shoppingOrderLocalService.deleteOrder(order);
 	}
 
 	@Override
@@ -106,18 +106,6 @@ public class ShoppingOrderLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the shopping order from the database. Also notifies the appropriate model listeners.
-	*
-	* @param shoppingOrder the shopping order
-	* @return the shopping order that was removed
-	*/
-	@Override
-	public com.liferay.shopping.model.ShoppingOrder deleteShoppingOrder(
-		com.liferay.shopping.model.ShoppingOrder shoppingOrder) {
-		return _shoppingOrderLocalService.deleteShoppingOrder(shoppingOrder);
-	}
-
-	/**
 	* Deletes the shopping order with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param orderId the primary key of the shopping order
@@ -129,6 +117,18 @@ public class ShoppingOrderLocalServiceWrapper
 		long orderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingOrderLocalService.deleteShoppingOrder(orderId);
+	}
+
+	/**
+	* Deletes the shopping order from the database. Also notifies the appropriate model listeners.
+	*
+	* @param shoppingOrder the shopping order
+	* @return the shopping order that was removed
+	*/
+	@Override
+	public com.liferay.shopping.model.ShoppingOrder deleteShoppingOrder(
+		com.liferay.shopping.model.ShoppingOrder shoppingOrder) {
+		return _shoppingOrderLocalService.deleteShoppingOrder(shoppingOrder);
 	}
 
 	@Override
@@ -239,14 +239,10 @@ public class ShoppingOrderLocalServiceWrapper
 		return _shoppingOrderLocalService.getLatestOrder(userId, groupId);
 	}
 
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _shoppingOrderLocalService.getOSGiServiceIdentifier();
+	public com.liferay.shopping.model.ShoppingOrder getOrder(long orderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingOrderLocalService.getOrder(orderId);
 	}
 
 	@Override
@@ -256,10 +252,14 @@ public class ShoppingOrderLocalServiceWrapper
 		return _shoppingOrderLocalService.getOrder(number);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	@Override
-	public com.liferay.shopping.model.ShoppingOrder getOrder(long orderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingOrderLocalService.getOrder(orderId);
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _shoppingOrderLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -353,18 +353,18 @@ public class ShoppingOrderLocalServiceWrapper
 	}
 
 	@Override
+	public void sendEmail(long orderId, java.lang.String emailType,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_shoppingOrderLocalService.sendEmail(orderId, emailType, serviceContext);
+	}
+
+	@Override
 	public void sendEmail(com.liferay.shopping.model.ShoppingOrder order,
 		java.lang.String emailType,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_shoppingOrderLocalService.sendEmail(order, emailType, serviceContext);
-	}
-
-	@Override
-	public void sendEmail(long orderId, java.lang.String emailType,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_shoppingOrderLocalService.sendEmail(orderId, emailType, serviceContext);
 	}
 
 	@Override

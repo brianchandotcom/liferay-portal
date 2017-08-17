@@ -81,18 +81,6 @@ public class ResourceBlockPermissionLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the resource block permission from the database. Also notifies the appropriate model listeners.
-	*
-	* @param resourceBlockPermission the resource block permission
-	* @return the resource block permission that was removed
-	*/
-	public static com.liferay.portal.kernel.model.ResourceBlockPermission deleteResourceBlockPermission(
-		com.liferay.portal.kernel.model.ResourceBlockPermission resourceBlockPermission) {
-		return getService()
-				   .deleteResourceBlockPermission(resourceBlockPermission);
-	}
-
-	/**
 	* Deletes the resource block permission with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param resourceBlockPermissionId the primary key of the resource block permission
@@ -104,6 +92,18 @@ public class ResourceBlockPermissionLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .deleteResourceBlockPermission(resourceBlockPermissionId);
+	}
+
+	/**
+	* Deletes the resource block permission from the database. Also notifies the appropriate model listeners.
+	*
+	* @param resourceBlockPermission the resource block permission
+	* @return the resource block permission that was removed
+	*/
+	public static com.liferay.portal.kernel.model.ResourceBlockPermission deleteResourceBlockPermission(
+		com.liferay.portal.kernel.model.ResourceBlockPermission resourceBlockPermission) {
+		return getService()
+				   .deleteResourceBlockPermission(resourceBlockPermission);
 	}
 
 	public static void deleteResourceBlockPermissions(long resourceBlockId) {
@@ -198,15 +198,6 @@ public class ResourceBlockPermissionLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
-	public static java.util.Map<java.lang.Long, java.util.Set<java.lang.String>> getAvailableResourceBlockPermissionActionIds(
-		java.lang.String name, long primKey,
-		java.util.List<java.lang.String> actionIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getAvailableResourceBlockPermissionActionIds(name, primKey,
-			actionIds);
-	}
-
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
 	#getAvailableResourceBlockPermissionActionIds(String, long,
@@ -220,6 +211,15 @@ public class ResourceBlockPermissionLocalServiceUtil {
 		return getService()
 				   .getAvailableResourceBlockPermissionActionIds(roleIds, name,
 			primKey, actionIds);
+	}
+
+	public static java.util.Map<java.lang.Long, java.util.Set<java.lang.String>> getAvailableResourceBlockPermissionActionIds(
+		java.lang.String name, long primKey,
+		java.util.List<java.lang.String> actionIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getAvailableResourceBlockPermissionActionIds(name, primKey,
+			actionIds);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
@@ -290,6 +290,13 @@ public class ResourceBlockPermissionLocalServiceUtil {
 				   .getResourceBlockPermissionsCount(resourceBlockId, roleId);
 	}
 
+	public static void updateResourceBlockPermission(long resourceBlockId,
+		long roleId, long actionIdsLong, int operator) {
+		getService()
+			.updateResourceBlockPermission(resourceBlockId, roleId,
+			actionIdsLong, operator);
+	}
+
 	/**
 	* Updates the resource block permission in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -300,13 +307,6 @@ public class ResourceBlockPermissionLocalServiceUtil {
 		com.liferay.portal.kernel.model.ResourceBlockPermission resourceBlockPermission) {
 		return getService()
 				   .updateResourceBlockPermission(resourceBlockPermission);
-	}
-
-	public static void updateResourceBlockPermission(long resourceBlockId,
-		long roleId, long actionIdsLong, int operator) {
-		getService()
-			.updateResourceBlockPermission(resourceBlockId, roleId,
-			actionIdsLong, operator);
 	}
 
 	public static ResourceBlockPermissionLocalService getService() {

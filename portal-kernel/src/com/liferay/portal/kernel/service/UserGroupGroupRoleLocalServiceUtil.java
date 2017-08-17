@@ -312,14 +312,14 @@ public class UserGroupGroupRoleLocalServiceUtil {
 	}
 
 	public static boolean hasUserGroupGroupRole(long userGroupId, long groupId,
-		java.lang.String roleName)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().hasUserGroupGroupRole(userGroupId, groupId, roleName);
+		long roleId) {
+		return getService().hasUserGroupGroupRole(userGroupId, groupId, roleId);
 	}
 
 	public static boolean hasUserGroupGroupRole(long userGroupId, long groupId,
-		long roleId) {
-		return getService().hasUserGroupGroupRole(userGroupId, groupId, roleId);
+		java.lang.String roleName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().hasUserGroupGroupRole(userGroupId, groupId, roleName);
 	}
 
 	/**

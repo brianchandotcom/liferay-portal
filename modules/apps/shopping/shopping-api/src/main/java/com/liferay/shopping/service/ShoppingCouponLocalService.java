@@ -88,9 +88,9 @@ public interface ShoppingCouponLocalService extends BaseLocalService,
 	*/
 	public ShoppingCoupon createShoppingCoupon(long couponId);
 
-	public void deleteCoupon(ShoppingCoupon coupon);
-
 	public void deleteCoupon(long couponId) throws PortalException;
+
+	public void deleteCoupon(ShoppingCoupon coupon);
 
 	public void deleteCoupons(long groupId);
 
@@ -102,15 +102,6 @@ public interface ShoppingCouponLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the shopping coupon from the database. Also notifies the appropriate model listeners.
-	*
-	* @param shoppingCoupon the shopping coupon
-	* @return the shopping coupon that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public ShoppingCoupon deleteShoppingCoupon(ShoppingCoupon shoppingCoupon);
-
-	/**
 	* Deletes the shopping coupon with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param couponId the primary key of the shopping coupon
@@ -120,6 +111,15 @@ public interface ShoppingCouponLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public ShoppingCoupon deleteShoppingCoupon(long couponId)
 		throws PortalException;
+
+	/**
+	* Deletes the shopping coupon from the database. Also notifies the appropriate model listeners.
+	*
+	* @param shoppingCoupon the shopping coupon
+	* @return the shopping coupon that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public ShoppingCoupon deleteShoppingCoupon(ShoppingCoupon shoppingCoupon);
 
 	public DynamicQuery dynamicQuery();
 
@@ -187,11 +187,11 @@ public interface ShoppingCouponLocalService extends BaseLocalService,
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ShoppingCoupon getCoupon(java.lang.String code)
-		throws PortalException;
+	public ShoppingCoupon getCoupon(long couponId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ShoppingCoupon getCoupon(long couponId) throws PortalException;
+	public ShoppingCoupon getCoupon(java.lang.String code)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

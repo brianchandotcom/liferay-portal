@@ -59,6 +59,10 @@ public interface WorkflowDefinitionLinkLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WorkflowDefinitionLinkLocalServiceUtil} to access the workflow definition link local service. Add custom service methods to {@link com.liferay.portal.service.impl.WorkflowDefinitionLinkLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public WorkflowDefinitionLink addWorkflowDefinitionLink(long userId,
+		long companyId, long groupId, java.lang.String className, long classPK,
+		long typePK, java.lang.String workflowDefinitionName,
+		int workflowDefinitionVersion) throws PortalException;
 
 	/**
 	* Adds the workflow definition link to the database. Also notifies the appropriate model listeners.
@@ -69,11 +73,6 @@ public interface WorkflowDefinitionLinkLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public WorkflowDefinitionLink addWorkflowDefinitionLink(
 		WorkflowDefinitionLink workflowDefinitionLink);
-
-	public WorkflowDefinitionLink addWorkflowDefinitionLink(long userId,
-		long companyId, long groupId, java.lang.String className, long classPK,
-		long typePK, java.lang.String workflowDefinitionName,
-		int workflowDefinitionVersion) throws PortalException;
 
 	/**
 	* Creates a new workflow definition link with the primary key. Does not add the workflow definition link to the database.
@@ -92,16 +91,6 @@ public interface WorkflowDefinitionLinkLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the workflow definition link from the database. Also notifies the appropriate model listeners.
-	*
-	* @param workflowDefinitionLink the workflow definition link
-	* @return the workflow definition link that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public WorkflowDefinitionLink deleteWorkflowDefinitionLink(
-		WorkflowDefinitionLink workflowDefinitionLink);
-
-	/**
 	* Deletes the workflow definition link with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param workflowDefinitionLinkId the primary key of the workflow definition link
@@ -114,6 +103,16 @@ public interface WorkflowDefinitionLinkLocalService extends BaseLocalService,
 
 	public void deleteWorkflowDefinitionLink(long companyId, long groupId,
 		java.lang.String className, long classPK, long typePK);
+
+	/**
+	* Deletes the workflow definition link from the database. Also notifies the appropriate model listeners.
+	*
+	* @param workflowDefinitionLink the workflow definition link
+	* @return the workflow definition link that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public WorkflowDefinitionLink deleteWorkflowDefinitionLink(
+		WorkflowDefinitionLink workflowDefinitionLink);
 
 	public DynamicQuery dynamicQuery();
 
@@ -259,12 +258,12 @@ public interface WorkflowDefinitionLinkLocalService extends BaseLocalService,
 	public int getWorkflowDefinitionLinksCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getWorkflowDefinitionLinksCount(long companyId,
-		java.lang.String workflowDefinitionName, int workflowDefinitionVersion);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getWorkflowDefinitionLinksCount(long companyId, long groupId,
 		java.lang.String className);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getWorkflowDefinitionLinksCount(long companyId,
+		java.lang.String workflowDefinitionName, int workflowDefinitionVersion);
 
 	@Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -281,6 +280,15 @@ public interface WorkflowDefinitionLinkLocalService extends BaseLocalService,
 	public boolean hasWorkflowDefinitionLink(long companyId, long groupId,
 		java.lang.String className, long classPK, long typePK);
 
+	public void updateWorkflowDefinitionLink(long userId, long companyId,
+		long groupId, java.lang.String className, long classPK, long typePK,
+		java.lang.String workflowDefinition) throws PortalException;
+
+	public WorkflowDefinitionLink updateWorkflowDefinitionLink(long userId,
+		long companyId, long groupId, java.lang.String className, long classPK,
+		long typePK, java.lang.String workflowDefinitionName,
+		int workflowDefinitionVersion) throws PortalException;
+
 	/**
 	* Updates the workflow definition link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -290,15 +298,6 @@ public interface WorkflowDefinitionLinkLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public WorkflowDefinitionLink updateWorkflowDefinitionLink(
 		WorkflowDefinitionLink workflowDefinitionLink);
-
-	public void updateWorkflowDefinitionLink(long userId, long companyId,
-		long groupId, java.lang.String className, long classPK, long typePK,
-		java.lang.String workflowDefinition) throws PortalException;
-
-	public WorkflowDefinitionLink updateWorkflowDefinitionLink(long userId,
-		long companyId, long groupId, java.lang.String className, long classPK,
-		long typePK, java.lang.String workflowDefinitionName,
-		int workflowDefinitionVersion) throws PortalException;
 
 	public void updateWorkflowDefinitionLinks(long userId, long companyId,
 		long groupId, java.lang.String className, long classPK,

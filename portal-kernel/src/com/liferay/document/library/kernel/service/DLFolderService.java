@@ -196,11 +196,17 @@ public interface DLFolderService extends BaseService {
 	public Lock refreshFolderLock(java.lang.String lockUuid, long companyId,
 		long expirationTime) throws PortalException;
 
+	public void unlockFolder(long groupId, long parentFolderId,
+		java.lang.String name, java.lang.String lockUuid)
+		throws PortalException;
+
 	public void unlockFolder(long folderId, java.lang.String lockUuid)
 		throws PortalException;
 
-	public void unlockFolder(long groupId, long parentFolderId,
-		java.lang.String name, java.lang.String lockUuid)
+	public DLFolder updateFolder(long folderId, long parentFolderId,
+		java.lang.String name, java.lang.String description,
+		long defaultFileEntryTypeId, List<java.lang.Long> fileEntryTypeIds,
+		int restrictionType, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -218,12 +224,6 @@ public interface DLFolderService extends BaseService {
 		java.lang.String description, long defaultFileEntryTypeId,
 		List<java.lang.Long> fileEntryTypeIds, int restrictionType,
 		ServiceContext serviceContext) throws PortalException;
-
-	public DLFolder updateFolder(long folderId, long parentFolderId,
-		java.lang.String name, java.lang.String description,
-		long defaultFileEntryTypeId, List<java.lang.Long> fileEntryTypeIds,
-		int restrictionType, ServiceContext serviceContext)
-		throws PortalException;
 
 	public boolean verifyInheritableLock(long folderId,
 		java.lang.String lockUuid) throws PortalException;

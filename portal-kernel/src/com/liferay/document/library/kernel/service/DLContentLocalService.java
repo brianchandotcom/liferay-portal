@@ -208,6 +208,9 @@ public interface DLContentLocalService extends BaseLocalService,
 	public List<DLContent> getContentsByDirectory(long companyId,
 		long repositoryId, java.lang.String dirName);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLContentDataBlobModel getDataBlobModel(Serializable primaryKey);
+
 	/**
 	* Returns the document library content with the primary key.
 	*
@@ -239,9 +242,6 @@ public interface DLContentLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getDLContentsCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLContentDataBlobModel getDataBlobModel(Serializable primaryKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

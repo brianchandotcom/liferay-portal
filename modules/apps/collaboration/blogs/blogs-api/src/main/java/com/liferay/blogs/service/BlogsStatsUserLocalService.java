@@ -224,6 +224,10 @@ public interface BlogsStatsUserLocalService extends BaseLocalService,
 	public int getCompanyStatsUsersCount(long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BlogsStatsUser> getGroupsStatsUsers(long companyId,
+		long groupId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BlogsStatsUser> getGroupStatsUsers(long groupId, int start,
 		int end);
 
@@ -235,18 +239,7 @@ public interface BlogsStatsUserLocalService extends BaseLocalService,
 	public int getGroupStatsUsersCount(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BlogsStatsUser> getGroupsStatsUsers(long companyId,
-		long groupId, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BlogsStatsUser> getOrganizationStatsUsers(long organizationId,
@@ -258,6 +251,13 @@ public interface BlogsStatsUserLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getOrganizationStatsUsersCount(long organizationId);
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -280,10 +280,10 @@ public interface BlogsStatsUserLocalService extends BaseLocalService,
 	public void updateStatsUser(long groupId, long userId)
 		throws PortalException;
 
+	public void updateStatsUser(long groupId, long userId, Date displayDate)
+		throws PortalException;
+
 	public BlogsStatsUser updateStatsUser(long groupId, long userId,
 		int ratingsTotalEntries, double ratingsTotalScore,
 		double ratingsAverageScore) throws PortalException;
-
-	public void updateStatsUser(long groupId, long userId, Date displayDate)
-		throws PortalException;
 }

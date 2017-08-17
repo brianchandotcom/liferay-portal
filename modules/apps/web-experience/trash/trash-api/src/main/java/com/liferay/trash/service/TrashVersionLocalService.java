@@ -61,6 +61,9 @@ public interface TrashVersionLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link TrashVersionLocalServiceUtil} to access the trash version local service. Add custom service methods to {@link com.liferay.trash.service.impl.TrashVersionLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public TrashVersion addTrashVersion(long trashEntryId,
+		java.lang.String className, long classPK, int status,
+		UnicodeProperties typeSettingsProperties);
 
 	/**
 	* Adds the trash version to the database. Also notifies the appropriate model listeners.
@@ -70,10 +73,6 @@ public interface TrashVersionLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public TrashVersion addTrashVersion(TrashVersion trashVersion);
-
-	public TrashVersion addTrashVersion(long trashEntryId,
-		java.lang.String className, long classPK, int status,
-		UnicodeProperties typeSettingsProperties);
 
 	/**
 	* Creates a new trash version with the primary key. Does not add the trash version to the database.
@@ -91,18 +90,6 @@ public interface TrashVersionLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the trash version from the database. Also notifies the appropriate model listeners.
-	*
-	* @param trashVersion the trash version
-	* @return the trash version that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public TrashVersion deleteTrashVersion(TrashVersion trashVersion);
-
-	public TrashVersion deleteTrashVersion(java.lang.String className,
-		long classPK);
-
-	/**
 	* Deletes the trash version with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param versionId the primary key of the trash version
@@ -112,6 +99,18 @@ public interface TrashVersionLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public TrashVersion deleteTrashVersion(long versionId)
 		throws PortalException;
+
+	public TrashVersion deleteTrashVersion(java.lang.String className,
+		long classPK);
+
+	/**
+	* Deletes the trash version from the database. Also notifies the appropriate model listeners.
+	*
+	* @param trashVersion the trash version
+	* @return the trash version that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public TrashVersion deleteTrashVersion(TrashVersion trashVersion);
 
 	public DynamicQuery dynamicQuery();
 
@@ -175,9 +174,6 @@ public interface TrashVersionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public TrashVersion fetchTrashVersion(long versionId);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public TrashVersion fetchVersion(java.lang.String className, long classPK);
-
 	/**
 	* @deprecated As of 1.0.0, replaced by {@link #fetchVersion(String, long)}
 	*/
@@ -185,6 +181,9 @@ public interface TrashVersionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public TrashVersion fetchVersion(long entryId, java.lang.String className,
 		long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public TrashVersion fetchVersion(java.lang.String className, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();

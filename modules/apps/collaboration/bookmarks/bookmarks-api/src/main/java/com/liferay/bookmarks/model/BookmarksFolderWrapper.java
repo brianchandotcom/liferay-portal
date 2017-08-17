@@ -566,6 +566,26 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	}
 
 	/**
+	* Returns <code>true</code> if this bookmarks folder is inactive.
+	*
+	* @return <code>true</code> if this bookmarks folder is inactive; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isInactive() {
+		return _bookmarksFolder.isInactive();
+	}
+
+	/**
+	* Returns <code>true</code> if this bookmarks folder is incomplete.
+	*
+	* @return <code>true</code> if this bookmarks folder is incomplete; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isIncomplete() {
+		return _bookmarksFolder.isIncomplete();
+	}
+
+	/**
 	* Returns <code>true</code> if this bookmarks folder is in the Recycle Bin.
 	*
 	* @return <code>true</code> if this bookmarks folder is in the Recycle Bin; <code>false</code> otherwise
@@ -593,26 +613,6 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	@Override
 	public boolean isInTrashImplicitly() {
 		return _bookmarksFolder.isInTrashImplicitly();
-	}
-
-	/**
-	* Returns <code>true</code> if this bookmarks folder is inactive.
-	*
-	* @return <code>true</code> if this bookmarks folder is inactive; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isInactive() {
-		return _bookmarksFolder.isInactive();
-	}
-
-	/**
-	* Returns <code>true</code> if this bookmarks folder is incomplete.
-	*
-	* @return <code>true</code> if this bookmarks folder is incomplete; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isIncomplete() {
-		return _bookmarksFolder.isIncomplete();
 	}
 
 	@Override
@@ -696,14 +696,14 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_bookmarksFolder.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_bookmarksFolder.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_bookmarksFolder.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

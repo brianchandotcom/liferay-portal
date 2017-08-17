@@ -90,25 +90,16 @@ public interface MBBanLocalService extends BaseLocalService,
 	*/
 	public MBBan createMBBan(long banId);
 
-	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public void deleteBan(MBBan ban);
-
 	public void deleteBan(long banId) throws PortalException;
 
 	public void deleteBan(long banUserId, ServiceContext serviceContext);
 
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public void deleteBan(MBBan ban);
+
 	public void deleteBansByBanUserId(long banUserId);
 
 	public void deleteBansByGroupId(long groupId);
-
-	/**
-	* Deletes the message boards ban from the database. Also notifies the appropriate model listeners.
-	*
-	* @param mbBan the message boards ban
-	* @return the message boards ban that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public MBBan deleteMBBan(MBBan mbBan);
 
 	/**
 	* Deletes the message boards ban with the primary key from the database. Also notifies the appropriate model listeners.
@@ -119,6 +110,15 @@ public interface MBBanLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public MBBan deleteMBBan(long banId) throws PortalException;
+
+	/**
+	* Deletes the message boards ban from the database. Also notifies the appropriate model listeners.
+	*
+	* @param mbBan the message boards ban
+	* @return the message boards ban that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public MBBan deleteMBBan(MBBan mbBan);
 
 	/**
 	* @throws PortalException

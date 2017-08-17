@@ -62,6 +62,10 @@ public interface PowwowParticipantLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PowwowParticipantLocalServiceUtil} to access the powwow participant local service. Add custom service methods to {@link com.liferay.powwow.service.impl.PowwowParticipantLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public PowwowParticipant addPowwowParticipant(long userId, long groupId,
+		long powwowMeetingId, java.lang.String name, long participantUserId,
+		java.lang.String emailAddress, int type, int status,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Adds the powwow participant to the database. Also notifies the appropriate model listeners.
@@ -72,11 +76,6 @@ public interface PowwowParticipantLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public PowwowParticipant addPowwowParticipant(
 		PowwowParticipant powwowParticipant);
-
-	public PowwowParticipant addPowwowParticipant(long userId, long groupId,
-		long powwowMeetingId, java.lang.String name, long participantUserId,
-		java.lang.String emailAddress, int type, int status,
-		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new powwow participant with the primary key. Does not add the powwow participant to the database.
@@ -94,16 +93,6 @@ public interface PowwowParticipantLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the powwow participant from the database. Also notifies the appropriate model listeners.
-	*
-	* @param powwowParticipant the powwow participant
-	* @return the powwow participant that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public PowwowParticipant deletePowwowParticipant(
-		PowwowParticipant powwowParticipant);
-
-	/**
 	* Deletes the powwow participant with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param powwowParticipantId the primary key of the powwow participant
@@ -113,6 +102,16 @@ public interface PowwowParticipantLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public PowwowParticipant deletePowwowParticipant(long powwowParticipantId)
 		throws PortalException;
+
+	/**
+	* Deletes the powwow participant from the database. Also notifies the appropriate model listeners.
+	*
+	* @param powwowParticipant the powwow participant
+	* @return the powwow participant that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public PowwowParticipant deletePowwowParticipant(
+		PowwowParticipant powwowParticipant);
 
 	public DynamicQuery dynamicQuery();
 
@@ -178,11 +177,11 @@ public interface PowwowParticipantLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PowwowParticipant fetchPowwowParticipant(long powwowMeetingId,
-		java.lang.String emailAddress);
+		long participantUserId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PowwowParticipant fetchPowwowParticipant(long powwowMeetingId,
-		long participantUserId);
+		java.lang.String emailAddress);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -253,6 +252,11 @@ public interface PowwowParticipantLocalService extends BaseLocalService,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
+	public PowwowParticipant updatePowwowParticipant(long powwowParticipantId,
+		long powwowMeetingId, java.lang.String name, long participantUserId,
+		java.lang.String emailAddress, int type, int status,
+		ServiceContext serviceContext) throws PortalException;
+
 	/**
 	* Updates the powwow participant in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -262,11 +266,6 @@ public interface PowwowParticipantLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public PowwowParticipant updatePowwowParticipant(
 		PowwowParticipant powwowParticipant);
-
-	public PowwowParticipant updatePowwowParticipant(long powwowParticipantId,
-		long powwowMeetingId, java.lang.String name, long participantUserId,
-		java.lang.String emailAddress, int type, int status,
-		ServiceContext serviceContext) throws PortalException;
 
 	public PowwowParticipant updateStatus(long powwowParticipantId, int status)
 		throws PortalException;

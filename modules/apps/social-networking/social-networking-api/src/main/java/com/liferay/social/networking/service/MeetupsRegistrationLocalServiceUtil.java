@@ -65,17 +65,6 @@ public class MeetupsRegistrationLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the meetups registration from the database. Also notifies the appropriate model listeners.
-	*
-	* @param meetupsRegistration the meetups registration
-	* @return the meetups registration that was removed
-	*/
-	public static com.liferay.social.networking.model.MeetupsRegistration deleteMeetupsRegistration(
-		com.liferay.social.networking.model.MeetupsRegistration meetupsRegistration) {
-		return getService().deleteMeetupsRegistration(meetupsRegistration);
-	}
-
-	/**
 	* Deletes the meetups registration with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param meetupsRegistrationId the primary key of the meetups registration
@@ -86,6 +75,17 @@ public class MeetupsRegistrationLocalServiceUtil {
 		long meetupsRegistrationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteMeetupsRegistration(meetupsRegistrationId);
+	}
+
+	/**
+	* Deletes the meetups registration from the database. Also notifies the appropriate model listeners.
+	*
+	* @param meetupsRegistration the meetups registration
+	* @return the meetups registration that was removed
+	*/
+	public static com.liferay.social.networking.model.MeetupsRegistration deleteMeetupsRegistration(
+		com.liferay.social.networking.model.MeetupsRegistration meetupsRegistration) {
+		return getService().deleteMeetupsRegistration(meetupsRegistration);
 	}
 
 	/**
@@ -258,6 +258,14 @@ public class MeetupsRegistrationLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static com.liferay.social.networking.model.MeetupsRegistration updateMeetupsRegistration(
+		long userId, long meetupsEntryId, int status, java.lang.String comments)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateMeetupsRegistration(userId, meetupsEntryId, status,
+			comments);
+	}
+
 	/**
 	* Updates the meetups registration in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -267,14 +275,6 @@ public class MeetupsRegistrationLocalServiceUtil {
 	public static com.liferay.social.networking.model.MeetupsRegistration updateMeetupsRegistration(
 		com.liferay.social.networking.model.MeetupsRegistration meetupsRegistration) {
 		return getService().updateMeetupsRegistration(meetupsRegistration);
-	}
-
-	public static com.liferay.social.networking.model.MeetupsRegistration updateMeetupsRegistration(
-		long userId, long meetupsEntryId, int status, java.lang.String comments)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateMeetupsRegistration(userId, meetupsEntryId, status,
-			comments);
 	}
 
 	public static MeetupsRegistrationLocalService getService() {

@@ -35,31 +35,6 @@ public class SocialActivityServiceWrapper implements SocialActivityService,
 
 	/**
 	* Returns a range of all the activities done on assets identified by the
-	* class name.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
-	* result set.
-	* </p>
-	*
-	* @param className the target asset's class name
-	* @param start the lower bound of the range of results
-	* @param end the upper bound of the range of results (not inclusive)
-	* @return the range of matching activities
-	*/
-	@Override
-	public java.util.List<com.liferay.social.kernel.model.SocialActivity> getActivities(
-		java.lang.String className, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _socialActivityService.getActivities(className, start, end);
-	}
-
-	/**
-	* Returns a range of all the activities done on assets identified by the
 	* class name ID.
 	*
 	* <p>
@@ -81,6 +56,35 @@ public class SocialActivityServiceWrapper implements SocialActivityService,
 		long classNameId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _socialActivityService.getActivities(classNameId, start, end);
+	}
+
+	/**
+	* Returns a range of all the activities done on the asset identified by the
+	* class name ID and class primary key that are mirrors of the activity
+	* identified by the mirror activity ID.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param mirrorActivityId the primary key of the mirror activity
+	* @param classNameId the target asset's class name ID
+	* @param classPK the primary key of the target asset
+	* @param start the lower bound of the range of results
+	* @param end the upper bound of the range of results (not inclusive)
+	* @return the range of matching activities
+	*/
+	@Override
+	public java.util.List<com.liferay.social.kernel.model.SocialActivity> getActivities(
+		long mirrorActivityId, long classNameId, long classPK, int start,
+		int end) throws com.liferay.portal.kernel.exception.PortalException {
+		return _socialActivityService.getActivities(mirrorActivityId,
+			classNameId, classPK, start, end);
 	}
 
 	/**
@@ -114,9 +118,8 @@ public class SocialActivityServiceWrapper implements SocialActivityService,
 	}
 
 	/**
-	* Returns a range of all the activities done on the asset identified by the
-	* class name ID and class primary key that are mirrors of the activity
-	* identified by the mirror activity ID.
+	* Returns a range of all the activities done on assets identified by the
+	* class name.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end -
@@ -127,30 +130,16 @@ public class SocialActivityServiceWrapper implements SocialActivityService,
 	* result set.
 	* </p>
 	*
-	* @param mirrorActivityId the primary key of the mirror activity
-	* @param classNameId the target asset's class name ID
-	* @param classPK the primary key of the target asset
+	* @param className the target asset's class name
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
 	*/
 	@Override
 	public java.util.List<com.liferay.social.kernel.model.SocialActivity> getActivities(
-		long mirrorActivityId, long classNameId, long classPK, int start,
-		int end) throws com.liferay.portal.kernel.exception.PortalException {
-		return _socialActivityService.getActivities(mirrorActivityId,
-			classNameId, classPK, start, end);
-	}
-
-	/**
-	* Returns the number of activities done on assets identified by class name.
-	*
-	* @param className the target asset's class name
-	* @return the number of matching activities
-	*/
-	@Override
-	public int getActivitiesCount(java.lang.String className) {
-		return _socialActivityService.getActivitiesCount(className);
+		java.lang.String className, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _socialActivityService.getActivities(className, start, end);
 	}
 
 	/**
@@ -163,6 +152,23 @@ public class SocialActivityServiceWrapper implements SocialActivityService,
 	@Override
 	public int getActivitiesCount(long classNameId) {
 		return _socialActivityService.getActivitiesCount(classNameId);
+	}
+
+	/**
+	* Returns the number of activities done on the asset identified by the
+	* class name ID and class primary key that are mirrors of the activity
+	* identified by the mirror activity ID.
+	*
+	* @param mirrorActivityId the primary key of the mirror activity
+	* @param classNameId the target asset's class name ID
+	* @param classPK the primary key of the target asset
+	* @return the number of matching activities
+	*/
+	@Override
+	public int getActivitiesCount(long mirrorActivityId, long classNameId,
+		long classPK) {
+		return _socialActivityService.getActivitiesCount(mirrorActivityId,
+			classNameId, classPK);
 	}
 
 	/**
@@ -183,20 +189,14 @@ public class SocialActivityServiceWrapper implements SocialActivityService,
 	}
 
 	/**
-	* Returns the number of activities done on the asset identified by the
-	* class name ID and class primary key that are mirrors of the activity
-	* identified by the mirror activity ID.
+	* Returns the number of activities done on assets identified by class name.
 	*
-	* @param mirrorActivityId the primary key of the mirror activity
-	* @param classNameId the target asset's class name ID
-	* @param classPK the primary key of the target asset
+	* @param className the target asset's class name
 	* @return the number of matching activities
 	*/
 	@Override
-	public int getActivitiesCount(long mirrorActivityId, long classNameId,
-		long classPK) {
-		return _socialActivityService.getActivitiesCount(mirrorActivityId,
-			classNameId, classPK);
+	public int getActivitiesCount(java.lang.String className) {
+		return _socialActivityService.getActivitiesCount(className);
 	}
 
 	/**
@@ -323,16 +323,6 @@ public class SocialActivityServiceWrapper implements SocialActivityService,
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _socialActivityService.getOSGiServiceIdentifier();
-	}
-
-	/**
 	* Returns a range of all the activities done in the organization. This
 	* method only finds activities without mirrors.
 	*
@@ -406,6 +396,16 @@ public class SocialActivityServiceWrapper implements SocialActivityService,
 	@Override
 	public int getOrganizationUsersActivitiesCount(long organizationId) {
 		return _socialActivityService.getOrganizationUsersActivitiesCount(organizationId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _socialActivityService.getOSGiServiceIdentifier();
 	}
 
 	/**

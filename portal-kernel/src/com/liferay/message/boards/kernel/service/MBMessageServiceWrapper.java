@@ -44,22 +44,13 @@ public class MBMessageServiceWrapper implements MBMessageService,
 
 	@Override
 	public com.liferay.message.boards.kernel.model.MBMessage addMessage(
-		long categoryId, java.lang.String subject, java.lang.String body,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessageService.addMessage(categoryId, subject, body,
-			serviceContext);
-	}
-
-	@Override
-	public com.liferay.message.boards.kernel.model.MBMessage addMessage(
-		long parentMessageId, java.lang.String subject, java.lang.String body,
-		java.lang.String format,
+		long groupId, long categoryId, java.lang.String subject,
+		java.lang.String body, java.lang.String format,
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs,
 		boolean anonymous, double priority, boolean allowPingbacks,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessageService.addMessage(parentMessageId, subject, body,
+		return _mbMessageService.addMessage(groupId, categoryId, subject, body,
 			format, inputStreamOVPs, anonymous, priority, allowPingbacks,
 			serviceContext);
 	}
@@ -80,13 +71,22 @@ public class MBMessageServiceWrapper implements MBMessageService,
 
 	@Override
 	public com.liferay.message.boards.kernel.model.MBMessage addMessage(
-		long groupId, long categoryId, java.lang.String subject,
-		java.lang.String body, java.lang.String format,
+		long categoryId, java.lang.String subject, java.lang.String body,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessageService.addMessage(categoryId, subject, body,
+			serviceContext);
+	}
+
+	@Override
+	public com.liferay.message.boards.kernel.model.MBMessage addMessage(
+		long parentMessageId, java.lang.String subject, java.lang.String body,
+		java.lang.String format,
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs,
 		boolean anonymous, double priority, boolean allowPingbacks,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessageService.addMessage(groupId, categoryId, subject, body,
+		return _mbMessageService.addMessage(parentMessageId, subject, body,
 			format, inputStreamOVPs, anonymous, priority, allowPingbacks,
 			serviceContext);
 	}

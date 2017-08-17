@@ -80,17 +80,6 @@ public class PollsVoteLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the polls vote from the database. Also notifies the appropriate model listeners.
-	*
-	* @param pollsVote the polls vote
-	* @return the polls vote that was removed
-	*/
-	public static com.liferay.polls.model.PollsVote deletePollsVote(
-		com.liferay.polls.model.PollsVote pollsVote) {
-		return getService().deletePollsVote(pollsVote);
-	}
-
-	/**
 	* Deletes the polls vote with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param voteId the primary key of the polls vote
@@ -100,6 +89,17 @@ public class PollsVoteLocalServiceUtil {
 	public static com.liferay.polls.model.PollsVote deletePollsVote(long voteId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deletePollsVote(voteId);
+	}
+
+	/**
+	* Deletes the polls vote from the database. Also notifies the appropriate model listeners.
+	*
+	* @param pollsVote the polls vote
+	* @return the polls vote that was removed
+	*/
+	public static com.liferay.polls.model.PollsVote deletePollsVote(
+		com.liferay.polls.model.PollsVote pollsVote) {
+		return getService().deletePollsVote(pollsVote);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {

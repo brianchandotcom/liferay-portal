@@ -109,17 +109,6 @@ public class PortletLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the portlet from the database. Also notifies the appropriate model listeners.
-	*
-	* @param portlet the portlet
-	* @return the portlet that was removed
-	*/
-	public static com.liferay.portal.kernel.model.Portlet deletePortlet(
-		com.liferay.portal.kernel.model.Portlet portlet) {
-		return getService().deletePortlet(portlet);
-	}
-
-	/**
 	* Deletes the portlet with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param id the primary key of the portlet
@@ -135,6 +124,17 @@ public class PortletLocalServiceUtil {
 		java.lang.String portletId, long plid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deletePortlet(companyId, portletId, plid);
+	}
+
+	/**
+	* Deletes the portlet from the database. Also notifies the appropriate model listeners.
+	*
+	* @param portlet the portlet
+	* @return the portlet that was removed
+	*/
+	public static com.liferay.portal.kernel.model.Portlet deletePortlet(
+		com.liferay.portal.kernel.model.Portlet portlet) {
+		return getService().deletePortlet(portlet);
 	}
 
 	public static void deletePortlets(long companyId,
@@ -326,13 +326,13 @@ public class PortletLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.Portlet getPortletById(
-		java.lang.String portletId) {
-		return getService().getPortletById(portletId);
+		long companyId, java.lang.String portletId) {
+		return getService().getPortletById(companyId, portletId);
 	}
 
 	public static com.liferay.portal.kernel.model.Portlet getPortletById(
-		long companyId, java.lang.String portletId) {
-		return getService().getPortletById(companyId, portletId);
+		java.lang.String portletId) {
+		return getService().getPortletById(portletId);
 	}
 
 	public static com.liferay.portal.kernel.model.Portlet getPortletByStrutsPath(
@@ -425,6 +425,12 @@ public class PortletLocalServiceUtil {
 		getService().removeCompanyPortletsPool(companyId);
 	}
 
+	public static com.liferay.portal.kernel.model.Portlet updatePortlet(
+		long companyId, java.lang.String portletId, java.lang.String roles,
+		boolean active) {
+		return getService().updatePortlet(companyId, portletId, roles, active);
+	}
+
 	/**
 	* Updates the portlet in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -434,12 +440,6 @@ public class PortletLocalServiceUtil {
 	public static com.liferay.portal.kernel.model.Portlet updatePortlet(
 		com.liferay.portal.kernel.model.Portlet portlet) {
 		return getService().updatePortlet(portlet);
-	}
-
-	public static com.liferay.portal.kernel.model.Portlet updatePortlet(
-		long companyId, java.lang.String portletId, java.lang.String roles,
-		boolean active) {
-		return getService().updatePortlet(companyId, portletId, roles, active);
 	}
 
 	public static void visitPortlets(long companyId,

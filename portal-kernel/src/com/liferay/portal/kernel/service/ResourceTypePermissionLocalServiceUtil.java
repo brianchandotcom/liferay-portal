@@ -74,17 +74,6 @@ public class ResourceTypePermissionLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the resource type permission from the database. Also notifies the appropriate model listeners.
-	*
-	* @param resourceTypePermission the resource type permission
-	* @return the resource type permission that was removed
-	*/
-	public static com.liferay.portal.kernel.model.ResourceTypePermission deleteResourceTypePermission(
-		com.liferay.portal.kernel.model.ResourceTypePermission resourceTypePermission) {
-		return getService().deleteResourceTypePermission(resourceTypePermission);
-	}
-
-	/**
 	* Deletes the resource type permission with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param resourceTypePermissionId the primary key of the resource type permission
@@ -96,6 +85,17 @@ public class ResourceTypePermissionLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .deleteResourceTypePermission(resourceTypePermissionId);
+	}
+
+	/**
+	* Deletes the resource type permission from the database. Also notifies the appropriate model listeners.
+	*
+	* @param resourceTypePermission the resource type permission
+	* @return the resource type permission that was removed
+	*/
+	public static com.liferay.portal.kernel.model.ResourceTypePermission deleteResourceTypePermission(
+		com.liferay.portal.kernel.model.ResourceTypePermission resourceTypePermission) {
+		return getService().deleteResourceTypePermission(resourceTypePermission);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {

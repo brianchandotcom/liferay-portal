@@ -53,14 +53,14 @@ public class EntryLocalServiceUtil {
 		return getService().addEntry(entry);
 	}
 
-	public static com.liferay.chat.model.Entry addEntry(long fromUserId,
-		long toUserId, java.lang.String content) {
-		return getService().addEntry(fromUserId, toUserId, content);
-	}
-
 	public static com.liferay.chat.model.Entry addEntry(long createDate,
 		long fromUserId, long toUserId, java.lang.String content) {
 		return getService().addEntry(createDate, fromUserId, toUserId, content);
+	}
+
+	public static com.liferay.chat.model.Entry addEntry(long fromUserId,
+		long toUserId, java.lang.String content) {
+		return getService().addEntry(fromUserId, toUserId, content);
 	}
 
 	/**
@@ -241,6 +241,11 @@ public class EntryLocalServiceUtil {
 		return getService().getNewEntries(userId, createDate, start, end);
 	}
 
+	public static java.util.List<com.liferay.chat.model.Entry> getOldEntries(
+		long createDate, int start, int end) {
+		return getService().getOldEntries(createDate, start, end);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -248,11 +253,6 @@ public class EntryLocalServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static java.util.List<com.liferay.chat.model.Entry> getOldEntries(
-		long createDate, int start, int end) {
-		return getService().getOldEntries(createDate, start, end);
 	}
 
 	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(

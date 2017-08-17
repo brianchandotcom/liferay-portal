@@ -33,6 +33,15 @@ public class WallEntryLocalServiceWrapper implements WallEntryLocalService,
 		_wallEntryLocalService = wallEntryLocalService;
 	}
 
+	@Override
+	public com.liferay.social.networking.model.WallEntry addWallEntry(
+		long groupId, long userId, java.lang.String comments,
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wallEntryLocalService.addWallEntry(groupId, userId, comments,
+			themeDisplay);
+	}
+
 	/**
 	* Adds the wall entry to the database. Also notifies the appropriate model listeners.
 	*
@@ -43,15 +52,6 @@ public class WallEntryLocalServiceWrapper implements WallEntryLocalService,
 	public com.liferay.social.networking.model.WallEntry addWallEntry(
 		com.liferay.social.networking.model.WallEntry wallEntry) {
 		return _wallEntryLocalService.addWallEntry(wallEntry);
-	}
-
-	@Override
-	public com.liferay.social.networking.model.WallEntry addWallEntry(
-		long groupId, long userId, java.lang.String comments,
-		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wallEntryLocalService.addWallEntry(groupId, userId, comments,
-			themeDisplay);
 	}
 
 	/**
@@ -83,20 +83,6 @@ public class WallEntryLocalServiceWrapper implements WallEntryLocalService,
 	}
 
 	/**
-	* Deletes the wall entry from the database. Also notifies the appropriate model listeners.
-	*
-	* @param wallEntry the wall entry
-	* @return the wall entry that was removed
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.social.networking.model.WallEntry deleteWallEntry(
-		com.liferay.social.networking.model.WallEntry wallEntry)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wallEntryLocalService.deleteWallEntry(wallEntry);
-	}
-
-	/**
 	* Deletes the wall entry with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param wallEntryId the primary key of the wall entry
@@ -108,6 +94,20 @@ public class WallEntryLocalServiceWrapper implements WallEntryLocalService,
 		long wallEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wallEntryLocalService.deleteWallEntry(wallEntryId);
+	}
+
+	/**
+	* Deletes the wall entry from the database. Also notifies the appropriate model listeners.
+	*
+	* @param wallEntry the wall entry
+	* @return the wall entry that was removed
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.social.networking.model.WallEntry deleteWallEntry(
+		com.liferay.social.networking.model.WallEntry wallEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wallEntryLocalService.deleteWallEntry(wallEntry);
 	}
 
 	@Override
@@ -294,6 +294,13 @@ public class WallEntryLocalServiceWrapper implements WallEntryLocalService,
 			groupId2, userId1, userId2);
 	}
 
+	@Override
+	public com.liferay.social.networking.model.WallEntry updateWallEntry(
+		long wallEntryId, java.lang.String comments)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wallEntryLocalService.updateWallEntry(wallEntryId, comments);
+	}
+
 	/**
 	* Updates the wall entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -304,13 +311,6 @@ public class WallEntryLocalServiceWrapper implements WallEntryLocalService,
 	public com.liferay.social.networking.model.WallEntry updateWallEntry(
 		com.liferay.social.networking.model.WallEntry wallEntry) {
 		return _wallEntryLocalService.updateWallEntry(wallEntry);
-	}
-
-	@Override
-	public com.liferay.social.networking.model.WallEntry updateWallEntry(
-		long wallEntryId, java.lang.String comments)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wallEntryLocalService.updateWallEntry(wallEntryId, comments);
 	}
 
 	@Override

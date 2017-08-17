@@ -524,6 +524,26 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	}
 
 	/**
+	* Returns <code>true</code> if this wiki node is inactive.
+	*
+	* @return <code>true</code> if this wiki node is inactive; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isInactive() {
+		return _wikiNode.isInactive();
+	}
+
+	/**
+	* Returns <code>true</code> if this wiki node is incomplete.
+	*
+	* @return <code>true</code> if this wiki node is incomplete; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isIncomplete() {
+		return _wikiNode.isIncomplete();
+	}
+
+	/**
 	* Returns <code>true</code> if this wiki node is in the Recycle Bin.
 	*
 	* @return <code>true</code> if this wiki node is in the Recycle Bin; <code>false</code> otherwise
@@ -551,26 +571,6 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	@Override
 	public boolean isInTrashImplicitly() {
 		return _wikiNode.isInTrashImplicitly();
-	}
-
-	/**
-	* Returns <code>true</code> if this wiki node is inactive.
-	*
-	* @return <code>true</code> if this wiki node is inactive; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isInactive() {
-		return _wikiNode.isInactive();
-	}
-
-	/**
-	* Returns <code>true</code> if this wiki node is incomplete.
-	*
-	* @return <code>true</code> if this wiki node is incomplete; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isIncomplete() {
-		return _wikiNode.isIncomplete();
 	}
 
 	@Override
@@ -649,14 +649,14 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_wikiNode.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_wikiNode.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_wikiNode.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

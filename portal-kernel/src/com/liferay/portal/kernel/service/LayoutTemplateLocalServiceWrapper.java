@@ -70,19 +70,19 @@ public class LayoutTemplateLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.LayoutTemplate> init(
+		javax.servlet.ServletContext servletContext, java.lang.String[] xmls,
+		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage) {
+		return _layoutTemplateLocalService.init(servletContext, xmls,
+			pluginPackage);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.LayoutTemplate> init(
 		java.lang.String servletContextName,
 		javax.servlet.ServletContext servletContext, java.lang.String[] xmls,
 		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage) {
 		return _layoutTemplateLocalService.init(servletContextName,
 			servletContext, xmls, pluginPackage);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.LayoutTemplate> init(
-		javax.servlet.ServletContext servletContext, java.lang.String[] xmls,
-		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage) {
-		return _layoutTemplateLocalService.init(servletContext, xmls,
-			pluginPackage);
 	}
 
 	@Override

@@ -41,18 +41,6 @@ public class MeetupsEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.social.networking.service.impl.MeetupsEntryLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-
-	/**
-	* Adds the meetups entry to the database. Also notifies the appropriate model listeners.
-	*
-	* @param meetupsEntry the meetups entry
-	* @return the meetups entry that was added
-	*/
-	public static com.liferay.social.networking.model.MeetupsEntry addMeetupsEntry(
-		com.liferay.social.networking.model.MeetupsEntry meetupsEntry) {
-		return getService().addMeetupsEntry(meetupsEntry);
-	}
-
 	public static com.liferay.social.networking.model.MeetupsEntry addMeetupsEntry(
 		long userId, java.lang.String title, java.lang.String description,
 		int startDateMonth, int startDateDay, int startDateYear,
@@ -68,6 +56,17 @@ public class MeetupsEntryLocalServiceUtil {
 	}
 
 	/**
+	* Adds the meetups entry to the database. Also notifies the appropriate model listeners.
+	*
+	* @param meetupsEntry the meetups entry
+	* @return the meetups entry that was added
+	*/
+	public static com.liferay.social.networking.model.MeetupsEntry addMeetupsEntry(
+		com.liferay.social.networking.model.MeetupsEntry meetupsEntry) {
+		return getService().addMeetupsEntry(meetupsEntry);
+	}
+
+	/**
 	* Creates a new meetups entry with the primary key. Does not add the meetups entry to the database.
 	*
 	* @param meetupsEntryId the primary key for the new meetups entry
@@ -76,17 +75,6 @@ public class MeetupsEntryLocalServiceUtil {
 	public static com.liferay.social.networking.model.MeetupsEntry createMeetupsEntry(
 		long meetupsEntryId) {
 		return getService().createMeetupsEntry(meetupsEntryId);
-	}
-
-	/**
-	* Deletes the meetups entry from the database. Also notifies the appropriate model listeners.
-	*
-	* @param meetupsEntry the meetups entry
-	* @return the meetups entry that was removed
-	*/
-	public static com.liferay.social.networking.model.MeetupsEntry deleteMeetupsEntry(
-		com.liferay.social.networking.model.MeetupsEntry meetupsEntry) {
-		return getService().deleteMeetupsEntry(meetupsEntry);
 	}
 
 	/**
@@ -100,6 +88,17 @@ public class MeetupsEntryLocalServiceUtil {
 		long meetupsEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteMeetupsEntry(meetupsEntryId);
+	}
+
+	/**
+	* Deletes the meetups entry from the database. Also notifies the appropriate model listeners.
+	*
+	* @param meetupsEntry the meetups entry
+	* @return the meetups entry that was removed
+	*/
+	public static com.liferay.social.networking.model.MeetupsEntry deleteMeetupsEntry(
+		com.liferay.social.networking.model.MeetupsEntry meetupsEntry) {
+		return getService().deleteMeetupsEntry(meetupsEntry);
 	}
 
 	/**
@@ -265,17 +264,6 @@ public class MeetupsEntryLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	/**
-	* Updates the meetups entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param meetupsEntry the meetups entry
-	* @return the meetups entry that was updated
-	*/
-	public static com.liferay.social.networking.model.MeetupsEntry updateMeetupsEntry(
-		com.liferay.social.networking.model.MeetupsEntry meetupsEntry) {
-		return getService().updateMeetupsEntry(meetupsEntry);
-	}
-
 	public static com.liferay.social.networking.model.MeetupsEntry updateMeetupsEntry(
 		long userId, long meetupsEntryId, java.lang.String title,
 		java.lang.String description, int startDateMonth, int startDateDay,
@@ -290,6 +278,17 @@ public class MeetupsEntryLocalServiceUtil {
 			startDateHour, startDateMinute, endDateMonth, endDateDay,
 			endDateYear, endDateHour, endDateMinute, totalAttendees,
 			maxAttendees, price, thumbnail);
+	}
+
+	/**
+	* Updates the meetups entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param meetupsEntry the meetups entry
+	* @return the meetups entry that was updated
+	*/
+	public static com.liferay.social.networking.model.MeetupsEntry updateMeetupsEntry(
+		com.liferay.social.networking.model.MeetupsEntry meetupsEntry) {
+		return getService().updateMeetupsEntry(meetupsEntry);
 	}
 
 	public static MeetupsEntryLocalService getService() {

@@ -30,6 +30,16 @@ public class PhoneLocalServiceWrapper implements PhoneLocalService,
 		_phoneLocalService = phoneLocalService;
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.Phone addPhone(long userId,
+		java.lang.String className, long classPK, java.lang.String number,
+		java.lang.String extension, long typeId, boolean primary,
+		ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _phoneLocalService.addPhone(userId, className, classPK, number,
+			extension, typeId, primary, serviceContext);
+	}
+
 	/**
 	* Adds the phone to the database. Also notifies the appropriate model listeners.
 	*
@@ -40,16 +50,6 @@ public class PhoneLocalServiceWrapper implements PhoneLocalService,
 	public com.liferay.portal.kernel.model.Phone addPhone(
 		com.liferay.portal.kernel.model.Phone phone) {
 		return _phoneLocalService.addPhone(phone);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Phone addPhone(long userId,
-		java.lang.String className, long classPK, java.lang.String number,
-		java.lang.String extension, long typeId, boolean primary,
-		ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _phoneLocalService.addPhone(userId, className, classPK, number,
-			extension, typeId, primary, serviceContext);
 	}
 
 	/**
@@ -74,18 +74,6 @@ public class PhoneLocalServiceWrapper implements PhoneLocalService,
 	}
 
 	/**
-	* Deletes the phone from the database. Also notifies the appropriate model listeners.
-	*
-	* @param phone the phone
-	* @return the phone that was removed
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.Phone deletePhone(
-		com.liferay.portal.kernel.model.Phone phone) {
-		return _phoneLocalService.deletePhone(phone);
-	}
-
-	/**
 	* Deletes the phone with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param phoneId the primary key of the phone
@@ -96,6 +84,18 @@ public class PhoneLocalServiceWrapper implements PhoneLocalService,
 	public com.liferay.portal.kernel.model.Phone deletePhone(long phoneId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _phoneLocalService.deletePhone(phoneId);
+	}
+
+	/**
+	* Deletes the phone from the database. Also notifies the appropriate model listeners.
+	*
+	* @param phone the phone
+	* @return the phone that was removed
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.Phone deletePhone(
+		com.liferay.portal.kernel.model.Phone phone) {
+		return _phoneLocalService.deletePhone(phone);
 	}
 
 	@Override
@@ -305,6 +305,15 @@ public class PhoneLocalServiceWrapper implements PhoneLocalService,
 		return _phoneLocalService.getPhonesCount();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.Phone updatePhone(long phoneId,
+		java.lang.String number, java.lang.String extension, long typeId,
+		boolean primary)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _phoneLocalService.updatePhone(phoneId, number, extension,
+			typeId, primary);
+	}
+
 	/**
 	* Updates the phone in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -315,15 +324,6 @@ public class PhoneLocalServiceWrapper implements PhoneLocalService,
 	public com.liferay.portal.kernel.model.Phone updatePhone(
 		com.liferay.portal.kernel.model.Phone phone) {
 		return _phoneLocalService.updatePhone(phone);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Phone updatePhone(long phoneId,
-		java.lang.String number, java.lang.String extension, long typeId,
-		boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _phoneLocalService.updatePhone(phoneId, number, extension,
-			typeId, primary);
 	}
 
 	@Override

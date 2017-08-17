@@ -62,6 +62,10 @@ public interface PhoneLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PhoneLocalServiceUtil} to access the phone local service. Add custom service methods to {@link com.liferay.portal.service.impl.PhoneLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public Phone addPhone(long userId, java.lang.String className,
+		long classPK, java.lang.String number, java.lang.String extension,
+		long typeId, boolean primary, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Adds the phone to the database. Also notifies the appropriate model listeners.
@@ -71,11 +75,6 @@ public interface PhoneLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public Phone addPhone(Phone phone);
-
-	public Phone addPhone(long userId, java.lang.String className,
-		long classPK, java.lang.String number, java.lang.String extension,
-		long typeId, boolean primary, ServiceContext serviceContext)
-		throws PortalException;
 
 	/**
 	* Creates a new phone with the primary key. Does not add the phone to the database.
@@ -93,16 +92,6 @@ public interface PhoneLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the phone from the database. Also notifies the appropriate model listeners.
-	*
-	* @param phone the phone
-	* @return the phone that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
-	public Phone deletePhone(Phone phone);
-
-	/**
 	* Deletes the phone with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param phoneId the primary key of the phone
@@ -111,6 +100,16 @@ public interface PhoneLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public Phone deletePhone(long phoneId) throws PortalException;
+
+	/**
+	* Deletes the phone from the database. Also notifies the appropriate model listeners.
+	*
+	* @param phone the phone
+	* @return the phone that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
+	public Phone deletePhone(Phone phone);
 
 	public void deletePhones(long companyId, java.lang.String className,
 		long classPK);
@@ -261,6 +260,10 @@ public interface PhoneLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getPhonesCount();
 
+	public Phone updatePhone(long phoneId, java.lang.String number,
+		java.lang.String extension, long typeId, boolean primary)
+		throws PortalException;
+
 	/**
 	* Updates the phone in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -269,8 +272,4 @@ public interface PhoneLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public Phone updatePhone(Phone phone);
-
-	public Phone updatePhone(long phoneId, java.lang.String number,
-		java.lang.String extension, long typeId, boolean primary)
-		throws PortalException;
 }

@@ -119,13 +119,6 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	public void deleteReceiverUserRequests(long receiverUserId);
 
 	/**
-	* Removes the social request from the database.
-	*
-	* @param request the social request to be removed
-	*/
-	public void deleteRequest(SocialRequest request);
-
-	/**
 	* Removes the social request identified by its primary key from the
 	* database.
 	*
@@ -133,16 +126,14 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	*/
 	public void deleteRequest(long requestId) throws PortalException;
 
-	public void deleteRequests(long className, long classPK);
-
 	/**
-	* Deletes the social request from the database. Also notifies the appropriate model listeners.
+	* Removes the social request from the database.
 	*
-	* @param socialRequest the social request
-	* @return the social request that was removed
+	* @param request the social request to be removed
 	*/
-	@Indexable(type = IndexableType.DELETE)
-	public SocialRequest deleteSocialRequest(SocialRequest socialRequest);
+	public void deleteRequest(SocialRequest request);
+
+	public void deleteRequests(long className, long classPK);
 
 	/**
 	* Deletes the social request with the primary key from the database. Also notifies the appropriate model listeners.
@@ -154,6 +145,15 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public SocialRequest deleteSocialRequest(long requestId)
 		throws PortalException;
+
+	/**
+	* Deletes the social request from the database. Also notifies the appropriate model listeners.
+	*
+	* @param socialRequest the social request
+	* @return the social request that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public SocialRequest deleteSocialRequest(SocialRequest socialRequest);
 
 	/**
 	* Removes all the social requests for the requesting user.

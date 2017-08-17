@@ -62,6 +62,13 @@ public class UserThreadLocalServiceUtil {
 			inputStreamOVPs, themeDisplay);
 	}
 
+	public static void addUserThread(long userId, long mbThreadId,
+		long topMBMessageId, boolean read, boolean deleted)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.addUserThread(userId, mbThreadId, topMBMessageId, read, deleted);
+	}
+
 	/**
 	* Adds the user thread to the database. Also notifies the appropriate model listeners.
 	*
@@ -71,13 +78,6 @@ public class UserThreadLocalServiceUtil {
 	public static com.liferay.social.privatemessaging.model.UserThread addUserThread(
 		com.liferay.social.privatemessaging.model.UserThread userThread) {
 		return getService().addUserThread(userThread);
-	}
-
-	public static void addUserThread(long userId, long mbThreadId,
-		long topMBMessageId, boolean read, boolean deleted)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addUserThread(userId, mbThreadId, topMBMessageId, read, deleted);
 	}
 
 	/**
@@ -106,17 +106,6 @@ public class UserThreadLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the user thread from the database. Also notifies the appropriate model listeners.
-	*
-	* @param userThread the user thread
-	* @return the user thread that was removed
-	*/
-	public static com.liferay.social.privatemessaging.model.UserThread deleteUserThread(
-		com.liferay.social.privatemessaging.model.UserThread userThread) {
-		return getService().deleteUserThread(userThread);
-	}
-
-	/**
 	* Deletes the user thread with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param userThreadId the primary key of the user thread
@@ -132,6 +121,17 @@ public class UserThreadLocalServiceUtil {
 	public static void deleteUserThread(long userId, long mbThreadId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteUserThread(userId, mbThreadId);
+	}
+
+	/**
+	* Deletes the user thread from the database. Also notifies the appropriate model listeners.
+	*
+	* @param userThread the user thread
+	* @return the user thread that was removed
+	*/
+	public static com.liferay.social.privatemessaging.model.UserThread deleteUserThread(
+		com.liferay.social.privatemessaging.model.UserThread userThread) {
+		return getService().deleteUserThread(userThread);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {

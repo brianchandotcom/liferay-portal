@@ -522,15 +522,6 @@ public interface DLAppService extends BaseService {
 		int start, int end, OrderByComparator<FileEntry> obc)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<FileEntry> getFileEntries(long repositoryId, long folderId,
-		java.lang.String[] mimeTypes) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<FileEntry> getFileEntries(long repositoryId, long folderId,
-		java.lang.String[] mimeTypes, int start, int end,
-		OrderByComparator<FileEntry> obc) throws PortalException;
-
 	/**
 	* Returns the file entries with the file entry type in the folder.
 	*
@@ -575,6 +566,15 @@ public interface DLAppService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FileEntry> getFileEntries(long repositoryId, long folderId,
 		long fileEntryTypeId, int start, int end,
+		OrderByComparator<FileEntry> obc) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FileEntry> getFileEntries(long repositoryId, long folderId,
+		java.lang.String[] mimeTypes) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FileEntry> getFileEntries(long repositoryId, long folderId,
+		java.lang.String[] mimeTypes, int start, int end,
 		OrderByComparator<FileEntry> obc) throws PortalException;
 
 	/**
@@ -638,10 +638,6 @@ public interface DLAppService extends BaseService {
 	public int getFileEntriesCount(long repositoryId, long folderId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFileEntriesCount(long repositoryId, long folderId,
-		java.lang.String[] mimeTypes) throws PortalException;
-
 	/**
 	* Returns the number of file entries with the file entry type in the
 	* folder.
@@ -654,6 +650,10 @@ public interface DLAppService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFileEntriesCount(long repositoryId, long folderId,
 		long fileEntryTypeId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFileEntriesCount(long repositoryId, long folderId,
+		java.lang.String[] mimeTypes) throws PortalException;
 
 	/**
 	* Returns the file entry with the primary key.
@@ -1418,14 +1418,6 @@ public interface DLAppService extends BaseService {
 		ServiceContext serviceContext) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Hits search(long repositoryId, SearchContext searchContext)
-		throws SearchException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Hits search(long repositoryId, SearchContext searchContext,
-		Query query) throws SearchException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Hits search(long repositoryId, long creatorUserId, int status,
 		int start, int end) throws PortalException;
 
@@ -1433,6 +1425,14 @@ public interface DLAppService extends BaseService {
 	public Hits search(long repositoryId, long creatorUserId, long folderId,
 		java.lang.String[] mimeTypes, int status, int start, int end)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Hits search(long repositoryId, SearchContext searchContext)
+		throws SearchException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Hits search(long repositoryId, SearchContext searchContext,
+		Query query) throws SearchException;
 
 	/**
 	* Subscribe the user to changes in documents of the file entry type. This

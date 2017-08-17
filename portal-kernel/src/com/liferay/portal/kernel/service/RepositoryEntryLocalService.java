@@ -60,6 +60,9 @@ public interface RepositoryEntryLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link RepositoryEntryLocalServiceUtil} to access the repository entry local service. Add custom service methods to {@link com.liferay.portal.service.impl.RepositoryEntryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public RepositoryEntry addRepositoryEntry(long userId, long groupId,
+		long repositoryId, java.lang.String mappedId,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Adds the repository entry to the database. Also notifies the appropriate model listeners.
@@ -69,10 +72,6 @@ public interface RepositoryEntryLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public RepositoryEntry addRepositoryEntry(RepositoryEntry repositoryEntry);
-
-	public RepositoryEntry addRepositoryEntry(long userId, long groupId,
-		long repositoryId, java.lang.String mappedId,
-		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new repository entry with the primary key. Does not add the repository entry to the database.
@@ -94,16 +93,6 @@ public interface RepositoryEntryLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the repository entry from the database. Also notifies the appropriate model listeners.
-	*
-	* @param repositoryEntry the repository entry
-	* @return the repository entry that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public RepositoryEntry deleteRepositoryEntry(
-		RepositoryEntry repositoryEntry);
-
-	/**
 	* Deletes the repository entry with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param repositoryEntryId the primary key of the repository entry
@@ -116,6 +105,16 @@ public interface RepositoryEntryLocalService extends BaseLocalService,
 
 	public void deleteRepositoryEntry(long repositoryId,
 		java.lang.String mappedId) throws PortalException;
+
+	/**
+	* Deletes the repository entry from the database. Also notifies the appropriate model listeners.
+	*
+	* @param repositoryEntry the repository entry
+	* @return the repository entry that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public RepositoryEntry deleteRepositoryEntry(
+		RepositoryEntry repositoryEntry);
 
 	public DynamicQuery dynamicQuery();
 
@@ -263,10 +262,6 @@ public interface RepositoryEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRepositoryEntriesCount();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public RepositoryEntry getRepositoryEntry(java.lang.String uuid,
-		long groupId) throws PortalException;
-
 	/**
 	* Returns the repository entry with the primary key.
 	*
@@ -282,6 +277,10 @@ public interface RepositoryEntryLocalService extends BaseLocalService,
 	public RepositoryEntry getRepositoryEntry(long userId, long groupId,
 		long repositoryId, java.lang.String objectId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public RepositoryEntry getRepositoryEntry(java.lang.String uuid,
+		long groupId) throws PortalException;
+
 	/**
 	* Returns the repository entry matching the UUID and group.
 	*
@@ -294,6 +293,9 @@ public interface RepositoryEntryLocalService extends BaseLocalService,
 	public RepositoryEntry getRepositoryEntryByUuidAndGroupId(
 		java.lang.String uuid, long groupId) throws PortalException;
 
+	public RepositoryEntry updateRepositoryEntry(long repositoryEntryId,
+		java.lang.String mappedId) throws PortalException;
+
 	/**
 	* Updates the repository entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -303,7 +305,4 @@ public interface RepositoryEntryLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public RepositoryEntry updateRepositoryEntry(
 		RepositoryEntry repositoryEntry);
-
-	public RepositoryEntry updateRepositoryEntry(long repositoryEntryId,
-		java.lang.String mappedId) throws PortalException;
 }

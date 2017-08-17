@@ -61,6 +61,11 @@ public interface OAuthTokenLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link OAuthTokenLocalServiceUtil} to access the o auth token local service. Add custom service methods to {@link com.liferay.opensocial.service.impl.OAuthTokenLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public OAuthToken addOAuthToken(long userId, java.lang.String gadgetKey,
+		java.lang.String serviceName, long moduleId,
+		java.lang.String accessToken, java.lang.String tokenName,
+		java.lang.String tokenSecret, java.lang.String sessionHandle,
+		long expiration) throws PortalException;
 
 	/**
 	* Adds the o auth token to the database. Also notifies the appropriate model listeners.
@@ -71,12 +76,6 @@ public interface OAuthTokenLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public OAuthToken addOAuthToken(OAuthToken oAuthToken);
 
-	public OAuthToken addOAuthToken(long userId, java.lang.String gadgetKey,
-		java.lang.String serviceName, long moduleId,
-		java.lang.String accessToken, java.lang.String tokenName,
-		java.lang.String tokenSecret, java.lang.String sessionHandle,
-		long expiration) throws PortalException;
-
 	/**
 	* Creates a new o auth token with the primary key. Does not add the o auth token to the database.
 	*
@@ -84,15 +83,6 @@ public interface OAuthTokenLocalService extends BaseLocalService,
 	* @return the new o auth token
 	*/
 	public OAuthToken createOAuthToken(long oAuthTokenId);
-
-	/**
-	* Deletes the o auth token from the database. Also notifies the appropriate model listeners.
-	*
-	* @param oAuthToken the o auth token
-	* @return the o auth token that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public OAuthToken deleteOAuthToken(OAuthToken oAuthToken);
 
 	/**
 	* Deletes the o auth token with the primary key from the database. Also notifies the appropriate model listeners.
@@ -108,6 +98,15 @@ public interface OAuthTokenLocalService extends BaseLocalService,
 	public void deleteOAuthToken(long userId, java.lang.String gadgetKey,
 		java.lang.String serviceName, long moduleId, java.lang.String tokenName)
 		throws PortalException;
+
+	/**
+	* Deletes the o auth token from the database. Also notifies the appropriate model listeners.
+	*
+	* @param oAuthToken the o auth token
+	* @return the o auth token that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public OAuthToken deleteOAuthToken(OAuthToken oAuthToken);
 
 	public void deleteOAuthTokens(java.lang.String gadgetKey,
 		java.lang.String serviceName);

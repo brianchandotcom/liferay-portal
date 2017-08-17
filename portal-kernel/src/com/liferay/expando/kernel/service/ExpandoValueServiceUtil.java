@@ -66,14 +66,6 @@ public class ExpandoValueServiceUtil {
 			.addValues(companyId, className, tableName, classPK, attributeValues);
 	}
 
-	public static java.io.Serializable getData(long companyId,
-		java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getData(companyId, className, tableName, columnName, classPK);
-	}
-
 	public static java.util.Map<java.lang.String, java.io.Serializable> getData(
 		long companyId, java.lang.String className, java.lang.String tableName,
 		java.util.Collection<java.lang.String> columnNames, long classPK)
@@ -81,6 +73,14 @@ public class ExpandoValueServiceUtil {
 		return getService()
 				   .getData(companyId, className, tableName, columnNames,
 			classPK);
+	}
+
+	public static java.io.Serializable getData(long companyId,
+		java.lang.String className, java.lang.String tableName,
+		java.lang.String columnName, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getData(companyId, className, tableName, columnName, classPK);
 	}
 
 	public static com.liferay.portal.kernel.json.JSONObject getJSONData(

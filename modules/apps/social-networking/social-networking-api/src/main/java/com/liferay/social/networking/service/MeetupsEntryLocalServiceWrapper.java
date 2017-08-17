@@ -33,18 +33,6 @@ public class MeetupsEntryLocalServiceWrapper implements MeetupsEntryLocalService
 		_meetupsEntryLocalService = meetupsEntryLocalService;
 	}
 
-	/**
-	* Adds the meetups entry to the database. Also notifies the appropriate model listeners.
-	*
-	* @param meetupsEntry the meetups entry
-	* @return the meetups entry that was added
-	*/
-	@Override
-	public com.liferay.social.networking.model.MeetupsEntry addMeetupsEntry(
-		com.liferay.social.networking.model.MeetupsEntry meetupsEntry) {
-		return _meetupsEntryLocalService.addMeetupsEntry(meetupsEntry);
-	}
-
 	@Override
 	public com.liferay.social.networking.model.MeetupsEntry addMeetupsEntry(
 		long userId, java.lang.String title, java.lang.String description,
@@ -61,6 +49,18 @@ public class MeetupsEntryLocalServiceWrapper implements MeetupsEntryLocalService
 	}
 
 	/**
+	* Adds the meetups entry to the database. Also notifies the appropriate model listeners.
+	*
+	* @param meetupsEntry the meetups entry
+	* @return the meetups entry that was added
+	*/
+	@Override
+	public com.liferay.social.networking.model.MeetupsEntry addMeetupsEntry(
+		com.liferay.social.networking.model.MeetupsEntry meetupsEntry) {
+		return _meetupsEntryLocalService.addMeetupsEntry(meetupsEntry);
+	}
+
+	/**
 	* Creates a new meetups entry with the primary key. Does not add the meetups entry to the database.
 	*
 	* @param meetupsEntryId the primary key for the new meetups entry
@@ -70,18 +70,6 @@ public class MeetupsEntryLocalServiceWrapper implements MeetupsEntryLocalService
 	public com.liferay.social.networking.model.MeetupsEntry createMeetupsEntry(
 		long meetupsEntryId) {
 		return _meetupsEntryLocalService.createMeetupsEntry(meetupsEntryId);
-	}
-
-	/**
-	* Deletes the meetups entry from the database. Also notifies the appropriate model listeners.
-	*
-	* @param meetupsEntry the meetups entry
-	* @return the meetups entry that was removed
-	*/
-	@Override
-	public com.liferay.social.networking.model.MeetupsEntry deleteMeetupsEntry(
-		com.liferay.social.networking.model.MeetupsEntry meetupsEntry) {
-		return _meetupsEntryLocalService.deleteMeetupsEntry(meetupsEntry);
 	}
 
 	/**
@@ -96,6 +84,18 @@ public class MeetupsEntryLocalServiceWrapper implements MeetupsEntryLocalService
 		long meetupsEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _meetupsEntryLocalService.deleteMeetupsEntry(meetupsEntryId);
+	}
+
+	/**
+	* Deletes the meetups entry from the database. Also notifies the appropriate model listeners.
+	*
+	* @param meetupsEntry the meetups entry
+	* @return the meetups entry that was removed
+	*/
+	@Override
+	public com.liferay.social.networking.model.MeetupsEntry deleteMeetupsEntry(
+		com.liferay.social.networking.model.MeetupsEntry meetupsEntry) {
+		return _meetupsEntryLocalService.deleteMeetupsEntry(meetupsEntry);
 	}
 
 	/**
@@ -279,18 +279,6 @@ public class MeetupsEntryLocalServiceWrapper implements MeetupsEntryLocalService
 		return _meetupsEntryLocalService.getPersistedModel(primaryKeyObj);
 	}
 
-	/**
-	* Updates the meetups entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param meetupsEntry the meetups entry
-	* @return the meetups entry that was updated
-	*/
-	@Override
-	public com.liferay.social.networking.model.MeetupsEntry updateMeetupsEntry(
-		com.liferay.social.networking.model.MeetupsEntry meetupsEntry) {
-		return _meetupsEntryLocalService.updateMeetupsEntry(meetupsEntry);
-	}
-
 	@Override
 	public com.liferay.social.networking.model.MeetupsEntry updateMeetupsEntry(
 		long userId, long meetupsEntryId, java.lang.String title,
@@ -305,6 +293,18 @@ public class MeetupsEntryLocalServiceWrapper implements MeetupsEntryLocalService
 			startDateYear, startDateHour, startDateMinute, endDateMonth,
 			endDateDay, endDateYear, endDateHour, endDateMinute,
 			totalAttendees, maxAttendees, price, thumbnail);
+	}
+
+	/**
+	* Updates the meetups entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param meetupsEntry the meetups entry
+	* @return the meetups entry that was updated
+	*/
+	@Override
+	public com.liferay.social.networking.model.MeetupsEntry updateMeetupsEntry(
+		com.liferay.social.networking.model.MeetupsEntry meetupsEntry) {
+		return _meetupsEntryLocalService.updateMeetupsEntry(meetupsEntry);
 	}
 
 	@Override

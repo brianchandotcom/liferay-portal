@@ -76,6 +76,10 @@ public interface UserThreadLocalService extends BaseLocalService,
 		List<ObjectValuePair<java.lang.String, InputStream>> inputStreamOVPs,
 		ThemeDisplay themeDisplay) throws PortalException;
 
+	public void addUserThread(long userId, long mbThreadId,
+		long topMBMessageId, boolean read, boolean deleted)
+		throws PortalException;
+
 	/**
 	* Adds the user thread to the database. Also notifies the appropriate model listeners.
 	*
@@ -84,10 +88,6 @@ public interface UserThreadLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public UserThread addUserThread(UserThread userThread);
-
-	public void addUserThread(long userId, long mbThreadId,
-		long topMBMessageId, boolean read, boolean deleted)
-		throws PortalException;
 
 	/**
 	* Creates a new user thread with the primary key. Does not add the user thread to the database.
@@ -107,15 +107,6 @@ public interface UserThreadLocalService extends BaseLocalService,
 	public void deleteUser(long userId) throws PortalException;
 
 	/**
-	* Deletes the user thread from the database. Also notifies the appropriate model listeners.
-	*
-	* @param userThread the user thread
-	* @return the user thread that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public UserThread deleteUserThread(UserThread userThread);
-
-	/**
 	* Deletes the user thread with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param userThreadId the primary key of the user thread
@@ -128,6 +119,15 @@ public interface UserThreadLocalService extends BaseLocalService,
 
 	public void deleteUserThread(long userId, long mbThreadId)
 		throws PortalException;
+
+	/**
+	* Deletes the user thread from the database. Also notifies the appropriate model listeners.
+	*
+	* @param userThread the user thread
+	* @return the user thread that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public UserThread deleteUserThread(UserThread userThread);
 
 	public DynamicQuery dynamicQuery();
 

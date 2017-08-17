@@ -40,6 +40,15 @@ public class MBThreadServiceWrapper implements MBThreadService,
 
 	@Override
 	public java.util.List<com.liferay.message.boards.kernel.model.MBThread> getGroupThreads(
+		long groupId, long userId, java.util.Date modifiedDate, int status,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbThreadService.getGroupThreads(groupId, userId, modifiedDate,
+			status, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.message.boards.kernel.model.MBThread> getGroupThreads(
 		long groupId, long userId, int status, boolean subscribed,
 		boolean includeAnonymous, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -64,12 +73,10 @@ public class MBThreadServiceWrapper implements MBThreadService,
 	}
 
 	@Override
-	public java.util.List<com.liferay.message.boards.kernel.model.MBThread> getGroupThreads(
-		long groupId, long userId, java.util.Date modifiedDate, int status,
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbThreadService.getGroupThreads(groupId, userId, modifiedDate,
-			status, start, end);
+	public int getGroupThreadsCount(long groupId, long userId,
+		java.util.Date modifiedDate, int status) {
+		return _mbThreadService.getGroupThreadsCount(groupId, userId,
+			modifiedDate, status);
 	}
 
 	@Override
@@ -89,13 +96,6 @@ public class MBThreadServiceWrapper implements MBThreadService,
 		boolean subscribed, boolean includeAnonymous) {
 		return _mbThreadService.getGroupThreadsCount(groupId, userId, status,
 			subscribed, includeAnonymous);
-	}
-
-	@Override
-	public int getGroupThreadsCount(long groupId, long userId,
-		java.util.Date modifiedDate, int status) {
-		return _mbThreadService.getGroupThreadsCount(groupId, userId,
-			modifiedDate, status);
 	}
 
 	/**

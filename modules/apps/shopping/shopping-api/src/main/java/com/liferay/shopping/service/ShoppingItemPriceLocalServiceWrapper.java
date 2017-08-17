@@ -69,18 +69,6 @@ public class ShoppingItemPriceLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the shopping item price from the database. Also notifies the appropriate model listeners.
-	*
-	* @param shoppingItemPrice the shopping item price
-	* @return the shopping item price that was removed
-	*/
-	@Override
-	public com.liferay.shopping.model.ShoppingItemPrice deleteShoppingItemPrice(
-		com.liferay.shopping.model.ShoppingItemPrice shoppingItemPrice) {
-		return _shoppingItemPriceLocalService.deleteShoppingItemPrice(shoppingItemPrice);
-	}
-
-	/**
 	* Deletes the shopping item price with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param itemPriceId the primary key of the shopping item price
@@ -92,6 +80,18 @@ public class ShoppingItemPriceLocalServiceWrapper
 		long itemPriceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingItemPriceLocalService.deleteShoppingItemPrice(itemPriceId);
+	}
+
+	/**
+	* Deletes the shopping item price from the database. Also notifies the appropriate model listeners.
+	*
+	* @param shoppingItemPrice the shopping item price
+	* @return the shopping item price that was removed
+	*/
+	@Override
+	public com.liferay.shopping.model.ShoppingItemPrice deleteShoppingItemPrice(
+		com.liferay.shopping.model.ShoppingItemPrice shoppingItemPrice) {
+		return _shoppingItemPriceLocalService.deleteShoppingItemPrice(shoppingItemPrice);
 	}
 
 	@Override

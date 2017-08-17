@@ -87,16 +87,6 @@ public interface ShoppingOrderItemLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the shopping order item from the database. Also notifies the appropriate model listeners.
-	*
-	* @param shoppingOrderItem the shopping order item
-	* @return the shopping order item that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public ShoppingOrderItem deleteShoppingOrderItem(
-		ShoppingOrderItem shoppingOrderItem);
-
-	/**
 	* Deletes the shopping order item with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param orderItemId the primary key of the shopping order item
@@ -106,6 +96,16 @@ public interface ShoppingOrderItemLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public ShoppingOrderItem deleteShoppingOrderItem(long orderItemId)
 		throws PortalException;
+
+	/**
+	* Deletes the shopping order item from the database. Also notifies the appropriate model listeners.
+	*
+	* @param shoppingOrderItem the shopping order item
+	* @return the shopping order item that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public ShoppingOrderItem deleteShoppingOrderItem(
+		ShoppingOrderItem shoppingOrderItem);
 
 	public DynamicQuery dynamicQuery();
 
@@ -175,15 +175,15 @@ public interface ShoppingOrderItemLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ShoppingOrderItem> getOrderItems(long orderId);
+
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ShoppingOrderItem> getOrderItems(long orderId);
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

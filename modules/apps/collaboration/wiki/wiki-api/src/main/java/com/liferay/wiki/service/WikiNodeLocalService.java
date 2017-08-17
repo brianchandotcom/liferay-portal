@@ -75,17 +75,17 @@ public interface WikiNodeLocalService extends BaseLocalService,
 		java.lang.String description, ServiceContext serviceContext)
 		throws PortalException;
 
-	public void addNodeResources(WikiNode node, boolean addGroupPermissions,
-		boolean addGuestPermissions) throws PortalException;
-
-	public void addNodeResources(WikiNode node,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws PortalException;
-
 	public void addNodeResources(long nodeId, boolean addGroupPermissions,
 		boolean addGuestPermissions) throws PortalException;
 
 	public void addNodeResources(long nodeId,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws PortalException;
+
+	public void addNodeResources(WikiNode node, boolean addGroupPermissions,
+		boolean addGuestPermissions) throws PortalException;
+
+	public void addNodeResources(WikiNode node,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
 		throws PortalException;
 
@@ -106,10 +106,10 @@ public interface WikiNodeLocalService extends BaseLocalService,
 	*/
 	public WikiNode createWikiNode(long nodeId);
 
+	public void deleteNode(long nodeId) throws PortalException;
+
 	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
 	public void deleteNode(WikiNode node) throws PortalException;
-
-	public void deleteNode(long nodeId) throws PortalException;
 
 	public void deleteNodes(long groupId) throws PortalException;
 
@@ -121,15 +121,6 @@ public interface WikiNodeLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the wiki node from the database. Also notifies the appropriate model listeners.
-	*
-	* @param wikiNode the wiki node
-	* @return the wiki node that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public WikiNode deleteWikiNode(WikiNode wikiNode);
-
-	/**
 	* Deletes the wiki node with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param nodeId the primary key of the wiki node
@@ -138,6 +129,15 @@ public interface WikiNodeLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public WikiNode deleteWikiNode(long nodeId) throws PortalException;
+
+	/**
+	* Deletes the wiki node from the database. Also notifies the appropriate model listeners.
+	*
+	* @param wikiNode the wiki node
+	* @return the wiki node that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public WikiNode deleteWikiNode(WikiNode wikiNode);
 
 	public DynamicQuery dynamicQuery();
 
@@ -357,10 +357,10 @@ public interface WikiNodeLocalService extends BaseLocalService,
 		Map<java.lang.String, java.lang.String[]> options)
 		throws PortalException;
 
-	public WikiNode moveNodeToTrash(long userId, WikiNode node)
+	public WikiNode moveNodeToTrash(long userId, long nodeId)
 		throws PortalException;
 
-	public WikiNode moveNodeToTrash(long userId, long nodeId)
+	public WikiNode moveNodeToTrash(long userId, WikiNode node)
 		throws PortalException;
 
 	public void restoreNodeFromTrash(long userId, WikiNode node)

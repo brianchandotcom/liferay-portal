@@ -418,14 +418,14 @@ public class OrganizationWrapper implements Organization,
 
 	@Override
 	public java.util.Set<java.lang.String> getReminderQueryQuestions(
-		java.lang.String languageId) {
-		return _organization.getReminderQueryQuestions(languageId);
+		java.util.Locale locale) {
+		return _organization.getReminderQueryQuestions(locale);
 	}
 
 	@Override
 	public java.util.Set<java.lang.String> getReminderQueryQuestions(
-		java.util.Locale locale) {
-		return _organization.getReminderQueryQuestions(locale);
+		java.lang.String languageId) {
+		return _organization.getReminderQueryQuestions(languageId);
 	}
 
 	/**
@@ -514,6 +514,11 @@ public class OrganizationWrapper implements Organization,
 	}
 
 	@Override
+	public int hashCode() {
+		return _organization.hashCode();
+	}
+
+	@Override
 	public boolean hasPrivateLayouts() {
 		return _organization.hasPrivateLayouts();
 	}
@@ -526,11 +531,6 @@ public class OrganizationWrapper implements Organization,
 	@Override
 	public boolean hasSuborganizations() {
 		return _organization.hasSuborganizations();
-	}
-
-	@Override
-	public int hashCode() {
-		return _organization.hashCode();
 	}
 
 	@Override
@@ -619,13 +619,13 @@ public class OrganizationWrapper implements Organization,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_organization.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
+		_organization.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_organization.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_organization.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

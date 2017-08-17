@@ -588,22 +588,6 @@ public class DLAppServiceUtil {
 				   .getFileEntries(repositoryId, folderId, start, end, obc);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getFileEntries(
-		long repositoryId, long folderId, java.lang.String[] mimeTypes)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getFileEntries(repositoryId, folderId, mimeTypes);
-	}
-
-	public static java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getFileEntries(
-		long repositoryId, long folderId, java.lang.String[] mimeTypes,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.repository.model.FileEntry> obc)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getFileEntries(repositoryId, folderId, mimeTypes, start,
-			end, obc);
-	}
-
 	/**
 	* Returns the file entries with the file entry type in the folder.
 	*
@@ -660,6 +644,22 @@ public class DLAppServiceUtil {
 		return getService()
 				   .getFileEntries(repositoryId, folderId, fileEntryTypeId,
 			start, end, obc);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getFileEntries(
+		long repositoryId, long folderId, java.lang.String[] mimeTypes)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getFileEntries(repositoryId, folderId, mimeTypes);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getFileEntries(
+		long repositoryId, long folderId, java.lang.String[] mimeTypes,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.repository.model.FileEntry> obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getFileEntries(repositoryId, folderId, mimeTypes, start,
+			end, obc);
 	}
 
 	/**
@@ -734,13 +734,6 @@ public class DLAppServiceUtil {
 		return getService().getFileEntriesCount(repositoryId, folderId);
 	}
 
-	public static int getFileEntriesCount(long repositoryId, long folderId,
-		java.lang.String[] mimeTypes)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getFileEntriesCount(repositoryId, folderId, mimeTypes);
-	}
-
 	/**
 	* Returns the number of file entries with the file entry type in the
 	* folder.
@@ -755,6 +748,13 @@ public class DLAppServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getFileEntriesCount(repositoryId, folderId, fileEntryTypeId);
+	}
+
+	public static int getFileEntriesCount(long repositoryId, long folderId,
+		java.lang.String[] mimeTypes)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getFileEntriesCount(repositoryId, folderId, mimeTypes);
 	}
 
 	/**
@@ -1663,21 +1663,6 @@ public class DLAppServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.search.Hits search(
-		long repositoryId,
-		com.liferay.portal.kernel.search.SearchContext searchContext)
-		throws com.liferay.portal.kernel.search.SearchException {
-		return getService().search(repositoryId, searchContext);
-	}
-
-	public static com.liferay.portal.kernel.search.Hits search(
-		long repositoryId,
-		com.liferay.portal.kernel.search.SearchContext searchContext,
-		com.liferay.portal.kernel.search.Query query)
-		throws com.liferay.portal.kernel.search.SearchException {
-		return getService().search(repositoryId, searchContext, query);
-	}
-
-	public static com.liferay.portal.kernel.search.Hits search(
 		long repositoryId, long creatorUserId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -1691,6 +1676,21 @@ public class DLAppServiceUtil {
 		return getService()
 				   .search(repositoryId, creatorUserId, folderId, mimeTypes,
 			status, start, end);
+	}
+
+	public static com.liferay.portal.kernel.search.Hits search(
+		long repositoryId,
+		com.liferay.portal.kernel.search.SearchContext searchContext)
+		throws com.liferay.portal.kernel.search.SearchException {
+		return getService().search(repositoryId, searchContext);
+	}
+
+	public static com.liferay.portal.kernel.search.Hits search(
+		long repositoryId,
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		com.liferay.portal.kernel.search.Query query)
+		throws com.liferay.portal.kernel.search.SearchException {
+		return getService().search(repositoryId, searchContext, query);
 	}
 
 	/**

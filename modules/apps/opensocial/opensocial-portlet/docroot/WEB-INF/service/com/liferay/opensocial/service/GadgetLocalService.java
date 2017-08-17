@@ -208,10 +208,6 @@ public interface GadgetLocalService extends BaseLocalService,
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Gadget getGadget(java.lang.String uuid, long companyId)
-		throws PortalException;
-
 	/**
 	* Returns the gadget with the primary key.
 	*
@@ -224,6 +220,10 @@ public interface GadgetLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Gadget getGadget(long companyId, java.lang.String url)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Gadget getGadget(java.lang.String uuid, long companyId)
 		throws PortalException;
 
 	/**

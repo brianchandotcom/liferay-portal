@@ -276,30 +276,6 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	/**
 	* Returns the localized description of this ddl record set in the language. Uses the default language if no localization exists for the requested language.
 	*
-	* @param languageId the ID of the language
-	* @return the localized description of this ddl record set
-	*/
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId) {
-		return _ddlRecordSet.getDescription(languageId);
-	}
-
-	/**
-	* Returns the localized description of this ddl record set in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized description of this ddl record set
-	*/
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId,
-		boolean useDefault) {
-		return _ddlRecordSet.getDescription(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized description of this ddl record set in the language. Uses the default language if no localization exists for the requested language.
-	*
 	* @param locale the locale of the language
 	* @return the localized description of this ddl record set
 	*/
@@ -319,6 +295,30 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	public java.lang.String getDescription(java.util.Locale locale,
 		boolean useDefault) {
 		return _ddlRecordSet.getDescription(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized description of this ddl record set in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized description of this ddl record set
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId) {
+		return _ddlRecordSet.getDescription(languageId);
+	}
+
+	/**
+	* Returns the localized description of this ddl record set in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized description of this ddl record set
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId,
+		boolean useDefault) {
+		return _ddlRecordSet.getDescription(languageId, useDefault);
 	}
 
 	@Override
@@ -399,6 +399,29 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	/**
 	* Returns the localized name of this ddl record set in the language. Uses the default language if no localization exists for the requested language.
 	*
+	* @param locale the locale of the language
+	* @return the localized name of this ddl record set
+	*/
+	@Override
+	public java.lang.String getName(java.util.Locale locale) {
+		return _ddlRecordSet.getName(locale);
+	}
+
+	/**
+	* Returns the localized name of this ddl record set in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized name of this ddl record set. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
+		return _ddlRecordSet.getName(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized name of this ddl record set in the language. Uses the default language if no localization exists for the requested language.
+	*
 	* @param languageId the ID of the language
 	* @return the localized name of this ddl record set
 	*/
@@ -418,29 +441,6 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	public java.lang.String getName(java.lang.String languageId,
 		boolean useDefault) {
 		return _ddlRecordSet.getName(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized name of this ddl record set in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized name of this ddl record set
-	*/
-	@Override
-	public java.lang.String getName(java.util.Locale locale) {
-		return _ddlRecordSet.getName(locale);
-	}
-
-	/**
-	* Returns the localized name of this ddl record set in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized name of this ddl record set. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
-		return _ddlRecordSet.getName(locale, useDefault);
 	}
 
 	@Override
@@ -478,6 +478,11 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 		return _ddlRecordSet.getPrimaryKeyObj();
 	}
 
+	@Override
+	public java.util.List<DDLRecord> getRecords() {
+		return _ddlRecordSet.getRecords();
+	}
+
 	/**
 	* Returns the record set ID of this ddl record set.
 	*
@@ -508,11 +513,6 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	public DDLRecordSetVersion getRecordSetVersion(java.lang.String version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordSet.getRecordSetVersion(version);
-	}
-
-	@Override
-	public java.util.List<DDLRecord> getRecords() {
-		return _ddlRecordSet.getRecords();
 	}
 
 	/**
@@ -765,14 +765,14 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_ddlRecordSet.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_ddlRecordSet.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_ddlRecordSet.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

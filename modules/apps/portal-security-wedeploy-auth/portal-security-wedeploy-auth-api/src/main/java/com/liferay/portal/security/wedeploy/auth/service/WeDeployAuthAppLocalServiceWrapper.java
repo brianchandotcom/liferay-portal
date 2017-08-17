@@ -34,6 +34,15 @@ public class WeDeployAuthAppLocalServiceWrapper
 		_weDeployAuthAppLocalService = weDeployAuthAppLocalService;
 	}
 
+	@Override
+	public com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp addWeDeployAuthApp(
+		long userId, java.lang.String name, java.lang.String redirectURI,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _weDeployAuthAppLocalService.addWeDeployAuthApp(userId, name,
+			redirectURI, serviceContext);
+	}
+
 	/**
 	* Adds the we deploy auth app to the database. Also notifies the appropriate model listeners.
 	*
@@ -44,15 +53,6 @@ public class WeDeployAuthAppLocalServiceWrapper
 	public com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp addWeDeployAuthApp(
 		com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp weDeployAuthApp) {
 		return _weDeployAuthAppLocalService.addWeDeployAuthApp(weDeployAuthApp);
-	}
-
-	@Override
-	public com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp addWeDeployAuthApp(
-		long userId, java.lang.String name, java.lang.String redirectURI,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _weDeployAuthAppLocalService.addWeDeployAuthApp(userId, name,
-			redirectURI, serviceContext);
 	}
 
 	/**
@@ -78,18 +78,6 @@ public class WeDeployAuthAppLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the we deploy auth app from the database. Also notifies the appropriate model listeners.
-	*
-	* @param weDeployAuthApp the we deploy auth app
-	* @return the we deploy auth app that was removed
-	*/
-	@Override
-	public com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp deleteWeDeployAuthApp(
-		com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp weDeployAuthApp) {
-		return _weDeployAuthAppLocalService.deleteWeDeployAuthApp(weDeployAuthApp);
-	}
-
-	/**
 	* Deletes the we deploy auth app with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param weDeployAuthAppId the primary key of the we deploy auth app
@@ -101,6 +89,18 @@ public class WeDeployAuthAppLocalServiceWrapper
 		long weDeployAuthAppId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _weDeployAuthAppLocalService.deleteWeDeployAuthApp(weDeployAuthAppId);
+	}
+
+	/**
+	* Deletes the we deploy auth app from the database. Also notifies the appropriate model listeners.
+	*
+	* @param weDeployAuthApp the we deploy auth app
+	* @return the we deploy auth app that was removed
+	*/
+	@Override
+	public com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp deleteWeDeployAuthApp(
+		com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp weDeployAuthApp) {
+		return _weDeployAuthAppLocalService.deleteWeDeployAuthApp(weDeployAuthApp);
 	}
 
 	@Override
@@ -191,15 +191,15 @@ public class WeDeployAuthAppLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp fetchWeDeployAuthApp(
-		java.lang.String redirectURI, java.lang.String clientId) {
-		return _weDeployAuthAppLocalService.fetchWeDeployAuthApp(redirectURI,
-			clientId);
+		long weDeployAuthAppId) {
+		return _weDeployAuthAppLocalService.fetchWeDeployAuthApp(weDeployAuthAppId);
 	}
 
 	@Override
 	public com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp fetchWeDeployAuthApp(
-		long weDeployAuthAppId) {
-		return _weDeployAuthAppLocalService.fetchWeDeployAuthApp(weDeployAuthAppId);
+		java.lang.String redirectURI, java.lang.String clientId) {
+		return _weDeployAuthAppLocalService.fetchWeDeployAuthApp(redirectURI,
+			clientId);
 	}
 
 	@Override

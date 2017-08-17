@@ -37,12 +37,11 @@ public class MDRActionServiceWrapper implements MDRActionService,
 		long ruleGroupInstanceId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type,
-		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
+		java.lang.String type, java.lang.String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrActionService.addAction(ruleGroupInstanceId, nameMap,
-			descriptionMap, type, typeSettingsProperties, serviceContext);
+			descriptionMap, type, typeSettings, serviceContext);
 	}
 
 	@Override
@@ -50,11 +49,12 @@ public class MDRActionServiceWrapper implements MDRActionService,
 		long ruleGroupInstanceId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type, java.lang.String typeSettings,
+		java.lang.String type,
+		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrActionService.addAction(ruleGroupInstanceId, nameMap,
-			descriptionMap, type, typeSettings, serviceContext);
+			descriptionMap, type, typeSettingsProperties, serviceContext);
 	}
 
 	@Override
@@ -92,12 +92,11 @@ public class MDRActionServiceWrapper implements MDRActionService,
 		long actionId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type,
-		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
+		java.lang.String type, java.lang.String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrActionService.updateAction(actionId, nameMap,
-			descriptionMap, type, typeSettingsProperties, serviceContext);
+			descriptionMap, type, typeSettings, serviceContext);
 	}
 
 	@Override
@@ -105,11 +104,12 @@ public class MDRActionServiceWrapper implements MDRActionService,
 		long actionId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type, java.lang.String typeSettings,
+		java.lang.String type,
+		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrActionService.updateAction(actionId, nameMap,
-			descriptionMap, type, typeSettings, serviceContext);
+			descriptionMap, type, typeSettingsProperties, serviceContext);
 	}
 
 	@Override

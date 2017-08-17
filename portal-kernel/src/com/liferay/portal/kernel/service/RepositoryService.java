@@ -81,16 +81,16 @@ public interface RepositoryService extends BaseService {
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String[] getSupportedParameters(
-		java.lang.String className, java.lang.String configuration);
+	public java.lang.String[] getSupportedParameters(long classNameId,
+		java.lang.String configuration);
 
 	/**
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String[] getSupportedParameters(long classNameId,
-		java.lang.String configuration);
+	public java.lang.String[] getSupportedParameters(
+		java.lang.String className, java.lang.String configuration);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public UnicodeProperties getTypeSettingsProperties(long repositoryId)

@@ -35,16 +35,16 @@ public class ExpandoTableLocalServiceWrapper implements ExpandoTableLocalService
 
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoTable addDefaultTable(
-		long companyId, java.lang.String className)
+		long companyId, long classNameId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _expandoTableLocalService.addDefaultTable(companyId, className);
+		return _expandoTableLocalService.addDefaultTable(companyId, classNameId);
 	}
 
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoTable addDefaultTable(
-		long companyId, long classNameId)
+		long companyId, java.lang.String className)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _expandoTableLocalService.addDefaultTable(companyId, classNameId);
+		return _expandoTableLocalService.addDefaultTable(companyId, className);
 	}
 
 	/**
@@ -61,16 +61,16 @@ public class ExpandoTableLocalServiceWrapper implements ExpandoTableLocalService
 
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoTable addTable(
-		long companyId, java.lang.String className, java.lang.String name)
+		long companyId, long classNameId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _expandoTableLocalService.addTable(companyId, className, name);
+		return _expandoTableLocalService.addTable(companyId, classNameId, name);
 	}
 
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoTable addTable(
-		long companyId, long classNameId, java.lang.String name)
+		long companyId, java.lang.String className, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _expandoTableLocalService.addTable(companyId, classNameId, name);
+		return _expandoTableLocalService.addTable(companyId, className, name);
 	}
 
 	/**
@@ -133,13 +133,6 @@ public class ExpandoTableLocalServiceWrapper implements ExpandoTableLocalService
 	}
 
 	@Override
-	public void deleteTable(long companyId, java.lang.String className,
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_expandoTableLocalService.deleteTable(companyId, className, name);
-	}
-
-	@Override
 	public void deleteTable(long companyId, long classNameId,
 		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -147,13 +140,20 @@ public class ExpandoTableLocalServiceWrapper implements ExpandoTableLocalService
 	}
 
 	@Override
-	public void deleteTables(long companyId, java.lang.String className) {
-		_expandoTableLocalService.deleteTables(companyId, className);
+	public void deleteTable(long companyId, java.lang.String className,
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_expandoTableLocalService.deleteTable(companyId, className, name);
 	}
 
 	@Override
 	public void deleteTables(long companyId, long classNameId) {
 		_expandoTableLocalService.deleteTables(companyId, classNameId);
+	}
+
+	@Override
+	public void deleteTables(long companyId, java.lang.String className) {
+		_expandoTableLocalService.deleteTables(companyId, className);
 	}
 
 	@Override
@@ -243,15 +243,15 @@ public class ExpandoTableLocalServiceWrapper implements ExpandoTableLocalService
 
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoTable fetchDefaultTable(
-		long companyId, java.lang.String className) {
-		return _expandoTableLocalService.fetchDefaultTable(companyId, className);
+		long companyId, long classNameId) {
+		return _expandoTableLocalService.fetchDefaultTable(companyId,
+			classNameId);
 	}
 
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoTable fetchDefaultTable(
-		long companyId, long classNameId) {
-		return _expandoTableLocalService.fetchDefaultTable(companyId,
-			classNameId);
+		long companyId, java.lang.String className) {
+		return _expandoTableLocalService.fetchDefaultTable(companyId, className);
 	}
 
 	@Override
@@ -273,16 +273,16 @@ public class ExpandoTableLocalServiceWrapper implements ExpandoTableLocalService
 
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoTable getDefaultTable(
-		long companyId, java.lang.String className)
+		long companyId, long classNameId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _expandoTableLocalService.getDefaultTable(companyId, className);
+		return _expandoTableLocalService.getDefaultTable(companyId, classNameId);
 	}
 
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoTable getDefaultTable(
-		long companyId, long classNameId)
+		long companyId, java.lang.String className)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _expandoTableLocalService.getDefaultTable(companyId, classNameId);
+		return _expandoTableLocalService.getDefaultTable(companyId, className);
 	}
 
 	/**
@@ -356,28 +356,28 @@ public class ExpandoTableLocalServiceWrapper implements ExpandoTableLocalService
 
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoTable getTable(
-		long companyId, java.lang.String className, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _expandoTableLocalService.getTable(companyId, className, name);
-	}
-
-	@Override
-	public com.liferay.expando.kernel.model.ExpandoTable getTable(
 		long companyId, long classNameId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _expandoTableLocalService.getTable(companyId, classNameId, name);
 	}
 
 	@Override
-	public java.util.List<com.liferay.expando.kernel.model.ExpandoTable> getTables(
-		long companyId, java.lang.String className) {
-		return _expandoTableLocalService.getTables(companyId, className);
+	public com.liferay.expando.kernel.model.ExpandoTable getTable(
+		long companyId, java.lang.String className, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _expandoTableLocalService.getTable(companyId, className, name);
 	}
 
 	@Override
 	public java.util.List<com.liferay.expando.kernel.model.ExpandoTable> getTables(
 		long companyId, long classNameId) {
 		return _expandoTableLocalService.getTables(companyId, classNameId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.expando.kernel.model.ExpandoTable> getTables(
+		long companyId, java.lang.String className) {
+		return _expandoTableLocalService.getTables(companyId, className);
 	}
 
 	/**

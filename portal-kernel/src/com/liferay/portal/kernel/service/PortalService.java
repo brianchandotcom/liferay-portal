@@ -64,6 +64,10 @@ public interface PortalService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getVersion();
 
+	public void testAddClassName_Rollback(java.lang.String classNameValue);
+
+	public void testAddClassName_Success(java.lang.String classNameValue);
+
 	public void testAddClassNameAndTestTransactionPortletBar_PortalRollback(
 		java.lang.String transactionPortletBarText);
 
@@ -72,10 +76,6 @@ public interface PortalService extends BaseService {
 
 	public void testAddClassNameAndTestTransactionPortletBar_Success(
 		java.lang.String transactionPortletBarText);
-
-	public void testAddClassName_Rollback(java.lang.String classNameValue);
-
-	public void testAddClassName_Success(java.lang.String classNameValue);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void testAutoSyncHibernateSessionStateOnTxCreation();

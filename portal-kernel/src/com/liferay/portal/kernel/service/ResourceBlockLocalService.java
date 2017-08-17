@@ -78,29 +78,20 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 		java.lang.String name, long roleId, long actionIdsLong);
 
 	public void addIndividualScopePermission(long companyId, long groupId,
-		java.lang.String name, PermissionedModel permissionedModel,
-		long roleId, java.lang.String actionId) throws PortalException;
-
-	public void addIndividualScopePermission(long companyId, long groupId,
 		java.lang.String name, long primKey, long roleId,
 		java.lang.String actionId) throws PortalException;
 
-	public void addIndividualScopePermissions(long companyId, long groupId,
+	public void addIndividualScopePermission(long companyId, long groupId,
 		java.lang.String name, PermissionedModel permissionedModel,
-		long roleId, long actionIdsLong);
+		long roleId, java.lang.String actionId) throws PortalException;
 
 	public void addIndividualScopePermissions(long companyId, long groupId,
 		java.lang.String name, long primKey, long roleId, long actionIdsLong)
 		throws PortalException;
 
-	/**
-	* Adds the resource block to the database. Also notifies the appropriate model listeners.
-	*
-	* @param resourceBlock the resource block
-	* @return the resource block that was added
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public ResourceBlock addResourceBlock(ResourceBlock resourceBlock);
+	public void addIndividualScopePermissions(long companyId, long groupId,
+		java.lang.String name, PermissionedModel permissionedModel,
+		long roleId, long actionIdsLong);
 
 	/**
 	* Adds a resource block if necessary and associates the resource block
@@ -120,6 +111,15 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 		ResourceBlockPermissionsContainer resourceBlockPermissionsContainer);
 
 	/**
+	* Adds the resource block to the database. Also notifies the appropriate model listeners.
+	*
+	* @param resourceBlock the resource block
+	* @return the resource block that was added
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public ResourceBlock addResourceBlock(ResourceBlock resourceBlock);
+
+	/**
 	* Creates a new resource block with the primary key. Does not add the resource block to the database.
 	*
 	* @param resourceBlockId the primary key for the new resource block
@@ -135,15 +135,6 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the resource block from the database. Also notifies the appropriate model listeners.
-	*
-	* @param resourceBlock the resource block
-	* @return the resource block that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public ResourceBlock deleteResourceBlock(ResourceBlock resourceBlock);
-
-	/**
 	* Deletes the resource block with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param resourceBlockId the primary key of the resource block
@@ -153,6 +144,15 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public ResourceBlock deleteResourceBlock(long resourceBlockId)
 		throws PortalException;
+
+	/**
+	* Deletes the resource block from the database. Also notifies the appropriate model listeners.
+	*
+	* @param resourceBlock the resource block
+	* @return the resource block that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public ResourceBlock deleteResourceBlock(ResourceBlock resourceBlock);
 
 	public DynamicQuery dynamicQuery();
 
@@ -217,6 +217,9 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 	public ResourceBlock fetchResourceBlock(long resourceBlockId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getActionId(java.lang.String name, java.lang.String actionId)
 		throws PortalException;
 
@@ -227,9 +230,6 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<java.lang.String> getActionIds(java.lang.String name,
 		long actionIdsLong);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<java.lang.String> getCompanyScopePermissions(
@@ -262,10 +262,6 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ResourceBlock getResourceBlock(java.lang.String name, long primKey)
-		throws PortalException;
-
 	/**
 	* Returns the resource block with the primary key.
 	*
@@ -275,6 +271,10 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ResourceBlock getResourceBlock(long resourceBlockId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ResourceBlock getResourceBlock(java.lang.String name, long primKey)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -313,14 +313,14 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 		java.lang.String actionId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasPermission(java.lang.String name,
-		PermissionedModel permissionedModel, java.lang.String actionId,
-		ResourceBlockIdsBag resourceBlockIdsBag) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasPermission(java.lang.String name, long primKey,
 		java.lang.String actionId, ResourceBlockIdsBag resourceBlockIdsBag)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasPermission(java.lang.String name,
+		PermissionedModel permissionedModel, java.lang.String actionId,
+		ResourceBlockIdsBag resourceBlockIdsBag) throws PortalException;
 
 	@Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -338,27 +338,27 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 	* the database or deletes the resource block if the reference count reaches
 	* zero.
 	*
-	* @param resourceBlock the resource block
+	* @param resourceBlockId the primary key of the resource block
 	*/
 	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRES_NEW)
-	public void releaseResourceBlock(ResourceBlock resourceBlock);
+	public void releaseResourceBlock(long resourceBlockId);
 
 	/**
 	* Decrements the reference count of the resource block and updates it in
 	* the database or deletes the resource block if the reference count reaches
 	* zero.
 	*
-	* @param resourceBlockId the primary key of the resource block
+	* @param resourceBlock the resource block
 	*/
 	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRES_NEW)
-	public void releaseResourceBlock(long resourceBlockId);
+	public void releaseResourceBlock(ResourceBlock resourceBlock);
+
+	public void removeAllGroupScopePermissions(long companyId,
+		java.lang.String name, long roleId, long actionIdsLong);
 
 	public void removeAllGroupScopePermissions(long companyId,
 		java.lang.String name, long roleId, java.lang.String actionId)
 		throws PortalException;
-
-	public void removeAllGroupScopePermissions(long companyId,
-		java.lang.String name, long roleId, long actionIdsLong);
 
 	public void removeCompanyScopePermission(long companyId,
 		java.lang.String name, long roleId, java.lang.String actionId)
@@ -375,21 +375,21 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 		java.lang.String name, long roleId, long actionIdsLong);
 
 	public void removeIndividualScopePermission(long companyId, long groupId,
-		java.lang.String name, PermissionedModel permissionedModel,
-		long roleId, java.lang.String actionId) throws PortalException;
-
-	public void removeIndividualScopePermission(long companyId, long groupId,
 		java.lang.String name, long primKey, long roleId,
 		java.lang.String actionId) throws PortalException;
 
-	public void removeIndividualScopePermissions(long companyId, long groupId,
+	public void removeIndividualScopePermission(long companyId, long groupId,
 		java.lang.String name, PermissionedModel permissionedModel,
-		long roleId, long actionIdsLong);
+		long roleId, java.lang.String actionId) throws PortalException;
 
 	public void removeIndividualScopePermissions(long companyId, long groupId,
 		java.lang.String name, long primKey, long roleId, long actionIdsLong)
 		throws PortalException;
 
+	public void removeIndividualScopePermissions(long companyId, long groupId,
+		java.lang.String name, PermissionedModel permissionedModel,
+		long roleId, long actionIdsLong);
+
 	public void setCompanyScopePermissions(long companyId,
 		java.lang.String name, long roleId, List<java.lang.String> actionIds)
 		throws PortalException;
@@ -403,6 +403,19 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 
 	public void setGroupScopePermissions(long companyId, long groupId,
 		java.lang.String name, long roleId, long actionIdsLong);
+
+	public void setIndividualScopePermissions(long companyId, long groupId,
+		java.lang.String name, long primKey, long roleId,
+		List<java.lang.String> actionIds) throws PortalException;
+
+	public void setIndividualScopePermissions(long companyId, long groupId,
+		java.lang.String name, long primKey, long roleId, long actionIdsLong)
+		throws PortalException;
+
+	public void setIndividualScopePermissions(long companyId, long groupId,
+		java.lang.String name, long primKey,
+		Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds)
+		throws PortalException;
 
 	public void setIndividualScopePermissions(long companyId, long groupId,
 		java.lang.String name, PermissionedModel permissionedModel,
@@ -412,19 +425,6 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 	public void setIndividualScopePermissions(long companyId, long groupId,
 		java.lang.String name, PermissionedModel permissionedModel,
 		long roleId, long actionIdsLong);
-
-	public void setIndividualScopePermissions(long companyId, long groupId,
-		java.lang.String name, long primKey,
-		Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds)
-		throws PortalException;
-
-	public void setIndividualScopePermissions(long companyId, long groupId,
-		java.lang.String name, long primKey, long roleId,
-		List<java.lang.String> actionIds) throws PortalException;
-
-	public void setIndividualScopePermissions(long companyId, long groupId,
-		java.lang.String name, long primKey, long roleId, long actionIdsLong)
-		throws PortalException;
 
 	public void updateCompanyScopePermissions(long companyId,
 		java.lang.String name, long roleId, long actionIdsLong, int operator);

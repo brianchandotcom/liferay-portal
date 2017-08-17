@@ -88,17 +88,6 @@ public class SocialActivitySetLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the social activity set from the database. Also notifies the appropriate model listeners.
-	*
-	* @param socialActivitySet the social activity set
-	* @return the social activity set that was removed
-	*/
-	public static com.liferay.social.kernel.model.SocialActivitySet deleteSocialActivitySet(
-		com.liferay.social.kernel.model.SocialActivitySet socialActivitySet) {
-		return getService().deleteSocialActivitySet(socialActivitySet);
-	}
-
-	/**
 	* Deletes the social activity set with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param activitySetId the primary key of the social activity set
@@ -109,6 +98,17 @@ public class SocialActivitySetLocalServiceUtil {
 		long activitySetId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteSocialActivitySet(activitySetId);
+	}
+
+	/**
+	* Deletes the social activity set from the database. Also notifies the appropriate model listeners.
+	*
+	* @param socialActivitySet the social activity set
+	* @return the social activity set that was removed
+	*/
+	public static com.liferay.social.kernel.model.SocialActivitySet deleteSocialActivitySet(
+		com.liferay.social.kernel.model.SocialActivitySet socialActivitySet) {
+		return getService().deleteSocialActivitySet(socialActivitySet);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -222,15 +222,6 @@ public class SocialActivitySetLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
 	public static java.util.List<com.liferay.social.kernel.model.SocialActivitySet> getOrganizationActivitySets(
 		long organizationId, int start, int end) {
 		return getService()
@@ -239,6 +230,15 @@ public class SocialActivitySetLocalServiceUtil {
 
 	public static int getOrganizationActivitySetsCount(long organizationId) {
 		return getService().getOrganizationActivitySetsCount(organizationId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(

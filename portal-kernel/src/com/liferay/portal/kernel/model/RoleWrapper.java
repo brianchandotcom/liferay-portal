@@ -253,30 +253,6 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	/**
 	* Returns the localized description of this role in the language. Uses the default language if no localization exists for the requested language.
 	*
-	* @param languageId the ID of the language
-	* @return the localized description of this role
-	*/
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId) {
-		return _role.getDescription(languageId);
-	}
-
-	/**
-	* Returns the localized description of this role in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized description of this role
-	*/
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId,
-		boolean useDefault) {
-		return _role.getDescription(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized description of this role in the language. Uses the default language if no localization exists for the requested language.
-	*
 	* @param locale the locale of the language
 	* @return the localized description of this role
 	*/
@@ -296,6 +272,30 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	public java.lang.String getDescription(java.util.Locale locale,
 		boolean useDefault) {
 		return _role.getDescription(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized description of this role in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized description of this role
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId) {
+		return _role.getDescription(languageId);
+	}
+
+	/**
+	* Returns the localized description of this role in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized description of this role
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId,
+		boolean useDefault) {
+		return _role.getDescription(languageId, useDefault);
 	}
 
 	@Override
@@ -407,6 +407,29 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	/**
 	* Returns the localized title of this role in the language. Uses the default language if no localization exists for the requested language.
 	*
+	* @param locale the locale of the language
+	* @return the localized title of this role
+	*/
+	@Override
+	public java.lang.String getTitle(java.util.Locale locale) {
+		return _role.getTitle(locale);
+	}
+
+	/**
+	* Returns the localized title of this role in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized title of this role. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
+		return _role.getTitle(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized title of this role in the language. Uses the default language if no localization exists for the requested language.
+	*
 	* @param languageId the ID of the language
 	* @return the localized title of this role
 	*/
@@ -426,29 +449,6 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	public java.lang.String getTitle(java.lang.String languageId,
 		boolean useDefault) {
 		return _role.getTitle(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized title of this role in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized title of this role
-	*/
-	@Override
-	public java.lang.String getTitle(java.util.Locale locale) {
-		return _role.getTitle(locale);
-	}
-
-	/**
-	* Returns the localized title of this role in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized title of this role. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
-		return _role.getTitle(locale, useDefault);
 	}
 
 	@Override
@@ -689,13 +689,13 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_role.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
+		_role.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_role.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_role.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

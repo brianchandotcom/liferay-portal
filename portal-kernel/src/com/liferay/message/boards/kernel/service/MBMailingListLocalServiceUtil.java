@@ -40,18 +40,6 @@ public class MBMailingListLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.messageboards.service.impl.MBMailingListLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-
-	/**
-	* Adds the message boards mailing list to the database. Also notifies the appropriate model listeners.
-	*
-	* @param mbMailingList the message boards mailing list
-	* @return the message boards mailing list that was added
-	*/
-	public static com.liferay.message.boards.kernel.model.MBMailingList addMBMailingList(
-		com.liferay.message.boards.kernel.model.MBMailingList mbMailingList) {
-		return getService().addMBMailingList(mbMailingList);
-	}
-
 	public static com.liferay.message.boards.kernel.model.MBMailingList addMailingList(
 		long userId, long groupId, long categoryId,
 		java.lang.String emailAddress, java.lang.String inProtocol,
@@ -72,6 +60,17 @@ public class MBMailingListLocalServiceUtil {
 	}
 
 	/**
+	* Adds the message boards mailing list to the database. Also notifies the appropriate model listeners.
+	*
+	* @param mbMailingList the message boards mailing list
+	* @return the message boards mailing list that was added
+	*/
+	public static com.liferay.message.boards.kernel.model.MBMailingList addMBMailingList(
+		com.liferay.message.boards.kernel.model.MBMailingList mbMailingList) {
+		return getService().addMBMailingList(mbMailingList);
+	}
+
+	/**
 	* Creates a new message boards mailing list with the primary key. Does not add the message boards mailing list to the database.
 	*
 	* @param mailingListId the primary key for the new message boards mailing list
@@ -87,15 +86,15 @@ public class MBMailingListLocalServiceUtil {
 		getService().deleteCategoryMailingList(groupId, categoryId);
 	}
 
-	/**
-	* Deletes the message boards mailing list from the database. Also notifies the appropriate model listeners.
-	*
-	* @param mbMailingList the message boards mailing list
-	* @return the message boards mailing list that was removed
-	*/
-	public static com.liferay.message.boards.kernel.model.MBMailingList deleteMBMailingList(
-		com.liferay.message.boards.kernel.model.MBMailingList mbMailingList) {
-		return getService().deleteMBMailingList(mbMailingList);
+	public static void deleteMailingList(long mailingListId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteMailingList(mailingListId);
+	}
+
+	public static void deleteMailingList(
+		com.liferay.message.boards.kernel.model.MBMailingList mailingList)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteMailingList(mailingList);
 	}
 
 	/**
@@ -111,15 +110,15 @@ public class MBMailingListLocalServiceUtil {
 		return getService().deleteMBMailingList(mailingListId);
 	}
 
-	public static void deleteMailingList(
-		com.liferay.message.boards.kernel.model.MBMailingList mailingList)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteMailingList(mailingList);
-	}
-
-	public static void deleteMailingList(long mailingListId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteMailingList(mailingListId);
+	/**
+	* Deletes the message boards mailing list from the database. Also notifies the appropriate model listeners.
+	*
+	* @param mbMailingList the message boards mailing list
+	* @return the message boards mailing list that was removed
+	*/
+	public static com.liferay.message.boards.kernel.model.MBMailingList deleteMBMailingList(
+		com.liferay.message.boards.kernel.model.MBMailingList mbMailingList) {
+		return getService().deleteMBMailingList(mbMailingList);
 	}
 
 	/**
@@ -347,17 +346,6 @@ public class MBMailingListLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	/**
-	* Updates the message boards mailing list in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param mbMailingList the message boards mailing list
-	* @return the message boards mailing list that was updated
-	*/
-	public static com.liferay.message.boards.kernel.model.MBMailingList updateMBMailingList(
-		com.liferay.message.boards.kernel.model.MBMailingList mbMailingList) {
-		return getService().updateMBMailingList(mbMailingList);
-	}
-
 	public static com.liferay.message.boards.kernel.model.MBMailingList updateMailingList(
 		long mailingListId, java.lang.String emailAddress,
 		java.lang.String inProtocol, java.lang.String inServerName,
@@ -375,6 +363,17 @@ public class MBMailingListLocalServiceUtil {
 			inReadInterval, outEmailAddress, outCustom, outServerName,
 			outServerPort, outUseSSL, outUserName, outPassword, allowAnonymous,
 			active, serviceContext);
+	}
+
+	/**
+	* Updates the message boards mailing list in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param mbMailingList the message boards mailing list
+	* @return the message boards mailing list that was updated
+	*/
+	public static com.liferay.message.boards.kernel.model.MBMailingList updateMBMailingList(
+		com.liferay.message.boards.kernel.model.MBMailingList mbMailingList) {
+		return getService().updateMBMailingList(mbMailingList);
 	}
 
 	public static MBMailingListLocalService getService() {

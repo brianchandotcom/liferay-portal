@@ -138,18 +138,6 @@ public class UserGroupServiceUtil {
 	}
 
 	/**
-	* Returns the user group with the name.
-	*
-	* @param name the user group's name
-	* @return the user group with the name
-	*/
-	public static com.liferay.portal.kernel.model.UserGroup getUserGroup(
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getUserGroup(name);
-	}
-
-	/**
 	* Returns the user group with the primary key.
 	*
 	* @param userGroupId the primary key of the user group
@@ -159,6 +147,18 @@ public class UserGroupServiceUtil {
 		long userGroupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getUserGroup(userGroupId);
+	}
+
+	/**
+	* Returns the user group with the name.
+	*
+	* @param name the user group's name
+	* @return the user group with the name
+	*/
+	public static com.liferay.portal.kernel.model.UserGroup getUserGroup(
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getUserGroup(name);
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.UserGroup> getUserGroups(

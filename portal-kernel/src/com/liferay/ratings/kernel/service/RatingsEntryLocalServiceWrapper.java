@@ -58,18 +58,18 @@ public class RatingsEntryLocalServiceWrapper implements RatingsEntryLocalService
 	}
 
 	@Override
+	public void deleteEntry(long userId, java.lang.String className,
+		long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_ratingsEntryLocalService.deleteEntry(userId, className, classPK);
+	}
+
+	@Override
 	public void deleteEntry(
 		com.liferay.ratings.kernel.model.RatingsEntry entry, long userId,
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_ratingsEntryLocalService.deleteEntry(entry, userId, className, classPK);
-	}
-
-	@Override
-	public void deleteEntry(long userId, java.lang.String className,
-		long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_ratingsEntryLocalService.deleteEntry(userId, className, classPK);
 	}
 
 	/**
@@ -80,18 +80,6 @@ public class RatingsEntryLocalServiceWrapper implements RatingsEntryLocalService
 		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ratingsEntryLocalService.deletePersistedModel(persistedModel);
-	}
-
-	/**
-	* Deletes the ratings entry from the database. Also notifies the appropriate model listeners.
-	*
-	* @param ratingsEntry the ratings entry
-	* @return the ratings entry that was removed
-	*/
-	@Override
-	public com.liferay.ratings.kernel.model.RatingsEntry deleteRatingsEntry(
-		com.liferay.ratings.kernel.model.RatingsEntry ratingsEntry) {
-		return _ratingsEntryLocalService.deleteRatingsEntry(ratingsEntry);
 	}
 
 	/**
@@ -106,6 +94,18 @@ public class RatingsEntryLocalServiceWrapper implements RatingsEntryLocalService
 		long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ratingsEntryLocalService.deleteRatingsEntry(entryId);
+	}
+
+	/**
+	* Deletes the ratings entry from the database. Also notifies the appropriate model listeners.
+	*
+	* @param ratingsEntry the ratings entry
+	* @return the ratings entry that was removed
+	*/
+	@Override
+	public com.liferay.ratings.kernel.model.RatingsEntry deleteRatingsEntry(
+		com.liferay.ratings.kernel.model.RatingsEntry ratingsEntry) {
+		return _ratingsEntryLocalService.deleteRatingsEntry(ratingsEntry);
 	}
 
 	@Override
@@ -224,18 +224,6 @@ public class RatingsEntryLocalServiceWrapper implements RatingsEntryLocalService
 		return _ratingsEntryLocalService.getActionableDynamicQuery();
 	}
 
-	@Override
-	public java.util.List<com.liferay.ratings.kernel.model.RatingsEntry> getEntries(
-		java.lang.String className, long classPK) {
-		return _ratingsEntryLocalService.getEntries(className, classPK);
-	}
-
-	@Override
-	public java.util.List<com.liferay.ratings.kernel.model.RatingsEntry> getEntries(
-		java.lang.String className, long classPK, double score) {
-		return _ratingsEntryLocalService.getEntries(className, classPK, score);
-	}
-
 	/**
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
@@ -251,6 +239,18 @@ public class RatingsEntryLocalServiceWrapper implements RatingsEntryLocalService
 	public java.util.Map<java.lang.Long, com.liferay.ratings.kernel.model.RatingsEntry> getEntries(
 		long userId, java.lang.String className, long[] classPKs) {
 		return _ratingsEntryLocalService.getEntries(userId, className, classPKs);
+	}
+
+	@Override
+	public java.util.List<com.liferay.ratings.kernel.model.RatingsEntry> getEntries(
+		java.lang.String className, long classPK) {
+		return _ratingsEntryLocalService.getEntries(className, classPK);
+	}
+
+	@Override
+	public java.util.List<com.liferay.ratings.kernel.model.RatingsEntry> getEntries(
+		java.lang.String className, long classPK, double score) {
+		return _ratingsEntryLocalService.getEntries(className, classPK, score);
 	}
 
 	@Override

@@ -76,18 +76,6 @@ public class PollsChoiceLocalServiceWrapper implements PollsChoiceLocalService,
 	}
 
 	/**
-	* Deletes the polls choice from the database. Also notifies the appropriate model listeners.
-	*
-	* @param pollsChoice the polls choice
-	* @return the polls choice that was removed
-	*/
-	@Override
-	public com.liferay.polls.model.PollsChoice deletePollsChoice(
-		com.liferay.polls.model.PollsChoice pollsChoice) {
-		return _pollsChoiceLocalService.deletePollsChoice(pollsChoice);
-	}
-
-	/**
 	* Deletes the polls choice with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param choiceId the primary key of the polls choice
@@ -98,6 +86,18 @@ public class PollsChoiceLocalServiceWrapper implements PollsChoiceLocalService,
 	public com.liferay.polls.model.PollsChoice deletePollsChoice(long choiceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _pollsChoiceLocalService.deletePollsChoice(choiceId);
+	}
+
+	/**
+	* Deletes the polls choice from the database. Also notifies the appropriate model listeners.
+	*
+	* @param pollsChoice the polls choice
+	* @return the polls choice that was removed
+	*/
+	@Override
+	public com.liferay.polls.model.PollsChoice deletePollsChoice(
+		com.liferay.polls.model.PollsChoice pollsChoice) {
+		return _pollsChoiceLocalService.deletePollsChoice(pollsChoice);
 	}
 
 	@Override

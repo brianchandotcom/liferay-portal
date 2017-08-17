@@ -289,6 +289,29 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	/**
 	* Returns the localized title of this sap entry in the language. Uses the default language if no localization exists for the requested language.
 	*
+	* @param locale the locale of the language
+	* @return the localized title of this sap entry
+	*/
+	@Override
+	public java.lang.String getTitle(java.util.Locale locale) {
+		return _sapEntry.getTitle(locale);
+	}
+
+	/**
+	* Returns the localized title of this sap entry in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized title of this sap entry. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
+		return _sapEntry.getTitle(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized title of this sap entry in the language. Uses the default language if no localization exists for the requested language.
+	*
 	* @param languageId the ID of the language
 	* @return the localized title of this sap entry
 	*/
@@ -308,29 +331,6 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	public java.lang.String getTitle(java.lang.String languageId,
 		boolean useDefault) {
 		return _sapEntry.getTitle(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized title of this sap entry in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized title of this sap entry
-	*/
-	@Override
-	public java.lang.String getTitle(java.util.Locale locale) {
-		return _sapEntry.getTitle(locale);
-	}
-
-	/**
-	* Returns the localized title of this sap entry in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized title of this sap entry. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
-		return _sapEntry.getTitle(locale, useDefault);
 	}
 
 	@Override
@@ -514,14 +514,14 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_sapEntry.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_sapEntry.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_sapEntry.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

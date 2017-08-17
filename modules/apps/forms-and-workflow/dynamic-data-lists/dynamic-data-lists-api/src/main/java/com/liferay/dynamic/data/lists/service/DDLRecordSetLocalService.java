@@ -398,10 +398,6 @@ public interface DDLRecordSetLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DDLRecordSet getRecordSet(java.lang.String uuid, long recordSetId)
-		throws PortalException;
-
 	/**
 	* Returns the record set with the ID.
 	*
@@ -424,6 +420,27 @@ public interface DDLRecordSetLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDLRecordSet getRecordSet(long groupId, java.lang.String recordSetKey)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDLRecordSet getRecordSet(java.lang.String uuid, long recordSetId)
+		throws PortalException;
+
+	/**
+	* Returns all the record sets belonging the group.
+	*
+	* @return the record sets belonging to the group
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DDLRecordSet> getRecordSets(long groupId);
+
+	/**
+	* Returns the number of all the record sets belonging the group.
+	*
+	* @param groupId the primary key of the record set's group
+	* @return the number of record sets belonging to the group
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getRecordSetsCount(long groupId);
 
 	/**
 	* Returns the record set's settings as a DDMFormValues object. For more
@@ -449,23 +466,6 @@ public interface DDLRecordSetLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDLRecordSetSettings getRecordSetSettingsModel(
 		DDLRecordSet recordSet) throws PortalException;
-
-	/**
-	* Returns all the record sets belonging the group.
-	*
-	* @return the record sets belonging to the group
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DDLRecordSet> getRecordSets(long groupId);
-
-	/**
-	* Returns the number of all the record sets belonging the group.
-	*
-	* @param groupId the primary key of the record set's group
-	* @return the number of record sets belonging to the group
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getRecordSetsCount(long groupId);
 
 	/**
 	* Returns a range of all record sets matching the parameters, including a
@@ -635,6 +635,27 @@ public interface DDLRecordSetLocalService extends BaseLocalService,
 		DDMFormValues settingsDDMFormValues) throws PortalException;
 
 	/**
+	* Updates the DDM structure, name, description, and minimum number of
+	* display rows for the record set matching the record set ID.
+	*
+	* @param recordSetId the primary key of the record set
+	* @param ddmStructureId the primary key of the record set's DDM structure
+	* @param nameMap the record set's locales and localized names
+	* @param descriptionMap the record set's locales and localized
+	descriptions
+	* @param minDisplayRows the record set's minimum number of rows to be
+	displayed in spreadsheet view
+	* @param serviceContext the service context to be applied. This can set
+	the record set modified date.
+	* @return the record set
+	* @throws PortalException if a portal exception occurred
+	*/
+	public DDLRecordSet updateRecordSet(long recordSetId, long ddmStructureId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, int minDisplayRows,
+		ServiceContext serviceContext) throws PortalException;
+
+	/**
 	* Updates the DDM strucutre, name, description, and minimum number of
 	* display rows for the record set matching the record set key and group ID.
 	*
@@ -653,27 +674,6 @@ public interface DDLRecordSetLocalService extends BaseLocalService,
 	*/
 	public DDLRecordSet updateRecordSet(long groupId, long ddmStructureId,
 		java.lang.String recordSetKey, Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, int minDisplayRows,
-		ServiceContext serviceContext) throws PortalException;
-
-	/**
-	* Updates the DDM structure, name, description, and minimum number of
-	* display rows for the record set matching the record set ID.
-	*
-	* @param recordSetId the primary key of the record set
-	* @param ddmStructureId the primary key of the record set's DDM structure
-	* @param nameMap the record set's locales and localized names
-	* @param descriptionMap the record set's locales and localized
-	descriptions
-	* @param minDisplayRows the record set's minimum number of rows to be
-	displayed in spreadsheet view
-	* @param serviceContext the service context to be applied. This can set
-	the record set modified date.
-	* @return the record set
-	* @throws PortalException if a portal exception occurred
-	*/
-	public DDLRecordSet updateRecordSet(long recordSetId, long ddmStructureId,
-		Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap, int minDisplayRows,
 		ServiceContext serviceContext) throws PortalException;
 }

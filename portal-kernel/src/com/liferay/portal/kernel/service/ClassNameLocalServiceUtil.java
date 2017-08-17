@@ -189,22 +189,17 @@ public class ClassNameLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.ClassName fetchClassName(
-		java.lang.String value) {
-		return getService().fetchClassName(value);
-	}
-
-	public static com.liferay.portal.kernel.model.ClassName fetchClassName(
 		long classNameId) {
 		return getService().fetchClassName(classNameId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
+	public static com.liferay.portal.kernel.model.ClassName fetchClassName(
+		java.lang.String value) {
+		return getService().fetchClassName(value);
 	}
 
-	public static com.liferay.portal.kernel.model.ClassName getClassName(
-		java.lang.String value) {
-		return getService().getClassName(value);
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
 	}
 
 	/**
@@ -218,6 +213,11 @@ public class ClassNameLocalServiceUtil {
 		long classNameId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getClassName(classNameId);
+	}
+
+	public static com.liferay.portal.kernel.model.ClassName getClassName(
+		java.lang.String value) {
+		return getService().getClassName(value);
 	}
 
 	public static long getClassNameId(java.lang.Class<?> clazz) {

@@ -67,18 +67,6 @@ public class MBThreadFlagLocalServiceWrapper implements MBThreadFlagLocalService
 	}
 
 	/**
-	* Deletes the message boards thread flag from the database. Also notifies the appropriate model listeners.
-	*
-	* @param mbThreadFlag the message boards thread flag
-	* @return the message boards thread flag that was removed
-	*/
-	@Override
-	public com.liferay.message.boards.kernel.model.MBThreadFlag deleteMBThreadFlag(
-		com.liferay.message.boards.kernel.model.MBThreadFlag mbThreadFlag) {
-		return _mbThreadFlagLocalService.deleteMBThreadFlag(mbThreadFlag);
-	}
-
-	/**
 	* Deletes the message boards thread flag with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param threadFlagId the primary key of the message boards thread flag
@@ -93,6 +81,18 @@ public class MBThreadFlagLocalServiceWrapper implements MBThreadFlagLocalService
 	}
 
 	/**
+	* Deletes the message boards thread flag from the database. Also notifies the appropriate model listeners.
+	*
+	* @param mbThreadFlag the message boards thread flag
+	* @return the message boards thread flag that was removed
+	*/
+	@Override
+	public com.liferay.message.boards.kernel.model.MBThreadFlag deleteMBThreadFlag(
+		com.liferay.message.boards.kernel.model.MBThreadFlag mbThreadFlag) {
+		return _mbThreadFlagLocalService.deleteMBThreadFlag(mbThreadFlag);
+	}
+
+	/**
 	* @throws PortalException
 	*/
 	@Override
@@ -103,15 +103,15 @@ public class MBThreadFlagLocalServiceWrapper implements MBThreadFlagLocalService
 	}
 
 	@Override
-	public void deleteThreadFlag(
-		com.liferay.message.boards.kernel.model.MBThreadFlag threadFlag) {
-		_mbThreadFlagLocalService.deleteThreadFlag(threadFlag);
-	}
-
-	@Override
 	public void deleteThreadFlag(long threadFlagId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_mbThreadFlagLocalService.deleteThreadFlag(threadFlagId);
+	}
+
+	@Override
+	public void deleteThreadFlag(
+		com.liferay.message.boards.kernel.model.MBThreadFlag threadFlag) {
+		_mbThreadFlagLocalService.deleteThreadFlag(threadFlag);
 	}
 
 	@Override

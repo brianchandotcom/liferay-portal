@@ -73,18 +73,6 @@ public class ShoppingCartLocalServiceWrapper implements ShoppingCartLocalService
 	}
 
 	/**
-	* Deletes the shopping cart from the database. Also notifies the appropriate model listeners.
-	*
-	* @param shoppingCart the shopping cart
-	* @return the shopping cart that was removed
-	*/
-	@Override
-	public com.liferay.shopping.model.ShoppingCart deleteShoppingCart(
-		com.liferay.shopping.model.ShoppingCart shoppingCart) {
-		return _shoppingCartLocalService.deleteShoppingCart(shoppingCart);
-	}
-
-	/**
 	* Deletes the shopping cart with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param cartId the primary key of the shopping cart
@@ -95,6 +83,18 @@ public class ShoppingCartLocalServiceWrapper implements ShoppingCartLocalService
 	public com.liferay.shopping.model.ShoppingCart deleteShoppingCart(
 		long cartId) throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingCartLocalService.deleteShoppingCart(cartId);
+	}
+
+	/**
+	* Deletes the shopping cart from the database. Also notifies the appropriate model listeners.
+	*
+	* @param shoppingCart the shopping cart
+	* @return the shopping cart that was removed
+	*/
+	@Override
+	public com.liferay.shopping.model.ShoppingCart deleteShoppingCart(
+		com.liferay.shopping.model.ShoppingCart shoppingCart) {
+		return _shoppingCartLocalService.deleteShoppingCart(shoppingCart);
 	}
 
 	@Override

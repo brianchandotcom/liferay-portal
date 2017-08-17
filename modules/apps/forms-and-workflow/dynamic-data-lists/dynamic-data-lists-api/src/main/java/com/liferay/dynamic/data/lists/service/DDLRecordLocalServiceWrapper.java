@@ -588,6 +588,102 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 	}
 
 	/**
+	* Returns all the records matching the record set ID
+	*
+	* @param recordSetId the record's record set ID
+	* @return the matching records
+	*/
+	@Override
+	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getRecords(
+		long recordSetId) {
+		return _ddlRecordLocalService.getRecords(recordSetId);
+	}
+
+	/**
+	* Returns an ordered range of all the records matching the record set ID
+	* and workflow status.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to <code>QueryUtil.ALL_POS</code> will return the
+	* full result set.
+	* </p>
+	*
+	* @param recordSetId the record's record set ID
+	* @param status the record's workflow status. For more information search
+	the portal kernel's WorkflowConstants class for constants
+	starting with the "STATUS_" prefix.
+	* @param start the lower bound of the range of records to return
+	* @param end the upper bound of the range of records to return (not
+	inclusive)
+	* @param orderByComparator the comparator to order the records
+	* @return the range of matching records ordered by the comparator
+	*/
+	@Override
+	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getRecords(
+		long recordSetId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> orderByComparator) {
+		return _ddlRecordLocalService.getRecords(recordSetId, status, start,
+			end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getRecords(
+		long recordSetId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> obc) {
+		return _ddlRecordLocalService.getRecords(recordSetId, start, end, obc);
+	}
+
+	/**
+	* Returns all the records matching the record set ID and user ID.
+	*
+	* @param recordSetId the record's record set ID
+	* @param userId the user ID the records belong to
+	* @return the list of matching records ordered by the comparator
+	*/
+	@Override
+	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getRecords(
+		long recordSetId, long userId) {
+		return _ddlRecordLocalService.getRecords(recordSetId, userId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getRecords(
+		long recordSetId, long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> obc) {
+		return _ddlRecordLocalService.getRecords(recordSetId, userId, start,
+			end, obc);
+	}
+
+	@Override
+	public int getRecordsCount(long recordSetId) {
+		return _ddlRecordLocalService.getRecordsCount(recordSetId);
+	}
+
+	/**
+	* Returns the number of records matching the record set ID and workflow
+	* status.
+	*
+	* @param recordSetId the record's record set ID
+	* @param status the record's workflow status. For more information search
+	the portal kernel's WorkflowConstants class for constants
+	starting with the "STATUS_" prefix.
+	* @return the number of matching records
+	*/
+	@Override
+	public int getRecordsCount(long recordSetId, int status) {
+		return _ddlRecordLocalService.getRecordsCount(recordSetId, status);
+	}
+
+	@Override
+	public int getRecordsCount(long recordSetId, long userId) {
+		return _ddlRecordLocalService.getRecordsCount(recordSetId, userId);
+	}
+
+	/**
 	* @deprecated As of 1.1.0, replaced by {@link
 	DDLRecordVersionLocalService#getRecordVersion(
 	long)}
@@ -636,102 +732,6 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 	@Override
 	public int getRecordVersionsCount(long recordId) {
 		return _ddlRecordLocalService.getRecordVersionsCount(recordId);
-	}
-
-	/**
-	* Returns all the records matching the record set ID
-	*
-	* @param recordSetId the record's record set ID
-	* @return the matching records
-	*/
-	@Override
-	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getRecords(
-		long recordSetId) {
-		return _ddlRecordLocalService.getRecords(recordSetId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getRecords(
-		long recordSetId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> obc) {
-		return _ddlRecordLocalService.getRecords(recordSetId, start, end, obc);
-	}
-
-	/**
-	* Returns an ordered range of all the records matching the record set ID
-	* and workflow status.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to <code>QueryUtil.ALL_POS</code> will return the
-	* full result set.
-	* </p>
-	*
-	* @param recordSetId the record's record set ID
-	* @param status the record's workflow status. For more information search
-	the portal kernel's WorkflowConstants class for constants
-	starting with the "STATUS_" prefix.
-	* @param start the lower bound of the range of records to return
-	* @param end the upper bound of the range of records to return (not
-	inclusive)
-	* @param orderByComparator the comparator to order the records
-	* @return the range of matching records ordered by the comparator
-	*/
-	@Override
-	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getRecords(
-		long recordSetId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> orderByComparator) {
-		return _ddlRecordLocalService.getRecords(recordSetId, status, start,
-			end, orderByComparator);
-	}
-
-	/**
-	* Returns all the records matching the record set ID and user ID.
-	*
-	* @param recordSetId the record's record set ID
-	* @param userId the user ID the records belong to
-	* @return the list of matching records ordered by the comparator
-	*/
-	@Override
-	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getRecords(
-		long recordSetId, long userId) {
-		return _ddlRecordLocalService.getRecords(recordSetId, userId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getRecords(
-		long recordSetId, long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> obc) {
-		return _ddlRecordLocalService.getRecords(recordSetId, userId, start,
-			end, obc);
-	}
-
-	@Override
-	public int getRecordsCount(long recordSetId) {
-		return _ddlRecordLocalService.getRecordsCount(recordSetId);
-	}
-
-	/**
-	* Returns the number of records matching the record set ID and workflow
-	* status.
-	*
-	* @param recordSetId the record's record set ID
-	* @param status the record's workflow status. For more information search
-	the portal kernel's WorkflowConstants class for constants
-	starting with the "STATUS_" prefix.
-	* @return the number of matching records
-	*/
-	@Override
-	public int getRecordsCount(long recordSetId, int status) {
-		return _ddlRecordLocalService.getRecordsCount(recordSetId, status);
-	}
-
-	@Override
-	public int getRecordsCount(long recordSetId, long userId) {
-		return _ddlRecordLocalService.getRecordsCount(recordSetId, userId);
 	}
 
 	/**

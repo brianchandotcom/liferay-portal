@@ -74,6 +74,11 @@ public interface LayoutPrototypeLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public LayoutPrototype addLayoutPrototype(LayoutPrototype layoutPrototype);
 
+	public LayoutPrototype addLayoutPrototype(long userId, long companyId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, boolean active,
+		ServiceContext serviceContext) throws PortalException;
+
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #addLayoutPrototype(long,
 	long, Map, Map, boolean, ServiceContext)}
@@ -83,11 +88,6 @@ public interface LayoutPrototypeLocalService extends BaseLocalService,
 		Map<Locale, java.lang.String> nameMap, java.lang.String description,
 		boolean active, ServiceContext serviceContext)
 		throws PortalException;
-
-	public LayoutPrototype addLayoutPrototype(long userId, long companyId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, boolean active,
-		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new layout prototype with the primary key. Does not add the layout prototype to the database.
@@ -288,6 +288,11 @@ public interface LayoutPrototypeLocalService extends BaseLocalService,
 	public LayoutPrototype updateLayoutPrototype(
 		LayoutPrototype layoutPrototype);
 
+	public LayoutPrototype updateLayoutPrototype(long layoutPrototypeId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, boolean active,
+		ServiceContext serviceContext) throws PortalException;
+
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #updateLayoutPrototype(long,
 	Map, Map, boolean, ServiceContext)}
@@ -297,9 +302,4 @@ public interface LayoutPrototypeLocalService extends BaseLocalService,
 		Map<Locale, java.lang.String> nameMap, java.lang.String description,
 		boolean active, ServiceContext serviceContext)
 		throws PortalException;
-
-	public LayoutPrototype updateLayoutPrototype(long layoutPrototypeId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, boolean active,
-		ServiceContext serviceContext) throws PortalException;
 }

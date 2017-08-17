@@ -763,12 +763,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			return;
 		}
 
-		// Individual
-
-		Resource resource = getResource(
-			companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, primKey);
-
-		// Permissions
+		// Individual Permissions
 
 		boolean flushResourcePermissionEnabled =
 			PermissionThreadLocal.isFlushResourcePermissionEnabled(
@@ -785,27 +780,24 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 				companyId, RoleConstants.OWNER);
 
 			List<String> ownerActionIds =
-				ResourceActionsUtil.getModelResourceActions(resource.getName());
+				ResourceActionsUtil.getModelResourceActions(name);
 
-			filterOwnerActions(resource.getName(), ownerActionIds);
+			filterOwnerActions(name, ownerActionIds);
 
 			String[] ownerPermissions = ownerActionIds.toArray(
 				new String[ownerActionIds.size()]);
 
 			resourcePermissionLocalService.setOwnerResourcePermissions(
-				resource.getCompanyId(), resource.getName(),
-				resource.getScope(), resource.getPrimKey(),
+				companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, primKey,
 				ownerRole.getRoleId(), userId, ownerPermissions);
 
 			if (modelPermissions != null) {
 				for (String roleName : modelPermissions.getRoleNames()) {
-					Role role = getRole(
-						resource.getCompanyId(), groupId, roleName);
+					Role role = getRole(companyId, groupId, roleName);
 
 					resourcePermissionLocalService.setResourcePermissions(
-						resource.getCompanyId(), resource.getName(),
-						resource.getScope(), resource.getPrimKey(),
-						role.getRoleId(),
+						companyId, name, ResourceConstants.SCOPE_INDIVIDUAL,
+						primKey, role.getRoleId(),
 						modelPermissions.getActionIds(roleName));
 				}
 			}

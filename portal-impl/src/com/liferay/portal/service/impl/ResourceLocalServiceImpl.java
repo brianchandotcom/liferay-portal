@@ -529,17 +529,9 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			guestPermissions = new String[0];
 		}
 
-		Role role = roleLocalService.getDefaultGroupRole(groupId);
+		addGroupPermissions(groupId, resource, groupPermissions);
 
-		resourcePermissionLocalService.setResourcePermissions(
-			resource.getCompanyId(), resource.getName(), resource.getScope(),
-			resource.getPrimKey(), role.getRoleId(), groupPermissions);
-
-		role = roleLocalService.getRole(companyId, RoleConstants.GUEST);
-
-		resourcePermissionLocalService.setResourcePermissions(
-			resource.getCompanyId(), resource.getName(), resource.getScope(),
-			resource.getPrimKey(), role.getRoleId(), guestPermissions);
+		addGuestPermissions(companyId, resource, guestPermissions);
 	}
 
 	/**

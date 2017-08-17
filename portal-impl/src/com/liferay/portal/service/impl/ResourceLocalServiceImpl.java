@@ -603,7 +603,16 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 		long companyId, String name, int scope, String primKey,
 		String newPrimKey) {
 
-		updateResourcePermissions(companyId, name, scope, primKey, newPrimKey);
+		List<ResourcePermission> resourcePermissions =
+			resourcePermissionLocalService.getResourcePermissions(
+				companyId, name, scope, primKey);
+
+		for (ResourcePermission resourcePermission : resourcePermissions) {
+			resourcePermission.setPrimKey(newPrimKey);
+			resourcePermission.setPrimKeyId(GetterUtil.getLong(newPrimKey));
+
+			resourcePermissionPersistence.update(resourcePermission);
+		}
 	}
 
 	protected void addGroupPermissions(
@@ -971,22 +980,6 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 				" for ", String.valueOf(userId), " ",
 				String.valueOf(resourceId), " ", actionId, " takes ",
 				String.valueOf(stopWatch.getTime()), " ms"));
-	}
-
-	protected void updateResourcePermissions(
-		long companyId, String name, int scope, String primKey,
-		String newPrimKey) {
-
-		List<ResourcePermission> resourcePermissions =
-			resourcePermissionLocalService.getResourcePermissions(
-				companyId, name, scope, primKey);
-
-		for (ResourcePermission resourcePermission : resourcePermissions) {
-			resourcePermission.setPrimKey(newPrimKey);
-			resourcePermission.setPrimKeyId(GetterUtil.getLong(newPrimKey));
-
-			resourcePermissionPersistence.update(resourcePermission);
-		}
 	}
 
 	protected void updateResources(

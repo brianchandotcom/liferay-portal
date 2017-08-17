@@ -42,7 +42,6 @@ import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.base.ResourceLocalServiceBaseImpl;
 import com.liferay.portal.util.ResourcePermissionsThreadLocal;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -876,12 +875,6 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 				throw new NoSuchResourceActionException(
 					"There are no actions associated with the resource " +
 						name);
-			}
-
-			actions = new ArrayList<>(resourceActions.size());
-
-			for (ResourceAction resourceAction : resourceActions) {
-				actions.add(resourceAction.getActionId());
 			}
 		}
 	}

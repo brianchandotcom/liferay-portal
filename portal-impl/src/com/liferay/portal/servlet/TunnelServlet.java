@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProtectedClassLoaderObjectInputStream;
+import com.liferay.portal.kernel.util.StreamUtil;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -76,6 +77,9 @@ public class TunnelServlet extends HttpServlet {
 			}
 
 			return;
+		}
+		finally {
+			StreamUtil.cleanUp(ois);
 		}
 
 		Object returnObj = null;

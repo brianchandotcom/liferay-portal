@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.deploy;
 
+import com.liferay.portal.kernel.deploy.auto.AutoDeployer;
 import com.liferay.portal.kernel.model.Plugin;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -63,7 +65,14 @@ public class PortletDeployer extends BaseDeployer {
 			}
 		}
 
-		new PortletDeployer(wars, jars);
+		AutoDeployer autoDeployer = null;
+
+		try {
+			autoDeployer = new PortletDeployer(wars, jars);
+		}
+		finally {
+			StreamUtil.cleanUp(autoDeployer);
+		}
 	}
 
 	public PortletDeployer() {

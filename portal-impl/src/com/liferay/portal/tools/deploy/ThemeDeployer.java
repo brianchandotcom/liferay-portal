@@ -14,8 +14,10 @@
 
 package com.liferay.portal.tools.deploy;
 
+import com.liferay.portal.kernel.deploy.auto.AutoDeployer;
 import com.liferay.portal.kernel.model.Plugin;
 import com.liferay.portal.kernel.plugin.PluginPackage;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -47,7 +49,14 @@ public class ThemeDeployer extends BaseDeployer {
 			}
 		}
 
-		new ThemeDeployer(wars, jars);
+		AutoDeployer autoDeployer = null;
+
+		try {
+			autoDeployer = new ThemeDeployer(wars, jars);
+		}
+		finally {
+			StreamUtil.cleanUp(autoDeployer);
+		}
 	}
 
 	public ThemeDeployer() {

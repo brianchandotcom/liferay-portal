@@ -288,12 +288,11 @@ public class LocalProcessExecutor implements ProcessExecutor {
 
 			AsyncBrokerThreadLocal.setAsyncBroker(_asyncBroker);
 
+			ObjectInputStream objectInputStream = null;
 			UnsyncBufferedInputStream unsyncBufferedInputStream =
 				new UnsyncBufferedInputStream(_process.getInputStream());
 
 			try {
-				ObjectInputStream objectInputStream = null;
-
 				UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 					new UnsyncByteArrayOutputStream();
 
@@ -317,6 +316,8 @@ public class LocalProcessExecutor implements ProcessExecutor {
 										unsyncByteArrayOutputStream.toString());
 							}
 						}
+
+						StreamUtil.cleanUp(unsyncByteArrayOutputStream);
 
 						unsyncByteArrayOutputStream = null;
 
@@ -436,6 +437,8 @@ public class LocalProcessExecutor implements ProcessExecutor {
 				}
 
 				AsyncBrokerThreadLocal.removeAsyncBroker();
+
+				StreamUtil.cleanUp(objectInputStream);
 			}
 		}
 

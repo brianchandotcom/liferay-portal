@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -116,7 +117,14 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 			}
 		}
 
-		new BaseDeployer(wars, jars);
+		AutoDeployer autoDeployer = null;
+
+		try {
+			autoDeployer = new BaseDeployer(wars, jars);
+		}
+		finally {
+			StreamUtil.cleanUp(autoDeployer);
+		}
 	}
 
 	public BaseDeployer() {

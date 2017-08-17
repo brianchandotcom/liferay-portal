@@ -183,6 +183,7 @@ public class UpgradeClient {
 		commands.add(DBUpgraderLauncher.class.getName());
 
 		processBuilder.command(commands);
+		processBuilder.directory(_jarFolder);
 
 		processBuilder.redirectErrorStream(true);
 

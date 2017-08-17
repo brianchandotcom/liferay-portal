@@ -42,11 +42,11 @@ public class UserInitialsGeneratorImpl implements UserInitialsGenerator {
 
 		String[] userNames = {firstName, middleName, lastName};
 
-		Stream<String> fieldsStream = Stream.of(
+		Stream<String> userInitialsFieldNamesStream = Stream.of(
 			_getUserInitialsFieldNames(locale));
 
-		return fieldsStream.map(
-			key -> userNames[_nameIndexMap.get(key)]
+		return userInitialsFieldNamesStream.map(
+			key -> userNames[_userNameIndexMap.get(key)]
 		).filter(
 			name -> Validator.isNotNull(name)
 		).limit(
@@ -68,27 +68,27 @@ public class UserInitialsGeneratorImpl implements UserInitialsGenerator {
 	}
 
 	private String[] _getUserInitialsFieldNames(Locale locale) {
-		String[]  userInitialsFieldNames = StringUtil.split(
+		String[] userInitialsFieldNames = StringUtil.split(
 			LanguageUtil.get(
-				locale, LanguageConstants.KEY_USER_INITIALS_FIELD_NAMES,
-				null));
+				locale, LanguageConstants.KEY_USER_INITIALS_FIELD_NAMES, null));
 
 		if (ArrayUtil.isEmpty(userInitialsFieldNames)) {
-			userInitialsFieldNames = _DEFAULT_INITIALS_FIELD_NAMES;
+			userInitialsFieldNames = _DEFAULT_USER_INITIALS_FIELD_NAMES;
 		}
 
 		return userInitialsFieldNames;
 	}
 
-	private static final String[] _DEFAULT_INITIALS_FIELD_NAMES =
+	private static final String[] _DEFAULT_USER_INITIALS_FIELD_NAMES =
 		{LanguageConstants.VALUE_FIRST_NAME, LanguageConstants.VALUE_LAST_NAME};
 
-	private static final Map<String, Integer> _nameIndexMap = new HashMap<>(3);
+	private static final Map<String, Integer> _userNameIndexMap = new HashMap<>(
+		3);
 
 	static {
-		_nameIndexMap.put(LanguageConstants.VALUE_FIRST_NAME, 0);
-		_nameIndexMap.put(LanguageConstants.VALUE_MIDDLE_NAME, 1);
-		_nameIndexMap.put(LanguageConstants.VALUE_LAST_NAME, 2);
+		_userNameIndexMap.put(LanguageConstants.VALUE_FIRST_NAME, 0);
+		_userNameIndexMap.put(LanguageConstants.VALUE_MIDDLE_NAME, 1);
+		_userNameIndexMap.put(LanguageConstants.VALUE_LAST_NAME, 2);
 	}
 
 }

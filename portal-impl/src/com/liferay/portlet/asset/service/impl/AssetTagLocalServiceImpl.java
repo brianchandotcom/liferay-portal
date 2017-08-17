@@ -21,8 +21,6 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -810,8 +808,5 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 				AssetTagException.INVALID_CHARACTER);
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AssetTagLocalServiceImpl.class);
 
 }

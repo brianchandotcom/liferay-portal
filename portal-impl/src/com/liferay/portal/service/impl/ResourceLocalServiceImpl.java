@@ -763,32 +763,6 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	}
 
 	protected void addResources(
-			long companyId, long groupId, long userId, Resource resource,
-			boolean portletActions, PermissionedModel permissionedModel)
-		throws PortalException {
-
-		List<String> actionIds = null;
-
-		if (portletActions) {
-			actionIds = ResourceActionsUtil.getPortletResourceActions(
-				resource.getName());
-		}
-		else {
-			actionIds = ResourceActionsUtil.getModelResourceActions(
-				resource.getName());
-
-			filterOwnerActions(resource.getName(), actionIds);
-		}
-
-		Role role = roleLocalService.getRole(companyId, RoleConstants.OWNER);
-
-		resourcePermissionLocalService.setOwnerResourcePermissions(
-			resource.getCompanyId(), resource.getName(), resource.getScope(),
-			resource.getPrimKey(), role.getRoleId(), userId,
-			actionIds.toArray(new String[actionIds.size()]));
-	}
-
-	protected void addResources(
 			long companyId, long groupId, long userId, String name,
 			String primKey, boolean portletActions, boolean addGroupPermissions,
 			boolean addGuestPermissions, PermissionedModel permissionedModel)
@@ -826,9 +800,26 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			resourcePermissions);
 
 		try {
-			addResources(
-				companyId, groupId, userId, resource, portletActions,
-				permissionedModel);
+			List<String> actionIds = null;
+
+			if (portletActions) {
+				actionIds = ResourceActionsUtil.getPortletResourceActions(
+					resource.getName());
+			}
+			else {
+				actionIds = ResourceActionsUtil.getModelResourceActions(
+					resource.getName());
+
+				filterOwnerActions(resource.getName(), actionIds);
+			}
+
+			Role role = roleLocalService.getRole(
+				companyId, RoleConstants.OWNER);
+
+			resourcePermissionLocalService.setOwnerResourcePermissions(
+				resource.getCompanyId(), resource.getName(),
+				resource.getScope(), resource.getPrimKey(), role.getRoleId(),
+				userId, actionIds.toArray(new String[actionIds.size()]));
 
 			// Group permissions
 
@@ -846,10 +837,9 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 							name);
 				}
 
-				String[] actionIds = actions.toArray(
-					new String[actions.size()]);
-
-				addGroupPermissions(groupId, resource, actionIds);
+				addGroupPermissions(
+					groupId, resource,
+					actions.toArray(new String[actions.size()]));
 			}
 
 			// Guest permissions

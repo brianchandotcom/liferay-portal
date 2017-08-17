@@ -25,6 +25,7 @@ import com.liferay.calendar.test.util.CalendarUpgradeTestUtil;
 import com.liferay.calendar.test.util.CheckBookingsMessageListenerTestUtil;
 import com.liferay.calendar.test.util.UpgradeDatabaseTestHelper;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -82,11 +83,11 @@ public class UpgradeSchemaTest {
 
 		dropColumnRecurringCalendarBookingId();
 
+		assertDoesNotHaveColumn("recurringCalendarBookingId");
+
 		_upgradeSchema.upgrade();
 
-		Assert.assertTrue(
-			_upgradeDatabaseTestHelper.hasColumn(
-				"CalendarBooking", "recurringCalendarBookingId"));
+		assertHasColumn("recurringCalendarBookingId");
 	}
 
 	@Test
@@ -101,7 +102,30 @@ public class UpgradeSchemaTest {
 
 		_upgradeSchema.upgrade();
 
+		assertRecurringCalendarBookingIdValue(
+			calendarBooking, recurringCalendarBookingId);
+	}
+
+	protected void assertDoesNotHaveColumn(String columnName) throws Exception {
+		Assert.assertFalse(
+			_upgradeDatabaseTestHelper.hasColumn(
+				"CalendarBooking", columnName));
+	}
+
+	protected void assertHasColumn(String columnName) throws Exception {
+		Assert.assertTrue(
+			_upgradeDatabaseTestHelper.hasColumn(
+				"CalendarBooking", columnName));
+	}
+
+	protected void assertRecurringCalendarBookingIdValue(
+			CalendarBooking calendarBooking, long recurringCalendarBookingId)
+		throws PortalException {
+
 		EntityCacheUtil.clearCache(CalendarBookingImpl.class);
+
+		Assert.assertNotEquals(
+			0, calendarBooking.getRecurringCalendarBookingId());
 
 		calendarBooking = CalendarBookingLocalServiceUtil.getCalendarBooking(
 			calendarBooking.getCalendarBookingId());

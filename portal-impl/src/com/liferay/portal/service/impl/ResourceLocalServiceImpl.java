@@ -514,9 +514,29 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			String[] groupPermissions, String[] guestPermissions)
 		throws PortalException {
 
-		updateResources(
-			companyId, groupId, name, String.valueOf(primKey), groupPermissions,
-			guestPermissions, null);
+		Resource resource = getResource(
+			companyId, name, ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(primKey));
+
+		if (groupPermissions == null) {
+			groupPermissions = new String[0];
+		}
+
+		if (guestPermissions == null) {
+			guestPermissions = new String[0];
+		}
+
+		Role role = roleLocalService.getDefaultGroupRole(groupId);
+
+		resourcePermissionLocalService.setResourcePermissions(
+			resource.getCompanyId(), resource.getName(), resource.getScope(),
+			resource.getPrimKey(), role.getRoleId(), groupPermissions);
+
+		role = roleLocalService.getRole(companyId, RoleConstants.GUEST);
+
+		resourcePermissionLocalService.setResourcePermissions(
+			resource.getCompanyId(), resource.getName(), resource.getScope(),
+			resource.getPrimKey(), role.getRoleId(), guestPermissions);
 	}
 
 	/**
@@ -996,36 +1016,6 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, primKey);
 
 		updateResourcePermissions(groupId, resource, modelPermissions);
-	}
-
-	protected void updateResources(
-			long companyId, long groupId, String name, String primKey,
-			String[] groupPermissions, String[] guestPermissions,
-			PermissionedModel permissionedModel)
-		throws PortalException {
-
-		Resource resource = getResource(
-			companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, primKey);
-
-		if (groupPermissions == null) {
-			groupPermissions = new String[0];
-		}
-
-		if (guestPermissions == null) {
-			guestPermissions = new String[0];
-		}
-
-		Role role = roleLocalService.getDefaultGroupRole(groupId);
-
-		resourcePermissionLocalService.setResourcePermissions(
-			resource.getCompanyId(), resource.getName(), resource.getScope(),
-			resource.getPrimKey(), role.getRoleId(), groupPermissions);
-
-		role = roleLocalService.getRole(companyId, RoleConstants.GUEST);
-
-		resourcePermissionLocalService.setResourcePermissions(
-			resource.getCompanyId(), resource.getName(), resource.getScope(),
-			resource.getPrimKey(), role.getRoleId(), guestPermissions);
 	}
 
 	protected void validate(String name, boolean portletActions)

@@ -21,8 +21,8 @@ import com.liferay.calendar.test.util.CalendarBookingTestUtil;
 import com.liferay.calendar.test.util.CalendarTestUtil;
 import com.liferay.calendar.test.util.CalendarUpgradeTestUtil;
 import com.liferay.calendar.test.util.CheckBookingsMessageListenerTestUtil;
+import com.liferay.calendar.test.util.UpgradeDatabaseTestHelper;
 import com.liferay.calendar.upgrade.v2_0_0.UpgradeSchema;
-import com.liferay.calendar.util.CalendarUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -64,6 +64,8 @@ public class UpgradeSchemaTest extends UpgradeSchema {
 
 		_calendar = CalendarTestUtil.addCalendar(_group);
 
+		_upgradeDatabaseTestHelper =
+			CalendarUpgradeTestUtil.getUpgradeDatabaseTestHelper();
 		_upgradeSchema = CalendarUpgradeTestUtil.getUpgradeStep(
 			"com.liferay.calendar.upgrade.v2_0_0.UpgradeSchema");
 
@@ -71,8 +73,10 @@ public class UpgradeSchemaTest extends UpgradeSchema {
 	}
 
 	@After
-	public void tearDown() {
+	public void tearDown() throws Exception {
 		CheckBookingsMessageListenerTestUtil.tearDown();
+
+		_upgradeDatabaseTestHelper.close();
 	}
 
 	@Test
@@ -87,7 +91,8 @@ public class UpgradeSchemaTest extends UpgradeSchema {
 			connection = con;
 
 			Assert.assertTrue(
-				hasColumn("CalendarBooking", "recurringCalendarBookingId"));
+				_upgradeDatabaseTestHelper.hasColumn(
+					"CalendarBooking", "recurringCalendarBookingId"));
 		}
 	}
 
@@ -120,23 +125,10 @@ public class UpgradeSchemaTest extends UpgradeSchema {
 	}
 
 	protected void dropColumnRecurringCalendarBookingId() throws Exception {
-		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
-			connection = con;
-
-			if (hasColumn("CalendarBooking", "recurringCalendarBookingId")) {
-
-				// Hack through the OSGi classloading, it is not worth exporting
-				// the generated *Table packages just to support this test
-
-				ClassLoader classLoader = CalendarUtil.class.getClassLoader();
-
-				alter(
-					classLoader.loadClass(
-						"com.liferay.calendar.internal.upgrade.v1_0_0.util." +
-							"CalendarBookingTable"),
-					new AlterTableDropColumn("recurringCalendarBookingId"));
-			}
-		}
+		_upgradeDatabaseTestHelper.dropColumn(
+			"com.liferay.calendar.internal.upgrade.v1_0_0.util." +
+				"CalendarBookingTable",
+			"CalendarBooking", "recurringCalendarBookingId");
 	}
 
 	@DeleteAfterTestRun
@@ -145,6 +137,7 @@ public class UpgradeSchemaTest extends UpgradeSchema {
 	@DeleteAfterTestRun
 	private Group _group;
 
+	private UpgradeDatabaseTestHelper _upgradeDatabaseTestHelper;
 	private UpgradeProcess _upgradeSchema;
 
 }

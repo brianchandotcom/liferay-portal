@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
+import java.util.function.Function;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -40,7 +42,7 @@ public class ServiceLocator {
 		try {
 			Registry registry = RegistryUtil.getRegistry();
 
-			bean = registry.getService(serviceName);
+			bean = registry.callService(serviceName, Function.identity());
 
 			if (bean == null) {
 				bean = PortalBeanLocatorUtil.locate(

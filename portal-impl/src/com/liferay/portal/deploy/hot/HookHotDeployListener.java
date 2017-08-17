@@ -1800,26 +1800,35 @@ public class HookHotDeployListener
 
 			try {
 				serviceProxy = PortalBeanLocatorUtil.locate(serviceType);
+
+				_initServices(
+					servletContextName, serviceImplConstructor, serviceProxy);
 			}
 			catch (BeanLocatorException ble) {
 				Registry registry = RegistryUtil.getRegistry();
 
-				serviceProxy = registry.getService(serviceTypeClass);
-			}
+				registry.callService(
+					serviceTypeClass,
+					registryServiceProxy -> {
+						try {
+							_initServices(
+								servletContextName, serviceImplConstructor,
+								registryServiceProxy);
+						}
+						catch (Exception e) {
+							ReflectionUtil.throwException(e);
+						}
 
-			if (ProxyUtil.isProxyClass(serviceProxy.getClass())) {
-				initServices(
-					servletContextName, portletClassLoader, serviceType,
-					serviceTypeClass, serviceImplConstructor, serviceProxy);
-			}
-			else {
-				_log.error(
-					"Service hooks require Spring to be configured to use " +
-						"JdkDynamicProxy and will not work with CGLIB");
+						return null;
+					});
 			}
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, as of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected void initServices(
 			String servletContextName, ClassLoader portletClassLoader,
 			String serviceType, Class<?> serviceTypeClass,
@@ -2282,6 +2291,36 @@ public class HookHotDeployListener
 		}
 
 		field.set(null, value);
+	}
+
+	private void _initServices(
+			String servletContextName, Constructor<?> serviceImplConstructor,
+			Object serviceProxy)
+		throws Exception {
+
+		AdvisedSupport advisedSupport = ServiceBeanAopProxy.getAdvisedSupport(
+			serviceProxy);
+
+		TargetSource targetSource = advisedSupport.getTargetSource();
+
+		Class<?> proxyClass = serviceProxy.getClass();
+
+		if (ProxyUtil.isProxyClass(proxyClass)) {
+			Object previousService = targetSource.getTarget();
+
+			ServiceWrapper<?> serviceWrapper =
+				(ServiceWrapper<?>)serviceImplConstructor.newInstance(
+					previousService);
+
+			registerService(
+				servletContextName, serviceImplConstructor,
+				ServiceWrapper.class, serviceWrapper);
+		}
+		else {
+			_log.error(
+				"Service hooks require Spring to be configured to use " +
+					"JdkDynamicProxy and will not work with CGLIB");
+		}
 	}
 
 	private static final String[] _PROPS_KEYS_EVENTS = {

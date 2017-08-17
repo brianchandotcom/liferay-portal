@@ -79,7 +79,7 @@ public class MessageDatagramReceiveHandlerTest {
 		MessageBus messageBus = Mockito.mock(MessageBus.class);
 
 		MessageDatagramReceiveHandler messageDatagramReceiveHandler =
-			new MessageDatagramReceiveHandler(messageBus);
+			new MessageDatagramReceiveHandler();
 
 		SystemDataType systemDataType = SystemDataType.MESSAGE;
 

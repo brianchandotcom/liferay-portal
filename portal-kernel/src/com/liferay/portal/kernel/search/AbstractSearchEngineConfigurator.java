@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
 import com.liferay.registry.dependency.ServiceDependencyListener;
 import com.liferay.registry.dependency.ServiceDependencyManager;
 
@@ -65,7 +66,11 @@ public abstract class AbstractSearchEngineConfigurator
 				public void dependenciesFulfilled() {
 					Registry registry = RegistryUtil.getRegistry();
 
-					_messageBus = registry.getService(MessageBus.class);
+					_messageBusServiceReference = registry.getServiceReference(
+						MessageBus.class);
+
+					_messageBus = registry.getService(
+						_messageBusServiceReference);
 
 					initialize();
 				}
@@ -97,6 +102,12 @@ public abstract class AbstractSearchEngineConfigurator
 				_originalSearchEngineId);
 
 			_originalSearchEngineId = null;
+		}
+
+		if (_messageBusServiceReference != null) {
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(_messageBusServiceReference);
 		}
 	}
 
@@ -433,6 +444,7 @@ public abstract class AbstractSearchEngineConfigurator
 		AbstractSearchEngineConfigurator.class);
 
 	private volatile MessageBus _messageBus;
+	private volatile ServiceReference<MessageBus> _messageBusServiceReference;
 	private String _originalSearchEngineId;
 	private final List<SearchEngineRegistration> _searchEngineRegistrations =
 		new ArrayList<>();

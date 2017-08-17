@@ -258,10 +258,6 @@ public class StartupAction extends SimpleAction {
 
 		@Override
 		public void dependenciesFulfilled() {
-			Registry registry = RegistryUtil.getRegistry();
-
-			MessageBus messageBus = registry.getService(MessageBus.class);
-
 			try {
 				DistributedRegistry.registerDistributed(
 					ComponentConstants.COMPONENT_CONTEXT, Direction.DUPLEX,
@@ -282,7 +278,7 @@ public class StartupAction extends SimpleAction {
 
 				intraband.registerDatagramReceiveHandler(
 					SystemDataType.MESSAGE.getValue(),
-					new MessageDatagramReceiveHandler(messageBus));
+					new MessageDatagramReceiveHandler());
 
 				intraband.registerDatagramReceiveHandler(
 					SystemDataType.PROXY.getValue(),

@@ -6413,25 +6413,11 @@ jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 			<then>
 				<echo append="true" file="portal-impl/src/portal-ext.properties">
 
+cluster.link.autodetect.address=
+
 cluster.link.enabled=true
 
-cluster.link.channel.system.properties=\
-	#
-	# Common
-	#
-	\
-	jgroups.bind_addr:${cluster.link.bind.addr["cluster-link-udp"]},\
-	jgroups.bind_interface:127.0.0.1,\
-	\
-	#
-	# Multicast
-	#
-	\
-	jgroups.mping.mcast_addr:${multicast.group.address["cluster-link-mping"]},\
-	jgroups.mping.mcast_port:${multicast.group.port["cluster-link-mping"]},\
-	jgroups.mping.ip_ttl:8
-
-cluster.link.autodetect.address=
+dl.store.impl=com.liferay.portal.store.db.DBStore
 
 web.server.display.node=true</echo>
 			</then>

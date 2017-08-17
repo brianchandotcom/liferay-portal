@@ -178,14 +178,7 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 					if (trashRenderer != null) {
 						PortletURL viewContentURL = renderResponse.createRenderURL();
 
-						if (!trashHandler.isContainerModel()) {
-							viewContentURL.setWindowState(LiferayWindowState.POP_UP);
-
-							viewContentURL.setParameter("mvcPath", "/preview.jsp");
-						}
-						else {
-							viewContentURL.setParameter("mvcPath", "/view_content.jsp");
-						}
+						viewContentURL.setParameter("mvcPath", "/view_content.jsp");
 
 						if (trashEntry.getRootEntry() != null) {
 							viewContentURL.setParameter("classNameId", String.valueOf(trashEntry.getClassNameId()));
@@ -227,20 +220,9 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 								</h6>
 
 								<h5>
-									<c:choose>
-										<c:when test="<%= !trashHandler.isContainerModel() %>">
-											<span class="preview" data-title="<%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %>" data-url="<%= viewContentURLString %>">
-												<aui:a href="javascript:;">
-													<%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %>
-												</aui:a>
-											</span>
-										</c:when>
-										<c:otherwise>
-											<aui:a href="<%= viewContentURLString %>">
-												<%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %>
-											</aui:a>
-										</c:otherwise>
-									</c:choose>
+									<aui:a href="<%= viewContentURLString %>">
+										<%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %>
+									</aui:a>
 								</h5>
 
 								<h6 class="text-default">
@@ -259,24 +241,14 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 							%>
 
 							<liferay-ui:search-container-column-text>
-
-								<%
-								Map<String, Object> data = new HashMap<String, Object>();
-
-								data.put("title", HtmlUtil.escape(trashRenderer.getTitle(locale)));
-								data.put("url", viewContentURLString);
-								%>
-
 								<liferay-frontend:icon-vertical-card
 									actionJsp="<%= actionPath %>"
 									actionJspServletContext="<%= application %>"
-									cssClass='<%= !trashHandler.isContainerModel() ? "preview" : StringPool.BLANK %>'
-									data="<%= !trashHandler.isContainerModel() ? data : null %>"
 									icon="<%= trashRenderer.getIconCssClass() %>"
 									resultRow="<%= row %>"
 									rowChecker="<%= searchContainer.getRowChecker() %>"
 									title="<%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %>"
-									url='<%= !trashHandler.isContainerModel() ? "javascript:;" : viewContentURLString %>'
+									url="<%= viewContentURLString %>"
 								>
 									<%@ include file="/trash_entry_vertical_card.jspf" %>
 								</liferay-frontend:icon-vertical-card>
@@ -287,20 +259,9 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 								cssClass="table-cell-content"
 								name="name"
 							>
-								<c:choose>
-									<c:when test="<%= !trashHandler.isContainerModel() %>">
-										<span class="preview" data-title="<%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %>" data-url="<%= viewContentURLString %>">
-											<aui:a href="javascript:;">
-												<%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %>
-											</aui:a>
-										</span>
-									</c:when>
-									<c:otherwise>
-										<aui:a href="<%= viewContentURLString %>">
-											<%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %>
-										</aui:a>
-									</c:otherwise>
-								</c:choose>
+								<aui:a href="<%= viewContentURLString %>">
+									<%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %>
+								</aui:a>
 
 								<c:if test="<%= trashEntry.getRootEntry() != null %>">
 
@@ -363,24 +324,3 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 		</aui:form>
 	</div>
 </div>
-
-<aui:script use="liferay-url-preview">
-	A.one('#<portlet:namespace />fm').delegate(
-		'click',
-		function(event) {
-			var currentTarget = event.currentTarget;
-
-			var parent = currentTarget.ancestor('.preview');
-
-			var urlPreview = new Liferay.UrlPreview(
-				{
-					title: parent.attr('data-title'),
-					url: parent.attr('data-url')
-				}
-			);
-
-			urlPreview.open();
-		},
-		'.preview a'
-	);
-</aui:script>

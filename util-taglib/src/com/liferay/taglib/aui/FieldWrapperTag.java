@@ -14,8 +14,6 @@
 
 package com.liferay.taglib.aui;
 
-import static javax.servlet.jsp.tagext.Tag.EVAL_PAGE;
-
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;

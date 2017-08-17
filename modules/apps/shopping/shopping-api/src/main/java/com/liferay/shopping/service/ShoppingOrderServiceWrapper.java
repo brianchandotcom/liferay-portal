@@ -51,6 +51,13 @@ public class ShoppingOrderServiceWrapper implements ShoppingOrderService,
 		_shoppingOrderService.deleteOrder(groupId, orderId);
 	}
 
+	@Override
+	public com.liferay.shopping.model.ShoppingOrder getOrder(long groupId,
+		long orderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingOrderService.getOrder(groupId, orderId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -59,13 +66,6 @@ public class ShoppingOrderServiceWrapper implements ShoppingOrderService,
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _shoppingOrderService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public com.liferay.shopping.model.ShoppingOrder getOrder(long groupId,
-		long orderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingOrderService.getOrder(groupId, orderId);
 	}
 
 	@Override

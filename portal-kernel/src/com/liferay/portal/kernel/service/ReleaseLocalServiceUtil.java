@@ -87,17 +87,6 @@ public class ReleaseLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the release from the database. Also notifies the appropriate model listeners.
-	*
-	* @param release the release
-	* @return the release that was removed
-	*/
-	public static com.liferay.portal.kernel.model.Release deleteRelease(
-		com.liferay.portal.kernel.model.Release release) {
-		return getService().deleteRelease(release);
-	}
-
-	/**
 	* Deletes the release with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param releaseId the primary key of the release
@@ -108,6 +97,17 @@ public class ReleaseLocalServiceUtil {
 		long releaseId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteRelease(releaseId);
+	}
+
+	/**
+	* Deletes the release from the database. Also notifies the appropriate model listeners.
+	*
+	* @param release the release
+	* @return the release that was removed
+	*/
+	public static com.liferay.portal.kernel.model.Release deleteRelease(
+		com.liferay.portal.kernel.model.Release release) {
+		return getService().deleteRelease(release);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -189,13 +189,13 @@ public class ReleaseLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.Release fetchRelease(
-		java.lang.String servletContextName) {
-		return getService().fetchRelease(servletContextName);
+		long releaseId) {
+		return getService().fetchRelease(releaseId);
 	}
 
 	public static com.liferay.portal.kernel.model.Release fetchRelease(
-		long releaseId) {
-		return getService().fetchRelease(releaseId);
+		java.lang.String servletContextName) {
+		return getService().fetchRelease(servletContextName);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
@@ -264,6 +264,15 @@ public class ReleaseLocalServiceUtil {
 		return getService().getReleasesCount();
 	}
 
+	public static com.liferay.portal.kernel.model.Release updateRelease(
+		long releaseId, java.lang.String schemaVersion, int buildNumber,
+		java.util.Date buildDate, boolean verified)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateRelease(releaseId, schemaVersion, buildNumber,
+			buildDate, verified);
+	}
+
 	/**
 	* Updates the release in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -273,13 +282,6 @@ public class ReleaseLocalServiceUtil {
 	public static com.liferay.portal.kernel.model.Release updateRelease(
 		com.liferay.portal.kernel.model.Release release) {
 		return getService().updateRelease(release);
-	}
-
-	public static void updateRelease(java.lang.String servletContextName,
-		java.lang.String schemaVersion, java.lang.String previousSchemaVersion) {
-		getService()
-			.updateRelease(servletContextName, schemaVersion,
-			previousSchemaVersion);
 	}
 
 	public static void updateRelease(java.lang.String servletContextName,
@@ -300,13 +302,11 @@ public class ReleaseLocalServiceUtil {
 			unfilteredPortalProperties);
 	}
 
-	public static com.liferay.portal.kernel.model.Release updateRelease(
-		long releaseId, java.lang.String schemaVersion, int buildNumber,
-		java.util.Date buildDate, boolean verified)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateRelease(releaseId, schemaVersion, buildNumber,
-			buildDate, verified);
+	public static void updateRelease(java.lang.String servletContextName,
+		java.lang.String schemaVersion, java.lang.String previousSchemaVersion) {
+		getService()
+			.updateRelease(servletContextName, schemaVersion,
+			previousSchemaVersion);
 	}
 
 	public static ReleaseLocalService getService() {

@@ -296,16 +296,28 @@ public class DLFolderServiceWrapper implements DLFolderService,
 	}
 
 	@Override
+	public void unlockFolder(long groupId, long parentFolderId,
+		java.lang.String name, java.lang.String lockUuid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlFolderService.unlockFolder(groupId, parentFolderId, name, lockUuid);
+	}
+
+	@Override
 	public void unlockFolder(long folderId, java.lang.String lockUuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlFolderService.unlockFolder(folderId, lockUuid);
 	}
 
 	@Override
-	public void unlockFolder(long groupId, long parentFolderId,
-		java.lang.String name, java.lang.String lockUuid)
+	public com.liferay.document.library.kernel.model.DLFolder updateFolder(
+		long folderId, long parentFolderId, java.lang.String name,
+		java.lang.String description, long defaultFileEntryTypeId,
+		java.util.List<java.lang.Long> fileEntryTypeIds, int restrictionType,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_dlFolderService.unlockFolder(groupId, parentFolderId, name, lockUuid);
+		return _dlFolderService.updateFolder(folderId, parentFolderId, name,
+			description, defaultFileEntryTypeId, fileEntryTypeIds,
+			restrictionType, serviceContext);
 	}
 
 	/**
@@ -337,18 +349,6 @@ public class DLFolderServiceWrapper implements DLFolderService,
 		return _dlFolderService.updateFolder(folderId, name, description,
 			defaultFileEntryTypeId, fileEntryTypeIds, restrictionType,
 			serviceContext);
-	}
-
-	@Override
-	public com.liferay.document.library.kernel.model.DLFolder updateFolder(
-		long folderId, long parentFolderId, java.lang.String name,
-		java.lang.String description, long defaultFileEntryTypeId,
-		java.util.List<java.lang.Long> fileEntryTypeIds, int restrictionType,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFolderService.updateFolder(folderId, parentFolderId, name,
-			description, defaultFileEntryTypeId, fileEntryTypeIds,
-			restrictionType, serviceContext);
 	}
 
 	@Override

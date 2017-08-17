@@ -61,6 +61,10 @@ public interface OAuthConsumerLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link OAuthConsumerLocalServiceUtil} to access the o auth consumer local service. Add custom service methods to {@link com.liferay.opensocial.service.impl.OAuthConsumerLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public OAuthConsumer addOAuthConsumer(long companyId,
+		java.lang.String gadgetKey, java.lang.String serviceName,
+		java.lang.String consumerKey, java.lang.String consumerSecret,
+		java.lang.String keyType);
 
 	/**
 	* Adds the o auth consumer to the database. Also notifies the appropriate model listeners.
@@ -71,11 +75,6 @@ public interface OAuthConsumerLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public OAuthConsumer addOAuthConsumer(OAuthConsumer oAuthConsumer);
 
-	public OAuthConsumer addOAuthConsumer(long companyId,
-		java.lang.String gadgetKey, java.lang.String serviceName,
-		java.lang.String consumerKey, java.lang.String consumerSecret,
-		java.lang.String keyType);
-
 	/**
 	* Creates a new o auth consumer with the primary key. Does not add the o auth consumer to the database.
 	*
@@ -83,15 +82,6 @@ public interface OAuthConsumerLocalService extends BaseLocalService,
 	* @return the new o auth consumer
 	*/
 	public OAuthConsumer createOAuthConsumer(long oAuthConsumerId);
-
-	/**
-	* Deletes the o auth consumer from the database. Also notifies the appropriate model listeners.
-	*
-	* @param oAuthConsumer the o auth consumer
-	* @return the o auth consumer that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public OAuthConsumer deleteOAuthConsumer(OAuthConsumer oAuthConsumer);
 
 	/**
 	* Deletes the o auth consumer with the primary key from the database. Also notifies the appropriate model listeners.
@@ -103,6 +93,15 @@ public interface OAuthConsumerLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public OAuthConsumer deleteOAuthConsumer(long oAuthConsumerId)
 		throws PortalException;
+
+	/**
+	* Deletes the o auth consumer from the database. Also notifies the appropriate model listeners.
+	*
+	* @param oAuthConsumer the o auth consumer
+	* @return the o auth consumer that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public OAuthConsumer deleteOAuthConsumer(OAuthConsumer oAuthConsumer);
 
 	public void deleteOAuthConsumers(java.lang.String gadgetKey);
 
@@ -173,21 +172,17 @@ public interface OAuthConsumerLocalService extends BaseLocalService,
 		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public OAuthConsumer fetchOAuthConsumer(java.lang.String gadgetKey,
-		java.lang.String serviceName);
+	public OAuthConsumer fetchOAuthConsumer(long oAuthConsumerId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public OAuthConsumer fetchOAuthConsumer(long oAuthConsumerId);
+	public OAuthConsumer fetchOAuthConsumer(java.lang.String gadgetKey,
+		java.lang.String serviceName);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public OAuthConsumer getOAuthConsumer(java.lang.String gadgetKey,
-		java.lang.String serviceName) throws PortalException;
 
 	/**
 	* Returns the o auth consumer with the primary key.
@@ -199,6 +194,10 @@ public interface OAuthConsumerLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OAuthConsumer getOAuthConsumer(long oAuthConsumerId)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OAuthConsumer getOAuthConsumer(java.lang.String gadgetKey,
+		java.lang.String serviceName) throws PortalException;
 
 	/**
 	* Returns a range of all the o auth consumers.
@@ -249,6 +248,11 @@ public interface OAuthConsumerLocalService extends BaseLocalService,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
+	public OAuthConsumer updateOAuthConsumer(long oAuthConsumerId,
+		java.lang.String consumerKey, java.lang.String consumerSecret,
+		java.lang.String keyType, java.lang.String keyName,
+		java.lang.String callbackURL) throws PortalException;
+
 	/**
 	* Updates the o auth consumer in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -257,9 +261,4 @@ public interface OAuthConsumerLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public OAuthConsumer updateOAuthConsumer(OAuthConsumer oAuthConsumer);
-
-	public OAuthConsumer updateOAuthConsumer(long oAuthConsumerId,
-		java.lang.String consumerKey, java.lang.String consumerSecret,
-		java.lang.String keyType, java.lang.String keyName,
-		java.lang.String callbackURL) throws PortalException;
 }

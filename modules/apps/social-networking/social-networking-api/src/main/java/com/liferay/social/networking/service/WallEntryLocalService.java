@@ -61,6 +61,9 @@ public interface WallEntryLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WallEntryLocalServiceUtil} to access the wall entry local service. Add custom service methods to {@link com.liferay.social.networking.service.impl.WallEntryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public WallEntry addWallEntry(long groupId, long userId,
+		java.lang.String comments, ThemeDisplay themeDisplay)
+		throws PortalException;
 
 	/**
 	* Adds the wall entry to the database. Also notifies the appropriate model listeners.
@@ -70,10 +73,6 @@ public interface WallEntryLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public WallEntry addWallEntry(WallEntry wallEntry);
-
-	public WallEntry addWallEntry(long groupId, long userId,
-		java.lang.String comments, ThemeDisplay themeDisplay)
-		throws PortalException;
 
 	/**
 	* Creates a new wall entry with the primary key. Does not add the wall entry to the database.
@@ -93,17 +92,6 @@ public interface WallEntryLocalService extends BaseLocalService,
 	public void deleteWallEntries(long groupId) throws PortalException;
 
 	/**
-	* Deletes the wall entry from the database. Also notifies the appropriate model listeners.
-	*
-	* @param wallEntry the wall entry
-	* @return the wall entry that was removed
-	* @throws PortalException
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public WallEntry deleteWallEntry(WallEntry wallEntry)
-		throws PortalException;
-
-	/**
 	* Deletes the wall entry with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param wallEntryId the primary key of the wall entry
@@ -112,6 +100,17 @@ public interface WallEntryLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public WallEntry deleteWallEntry(long wallEntryId)
+		throws PortalException;
+
+	/**
+	* Deletes the wall entry from the database. Also notifies the appropriate model listeners.
+	*
+	* @param wallEntry the wall entry
+	* @return the wall entry that was removed
+	* @throws PortalException
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public WallEntry deleteWallEntry(WallEntry wallEntry)
 		throws PortalException;
 
 	public DynamicQuery dynamicQuery();
@@ -240,6 +239,9 @@ public interface WallEntryLocalService extends BaseLocalService,
 	public int getWallToWallEntriesCount(long groupId1, long groupId2,
 		long userId1, long userId2);
 
+	public WallEntry updateWallEntry(long wallEntryId, java.lang.String comments)
+		throws PortalException;
+
 	/**
 	* Updates the wall entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -248,7 +250,4 @@ public interface WallEntryLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public WallEntry updateWallEntry(WallEntry wallEntry);
-
-	public WallEntry updateWallEntry(long wallEntryId, java.lang.String comments)
-		throws PortalException;
 }

@@ -467,30 +467,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	/**
 	* Returns the localized description of this layout in the language. Uses the default language if no localization exists for the requested language.
 	*
-	* @param languageId the ID of the language
-	* @return the localized description of this layout
-	*/
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId) {
-		return _layout.getDescription(languageId);
-	}
-
-	/**
-	* Returns the localized description of this layout in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized description of this layout
-	*/
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId,
-		boolean useDefault) {
-		return _layout.getDescription(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized description of this layout in the language. Uses the default language if no localization exists for the requested language.
-	*
 	* @param locale the locale of the language
 	* @return the localized description of this layout
 	*/
@@ -510,6 +486,30 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	public java.lang.String getDescription(java.util.Locale locale,
 		boolean useDefault) {
 		return _layout.getDescription(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized description of this layout in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized description of this layout
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId) {
+		return _layout.getDescription(languageId);
+	}
+
+	/**
+	* Returns the localized description of this layout in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized description of this layout
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId,
+		boolean useDefault) {
+		return _layout.getDescription(languageId, useDefault);
 	}
 
 	@Override
@@ -608,17 +608,13 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	}
 
 	/**
-	* Returns the current layout's HTML title for the given locale language ID,
-	* or the current layout's name if no HTML title is configured.
+	* Returns the hidden of this layout.
 	*
-	* @param localeLanguageId the locale that the HTML title should be
-	retrieved for
-	* @return the current layout's HTML title for the given locale language ID,
-	or the current layout's name if no HTML title is configured
+	* @return the hidden of this layout
 	*/
 	@Override
-	public java.lang.String getHTMLTitle(java.lang.String localeLanguageId) {
-		return _layout.getHTMLTitle(localeLanguageId);
+	public boolean getHidden() {
+		return _layout.getHidden();
 	}
 
 	/**
@@ -637,13 +633,17 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	}
 
 	/**
-	* Returns the hidden of this layout.
+	* Returns the current layout's HTML title for the given locale language ID,
+	* or the current layout's name if no HTML title is configured.
 	*
-	* @return the hidden of this layout
+	* @param localeLanguageId the locale that the HTML title should be
+	retrieved for
+	* @return the current layout's HTML title for the given locale language ID,
+	or the current layout's name if no HTML title is configured
 	*/
 	@Override
-	public boolean getHidden() {
-		return _layout.getHidden();
+	public java.lang.String getHTMLTitle(java.lang.String localeLanguageId) {
+		return _layout.getHTMLTitle(localeLanguageId);
 	}
 
 	/**
@@ -680,30 +680,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	/**
 	* Returns the localized keywords of this layout in the language. Uses the default language if no localization exists for the requested language.
 	*
-	* @param languageId the ID of the language
-	* @return the localized keywords of this layout
-	*/
-	@Override
-	public java.lang.String getKeywords(java.lang.String languageId) {
-		return _layout.getKeywords(languageId);
-	}
-
-	/**
-	* Returns the localized keywords of this layout in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized keywords of this layout
-	*/
-	@Override
-	public java.lang.String getKeywords(java.lang.String languageId,
-		boolean useDefault) {
-		return _layout.getKeywords(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized keywords of this layout in the language. Uses the default language if no localization exists for the requested language.
-	*
 	* @param locale the locale of the language
 	* @return the localized keywords of this layout
 	*/
@@ -723,6 +699,30 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	public java.lang.String getKeywords(java.util.Locale locale,
 		boolean useDefault) {
 		return _layout.getKeywords(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized keywords of this layout in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized keywords of this layout
+	*/
+	@Override
+	public java.lang.String getKeywords(java.lang.String languageId) {
+		return _layout.getKeywords(languageId);
+	}
+
+	/**
+	* Returns the localized keywords of this layout in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized keywords of this layout
+	*/
+	@Override
+	public java.lang.String getKeywords(java.lang.String languageId,
+		boolean useDefault) {
+		return _layout.getKeywords(languageId, useDefault);
 	}
 
 	@Override
@@ -849,6 +849,29 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	/**
 	* Returns the localized name of this layout in the language. Uses the default language if no localization exists for the requested language.
 	*
+	* @param locale the locale of the language
+	* @return the localized name of this layout
+	*/
+	@Override
+	public java.lang.String getName(java.util.Locale locale) {
+		return _layout.getName(locale);
+	}
+
+	/**
+	* Returns the localized name of this layout in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized name of this layout. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
+		return _layout.getName(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized name of this layout in the language. Uses the default language if no localization exists for the requested language.
+	*
 	* @param languageId the ID of the language
 	* @return the localized name of this layout
 	*/
@@ -868,29 +891,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	public java.lang.String getName(java.lang.String languageId,
 		boolean useDefault) {
 		return _layout.getName(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized name of this layout in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized name of this layout
-	*/
-	@Override
-	public java.lang.String getName(java.util.Locale locale) {
-		return _layout.getName(locale);
-	}
-
-	/**
-	* Returns the localized name of this layout in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized name of this layout. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
-		return _layout.getName(locale, useDefault);
 	}
 
 	@Override
@@ -1014,30 +1014,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	/**
 	* Returns the localized robots of this layout in the language. Uses the default language if no localization exists for the requested language.
 	*
-	* @param languageId the ID of the language
-	* @return the localized robots of this layout
-	*/
-	@Override
-	public java.lang.String getRobots(java.lang.String languageId) {
-		return _layout.getRobots(languageId);
-	}
-
-	/**
-	* Returns the localized robots of this layout in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized robots of this layout
-	*/
-	@Override
-	public java.lang.String getRobots(java.lang.String languageId,
-		boolean useDefault) {
-		return _layout.getRobots(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized robots of this layout in the language. Uses the default language if no localization exists for the requested language.
-	*
 	* @param locale the locale of the language
 	* @return the localized robots of this layout
 	*/
@@ -1057,6 +1033,30 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	public java.lang.String getRobots(java.util.Locale locale,
 		boolean useDefault) {
 		return _layout.getRobots(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized robots of this layout in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized robots of this layout
+	*/
+	@Override
+	public java.lang.String getRobots(java.lang.String languageId) {
+		return _layout.getRobots(languageId);
+	}
+
+	/**
+	* Returns the localized robots of this layout in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized robots of this layout
+	*/
+	@Override
+	public java.lang.String getRobots(java.lang.String languageId,
+		boolean useDefault) {
+		return _layout.getRobots(languageId, useDefault);
 	}
 
 	@Override
@@ -1148,6 +1148,29 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	/**
 	* Returns the localized title of this layout in the language. Uses the default language if no localization exists for the requested language.
 	*
+	* @param locale the locale of the language
+	* @return the localized title of this layout
+	*/
+	@Override
+	public java.lang.String getTitle(java.util.Locale locale) {
+		return _layout.getTitle(locale);
+	}
+
+	/**
+	* Returns the localized title of this layout in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized title of this layout. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
+		return _layout.getTitle(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized title of this layout in the language. Uses the default language if no localization exists for the requested language.
+	*
 	* @param languageId the ID of the language
 	* @return the localized title of this layout
 	*/
@@ -1167,29 +1190,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	public java.lang.String getTitle(java.lang.String languageId,
 		boolean useDefault) {
 		return _layout.getTitle(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized title of this layout in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized title of this layout
-	*/
-	@Override
-	public java.lang.String getTitle(java.util.Locale locale) {
-		return _layout.getTitle(locale);
-	}
-
-	/**
-	* Returns the localized title of this layout in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized title of this layout. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
-		return _layout.getTitle(locale, useDefault);
 	}
 
 	@Override
@@ -1316,6 +1316,11 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	}
 
 	@Override
+	public int hashCode() {
+		return _layout.hashCode();
+	}
+
+	@Override
 	public boolean hasScopeGroup()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layout.hasScopeGroup();
@@ -1324,11 +1329,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	@Override
 	public boolean hasSetModifiedDate() {
 		return _layout.hasSetModifiedDate();
-	}
-
-	@Override
-	public int hashCode() {
-		return _layout.hashCode();
 	}
 
 	@Override
@@ -1696,13 +1696,13 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_layout.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
+		_layout.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_layout.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_layout.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

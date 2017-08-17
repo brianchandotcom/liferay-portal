@@ -40,6 +40,13 @@ public class PortletItemLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.PortletItemLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portal.kernel.model.PortletItem addPortletItem(
+		long userId, long groupId, java.lang.String name,
+		java.lang.String portletId, java.lang.String className)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addPortletItem(userId, groupId, name, portletId, className);
+	}
 
 	/**
 	* Adds the portlet item to the database. Also notifies the appropriate model listeners.
@@ -50,14 +57,6 @@ public class PortletItemLocalServiceUtil {
 	public static com.liferay.portal.kernel.model.PortletItem addPortletItem(
 		com.liferay.portal.kernel.model.PortletItem portletItem) {
 		return getService().addPortletItem(portletItem);
-	}
-
-	public static com.liferay.portal.kernel.model.PortletItem addPortletItem(
-		long userId, long groupId, java.lang.String name,
-		java.lang.String portletId, java.lang.String className)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addPortletItem(userId, groupId, name, portletId, className);
 	}
 
 	/**
@@ -81,17 +80,6 @@ public class PortletItemLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the portlet item from the database. Also notifies the appropriate model listeners.
-	*
-	* @param portletItem the portlet item
-	* @return the portlet item that was removed
-	*/
-	public static com.liferay.portal.kernel.model.PortletItem deletePortletItem(
-		com.liferay.portal.kernel.model.PortletItem portletItem) {
-		return getService().deletePortletItem(portletItem);
-	}
-
-	/**
 	* Deletes the portlet item with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param portletItemId the primary key of the portlet item
@@ -102,6 +90,17 @@ public class PortletItemLocalServiceUtil {
 		long portletItemId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deletePortletItem(portletItemId);
+	}
+
+	/**
+	* Deletes the portlet item from the database. Also notifies the appropriate model listeners.
+	*
+	* @param portletItem the portlet item
+	* @return the portlet item that was removed
+	*/
+	public static com.liferay.portal.kernel.model.PortletItem deletePortletItem(
+		com.liferay.portal.kernel.model.PortletItem portletItem) {
+		return getService().deletePortletItem(portletItem);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -265,6 +264,15 @@ public class PortletItemLocalServiceUtil {
 		return getService().getPortletItemsCount();
 	}
 
+	public static com.liferay.portal.kernel.model.PortletItem updatePortletItem(
+		long userId, long groupId, java.lang.String name,
+		java.lang.String portletId, java.lang.String className)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updatePortletItem(userId, groupId, name, portletId,
+			className);
+	}
+
 	/**
 	* Updates the portlet item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -274,15 +282,6 @@ public class PortletItemLocalServiceUtil {
 	public static com.liferay.portal.kernel.model.PortletItem updatePortletItem(
 		com.liferay.portal.kernel.model.PortletItem portletItem) {
 		return getService().updatePortletItem(portletItem);
-	}
-
-	public static com.liferay.portal.kernel.model.PortletItem updatePortletItem(
-		long userId, long groupId, java.lang.String name,
-		java.lang.String portletId, java.lang.String className)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updatePortletItem(userId, groupId, name, portletId,
-			className);
 	}
 
 	public static PortletItemLocalService getService() {

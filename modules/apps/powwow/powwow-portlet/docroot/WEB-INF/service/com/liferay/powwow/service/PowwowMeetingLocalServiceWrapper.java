@@ -34,18 +34,6 @@ public class PowwowMeetingLocalServiceWrapper
 		_powwowMeetingLocalService = powwowMeetingLocalService;
 	}
 
-	/**
-	* Adds the powwow meeting to the database. Also notifies the appropriate model listeners.
-	*
-	* @param powwowMeeting the powwow meeting
-	* @return the powwow meeting that was added
-	*/
-	@Override
-	public com.liferay.powwow.model.PowwowMeeting addPowwowMeeting(
-		com.liferay.powwow.model.PowwowMeeting powwowMeeting) {
-		return _powwowMeetingLocalService.addPowwowMeeting(powwowMeeting);
-	}
-
 	@Override
 	public com.liferay.powwow.model.PowwowMeeting addPowwowMeeting(
 		long userId, long groupId, long powwowServerId, java.lang.String name,
@@ -59,6 +47,18 @@ public class PowwowMeetingLocalServiceWrapper
 			powwowServerId, name, description, providerType,
 			providerTypeMetadataMap, languageId, calendarBookingId, status,
 			powwowParticipants, serviceContext);
+	}
+
+	/**
+	* Adds the powwow meeting to the database. Also notifies the appropriate model listeners.
+	*
+	* @param powwowMeeting the powwow meeting
+	* @return the powwow meeting that was added
+	*/
+	@Override
+	public com.liferay.powwow.model.PowwowMeeting addPowwowMeeting(
+		com.liferay.powwow.model.PowwowMeeting powwowMeeting) {
+		return _powwowMeetingLocalService.addPowwowMeeting(powwowMeeting);
 	}
 
 	@Override
@@ -90,20 +90,6 @@ public class PowwowMeetingLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the powwow meeting from the database. Also notifies the appropriate model listeners.
-	*
-	* @param powwowMeeting the powwow meeting
-	* @return the powwow meeting that was removed
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.powwow.model.PowwowMeeting deletePowwowMeeting(
-		com.liferay.powwow.model.PowwowMeeting powwowMeeting)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _powwowMeetingLocalService.deletePowwowMeeting(powwowMeeting);
-	}
-
-	/**
 	* Deletes the powwow meeting with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param powwowMeetingId the primary key of the powwow meeting
@@ -115,6 +101,20 @@ public class PowwowMeetingLocalServiceWrapper
 		long powwowMeetingId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _powwowMeetingLocalService.deletePowwowMeeting(powwowMeetingId);
+	}
+
+	/**
+	* Deletes the powwow meeting from the database. Also notifies the appropriate model listeners.
+	*
+	* @param powwowMeeting the powwow meeting
+	* @return the powwow meeting that was removed
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.powwow.model.PowwowMeeting deletePowwowMeeting(
+		com.liferay.powwow.model.PowwowMeeting powwowMeeting)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _powwowMeetingLocalService.deletePowwowMeeting(powwowMeeting);
 	}
 
 	@Override
@@ -347,18 +347,6 @@ public class PowwowMeetingLocalServiceWrapper
 			arguments);
 	}
 
-	/**
-	* Updates the powwow meeting in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param powwowMeeting the powwow meeting
-	* @return the powwow meeting that was updated
-	*/
-	@Override
-	public com.liferay.powwow.model.PowwowMeeting updatePowwowMeeting(
-		com.liferay.powwow.model.PowwowMeeting powwowMeeting) {
-		return _powwowMeetingLocalService.updatePowwowMeeting(powwowMeeting);
-	}
-
 	@Override
 	public com.liferay.powwow.model.PowwowMeeting updatePowwowMeeting(
 		long powwowMeetingId, long powwowServerId, java.lang.String name,
@@ -372,6 +360,18 @@ public class PowwowMeetingLocalServiceWrapper
 			powwowServerId, name, description, providerType,
 			providerTypeMetadataMap, languageId, calendarBookingId, status,
 			powwowParticipants, serviceContext);
+	}
+
+	/**
+	* Updates the powwow meeting in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param powwowMeeting the powwow meeting
+	* @return the powwow meeting that was updated
+	*/
+	@Override
+	public com.liferay.powwow.model.PowwowMeeting updatePowwowMeeting(
+		com.liferay.powwow.model.PowwowMeeting powwowMeeting) {
+		return _powwowMeetingLocalService.updatePowwowMeeting(powwowMeeting);
 	}
 
 	@Override

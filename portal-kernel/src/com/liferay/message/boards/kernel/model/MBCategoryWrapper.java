@@ -593,6 +593,26 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	}
 
 	/**
+	* Returns <code>true</code> if this message boards category is inactive.
+	*
+	* @return <code>true</code> if this message boards category is inactive; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isInactive() {
+		return _mbCategory.isInactive();
+	}
+
+	/**
+	* Returns <code>true</code> if this message boards category is incomplete.
+	*
+	* @return <code>true</code> if this message boards category is incomplete; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isIncomplete() {
+		return _mbCategory.isIncomplete();
+	}
+
+	/**
 	* Returns <code>true</code> if this message boards category is in the Recycle Bin.
 	*
 	* @return <code>true</code> if this message boards category is in the Recycle Bin; <code>false</code> otherwise
@@ -620,26 +640,6 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	@Override
 	public boolean isInTrashImplicitly() {
 		return _mbCategory.isInTrashImplicitly();
-	}
-
-	/**
-	* Returns <code>true</code> if this message boards category is inactive.
-	*
-	* @return <code>true</code> if this message boards category is inactive; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isInactive() {
-		return _mbCategory.isInactive();
-	}
-
-	/**
-	* Returns <code>true</code> if this message boards category is incomplete.
-	*
-	* @return <code>true</code> if this message boards category is incomplete; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isIncomplete() {
-		return _mbCategory.isIncomplete();
 	}
 
 	@Override
@@ -743,14 +743,14 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_mbCategory.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_mbCategory.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_mbCategory.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

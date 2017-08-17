@@ -214,30 +214,6 @@ public class PollsChoiceWrapper implements PollsChoice,
 	/**
 	* Returns the localized description of this polls choice in the language. Uses the default language if no localization exists for the requested language.
 	*
-	* @param languageId the ID of the language
-	* @return the localized description of this polls choice
-	*/
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId) {
-		return _pollsChoice.getDescription(languageId);
-	}
-
-	/**
-	* Returns the localized description of this polls choice in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized description of this polls choice
-	*/
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId,
-		boolean useDefault) {
-		return _pollsChoice.getDescription(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized description of this polls choice in the language. Uses the default language if no localization exists for the requested language.
-	*
 	* @param locale the locale of the language
 	* @return the localized description of this polls choice
 	*/
@@ -257,6 +233,30 @@ public class PollsChoiceWrapper implements PollsChoice,
 	public java.lang.String getDescription(java.util.Locale locale,
 		boolean useDefault) {
 		return _pollsChoice.getDescription(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized description of this polls choice in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized description of this polls choice
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId) {
+		return _pollsChoice.getDescription(languageId);
+	}
+
+	/**
+	* Returns the localized description of this polls choice in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized description of this polls choice
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId,
+		boolean useDefault) {
+		return _pollsChoice.getDescription(languageId, useDefault);
 	}
 
 	@Override
@@ -532,14 +532,14 @@ public class PollsChoiceWrapper implements PollsChoice,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_pollsChoice.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_pollsChoice.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_pollsChoice.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

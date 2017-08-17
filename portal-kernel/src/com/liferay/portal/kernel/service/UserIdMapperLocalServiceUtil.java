@@ -73,17 +73,6 @@ public class UserIdMapperLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the user ID mapper from the database. Also notifies the appropriate model listeners.
-	*
-	* @param userIdMapper the user ID mapper
-	* @return the user ID mapper that was removed
-	*/
-	public static com.liferay.portal.kernel.model.UserIdMapper deleteUserIdMapper(
-		com.liferay.portal.kernel.model.UserIdMapper userIdMapper) {
-		return getService().deleteUserIdMapper(userIdMapper);
-	}
-
-	/**
 	* Deletes the user ID mapper with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param userIdMapperId the primary key of the user ID mapper
@@ -94,6 +83,17 @@ public class UserIdMapperLocalServiceUtil {
 		long userIdMapperId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteUserIdMapper(userIdMapperId);
+	}
+
+	/**
+	* Deletes the user ID mapper from the database. Also notifies the appropriate model listeners.
+	*
+	* @param userIdMapper the user ID mapper
+	* @return the user ID mapper that was removed
+	*/
+	public static com.liferay.portal.kernel.model.UserIdMapper deleteUserIdMapper(
+		com.liferay.portal.kernel.model.UserIdMapper userIdMapper) {
+		return getService().deleteUserIdMapper(userIdMapper);
 	}
 
 	public static void deleteUserIdMappers(long userId) {
@@ -261,6 +261,13 @@ public class UserIdMapperLocalServiceUtil {
 		return getService().getUserIdMappersCount();
 	}
 
+	public static com.liferay.portal.kernel.model.UserIdMapper updateUserIdMapper(
+		long userId, java.lang.String type, java.lang.String description,
+		java.lang.String externalUserId) {
+		return getService()
+				   .updateUserIdMapper(userId, type, description, externalUserId);
+	}
+
 	/**
 	* Updates the user ID mapper in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -270,13 +277,6 @@ public class UserIdMapperLocalServiceUtil {
 	public static com.liferay.portal.kernel.model.UserIdMapper updateUserIdMapper(
 		com.liferay.portal.kernel.model.UserIdMapper userIdMapper) {
 		return getService().updateUserIdMapper(userIdMapper);
-	}
-
-	public static com.liferay.portal.kernel.model.UserIdMapper updateUserIdMapper(
-		long userId, java.lang.String type, java.lang.String description,
-		java.lang.String externalUserId) {
-		return getService()
-				   .updateUserIdMapper(userId, type, description, externalUserId);
 	}
 
 	public static UserIdMapperLocalService getService() {

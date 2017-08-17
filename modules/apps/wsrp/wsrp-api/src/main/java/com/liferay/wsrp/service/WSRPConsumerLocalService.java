@@ -67,6 +67,11 @@ public interface WSRPConsumerLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WSRPConsumerLocalServiceUtil} to access the wsrp consumer local service. Add custom service methods to {@link com.liferay.wsrp.service.impl.WSRPConsumerLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public WSRPConsumer addWSRPConsumer(long companyId,
+		java.lang.String adminPortletId, java.lang.String name,
+		java.lang.String url, java.lang.String forwardCookies,
+		java.lang.String forwardHeaders, java.lang.String markupCharacterSets,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Adds the wsrp consumer to the database. Also notifies the appropriate model listeners.
@@ -76,12 +81,6 @@ public interface WSRPConsumerLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public WSRPConsumer addWSRPConsumer(WSRPConsumer wsrpConsumer);
-
-	public WSRPConsumer addWSRPConsumer(long companyId,
-		java.lang.String adminPortletId, java.lang.String name,
-		java.lang.String url, java.lang.String forwardCookies,
-		java.lang.String forwardHeaders, java.lang.String markupCharacterSets,
-		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new wsrp consumer with the primary key. Does not add the wsrp consumer to the database.
@@ -99,6 +98,17 @@ public interface WSRPConsumerLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
+	* Deletes the wsrp consumer with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param wsrpConsumerId the primary key of the wsrp consumer
+	* @return the wsrp consumer that was removed
+	* @throws PortalException if a wsrp consumer with the primary key could not be found
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public WSRPConsumer deleteWSRPConsumer(long wsrpConsumerId)
+		throws PortalException;
+
+	/**
 	* Deletes the wsrp consumer from the database. Also notifies the appropriate model listeners.
 	*
 	* @param wsrpConsumer the wsrp consumer
@@ -108,17 +118,6 @@ public interface WSRPConsumerLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
 	public WSRPConsumer deleteWSRPConsumer(WSRPConsumer wsrpConsumer)
-		throws PortalException;
-
-	/**
-	* Deletes the wsrp consumer with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param wsrpConsumerId the primary key of the wsrp consumer
-	* @return the wsrp consumer that was removed
-	* @throws PortalException if a wsrp consumer with the primary key could not be found
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public WSRPConsumer deleteWSRPConsumer(long wsrpConsumerId)
 		throws PortalException;
 
 	public void deleteWSRPConsumers(long companyId) throws PortalException;
@@ -218,10 +217,6 @@ public interface WSRPConsumerLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WSRPConsumer getWSRPConsumer(java.lang.String wsrpConsumerUuid)
-		throws PortalException;
-
 	/**
 	* Returns the wsrp consumer with the primary key.
 	*
@@ -231,6 +226,10 @@ public interface WSRPConsumerLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WSRPConsumer getWSRPConsumer(long wsrpConsumerId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WSRPConsumer getWSRPConsumer(java.lang.String wsrpConsumerUuid)
 		throws PortalException;
 
 	/**
@@ -285,6 +284,12 @@ public interface WSRPConsumerLocalService extends BaseLocalService,
 	public void updateServiceDescription(long wsrpConsumerId)
 		throws PortalException;
 
+	public WSRPConsumer updateWSRPConsumer(long wsrpConsumerId,
+		java.lang.String adminPortletId, java.lang.String name,
+		java.lang.String url, java.lang.String forwardCookies,
+		java.lang.String forwardHeaders, java.lang.String markupCharacterSets)
+		throws PortalException;
+
 	/**
 	* Updates the wsrp consumer in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -293,10 +298,4 @@ public interface WSRPConsumerLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public WSRPConsumer updateWSRPConsumer(WSRPConsumer wsrpConsumer);
-
-	public WSRPConsumer updateWSRPConsumer(long wsrpConsumerId,
-		java.lang.String adminPortletId, java.lang.String name,
-		java.lang.String url, java.lang.String forwardCookies,
-		java.lang.String forwardHeaders, java.lang.String markupCharacterSets)
-		throws PortalException;
 }

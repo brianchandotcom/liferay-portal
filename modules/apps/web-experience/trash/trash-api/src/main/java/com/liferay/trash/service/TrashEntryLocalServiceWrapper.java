@@ -34,18 +34,6 @@ public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 	}
 
 	/**
-	* Adds the trash entry to the database. Also notifies the appropriate model listeners.
-	*
-	* @param trashEntry the trash entry
-	* @return the trash entry that was added
-	*/
-	@Override
-	public com.liferay.trash.model.TrashEntry addTrashEntry(
-		com.liferay.trash.model.TrashEntry trashEntry) {
-		return _trashEntryLocalService.addTrashEntry(trashEntry);
-	}
-
-	/**
 	* Moves an entry to trash.
 	*
 	* @param userId the primary key of the user removing the entity
@@ -75,6 +63,18 @@ public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 			statusOVPs, typeSettingsProperties);
 	}
 
+	/**
+	* Adds the trash entry to the database. Also notifies the appropriate model listeners.
+	*
+	* @param trashEntry the trash entry
+	* @return the trash entry that was added
+	*/
+	@Override
+	public com.liferay.trash.model.TrashEntry addTrashEntry(
+		com.liferay.trash.model.TrashEntry trashEntry) {
+		return _trashEntryLocalService.addTrashEntry(trashEntry);
+	}
+
 	@Override
 	public void checkEntries()
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -97,10 +97,15 @@ public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 		_trashEntryLocalService.deleteEntries(groupId);
 	}
 
+	/**
+	* Deletes the trash entry with the primary key.
+	*
+	* @param entryId the primary key of the trash entry
+	* @return the trash entry with the primary key
+	*/
 	@Override
-	public com.liferay.trash.model.TrashEntry deleteEntry(
-		com.liferay.trash.model.TrashEntry trashEntry) {
-		return _trashEntryLocalService.deleteEntry(trashEntry);
+	public com.liferay.trash.model.TrashEntry deleteEntry(long entryId) {
+		return _trashEntryLocalService.deleteEntry(entryId);
 	}
 
 	/**
@@ -116,15 +121,10 @@ public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 		return _trashEntryLocalService.deleteEntry(className, classPK);
 	}
 
-	/**
-	* Deletes the trash entry with the primary key.
-	*
-	* @param entryId the primary key of the trash entry
-	* @return the trash entry with the primary key
-	*/
 	@Override
-	public com.liferay.trash.model.TrashEntry deleteEntry(long entryId) {
-		return _trashEntryLocalService.deleteEntry(entryId);
+	public com.liferay.trash.model.TrashEntry deleteEntry(
+		com.liferay.trash.model.TrashEntry trashEntry) {
+		return _trashEntryLocalService.deleteEntry(trashEntry);
 	}
 
 	/**
@@ -138,18 +138,6 @@ public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 	}
 
 	/**
-	* Deletes the trash entry from the database. Also notifies the appropriate model listeners.
-	*
-	* @param trashEntry the trash entry
-	* @return the trash entry that was removed
-	*/
-	@Override
-	public com.liferay.trash.model.TrashEntry deleteTrashEntry(
-		com.liferay.trash.model.TrashEntry trashEntry) {
-		return _trashEntryLocalService.deleteTrashEntry(trashEntry);
-	}
-
-	/**
 	* Deletes the trash entry with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param entryId the primary key of the trash entry
@@ -160,6 +148,18 @@ public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 	public com.liferay.trash.model.TrashEntry deleteTrashEntry(long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _trashEntryLocalService.deleteTrashEntry(entryId);
+	}
+
+	/**
+	* Deletes the trash entry from the database. Also notifies the appropriate model listeners.
+	*
+	* @param trashEntry the trash entry
+	* @return the trash entry that was removed
+	*/
+	@Override
+	public com.liferay.trash.model.TrashEntry deleteTrashEntry(
+		com.liferay.trash.model.TrashEntry trashEntry) {
+		return _trashEntryLocalService.deleteTrashEntry(trashEntry);
 	}
 
 	@Override
@@ -248,6 +248,17 @@ public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 	}
 
 	/**
+	* Returns the trash entry with the primary key.
+	*
+	* @param entryId the primary key of the entry
+	* @return the trash entry with the primary key
+	*/
+	@Override
+	public com.liferay.trash.model.TrashEntry fetchEntry(long entryId) {
+		return _trashEntryLocalService.fetchEntry(entryId);
+	}
+
+	/**
 	* Returns the trash entry with the entity class name and primary key.
 	*
 	* @param className the class name of the entity
@@ -258,17 +269,6 @@ public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 	public com.liferay.trash.model.TrashEntry fetchEntry(
 		java.lang.String className, long classPK) {
 		return _trashEntryLocalService.fetchEntry(className, classPK);
-	}
-
-	/**
-	* Returns the trash entry with the primary key.
-	*
-	* @param entryId the primary key of the entry
-	* @return the trash entry with the primary key
-	*/
-	@Override
-	public com.liferay.trash.model.TrashEntry fetchEntry(long entryId) {
-		return _trashEntryLocalService.fetchEntry(entryId);
 	}
 
 	@Override
@@ -345,6 +345,18 @@ public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 	}
 
 	/**
+	* Returns the trash entry with the primary key.
+	*
+	* @param entryId the primary key of the trash entry
+	* @return the trash entry with the primary key
+	*/
+	@Override
+	public com.liferay.trash.model.TrashEntry getEntry(long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _trashEntryLocalService.getEntry(entryId);
+	}
+
+	/**
 	* Returns the entry with the entity class name and primary key.
 	*
 	* @param className the class name of the entity
@@ -356,18 +368,6 @@ public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _trashEntryLocalService.getEntry(className, classPK);
-	}
-
-	/**
-	* Returns the trash entry with the primary key.
-	*
-	* @param entryId the primary key of the trash entry
-	* @return the trash entry with the primary key
-	*/
-	@Override
-	public com.liferay.trash.model.TrashEntry getEntry(long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _trashEntryLocalService.getEntry(entryId);
 	}
 
 	@Override

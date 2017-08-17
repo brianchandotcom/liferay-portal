@@ -54,6 +54,16 @@ public class WeDeployAuthTokenLocalServiceWrapper
 			redirectURI, clientId, serviceContext);
 	}
 
+	@Override
+	public com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken addWeDeployAuthToken(
+		long userId, java.lang.String clientId, java.lang.String token,
+		int type,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _weDeployAuthTokenLocalService.addWeDeployAuthToken(userId,
+			clientId, token, type, serviceContext);
+	}
+
 	/**
 	* Adds the we deploy auth token to the database. Also notifies the appropriate model listeners.
 	*
@@ -64,16 +74,6 @@ public class WeDeployAuthTokenLocalServiceWrapper
 	public com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken addWeDeployAuthToken(
 		com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken weDeployAuthToken) {
 		return _weDeployAuthTokenLocalService.addWeDeployAuthToken(weDeployAuthToken);
-	}
-
-	@Override
-	public com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken addWeDeployAuthToken(
-		long userId, java.lang.String clientId, java.lang.String token,
-		int type,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _weDeployAuthTokenLocalService.addWeDeployAuthToken(userId,
-			clientId, token, type, serviceContext);
 	}
 
 	/**
@@ -99,18 +99,6 @@ public class WeDeployAuthTokenLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the we deploy auth token from the database. Also notifies the appropriate model listeners.
-	*
-	* @param weDeployAuthToken the we deploy auth token
-	* @return the we deploy auth token that was removed
-	*/
-	@Override
-	public com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken deleteWeDeployAuthToken(
-		com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken weDeployAuthToken) {
-		return _weDeployAuthTokenLocalService.deleteWeDeployAuthToken(weDeployAuthToken);
-	}
-
-	/**
 	* Deletes the we deploy auth token with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param weDeployAuthTokenId the primary key of the we deploy auth token
@@ -122,6 +110,18 @@ public class WeDeployAuthTokenLocalServiceWrapper
 		long weDeployAuthTokenId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _weDeployAuthTokenLocalService.deleteWeDeployAuthToken(weDeployAuthTokenId);
+	}
+
+	/**
+	* Deletes the we deploy auth token from the database. Also notifies the appropriate model listeners.
+	*
+	* @param weDeployAuthToken the we deploy auth token
+	* @return the we deploy auth token that was removed
+	*/
+	@Override
+	public com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken deleteWeDeployAuthToken(
+		com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken weDeployAuthToken) {
+		return _weDeployAuthTokenLocalService.deleteWeDeployAuthToken(weDeployAuthToken);
 	}
 
 	@Override
@@ -243,13 +243,6 @@ public class WeDeployAuthTokenLocalServiceWrapper
 		return _weDeployAuthTokenLocalService.getPersistedModel(primaryKeyObj);
 	}
 
-	@Override
-	public com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken getWeDeployAuthToken(
-		java.lang.String token, int type)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _weDeployAuthTokenLocalService.getWeDeployAuthToken(token, type);
-	}
-
 	/**
 	* Returns the we deploy auth token with the primary key.
 	*
@@ -262,6 +255,13 @@ public class WeDeployAuthTokenLocalServiceWrapper
 		long weDeployAuthTokenId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _weDeployAuthTokenLocalService.getWeDeployAuthToken(weDeployAuthTokenId);
+	}
+
+	@Override
+	public com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken getWeDeployAuthToken(
+		java.lang.String token, int type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _weDeployAuthTokenLocalService.getWeDeployAuthToken(token, type);
 	}
 
 	/**

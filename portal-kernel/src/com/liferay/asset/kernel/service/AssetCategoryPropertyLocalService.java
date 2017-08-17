@@ -262,11 +262,11 @@ public interface AssetCategoryPropertyLocalService extends BaseLocalService,
 	public AssetCategoryProperty updateAssetCategoryProperty(
 		AssetCategoryProperty assetCategoryProperty);
 
-	public AssetCategoryProperty updateCategoryProperty(
+	public AssetCategoryProperty updateCategoryProperty(long userId,
 		long categoryPropertyId, java.lang.String key, java.lang.String value)
 		throws PortalException;
 
-	public AssetCategoryProperty updateCategoryProperty(long userId,
+	public AssetCategoryProperty updateCategoryProperty(
 		long categoryPropertyId, java.lang.String key, java.lang.String value)
 		throws PortalException;
 }

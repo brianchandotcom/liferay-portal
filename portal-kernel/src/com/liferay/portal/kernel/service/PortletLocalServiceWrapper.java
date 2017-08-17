@@ -106,18 +106,6 @@ public class PortletLocalServiceWrapper implements PortletLocalService,
 	}
 
 	/**
-	* Deletes the portlet from the database. Also notifies the appropriate model listeners.
-	*
-	* @param portlet the portlet
-	* @return the portlet that was removed
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.Portlet deletePortlet(
-		com.liferay.portal.kernel.model.Portlet portlet) {
-		return _portletLocalService.deletePortlet(portlet);
-	}
-
-	/**
 	* Deletes the portlet with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param id the primary key of the portlet
@@ -134,6 +122,18 @@ public class PortletLocalServiceWrapper implements PortletLocalService,
 	public void deletePortlet(long companyId, java.lang.String portletId,
 		long plid) throws com.liferay.portal.kernel.exception.PortalException {
 		_portletLocalService.deletePortlet(companyId, portletId, plid);
+	}
+
+	/**
+	* Deletes the portlet from the database. Also notifies the appropriate model listeners.
+	*
+	* @param portlet the portlet
+	* @return the portlet that was removed
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.Portlet deletePortlet(
+		com.liferay.portal.kernel.model.Portlet portlet) {
+		return _portletLocalService.deletePortlet(portlet);
 	}
 
 	@Override
@@ -348,14 +348,14 @@ public class PortletLocalServiceWrapper implements PortletLocalService,
 
 	@Override
 	public com.liferay.portal.kernel.model.Portlet getPortletById(
-		java.lang.String portletId) {
-		return _portletLocalService.getPortletById(portletId);
+		long companyId, java.lang.String portletId) {
+		return _portletLocalService.getPortletById(companyId, portletId);
 	}
 
 	@Override
 	public com.liferay.portal.kernel.model.Portlet getPortletById(
-		long companyId, java.lang.String portletId) {
-		return _portletLocalService.getPortletById(companyId, portletId);
+		java.lang.String portletId) {
+		return _portletLocalService.getPortletById(portletId);
 	}
 
 	@Override
@@ -462,6 +462,14 @@ public class PortletLocalServiceWrapper implements PortletLocalService,
 		_portletLocalService.removeCompanyPortletsPool(companyId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.Portlet updatePortlet(
+		long companyId, java.lang.String portletId, java.lang.String roles,
+		boolean active) {
+		return _portletLocalService.updatePortlet(companyId, portletId, roles,
+			active);
+	}
+
 	/**
 	* Updates the portlet in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -472,14 +480,6 @@ public class PortletLocalServiceWrapper implements PortletLocalService,
 	public com.liferay.portal.kernel.model.Portlet updatePortlet(
 		com.liferay.portal.kernel.model.Portlet portlet) {
 		return _portletLocalService.updatePortlet(portlet);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Portlet updatePortlet(
-		long companyId, java.lang.String portletId, java.lang.String roles,
-		boolean active) {
-		return _portletLocalService.updatePortlet(companyId, portletId, roles,
-			active);
 	}
 
 	@Override

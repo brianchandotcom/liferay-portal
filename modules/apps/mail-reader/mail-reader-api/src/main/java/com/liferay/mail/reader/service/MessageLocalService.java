@@ -61,6 +61,11 @@ public interface MessageLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MessageLocalServiceUtil} to access the message local service. Add custom service methods to {@link com.liferay.mail.reader.service.impl.MessageLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public Message addMessage(long userId, long folderId,
+		java.lang.String sender, java.lang.String to, java.lang.String cc,
+		java.lang.String bcc, Date sentDate, java.lang.String subject,
+		java.lang.String body, java.lang.String flags, long remoteMessageId,
+		java.lang.String contentType) throws PortalException;
 
 	/**
 	* Adds the message to the database. Also notifies the appropriate model listeners.
@@ -71,12 +76,6 @@ public interface MessageLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public Message addMessage(Message message);
 
-	public Message addMessage(long userId, long folderId,
-		java.lang.String sender, java.lang.String to, java.lang.String cc,
-		java.lang.String bcc, Date sentDate, java.lang.String subject,
-		java.lang.String body, java.lang.String flags, long remoteMessageId,
-		java.lang.String contentType) throws PortalException;
-
 	/**
 	* Creates a new message with the primary key. Does not add the message to the database.
 	*
@@ -84,16 +83,6 @@ public interface MessageLocalService extends BaseLocalService,
 	* @return the new message
 	*/
 	public Message createMessage(long messageId);
-
-	/**
-	* Deletes the message from the database. Also notifies the appropriate model listeners.
-	*
-	* @param message the message
-	* @return the message that was removed
-	* @throws PortalException
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public Message deleteMessage(Message message) throws PortalException;
 
 	/**
 	* Deletes the message with the primary key from the database. Also notifies the appropriate model listeners.
@@ -104,6 +93,16 @@ public interface MessageLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public Message deleteMessage(long messageId) throws PortalException;
+
+	/**
+	* Deletes the message from the database. Also notifies the appropriate model listeners.
+	*
+	* @param message the message
+	* @return the message that was removed
+	* @throws PortalException
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public Message deleteMessage(Message message) throws PortalException;
 
 	public void deleteMessages(long folderId) throws PortalException;
 
@@ -262,6 +261,12 @@ public interface MessageLocalService extends BaseLocalService,
 	public Message updateFlag(long messageId, int flag, boolean value)
 		throws PortalException;
 
+	public Message updateMessage(long messageId, long folderId,
+		java.lang.String sender, java.lang.String to, java.lang.String cc,
+		java.lang.String bcc, Date sentDate, java.lang.String subject,
+		java.lang.String body, java.lang.String flags, long remoteMessageId)
+		throws PortalException;
+
 	/**
 	* Updates the message in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -270,10 +275,4 @@ public interface MessageLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public Message updateMessage(Message message);
-
-	public Message updateMessage(long messageId, long folderId,
-		java.lang.String sender, java.lang.String to, java.lang.String cc,
-		java.lang.String bcc, Date sentDate, java.lang.String subject,
-		java.lang.String body, java.lang.String flags, long remoteMessageId)
-		throws PortalException;
 }

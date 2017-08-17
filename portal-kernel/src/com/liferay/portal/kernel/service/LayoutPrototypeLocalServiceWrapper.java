@@ -44,6 +44,17 @@ public class LayoutPrototypeLocalServiceWrapper
 		return _layoutPrototypeLocalService.addLayoutPrototype(layoutPrototype);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.LayoutPrototype addLayoutPrototype(
+		long userId, long companyId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		boolean active, ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutPrototypeLocalService.addLayoutPrototype(userId,
+			companyId, nameMap, descriptionMap, active, serviceContext);
+	}
+
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #addLayoutPrototype(long,
 	long, Map, Map, boolean, ServiceContext)}
@@ -58,17 +69,6 @@ public class LayoutPrototypeLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutPrototypeLocalService.addLayoutPrototype(userId,
 			companyId, nameMap, description, active, serviceContext);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.LayoutPrototype addLayoutPrototype(
-		long userId, long companyId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		boolean active, ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutPrototypeLocalService.addLayoutPrototype(userId,
-			companyId, nameMap, descriptionMap, active, serviceContext);
 	}
 
 	/**
@@ -348,6 +348,17 @@ public class LayoutPrototypeLocalServiceWrapper
 		return _layoutPrototypeLocalService.updateLayoutPrototype(layoutPrototype);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.LayoutPrototype updateLayoutPrototype(
+		long layoutPrototypeId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		boolean active, ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutPrototypeLocalService.updateLayoutPrototype(layoutPrototypeId,
+			nameMap, descriptionMap, active, serviceContext);
+	}
+
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #updateLayoutPrototype(long,
 	Map, Map, boolean, ServiceContext)}
@@ -362,17 +373,6 @@ public class LayoutPrototypeLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutPrototypeLocalService.updateLayoutPrototype(layoutPrototypeId,
 			nameMap, description, active, serviceContext);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.LayoutPrototype updateLayoutPrototype(
-		long layoutPrototypeId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		boolean active, ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutPrototypeLocalService.updateLayoutPrototype(layoutPrototypeId,
-			nameMap, descriptionMap, active, serviceContext);
 	}
 
 	@Override

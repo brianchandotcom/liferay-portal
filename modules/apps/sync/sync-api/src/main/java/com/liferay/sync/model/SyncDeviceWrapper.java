@@ -317,13 +317,13 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	}
 
 	@Override
-	public boolean hasSetModifiedDate() {
-		return _syncDevice.hasSetModifiedDate();
+	public int hashCode() {
+		return _syncDevice.hashCode();
 	}
 
 	@Override
-	public int hashCode() {
-		return _syncDevice.hashCode();
+	public boolean hasSetModifiedDate() {
+		return _syncDevice.hasSetModifiedDate();
 	}
 
 	@Override
@@ -387,14 +387,14 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_syncDevice.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_syncDevice.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_syncDevice.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

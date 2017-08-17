@@ -57,6 +57,12 @@ public class ShoppingOrderServiceUtil {
 		getService().deleteOrder(groupId, orderId);
 	}
 
+	public static com.liferay.shopping.model.ShoppingOrder getOrder(
+		long groupId, long orderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getOrder(groupId, orderId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -64,12 +70,6 @@ public class ShoppingOrderServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static com.liferay.shopping.model.ShoppingOrder getOrder(
-		long groupId, long orderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getOrder(groupId, orderId);
 	}
 
 	public static void sendEmail(long groupId, long orderId,

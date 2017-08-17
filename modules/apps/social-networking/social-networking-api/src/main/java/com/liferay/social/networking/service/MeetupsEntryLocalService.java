@@ -60,6 +60,12 @@ public interface MeetupsEntryLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MeetupsEntryLocalServiceUtil} to access the meetups entry local service. Add custom service methods to {@link com.liferay.social.networking.service.impl.MeetupsEntryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public MeetupsEntry addMeetupsEntry(long userId, java.lang.String title,
+		java.lang.String description, int startDateMonth, int startDateDay,
+		int startDateYear, int startDateHour, int startDateMinute,
+		int endDateMonth, int endDateDay, int endDateYear, int endDateHour,
+		int endDateMinute, int totalAttendees, int maxAttendees, double price,
+		byte[] thumbnail) throws PortalException;
 
 	/**
 	* Adds the meetups entry to the database. Also notifies the appropriate model listeners.
@@ -70,13 +76,6 @@ public interface MeetupsEntryLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public MeetupsEntry addMeetupsEntry(MeetupsEntry meetupsEntry);
 
-	public MeetupsEntry addMeetupsEntry(long userId, java.lang.String title,
-		java.lang.String description, int startDateMonth, int startDateDay,
-		int startDateYear, int startDateHour, int startDateMinute,
-		int endDateMonth, int endDateDay, int endDateYear, int endDateHour,
-		int endDateMinute, int totalAttendees, int maxAttendees, double price,
-		byte[] thumbnail) throws PortalException;
-
 	/**
 	* Creates a new meetups entry with the primary key. Does not add the meetups entry to the database.
 	*
@@ -84,15 +83,6 @@ public interface MeetupsEntryLocalService extends BaseLocalService,
 	* @return the new meetups entry
 	*/
 	public MeetupsEntry createMeetupsEntry(long meetupsEntryId);
-
-	/**
-	* Deletes the meetups entry from the database. Also notifies the appropriate model listeners.
-	*
-	* @param meetupsEntry the meetups entry
-	* @return the meetups entry that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public MeetupsEntry deleteMeetupsEntry(MeetupsEntry meetupsEntry);
 
 	/**
 	* Deletes the meetups entry with the primary key from the database. Also notifies the appropriate model listeners.
@@ -104,6 +94,15 @@ public interface MeetupsEntryLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public MeetupsEntry deleteMeetupsEntry(long meetupsEntryId)
 		throws PortalException;
+
+	/**
+	* Deletes the meetups entry from the database. Also notifies the appropriate model listeners.
+	*
+	* @param meetupsEntry the meetups entry
+	* @return the meetups entry that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public MeetupsEntry deleteMeetupsEntry(MeetupsEntry meetupsEntry);
 
 	/**
 	* @throws PortalException
@@ -231,6 +230,14 @@ public interface MeetupsEntryLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	public MeetupsEntry updateMeetupsEntry(long userId, long meetupsEntryId,
+		java.lang.String title, java.lang.String description,
+		int startDateMonth, int startDateDay, int startDateYear,
+		int startDateHour, int startDateMinute, int endDateMonth,
+		int endDateDay, int endDateYear, int endDateHour, int endDateMinute,
+		int totalAttendees, int maxAttendees, double price, byte[] thumbnail)
+		throws PortalException;
+
 	/**
 	* Updates the meetups entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -239,12 +246,4 @@ public interface MeetupsEntryLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public MeetupsEntry updateMeetupsEntry(MeetupsEntry meetupsEntry);
-
-	public MeetupsEntry updateMeetupsEntry(long userId, long meetupsEntryId,
-		java.lang.String title, java.lang.String description,
-		int startDateMonth, int startDateDay, int startDateYear,
-		int startDateHour, int startDateMinute, int endDateMonth,
-		int endDateDay, int endDateYear, int endDateHour, int endDateMinute,
-		int totalAttendees, int maxAttendees, double price, byte[] thumbnail)
-		throws PortalException;
 }

@@ -69,6 +69,21 @@ public class PollsQuestionLocalServiceUtil {
 			serviceContext);
 	}
 
+	public static void addQuestionResources(long questionId,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.addQuestionResources(questionId, addGroupPermissions,
+			addGuestPermissions);
+	}
+
+	public static void addQuestionResources(long questionId,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.addQuestionResources(questionId, groupPermissions, guestPermissions);
+	}
+
 	public static void addQuestionResources(
 		com.liferay.polls.model.PollsQuestion question,
 		boolean addGroupPermissions, boolean addGuestPermissions)
@@ -84,21 +99,6 @@ public class PollsQuestionLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.addQuestionResources(question, groupPermissions, guestPermissions);
-	}
-
-	public static void addQuestionResources(long questionId,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addQuestionResources(questionId, addGroupPermissions,
-			addGuestPermissions);
-	}
-
-	public static void addQuestionResources(long questionId,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addQuestionResources(questionId, groupPermissions, guestPermissions);
 	}
 
 	/**
@@ -122,17 +122,6 @@ public class PollsQuestionLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the polls question from the database. Also notifies the appropriate model listeners.
-	*
-	* @param pollsQuestion the polls question
-	* @return the polls question that was removed
-	*/
-	public static com.liferay.polls.model.PollsQuestion deletePollsQuestion(
-		com.liferay.polls.model.PollsQuestion pollsQuestion) {
-		return getService().deletePollsQuestion(pollsQuestion);
-	}
-
-	/**
 	* Deletes the polls question with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param questionId the primary key of the polls question
@@ -145,15 +134,26 @@ public class PollsQuestionLocalServiceUtil {
 		return getService().deletePollsQuestion(questionId);
 	}
 
-	public static void deleteQuestion(
-		com.liferay.polls.model.PollsQuestion question)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteQuestion(question);
+	/**
+	* Deletes the polls question from the database. Also notifies the appropriate model listeners.
+	*
+	* @param pollsQuestion the polls question
+	* @return the polls question that was removed
+	*/
+	public static com.liferay.polls.model.PollsQuestion deletePollsQuestion(
+		com.liferay.polls.model.PollsQuestion pollsQuestion) {
+		return getService().deletePollsQuestion(pollsQuestion);
 	}
 
 	public static void deleteQuestion(long questionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteQuestion(questionId);
+	}
+
+	public static void deleteQuestion(
+		com.liferay.polls.model.PollsQuestion question)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteQuestion(question);
 	}
 
 	public static void deleteQuestions(long groupId)

@@ -66,6 +66,10 @@ public interface SiteFriendlyURLLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SiteFriendlyURLLocalServiceUtil} to access the site friendly url local service. Add custom service methods to {@link com.liferay.site.service.impl.SiteFriendlyURLLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public SiteFriendlyURL addSiteFriendlyURL(long userId, long companyId,
+		long groupId, java.lang.String friendlyURL,
+		java.lang.String languageId, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Adds the site friendly url to the database. Also notifies the appropriate model listeners.
@@ -75,11 +79,6 @@ public interface SiteFriendlyURLLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public SiteFriendlyURL addSiteFriendlyURL(SiteFriendlyURL siteFriendlyURL);
-
-	public SiteFriendlyURL addSiteFriendlyURL(long userId, long companyId,
-		long groupId, java.lang.String friendlyURL,
-		java.lang.String languageId, ServiceContext serviceContext)
-		throws PortalException;
 
 	public List<SiteFriendlyURL> addSiteFriendlyURLs(long userId,
 		long companyId, long groupId,
@@ -102,16 +101,6 @@ public interface SiteFriendlyURLLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the site friendly url from the database. Also notifies the appropriate model listeners.
-	*
-	* @param siteFriendlyURL the site friendly url
-	* @return the site friendly url that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public SiteFriendlyURL deleteSiteFriendlyURL(
-		SiteFriendlyURL siteFriendlyURL);
-
-	/**
 	* Deletes the site friendly url with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param siteFriendlyURLId the primary key of the site friendly url
@@ -124,6 +113,16 @@ public interface SiteFriendlyURLLocalService extends BaseLocalService,
 
 	public SiteFriendlyURL deleteSiteFriendlyURL(long companyId, long groupId,
 		java.lang.String languageId) throws PortalException;
+
+	/**
+	* Deletes the site friendly url from the database. Also notifies the appropriate model listeners.
+	*
+	* @param siteFriendlyURL the site friendly url
+	* @return the site friendly url that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public SiteFriendlyURL deleteSiteFriendlyURL(
+		SiteFriendlyURL siteFriendlyURL);
 
 	public void deleteSiteFriendlyURLs(long companyId, long groupId);
 
@@ -305,6 +304,11 @@ public interface SiteFriendlyURLLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSiteFriendlyURLsCount();
 
+	public SiteFriendlyURL updateSiteFriendlyURL(long userId, long companyId,
+		long groupId, java.lang.String friendlyURL,
+		java.lang.String languageId, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	* Updates the site friendly url in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -314,11 +318,6 @@ public interface SiteFriendlyURLLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public SiteFriendlyURL updateSiteFriendlyURL(
 		SiteFriendlyURL siteFriendlyURL);
-
-	public SiteFriendlyURL updateSiteFriendlyURL(long userId, long companyId,
-		long groupId, java.lang.String friendlyURL,
-		java.lang.String languageId, ServiceContext serviceContext)
-		throws PortalException;
 
 	public List<SiteFriendlyURL> updateSiteFriendlyURLs(long userId,
 		long companyId, long groupId,

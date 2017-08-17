@@ -59,6 +59,10 @@ public interface UserTrackerLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link UserTrackerLocalServiceUtil} to access the user tracker local service. Add custom service methods to {@link com.liferay.portal.service.impl.UserTrackerLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public UserTracker addUserTracker(long companyId, long userId,
+		Date modifiedDate, java.lang.String sessionId,
+		java.lang.String remoteAddr, java.lang.String remoteHost,
+		java.lang.String userAgent, List<UserTrackerPath> userTrackerPaths);
 
 	/**
 	* Adds the user tracker to the database. Also notifies the appropriate model listeners.
@@ -68,11 +72,6 @@ public interface UserTrackerLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public UserTracker addUserTracker(UserTracker userTracker);
-
-	public UserTracker addUserTracker(long companyId, long userId,
-		Date modifiedDate, java.lang.String sessionId,
-		java.lang.String remoteAddr, java.lang.String remoteHost,
-		java.lang.String userAgent, List<UserTrackerPath> userTrackerPaths);
 
 	/**
 	* Creates a new user tracker with the primary key. Does not add the user tracker to the database.
@@ -90,15 +89,6 @@ public interface UserTrackerLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the user tracker from the database. Also notifies the appropriate model listeners.
-	*
-	* @param userTracker the user tracker
-	* @return the user tracker that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public UserTracker deleteUserTracker(UserTracker userTracker);
-
-	/**
 	* Deletes the user tracker with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param userTrackerId the primary key of the user tracker
@@ -108,6 +98,15 @@ public interface UserTrackerLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public UserTracker deleteUserTracker(long userTrackerId)
 		throws PortalException;
+
+	/**
+	* Deletes the user tracker from the database. Also notifies the appropriate model listeners.
+	*
+	* @param userTracker the user tracker
+	* @return the user tracker that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public UserTracker deleteUserTracker(UserTracker userTracker);
 
 	public DynamicQuery dynamicQuery();
 

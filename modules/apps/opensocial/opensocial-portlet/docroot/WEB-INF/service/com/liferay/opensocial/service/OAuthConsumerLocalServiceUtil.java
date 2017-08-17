@@ -41,6 +41,14 @@ public class OAuthConsumerLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.opensocial.service.impl.OAuthConsumerLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.opensocial.model.OAuthConsumer addOAuthConsumer(
+		long companyId, java.lang.String gadgetKey,
+		java.lang.String serviceName, java.lang.String consumerKey,
+		java.lang.String consumerSecret, java.lang.String keyType) {
+		return getService()
+				   .addOAuthConsumer(companyId, gadgetKey, serviceName,
+			consumerKey, consumerSecret, keyType);
+	}
 
 	/**
 	* Adds the o auth consumer to the database. Also notifies the appropriate model listeners.
@@ -51,15 +59,6 @@ public class OAuthConsumerLocalServiceUtil {
 	public static com.liferay.opensocial.model.OAuthConsumer addOAuthConsumer(
 		com.liferay.opensocial.model.OAuthConsumer oAuthConsumer) {
 		return getService().addOAuthConsumer(oAuthConsumer);
-	}
-
-	public static com.liferay.opensocial.model.OAuthConsumer addOAuthConsumer(
-		long companyId, java.lang.String gadgetKey,
-		java.lang.String serviceName, java.lang.String consumerKey,
-		java.lang.String consumerSecret, java.lang.String keyType) {
-		return getService()
-				   .addOAuthConsumer(companyId, gadgetKey, serviceName,
-			consumerKey, consumerSecret, keyType);
 	}
 
 	/**
@@ -74,17 +73,6 @@ public class OAuthConsumerLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the o auth consumer from the database. Also notifies the appropriate model listeners.
-	*
-	* @param oAuthConsumer the o auth consumer
-	* @return the o auth consumer that was removed
-	*/
-	public static com.liferay.opensocial.model.OAuthConsumer deleteOAuthConsumer(
-		com.liferay.opensocial.model.OAuthConsumer oAuthConsumer) {
-		return getService().deleteOAuthConsumer(oAuthConsumer);
-	}
-
-	/**
 	* Deletes the o auth consumer with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param oAuthConsumerId the primary key of the o auth consumer
@@ -95,6 +83,17 @@ public class OAuthConsumerLocalServiceUtil {
 		long oAuthConsumerId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteOAuthConsumer(oAuthConsumerId);
+	}
+
+	/**
+	* Deletes the o auth consumer from the database. Also notifies the appropriate model listeners.
+	*
+	* @param oAuthConsumer the o auth consumer
+	* @return the o auth consumer that was removed
+	*/
+	public static com.liferay.opensocial.model.OAuthConsumer deleteOAuthConsumer(
+		com.liferay.opensocial.model.OAuthConsumer oAuthConsumer) {
+		return getService().deleteOAuthConsumer(oAuthConsumer);
 	}
 
 	public static void deleteOAuthConsumers(java.lang.String gadgetKey) {
@@ -189,13 +188,13 @@ public class OAuthConsumerLocalServiceUtil {
 	}
 
 	public static com.liferay.opensocial.model.OAuthConsumer fetchOAuthConsumer(
-		java.lang.String gadgetKey, java.lang.String serviceName) {
-		return getService().fetchOAuthConsumer(gadgetKey, serviceName);
+		long oAuthConsumerId) {
+		return getService().fetchOAuthConsumer(oAuthConsumerId);
 	}
 
 	public static com.liferay.opensocial.model.OAuthConsumer fetchOAuthConsumer(
-		long oAuthConsumerId) {
-		return getService().fetchOAuthConsumer(oAuthConsumerId);
+		java.lang.String gadgetKey, java.lang.String serviceName) {
+		return getService().fetchOAuthConsumer(gadgetKey, serviceName);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
@@ -204,12 +203,6 @@ public class OAuthConsumerLocalServiceUtil {
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	public static com.liferay.opensocial.model.OAuthConsumer getOAuthConsumer(
-		java.lang.String gadgetKey, java.lang.String serviceName)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getOAuthConsumer(gadgetKey, serviceName);
 	}
 
 	/**
@@ -223,6 +216,12 @@ public class OAuthConsumerLocalServiceUtil {
 		long oAuthConsumerId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getOAuthConsumer(oAuthConsumerId);
+	}
+
+	public static com.liferay.opensocial.model.OAuthConsumer getOAuthConsumer(
+		java.lang.String gadgetKey, java.lang.String serviceName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getOAuthConsumer(gadgetKey, serviceName);
 	}
 
 	/**
@@ -285,6 +284,16 @@ public class OAuthConsumerLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static com.liferay.opensocial.model.OAuthConsumer updateOAuthConsumer(
+		long oAuthConsumerId, java.lang.String consumerKey,
+		java.lang.String consumerSecret, java.lang.String keyType,
+		java.lang.String keyName, java.lang.String callbackURL)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateOAuthConsumer(oAuthConsumerId, consumerKey,
+			consumerSecret, keyType, keyName, callbackURL);
+	}
+
 	/**
 	* Updates the o auth consumer in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -294,16 +303,6 @@ public class OAuthConsumerLocalServiceUtil {
 	public static com.liferay.opensocial.model.OAuthConsumer updateOAuthConsumer(
 		com.liferay.opensocial.model.OAuthConsumer oAuthConsumer) {
 		return getService().updateOAuthConsumer(oAuthConsumer);
-	}
-
-	public static com.liferay.opensocial.model.OAuthConsumer updateOAuthConsumer(
-		long oAuthConsumerId, java.lang.String consumerKey,
-		java.lang.String consumerSecret, java.lang.String keyType,
-		java.lang.String keyName, java.lang.String callbackURL)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateOAuthConsumer(oAuthConsumerId, consumerKey,
-			consumerSecret, keyType, keyName, callbackURL);
 	}
 
 	public static void clearService() {

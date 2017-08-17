@@ -92,17 +92,6 @@ public class ResourceActionLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the resource action from the database. Also notifies the appropriate model listeners.
-	*
-	* @param resourceAction the resource action
-	* @return the resource action that was removed
-	*/
-	public static com.liferay.portal.kernel.model.ResourceAction deleteResourceAction(
-		com.liferay.portal.kernel.model.ResourceAction resourceAction) {
-		return getService().deleteResourceAction(resourceAction);
-	}
-
-	/**
 	* Deletes the resource action with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param resourceActionId the primary key of the resource action
@@ -113,6 +102,17 @@ public class ResourceActionLocalServiceUtil {
 		long resourceActionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteResourceAction(resourceActionId);
+	}
+
+	/**
+	* Deletes the resource action from the database. Also notifies the appropriate model listeners.
+	*
+	* @param resourceAction the resource action
+	* @return the resource action that was removed
+	*/
+	public static com.liferay.portal.kernel.model.ResourceAction deleteResourceAction(
+		com.liferay.portal.kernel.model.ResourceAction resourceAction) {
+		return getService().deleteResourceAction(resourceAction);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -194,13 +194,13 @@ public class ResourceActionLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.ResourceAction fetchResourceAction(
-		java.lang.String name, java.lang.String actionId) {
-		return getService().fetchResourceAction(name, actionId);
+		long resourceActionId) {
+		return getService().fetchResourceAction(resourceActionId);
 	}
 
 	public static com.liferay.portal.kernel.model.ResourceAction fetchResourceAction(
-		long resourceActionId) {
-		return getService().fetchResourceAction(resourceActionId);
+		java.lang.String name, java.lang.String actionId) {
+		return getService().fetchResourceAction(name, actionId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
@@ -226,12 +226,6 @@ public class ResourceActionLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static com.liferay.portal.kernel.model.ResourceAction getResourceAction(
-		java.lang.String name, java.lang.String actionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getResourceAction(name, actionId);
-	}
-
 	/**
 	* Returns the resource action with the primary key.
 	*
@@ -243,6 +237,12 @@ public class ResourceActionLocalServiceUtil {
 		long resourceActionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getResourceAction(resourceActionId);
+	}
+
+	public static com.liferay.portal.kernel.model.ResourceAction getResourceAction(
+		java.lang.String name, java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getResourceAction(name, actionId);
 	}
 
 	/**

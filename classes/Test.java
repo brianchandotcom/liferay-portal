@@ -22,6 +22,17 @@ public class Test {
 
 		run();
 
+		String s1 = "setExpandoBridgeAttributes(long)";
+		String s2 = "setExpandoBridgeAttributes(long, String)";
+
+		if (s1.compareToIgnoreCase(s2) < 0) {
+			System.out.println(s1);
+			System.out.println(s2);
+		}
+		else {
+			System.out.println(s2);
+			System.out.println(s1);
+		}
 		//com.liferay.portal.util.InitUtil.stopModuleFramework();
 	}
 

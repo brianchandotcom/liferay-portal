@@ -122,20 +122,20 @@ public class ResourceBlockServiceWrapper implements ResourceBlockService,
 
 	@Override
 	public void setIndividualScopePermissions(long companyId, long groupId,
-		java.lang.String name, long primKey,
-		java.util.Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_resourceBlockService.setIndividualScopePermissions(companyId, groupId,
-			name, primKey, roleIdsToActionIds);
-	}
-
-	@Override
-	public void setIndividualScopePermissions(long companyId, long groupId,
 		java.lang.String name, long primKey, long roleId,
 		java.util.List<java.lang.String> actionIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_resourceBlockService.setIndividualScopePermissions(companyId, groupId,
 			name, primKey, roleId, actionIds);
+	}
+
+	@Override
+	public void setIndividualScopePermissions(long companyId, long groupId,
+		java.lang.String name, long primKey,
+		java.util.Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_resourceBlockService.setIndividualScopePermissions(companyId, groupId,
+			name, primKey, roleIdsToActionIds);
 	}
 
 	@Override

@@ -80,15 +80,15 @@ public class ShoppingOrderLocalServiceUtil {
 		return getService().createShoppingOrder(orderId);
 	}
 
+	public static void deleteOrder(long orderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteOrder(orderId);
+	}
+
 	public static void deleteOrder(
 		com.liferay.shopping.model.ShoppingOrder order)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteOrder(order);
-	}
-
-	public static void deleteOrder(long orderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteOrder(orderId);
 	}
 
 	public static void deleteOrders(long groupId)
@@ -106,17 +106,6 @@ public class ShoppingOrderLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the shopping order from the database. Also notifies the appropriate model listeners.
-	*
-	* @param shoppingOrder the shopping order
-	* @return the shopping order that was removed
-	*/
-	public static com.liferay.shopping.model.ShoppingOrder deleteShoppingOrder(
-		com.liferay.shopping.model.ShoppingOrder shoppingOrder) {
-		return getService().deleteShoppingOrder(shoppingOrder);
-	}
-
-	/**
 	* Deletes the shopping order with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param orderId the primary key of the shopping order
@@ -127,6 +116,17 @@ public class ShoppingOrderLocalServiceUtil {
 		long orderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteShoppingOrder(orderId);
+	}
+
+	/**
+	* Deletes the shopping order from the database. Also notifies the appropriate model listeners.
+	*
+	* @param shoppingOrder the shopping order
+	* @return the shopping order that was removed
+	*/
+	public static com.liferay.shopping.model.ShoppingOrder deleteShoppingOrder(
+		com.liferay.shopping.model.ShoppingOrder shoppingOrder) {
+		return getService().deleteShoppingOrder(shoppingOrder);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -226,13 +226,10 @@ public class ShoppingOrderLocalServiceUtil {
 		return getService().getLatestOrder(userId, groupId);
 	}
 
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+	public static com.liferay.shopping.model.ShoppingOrder getOrder(
+		long orderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getOrder(orderId);
 	}
 
 	public static com.liferay.shopping.model.ShoppingOrder getOrder(
@@ -241,10 +238,13 @@ public class ShoppingOrderLocalServiceUtil {
 		return getService().getOrder(number);
 	}
 
-	public static com.liferay.shopping.model.ShoppingOrder getOrder(
-		long orderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getOrder(orderId);
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static com.liferay.shopping.model.ShoppingOrder getPayPalTxnIdOrder(
@@ -331,18 +331,18 @@ public class ShoppingOrderLocalServiceUtil {
 			ppPaymentStatus, andOperator);
 	}
 
+	public static void sendEmail(long orderId, java.lang.String emailType,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().sendEmail(orderId, emailType, serviceContext);
+	}
+
 	public static void sendEmail(
 		com.liferay.shopping.model.ShoppingOrder order,
 		java.lang.String emailType,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().sendEmail(order, emailType, serviceContext);
-	}
-
-	public static void sendEmail(long orderId, java.lang.String emailType,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().sendEmail(orderId, emailType, serviceContext);
 	}
 
 	public static com.liferay.shopping.model.ShoppingOrder updateLatestOrder(

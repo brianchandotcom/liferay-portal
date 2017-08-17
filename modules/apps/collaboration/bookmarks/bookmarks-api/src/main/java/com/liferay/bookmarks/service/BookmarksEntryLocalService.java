@@ -285,16 +285,16 @@ public interface BookmarksEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BookmarksEntry> getEntries(long groupId, long folderId,
-		int start, int end, OrderByComparator<BookmarksEntry> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BookmarksEntry> getEntries(long groupId, long folderId,
 		int status, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BookmarksEntry> getEntries(long groupId, long folderId,
 		int status, int start, int end,
 		OrderByComparator<BookmarksEntry> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BookmarksEntry> getEntries(long groupId, long folderId,
+		int start, int end, OrderByComparator<BookmarksEntry> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getEntriesCount(long groupId, long folderId);

@@ -72,12 +72,12 @@ public interface LayoutTemplateLocalService extends BaseLocalService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
+	public List<LayoutTemplate> init(ServletContext servletContext,
+		java.lang.String[] xmls, PluginPackage pluginPackage);
+
 	public List<LayoutTemplate> init(java.lang.String servletContextName,
 		ServletContext servletContext, java.lang.String[] xmls,
 		PluginPackage pluginPackage);
-
-	public List<LayoutTemplate> init(ServletContext servletContext,
-		java.lang.String[] xmls, PluginPackage pluginPackage);
 
 	public void readLayoutTemplate(java.lang.String servletContextName,
 		ServletContext servletContext, Set<LayoutTemplate> layoutTemplates,

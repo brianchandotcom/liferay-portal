@@ -64,16 +64,6 @@ public interface MBMailingListLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MBMailingListLocalServiceUtil} to access the message boards mailing list local service. Add custom service methods to {@link com.liferay.portlet.messageboards.service.impl.MBMailingListLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-
-	/**
-	* Adds the message boards mailing list to the database. Also notifies the appropriate model listeners.
-	*
-	* @param mbMailingList the message boards mailing list
-	* @return the message boards mailing list that was added
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public MBMailingList addMBMailingList(MBMailingList mbMailingList);
-
 	public MBMailingList addMailingList(long userId, long groupId,
 		long categoryId, java.lang.String emailAddress,
 		java.lang.String inProtocol, java.lang.String inServerName,
@@ -86,6 +76,15 @@ public interface MBMailingListLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
+	* Adds the message boards mailing list to the database. Also notifies the appropriate model listeners.
+	*
+	* @param mbMailingList the message boards mailing list
+	* @return the message boards mailing list that was added
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public MBMailingList addMBMailingList(MBMailingList mbMailingList);
+
+	/**
 	* Creates a new message boards mailing list with the primary key. Does not add the message boards mailing list to the database.
 	*
 	* @param mailingListId the primary key for the new message boards mailing list
@@ -96,14 +95,10 @@ public interface MBMailingListLocalService extends BaseLocalService,
 	public void deleteCategoryMailingList(long groupId, long categoryId)
 		throws PortalException;
 
-	/**
-	* Deletes the message boards mailing list from the database. Also notifies the appropriate model listeners.
-	*
-	* @param mbMailingList the message boards mailing list
-	* @return the message boards mailing list that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public MBMailingList deleteMBMailingList(MBMailingList mbMailingList);
+	public void deleteMailingList(long mailingListId) throws PortalException;
+
+	public void deleteMailingList(MBMailingList mailingList)
+		throws PortalException;
 
 	/**
 	* Deletes the message boards mailing list with the primary key from the database. Also notifies the appropriate model listeners.
@@ -116,10 +111,14 @@ public interface MBMailingListLocalService extends BaseLocalService,
 	public MBMailingList deleteMBMailingList(long mailingListId)
 		throws PortalException;
 
-	public void deleteMailingList(MBMailingList mailingList)
-		throws PortalException;
-
-	public void deleteMailingList(long mailingListId) throws PortalException;
+	/**
+	* Deletes the message boards mailing list from the database. Also notifies the appropriate model listeners.
+	*
+	* @param mbMailingList the message boards mailing list
+	* @return the message boards mailing list that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public MBMailingList deleteMBMailingList(MBMailingList mbMailingList);
 
 	/**
 	* @throws PortalException
@@ -301,15 +300,6 @@ public interface MBMailingListLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	/**
-	* Updates the message boards mailing list in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param mbMailingList the message boards mailing list
-	* @return the message boards mailing list that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public MBMailingList updateMBMailingList(MBMailingList mbMailingList);
-
 	public MBMailingList updateMailingList(long mailingListId,
 		java.lang.String emailAddress, java.lang.String inProtocol,
 		java.lang.String inServerName, int inServerPort, boolean inUseSSL,
@@ -319,4 +309,13 @@ public interface MBMailingListLocalService extends BaseLocalService,
 		boolean outUseSSL, java.lang.String outUserName,
 		java.lang.String outPassword, boolean allowAnonymous, boolean active,
 		ServiceContext serviceContext) throws PortalException;
+
+	/**
+	* Updates the message boards mailing list in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param mbMailingList the message boards mailing list
+	* @return the message boards mailing list that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public MBMailingList updateMBMailingList(MBMailingList mbMailingList);
 }

@@ -83,16 +83,6 @@ public interface UserTrackerPathLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the user tracker path from the database. Also notifies the appropriate model listeners.
-	*
-	* @param userTrackerPath the user tracker path
-	* @return the user tracker path that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public UserTrackerPath deleteUserTrackerPath(
-		UserTrackerPath userTrackerPath);
-
-	/**
 	* Deletes the user tracker path with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param userTrackerPathId the primary key of the user tracker path
@@ -102,6 +92,16 @@ public interface UserTrackerPathLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public UserTrackerPath deleteUserTrackerPath(long userTrackerPathId)
 		throws PortalException;
+
+	/**
+	* Deletes the user tracker path from the database. Also notifies the appropriate model listeners.
+	*
+	* @param userTrackerPath the user tracker path
+	* @return the user tracker path that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public UserTrackerPath deleteUserTrackerPath(
+		UserTrackerPath userTrackerPath);
 
 	public DynamicQuery dynamicQuery();
 

@@ -77,16 +77,6 @@ public class DLFileEntryTypeLocalServiceUtil {
 	}
 
 	public static com.liferay.document.library.kernel.model.DLFileEntryType addFileEntryType(
-		long userId, long groupId, java.lang.String name,
-		java.lang.String description, long[] ddmStructureIds,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addFileEntryType(userId, groupId, name, description,
-			ddmStructureIds, serviceContext);
-	}
-
-	public static com.liferay.document.library.kernel.model.DLFileEntryType addFileEntryType(
 		long userId, long groupId, java.lang.String fileEntryTypeKey,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
@@ -96,6 +86,16 @@ public class DLFileEntryTypeLocalServiceUtil {
 		return getService()
 				   .addFileEntryType(userId, groupId, fileEntryTypeKey,
 			nameMap, descriptionMap, ddmStructureIds, serviceContext);
+	}
+
+	public static com.liferay.document.library.kernel.model.DLFileEntryType addFileEntryType(
+		long userId, long groupId, java.lang.String name,
+		java.lang.String description, long[] ddmStructureIds,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addFileEntryType(userId, groupId, name, description,
+			ddmStructureIds, serviceContext);
 	}
 
 	public static void cascadeFileEntryTypes(long userId,
@@ -297,6 +297,11 @@ public class DLFileEntryTypeLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static long getDefaultFileEntryTypeId(long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getDefaultFileEntryTypeId(folderId);
+	}
+
 	/**
 	* Returns the document library file entry type with the primary key.
 	*
@@ -410,11 +415,6 @@ public class DLFileEntryTypeLocalServiceUtil {
 	*/
 	public static long[] getDLFolderPrimaryKeys(long fileEntryTypeId) {
 		return getService().getDLFolderPrimaryKeys(fileEntryTypeId);
-	}
-
-	public static long getDefaultFileEntryTypeId(long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getDefaultFileEntryTypeId(folderId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
@@ -531,16 +531,6 @@ public class DLFileEntryTypeLocalServiceUtil {
 	}
 
 	public static void updateFileEntryType(long userId, long fileEntryTypeId,
-		java.lang.String name, java.lang.String description,
-		long[] ddmStructureIds,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.updateFileEntryType(userId, fileEntryTypeId, name, description,
-			ddmStructureIds, serviceContext);
-	}
-
-	public static void updateFileEntryType(long userId, long fileEntryTypeId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long[] ddmStructureIds,
@@ -549,6 +539,16 @@ public class DLFileEntryTypeLocalServiceUtil {
 		getService()
 			.updateFileEntryType(userId, fileEntryTypeId, nameMap,
 			descriptionMap, ddmStructureIds, serviceContext);
+	}
+
+	public static void updateFileEntryType(long userId, long fileEntryTypeId,
+		java.lang.String name, java.lang.String description,
+		long[] ddmStructureIds,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.updateFileEntryType(userId, fileEntryTypeId, name, description,
+			ddmStructureIds, serviceContext);
 	}
 
 	public static void updateFolderFileEntryTypes(

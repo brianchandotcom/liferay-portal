@@ -60,21 +60,21 @@ public class ExpandoValueServiceWrapper implements ExpandoValueService,
 	}
 
 	@Override
-	public java.io.Serializable getData(long companyId,
-		java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _expandoValueService.getData(companyId, className, tableName,
-			columnName, classPK);
-	}
-
-	@Override
 	public java.util.Map<java.lang.String, java.io.Serializable> getData(
 		long companyId, java.lang.String className, java.lang.String tableName,
 		java.util.Collection<java.lang.String> columnNames, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _expandoValueService.getData(companyId, className, tableName,
 			columnNames, classPK);
+	}
+
+	@Override
+	public java.io.Serializable getData(long companyId,
+		java.lang.String className, java.lang.String tableName,
+		java.lang.String columnName, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _expandoValueService.getData(companyId, className, tableName,
+			columnName, classPK);
 	}
 
 	@Override

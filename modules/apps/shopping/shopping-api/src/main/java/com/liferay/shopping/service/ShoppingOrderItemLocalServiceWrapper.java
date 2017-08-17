@@ -69,18 +69,6 @@ public class ShoppingOrderItemLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the shopping order item from the database. Also notifies the appropriate model listeners.
-	*
-	* @param shoppingOrderItem the shopping order item
-	* @return the shopping order item that was removed
-	*/
-	@Override
-	public com.liferay.shopping.model.ShoppingOrderItem deleteShoppingOrderItem(
-		com.liferay.shopping.model.ShoppingOrderItem shoppingOrderItem) {
-		return _shoppingOrderItemLocalService.deleteShoppingOrderItem(shoppingOrderItem);
-	}
-
-	/**
 	* Deletes the shopping order item with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param orderItemId the primary key of the shopping order item
@@ -92,6 +80,18 @@ public class ShoppingOrderItemLocalServiceWrapper
 		long orderItemId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingOrderItemLocalService.deleteShoppingOrderItem(orderItemId);
+	}
+
+	/**
+	* Deletes the shopping order item from the database. Also notifies the appropriate model listeners.
+	*
+	* @param shoppingOrderItem the shopping order item
+	* @return the shopping order item that was removed
+	*/
+	@Override
+	public com.liferay.shopping.model.ShoppingOrderItem deleteShoppingOrderItem(
+		com.liferay.shopping.model.ShoppingOrderItem shoppingOrderItem) {
+		return _shoppingOrderItemLocalService.deleteShoppingOrderItem(shoppingOrderItem);
 	}
 
 	@Override
@@ -196,6 +196,12 @@ public class ShoppingOrderItemLocalServiceWrapper
 		return _shoppingOrderItemLocalService.getIndexableActionableDynamicQuery();
 	}
 
+	@Override
+	public java.util.List<com.liferay.shopping.model.ShoppingOrderItem> getOrderItems(
+		long orderId) {
+		return _shoppingOrderItemLocalService.getOrderItems(orderId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -204,12 +210,6 @@ public class ShoppingOrderItemLocalServiceWrapper
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _shoppingOrderItemLocalService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public java.util.List<com.liferay.shopping.model.ShoppingOrderItem> getOrderItems(
-		long orderId) {
-		return _shoppingOrderItemLocalService.getOrderItems(orderId);
 	}
 
 	@Override

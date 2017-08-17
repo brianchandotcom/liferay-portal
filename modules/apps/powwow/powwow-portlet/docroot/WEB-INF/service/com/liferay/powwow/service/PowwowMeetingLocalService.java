@@ -64,6 +64,14 @@ public interface PowwowMeetingLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PowwowMeetingLocalServiceUtil} to access the powwow meeting local service. Add custom service methods to {@link com.liferay.powwow.service.impl.PowwowMeetingLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	@Indexable(type = IndexableType.REINDEX)
+	public PowwowMeeting addPowwowMeeting(long userId, long groupId,
+		long powwowServerId, java.lang.String name,
+		java.lang.String description, java.lang.String providerType,
+		Map<java.lang.String, Serializable> providerTypeMetadataMap,
+		java.lang.String languageId, long calendarBookingId, int status,
+		List<PowwowParticipant> powwowParticipants,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Adds the powwow meeting to the database. Also notifies the appropriate model listeners.
@@ -73,15 +81,6 @@ public interface PowwowMeetingLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public PowwowMeeting addPowwowMeeting(PowwowMeeting powwowMeeting);
-
-	@Indexable(type = IndexableType.REINDEX)
-	public PowwowMeeting addPowwowMeeting(long userId, long groupId,
-		long powwowServerId, java.lang.String name,
-		java.lang.String description, java.lang.String providerType,
-		Map<java.lang.String, Serializable> providerTypeMetadataMap,
-		java.lang.String languageId, long calendarBookingId, int status,
-		List<PowwowParticipant> powwowParticipants,
-		ServiceContext serviceContext) throws PortalException;
 
 	public void checkPowwowMeetings() throws PortalException;
 
@@ -101,17 +100,6 @@ public interface PowwowMeetingLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the powwow meeting from the database. Also notifies the appropriate model listeners.
-	*
-	* @param powwowMeeting the powwow meeting
-	* @return the powwow meeting that was removed
-	* @throws PortalException
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public PowwowMeeting deletePowwowMeeting(PowwowMeeting powwowMeeting)
-		throws PortalException;
-
-	/**
 	* Deletes the powwow meeting with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param powwowMeetingId the primary key of the powwow meeting
@@ -120,6 +108,17 @@ public interface PowwowMeetingLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public PowwowMeeting deletePowwowMeeting(long powwowMeetingId)
+		throws PortalException;
+
+	/**
+	* Deletes the powwow meeting from the database. Also notifies the appropriate model listeners.
+	*
+	* @param powwowMeeting the powwow meeting
+	* @return the powwow meeting that was removed
+	* @throws PortalException
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public PowwowMeeting deletePowwowMeeting(PowwowMeeting powwowMeeting)
 		throws PortalException;
 
 	public DynamicQuery dynamicQuery();
@@ -274,15 +273,6 @@ public interface PowwowMeetingLocalService extends BaseLocalService,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
-	/**
-	* Updates the powwow meeting in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param powwowMeeting the powwow meeting
-	* @return the powwow meeting that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public PowwowMeeting updatePowwowMeeting(PowwowMeeting powwowMeeting);
-
 	@Indexable(type = IndexableType.REINDEX)
 	public PowwowMeeting updatePowwowMeeting(long powwowMeetingId,
 		long powwowServerId, java.lang.String name,
@@ -291,6 +281,15 @@ public interface PowwowMeetingLocalService extends BaseLocalService,
 		java.lang.String languageId, long calendarBookingId, int status,
 		List<PowwowParticipant> powwowParticipants,
 		ServiceContext serviceContext) throws PortalException;
+
+	/**
+	* Updates the powwow meeting in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param powwowMeeting the powwow meeting
+	* @return the powwow meeting that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public PowwowMeeting updatePowwowMeeting(PowwowMeeting powwowMeeting);
 
 	@Indexable(type = IndexableType.REINDEX)
 	public PowwowMeeting updateStatus(long powwowMeetingId, int status)

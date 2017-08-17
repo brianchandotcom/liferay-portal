@@ -158,16 +158,6 @@ public interface SocialActivityCounterLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes all activity counters for the entity identified by the class name
-	* and class primary key.
-	*
-	* @param className the entity's class name
-	* @param classPK the primary key of the entity
-	*/
-	public void deleteActivityCounters(java.lang.String className, long classPK)
-		throws PortalException;
-
-	/**
 	* Deletes all activity counters, limits, and settings related to the entity
 	* identified by the class name ID and class primary key.
 	*
@@ -178,21 +168,21 @@ public interface SocialActivityCounterLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
+	* Deletes all activity counters for the entity identified by the class name
+	* and class primary key.
+	*
+	* @param className the entity's class name
+	* @param classPK the primary key of the entity
+	*/
+	public void deleteActivityCounters(java.lang.String className, long classPK)
+		throws PortalException;
+
+	/**
 	* @throws PortalException
 	*/
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
-
-	/**
-	* Deletes the social activity counter from the database. Also notifies the appropriate model listeners.
-	*
-	* @param socialActivityCounter the social activity counter
-	* @return the social activity counter that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public SocialActivityCounter deleteSocialActivityCounter(
-		SocialActivityCounter socialActivityCounter);
 
 	/**
 	* Deletes the social activity counter with the primary key from the database. Also notifies the appropriate model listeners.
@@ -206,19 +196,14 @@ public interface SocialActivityCounterLocalService extends BaseLocalService,
 		long activityCounterId) throws PortalException;
 
 	/**
-	* Disables all the counters of an asset identified by the class name and
-	* class primary key.
+	* Deletes the social activity counter from the database. Also notifies the appropriate model listeners.
 	*
-	* <p>
-	* This method is used by the recycle bin to disable all counters of assets
-	* put into the recycle bin. It adjusts the owner's contribution score.
-	* </p>
-	*
-	* @param className the asset's class name
-	* @param classPK the primary key of the asset
+	* @param socialActivityCounter the social activity counter
+	* @return the social activity counter that was removed
 	*/
-	public void disableActivityCounters(java.lang.String className, long classPK)
-		throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public SocialActivityCounter deleteSocialActivityCounter(
+		SocialActivityCounter socialActivityCounter);
 
 	/**
 	* Disables all the counters of an asset identified by the class name ID and
@@ -233,6 +218,21 @@ public interface SocialActivityCounterLocalService extends BaseLocalService,
 	* @param classPK the primary key of the asset
 	*/
 	public void disableActivityCounters(long classNameId, long classPK)
+		throws PortalException;
+
+	/**
+	* Disables all the counters of an asset identified by the class name and
+	* class primary key.
+	*
+	* <p>
+	* This method is used by the recycle bin to disable all counters of assets
+	* put into the recycle bin. It adjusts the owner's contribution score.
+	* </p>
+	*
+	* @param className the asset's class name
+	* @param classPK the primary key of the asset
+	*/
+	public void disableActivityCounters(java.lang.String className, long classPK)
 		throws PortalException;
 
 	public DynamicQuery dynamicQuery();
@@ -295,21 +295,6 @@ public interface SocialActivityCounterLocalService extends BaseLocalService,
 		Projection projection);
 
 	/**
-	* Enables all the counters of an asset identified by the class name and
-	* class primary key.
-	*
-	* <p>
-	* This method is used by the recycle bin to enable all counters of assets
-	* restored from the recycle bin. It adjusts the owner's contribution score.
-	* </p>
-	*
-	* @param className the asset's class name
-	* @param classPK the primary key of the asset
-	*/
-	public void enableActivityCounters(java.lang.String className, long classPK)
-		throws PortalException;
-
-	/**
 	* Enables all activity counters of an asset identified by the class name ID
 	* and class primary key.
 	*
@@ -322,6 +307,21 @@ public interface SocialActivityCounterLocalService extends BaseLocalService,
 	* @param classPK the primary key of the asset
 	*/
 	public void enableActivityCounters(long classNameId, long classPK)
+		throws PortalException;
+
+	/**
+	* Enables all the counters of an asset identified by the class name and
+	* class primary key.
+	*
+	* <p>
+	* This method is used by the recycle bin to enable all counters of assets
+	* restored from the recycle bin. It adjusts the owner's contribution score.
+	* </p>
+	*
+	* @param className the asset's class name
+	* @param classPK the primary key of the asset
+	*/
+	public void enableActivityCounters(java.lang.String className, long classPK)
 		throws PortalException;
 
 	/**
@@ -384,13 +384,6 @@ public interface SocialActivityCounterLocalService extends BaseLocalService,
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	/**
 	* Returns all the activity counters with the given name and period offsets.
 	*
 	* <p>
@@ -428,6 +421,13 @@ public interface SocialActivityCounterLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SocialActivityCounter> getOffsetDistributionActivityCounters(
 		long groupId, java.lang.String name, int startOffset, int endOffset);
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Returns all the activity counters with the given name and time period.

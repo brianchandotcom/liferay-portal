@@ -67,18 +67,6 @@ public class ResourceTypePermissionLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the resource type permission from the database. Also notifies the appropriate model listeners.
-	*
-	* @param resourceTypePermission the resource type permission
-	* @return the resource type permission that was removed
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.ResourceTypePermission deleteResourceTypePermission(
-		com.liferay.portal.kernel.model.ResourceTypePermission resourceTypePermission) {
-		return _resourceTypePermissionLocalService.deleteResourceTypePermission(resourceTypePermission);
-	}
-
-	/**
 	* Deletes the resource type permission with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param resourceTypePermissionId the primary key of the resource type permission
@@ -90,6 +78,18 @@ public class ResourceTypePermissionLocalServiceWrapper
 		long resourceTypePermissionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _resourceTypePermissionLocalService.deleteResourceTypePermission(resourceTypePermissionId);
+	}
+
+	/**
+	* Deletes the resource type permission from the database. Also notifies the appropriate model listeners.
+	*
+	* @param resourceTypePermission the resource type permission
+	* @return the resource type permission that was removed
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.ResourceTypePermission deleteResourceTypePermission(
+		com.liferay.portal.kernel.model.ResourceTypePermission resourceTypePermission) {
+		return _resourceTypePermissionLocalService.deleteResourceTypePermission(resourceTypePermission);
 	}
 
 	@Override

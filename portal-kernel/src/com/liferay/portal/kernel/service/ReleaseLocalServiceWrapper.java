@@ -81,18 +81,6 @@ public class ReleaseLocalServiceWrapper implements ReleaseLocalService,
 	}
 
 	/**
-	* Deletes the release from the database. Also notifies the appropriate model listeners.
-	*
-	* @param release the release
-	* @return the release that was removed
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.Release deleteRelease(
-		com.liferay.portal.kernel.model.Release release) {
-		return _releaseLocalService.deleteRelease(release);
-	}
-
-	/**
 	* Deletes the release with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param releaseId the primary key of the release
@@ -103,6 +91,18 @@ public class ReleaseLocalServiceWrapper implements ReleaseLocalService,
 	public com.liferay.portal.kernel.model.Release deleteRelease(long releaseId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _releaseLocalService.deleteRelease(releaseId);
+	}
+
+	/**
+	* Deletes the release from the database. Also notifies the appropriate model listeners.
+	*
+	* @param release the release
+	* @return the release that was removed
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.Release deleteRelease(
+		com.liferay.portal.kernel.model.Release release) {
+		return _releaseLocalService.deleteRelease(release);
 	}
 
 	@Override
@@ -190,14 +190,14 @@ public class ReleaseLocalServiceWrapper implements ReleaseLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Release fetchRelease(
-		java.lang.String servletContextName) {
-		return _releaseLocalService.fetchRelease(servletContextName);
+	public com.liferay.portal.kernel.model.Release fetchRelease(long releaseId) {
+		return _releaseLocalService.fetchRelease(releaseId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Release fetchRelease(long releaseId) {
-		return _releaseLocalService.fetchRelease(releaseId);
+	public com.liferay.portal.kernel.model.Release fetchRelease(
+		java.lang.String servletContextName) {
+		return _releaseLocalService.fetchRelease(servletContextName);
 	}
 
 	@Override
@@ -273,6 +273,15 @@ public class ReleaseLocalServiceWrapper implements ReleaseLocalService,
 		return _releaseLocalService.getReleasesCount();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.Release updateRelease(
+		long releaseId, java.lang.String schemaVersion, int buildNumber,
+		java.util.Date buildDate, boolean verified)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _releaseLocalService.updateRelease(releaseId, schemaVersion,
+			buildNumber, buildDate, verified);
+	}
+
 	/**
 	* Updates the release in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -283,13 +292,6 @@ public class ReleaseLocalServiceWrapper implements ReleaseLocalService,
 	public com.liferay.portal.kernel.model.Release updateRelease(
 		com.liferay.portal.kernel.model.Release release) {
 		return _releaseLocalService.updateRelease(release);
-	}
-
-	@Override
-	public void updateRelease(java.lang.String servletContextName,
-		java.lang.String schemaVersion, java.lang.String previousSchemaVersion) {
-		_releaseLocalService.updateRelease(servletContextName, schemaVersion,
-			previousSchemaVersion);
 	}
 
 	@Override
@@ -311,12 +313,10 @@ public class ReleaseLocalServiceWrapper implements ReleaseLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Release updateRelease(
-		long releaseId, java.lang.String schemaVersion, int buildNumber,
-		java.util.Date buildDate, boolean verified)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _releaseLocalService.updateRelease(releaseId, schemaVersion,
-			buildNumber, buildDate, verified);
+	public void updateRelease(java.lang.String servletContextName,
+		java.lang.String schemaVersion, java.lang.String previousSchemaVersion) {
+		_releaseLocalService.updateRelease(servletContextName, schemaVersion,
+			previousSchemaVersion);
 	}
 
 	@Override

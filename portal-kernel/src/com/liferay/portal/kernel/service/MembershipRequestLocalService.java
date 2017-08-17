@@ -57,6 +57,9 @@ public interface MembershipRequestLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MembershipRequestLocalServiceUtil} to access the membership request local service. Add custom service methods to {@link com.liferay.portal.service.impl.MembershipRequestLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public MembershipRequest addMembershipRequest(long userId, long groupId,
+		java.lang.String comments, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Adds the membership request to the database. Also notifies the appropriate model listeners.
@@ -68,10 +71,6 @@ public interface MembershipRequestLocalService extends BaseLocalService,
 	public MembershipRequest addMembershipRequest(
 		MembershipRequest membershipRequest);
 
-	public MembershipRequest addMembershipRequest(long userId, long groupId,
-		java.lang.String comments, ServiceContext serviceContext)
-		throws PortalException;
-
 	/**
 	* Creates a new membership request with the primary key. Does not add the membership request to the database.
 	*
@@ -79,16 +78,6 @@ public interface MembershipRequestLocalService extends BaseLocalService,
 	* @return the new membership request
 	*/
 	public MembershipRequest createMembershipRequest(long membershipRequestId);
-
-	/**
-	* Deletes the membership request from the database. Also notifies the appropriate model listeners.
-	*
-	* @param membershipRequest the membership request
-	* @return the membership request that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public MembershipRequest deleteMembershipRequest(
-		MembershipRequest membershipRequest);
 
 	/**
 	* Deletes the membership request with the primary key from the database. Also notifies the appropriate model listeners.
@@ -100,6 +89,16 @@ public interface MembershipRequestLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public MembershipRequest deleteMembershipRequest(long membershipRequestId)
 		throws PortalException;
+
+	/**
+	* Deletes the membership request from the database. Also notifies the appropriate model listeners.
+	*
+	* @param membershipRequest the membership request
+	* @return the membership request that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public MembershipRequest deleteMembershipRequest(
+		MembershipRequest membershipRequest);
 
 	public void deleteMembershipRequests(long groupId);
 

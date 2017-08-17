@@ -40,6 +40,15 @@ public class UserTrackerLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.UserTrackerLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portal.kernel.model.UserTracker addUserTracker(
+		long companyId, long userId, java.util.Date modifiedDate,
+		java.lang.String sessionId, java.lang.String remoteAddr,
+		java.lang.String remoteHost, java.lang.String userAgent,
+		java.util.List<com.liferay.portal.kernel.model.UserTrackerPath> userTrackerPaths) {
+		return getService()
+				   .addUserTracker(companyId, userId, modifiedDate, sessionId,
+			remoteAddr, remoteHost, userAgent, userTrackerPaths);
+	}
 
 	/**
 	* Adds the user tracker to the database. Also notifies the appropriate model listeners.
@@ -50,16 +59,6 @@ public class UserTrackerLocalServiceUtil {
 	public static com.liferay.portal.kernel.model.UserTracker addUserTracker(
 		com.liferay.portal.kernel.model.UserTracker userTracker) {
 		return getService().addUserTracker(userTracker);
-	}
-
-	public static com.liferay.portal.kernel.model.UserTracker addUserTracker(
-		long companyId, long userId, java.util.Date modifiedDate,
-		java.lang.String sessionId, java.lang.String remoteAddr,
-		java.lang.String remoteHost, java.lang.String userAgent,
-		java.util.List<com.liferay.portal.kernel.model.UserTrackerPath> userTrackerPaths) {
-		return getService()
-				   .addUserTracker(companyId, userId, modifiedDate, sessionId,
-			remoteAddr, remoteHost, userAgent, userTrackerPaths);
 	}
 
 	/**
@@ -83,17 +82,6 @@ public class UserTrackerLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the user tracker from the database. Also notifies the appropriate model listeners.
-	*
-	* @param userTracker the user tracker
-	* @return the user tracker that was removed
-	*/
-	public static com.liferay.portal.kernel.model.UserTracker deleteUserTracker(
-		com.liferay.portal.kernel.model.UserTracker userTracker) {
-		return getService().deleteUserTracker(userTracker);
-	}
-
-	/**
 	* Deletes the user tracker with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param userTrackerId the primary key of the user tracker
@@ -104,6 +92,17 @@ public class UserTrackerLocalServiceUtil {
 		long userTrackerId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteUserTracker(userTrackerId);
+	}
+
+	/**
+	* Deletes the user tracker from the database. Also notifies the appropriate model listeners.
+	*
+	* @param userTracker the user tracker
+	* @return the user tracker that was removed
+	*/
+	public static com.liferay.portal.kernel.model.UserTracker deleteUserTracker(
+		com.liferay.portal.kernel.model.UserTracker userTracker) {
+		return getService().deleteUserTracker(userTracker);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {

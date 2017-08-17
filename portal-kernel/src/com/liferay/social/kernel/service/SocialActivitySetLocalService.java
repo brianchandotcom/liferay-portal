@@ -95,16 +95,6 @@ public interface SocialActivitySetLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the social activity set from the database. Also notifies the appropriate model listeners.
-	*
-	* @param socialActivitySet the social activity set
-	* @return the social activity set that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public SocialActivitySet deleteSocialActivitySet(
-		SocialActivitySet socialActivitySet);
-
-	/**
 	* Deletes the social activity set with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param activitySetId the primary key of the social activity set
@@ -114,6 +104,16 @@ public interface SocialActivitySetLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public SocialActivitySet deleteSocialActivitySet(long activitySetId)
 		throws PortalException;
+
+	/**
+	* Deletes the social activity set from the database. Also notifies the appropriate model listeners.
+	*
+	* @param socialActivitySet the social activity set
+	* @return the social activity set that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public SocialActivitySet deleteSocialActivitySet(
+		SocialActivitySet socialActivitySet);
 
 	public DynamicQuery dynamicQuery();
 
@@ -198,19 +198,19 @@ public interface SocialActivitySetLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SocialActivitySet> getOrganizationActivitySets(
 		long organizationId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getOrganizationActivitySetsCount(long organizationId);
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -71,17 +71,6 @@ public class MBThreadFlagLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the message boards thread flag from the database. Also notifies the appropriate model listeners.
-	*
-	* @param mbThreadFlag the message boards thread flag
-	* @return the message boards thread flag that was removed
-	*/
-	public static com.liferay.message.boards.kernel.model.MBThreadFlag deleteMBThreadFlag(
-		com.liferay.message.boards.kernel.model.MBThreadFlag mbThreadFlag) {
-		return getService().deleteMBThreadFlag(mbThreadFlag);
-	}
-
-	/**
 	* Deletes the message boards thread flag with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param threadFlagId the primary key of the message boards thread flag
@@ -95,6 +84,17 @@ public class MBThreadFlagLocalServiceUtil {
 	}
 
 	/**
+	* Deletes the message boards thread flag from the database. Also notifies the appropriate model listeners.
+	*
+	* @param mbThreadFlag the message boards thread flag
+	* @return the message boards thread flag that was removed
+	*/
+	public static com.liferay.message.boards.kernel.model.MBThreadFlag deleteMBThreadFlag(
+		com.liferay.message.boards.kernel.model.MBThreadFlag mbThreadFlag) {
+		return getService().deleteMBThreadFlag(mbThreadFlag);
+	}
+
+	/**
 	* @throws PortalException
 	*/
 	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
@@ -103,14 +103,14 @@ public class MBThreadFlagLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static void deleteThreadFlag(
-		com.liferay.message.boards.kernel.model.MBThreadFlag threadFlag) {
-		getService().deleteThreadFlag(threadFlag);
-	}
-
 	public static void deleteThreadFlag(long threadFlagId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteThreadFlag(threadFlagId);
+	}
+
+	public static void deleteThreadFlag(
+		com.liferay.message.boards.kernel.model.MBThreadFlag threadFlag) {
+		getService().deleteThreadFlag(threadFlag);
 	}
 
 	public static void deleteThreadFlagsByThreadId(long threadId) {

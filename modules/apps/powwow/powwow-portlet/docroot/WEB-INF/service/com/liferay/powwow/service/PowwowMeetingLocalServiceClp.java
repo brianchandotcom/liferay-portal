@@ -31,16 +31,16 @@ public class PowwowMeetingLocalServiceClp implements PowwowMeetingLocalService {
 		_methodName0 = "addPowwowMeeting";
 
 		_methodParameterTypes0 = new String[] {
-				"com.liferay.powwow.model.PowwowMeeting"
+				"long", "long", "long", "java.lang.String", "java.lang.String",
+				"java.lang.String", "java.util.Map", "java.lang.String", "long",
+				"int", "java.util.List",
+				"com.liferay.portal.kernel.service.ServiceContext"
 			};
 
 		_methodName1 = "addPowwowMeeting";
 
 		_methodParameterTypes1 = new String[] {
-				"long", "long", "long", "java.lang.String", "java.lang.String",
-				"java.lang.String", "java.util.Map", "java.lang.String", "long",
-				"int", "java.util.List",
-				"com.liferay.portal.kernel.service.ServiceContext"
+				"com.liferay.powwow.model.PowwowMeeting"
 			};
 
 		_methodName2 = "checkPowwowMeetings";
@@ -59,13 +59,13 @@ public class PowwowMeetingLocalServiceClp implements PowwowMeetingLocalService {
 
 		_methodName5 = "deletePowwowMeeting";
 
-		_methodParameterTypes5 = new String[] {
-				"com.liferay.powwow.model.PowwowMeeting"
-			};
+		_methodParameterTypes5 = new String[] { "long" };
 
 		_methodName6 = "deletePowwowMeeting";
 
-		_methodParameterTypes6 = new String[] { "long" };
+		_methodParameterTypes6 = new String[] {
+				"com.liferay.powwow.model.PowwowMeeting"
+			};
 
 		_methodName7 = "dynamicQuery";
 
@@ -186,46 +186,21 @@ public class PowwowMeetingLocalServiceClp implements PowwowMeetingLocalService {
 		_methodName31 = "updatePowwowMeeting";
 
 		_methodParameterTypes31 = new String[] {
-				"com.liferay.powwow.model.PowwowMeeting"
-			};
-
-		_methodName32 = "updatePowwowMeeting";
-
-		_methodParameterTypes32 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.util.Map", "java.lang.String", "long",
 				"int", "java.util.List",
 				"com.liferay.portal.kernel.service.ServiceContext"
 			};
 
+		_methodName32 = "updatePowwowMeeting";
+
+		_methodParameterTypes32 = new String[] {
+				"com.liferay.powwow.model.PowwowMeeting"
+			};
+
 		_methodName33 = "updateStatus";
 
 		_methodParameterTypes33 = new String[] { "long", "int" };
-	}
-
-	@Override
-	public com.liferay.powwow.model.PowwowMeeting addPowwowMeeting(
-		com.liferay.powwow.model.PowwowMeeting powwowMeeting) {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName0,
-					_methodParameterTypes0,
-					new Object[] { ClpSerializer.translateInput(powwowMeeting) });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (com.liferay.powwow.model.PowwowMeeting)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
@@ -240,8 +215,8 @@ public class PowwowMeetingLocalServiceClp implements PowwowMeetingLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName1,
-					_methodParameterTypes1,
+			returnObj = _invokableLocalService.invokeMethod(_methodName0,
+					_methodParameterTypes0,
 					new Object[] {
 						userId,
 						
@@ -274,6 +249,31 @@ public class PowwowMeetingLocalServiceClp implements PowwowMeetingLocalService {
 			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
 				throw (com.liferay.portal.kernel.exception.PortalException)t;
 			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.powwow.model.PowwowMeeting)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public com.liferay.powwow.model.PowwowMeeting addPowwowMeeting(
+		com.liferay.powwow.model.PowwowMeeting powwowMeeting) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName1,
+					_methodParameterTypes1,
+					new Object[] { ClpSerializer.translateInput(powwowMeeting) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
 
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
@@ -367,14 +367,13 @@ public class PowwowMeetingLocalServiceClp implements PowwowMeetingLocalService {
 
 	@Override
 	public com.liferay.powwow.model.PowwowMeeting deletePowwowMeeting(
-		com.liferay.powwow.model.PowwowMeeting powwowMeeting)
+		long powwowMeetingId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName5,
-					_methodParameterTypes5,
-					new Object[] { ClpSerializer.translateInput(powwowMeeting) });
+					_methodParameterTypes5, new Object[] { powwowMeetingId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -397,13 +396,14 @@ public class PowwowMeetingLocalServiceClp implements PowwowMeetingLocalService {
 
 	@Override
 	public com.liferay.powwow.model.PowwowMeeting deletePowwowMeeting(
-		long powwowMeetingId)
+		com.liferay.powwow.model.PowwowMeeting powwowMeeting)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName6,
-					_methodParameterTypes6, new Object[] { powwowMeetingId });
+					_methodParameterTypes6,
+					new Object[] { ClpSerializer.translateInput(powwowMeeting) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1076,31 +1076,6 @@ public class PowwowMeetingLocalServiceClp implements PowwowMeetingLocalService {
 
 	@Override
 	public com.liferay.powwow.model.PowwowMeeting updatePowwowMeeting(
-		com.liferay.powwow.model.PowwowMeeting powwowMeeting) {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName31,
-					_methodParameterTypes31,
-					new Object[] { ClpSerializer.translateInput(powwowMeeting) });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (com.liferay.powwow.model.PowwowMeeting)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
-	public com.liferay.powwow.model.PowwowMeeting updatePowwowMeeting(
 		long powwowMeetingId, long powwowServerId, java.lang.String name,
 		java.lang.String description, java.lang.String providerType,
 		java.util.Map<java.lang.String, java.io.Serializable> providerTypeMetadataMap,
@@ -1111,8 +1086,8 @@ public class PowwowMeetingLocalServiceClp implements PowwowMeetingLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName32,
-					_methodParameterTypes32,
+			returnObj = _invokableLocalService.invokeMethod(_methodName31,
+					_methodParameterTypes31,
 					new Object[] {
 						powwowMeetingId,
 						
@@ -1143,6 +1118,31 @@ public class PowwowMeetingLocalServiceClp implements PowwowMeetingLocalService {
 			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
 				throw (com.liferay.portal.kernel.exception.PortalException)t;
 			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.powwow.model.PowwowMeeting)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public com.liferay.powwow.model.PowwowMeeting updatePowwowMeeting(
+		com.liferay.powwow.model.PowwowMeeting powwowMeeting) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName32,
+					_methodParameterTypes32,
+					new Object[] { ClpSerializer.translateInput(powwowMeeting) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
 
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;

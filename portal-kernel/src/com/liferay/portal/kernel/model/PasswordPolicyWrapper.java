@@ -333,16 +333,6 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	}
 
 	/**
-	* Returns the change required of this password policy.
-	*
-	* @return the change required of this password policy
-	*/
-	@Override
-	public boolean getChangeRequired() {
-		return _passwordPolicy.getChangeRequired();
-	}
-
-	/**
 	* Returns the changeable of this password policy.
 	*
 	* @return the changeable of this password policy
@@ -350,6 +340,16 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	@Override
 	public boolean getChangeable() {
 		return _passwordPolicy.getChangeable();
+	}
+
+	/**
+	* Returns the change required of this password policy.
+	*
+	* @return the change required of this password policy
+	*/
+	@Override
+	public boolean getChangeRequired() {
+		return _passwordPolicy.getChangeRequired();
 	}
 
 	/**
@@ -723,16 +723,6 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	}
 
 	/**
-	* Returns <code>true</code> if this password policy is change required.
-	*
-	* @return <code>true</code> if this password policy is change required; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isChangeRequired() {
-		return _passwordPolicy.isChangeRequired();
-	}
-
-	/**
 	* Returns <code>true</code> if this password policy is changeable.
 	*
 	* @return <code>true</code> if this password policy is changeable; <code>false</code> otherwise
@@ -740,6 +730,16 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	@Override
 	public boolean isChangeable() {
 		return _passwordPolicy.isChangeable();
+	}
+
+	/**
+	* Returns <code>true</code> if this password policy is change required.
+	*
+	* @return <code>true</code> if this password policy is change required; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isChangeRequired() {
+		return _passwordPolicy.isChangeRequired();
 	}
 
 	/**
@@ -833,16 +833,6 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	}
 
 	/**
-	* Sets whether this password policy is change required.
-	*
-	* @param changeRequired the change required of this password policy
-	*/
-	@Override
-	public void setChangeRequired(boolean changeRequired) {
-		_passwordPolicy.setChangeRequired(changeRequired);
-	}
-
-	/**
 	* Sets whether this password policy is changeable.
 	*
 	* @param changeable the changeable of this password policy
@@ -850,6 +840,16 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	@Override
 	public void setChangeable(boolean changeable) {
 		_passwordPolicy.setChangeable(changeable);
+	}
+
+	/**
+	* Sets whether this password policy is change required.
+	*
+	* @param changeRequired the change required of this password policy
+	*/
+	@Override
+	public void setChangeRequired(boolean changeRequired) {
+		_passwordPolicy.setChangeRequired(changeRequired);
 	}
 
 	/**
@@ -903,13 +903,13 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_passwordPolicy.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
+		_passwordPolicy.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_passwordPolicy.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_passwordPolicy.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

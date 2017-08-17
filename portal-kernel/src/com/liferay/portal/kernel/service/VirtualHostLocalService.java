@@ -83,15 +83,6 @@ public interface VirtualHostLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the virtual host from the database. Also notifies the appropriate model listeners.
-	*
-	* @param virtualHost the virtual host
-	* @return the virtual host that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public VirtualHost deleteVirtualHost(VirtualHost virtualHost);
-
-	/**
 	* Deletes the virtual host with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param virtualHostId the primary key of the virtual host
@@ -101,6 +92,15 @@ public interface VirtualHostLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public VirtualHost deleteVirtualHost(long virtualHostId)
 		throws PortalException;
+
+	/**
+	* Deletes the virtual host from the database. Also notifies the appropriate model listeners.
+	*
+	* @param virtualHost the virtual host
+	* @return the virtual host that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public VirtualHost deleteVirtualHost(VirtualHost virtualHost);
 
 	public DynamicQuery dynamicQuery();
 
@@ -162,13 +162,13 @@ public interface VirtualHostLocalService extends BaseLocalService,
 		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public VirtualHost fetchVirtualHost(java.lang.String hostname);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public VirtualHost fetchVirtualHost(long virtualHostId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public VirtualHost fetchVirtualHost(long companyId, long layoutSetId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public VirtualHost fetchVirtualHost(java.lang.String hostname);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -188,10 +188,6 @@ public interface VirtualHostLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public VirtualHost getVirtualHost(java.lang.String hostname)
-		throws PortalException;
-
 	/**
 	* Returns the virtual host with the primary key.
 	*
@@ -205,6 +201,10 @@ public interface VirtualHostLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public VirtualHost getVirtualHost(long companyId, long layoutSetId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public VirtualHost getVirtualHost(java.lang.String hostname)
 		throws PortalException;
 
 	/**
@@ -229,6 +229,9 @@ public interface VirtualHostLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getVirtualHostsCount();
 
+	public VirtualHost updateVirtualHost(long companyId, long layoutSetId,
+		java.lang.String hostname);
+
 	/**
 	* Updates the virtual host in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -237,7 +240,4 @@ public interface VirtualHostLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public VirtualHost updateVirtualHost(VirtualHost virtualHost);
-
-	public VirtualHost updateVirtualHost(long companyId, long layoutSetId,
-		java.lang.String hostname);
 }

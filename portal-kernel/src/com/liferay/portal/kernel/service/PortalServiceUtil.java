@@ -61,6 +61,15 @@ public class PortalServiceUtil {
 		return getService().getVersion();
 	}
 
+	public static void testAddClassName_Rollback(
+		java.lang.String classNameValue) {
+		getService().testAddClassName_Rollback(classNameValue);
+	}
+
+	public static void testAddClassName_Success(java.lang.String classNameValue) {
+		getService().testAddClassName_Success(classNameValue);
+	}
+
 	public static void testAddClassNameAndTestTransactionPortletBar_PortalRollback(
 		java.lang.String transactionPortletBarText) {
 		getService()
@@ -77,15 +86,6 @@ public class PortalServiceUtil {
 		java.lang.String transactionPortletBarText) {
 		getService()
 			.testAddClassNameAndTestTransactionPortletBar_Success(transactionPortletBarText);
-	}
-
-	public static void testAddClassName_Rollback(
-		java.lang.String classNameValue) {
-		getService().testAddClassName_Rollback(classNameValue);
-	}
-
-	public static void testAddClassName_Success(java.lang.String classNameValue) {
-		getService().testAddClassName_Success(classNameValue);
 	}
 
 	public static void testAutoSyncHibernateSessionStateOnTxCreation() {

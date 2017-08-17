@@ -81,16 +81,6 @@ public interface MeetupsRegistrationLocalService extends BaseLocalService,
 		long meetupsRegistrationId);
 
 	/**
-	* Deletes the meetups registration from the database. Also notifies the appropriate model listeners.
-	*
-	* @param meetupsRegistration the meetups registration
-	* @return the meetups registration that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public MeetupsRegistration deleteMeetupsRegistration(
-		MeetupsRegistration meetupsRegistration);
-
-	/**
 	* Deletes the meetups registration with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param meetupsRegistrationId the primary key of the meetups registration
@@ -100,6 +90,16 @@ public interface MeetupsRegistrationLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public MeetupsRegistration deleteMeetupsRegistration(
 		long meetupsRegistrationId) throws PortalException;
+
+	/**
+	* Deletes the meetups registration from the database. Also notifies the appropriate model listeners.
+	*
+	* @param meetupsRegistration the meetups registration
+	* @return the meetups registration that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public MeetupsRegistration deleteMeetupsRegistration(
+		MeetupsRegistration meetupsRegistration);
 
 	/**
 	* @throws PortalException
@@ -233,6 +233,10 @@ public interface MeetupsRegistrationLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	public MeetupsRegistration updateMeetupsRegistration(long userId,
+		long meetupsEntryId, int status, java.lang.String comments)
+		throws PortalException;
+
 	/**
 	* Updates the meetups registration in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -242,8 +246,4 @@ public interface MeetupsRegistrationLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public MeetupsRegistration updateMeetupsRegistration(
 		MeetupsRegistration meetupsRegistration);
-
-	public MeetupsRegistration updateMeetupsRegistration(long userId,
-		long meetupsEntryId, int status, java.lang.String comments)
-		throws PortalException;
 }

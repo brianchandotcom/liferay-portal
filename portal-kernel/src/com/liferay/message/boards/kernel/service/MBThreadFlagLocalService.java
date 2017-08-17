@@ -90,15 +90,6 @@ public interface MBThreadFlagLocalService extends BaseLocalService,
 	public MBThreadFlag createMBThreadFlag(long threadFlagId);
 
 	/**
-	* Deletes the message boards thread flag from the database. Also notifies the appropriate model listeners.
-	*
-	* @param mbThreadFlag the message boards thread flag
-	* @return the message boards thread flag that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public MBThreadFlag deleteMBThreadFlag(MBThreadFlag mbThreadFlag);
-
-	/**
 	* Deletes the message boards thread flag with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param threadFlagId the primary key of the message boards thread flag
@@ -110,16 +101,25 @@ public interface MBThreadFlagLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
+	* Deletes the message boards thread flag from the database. Also notifies the appropriate model listeners.
+	*
+	* @param mbThreadFlag the message boards thread flag
+	* @return the message boards thread flag that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public MBThreadFlag deleteMBThreadFlag(MBThreadFlag mbThreadFlag);
+
+	/**
 	* @throws PortalException
 	*/
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
+	public void deleteThreadFlag(long threadFlagId) throws PortalException;
+
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public void deleteThreadFlag(MBThreadFlag threadFlag);
-
-	public void deleteThreadFlag(long threadFlagId) throws PortalException;
 
 	public void deleteThreadFlagsByThreadId(long threadId);
 

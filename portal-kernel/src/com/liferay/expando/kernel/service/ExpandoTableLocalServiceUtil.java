@@ -41,15 +41,15 @@ public class ExpandoTableLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.expando.service.impl.ExpandoTableLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.expando.kernel.model.ExpandoTable addDefaultTable(
-		long companyId, java.lang.String className)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().addDefaultTable(companyId, className);
-	}
-
-	public static com.liferay.expando.kernel.model.ExpandoTable addDefaultTable(
 		long companyId, long classNameId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().addDefaultTable(companyId, classNameId);
+	}
+
+	public static com.liferay.expando.kernel.model.ExpandoTable addDefaultTable(
+		long companyId, java.lang.String className)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addDefaultTable(companyId, className);
 	}
 
 	/**
@@ -64,15 +64,15 @@ public class ExpandoTableLocalServiceUtil {
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoTable addTable(
-		long companyId, java.lang.String className, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().addTable(companyId, className, name);
-	}
-
-	public static com.liferay.expando.kernel.model.ExpandoTable addTable(
 		long companyId, long classNameId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().addTable(companyId, classNameId, name);
+	}
+
+	public static com.liferay.expando.kernel.model.ExpandoTable addTable(
+		long companyId, java.lang.String className, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addTable(companyId, className, name);
 	}
 
 	/**
@@ -129,24 +129,24 @@ public class ExpandoTableLocalServiceUtil {
 		getService().deleteTable(tableId);
 	}
 
-	public static void deleteTable(long companyId, java.lang.String className,
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteTable(companyId, className, name);
-	}
-
 	public static void deleteTable(long companyId, long classNameId,
 		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteTable(companyId, classNameId, name);
 	}
 
-	public static void deleteTables(long companyId, java.lang.String className) {
-		getService().deleteTables(companyId, className);
+	public static void deleteTable(long companyId, java.lang.String className,
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteTable(companyId, className, name);
 	}
 
 	public static void deleteTables(long companyId, long classNameId) {
 		getService().deleteTables(companyId, classNameId);
+	}
+
+	public static void deleteTables(long companyId, java.lang.String className) {
+		getService().deleteTables(companyId, className);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -228,13 +228,13 @@ public class ExpandoTableLocalServiceUtil {
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoTable fetchDefaultTable(
-		long companyId, java.lang.String className) {
-		return getService().fetchDefaultTable(companyId, className);
+		long companyId, long classNameId) {
+		return getService().fetchDefaultTable(companyId, classNameId);
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoTable fetchDefaultTable(
-		long companyId, long classNameId) {
-		return getService().fetchDefaultTable(companyId, classNameId);
+		long companyId, java.lang.String className) {
+		return getService().fetchDefaultTable(companyId, className);
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoTable fetchExpandoTable(
@@ -252,15 +252,15 @@ public class ExpandoTableLocalServiceUtil {
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoTable getDefaultTable(
-		long companyId, java.lang.String className)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getDefaultTable(companyId, className);
-	}
-
-	public static com.liferay.expando.kernel.model.ExpandoTable getDefaultTable(
 		long companyId, long classNameId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getDefaultTable(companyId, classNameId);
+	}
+
+	public static com.liferay.expando.kernel.model.ExpandoTable getDefaultTable(
+		long companyId, java.lang.String className)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getDefaultTable(companyId, className);
 	}
 
 	/**
@@ -327,25 +327,25 @@ public class ExpandoTableLocalServiceUtil {
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoTable getTable(
-		long companyId, java.lang.String className, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getTable(companyId, className, name);
-	}
-
-	public static com.liferay.expando.kernel.model.ExpandoTable getTable(
 		long companyId, long classNameId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getTable(companyId, classNameId, name);
 	}
 
-	public static java.util.List<com.liferay.expando.kernel.model.ExpandoTable> getTables(
-		long companyId, java.lang.String className) {
-		return getService().getTables(companyId, className);
+	public static com.liferay.expando.kernel.model.ExpandoTable getTable(
+		long companyId, java.lang.String className, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getTable(companyId, className, name);
 	}
 
 	public static java.util.List<com.liferay.expando.kernel.model.ExpandoTable> getTables(
 		long companyId, long classNameId) {
 		return getService().getTables(companyId, classNameId);
+	}
+
+	public static java.util.List<com.liferay.expando.kernel.model.ExpandoTable> getTables(
+		long companyId, java.lang.String className) {
+		return getService().getTables(companyId, className);
 	}
 
 	/**

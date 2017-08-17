@@ -82,15 +82,6 @@ public interface MBStatsUserLocalService extends BaseLocalService,
 	public MBStatsUser createMBStatsUser(long statsUserId);
 
 	/**
-	* Deletes the message boards stats user from the database. Also notifies the appropriate model listeners.
-	*
-	* @param mbStatsUser the message boards stats user
-	* @return the message boards stats user that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public MBStatsUser deleteMBStatsUser(MBStatsUser mbStatsUser);
-
-	/**
 	* Deletes the message boards stats user with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param statsUserId the primary key of the message boards stats user
@@ -102,15 +93,24 @@ public interface MBStatsUserLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
+	* Deletes the message boards stats user from the database. Also notifies the appropriate model listeners.
+	*
+	* @param mbStatsUser the message boards stats user
+	* @return the message boards stats user that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public MBStatsUser deleteMBStatsUser(MBStatsUser mbStatsUser);
+
+	/**
 	* @throws PortalException
 	*/
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public void deleteStatsUser(MBStatsUser statsUser);
-
 	public void deleteStatsUser(long statsUserId) throws PortalException;
+
+	public void deleteStatsUser(MBStatsUser statsUser);
 
 	public void deleteStatsUsersByGroupId(long groupId);
 
@@ -264,8 +264,8 @@ public interface MBStatsUserLocalService extends BaseLocalService,
 	public MBStatsUser updateStatsUser(long groupId, long userId);
 
 	public MBStatsUser updateStatsUser(long groupId, long userId,
-		int messageCount, Date lastPostDate);
+		Date lastPostDate);
 
 	public MBStatsUser updateStatsUser(long groupId, long userId,
-		Date lastPostDate);
+		int messageCount, Date lastPostDate);
 }

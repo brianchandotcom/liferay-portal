@@ -40,18 +40,6 @@ public class RepositoryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.RepositoryLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-
-	/**
-	* Adds the repository to the database. Also notifies the appropriate model listeners.
-	*
-	* @param repository the repository
-	* @return the repository that was added
-	*/
-	public static com.liferay.portal.kernel.model.Repository addRepository(
-		com.liferay.portal.kernel.model.Repository repository) {
-		return getService().addRepository(repository);
-	}
-
 	public static com.liferay.portal.kernel.model.Repository addRepository(
 		long userId, long groupId, long classNameId, long parentFolderId,
 		java.lang.String name, java.lang.String description,
@@ -63,6 +51,17 @@ public class RepositoryLocalServiceUtil {
 				   .addRepository(userId, groupId, classNameId, parentFolderId,
 			name, description, portletId, typeSettingsProperties, hidden,
 			serviceContext);
+	}
+
+	/**
+	* Adds the repository to the database. Also notifies the appropriate model listeners.
+	*
+	* @param repository the repository
+	* @return the repository that was added
+	*/
+	public static com.liferay.portal.kernel.model.Repository addRepository(
+		com.liferay.portal.kernel.model.Repository repository) {
+		return getService().addRepository(repository);
 	}
 
 	public static void checkRepository(long repositoryId) {
@@ -95,17 +94,6 @@ public class RepositoryLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the repository from the database. Also notifies the appropriate model listeners.
-	*
-	* @param repository the repository
-	* @return the repository that was removed
-	*/
-	public static com.liferay.portal.kernel.model.Repository deleteRepository(
-		com.liferay.portal.kernel.model.Repository repository) {
-		return getService().deleteRepository(repository);
-	}
-
-	/**
 	* Deletes the repository with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param repositoryId the primary key of the repository
@@ -116,6 +104,17 @@ public class RepositoryLocalServiceUtil {
 		long repositoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteRepository(repositoryId);
+	}
+
+	/**
+	* Deletes the repository from the database. Also notifies the appropriate model listeners.
+	*
+	* @param repository the repository
+	* @return the repository that was removed
+	*/
+	public static com.liferay.portal.kernel.model.Repository deleteRepository(
+		com.liferay.portal.kernel.model.Repository repository) {
+		return getService().deleteRepository(repository);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -356,6 +355,18 @@ public class RepositoryLocalServiceUtil {
 		return getService().getTypeSettingsProperties(repositoryId);
 	}
 
+	public static void updateRepository(long repositoryId,
+		java.lang.String name, java.lang.String description)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().updateRepository(repositoryId, name, description);
+	}
+
+	public static void updateRepository(long repositoryId,
+		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().updateRepository(repositoryId, typeSettingsProperties);
+	}
+
 	/**
 	* Updates the repository in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -365,18 +376,6 @@ public class RepositoryLocalServiceUtil {
 	public static com.liferay.portal.kernel.model.Repository updateRepository(
 		com.liferay.portal.kernel.model.Repository repository) {
 		return getService().updateRepository(repository);
-	}
-
-	public static void updateRepository(long repositoryId,
-		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().updateRepository(repositoryId, typeSettingsProperties);
-	}
-
-	public static void updateRepository(long repositoryId,
-		java.lang.String name, java.lang.String description)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().updateRepository(repositoryId, name, description);
 	}
 
 	public static RepositoryLocalService getService() {

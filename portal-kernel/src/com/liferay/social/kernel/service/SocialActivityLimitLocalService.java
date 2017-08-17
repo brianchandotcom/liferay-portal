@@ -92,16 +92,6 @@ public interface SocialActivityLimitLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the social activity limit from the database. Also notifies the appropriate model listeners.
-	*
-	* @param socialActivityLimit the social activity limit
-	* @return the social activity limit that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public SocialActivityLimit deleteSocialActivityLimit(
-		SocialActivityLimit socialActivityLimit);
-
-	/**
 	* Deletes the social activity limit with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param activityLimitId the primary key of the social activity limit
@@ -111,6 +101,16 @@ public interface SocialActivityLimitLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public SocialActivityLimit deleteSocialActivityLimit(long activityLimitId)
 		throws PortalException;
+
+	/**
+	* Deletes the social activity limit from the database. Also notifies the appropriate model listeners.
+	*
+	* @param socialActivityLimit the social activity limit
+	* @return the social activity limit that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public SocialActivityLimit deleteSocialActivityLimit(
+		SocialActivityLimit socialActivityLimit);
 
 	public DynamicQuery dynamicQuery();
 

@@ -227,9 +227,9 @@ public interface ListTypeLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public ListType updateListType(ListType listType);
 
-	public void validate(long listTypeId, java.lang.String type)
-		throws PortalException;
-
 	public void validate(long listTypeId, long classNameId,
 		java.lang.String type) throws PortalException;
+
+	public void validate(long listTypeId, java.lang.String type)
+		throws PortalException;
 }

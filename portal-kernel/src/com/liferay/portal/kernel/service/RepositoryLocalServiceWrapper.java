@@ -31,18 +31,6 @@ public class RepositoryLocalServiceWrapper implements RepositoryLocalService,
 		_repositoryLocalService = repositoryLocalService;
 	}
 
-	/**
-	* Adds the repository to the database. Also notifies the appropriate model listeners.
-	*
-	* @param repository the repository
-	* @return the repository that was added
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.Repository addRepository(
-		com.liferay.portal.kernel.model.Repository repository) {
-		return _repositoryLocalService.addRepository(repository);
-	}
-
 	@Override
 	public com.liferay.portal.kernel.model.Repository addRepository(
 		long userId, long groupId, long classNameId, long parentFolderId,
@@ -54,6 +42,18 @@ public class RepositoryLocalServiceWrapper implements RepositoryLocalService,
 		return _repositoryLocalService.addRepository(userId, groupId,
 			classNameId, parentFolderId, name, description, portletId,
 			typeSettingsProperties, hidden, serviceContext);
+	}
+
+	/**
+	* Adds the repository to the database. Also notifies the appropriate model listeners.
+	*
+	* @param repository the repository
+	* @return the repository that was added
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.Repository addRepository(
+		com.liferay.portal.kernel.model.Repository repository) {
+		return _repositoryLocalService.addRepository(repository);
 	}
 
 	@Override
@@ -90,18 +90,6 @@ public class RepositoryLocalServiceWrapper implements RepositoryLocalService,
 	}
 
 	/**
-	* Deletes the repository from the database. Also notifies the appropriate model listeners.
-	*
-	* @param repository the repository
-	* @return the repository that was removed
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.Repository deleteRepository(
-		com.liferay.portal.kernel.model.Repository repository) {
-		return _repositoryLocalService.deleteRepository(repository);
-	}
-
-	/**
 	* Deletes the repository with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param repositoryId the primary key of the repository
@@ -113,6 +101,18 @@ public class RepositoryLocalServiceWrapper implements RepositoryLocalService,
 		long repositoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _repositoryLocalService.deleteRepository(repositoryId);
+	}
+
+	/**
+	* Deletes the repository from the database. Also notifies the appropriate model listeners.
+	*
+	* @param repository the repository
+	* @return the repository that was removed
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.Repository deleteRepository(
+		com.liferay.portal.kernel.model.Repository repository) {
+		return _repositoryLocalService.deleteRepository(repository);
 	}
 
 	@Override
@@ -381,16 +381,11 @@ public class RepositoryLocalServiceWrapper implements RepositoryLocalService,
 		return _repositoryLocalService.getTypeSettingsProperties(repositoryId);
 	}
 
-	/**
-	* Updates the repository in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param repository the repository
-	* @return the repository that was updated
-	*/
 	@Override
-	public com.liferay.portal.kernel.model.Repository updateRepository(
-		com.liferay.portal.kernel.model.Repository repository) {
-		return _repositoryLocalService.updateRepository(repository);
+	public void updateRepository(long repositoryId, java.lang.String name,
+		java.lang.String description)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_repositoryLocalService.updateRepository(repositoryId, name, description);
 	}
 
 	@Override
@@ -401,11 +396,16 @@ public class RepositoryLocalServiceWrapper implements RepositoryLocalService,
 			typeSettingsProperties);
 	}
 
+	/**
+	* Updates the repository in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param repository the repository
+	* @return the repository that was updated
+	*/
 	@Override
-	public void updateRepository(long repositoryId, java.lang.String name,
-		java.lang.String description)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_repositoryLocalService.updateRepository(repositoryId, name, description);
+	public com.liferay.portal.kernel.model.Repository updateRepository(
+		com.liferay.portal.kernel.model.Repository repository) {
+		return _repositoryLocalService.updateRepository(repository);
 	}
 
 	@Override

@@ -38,12 +38,11 @@ public class MDRActionLocalServiceWrapper implements MDRActionLocalService,
 		long ruleGroupInstanceId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type,
-		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
+		java.lang.String type, java.lang.String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrActionLocalService.addAction(ruleGroupInstanceId, nameMap,
-			descriptionMap, type, typeSettingsProperties, serviceContext);
+			descriptionMap, type, typeSettings, serviceContext);
 	}
 
 	@Override
@@ -51,11 +50,12 @@ public class MDRActionLocalServiceWrapper implements MDRActionLocalService,
 		long ruleGroupInstanceId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type, java.lang.String typeSettings,
+		java.lang.String type,
+		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrActionLocalService.addAction(ruleGroupInstanceId, nameMap,
-			descriptionMap, type, typeSettings, serviceContext);
+			descriptionMap, type, typeSettingsProperties, serviceContext);
 	}
 
 	/**
@@ -83,31 +83,19 @@ public class MDRActionLocalServiceWrapper implements MDRActionLocalService,
 	}
 
 	@Override
+	public void deleteAction(long actionId) {
+		_mdrActionLocalService.deleteAction(actionId);
+	}
+
+	@Override
 	public void deleteAction(
 		com.liferay.mobile.device.rules.model.MDRAction action) {
 		_mdrActionLocalService.deleteAction(action);
 	}
 
 	@Override
-	public void deleteAction(long actionId) {
-		_mdrActionLocalService.deleteAction(actionId);
-	}
-
-	@Override
 	public void deleteActions(long ruleGroupInstanceId) {
 		_mdrActionLocalService.deleteActions(ruleGroupInstanceId);
-	}
-
-	/**
-	* Deletes the mdr action from the database. Also notifies the appropriate model listeners.
-	*
-	* @param mdrAction the mdr action
-	* @return the mdr action that was removed
-	*/
-	@Override
-	public com.liferay.mobile.device.rules.model.MDRAction deleteMDRAction(
-		com.liferay.mobile.device.rules.model.MDRAction mdrAction) {
-		return _mdrActionLocalService.deleteMDRAction(mdrAction);
 	}
 
 	/**
@@ -122,6 +110,18 @@ public class MDRActionLocalServiceWrapper implements MDRActionLocalService,
 		long actionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrActionLocalService.deleteMDRAction(actionId);
+	}
+
+	/**
+	* Deletes the mdr action from the database. Also notifies the appropriate model listeners.
+	*
+	* @param mdrAction the mdr action
+	* @return the mdr action that was removed
+	*/
+	@Override
+	public com.liferay.mobile.device.rules.model.MDRAction deleteMDRAction(
+		com.liferay.mobile.device.rules.model.MDRAction mdrAction) {
+		return _mdrActionLocalService.deleteMDRAction(mdrAction);
 	}
 
 	/**
@@ -402,12 +402,11 @@ public class MDRActionLocalServiceWrapper implements MDRActionLocalService,
 		long actionId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type,
-		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
+		java.lang.String type, java.lang.String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrActionLocalService.updateAction(actionId, nameMap,
-			descriptionMap, type, typeSettingsProperties, serviceContext);
+			descriptionMap, type, typeSettings, serviceContext);
 	}
 
 	@Override
@@ -415,11 +414,12 @@ public class MDRActionLocalServiceWrapper implements MDRActionLocalService,
 		long actionId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type, java.lang.String typeSettings,
+		java.lang.String type,
+		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrActionLocalService.updateAction(actionId, nameMap,
-			descriptionMap, type, typeSettings, serviceContext);
+			descriptionMap, type, typeSettingsProperties, serviceContext);
 	}
 
 	/**

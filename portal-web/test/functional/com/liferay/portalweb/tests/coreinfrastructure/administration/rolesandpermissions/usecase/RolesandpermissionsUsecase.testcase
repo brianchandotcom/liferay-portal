@@ -196,7 +196,6 @@
 
 		<execute macro="PermissionsInline#gotoConfigurationPG">
 			<var name="portletName" value="Web Content Display" />
-			<var name="portletOption" value="Configuration" />
 		</execute>
 
 		<var name="key_teamName" value="Site Team Name" />
@@ -216,7 +215,6 @@
 
 		<execute macro="PermissionsInline#gotoConfigurationPG">
 			<var name="portletName" value="Web Content Display" />
-			<var name="portletOption" value="Configuration" />
 		</execute>
 
 		<var name="key_teamName" value="Site Team Name" />
@@ -2320,7 +2318,6 @@
 
 		<execute macro="PermissionsInline#gotoConfigurationPG">
 			<var name="portletName" value="Currency Converter" />
-			<var name="portletOption" value="Configuration" />
 		</execute>
 
 		<execute macro="Role#definePermissionPG">

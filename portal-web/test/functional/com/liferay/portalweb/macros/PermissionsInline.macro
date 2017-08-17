@@ -89,6 +89,7 @@
 		</if>
 
 		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="${portletName}" />
 			<var name="portletOption" value="${optionName}" />
 		</execute>
 

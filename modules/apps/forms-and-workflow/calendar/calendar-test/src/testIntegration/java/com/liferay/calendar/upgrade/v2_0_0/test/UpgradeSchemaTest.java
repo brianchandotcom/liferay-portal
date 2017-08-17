@@ -64,7 +64,7 @@ public class UpgradeSchemaTest {
 		_upgradeDatabaseTestHelper =
 			CalendarUpgradeTestUtil.getUpgradeDatabaseTestHelper();
 		_upgradeSchema = CalendarUpgradeTestUtil.getUpgradeStep(
-			"com.liferay.calendar.upgrade.v2_0_0.UpgradeSchema");
+			"com.liferay.calendar.internal.upgrade.v2_0_0.UpgradeSchema");
 
 		CheckBookingsMessageListenerTestUtil.setUp();
 	}

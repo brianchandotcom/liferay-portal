@@ -236,14 +236,12 @@ public abstract class BaseExportImportTestCase {
 		return parameterMap;
 	}
 
-	@SuppressWarnings("unused")
 	protected StagedModel getStagedModel(String uuid, long groupId)
 		throws PortalException {
 
 		return null;
 	}
 
-	@SuppressWarnings("unused")
 	protected String getStagedModelUuid(StagedModel stagedModel)
 		throws PortalException {
 

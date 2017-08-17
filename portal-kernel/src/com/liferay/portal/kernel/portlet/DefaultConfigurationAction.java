@@ -41,7 +41,6 @@ public class DefaultConfigurationAction
 		return new PortletPreferencesSettings(actionRequest.getPreferences());
 	}
 
-	@SuppressWarnings("unused")
 	protected void postProcess(
 			long companyId, PortletRequest portletRequest,
 			PortletPreferences portletPreferences)

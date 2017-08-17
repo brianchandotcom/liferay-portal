@@ -42,7 +42,6 @@ import java.util.Map;
 public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 
 	@Override
-	@SuppressWarnings("unused")
 	public void checkRoles(
 			List<UserGroupRole> addUserGroupRoles,
 			List<UserGroupRole> removeUserGroupRoles)
@@ -50,7 +49,6 @@ public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public boolean isMembershipAllowed(long userId, long groupId)
 		throws PortalException {
 
@@ -95,7 +93,6 @@ public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public boolean isMembershipRequired(long userId, long groupId)
 		throws PortalException {
 
@@ -110,7 +107,6 @@ public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public boolean isRoleAllowed(long userId, long groupId, long roleId)
 		throws PortalException {
 
@@ -186,7 +182,6 @@ public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public void propagateRoles(
 			List<UserGroupRole> addUserGroupRoles,
 			List<UserGroupRole> removeUserGroupRoles)

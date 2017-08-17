@@ -46,7 +46,6 @@ public abstract class BaseIntraband implements Intraband {
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public void close() throws InterruptedException, IOException {
 		datagramReceiveHandlersReference.set(null);
 

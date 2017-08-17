@@ -170,7 +170,6 @@ public abstract class BaseDB implements DB {
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public List<Index> getIndexes(Connection con) throws SQLException {
 		return Collections.emptyList();
 	}

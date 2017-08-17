@@ -98,21 +98,18 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public void checkRestorableEntry(
 			long classPK, long containerModelId, String newName)
 		throws PortalException {
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public void checkRestorableEntry(
 			TrashEntry trashEntry, long containerModelId, String newName)
 		throws PortalException {
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public ContainerModel getContainerModel(long containerModelId)
 		throws PortalException {
 
@@ -139,7 +136,6 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public List<ContainerModel> getContainerModels(
 			long classPK, long containerModelId, int start, int end)
 		throws PortalException {
@@ -148,7 +144,6 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public int getContainerModelsCount(long classPK, long containerModelId)
 		throws PortalException {
 
@@ -183,7 +178,6 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public ContainerModel getParentContainerModel(long classPK)
 		throws PortalException {
 
@@ -206,7 +200,6 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public List<ContainerModel> getParentContainerModels(long classPK)
 		throws PortalException {
 
@@ -214,7 +207,6 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public String getRestoreContainedModelLink(
 			PortletRequest portletRequest, long classPK)
 		throws PortalException {
@@ -223,7 +215,6 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public String getRestoreContainerModelLink(
 			PortletRequest portletRequest, long classPK)
 		throws PortalException {
@@ -232,7 +223,6 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public String getRestoreMessage(PortletRequest portletRequest, long classPK)
 		throws PortalException {
 
@@ -260,7 +250,6 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public int getTrashContainedModelsCount(long classPK)
 		throws PortalException {
 
@@ -272,7 +261,6 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	 */
 	@Deprecated
 	@Override
-	@SuppressWarnings("unused")
 	public List<TrashRenderer> getTrashContainedModelTrashRenderers(
 			long classPK, int start, int end)
 		throws PortalException {
@@ -286,7 +274,6 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public int getTrashContainerModelsCount(long classPK)
 		throws PortalException {
 
@@ -298,7 +285,6 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	 */
 	@Deprecated
 	@Override
-	@SuppressWarnings("unused")
 	public List<TrashRenderer> getTrashContainerModelTrashRenderers(
 			long classPK, int start, int end)
 		throws PortalException {
@@ -312,7 +298,6 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public int getTrashModelsCount(long classPK) throws PortalException {
 		return 0;
 	}
@@ -324,7 +309,6 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	 */
 	@Deprecated
 	@Override
-	@SuppressWarnings("unused")
 	public List<TrashRenderer> getTrashModelTrashRenderers(
 			long classPK, int start, int end, OrderByComparator<?> obc)
 		throws PortalException {
@@ -392,13 +376,11 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public boolean isRestorable(long classPK) throws PortalException {
 		return true;
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public void moveEntry(
 			long userId, long classPK, long containerModelId,
 			ServiceContext serviceContext)
@@ -423,13 +405,11 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public void restoreRelatedTrashEntry(String className, long classPK)
 		throws PortalException {
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public void updateTitle(long classPK, String title) throws PortalException {
 	}
 

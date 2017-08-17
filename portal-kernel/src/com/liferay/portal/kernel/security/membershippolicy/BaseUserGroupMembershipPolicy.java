@@ -27,7 +27,6 @@ public abstract class BaseUserGroupMembershipPolicy
 	implements UserGroupMembershipPolicy {
 
 	@Override
-	@SuppressWarnings("unused")
 	public boolean isMembershipAllowed(long userId, long userGroupId)
 		throws PortalException {
 
@@ -43,7 +42,6 @@ public abstract class BaseUserGroupMembershipPolicy
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public boolean isMembershipRequired(long userId, long userGroupId)
 		throws PortalException {
 

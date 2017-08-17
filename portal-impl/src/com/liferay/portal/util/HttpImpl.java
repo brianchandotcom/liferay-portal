@@ -521,7 +521,6 @@ public class HttpImpl implements Http {
 	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
-	@SuppressWarnings("unused")
 	public org.apache.commons.httpclient.HostConfiguration getHostConfiguration(
 			String location)
 		throws IOException {

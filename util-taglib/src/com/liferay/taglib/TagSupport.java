@@ -52,13 +52,11 @@ public class TagSupport implements DirectTag, Tag {
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public int doEndTag() throws JspException {
 		return EVAL_PAGE;
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public int doStartTag() throws JspException {
 		return SKIP_BODY;
 	}

@@ -264,7 +264,6 @@ public class LiferayPortlet extends GenericPortlet {
 		}
 	}
 
-	@SuppressWarnings("unused")
 	protected void doAbout(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
@@ -272,7 +271,6 @@ public class LiferayPortlet extends GenericPortlet {
 		throw new PortletException("doAbout method not implemented");
 	}
 
-	@SuppressWarnings("unused")
 	protected void doConfig(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
@@ -331,7 +329,6 @@ public class LiferayPortlet extends GenericPortlet {
 		}
 	}
 
-	@SuppressWarnings("unused")
 	protected void doEditDefaults(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
@@ -339,7 +336,6 @@ public class LiferayPortlet extends GenericPortlet {
 		throw new PortletException("doEditDefaults method not implemented");
 	}
 
-	@SuppressWarnings("unused")
 	protected void doEditGuest(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
@@ -347,7 +343,6 @@ public class LiferayPortlet extends GenericPortlet {
 		throw new PortletException("doEditGuest method not implemented");
 	}
 
-	@SuppressWarnings("unused")
 	protected void doPreview(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
@@ -355,7 +350,6 @@ public class LiferayPortlet extends GenericPortlet {
 		throw new PortletException("doPreview method not implemented");
 	}
 
-	@SuppressWarnings("unused")
 	protected void doPrint(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {

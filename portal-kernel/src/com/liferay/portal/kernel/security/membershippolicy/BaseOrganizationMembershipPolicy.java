@@ -41,7 +41,6 @@ public abstract class BaseOrganizationMembershipPolicy
 	implements OrganizationMembershipPolicy {
 
 	@Override
-	@SuppressWarnings("unused")
 	public void checkRoles(
 			List<UserGroupRole> addUserGroupRoles,
 			List<UserGroupRole> removeUserGroupRoles)
@@ -49,7 +48,6 @@ public abstract class BaseOrganizationMembershipPolicy
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public boolean isMembershipAllowed(long userId, long organizationId)
 		throws PortalException {
 
@@ -104,7 +102,6 @@ public abstract class BaseOrganizationMembershipPolicy
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public boolean isMembershipRequired(long userId, long organizationId)
 		throws PortalException {
 

@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 public abstract class BaseRoleMembershipPolicy implements RoleMembershipPolicy {
 
 	@Override
-	@SuppressWarnings("unused")
 	public boolean isRoleAllowed(long userId, long roleId)
 		throws PortalException {
 
@@ -41,7 +40,6 @@ public abstract class BaseRoleMembershipPolicy implements RoleMembershipPolicy {
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public boolean isRoleRequired(long userId, long roleId)
 		throws PortalException {
 

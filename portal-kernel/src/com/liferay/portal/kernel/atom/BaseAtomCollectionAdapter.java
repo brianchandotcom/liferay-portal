@@ -92,13 +92,11 @@ public abstract class BaseAtomCollectionAdapter<E>
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public String getMediaName(E entry) throws AtomException {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public InputStream getMediaStream(E entry) throws AtomException {
 		throw new UnsupportedOperationException();
 	}

@@ -51,7 +51,6 @@ public class BasicLoginModule implements LoginModule {
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public boolean commit() throws LoginException {
 		Principal principal = getPrincipal();
 
@@ -165,7 +164,6 @@ public class BasicLoginModule implements LoginModule {
 		return _password;
 	}
 
-	@SuppressWarnings("unused")
 	protected Principal getPortalPrincipal(String name) throws LoginException {
 		return new PortalPrincipal(name);
 	}

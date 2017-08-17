@@ -1830,6 +1830,7 @@ public class ServicePreAction extends Action {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	protected void servicePre(
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {

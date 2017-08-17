@@ -41,8 +41,6 @@ public class FailureFilter implements Filter {
 		if (true) {
 			throw new ServletException("Hook servlet filters is not protected");
 		}
-
-		filterChain.doFilter(servletRequest, servletResponse);
 	}
 
 	@Override

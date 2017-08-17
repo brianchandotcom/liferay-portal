@@ -53,23 +53,24 @@ public class UserPortraitTag extends IncludeTag {
 
 		jspWriter.write("<div class=\"");
 
-		boolean useInitialsAsDefaultPortrait =
+		boolean imageDefaultUseInitials =
 			_userFileUploadsSettings.isImageDefaultUseInitials();
 		long userPortraitId = 0;
 
 		if (user != null) {
 			userPortraitId = user.getPortraitId();
 
-			String defaultPortrait = LanguageUtil.get(
-				user.getLocale(), LanguageConstants.KEY_USER_DEFAULT_PORTRAIT,
-				LanguageConstants.VALUE_INITIALS);
+			if (LanguageConstants.VALUE_IMAGE.equals(
+					LanguageUtil.get(
+						user.getLocale(),
+						LanguageConstants.KEY_USER_DEFAULT_PORTRAIT,
+						LanguageConstants.VALUE_INITIALS))) {
 
-			if (defaultPortrait.equals(LanguageConstants.VALUE_IMAGE)) {
-				useInitialsAsDefaultPortrait = false;
+				imageDefaultUseInitials = false;
 			}
 		}
 
-		if (useInitialsAsDefaultPortrait && (userPortraitId == 0)) {
+		if (imageDefaultUseInitials && (userPortraitId == 0)) {
 			jspWriter.write(LexiconUtil.getUserColorCssClass(user));
 			jspWriter.write(" ");
 			jspWriter.write(_cssClass);

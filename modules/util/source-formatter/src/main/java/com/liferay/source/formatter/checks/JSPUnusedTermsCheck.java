@@ -115,7 +115,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 		List<String> allJSPFileNames = SourceFormatterUtil.filterFileNames(
 			_allFileNames, excludes,
 			new String[] {"**/*.jsp", "**/*.jspf", "**/*.tag"},
-			getSourceFormatterExcludes());
+			getSourceFormatterExcludes(), true);
 
 		return JSPSourceUtil.getContentsMap(allJSPFileNames);
 	}

@@ -427,7 +427,7 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 
 		List<String> tldFileNames = SourceFormatterUtil.filterFileNames(
 			_allFileNames, excludes, new String[] {"**/*.tld"},
-			getSourceFormatterExcludes());
+			getSourceFormatterExcludes(), true);
 
 		if (!isPortalSource()) {
 			return tldFileNames;

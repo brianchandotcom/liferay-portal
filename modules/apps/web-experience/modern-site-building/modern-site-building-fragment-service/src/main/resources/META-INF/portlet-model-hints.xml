@@ -21,9 +21,15 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="name" type="String" />
-		<field name="css" type="String" />
-		<field name="html" type="String" />
-		<field name="js" type="String" />
+		<field name="css" type="String">
+			<hint name="max-length">4000</hint>
+		</field>
+		<field name="html" type="String">
+			<hint name="max-length">4000</hint>
+		</field>
+		<field name="js" type="String">
+			<hint name="max-length">4000</hint>
+		</field>
 		<field name="fragmentCollectionId" type="long" />
 	</model>
 </model-hints>

@@ -115,6 +115,31 @@ public class GitWorkingDirectory {
 		_repositoryUsername = loadRepositoryUsername();
 	}
 
+	public GitWorkingDirectory(
+			String upstreamBranchName, String workingDirectory,
+			String repository)
+		throws GitAPIException, IOException {
+
+		_upstreamBranchName = upstreamBranchName;
+
+		setWorkingDirectory(workingDirectory);
+
+		waitForIndexLock();
+
+		FileRepositoryBuilder fileRepositoryBuilder =
+			new FileRepositoryBuilder();
+
+		fileRepositoryBuilder.setGitDir(_gitDirectory);
+		fileRepositoryBuilder.setWorkTree(_workingDirectory);
+
+		_repository = fileRepositoryBuilder.build();
+
+		_git = new Git(_repository);
+
+		_repositoryName = repository;
+		_repositoryUsername = loadRepositoryUsername();
+	}
+
 	public RemoteConfig addRemote(
 			boolean force, String remoteName, String remoteURL)
 		throws GitAPIException {

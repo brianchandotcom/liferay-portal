@@ -20,7 +20,6 @@ import com.dumbster.smtp.mailstores.RollingMailStore;
 
 import com.liferay.mail.kernel.service.MailServiceUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SocketUtil;
 import com.liferay.portal.kernel.util.SocketUtil.ServerSocketConfigurator;
@@ -36,11 +35,7 @@ import java.net.SocketException;
 import java.nio.channels.ServerSocketChannel;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Adam Brandizzi
@@ -182,25 +177,6 @@ public class MailServiceTestUtil {
 
 			return serverSocket.getLocalPort();
 		}
-	}
-
-	private static Map<String, List<String>> _getHeadersMap(
-		com.dumbster.smtp.MailMessage mailMessage) {
-
-		Map<String, List<String>> headers = new HashMap<>();
-
-		Iterator<String> headerNames = mailMessage.getHeaderNames();
-
-		while (headerNames.hasNext()) {
-			String headerName = headerNames.next();
-
-			List<String> headerValues = ListUtil.fromArray(
-				mailMessage.getHeaderValues(headerName));
-
-			headers.put(headerName, Collections.unmodifiableList(headerValues));
-		}
-
-		return headers;
 	}
 
 	private static List<MailMessage> _wrapMailMessages(

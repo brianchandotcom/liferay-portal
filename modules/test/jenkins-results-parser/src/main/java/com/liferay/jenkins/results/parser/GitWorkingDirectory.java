@@ -119,7 +119,7 @@ public class GitWorkingDirectory {
 
 		_git = new Git(_repository);
 
-		if (repositoryName == null) {
+		if (repositoryName == null || repositoryName.equals("")) {
 			repositoryName = loadRepositoryName();
 		}
 

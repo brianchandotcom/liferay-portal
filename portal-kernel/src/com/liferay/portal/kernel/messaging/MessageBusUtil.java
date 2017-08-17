@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.messaging;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactoryUtil;
 import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
 import com.liferay.portal.kernel.security.pacl.permission.PortalMessageBusPermission;
@@ -198,8 +196,6 @@ public class MessageBusUtil {
 
 		_synchronousMessageSenderMode = synchronousMessageSenderMode;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(MessageBusUtil.class);
 
 	private static volatile MessageBus _messageBus =
 		ServiceProxyFactory.newServiceTrackedInstance(

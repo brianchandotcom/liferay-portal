@@ -31,13 +31,22 @@ renderResponse.setTitle(msbFragmentDisplayContext.getMSBFragmentEntryTitle());
 	<portlet:param name="mvcPath" value="/edit_msb_fragment_entry.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= editMSBFragmentEntryURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="fm">
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<portlet:renderURL var="mainURL" />
+
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item href="<%= mainURL.toString() %>" label="code" selected="<%= true %>" />
+	</aui:nav>
+</aui:nav-bar>
+
+<aui:form action="<%= editMSBFragmentEntryURL %>" enctype="multipart/form-data" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="msbFragmentEntryId" type="hidden" value="<%= msbFragmentDisplayContext.getMSBFragmentEntryId() %>" />
 	<aui:input name="msbFragmentCollectionId" type="hidden" value="<%= msbFragmentDisplayContext.getMSBFragmentCollectionId() %>" />
-	<aui:input name="cssContent" type="hidden" />
-	<aui:input name="htmlContent" type="hidden" />
-	<aui:input name="jsContent" type="hidden" />
+	<aui:input name="htmlContent" type="hidden" value="<%= HtmlUtil.escape(msbFragmentEntry != null ? msbFragmentEntry.getHtml() : StringPool.BLANK) %>" />
+	<aui:input name="cssContent" type="hidden" value="<%= HtmlUtil.escape(msbFragmentEntry != null ? msbFragmentEntry.getCss() : StringPool.BLANK) %>" />
+	<aui:input name="jsContent" type="hidden" value="<%= HtmlUtil.escape(msbFragmentEntry != null ? msbFragmentEntry.getJs() : StringPool.BLANK) %>" />
+	<aui:input name="name" type="hidden" value="<%= HtmlUtil.escape(msbFragmentEntry != null ? msbFragmentEntry.getName() : StringPool.BLANK) %>" />
 
 	<aui:model-context bean="<%= msbFragmentEntry %>" model="<%= MSBFragmentEntry.class %>" />
 
@@ -50,58 +59,21 @@ renderResponse.setTitle(msbFragmentDisplayContext.getMSBFragmentEntryTitle());
 	editorContext.put("namespace", portletDisplay.getNamespace());
 	%>
 
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
-			<aui:input autoFocus="<%= true %>" label="name" name="name" placeholder="name" />
+	<soy:template-renderer
+		context="<%= editorContext %>"
+		module="modern-site-building-fragment-web/js/MSBFragmentEditor.es"
+		templateNamespace="MSBFragmentEditor.render"
+	/>
 
-			<div class="entry-content form-group">
-				<liferay-ui:input-editor
-					contents="<%= HtmlUtil.escape((msbFragmentEntry != null) ? msbFragmentEntry.getCss() : StringPool.BLANK) %>"
-					editorName="alloyeditor"
-					name="cssEditor"
-					placeholder="css"
-					showSource="<%= false %>"
-				/>
-			</div>
-
-			<div class="entry-content form-group">
-				<liferay-ui:input-editor
-					contents="<%= HtmlUtil.escape((msbFragmentEntry != null) ? msbFragmentEntry.getHtml() : StringPool.BLANK) %>"
-					editorName="alloyeditor"
-					name="htmlEditor"
-					placeholder="html"
-					showSource="<%= false %>"
-				/>
-			</div>
-
-			<div class="entry-content form-group">
-				<liferay-ui:input-editor
-					contents="<%= HtmlUtil.escape((msbFragmentEntry != null) ? msbFragmentEntry.getJs() : StringPool.BLANK) %>"
-					editorName="alloyeditor"
-					name="jsEditor"
-					placeholder="js"
-					showSource="<%= false %>"
-				/>
-			</div>
-		</aui:fieldset>
-	</aui:fieldset-group>
-
-	<aui:button-row>
-		<aui:button cssClass="btn-lg" type="submit" />
-
-		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+	<aui:button-row cssClass="msb-fragment-submit-buttons">
+		<aui:button cssClass="btn" type="submit" />
 	</aui:button-row>
 </aui:form>
 
-<aui:script use="aui-base,event-input">
-	var form = A.one('#<portlet:namespace />fm');
-
-	form.on(
-		'submit',
-		function() {
-			form.one('#<portlet:namespace />cssContent').val(window.<portlet:namespace />cssEditor.getText());
-			form.one('#<portlet:namespace />htmlContent').val(window.<portlet:namespace />htmlEditor.getText());
-			form.one('#<portlet:namespace />jsContent').val(window.<portlet:namespace />jsEditor.getText());
-		}
-	);
+<aui:script require="modern-site-building-fragment-web/js/MSBFragmentNameEditor.es">
+	new modernSiteBuildingFragmentWebJsMSBFragmentNameEditorEs.default({
+		namespace: "<%= portletDisplay.getNamespace() %>",
+		backUrl: "<%= redirect %>",
+		title: "<%= LanguageUtil.get(request, "add-fragment-entry") %>"
+	});
 </aui:script>

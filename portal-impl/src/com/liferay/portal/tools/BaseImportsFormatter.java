@@ -82,37 +82,38 @@ public abstract class BaseImportsFormatter implements ImportsFormatter {
 
 		Set<ImportPackage> importPackages = new TreeSet<>();
 
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(imports));
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(imports))) {
 
-		String line = null;
+			String line = null;
 
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			ImportPackage importPackage = createImportPackage(line);
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				ImportPackage importPackage = createImportPackage(line);
 
-			if (importPackage != null) {
-				importPackages.add(importPackage);
+				if (importPackage != null) {
+					importPackages.add(importPackage);
+				}
 			}
-		}
 
-		StringBundler sb = new StringBundler(3 * importPackages.size());
+			StringBundler sb = new StringBundler(3 * importPackages.size());
 
-		ImportPackage previousImportPackage = null;
+			ImportPackage previousImportPackage = null;
 
-		for (ImportPackage importPackage : importPackages) {
-			if ((previousImportPackage != null) &&
-				!importPackage.isGroupedWith(previousImportPackage)) {
+			for (ImportPackage importPackage : importPackages) {
+				if ((previousImportPackage != null) &&
+					!importPackage.isGroupedWith(previousImportPackage)) {
 
+					sb.append("\n");
+				}
+
+				sb.append(importPackage.getLine());
 				sb.append("\n");
+
+				previousImportPackage = importPackage;
 			}
 
-			sb.append(importPackage.getLine());
-			sb.append("\n");
-
-			previousImportPackage = importPackage;
+			return sb.toString();
 		}
-
-		return sb.toString();
 	}
 
 	protected String stripUnusedImports(
@@ -125,39 +126,40 @@ public abstract class BaseImportsFormatter implements ImportsFormatter {
 
 		StringBundler sb = new StringBundler();
 
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(imports));
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(imports))) {
 
-		String line = null;
+			String line = null;
 
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			int x = line.indexOf("import ");
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				int x = line.indexOf("import ");
 
-			if (x == -1) {
-				continue;
+				if (x == -1) {
+					continue;
+				}
+
+				int y = line.lastIndexOf(CharPool.PERIOD);
+
+				String importPackage = line.substring(x + 7, y);
+
+				if (importPackage.equals(packagePath) ||
+					importPackage.equals("java.lang")) {
+
+					continue;
+				}
+
+				String importClass = line.substring(y + 1, line.length() - 1);
+
+				if (importClass.matches(classNameExceptionRegex) ||
+					classes.contains(importClass)) {
+
+					sb.append(line);
+					sb.append("\n");
+				}
 			}
 
-			int y = line.lastIndexOf(CharPool.PERIOD);
-
-			String importPackage = line.substring(x + 7, y);
-
-			if (importPackage.equals(packagePath) ||
-				importPackage.equals("java.lang")) {
-
-				continue;
-			}
-
-			String importClass = line.substring(y + 1, line.length() - 1);
-
-			if (importClass.matches(classNameExceptionRegex) ||
-				classes.contains(importClass)) {
-
-				sb.append(line);
-				sb.append("\n");
-			}
+			return sb.toString();
 		}
-
-		return sb.toString();
 	}
 
 	private static final Pattern _javaImportPattern = Pattern.compile(

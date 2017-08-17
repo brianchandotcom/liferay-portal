@@ -295,62 +295,63 @@ public class ToolsUtil {
 			break;
 		}
 
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(imports));
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(imports))) {
 
-		String line = null;
+			String line = null;
 
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			int x = line.indexOf("import ");
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				int x = line.indexOf("import ");
 
-			if (x == -1) {
-				continue;
-			}
-
-			String importPackageAndClassName = line.substring(
-				x + 7, line.lastIndexOf(StringPool.SEMICOLON));
-
-			if (importPackageAndClassName.contains(StringPool.STAR)) {
-				continue;
-			}
-
-			Pattern pattern3 = Pattern.compile(
-				"\n(.*)(" +
-					StringUtil.replace(importPackageAndClassName, ".", "\\.") +
-						")\\W");
-
-			outerLoop:
-			while (true) {
-				Matcher matcher3 = pattern3.matcher(content);
-
-				while (matcher3.find()) {
-					String lineStart = StringUtil.trimLeading(
-						matcher3.group(1));
-
-					if (lineStart.startsWith("import ") ||
-						lineStart.contains("//") ||
-						isInsideQuotes(content, matcher3.start(2))) {
-
-						continue;
-					}
-
-					String importClassName =
-						importPackageAndClassName.substring(
-							importPackageAndClassName.lastIndexOf(
-								StringPool.PERIOD) + 1);
-
-					content = StringUtil.replaceFirst(
-						content, importPackageAndClassName, importClassName,
-						matcher3.start());
-
-					continue outerLoop;
+				if (x == -1) {
+					continue;
 				}
 
-				break;
-			}
-		}
+				String importPackageAndClassName = line.substring(
+					x + 7, line.lastIndexOf(StringPool.SEMICOLON));
 
-		return content;
+				if (importPackageAndClassName.contains(StringPool.STAR)) {
+					continue;
+				}
+
+				Pattern pattern3 = Pattern.compile(
+					"\n(.*)(" +
+						StringUtil.replace(importPackageAndClassName, ".", "\\.") +
+							")\\W");
+
+				outerLoop:
+				while (true) {
+					Matcher matcher3 = pattern3.matcher(content);
+
+					while (matcher3.find()) {
+						String lineStart = StringUtil.trimLeading(
+							matcher3.group(1));
+
+						if (lineStart.startsWith("import ") ||
+							lineStart.contains("//") ||
+							isInsideQuotes(content, matcher3.start(2))) {
+
+							continue;
+						}
+
+						String importClassName =
+							importPackageAndClassName.substring(
+								importPackageAndClassName.lastIndexOf(
+									StringPool.PERIOD) + 1);
+
+						content = StringUtil.replaceFirst(
+							content, importPackageAndClassName, importClassName,
+							matcher3.start());
+
+						continue outerLoop;
+					}
+
+					break;
+				}
+			}
+
+			return content;
+		}
 	}
 
 	public static void writeFile(

@@ -62,16 +62,17 @@ public class FIFOWelder extends BaseWelder {
 
 		// Write, then read
 
-		FileOutputStream fileOutputStream = new FileOutputStream(inputFIFOFile);
+		try (FileOutputStream fileOutputStream = new FileOutputStream(
+				inputFIFOFile);
+			FileInputStream fileInputStream = new AutoDeleteFileInputStream(
+				outputFIFOFile);
+		) {
+			writeFileChannel = fileOutputStream.getChannel();
 
-		writeFileChannel = fileOutputStream.getChannel();
+			readFileChannel = fileInputStream.getChannel();
 
-		FileInputStream fileInputStream = new AutoDeleteFileInputStream(
-			outputFIFOFile);
-
-		readFileChannel = fileInputStream.getChannel();
-
-		return intraband.registerChannel(readFileChannel, writeFileChannel);
+			return intraband.registerChannel(readFileChannel, writeFileChannel);
+		}
 	}
 
 	@Override
@@ -80,17 +81,17 @@ public class FIFOWelder extends BaseWelder {
 
 		// Read, then write
 
-		FileInputStream fileInputStream = new AutoDeleteFileInputStream(
-			inputFIFOFile);
+		try (FileInputStream fileInputStream = new AutoDeleteFileInputStream(
+				inputFIFOFile);
+			FileOutputStream fileOutputStream = new FileOutputStream(
+				outputFIFOFile);
+		) {
+			readFileChannel = fileInputStream.getChannel();
 
-		readFileChannel = fileInputStream.getChannel();
+			writeFileChannel = fileOutputStream.getChannel();
 
-		FileOutputStream fileOutputStream = new FileOutputStream(
-			outputFIFOFile);
-
-		writeFileChannel = fileOutputStream.getChannel();
-
-		return intraband.registerChannel(readFileChannel, writeFileChannel);
+			return intraband.registerChannel(readFileChannel, writeFileChannel);
+		}
 	}
 
 	protected static final AtomicLong idCounter = new AtomicLong(

@@ -115,6 +115,8 @@ public class SharepointRequest {
 			return;
 		}
 
+		UnsyncBufferedReader unsyncBufferedReader = null;
+
 		try {
 			InputStream is = _request.getInputStream();
 
@@ -125,9 +127,8 @@ public class SharepointRequest {
 
 			byte[] bytes = unsyncByteArrayOutputStream.toByteArray();
 
-			UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(
-					new InputStreamReader(new ByteArrayInputStream(bytes)));
+			unsyncBufferedReader = new UnsyncBufferedReader(
+				new InputStreamReader(new ByteArrayInputStream(bytes)));
 
 			String url = unsyncBufferedReader.readLine();
 
@@ -153,6 +154,9 @@ public class SharepointRequest {
 		}
 		catch (Exception e) {
 			throw new SharepointException(e);
+		}
+		finally {
+			StreamUtil.cleanUp(unsyncBufferedReader);
 		}
 	}
 

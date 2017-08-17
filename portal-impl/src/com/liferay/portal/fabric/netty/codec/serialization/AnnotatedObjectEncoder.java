@@ -50,16 +50,17 @@ public class AnnotatedObjectEncoder extends MessageToByteEncoder<Serializable> {
 
 		byteBufOutputStream.writeInt(0);
 
-		ObjectOutputStream objectOutputStream = new AnnotatedObjectOutputStream(
-			byteBufOutputStream);
+		try (ObjectOutputStream objectOutputStream =
+				new AnnotatedObjectOutputStream(byteBufOutputStream)) {
 
-		objectOutputStream.writeObject(serializable);
+			objectOutputStream.writeObject(serializable);
 
-		objectOutputStream.flush();
+			objectOutputStream.flush();
 
-		int endIndex = byteBuf.writerIndex();
+			int endIndex = byteBuf.writerIndex();
 
-		byteBuf.setInt(startIndex, endIndex - startIndex - 4);
+			byteBuf.setInt(startIndex, endIndex - startIndex - 4);
+		}
 	}
 
 	private AnnotatedObjectEncoder() {

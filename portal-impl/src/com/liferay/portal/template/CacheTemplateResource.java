@@ -82,13 +82,13 @@ public class CacheTemplateResource implements TemplateResource {
 			return new UnsyncStringReader(templateContent);
 		}
 
-		try (Reader reader = _templateResource.getReader()) {
+		try (Reader reader = _templateResource.getReader();
+			UnsyncCharArrayWriter unsyncCharArrayWriter =
+				new UnsyncCharArrayWriter();
+		) {
 			char[] buffer = new char[1024];
 
 			int result = -1;
-
-			UnsyncCharArrayWriter unsyncCharArrayWriter =
-				new UnsyncCharArrayWriter();
 
 			while ((result = reader.read(buffer)) != -1) {
 				unsyncCharArrayWriter.write(buffer, 0, result);

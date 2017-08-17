@@ -668,12 +668,8 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 	@Override
 	public boolean isSameContent(File file, byte[] bytes, int length) {
-		FileChannel fileChannel = null;
-
-		try {
-			FileInputStream fileInputStream = new FileInputStream(file);
-
-			fileChannel = fileInputStream.getChannel();
+		try (FileInputStream fileInputStream = new FileInputStream(file)) {
+			FileChannel fileChannel = fileInputStream.getChannel();
 
 			if (fileChannel.size() != length) {
 				return false;
@@ -707,15 +703,6 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		}
 		catch (Exception e) {
 			return false;
-		}
-		finally {
-			if (fileChannel != null) {
-				try {
-					fileChannel.close();
-				}
-				catch (IOException ioe) {
-				}
-			}
 		}
 	}
 

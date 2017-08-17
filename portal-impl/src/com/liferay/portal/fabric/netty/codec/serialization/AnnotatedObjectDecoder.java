@@ -109,22 +109,23 @@ public class AnnotatedObjectDecoder extends LengthFieldBasedFrameDecoder {
 			return null;
 		}
 
-		ObjectInputStream objectInputStream =
-			new ProtectedAnnotatedObjectInputStream(
-				new ByteBufInputStream(decodeByteBuf));
+		try (ObjectInputStream objectInputStream =
+				new ProtectedAnnotatedObjectInputStream(
+					new ByteBufInputStream(decodeByteBuf))) {
 
-		Object object = objectInputStream.readObject();
+			Object object = objectInputStream.readObject();
 
-		for (Entry<String, ChannelHandler> entry : _channelPipeline) {
-			ObjectDecodeChannelInboundHandler<?>
-				objectDecodeChannelInboundHandler =
-					(ObjectDecodeChannelInboundHandler<?>)entry.getValue();
+			for (Entry<String, ChannelHandler> entry : _channelPipeline) {
+				ObjectDecodeChannelInboundHandler<?>
+					objectDecodeChannelInboundHandler =
+						(ObjectDecodeChannelInboundHandler<?>)entry.getValue();
 
-			object = objectDecodeChannelInboundHandler.channelRead(
-				channelHandlerContext, object, byteBuf);
+				object = objectDecodeChannelInboundHandler.channelRead(
+					channelHandlerContext, object, byteBuf);
+			}
+
+			return object;
 		}
-
-		return object;
 	}
 
 	@Override

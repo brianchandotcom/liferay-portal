@@ -220,14 +220,17 @@ class SoyPortletRouter extends State {
 	 * @return {Function} A matcher function
 	 */
 	getPathFunctionForFriendlyURLPattern_(pattern, mapping) {
-		return function path(url) {
+		return (url) => {
+			let mappingPrefix = `/${mapping}`;
+			if (this.friendlyURLPrefix) {
+				mappingPrefix = `/-${mappingPrefix}`;
+			}
 			const uri = new Uri(url);
 			const pathname = uri.getPathname();
 			const currentPath = pathname.substring(
-				pathname.indexOf(`/${mapping}/`),
+				pathname.lastIndexOf(mappingPrefix),
 			);
-			const mappedPath = `/${mapping}${pattern}`;
-			return currentPath === mappedPath;
+			return currentPath === `${mappingPrefix}${pattern}`;
 		};
 	}
 
@@ -240,8 +243,8 @@ class SoyPortletRouter extends State {
 	 */
 	getPathFunctionForFriendlyURLRoute_(friendlyURLRoute) {
 		return (
-			this.getPathFunctionForImplicitParameters_(
-				friendlyURLRoute.implicitParameters,
+			this.getPathFunctionForOverriddenParameters_(
+				friendlyURLRoute.overriddenParameters,
 			) ||
 			this.getPathFunctionForFriendlyURLPattern_(
 				friendlyURLRoute.pattern,
@@ -252,14 +255,14 @@ class SoyPortletRouter extends State {
 
 	/**
 	 * Creates a path matcher function for a pattern-metal-router implicit param
-	 * @param {object} implicitParameters Object with the friendly url implicit
+	 * @param {object} overriddenParameters Object with the friendly url implicit
 	 * parameters
 	 * @protected
 	 * @return {Function} A matcher function
 	 */
-	getPathFunctionForImplicitParameters_(implicitParameters) {
-		if (implicitParameters['pattern-metal-router']) {
-			const url = `/${this.friendlyURLMapping}${implicitParameters[
+	getPathFunctionForOverriddenParameters_(overriddenParameters) {
+		if (overriddenParameters['pattern-metal-router']) {
+			const url = `(.*)/${this.friendlyURLMapping}${overriddenParameters[
 				'pattern-metal-router'
 			]}`;
 			const regex = toRegex(url);

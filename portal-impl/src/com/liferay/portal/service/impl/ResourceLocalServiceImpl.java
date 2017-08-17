@@ -444,20 +444,15 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 
 		stopWatch.start();
 
-		int block = 1;
-
 		boolean hasUserPermissions =
 			resourcePermissionLocalService.hasResourcePermission(
 				resources, roleIds, actionId);
 
-		block++;
-
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(
-					"Checking user permissions block ", String.valueOf(block),
-					" for ", String.valueOf(userId), " ",
-					String.valueOf(resourceId), " ", actionId, " takes ",
+					"Checking user permissions for ", String.valueOf(userId),
+					" ", String.valueOf(resourceId), " ", actionId, " takes ",
 					String.valueOf(stopWatch.getTime()), " ms"));
 		}
 

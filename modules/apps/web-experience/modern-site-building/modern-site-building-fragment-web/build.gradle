@@ -1,0 +1,4 @@
+dependencies {
+	provided project (":apps:web-experience:modern-site-building:modern-site-building-fragment-api")
+	provided project (":apps:web-experience:modern-site-building:modern-site-building-fragment-service")
+}

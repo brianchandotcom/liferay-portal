@@ -1,0 +1,57 @@
+{namespace MSBFragmentNameEditor}
+
+/**
+ * MSBFragmentNameEditor
+ */
+{template .render}
+	{@param namespace: string}
+	{@param spritemap: string}
+	{@param? error: string}
+	{@param? _handleModalHidden: any}
+	{@param? _handleSubmitForm: any}
+
+	{call Modal.render}
+		{param body kind="html"}
+			<form class="form" method="post" data-onsubmit="{$_handleSubmitForm}">
+				<div class="form-group input-text-wrapper">
+					<label class="control-label">
+						{msg desc=""}name{/msg}
+						<span class="reference-mark text-warning">
+							<svg class="lexicon-icon">
+								<use xlink:href="{$spritemap}#asterisk"></use>
+							</svg>
+						</span>
+						<span class="hide-accessible">
+							{msg desc=""}required{/msg}
+						</span>
+					</label>
+					<input class="field form-control {if $error}error-field{/if}" name="{$namespace}name" type="text">
+					{if $error}
+						<div class="form-validator-stack help-block">
+							<div role="alert">{$error}</div>
+						</div>
+					{/if}
+				</div>
+				<div class="pull-right">
+					<button class="btn btn btn-cancel btn-default btn-link" type="button" data-onclick="hide">
+						<span class="lfr-btn-label">
+							{msg desc=""}cancel{/msg}
+						</span>
+					</button>
+					<button class="btn btn btn-primary btn-default" type="submit">
+						<span class="lfr-btn-label">
+							{msg desc=""}save{/msg}
+						</span>
+					</button>
+				</div>
+			</form>
+		{/param}
+		{param dialogClasses: 'msb-fragment-name-editor__dialog' /}
+		{param events: [
+			'hide': $_handleModalHidden,
+		]/}
+		{param header kind="html"}
+			<h3 class="modal-title">{msg desc=""}add-fragment{/msg}</h3>
+		{/param}
+	{/call}
+{/template}

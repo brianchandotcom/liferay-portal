@@ -51,7 +51,8 @@ public class SourceFormatterUtil {
 
 	public static List<String> filterFileNames(
 		List<String> allFileNames, String[] excludes, String[] includes,
-		SourceFormatterExcludes sourceFormatterExcludes) {
+		SourceFormatterExcludes sourceFormatterExcludes,
+		boolean forceIncludeSourceFormatterExcludes) {
 
 		List<String> excludeRegexList = new ArrayList<>();
 		Map<String, List<String>> excludeRegexMap = new HashMap<>();
@@ -78,33 +79,36 @@ public class SourceFormatterUtil {
 			}
 		}
 
-		Map<String, List<ExcludeSyntaxPattern>> excludeSyntaxPatternsMap =
-			sourceFormatterExcludes.getExcludeSyntaxPatternsMap();
+		if (!forceIncludeSourceFormatterExcludes) {
+			Map<String, List<ExcludeSyntaxPattern>> excludeSyntaxPatternsMap =
+				sourceFormatterExcludes.getExcludeSyntaxPatternsMap();
 
-		for (Map.Entry<String, List<ExcludeSyntaxPattern>> entry :
-				excludeSyntaxPatternsMap.entrySet()) {
+			for (Map.Entry<String, List<ExcludeSyntaxPattern>> entry :
+					excludeSyntaxPatternsMap.entrySet()) {
 
-			List<ExcludeSyntaxPattern> excludeSyntaxPatterns = entry.getValue();
+				List<ExcludeSyntaxPattern> excludeSyntaxPatterns =
+					entry.getValue();
 
-			List<String> regexList = new ArrayList<>();
+				List<String> regexList = new ArrayList<>();
 
-			for (ExcludeSyntaxPattern excludeSyntaxPattern :
-					excludeSyntaxPatterns) {
+				for (ExcludeSyntaxPattern excludeSyntaxPattern :
+						excludeSyntaxPatterns) {
 
-				String excludePattern =
-					excludeSyntaxPattern.getExcludePattern();
-				ExcludeSyntax excludeSyntax =
-					excludeSyntaxPattern.getExcludeSyntax();
+					String excludePattern =
+						excludeSyntaxPattern.getExcludePattern();
+					ExcludeSyntax excludeSyntax =
+						excludeSyntaxPattern.getExcludeSyntax();
 
-				if (excludeSyntax.equals(ExcludeSyntax.REGEX)) {
-					regexList.add(excludePattern);
+					if (excludeSyntax.equals(ExcludeSyntax.REGEX)) {
+						regexList.add(excludePattern);
+					}
+					else if (!excludePattern.contains(StringPool.DOLLAR)) {
+						regexList.add(_createRegex(excludePattern));
+					}
 				}
-				else if (!excludePattern.contains(StringPool.DOLLAR)) {
-					regexList.add(_createRegex(excludePattern));
-				}
+
+				excludeRegexMap.put(entry.getKey(), regexList);
 			}
-
-			excludeRegexMap.put(entry.getKey(), regexList);
 		}
 
 		for (String include : includes) {

@@ -398,7 +398,7 @@ public class SourceFormatter {
 			SourceFormatterUtil.filterFileNames(
 				_allFileNames, new String[0],
 				new String[] {"**/" + _PROPERTIES_FILE_NAME},
-				_sourceFormatterExcludes);
+				_sourceFormatterExcludes, true);
 
 		for (String modulePropertiesFileName : modulePropertiesFileNames) {
 			_readProperties(new File(modulePropertiesFileName));

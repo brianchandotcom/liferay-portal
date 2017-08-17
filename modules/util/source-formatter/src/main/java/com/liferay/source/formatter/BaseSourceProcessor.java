@@ -238,7 +238,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return SourceFormatterUtil.filterFileNames(
-			_allFileNames, excludes, includes, _sourceFormatterExcludes);
+			_allFileNames, excludes, includes, _sourceFormatterExcludes,
+			forceIncludeAllFiles);
 	}
 
 	protected List<String> getPluginsInsideModulesDirectoryNames()

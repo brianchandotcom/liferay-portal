@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.messaging.sender;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
@@ -62,9 +60,6 @@ public class SingleDestinationMessageSenderFactoryUtil {
 
 	private SingleDestinationMessageSenderFactoryUtil() {
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SingleDestinationMessageSenderFactoryUtil.class);
 
 	private static volatile SingleDestinationMessageSenderFactory
 		_singleDestinationMessageSenderFactory =

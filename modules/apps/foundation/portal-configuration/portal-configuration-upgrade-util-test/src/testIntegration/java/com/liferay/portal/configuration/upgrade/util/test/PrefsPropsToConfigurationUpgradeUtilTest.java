@@ -307,6 +307,11 @@ public class PrefsPropsToConfigurationUpgradeUtilTest {
 	}
 
 	private static final BundleContext _bundleContext;
+	private static final String _configurationMethodName =
+		RandomTestUtil.randomString();
+	private static final String _configurationPid =
+		RandomTestUtil.randomString();
+	private static final String _prefsPropsName = RandomTestUtil.randomString();
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(
@@ -320,11 +325,7 @@ public class PrefsPropsToConfigurationUpgradeUtilTest {
 		}
 	}
 
-	private final String _configurationMethodName =
-		RandomTestUtil.randomString();
-	private final String _configurationPid = RandomTestUtil.randomString();
 	private PortletPreferences _portletPreferences;
-	private final String _prefsPropsName = RandomTestUtil.randomString();
 	private final List<String> _prefsPropsNames = new ArrayList<>();
 
 }

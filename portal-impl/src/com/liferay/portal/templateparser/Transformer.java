@@ -16,8 +16,6 @@ package com.liferay.portal.templateparser;
 
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mobile.device.Device;
 import com.liferay.portal.kernel.mobile.device.UnknownDevice;
 import com.liferay.portal.kernel.model.Company;
@@ -253,8 +251,6 @@ public class Transformer {
 
 		template.prepare(themeDisplay.getRequest());
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(Transformer.class);
 
 	private final Map<String, TemplateResource> _errorTemplateResources =
 		new HashMap<>();

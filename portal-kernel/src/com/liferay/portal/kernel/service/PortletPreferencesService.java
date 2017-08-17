@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.PortletItem;
-import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;

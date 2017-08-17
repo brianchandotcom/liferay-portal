@@ -44,25 +44,25 @@ TrashRenderer trashRenderer = trashDisplayContext.getTrashRenderer();
 renderResponse.setTitle(trashRenderer.getTitle(locale));
 %>
 
-<liferay-util:include page="/navigation.jsp" servletContext="<%= application %>" />
+<c:choose>
+	<c:when test="<%= trashHandler.isContainerModel() %>">
+		<liferay-util:include page="/navigation.jsp" servletContext="<%= application %>" />
 
-<liferay-util:include page="/view_content_toolbar.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/view_content_toolbar.jsp" servletContext="<%= application %>" />
 
-<liferay-util:include page="/restore_path.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/restore_path.jsp" servletContext="<%= application %>" />
 
-<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/trash/info_panel" var="sidebarPanelURL" />
+		<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
+			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/trash/info_panel" var="sidebarPanelURL" />
 
-	<liferay-frontend:sidebar-panel
-		resourceURL="<%= sidebarPanelURL %>"
-	>
-		<liferay-util:include page="/view_content_info_panel.jsp" servletContext="<%= application %>" />
-	</liferay-frontend:sidebar-panel>
+			<liferay-frontend:sidebar-panel
+				resourceURL="<%= sidebarPanelURL %>"
+			>
+				<liferay-util:include page="/view_content_info_panel.jsp" servletContext="<%= application %>" />
+			</liferay-frontend:sidebar-panel>
 
-	<div class="sidenav-content">
-		<div id="<portlet:namespace />trashContainer">
-			<c:choose>
-				<c:when test="<%= trashHandler.isContainerModel() %>">
+			<div class="sidenav-content">
+				<div id="<portlet:namespace />trashContainer">
 					<liferay-ui:breadcrumb
 						showCurrentGroup="<%= false %>"
 						showGuestGroup="<%= false %>"
@@ -228,16 +228,22 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 
 						<liferay-ui:search-iterator displayStyle="<%= trashDisplayContext.getDisplayStyle() %>" markupView="lexicon" resultRowSplitter="<%= new TrashResultRowSplitter() %>" />
 					</liferay-ui:search-container>
-				</c:when>
-				<c:otherwise>
+				</div>
+			</div>
+		</div>
+	</c:when>
+	<c:otherwise>
+		<div class="container-fluid-1280">
+			<aui:fieldset-group markupView="lexicon">
+				<aui:fieldset>
 					<liferay-ui:asset-display
 						renderer="<%= trashRenderer %>"
 					/>
-				</c:otherwise>
-			</c:choose>
+				</aui:fieldset>
+			</aui:fieldset-group>
 		</div>
-	</div>
-</div>
+	</c:otherwise>
+</c:choose>
 
 <aui:script use="liferay-url-preview">
 	A.one('#<portlet:namespace />trashContainer').delegate(

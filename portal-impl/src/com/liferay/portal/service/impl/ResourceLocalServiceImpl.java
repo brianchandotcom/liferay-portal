@@ -886,18 +886,15 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			PermissionedModel permissionedModel)
 		throws PortalException {
 
-		Resource resource = getResource(
-			companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, primKey);
-
 		for (String roleName : modelPermissions.getRoleNames()) {
-			Role role = getRole(resource.getCompanyId(), groupId, roleName);
+			Role role = getRole(companyId, groupId, roleName);
 
 			List<String> actionIds = modelPermissions.getActionIdsList(
 				roleName);
 
 			resourcePermissionLocalService.setResourcePermissions(
-				resource.getCompanyId(), resource.getName(),
-				resource.getScope(), resource.getPrimKey(), role.getRoleId(),
+				companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, primKey,
+				role.getRoleId(),
 				actionIds.toArray(new String[actionIds.size()]));
 		}
 	}

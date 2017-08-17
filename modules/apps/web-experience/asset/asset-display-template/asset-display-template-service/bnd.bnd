@@ -1,12 +1,6 @@
 Bundle-Name: Liferay Asset Display Template Service
 Bundle-SymbolicName: com.liferay.asset.display.template.service
 Bundle-Version: 1.0.0
-Export-Package:\
-	com.liferay.asset.display.template.model.impl,\
-	com.liferay.asset.display.template.service.impl,\
-	com.liferay.asset.display.template.service.permission,\
-	com.liferay.asset.display.template.service.persistence.impl,\
-	com.liferay.asset.display.template.service.util
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Asset
 Liferay-Require-SchemaVersion: 1.0.0

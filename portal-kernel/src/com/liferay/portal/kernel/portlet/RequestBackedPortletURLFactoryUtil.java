@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.portlet;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.impl.VirtualLayout;
@@ -94,9 +92,6 @@ public class RequestBackedPortletURLFactoryUtil {
 
 		return liferayPortletURL;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		RequestBackedPortletURLFactoryUtil.class);
 
 	private static class HttpServletRequestRequestBackedPortletURLFactory
 		implements RequestBackedPortletURLFactory {

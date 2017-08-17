@@ -15,8 +15,6 @@
 package com.liferay.portal.kernel.executor;
 
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.PACLConstants;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
@@ -73,9 +71,6 @@ public class PortalExecutorManagerUtil {
 
 	private PortalExecutorManagerUtil() {
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		PortalExecutorManagerUtil.class);
 
 	private static volatile PortalExecutorManager _portalExecutorManager =
 		ServiceProxyFactory.newServiceTrackedInstance(

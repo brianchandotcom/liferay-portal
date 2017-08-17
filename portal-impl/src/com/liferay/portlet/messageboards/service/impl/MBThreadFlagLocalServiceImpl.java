@@ -17,8 +17,6 @@ package com.liferay.portlet.messageboards.service.impl;
 import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.kernel.model.MBThreadFlag;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -152,8 +150,5 @@ public class MBThreadFlagLocalServiceImpl
 			return false;
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		MBThreadFlagLocalServiceImpl.class);
 
 }

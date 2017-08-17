@@ -148,6 +148,8 @@ public class SoyPortletHelper {
 				Map<String, Object> mapping = new HashMap<>();
 
 				mapping.put(
+					"overriddenParameters", route.getOverriddenParameters());
+				mapping.put(
 					"implicitParameters", route.getImplicitParameters());
 				mapping.put("pattern", route.getPattern());
 

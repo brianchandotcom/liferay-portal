@@ -551,6 +551,10 @@ public class UpgradeClient {
 				_appServerProperties.getProperty("extra.lib.dirs"),
 				_appServerProperties.getProperty("global.lib.dir"),
 				_appServerProperties.getProperty("portal.dir"), value);
+
+			File dir = _appServer.getDir();
+
+			_appServerProperties.setProperty("dir", dir.getCanonicalPath());
 		}
 	}
 
@@ -680,17 +684,17 @@ public class UpgradeClient {
 				"Please enter your Liferay home (" +
 					defaultLiferayHome.getCanonicalPath() + "): ");
 
-			String response = _consoleReader.readLine();
+			value = _consoleReader.readLine();
 
-			if (response.isEmpty()) {
-				response = defaultLiferayHome.getCanonicalPath();
+			if (value.isEmpty()) {
+				value = defaultLiferayHome.getCanonicalPath();
 			}
-
-			File liferayHome = new File(response);
-
-			_portalUpgradeExtProperties.setProperty(
-				"liferay.home", liferayHome.getCanonicalPath());
 		}
+
+		File liferayHome = new File(value);
+
+		_portalUpgradeExtProperties.setProperty(
+			"liferay.home", liferayHome.getCanonicalPath());
 	}
 
 	private static final String _JAVA_HOME = System.getenv("JAVA_HOME");

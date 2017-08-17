@@ -273,16 +273,16 @@ public class ListTypeLocalServiceWrapper implements ListTypeLocalService,
 	}
 
 	@Override
-	public void validate(long listTypeId, java.lang.String type)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_listTypeLocalService.validate(listTypeId, type);
-	}
-
-	@Override
 	public void validate(long listTypeId, long classNameId,
 		java.lang.String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_listTypeLocalService.validate(listTypeId, classNameId, type);
+	}
+
+	@Override
+	public void validate(long listTypeId, java.lang.String type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_listTypeLocalService.validate(listTypeId, type);
 	}
 
 	@Override

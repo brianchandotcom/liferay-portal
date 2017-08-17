@@ -815,16 +815,6 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	}
 
 	/**
-	* Returns the ship to billing of this shopping order.
-	*
-	* @return the ship to billing of this shopping order
-	*/
-	@Override
-	public boolean getShipToBilling() {
-		return _shoppingOrder.getShipToBilling();
-	}
-
-	/**
 	* Returns the shipping of this shopping order.
 	*
 	* @return the shipping of this shopping order
@@ -932,6 +922,16 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	@Override
 	public java.lang.String getShippingZip() {
 		return _shoppingOrder.getShippingZip();
+	}
+
+	/**
+	* Returns the ship to billing of this shopping order.
+	*
+	* @return the ship to billing of this shopping order
+	*/
+	@Override
+	public boolean getShipToBilling() {
+		return _shoppingOrder.getShipToBilling();
 	}
 
 	/**
@@ -1275,14 +1275,14 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_shoppingOrder.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_shoppingOrder.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_shoppingOrder.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -1451,16 +1451,6 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	}
 
 	/**
-	* Sets whether this shopping order is ship to billing.
-	*
-	* @param shipToBilling the ship to billing of this shopping order
-	*/
-	@Override
-	public void setShipToBilling(boolean shipToBilling) {
-		_shoppingOrder.setShipToBilling(shipToBilling);
-	}
-
-	/**
 	* Sets the shipping of this shopping order.
 	*
 	* @param shipping the shipping of this shopping order
@@ -1568,6 +1558,16 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	@Override
 	public void setShippingZip(java.lang.String shippingZip) {
 		_shoppingOrder.setShippingZip(shippingZip);
+	}
+
+	/**
+	* Sets whether this shopping order is ship to billing.
+	*
+	* @param shipToBilling the ship to billing of this shopping order
+	*/
+	@Override
+	public void setShipToBilling(boolean shipToBilling) {
+		_shoppingOrder.setShipToBilling(shipToBilling);
 	}
 
 	/**

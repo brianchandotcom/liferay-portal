@@ -111,16 +111,6 @@ public class SocialRequestLocalServiceUtil {
 	}
 
 	/**
-	* Removes the social request from the database.
-	*
-	* @param request the social request to be removed
-	*/
-	public static void deleteRequest(
-		com.liferay.social.kernel.model.SocialRequest request) {
-		getService().deleteRequest(request);
-	}
-
-	/**
 	* Removes the social request identified by its primary key from the
 	* database.
 	*
@@ -131,19 +121,18 @@ public class SocialRequestLocalServiceUtil {
 		getService().deleteRequest(requestId);
 	}
 
-	public static void deleteRequests(long className, long classPK) {
-		getService().deleteRequests(className, classPK);
+	/**
+	* Removes the social request from the database.
+	*
+	* @param request the social request to be removed
+	*/
+	public static void deleteRequest(
+		com.liferay.social.kernel.model.SocialRequest request) {
+		getService().deleteRequest(request);
 	}
 
-	/**
-	* Deletes the social request from the database. Also notifies the appropriate model listeners.
-	*
-	* @param socialRequest the social request
-	* @return the social request that was removed
-	*/
-	public static com.liferay.social.kernel.model.SocialRequest deleteSocialRequest(
-		com.liferay.social.kernel.model.SocialRequest socialRequest) {
-		return getService().deleteSocialRequest(socialRequest);
+	public static void deleteRequests(long className, long classPK) {
+		getService().deleteRequests(className, classPK);
 	}
 
 	/**
@@ -157,6 +146,17 @@ public class SocialRequestLocalServiceUtil {
 		long requestId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteSocialRequest(requestId);
+	}
+
+	/**
+	* Deletes the social request from the database. Also notifies the appropriate model listeners.
+	*
+	* @param socialRequest the social request
+	* @return the social request that was removed
+	*/
+	public static com.liferay.social.kernel.model.SocialRequest deleteSocialRequest(
+		com.liferay.social.kernel.model.SocialRequest socialRequest) {
+		return getService().deleteSocialRequest(socialRequest);
 	}
 
 	/**

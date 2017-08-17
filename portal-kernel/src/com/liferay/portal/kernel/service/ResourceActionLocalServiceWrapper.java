@@ -92,18 +92,6 @@ public class ResourceActionLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the resource action from the database. Also notifies the appropriate model listeners.
-	*
-	* @param resourceAction the resource action
-	* @return the resource action that was removed
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.ResourceAction deleteResourceAction(
-		com.liferay.portal.kernel.model.ResourceAction resourceAction) {
-		return _resourceActionLocalService.deleteResourceAction(resourceAction);
-	}
-
-	/**
 	* Deletes the resource action with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param resourceActionId the primary key of the resource action
@@ -115,6 +103,18 @@ public class ResourceActionLocalServiceWrapper
 		long resourceActionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _resourceActionLocalService.deleteResourceAction(resourceActionId);
+	}
+
+	/**
+	* Deletes the resource action from the database. Also notifies the appropriate model listeners.
+	*
+	* @param resourceAction the resource action
+	* @return the resource action that was removed
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.ResourceAction deleteResourceAction(
+		com.liferay.portal.kernel.model.ResourceAction resourceAction) {
+		return _resourceActionLocalService.deleteResourceAction(resourceAction);
 	}
 
 	@Override
@@ -204,14 +204,14 @@ public class ResourceActionLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.ResourceAction fetchResourceAction(
-		java.lang.String name, java.lang.String actionId) {
-		return _resourceActionLocalService.fetchResourceAction(name, actionId);
+		long resourceActionId) {
+		return _resourceActionLocalService.fetchResourceAction(resourceActionId);
 	}
 
 	@Override
 	public com.liferay.portal.kernel.model.ResourceAction fetchResourceAction(
-		long resourceActionId) {
-		return _resourceActionLocalService.fetchResourceAction(resourceActionId);
+		java.lang.String name, java.lang.String actionId) {
+		return _resourceActionLocalService.fetchResourceAction(name, actionId);
 	}
 
 	@Override
@@ -241,13 +241,6 @@ public class ResourceActionLocalServiceWrapper
 		return _resourceActionLocalService.getPersistedModel(primaryKeyObj);
 	}
 
-	@Override
-	public com.liferay.portal.kernel.model.ResourceAction getResourceAction(
-		java.lang.String name, java.lang.String actionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _resourceActionLocalService.getResourceAction(name, actionId);
-	}
-
 	/**
 	* Returns the resource action with the primary key.
 	*
@@ -260,6 +253,13 @@ public class ResourceActionLocalServiceWrapper
 		long resourceActionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _resourceActionLocalService.getResourceAction(resourceActionId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.ResourceAction getResourceAction(
+		java.lang.String name, java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _resourceActionLocalService.getResourceAction(name, actionId);
 	}
 
 	/**

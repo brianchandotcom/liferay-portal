@@ -59,6 +59,11 @@ public interface MBThreadService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBThread> getGroupThreads(long groupId, long userId,
+		Date modifiedDate, int status, int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBThread> getGroupThreads(long groupId, long userId,
 		int status, boolean subscribed, boolean includeAnonymous, int start,
 		int end) throws PortalException;
 
@@ -72,9 +77,8 @@ public interface MBThreadService extends BaseService {
 		int status, int start, int end) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBThread> getGroupThreads(long groupId, long userId,
-		Date modifiedDate, int status, int start, int end)
-		throws PortalException;
+	public int getGroupThreadsCount(long groupId, long userId,
+		Date modifiedDate, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupThreadsCount(long groupId, long userId, int status);
@@ -86,10 +90,6 @@ public interface MBThreadService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupThreadsCount(long groupId, long userId, int status,
 		boolean subscribed, boolean includeAnonymous);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getGroupThreadsCount(long groupId, long userId,
-		Date modifiedDate, int status);
 
 	/**
 	* Returns the OSGi service identifier.

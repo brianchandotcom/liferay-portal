@@ -41,6 +41,15 @@ public class PowwowServerLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.powwow.service.impl.PowwowServerLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.powwow.model.PowwowServer addPowwowServer(
+		long userId, java.lang.String name, java.lang.String providerType,
+		java.lang.String url, java.lang.String apiKey, java.lang.String secret,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addPowwowServer(userId, name, providerType, url, apiKey,
+			secret, serviceContext);
+	}
 
 	/**
 	* Adds the powwow server to the database. Also notifies the appropriate model listeners.
@@ -51,16 +60,6 @@ public class PowwowServerLocalServiceUtil {
 	public static com.liferay.powwow.model.PowwowServer addPowwowServer(
 		com.liferay.powwow.model.PowwowServer powwowServer) {
 		return getService().addPowwowServer(powwowServer);
-	}
-
-	public static com.liferay.powwow.model.PowwowServer addPowwowServer(
-		long userId, java.lang.String name, java.lang.String providerType,
-		java.lang.String url, java.lang.String apiKey, java.lang.String secret,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addPowwowServer(userId, name, providerType, url, apiKey,
-			secret, serviceContext);
 	}
 
 	public static void checkPowwowServers() {
@@ -88,17 +87,6 @@ public class PowwowServerLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the powwow server from the database. Also notifies the appropriate model listeners.
-	*
-	* @param powwowServer the powwow server
-	* @return the powwow server that was removed
-	*/
-	public static com.liferay.powwow.model.PowwowServer deletePowwowServer(
-		com.liferay.powwow.model.PowwowServer powwowServer) {
-		return getService().deletePowwowServer(powwowServer);
-	}
-
-	/**
 	* Deletes the powwow server with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param powwowServerId the primary key of the powwow server
@@ -109,6 +97,17 @@ public class PowwowServerLocalServiceUtil {
 		long powwowServerId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deletePowwowServer(powwowServerId);
+	}
+
+	/**
+	* Deletes the powwow server from the database. Also notifies the appropriate model listeners.
+	*
+	* @param powwowServer the powwow server
+	* @return the powwow server that was removed
+	*/
+	public static com.liferay.powwow.model.PowwowServer deletePowwowServer(
+		com.liferay.powwow.model.PowwowServer powwowServer) {
+		return getService().deletePowwowServer(powwowServer);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -276,17 +275,6 @@ public class PowwowServerLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	/**
-	* Updates the powwow server in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param powwowServer the powwow server
-	* @return the powwow server that was updated
-	*/
-	public static com.liferay.powwow.model.PowwowServer updatePowwowServer(
-		com.liferay.powwow.model.PowwowServer powwowServer) {
-		return getService().updatePowwowServer(powwowServer);
-	}
-
 	public static com.liferay.powwow.model.PowwowServer updatePowwowServer(
 		long powwowServerId, java.lang.String name,
 		java.lang.String providerType, java.lang.String url,
@@ -296,6 +284,17 @@ public class PowwowServerLocalServiceUtil {
 		return getService()
 				   .updatePowwowServer(powwowServerId, name, providerType, url,
 			apiKey, secret, serviceContext);
+	}
+
+	/**
+	* Updates the powwow server in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param powwowServer the powwow server
+	* @return the powwow server that was updated
+	*/
+	public static com.liferay.powwow.model.PowwowServer updatePowwowServer(
+		com.liferay.powwow.model.PowwowServer powwowServer) {
+		return getService().updatePowwowServer(powwowServer);
 	}
 
 	public static void clearService() {

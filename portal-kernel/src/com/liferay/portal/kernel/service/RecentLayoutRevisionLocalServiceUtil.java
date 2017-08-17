@@ -40,6 +40,13 @@ public class RecentLayoutRevisionLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.RecentLayoutRevisionLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portal.kernel.model.RecentLayoutRevision addRecentLayoutRevision(
+		long userId, long layoutRevisionId, long layoutSetBranchId, long plid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addRecentLayoutRevision(userId, layoutRevisionId,
+			layoutSetBranchId, plid);
+	}
 
 	/**
 	* Adds the recent layout revision to the database. Also notifies the appropriate model listeners.
@@ -50,14 +57,6 @@ public class RecentLayoutRevisionLocalServiceUtil {
 	public static com.liferay.portal.kernel.model.RecentLayoutRevision addRecentLayoutRevision(
 		com.liferay.portal.kernel.model.RecentLayoutRevision recentLayoutRevision) {
 		return getService().addRecentLayoutRevision(recentLayoutRevision);
-	}
-
-	public static com.liferay.portal.kernel.model.RecentLayoutRevision addRecentLayoutRevision(
-		long userId, long layoutRevisionId, long layoutSetBranchId, long plid)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addRecentLayoutRevision(userId, layoutRevisionId,
-			layoutSetBranchId, plid);
 	}
 
 	/**
@@ -81,17 +80,6 @@ public class RecentLayoutRevisionLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the recent layout revision from the database. Also notifies the appropriate model listeners.
-	*
-	* @param recentLayoutRevision the recent layout revision
-	* @return the recent layout revision that was removed
-	*/
-	public static com.liferay.portal.kernel.model.RecentLayoutRevision deleteRecentLayoutRevision(
-		com.liferay.portal.kernel.model.RecentLayoutRevision recentLayoutRevision) {
-		return getService().deleteRecentLayoutRevision(recentLayoutRevision);
-	}
-
-	/**
 	* Deletes the recent layout revision with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param recentLayoutRevisionId the primary key of the recent layout revision
@@ -102,6 +90,17 @@ public class RecentLayoutRevisionLocalServiceUtil {
 		long recentLayoutRevisionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteRecentLayoutRevision(recentLayoutRevisionId);
+	}
+
+	/**
+	* Deletes the recent layout revision from the database. Also notifies the appropriate model listeners.
+	*
+	* @param recentLayoutRevision the recent layout revision
+	* @return the recent layout revision that was removed
+	*/
+	public static com.liferay.portal.kernel.model.RecentLayoutRevision deleteRecentLayoutRevision(
+		com.liferay.portal.kernel.model.RecentLayoutRevision recentLayoutRevision) {
+		return getService().deleteRecentLayoutRevision(recentLayoutRevision);
 	}
 
 	public static void deleteRecentLayoutRevisions(long layoutRevisionId) {

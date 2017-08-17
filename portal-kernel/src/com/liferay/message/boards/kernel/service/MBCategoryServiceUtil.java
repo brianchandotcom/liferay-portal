@@ -41,6 +41,16 @@ public class MBCategoryServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.messageboards.service.impl.MBCategoryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.message.boards.kernel.model.MBCategory addCategory(
+		long userId, long parentCategoryId, java.lang.String name,
+		java.lang.String description,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCategory(userId, parentCategoryId, name, description,
+			serviceContext);
+	}
+
+	public static com.liferay.message.boards.kernel.model.MBCategory addCategory(
 		long parentCategoryId, java.lang.String name,
 		java.lang.String description, java.lang.String displayStyle,
 		java.lang.String emailAddress, java.lang.String inProtocol,
@@ -59,16 +69,6 @@ public class MBCategoryServiceUtil {
 			inUseSSL, inUserName, inPassword, inReadInterval, outEmailAddress,
 			outCustom, outServerName, outServerPort, outUseSSL, outUserName,
 			outPassword, mailingListActive, allowAnonymousEmail, serviceContext);
-	}
-
-	public static com.liferay.message.boards.kernel.model.MBCategory addCategory(
-		long userId, long parentCategoryId, java.lang.String name,
-		java.lang.String description,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addCategory(userId, parentCategoryId, name, description,
-			serviceContext);
 	}
 
 	public static void deleteCategory(long categoryId,
@@ -136,13 +136,6 @@ public class MBCategoryServiceUtil {
 	}
 
 	public static java.util.List<java.lang.Object> getCategoriesAndThreads(
-		long groupId, long categoryId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
-		return getService()
-				   .getCategoriesAndThreads(groupId, categoryId, queryDefinition);
-	}
-
-	public static java.util.List<java.lang.Object> getCategoriesAndThreads(
 		long groupId, long categoryId, int status) {
 		return getService().getCategoriesAndThreads(groupId, categoryId, status);
 	}
@@ -162,8 +155,21 @@ public class MBCategoryServiceUtil {
 			end, obc);
 	}
 
+	public static java.util.List<java.lang.Object> getCategoriesAndThreads(
+		long groupId, long categoryId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
+		return getService()
+				   .getCategoriesAndThreads(groupId, categoryId, queryDefinition);
+	}
+
 	public static int getCategoriesAndThreadsCount(long groupId, long categoryId) {
 		return getService().getCategoriesAndThreadsCount(groupId, categoryId);
+	}
+
+	public static int getCategoriesAndThreadsCount(long groupId,
+		long categoryId, int status) {
+		return getService()
+				   .getCategoriesAndThreadsCount(groupId, categoryId, status);
 	}
 
 	public static int getCategoriesAndThreadsCount(long groupId,
@@ -172,12 +178,6 @@ public class MBCategoryServiceUtil {
 		return getService()
 				   .getCategoriesAndThreadsCount(groupId, categoryId,
 			queryDefinition);
-	}
-
-	public static int getCategoriesAndThreadsCount(long groupId,
-		long categoryId, int status) {
-		return getService()
-				   .getCategoriesAndThreadsCount(groupId, categoryId, status);
 	}
 
 	public static int getCategoriesCount(long groupId, long[] parentCategoryIds) {

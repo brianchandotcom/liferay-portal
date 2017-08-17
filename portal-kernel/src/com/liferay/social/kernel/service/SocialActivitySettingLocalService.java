@@ -95,16 +95,6 @@ public interface SocialActivitySettingLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the social activity setting from the database. Also notifies the appropriate model listeners.
-	*
-	* @param socialActivitySetting the social activity setting
-	* @return the social activity setting that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public SocialActivitySetting deleteSocialActivitySetting(
-		SocialActivitySetting socialActivitySetting);
-
-	/**
 	* Deletes the social activity setting with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param activitySettingId the primary key of the social activity setting
@@ -114,6 +104,16 @@ public interface SocialActivitySettingLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public SocialActivitySetting deleteSocialActivitySetting(
 		long activitySettingId) throws PortalException;
+
+	/**
+	* Deletes the social activity setting from the database. Also notifies the appropriate model listeners.
+	*
+	* @param socialActivitySetting the social activity setting
+	* @return the social activity setting that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public SocialActivitySetting deleteSocialActivitySetting(
+		SocialActivitySetting socialActivitySetting);
 
 	public DynamicQuery dynamicQuery();
 

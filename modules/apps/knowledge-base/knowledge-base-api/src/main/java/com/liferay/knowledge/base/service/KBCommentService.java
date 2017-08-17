@@ -66,10 +66,6 @@ public interface KBCommentService extends BaseService {
 	public KBComment getKBComment(long kbCommentId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBComment> getKBComments(long groupId, int start, int end,
-		OrderByComparator<KBComment> obc) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KBComment> getKBComments(long groupId, int status, int start,
 		int end) throws PortalException;
 
@@ -78,8 +74,7 @@ public interface KBCommentService extends BaseService {
 		int end, OrderByComparator<KBComment> obc) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBComment> getKBComments(long groupId,
-		java.lang.String className, long classPK, int start, int end,
+	public List<KBComment> getKBComments(long groupId, int start, int end,
 		OrderByComparator<KBComment> obc) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -91,6 +86,11 @@ public interface KBCommentService extends BaseService {
 	public List<KBComment> getKBComments(long groupId,
 		java.lang.String className, long classPK, int status, int start,
 		int end, OrderByComparator<KBComment> obc) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KBComment> getKBComments(long groupId,
+		java.lang.String className, long classPK, int start, int end,
+		OrderByComparator<KBComment> obc) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getKBCommentsCount(long groupId) throws PortalException;
@@ -115,12 +115,12 @@ public interface KBCommentService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	public KBComment updateKBComment(long kbCommentId, long classNameId,
-		long classPK, java.lang.String content, ServiceContext serviceContext)
-		throws PortalException;
-
-	public KBComment updateKBComment(long kbCommentId, long classNameId,
 		long classPK, java.lang.String content, int status,
 		ServiceContext serviceContext) throws PortalException;
+
+	public KBComment updateKBComment(long kbCommentId, long classNameId,
+		long classPK, java.lang.String content, ServiceContext serviceContext)
+		throws PortalException;
 
 	public KBComment updateStatus(long kbCommentId, int status,
 		ServiceContext serviceContext) throws PortalException;

@@ -64,12 +64,9 @@ public interface MBMessageService extends BaseService {
 		long parentMessageId, java.lang.String subject, java.lang.String body,
 		ServiceContext serviceContext) throws PortalException;
 
-	public MBMessage addMessage(long categoryId, java.lang.String subject,
-		java.lang.String body, ServiceContext serviceContext)
-		throws PortalException;
-
-	public MBMessage addMessage(long parentMessageId, java.lang.String subject,
-		java.lang.String body, java.lang.String format,
+	public MBMessage addMessage(long groupId, long categoryId,
+		java.lang.String subject, java.lang.String body,
+		java.lang.String format,
 		List<ObjectValuePair<java.lang.String, InputStream>> inputStreamOVPs,
 		boolean anonymous, double priority, boolean allowPingbacks,
 		ServiceContext serviceContext) throws PortalException;
@@ -81,9 +78,12 @@ public interface MBMessageService extends BaseService {
 		ServiceContext serviceContext)
 		throws PortalException, FileNotFoundException;
 
-	public MBMessage addMessage(long groupId, long categoryId,
-		java.lang.String subject, java.lang.String body,
-		java.lang.String format,
+	public MBMessage addMessage(long categoryId, java.lang.String subject,
+		java.lang.String body, ServiceContext serviceContext)
+		throws PortalException;
+
+	public MBMessage addMessage(long parentMessageId, java.lang.String subject,
+		java.lang.String body, java.lang.String format,
 		List<ObjectValuePair<java.lang.String, InputStream>> inputStreamOVPs,
 		boolean anonymous, double priority, boolean allowPingbacks,
 		ServiceContext serviceContext) throws PortalException;

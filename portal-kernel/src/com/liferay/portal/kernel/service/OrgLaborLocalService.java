@@ -57,6 +57,10 @@ public interface OrgLaborLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link OrgLaborLocalServiceUtil} to access the org labor local service. Add custom service methods to {@link com.liferay.portal.service.impl.OrgLaborLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public OrgLabor addOrgLabor(long organizationId, long typeId, int sunOpen,
+		int sunClose, int monOpen, int monClose, int tueOpen, int tueClose,
+		int wedOpen, int wedClose, int thuOpen, int thuClose, int friOpen,
+		int friClose, int satOpen, int satClose) throws PortalException;
 
 	/**
 	* Adds the org labor to the database. Also notifies the appropriate model listeners.
@@ -67,11 +71,6 @@ public interface OrgLaborLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public OrgLabor addOrgLabor(OrgLabor orgLabor);
 
-	public OrgLabor addOrgLabor(long organizationId, long typeId, int sunOpen,
-		int sunClose, int monOpen, int monClose, int tueOpen, int tueClose,
-		int wedOpen, int wedClose, int thuOpen, int thuClose, int friOpen,
-		int friClose, int satOpen, int satClose) throws PortalException;
-
 	/**
 	* Creates a new org labor with the primary key. Does not add the org labor to the database.
 	*
@@ -79,15 +78,6 @@ public interface OrgLaborLocalService extends BaseLocalService,
 	* @return the new org labor
 	*/
 	public OrgLabor createOrgLabor(long orgLaborId);
-
-	/**
-	* Deletes the org labor from the database. Also notifies the appropriate model listeners.
-	*
-	* @param orgLabor the org labor
-	* @return the org labor that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public OrgLabor deleteOrgLabor(OrgLabor orgLabor);
 
 	/**
 	* Deletes the org labor with the primary key from the database. Also notifies the appropriate model listeners.
@@ -98,6 +88,15 @@ public interface OrgLaborLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public OrgLabor deleteOrgLabor(long orgLaborId) throws PortalException;
+
+	/**
+	* Deletes the org labor from the database. Also notifies the appropriate model listeners.
+	*
+	* @param orgLabor the org labor
+	* @return the org labor that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public OrgLabor deleteOrgLabor(OrgLabor orgLabor);
 
 	/**
 	* @throws PortalException
@@ -175,13 +174,6 @@ public interface OrgLaborLocalService extends BaseLocalService,
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	/**
 	* Returns the org labor with the primary key.
 	*
 	* @param orgLaborId the primary key of the org labor
@@ -216,10 +208,22 @@ public interface OrgLaborLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getOrgLaborsCount();
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	public OrgLabor updateOrgLabor(long orgLaborId, long typeId, int sunOpen,
+		int sunClose, int monOpen, int monClose, int tueOpen, int tueClose,
+		int wedOpen, int wedClose, int thuOpen, int thuClose, int friOpen,
+		int friClose, int satOpen, int satClose) throws PortalException;
 
 	/**
 	* Updates the org labor in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -229,9 +233,4 @@ public interface OrgLaborLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public OrgLabor updateOrgLabor(OrgLabor orgLabor);
-
-	public OrgLabor updateOrgLabor(long orgLaborId, long typeId, int sunOpen,
-		int sunClose, int monOpen, int monClose, int tueOpen, int tueClose,
-		int wedOpen, int wedClose, int thuOpen, int thuClose, int friOpen,
-		int friClose, int satOpen, int satClose) throws PortalException;
 }

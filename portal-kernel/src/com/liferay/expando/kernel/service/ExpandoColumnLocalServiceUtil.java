@@ -85,6 +85,12 @@ public class ExpandoColumnLocalServiceUtil {
 		getService().deleteColumn(columnId);
 	}
 
+	public static void deleteColumn(long companyId, long classNameId,
+		java.lang.String tableName, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteColumn(companyId, classNameId, tableName, name);
+	}
+
 	public static void deleteColumn(long tableId, java.lang.String name) {
 		getService().deleteColumn(tableId, name);
 	}
@@ -95,26 +101,20 @@ public class ExpandoColumnLocalServiceUtil {
 		getService().deleteColumn(companyId, className, tableName, name);
 	}
 
-	public static void deleteColumn(long companyId, long classNameId,
-		java.lang.String tableName, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteColumn(companyId, classNameId, tableName, name);
-	}
-
 	public static void deleteColumns(long tableId) {
 		getService().deleteColumns(tableId);
-	}
-
-	public static void deleteColumns(long companyId,
-		java.lang.String className, java.lang.String tableName)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteColumns(companyId, className, tableName);
 	}
 
 	public static void deleteColumns(long companyId, long classNameId,
 		java.lang.String tableName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteColumns(companyId, classNameId, tableName);
+	}
+
+	public static void deleteColumns(long companyId,
+		java.lang.String className, java.lang.String tableName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteColumns(companyId, className, tableName);
 	}
 
 	/**
@@ -244,6 +244,12 @@ public class ExpandoColumnLocalServiceUtil {
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoColumn getColumn(
+		long companyId, long classNameId, java.lang.String tableName,
+		java.lang.String name) {
+		return getService().getColumn(companyId, classNameId, tableName, name);
+	}
+
+	public static com.liferay.expando.kernel.model.ExpandoColumn getColumn(
 		long tableId, java.lang.String name) {
 		return getService().getColumn(tableId, name);
 	}
@@ -254,27 +260,9 @@ public class ExpandoColumnLocalServiceUtil {
 		return getService().getColumn(companyId, className, tableName, name);
 	}
 
-	public static com.liferay.expando.kernel.model.ExpandoColumn getColumn(
-		long companyId, long classNameId, java.lang.String tableName,
-		java.lang.String name) {
-		return getService().getColumn(companyId, classNameId, tableName, name);
-	}
-
 	public static java.util.List<com.liferay.expando.kernel.model.ExpandoColumn> getColumns(
 		long tableId) {
 		return getService().getColumns(tableId);
-	}
-
-	public static java.util.List<com.liferay.expando.kernel.model.ExpandoColumn> getColumns(
-		long companyId, java.lang.String className, java.lang.String tableName) {
-		return getService().getColumns(companyId, className, tableName);
-	}
-
-	public static java.util.List<com.liferay.expando.kernel.model.ExpandoColumn> getColumns(
-		long companyId, java.lang.String className, java.lang.String tableName,
-		java.util.Collection<java.lang.String> columnNames) {
-		return getService()
-				   .getColumns(companyId, className, tableName, columnNames);
 	}
 
 	public static java.util.List<com.liferay.expando.kernel.model.ExpandoColumn> getColumns(
@@ -293,13 +281,20 @@ public class ExpandoColumnLocalServiceUtil {
 		return getService().getColumns(companyId, classNameId, tableName, names);
 	}
 
-	public static int getColumnsCount(long tableId) {
-		return getService().getColumnsCount(tableId);
+	public static java.util.List<com.liferay.expando.kernel.model.ExpandoColumn> getColumns(
+		long companyId, java.lang.String className, java.lang.String tableName) {
+		return getService().getColumns(companyId, className, tableName);
 	}
 
-	public static int getColumnsCount(long companyId,
-		java.lang.String className, java.lang.String tableName) {
-		return getService().getColumnsCount(companyId, className, tableName);
+	public static java.util.List<com.liferay.expando.kernel.model.ExpandoColumn> getColumns(
+		long companyId, java.lang.String className, java.lang.String tableName,
+		java.util.Collection<java.lang.String> columnNames) {
+		return getService()
+				   .getColumns(companyId, className, tableName, columnNames);
+	}
+
+	public static int getColumnsCount(long tableId) {
+		return getService().getColumnsCount(tableId);
 	}
 
 	public static int getColumnsCount(long companyId, long classNameId,
@@ -307,9 +302,9 @@ public class ExpandoColumnLocalServiceUtil {
 		return getService().getColumnsCount(companyId, classNameId, tableName);
 	}
 
-	public static com.liferay.expando.kernel.model.ExpandoColumn getDefaultTableColumn(
-		long companyId, java.lang.String className, java.lang.String name) {
-		return getService().getDefaultTableColumn(companyId, className, name);
+	public static int getColumnsCount(long companyId,
+		java.lang.String className, java.lang.String tableName) {
+		return getService().getColumnsCount(companyId, className, tableName);
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoColumn getDefaultTableColumn(
@@ -317,9 +312,9 @@ public class ExpandoColumnLocalServiceUtil {
 		return getService().getDefaultTableColumn(companyId, classNameId, name);
 	}
 
-	public static java.util.List<com.liferay.expando.kernel.model.ExpandoColumn> getDefaultTableColumns(
-		long companyId, java.lang.String className) {
-		return getService().getDefaultTableColumns(companyId, className);
+	public static com.liferay.expando.kernel.model.ExpandoColumn getDefaultTableColumn(
+		long companyId, java.lang.String className, java.lang.String name) {
+		return getService().getDefaultTableColumn(companyId, className, name);
 	}
 
 	public static java.util.List<com.liferay.expando.kernel.model.ExpandoColumn> getDefaultTableColumns(
@@ -327,14 +322,19 @@ public class ExpandoColumnLocalServiceUtil {
 		return getService().getDefaultTableColumns(companyId, classNameId);
 	}
 
-	public static int getDefaultTableColumnsCount(long companyId,
-		java.lang.String className) {
-		return getService().getDefaultTableColumnsCount(companyId, className);
+	public static java.util.List<com.liferay.expando.kernel.model.ExpandoColumn> getDefaultTableColumns(
+		long companyId, java.lang.String className) {
+		return getService().getDefaultTableColumns(companyId, className);
 	}
 
 	public static int getDefaultTableColumnsCount(long companyId,
 		long classNameId) {
 		return getService().getDefaultTableColumnsCount(companyId, classNameId);
+	}
+
+	public static int getDefaultTableColumnsCount(long companyId,
+		java.lang.String className) {
+		return getService().getDefaultTableColumnsCount(companyId, className);
 	}
 
 	/**

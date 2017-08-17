@@ -56,15 +56,15 @@ public interface DLFileEntryTypeService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link DLFileEntryTypeServiceUtil} to access the document library file entry type remote service. Add custom service methods to {@link com.liferay.portlet.documentlibrary.service.impl.DLFileEntryTypeServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public DLFileEntryType addFileEntryType(long groupId,
-		java.lang.String name, java.lang.String description,
-		long[] ddmStructureIds, ServiceContext serviceContext)
-		throws PortalException;
-
-	public DLFileEntryType addFileEntryType(long groupId,
 		java.lang.String fileEntryTypeKey,
 		Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap, long[] ddmStructureIds,
 		ServiceContext serviceContext) throws PortalException;
+
+	public DLFileEntryType addFileEntryType(long groupId,
+		java.lang.String name, java.lang.String description,
+		long[] ddmStructureIds, ServiceContext serviceContext)
+		throws PortalException;
 
 	public void deleteFileEntryType(long fileEntryTypeId)
 		throws PortalException;
@@ -104,12 +104,12 @@ public interface DLFileEntryTypeService extends BaseService {
 		java.lang.String keywords, boolean includeBasicFileEntryType);
 
 	public void updateFileEntryType(long fileEntryTypeId,
-		java.lang.String name, java.lang.String description,
-		long[] ddmStructureIds, ServiceContext serviceContext)
-		throws PortalException;
-
-	public void updateFileEntryType(long fileEntryTypeId,
 		Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap, long[] ddmStructureIds,
 		ServiceContext serviceContext) throws PortalException;
+
+	public void updateFileEntryType(long fileEntryTypeId,
+		java.lang.String name, java.lang.String description,
+		long[] ddmStructureIds, ServiceContext serviceContext)
+		throws PortalException;
 }

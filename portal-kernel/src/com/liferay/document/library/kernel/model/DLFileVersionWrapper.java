@@ -331,12 +331,6 @@ public class DLFileVersionWrapper implements DLFileVersion,
 		return _dlFileVersion.getDDMStructures();
 	}
 
-	@Override
-	public DLFileEntryType getDLFileEntryType()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileVersion.getDLFileEntryType();
-	}
-
 	/**
 	* Returns the description of this document library file version.
 	*
@@ -345,6 +339,12 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	@Override
 	public java.lang.String getDescription() {
 		return _dlFileVersion.getDescription();
+	}
+
+	@Override
+	public DLFileEntryType getDLFileEntryType()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileVersion.getDLFileEntryType();
 	}
 
 	@Override
@@ -800,14 +800,14 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_dlFileVersion.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_dlFileVersion.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_dlFileVersion.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

@@ -75,6 +75,12 @@ public interface LayoutSetPrototypeLocalService extends BaseLocalService,
 	public LayoutSetPrototype addLayoutSetPrototype(
 		LayoutSetPrototype layoutSetPrototype);
 
+	public LayoutSetPrototype addLayoutSetPrototype(long userId,
+		long companyId, Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, boolean active,
+		boolean layoutsUpdateable, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #addLayoutSetPrototype(long,
 	long, Map, Map, boolean, boolean, ServiceContext)}
@@ -83,12 +89,6 @@ public interface LayoutSetPrototypeLocalService extends BaseLocalService,
 	public LayoutSetPrototype addLayoutSetPrototype(long userId,
 		long companyId, Map<Locale, java.lang.String> nameMap,
 		java.lang.String description, boolean active,
-		boolean layoutsUpdateable, ServiceContext serviceContext)
-		throws PortalException;
-
-	public LayoutSetPrototype addLayoutSetPrototype(long userId,
-		long companyId, Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, boolean active,
 		boolean layoutsUpdateable, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -298,7 +298,9 @@ public interface LayoutSetPrototypeLocalService extends BaseLocalService,
 		LayoutSetPrototype layoutSetPrototype);
 
 	public LayoutSetPrototype updateLayoutSetPrototype(
-		long layoutSetPrototypeId, java.lang.String settings)
+		long layoutSetPrototypeId, Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, boolean active,
+		boolean layoutsUpdateable, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -314,8 +316,6 @@ public interface LayoutSetPrototypeLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public LayoutSetPrototype updateLayoutSetPrototype(
-		long layoutSetPrototypeId, Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, boolean active,
-		boolean layoutsUpdateable, ServiceContext serviceContext)
+		long layoutSetPrototypeId, java.lang.String settings)
 		throws PortalException;
 }

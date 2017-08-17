@@ -390,30 +390,6 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	/**
 	* Returns the localized description of this calendar booking in the language. Uses the default language if no localization exists for the requested language.
 	*
-	* @param languageId the ID of the language
-	* @return the localized description of this calendar booking
-	*/
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId) {
-		return _calendarBooking.getDescription(languageId);
-	}
-
-	/**
-	* Returns the localized description of this calendar booking in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized description of this calendar booking
-	*/
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId,
-		boolean useDefault) {
-		return _calendarBooking.getDescription(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized description of this calendar booking in the language. Uses the default language if no localization exists for the requested language.
-	*
 	* @param locale the locale of the language
 	* @return the localized description of this calendar booking
 	*/
@@ -433,6 +409,30 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	public java.lang.String getDescription(java.util.Locale locale,
 		boolean useDefault) {
 		return _calendarBooking.getDescription(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized description of this calendar booking in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized description of this calendar booking
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId) {
+		return _calendarBooking.getDescription(languageId);
+	}
+
+	/**
+	* Returns the localized description of this calendar booking in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized description of this calendar booking
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId,
+		boolean useDefault) {
+		return _calendarBooking.getDescription(languageId, useDefault);
 	}
 
 	@Override
@@ -714,6 +714,29 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	/**
 	* Returns the localized title of this calendar booking in the language. Uses the default language if no localization exists for the requested language.
 	*
+	* @param locale the locale of the language
+	* @return the localized title of this calendar booking
+	*/
+	@Override
+	public java.lang.String getTitle(java.util.Locale locale) {
+		return _calendarBooking.getTitle(locale);
+	}
+
+	/**
+	* Returns the localized title of this calendar booking in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized title of this calendar booking. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
+		return _calendarBooking.getTitle(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized title of this calendar booking in the language. Uses the default language if no localization exists for the requested language.
+	*
 	* @param languageId the ID of the language
 	* @return the localized title of this calendar booking
 	*/
@@ -733,29 +756,6 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	public java.lang.String getTitle(java.lang.String languageId,
 		boolean useDefault) {
 		return _calendarBooking.getTitle(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized title of this calendar booking in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized title of this calendar booking
-	*/
-	@Override
-	public java.lang.String getTitle(java.util.Locale locale) {
-		return _calendarBooking.getTitle(locale);
-	}
-
-	/**
-	* Returns the localized title of this calendar booking in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized title of this calendar booking. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
-		return _calendarBooking.getTitle(locale, useDefault);
 	}
 
 	@Override
@@ -927,6 +927,26 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	}
 
 	/**
+	* Returns <code>true</code> if this calendar booking is inactive.
+	*
+	* @return <code>true</code> if this calendar booking is inactive; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isInactive() {
+		return _calendarBooking.isInactive();
+	}
+
+	/**
+	* Returns <code>true</code> if this calendar booking is incomplete.
+	*
+	* @return <code>true</code> if this calendar booking is incomplete; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isIncomplete() {
+		return _calendarBooking.isIncomplete();
+	}
+
+	/**
 	* Returns <code>true</code> if this calendar booking is in the Recycle Bin.
 	*
 	* @return <code>true</code> if this calendar booking is in the Recycle Bin; <code>false</code> otherwise
@@ -954,26 +974,6 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	@Override
 	public boolean isInTrashImplicitly() {
 		return _calendarBooking.isInTrashImplicitly();
-	}
-
-	/**
-	* Returns <code>true</code> if this calendar booking is inactive.
-	*
-	* @return <code>true</code> if this calendar booking is inactive; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isInactive() {
-		return _calendarBooking.isInactive();
-	}
-
-	/**
-	* Returns <code>true</code> if this calendar booking is incomplete.
-	*
-	* @return <code>true</code> if this calendar booking is incomplete; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isIncomplete() {
-		return _calendarBooking.isIncomplete();
 	}
 
 	@Override
@@ -1174,14 +1174,14 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_calendarBooking.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_calendarBooking.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_calendarBooking.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

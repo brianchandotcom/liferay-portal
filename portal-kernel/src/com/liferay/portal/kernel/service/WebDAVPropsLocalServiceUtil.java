@@ -73,22 +73,6 @@ public class WebDAVPropsLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the web dav props from the database. Also notifies the appropriate model listeners.
-	*
-	* @param webDAVProps the web dav props
-	* @return the web dav props that was removed
-	*/
-	public static com.liferay.portal.kernel.model.WebDAVProps deleteWebDAVProps(
-		com.liferay.portal.kernel.model.WebDAVProps webDAVProps) {
-		return getService().deleteWebDAVProps(webDAVProps);
-	}
-
-	public static void deleteWebDAVProps(java.lang.String className,
-		long classPK) {
-		getService().deleteWebDAVProps(className, classPK);
-	}
-
-	/**
 	* Deletes the web dav props with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param webDavPropsId the primary key of the web dav props
@@ -99,6 +83,22 @@ public class WebDAVPropsLocalServiceUtil {
 		long webDavPropsId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteWebDAVProps(webDavPropsId);
+	}
+
+	public static void deleteWebDAVProps(java.lang.String className,
+		long classPK) {
+		getService().deleteWebDAVProps(className, classPK);
+	}
+
+	/**
+	* Deletes the web dav props from the database. Also notifies the appropriate model listeners.
+	*
+	* @param webDAVProps the web dav props
+	* @return the web dav props that was removed
+	*/
+	public static com.liferay.portal.kernel.model.WebDAVProps deleteWebDAVProps(
+		com.liferay.portal.kernel.model.WebDAVProps webDAVProps) {
+		return getService().deleteWebDAVProps(webDAVProps);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {

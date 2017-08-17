@@ -70,11 +70,6 @@ public class MBBanLocalServiceWrapper implements MBBanLocalService,
 	}
 
 	@Override
-	public void deleteBan(com.liferay.message.boards.kernel.model.MBBan ban) {
-		_mbBanLocalService.deleteBan(ban);
-	}
-
-	@Override
 	public void deleteBan(long banId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_mbBanLocalService.deleteBan(banId);
@@ -84,6 +79,11 @@ public class MBBanLocalServiceWrapper implements MBBanLocalService,
 	public void deleteBan(long banUserId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		_mbBanLocalService.deleteBan(banUserId, serviceContext);
+	}
+
+	@Override
+	public void deleteBan(com.liferay.message.boards.kernel.model.MBBan ban) {
+		_mbBanLocalService.deleteBan(ban);
 	}
 
 	@Override
@@ -97,18 +97,6 @@ public class MBBanLocalServiceWrapper implements MBBanLocalService,
 	}
 
 	/**
-	* Deletes the message boards ban from the database. Also notifies the appropriate model listeners.
-	*
-	* @param mbBan the message boards ban
-	* @return the message boards ban that was removed
-	*/
-	@Override
-	public com.liferay.message.boards.kernel.model.MBBan deleteMBBan(
-		com.liferay.message.boards.kernel.model.MBBan mbBan) {
-		return _mbBanLocalService.deleteMBBan(mbBan);
-	}
-
-	/**
 	* Deletes the message boards ban with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param banId the primary key of the message boards ban
@@ -119,6 +107,18 @@ public class MBBanLocalServiceWrapper implements MBBanLocalService,
 	public com.liferay.message.boards.kernel.model.MBBan deleteMBBan(long banId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbBanLocalService.deleteMBBan(banId);
+	}
+
+	/**
+	* Deletes the message boards ban from the database. Also notifies the appropriate model listeners.
+	*
+	* @param mbBan the message boards ban
+	* @return the message boards ban that was removed
+	*/
+	@Override
+	public com.liferay.message.boards.kernel.model.MBBan deleteMBBan(
+		com.liferay.message.boards.kernel.model.MBBan mbBan) {
+		return _mbBanLocalService.deleteMBBan(mbBan);
 	}
 
 	/**

@@ -321,6 +321,35 @@ public class DDLRecordSetServiceWrapper implements DDLRecordSetService,
 
 	/**
 	* Updates the DDM structure, name, description, and minimum number of
+	* display rows for the record set matching the record set ID.
+	*
+	* @param recordSetId the primary key of the record set
+	* @param ddmStructureId the primary key of the record set's DDM structure
+	* @param nameMap the record set's locales and localized names
+	* @param descriptionMap the record set's locales and localized
+	descriptions
+	* @param minDisplayRows the record set's minimum number of rows to be
+	displayed in spreadsheet view.
+	* @param serviceContext the service context to be applied. Can set the
+	record set modified date.
+	* @return the record set
+	* @throws PortalException if a portal exception occurred
+	*/
+	@Override
+	public com.liferay.dynamic.data.lists.model.DDLRecordSet updateRecordSet(
+		long recordSetId, long ddmStructureId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		int minDisplayRows,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecordSetService.updateRecordSet(recordSetId,
+			ddmStructureId, nameMap, descriptionMap, minDisplayRows,
+			serviceContext);
+	}
+
+	/**
+	* Updates the DDM structure, name, description, and minimum number of
 	* display rows for the record set matching the group ID and record set key.
 	*
 	* @param groupId the primary key of the record set's group
@@ -346,35 +375,6 @@ public class DDLRecordSetServiceWrapper implements DDLRecordSetService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordSetService.updateRecordSet(groupId, ddmStructureId,
 			recordSetKey, nameMap, descriptionMap, minDisplayRows,
-			serviceContext);
-	}
-
-	/**
-	* Updates the DDM structure, name, description, and minimum number of
-	* display rows for the record set matching the record set ID.
-	*
-	* @param recordSetId the primary key of the record set
-	* @param ddmStructureId the primary key of the record set's DDM structure
-	* @param nameMap the record set's locales and localized names
-	* @param descriptionMap the record set's locales and localized
-	descriptions
-	* @param minDisplayRows the record set's minimum number of rows to be
-	displayed in spreadsheet view.
-	* @param serviceContext the service context to be applied. Can set the
-	record set modified date.
-	* @return the record set
-	* @throws PortalException if a portal exception occurred
-	*/
-	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecordSet updateRecordSet(
-		long recordSetId, long ddmStructureId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		int minDisplayRows,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecordSetService.updateRecordSet(recordSetId,
-			ddmStructureId, nameMap, descriptionMap, minDisplayRows,
 			serviceContext);
 	}
 

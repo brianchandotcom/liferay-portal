@@ -40,16 +40,14 @@ public class SystemEventLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.SystemEventLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-
-	/**
-	* Adds the system event to the database. Also notifies the appropriate model listeners.
-	*
-	* @param systemEvent the system event
-	* @return the system event that was added
-	*/
 	public static com.liferay.portal.kernel.model.SystemEvent addSystemEvent(
-		com.liferay.portal.kernel.model.SystemEvent systemEvent) {
-		return getService().addSystemEvent(systemEvent);
+		long userId, long groupId, java.lang.String className, long classPK,
+		java.lang.String classUuid, java.lang.String referrerClassName,
+		int type, java.lang.String extraData)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addSystemEvent(userId, groupId, className, classPK,
+			classUuid, referrerClassName, type, extraData);
 	}
 
 	public static com.liferay.portal.kernel.model.SystemEvent addSystemEvent(
@@ -62,14 +60,15 @@ public class SystemEventLocalServiceUtil {
 			referrerClassName, type, extraData);
 	}
 
+	/**
+	* Adds the system event to the database. Also notifies the appropriate model listeners.
+	*
+	* @param systemEvent the system event
+	* @return the system event that was added
+	*/
 	public static com.liferay.portal.kernel.model.SystemEvent addSystemEvent(
-		long userId, long groupId, java.lang.String className, long classPK,
-		java.lang.String classUuid, java.lang.String referrerClassName,
-		int type, java.lang.String extraData)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addSystemEvent(userId, groupId, className, classPK,
-			classUuid, referrerClassName, type, extraData);
+		com.liferay.portal.kernel.model.SystemEvent systemEvent) {
+		return getService().addSystemEvent(systemEvent);
 	}
 
 	public static void checkSystemEvents()
@@ -98,17 +97,6 @@ public class SystemEventLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the system event from the database. Also notifies the appropriate model listeners.
-	*
-	* @param systemEvent the system event
-	* @return the system event that was removed
-	*/
-	public static com.liferay.portal.kernel.model.SystemEvent deleteSystemEvent(
-		com.liferay.portal.kernel.model.SystemEvent systemEvent) {
-		return getService().deleteSystemEvent(systemEvent);
-	}
-
-	/**
 	* Deletes the system event with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param systemEventId the primary key of the system event
@@ -119,6 +107,17 @@ public class SystemEventLocalServiceUtil {
 		long systemEventId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteSystemEvent(systemEventId);
+	}
+
+	/**
+	* Deletes the system event from the database. Also notifies the appropriate model listeners.
+	*
+	* @param systemEvent the system event
+	* @return the system event that was removed
+	*/
+	public static com.liferay.portal.kernel.model.SystemEvent deleteSystemEvent(
+		com.liferay.portal.kernel.model.SystemEvent systemEvent) {
+		return getService().deleteSystemEvent(systemEvent);
 	}
 
 	public static void deleteSystemEvents(long groupId) {

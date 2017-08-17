@@ -40,6 +40,14 @@ public class MembershipRequestLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.MembershipRequestLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portal.kernel.model.MembershipRequest addMembershipRequest(
+		long userId, long groupId, java.lang.String comments,
+		ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addMembershipRequest(userId, groupId, comments,
+			serviceContext);
+	}
 
 	/**
 	* Adds the membership request to the database. Also notifies the appropriate model listeners.
@@ -50,15 +58,6 @@ public class MembershipRequestLocalServiceUtil {
 	public static com.liferay.portal.kernel.model.MembershipRequest addMembershipRequest(
 		com.liferay.portal.kernel.model.MembershipRequest membershipRequest) {
 		return getService().addMembershipRequest(membershipRequest);
-	}
-
-	public static com.liferay.portal.kernel.model.MembershipRequest addMembershipRequest(
-		long userId, long groupId, java.lang.String comments,
-		ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addMembershipRequest(userId, groupId, comments,
-			serviceContext);
 	}
 
 	/**
@@ -73,17 +72,6 @@ public class MembershipRequestLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the membership request from the database. Also notifies the appropriate model listeners.
-	*
-	* @param membershipRequest the membership request
-	* @return the membership request that was removed
-	*/
-	public static com.liferay.portal.kernel.model.MembershipRequest deleteMembershipRequest(
-		com.liferay.portal.kernel.model.MembershipRequest membershipRequest) {
-		return getService().deleteMembershipRequest(membershipRequest);
-	}
-
-	/**
 	* Deletes the membership request with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param membershipRequestId the primary key of the membership request
@@ -94,6 +82,17 @@ public class MembershipRequestLocalServiceUtil {
 		long membershipRequestId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteMembershipRequest(membershipRequestId);
+	}
+
+	/**
+	* Deletes the membership request from the database. Also notifies the appropriate model listeners.
+	*
+	* @param membershipRequest the membership request
+	* @return the membership request that was removed
+	*/
+	public static com.liferay.portal.kernel.model.MembershipRequest deleteMembershipRequest(
+		com.liferay.portal.kernel.model.MembershipRequest membershipRequest) {
+		return getService().deleteMembershipRequest(membershipRequest);
 	}
 
 	public static void deleteMembershipRequests(long groupId) {

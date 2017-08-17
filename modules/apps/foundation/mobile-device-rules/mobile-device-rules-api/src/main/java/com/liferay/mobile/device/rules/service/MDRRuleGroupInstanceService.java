@@ -58,11 +58,11 @@ public interface MDRRuleGroupInstanceService extends BaseService {
 	 */
 	public MDRRuleGroupInstance addRuleGroupInstance(long groupId,
 		java.lang.String className, long classPK, long ruleGroupId,
-		ServiceContext serviceContext) throws PortalException;
+		int priority, ServiceContext serviceContext) throws PortalException;
 
 	public MDRRuleGroupInstance addRuleGroupInstance(long groupId,
 		java.lang.String className, long classPK, long ruleGroupId,
-		int priority, ServiceContext serviceContext) throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	public void deleteRuleGroupInstance(long ruleGroupInstanceId)
 		throws PortalException;

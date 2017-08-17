@@ -448,13 +448,13 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 	}
 
 	@Override
-	public boolean hasSetModifiedDate() {
-		return _layoutSet.hasSetModifiedDate();
+	public int hashCode() {
+		return _layoutSet.hashCode();
 	}
 
 	@Override
-	public int hashCode() {
-		return _layoutSet.hashCode();
+	public boolean hasSetModifiedDate() {
+		return _layoutSet.hasSetModifiedDate();
 	}
 
 	@Override
@@ -559,13 +559,13 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_layoutSet.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
+		_layoutSet.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_layoutSet.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_layoutSet.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

@@ -100,15 +100,6 @@ public interface SocialRelationLocalService extends BaseLocalService,
 	* Removes the relation (and its inverse in case of a bidirectional
 	* relation) from the database.
 	*
-	* @param relation the relation to be removed
-	*/
-	public void deleteRelation(SocialRelation relation)
-		throws PortalException;
-
-	/**
-	* Removes the relation (and its inverse in case of a bidirectional
-	* relation) from the database.
-	*
 	* @param relationId the primary key of the relation
 	*/
 	public void deleteRelation(long relationId) throws PortalException;
@@ -122,6 +113,15 @@ public interface SocialRelationLocalService extends BaseLocalService,
 	* @param type the relation's type
 	*/
 	public void deleteRelation(long userId1, long userId2, int type)
+		throws PortalException;
+
+	/**
+	* Removes the relation (and its inverse in case of a bidirectional
+	* relation) from the database.
+	*
+	* @param relation the relation to be removed
+	*/
+	public void deleteRelation(SocialRelation relation)
 		throws PortalException;
 
 	/**
@@ -141,15 +141,6 @@ public interface SocialRelationLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the social relation from the database. Also notifies the appropriate model listeners.
-	*
-	* @param socialRelation the social relation
-	* @return the social relation that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public SocialRelation deleteSocialRelation(SocialRelation socialRelation);
-
-	/**
 	* Deletes the social relation with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param relationId the primary key of the social relation
@@ -159,6 +150,15 @@ public interface SocialRelationLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public SocialRelation deleteSocialRelation(long relationId)
 		throws PortalException;
+
+	/**
+	* Deletes the social relation from the database. Also notifies the appropriate model listeners.
+	*
+	* @param socialRelation the social relation
+	* @return the social relation that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public SocialRelation deleteSocialRelation(SocialRelation socialRelation);
 
 	public DynamicQuery dynamicQuery();
 

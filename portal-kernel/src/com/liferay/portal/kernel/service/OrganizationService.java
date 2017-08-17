@@ -65,34 +65,6 @@ public interface OrganizationService extends BaseService {
 		throws PortalException;
 
 	/**
-	* Adds an organization.
-	*
-	* <p>
-	* This method handles the creation and bookkeeping of the organization
-	* including its resources, metadata, and internal data structures.
-	* </p>
-	*
-	* @param parentOrganizationId the primary key of the organization's parent
-	organization
-	* @param name the organization's name
-	* @param type the organization's type
-	* @param regionId the primary key of the organization's region
-	* @param countryId the primary key of the organization's country
-	* @param statusId the organization's workflow status
-	* @param comments the comments about the organization
-	* @param site whether the organization is to be associated with a main
-	site
-	* @param serviceContext the service context to be applied (optionally
-	<code>null</code>). Can set asset category IDs, asset tag names,
-	and expando bridge attributes for the organization.
-	* @return the organization
-	*/
-	public Organization addOrganization(long parentOrganizationId,
-		java.lang.String name, java.lang.String type, long regionId,
-		long countryId, long statusId, java.lang.String comments, boolean site,
-		ServiceContext serviceContext) throws PortalException;
-
-	/**
 	* Adds an organization with additional parameters.
 	*
 	* <p>
@@ -125,6 +97,34 @@ public interface OrganizationService extends BaseService {
 		long countryId, long statusId, java.lang.String comments, boolean site,
 		List<Address> addresses, List<EmailAddress> emailAddresses,
 		List<OrgLabor> orgLabors, List<Phone> phones, List<Website> websites,
+		ServiceContext serviceContext) throws PortalException;
+
+	/**
+	* Adds an organization.
+	*
+	* <p>
+	* This method handles the creation and bookkeeping of the organization
+	* including its resources, metadata, and internal data structures.
+	* </p>
+	*
+	* @param parentOrganizationId the primary key of the organization's parent
+	organization
+	* @param name the organization's name
+	* @param type the organization's type
+	* @param regionId the primary key of the organization's region
+	* @param countryId the primary key of the organization's country
+	* @param statusId the organization's workflow status
+	* @param comments the comments about the organization
+	* @param site whether the organization is to be associated with a main
+	site
+	* @param serviceContext the service context to be applied (optionally
+	<code>null</code>). Can set asset category IDs, asset tag names,
+	and expando bridge attributes for the organization.
+	* @return the organization
+	*/
+	public Organization addOrganization(long parentOrganizationId,
+		java.lang.String name, java.lang.String type, long regionId,
+		long countryId, long statusId, java.lang.String comments, boolean site,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -164,13 +164,6 @@ public interface OrganizationService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Organization fetchOrganization(long organizationId)
 		throws PortalException;
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Returns the organization with the primary key.
@@ -242,6 +235,13 @@ public interface OrganizationService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getOrganizationsCount(long companyId, long parentOrganizationId);
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Returns all the organizations with which the user is explicitly
@@ -325,32 +325,6 @@ public interface OrganizationService extends BaseService {
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
-	* Updates the organization.
-	*
-	* @param organizationId the primary key of the organization
-	* @param parentOrganizationId the primary key of the organization's parent
-	organization
-	* @param name the organization's name
-	* @param type the organization's type
-	* @param regionId the primary key of the organization's region
-	* @param countryId the primary key of the organization's country
-	* @param statusId the organization's workflow status
-	* @param comments the comments about the organization
-	* @param site whether the organization is to be associated with a main
-	site
-	* @param serviceContext the service context to be applied (optionally
-	<code>null</code>). Can set asset category IDs and asset tag
-	names for the organization, and merge expando bridge attributes
-	for the organization.
-	* @return the organization
-	*/
-	public Organization updateOrganization(long organizationId,
-		long parentOrganizationId, java.lang.String name,
-		java.lang.String type, long regionId, long countryId, long statusId,
-		java.lang.String comments, boolean site, ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
 	* Updates the organization with additional parameters.
 	*
 	* @param organizationId the primary key of the organization
@@ -387,4 +361,30 @@ public interface OrganizationService extends BaseService {
 		List<EmailAddress> emailAddresses, List<OrgLabor> orgLabors,
 		List<Phone> phones, List<Website> websites,
 		ServiceContext serviceContext) throws PortalException;
+
+	/**
+	* Updates the organization.
+	*
+	* @param organizationId the primary key of the organization
+	* @param parentOrganizationId the primary key of the organization's parent
+	organization
+	* @param name the organization's name
+	* @param type the organization's type
+	* @param regionId the primary key of the organization's region
+	* @param countryId the primary key of the organization's country
+	* @param statusId the organization's workflow status
+	* @param comments the comments about the organization
+	* @param site whether the organization is to be associated with a main
+	site
+	* @param serviceContext the service context to be applied (optionally
+	<code>null</code>). Can set asset category IDs and asset tag
+	names for the organization, and merge expando bridge attributes
+	for the organization.
+	* @return the organization
+	*/
+	public Organization updateOrganization(long organizationId,
+		long parentOrganizationId, java.lang.String name,
+		java.lang.String type, long regionId, long countryId, long statusId,
+		java.lang.String comments, boolean site, ServiceContext serviceContext)
+		throws PortalException;
 }

@@ -92,15 +92,6 @@ public interface MBThreadLocalService extends BaseLocalService,
 	public MBThread createMBThread(long threadId);
 
 	/**
-	* Deletes the message boards thread from the database. Also notifies the appropriate model listeners.
-	*
-	* @param mbThread the message boards thread
-	* @return the message boards thread that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public MBThread deleteMBThread(MBThread mbThread);
-
-	/**
 	* Deletes the message boards thread with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param threadId the primary key of the message boards thread
@@ -111,16 +102,25 @@ public interface MBThreadLocalService extends BaseLocalService,
 	public MBThread deleteMBThread(long threadId) throws PortalException;
 
 	/**
+	* Deletes the message boards thread from the database. Also notifies the appropriate model listeners.
+	*
+	* @param mbThread the message boards thread
+	* @return the message boards thread that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public MBThread deleteMBThread(MBThread mbThread);
+
+	/**
 	* @throws PortalException
 	*/
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
+	public void deleteThread(long threadId) throws PortalException;
+
 	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
 	public void deleteThread(MBThread thread) throws PortalException;
-
-	public void deleteThread(long threadId) throws PortalException;
 
 	public void deleteThreads(long groupId, long categoryId)
 		throws PortalException;
@@ -215,37 +215,37 @@ public interface MBThreadLocalService extends BaseLocalService,
 		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBThread> getGroupThreads(long groupId, long userId,
+		boolean subscribed, boolean includeAnonymous,
+		QueryDefinition<MBThread> queryDefinition);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBThread> getGroupThreads(long groupId, long userId,
+		boolean subscribed, QueryDefinition<MBThread> queryDefinition);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBThread> getGroupThreads(long groupId, long userId,
+		QueryDefinition<MBThread> queryDefinition);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBThread> getGroupThreads(long groupId,
 		QueryDefinition<MBThread> queryDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBThread> getGroupThreads(long groupId, long userId,
+	public int getGroupThreadsCount(long groupId, long userId,
 		boolean subscribed, boolean includeAnonymous,
 		QueryDefinition<MBThread> queryDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBThread> getGroupThreads(long groupId, long userId,
+	public int getGroupThreadsCount(long groupId, long userId,
 		boolean subscribed, QueryDefinition<MBThread> queryDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBThread> getGroupThreads(long groupId, long userId,
+	public int getGroupThreadsCount(long groupId, long userId,
 		QueryDefinition<MBThread> queryDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupThreadsCount(long groupId,
-		QueryDefinition<MBThread> queryDefinition);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getGroupThreadsCount(long groupId, long userId,
-		boolean subscribed, boolean includeAnonymous,
-		QueryDefinition<MBThread> queryDefinition);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getGroupThreadsCount(long groupId, long userId,
-		boolean subscribed, QueryDefinition<MBThread> queryDefinition);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getGroupThreadsCount(long groupId, long userId,
 		QueryDefinition<MBThread> queryDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -370,13 +370,13 @@ public interface MBThreadLocalService extends BaseLocalService,
 	public MBThread moveThreadFromTrash(long userId, long categoryId,
 		long threadId) throws PortalException;
 
-	public MBThread moveThreadToTrash(long userId, MBThread thread)
+	public void moveThreadsToTrash(long groupId, long userId)
 		throws PortalException;
 
 	public MBThread moveThreadToTrash(long userId, long threadId)
 		throws PortalException;
 
-	public void moveThreadsToTrash(long groupId, long userId)
+	public MBThread moveThreadToTrash(long userId, MBThread thread)
 		throws PortalException;
 
 	public void restoreDependentsFromTrash(long groupId, long threadId)

@@ -31,18 +31,6 @@ public class TeamLocalServiceWrapper implements TeamLocalService,
 	}
 
 	/**
-	* Adds the team to the database. Also notifies the appropriate model listeners.
-	*
-	* @param team the team
-	* @return the team that was added
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.Team addTeam(
-		com.liferay.portal.kernel.model.Team team) {
-		return _teamLocalService.addTeam(team);
-	}
-
-	/**
 	* @deprecated As of 7.0.0, replaced by {@link #addTeam(long, long, String,
 	String, ServiceContext)}
 	*/
@@ -63,15 +51,27 @@ public class TeamLocalServiceWrapper implements TeamLocalService,
 			serviceContext);
 	}
 
+	/**
+	* Adds the team to the database. Also notifies the appropriate model listeners.
+	*
+	* @param team the team
+	* @return the team that was added
+	*/
 	@Override
-	public void addUserGroupTeam(long userGroupId,
+	public com.liferay.portal.kernel.model.Team addTeam(
 		com.liferay.portal.kernel.model.Team team) {
-		_teamLocalService.addUserGroupTeam(userGroupId, team);
+		return _teamLocalService.addTeam(team);
 	}
 
 	@Override
 	public void addUserGroupTeam(long userGroupId, long teamId) {
 		_teamLocalService.addUserGroupTeam(userGroupId, teamId);
+	}
+
+	@Override
+	public void addUserGroupTeam(long userGroupId,
+		com.liferay.portal.kernel.model.Team team) {
+		_teamLocalService.addUserGroupTeam(userGroupId, team);
 	}
 
 	@Override
@@ -86,14 +86,14 @@ public class TeamLocalServiceWrapper implements TeamLocalService,
 	}
 
 	@Override
-	public void addUserTeam(long userId,
-		com.liferay.portal.kernel.model.Team team) {
-		_teamLocalService.addUserTeam(userId, team);
+	public void addUserTeam(long userId, long teamId) {
+		_teamLocalService.addUserTeam(userId, teamId);
 	}
 
 	@Override
-	public void addUserTeam(long userId, long teamId) {
-		_teamLocalService.addUserTeam(userId, teamId);
+	public void addUserTeam(long userId,
+		com.liferay.portal.kernel.model.Team team) {
+		_teamLocalService.addUserTeam(userId, team);
 	}
 
 	@Override
@@ -139,6 +139,19 @@ public class TeamLocalServiceWrapper implements TeamLocalService,
 	}
 
 	/**
+	* Deletes the team with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param teamId the primary key of the team
+	* @return the team that was removed
+	* @throws PortalException if a team with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.Team deleteTeam(long teamId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _teamLocalService.deleteTeam(teamId);
+	}
+
+	/**
 	* Deletes the team from the database. Also notifies the appropriate model listeners.
 	*
 	* @param team the team
@@ -152,19 +165,6 @@ public class TeamLocalServiceWrapper implements TeamLocalService,
 		return _teamLocalService.deleteTeam(team);
 	}
 
-	/**
-	* Deletes the team with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param teamId the primary key of the team
-	* @return the team that was removed
-	* @throws PortalException if a team with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.Team deleteTeam(long teamId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _teamLocalService.deleteTeam(teamId);
-	}
-
 	@Override
 	public void deleteTeams(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -172,14 +172,14 @@ public class TeamLocalServiceWrapper implements TeamLocalService,
 	}
 
 	@Override
-	public void deleteUserGroupTeam(long userGroupId,
-		com.liferay.portal.kernel.model.Team team) {
-		_teamLocalService.deleteUserGroupTeam(userGroupId, team);
+	public void deleteUserGroupTeam(long userGroupId, long teamId) {
+		_teamLocalService.deleteUserGroupTeam(userGroupId, teamId);
 	}
 
 	@Override
-	public void deleteUserGroupTeam(long userGroupId, long teamId) {
-		_teamLocalService.deleteUserGroupTeam(userGroupId, teamId);
+	public void deleteUserGroupTeam(long userGroupId,
+		com.liferay.portal.kernel.model.Team team) {
+		_teamLocalService.deleteUserGroupTeam(userGroupId, team);
 	}
 
 	@Override
@@ -194,14 +194,14 @@ public class TeamLocalServiceWrapper implements TeamLocalService,
 	}
 
 	@Override
-	public void deleteUserTeam(long userId,
-		com.liferay.portal.kernel.model.Team team) {
-		_teamLocalService.deleteUserTeam(userId, team);
+	public void deleteUserTeam(long userId, long teamId) {
+		_teamLocalService.deleteUserTeam(userId, teamId);
 	}
 
 	@Override
-	public void deleteUserTeam(long userId, long teamId) {
-		_teamLocalService.deleteUserTeam(userId, teamId);
+	public void deleteUserTeam(long userId,
+		com.liferay.portal.kernel.model.Team team) {
+		_teamLocalService.deleteUserTeam(userId, team);
 	}
 
 	@Override
@@ -586,6 +586,13 @@ public class TeamLocalServiceWrapper implements TeamLocalService,
 		_teamLocalService.setUserTeams(userId, teamIds);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.Team updateTeam(long teamId,
+		java.lang.String name, java.lang.String description)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _teamLocalService.updateTeam(teamId, name, description);
+	}
+
 	/**
 	* Updates the team in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -596,13 +603,6 @@ public class TeamLocalServiceWrapper implements TeamLocalService,
 	public com.liferay.portal.kernel.model.Team updateTeam(
 		com.liferay.portal.kernel.model.Team team) {
 		return _teamLocalService.updateTeam(team);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Team updateTeam(long teamId,
-		java.lang.String name, java.lang.String description)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _teamLocalService.updateTeam(teamId, name, description);
 	}
 
 	@Override

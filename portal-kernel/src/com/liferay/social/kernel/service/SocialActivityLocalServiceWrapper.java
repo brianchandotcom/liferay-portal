@@ -34,35 +34,6 @@ public class SocialActivityLocalServiceWrapper
 		_socialActivityLocalService = socialActivityLocalService;
 	}
 
-	@Override
-	public void addActivity(
-		com.liferay.social.kernel.model.SocialActivity activity,
-		com.liferay.social.kernel.model.SocialActivity mirrorActivity)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_socialActivityLocalService.addActivity(activity, mirrorActivity);
-	}
-
-	/**
-	* Records an activity in the database, using a time based on the current
-	* time in an attempt to make the activity's time unique.
-	*
-	* @param userId the primary key of the acting user
-	* @param groupId the primary key of the group
-	* @param className the target asset's class name
-	* @param classPK the primary key of the target asset
-	* @param type the activity's type
-	* @param extraData any extra data regarding the activity
-	* @param receiverUserId the primary key of the receiving user
-	*/
-	@Override
-	public void addActivity(long userId, long groupId,
-		java.lang.String className, long classPK, int type,
-		java.lang.String extraData, long receiverUserId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_socialActivityLocalService.addActivity(userId, groupId, className,
-			classPK, type, extraData, receiverUserId);
-	}
-
 	/**
 	* Records an activity with the given time in the database.
 	*
@@ -110,25 +81,8 @@ public class SocialActivityLocalServiceWrapper
 	}
 
 	/**
-	* Adds the social activity to the database. Also notifies the appropriate model listeners.
-	*
-	* @param socialActivity the social activity
-	* @return the social activity that was added
-	*/
-	@Override
-	public com.liferay.social.kernel.model.SocialActivity addSocialActivity(
-		com.liferay.social.kernel.model.SocialActivity socialActivity) {
-		return _socialActivityLocalService.addSocialActivity(socialActivity);
-	}
-
-	/**
-	* Records an activity with the current time in the database, but only if
-	* there isn't one with the same parameters.
-	*
-	* <p>
-	* For the main functionality see {@link #addActivity(long, long, Date,
-	* String, long, int, String, long)}
-	* </p>
+	* Records an activity in the database, using a time based on the current
+	* time in an attempt to make the activity's time unique.
 	*
 	* @param userId the primary key of the acting user
 	* @param groupId the primary key of the group
@@ -139,12 +93,32 @@ public class SocialActivityLocalServiceWrapper
 	* @param receiverUserId the primary key of the receiving user
 	*/
 	@Override
-	public void addUniqueActivity(long userId, long groupId,
+	public void addActivity(long userId, long groupId,
 		java.lang.String className, long classPK, int type,
 		java.lang.String extraData, long receiverUserId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_socialActivityLocalService.addUniqueActivity(userId, groupId,
-			className, classPK, type, extraData, receiverUserId);
+		_socialActivityLocalService.addActivity(userId, groupId, className,
+			classPK, type, extraData, receiverUserId);
+	}
+
+	@Override
+	public void addActivity(
+		com.liferay.social.kernel.model.SocialActivity activity,
+		com.liferay.social.kernel.model.SocialActivity mirrorActivity)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_socialActivityLocalService.addActivity(activity, mirrorActivity);
+	}
+
+	/**
+	* Adds the social activity to the database. Also notifies the appropriate model listeners.
+	*
+	* @param socialActivity the social activity
+	* @return the social activity that was added
+	*/
+	@Override
+	public com.liferay.social.kernel.model.SocialActivity addSocialActivity(
+		com.liferay.social.kernel.model.SocialActivity socialActivity) {
+		return _socialActivityLocalService.addSocialActivity(socialActivity);
 	}
 
 	/**
@@ -175,6 +149,32 @@ public class SocialActivityLocalServiceWrapper
 	}
 
 	/**
+	* Records an activity with the current time in the database, but only if
+	* there isn't one with the same parameters.
+	*
+	* <p>
+	* For the main functionality see {@link #addActivity(long, long, Date,
+	* String, long, int, String, long)}
+	* </p>
+	*
+	* @param userId the primary key of the acting user
+	* @param groupId the primary key of the group
+	* @param className the target asset's class name
+	* @param classPK the primary key of the target asset
+	* @param type the activity's type
+	* @param extraData any extra data regarding the activity
+	* @param receiverUserId the primary key of the receiving user
+	*/
+	@Override
+	public void addUniqueActivity(long userId, long groupId,
+		java.lang.String className, long classPK, int type,
+		java.lang.String extraData, long receiverUserId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_socialActivityLocalService.addUniqueActivity(userId, groupId,
+			className, classPK, type, extraData, receiverUserId);
+	}
+
+	/**
 	* Creates a new social activity with the primary key. Does not add the social activity to the database.
 	*
 	* @param activityId the primary key for the new social activity
@@ -198,6 +198,11 @@ public class SocialActivityLocalServiceWrapper
 		_socialActivityLocalService.deleteActivities(assetEntry);
 	}
 
+	@Override
+	public void deleteActivities(long groupId) {
+		_socialActivityLocalService.deleteActivities(groupId);
+	}
+
 	/**
 	* Removes stored activities for the asset identified by the class name and
 	* class primary key.
@@ -211,9 +216,15 @@ public class SocialActivityLocalServiceWrapper
 		_socialActivityLocalService.deleteActivities(className, classPK);
 	}
 
+	/**
+	* Removes the stored activity from the database.
+	*
+	* @param activityId the primary key of the stored activity
+	*/
 	@Override
-	public void deleteActivities(long groupId) {
-		_socialActivityLocalService.deleteActivities(groupId);
+	public void deleteActivity(long activityId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_socialActivityLocalService.deleteActivity(activityId);
 	}
 
 	/**
@@ -229,17 +240,6 @@ public class SocialActivityLocalServiceWrapper
 	}
 
 	/**
-	* Removes the stored activity from the database.
-	*
-	* @param activityId the primary key of the stored activity
-	*/
-	@Override
-	public void deleteActivity(long activityId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_socialActivityLocalService.deleteActivity(activityId);
-	}
-
-	/**
 	* @throws PortalException
 	*/
 	@Override
@@ -247,18 +247,6 @@ public class SocialActivityLocalServiceWrapper
 		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _socialActivityLocalService.deletePersistedModel(persistedModel);
-	}
-
-	/**
-	* Deletes the social activity from the database. Also notifies the appropriate model listeners.
-	*
-	* @param socialActivity the social activity
-	* @return the social activity that was removed
-	*/
-	@Override
-	public com.liferay.social.kernel.model.SocialActivity deleteSocialActivity(
-		com.liferay.social.kernel.model.SocialActivity socialActivity) {
-		return _socialActivityLocalService.deleteSocialActivity(socialActivity);
 	}
 
 	/**
@@ -273,6 +261,18 @@ public class SocialActivityLocalServiceWrapper
 		long activityId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _socialActivityLocalService.deleteSocialActivity(activityId);
+	}
+
+	/**
+	* Deletes the social activity from the database. Also notifies the appropriate model listeners.
+	*
+	* @param socialActivity the social activity
+	* @return the social activity that was removed
+	*/
+	@Override
+	public com.liferay.social.kernel.model.SocialActivity deleteSocialActivity(
+		com.liferay.social.kernel.model.SocialActivity socialActivity) {
+		return _socialActivityLocalService.deleteSocialActivity(socialActivity);
 	}
 
 	/**
@@ -396,30 +396,6 @@ public class SocialActivityLocalServiceWrapper
 
 	/**
 	* Returns a range of all the activities done on assets identified by the
-	* class name.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
-	* result set.
-	* </p>
-	*
-	* @param className the target asset's class name
-	* @param start the lower bound of the range of results
-	* @param end the upper bound of the range of results (not inclusive)
-	* @return the range of matching activities
-	*/
-	@Override
-	public java.util.List<com.liferay.social.kernel.model.SocialActivity> getActivities(
-		java.lang.String className, int start, int end) {
-		return _socialActivityLocalService.getActivities(className, start, end);
-	}
-
-	/**
-	* Returns a range of all the activities done on assets identified by the
 	* class name ID.
 	*
 	* <p>
@@ -440,35 +416,6 @@ public class SocialActivityLocalServiceWrapper
 	public java.util.List<com.liferay.social.kernel.model.SocialActivity> getActivities(
 		long classNameId, int start, int end) {
 		return _socialActivityLocalService.getActivities(classNameId, start, end);
-	}
-
-	/**
-	* Returns a range of all the activities done on the asset identified by the
-	* class name and the class primary key that are mirrors of the activity
-	* identified by the mirror activity ID.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
-	* result set.
-	* </p>
-	*
-	* @param mirrorActivityId the primary key of the mirror activity
-	* @param className the target asset's class name
-	* @param classPK the primary key of the target asset
-	* @param start the lower bound of the range of results
-	* @param end the upper bound of the range of results (not inclusive)
-	* @return the range of matching activities
-	*/
-	@Override
-	public java.util.List<com.liferay.social.kernel.model.SocialActivity> getActivities(
-		long mirrorActivityId, java.lang.String className, long classPK,
-		int start, int end) {
-		return _socialActivityLocalService.getActivities(mirrorActivityId,
-			className, classPK, start, end);
 	}
 
 	/**
@@ -501,14 +448,56 @@ public class SocialActivityLocalServiceWrapper
 	}
 
 	/**
-	* Returns the number of activities done on assets identified by class name.
+	* Returns a range of all the activities done on the asset identified by the
+	* class name and the class primary key that are mirrors of the activity
+	* identified by the mirror activity ID.
 	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param mirrorActivityId the primary key of the mirror activity
 	* @param className the target asset's class name
-	* @return the number of matching activities
+	* @param classPK the primary key of the target asset
+	* @param start the lower bound of the range of results
+	* @param end the upper bound of the range of results (not inclusive)
+	* @return the range of matching activities
 	*/
 	@Override
-	public int getActivitiesCount(java.lang.String className) {
-		return _socialActivityLocalService.getActivitiesCount(className);
+	public java.util.List<com.liferay.social.kernel.model.SocialActivity> getActivities(
+		long mirrorActivityId, java.lang.String className, long classPK,
+		int start, int end) {
+		return _socialActivityLocalService.getActivities(mirrorActivityId,
+			className, classPK, start, end);
+	}
+
+	/**
+	* Returns a range of all the activities done on assets identified by the
+	* class name.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param className the target asset's class name
+	* @param start the lower bound of the range of results
+	* @param end the upper bound of the range of results (not inclusive)
+	* @return the range of matching activities
+	*/
+	@Override
+	public java.util.List<com.liferay.social.kernel.model.SocialActivity> getActivities(
+		java.lang.String className, int start, int end) {
+		return _socialActivityLocalService.getActivities(className, start, end);
 	}
 
 	/**
@@ -521,23 +510,6 @@ public class SocialActivityLocalServiceWrapper
 	@Override
 	public int getActivitiesCount(long classNameId) {
 		return _socialActivityLocalService.getActivitiesCount(classNameId);
-	}
-
-	/**
-	* Returns the number of activities done on the asset identified by the
-	* class name and class primary key that are mirrors of the activity
-	* identified by the mirror activity ID.
-	*
-	* @param mirrorActivityId the primary key of the mirror activity
-	* @param className the target asset's class name
-	* @param classPK the primary key of the target asset
-	* @return the number of matching activities
-	*/
-	@Override
-	public int getActivitiesCount(long mirrorActivityId,
-		java.lang.String className, long classPK) {
-		return _socialActivityLocalService.getActivitiesCount(mirrorActivityId,
-			className, classPK);
 	}
 
 	@Override
@@ -563,6 +535,34 @@ public class SocialActivityLocalServiceWrapper
 		long classPK) {
 		return _socialActivityLocalService.getActivitiesCount(mirrorActivityId,
 			classNameId, classPK);
+	}
+
+	/**
+	* Returns the number of activities done on the asset identified by the
+	* class name and class primary key that are mirrors of the activity
+	* identified by the mirror activity ID.
+	*
+	* @param mirrorActivityId the primary key of the mirror activity
+	* @param className the target asset's class name
+	* @param classPK the primary key of the target asset
+	* @return the number of matching activities
+	*/
+	@Override
+	public int getActivitiesCount(long mirrorActivityId,
+		java.lang.String className, long classPK) {
+		return _socialActivityLocalService.getActivitiesCount(mirrorActivityId,
+			className, classPK);
+	}
+
+	/**
+	* Returns the number of activities done on assets identified by class name.
+	*
+	* @param className the target asset's class name
+	* @return the number of matching activities
+	*/
+	@Override
+	public int getActivitiesCount(java.lang.String className) {
+		return _socialActivityLocalService.getActivitiesCount(className);
 	}
 
 	/**
@@ -692,16 +692,6 @@ public class SocialActivityLocalServiceWrapper
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _socialActivityLocalService.getOSGiServiceIdentifier();
-	}
-
-	/**
 	* Returns a range of all the activities done in the organization. This
 	* method only finds activities without mirrors.
 	*
@@ -773,6 +763,16 @@ public class SocialActivityLocalServiceWrapper
 	@Override
 	public int getOrganizationUsersActivitiesCount(long organizationId) {
 		return _socialActivityLocalService.getOrganizationUsersActivitiesCount(organizationId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _socialActivityLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override

@@ -74,18 +74,6 @@ public class RatingsStatsLocalServiceWrapper implements RatingsStatsLocalService
 	}
 
 	/**
-	* Deletes the ratings stats from the database. Also notifies the appropriate model listeners.
-	*
-	* @param ratingsStats the ratings stats
-	* @return the ratings stats that was removed
-	*/
-	@Override
-	public com.liferay.ratings.kernel.model.RatingsStats deleteRatingsStats(
-		com.liferay.ratings.kernel.model.RatingsStats ratingsStats) {
-		return _ratingsStatsLocalService.deleteRatingsStats(ratingsStats);
-	}
-
-	/**
 	* Deletes the ratings stats with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param statsId the primary key of the ratings stats
@@ -97,6 +85,18 @@ public class RatingsStatsLocalServiceWrapper implements RatingsStatsLocalService
 		long statsId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ratingsStatsLocalService.deleteRatingsStats(statsId);
+	}
+
+	/**
+	* Deletes the ratings stats from the database. Also notifies the appropriate model listeners.
+	*
+	* @param ratingsStats the ratings stats
+	* @return the ratings stats that was removed
+	*/
+	@Override
+	public com.liferay.ratings.kernel.model.RatingsStats deleteRatingsStats(
+		com.liferay.ratings.kernel.model.RatingsStats ratingsStats) {
+		return _ratingsStatsLocalService.deleteRatingsStats(ratingsStats);
 	}
 
 	@Override
@@ -269,6 +269,12 @@ public class RatingsStatsLocalServiceWrapper implements RatingsStatsLocalService
 		return _ratingsStatsLocalService.getRatingsStatsesCount();
 	}
 
+	@Override
+	public com.liferay.ratings.kernel.model.RatingsStats getStats(long statsId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ratingsStatsLocalService.getStats(statsId);
+	}
+
 	/**
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
@@ -290,12 +296,6 @@ public class RatingsStatsLocalServiceWrapper implements RatingsStatsLocalService
 	public java.util.Map<java.lang.Long, com.liferay.ratings.kernel.model.RatingsStats> getStats(
 		java.lang.String className, long[] classPKs) {
 		return _ratingsStatsLocalService.getStats(className, classPKs);
-	}
-
-	@Override
-	public com.liferay.ratings.kernel.model.RatingsStats getStats(long statsId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ratingsStatsLocalService.getStats(statsId);
 	}
 
 	/**

@@ -236,13 +236,6 @@ public class GadgetLocalServiceWrapper implements GadgetLocalService,
 		return _gadgetLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 
-	@Override
-	public com.liferay.opensocial.model.Gadget getGadget(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _gadgetLocalService.getGadget(uuid, companyId);
-	}
-
 	/**
 	* Returns the gadget with the primary key.
 	*
@@ -261,6 +254,13 @@ public class GadgetLocalServiceWrapper implements GadgetLocalService,
 		java.lang.String url)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _gadgetLocalService.getGadget(companyId, url);
+	}
+
+	@Override
+	public com.liferay.opensocial.model.Gadget getGadget(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _gadgetLocalService.getGadget(uuid, companyId);
 	}
 
 	/**

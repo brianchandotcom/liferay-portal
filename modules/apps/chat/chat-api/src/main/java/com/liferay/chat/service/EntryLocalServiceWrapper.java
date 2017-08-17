@@ -45,16 +45,16 @@ public class EntryLocalServiceWrapper implements EntryLocalService,
 	}
 
 	@Override
-	public com.liferay.chat.model.Entry addEntry(long fromUserId,
-		long toUserId, java.lang.String content) {
-		return _entryLocalService.addEntry(fromUserId, toUserId, content);
-	}
-
-	@Override
 	public com.liferay.chat.model.Entry addEntry(long createDate,
 		long fromUserId, long toUserId, java.lang.String content) {
 		return _entryLocalService.addEntry(createDate, fromUserId, toUserId,
 			content);
+	}
+
+	@Override
+	public com.liferay.chat.model.Entry addEntry(long fromUserId,
+		long toUserId, java.lang.String content) {
+		return _entryLocalService.addEntry(fromUserId, toUserId, content);
 	}
 
 	/**
@@ -253,6 +253,12 @@ public class EntryLocalServiceWrapper implements EntryLocalService,
 		return _entryLocalService.getNewEntries(userId, createDate, start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.chat.model.Entry> getOldEntries(
+		long createDate, int start, int end) {
+		return _entryLocalService.getOldEntries(createDate, start, end);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -261,12 +267,6 @@ public class EntryLocalServiceWrapper implements EntryLocalService,
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _entryLocalService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public java.util.List<com.liferay.chat.model.Entry> getOldEntries(
-		long createDate, int start, int end) {
-		return _entryLocalService.getOldEntries(createDate, start, end);
 	}
 
 	@Override

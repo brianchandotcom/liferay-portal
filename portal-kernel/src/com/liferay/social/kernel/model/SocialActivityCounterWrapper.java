@@ -447,14 +447,14 @@ public class SocialActivityCounterWrapper implements SocialActivityCounter,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_socialActivityCounter.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_socialActivityCounter.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_socialActivityCounter.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

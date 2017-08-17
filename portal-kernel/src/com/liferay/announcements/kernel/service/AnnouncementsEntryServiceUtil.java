@@ -40,16 +40,6 @@ public class AnnouncementsEntryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.announcements.service.impl.AnnouncementsEntryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.announcements.kernel.model.AnnouncementsEntry addEntry(
-		long classNameId, long classPK, java.lang.String title,
-		java.lang.String content, java.lang.String url, java.lang.String type,
-		java.util.Date displayDate, java.util.Date expirationDate,
-		int priority, boolean alert)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addEntry(classNameId, classPK, title, content, url, type,
-			displayDate, expirationDate, priority, alert);
-	}
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #addEntry(long, long, String,
@@ -73,6 +63,17 @@ public class AnnouncementsEntryServiceUtil {
 			expirationDateHour, expirationDateMinute, priority, alert);
 	}
 
+	public static com.liferay.announcements.kernel.model.AnnouncementsEntry addEntry(
+		long classNameId, long classPK, java.lang.String title,
+		java.lang.String content, java.lang.String url, java.lang.String type,
+		java.util.Date displayDate, java.util.Date expirationDate,
+		int priority, boolean alert)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addEntry(classNameId, classPK, title, content, url, type,
+			displayDate, expirationDate, priority, alert);
+	}
+
 	public static void deleteEntry(long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteEntry(entryId);
@@ -91,6 +92,16 @@ public class AnnouncementsEntryServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.announcements.kernel.model.AnnouncementsEntry updateEntry(
+		long entryId, java.lang.String title, java.lang.String content,
+		java.lang.String url, java.lang.String type,
+		java.util.Date displayDate, java.util.Date expirationDate, int priority)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateEntry(entryId, title, content, url, type,
+			displayDate, expirationDate, priority);
 	}
 
 	/**
@@ -112,16 +123,6 @@ public class AnnouncementsEntryServiceUtil {
 			displayDateMinute, displayImmediately, expirationDateMonth,
 			expirationDateDay, expirationDateYear, expirationDateHour,
 			expirationDateMinute, priority);
-	}
-
-	public static com.liferay.announcements.kernel.model.AnnouncementsEntry updateEntry(
-		long entryId, java.lang.String title, java.lang.String content,
-		java.lang.String url, java.lang.String type,
-		java.util.Date displayDate, java.util.Date expirationDate, int priority)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateEntry(entryId, title, content, url, type,
-			displayDate, expirationDate, priority);
 	}
 
 	public static AnnouncementsEntryService getService() {

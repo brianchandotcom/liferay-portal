@@ -550,6 +550,26 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 		return _dlFileShortcut.isExpired();
 	}
 
+	/**
+	* Returns <code>true</code> if this document library file shortcut is inactive.
+	*
+	* @return <code>true</code> if this document library file shortcut is inactive; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isInactive() {
+		return _dlFileShortcut.isInactive();
+	}
+
+	/**
+	* Returns <code>true</code> if this document library file shortcut is incomplete.
+	*
+	* @return <code>true</code> if this document library file shortcut is incomplete; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isIncomplete() {
+		return _dlFileShortcut.isIncomplete();
+	}
+
 	@Override
 	public boolean isInHiddenFolder() {
 		return _dlFileShortcut.isInHiddenFolder();
@@ -583,26 +603,6 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	@Override
 	public boolean isInTrashImplicitly() {
 		return _dlFileShortcut.isInTrashImplicitly();
-	}
-
-	/**
-	* Returns <code>true</code> if this document library file shortcut is inactive.
-	*
-	* @return <code>true</code> if this document library file shortcut is inactive; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isInactive() {
-		return _dlFileShortcut.isInactive();
-	}
-
-	/**
-	* Returns <code>true</code> if this document library file shortcut is incomplete.
-	*
-	* @return <code>true</code> if this document library file shortcut is incomplete; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isIncomplete() {
-		return _dlFileShortcut.isIncomplete();
 	}
 
 	@Override
@@ -671,14 +671,14 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_dlFileShortcut.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_dlFileShortcut.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_dlFileShortcut.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

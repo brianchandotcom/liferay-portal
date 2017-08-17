@@ -56,6 +56,16 @@ public class PortalServiceWrapper implements PortalService,
 	}
 
 	@Override
+	public void testAddClassName_Rollback(java.lang.String classNameValue) {
+		_portalService.testAddClassName_Rollback(classNameValue);
+	}
+
+	@Override
+	public void testAddClassName_Success(java.lang.String classNameValue) {
+		_portalService.testAddClassName_Success(classNameValue);
+	}
+
+	@Override
 	public void testAddClassNameAndTestTransactionPortletBar_PortalRollback(
 		java.lang.String transactionPortletBarText) {
 		_portalService.testAddClassNameAndTestTransactionPortletBar_PortalRollback(transactionPortletBarText);
@@ -71,16 +81,6 @@ public class PortalServiceWrapper implements PortalService,
 	public void testAddClassNameAndTestTransactionPortletBar_Success(
 		java.lang.String transactionPortletBarText) {
 		_portalService.testAddClassNameAndTestTransactionPortletBar_Success(transactionPortletBarText);
-	}
-
-	@Override
-	public void testAddClassName_Rollback(java.lang.String classNameValue) {
-		_portalService.testAddClassName_Rollback(classNameValue);
-	}
-
-	@Override
-	public void testAddClassName_Success(java.lang.String classNameValue) {
-		_portalService.testAddClassName_Success(classNameValue);
 	}
 
 	@Override

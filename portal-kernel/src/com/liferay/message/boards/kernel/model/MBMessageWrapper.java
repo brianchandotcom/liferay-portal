@@ -780,6 +780,26 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	}
 
 	/**
+	* Returns <code>true</code> if this message-boards message is inactive.
+	*
+	* @return <code>true</code> if this message-boards message is inactive; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isInactive() {
+		return _mbMessage.isInactive();
+	}
+
+	/**
+	* Returns <code>true</code> if this message-boards message is incomplete.
+	*
+	* @return <code>true</code> if this message-boards message is incomplete; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isIncomplete() {
+		return _mbMessage.isIncomplete();
+	}
+
+	/**
 	* Returns <code>true</code> if this message-boards message is in the Recycle Bin.
 	*
 	* @return <code>true</code> if this message-boards message is in the Recycle Bin; <code>false</code> otherwise
@@ -807,26 +827,6 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	@Override
 	public boolean isInTrashImplicitly() {
 		return _mbMessage.isInTrashImplicitly();
-	}
-
-	/**
-	* Returns <code>true</code> if this message-boards message is inactive.
-	*
-	* @return <code>true</code> if this message-boards message is inactive; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isInactive() {
-		return _mbMessage.isInactive();
-	}
-
-	/**
-	* Returns <code>true</code> if this message-boards message is incomplete.
-	*
-	* @return <code>true</code> if this message-boards message is incomplete; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isIncomplete() {
-		return _mbMessage.isIncomplete();
 	}
 
 	@Override
@@ -975,14 +975,14 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_mbMessage.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_mbMessage.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_mbMessage.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

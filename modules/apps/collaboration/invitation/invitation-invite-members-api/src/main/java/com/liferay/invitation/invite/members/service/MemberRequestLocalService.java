@@ -61,6 +61,10 @@ public interface MemberRequestLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MemberRequestLocalServiceUtil} to access the member request local service. Add custom service methods to {@link com.liferay.invitation.invite.members.service.impl.MemberRequestLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public MemberRequest addMemberRequest(long userId, long groupId,
+		long receiverUserId, java.lang.String receiverEmailAddress,
+		long invitedRoleId, long invitedTeamId, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Adds the member request to the database. Also notifies the appropriate model listeners.
@@ -71,19 +75,14 @@ public interface MemberRequestLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public MemberRequest addMemberRequest(MemberRequest memberRequest);
 
-	public MemberRequest addMemberRequest(long userId, long groupId,
-		long receiverUserId, java.lang.String receiverEmailAddress,
-		long invitedRoleId, long invitedTeamId, ServiceContext serviceContext)
-		throws PortalException;
+	public void addMemberRequests(long userId, long groupId,
+		long[] receiverUserIds, long invitedRoleId, long invitedTeamId,
+		ServiceContext serviceContext) throws PortalException;
 
 	public void addMemberRequests(long userId, long groupId,
 		java.lang.String[] emailAddresses, long invitedRoleId,
 		long invitedTeamId, ServiceContext serviceContext)
 		throws PortalException;
-
-	public void addMemberRequests(long userId, long groupId,
-		long[] receiverUserIds, long invitedRoleId, long invitedTeamId,
-		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new member request with the primary key. Does not add the member request to the database.
@@ -92,15 +91,6 @@ public interface MemberRequestLocalService extends BaseLocalService,
 	* @return the new member request
 	*/
 	public MemberRequest createMemberRequest(long memberRequestId);
-
-	/**
-	* Deletes the member request from the database. Also notifies the appropriate model listeners.
-	*
-	* @param memberRequest the member request
-	* @return the member request that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public MemberRequest deleteMemberRequest(MemberRequest memberRequest);
 
 	/**
 	* Deletes the member request with the primary key from the database. Also notifies the appropriate model listeners.
@@ -112,6 +102,15 @@ public interface MemberRequestLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public MemberRequest deleteMemberRequest(long memberRequestId)
 		throws PortalException;
+
+	/**
+	* Deletes the member request from the database. Also notifies the appropriate model listeners.
+	*
+	* @param memberRequest the member request
+	* @return the member request that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public MemberRequest deleteMemberRequest(MemberRequest memberRequest);
 
 	/**
 	* @throws PortalException
@@ -255,6 +254,9 @@ public interface MemberRequestLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasPendingMemberRequest(long groupId, long receiverUserId);
 
+	public MemberRequest updateMemberRequest(long userId, long memberRequestId,
+		int status) throws java.lang.Exception;
+
 	/**
 	* Updates the member request in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -266,7 +268,4 @@ public interface MemberRequestLocalService extends BaseLocalService,
 
 	public MemberRequest updateMemberRequest(java.lang.String key,
 		long receiverUserId) throws PortalException;
-
-	public MemberRequest updateMemberRequest(long userId, long memberRequestId,
-		int status) throws java.lang.Exception;
 }

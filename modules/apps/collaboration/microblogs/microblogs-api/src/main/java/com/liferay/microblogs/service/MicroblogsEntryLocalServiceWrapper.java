@@ -34,16 +34,16 @@ public class MicroblogsEntryLocalServiceWrapper
 		_microblogsEntryLocalService = microblogsEntryLocalService;
 	}
 
-	/**
-	* Adds the microblogs entry to the database. Also notifies the appropriate model listeners.
-	*
-	* @param microblogsEntry the microblogs entry
-	* @return the microblogs entry that was added
-	*/
 	@Override
 	public com.liferay.microblogs.model.MicroblogsEntry addMicroblogsEntry(
-		com.liferay.microblogs.model.MicroblogsEntry microblogsEntry) {
-		return _microblogsEntryLocalService.addMicroblogsEntry(microblogsEntry);
+		long userId, long creatorClassNameId, long creatorClassPK,
+		java.lang.String content, int type, long parentMicroblogsEntryId,
+		int socialRelationType,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _microblogsEntryLocalService.addMicroblogsEntry(userId,
+			creatorClassNameId, creatorClassPK, content, type,
+			parentMicroblogsEntryId, socialRelationType, serviceContext);
 	}
 
 	@Override
@@ -56,16 +56,16 @@ public class MicroblogsEntryLocalServiceWrapper
 			type, parentMicroblogsEntryId, socialRelationType, serviceContext);
 	}
 
+	/**
+	* Adds the microblogs entry to the database. Also notifies the appropriate model listeners.
+	*
+	* @param microblogsEntry the microblogs entry
+	* @return the microblogs entry that was added
+	*/
 	@Override
 	public com.liferay.microblogs.model.MicroblogsEntry addMicroblogsEntry(
-		long userId, long creatorClassNameId, long creatorClassPK,
-		java.lang.String content, int type, long parentMicroblogsEntryId,
-		int socialRelationType,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _microblogsEntryLocalService.addMicroblogsEntry(userId,
-			creatorClassNameId, creatorClassPK, content, type,
-			parentMicroblogsEntryId, socialRelationType, serviceContext);
+		com.liferay.microblogs.model.MicroblogsEntry microblogsEntry) {
+		return _microblogsEntryLocalService.addMicroblogsEntry(microblogsEntry);
 	}
 
 	/**
@@ -89,20 +89,6 @@ public class MicroblogsEntryLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the microblogs entry from the database. Also notifies the appropriate model listeners.
-	*
-	* @param microblogsEntry the microblogs entry
-	* @return the microblogs entry that was removed
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.microblogs.model.MicroblogsEntry deleteMicroblogsEntry(
-		com.liferay.microblogs.model.MicroblogsEntry microblogsEntry)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _microblogsEntryLocalService.deleteMicroblogsEntry(microblogsEntry);
-	}
-
-	/**
 	* Deletes the microblogs entry with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param microblogsEntryId the primary key of the microblogs entry
@@ -114,6 +100,20 @@ public class MicroblogsEntryLocalServiceWrapper
 		long microblogsEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _microblogsEntryLocalService.deleteMicroblogsEntry(microblogsEntryId);
+	}
+
+	/**
+	* Deletes the microblogs entry from the database. Also notifies the appropriate model listeners.
+	*
+	* @param microblogsEntry the microblogs entry
+	* @return the microblogs entry that was removed
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.microblogs.model.MicroblogsEntry deleteMicroblogsEntry(
+		com.liferay.microblogs.model.MicroblogsEntry microblogsEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _microblogsEntryLocalService.deleteMicroblogsEntry(microblogsEntry);
 	}
 
 	/**
@@ -281,18 +281,6 @@ public class MicroblogsEntryLocalServiceWrapper
 	@Deprecated
 	@Override
 	public java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
-		long creatorClassNameId, java.lang.String assetTagName, int start,
-		int end) {
-		return _microblogsEntryLocalService.getMicroblogsEntries(creatorClassNameId,
-			assetTagName, start, end);
-	}
-
-	/**
-	* @deprecated As of 2.1.0
-	*/
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
 		long creatorClassNameId, long creatorClassPK, int start, int end) {
 		return _microblogsEntryLocalService.getMicroblogsEntries(creatorClassNameId,
 			creatorClassPK, start, end);
@@ -316,26 +304,6 @@ public class MicroblogsEntryLocalServiceWrapper
 		com.liferay.portal.kernel.util.OrderByComparator obc) {
 		return _microblogsEntryLocalService.getMicroblogsEntries(companyId,
 			creatorClassNameId, type, start, end, obc);
-	}
-
-	/**
-	* @deprecated As of 2.1.0
-	*/
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
-		long creatorClassNameId, long creatorClassPK,
-		java.lang.String assetTagName, boolean andOperator, int start, int end) {
-		return _microblogsEntryLocalService.getMicroblogsEntries(creatorClassNameId,
-			creatorClassPK, assetTagName, andOperator, start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
-		long companyId, long creatorClassNameId, java.lang.String assetTagName,
-		int start, int end) {
-		return _microblogsEntryLocalService.getMicroblogsEntries(companyId,
-			creatorClassNameId, assetTagName, start, end);
 	}
 
 	@Override
@@ -364,13 +332,23 @@ public class MicroblogsEntryLocalServiceWrapper
 	}
 
 	/**
-	* Returns the number of microblogs entries.
-	*
-	* @return the number of microblogs entries
+	* @deprecated As of 2.1.0
 	*/
+	@Deprecated
 	@Override
-	public int getMicroblogsEntriesCount() {
-		return _microblogsEntryLocalService.getMicroblogsEntriesCount();
+	public java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
+		long creatorClassNameId, long creatorClassPK,
+		java.lang.String assetTagName, boolean andOperator, int start, int end) {
+		return _microblogsEntryLocalService.getMicroblogsEntries(creatorClassNameId,
+			creatorClassPK, assetTagName, andOperator, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
+		long companyId, long creatorClassNameId, java.lang.String assetTagName,
+		int start, int end) {
+		return _microblogsEntryLocalService.getMicroblogsEntries(companyId,
+			creatorClassNameId, assetTagName, start, end);
 	}
 
 	/**
@@ -378,10 +356,21 @@ public class MicroblogsEntryLocalServiceWrapper
 	*/
 	@Deprecated
 	@Override
-	public int getMicroblogsEntriesCount(long creatorClassNameId,
-		java.lang.String assetTagName) {
-		return _microblogsEntryLocalService.getMicroblogsEntriesCount(creatorClassNameId,
-			assetTagName);
+	public java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
+		long creatorClassNameId, java.lang.String assetTagName, int start,
+		int end) {
+		return _microblogsEntryLocalService.getMicroblogsEntries(creatorClassNameId,
+			assetTagName, start, end);
+	}
+
+	/**
+	* Returns the number of microblogs entries.
+	*
+	* @return the number of microblogs entries
+	*/
+	@Override
+	public int getMicroblogsEntriesCount() {
+		return _microblogsEntryLocalService.getMicroblogsEntriesCount();
 	}
 
 	/**
@@ -408,24 +397,6 @@ public class MicroblogsEntryLocalServiceWrapper
 
 	@Override
 	public int getMicroblogsEntriesCount(long companyId,
-		long creatorClassNameId, java.lang.String assetTagName) {
-		return _microblogsEntryLocalService.getMicroblogsEntriesCount(companyId,
-			creatorClassNameId, assetTagName);
-	}
-
-	/**
-	* @deprecated As of 2.1.0
-	*/
-	@Deprecated
-	@Override
-	public int getMicroblogsEntriesCount(long creatorClassNameId,
-		long creatorClassPK, java.lang.String assetTagName, boolean andOperator) {
-		return _microblogsEntryLocalService.getMicroblogsEntriesCount(creatorClassNameId,
-			creatorClassPK, assetTagName, andOperator);
-	}
-
-	@Override
-	public int getMicroblogsEntriesCount(long companyId,
 		long creatorClassNameId, long creatorClassPK) {
 		return _microblogsEntryLocalService.getMicroblogsEntriesCount(companyId,
 			creatorClassNameId, creatorClassPK);
@@ -444,6 +415,35 @@ public class MicroblogsEntryLocalServiceWrapper
 		java.lang.String assetTagName, boolean andOperator) {
 		return _microblogsEntryLocalService.getMicroblogsEntriesCount(companyId,
 			creatorClassNameId, creatorClassPK, assetTagName, andOperator);
+	}
+
+	@Override
+	public int getMicroblogsEntriesCount(long companyId,
+		long creatorClassNameId, java.lang.String assetTagName) {
+		return _microblogsEntryLocalService.getMicroblogsEntriesCount(companyId,
+			creatorClassNameId, assetTagName);
+	}
+
+	/**
+	* @deprecated As of 2.1.0
+	*/
+	@Deprecated
+	@Override
+	public int getMicroblogsEntriesCount(long creatorClassNameId,
+		long creatorClassPK, java.lang.String assetTagName, boolean andOperator) {
+		return _microblogsEntryLocalService.getMicroblogsEntriesCount(creatorClassNameId,
+			creatorClassPK, assetTagName, andOperator);
+	}
+
+	/**
+	* @deprecated As of 2.1.0
+	*/
+	@Deprecated
+	@Override
+	public int getMicroblogsEntriesCount(long creatorClassNameId,
+		java.lang.String assetTagName) {
+		return _microblogsEntryLocalService.getMicroblogsEntriesCount(creatorClassNameId,
+			assetTagName);
 	}
 
 	/**
@@ -533,6 +533,16 @@ public class MicroblogsEntryLocalServiceWrapper
 			assetCategoryIds, assetTagNames);
 	}
 
+	@Override
+	public com.liferay.microblogs.model.MicroblogsEntry updateMicroblogsEntry(
+		long microblogsEntryId, java.lang.String content,
+		int socialRelationType,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _microblogsEntryLocalService.updateMicroblogsEntry(microblogsEntryId,
+			content, socialRelationType, serviceContext);
+	}
+
 	/**
 	* Updates the microblogs entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -543,16 +553,6 @@ public class MicroblogsEntryLocalServiceWrapper
 	public com.liferay.microblogs.model.MicroblogsEntry updateMicroblogsEntry(
 		com.liferay.microblogs.model.MicroblogsEntry microblogsEntry) {
 		return _microblogsEntryLocalService.updateMicroblogsEntry(microblogsEntry);
-	}
-
-	@Override
-	public com.liferay.microblogs.model.MicroblogsEntry updateMicroblogsEntry(
-		long microblogsEntryId, java.lang.String content,
-		int socialRelationType,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _microblogsEntryLocalService.updateMicroblogsEntry(microblogsEntryId,
-			content, socialRelationType, serviceContext);
 	}
 
 	@Override

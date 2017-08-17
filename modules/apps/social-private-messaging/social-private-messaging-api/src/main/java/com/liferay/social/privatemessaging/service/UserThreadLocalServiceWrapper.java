@@ -54,6 +54,14 @@ public class UserThreadLocalServiceWrapper implements UserThreadLocalService,
 			parentMBMessageId, body, inputStreamOVPs, themeDisplay);
 	}
 
+	@Override
+	public void addUserThread(long userId, long mbThreadId,
+		long topMBMessageId, boolean read, boolean deleted)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_userThreadLocalService.addUserThread(userId, mbThreadId,
+			topMBMessageId, read, deleted);
+	}
+
 	/**
 	* Adds the user thread to the database. Also notifies the appropriate model listeners.
 	*
@@ -64,14 +72,6 @@ public class UserThreadLocalServiceWrapper implements UserThreadLocalService,
 	public com.liferay.social.privatemessaging.model.UserThread addUserThread(
 		com.liferay.social.privatemessaging.model.UserThread userThread) {
 		return _userThreadLocalService.addUserThread(userThread);
-	}
-
-	@Override
-	public void addUserThread(long userId, long mbThreadId,
-		long topMBMessageId, boolean read, boolean deleted)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_userThreadLocalService.addUserThread(userId, mbThreadId,
-			topMBMessageId, read, deleted);
 	}
 
 	/**
@@ -103,18 +103,6 @@ public class UserThreadLocalServiceWrapper implements UserThreadLocalService,
 	}
 
 	/**
-	* Deletes the user thread from the database. Also notifies the appropriate model listeners.
-	*
-	* @param userThread the user thread
-	* @return the user thread that was removed
-	*/
-	@Override
-	public com.liferay.social.privatemessaging.model.UserThread deleteUserThread(
-		com.liferay.social.privatemessaging.model.UserThread userThread) {
-		return _userThreadLocalService.deleteUserThread(userThread);
-	}
-
-	/**
 	* Deletes the user thread with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param userThreadId the primary key of the user thread
@@ -132,6 +120,18 @@ public class UserThreadLocalServiceWrapper implements UserThreadLocalService,
 	public void deleteUserThread(long userId, long mbThreadId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_userThreadLocalService.deleteUserThread(userId, mbThreadId);
+	}
+
+	/**
+	* Deletes the user thread from the database. Also notifies the appropriate model listeners.
+	*
+	* @param userThread the user thread
+	* @return the user thread that was removed
+	*/
+	@Override
+	public com.liferay.social.privatemessaging.model.UserThread deleteUserThread(
+		com.liferay.social.privatemessaging.model.UserThread userThread) {
+		return _userThreadLocalService.deleteUserThread(userThread);
 	}
 
 	@Override

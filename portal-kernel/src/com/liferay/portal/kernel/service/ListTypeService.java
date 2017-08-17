@@ -62,9 +62,9 @@ public interface ListTypeService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	public void validate(long listTypeId, java.lang.String type)
-		throws PortalException;
-
 	public void validate(long listTypeId, long classNameId,
 		java.lang.String type) throws PortalException;
+
+	public void validate(long listTypeId, java.lang.String type)
+		throws PortalException;
 }

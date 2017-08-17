@@ -40,6 +40,13 @@ public class RecentLayoutSetBranchLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.RecentLayoutSetBranchLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portal.kernel.model.RecentLayoutSetBranch addRecentLayoutSetBranch(
+		long userId, long layoutSetBranchId, long layoutSetId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addRecentLayoutSetBranch(userId, layoutSetBranchId,
+			layoutSetId);
+	}
 
 	/**
 	* Adds the recent layout set branch to the database. Also notifies the appropriate model listeners.
@@ -50,14 +57,6 @@ public class RecentLayoutSetBranchLocalServiceUtil {
 	public static com.liferay.portal.kernel.model.RecentLayoutSetBranch addRecentLayoutSetBranch(
 		com.liferay.portal.kernel.model.RecentLayoutSetBranch recentLayoutSetBranch) {
 		return getService().addRecentLayoutSetBranch(recentLayoutSetBranch);
-	}
-
-	public static com.liferay.portal.kernel.model.RecentLayoutSetBranch addRecentLayoutSetBranch(
-		long userId, long layoutSetBranchId, long layoutSetId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addRecentLayoutSetBranch(userId, layoutSetBranchId,
-			layoutSetId);
 	}
 
 	/**
@@ -81,17 +80,6 @@ public class RecentLayoutSetBranchLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the recent layout set branch from the database. Also notifies the appropriate model listeners.
-	*
-	* @param recentLayoutSetBranch the recent layout set branch
-	* @return the recent layout set branch that was removed
-	*/
-	public static com.liferay.portal.kernel.model.RecentLayoutSetBranch deleteRecentLayoutSetBranch(
-		com.liferay.portal.kernel.model.RecentLayoutSetBranch recentLayoutSetBranch) {
-		return getService().deleteRecentLayoutSetBranch(recentLayoutSetBranch);
-	}
-
-	/**
 	* Deletes the recent layout set branch with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param recentLayoutSetBranchId the primary key of the recent layout set branch
@@ -102,6 +90,17 @@ public class RecentLayoutSetBranchLocalServiceUtil {
 		long recentLayoutSetBranchId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteRecentLayoutSetBranch(recentLayoutSetBranchId);
+	}
+
+	/**
+	* Deletes the recent layout set branch from the database. Also notifies the appropriate model listeners.
+	*
+	* @param recentLayoutSetBranch the recent layout set branch
+	* @return the recent layout set branch that was removed
+	*/
+	public static com.liferay.portal.kernel.model.RecentLayoutSetBranch deleteRecentLayoutSetBranch(
+		com.liferay.portal.kernel.model.RecentLayoutSetBranch recentLayoutSetBranch) {
+		return getService().deleteRecentLayoutSetBranch(recentLayoutSetBranch);
 	}
 
 	public static void deleteRecentLayoutSetBranches(long layoutSetBranchId) {

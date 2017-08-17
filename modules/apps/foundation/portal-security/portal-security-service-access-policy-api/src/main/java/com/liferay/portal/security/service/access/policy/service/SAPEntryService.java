@@ -62,9 +62,9 @@ public interface SAPEntryService extends BaseService {
 		Map<Locale, java.lang.String> titleMap, ServiceContext serviceContext)
 		throws PortalException;
 
-	public SAPEntry deleteSAPEntry(SAPEntry sapEntry) throws PortalException;
-
 	public SAPEntry deleteSAPEntry(long sapEntryId) throws PortalException;
+
+	public SAPEntry deleteSAPEntry(SAPEntry sapEntry) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SAPEntry fetchSAPEntry(long companyId, java.lang.String name)

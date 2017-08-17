@@ -48,16 +48,16 @@ public class PushNotificationsDeviceServiceUtil {
 	}
 
 	public static com.liferay.push.notifications.model.PushNotificationsDevice deletePushNotificationsDevice(
-		java.lang.String token)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePushNotificationsDevice(token);
-	}
-
-	public static com.liferay.push.notifications.model.PushNotificationsDevice deletePushNotificationsDevice(
 		long pushNotificationsDeviceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .deletePushNotificationsDevice(pushNotificationsDeviceId);
+	}
+
+	public static com.liferay.push.notifications.model.PushNotificationsDevice deletePushNotificationsDevice(
+		java.lang.String token)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePushNotificationsDevice(token);
 	}
 
 	/**
@@ -69,16 +69,16 @@ public class PushNotificationsDeviceServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static void sendPushNotification(java.lang.String platform,
-		java.util.List<java.lang.String> tokens, java.lang.String payload)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().sendPushNotification(platform, tokens, payload);
-	}
-
 	public static void sendPushNotification(long[] toUserIds,
 		java.lang.String payload)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().sendPushNotification(toUserIds, payload);
+	}
+
+	public static void sendPushNotification(java.lang.String platform,
+		java.util.List<java.lang.String> tokens, java.lang.String payload)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().sendPushNotification(platform, tokens, payload);
 	}
 
 	public static PushNotificationsDeviceService getService() {

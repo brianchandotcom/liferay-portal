@@ -108,17 +108,6 @@ public class SocialRequestLocalServiceWrapper
 	}
 
 	/**
-	* Removes the social request from the database.
-	*
-	* @param request the social request to be removed
-	*/
-	@Override
-	public void deleteRequest(
-		com.liferay.social.kernel.model.SocialRequest request) {
-		_socialRequestLocalService.deleteRequest(request);
-	}
-
-	/**
 	* Removes the social request identified by its primary key from the
 	* database.
 	*
@@ -130,21 +119,20 @@ public class SocialRequestLocalServiceWrapper
 		_socialRequestLocalService.deleteRequest(requestId);
 	}
 
+	/**
+	* Removes the social request from the database.
+	*
+	* @param request the social request to be removed
+	*/
+	@Override
+	public void deleteRequest(
+		com.liferay.social.kernel.model.SocialRequest request) {
+		_socialRequestLocalService.deleteRequest(request);
+	}
+
 	@Override
 	public void deleteRequests(long className, long classPK) {
 		_socialRequestLocalService.deleteRequests(className, classPK);
-	}
-
-	/**
-	* Deletes the social request from the database. Also notifies the appropriate model listeners.
-	*
-	* @param socialRequest the social request
-	* @return the social request that was removed
-	*/
-	@Override
-	public com.liferay.social.kernel.model.SocialRequest deleteSocialRequest(
-		com.liferay.social.kernel.model.SocialRequest socialRequest) {
-		return _socialRequestLocalService.deleteSocialRequest(socialRequest);
 	}
 
 	/**
@@ -159,6 +147,18 @@ public class SocialRequestLocalServiceWrapper
 		long requestId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _socialRequestLocalService.deleteSocialRequest(requestId);
+	}
+
+	/**
+	* Deletes the social request from the database. Also notifies the appropriate model listeners.
+	*
+	* @param socialRequest the social request
+	* @return the social request that was removed
+	*/
+	@Override
+	public com.liferay.social.kernel.model.SocialRequest deleteSocialRequest(
+		com.liferay.social.kernel.model.SocialRequest socialRequest) {
+		return _socialRequestLocalService.deleteSocialRequest(socialRequest);
 	}
 
 	/**

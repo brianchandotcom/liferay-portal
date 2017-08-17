@@ -49,6 +49,18 @@ public class MDRRuleLocalServiceWrapper implements MDRRuleLocalService,
 		long ruleGroupId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String type, java.lang.String typeSettings,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mdrRuleLocalService.addRule(ruleGroupId, nameMap,
+			descriptionMap, type, typeSettings, serviceContext);
+	}
+
+	@Override
+	public com.liferay.mobile.device.rules.model.MDRRule addRule(
+		long ruleGroupId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String type,
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -58,15 +70,11 @@ public class MDRRuleLocalServiceWrapper implements MDRRuleLocalService,
 	}
 
 	@Override
-	public com.liferay.mobile.device.rules.model.MDRRule addRule(
+	public com.liferay.mobile.device.rules.model.MDRRule copyRule(long ruleId,
 		long ruleGroupId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type, java.lang.String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mdrRuleLocalService.addRule(ruleGroupId, nameMap,
-			descriptionMap, type, typeSettings, serviceContext);
+		return _mdrRuleLocalService.copyRule(ruleId, ruleGroupId, serviceContext);
 	}
 
 	@Override
@@ -75,14 +83,6 @@ public class MDRRuleLocalServiceWrapper implements MDRRuleLocalService,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrRuleLocalService.copyRule(rule, ruleGroupId, serviceContext);
-	}
-
-	@Override
-	public com.liferay.mobile.device.rules.model.MDRRule copyRule(long ruleId,
-		long ruleGroupId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mdrRuleLocalService.copyRule(ruleId, ruleGroupId, serviceContext);
 	}
 
 	/**
@@ -95,18 +95,6 @@ public class MDRRuleLocalServiceWrapper implements MDRRuleLocalService,
 	public com.liferay.mobile.device.rules.model.MDRRule createMDRRule(
 		long ruleId) {
 		return _mdrRuleLocalService.createMDRRule(ruleId);
-	}
-
-	/**
-	* Deletes the mdr rule from the database. Also notifies the appropriate model listeners.
-	*
-	* @param mdrRule the mdr rule
-	* @return the mdr rule that was removed
-	*/
-	@Override
-	public com.liferay.mobile.device.rules.model.MDRRule deleteMDRRule(
-		com.liferay.mobile.device.rules.model.MDRRule mdrRule) {
-		return _mdrRuleLocalService.deleteMDRRule(mdrRule);
 	}
 
 	/**
@@ -123,6 +111,18 @@ public class MDRRuleLocalServiceWrapper implements MDRRuleLocalService,
 	}
 
 	/**
+	* Deletes the mdr rule from the database. Also notifies the appropriate model listeners.
+	*
+	* @param mdrRule the mdr rule
+	* @return the mdr rule that was removed
+	*/
+	@Override
+	public com.liferay.mobile.device.rules.model.MDRRule deleteMDRRule(
+		com.liferay.mobile.device.rules.model.MDRRule mdrRule) {
+		return _mdrRuleLocalService.deleteMDRRule(mdrRule);
+	}
+
+	/**
 	* @throws PortalException
 	*/
 	@Override
@@ -133,13 +133,13 @@ public class MDRRuleLocalServiceWrapper implements MDRRuleLocalService,
 	}
 
 	@Override
-	public void deleteRule(com.liferay.mobile.device.rules.model.MDRRule rule) {
-		_mdrRuleLocalService.deleteRule(rule);
+	public void deleteRule(long ruleId) {
+		_mdrRuleLocalService.deleteRule(ruleId);
 	}
 
 	@Override
-	public void deleteRule(long ruleId) {
-		_mdrRuleLocalService.deleteRule(ruleId);
+	public void deleteRule(com.liferay.mobile.device.rules.model.MDRRule rule) {
+		_mdrRuleLocalService.deleteRule(rule);
 	}
 
 	@Override
@@ -421,23 +421,23 @@ public class MDRRuleLocalServiceWrapper implements MDRRuleLocalService,
 	public com.liferay.mobile.device.rules.model.MDRRule updateRule(
 		long ruleId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type,
-		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
+		java.lang.String type, java.lang.String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrRuleLocalService.updateRule(ruleId, nameMap, descriptionMap,
-			type, typeSettingsProperties, serviceContext);
+			type, typeSettings, serviceContext);
 	}
 
 	@Override
 	public com.liferay.mobile.device.rules.model.MDRRule updateRule(
 		long ruleId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type, java.lang.String typeSettings,
+		java.lang.String type,
+		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrRuleLocalService.updateRule(ruleId, nameMap, descriptionMap,
-			type, typeSettings, serviceContext);
+			type, typeSettingsProperties, serviceContext);
 	}
 
 	@Override

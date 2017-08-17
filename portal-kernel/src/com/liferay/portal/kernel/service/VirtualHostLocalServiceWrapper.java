@@ -66,18 +66,6 @@ public class VirtualHostLocalServiceWrapper implements VirtualHostLocalService,
 	}
 
 	/**
-	* Deletes the virtual host from the database. Also notifies the appropriate model listeners.
-	*
-	* @param virtualHost the virtual host
-	* @return the virtual host that was removed
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.VirtualHost deleteVirtualHost(
-		com.liferay.portal.kernel.model.VirtualHost virtualHost) {
-		return _virtualHostLocalService.deleteVirtualHost(virtualHost);
-	}
-
-	/**
 	* Deletes the virtual host with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param virtualHostId the primary key of the virtual host
@@ -89,6 +77,18 @@ public class VirtualHostLocalServiceWrapper implements VirtualHostLocalService,
 		long virtualHostId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _virtualHostLocalService.deleteVirtualHost(virtualHostId);
+	}
+
+	/**
+	* Deletes the virtual host from the database. Also notifies the appropriate model listeners.
+	*
+	* @param virtualHost the virtual host
+	* @return the virtual host that was removed
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.VirtualHost deleteVirtualHost(
+		com.liferay.portal.kernel.model.VirtualHost virtualHost) {
+		return _virtualHostLocalService.deleteVirtualHost(virtualHost);
 	}
 
 	@Override
@@ -178,12 +178,6 @@ public class VirtualHostLocalServiceWrapper implements VirtualHostLocalService,
 
 	@Override
 	public com.liferay.portal.kernel.model.VirtualHost fetchVirtualHost(
-		java.lang.String hostname) {
-		return _virtualHostLocalService.fetchVirtualHost(hostname);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.VirtualHost fetchVirtualHost(
 		long virtualHostId) {
 		return _virtualHostLocalService.fetchVirtualHost(virtualHostId);
 	}
@@ -192,6 +186,12 @@ public class VirtualHostLocalServiceWrapper implements VirtualHostLocalService,
 	public com.liferay.portal.kernel.model.VirtualHost fetchVirtualHost(
 		long companyId, long layoutSetId) {
 		return _virtualHostLocalService.fetchVirtualHost(companyId, layoutSetId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.VirtualHost fetchVirtualHost(
+		java.lang.String hostname) {
+		return _virtualHostLocalService.fetchVirtualHost(hostname);
 	}
 
 	@Override
@@ -221,13 +221,6 @@ public class VirtualHostLocalServiceWrapper implements VirtualHostLocalService,
 		return _virtualHostLocalService.getPersistedModel(primaryKeyObj);
 	}
 
-	@Override
-	public com.liferay.portal.kernel.model.VirtualHost getVirtualHost(
-		java.lang.String hostname)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _virtualHostLocalService.getVirtualHost(hostname);
-	}
-
 	/**
 	* Returns the virtual host with the primary key.
 	*
@@ -247,6 +240,13 @@ public class VirtualHostLocalServiceWrapper implements VirtualHostLocalService,
 		long companyId, long layoutSetId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _virtualHostLocalService.getVirtualHost(companyId, layoutSetId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.VirtualHost getVirtualHost(
+		java.lang.String hostname)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _virtualHostLocalService.getVirtualHost(hostname);
 	}
 
 	/**
@@ -276,6 +276,13 @@ public class VirtualHostLocalServiceWrapper implements VirtualHostLocalService,
 		return _virtualHostLocalService.getVirtualHostsCount();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.VirtualHost updateVirtualHost(
+		long companyId, long layoutSetId, java.lang.String hostname) {
+		return _virtualHostLocalService.updateVirtualHost(companyId,
+			layoutSetId, hostname);
+	}
+
 	/**
 	* Updates the virtual host in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -286,13 +293,6 @@ public class VirtualHostLocalServiceWrapper implements VirtualHostLocalService,
 	public com.liferay.portal.kernel.model.VirtualHost updateVirtualHost(
 		com.liferay.portal.kernel.model.VirtualHost virtualHost) {
 		return _virtualHostLocalService.updateVirtualHost(virtualHost);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.VirtualHost updateVirtualHost(
-		long companyId, long layoutSetId, java.lang.String hostname) {
-		return _virtualHostLocalService.updateVirtualHost(companyId,
-			layoutSetId, hostname);
 	}
 
 	@Override

@@ -57,18 +57,6 @@ public class PasswordTrackerLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the password tracker from the database. Also notifies the appropriate model listeners.
-	*
-	* @param passwordTracker the password tracker
-	* @return the password tracker that was removed
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.PasswordTracker deletePasswordTracker(
-		com.liferay.portal.kernel.model.PasswordTracker passwordTracker) {
-		return _passwordTrackerLocalService.deletePasswordTracker(passwordTracker);
-	}
-
-	/**
 	* Deletes the password tracker with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param passwordTrackerId the primary key of the password tracker
@@ -80,6 +68,18 @@ public class PasswordTrackerLocalServiceWrapper
 		long passwordTrackerId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _passwordTrackerLocalService.deletePasswordTracker(passwordTrackerId);
+	}
+
+	/**
+	* Deletes the password tracker from the database. Also notifies the appropriate model listeners.
+	*
+	* @param passwordTracker the password tracker
+	* @return the password tracker that was removed
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.PasswordTracker deletePasswordTracker(
+		com.liferay.portal.kernel.model.PasswordTracker passwordTracker) {
+		return _passwordTrackerLocalService.deletePasswordTracker(passwordTracker);
 	}
 
 	@Override

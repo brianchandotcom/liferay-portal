@@ -90,18 +90,18 @@ public class RepositoryServiceUtil {
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
 	@Deprecated
-	public static java.lang.String[] getSupportedParameters(
-		java.lang.String className, java.lang.String configuration) {
-		return getService().getSupportedParameters(className, configuration);
+	public static java.lang.String[] getSupportedParameters(long classNameId,
+		java.lang.String configuration) {
+		return getService().getSupportedParameters(classNameId, configuration);
 	}
 
 	/**
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
 	@Deprecated
-	public static java.lang.String[] getSupportedParameters(long classNameId,
-		java.lang.String configuration) {
-		return getService().getSupportedParameters(classNameId, configuration);
+	public static java.lang.String[] getSupportedParameters(
+		java.lang.String className, java.lang.String configuration) {
+		return getService().getSupportedParameters(className, configuration);
 	}
 
 	public static com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties(

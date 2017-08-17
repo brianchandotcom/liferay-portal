@@ -41,16 +41,14 @@ public class WSRPProducerLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.wsrp.service.impl.WSRPProducerLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-
-	/**
-	* Adds the wsrp producer to the database. Also notifies the appropriate model listeners.
-	*
-	* @param wsrpProducer the wsrp producer
-	* @return the wsrp producer that was added
-	*/
 	public static com.liferay.wsrp.model.WSRPProducer addWSRPProducer(
-		com.liferay.wsrp.model.WSRPProducer wsrpProducer) {
-		return getService().addWSRPProducer(wsrpProducer);
+		long userId, long groupId, java.lang.String name,
+		java.lang.String version, java.lang.String portletIds,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addWSRPProducer(userId, groupId, name, version, portletIds,
+			serviceContext);
 	}
 
 	public static com.liferay.wsrp.model.WSRPProducer addWSRPProducer(
@@ -63,14 +61,15 @@ public class WSRPProducerLocalServiceUtil {
 			serviceContext);
 	}
 
+	/**
+	* Adds the wsrp producer to the database. Also notifies the appropriate model listeners.
+	*
+	* @param wsrpProducer the wsrp producer
+	* @return the wsrp producer that was added
+	*/
 	public static com.liferay.wsrp.model.WSRPProducer addWSRPProducer(
-		long userId, long groupId, java.lang.String name,
-		java.lang.String version, java.lang.String portletIds,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addWSRPProducer(userId, groupId, name, version, portletIds,
-			serviceContext);
+		com.liferay.wsrp.model.WSRPProducer wsrpProducer) {
+		return getService().addWSRPProducer(wsrpProducer);
 	}
 
 	/**
@@ -94,19 +93,6 @@ public class WSRPProducerLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the wsrp producer from the database. Also notifies the appropriate model listeners.
-	*
-	* @param wsrpProducer the wsrp producer
-	* @return the wsrp producer that was removed
-	* @throws PortalException
-	*/
-	public static com.liferay.wsrp.model.WSRPProducer deleteWSRPProducer(
-		com.liferay.wsrp.model.WSRPProducer wsrpProducer)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteWSRPProducer(wsrpProducer);
-	}
-
-	/**
 	* Deletes the wsrp producer with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param wsrpProducerId the primary key of the wsrp producer
@@ -117,6 +103,19 @@ public class WSRPProducerLocalServiceUtil {
 		long wsrpProducerId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteWSRPProducer(wsrpProducerId);
+	}
+
+	/**
+	* Deletes the wsrp producer from the database. Also notifies the appropriate model listeners.
+	*
+	* @param wsrpProducer the wsrp producer
+	* @return the wsrp producer that was removed
+	* @throws PortalException
+	*/
+	public static com.liferay.wsrp.model.WSRPProducer deleteWSRPProducer(
+		com.liferay.wsrp.model.WSRPProducer wsrpProducer)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteWSRPProducer(wsrpProducer);
 	}
 
 	public static void deleteWSRPProducers(long companyId)
@@ -247,12 +246,6 @@ public class WSRPProducerLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static com.liferay.wsrp.model.WSRPProducer getWSRPProducer(
-		java.lang.String wsrpProducerUuid)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getWSRPProducer(wsrpProducerUuid);
-	}
-
 	/**
 	* Returns the wsrp producer with the primary key.
 	*
@@ -264,6 +257,12 @@ public class WSRPProducerLocalServiceUtil {
 		long wsrpProducerId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getWSRPProducer(wsrpProducerId);
+	}
+
+	public static com.liferay.wsrp.model.WSRPProducer getWSRPProducer(
+		java.lang.String wsrpProducerUuid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getWSRPProducer(wsrpProducerUuid);
 	}
 
 	/**
@@ -344,6 +343,14 @@ public class WSRPProducerLocalServiceUtil {
 		return getService().getWSRPProducersCount(companyId);
 	}
 
+	public static com.liferay.wsrp.model.WSRPProducer updateWSRPProducer(
+		long wsrpProducerId, java.lang.String name, java.lang.String version,
+		java.lang.String portletIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateWSRPProducer(wsrpProducerId, name, version, portletIds);
+	}
+
 	/**
 	* Updates the wsrp producer in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -353,14 +360,6 @@ public class WSRPProducerLocalServiceUtil {
 	public static com.liferay.wsrp.model.WSRPProducer updateWSRPProducer(
 		com.liferay.wsrp.model.WSRPProducer wsrpProducer) {
 		return getService().updateWSRPProducer(wsrpProducer);
-	}
-
-	public static com.liferay.wsrp.model.WSRPProducer updateWSRPProducer(
-		long wsrpProducerId, java.lang.String name, java.lang.String version,
-		java.lang.String portletIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateWSRPProducer(wsrpProducerId, name, version, portletIds);
 	}
 
 	public static WSRPProducerLocalService getService() {

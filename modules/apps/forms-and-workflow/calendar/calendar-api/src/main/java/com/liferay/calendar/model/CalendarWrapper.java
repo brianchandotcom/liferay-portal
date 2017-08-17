@@ -291,30 +291,6 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	/**
 	* Returns the localized description of this calendar in the language. Uses the default language if no localization exists for the requested language.
 	*
-	* @param languageId the ID of the language
-	* @return the localized description of this calendar
-	*/
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId) {
-		return _calendar.getDescription(languageId);
-	}
-
-	/**
-	* Returns the localized description of this calendar in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized description of this calendar
-	*/
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId,
-		boolean useDefault) {
-		return _calendar.getDescription(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized description of this calendar in the language. Uses the default language if no localization exists for the requested language.
-	*
 	* @param locale the locale of the language
 	* @return the localized description of this calendar
 	*/
@@ -334,6 +310,30 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	public java.lang.String getDescription(java.util.Locale locale,
 		boolean useDefault) {
 		return _calendar.getDescription(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized description of this calendar in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized description of this calendar
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId) {
+		return _calendar.getDescription(languageId);
+	}
+
+	/**
+	* Returns the localized description of this calendar in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized description of this calendar
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId,
+		boolean useDefault) {
+		return _calendar.getDescription(languageId, useDefault);
 	}
 
 	@Override
@@ -424,6 +424,29 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	/**
 	* Returns the localized name of this calendar in the language. Uses the default language if no localization exists for the requested language.
 	*
+	* @param locale the locale of the language
+	* @return the localized name of this calendar
+	*/
+	@Override
+	public java.lang.String getName(java.util.Locale locale) {
+		return _calendar.getName(locale);
+	}
+
+	/**
+	* Returns the localized name of this calendar in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized name of this calendar. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
+		return _calendar.getName(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized name of this calendar in the language. Uses the default language if no localization exists for the requested language.
+	*
 	* @param languageId the ID of the language
 	* @return the localized name of this calendar
 	*/
@@ -443,29 +466,6 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	public java.lang.String getName(java.lang.String languageId,
 		boolean useDefault) {
 		return _calendar.getName(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized name of this calendar in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized name of this calendar
-	*/
-	@Override
-	public java.lang.String getName(java.util.Locale locale) {
-		return _calendar.getName(locale);
-	}
-
-	/**
-	* Returns the localized name of this calendar in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized name of this calendar. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
-		return _calendar.getName(locale, useDefault);
 	}
 
 	@Override
@@ -786,14 +786,14 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_calendar.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_calendar.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_calendar.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

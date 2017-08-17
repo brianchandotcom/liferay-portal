@@ -41,18 +41,6 @@ public class PowwowMeetingLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.powwow.service.impl.PowwowMeetingLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-
-	/**
-	* Adds the powwow meeting to the database. Also notifies the appropriate model listeners.
-	*
-	* @param powwowMeeting the powwow meeting
-	* @return the powwow meeting that was added
-	*/
-	public static com.liferay.powwow.model.PowwowMeeting addPowwowMeeting(
-		com.liferay.powwow.model.PowwowMeeting powwowMeeting) {
-		return getService().addPowwowMeeting(powwowMeeting);
-	}
-
 	public static com.liferay.powwow.model.PowwowMeeting addPowwowMeeting(
 		long userId, long groupId, long powwowServerId, java.lang.String name,
 		java.lang.String description, java.lang.String providerType,
@@ -65,6 +53,17 @@ public class PowwowMeetingLocalServiceUtil {
 				   .addPowwowMeeting(userId, groupId, powwowServerId, name,
 			description, providerType, providerTypeMetadataMap, languageId,
 			calendarBookingId, status, powwowParticipants, serviceContext);
+	}
+
+	/**
+	* Adds the powwow meeting to the database. Also notifies the appropriate model listeners.
+	*
+	* @param powwowMeeting the powwow meeting
+	* @return the powwow meeting that was added
+	*/
+	public static com.liferay.powwow.model.PowwowMeeting addPowwowMeeting(
+		com.liferay.powwow.model.PowwowMeeting powwowMeeting) {
+		return getService().addPowwowMeeting(powwowMeeting);
 	}
 
 	public static void checkPowwowMeetings()
@@ -93,19 +92,6 @@ public class PowwowMeetingLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the powwow meeting from the database. Also notifies the appropriate model listeners.
-	*
-	* @param powwowMeeting the powwow meeting
-	* @return the powwow meeting that was removed
-	* @throws PortalException
-	*/
-	public static com.liferay.powwow.model.PowwowMeeting deletePowwowMeeting(
-		com.liferay.powwow.model.PowwowMeeting powwowMeeting)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePowwowMeeting(powwowMeeting);
-	}
-
-	/**
 	* Deletes the powwow meeting with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param powwowMeetingId the primary key of the powwow meeting
@@ -116,6 +102,19 @@ public class PowwowMeetingLocalServiceUtil {
 		long powwowMeetingId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deletePowwowMeeting(powwowMeetingId);
+	}
+
+	/**
+	* Deletes the powwow meeting from the database. Also notifies the appropriate model listeners.
+	*
+	* @param powwowMeeting the powwow meeting
+	* @return the powwow meeting that was removed
+	* @throws PortalException
+	*/
+	public static com.liferay.powwow.model.PowwowMeeting deletePowwowMeeting(
+		com.liferay.powwow.model.PowwowMeeting powwowMeeting)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePowwowMeeting(powwowMeeting);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -321,17 +320,6 @@ public class PowwowMeetingLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	/**
-	* Updates the powwow meeting in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param powwowMeeting the powwow meeting
-	* @return the powwow meeting that was updated
-	*/
-	public static com.liferay.powwow.model.PowwowMeeting updatePowwowMeeting(
-		com.liferay.powwow.model.PowwowMeeting powwowMeeting) {
-		return getService().updatePowwowMeeting(powwowMeeting);
-	}
-
 	public static com.liferay.powwow.model.PowwowMeeting updatePowwowMeeting(
 		long powwowMeetingId, long powwowServerId, java.lang.String name,
 		java.lang.String description, java.lang.String providerType,
@@ -344,6 +332,17 @@ public class PowwowMeetingLocalServiceUtil {
 				   .updatePowwowMeeting(powwowMeetingId, powwowServerId, name,
 			description, providerType, providerTypeMetadataMap, languageId,
 			calendarBookingId, status, powwowParticipants, serviceContext);
+	}
+
+	/**
+	* Updates the powwow meeting in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param powwowMeeting the powwow meeting
+	* @return the powwow meeting that was updated
+	*/
+	public static com.liferay.powwow.model.PowwowMeeting updatePowwowMeeting(
+		com.liferay.powwow.model.PowwowMeeting powwowMeeting) {
+		return getService().updatePowwowMeeting(powwowMeeting);
 	}
 
 	public static com.liferay.powwow.model.PowwowMeeting updateStatus(

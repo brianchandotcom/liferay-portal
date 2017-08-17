@@ -57,6 +57,9 @@ public interface PortletItemLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PortletItemLocalServiceUtil} to access the portlet item local service. Add custom service methods to {@link com.liferay.portal.service.impl.PortletItemLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public PortletItem addPortletItem(long userId, long groupId,
+		java.lang.String name, java.lang.String portletId,
+		java.lang.String className) throws PortalException;
 
 	/**
 	* Adds the portlet item to the database. Also notifies the appropriate model listeners.
@@ -66,10 +69,6 @@ public interface PortletItemLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public PortletItem addPortletItem(PortletItem portletItem);
-
-	public PortletItem addPortletItem(long userId, long groupId,
-		java.lang.String name, java.lang.String portletId,
-		java.lang.String className) throws PortalException;
 
 	/**
 	* Creates a new portlet item with the primary key. Does not add the portlet item to the database.
@@ -87,15 +86,6 @@ public interface PortletItemLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the portlet item from the database. Also notifies the appropriate model listeners.
-	*
-	* @param portletItem the portlet item
-	* @return the portlet item that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public PortletItem deletePortletItem(PortletItem portletItem);
-
-	/**
 	* Deletes the portlet item with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param portletItemId the primary key of the portlet item
@@ -105,6 +95,15 @@ public interface PortletItemLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public PortletItem deletePortletItem(long portletItemId)
 		throws PortalException;
+
+	/**
+	* Deletes the portlet item from the database. Also notifies the appropriate model listeners.
+	*
+	* @param portletItem the portlet item
+	* @return the portlet item that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public PortletItem deletePortletItem(PortletItem portletItem);
 
 	public DynamicQuery dynamicQuery();
 
@@ -232,6 +231,10 @@ public interface PortletItemLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getPortletItemsCount();
 
+	public PortletItem updatePortletItem(long userId, long groupId,
+		java.lang.String name, java.lang.String portletId,
+		java.lang.String className) throws PortalException;
+
 	/**
 	* Updates the portlet item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -240,8 +243,4 @@ public interface PortletItemLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public PortletItem updatePortletItem(PortletItem portletItem);
-
-	public PortletItem updatePortletItem(long userId, long groupId,
-		java.lang.String name, java.lang.String portletId,
-		java.lang.String className) throws PortalException;
 }

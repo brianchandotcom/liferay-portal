@@ -50,22 +50,6 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	}
 
 	@Override
-	public void addNodeResources(com.liferay.wiki.model.WikiNode node,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_wikiNodeLocalService.addNodeResources(node, addGroupPermissions,
-			addGuestPermissions);
-	}
-
-	@Override
-	public void addNodeResources(com.liferay.wiki.model.WikiNode node,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_wikiNodeLocalService.addNodeResources(node, groupPermissions,
-			guestPermissions);
-	}
-
-	@Override
 	public void addNodeResources(long nodeId, boolean addGroupPermissions,
 		boolean addGuestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -78,6 +62,22 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_wikiNodeLocalService.addNodeResources(nodeId, groupPermissions,
+			guestPermissions);
+	}
+
+	@Override
+	public void addNodeResources(com.liferay.wiki.model.WikiNode node,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_wikiNodeLocalService.addNodeResources(node, addGroupPermissions,
+			addGuestPermissions);
+	}
+
+	@Override
+	public void addNodeResources(com.liferay.wiki.model.WikiNode node,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_wikiNodeLocalService.addNodeResources(node, groupPermissions,
 			guestPermissions);
 	}
 
@@ -105,15 +105,15 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	}
 
 	@Override
-	public void deleteNode(com.liferay.wiki.model.WikiNode node)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_wikiNodeLocalService.deleteNode(node);
-	}
-
-	@Override
 	public void deleteNode(long nodeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_wikiNodeLocalService.deleteNode(nodeId);
+	}
+
+	@Override
+	public void deleteNode(com.liferay.wiki.model.WikiNode node)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_wikiNodeLocalService.deleteNode(node);
 	}
 
 	@Override
@@ -133,18 +133,6 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	}
 
 	/**
-	* Deletes the wiki node from the database. Also notifies the appropriate model listeners.
-	*
-	* @param wikiNode the wiki node
-	* @return the wiki node that was removed
-	*/
-	@Override
-	public com.liferay.wiki.model.WikiNode deleteWikiNode(
-		com.liferay.wiki.model.WikiNode wikiNode) {
-		return _wikiNodeLocalService.deleteWikiNode(wikiNode);
-	}
-
-	/**
 	* Deletes the wiki node with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param nodeId the primary key of the wiki node
@@ -155,6 +143,18 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	public com.liferay.wiki.model.WikiNode deleteWikiNode(long nodeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiNodeLocalService.deleteWikiNode(nodeId);
+	}
+
+	/**
+	* Deletes the wiki node from the database. Also notifies the appropriate model listeners.
+	*
+	* @param wikiNode the wiki node
+	* @return the wiki node that was removed
+	*/
+	@Override
+	public com.liferay.wiki.model.WikiNode deleteWikiNode(
+		com.liferay.wiki.model.WikiNode wikiNode) {
+		return _wikiNodeLocalService.deleteWikiNode(wikiNode);
 	}
 
 	@Override
@@ -476,15 +476,15 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 
 	@Override
 	public com.liferay.wiki.model.WikiNode moveNodeToTrash(long userId,
-		com.liferay.wiki.model.WikiNode node)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiNodeLocalService.moveNodeToTrash(userId, node);
+		long nodeId) throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiNodeLocalService.moveNodeToTrash(userId, nodeId);
 	}
 
 	@Override
 	public com.liferay.wiki.model.WikiNode moveNodeToTrash(long userId,
-		long nodeId) throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiNodeLocalService.moveNodeToTrash(userId, nodeId);
+		com.liferay.wiki.model.WikiNode node)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiNodeLocalService.moveNodeToTrash(userId, node);
 	}
 
 	@Override

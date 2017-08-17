@@ -58,13 +58,13 @@ public interface AssetVocabularyService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link AssetVocabularyServiceUtil} to access the asset vocabulary remote service. Add custom service methods to {@link com.liferay.portlet.asset.service.impl.AssetVocabularyServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public AssetVocabulary addVocabulary(long groupId, java.lang.String title,
-		ServiceContext serviceContext) throws PortalException;
-
-	public AssetVocabulary addVocabulary(long groupId, java.lang.String title,
 		Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> descriptionMap,
 		java.lang.String settings, ServiceContext serviceContext)
 		throws PortalException;
+
+	public AssetVocabulary addVocabulary(long groupId, java.lang.String title,
+		ServiceContext serviceContext) throws PortalException;
 
 	public List<AssetVocabulary> deleteVocabularies(long[] vocabularyIds,
 		ServiceContext serviceContext) throws PortalException;
@@ -82,6 +82,17 @@ public interface AssetVocabularyService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetVocabulary> getCompanyVocabularies(long companyId)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetVocabulary> getGroupsVocabularies(long[] groupIds);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetVocabulary> getGroupsVocabularies(long[] groupIds,
+		java.lang.String className);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetVocabulary> getGroupsVocabularies(long[] groupIds,
+		java.lang.String className, long classTypePK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetVocabulary> getGroupVocabularies(long[] groupIds);
@@ -127,17 +138,6 @@ public interface AssetVocabularyService extends BaseService {
 	public AssetVocabularyDisplay getGroupVocabulariesDisplay(long groupId,
 		java.lang.String name, int start, int end,
 		OrderByComparator<AssetVocabulary> obc) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetVocabulary> getGroupsVocabularies(long[] groupIds);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetVocabulary> getGroupsVocabularies(long[] groupIds,
-		java.lang.String className);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetVocabulary> getGroupsVocabularies(long[] groupIds,
-		java.lang.String className, long classTypePK);
 
 	/**
 	* Returns the OSGi service identifier.

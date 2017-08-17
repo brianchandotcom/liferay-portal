@@ -86,15 +86,15 @@ public interface ExportImportConfigurationLocalService extends BaseLocalService,
 	public ExportImportConfiguration addExportImportConfiguration(
 		ExportImportConfiguration exportImportConfiguration);
 
-	public ExportImportConfiguration addExportImportConfiguration(long userId,
-		long groupId, java.lang.String name, java.lang.String description,
-		int type, Map<java.lang.String, Serializable> settingsMap,
-		ServiceContext serviceContext) throws PortalException;
-
 	@Indexable(type = IndexableType.REINDEX)
 	public ExportImportConfiguration addExportImportConfiguration(long userId,
 		long groupId, java.lang.String name, java.lang.String description,
 		int type, Map<java.lang.String, Serializable> settingsMap, int status,
+		ServiceContext serviceContext) throws PortalException;
+
+	public ExportImportConfiguration addExportImportConfiguration(long userId,
+		long groupId, java.lang.String name, java.lang.String description,
+		int type, Map<java.lang.String, Serializable> settingsMap,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**

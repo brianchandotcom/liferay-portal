@@ -57,6 +57,9 @@ public interface UserNotificationDeliveryLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link UserNotificationDeliveryLocalServiceUtil} to access the user notification delivery local service. Add custom service methods to {@link com.liferay.portal.service.impl.UserNotificationDeliveryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public UserNotificationDelivery addUserNotificationDelivery(long userId,
+		java.lang.String portletId, long classNameId, int notificationType,
+		int deliveryType, boolean deliver) throws PortalException;
 
 	/**
 	* Adds the user notification delivery to the database. Also notifies the appropriate model listeners.
@@ -67,10 +70,6 @@ public interface UserNotificationDeliveryLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public UserNotificationDelivery addUserNotificationDelivery(
 		UserNotificationDelivery userNotificationDelivery);
-
-	public UserNotificationDelivery addUserNotificationDelivery(long userId,
-		java.lang.String portletId, long classNameId, int notificationType,
-		int deliveryType, boolean deliver) throws PortalException;
 
 	/**
 	* Creates a new user notification delivery with the primary key. Does not add the user notification delivery to the database.
@@ -91,16 +90,6 @@ public interface UserNotificationDeliveryLocalService extends BaseLocalService,
 	public void deleteUserNotificationDeliveries(long userId);
 
 	/**
-	* Deletes the user notification delivery from the database. Also notifies the appropriate model listeners.
-	*
-	* @param userNotificationDelivery the user notification delivery
-	* @return the user notification delivery that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public UserNotificationDelivery deleteUserNotificationDelivery(
-		UserNotificationDelivery userNotificationDelivery);
-
-	/**
 	* Deletes the user notification delivery with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param userNotificationDeliveryId the primary key of the user notification delivery
@@ -114,6 +103,16 @@ public interface UserNotificationDeliveryLocalService extends BaseLocalService,
 	public void deleteUserNotificationDelivery(long userId,
 		java.lang.String portletId, long classNameId, int notificationType,
 		int deliveryType);
+
+	/**
+	* Deletes the user notification delivery from the database. Also notifies the appropriate model listeners.
+	*
+	* @param userNotificationDelivery the user notification delivery
+	* @return the user notification delivery that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public UserNotificationDelivery deleteUserNotificationDelivery(
+		UserNotificationDelivery userNotificationDelivery);
 
 	public DynamicQuery dynamicQuery();
 
@@ -240,6 +239,9 @@ public interface UserNotificationDeliveryLocalService extends BaseLocalService,
 		java.lang.String portletId, long classNameId, int notificationType,
 		int deliveryType, boolean deliver) throws PortalException;
 
+	public UserNotificationDelivery updateUserNotificationDelivery(
+		long userNotificationDeliveryId, boolean deliver);
+
 	/**
 	* Updates the user notification delivery in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -249,7 +251,4 @@ public interface UserNotificationDeliveryLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public UserNotificationDelivery updateUserNotificationDelivery(
 		UserNotificationDelivery userNotificationDelivery);
-
-	public UserNotificationDelivery updateUserNotificationDelivery(
-		long userNotificationDeliveryId, boolean deliver);
 }

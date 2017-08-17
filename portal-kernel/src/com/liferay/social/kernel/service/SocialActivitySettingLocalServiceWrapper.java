@@ -81,18 +81,6 @@ public class SocialActivitySettingLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the social activity setting from the database. Also notifies the appropriate model listeners.
-	*
-	* @param socialActivitySetting the social activity setting
-	* @return the social activity setting that was removed
-	*/
-	@Override
-	public com.liferay.social.kernel.model.SocialActivitySetting deleteSocialActivitySetting(
-		com.liferay.social.kernel.model.SocialActivitySetting socialActivitySetting) {
-		return _socialActivitySettingLocalService.deleteSocialActivitySetting(socialActivitySetting);
-	}
-
-	/**
 	* Deletes the social activity setting with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param activitySettingId the primary key of the social activity setting
@@ -104,6 +92,18 @@ public class SocialActivitySettingLocalServiceWrapper
 		long activitySettingId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _socialActivitySettingLocalService.deleteSocialActivitySetting(activitySettingId);
+	}
+
+	/**
+	* Deletes the social activity setting from the database. Also notifies the appropriate model listeners.
+	*
+	* @param socialActivitySetting the social activity setting
+	* @return the social activity setting that was removed
+	*/
+	@Override
+	public com.liferay.social.kernel.model.SocialActivitySetting deleteSocialActivitySetting(
+		com.liferay.social.kernel.model.SocialActivitySetting socialActivitySetting) {
+		return _socialActivitySettingLocalService.deleteSocialActivitySetting(socialActivitySetting);
 	}
 
 	@Override

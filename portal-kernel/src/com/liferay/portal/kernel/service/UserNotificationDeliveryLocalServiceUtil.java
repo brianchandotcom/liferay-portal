@@ -40,6 +40,14 @@ public class UserNotificationDeliveryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.UserNotificationDeliveryLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portal.kernel.model.UserNotificationDelivery addUserNotificationDelivery(
+		long userId, java.lang.String portletId, long classNameId,
+		int notificationType, int deliveryType, boolean deliver)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addUserNotificationDelivery(userId, portletId, classNameId,
+			notificationType, deliveryType, deliver);
+	}
 
 	/**
 	* Adds the user notification delivery to the database. Also notifies the appropriate model listeners.
@@ -50,15 +58,6 @@ public class UserNotificationDeliveryLocalServiceUtil {
 	public static com.liferay.portal.kernel.model.UserNotificationDelivery addUserNotificationDelivery(
 		com.liferay.portal.kernel.model.UserNotificationDelivery userNotificationDelivery) {
 		return getService().addUserNotificationDelivery(userNotificationDelivery);
-	}
-
-	public static com.liferay.portal.kernel.model.UserNotificationDelivery addUserNotificationDelivery(
-		long userId, java.lang.String portletId, long classNameId,
-		int notificationType, int deliveryType, boolean deliver)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addUserNotificationDelivery(userId, portletId, classNameId,
-			notificationType, deliveryType, deliver);
 	}
 
 	/**
@@ -87,18 +86,6 @@ public class UserNotificationDeliveryLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the user notification delivery from the database. Also notifies the appropriate model listeners.
-	*
-	* @param userNotificationDelivery the user notification delivery
-	* @return the user notification delivery that was removed
-	*/
-	public static com.liferay.portal.kernel.model.UserNotificationDelivery deleteUserNotificationDelivery(
-		com.liferay.portal.kernel.model.UserNotificationDelivery userNotificationDelivery) {
-		return getService()
-				   .deleteUserNotificationDelivery(userNotificationDelivery);
-	}
-
-	/**
 	* Deletes the user notification delivery with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param userNotificationDeliveryId the primary key of the user notification delivery
@@ -118,6 +105,18 @@ public class UserNotificationDeliveryLocalServiceUtil {
 		getService()
 			.deleteUserNotificationDelivery(userId, portletId, classNameId,
 			notificationType, deliveryType);
+	}
+
+	/**
+	* Deletes the user notification delivery from the database. Also notifies the appropriate model listeners.
+	*
+	* @param userNotificationDelivery the user notification delivery
+	* @return the user notification delivery that was removed
+	*/
+	public static com.liferay.portal.kernel.model.UserNotificationDelivery deleteUserNotificationDelivery(
+		com.liferay.portal.kernel.model.UserNotificationDelivery userNotificationDelivery) {
+		return getService()
+				   .deleteUserNotificationDelivery(userNotificationDelivery);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -283,6 +282,13 @@ public class UserNotificationDeliveryLocalServiceUtil {
 			notificationType, deliveryType, deliver);
 	}
 
+	public static com.liferay.portal.kernel.model.UserNotificationDelivery updateUserNotificationDelivery(
+		long userNotificationDeliveryId, boolean deliver) {
+		return getService()
+				   .updateUserNotificationDelivery(userNotificationDeliveryId,
+			deliver);
+	}
+
 	/**
 	* Updates the user notification delivery in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -293,13 +299,6 @@ public class UserNotificationDeliveryLocalServiceUtil {
 		com.liferay.portal.kernel.model.UserNotificationDelivery userNotificationDelivery) {
 		return getService()
 				   .updateUserNotificationDelivery(userNotificationDelivery);
-	}
-
-	public static com.liferay.portal.kernel.model.UserNotificationDelivery updateUserNotificationDelivery(
-		long userNotificationDeliveryId, boolean deliver) {
-		return getService()
-				   .updateUserNotificationDelivery(userNotificationDeliveryId,
-			deliver);
 	}
 
 	public static UserNotificationDeliveryLocalService getService() {

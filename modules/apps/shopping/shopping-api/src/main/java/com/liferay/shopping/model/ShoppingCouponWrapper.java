@@ -412,6 +412,11 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 	}
 
 	@Override
+	public int hashCode() {
+		return _shoppingCoupon.hashCode();
+	}
+
+	@Override
 	public boolean hasValidDateRange() {
 		return _shoppingCoupon.hasValidDateRange();
 	}
@@ -424,11 +429,6 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 	@Override
 	public boolean hasValidStartDate() {
 		return _shoppingCoupon.hasValidStartDate();
-	}
-
-	@Override
-	public int hashCode() {
-		return _shoppingCoupon.hashCode();
 	}
 
 	/**
@@ -557,14 +557,14 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_shoppingCoupon.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_shoppingCoupon.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_shoppingCoupon.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

@@ -252,14 +252,14 @@ public class ShoppingItemFieldWrapper implements ShoppingItemField,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_shoppingItemField.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_shoppingItemField.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_shoppingItemField.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

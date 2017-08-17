@@ -69,18 +69,6 @@ public class ShoppingItemFieldLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the shopping item field from the database. Also notifies the appropriate model listeners.
-	*
-	* @param shoppingItemField the shopping item field
-	* @return the shopping item field that was removed
-	*/
-	@Override
-	public com.liferay.shopping.model.ShoppingItemField deleteShoppingItemField(
-		com.liferay.shopping.model.ShoppingItemField shoppingItemField) {
-		return _shoppingItemFieldLocalService.deleteShoppingItemField(shoppingItemField);
-	}
-
-	/**
 	* Deletes the shopping item field with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param itemFieldId the primary key of the shopping item field
@@ -92,6 +80,18 @@ public class ShoppingItemFieldLocalServiceWrapper
 		long itemFieldId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingItemFieldLocalService.deleteShoppingItemField(itemFieldId);
+	}
+
+	/**
+	* Deletes the shopping item field from the database. Also notifies the appropriate model listeners.
+	*
+	* @param shoppingItemField the shopping item field
+	* @return the shopping item field that was removed
+	*/
+	@Override
+	public com.liferay.shopping.model.ShoppingItemField deleteShoppingItemField(
+		com.liferay.shopping.model.ShoppingItemField shoppingItemField) {
+		return _shoppingItemFieldLocalService.deleteShoppingItemField(shoppingItemField);
 	}
 
 	@Override

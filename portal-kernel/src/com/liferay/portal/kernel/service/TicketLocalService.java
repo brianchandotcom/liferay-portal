@@ -62,6 +62,10 @@ public interface TicketLocalService extends BaseLocalService,
 		long classPK, int type, java.lang.String extraInfo,
 		Date expirationDate, ServiceContext serviceContext);
 
+	public Ticket addTicket(long companyId, java.lang.String className,
+		long classPK, int type, java.lang.String extraInfo,
+		Date expirationDate, ServiceContext serviceContext);
+
 	/**
 	* Adds the ticket to the database. Also notifies the appropriate model listeners.
 	*
@@ -70,10 +74,6 @@ public interface TicketLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public Ticket addTicket(Ticket ticket);
-
-	public Ticket addTicket(long companyId, java.lang.String className,
-		long classPK, int type, java.lang.String extraInfo,
-		Date expirationDate, ServiceContext serviceContext);
 
 	/**
 	* Creates a new ticket with the primary key. Does not add the ticket to the database.
@@ -91,15 +91,6 @@ public interface TicketLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the ticket from the database. Also notifies the appropriate model listeners.
-	*
-	* @param ticket the ticket
-	* @return the ticket that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public Ticket deleteTicket(Ticket ticket);
-
-	/**
 	* Deletes the ticket with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param ticketId the primary key of the ticket
@@ -108,6 +99,15 @@ public interface TicketLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public Ticket deleteTicket(long ticketId) throws PortalException;
+
+	/**
+	* Deletes the ticket from the database. Also notifies the appropriate model listeners.
+	*
+	* @param ticket the ticket
+	* @return the ticket that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public Ticket deleteTicket(Ticket ticket);
 
 	public DynamicQuery dynamicQuery();
 
@@ -169,10 +169,10 @@ public interface TicketLocalService extends BaseLocalService,
 		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Ticket fetchTicket(java.lang.String key);
+	public Ticket fetchTicket(long ticketId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Ticket fetchTicket(long ticketId);
+	public Ticket fetchTicket(java.lang.String key);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -192,9 +192,6 @@ public interface TicketLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Ticket getTicket(java.lang.String key) throws PortalException;
-
 	/**
 	* Returns the ticket with the primary key.
 	*
@@ -204,6 +201,9 @@ public interface TicketLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Ticket getTicket(long ticketId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Ticket getTicket(java.lang.String key) throws PortalException;
 
 	/**
 	* Returns a range of all the tickets.
@@ -231,6 +231,10 @@ public interface TicketLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getTicketsCount();
 
+	public Ticket updateTicket(long ticketId, java.lang.String className,
+		long classPK, int type, java.lang.String extraInfo, Date expirationDate)
+		throws PortalException;
+
 	/**
 	* Updates the ticket in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -239,8 +243,4 @@ public interface TicketLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public Ticket updateTicket(Ticket ticket);
-
-	public Ticket updateTicket(long ticketId, java.lang.String className,
-		long classPK, int type, java.lang.String extraInfo, Date expirationDate)
-		throws PortalException;
 }

@@ -450,7 +450,16 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			resourcePermissionLocalService.hasResourcePermission(
 				resources, roleIds, actionId);
 
-		logHasUserPermissions(userId, resourceId, actionId, stopWatch, block++);
+		block++;
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"Checking user permissions block ", String.valueOf(block),
+					" for ", String.valueOf(userId), " ",
+					String.valueOf(resourceId), " ", actionId, " takes ",
+					String.valueOf(stopWatch.getTime()), " ms"));
+		}
 
 		return hasUserPermissions;
 	}
@@ -935,22 +944,6 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 		}
 
 		return roleLocalService.getRole(companyId, roleName);
-	}
-
-	protected void logHasUserPermissions(
-		long userId, long resourceId, String actionId, StopWatch stopWatch,
-		int block) {
-
-		if (!_log.isDebugEnabled()) {
-			return;
-		}
-
-		_log.debug(
-			StringBundler.concat(
-				"Checking user permissions block ", String.valueOf(block),
-				" for ", String.valueOf(userId), " ",
-				String.valueOf(resourceId), " ", actionId, " takes ",
-				String.valueOf(stopWatch.getTime()), " ms"));
 	}
 
 	protected void updateResources(

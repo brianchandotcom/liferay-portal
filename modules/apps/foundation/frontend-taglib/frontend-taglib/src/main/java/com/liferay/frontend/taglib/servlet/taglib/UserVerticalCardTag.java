@@ -67,11 +67,11 @@ public class UserVerticalCardTag extends VerticalCardTag {
 			LexiconUtil.getUserColorCssClass(user));
 
 		if (user != null) {
-			String defaultPortrait = LanguageUtil.get(
+			String userDefaultPortrait = LanguageUtil.get(
 				user.getLocale(), LanguageConstants.KEY_USER_DEFAULT_PORTRAIT,
 				LanguageConstants.VALUE_INITIALS);
 
-			if (defaultPortrait.equals(LanguageConstants.VALUE_IMAGE) ||
+			if (userDefaultPortrait.equals(LanguageConstants.VALUE_IMAGE) ||
 				(user.getPortraitId() > 0)) {
 
 				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(

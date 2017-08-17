@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.Resource;
-import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
@@ -868,10 +867,9 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 						"portlet resource actions found for " + name);
 			}
 
-			List<ResourceAction> resourceActions =
-				resourceActionLocalService.getResourceActions(name);
+			int count = resourceActionPersistence.countByName(name);
 
-			if (ListUtil.isEmpty(resourceActions)) {
+			if (count == 0) {
 				throw new NoSuchResourceActionException(
 					"There are no actions associated with the resource " +
 						name);

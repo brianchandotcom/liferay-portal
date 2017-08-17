@@ -1,5 +1,8 @@
 import com.liferay.gradle.util.copy.RenameDependencyClosure
 
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
 task copyTestLibs(type: Copy)
 
 configurations {

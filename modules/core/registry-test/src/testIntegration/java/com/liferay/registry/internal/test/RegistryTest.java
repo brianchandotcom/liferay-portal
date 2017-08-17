@@ -67,6 +67,46 @@ public class RegistryTest {
 	}
 
 	@Test
+	public void testCallServiceByClass() {
+		InterfaceOne interfaceOne = getInstance();
+
+		ServiceRegistration<InterfaceOne> serviceRegistration =
+			_registry.registerService(InterfaceOne.class, interfaceOne);
+
+		Assert.assertNotNull(serviceRegistration);
+
+		_registry.callService(
+			InterfaceOne.class,
+			registeredInterfaceOne -> {
+				Assert.assertEquals(interfaceOne, registeredInterfaceOne);
+
+				return null;
+			});
+
+		serviceRegistration.unregister();
+	}
+
+	@Test
+	public void testCallServiceByClassName() {
+		InterfaceOne interfaceOne = getInstance();
+
+		ServiceRegistration<InterfaceOne> serviceRegistration =
+			_registry.registerService(InterfaceOne.class, interfaceOne);
+
+		Assert.assertNotNull(serviceRegistration);
+
+		_registry.callService(
+			InterfaceOne.class.getName(),
+			registeredInterfaceOne -> {
+				Assert.assertEquals(interfaceOne, registeredInterfaceOne);
+
+				return null;
+			});
+
+		serviceRegistration.unregister();
+	}
+
+	@Test
 	public void testGetBundleContext() {
 		Assert.assertNotNull(_bundleContext);
 	}

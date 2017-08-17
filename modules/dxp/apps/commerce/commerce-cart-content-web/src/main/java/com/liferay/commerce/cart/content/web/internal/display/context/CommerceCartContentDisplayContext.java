@@ -56,7 +56,6 @@ public class CommerceCartContentDisplayContext {
 			httpServletRequest);
 
 		liferayPortletRequest = cpRequestHelper.getLiferayPortletRequest();
-
 		liferayPortletResponse = cpRequestHelper.getLiferayPortletResponse();
 	}
 

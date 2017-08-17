@@ -954,24 +954,6 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	}
 
 	protected void updateResourcePermissions(
-			long companyId, long groupId, Resource resource,
-			String[] groupPermissions, String[] guestPermissions)
-		throws PortalException {
-
-		Role role = roleLocalService.getDefaultGroupRole(groupId);
-
-		resourcePermissionLocalService.setResourcePermissions(
-			resource.getCompanyId(), resource.getName(), resource.getScope(),
-			resource.getPrimKey(), role.getRoleId(), groupPermissions);
-
-		role = roleLocalService.getRole(companyId, RoleConstants.GUEST);
-
-		resourcePermissionLocalService.setResourcePermissions(
-			resource.getCompanyId(), resource.getName(), resource.getScope(),
-			resource.getPrimKey(), role.getRoleId(), guestPermissions);
-	}
-
-	protected void updateResourcePermissions(
 			long groupId, Resource resource, ModelPermissions modelPermissions)
 		throws PortalException {
 
@@ -1033,8 +1015,17 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			guestPermissions = new String[0];
 		}
 
-		updateResourcePermissions(
-			companyId, groupId, resource, groupPermissions, guestPermissions);
+		Role role = roleLocalService.getDefaultGroupRole(groupId);
+
+		resourcePermissionLocalService.setResourcePermissions(
+			resource.getCompanyId(), resource.getName(), resource.getScope(),
+			resource.getPrimKey(), role.getRoleId(), groupPermissions);
+
+		role = roleLocalService.getRole(companyId, RoleConstants.GUEST);
+
+		resourcePermissionLocalService.setResourcePermissions(
+			resource.getCompanyId(), resource.getName(), resource.getScope(),
+			resource.getPrimKey(), role.getRoleId(), guestPermissions);
 	}
 
 	protected void validate(String name, boolean portletActions)

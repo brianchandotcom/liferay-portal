@@ -69,6 +69,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -947,19 +948,26 @@ public class AssetUtil {
 		if (sortField.startsWith(
 				DDMStructureManager.STRUCTURE_INDEXER_FIELD_PREFIX)) {
 
-			sortField = sortField.concat(StringPool.UNDERLINE).concat(
-				LocaleUtil.toLanguageId(locale));
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(sortField);
+			sb.append(StringPool.UNDERLINE);
+			sb.append(LocaleUtil.toLanguageId(locale));
+			sb.append(StringPool.UNDERLINE);
+
+			String suffix = "String";
 
 			if (!fieldType.equals("ddm-date") &&
 				((sortType == Sort.DOUBLE_TYPE) ||
 				 (sortType == Sort.FLOAT_TYPE) || (sortType == Sort.INT_TYPE) ||
 				 (sortType == Sort.LONG_TYPE))) {
 
-				sortField = sortField.concat(StringPool.UNDERLINE).concat(
-					"Number");
+				suffix = "Number";
 			}
 
-			sortField = Field.getSortableFieldName(sortField);
+			sb.append(suffix);
+
+			sortField = Field.getSortableFieldName(sb.toString());
 		}
 		else if (sortField.equals("modifiedDate")) {
 			sortField = Field.MODIFIED_DATE;

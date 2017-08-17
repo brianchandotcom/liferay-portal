@@ -17,6 +17,7 @@ package com.liferay.portal.tools.db.upgrade.client;
 import com.liferay.portal.tools.db.upgrade.client.util.StringUtil;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,9 +81,10 @@ public class AppServer {
 		String dirName, String extraLibDirNames, String globalLibDirName,
 		String portalDirName, String serverDetectorServerId) {
 
-		_dir = new File(dirName);
-		_globalLibDir = new File(dirName, globalLibDirName);
-		_portalDir = new File(dirName, portalDirName);
+		_setDirName(dirName);
+
+		_globalLibDir = new File(_dir, globalLibDirName);
+		_portalDir = new File(_dir, portalDirName);
 		_serverDetectorServerId = serverDetectorServerId;
 
 		_setExtraLibDirNames(extraLibDirNames);
@@ -121,7 +123,7 @@ public class AppServer {
 	}
 
 	public void setDirName(String dirName) {
-		_dir = new File(dirName);
+		_setDirName(dirName);
 	}
 
 	public void setExtraLibDirNames(String extraLibDirNames) {
@@ -152,6 +154,19 @@ public class AppServer {
 		sb.append("javax/transaction");
 
 		return sb.toString();
+	}
+
+	private void _setDirName(String dirName) {
+		try {
+			_dir = new File(dirName);
+
+			if (!_dir.isAbsolute()) {
+				_dir = _dir.getCanonicalFile();
+			}
+		}
+		catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
 	}
 
 	private void _setExtraLibDirNames(String extraLibDirNames) {

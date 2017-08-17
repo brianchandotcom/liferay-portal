@@ -14,10 +14,12 @@
 
 package com.liferay.portal.mobile.device.detection.fiftyonedegrees.internal;
 
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mobile.device.Device;
 import com.liferay.portal.kernel.mobile.device.UnknownDevice;
+import com.liferay.portal.mobile.device.detection.fiftyonedegrees.configuration.FiftyOneDegreesConfiguration;
 import com.liferay.portal.mobile.device.detection.fiftyonedegrees.data.DataFileProvider;
 
 import fiftyone.mobile.detection.Dataset;
@@ -76,12 +78,16 @@ public class FiftyOneDegreesEngineProxy {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
+		_fiftyOneDegreesConfiguration = ConfigurableUtil.createConfigurable(
+			FiftyOneDegreesConfiguration.class, properties);
+
 		try (InputStream inputStream =
 				_dataFileProvider.getDataFileInputStream()) {
 
 			_dataset = StreamFactory.create(IOUtils.toByteArray(inputStream));
 
-			_provider = new Provider(_dataset);
+			_provider = new Provider(
+				_dataset, _fiftyOneDegreesConfiguration.cacheSize());
 		}
 		catch (IOException ioe) {
 			if (_log.isWarnEnabled()) {
@@ -94,6 +100,7 @@ public class FiftyOneDegreesEngineProxy {
 
 	@Deactivate
 	protected void deactivate() throws IOException {
+		_fiftyOneDegreesConfiguration = null;
 		_provider = null;
 
 		if (_dataset != null) {
@@ -108,6 +115,7 @@ public class FiftyOneDegreesEngineProxy {
 	private DataFileProvider _dataFileProvider;
 
 	private Dataset _dataset;
+	private volatile FiftyOneDegreesConfiguration _fiftyOneDegreesConfiguration;
 	private Provider _provider;
 
 }

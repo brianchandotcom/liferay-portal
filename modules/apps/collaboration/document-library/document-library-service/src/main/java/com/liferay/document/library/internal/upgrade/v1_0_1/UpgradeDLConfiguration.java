@@ -15,13 +15,13 @@
 package com.liferay.document.library.internal.upgrade.v1_0_1;
 
 import com.liferay.document.library.configuration.DLConfiguration;
+import com.liferay.document.library.internal.constants.LegacyDLKeys;
+import com.liferay.portal.configuration.upgrade.util.PrefsPropsToConfigurationUpgradeItem;
+import com.liferay.portal.configuration.upgrade.util.PrefsPropsToConfigurationUpgradeUtil;
+import com.liferay.portal.configuration.upgrade.util.PrefsPropsValueType;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
-
-import java.util.Dictionary;
 
 import javax.portlet.PortletPreferences;
 
@@ -48,33 +48,21 @@ public class UpgradeDLConfiguration extends UpgradeProcess {
 	private void _upgradeConfiguration() throws Exception {
 		Configuration configuration = _configurationAdmin.getConfiguration(
 			DLConfiguration.class.getName(), StringPool.QUESTION);
-
-		Dictionary properties = configuration.getProperties();
-
-		if (properties == null) {
-			properties = new HashMapDictionary();
-		}
-
 		PortletPreferences portletPreferences = _prefsProps.getPreferences();
 
-		String[][] propertyMethodNamePairs = {
-			{"dl.file.extensions", "fileExtensions"},
-			{"dl.file.max.size", "fileMaxSize"}
-		};
+		PrefsPropsToConfigurationUpgradeItem[]
+			prefsPropsToConfigurationUpgradeItems = {
+				new PrefsPropsToConfigurationUpgradeItem(
+					LegacyDLKeys.DL_FILE_EXTENSIONS,
+					PrefsPropsValueType.STRING_ARRAY, "fileExtensions"),
+				new PrefsPropsToConfigurationUpgradeItem(
+					LegacyDLKeys.DL_FILE_MAX_SIZE, PrefsPropsValueType.LONG,
+					"fileMaxSize")
+			};
 
-		for (String[] propertyMethodNamePair : propertyMethodNamePairs) {
-			String oldPropertyKey = propertyMethodNamePair[0];
-
-			String oldPropertyValue = _prefsProps.getString(oldPropertyKey);
-
-			if (Validator.isNotNull(oldPropertyValue)) {
-				properties.put(propertyMethodNamePair[1], oldPropertyValue);
-
-				portletPreferences.reset(oldPropertyKey);
-			}
-		}
-
-		configuration.update(properties);
+		PrefsPropsToConfigurationUpgradeUtil.upgradePrefsPropsToConfiguration(
+			portletPreferences, configuration,
+			prefsPropsToConfigurationUpgradeItems);
 	}
 
 	private final ConfigurationAdmin _configurationAdmin;

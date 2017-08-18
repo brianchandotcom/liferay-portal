@@ -16,10 +16,7 @@ package com.liferay.asset.display.template.service.permission;
 
 import com.liferay.asset.display.template.model.AssetDisplayTemplate;
 import com.liferay.asset.display.template.service.AssetDisplayTemplateLocalServiceUtil;
-import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -126,32 +123,20 @@ public class AssetDisplayTemplatePermission
 		PermissionChecker permissionChecker,
 		AssetDisplayTemplate assetDisplayTemplate, String actionId) {
 
-		String portletId = PortletProviderUtil.getPortletId(
-			AssetDisplayTemplate.class.getName(), PortletProvider.Action.EDIT);
-
-		Boolean hasPermission = StagingPermissionUtil.hasPermission(
-			permissionChecker, assetDisplayTemplate.getGroupId(),
-			AssetDisplayTemplate.class.getName(),
-			assetDisplayTemplate.getAssetDisplayTemplateId(), portletId,
-			actionId);
-
-		if (hasPermission != null) {
-			return hasPermission.booleanValue();
-		}
-
 		if (permissionChecker.hasOwnerPermission(
 				assetDisplayTemplate.getCompanyId(),
 				AssetDisplayTemplate.class.getName(),
 				assetDisplayTemplate.getAssetDisplayTemplateId(),
-				assetDisplayTemplate.getUserId(), actionId)) {
+				assetDisplayTemplate.getUserId(), actionId) ||
+			permissionChecker.hasPermission(
+				assetDisplayTemplate.getGroupId(),
+				AssetDisplayTemplate.class.getName(),
+				assetDisplayTemplate.getAssetDisplayTemplateId(), actionId)) {
 
 			return true;
 		}
 
-		return permissionChecker.hasPermission(
-			assetDisplayTemplate.getGroupId(),
-			AssetDisplayTemplate.class.getName(),
-			assetDisplayTemplate.getAssetDisplayTemplateId(), actionId);
+		return false;
 	}
 
 	private static class PermissionCacheKey {

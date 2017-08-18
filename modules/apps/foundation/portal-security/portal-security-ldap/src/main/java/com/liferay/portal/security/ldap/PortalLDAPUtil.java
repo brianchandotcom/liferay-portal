@@ -140,7 +140,7 @@ public class PortalLDAPUtil {
 	}
 
 	/**
-	 * @deprecated As of 2.2.0
+	 * @deprecated As of 2.2.0, with no direct replacement
 	 */
 	@Deprecated
 	public static String getNameInNamespace(

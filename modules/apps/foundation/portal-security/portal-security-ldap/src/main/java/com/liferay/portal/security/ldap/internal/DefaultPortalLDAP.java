@@ -472,7 +472,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 	}
 
 	/**
-	 * @deprecated As of 2.2.0
+	 * @deprecated As of 2.2.0, with no direct replacement
 	 */
 	@Deprecated
 	@Override

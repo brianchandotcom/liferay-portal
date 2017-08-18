@@ -19,17 +19,13 @@ import com.liferay.asset.display.template.service.base.AssetDisplayTemplateLocal
 import com.liferay.dynamic.data.mapping.kernel.DDMTemplate;
 import com.liferay.dynamic.data.mapping.kernel.DDMTemplateManager;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
-import com.liferay.layout.type.controller.asset.display.constants.AssetDisplayLayoutTypeControllerConstants;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 
@@ -71,25 +67,6 @@ public class AssetDisplayTemplateLocalServiceImpl
 		assetDisplayTemplate.setName(name);
 		assetDisplayTemplate.setMain(main);
 
-		// Layout
-
-		Layout layout = layoutLocalService.addLayout(
-			userId, groupId, false, 0, name, name, StringPool.BLANK,
-			AssetDisplayLayoutTypeControllerConstants.LAYOUT_TYPE_ASSET_DISPLAY,
-			true, null, serviceContext);
-
-		assetDisplayTemplate.setPlid(layout.getPlid());
-
-		UnicodeProperties typeSettingsProperties =
-			layout.getTypeSettingsProperties();
-
-		typeSettingsProperties.setProperty(
-			"assetDisplayTemplateId", String.valueOf(assetDisplayTemplateId));
-
-		layoutLocalService.updateLayout(
-			groupId, layout.isPrivateLayout(), layout.getLayoutId(),
-			layout.getTypeSettings());
-
 		// DDM Template
 
 		long assetDisplayTemplateClassNameId = _portal.getClassNameId(
@@ -128,8 +105,6 @@ public class AssetDisplayTemplateLocalServiceImpl
 
 		AssetDisplayTemplate assetDisplayTemplate = getAssetDisplayTemplate(
 			assetDisplayTemplateId);
-
-		layoutLocalService.deleteLayout(assetDisplayTemplate.getPlid());
 
 		_ddmTemplateLocalService.deleteDDMTemplate(
 			assetDisplayTemplate.getTemplateId());

@@ -111,25 +111,20 @@ public class UserModelListener extends BaseModelListener<User> {
 			return;
 		}
 
-		Callable<Void> callable = new Callable<Void>() {
+		Callable<Void> callable = () -> {
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
 
-			@Override
-			public Void call() throws Exception {
-				ServiceContext serviceContext =
-					ServiceContextThreadLocal.getServiceContext();
+			Map<String, Serializable> expandoBridgeAttributes = null;
 
-				Map<String, Serializable> expandoBridgeAttributes = null;
-
-				if (serviceContext != null) {
-					expandoBridgeAttributes =
-						serviceContext.getExpandoBridgeAttributes();
-				}
-
-				_userExporter.exportUser(user, expandoBridgeAttributes);
-
-				return null;
+			if (serviceContext != null) {
+				expandoBridgeAttributes =
+					serviceContext.getExpandoBridgeAttributes();
 			}
 
+			_userExporter.exportUser(user, expandoBridgeAttributes);
+
+			return null;
 		};
 
 		TransactionCommitCallbackUtil.registerCallback(callable);

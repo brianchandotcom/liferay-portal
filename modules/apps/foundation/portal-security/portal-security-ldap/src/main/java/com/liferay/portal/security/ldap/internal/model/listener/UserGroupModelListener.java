@@ -89,31 +89,25 @@ public class UserGroupModelListener extends BaseModelListener<UserGroup> {
 			return;
 		}
 
-		Callable<Void> callable = new Callable<Void>() {
-
-			@Override
-			public Void call() throws Exception {
-				if ((_userLocalService.fetchUser(userId) == null) ||
-					(_userGroupLocalService.fetchUserGroup(userGroupId) ==
-						null)) {
-
-					return null;
-				}
-
-				_userExporter.exportUser(userId, userGroupId, userOperation);
-
-				if (_log.isDebugEnabled()) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							"Exporting user " + userId + " to user group " +
-								userGroupId + " with user operation " +
-									userOperation.name());
-					}
-				}
+		Callable<Void> callable = () -> {
+			if ((_userLocalService.fetchUser(userId) == null) ||
+				(_userGroupLocalService.fetchUserGroup(userGroupId) == null)) {
 
 				return null;
 			}
 
+			_userExporter.exportUser(userId, userGroupId, userOperation);
+
+			if (_log.isDebugEnabled()) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Exporting user " + userId + " to user group " +
+							userGroupId + " with user operation " +
+								userOperation.name());
+				}
+			}
+
+			return null;
 		};
 
 		TransactionCommitCallbackUtil.registerCallback(callable);

@@ -16,7 +16,6 @@ package com.liferay.portal.tools.db.upgrade.client;
 
 import com.liferay.portal.tools.db.upgrade.client.util.GogoTelnetClient;
 import com.liferay.portal.tools.db.upgrade.client.util.Properties;
-import com.liferay.portal.tools.db.upgrade.client.util.StringUtil;
 import com.liferay.portal.tools.db.upgrade.client.util.TeePrintStream;
 
 import java.io.BufferedReader;
@@ -345,29 +344,6 @@ public class UpgradeClient {
 		return sb.toString();
 	}
 
-	private String _getRelativeFileName(File baseFile, File pathFile) {
-		return _getRelativeFileName(baseFile.toPath(), pathFile.toPath());
-	}
-
-	private String _getRelativeFileName(Path basePath, Path path) {
-		Path relativePath = basePath.relativize(path);
-
-		return relativePath.toString();
-	}
-
-	private List<String> _getRelativeFileNames(
-		File baseFile, List<File> pathFiles) {
-
-		List<String> relativeFileNames = new ArrayList<>(pathFiles.size());
-
-		for (File pathFile : pathFiles) {
-			relativeFileNames.add(
-				_getRelativeFileName(baseFile.toPath(), pathFile.toPath()));
-		}
-
-		return relativeFileNames;
-	}
-
 	private boolean _isFinished(GogoTelnetClient gogoTelnetClient)
 		throws IOException {
 
@@ -475,8 +451,6 @@ public class UpgradeClient {
 			}
 
 			File dir = _appServer.getDir();
-			File globalLibDir = _appServer.getGlobalLibDir();
-			File portalDir = _appServer.getPortalDir();
 
 			System.out.println(
 				"Please enter your application server directory (" + dir +
@@ -489,8 +463,9 @@ public class UpgradeClient {
 			}
 
 			System.out.println(
-				"Please enter your extra library directories (" +
-					_appServer.getExtraLibDirNames() + "): ");
+				"Please enter your extra library directories in application " +
+					"server directory (" + _appServer.getExtraLibDirNames() +
+						"): ");
 
 			response = _consoleReader.readLine();
 
@@ -499,8 +474,9 @@ public class UpgradeClient {
 			}
 
 			System.out.println(
-				"Please enter your global library directory (" + globalLibDir +
-					"): ");
+				"Please enter your global library directory in application " +
+					"server directory (" + _appServer.getGlobalLibDirName() +
+						"): ");
 
 			response = _consoleReader.readLine();
 
@@ -509,7 +485,8 @@ public class UpgradeClient {
 			}
 
 			System.out.println(
-				"Please enter your portal directory (" + portalDir + "): ");
+				"Please enter your portal directory in application server " +
+					"directory (" + _appServer.getPortalDirName() + "): ");
 
 			response = _consoleReader.readLine();
 
@@ -519,14 +496,11 @@ public class UpgradeClient {
 
 			_appServerProperties.setProperty("dir", dir.getCanonicalPath());
 			_appServerProperties.setProperty(
-				"extra.lib.dirs",
-				StringUtil.join(
-					_getRelativeFileNames(dir, _appServer.getExtraLibDirs()),
-					','));
+				"extra.lib.dirs", _appServer.getExtraLibDirNames());
 			_appServerProperties.setProperty(
-				"global.lib.dir", _getRelativeFileName(dir, globalLibDir));
+				"global.lib.dir", _appServer.getGlobalLibDirName());
 			_appServerProperties.setProperty(
-				"portal.dir", _getRelativeFileName(dir, portalDir));
+				"portal.dir", _appServer.getPortalDirName());
 			_appServerProperties.setProperty(
 				"server.detector.server.id",
 				_appServer.getServerDetectorServerId());

@@ -86,16 +86,22 @@
 	</target>
 
 	<target name="check-current-branch">
-		<exec dir="${modules.dir}" executable="git" outputproperty="liferay.releng.branch">
-			<arg value="rev-parse" />
-			<arg value="--abbrev-ref" />
-			<arg value="HEAD" />
-		</exec>
+		<loadfile property="release.info.name" srcfile="${modules.dir}/../portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java">
+			<filterchain>
+				<linecontains>
+					<contains value="private static final String _NAME =" />
+				</linecontains>
 
-		<echo message="Current branch: ${liferay.releng.branch}" />
+				<tokenfilter>
+					<replaceregex pattern="\s*private static final String _NAME = &quot;([A-Za-z ]+)&quot;;" replace="\1" />
+				</tokenfilter>
+
+				<striplinebreaks />
+			</filterchain>
+		</loadfile>
 
 		<condition property="current.branch.private">
-			<contains string="${liferay.releng.branch}" substring="-private" />
+			<equals arg1="${release.info.name}" arg2="Liferay DXP Digital Enterprise" />
 		</condition>
 
 		<condition else="Liferay CE" property="liferay.releng.app.title.prefix" value="Liferay">

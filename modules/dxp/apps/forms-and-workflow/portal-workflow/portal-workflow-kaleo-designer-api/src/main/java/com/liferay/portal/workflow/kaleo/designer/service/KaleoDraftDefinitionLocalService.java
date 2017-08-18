@@ -118,6 +118,17 @@ public interface KaleoDraftDefinitionLocalService extends BaseLocalService,
 		KaleoDraftDefinition kaleoDraftDefinition) throws PortalException;
 
 	/**
+	* Deletes the kaleo draft definition with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param kaleoDraftDefinitionId the primary key of the kaleo draft definition
+	* @return the kaleo draft definition that was removed
+	* @throws PortalException if a kaleo draft definition with the primary key could not be found
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public KaleoDraftDefinition deleteKaleoDraftDefinition(
+		long kaleoDraftDefinitionId) throws PortalException;
+
+	/**
 	* Deletes the Kaleo draft definition and its resources matching the name,
 	* published version, and draft version.
 	*
@@ -133,17 +144,6 @@ public interface KaleoDraftDefinitionLocalService extends BaseLocalService,
 	public KaleoDraftDefinition deleteKaleoDraftDefinition(
 		java.lang.String name, int version, int draftVersion,
 		ServiceContext serviceContext) throws PortalException;
-
-	/**
-	* Deletes the kaleo draft definition with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param kaleoDraftDefinitionId the primary key of the kaleo draft definition
-	* @return the kaleo draft definition that was removed
-	* @throws PortalException if a kaleo draft definition with the primary key could not be found
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public KaleoDraftDefinition deleteKaleoDraftDefinition(
-		long kaleoDraftDefinitionId) throws PortalException;
 
 	/**
 	* Deletes the kaleo draft definition and its resources matching the name
@@ -236,6 +236,17 @@ public interface KaleoDraftDefinitionLocalService extends BaseLocalService,
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
+	* Returns the kaleo draft definition with the primary key.
+	*
+	* @param kaleoDraftDefinitionId the primary key of the kaleo draft definition
+	* @return the kaleo draft definition
+	* @throws PortalException if a kaleo draft definition with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KaleoDraftDefinition getKaleoDraftDefinition(
+		long kaleoDraftDefinitionId) throws PortalException;
+
+	/**
 	* Returns the Kaleo draft definition matching the name, published version,
 	* and draft version.
 	*
@@ -252,17 +263,6 @@ public interface KaleoDraftDefinitionLocalService extends BaseLocalService,
 	public KaleoDraftDefinition getKaleoDraftDefinition(java.lang.String name,
 		int version, int draftVersion, ServiceContext serviceContext)
 		throws PortalException;
-
-	/**
-	* Returns the kaleo draft definition with the primary key.
-	*
-	* @param kaleoDraftDefinitionId the primary key of the kaleo draft definition
-	* @return the kaleo draft definition
-	* @throws PortalException if a kaleo draft definition with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KaleoDraftDefinition getKaleoDraftDefinition(
-		long kaleoDraftDefinitionId) throws PortalException;
 
 	/**
 	* Returns a range of all the kaleo draft definitions.

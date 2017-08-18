@@ -162,16 +162,6 @@ public class SamlSpAuthRequestWrapper implements SamlSpAuthRequest,
 	}
 
 	/**
-	* Returns the saml sp auth request key of this saml sp auth request.
-	*
-	* @return the saml sp auth request key of this saml sp auth request
-	*/
-	@Override
-	public java.lang.String getSamlSpAuthRequestKey() {
-		return _samlSpAuthRequest.getSamlSpAuthRequestKey();
-	}
-
-	/**
 	* Returns the saml sp authn request ID of this saml sp auth request.
 	*
 	* @return the saml sp authn request ID of this saml sp auth request
@@ -179,6 +169,16 @@ public class SamlSpAuthRequestWrapper implements SamlSpAuthRequest,
 	@Override
 	public long getSamlSpAuthnRequestId() {
 		return _samlSpAuthRequest.getSamlSpAuthnRequestId();
+	}
+
+	/**
+	* Returns the saml sp auth request key of this saml sp auth request.
+	*
+	* @return the saml sp auth request key of this saml sp auth request
+	*/
+	@Override
+	public java.lang.String getSamlSpAuthRequestKey() {
+		return _samlSpAuthRequest.getSamlSpAuthRequestKey();
 	}
 
 	@Override
@@ -232,14 +232,14 @@ public class SamlSpAuthRequestWrapper implements SamlSpAuthRequest,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_samlSpAuthRequest.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_samlSpAuthRequest.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_samlSpAuthRequest.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -278,16 +278,6 @@ public class SamlSpAuthRequestWrapper implements SamlSpAuthRequest,
 	}
 
 	/**
-	* Sets the saml sp auth request key of this saml sp auth request.
-	*
-	* @param samlSpAuthRequestKey the saml sp auth request key of this saml sp auth request
-	*/
-	@Override
-	public void setSamlSpAuthRequestKey(java.lang.String samlSpAuthRequestKey) {
-		_samlSpAuthRequest.setSamlSpAuthRequestKey(samlSpAuthRequestKey);
-	}
-
-	/**
 	* Sets the saml sp authn request ID of this saml sp auth request.
 	*
 	* @param samlSpAuthnRequestId the saml sp authn request ID of this saml sp auth request
@@ -295,6 +285,16 @@ public class SamlSpAuthRequestWrapper implements SamlSpAuthRequest,
 	@Override
 	public void setSamlSpAuthnRequestId(long samlSpAuthnRequestId) {
 		_samlSpAuthRequest.setSamlSpAuthnRequestId(samlSpAuthnRequestId);
+	}
+
+	/**
+	* Sets the saml sp auth request key of this saml sp auth request.
+	*
+	* @param samlSpAuthRequestKey the saml sp auth request key of this saml sp auth request
+	*/
+	@Override
+	public void setSamlSpAuthRequestKey(java.lang.String samlSpAuthRequestKey) {
+		_samlSpAuthRequest.setSamlSpAuthRequestKey(samlSpAuthRequestKey);
 	}
 
 	@Override

@@ -31,16 +31,16 @@ public class SPIDefinitionLocalServiceClp implements SPIDefinitionLocalService {
 		_methodName0 = "addSPIDefinition";
 
 		_methodParameterTypes0 = new String[] {
-				"com.liferay.portal.resiliency.spi.model.SPIDefinition"
+				"long", "java.lang.String", "java.lang.String", "int",
+				"java.lang.String", "java.lang.String", "java.lang.String",
+				"java.lang.String", "java.lang.String",
+				"com.liferay.portal.kernel.service.ServiceContext"
 			};
 
 		_methodName1 = "addSPIDefinition";
 
 		_methodParameterTypes1 = new String[] {
-				"long", "java.lang.String", "java.lang.String", "int",
-				"java.lang.String", "java.lang.String", "java.lang.String",
-				"java.lang.String", "java.lang.String",
-				"com.liferay.portal.kernel.service.ServiceContext"
+				"com.liferay.portal.resiliency.spi.model.SPIDefinition"
 			};
 
 		_methodName2 = "createSPIDefinition";
@@ -55,13 +55,13 @@ public class SPIDefinitionLocalServiceClp implements SPIDefinitionLocalService {
 
 		_methodName4 = "deleteSPIDefinition";
 
-		_methodParameterTypes4 = new String[] {
-				"com.liferay.portal.resiliency.spi.model.SPIDefinition"
-			};
+		_methodParameterTypes4 = new String[] { "long" };
 
 		_methodName5 = "deleteSPIDefinition";
 
-		_methodParameterTypes5 = new String[] { "long" };
+		_methodParameterTypes5 = new String[] {
+				"com.liferay.portal.resiliency.spi.model.SPIDefinition"
+			};
 
 		_methodName6 = "dynamicQuery";
 
@@ -173,21 +173,21 @@ public class SPIDefinitionLocalServiceClp implements SPIDefinitionLocalService {
 
 		_methodName31 = "updateSPIDefinition";
 
-		_methodParameterTypes31 = new String[] {
-				"com.liferay.portal.resiliency.spi.model.SPIDefinition"
-			};
+		_methodParameterTypes31 = new String[] { "long", "int", "java.lang.String" };
 
 		_methodName32 = "updateSPIDefinition";
 
-		_methodParameterTypes32 = new String[] { "long", "int", "java.lang.String" };
-
-		_methodName33 = "updateSPIDefinition";
-
-		_methodParameterTypes33 = new String[] {
+		_methodParameterTypes32 = new String[] {
 				"long", "long", "java.lang.String", "int", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"java.lang.String",
 				"com.liferay.portal.kernel.service.ServiceContext"
+			};
+
+		_methodName33 = "updateSPIDefinition";
+
+		_methodParameterTypes33 = new String[] {
+				"com.liferay.portal.resiliency.spi.model.SPIDefinition"
 			};
 
 		_methodName34 = "updateTypeSettings";
@@ -196,31 +196,6 @@ public class SPIDefinitionLocalServiceClp implements SPIDefinitionLocalService {
 				"long", "long", "java.lang.String",
 				"com.liferay.portal.kernel.service.ServiceContext"
 			};
-	}
-
-	@Override
-	public com.liferay.portal.resiliency.spi.model.SPIDefinition addSPIDefinition(
-		com.liferay.portal.resiliency.spi.model.SPIDefinition spiDefinition) {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName0,
-					_methodParameterTypes0,
-					new Object[] { ClpSerializer.translateInput(spiDefinition) });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (com.liferay.portal.resiliency.spi.model.SPIDefinition)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
@@ -234,8 +209,8 @@ public class SPIDefinitionLocalServiceClp implements SPIDefinitionLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName1,
-					_methodParameterTypes1,
+			returnObj = _invokableLocalService.invokeMethod(_methodName0,
+					_methodParameterTypes0,
 					new Object[] {
 						userId,
 						
@@ -264,6 +239,31 @@ public class SPIDefinitionLocalServiceClp implements SPIDefinitionLocalService {
 			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
 				throw (com.liferay.portal.kernel.exception.PortalException)t;
 			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.portal.resiliency.spi.model.SPIDefinition)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public com.liferay.portal.resiliency.spi.model.SPIDefinition addSPIDefinition(
+		com.liferay.portal.resiliency.spi.model.SPIDefinition spiDefinition) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName1,
+					_methodParameterTypes1,
+					new Object[] { ClpSerializer.translateInput(spiDefinition) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
 
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
@@ -333,14 +333,13 @@ public class SPIDefinitionLocalServiceClp implements SPIDefinitionLocalService {
 
 	@Override
 	public com.liferay.portal.resiliency.spi.model.SPIDefinition deleteSPIDefinition(
-		com.liferay.portal.resiliency.spi.model.SPIDefinition spiDefinition)
+		long spiDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName4,
-					_methodParameterTypes4,
-					new Object[] { ClpSerializer.translateInput(spiDefinition) });
+					_methodParameterTypes4, new Object[] { spiDefinitionId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -363,13 +362,14 @@ public class SPIDefinitionLocalServiceClp implements SPIDefinitionLocalService {
 
 	@Override
 	public com.liferay.portal.resiliency.spi.model.SPIDefinition deleteSPIDefinition(
-		long spiDefinitionId)
+		com.liferay.portal.resiliency.spi.model.SPIDefinition spiDefinition)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName5,
-					_methodParameterTypes5, new Object[] { spiDefinitionId });
+					_methodParameterTypes5,
+					new Object[] { ClpSerializer.translateInput(spiDefinition) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1033,38 +1033,13 @@ public class SPIDefinitionLocalServiceClp implements SPIDefinitionLocalService {
 
 	@Override
 	public com.liferay.portal.resiliency.spi.model.SPIDefinition updateSPIDefinition(
-		com.liferay.portal.resiliency.spi.model.SPIDefinition spiDefinition) {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName31,
-					_methodParameterTypes31,
-					new Object[] { ClpSerializer.translateInput(spiDefinition) });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (com.liferay.portal.resiliency.spi.model.SPIDefinition)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
-	public com.liferay.portal.resiliency.spi.model.SPIDefinition updateSPIDefinition(
 		long spiDefinitionId, int status, java.lang.String statusMessage)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName32,
-					_methodParameterTypes32,
+			returnObj = _invokableLocalService.invokeMethod(_methodName31,
+					_methodParameterTypes31,
 					new Object[] {
 						spiDefinitionId,
 						
@@ -1103,8 +1078,8 @@ public class SPIDefinitionLocalServiceClp implements SPIDefinitionLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName33,
-					_methodParameterTypes33,
+			returnObj = _invokableLocalService.invokeMethod(_methodName32,
+					_methodParameterTypes32,
 					new Object[] {
 						userId,
 						
@@ -1133,6 +1108,31 @@ public class SPIDefinitionLocalServiceClp implements SPIDefinitionLocalService {
 			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
 				throw (com.liferay.portal.kernel.exception.PortalException)t;
 			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.portal.resiliency.spi.model.SPIDefinition)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public com.liferay.portal.resiliency.spi.model.SPIDefinition updateSPIDefinition(
+		com.liferay.portal.resiliency.spi.model.SPIDefinition spiDefinition) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName33,
+					_methodParameterTypes33,
+					new Object[] { ClpSerializer.translateInput(spiDefinition) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
 
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;

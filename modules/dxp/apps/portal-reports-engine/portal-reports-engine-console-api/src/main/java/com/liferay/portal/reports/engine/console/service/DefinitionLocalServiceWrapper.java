@@ -100,17 +100,17 @@ public class DefinitionLocalServiceWrapper implements DefinitionLocalService,
 	}
 
 	@Override
+	public void deleteDefinitions(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_definitionLocalService.deleteDefinitions(groupId);
+	}
+
+	@Override
 	public void deleteDefinitionTemplates(long companyId,
 		java.lang.String attachmentsDirectory)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_definitionLocalService.deleteDefinitionTemplates(companyId,
 			attachmentsDirectory);
-	}
-
-	@Override
-	public void deleteDefinitions(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_definitionLocalService.deleteDefinitions(groupId);
 	}
 
 	/**

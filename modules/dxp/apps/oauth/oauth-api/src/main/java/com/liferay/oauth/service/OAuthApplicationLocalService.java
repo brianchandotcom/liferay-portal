@@ -63,6 +63,11 @@ public interface OAuthApplicationLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link OAuthApplicationLocalServiceUtil} to access the o auth application local service. Add custom service methods to {@link com.liferay.oauth.service.impl.OAuthApplicationLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public OAuthApplication addOAuthApplication(long userId,
+		java.lang.String name, java.lang.String description, int accessLevel,
+		boolean shareableAccessToken, java.lang.String callbackURI,
+		java.lang.String websiteURL, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Adds the o auth application to the database. Also notifies the appropriate model listeners.
@@ -73,12 +78,6 @@ public interface OAuthApplicationLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public OAuthApplication addOAuthApplication(
 		OAuthApplication oAuthApplication);
-
-	public OAuthApplication addOAuthApplication(long userId,
-		java.lang.String name, java.lang.String description, int accessLevel,
-		boolean shareableAccessToken, java.lang.String callbackURI,
-		java.lang.String websiteURL, ServiceContext serviceContext)
-		throws PortalException;
 
 	/**
 	* Creates a new o auth application with the primary key. Does not add the o auth application to the database.
@@ -91,17 +90,6 @@ public interface OAuthApplicationLocalService extends BaseLocalService,
 	public void deleteLogo(long oAuthApplicationId) throws PortalException;
 
 	/**
-	* Deletes the o auth application from the database. Also notifies the appropriate model listeners.
-	*
-	* @param oAuthApplication the o auth application
-	* @return the o auth application that was removed
-	* @throws PortalException
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public OAuthApplication deleteOAuthApplication(
-		OAuthApplication oAuthApplication) throws PortalException;
-
-	/**
 	* Deletes the o auth application with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param oAuthApplicationId the primary key of the o auth application
@@ -111,6 +99,17 @@ public interface OAuthApplicationLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public OAuthApplication deleteOAuthApplication(long oAuthApplicationId)
 		throws PortalException;
+
+	/**
+	* Deletes the o auth application from the database. Also notifies the appropriate model listeners.
+	*
+	* @param oAuthApplication the o auth application
+	* @return the o auth application that was removed
+	* @throws PortalException
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public OAuthApplication deleteOAuthApplication(
+		OAuthApplication oAuthApplication) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -179,20 +178,16 @@ public interface OAuthApplicationLocalService extends BaseLocalService,
 		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public OAuthApplication fetchOAuthApplication(java.lang.String consumerKey);
+	public OAuthApplication fetchOAuthApplication(long oAuthApplicationId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public OAuthApplication fetchOAuthApplication(long oAuthApplicationId);
+	public OAuthApplication fetchOAuthApplication(java.lang.String consumerKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public OAuthApplication getOAuthApplication(java.lang.String consumerKey)
-		throws PortalException;
 
 	/**
 	* Returns the o auth application with the primary key.
@@ -203,6 +198,10 @@ public interface OAuthApplicationLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OAuthApplication getOAuthApplication(long oAuthApplicationId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OAuthApplication getOAuthApplication(java.lang.String consumerKey)
 		throws PortalException;
 
 	/**
@@ -259,6 +258,12 @@ public interface OAuthApplicationLocalService extends BaseLocalService,
 	public OAuthApplication updateLogo(long oAuthApplicationId,
 		InputStream inputStream) throws PortalException;
 
+	public OAuthApplication updateOAuthApplication(long oAuthApplicationId,
+		java.lang.String name, java.lang.String description,
+		boolean shareableAccessToken, java.lang.String callbackURI,
+		java.lang.String websiteURL, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	* Updates the o auth application in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -268,10 +273,4 @@ public interface OAuthApplicationLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public OAuthApplication updateOAuthApplication(
 		OAuthApplication oAuthApplication);
-
-	public OAuthApplication updateOAuthApplication(long oAuthApplicationId,
-		java.lang.String name, java.lang.String description,
-		boolean shareableAccessToken, java.lang.String callbackURI,
-		java.lang.String websiteURL, ServiceContext serviceContext)
-		throws PortalException;
 }

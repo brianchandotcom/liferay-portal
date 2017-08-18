@@ -88,17 +88,6 @@ public class SamlSpSessionLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the saml sp session from the database. Also notifies the appropriate model listeners.
-	*
-	* @param samlSpSession the saml sp session
-	* @return the saml sp session that was removed
-	*/
-	public static com.liferay.saml.persistence.model.SamlSpSession deleteSamlSpSession(
-		com.liferay.saml.persistence.model.SamlSpSession samlSpSession) {
-		return getService().deleteSamlSpSession(samlSpSession);
-	}
-
-	/**
 	* Deletes the saml sp session with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param samlSpSessionId the primary key of the saml sp session
@@ -109,6 +98,17 @@ public class SamlSpSessionLocalServiceUtil {
 		long samlSpSessionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteSamlSpSession(samlSpSessionId);
+	}
+
+	/**
+	* Deletes the saml sp session from the database. Also notifies the appropriate model listeners.
+	*
+	* @param samlSpSession the saml sp session
+	* @return the saml sp session that was removed
+	*/
+	public static com.liferay.saml.persistence.model.SamlSpSession deleteSamlSpSession(
+		com.liferay.saml.persistence.model.SamlSpSession samlSpSession) {
+		return getService().deleteSamlSpSession(samlSpSession);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -294,17 +294,6 @@ public class SamlSpSessionLocalServiceUtil {
 		return getService().getSamlSpSessionsCount();
 	}
 
-	/**
-	* Updates the saml sp session in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param samlSpSession the saml sp session
-	* @return the saml sp session that was updated
-	*/
-	public static com.liferay.saml.persistence.model.SamlSpSession updateSamlSpSession(
-		com.liferay.saml.persistence.model.SamlSpSession samlSpSession) {
-		return getService().updateSamlSpSession(samlSpSession);
-	}
-
 	public static com.liferay.saml.persistence.model.SamlSpSession updateSamlSpSession(
 		long samlSpSessionId, java.lang.String jSessionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -323,6 +312,17 @@ public class SamlSpSessionLocalServiceUtil {
 				   .updateSamlSpSession(samlSpSessionId, samlSpSessionKey,
 			assertionXml, jSessionId, nameIdFormat, nameIdNameQualifier,
 			nameIdSPNameQualifier, nameIdValue, sessionIndex, serviceContext);
+	}
+
+	/**
+	* Updates the saml sp session in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param samlSpSession the saml sp session
+	* @return the saml sp session that was updated
+	*/
+	public static com.liferay.saml.persistence.model.SamlSpSession updateSamlSpSession(
+		com.liferay.saml.persistence.model.SamlSpSession samlSpSession) {
+		return getService().updateSamlSpSession(samlSpSession);
 	}
 
 	public static SamlSpSessionLocalService getService() {

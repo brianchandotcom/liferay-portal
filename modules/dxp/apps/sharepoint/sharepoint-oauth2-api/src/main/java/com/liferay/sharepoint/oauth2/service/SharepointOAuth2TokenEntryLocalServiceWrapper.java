@@ -34,6 +34,16 @@ public class SharepointOAuth2TokenEntryLocalServiceWrapper
 		_sharepointOAuth2TokenEntryLocalService = sharepointOAuth2TokenEntryLocalService;
 	}
 
+	@Override
+	public com.liferay.sharepoint.oauth2.model.SharepointOAuth2TokenEntry addSharepointOAuth2TokenEntry(
+		long userId, java.lang.String configurationPid,
+		java.lang.String accessToken, java.lang.String refreshToken,
+		java.util.Date expirationDate)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _sharepointOAuth2TokenEntryLocalService.addSharepointOAuth2TokenEntry(userId,
+			configurationPid, accessToken, refreshToken, expirationDate);
+	}
+
 	/**
 	* Adds the sharepoint o auth2 token entry to the database. Also notifies the appropriate model listeners.
 	*
@@ -44,16 +54,6 @@ public class SharepointOAuth2TokenEntryLocalServiceWrapper
 	public com.liferay.sharepoint.oauth2.model.SharepointOAuth2TokenEntry addSharepointOAuth2TokenEntry(
 		com.liferay.sharepoint.oauth2.model.SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry) {
 		return _sharepointOAuth2TokenEntryLocalService.addSharepointOAuth2TokenEntry(sharepointOAuth2TokenEntry);
-	}
-
-	@Override
-	public com.liferay.sharepoint.oauth2.model.SharepointOAuth2TokenEntry addSharepointOAuth2TokenEntry(
-		long userId, java.lang.String configurationPid,
-		java.lang.String accessToken, java.lang.String refreshToken,
-		java.util.Date expirationDate)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _sharepointOAuth2TokenEntryLocalService.addSharepointOAuth2TokenEntry(userId,
-			configurationPid, accessToken, refreshToken, expirationDate);
 	}
 
 	/**
@@ -79,18 +79,6 @@ public class SharepointOAuth2TokenEntryLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the sharepoint o auth2 token entry from the database. Also notifies the appropriate model listeners.
-	*
-	* @param sharepointOAuth2TokenEntry the sharepoint o auth2 token entry
-	* @return the sharepoint o auth2 token entry that was removed
-	*/
-	@Override
-	public com.liferay.sharepoint.oauth2.model.SharepointOAuth2TokenEntry deleteSharepointOAuth2TokenEntry(
-		com.liferay.sharepoint.oauth2.model.SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry) {
-		return _sharepointOAuth2TokenEntryLocalService.deleteSharepointOAuth2TokenEntry(sharepointOAuth2TokenEntry);
-	}
-
-	/**
 	* Deletes the sharepoint o auth2 token entry with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param sharepointOAuth2TokenEntryId the primary key of the sharepoint o auth2 token entry
@@ -110,6 +98,18 @@ public class SharepointOAuth2TokenEntryLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_sharepointOAuth2TokenEntryLocalService.deleteSharepointOAuth2TokenEntry(userId,
 			configurationPid);
+	}
+
+	/**
+	* Deletes the sharepoint o auth2 token entry from the database. Also notifies the appropriate model listeners.
+	*
+	* @param sharepointOAuth2TokenEntry the sharepoint o auth2 token entry
+	* @return the sharepoint o auth2 token entry that was removed
+	*/
+	@Override
+	public com.liferay.sharepoint.oauth2.model.SharepointOAuth2TokenEntry deleteSharepointOAuth2TokenEntry(
+		com.liferay.sharepoint.oauth2.model.SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry) {
+		return _sharepointOAuth2TokenEntryLocalService.deleteSharepointOAuth2TokenEntry(sharepointOAuth2TokenEntry);
 	}
 
 	@Override

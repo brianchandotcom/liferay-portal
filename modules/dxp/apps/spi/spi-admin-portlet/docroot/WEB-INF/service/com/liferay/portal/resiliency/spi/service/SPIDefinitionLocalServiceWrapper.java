@@ -34,18 +34,6 @@ public class SPIDefinitionLocalServiceWrapper
 		_spiDefinitionLocalService = spiDefinitionLocalService;
 	}
 
-	/**
-	* Adds the spi definition to the database. Also notifies the appropriate model listeners.
-	*
-	* @param spiDefinition the spi definition
-	* @return the spi definition that was added
-	*/
-	@Override
-	public com.liferay.portal.resiliency.spi.model.SPIDefinition addSPIDefinition(
-		com.liferay.portal.resiliency.spi.model.SPIDefinition spiDefinition) {
-		return _spiDefinitionLocalService.addSPIDefinition(spiDefinition);
-	}
-
 	@Override
 	public com.liferay.portal.resiliency.spi.model.SPIDefinition addSPIDefinition(
 		long userId, java.lang.String name, java.lang.String connectorAddress,
@@ -57,6 +45,18 @@ public class SPIDefinitionLocalServiceWrapper
 		return _spiDefinitionLocalService.addSPIDefinition(userId, name,
 			connectorAddress, connectorPort, description, jvmArguments,
 			portletIds, servletContextNames, typeSettings, serviceContext);
+	}
+
+	/**
+	* Adds the spi definition to the database. Also notifies the appropriate model listeners.
+	*
+	* @param spiDefinition the spi definition
+	* @return the spi definition that was added
+	*/
+	@Override
+	public com.liferay.portal.resiliency.spi.model.SPIDefinition addSPIDefinition(
+		com.liferay.portal.resiliency.spi.model.SPIDefinition spiDefinition) {
+		return _spiDefinitionLocalService.addSPIDefinition(spiDefinition);
 	}
 
 	/**
@@ -82,20 +82,6 @@ public class SPIDefinitionLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the spi definition from the database. Also notifies the appropriate model listeners.
-	*
-	* @param spiDefinition the spi definition
-	* @return the spi definition that was removed
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.resiliency.spi.model.SPIDefinition deleteSPIDefinition(
-		com.liferay.portal.resiliency.spi.model.SPIDefinition spiDefinition)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _spiDefinitionLocalService.deleteSPIDefinition(spiDefinition);
-	}
-
-	/**
 	* Deletes the spi definition with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param spiDefinitionId the primary key of the spi definition
@@ -107,6 +93,20 @@ public class SPIDefinitionLocalServiceWrapper
 		long spiDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _spiDefinitionLocalService.deleteSPIDefinition(spiDefinitionId);
+	}
+
+	/**
+	* Deletes the spi definition from the database. Also notifies the appropriate model listeners.
+	*
+	* @param spiDefinition the spi definition
+	* @return the spi definition that was removed
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.resiliency.spi.model.SPIDefinition deleteSPIDefinition(
+		com.liferay.portal.resiliency.spi.model.SPIDefinition spiDefinition)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _spiDefinitionLocalService.deleteSPIDefinition(spiDefinition);
 	}
 
 	@Override
@@ -339,18 +339,6 @@ public class SPIDefinitionLocalServiceWrapper
 			spiDefinitionId);
 	}
 
-	/**
-	* Updates the spi definition in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param spiDefinition the spi definition
-	* @return the spi definition that was updated
-	*/
-	@Override
-	public com.liferay.portal.resiliency.spi.model.SPIDefinition updateSPIDefinition(
-		com.liferay.portal.resiliency.spi.model.SPIDefinition spiDefinition) {
-		return _spiDefinitionLocalService.updateSPIDefinition(spiDefinition);
-	}
-
 	@Override
 	public com.liferay.portal.resiliency.spi.model.SPIDefinition updateSPIDefinition(
 		long spiDefinitionId, int status, java.lang.String statusMessage)
@@ -371,6 +359,18 @@ public class SPIDefinitionLocalServiceWrapper
 			spiDefinitionId, connectorAddress, connectorPort, description,
 			jvmArguments, portletIds, servletContextNames, typeSettings,
 			serviceContext);
+	}
+
+	/**
+	* Updates the spi definition in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param spiDefinition the spi definition
+	* @return the spi definition that was updated
+	*/
+	@Override
+	public com.liferay.portal.resiliency.spi.model.SPIDefinition updateSPIDefinition(
+		com.liferay.portal.resiliency.spi.model.SPIDefinition spiDefinition) {
+		return _spiDefinitionLocalService.updateSPIDefinition(spiDefinition);
 	}
 
 	@Override

@@ -358,11 +358,6 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 		return _spiDefinition.getRestartAttempts();
 	}
 
-	@Override
-	public com.liferay.portal.kernel.resiliency.spi.SPI getSPI() {
-		return _spiDefinition.getSPI();
-	}
-
 	/**
 	* Returns the servlet context names of this spi definition.
 	*
@@ -376,6 +371,11 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	@Override
 	public long getShutdownTimeout() {
 		return _spiDefinition.getShutdownTimeout();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.resiliency.spi.SPI getSPI() {
+		return _spiDefinition.getSPI();
 	}
 
 	/**
@@ -555,14 +555,14 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_spiDefinition.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_spiDefinition.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_spiDefinition.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

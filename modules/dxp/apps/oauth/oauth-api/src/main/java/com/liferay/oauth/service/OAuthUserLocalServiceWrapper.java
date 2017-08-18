@@ -33,6 +33,16 @@ public class OAuthUserLocalServiceWrapper implements OAuthUserLocalService,
 		_oAuthUserLocalService = oAuthUserLocalService;
 	}
 
+	@Override
+	public com.liferay.oauth.model.OAuthUser addOAuthUser(long userId,
+		long oAuthApplicationId, java.lang.String accessToken,
+		java.lang.String accessSecret,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _oAuthUserLocalService.addOAuthUser(userId, oAuthApplicationId,
+			accessToken, accessSecret, serviceContext);
+	}
+
 	/**
 	* Adds the o auth user to the database. Also notifies the appropriate model listeners.
 	*
@@ -45,16 +55,6 @@ public class OAuthUserLocalServiceWrapper implements OAuthUserLocalService,
 		return _oAuthUserLocalService.addOAuthUser(oAuthUser);
 	}
 
-	@Override
-	public com.liferay.oauth.model.OAuthUser addOAuthUser(long userId,
-		long oAuthApplicationId, java.lang.String accessToken,
-		java.lang.String accessSecret,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _oAuthUserLocalService.addOAuthUser(userId, oAuthApplicationId,
-			accessToken, accessSecret, serviceContext);
-	}
-
 	/**
 	* Creates a new o auth user with the primary key. Does not add the o auth user to the database.
 	*
@@ -64,20 +64,6 @@ public class OAuthUserLocalServiceWrapper implements OAuthUserLocalService,
 	@Override
 	public com.liferay.oauth.model.OAuthUser createOAuthUser(long oAuthUserId) {
 		return _oAuthUserLocalService.createOAuthUser(oAuthUserId);
-	}
-
-	/**
-	* Deletes the o auth user from the database. Also notifies the appropriate model listeners.
-	*
-	* @param oAuthUser the o auth user
-	* @return the o auth user that was removed
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.oauth.model.OAuthUser deleteOAuthUser(
-		com.liferay.oauth.model.OAuthUser oAuthUser)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _oAuthUserLocalService.deleteOAuthUser(oAuthUser);
 	}
 
 	/**
@@ -98,6 +84,20 @@ public class OAuthUserLocalServiceWrapper implements OAuthUserLocalService,
 		long oAuthApplicationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _oAuthUserLocalService.deleteOAuthUser(userId, oAuthApplicationId);
+	}
+
+	/**
+	* Deletes the o auth user from the database. Also notifies the appropriate model listeners.
+	*
+	* @param oAuthUser the o auth user
+	* @return the o auth user that was removed
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.oauth.model.OAuthUser deleteOAuthUser(
+		com.liferay.oauth.model.OAuthUser oAuthUser)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _oAuthUserLocalService.deleteOAuthUser(oAuthUser);
 	}
 
 	/**
@@ -195,12 +195,6 @@ public class OAuthUserLocalServiceWrapper implements OAuthUserLocalService,
 	}
 
 	@Override
-	public com.liferay.oauth.model.OAuthUser fetchOAuthUser(
-		java.lang.String accessToken) {
-		return _oAuthUserLocalService.fetchOAuthUser(accessToken);
-	}
-
-	@Override
 	public com.liferay.oauth.model.OAuthUser fetchOAuthUser(long oAuthUserId) {
 		return _oAuthUserLocalService.fetchOAuthUser(oAuthUserId);
 	}
@@ -209,6 +203,12 @@ public class OAuthUserLocalServiceWrapper implements OAuthUserLocalService,
 	public com.liferay.oauth.model.OAuthUser fetchOAuthUser(long userId,
 		long oAuthApplicationId) {
 		return _oAuthUserLocalService.fetchOAuthUser(userId, oAuthApplicationId);
+	}
+
+	@Override
+	public com.liferay.oauth.model.OAuthUser fetchOAuthUser(
+		java.lang.String accessToken) {
+		return _oAuthUserLocalService.fetchOAuthUser(accessToken);
 	}
 
 	@Override
@@ -234,13 +234,6 @@ public class OAuthUserLocalServiceWrapper implements OAuthUserLocalService,
 		return _oAuthUserLocalService.getOAuthApplicationOAuthUsersCount(oAuthApplicationId);
 	}
 
-	@Override
-	public com.liferay.oauth.model.OAuthUser getOAuthUser(
-		java.lang.String accessToken)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _oAuthUserLocalService.getOAuthUser(accessToken);
-	}
-
 	/**
 	* Returns the o auth user with the primary key.
 	*
@@ -259,6 +252,13 @@ public class OAuthUserLocalServiceWrapper implements OAuthUserLocalService,
 		long oAuthApplicationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _oAuthUserLocalService.getOAuthUser(userId, oAuthApplicationId);
+	}
+
+	@Override
+	public com.liferay.oauth.model.OAuthUser getOAuthUser(
+		java.lang.String accessToken)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _oAuthUserLocalService.getOAuthUser(accessToken);
 	}
 
 	/**
@@ -318,6 +318,16 @@ public class OAuthUserLocalServiceWrapper implements OAuthUserLocalService,
 		return _oAuthUserLocalService.getUserOAuthUsersCount(userId);
 	}
 
+	@Override
+	public com.liferay.oauth.model.OAuthUser updateOAuthUser(long userId,
+		long oAuthApplicationId, java.lang.String accessToken,
+		java.lang.String accessSecret,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _oAuthUserLocalService.updateOAuthUser(userId,
+			oAuthApplicationId, accessToken, accessSecret, serviceContext);
+	}
+
 	/**
 	* Updates the o auth user in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -328,16 +338,6 @@ public class OAuthUserLocalServiceWrapper implements OAuthUserLocalService,
 	public com.liferay.oauth.model.OAuthUser updateOAuthUser(
 		com.liferay.oauth.model.OAuthUser oAuthUser) {
 		return _oAuthUserLocalService.updateOAuthUser(oAuthUser);
-	}
-
-	@Override
-	public com.liferay.oauth.model.OAuthUser updateOAuthUser(long userId,
-		long oAuthApplicationId, java.lang.String accessToken,
-		java.lang.String accessSecret,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _oAuthUserLocalService.updateOAuthUser(userId,
-			oAuthApplicationId, accessToken, accessSecret, serviceContext);
 	}
 
 	@Override

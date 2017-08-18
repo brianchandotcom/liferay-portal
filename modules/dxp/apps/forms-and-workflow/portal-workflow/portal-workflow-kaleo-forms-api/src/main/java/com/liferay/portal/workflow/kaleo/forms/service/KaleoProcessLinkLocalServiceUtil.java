@@ -314,27 +314,6 @@ public class KaleoProcessLinkLocalServiceUtil {
 	}
 
 	/**
-	* Updates the Kaleo process link. If no Kaleo process link is found
-	* matching the primary key of the Kaleo process and the workflow task name,
-	* a new link is created.
-	*
-	* @param kaleoProcessId the primary key of the Kaleo process link's Kaleo
-	process
-	* @param workflowTaskName the name of the Kaleo process link's workflow
-	task
-	* @param ddmTemplateId the primary key of the Kaleo process link's DDM
-	template
-	* @return the Kaleo process link
-	*/
-	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink updateKaleoProcessLink(
-		long kaleoProcessId, java.lang.String workflowTaskName,
-		long ddmTemplateId) {
-		return getService()
-				   .updateKaleoProcessLink(kaleoProcessId, workflowTaskName,
-			ddmTemplateId);
-	}
-
-	/**
 	* Updates the Kaleo process link, setting the primary key of the associated
 	* Kaleo process.
 	*
@@ -374,6 +353,27 @@ public class KaleoProcessLinkLocalServiceUtil {
 		return getService()
 				   .updateKaleoProcessLink(kaleoProcessLinkId, kaleoProcessId,
 			workflowTaskName, ddmTemplateId);
+	}
+
+	/**
+	* Updates the Kaleo process link. If no Kaleo process link is found
+	* matching the primary key of the Kaleo process and the workflow task name,
+	* a new link is created.
+	*
+	* @param kaleoProcessId the primary key of the Kaleo process link's Kaleo
+	process
+	* @param workflowTaskName the name of the Kaleo process link's workflow
+	task
+	* @param ddmTemplateId the primary key of the Kaleo process link's DDM
+	template
+	* @return the Kaleo process link
+	*/
+	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink updateKaleoProcessLink(
+		long kaleoProcessId, java.lang.String workflowTaskName,
+		long ddmTemplateId) {
+		return getService()
+				   .updateKaleoProcessLink(kaleoProcessId, workflowTaskName,
+			ddmTemplateId);
 	}
 
 	public static KaleoProcessLinkLocalService getService() {

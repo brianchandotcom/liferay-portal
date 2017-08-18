@@ -253,14 +253,14 @@ public class SamlSpMessageWrapper implements SamlSpMessage,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_samlSpMessage.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_samlSpMessage.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_samlSpMessage.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

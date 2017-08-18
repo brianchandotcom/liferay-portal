@@ -41,6 +41,15 @@ public class SamlIdpSpSessionLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.saml.persistence.service.impl.SamlIdpSpSessionLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.saml.persistence.model.SamlIdpSpSession addSamlIdpSpSession(
+		long samlIdpSsoSessionId, java.lang.String samlSpEntityId,
+		java.lang.String nameIdFormat, java.lang.String nameIdValue,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addSamlIdpSpSession(samlIdpSsoSessionId, samlSpEntityId,
+			nameIdFormat, nameIdValue, serviceContext);
+	}
 
 	/**
 	* Adds the saml idp sp session to the database. Also notifies the appropriate model listeners.
@@ -51,16 +60,6 @@ public class SamlIdpSpSessionLocalServiceUtil {
 	public static com.liferay.saml.persistence.model.SamlIdpSpSession addSamlIdpSpSession(
 		com.liferay.saml.persistence.model.SamlIdpSpSession samlIdpSpSession) {
 		return getService().addSamlIdpSpSession(samlIdpSpSession);
-	}
-
-	public static com.liferay.saml.persistence.model.SamlIdpSpSession addSamlIdpSpSession(
-		long samlIdpSsoSessionId, java.lang.String samlSpEntityId,
-		java.lang.String nameIdFormat, java.lang.String nameIdValue,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addSamlIdpSpSession(samlIdpSsoSessionId, samlSpEntityId,
-			nameIdFormat, nameIdValue, serviceContext);
 	}
 
 	/**
@@ -84,17 +83,6 @@ public class SamlIdpSpSessionLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the saml idp sp session from the database. Also notifies the appropriate model listeners.
-	*
-	* @param samlIdpSpSession the saml idp sp session
-	* @return the saml idp sp session that was removed
-	*/
-	public static com.liferay.saml.persistence.model.SamlIdpSpSession deleteSamlIdpSpSession(
-		com.liferay.saml.persistence.model.SamlIdpSpSession samlIdpSpSession) {
-		return getService().deleteSamlIdpSpSession(samlIdpSpSession);
-	}
-
-	/**
 	* Deletes the saml idp sp session with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param samlIdpSpSessionId the primary key of the saml idp sp session
@@ -105,6 +93,17 @@ public class SamlIdpSpSessionLocalServiceUtil {
 		long samlIdpSpSessionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteSamlIdpSpSession(samlIdpSpSessionId);
+	}
+
+	/**
+	* Deletes the saml idp sp session from the database. Also notifies the appropriate model listeners.
+	*
+	* @param samlIdpSpSession the saml idp sp session
+	* @return the saml idp sp session that was removed
+	*/
+	public static com.liferay.saml.persistence.model.SamlIdpSpSession deleteSamlIdpSpSession(
+		com.liferay.saml.persistence.model.SamlIdpSpSession samlIdpSpSession) {
+		return getService().deleteSamlIdpSpSession(samlIdpSpSession);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {

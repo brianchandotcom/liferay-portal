@@ -546,14 +546,14 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_samlIdpSpConnection.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_samlIdpSpConnection.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_samlIdpSpConnection.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

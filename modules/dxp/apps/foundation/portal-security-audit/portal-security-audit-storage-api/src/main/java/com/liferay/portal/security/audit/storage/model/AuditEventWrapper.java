@@ -480,14 +480,14 @@ public class AuditEventWrapper implements AuditEvent, ModelWrapper<AuditEvent> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_auditEvent.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_auditEvent.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_auditEvent.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

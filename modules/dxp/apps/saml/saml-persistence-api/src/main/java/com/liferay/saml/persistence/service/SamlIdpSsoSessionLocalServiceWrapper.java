@@ -83,18 +83,6 @@ public class SamlIdpSsoSessionLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the saml idp sso session from the database. Also notifies the appropriate model listeners.
-	*
-	* @param samlIdpSsoSession the saml idp sso session
-	* @return the saml idp sso session that was removed
-	*/
-	@Override
-	public com.liferay.saml.persistence.model.SamlIdpSsoSession deleteSamlIdpSsoSession(
-		com.liferay.saml.persistence.model.SamlIdpSsoSession samlIdpSsoSession) {
-		return _samlIdpSsoSessionLocalService.deleteSamlIdpSsoSession(samlIdpSsoSession);
-	}
-
-	/**
 	* Deletes the saml idp sso session with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param samlIdpSsoSessionId the primary key of the saml idp sso session
@@ -106,6 +94,18 @@ public class SamlIdpSsoSessionLocalServiceWrapper
 		long samlIdpSsoSessionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _samlIdpSsoSessionLocalService.deleteSamlIdpSsoSession(samlIdpSsoSessionId);
+	}
+
+	/**
+	* Deletes the saml idp sso session from the database. Also notifies the appropriate model listeners.
+	*
+	* @param samlIdpSsoSession the saml idp sso session
+	* @return the saml idp sso session that was removed
+	*/
+	@Override
+	public com.liferay.saml.persistence.model.SamlIdpSsoSession deleteSamlIdpSsoSession(
+		com.liferay.saml.persistence.model.SamlIdpSsoSession samlIdpSsoSession) {
+		return _samlIdpSsoSessionLocalService.deleteSamlIdpSsoSession(samlIdpSsoSession);
 	}
 
 	@Override

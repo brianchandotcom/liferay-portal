@@ -67,6 +67,11 @@ public interface SourceLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SourceLocalServiceUtil} to access the source local service. Add custom service methods to {@link com.liferay.portal.reports.engine.console.service.impl.SourceLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public Source addSource(long userId, long groupId,
+		Map<Locale, java.lang.String> nameMap,
+		java.lang.String driverClassName, java.lang.String driverUrl,
+		java.lang.String driverUserName, java.lang.String driverPassword,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Adds the source to the database. Also notifies the appropriate model listeners.
@@ -76,12 +81,6 @@ public interface SourceLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public Source addSource(Source source);
-
-	public Source addSource(long userId, long groupId,
-		Map<Locale, java.lang.String> nameMap,
-		java.lang.String driverClassName, java.lang.String driverUrl,
-		java.lang.String driverUserName, java.lang.String driverPassword,
-		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new source with the primary key. Does not add the source to the database.
@@ -99,6 +98,16 @@ public interface SourceLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
+	* Deletes the source with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param sourceId the primary key of the source
+	* @return the source that was removed
+	* @throws PortalException if a source with the primary key could not be found
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public Source deleteSource(long sourceId) throws PortalException;
+
+	/**
 	* Deletes the source from the database. Also notifies the appropriate model listeners.
 	*
 	* @param source the source
@@ -108,16 +117,6 @@ public interface SourceLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public Source deleteSource(Source source) throws PortalException;
-
-	/**
-	* Deletes the source with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param sourceId the primary key of the source
-	* @return the source that was removed
-	* @throws PortalException if a source with the primary key could not be found
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public Source deleteSource(long sourceId) throws PortalException;
 
 	public void deleteSources(long groupId) throws PortalException;
 
@@ -295,6 +294,12 @@ public interface SourceLocalService extends BaseLocalService,
 	public int getSourcesCount(long groupId, java.lang.String name,
 		java.lang.String driverUrl, boolean andSearch);
 
+	public Source updateSource(long sourceId,
+		Map<Locale, java.lang.String> nameMap,
+		java.lang.String driverClassName, java.lang.String driverUrl,
+		java.lang.String driverUserName, java.lang.String driverPassword,
+		ServiceContext serviceContext) throws PortalException;
+
 	/**
 	* Updates the source in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -303,10 +308,4 @@ public interface SourceLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public Source updateSource(Source source);
-
-	public Source updateSource(long sourceId,
-		Map<Locale, java.lang.String> nameMap,
-		java.lang.String driverClassName, java.lang.String driverUrl,
-		java.lang.String driverUserName, java.lang.String driverPassword,
-		ServiceContext serviceContext) throws PortalException;
 }

@@ -41,10 +41,6 @@ public class AuditEventLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.security.audit.storage.service.impl.AuditEventLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.security.audit.storage.model.AuditEvent addAuditEvent(
-		com.liferay.portal.kernel.audit.AuditMessage auditMessage) {
-		return getService().addAuditEvent(auditMessage);
-	}
 
 	/**
 	* Adds the audit event to the database. Also notifies the appropriate model listeners.
@@ -55,6 +51,11 @@ public class AuditEventLocalServiceUtil {
 	public static com.liferay.portal.security.audit.storage.model.AuditEvent addAuditEvent(
 		com.liferay.portal.security.audit.storage.model.AuditEvent auditEvent) {
 		return getService().addAuditEvent(auditEvent);
+	}
+
+	public static com.liferay.portal.security.audit.storage.model.AuditEvent addAuditEvent(
+		com.liferay.portal.kernel.audit.AuditMessage auditMessage) {
+		return getService().addAuditEvent(auditMessage);
 	}
 
 	/**

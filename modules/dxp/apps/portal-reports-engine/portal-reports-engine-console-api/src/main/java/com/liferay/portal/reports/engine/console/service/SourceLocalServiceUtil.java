@@ -41,18 +41,6 @@ public class SourceLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.reports.engine.console.service.impl.SourceLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-
-	/**
-	* Adds the source to the database. Also notifies the appropriate model listeners.
-	*
-	* @param source the source
-	* @return the source that was added
-	*/
-	public static com.liferay.portal.reports.engine.console.model.Source addSource(
-		com.liferay.portal.reports.engine.console.model.Source source) {
-		return getService().addSource(source);
-	}
-
 	public static com.liferay.portal.reports.engine.console.model.Source addSource(
 		long userId, long groupId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
@@ -63,6 +51,17 @@ public class SourceLocalServiceUtil {
 		return getService()
 				   .addSource(userId, groupId, nameMap, driverClassName,
 			driverUrl, driverUserName, driverPassword, serviceContext);
+	}
+
+	/**
+	* Adds the source to the database. Also notifies the appropriate model listeners.
+	*
+	* @param source the source
+	* @return the source that was added
+	*/
+	public static com.liferay.portal.reports.engine.console.model.Source addSource(
+		com.liferay.portal.reports.engine.console.model.Source source) {
+		return getService().addSource(source);
 	}
 
 	/**
@@ -86,19 +85,6 @@ public class SourceLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the source from the database. Also notifies the appropriate model listeners.
-	*
-	* @param source the source
-	* @return the source that was removed
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.reports.engine.console.model.Source deleteSource(
-		com.liferay.portal.reports.engine.console.model.Source source)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteSource(source);
-	}
-
-	/**
 	* Deletes the source with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param sourceId the primary key of the source
@@ -109,6 +95,19 @@ public class SourceLocalServiceUtil {
 		long sourceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteSource(sourceId);
+	}
+
+	/**
+	* Deletes the source from the database. Also notifies the appropriate model listeners.
+	*
+	* @param source the source
+	* @return the source that was removed
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.reports.engine.console.model.Source deleteSource(
+		com.liferay.portal.reports.engine.console.model.Source source)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteSource(source);
 	}
 
 	public static void deleteSources(long groupId)
@@ -335,17 +334,6 @@ public class SourceLocalServiceUtil {
 		return getService().getSourcesCount(groupId, name, driverUrl, andSearch);
 	}
 
-	/**
-	* Updates the source in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param source the source
-	* @return the source that was updated
-	*/
-	public static com.liferay.portal.reports.engine.console.model.Source updateSource(
-		com.liferay.portal.reports.engine.console.model.Source source) {
-		return getService().updateSource(source);
-	}
-
 	public static com.liferay.portal.reports.engine.console.model.Source updateSource(
 		long sourceId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
@@ -356,6 +344,17 @@ public class SourceLocalServiceUtil {
 		return getService()
 				   .updateSource(sourceId, nameMap, driverClassName, driverUrl,
 			driverUserName, driverPassword, serviceContext);
+	}
+
+	/**
+	* Updates the source in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param source the source
+	* @return the source that was updated
+	*/
+	public static com.liferay.portal.reports.engine.console.model.Source updateSource(
+		com.liferay.portal.reports.engine.console.model.Source source) {
+		return getService().updateSource(source);
 	}
 
 	public static SourceLocalService getService() {

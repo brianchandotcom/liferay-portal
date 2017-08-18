@@ -107,6 +107,19 @@ public class KaleoDraftDefinitionLocalServiceUtil {
 	}
 
 	/**
+	* Deletes the kaleo draft definition with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param kaleoDraftDefinitionId the primary key of the kaleo draft definition
+	* @return the kaleo draft definition that was removed
+	* @throws PortalException if a kaleo draft definition with the primary key could not be found
+	*/
+	public static com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition deleteKaleoDraftDefinition(
+		long kaleoDraftDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteKaleoDraftDefinition(kaleoDraftDefinitionId);
+	}
+
+	/**
 	* Deletes the Kaleo draft definition and its resources matching the name,
 	* published version, and draft version.
 	*
@@ -126,19 +139,6 @@ public class KaleoDraftDefinitionLocalServiceUtil {
 		return getService()
 				   .deleteKaleoDraftDefinition(name, version, draftVersion,
 			serviceContext);
-	}
-
-	/**
-	* Deletes the kaleo draft definition with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param kaleoDraftDefinitionId the primary key of the kaleo draft definition
-	* @return the kaleo draft definition that was removed
-	* @throws PortalException if a kaleo draft definition with the primary key could not be found
-	*/
-	public static com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition deleteKaleoDraftDefinition(
-		long kaleoDraftDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteKaleoDraftDefinition(kaleoDraftDefinitionId);
 	}
 
 	/**
@@ -260,6 +260,19 @@ public class KaleoDraftDefinitionLocalServiceUtil {
 	}
 
 	/**
+	* Returns the kaleo draft definition with the primary key.
+	*
+	* @param kaleoDraftDefinitionId the primary key of the kaleo draft definition
+	* @return the kaleo draft definition
+	* @throws PortalException if a kaleo draft definition with the primary key could not be found
+	*/
+	public static com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition getKaleoDraftDefinition(
+		long kaleoDraftDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getKaleoDraftDefinition(kaleoDraftDefinitionId);
+	}
+
+	/**
 	* Returns the Kaleo draft definition matching the name, published version,
 	* and draft version.
 	*
@@ -279,19 +292,6 @@ public class KaleoDraftDefinitionLocalServiceUtil {
 		return getService()
 				   .getKaleoDraftDefinition(name, version, draftVersion,
 			serviceContext);
-	}
-
-	/**
-	* Returns the kaleo draft definition with the primary key.
-	*
-	* @param kaleoDraftDefinitionId the primary key of the kaleo draft definition
-	* @return the kaleo draft definition
-	* @throws PortalException if a kaleo draft definition with the primary key could not be found
-	*/
-	public static com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition getKaleoDraftDefinition(
-		long kaleoDraftDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getKaleoDraftDefinition(kaleoDraftDefinitionId);
 	}
 
 	/**

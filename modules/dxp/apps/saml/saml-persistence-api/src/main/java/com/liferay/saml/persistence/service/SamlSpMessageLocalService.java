@@ -94,15 +94,6 @@ public interface SamlSpMessageLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the saml sp message from the database. Also notifies the appropriate model listeners.
-	*
-	* @param samlSpMessage the saml sp message
-	* @return the saml sp message that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public SamlSpMessage deleteSamlSpMessage(SamlSpMessage samlSpMessage);
-
-	/**
 	* Deletes the saml sp message with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param samlSpMessageId the primary key of the saml sp message
@@ -112,6 +103,15 @@ public interface SamlSpMessageLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public SamlSpMessage deleteSamlSpMessage(long samlSpMessageId)
 		throws PortalException;
+
+	/**
+	* Deletes the saml sp message from the database. Also notifies the appropriate model listeners.
+	*
+	* @param samlSpMessage the saml sp message
+	* @return the saml sp message that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public SamlSpMessage deleteSamlSpMessage(SamlSpMessage samlSpMessage);
 
 	public DynamicQuery dynamicQuery();
 
@@ -173,11 +173,11 @@ public interface SamlSpMessageLocalService extends BaseLocalService,
 		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SamlSpMessage fetchSamlSpMessage(java.lang.String samlIdpEntityId,
-		java.lang.String samlIdpResponseKey);
+	public SamlSpMessage fetchSamlSpMessage(long samlSpMessageId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SamlSpMessage fetchSamlSpMessage(long samlSpMessageId);
+	public SamlSpMessage fetchSamlSpMessage(java.lang.String samlIdpEntityId,
+		java.lang.String samlIdpResponseKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -197,10 +197,6 @@ public interface SamlSpMessageLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SamlSpMessage getSamlSpMessage(java.lang.String samlIdpEntityId,
-		java.lang.String samlIdpResponseKey) throws PortalException;
-
 	/**
 	* Returns the saml sp message with the primary key.
 	*
@@ -211,6 +207,10 @@ public interface SamlSpMessageLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SamlSpMessage getSamlSpMessage(long samlSpMessageId)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SamlSpMessage getSamlSpMessage(java.lang.String samlIdpEntityId,
+		java.lang.String samlIdpResponseKey) throws PortalException;
 
 	/**
 	* Returns a range of all the saml sp messages.

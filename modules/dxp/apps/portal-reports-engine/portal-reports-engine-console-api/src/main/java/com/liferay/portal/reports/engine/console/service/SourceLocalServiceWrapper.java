@@ -32,18 +32,6 @@ public class SourceLocalServiceWrapper implements SourceLocalService,
 		_sourceLocalService = sourceLocalService;
 	}
 
-	/**
-	* Adds the source to the database. Also notifies the appropriate model listeners.
-	*
-	* @param source the source
-	* @return the source that was added
-	*/
-	@Override
-	public com.liferay.portal.reports.engine.console.model.Source addSource(
-		com.liferay.portal.reports.engine.console.model.Source source) {
-		return _sourceLocalService.addSource(source);
-	}
-
 	@Override
 	public com.liferay.portal.reports.engine.console.model.Source addSource(
 		long userId, long groupId,
@@ -55,6 +43,18 @@ public class SourceLocalServiceWrapper implements SourceLocalService,
 		return _sourceLocalService.addSource(userId, groupId, nameMap,
 			driverClassName, driverUrl, driverUserName, driverPassword,
 			serviceContext);
+	}
+
+	/**
+	* Adds the source to the database. Also notifies the appropriate model listeners.
+	*
+	* @param source the source
+	* @return the source that was added
+	*/
+	@Override
+	public com.liferay.portal.reports.engine.console.model.Source addSource(
+		com.liferay.portal.reports.engine.console.model.Source source) {
+		return _sourceLocalService.addSource(source);
 	}
 
 	/**
@@ -80,20 +80,6 @@ public class SourceLocalServiceWrapper implements SourceLocalService,
 	}
 
 	/**
-	* Deletes the source from the database. Also notifies the appropriate model listeners.
-	*
-	* @param source the source
-	* @return the source that was removed
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.reports.engine.console.model.Source deleteSource(
-		com.liferay.portal.reports.engine.console.model.Source source)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _sourceLocalService.deleteSource(source);
-	}
-
-	/**
 	* Deletes the source with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param sourceId the primary key of the source
@@ -105,6 +91,20 @@ public class SourceLocalServiceWrapper implements SourceLocalService,
 		long sourceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sourceLocalService.deleteSource(sourceId);
+	}
+
+	/**
+	* Deletes the source from the database. Also notifies the appropriate model listeners.
+	*
+	* @param source the source
+	* @return the source that was removed
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.reports.engine.console.model.Source deleteSource(
+		com.liferay.portal.reports.engine.console.model.Source source)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _sourceLocalService.deleteSource(source);
 	}
 
 	@Override
@@ -352,18 +352,6 @@ public class SourceLocalServiceWrapper implements SourceLocalService,
 			andSearch);
 	}
 
-	/**
-	* Updates the source in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param source the source
-	* @return the source that was updated
-	*/
-	@Override
-	public com.liferay.portal.reports.engine.console.model.Source updateSource(
-		com.liferay.portal.reports.engine.console.model.Source source) {
-		return _sourceLocalService.updateSource(source);
-	}
-
 	@Override
 	public com.liferay.portal.reports.engine.console.model.Source updateSource(
 		long sourceId,
@@ -375,6 +363,18 @@ public class SourceLocalServiceWrapper implements SourceLocalService,
 		return _sourceLocalService.updateSource(sourceId, nameMap,
 			driverClassName, driverUrl, driverUserName, driverPassword,
 			serviceContext);
+	}
+
+	/**
+	* Updates the source in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param source the source
+	* @return the source that was updated
+	*/
+	@Override
+	public com.liferay.portal.reports.engine.console.model.Source updateSource(
+		com.liferay.portal.reports.engine.console.model.Source source) {
+		return _sourceLocalService.updateSource(source);
 	}
 
 	@Override

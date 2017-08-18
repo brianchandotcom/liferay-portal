@@ -91,17 +91,6 @@ public class SamlSpIdpConnectionLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the saml sp idp connection from the database. Also notifies the appropriate model listeners.
-	*
-	* @param samlSpIdpConnection the saml sp idp connection
-	* @return the saml sp idp connection that was removed
-	*/
-	public static com.liferay.saml.persistence.model.SamlSpIdpConnection deleteSamlSpIdpConnection(
-		com.liferay.saml.persistence.model.SamlSpIdpConnection samlSpIdpConnection) {
-		return getService().deleteSamlSpIdpConnection(samlSpIdpConnection);
-	}
-
-	/**
 	* Deletes the saml sp idp connection with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param samlSpIdpConnectionId the primary key of the saml sp idp connection
@@ -112,6 +101,17 @@ public class SamlSpIdpConnectionLocalServiceUtil {
 		long samlSpIdpConnectionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteSamlSpIdpConnection(samlSpIdpConnectionId);
+	}
+
+	/**
+	* Deletes the saml sp idp connection from the database. Also notifies the appropriate model listeners.
+	*
+	* @param samlSpIdpConnection the saml sp idp connection
+	* @return the saml sp idp connection that was removed
+	*/
+	public static com.liferay.saml.persistence.model.SamlSpIdpConnection deleteSamlSpIdpConnection(
+		com.liferay.saml.persistence.model.SamlSpIdpConnection samlSpIdpConnection) {
+		return getService().deleteSamlSpIdpConnection(samlSpIdpConnection);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -291,17 +291,6 @@ public class SamlSpIdpConnectionLocalServiceUtil {
 		getService().updateMetadata(samlSpIdpConnectionId);
 	}
 
-	/**
-	* Updates the saml sp idp connection in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param samlSpIdpConnection the saml sp idp connection
-	* @return the saml sp idp connection that was updated
-	*/
-	public static com.liferay.saml.persistence.model.SamlSpIdpConnection updateSamlSpIdpConnection(
-		com.liferay.saml.persistence.model.SamlSpIdpConnection samlSpIdpConnection) {
-		return getService().updateSamlSpIdpConnection(samlSpIdpConnection);
-	}
-
 	public static com.liferay.saml.persistence.model.SamlSpIdpConnection updateSamlSpIdpConnection(
 		long samlSpIdpConnectionId, java.lang.String samlIdpEntityId,
 		boolean assertionSignatureRequired, long clockSkew, boolean enabled,
@@ -318,6 +307,17 @@ public class SamlSpIdpConnectionLocalServiceUtil {
 			forceAuthn, ldapImportEnabled, metadataUrl, metadataXmlInputStream,
 			name, nameIdFormat, signAuthnRequest, userAttributeMappings,
 			serviceContext);
+	}
+
+	/**
+	* Updates the saml sp idp connection in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param samlSpIdpConnection the saml sp idp connection
+	* @return the saml sp idp connection that was updated
+	*/
+	public static com.liferay.saml.persistence.model.SamlSpIdpConnection updateSamlSpIdpConnection(
+		com.liferay.saml.persistence.model.SamlSpIdpConnection samlSpIdpConnection) {
+		return getService().updateSamlSpIdpConnection(samlSpIdpConnection);
 	}
 
 	public static SamlSpIdpConnectionLocalService getService() {

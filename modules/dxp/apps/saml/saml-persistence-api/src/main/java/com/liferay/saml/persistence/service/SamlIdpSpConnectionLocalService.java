@@ -99,16 +99,6 @@ public interface SamlIdpSpConnectionLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the saml idp sp connection from the database. Also notifies the appropriate model listeners.
-	*
-	* @param samlIdpSpConnection the saml idp sp connection
-	* @return the saml idp sp connection that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public SamlIdpSpConnection deleteSamlIdpSpConnection(
-		SamlIdpSpConnection samlIdpSpConnection);
-
-	/**
 	* Deletes the saml idp sp connection with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param samlIdpSpConnectionId the primary key of the saml idp sp connection
@@ -118,6 +108,16 @@ public interface SamlIdpSpConnectionLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public SamlIdpSpConnection deleteSamlIdpSpConnection(
 		long samlIdpSpConnectionId) throws PortalException;
+
+	/**
+	* Deletes the saml idp sp connection from the database. Also notifies the appropriate model listeners.
+	*
+	* @param samlIdpSpConnection the saml idp sp connection
+	* @return the saml idp sp connection that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public SamlIdpSpConnection deleteSamlIdpSpConnection(
+		SamlIdpSpConnection samlIdpSpConnection);
 
 	public DynamicQuery dynamicQuery();
 
@@ -254,6 +254,15 @@ public interface SamlIdpSpConnectionLocalService extends BaseLocalService,
 	public void updateMetadata(long samlIdpSpConnectionId)
 		throws PortalException;
 
+	public SamlIdpSpConnection updateSamlIdpSpConnection(
+		long samlIdpSpConnectionId, java.lang.String samlSpEntityId,
+		int assertionLifetime, java.lang.String attributeNames,
+		boolean attributesEnabled, boolean attributesNamespaceEnabled,
+		boolean enabled, java.lang.String metadataUrl,
+		InputStream metadataXmlInputStream, java.lang.String name,
+		java.lang.String nameIdAttribute, java.lang.String nameIdFormat,
+		ServiceContext serviceContext) throws PortalException;
+
 	/**
 	* Updates the saml idp sp connection in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -263,13 +272,4 @@ public interface SamlIdpSpConnectionLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public SamlIdpSpConnection updateSamlIdpSpConnection(
 		SamlIdpSpConnection samlIdpSpConnection);
-
-	public SamlIdpSpConnection updateSamlIdpSpConnection(
-		long samlIdpSpConnectionId, java.lang.String samlSpEntityId,
-		int assertionLifetime, java.lang.String attributeNames,
-		boolean attributesEnabled, boolean attributesNamespaceEnabled,
-		boolean enabled, java.lang.String metadataUrl,
-		InputStream metadataXmlInputStream, java.lang.String name,
-		java.lang.String nameIdAttribute, java.lang.String nameIdFormat,
-		ServiceContext serviceContext) throws PortalException;
 }

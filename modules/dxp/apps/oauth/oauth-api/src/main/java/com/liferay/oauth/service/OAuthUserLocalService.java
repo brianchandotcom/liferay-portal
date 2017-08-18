@@ -61,6 +61,9 @@ public interface OAuthUserLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link OAuthUserLocalServiceUtil} to access the o auth user local service. Add custom service methods to {@link com.liferay.oauth.service.impl.OAuthUserLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public OAuthUser addOAuthUser(long userId, long oAuthApplicationId,
+		java.lang.String accessToken, java.lang.String accessSecret,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Adds the o auth user to the database. Also notifies the appropriate model listeners.
@@ -71,10 +74,6 @@ public interface OAuthUserLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public OAuthUser addOAuthUser(OAuthUser oAuthUser);
 
-	public OAuthUser addOAuthUser(long userId, long oAuthApplicationId,
-		java.lang.String accessToken, java.lang.String accessSecret,
-		ServiceContext serviceContext) throws PortalException;
-
 	/**
 	* Creates a new o auth user with the primary key. Does not add the o auth user to the database.
 	*
@@ -82,17 +81,6 @@ public interface OAuthUserLocalService extends BaseLocalService,
 	* @return the new o auth user
 	*/
 	public OAuthUser createOAuthUser(long oAuthUserId);
-
-	/**
-	* Deletes the o auth user from the database. Also notifies the appropriate model listeners.
-	*
-	* @param oAuthUser the o auth user
-	* @return the o auth user that was removed
-	* @throws PortalException
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public OAuthUser deleteOAuthUser(OAuthUser oAuthUser)
-		throws PortalException;
 
 	/**
 	* Deletes the o auth user with the primary key from the database. Also notifies the appropriate model listeners.
@@ -106,6 +94,17 @@ public interface OAuthUserLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public OAuthUser deleteOAuthUser(long userId, long oAuthApplicationId)
+		throws PortalException;
+
+	/**
+	* Deletes the o auth user from the database. Also notifies the appropriate model listeners.
+	*
+	* @param oAuthUser the o auth user
+	* @return the o auth user that was removed
+	* @throws PortalException
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public OAuthUser deleteOAuthUser(OAuthUser oAuthUser)
 		throws PortalException;
 
 	/**
@@ -175,13 +174,13 @@ public interface OAuthUserLocalService extends BaseLocalService,
 		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public OAuthUser fetchOAuthUser(java.lang.String accessToken);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OAuthUser fetchOAuthUser(long oAuthUserId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OAuthUser fetchOAuthUser(long userId, long oAuthApplicationId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OAuthUser fetchOAuthUser(java.lang.String accessToken);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -197,10 +196,6 @@ public interface OAuthUserLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getOAuthApplicationOAuthUsersCount(long oAuthApplicationId);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public OAuthUser getOAuthUser(java.lang.String accessToken)
-		throws PortalException;
-
 	/**
 	* Returns the o auth user with the primary key.
 	*
@@ -213,6 +208,10 @@ public interface OAuthUserLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OAuthUser getOAuthUser(long userId, long oAuthApplicationId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OAuthUser getOAuthUser(java.lang.String accessToken)
 		throws PortalException;
 
 	/**
@@ -256,6 +255,10 @@ public interface OAuthUserLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserOAuthUsersCount(long userId);
 
+	public OAuthUser updateOAuthUser(long userId, long oAuthApplicationId,
+		java.lang.String accessToken, java.lang.String accessSecret,
+		ServiceContext serviceContext) throws PortalException;
+
 	/**
 	* Updates the o auth user in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -264,8 +267,4 @@ public interface OAuthUserLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public OAuthUser updateOAuthUser(OAuthUser oAuthUser);
-
-	public OAuthUser updateOAuthUser(long userId, long oAuthApplicationId,
-		java.lang.String accessToken, java.lang.String accessSecret,
-		ServiceContext serviceContext) throws PortalException;
 }

@@ -94,15 +94,6 @@ public interface SamlSpSessionLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the saml sp session from the database. Also notifies the appropriate model listeners.
-	*
-	* @param samlSpSession the saml sp session
-	* @return the saml sp session that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public SamlSpSession deleteSamlSpSession(SamlSpSession samlSpSession);
-
-	/**
 	* Deletes the saml sp session with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param samlSpSessionId the primary key of the saml sp session
@@ -112,6 +103,15 @@ public interface SamlSpSessionLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public SamlSpSession deleteSamlSpSession(long samlSpSessionId)
 		throws PortalException;
+
+	/**
+	* Deletes the saml sp session from the database. Also notifies the appropriate model listeners.
+	*
+	* @param samlSpSession the saml sp session
+	* @return the saml sp session that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public SamlSpSession deleteSamlSpSession(SamlSpSession samlSpSession);
 
 	public DynamicQuery dynamicQuery();
 
@@ -253,15 +253,6 @@ public interface SamlSpSessionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSamlSpSessionsCount();
 
-	/**
-	* Updates the saml sp session in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param samlSpSession the saml sp session
-	* @return the saml sp session that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public SamlSpSession updateSamlSpSession(SamlSpSession samlSpSession);
-
 	public SamlSpSession updateSamlSpSession(long samlSpSessionId,
 		java.lang.String jSessionId) throws PortalException;
 
@@ -272,4 +263,13 @@ public interface SamlSpSessionLocalService extends BaseLocalService,
 		java.lang.String nameIdSPNameQualifier, java.lang.String nameIdValue,
 		java.lang.String sessionIndex, ServiceContext serviceContext)
 		throws PortalException;
+
+	/**
+	* Updates the saml sp session in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param samlSpSession the saml sp session
+	* @return the saml sp session that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public SamlSpSession updateSamlSpSession(SamlSpSession samlSpSession);
 }

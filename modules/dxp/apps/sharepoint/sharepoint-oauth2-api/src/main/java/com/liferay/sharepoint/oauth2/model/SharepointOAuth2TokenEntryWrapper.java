@@ -306,14 +306,14 @@ public class SharepointOAuth2TokenEntryWrapper
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_sharepointOAuth2TokenEntry.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_sharepointOAuth2TokenEntry.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_sharepointOAuth2TokenEntry.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

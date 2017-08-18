@@ -83,18 +83,6 @@ public class SamlSpAuthRequestLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the saml sp auth request from the database. Also notifies the appropriate model listeners.
-	*
-	* @param samlSpAuthRequest the saml sp auth request
-	* @return the saml sp auth request that was removed
-	*/
-	@Override
-	public com.liferay.saml.persistence.model.SamlSpAuthRequest deleteSamlSpAuthRequest(
-		com.liferay.saml.persistence.model.SamlSpAuthRequest samlSpAuthRequest) {
-		return _samlSpAuthRequestLocalService.deleteSamlSpAuthRequest(samlSpAuthRequest);
-	}
-
-	/**
 	* Deletes the saml sp auth request with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param samlSpAuthnRequestId the primary key of the saml sp auth request
@@ -106,6 +94,18 @@ public class SamlSpAuthRequestLocalServiceWrapper
 		long samlSpAuthnRequestId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _samlSpAuthRequestLocalService.deleteSamlSpAuthRequest(samlSpAuthnRequestId);
+	}
+
+	/**
+	* Deletes the saml sp auth request from the database. Also notifies the appropriate model listeners.
+	*
+	* @param samlSpAuthRequest the saml sp auth request
+	* @return the saml sp auth request that was removed
+	*/
+	@Override
+	public com.liferay.saml.persistence.model.SamlSpAuthRequest deleteSamlSpAuthRequest(
+		com.liferay.saml.persistence.model.SamlSpAuthRequest samlSpAuthRequest) {
+		return _samlSpAuthRequestLocalService.deleteSamlSpAuthRequest(samlSpAuthRequest);
 	}
 
 	@Override
@@ -196,15 +196,15 @@ public class SamlSpAuthRequestLocalServiceWrapper
 
 	@Override
 	public com.liferay.saml.persistence.model.SamlSpAuthRequest fetchSamlSpAuthRequest(
-		java.lang.String samlIdpEntityId, java.lang.String samlSpAuthRequestKey) {
-		return _samlSpAuthRequestLocalService.fetchSamlSpAuthRequest(samlIdpEntityId,
-			samlSpAuthRequestKey);
+		long samlSpAuthnRequestId) {
+		return _samlSpAuthRequestLocalService.fetchSamlSpAuthRequest(samlSpAuthnRequestId);
 	}
 
 	@Override
 	public com.liferay.saml.persistence.model.SamlSpAuthRequest fetchSamlSpAuthRequest(
-		long samlSpAuthnRequestId) {
-		return _samlSpAuthRequestLocalService.fetchSamlSpAuthRequest(samlSpAuthnRequestId);
+		java.lang.String samlIdpEntityId, java.lang.String samlSpAuthRequestKey) {
+		return _samlSpAuthRequestLocalService.fetchSamlSpAuthRequest(samlIdpEntityId,
+			samlSpAuthRequestKey);
 	}
 
 	@Override
@@ -234,14 +234,6 @@ public class SamlSpAuthRequestLocalServiceWrapper
 		return _samlSpAuthRequestLocalService.getPersistedModel(primaryKeyObj);
 	}
 
-	@Override
-	public com.liferay.saml.persistence.model.SamlSpAuthRequest getSamlSpAuthRequest(
-		java.lang.String samlIdpEntityId, java.lang.String samlSpAuthRequestKey)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _samlSpAuthRequestLocalService.getSamlSpAuthRequest(samlIdpEntityId,
-			samlSpAuthRequestKey);
-	}
-
 	/**
 	* Returns the saml sp auth request with the primary key.
 	*
@@ -254,6 +246,14 @@ public class SamlSpAuthRequestLocalServiceWrapper
 		long samlSpAuthnRequestId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _samlSpAuthRequestLocalService.getSamlSpAuthRequest(samlSpAuthnRequestId);
+	}
+
+	@Override
+	public com.liferay.saml.persistence.model.SamlSpAuthRequest getSamlSpAuthRequest(
+		java.lang.String samlIdpEntityId, java.lang.String samlSpAuthRequestKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _samlSpAuthRequestLocalService.getSamlSpAuthRequest(samlIdpEntityId,
+			samlSpAuthRequestKey);
 	}
 
 	/**

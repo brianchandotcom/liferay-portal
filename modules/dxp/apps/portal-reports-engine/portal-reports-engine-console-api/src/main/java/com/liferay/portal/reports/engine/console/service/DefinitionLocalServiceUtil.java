@@ -103,15 +103,15 @@ public class DefinitionLocalServiceUtil {
 		return getService().deleteDefinition(definitionId);
 	}
 
+	public static void deleteDefinitions(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteDefinitions(groupId);
+	}
+
 	public static void deleteDefinitionTemplates(long companyId,
 		java.lang.String attachmentsDirectory)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteDefinitionTemplates(companyId, attachmentsDirectory);
-	}
-
-	public static void deleteDefinitions(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteDefinitions(groupId);
 	}
 
 	/**

@@ -87,17 +87,6 @@ public class SamlSpMessageLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the saml sp message from the database. Also notifies the appropriate model listeners.
-	*
-	* @param samlSpMessage the saml sp message
-	* @return the saml sp message that was removed
-	*/
-	public static com.liferay.saml.persistence.model.SamlSpMessage deleteSamlSpMessage(
-		com.liferay.saml.persistence.model.SamlSpMessage samlSpMessage) {
-		return getService().deleteSamlSpMessage(samlSpMessage);
-	}
-
-	/**
 	* Deletes the saml sp message with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param samlSpMessageId the primary key of the saml sp message
@@ -108,6 +97,17 @@ public class SamlSpMessageLocalServiceUtil {
 		long samlSpMessageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteSamlSpMessage(samlSpMessageId);
+	}
+
+	/**
+	* Deletes the saml sp message from the database. Also notifies the appropriate model listeners.
+	*
+	* @param samlSpMessage the saml sp message
+	* @return the saml sp message that was removed
+	*/
+	public static com.liferay.saml.persistence.model.SamlSpMessage deleteSamlSpMessage(
+		com.liferay.saml.persistence.model.SamlSpMessage samlSpMessage) {
+		return getService().deleteSamlSpMessage(samlSpMessage);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -189,14 +189,14 @@ public class SamlSpMessageLocalServiceUtil {
 	}
 
 	public static com.liferay.saml.persistence.model.SamlSpMessage fetchSamlSpMessage(
-		java.lang.String samlIdpEntityId, java.lang.String samlIdpResponseKey) {
-		return getService()
-				   .fetchSamlSpMessage(samlIdpEntityId, samlIdpResponseKey);
+		long samlSpMessageId) {
+		return getService().fetchSamlSpMessage(samlSpMessageId);
 	}
 
 	public static com.liferay.saml.persistence.model.SamlSpMessage fetchSamlSpMessage(
-		long samlSpMessageId) {
-		return getService().fetchSamlSpMessage(samlSpMessageId);
+		java.lang.String samlIdpEntityId, java.lang.String samlIdpResponseKey) {
+		return getService()
+				   .fetchSamlSpMessage(samlIdpEntityId, samlIdpResponseKey);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
@@ -222,12 +222,6 @@ public class SamlSpMessageLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static com.liferay.saml.persistence.model.SamlSpMessage getSamlSpMessage(
-		java.lang.String samlIdpEntityId, java.lang.String samlIdpResponseKey)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getSamlSpMessage(samlIdpEntityId, samlIdpResponseKey);
-	}
-
 	/**
 	* Returns the saml sp message with the primary key.
 	*
@@ -239,6 +233,12 @@ public class SamlSpMessageLocalServiceUtil {
 		long samlSpMessageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getSamlSpMessage(samlSpMessageId);
+	}
+
+	public static com.liferay.saml.persistence.model.SamlSpMessage getSamlSpMessage(
+		java.lang.String samlIdpEntityId, java.lang.String samlIdpResponseKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getSamlSpMessage(samlIdpEntityId, samlIdpResponseKey);
 	}
 
 	/**

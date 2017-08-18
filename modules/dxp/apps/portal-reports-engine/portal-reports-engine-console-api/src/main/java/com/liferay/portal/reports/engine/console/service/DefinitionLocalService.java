@@ -116,10 +116,10 @@ public interface DefinitionLocalService extends BaseLocalService,
 	public Definition deleteDefinition(long definitionId)
 		throws PortalException;
 
+	public void deleteDefinitions(long groupId) throws PortalException;
+
 	public void deleteDefinitionTemplates(long companyId,
 		java.lang.String attachmentsDirectory) throws PortalException;
-
-	public void deleteDefinitions(long groupId) throws PortalException;
 
 	/**
 	* @throws PortalException

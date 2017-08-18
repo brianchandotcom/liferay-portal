@@ -61,7 +61,6 @@ public interface AuditEventLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AuditEventLocalServiceUtil} to access the audit event local service. Add custom service methods to {@link com.liferay.portal.security.audit.storage.service.impl.AuditEventLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public AuditEvent addAuditEvent(AuditMessage auditMessage);
 
 	/**
 	* Adds the audit event to the database. Also notifies the appropriate model listeners.
@@ -71,6 +70,8 @@ public interface AuditEventLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public AuditEvent addAuditEvent(AuditEvent auditEvent);
+
+	public AuditEvent addAuditEvent(AuditMessage auditMessage);
 
 	/**
 	* Creates a new audit event with the primary key. Does not add the audit event to the database.

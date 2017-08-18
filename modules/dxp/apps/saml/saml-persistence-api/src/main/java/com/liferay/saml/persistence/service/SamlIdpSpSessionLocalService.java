@@ -61,6 +61,10 @@ public interface SamlIdpSpSessionLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SamlIdpSpSessionLocalServiceUtil} to access the saml idp sp session local service. Add custom service methods to {@link com.liferay.saml.persistence.service.impl.SamlIdpSpSessionLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public SamlIdpSpSession addSamlIdpSpSession(long samlIdpSsoSessionId,
+		java.lang.String samlSpEntityId, java.lang.String nameIdFormat,
+		java.lang.String nameIdValue, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Adds the saml idp sp session to the database. Also notifies the appropriate model listeners.
@@ -71,11 +75,6 @@ public interface SamlIdpSpSessionLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public SamlIdpSpSession addSamlIdpSpSession(
 		SamlIdpSpSession samlIdpSpSession);
-
-	public SamlIdpSpSession addSamlIdpSpSession(long samlIdpSsoSessionId,
-		java.lang.String samlSpEntityId, java.lang.String nameIdFormat,
-		java.lang.String nameIdValue, ServiceContext serviceContext)
-		throws PortalException;
 
 	/**
 	* Creates a new saml idp sp session with the primary key. Does not add the saml idp sp session to the database.
@@ -93,16 +92,6 @@ public interface SamlIdpSpSessionLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the saml idp sp session from the database. Also notifies the appropriate model listeners.
-	*
-	* @param samlIdpSpSession the saml idp sp session
-	* @return the saml idp sp session that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public SamlIdpSpSession deleteSamlIdpSpSession(
-		SamlIdpSpSession samlIdpSpSession);
-
-	/**
 	* Deletes the saml idp sp session with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param samlIdpSpSessionId the primary key of the saml idp sp session
@@ -112,6 +101,16 @@ public interface SamlIdpSpSessionLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public SamlIdpSpSession deleteSamlIdpSpSession(long samlIdpSpSessionId)
 		throws PortalException;
+
+	/**
+	* Deletes the saml idp sp session from the database. Also notifies the appropriate model listeners.
+	*
+	* @param samlIdpSpSession the saml idp sp session
+	* @return the saml idp sp session that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public SamlIdpSpSession deleteSamlIdpSpSession(
+		SamlIdpSpSession samlIdpSpSession);
 
 	public DynamicQuery dynamicQuery();
 

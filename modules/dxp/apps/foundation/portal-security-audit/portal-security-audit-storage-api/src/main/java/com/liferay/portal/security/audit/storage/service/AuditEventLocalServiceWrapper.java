@@ -33,12 +33,6 @@ public class AuditEventLocalServiceWrapper implements AuditEventLocalService,
 		_auditEventLocalService = auditEventLocalService;
 	}
 
-	@Override
-	public com.liferay.portal.security.audit.storage.model.AuditEvent addAuditEvent(
-		com.liferay.portal.kernel.audit.AuditMessage auditMessage) {
-		return _auditEventLocalService.addAuditEvent(auditMessage);
-	}
-
 	/**
 	* Adds the audit event to the database. Also notifies the appropriate model listeners.
 	*
@@ -49,6 +43,12 @@ public class AuditEventLocalServiceWrapper implements AuditEventLocalService,
 	public com.liferay.portal.security.audit.storage.model.AuditEvent addAuditEvent(
 		com.liferay.portal.security.audit.storage.model.AuditEvent auditEvent) {
 		return _auditEventLocalService.addAuditEvent(auditEvent);
+	}
+
+	@Override
+	public com.liferay.portal.security.audit.storage.model.AuditEvent addAuditEvent(
+		com.liferay.portal.kernel.audit.AuditMessage auditMessage) {
+		return _auditEventLocalService.addAuditEvent(auditMessage);
 	}
 
 	/**

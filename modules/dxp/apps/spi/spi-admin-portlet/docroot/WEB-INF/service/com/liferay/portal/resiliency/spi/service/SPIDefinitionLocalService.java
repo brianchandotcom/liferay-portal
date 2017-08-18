@@ -63,6 +63,12 @@ public interface SPIDefinitionLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SPIDefinitionLocalServiceUtil} to access the spi definition local service. Add custom service methods to {@link com.liferay.portal.resiliency.spi.service.impl.SPIDefinitionLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public SPIDefinition addSPIDefinition(long userId, java.lang.String name,
+		java.lang.String connectorAddress, int connectorPort,
+		java.lang.String description, java.lang.String jvmArguments,
+		java.lang.String portletIds, java.lang.String servletContextNames,
+		java.lang.String typeSettings, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Adds the spi definition to the database. Also notifies the appropriate model listeners.
@@ -72,13 +78,6 @@ public interface SPIDefinitionLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public SPIDefinition addSPIDefinition(SPIDefinition spiDefinition);
-
-	public SPIDefinition addSPIDefinition(long userId, java.lang.String name,
-		java.lang.String connectorAddress, int connectorPort,
-		java.lang.String description, java.lang.String jvmArguments,
-		java.lang.String portletIds, java.lang.String servletContextNames,
-		java.lang.String typeSettings, ServiceContext serviceContext)
-		throws PortalException;
 
 	/**
 	* Creates a new spi definition with the primary key. Does not add the spi definition to the database.
@@ -96,17 +95,6 @@ public interface SPIDefinitionLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the spi definition from the database. Also notifies the appropriate model listeners.
-	*
-	* @param spiDefinition the spi definition
-	* @return the spi definition that was removed
-	* @throws PortalException
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public SPIDefinition deleteSPIDefinition(SPIDefinition spiDefinition)
-		throws PortalException;
-
-	/**
 	* Deletes the spi definition with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param spiDefinitionId the primary key of the spi definition
@@ -115,6 +103,17 @@ public interface SPIDefinitionLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public SPIDefinition deleteSPIDefinition(long spiDefinitionId)
+		throws PortalException;
+
+	/**
+	* Deletes the spi definition from the database. Also notifies the appropriate model listeners.
+	*
+	* @param spiDefinition the spi definition
+	* @return the spi definition that was removed
+	* @throws PortalException
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public SPIDefinition deleteSPIDefinition(SPIDefinition spiDefinition)
 		throws PortalException;
 
 	public DynamicQuery dynamicQuery();
@@ -266,15 +265,6 @@ public interface SPIDefinitionLocalService extends BaseLocalService,
 	public long stopSPIinBackground(long userId, long spiDefinitionId)
 		throws PortalException;
 
-	/**
-	* Updates the spi definition in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param spiDefinition the spi definition
-	* @return the spi definition that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public SPIDefinition updateSPIDefinition(SPIDefinition spiDefinition);
-
 	public SPIDefinition updateSPIDefinition(long spiDefinitionId, int status,
 		java.lang.String statusMessage) throws PortalException;
 
@@ -284,6 +274,15 @@ public interface SPIDefinitionLocalService extends BaseLocalService,
 		java.lang.String portletIds, java.lang.String servletContextNames,
 		java.lang.String typeSettings, ServiceContext serviceContext)
 		throws PortalException;
+
+	/**
+	* Updates the spi definition in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param spiDefinition the spi definition
+	* @return the spi definition that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public SPIDefinition updateSPIDefinition(SPIDefinition spiDefinition);
 
 	public SPIDefinition updateTypeSettings(long userId, long spiDefinitionId,
 		java.lang.String typeSettings, ServiceContext serviceContext)

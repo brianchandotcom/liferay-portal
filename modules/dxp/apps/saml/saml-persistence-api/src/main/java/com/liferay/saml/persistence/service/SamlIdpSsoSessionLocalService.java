@@ -94,16 +94,6 @@ public interface SamlIdpSsoSessionLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the saml idp sso session from the database. Also notifies the appropriate model listeners.
-	*
-	* @param samlIdpSsoSession the saml idp sso session
-	* @return the saml idp sso session that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public SamlIdpSsoSession deleteSamlIdpSsoSession(
-		SamlIdpSsoSession samlIdpSsoSession);
-
-	/**
 	* Deletes the saml idp sso session with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param samlIdpSsoSessionId the primary key of the saml idp sso session
@@ -113,6 +103,16 @@ public interface SamlIdpSsoSessionLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public SamlIdpSsoSession deleteSamlIdpSsoSession(long samlIdpSsoSessionId)
 		throws PortalException;
+
+	/**
+	* Deletes the saml idp sso session from the database. Also notifies the appropriate model listeners.
+	*
+	* @param samlIdpSsoSession the saml idp sso session
+	* @return the saml idp sso session that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public SamlIdpSsoSession deleteSamlIdpSsoSession(
+		SamlIdpSsoSession samlIdpSsoSession);
 
 	public DynamicQuery dynamicQuery();
 

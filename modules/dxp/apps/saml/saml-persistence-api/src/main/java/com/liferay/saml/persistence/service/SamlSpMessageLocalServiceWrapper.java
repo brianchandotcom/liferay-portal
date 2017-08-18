@@ -83,18 +83,6 @@ public class SamlSpMessageLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the saml sp message from the database. Also notifies the appropriate model listeners.
-	*
-	* @param samlSpMessage the saml sp message
-	* @return the saml sp message that was removed
-	*/
-	@Override
-	public com.liferay.saml.persistence.model.SamlSpMessage deleteSamlSpMessage(
-		com.liferay.saml.persistence.model.SamlSpMessage samlSpMessage) {
-		return _samlSpMessageLocalService.deleteSamlSpMessage(samlSpMessage);
-	}
-
-	/**
 	* Deletes the saml sp message with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param samlSpMessageId the primary key of the saml sp message
@@ -106,6 +94,18 @@ public class SamlSpMessageLocalServiceWrapper
 		long samlSpMessageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _samlSpMessageLocalService.deleteSamlSpMessage(samlSpMessageId);
+	}
+
+	/**
+	* Deletes the saml sp message from the database. Also notifies the appropriate model listeners.
+	*
+	* @param samlSpMessage the saml sp message
+	* @return the saml sp message that was removed
+	*/
+	@Override
+	public com.liferay.saml.persistence.model.SamlSpMessage deleteSamlSpMessage(
+		com.liferay.saml.persistence.model.SamlSpMessage samlSpMessage) {
+		return _samlSpMessageLocalService.deleteSamlSpMessage(samlSpMessage);
 	}
 
 	@Override
@@ -195,15 +195,15 @@ public class SamlSpMessageLocalServiceWrapper
 
 	@Override
 	public com.liferay.saml.persistence.model.SamlSpMessage fetchSamlSpMessage(
-		java.lang.String samlIdpEntityId, java.lang.String samlIdpResponseKey) {
-		return _samlSpMessageLocalService.fetchSamlSpMessage(samlIdpEntityId,
-			samlIdpResponseKey);
+		long samlSpMessageId) {
+		return _samlSpMessageLocalService.fetchSamlSpMessage(samlSpMessageId);
 	}
 
 	@Override
 	public com.liferay.saml.persistence.model.SamlSpMessage fetchSamlSpMessage(
-		long samlSpMessageId) {
-		return _samlSpMessageLocalService.fetchSamlSpMessage(samlSpMessageId);
+		java.lang.String samlIdpEntityId, java.lang.String samlIdpResponseKey) {
+		return _samlSpMessageLocalService.fetchSamlSpMessage(samlIdpEntityId,
+			samlIdpResponseKey);
 	}
 
 	@Override
@@ -233,14 +233,6 @@ public class SamlSpMessageLocalServiceWrapper
 		return _samlSpMessageLocalService.getPersistedModel(primaryKeyObj);
 	}
 
-	@Override
-	public com.liferay.saml.persistence.model.SamlSpMessage getSamlSpMessage(
-		java.lang.String samlIdpEntityId, java.lang.String samlIdpResponseKey)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _samlSpMessageLocalService.getSamlSpMessage(samlIdpEntityId,
-			samlIdpResponseKey);
-	}
-
 	/**
 	* Returns the saml sp message with the primary key.
 	*
@@ -253,6 +245,14 @@ public class SamlSpMessageLocalServiceWrapper
 		long samlSpMessageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _samlSpMessageLocalService.getSamlSpMessage(samlSpMessageId);
+	}
+
+	@Override
+	public com.liferay.saml.persistence.model.SamlSpMessage getSamlSpMessage(
+		java.lang.String samlIdpEntityId, java.lang.String samlIdpResponseKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _samlSpMessageLocalService.getSamlSpMessage(samlIdpEntityId,
+			samlIdpResponseKey);
 	}
 
 	/**

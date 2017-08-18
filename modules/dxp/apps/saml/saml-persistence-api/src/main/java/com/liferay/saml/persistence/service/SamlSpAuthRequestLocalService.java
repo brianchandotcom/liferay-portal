@@ -94,16 +94,6 @@ public interface SamlSpAuthRequestLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the saml sp auth request from the database. Also notifies the appropriate model listeners.
-	*
-	* @param samlSpAuthRequest the saml sp auth request
-	* @return the saml sp auth request that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public SamlSpAuthRequest deleteSamlSpAuthRequest(
-		SamlSpAuthRequest samlSpAuthRequest);
-
-	/**
 	* Deletes the saml sp auth request with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param samlSpAuthnRequestId the primary key of the saml sp auth request
@@ -113,6 +103,16 @@ public interface SamlSpAuthRequestLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public SamlSpAuthRequest deleteSamlSpAuthRequest(long samlSpAuthnRequestId)
 		throws PortalException;
+
+	/**
+	* Deletes the saml sp auth request from the database. Also notifies the appropriate model listeners.
+	*
+	* @param samlSpAuthRequest the saml sp auth request
+	* @return the saml sp auth request that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public SamlSpAuthRequest deleteSamlSpAuthRequest(
+		SamlSpAuthRequest samlSpAuthRequest);
 
 	public DynamicQuery dynamicQuery();
 
@@ -174,11 +174,11 @@ public interface SamlSpAuthRequestLocalService extends BaseLocalService,
 		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SamlSpAuthRequest fetchSamlSpAuthRequest(
-		java.lang.String samlIdpEntityId, java.lang.String samlSpAuthRequestKey);
+	public SamlSpAuthRequest fetchSamlSpAuthRequest(long samlSpAuthnRequestId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SamlSpAuthRequest fetchSamlSpAuthRequest(long samlSpAuthnRequestId);
+	public SamlSpAuthRequest fetchSamlSpAuthRequest(
+		java.lang.String samlIdpEntityId, java.lang.String samlSpAuthRequestKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -198,11 +198,6 @@ public interface SamlSpAuthRequestLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SamlSpAuthRequest getSamlSpAuthRequest(
-		java.lang.String samlIdpEntityId, java.lang.String samlSpAuthRequestKey)
-		throws PortalException;
-
 	/**
 	* Returns the saml sp auth request with the primary key.
 	*
@@ -212,6 +207,11 @@ public interface SamlSpAuthRequestLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SamlSpAuthRequest getSamlSpAuthRequest(long samlSpAuthnRequestId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SamlSpAuthRequest getSamlSpAuthRequest(
+		java.lang.String samlIdpEntityId, java.lang.String samlSpAuthRequestKey)
 		throws PortalException;
 
 	/**

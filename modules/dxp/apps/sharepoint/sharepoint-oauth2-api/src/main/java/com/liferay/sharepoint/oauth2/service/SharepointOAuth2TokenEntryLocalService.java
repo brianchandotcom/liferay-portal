@@ -61,6 +61,10 @@ public interface SharepointOAuth2TokenEntryLocalService extends BaseLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SharepointOAuth2TokenEntryLocalServiceUtil} to access the sharepoint o auth2 token entry local service. Add custom service methods to {@link com.liferay.sharepoint.oauth2.service.impl.SharepointOAuth2TokenEntryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public SharepointOAuth2TokenEntry addSharepointOAuth2TokenEntry(
+		long userId, java.lang.String configurationPid,
+		java.lang.String accessToken, java.lang.String refreshToken,
+		Date expirationDate) throws PortalException;
 
 	/**
 	* Adds the sharepoint o auth2 token entry to the database. Also notifies the appropriate model listeners.
@@ -71,11 +75,6 @@ public interface SharepointOAuth2TokenEntryLocalService extends BaseLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public SharepointOAuth2TokenEntry addSharepointOAuth2TokenEntry(
 		SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry);
-
-	public SharepointOAuth2TokenEntry addSharepointOAuth2TokenEntry(
-		long userId, java.lang.String configurationPid,
-		java.lang.String accessToken, java.lang.String refreshToken,
-		Date expirationDate) throws PortalException;
 
 	/**
 	* Creates a new sharepoint o auth2 token entry with the primary key. Does not add the sharepoint o auth2 token entry to the database.
@@ -94,16 +93,6 @@ public interface SharepointOAuth2TokenEntryLocalService extends BaseLocalService
 		throws PortalException;
 
 	/**
-	* Deletes the sharepoint o auth2 token entry from the database. Also notifies the appropriate model listeners.
-	*
-	* @param sharepointOAuth2TokenEntry the sharepoint o auth2 token entry
-	* @return the sharepoint o auth2 token entry that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public SharepointOAuth2TokenEntry deleteSharepointOAuth2TokenEntry(
-		SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry);
-
-	/**
 	* Deletes the sharepoint o auth2 token entry with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param sharepointOAuth2TokenEntryId the primary key of the sharepoint o auth2 token entry
@@ -116,6 +105,16 @@ public interface SharepointOAuth2TokenEntryLocalService extends BaseLocalService
 
 	public void deleteSharepointOAuth2TokenEntry(long userId,
 		java.lang.String configurationPid) throws PortalException;
+
+	/**
+	* Deletes the sharepoint o auth2 token entry from the database. Also notifies the appropriate model listeners.
+	*
+	* @param sharepointOAuth2TokenEntry the sharepoint o auth2 token entry
+	* @return the sharepoint o auth2 token entry that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public SharepointOAuth2TokenEntry deleteSharepointOAuth2TokenEntry(
+		SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry);
 
 	public DynamicQuery dynamicQuery();
 

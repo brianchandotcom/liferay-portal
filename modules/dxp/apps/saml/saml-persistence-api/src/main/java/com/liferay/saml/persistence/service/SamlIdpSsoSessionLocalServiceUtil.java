@@ -86,17 +86,6 @@ public class SamlIdpSsoSessionLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the saml idp sso session from the database. Also notifies the appropriate model listeners.
-	*
-	* @param samlIdpSsoSession the saml idp sso session
-	* @return the saml idp sso session that was removed
-	*/
-	public static com.liferay.saml.persistence.model.SamlIdpSsoSession deleteSamlIdpSsoSession(
-		com.liferay.saml.persistence.model.SamlIdpSsoSession samlIdpSsoSession) {
-		return getService().deleteSamlIdpSsoSession(samlIdpSsoSession);
-	}
-
-	/**
 	* Deletes the saml idp sso session with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param samlIdpSsoSessionId the primary key of the saml idp sso session
@@ -107,6 +96,17 @@ public class SamlIdpSsoSessionLocalServiceUtil {
 		long samlIdpSsoSessionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteSamlIdpSsoSession(samlIdpSsoSessionId);
+	}
+
+	/**
+	* Deletes the saml idp sso session from the database. Also notifies the appropriate model listeners.
+	*
+	* @param samlIdpSsoSession the saml idp sso session
+	* @return the saml idp sso session that was removed
+	*/
+	public static com.liferay.saml.persistence.model.SamlIdpSsoSession deleteSamlIdpSsoSession(
+		com.liferay.saml.persistence.model.SamlIdpSsoSession samlIdpSsoSession) {
+		return getService().deleteSamlIdpSsoSession(samlIdpSsoSession);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {

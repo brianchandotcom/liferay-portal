@@ -41,6 +41,16 @@ public class OAuthApplicationLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.oauth.service.impl.OAuthApplicationLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.oauth.model.OAuthApplication addOAuthApplication(
+		long userId, java.lang.String name, java.lang.String description,
+		int accessLevel, boolean shareableAccessToken,
+		java.lang.String callbackURI, java.lang.String websiteURL,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addOAuthApplication(userId, name, description, accessLevel,
+			shareableAccessToken, callbackURI, websiteURL, serviceContext);
+	}
 
 	/**
 	* Adds the o auth application to the database. Also notifies the appropriate model listeners.
@@ -51,17 +61,6 @@ public class OAuthApplicationLocalServiceUtil {
 	public static com.liferay.oauth.model.OAuthApplication addOAuthApplication(
 		com.liferay.oauth.model.OAuthApplication oAuthApplication) {
 		return getService().addOAuthApplication(oAuthApplication);
-	}
-
-	public static com.liferay.oauth.model.OAuthApplication addOAuthApplication(
-		long userId, java.lang.String name, java.lang.String description,
-		int accessLevel, boolean shareableAccessToken,
-		java.lang.String callbackURI, java.lang.String websiteURL,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addOAuthApplication(userId, name, description, accessLevel,
-			shareableAccessToken, callbackURI, websiteURL, serviceContext);
 	}
 
 	/**
@@ -81,19 +80,6 @@ public class OAuthApplicationLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the o auth application from the database. Also notifies the appropriate model listeners.
-	*
-	* @param oAuthApplication the o auth application
-	* @return the o auth application that was removed
-	* @throws PortalException
-	*/
-	public static com.liferay.oauth.model.OAuthApplication deleteOAuthApplication(
-		com.liferay.oauth.model.OAuthApplication oAuthApplication)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteOAuthApplication(oAuthApplication);
-	}
-
-	/**
 	* Deletes the o auth application with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param oAuthApplicationId the primary key of the o auth application
@@ -104,6 +90,19 @@ public class OAuthApplicationLocalServiceUtil {
 		long oAuthApplicationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteOAuthApplication(oAuthApplicationId);
+	}
+
+	/**
+	* Deletes the o auth application from the database. Also notifies the appropriate model listeners.
+	*
+	* @param oAuthApplication the o auth application
+	* @return the o auth application that was removed
+	* @throws PortalException
+	*/
+	public static com.liferay.oauth.model.OAuthApplication deleteOAuthApplication(
+		com.liferay.oauth.model.OAuthApplication oAuthApplication)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteOAuthApplication(oAuthApplication);
 	}
 
 	/**
@@ -194,13 +193,13 @@ public class OAuthApplicationLocalServiceUtil {
 	}
 
 	public static com.liferay.oauth.model.OAuthApplication fetchOAuthApplication(
-		java.lang.String consumerKey) {
-		return getService().fetchOAuthApplication(consumerKey);
+		long oAuthApplicationId) {
+		return getService().fetchOAuthApplication(oAuthApplicationId);
 	}
 
 	public static com.liferay.oauth.model.OAuthApplication fetchOAuthApplication(
-		long oAuthApplicationId) {
-		return getService().fetchOAuthApplication(oAuthApplicationId);
+		java.lang.String consumerKey) {
+		return getService().fetchOAuthApplication(consumerKey);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
@@ -209,12 +208,6 @@ public class OAuthApplicationLocalServiceUtil {
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	public static com.liferay.oauth.model.OAuthApplication getOAuthApplication(
-		java.lang.String consumerKey)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getOAuthApplication(consumerKey);
 	}
 
 	/**
@@ -228,6 +221,12 @@ public class OAuthApplicationLocalServiceUtil {
 		long oAuthApplicationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getOAuthApplication(oAuthApplicationId);
+	}
+
+	public static com.liferay.oauth.model.OAuthApplication getOAuthApplication(
+		java.lang.String consumerKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getOAuthApplication(consumerKey);
 	}
 
 	/**
@@ -303,17 +302,6 @@ public class OAuthApplicationLocalServiceUtil {
 		return getService().updateLogo(oAuthApplicationId, inputStream);
 	}
 
-	/**
-	* Updates the o auth application in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param oAuthApplication the o auth application
-	* @return the o auth application that was updated
-	*/
-	public static com.liferay.oauth.model.OAuthApplication updateOAuthApplication(
-		com.liferay.oauth.model.OAuthApplication oAuthApplication) {
-		return getService().updateOAuthApplication(oAuthApplication);
-	}
-
 	public static com.liferay.oauth.model.OAuthApplication updateOAuthApplication(
 		long oAuthApplicationId, java.lang.String name,
 		java.lang.String description, boolean shareableAccessToken,
@@ -324,6 +312,17 @@ public class OAuthApplicationLocalServiceUtil {
 				   .updateOAuthApplication(oAuthApplicationId, name,
 			description, shareableAccessToken, callbackURI, websiteURL,
 			serviceContext);
+	}
+
+	/**
+	* Updates the o auth application in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param oAuthApplication the o auth application
+	* @return the o auth application that was updated
+	*/
+	public static com.liferay.oauth.model.OAuthApplication updateOAuthApplication(
+		com.liferay.oauth.model.OAuthApplication oAuthApplication) {
+		return getService().updateOAuthApplication(oAuthApplication);
 	}
 
 	public static OAuthApplicationLocalService getService() {

@@ -41,6 +41,15 @@ public class OAuthUserLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.oauth.service.impl.OAuthUserLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.oauth.model.OAuthUser addOAuthUser(long userId,
+		long oAuthApplicationId, java.lang.String accessToken,
+		java.lang.String accessSecret,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addOAuthUser(userId, oAuthApplicationId, accessToken,
+			accessSecret, serviceContext);
+	}
 
 	/**
 	* Adds the o auth user to the database. Also notifies the appropriate model listeners.
@@ -53,16 +62,6 @@ public class OAuthUserLocalServiceUtil {
 		return getService().addOAuthUser(oAuthUser);
 	}
 
-	public static com.liferay.oauth.model.OAuthUser addOAuthUser(long userId,
-		long oAuthApplicationId, java.lang.String accessToken,
-		java.lang.String accessSecret,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addOAuthUser(userId, oAuthApplicationId, accessToken,
-			accessSecret, serviceContext);
-	}
-
 	/**
 	* Creates a new o auth user with the primary key. Does not add the o auth user to the database.
 	*
@@ -72,19 +71,6 @@ public class OAuthUserLocalServiceUtil {
 	public static com.liferay.oauth.model.OAuthUser createOAuthUser(
 		long oAuthUserId) {
 		return getService().createOAuthUser(oAuthUserId);
-	}
-
-	/**
-	* Deletes the o auth user from the database. Also notifies the appropriate model listeners.
-	*
-	* @param oAuthUser the o auth user
-	* @return the o auth user that was removed
-	* @throws PortalException
-	*/
-	public static com.liferay.oauth.model.OAuthUser deleteOAuthUser(
-		com.liferay.oauth.model.OAuthUser oAuthUser)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteOAuthUser(oAuthUser);
 	}
 
 	/**
@@ -104,6 +90,19 @@ public class OAuthUserLocalServiceUtil {
 		long userId, long oAuthApplicationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteOAuthUser(userId, oAuthApplicationId);
+	}
+
+	/**
+	* Deletes the o auth user from the database. Also notifies the appropriate model listeners.
+	*
+	* @param oAuthUser the o auth user
+	* @return the o auth user that was removed
+	* @throws PortalException
+	*/
+	public static com.liferay.oauth.model.OAuthUser deleteOAuthUser(
+		com.liferay.oauth.model.OAuthUser oAuthUser)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteOAuthUser(oAuthUser);
 	}
 
 	/**
@@ -194,11 +193,6 @@ public class OAuthUserLocalServiceUtil {
 	}
 
 	public static com.liferay.oauth.model.OAuthUser fetchOAuthUser(
-		java.lang.String accessToken) {
-		return getService().fetchOAuthUser(accessToken);
-	}
-
-	public static com.liferay.oauth.model.OAuthUser fetchOAuthUser(
 		long oAuthUserId) {
 		return getService().fetchOAuthUser(oAuthUserId);
 	}
@@ -206,6 +200,11 @@ public class OAuthUserLocalServiceUtil {
 	public static com.liferay.oauth.model.OAuthUser fetchOAuthUser(
 		long userId, long oAuthApplicationId) {
 		return getService().fetchOAuthUser(userId, oAuthApplicationId);
+	}
+
+	public static com.liferay.oauth.model.OAuthUser fetchOAuthUser(
+		java.lang.String accessToken) {
+		return getService().fetchOAuthUser(accessToken);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
@@ -230,12 +229,6 @@ public class OAuthUserLocalServiceUtil {
 				   .getOAuthApplicationOAuthUsersCount(oAuthApplicationId);
 	}
 
-	public static com.liferay.oauth.model.OAuthUser getOAuthUser(
-		java.lang.String accessToken)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getOAuthUser(accessToken);
-	}
-
 	/**
 	* Returns the o auth user with the primary key.
 	*
@@ -253,6 +246,12 @@ public class OAuthUserLocalServiceUtil {
 		long oAuthApplicationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getOAuthUser(userId, oAuthApplicationId);
+	}
+
+	public static com.liferay.oauth.model.OAuthUser getOAuthUser(
+		java.lang.String accessToken)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getOAuthUser(accessToken);
 	}
 
 	/**
@@ -306,6 +305,16 @@ public class OAuthUserLocalServiceUtil {
 		return getService().getUserOAuthUsersCount(userId);
 	}
 
+	public static com.liferay.oauth.model.OAuthUser updateOAuthUser(
+		long userId, long oAuthApplicationId, java.lang.String accessToken,
+		java.lang.String accessSecret,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateOAuthUser(userId, oAuthApplicationId, accessToken,
+			accessSecret, serviceContext);
+	}
+
 	/**
 	* Updates the o auth user in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -315,16 +324,6 @@ public class OAuthUserLocalServiceUtil {
 	public static com.liferay.oauth.model.OAuthUser updateOAuthUser(
 		com.liferay.oauth.model.OAuthUser oAuthUser) {
 		return getService().updateOAuthUser(oAuthUser);
-	}
-
-	public static com.liferay.oauth.model.OAuthUser updateOAuthUser(
-		long userId, long oAuthApplicationId, java.lang.String accessToken,
-		java.lang.String accessSecret,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateOAuthUser(userId, oAuthApplicationId, accessToken,
-			accessSecret, serviceContext);
 	}
 
 	public static OAuthUserLocalService getService() {

@@ -15,13 +15,13 @@
 package com.liferay.document.library.internal.upgrade.v1_0_1;
 
 import com.liferay.document.library.configuration.DLFileEntryConfiguration;
+import com.liferay.document.library.internal.constants.LegacyDLKeys;
+import com.liferay.portal.configuration.upgrade.util.PrefsPropsToConfigurationUpgradeItem;
+import com.liferay.portal.configuration.upgrade.util.PrefsPropsToConfigurationUpgradeUtil;
+import com.liferay.portal.configuration.upgrade.util.PrefsPropsValueType;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
-
-import java.util.Dictionary;
 
 import javax.portlet.PortletPreferences;
 
@@ -48,26 +48,18 @@ public class UpgradeDLFileEntryConfiguration extends UpgradeProcess {
 	private void _upgradeConfiguration() throws Exception {
 		Configuration configuration = _configurationAdmin.getConfiguration(
 			DLFileEntryConfiguration.class.getName(), StringPool.QUESTION);
-
-		Dictionary properties = configuration.getProperties();
-
-		if (properties == null) {
-			properties = new HashMapDictionary();
-		}
-
 		PortletPreferences portletPreferences = _prefsProps.getPreferences();
 
-		String oldPropertyKey = "dl.file.entry.previewable.processor.max.size";
+		PrefsPropsToConfigurationUpgradeItem[]
+			prefsPropsToConfigurationUpgradeItems = {
+				new PrefsPropsToConfigurationUpgradeItem(
+					LegacyDLKeys.DL_FILE_ENTRY_PREVIEWABLE_PROCESSOR_MAX_SIZE,
+					PrefsPropsValueType.LONG, "previewableProcessorMaxSize")
+			};
 
-		String oldPropertyValue = _prefsProps.getString(oldPropertyKey);
-
-		if (Validator.isNotNull(oldPropertyValue)) {
-			properties.put("previewableProcessorMaxSize", oldPropertyValue);
-
-			portletPreferences.reset(oldPropertyKey);
-		}
-
-		configuration.update(properties);
+		PrefsPropsToConfigurationUpgradeUtil.upgradePrefsPropsToConfiguration(
+			portletPreferences, configuration,
+			prefsPropsToConfigurationUpgradeItems);
 	}
 
 	private final ConfigurationAdmin _configurationAdmin;

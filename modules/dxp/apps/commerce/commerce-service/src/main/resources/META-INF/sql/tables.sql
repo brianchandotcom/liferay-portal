@@ -47,6 +47,33 @@ create table CommerceCountry (
 	lastPublishDate DATE null
 );
 
+create table CommerceOrder (
+	commerceOrderId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	orderUserId LONG,
+	status INTEGER
+);
+
+create table CommerceOrderItem (
+	commerceOrderItemId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	commerceOrderId LONG,
+	CPDefinitionId LONG,
+	CPInstanceId LONG,
+	quantity INTEGER,
+	json VARCHAR(75) null
+);
+
 create table CommerceRegion (
 	uuid_ VARCHAR(75) null,
 	commerceRegionId LONG not null primary key,

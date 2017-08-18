@@ -21,6 +21,8 @@ import com.liferay.commerce.service.CommerceRegionLocalService;
 import com.liferay.commerce.service.persistence.CommerceCartItemPersistence;
 import com.liferay.commerce.service.persistence.CommerceCartPersistence;
 import com.liferay.commerce.service.persistence.CommerceCountryPersistence;
+import com.liferay.commerce.service.persistence.CommerceOrderItemPersistence;
+import com.liferay.commerce.service.persistence.CommerceOrderPersistence;
 import com.liferay.commerce.service.persistence.CommerceRegionPersistence;
 
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
@@ -550,6 +552,82 @@ public abstract class CommerceRegionLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the commerce order local service.
+	 *
+	 * @return the commerce order local service
+	 */
+	public com.liferay.commerce.service.CommerceOrderLocalService getCommerceOrderLocalService() {
+		return commerceOrderLocalService;
+	}
+
+	/**
+	 * Sets the commerce order local service.
+	 *
+	 * @param commerceOrderLocalService the commerce order local service
+	 */
+	public void setCommerceOrderLocalService(
+		com.liferay.commerce.service.CommerceOrderLocalService commerceOrderLocalService) {
+		this.commerceOrderLocalService = commerceOrderLocalService;
+	}
+
+	/**
+	 * Returns the commerce order persistence.
+	 *
+	 * @return the commerce order persistence
+	 */
+	public CommerceOrderPersistence getCommerceOrderPersistence() {
+		return commerceOrderPersistence;
+	}
+
+	/**
+	 * Sets the commerce order persistence.
+	 *
+	 * @param commerceOrderPersistence the commerce order persistence
+	 */
+	public void setCommerceOrderPersistence(
+		CommerceOrderPersistence commerceOrderPersistence) {
+		this.commerceOrderPersistence = commerceOrderPersistence;
+	}
+
+	/**
+	 * Returns the commerce order item local service.
+	 *
+	 * @return the commerce order item local service
+	 */
+	public com.liferay.commerce.service.CommerceOrderItemLocalService getCommerceOrderItemLocalService() {
+		return commerceOrderItemLocalService;
+	}
+
+	/**
+	 * Sets the commerce order item local service.
+	 *
+	 * @param commerceOrderItemLocalService the commerce order item local service
+	 */
+	public void setCommerceOrderItemLocalService(
+		com.liferay.commerce.service.CommerceOrderItemLocalService commerceOrderItemLocalService) {
+		this.commerceOrderItemLocalService = commerceOrderItemLocalService;
+	}
+
+	/**
+	 * Returns the commerce order item persistence.
+	 *
+	 * @return the commerce order item persistence
+	 */
+	public CommerceOrderItemPersistence getCommerceOrderItemPersistence() {
+		return commerceOrderItemPersistence;
+	}
+
+	/**
+	 * Sets the commerce order item persistence.
+	 *
+	 * @param commerceOrderItemPersistence the commerce order item persistence
+	 */
+	public void setCommerceOrderItemPersistence(
+		CommerceOrderItemPersistence commerceOrderItemPersistence) {
+		this.commerceOrderItemPersistence = commerceOrderItemPersistence;
+	}
+
+	/**
 	 * Returns the commerce region local service.
 	 *
 	 * @return the commerce region local service
@@ -764,6 +842,14 @@ public abstract class CommerceRegionLocalServiceBaseImpl
 	protected com.liferay.commerce.service.CommerceCountryLocalService commerceCountryLocalService;
 	@BeanReference(type = CommerceCountryPersistence.class)
 	protected CommerceCountryPersistence commerceCountryPersistence;
+	@BeanReference(type = com.liferay.commerce.service.CommerceOrderLocalService.class)
+	protected com.liferay.commerce.service.CommerceOrderLocalService commerceOrderLocalService;
+	@BeanReference(type = CommerceOrderPersistence.class)
+	protected CommerceOrderPersistence commerceOrderPersistence;
+	@BeanReference(type = com.liferay.commerce.service.CommerceOrderItemLocalService.class)
+	protected com.liferay.commerce.service.CommerceOrderItemLocalService commerceOrderItemLocalService;
+	@BeanReference(type = CommerceOrderItemPersistence.class)
+	protected CommerceOrderItemPersistence commerceOrderItemPersistence;
 	@BeanReference(type = CommerceRegionLocalService.class)
 	protected CommerceRegionLocalService commerceRegionLocalService;
 	@BeanReference(type = CommerceRegionPersistence.class)

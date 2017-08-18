@@ -10,6 +10,12 @@
 	<bean class="com.liferay.commerce.service.impl.CommerceCountryLocalServiceImpl" id="com.liferay.commerce.service.CommerceCountryLocalService" />
 	<bean class="com.liferay.commerce.service.impl.CommerceCountryServiceImpl" id="com.liferay.commerce.service.CommerceCountryService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceCountryPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceCountryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.service.impl.CommerceOrderLocalServiceImpl" id="com.liferay.commerce.service.CommerceOrderLocalService" />
+	<bean class="com.liferay.commerce.service.impl.CommerceOrderServiceImpl" id="com.liferay.commerce.service.CommerceOrderService" />
+	<bean class="com.liferay.commerce.service.persistence.impl.CommerceOrderPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceOrderPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.service.impl.CommerceOrderItemLocalServiceImpl" id="com.liferay.commerce.service.CommerceOrderItemLocalService" />
+	<bean class="com.liferay.commerce.service.impl.CommerceOrderItemServiceImpl" id="com.liferay.commerce.service.CommerceOrderItemService" />
+	<bean class="com.liferay.commerce.service.persistence.impl.CommerceOrderItemPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceOrderItemPersistence" parent="basePersistence" />
 	<bean class="com.liferay.commerce.service.impl.CommerceRegionLocalServiceImpl" id="com.liferay.commerce.service.CommerceRegionLocalService" />
 	<bean class="com.liferay.commerce.service.impl.CommerceRegionServiceImpl" id="com.liferay.commerce.service.CommerceRegionService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceRegionPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceRegionPersistence" parent="basePersistence" />

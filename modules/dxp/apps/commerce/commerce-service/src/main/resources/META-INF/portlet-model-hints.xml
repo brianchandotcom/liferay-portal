@@ -59,6 +59,31 @@
 		<field name="active" type="boolean" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
+	<model name="com.liferay.commerce.model.CommerceOrder">
+		<field name="commerceOrderId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="orderUserId" type="long" />
+		<field name="status" type="int" />
+	</model>
+	<model name="com.liferay.commerce.model.CommerceOrderItem">
+		<field name="commerceOrderItemId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="commerceOrderId" type="long" />
+		<field name="CPDefinitionId" type="long" />
+		<field name="CPInstanceId" type="long" />
+		<field name="quantity" type="int" />
+		<field name="json" type="String" />
+	</model>
 	<model name="com.liferay.commerce.model.CommerceRegion">
 		<field name="uuid" type="String" />
 		<field name="commerceRegionId" type="long" />

@@ -32,8 +32,6 @@
 			</aui:script>
 		</c:if>
 
-		<c:if test="<%= !cmd.equals(Constants.IMPORT) %>">
-			<aui:input disabled="<%= disableInputs %>" helpMessage='<%= cmd.equals(Constants.EXPORT) ? "deletions-help-export" : "deletions-help" %>' label='<%= cmd.equals(Constants.EXPORT) ? "export-individual-deletions" : "replicate-individual-deletions" %>' name="<%= PortletDataHandlerKeys.DELETIONS %>" type="toggle-switch" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.DELETIONS, false) %>" />
-		</c:if>
+		<aui:input disabled="<%= disableInputs %>" helpMessage='<%= cmd.equals(Constants.EXPORT) ? "deletions-help-export" : "deletions-help" %>' label='<%= cmd.equals(Constants.EXPORT) ? "export-individual-deletions" : "replicate-individual-deletions" %>' name="<%= PortletDataHandlerKeys.DELETIONS %>" type="toggle-switch" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.DELETIONS, false) %>" />
 	</aui:fieldset>
 </c:if>

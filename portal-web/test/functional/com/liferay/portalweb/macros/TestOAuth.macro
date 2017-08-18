@@ -11,26 +11,26 @@
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
-	<command name="getConsumerKeyAndSecret" returns="consumer_key,consumer_secret">
-		<var name="key_name" value="${key_name}" />
+	<command name="getConsumerKeyAndSecret" returns="consumerKey,consumerSecret">
+		<var name="keyName" value="${keyName}" />
 
-		<execute function="AssertClick" locator1="TestOAuth#OAUTH_ADMIN_TABLE_NAME" value1="${key_name}" />
+		<execute function="AssertClick" locator1="TestOAuth#OAUTH_ADMIN_TABLE_NAME" value1="${keyName}" />
 
-		<var locator="TestOAuth#OAUTH_ADMIN_APPLICATION_CREDENTIALS" name="application_credentials" />
+		<var locator="TestOAuth#OAUTH_ADMIN_applicationCredentials" name="applicationCredentials" />
 
-		<var method="StringUtil#stripBetween('${application_credentials}', 'Application', 'Secret: ')" name="consumer_secret" />
+		<var method="StringUtil#stripBetween('${applicationCredentials}', 'Application', 'Secret: ')" name="consumerSecret" />
 
-		<var method="StringUtil#stripBetween('${application_credentials}', 'Application', 'Key: ')" name="stripped_result" />
+		<var method="StringUtil#stripBetween('${applicationCredentials}', 'Application', 'Key: ')" name="strippedResult" />
 
-		<var method="StringUtil#stripBetween('${stripped_result}', ' Consumer', '${consumer_secret}')" name="consumer_key" />
+		<var method="StringUtil#stripBetween('${strippedResult}', ' Consumer', '${consumerSecret}')" name="consumerKey" />
 
-		<return name="consumer_key" value="${consumer_key}" />
-		<return name="consumer_secret" value="${consumer_secret}" />
+		<return name="consumerKey" value="${consumerKey}" />
+		<return name="consumerSecret" value="${consumerSecret}" />
 	</command>
 
 	<command name="testConsumerKeyAndSecret">
-		<execute function="Type" locator1="TestOAuth#TEST_PORTLET_KEY" value1="${consumer_key}" />
-		<execute function="Type" locator1="TestOAuth#TEST_PORTLET_SECRET" value1="${consumer_secret}" />
+		<execute function="Type" locator1="TestOAuth#TEST_PORTLET_KEY" value1="${consumerKey}" />
+		<execute function="Type" locator1="TestOAuth#TEST_PORTLET_SECRET" value1="${consumerSecret}" />
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 

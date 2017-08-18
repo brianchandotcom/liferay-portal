@@ -25,9 +25,9 @@
 		</execute>
 
 		<execute macro="TestOAuth#getConsumerKeyAndSecret">
-			<var name="key_name" value="oauth1" />
-			<return from="consumer_key" name="consumer_key" />
-			<return from="consumer_secret" name="consumer_secret" />
+			<return from="consumerKey" name="consumerKey" />
+			<return from="consumerSecret" name="consumerSecret" />
+			<var name="keyName" value="oauth1" />
 		</execute>
 
 		<execute macro="Page#add">
@@ -39,8 +39,8 @@
 		</execute>
 
 		<execute macro="TestOAuth#testConsumerKeyAndSecret">
-			<var name="consumer_key" value="${consumer_key}" />
-			<var name="consumer_secret" value="${consumer_secret}" />
+			<var name="consumerKey" value="${consumerKey}" />
+			<var name="consumerSecret" value="${consumerSecret}" />
 			<var name="webID" value="liferay.com" />
 		</execute>
 

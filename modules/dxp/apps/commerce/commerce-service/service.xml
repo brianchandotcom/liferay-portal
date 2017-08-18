@@ -145,6 +145,87 @@
 			<finder-column name="active" />
 		</finder>
 	</entity>
+	<entity local-service="true" name="CommerceOrder" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceOrderId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="orderUserId" type="long" />
+		<column name="status" type="int" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- References -->
+
+		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
+	</entity>
+	<entity local-service="true" name="CommerceOrderItem" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceOrderItemId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="commerceOrderId" type="long" />
+		<column name="CPDefinitionId" type="long" />
+		<column name="CPInstanceId" type="long" />
+		<column name="quantity" type="int" />
+		<column name="json" type="String" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CommerceOrderId" return-type="Collection">
+			<finder-column name="commerceOrderId" />
+		</finder>
+		<finder name="CPDefinitionId" return-type="Collection">
+			<finder-column name="CPDefinitionId" />
+		</finder>
+		<finder name="CPInstanceId" return-type="Collection">
+			<finder-column name="CPInstanceId" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
+	</entity>
 	<entity local-service="true" name="CommerceRegion" remote-service="true" uuid="true">
 
 		<!-- PK fields -->

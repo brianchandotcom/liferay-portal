@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.security.permission.ResourcePermissionChecker;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Jorge Ferrer
+ * @author Pavel Savinov
  */
 @Component(
 	property = {"resource.name=" + AssetDisplayPermission.RESOURCE_NAME},

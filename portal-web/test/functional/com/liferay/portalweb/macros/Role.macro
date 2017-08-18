@@ -670,7 +670,7 @@
 		<if>
 			<equals arg1="${remove}" arg2="true" />
 				<then>
-					<execute function="Confirm" value1="Updating the chosen permissions will overwrite the respective individually defined permissions for one or more of these resource types: Bookmarks Entry, Bookmarks Folder, Calendar Booking, Calendar, Calendar Resource" />
+					<execute function="Confirm#assertPartialConfirmationNoWait" value1="Updating the chosen permissions will overwrite the respective individually defined permissions for one or more of these resource types" />
 				</then>
 		</if>
 

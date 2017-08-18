@@ -12,13 +12,13 @@
 		<weight>1</weight>
 		<permissions>
 			<supports>
-				<action-key>MANAGE_CARTS</action-key>
+				<action-key>MANAGE_COMMERCE_CARTS</action-key>
 				<action-key>MANAGE_COMMERCE_COUNTRIES</action-key>
 			</supports>
 			<site-member-defaults />
 			<guest-defaults />
 			<guest-unsupported>
-				<action-key>MANAGE_CARTS</action-key>
+				<action-key>MANAGE_COMMERCE_CARTS</action-key>
 				<action-key>MANAGE_COMMERCE_COUNTRIES</action-key>
 			</guest-unsupported>
 		</permissions>

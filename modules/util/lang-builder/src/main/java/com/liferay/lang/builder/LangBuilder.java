@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedWriter;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.language.LanguageConstants;
 import com.liferay.portal.kernel.language.LanguageValidator;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.PropertiesUtil;
@@ -71,6 +72,9 @@ public class LangBuilder {
 
 		System.setProperty("line.separator", StringPool.NEW_LINE);
 
+		String excludedLanguageIdsString = GetterUtil.getString(
+			arguments.get("lang.excluded.language.ids"),
+			StringUtil.merge(LangBuilderArgs.EXCLUDED_LANGUAGE_IDS));
 		String langDirName = GetterUtil.getString(
 			arguments.get(LanguageConstants.KEY_DIR),
 			LangBuilderArgs.LANG_DIR_NAME);
@@ -88,20 +92,24 @@ public class LangBuilder {
 		boolean buildCurrentBranch = ArgumentsUtil.getBoolean(
 			arguments, "build.current.branch", false);
 
+		String[] excludedLanguageIds = StringUtil.split(
+			excludedLanguageIdsString);
+
 		if (buildCurrentBranch) {
 			String gitWorkingBranchName = ArgumentsUtil.getString(
 				arguments, "git.working.branch.name", "master");
 
 			_processCurrentBranch(
-				langFileName, plugin, portalLanguagePropertiesFileName,
-				translate, translateSubscriptionKey, gitWorkingBranchName);
+				excludedLanguageIds, langFileName, plugin,
+				portalLanguagePropertiesFileName, translate,
+				translateSubscriptionKey, gitWorkingBranchName);
 
 			return;
 		}
 
 		try {
 			new LangBuilder(
-				langDirName, langFileName, plugin,
+				excludedLanguageIds, langDirName, langFileName, plugin,
 				portalLanguagePropertiesFileName, translate,
 				translateSubscriptionKey);
 		}
@@ -111,11 +119,13 @@ public class LangBuilder {
 	}
 
 	public LangBuilder(
-			String langDirName, String langFileName, boolean plugin,
+			String[] excludedLanguageIds, String langDirName,
+			String langFileName, boolean plugin,
 			String portalLanguagePropertiesFileName, boolean translate,
 			String translateSubscriptionKey)
 		throws Exception {
 
+		_excludedLanguageIds = excludedLanguageIds;
 		_langDirName = langDirName;
 		_langFileName = langFileName;
 		_translate = translate;
@@ -246,7 +256,7 @@ public class LangBuilder {
 	}
 
 	private static void _processCurrentBranch(
-			String langFileName, boolean plugin,
+			String[] excludedLanguageIds, String langFileName, boolean plugin,
 			String portalLanguagePropertiesFileName, boolean translate,
 			String translateSubscriptionKey, String gitWorkingBranchName)
 		throws Exception {
@@ -268,7 +278,7 @@ public class LangBuilder {
 				String langDirName = basedir + fileName.substring(0, pos + 7);
 
 				new LangBuilder(
-					langDirName, langFileName, plugin,
+					excludedLanguageIds, langDirName, langFileName, plugin,
 					portalLanguagePropertiesFileName, translate,
 					translateSubscriptionKey);
 			}
@@ -764,11 +774,7 @@ public class LangBuilder {
 
 		// LPS-61961
 
-		if (toLanguageId.equals("da") || toLanguageId.equals("de") ||
-			toLanguageId.equals("fi") || toLanguageId.equals("ja") ||
-			toLanguageId.equals("nl") || toLanguageId.equals("pt_PT") ||
-			toLanguageId.equals("sv")) {
-
+		if (ArrayUtil.contains(_excludedLanguageIds, toLanguageId)) {
 			return null;
 		}
 
@@ -820,6 +826,7 @@ public class LangBuilder {
 		return toText;
 	}
 
+	private final String[] _excludedLanguageIds;
 	private final Set<String> _keysWithUpdatedValues = new HashSet<>();
 	private final String _langDirName;
 	private final String _langFileName;

@@ -27,17 +27,13 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.MembershipRequestLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.security.exportimport.UserExporter;
 import com.liferay.portal.security.ldap.internal.UserImportTransactionThreadLocal;
 
-import java.io.Serializable;
-
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.Callable;
 
 import org.osgi.service.component.annotations.Component;
@@ -104,33 +100,25 @@ public class UserModelListener extends BaseModelListener<User> {
 			user.getOriginalEmailAddress());
 	}
 
-	protected void exportToLDAP(final User user) throws Exception {
+	protected void exportToLDAP(final User user) {
 		if (user.isDefaultUser() ||
 			UserImportTransactionThreadLocal.isOriginatesFromImport()) {
 
 			return;
 		}
 
-		Callable<Void> callable = new Callable<Void>() {
-
-			@Override
-			public Void call() throws Exception {
-				ServiceContext serviceContext =
-					ServiceContextThreadLocal.getServiceContext();
-
-				Map<String, Serializable> expandoBridgeAttributes = null;
-
-				if (serviceContext != null) {
-					expandoBridgeAttributes =
-						serviceContext.getExpandoBridgeAttributes();
+		Callable<Void> callable = CallableUtil.getCallable(
+			expandoBridgeAttributes -> {
+				try {
+					_userExporter.exportUser(user, expandoBridgeAttributes);
 				}
-
-				_userExporter.exportUser(user, expandoBridgeAttributes);
-
-				return null;
-			}
-
-		};
+				catch (Exception e) {
+					_log.error(
+						"Unable to export user with user ID " +
+							user.getUserId() + " to LDAP on after create",
+						e);
+				}
+			});
 
 		TransactionCommitCallbackUtil.registerCallback(callable);
 	}

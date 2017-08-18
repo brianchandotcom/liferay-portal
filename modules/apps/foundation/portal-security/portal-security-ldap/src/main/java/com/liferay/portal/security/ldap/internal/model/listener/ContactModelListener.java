@@ -20,15 +20,12 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.security.exportimport.UserExporter;
 import com.liferay.portal.security.ldap.internal.UserImportTransactionThreadLocal;
 
-import java.io.Serializable;
-
-import java.util.Map;
+import java.util.concurrent.Callable;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -68,7 +65,7 @@ public class ContactModelListener extends BaseModelListener<Contact> {
 		}
 	}
 
-	protected void exportToLDAP(Contact contact) throws Exception {
+	protected void exportToLDAP(final Contact contact) {
 		if (UserImportTransactionThreadLocal.isOriginatesFromImport()) {
 			return;
 		}
@@ -79,17 +76,20 @@ public class ContactModelListener extends BaseModelListener<Contact> {
 			return;
 		}
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
+		Callable<Void> callable = CallableUtil.getCallable(
+			expandoBridgeAttributes -> {
+				try {
+					_userExporter.exportUser(contact, expandoBridgeAttributes);
+				}
+				catch (Exception e) {
+					_log.error(
+						"Unable to export contact with user ID " +
+							contact.getUserId() + " to LDAP on after create",
+						e);
+				}
+			});
 
-		Map<String, Serializable> expandoBridgeAttributes = null;
-
-		if (serviceContext != null) {
-			expandoBridgeAttributes =
-				serviceContext.getExpandoBridgeAttributes();
-		}
-
-		_userExporter.exportUser(contact, expandoBridgeAttributes);
+		TransactionCommitCallbackUtil.registerCallback(callable);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

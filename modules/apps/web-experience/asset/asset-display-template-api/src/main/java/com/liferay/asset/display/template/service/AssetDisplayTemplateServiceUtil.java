@@ -41,6 +41,22 @@ public class AssetDisplayTemplateServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.asset.display.template.service.impl.AssetDisplayTemplateServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.asset.display.template.model.AssetDisplayTemplate addAssetDisplayTemplate(
+		long groupId, long userId, java.lang.String name, long classNameId,
+		java.lang.String language, java.lang.String scriptContent,
+		boolean main,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addAssetDisplayTemplate(groupId, userId, name, classNameId,
+			language, scriptContent, main, serviceContext);
+	}
+
+	public static com.liferay.asset.display.template.model.AssetDisplayTemplate deleteAssetDisplayTemplate(
+		long assetDisplayTemplateId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteAssetDisplayTemplate(assetDisplayTemplateId);
+	}
 
 	/**
 	* Returns the OSGi service identifier.
@@ -49,6 +65,17 @@ public class AssetDisplayTemplateServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.asset.display.template.model.AssetDisplayTemplate updateAssetDisplayTemplate(
+		long assetDisplayTemplateId, java.lang.String name, long classNameId,
+		java.lang.String language, java.lang.String scriptContent,
+		boolean main,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateAssetDisplayTemplate(assetDisplayTemplateId, name,
+			classNameId, language, scriptContent, main, serviceContext);
 	}
 
 	public static AssetDisplayTemplateService getService() {

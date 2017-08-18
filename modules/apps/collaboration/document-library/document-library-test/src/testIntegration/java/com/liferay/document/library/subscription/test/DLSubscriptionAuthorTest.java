@@ -63,7 +63,7 @@ public class DLSubscriptionAuthorTest extends BaseSubscriptionAuthorTestCase {
 		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
 			userId, group.getGroupId(), containerModelId,
 			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
-			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
+			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.TEXT_PLAIN),
 			serviceContext);
 
 		return fileEntry.getFileEntryId();
@@ -108,7 +108,7 @@ public class DLSubscriptionAuthorTest extends BaseSubscriptionAuthorTestCase {
 			userId, baseModelId, RandomTestUtil.randomString(),
 			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
 			StringPool.BLANK, StringPool.BLANK, false,
-			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
+			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.TEXT_PLAIN),
 			serviceContext);
 	}
 

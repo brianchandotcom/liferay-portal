@@ -1415,7 +1415,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 						PropsKeys.DL_FILE_MAX_SIZE, 1L)) {
 
 				byte[] bytes = RandomTestUtil.randomBytes(
-					TikaSafeRandomizerBumper.INSTANCE);
+					TikaSafeRandomizerBumper.TEXT_PLAIN);
 
 				DLAppServiceUtil.updateFileEntry(
 					fileEntry.getFileEntryId(), fileName,
@@ -1935,7 +1935,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		return DLAppServiceUtil.updateFileEntry(
 			fileEntryId, fileName, ContentTypes.TEXT_PLAIN, fileName,
 			StringPool.BLANK, StringPool.BLANK, majorVersion,
-			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
+			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.TEXT_PLAIN),
 			serviceContext);
 	}
 

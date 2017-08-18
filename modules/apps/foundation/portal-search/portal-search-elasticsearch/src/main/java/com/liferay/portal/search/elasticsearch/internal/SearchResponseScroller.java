@@ -103,7 +103,7 @@ public class SearchResponseScroller {
 	public boolean scroll(SearchHitsProcessor searchHitsProcessor)
 		throws Exception {
 
-		if (Validator.isNotNull(_scrollId)) {
+		if (Validator.isNull(_scrollId)) {
 			return false;
 		}
 
@@ -124,7 +124,7 @@ public class SearchResponseScroller {
 
 		SearchHit[] searchHitsArray = searchHits.getHits();
 
-		if (ArrayUtil.isNotEmpty(searchHitsArray)) {
+		if (ArrayUtil.isEmpty(searchHitsArray)) {
 			_scrollId = null;
 
 			return false;

@@ -22,4 +22,7 @@ public class CommerceActionKeys {
 	public static final String MANAGE_COMMERCE_COUNTRIES =
 		"MANAGE_COMMERCE_COUNTRIES";
 
+	public static final String MANAGE_COMMERCE_ORDERS =
+		"MANAGE_COMMERCE_ORDERS";
+
 }

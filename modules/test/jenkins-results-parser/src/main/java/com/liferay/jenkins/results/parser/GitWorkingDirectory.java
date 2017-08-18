@@ -95,6 +95,14 @@ public class GitWorkingDirectory {
 			String upstreamBranchName, String workingDirectory)
 		throws GitAPIException, IOException {
 
+		this(upstreamBranchName, workingDirectory, null);
+	}
+
+	public GitWorkingDirectory(
+			String upstreamBranchName, String workingDirectory,
+			String repositoryName)
+		throws GitAPIException, IOException {
+
 		_upstreamBranchName = upstreamBranchName;
 
 		setWorkingDirectory(workingDirectory);
@@ -111,7 +119,11 @@ public class GitWorkingDirectory {
 
 		_git = new Git(_repository);
 
-		_repositoryName = loadRepositoryName();
+		if ((repositoryName == null) || repositoryName.equals("")) {
+			repositoryName = loadRepositoryName();
+		}
+
+		_repositoryName = repositoryName;
 		_repositoryUsername = loadRepositoryUsername();
 	}
 

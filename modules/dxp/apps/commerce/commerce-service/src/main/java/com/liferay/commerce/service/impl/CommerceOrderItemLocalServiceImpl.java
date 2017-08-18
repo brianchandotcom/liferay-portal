@@ -14,11 +14,189 @@
 
 package com.liferay.commerce.service.impl;
 
+import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
+import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.service.base.CommerceOrderItemLocalServiceBaseImpl;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
+
+import java.util.List;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Andrea Di Giorgi
  */
 public class CommerceOrderItemLocalServiceImpl
 	extends CommerceOrderItemLocalServiceBaseImpl {
+
+	@Override
+	public CommerceOrderItem addCommerceOrderItem(
+			long commerceOrderId, long cpDefinitionId, long cpInstanceId,
+			int quantity, String json, ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = userLocalService.getUser(serviceContext.getUserId());
+		long groupId = serviceContext.getScopeGroupId();
+
+		validate(cpDefinitionId, cpInstanceId);
+
+		long commerceOrderItemId = counterLocalService.increment();
+
+		CommerceOrderItem commerceOrderItem =
+			commerceOrderItemPersistence.create(commerceOrderItemId);
+
+		commerceOrderItem.setGroupId(groupId);
+		commerceOrderItem.setCompanyId(user.getCompanyId());
+		commerceOrderItem.setUserId(user.getUserId());
+		commerceOrderItem.setUserName(user.getFullName());
+		commerceOrderItem.setCommerceOrderId(commerceOrderId);
+		commerceOrderItem.setCPDefinitionId(cpDefinitionId);
+		commerceOrderItem.setCPInstanceId(cpInstanceId);
+		commerceOrderItem.setQuantity(quantity);
+		commerceOrderItem.setJson(json);
+		commerceOrderItem.setExpandoBridgeAttributes(serviceContext);
+
+		commerceOrderItemPersistence.update(commerceOrderItem);
+
+		return commerceOrderItem;
+	}
+
+	@Override
+	public CommerceOrderItem deleteCommerceOrderItem(
+			CommerceOrderItem commerceOrderItem)
+		throws PortalException {
+
+		// Commerce order item
+
+		commerceOrderItemPersistence.remove(commerceOrderItem);
+
+		// Expando
+
+		expandoRowLocalService.deleteRows(
+			commerceOrderItem.getCommerceOrderItemId());
+
+		return commerceOrderItem;
+	}
+
+	@Override
+	public CommerceOrderItem deleteCommerceOrderItem(long commerceOrderItemId)
+		throws PortalException {
+
+		CommerceOrderItem commerceOrderItem =
+			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);
+
+		return commerceOrderItemLocalService.deleteCommerceOrderItem(
+			commerceOrderItem);
+	}
+
+	@Override
+	public void deleteCommerceOrderItems(long commerceOrderId)
+		throws PortalException {
+
+		List<CommerceOrderItem> commerceOrderItems =
+			commerceOrderItemPersistence.findByCommerceOrderId(
+				commerceOrderId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
+			deleteCommerceOrderItem(commerceOrderItem);
+		}
+	}
+
+	@Override
+	public void deleteCommerceOrderItemsByCPDefinitionId(long cpDefinitionId)
+		throws PortalException {
+
+		List<CommerceOrderItem> commerceOrderItems =
+			commerceOrderItemPersistence.findByCPDefinitionId(cpDefinitionId);
+
+		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
+			deleteCommerceOrderItem(commerceOrderItem);
+		}
+	}
+
+	@Override
+	public void deleteCommerceOrderItemsByCPInstanceId(long cpInstanceId)
+		throws PortalException {
+
+		List<CommerceOrderItem> commerceOrderItems =
+			commerceOrderItemPersistence.findByCPInstanceId(cpInstanceId);
+
+		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
+			deleteCommerceOrderItem(commerceOrderItem);
+		}
+	}
+
+	@Override
+	public List<CommerceOrderItem> getCommerceOrderItems(
+		long commerceOrderId, int start, int end) {
+
+		return commerceOrderItemPersistence.findByCommerceOrderId(
+			commerceOrderId, start, end);
+	}
+
+	@Override
+	public List<CommerceOrderItem> getCommerceOrderItems(
+		long commerceOrderId, int start, int end,
+		OrderByComparator<CommerceOrderItem> orderByComparator) {
+
+		return commerceOrderItemPersistence.findByCommerceOrderId(
+			commerceOrderId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getCommerceOrderItemsCount(long commerceOrderId) {
+		return commerceOrderItemPersistence.countByCommerceOrderId(
+			commerceOrderId);
+	}
+
+	@Override
+	public CommerceOrderItem updateCommerceOrderItem(
+			long commerceOrderItemId, int quantity, String json)
+		throws PortalException {
+
+		CommerceOrderItem commerceOrderItem =
+			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);
+
+		commerceOrderItem.setQuantity(quantity);
+		commerceOrderItem.setJson(json);
+
+		commerceOrderItemPersistence.update(commerceOrderItem);
+
+		return commerceOrderItem;
+	}
+
+	public void validate(long cpDefinitionId, long cpInstanceId)
+		throws PortalException {
+
+		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
+			cpDefinitionId);
+
+		if (cpInstanceId > 0) {
+			CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
+				cpInstanceId);
+
+			if (cpInstance.getCPDefinitionId() !=
+					cpDefinition.getCPDefinitionId()) {
+
+				throw new NoSuchCPInstanceException(
+					"CPInstance " + cpInstance.getCPInstanceId() +
+						" belongs to a different CPDefinition than " +
+							cpDefinition.getCPDefinitionId());
+			}
+		}
+	}
+
+	@ServiceReference(type = CPDefinitionLocalService.class)
+	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@ServiceReference(type = CPInstanceLocalService.class)
+	private CPInstanceLocalService _cpInstanceLocalService;
+
 }

@@ -42,10 +42,10 @@ public class CommerceCartItemLocalServiceImpl
 			int quantity, String json, ServiceContext serviceContext)
 		throws PortalException {
 
-		validate(cpDefinitionId, cpInstanceId);
-
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
+
+		validate(cpDefinitionId, cpInstanceId);
 
 		long commerceCartItemId = counterLocalService.increment();
 

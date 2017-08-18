@@ -34,7 +34,7 @@ public class CPDefinitionModelListener extends BaseModelListener<CPDefinition> {
 	@Override
 	public void onBeforeRemove(CPDefinition cpDefinition) {
 		try {
-			_commerceCommerceCartItemLocalService.
+			_commerceCartItemLocalService.
 				deleteCommerceCartItemsByCPDefinitionId(
 					cpDefinition.getCPDefinitionId());
 		}
@@ -49,6 +49,6 @@ public class CPDefinitionModelListener extends BaseModelListener<CPDefinition> {
 		CPDefinitionModelListener.class);
 
 	@Reference
-	private CommerceCartItemLocalService _commerceCommerceCartItemLocalService;
+	private CommerceCartItemLocalService _commerceCartItemLocalService;
 
 }

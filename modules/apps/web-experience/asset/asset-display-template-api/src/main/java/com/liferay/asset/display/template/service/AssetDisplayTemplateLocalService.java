@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -70,6 +71,11 @@ public interface AssetDisplayTemplateLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public AssetDisplayTemplate addAssetDisplayTemplate(
 		AssetDisplayTemplate assetDisplayTemplate);
+
+	public AssetDisplayTemplate addAssetDisplayTemplate(long groupId,
+		long userId, java.lang.String name, long classNameId,
+		java.lang.String language, java.lang.String scriptContent,
+		boolean main, ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new asset display template with the primary key. Does not add the asset display template to the database.
@@ -172,6 +178,10 @@ public interface AssetDisplayTemplateLocalService extends BaseLocalService,
 		long assetDisplayTemplateId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetDisplayTemplate fetchAssetDisplayTemplate(long groupId,
+		long classNameId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
@@ -184,6 +194,9 @@ public interface AssetDisplayTemplateLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetDisplayTemplate getAssetDisplayTemplate(
 		long assetDisplayTemplateId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAssetDisplayTemplateCount(long groupId);
 
 	/**
 	* Returns a range of all the asset display templates.
@@ -199,6 +212,11 @@ public interface AssetDisplayTemplateLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetDisplayTemplate> getAssetDisplayTemplates(int start,
 		int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetDisplayTemplate> getAssetDisplayTemplates(long groupId,
+		int start, int end,
+		OrderByComparator<AssetDisplayTemplate> orderByComparator);
 
 	/**
 	* Returns the number of asset display templates.
@@ -232,4 +250,9 @@ public interface AssetDisplayTemplateLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public AssetDisplayTemplate updateAssetDisplayTemplate(
 		AssetDisplayTemplate assetDisplayTemplate);
+
+	public AssetDisplayTemplate updateAssetDisplayTemplate(
+		long assetDisplayTemplateId, java.lang.String name, long classNameId,
+		java.lang.String language, java.lang.String scriptContent,
+		boolean main, ServiceContext serviceContext) throws PortalException;
 }

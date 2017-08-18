@@ -437,39 +437,6 @@ app.server.type=@{app.server.type}]]></echo>
 
 			<antcall inheritAll="false" target="compile-test" />
 
-			<echo file="${project.dir}/.gitignore">/.ivy/
-/app.server.*.properties
-/build.*.properties
-/release.*.properties
-/sql/sql.*.properties
-/test.*.properties
-/tools/maven/*.asc
-/tools/node*
-/tools/selenium/*.exe
-/tools/selenium/extensions/ide.*.js
-/tools/tck
-/tools/zip_tmpl/license</echo>
-
-			<delete file="${project.dir}/lib/.gitignore" />
-
-			<echo file="${project.dir}/modules/.gitignore">tmp
-/*/*/ivy.xml.MD5
-/*/*/javadoc
-/*/*/lib
-/*/*/tmp
-/*/*/*/build/node
-/*/*/*/ivy.xml.MD5
-/*/*/*/javadoc
-/*/*/*/lib
-/*/*/*/node_modules
-/*/*/*/tmp
-/*/*/*/*/build/node
-/*/*/*/*/ivy.xml.MD5
-/*/*/*/*/javadoc
-/*/*/*/*/lib
-/*/*/*/*/node_modules
-/*/*/*/*/tmp</echo>
-
 			<delete>
 				<fileset dir="bundles" includes="*.zip" />
 			</delete>

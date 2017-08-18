@@ -157,7 +157,8 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 	}
 
 	private final Pattern _dependenciesPattern = Pattern.compile(
-		"^dependencies \\{(.+?\n)\\}", Pattern.DOTALL | Pattern.MULTILINE);
+		"^dependencies \\{(((?![\\{\\}]).)+?\n)\\}",
+		Pattern.DOTALL | Pattern.MULTILINE);
 	private final Pattern _incorrectGroupNameVersionPattern = Pattern.compile(
 		"(^[^\\s]+)\\s+\"([^:]+?):([^:]+?):([^\"]+?)\"(.*?)", Pattern.DOTALL);
 	private final Pattern _incorrectWhitespacePattern = Pattern.compile(

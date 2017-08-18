@@ -667,6 +667,13 @@
 
 		<execute function="AssertClick" locator1="RolesPermissions#SAVE_BUTTON" value1="Save" />
 
+		<if>
+			<equals arg1="${remove}" arg2="true" />
+				<then>
+					<execute function="Confirm#assertPartialConfirmationNoWait" value1="Updating the chosen permissions will overwrite the respective individually defined permissions for one or more of these resource types" />
+				</then>
+		</if>
+
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 

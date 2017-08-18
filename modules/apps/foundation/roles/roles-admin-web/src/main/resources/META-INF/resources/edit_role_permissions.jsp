@@ -421,12 +421,24 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 </aui:script>
 
 <aui:script>
-	function <portlet:namespace />updateActions() {
+	function <portlet:namespace />updateActions(selected, unselected) {
 		var form = AUI.$(document.<portlet:namespace />fm);
+		var oldSelectedPermissions = selected.split(',');
+		var oldUnselectedPermissions = unselected.split(',');
+
+		var selectedPermissionsString = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
+		var unselectedPermissionsString = Liferay.Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds');
+
+		var selectedPermissions = selectedPermissionsString.split(',');
+		var unselectedPermissions = unselectedPermissionsString.split(',');
+
+		if ((AUI._.intersection(selectedPermissions, oldUnselectedPermissions).length || AUI._.intersection(unselectedPermissions, oldSelectedPermissions).length) && !confirm('<liferay-ui:message key="updating-the-chosen-permissions-will-overwrite-the-respective-individually-defined-permissions-for-one-or-more-of-these-resource-types" />')) {
+			return;
+		}
 
 		form.fm('redirect').val('<%= HtmlUtil.escapeJS(portletURL.toString()) %>');
-		form.fm('selectedTargets').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-		form.fm('unselectedTargets').val(Liferay.Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'));
+		form.fm('selectedTargets').val(selectedPermissionsString);
+		form.fm('unselectedTargets').val(unselectedPermissionsString);
 
 		submitForm(form);
 	}

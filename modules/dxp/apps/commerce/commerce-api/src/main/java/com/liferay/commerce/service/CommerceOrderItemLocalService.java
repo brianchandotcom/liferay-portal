@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -71,6 +72,11 @@ public interface CommerceOrderItemLocalService extends BaseLocalService,
 	public CommerceOrderItem addCommerceOrderItem(
 		CommerceOrderItem commerceOrderItem);
 
+	public CommerceOrderItem addCommerceOrderItem(long commerceOrderId,
+		long cpDefinitionId, long cpInstanceId, int quantity,
+		java.lang.String json, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	* Creates a new commerce order item with the primary key. Does not add the commerce order item to the database.
 	*
@@ -84,10 +90,11 @@ public interface CommerceOrderItemLocalService extends BaseLocalService,
 	*
 	* @param commerceOrderItem the commerce order item
 	* @return the commerce order item that was removed
+	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public CommerceOrderItem deleteCommerceOrderItem(
-		CommerceOrderItem commerceOrderItem);
+		CommerceOrderItem commerceOrderItem) throws PortalException;
 
 	/**
 	* Deletes the commerce order item with the primary key from the database. Also notifies the appropriate model listeners.
@@ -98,6 +105,15 @@ public interface CommerceOrderItemLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public CommerceOrderItem deleteCommerceOrderItem(long commerceOrderItemId)
+		throws PortalException;
+
+	public void deleteCommerceOrderItems(long commerceOrderId)
+		throws PortalException;
+
+	public void deleteCommerceOrderItemsByCPDefinitionId(long cpDefinitionId)
+		throws PortalException;
+
+	public void deleteCommerceOrderItemsByCPInstanceId(long cpInstanceId)
 		throws PortalException;
 
 	/**
@@ -197,6 +213,15 @@ public interface CommerceOrderItemLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceOrderItem> getCommerceOrderItems(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrderItem> getCommerceOrderItems(long commerceOrderId,
+		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrderItem> getCommerceOrderItems(long commerceOrderId,
+		int start, int end,
+		OrderByComparator<CommerceOrderItem> orderByComparator);
+
 	/**
 	* Returns the number of commerce order items.
 	*
@@ -204,6 +229,9 @@ public interface CommerceOrderItemLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceOrderItemsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceOrderItemsCount(long commerceOrderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -229,4 +257,10 @@ public interface CommerceOrderItemLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrderItem updateCommerceOrderItem(
 		CommerceOrderItem commerceOrderItem);
+
+	public CommerceOrderItem updateCommerceOrderItem(long commerceOrderItemId,
+		int quantity, java.lang.String json) throws PortalException;
+
+	public void validate(long cpDefinitionId, long cpInstanceId)
+		throws PortalException;
 }

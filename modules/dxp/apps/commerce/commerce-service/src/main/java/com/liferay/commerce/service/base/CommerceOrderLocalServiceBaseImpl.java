@@ -124,10 +124,12 @@ public abstract class CommerceOrderLocalServiceBaseImpl
 	 *
 	 * @param commerceOrder the commerce order
 	 * @return the commerce order that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public CommerceOrder deleteCommerceOrder(CommerceOrder commerceOrder) {
+	public CommerceOrder deleteCommerceOrder(CommerceOrder commerceOrder)
+		throws PortalException {
 		return commerceOrderPersistence.remove(commerceOrder);
 	}
 

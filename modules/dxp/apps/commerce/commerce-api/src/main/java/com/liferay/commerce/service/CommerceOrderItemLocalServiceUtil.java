@@ -53,6 +53,16 @@ public class CommerceOrderItemLocalServiceUtil {
 		return getService().addCommerceOrderItem(commerceOrderItem);
 	}
 
+	public static com.liferay.commerce.model.CommerceOrderItem addCommerceOrderItem(
+		long commerceOrderId, long cpDefinitionId, long cpInstanceId,
+		int quantity, java.lang.String json,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCommerceOrderItem(commerceOrderId, cpDefinitionId,
+			cpInstanceId, quantity, json, serviceContext);
+	}
+
 	/**
 	* Creates a new commerce order item with the primary key. Does not add the commerce order item to the database.
 	*
@@ -69,9 +79,11 @@ public class CommerceOrderItemLocalServiceUtil {
 	*
 	* @param commerceOrderItem the commerce order item
 	* @return the commerce order item that was removed
+	* @throws PortalException
 	*/
 	public static com.liferay.commerce.model.CommerceOrderItem deleteCommerceOrderItem(
-		com.liferay.commerce.model.CommerceOrderItem commerceOrderItem) {
+		com.liferay.commerce.model.CommerceOrderItem commerceOrderItem)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteCommerceOrderItem(commerceOrderItem);
 	}
 
@@ -86,6 +98,22 @@ public class CommerceOrderItemLocalServiceUtil {
 		long commerceOrderItemId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteCommerceOrderItem(commerceOrderItemId);
+	}
+
+	public static void deleteCommerceOrderItems(long commerceOrderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteCommerceOrderItems(commerceOrderId);
+	}
+
+	public static void deleteCommerceOrderItemsByCPDefinitionId(
+		long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteCommerceOrderItemsByCPDefinitionId(cpDefinitionId);
+	}
+
+	public static void deleteCommerceOrderItemsByCPInstanceId(long cpInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteCommerceOrderItemsByCPInstanceId(cpInstanceId);
 	}
 
 	/**
@@ -213,6 +241,19 @@ public class CommerceOrderItemLocalServiceUtil {
 		return getService().getCommerceOrderItems(start, end);
 	}
 
+	public static java.util.List<com.liferay.commerce.model.CommerceOrderItem> getCommerceOrderItems(
+		long commerceOrderId, int start, int end) {
+		return getService().getCommerceOrderItems(commerceOrderId, start, end);
+	}
+
+	public static java.util.List<com.liferay.commerce.model.CommerceOrderItem> getCommerceOrderItems(
+		long commerceOrderId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceOrderItem> orderByComparator) {
+		return getService()
+				   .getCommerceOrderItems(commerceOrderId, start, end,
+			orderByComparator);
+	}
+
 	/**
 	* Returns the number of commerce order items.
 	*
@@ -220,6 +261,10 @@ public class CommerceOrderItemLocalServiceUtil {
 	*/
 	public static int getCommerceOrderItemsCount() {
 		return getService().getCommerceOrderItemsCount();
+	}
+
+	public static int getCommerceOrderItemsCount(long commerceOrderId) {
+		return getService().getCommerceOrderItemsCount(commerceOrderId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
@@ -250,6 +295,18 @@ public class CommerceOrderItemLocalServiceUtil {
 	public static com.liferay.commerce.model.CommerceOrderItem updateCommerceOrderItem(
 		com.liferay.commerce.model.CommerceOrderItem commerceOrderItem) {
 		return getService().updateCommerceOrderItem(commerceOrderItem);
+	}
+
+	public static com.liferay.commerce.model.CommerceOrderItem updateCommerceOrderItem(
+		long commerceOrderItemId, int quantity, java.lang.String json)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCommerceOrderItem(commerceOrderItemId, quantity, json);
+	}
+
+	public static void validate(long cpDefinitionId, long cpInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().validate(cpDefinitionId, cpInstanceId);
 	}
 
 	public static CommerceOrderItemLocalService getService() {

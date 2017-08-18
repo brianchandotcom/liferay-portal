@@ -41,6 +41,19 @@ public class CommerceOrderServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceOrderServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.commerce.model.CommerceOrder addCommerceOrderFromCart(
+		long commerceCartId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCommerceOrderFromCart(commerceCartId, serviceContext);
+	}
+
+	public static com.liferay.commerce.model.CommerceOrder getCommerceOrder(
+		long commerceOrderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCommerceOrder(commerceOrderId);
+	}
 
 	/**
 	* Returns the OSGi service identifier.

@@ -33,6 +33,22 @@ public class CommerceOrderServiceWrapper implements CommerceOrderService,
 		_commerceOrderService = commerceOrderService;
 	}
 
+	@Override
+	public com.liferay.commerce.model.CommerceOrder addCommerceOrderFromCart(
+		long commerceCartId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderService.addCommerceOrderFromCart(commerceCartId,
+			serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceOrder getCommerceOrder(
+		long commerceOrderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderService.getCommerceOrder(commerceOrderId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

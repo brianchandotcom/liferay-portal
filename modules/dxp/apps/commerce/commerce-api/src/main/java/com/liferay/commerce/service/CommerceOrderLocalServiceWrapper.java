@@ -46,6 +46,24 @@ public class CommerceOrderLocalServiceWrapper
 		return _commerceOrderLocalService.addCommerceOrder(commerceOrder);
 	}
 
+	@Override
+	public com.liferay.commerce.model.CommerceOrder addCommerceOrder(
+		long orderUserId, int status,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderLocalService.addCommerceOrder(orderUserId, status,
+			serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceOrder addCommerceOrderFromCart(
+		long commerceCartId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderLocalService.addCommerceOrderFromCart(commerceCartId,
+			serviceContext);
+	}
+
 	/**
 	* Creates a new commerce order with the primary key. Does not add the commerce order to the database.
 	*
@@ -63,10 +81,12 @@ public class CommerceOrderLocalServiceWrapper
 	*
 	* @param commerceOrder the commerce order
 	* @return the commerce order that was removed
+	* @throws PortalException
 	*/
 	@Override
 	public com.liferay.commerce.model.CommerceOrder deleteCommerceOrder(
-		com.liferay.commerce.model.CommerceOrder commerceOrder) {
+		com.liferay.commerce.model.CommerceOrder commerceOrder)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderLocalService.deleteCommerceOrder(commerceOrder);
 	}
 

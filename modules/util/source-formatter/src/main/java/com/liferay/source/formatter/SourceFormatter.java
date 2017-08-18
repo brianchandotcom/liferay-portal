@@ -69,7 +69,7 @@ public class SourceFormatter {
 			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/tmp/**"),
 			new ExcludeSyntaxPattern(
 				ExcludeSyntax.REGEX,
-				"^((?![\\/\\\\]frontend-js-node-shims[\\/\\\\]src[\\/\\\\]).)*[\\/\\\\]node_modules[\\/\\\\].*")
+				"^((?!/frontend-js-node-shims/src/).)*/node_modules/.*")
 	};
 
 	public static void main(String[] args) throws Exception {

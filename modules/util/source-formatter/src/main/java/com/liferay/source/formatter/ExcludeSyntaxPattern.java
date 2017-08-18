@@ -14,6 +14,13 @@
 
 package com.liferay.source.formatter;
 
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.io.File;
+
+import java.util.regex.Pattern;
+
 /**
  * @author Peter Shin
  */
@@ -23,7 +30,14 @@ public class ExcludeSyntaxPattern {
 		ExcludeSyntax excludeSyntax, String excludePattern) {
 
 		_excludeSyntax = excludeSyntax;
-		_excludePattern = excludePattern;
+
+		if (_excludeSyntax == ExcludeSyntax.REGEX) {
+			_excludePattern = StringUtil.replace(
+				excludePattern, CharPool.SLASH, Pattern.quote(File.separator));
+		}
+		else {
+			_excludePattern = excludePattern;
+		}
 	}
 
 	@Override

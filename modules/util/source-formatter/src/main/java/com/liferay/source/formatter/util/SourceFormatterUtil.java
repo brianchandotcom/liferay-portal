@@ -41,6 +41,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 /**
  * @author Igor Spasic
@@ -567,10 +568,12 @@ public class SourceFormatterUtil {
 						excludeSyntax.getValue() + ":" + excludePattern));
 			}
 			else if (excludeSyntax.equals(ExcludeSyntax.REGEX) &&
-					 excludePattern.endsWith("[\\/\\\\].*")) {
+					 excludePattern.endsWith(
+						 Pattern.quote(File.separator) + ".*")) {
 
-				excludePattern = excludePattern.substring(
-					0, excludePattern.length() - 8);
+				excludePattern = StringUtil.replaceLast(
+					excludePattern, Pattern.quote(File.separator) + ".*",
+					StringPool.BLANK);
 
 				_excludeDirPathMatchers.add(
 					_fileSystem.getPathMatcher(
@@ -615,10 +618,12 @@ public class SourceFormatterUtil {
 							excludeSyntax.getValue() + ":" + excludePattern));
 				}
 				else if (excludeSyntax.equals(ExcludeSyntax.REGEX) &&
-						 excludePattern.endsWith("[\\/\\\\].*")) {
+						 excludePattern.endsWith(
+							 Pattern.quote(File.separator) + ".*")) {
 
-					excludePattern = excludePattern.substring(
-						0, excludePattern.length() - 8);
+					excludePattern = StringUtil.replaceLast(
+						excludePattern, Pattern.quote(File.separator) + ".*",
+						StringPool.BLANK);
 
 					excludeDirPathMatcherList.add(
 						_fileSystem.getPathMatcher(
